@@ -104,7 +104,7 @@ lem-cert-deposits-valid : ∀ {Γ s tx s'} (open L.LEnv Γ using (pparams))
                         → isValid tx ≡ true
                         → Γ L.⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                         → updateLedgerDeps pparams tx (certDeposits s) ≡ᵈ certDeposits s'
-lem-cert-deposits-valid {Γ} {s} {tx} {s'} refl (L.LEDGER-V⋯ refl utxow certs gov) rewrite sym (lemUpdateDeposits refl utxow) =
+lem-cert-deposits-valid {Γ} {s} {tx} {s'} refl (L.LEDGER-V⋯ refl utxow certs u gov) rewrite sym (lemUpdateDeposits refl utxow) =
   lem-upd-ddeps pparams deps tx ,
   lem-upd-gdeps pparams deps tx
   where
@@ -137,7 +137,7 @@ instance
                     certDeposits-s' ≡ᵈ certDeposits s'
                   × Γ C.⊢ (certDeposits s ⊢conv s) ⇀⦇ tx ,LEDGER⦈ (certDeposits-s' ⊢conv s')
   -- LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ (cdeps , eq-cdeps) r@(L.LEDGER-V⋯ refl utxow certs gov) =
-  LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-V⋯ refl utxow certs gov) =
+  LEDGERToConf {Γ} {s} {tx} {s'} .convⁱ _ r@(L.LEDGER-V⋯ refl utxow certs u gov) =
     updateLedgerDeps pparams tx (certDeposits s)
     , lem-cert-deposits-valid refl r
     , subst₂ (λ • ◆ → Γ C.⊢ getCertDeps* cdeposits ⊢conv s ⇀⦇ tx ,LEDGER⦈ ⟦ • , _ , ◆ ⟧)
@@ -157,7 +157,7 @@ instance
       certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
       certs' = cdeposits ⊢conv certs
       ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
-      ledger' = C.LEDGER-V⋯ refl utxow' certs' gov
+      ledger' = C.LEDGER-V⋯ refl utxow' certs' u gov
       utxoEq  : utxoStC' ≡ utxoSt'
       utxoEq  = cong (λ • → ⟦ _ , _ , • , _ ⟧)
                      (lemUpdateDeposits refl utxow)
@@ -190,9 +190,9 @@ WellformedLState s = certDepositsC (C.LState.certState s) ≡ᵈ certDeposits (c
 
 getValidCertDepositsCERTS : ∀ {Γ s certs s'} deposits (open L.CertEnv Γ using (pp))
                           → certDepositsC s ≡ᵈ (certDDeps deposits , certGDeps deposits)
-                          → ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_} Γ s certs s'
+                          → Γ C.⊢ s ⇀⦇ certs ,CERTS⦈ s'
                           → L.ValidCertDeposits pp deposits certs
-getValidCertDepositsCERTS deposits wf (BS-base Id-nop) = L.[]
+getValidCertDepositsCERTS deposits wf (BS-base _) = L.[]
 getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-deleg (C.DELEG-delegate (a , b))) rs) =
   L.delegate (getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
 getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-deleg (C.DELEG-dereg (_ , h , h'))) rs) =
@@ -212,20 +212,6 @@ getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-vdel
 getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-vdel (C.GOVCERT-ccreghot x)) rs) =
   L.ccreghot(getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
 
-getValidCertDepositsC : ∀ Γ s {s'} tx
-                     → (let open C.LEnv Γ using (pparams; slot; enactState)
-                            open TxBody (tx .Tx.body) using (txcerts; txvote; txwdrls)
-                            open C.LState s
-                            open C.UTxOState utxoSt using (deposits)
-                            cc = C.allColdCreds govSt enactState
-                       )
-                     → WellformedLState s
-                     → isValid tx ≡ true
-                     → ⟦ epoch slot , pparams , txvote , txwdrls , cc ⟧ C.⊢ certState ⇀⦇ txcerts ,CERTS⦈ s'
-                     → L.ValidCertDeposits pparams deposits txcerts
-getValidCertDepositsC Γ s tx wf refl (RTC (C.CERT-base _ , step)) =
-  getValidCertDepositsCERTS (C.UTxOState.deposits (C.LState.utxoSt s)) wf step
-
 lemUtxowDeposits : ∀ {Γ s s' tx}
                       (let open C.UTxOEnv Γ using (pparams))
                   → isValid tx ≡ true
@@ -242,7 +228,7 @@ instance
                                     ⭆ Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ conv s'
   LEDGERFromConf .convⁱ _ (C.LEDGER-I⋯ invalid utxow) with inj₁ invalid ⊢conv utxow
   ... | utxow' rewrite lemInvalidDepositsC invalid utxow = L.LEDGER-I⋯ invalid utxow'
-  LEDGERFromConf {Γ} {s} {tx} {s'} .convⁱ wf (C.LEDGER-V⋯ refl utxow certs gov) =
+  LEDGERFromConf {Γ} {s} {tx} {s'} .convⁱ wf (C.LEDGER-V⋯ refl utxow certs u gov) =
     subst (λ • → Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ ⟦ • , govSt' , conv certSt' ⟧) eqUtxo ledger'
     where
       open C.LEnv Γ
@@ -254,7 +240,7 @@ instance
       open C.UTxOState utxoSt using (deposits)
 
       valid-deps : L.ValidCertDeposits pparams deposits txcerts
-      valid-deps = getValidCertDepositsC Γ s tx wf refl certs
+      valid-deps = getValidCertDepositsCERTS (C.UTxOState.deposits (C.LState.utxoSt s)) wf certs
 
       utxow' : _ L.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ (setDeposits (utxowDeposits utxow) utxoSt')
       utxow' = inj₂ valid-deps ⊢conv utxow
@@ -265,14 +251,14 @@ instance
       ledger' : Γ L.⊢ conv s ⇀⦇ tx ,LEDGER⦈ L.⟦ setDeposits (utxowDeposits utxow) utxoSt'
                                               , govSt'
                                               , conv certSt' ⟧ˡ
-      ledger' = L.LEDGER-V⋯ refl utxow' (conv certs) gov
+      ledger' = L.LEDGER-V⋯ refl utxow' (conv certs) u gov
 
 open IsEquivalence ≡ᵈ-isEquivalence renaming (refl to ≡ᵈ-refl; sym to ≡ᵈ-sym; trans to ≡ᵈ-trans)
 
 lemCERTS'DepositsC : ∀ {Γ s dcerts s'} (open C.CertEnv Γ using (pp))
-                   → ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_} Γ s dcerts s'
+                   → C._⊢_⇀⦇_,CERTS⦈_ Γ s dcerts s'
                    → certDepositsC s' ≡ ⟨ updateDDeps pp dcerts , updateGDeps pp dcerts ⟩ (certDepositsC s)
-lemCERTS'DepositsC (BS-base Id-nop)                                  = refl
+lemCERTS'DepositsC (BS-base (C._⊢_⇀⦇_,CERTBASE⦈_.CERT-base _))       = refl
 lemCERTS'DepositsC (BS-ind (C.CERT-deleg (C.DELEG-delegate   _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (BS-ind (C.CERT-deleg (C.DELEG-dereg      _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (BS-ind (C.CERT-deleg (C.DELEG-reg        _)) rs) = lemCERTS'DepositsC rs
@@ -282,13 +268,8 @@ lemCERTS'DepositsC (BS-ind (C.CERT-vdel (C.GOVCERT-regdrep   _)) rs) = lemCERTS'
 lemCERTS'DepositsC (BS-ind (C.CERT-vdel (C.GOVCERT-deregdrep _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (BS-ind (C.CERT-vdel (C.GOVCERT-ccreghot  _)) rs) = lemCERTS'DepositsC rs
 
-lemCERTSDepositsC : ∀ {Γ s txcerts s'} (open C.CertEnv Γ using (pp))
-                  → Γ C.⊢ s ⇀⦇ txcerts ,CERTS⦈ s'
-                  → certDepositsC s' ≡ ⟨ updateDDeps pp txcerts , updateGDeps pp txcerts ⟩ (certDepositsC s)
-lemCERTSDepositsC (RTC (C.CERT-base _ , step)) = lemCERTS'DepositsC step
-
 lemWellformed : ∀ {Γ s tx s'} → WellformedLState s → Γ C.⊢ s ⇀⦇ tx ,LEDGER⦈ s' → WellformedLState s'
-lemWellformed {Γ} {s = ls} {tx} {s' = ls'} wf (C.LEDGER-V⋯ refl utxo certs gov) = goal
+lemWellformed {Γ} {s = ls} {tx} {s' = ls'} wf (C.LEDGER-V⋯ refl utxo certs u gov) = goal
   where
     open C.LState ls  renaming (certState to certSt)
     open C.LState ls' renaming (utxoSt to utxoSt'; certState to certSt')
@@ -310,7 +291,7 @@ lemWellformed {Γ} {s = ls} {tx} {s' = ls'} wf (C.LEDGER-V⋯ refl utxo certs go
     lem rewrite lemDepositsC utxo = refl
 
     lem₁ : (ddeps' , gdeps') ≡ (updateDDeps pparams txcerts ddeps , updateGDeps pparams txcerts gdeps)
-    lem₁ = lemCERTSDepositsC certs
+    lem₁ = lemCERTS'DepositsC certs
 
     lem₂ :  (updateDDeps pparams txcerts (certDDeps deposits) , updateGDeps pparams txcerts (certGDeps deposits))
          ≡ᵈ (certDDeps deposits' , certGDeps deposits')
@@ -342,9 +323,10 @@ updateCDep pp cert (ddep , gdep) = updateDDep pp cert ddep , updateGDep pp cert 
 opaque
   castCERTS' : ∀ {Γ certs} {s s' : L.CertState} deps₁ deps₂ deps₁'
              → deps₁ ≡ᵈ deps₂
-             → Γ ⊢ deps₁ ⊢conv s ⇀⦇ certs ,CERTS'⦈ (deps₁' ⊢conv s')
-             → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂' × Γ ⊢ deps₂ ⊢conv s ⇀⦇ certs ,CERTS'⦈ (deps₂' ⊢conv s')
-  castCERTS' deps₁ deps₂ deps₁' eqd (BS-base Id-nop) = deps₂ , eqd , BS-base Id-nop
+             → Γ C.⊢ deps₁ ⊢conv s ⇀⦇ certs ,CERTS⦈ (deps₁' ⊢conv s')
+             → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂' × Γ C.⊢ deps₂ ⊢conv s ⇀⦇ certs ,CERTS⦈ (deps₂' ⊢conv s')
+  castCERTS' deps₁ deps₂ deps₁' eqd (BS-base (C._⊢_⇀⦇_,CERTBASE⦈_.CERT-base h)) = 
+    deps₂ , eqd , BS-base (C.CERT-base h)
   castCERTS' {Γ} deps₁ deps₂ deps₁' eqd (BS-ind (C.CERT-deleg {dCert = cert} (C.DELEG-delegate h))    rs) =
     let open C.CertEnv Γ using (pp)
         deps₂' , eqd' , rs' = castCERTS' (updateCDep pp cert deps₁) (updateCDep pp cert deps₂) deps₁'
@@ -387,14 +369,6 @@ opaque
     let deps₂' , eqd' , rs' = castCERTS' deps₁ deps₂ deps₁' eqd rs
     in  deps₂' , eqd' , BS-ind (C.CERT-vdel (C.GOVCERT-ccreghot h)) rs'
 
-  castCERTS : ∀ {Γ certs} {s s' : L.CertState} deps₁ deps₂ deps₁'
-            → deps₁ ≡ᵈ deps₂
-            → Γ C.⊢ deps₁ ⊢conv s ⇀⦇ certs ,CERTS⦈ (deps₁' ⊢conv s')
-            → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂' × Γ C.⊢ deps₂ ⊢conv s ⇀⦇ certs ,CERTS⦈ (deps₂' ⊢conv s')
-  castCERTS deps₁ deps₂ deps₁' eqd (RTC (C.CERT-base h , step)) =
-    let deps₂' , eqd' , step' = castCERTS' deps₁ deps₂ deps₁' eqd step
-    in  deps₂' , eqd' , RTC (C.CERT-base h , step')
-
 _⊢_⇀⦇_,GOVn⦈_ : L.GovEnv × ℕ → L.GovState → List (GovVote ⊎ GovProposal) → L.GovState → Type
 _⊢_⇀⦇_,GOVn⦈_ = _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = L._⊢_⇀⦇_,GOV⦈_}
 
@@ -403,9 +377,9 @@ opaque
             → deps₁ ≡ᵈ deps₂
             → Γ C.⊢ deps₁ ⊢conv s ⇀⦇ tx ,LEDGER⦈ (deps₁' ⊢conv s')
             → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂' × Γ C.⊢ deps₂ ⊢conv s ⇀⦇ tx ,LEDGER⦈ (deps₂' ⊢conv s')
-  castLEDGER {Γ} {tx} {s} {s'} deps₁ deps₂ deps₁' eqd (C.LEDGER-V⋯ refl utxo certs gov) =
-    let deps₂' , eqd' , certs' = castCERTS deps₁ deps₂ deps₁' eqd certs
-    in  deps₂' , eqd' , C.LEDGER-V⋯ refl utxo certs' gov
+  castLEDGER {Γ} {tx} {s} {s'} deps₁ deps₂ deps₁' eqd (C.LEDGER-V⋯ refl utxo certs u gov) =
+    let deps₂' , eqd' , certs' = castCERTS' deps₁ deps₂ deps₁' eqd certs
+    in  deps₂' , eqd' , C.LEDGER-V⋯ refl utxo certs' u gov
   castLEDGER deps₁ deps₂ deps₁' eqd (C.LEDGER-I⋯ refl utxo) = _ , eqd , C.LEDGER-I⋯ refl utxo
 
 ---------------------------------------------------------------------------

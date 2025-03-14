@@ -148,15 +148,13 @@ instance
         open GState (gState cs); open DState (dState cs)
         refresh = mapPartial getDRepVote (fromList votes)
         refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
-    in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
-              × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-      (yes p) → success (-, CERT-base p)
+    in case ¿ mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
+      (yes p) → success (-, CERT-base (p {_}))
       (no ¬p) → failure (genErrors ¬p)
-  Computational-CERTBASE .completeness ce st _ st' (CERT-base p)
-    rewrite let dState = CertState.dState st; open DState dState in
-      dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
-                × mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
-        p .proj₂ = refl
+  Computational-CERTBASE .completeness ce st _ st' (CERT-base p) with 
+    ¿ mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ (st .CertState.dState .DState.rewards) ˢ ¿
+  ... | yes _ = refl
+  ... | no ¬q = ⊥-elim (¬q p)
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
@@ -256,7 +254,7 @@ module _  {Γ : CertEnv}
 
     CERTBASE-pov  {s  = cs}
                   {s' = cs'}
-                  (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
+                  (CERT-base {pp}{vs}{e}{dreps}{wdrls} wdrlsCC⊆rwds) =
       let
         open DState (dState cs )
         open DState (dState cs') renaming (rewards to rewards')
@@ -301,16 +299,9 @@ module _  {Γ : CertEnv}
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
             ∎
 
-    sts-pov  : {s₁ sₙ : CertState} → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
-             → getCoin s₁ ≡ getCoin sₙ
-    sts-pov (BS-base Id-nop) = refl
-    sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
-
     CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
-    CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts
-    CERTS-pov (RTC (bsts , BS-ind x sts)) = trans  (CERTBASE-pov bsts)
-                                                   (cong  (_+ getCoin (CertEnv.wdrls Γ))
-                                                          (trans (CERT-pov x) (sts-pov sts)))
+    CERTS-pov (BS-base x) = CERTBASE-pov x
+    CERTS-pov {s₁ = s₁} {sₙ} (BS-ind x y) = trans (CERT-pov x) (CERTS-pov y)
 
 -- TODO: Prove the following property.
 -- range vDelegs ⊆ map (credVoter DRep) (dom DReps)

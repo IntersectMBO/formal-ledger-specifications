@@ -37,6 +37,8 @@ open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm; 
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Unary using (Decidable)
 
+open import Tactic.GenError using (genErrors)
+
 import Function.Related.Propositional as R
 
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
@@ -73,14 +75,18 @@ instance
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           (certSt' , certStep) ← computeCerts certΓ certState txcerts
+          let wdrlCreds = mapˢ RwdAddr.stake (dom txwdrls)
+          wdrlsCheck ← case ¿ filterˢ isKeyHash wdrlCreds ⊆ dom (certSt' .CertState.dState .DState.voteDelegs) ¿ of λ where
+            (yes q) → success q
+            (no ¬q) → failure (genErrors ¬q)
           (govSt'  , govStep)  ← computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt) (txgov txb)
-          success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
+          success (_ , LEDGER-V⋯ p utxoStep certStep wdrlsCheck govStep)
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           success (_ , LEDGER-I⋯ (¬-not ¬p) utxoStep)
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ success s'
-      completeness ledgerSt (LEDGER-V⋯ v utxoStep certStep govStep)
+      completeness ledgerSt (LEDGER-V⋯ v utxoStep certStep u govStep)
         with isValid ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
@@ -88,8 +94,10 @@ instance
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certState txcerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
+        with dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom txwdrls)) ⊆ dom (certSt' .CertState.dState .DState.voteDelegs) ¿ (λ { x → u x })
+      ... | (_ , p)
         with computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt ) (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
-      ... | success (govSt' , _) | refl = refl
+      ... | success (govSt' , _) | refl rewrite p = refl
       completeness ledgerSt (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
       ... | yes refl = case i of λ ()
@@ -251,7 +259,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   STS→GovSt≡ : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                → isValid ≡ true → LState.govSt s' ≡ updateGovStates (txgov txb) 0 (rmOrphanDRepVotes (LState.certState s') (LState.govSt s))
   -- STS→GovSt≡ (LEDGER-V ( _ , _ , _ , x )) refl = STS→updateGovSt≡ (txgov txb) 0 x
-  STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
+  STS→GovSt≡ (LEDGER-V (_ , _ , _ , _ , x)) refl = STS→updateGovSt≡ (txgov txb) 0 x
     where
     STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {certSt : CertState} {govSt govSt' : GovState}
       → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV⦈_} (⟦ txid , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
@@ -536,7 +544,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
   LEDGER-govDepsMatch {s' = s'}
-    utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ GOV-sts) aprioriMatch =
+    utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ _ GOV-sts) aprioriMatch =
     let open LState s' renaming (govSt to govSt'; certState to certState') in
     begin
       filterˢ isGADeposit (dom (updateDeposits pp txb utxoDeps))
