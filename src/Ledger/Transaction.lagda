@@ -1,6 +1,9 @@
 \section{Transactions}
 \label{sec:transactions}
-\modulenote{\LedgerModule{Transaction}}
+\modulenote{\LedgerModule{Transaction}}, where we define transactions.
+
+ A transaction consists of a transaction body, a collection of witnesses and some optional auxiliary
+data.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -33,9 +36,6 @@ unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 \end{code}
 
-Transactions are defined in \cref{fig:defs:transactions}.  A
-transaction is made up of a transaction body, a collection of
-witnesses and some optional auxiliary data.
 \begin{NoConway}
 Some key ingredients in the transaction body are:
 \begin{itemize}

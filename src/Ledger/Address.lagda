@@ -1,6 +1,17 @@
 \section{Addresses}
 \label{sec:addresses}
-\modulenote{\LedgerModule{Address}}
+\modulenote{\LedgerModule{Address}}, in which we define credentials and various types
+of addresses here. 
+
+A credential contains a hash, either of a verifying (public) key
+(\isVKey{}) or of a script (\isScript{}).
+
+N.B.\@ in the Shelley era the type of the \stake{} field of the
+\BaseAddr{} record was \CredentialType{} (see \textcite[\sectionname~4]{shelley-ledger-spec});
+to specify an address with no stake, we would use an ``enterprise'' address.
+In contrast, the type of \stake{} in the Conway era is \Maybe{}~\CredentialType{},
+so we can now use \BaseAddr{} to specify an address with no stake
+by setting \stake{} to \nothing{}.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -12,17 +23,6 @@ open import Tactic.Derive.Show
 
 module Ledger.Address (
 \end{code}
-
-We define credentials and various types of addresses here. A
-credential contains a hash, either of a verifying (public) key
-(\isVKey{}) or of a script (\isScript{}).
-
-N.B.\@ in the Shelley era the type of the \stake{} field of the
-\BaseAddr{} record was \CredentialType{} (see \textcite[\sectionname~4]{shelley-ledger-spec});
-to specify an address with no stake, we would use an ``enterprise'' address.
-In contrast, the type of \stake{} in the Conway era is \Maybe{}~\CredentialType{},
-so we can now use \BaseAddr{} to specify an address with no stake
-by setting \stake{} to \nothing{}.
 
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}

@@ -1,6 +1,24 @@
 \section{Governance}
 \label{sec:governance}
-\modulenote{\LedgerModule{Gov}}
+\modulenote{\LedgerModule{Gov}}, where we define the types required for ledger governance.
+
+The behavior of \GovState{} is similar to that of a queue.  New proposals are
+appended at the end, but any proposal can be removed at the epoch boundary.  However,
+for the purposes of enactment, earlier proposals take priority.  Note that
+\EnactState{} used in \GovEnv{} is defined in \cref{sec:enactment}.
+
+\begin{itemize}
+  \item
+    \addVote{} inserts (and potentially overrides) a vote made for a
+    particular governance action (identified by its ID) by a credential with a role.
+  \item
+    \addAction{} adds a new proposed action at the end of a given \GovState{}.
+  \item
+    The \validHFAction{} property indicates whether a given proposal, if it is a
+    \TriggerHF{} action, can potentially be enacted in the future. For this to be the
+    case, its \prevAction{} needs to exist, be another \TriggerHF{} action and have a
+    compatible version.
+\end{itemize}
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -32,24 +50,6 @@ open import Function.Related.Propositional using (↔⇒)
 
 open GovActionState
 \end{code}
-
-The behavior of \GovState{} is similar to that of a queue. New proposals are
-appended at the end, but any proposal can be removed at the epoch
-boundary. However, for the purposes of enactment, earlier proposals
-take priority. Note that \EnactState{} used in \GovEnv{} is defined later,
-in \cref{sec:enactment}.
-
-\begin{itemize}
-\item \addVote{} inserts (and potentially overrides) a vote made for a
-particular governance action (identified by its ID) by a credential with a role.
-
-\item \addAction{} adds a new proposed action at the end of a given \GovState{}.
-
-\item The \validHFAction{} property indicates whether a given proposal, if it is a
-\TriggerHF{} action, can potentially be enacted in the future. For this to be the
-case, its \prevAction{} needs to exist, be another \TriggerHF{} action and have a
-compatible version.
-\end{itemize}
 
 \begin{figure*}
 \emph{Derived types}

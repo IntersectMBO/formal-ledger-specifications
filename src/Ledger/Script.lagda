@@ -1,6 +1,9 @@
 \section{Scripts}
 \label{sec:scripts}
-\modulenote{\LedgerModule{Script}}
+\modulenote{\LedgerModule{Script}}, in which we define \Timelock{} scripts.  
+
+\Timelock{} scripts can verify the presence of keys and whether a transaction happens in a certain slot
+interval.  The scripts are executed as part of the regular witnessing.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -59,9 +62,6 @@ record PlutusStructure : Type₁ where
         language : PlutusScript → Language
         toData : ∀ {A : Type} → A → Data
 \end{code}
-We define \Timelock{} scripts here. They can verify the presence of keys and whether
-a transaction happens in a certain slot interval. These scripts are executed as part
-of the regular witnessing.
 \begin{figure*}[h]
 \begin{code}
 data Timelock : Type where

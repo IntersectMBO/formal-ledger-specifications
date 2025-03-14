@@ -1,5 +1,7 @@
 \section{Base Types}
 \label{sec:base-types}
+\modulenote{\LedgerModule{BaseTypes}}, in which we define some of the most basic types used throughout the ledger.
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 

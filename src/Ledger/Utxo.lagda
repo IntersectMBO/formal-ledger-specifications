@@ -1,6 +1,7 @@
 \section{UTxO}
 \label{sec:utxo}
-\modulenote{\LedgerModule{Utxo}}
+\modulenote{\LedgerModule{Utxo}}, where we define types and functions needed for the
+UTxO transition system.
 
 \subsection{Accounting}
 \begin{code}[hide]
@@ -32,12 +33,6 @@ open import Ledger.Certs govStructure
 
 instance
   _ = +-0-monoid
-
-infixl 7 _*↓_
-
--- multiply a natural number with a fraction, rounding down and taking the absolute value
-_*↓_ : ℚ.ℚ → ℕ → ℕ
-q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 \end{code}
 
 \begin{NoConway}
@@ -112,10 +107,6 @@ functions needed for the UTxO transition system.
 \Crefrange{fig:ts-types:utxo}{fig:functions:utxo-conway}
 define types and functions needed for the UTxO transition system.
 \end{Conway}
-%
-\ Note the special multiplication symbol \AgdaFunction{*↓} used in
-\cref{fig:functions:utxo}; it means multiply and take the absolute value of the
-result, rounded down to the nearest integer.
 
 \begin{NoConway}
 \Cref{fig:ts-types:utxo} defines the types needed for the UTxO transition system.
