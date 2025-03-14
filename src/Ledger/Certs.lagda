@@ -467,8 +467,6 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
                                         ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []) )
     in
-    ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
-      ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
         ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧
         , stᵖ

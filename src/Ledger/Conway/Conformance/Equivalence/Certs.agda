@@ -153,7 +153,7 @@ instance
                  → L.Deposits × L.Deposits
                    ⊢ Γ L.⊢ s ⇀⦇ _ ,CERTBASE⦈ s' ⭆ⁱ λ deposits _ →
                      Γ C.⊢ (deposits ⊢conv s) ⇀⦇ _ ,CERTBASE⦈ (deposits ⊢conv s')
-  CERTBASEToConf .convⁱ deposits (L.CERT-base h) = C.CERT-base h
+  CERTBASEToConf .convⁱ deposits L.CERT-base = C.CERT-base
 
   DELEGToConf : ∀ {Γ s dcert dcerts s'}
                   (open L.DelegEnv Γ renaming (pparams to pp))
@@ -235,7 +235,7 @@ instance
   CERTBASEFromConf : ∀ {Γ s s'}
                    → Γ C.⊢ s ⇀⦇ _ ,CERTBASE⦈ s' ⭆
                      Γ L.⊢ (conv s) ⇀⦇ _ ,CERTBASE⦈ (conv s')
-  CERTBASEFromConf .convⁱ _ (C.CERT-base h) = L.CERT-base h
+  CERTBASEFromConf .convⁱ _ C.CERT-base = L.CERT-base
 
   CERTS'FromConf : ∀ {Γ s dcerts s'}
                  → ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_} Γ s dcerts s' ⭆

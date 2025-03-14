@@ -82,13 +82,17 @@ instance
             (yes q) → success q
             (no ¬q) → failure (genErrors ¬q)
           (govSt'  , govStep)  ← computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt) (txgov txb)
-          success (_ , LEDGER-V⋯ p utxoStep certStep wdrlsCheck govStep)
+          let rewards = certState .CertState.dState .DState.rewards
+          rwdsCheck ← case ¿ wdrlCreds ⊆ dom rewards ¿ of λ where
+            (yes q) → success q
+            (no ¬q) → failure (genErrors ¬q)
+          success (_ , LEDGER-V⋯ p utxoStep certStep wdrlsCheck govStep λ { x → rwdsCheck x })
         (no ¬p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
           success (_ , LEDGER-I⋯ (¬-not ¬p) utxoStep)
 
       completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → (proj₁ <$> computeProof) ≡ success s'
-      completeness  ls' (LEDGER-V⋯ v utxoStep certStep u govStep)
+      completeness  ls' (LEDGER-V⋯ v utxoStep certStep u govStep t)
         with isValid ≟ true
       ... | no ¬v = contradiction v ¬v
       ... | yes refl
@@ -99,7 +103,9 @@ instance
         with dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom txwdrls)) ⊆ dom (certState .CertState.dState .DState.voteDelegs) ¿ (λ { x → u x })
       ... | (_ , p)
         with computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt ) (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
-      ... | success (govSt' , _) | refl rewrite p = refl
+      ... | success (govSt' , _) | refl 
+        with dec-yes ¿ (mapˢ RwdAddr.stake (dom txwdrls)) ⊆ dom (certState .CertState.dState .DState.rewards) ¿ (λ {x → t x}) 
+      ... | (_ , q) rewrite p rewrite q = refl
       completeness ls' (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
       ... | yes refl = case i of λ ()
