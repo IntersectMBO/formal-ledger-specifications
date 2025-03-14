@@ -1,7 +1,9 @@
 \section{Cryptographic Primitives}
 \label{sec:cryptographic-primitives}
 \modulenote{\LedgerModule{Crypto}}, in which we rely on a public key signing scheme
-for verification of spending.  \Cref{fig:defs:crypto} shows some of the types,
+for verification of spending.
+
+\Cref{fig:defs:crypto} shows some of the types,
 functions and properties of this scheme.
 
 \begin{code}[hide]
