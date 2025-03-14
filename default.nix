@@ -100,7 +100,6 @@ in rec
     meta = { };
     buildInputs = deps;
     buildPhase = ''
-      echo "$(agda --numeric-version)"
       agda --profile=modules src/Everything.agda | tee typecheck.log
     '';
     doCheck = true;
