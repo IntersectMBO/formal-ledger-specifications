@@ -370,10 +370,10 @@ the logic is unchanged; see \cref{sec:conway-bootstrap}.)
 To be precise, the agreed upon specification is the following: an SPO that did
 not vote is assumed to have vote \no{}, except under the following circumstances:
 \begin{itemize}
-  \item if the SPO has delegated its reward credential to an
+\item if the SPO has delegated its reward credential to an
   \texttt{AlwaysNoConfidence} DRep, then their default vote is \yes{} for
   \NoConfidence{} proposals and \no{} for other proposals;
-  \item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain}
+\item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain}
   DRep, then its default vote is \abstain{} for all proposals.
 \end{itemize}
 It is important to note that the credential that can now be used to set a default

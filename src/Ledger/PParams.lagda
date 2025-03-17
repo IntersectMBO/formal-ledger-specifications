@@ -467,8 +467,7 @@ An element of the type \AgdaField{UpdateT} is well formed if it
 updates at least one group and applying the update preserves
 well-formedness.
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
+
 \begin{code}[hide]
 instance
   pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
@@ -478,7 +477,11 @@ instance
   ... | no ¬p    | yes refl = yes canFollowMinor
   ... | yes refl | no ¬p    = yes canFollowMajor
   ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
+\end{code}
 
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}[hide]
 record PParamsDiff : Type₁ where
   field
 \end{code}

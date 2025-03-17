@@ -1,7 +1,8 @@
 \section{Governance Actions}
 \label{sec:governance-actions}
-\modulenote{\LedgerModule{GovernanceActions}}, in which
-we introduce the following distinct bodies with specific functions in the new governance framework:
+\modulenote{\LedgerModule{GovernanceActions}}.
+
+We introduce the following distinct bodies with specific functions in the new governance framework:
 \begin{enumerate}
   \item a constitutional committee (henceforth called \CC{});
   \item a group of delegate representatives (henceforth called \DReps{});
