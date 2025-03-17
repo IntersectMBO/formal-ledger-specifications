@@ -15836,7 +15836,7 @@ du_CERTBASEFromConf_2652
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
          (\ v0 v1 ->
-            seq (coe v1) (coe MAlonzo.Code.Ledger.Certs.C_CERT'45'base_1102)))
+            seq (coe v1) (coe MAlonzo.Code.Ledger.Certs.C_CERT'45'base_1104)))
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTS'FromConf
 d_CERTS''FromConf_2662 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->

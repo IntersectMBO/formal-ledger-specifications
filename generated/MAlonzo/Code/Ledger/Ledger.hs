@@ -1292,10 +1292,10 @@ d_'46'generalizedField'45'tx_15683 v0
       C_mkGeneralizeTel_15709 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
         -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Ledger..generalizedField-certState
-d_'46'generalizedField'45'certState_15685 ::
+-- Ledger.Ledger..generalizedField-certState'
+d_'46'generalizedField'45'certState''_15685 ::
   T_GeneralizeTel_15707 -> MAlonzo.Code.Ledger.Certs.T_CertState_930
-d_'46'generalizedField'45'certState_15685 v0
+d_'46'generalizedField'45'certState''_15685 v0
   = case coe v0 of
       C_mkGeneralizeTel_15709 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
         -> coe v2
@@ -1356,10 +1356,10 @@ d_'46'generalizedField'45'enactState_15699 v0
       C_mkGeneralizeTel_15709 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
         -> coe v9
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Ledger..generalizedField-certState'
-d_'46'generalizedField'45'certState''_15701 ::
+-- Ledger.Ledger..generalizedField-certState
+d_'46'generalizedField'45'certState_15701 ::
   T_GeneralizeTel_15707 -> MAlonzo.Code.Ledger.Certs.T_CertState_930
-d_'46'generalizedField'45'certState''_15701 v0
+d_'46'generalizedField'45'certState_15701 v0
   = case coe v0 of
       C_mkGeneralizeTel_15709 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
         -> coe v10
