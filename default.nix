@@ -71,6 +71,10 @@ let
 
   deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets ];
   agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
+
+in rec
+{
+
   agdaWithDeps = agdaWithPkgs deps;
 
   latex = texlive.combine {
@@ -89,24 +93,19 @@ let
       environ;
   };
 
-in rec
-{
-
   formalLedger = customAgda.agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "formal-ledger";
     version = "0.1";
-    src = ./src;
+    src = ./.;
     meta = { };
     buildInputs = deps;
     buildPhase = ''
-      agda --profile=modules Everything.agda \
-      | tee typecheck.log \
-      | sed '/Checking/!d'
+      agda --profile=modules src/Everything.agda | tee typecheck.log
     '';
     doCheck = true;
     checkPhase = ''
-      sh checkTypeChecked.sh -m
+      sh scripts/checkTypeChecked.sh -m
     '';
     postInstall = ''
       awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
@@ -120,7 +119,7 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = pname;
     version = version;
-    src = ./src;
+    src = ./.;
     meta = { };
     buildInputs = [ agdaWithDeps latex python310 ];
     buildPhase = ''
@@ -137,7 +136,7 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "html";
     version = "0.1";
-    src = ./src;
+    src = ./.;
     meta = { };
     buildInputs = [ agdaWithDeps ];
     buildPhase = ''
@@ -154,7 +153,7 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "hs-src";
     version = "0.1";
-    src = ./src;
+    src = ./.;
     meta = { };
     buildInputs = [ agdaWithDeps ];
     buildPhase = ''
