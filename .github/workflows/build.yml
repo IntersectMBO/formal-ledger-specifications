@@ -155,7 +155,7 @@ jobs:
           echo "** Generated PDF files:"; find -L docs/ -name '*.pdf'
           echo "** Generated HTML files:"; find -L docs/ -name '*.html'
           echo "** Generated Haskell files:"; find -L docs/ -name '*.hs'
-          OUT_DIR=../docs/ make staticWebsite
+          OUT_DIR=../docs make staticWebsite
       - name: Add files
         if: github.ref == 'refs/heads/master'
         run: |
