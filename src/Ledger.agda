@@ -1,4 +1,4 @@
-module Html where
+module Ledger where
 
 open import Ledger.BaseTypes
 open import Ledger.Introduction

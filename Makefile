@@ -86,7 +86,7 @@ define agdaToHtml
     @echo "Generating $@"
     $(AGDA_RUN) --html --html-dir $(HTML_DIR) $<
 endef
-$(HTML_DIR)/Html.html : src/Html.agda
+$(HTML_DIR)/$(LEDGER).html : src/$(LEDGER).agda
 	$(agdaToHtml)
 
 # Agda -> Haskell
@@ -163,7 +163,7 @@ ledger.docs: $(PDF_DIR)/cardano-ledger.pdf $(latexFiles)
 ledger.conway.docs: $(PDF_DIR)/conway-ledger.pdf
 docs: ledger.docs
 
-ledger.html: $(HTML_DIR)/Html.html
+ledger.html: $(HTML_DIR)/$(LEDGER).html
 html: ledger.html
 
 ledger.hs: $(HS_LEDGER)
