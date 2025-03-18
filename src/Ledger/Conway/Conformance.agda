@@ -1,7 +1,6 @@
-
 {-# OPTIONS --safe #-}
 
-module Ledger.Conway.Conformance.PDF where
+module Ledger.Conway.Conformance where
 
 open import Ledger.Conway.Conformance.Script
 open import Ledger.ScriptValidation
