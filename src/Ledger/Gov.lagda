@@ -88,7 +88,7 @@ private variable
   d : Coin
   addr : RwdAddr
   a : GovAction
-  prev : NeedsHash a
+  prev : NeedsHash (gaType a)
   k : ℕ
   p : Maybe ScriptHash
 
@@ -99,42 +99,89 @@ open PState
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{code}
-govActionPriority : GovAction → ℕ
-govActionPriority NoConfidence             = 0
-govActionPriority (UpdateCommittee _ _ _)  = 1
-govActionPriority (NewConstitution _ _)    = 2
-govActionPriority (TriggerHF _)            = 3
-govActionPriority (ChangePParams _)        = 4
-govActionPriority (TreasuryWdrl _)         = 5
-govActionPriority Info                     = 6
+govActionPriority : GovActionType → ℕ
+govActionPriority NoConfidence     = 0
+govActionPriority UpdateCommittee  = 1
+govActionPriority NewConstitution  = 2
+govActionPriority TriggerHF        = 3
+govActionPriority ChangePParams    = 4
+govActionPriority TreasuryWdrl     = 5
+govActionPriority Info             = 6
 
-Overlap : GovAction → GovAction → Type
-Overlap a a' = let n = govActionPriority a
-                   m = govActionPriority a'
-               in (n ≡ m) ⊎ (n ≡ 0 × m ≡ 1) ⊎ (n ≡ 1 × m ≡ 0)
+Overlap : GovActionType → GovActionType → Type
+Overlap NoConfidence    UpdateCommittee  = ⊤
+Overlap UpdateCommittee NoConfidence     = ⊤
+Overlap a               a'               = a ≡ a'
 \end{code}
 \begin{code}[hide]
-Overlap? : (a a' : GovAction) → Dec (Overlap a a')
-Overlap? a a' = let n = govActionPriority a
-                    m = govActionPriority a'
-                in n ≟ m ⊎-dec (n ≟ 0 ×-dec m ≟ 1) ⊎-dec (n ≟ 1 ×-dec m ≟ 0)
+-- TODO: cleanup this
+Overlap? : (a a' : GovActionType) → Dec (Overlap a a')
+Overlap? NoConfidence    UpdateCommittee  = Dec-⊤ .dec
+Overlap? UpdateCommittee NoConfidence     = Dec-⊤ .dec
+Overlap? NoConfidence NoConfidence = yes refl
+Overlap? NoConfidence NewConstitution = no (λ ())
+Overlap? NoConfidence TriggerHF = no (λ ())
+Overlap? NoConfidence ChangePParams = no (λ ())
+Overlap? NoConfidence TreasuryWdrl = no (λ ())
+Overlap? NoConfidence Info = no (λ ())
+Overlap? UpdateCommittee UpdateCommittee = yes refl
+Overlap? UpdateCommittee NewConstitution = no (λ ())
+Overlap? UpdateCommittee TriggerHF = no (λ ())
+Overlap? UpdateCommittee ChangePParams = no (λ ())
+Overlap? UpdateCommittee TreasuryWdrl = no (λ ())
+Overlap? UpdateCommittee Info = no (λ ())
+Overlap? NewConstitution NoConfidence = no (λ ())
+Overlap? NewConstitution UpdateCommittee = no (λ ())
+Overlap? NewConstitution NewConstitution = yes refl
+Overlap? NewConstitution TriggerHF = no (λ ())
+Overlap? NewConstitution ChangePParams = no (λ ())
+Overlap? NewConstitution TreasuryWdrl = no (λ ())
+Overlap? NewConstitution Info = no (λ ())
+Overlap? TriggerHF NoConfidence = no (λ ())
+Overlap? TriggerHF UpdateCommittee = no (λ ())
+Overlap? TriggerHF NewConstitution = no (λ ())
+Overlap? TriggerHF TriggerHF = yes refl
+Overlap? TriggerHF ChangePParams = no (λ ())
+Overlap? TriggerHF TreasuryWdrl = no (λ ())
+Overlap? TriggerHF Info = no (λ ())
+Overlap? ChangePParams NoConfidence = no (λ ())
+Overlap? ChangePParams UpdateCommittee = no (λ ())
+Overlap? ChangePParams NewConstitution = no (λ ())
+Overlap? ChangePParams TriggerHF = no (λ ())
+Overlap? ChangePParams ChangePParams = yes refl
+Overlap? ChangePParams TreasuryWdrl = no (λ ())
+Overlap? ChangePParams Info = no (λ ())
+Overlap? TreasuryWdrl NoConfidence = no (λ ())
+Overlap? TreasuryWdrl UpdateCommittee = no (λ ())
+Overlap? TreasuryWdrl NewConstitution = no (λ ())
+Overlap? TreasuryWdrl TriggerHF = no (λ ())
+Overlap? TreasuryWdrl ChangePParams = no (λ ())
+Overlap? TreasuryWdrl TreasuryWdrl = yes refl
+Overlap? TreasuryWdrl Info = no (λ ())
+Overlap? Info NoConfidence = no (λ ())
+Overlap? Info UpdateCommittee = no (λ ())
+Overlap? Info NewConstitution = no (λ ())
+Overlap? Info TriggerHF = no (λ ())
+Overlap? Info ChangePParams = no (λ ())
+Overlap? Info TreasuryWdrl = no (λ ())
+Overlap? Info Info = yes refl
 \end{code}
 \begin{code}
 
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
 insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
-  =  if (govActionPriority (action gaSt₀)) ≤? (govActionPriority (action gaSt₁))
+  =  if (govActionPriority (action gaSt₀ .gaType)) ≤? (govActionPriority (action gaSt₁ .gaType))
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
-mkGovStatePair : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
+mkGovStatePair : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
                  → GovActionID × GovActionState
 mkGovStatePair e aid addr a prev = (aid , record
   { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
 addAction : GovState
-          → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash a
+          → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
           → GovState
 addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
 \end{code}
@@ -157,9 +204,9 @@ opaque
         open CertState (GovEnv.certState Γ) using (gState; pState)
 
   validHFAction : GovProposal → GovState → EnactState → Type
-  validHFAction (record { action = TriggerHF v ; prevAction = prev }) s e =
+  validHFAction (record { action = ⟦ TriggerHF , v ⟧ᵍᵃ ; prevAction = prev }) s e =
     (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
-    ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ TriggerHF v' × pvCanFollow v' v
+    ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ ⟦ TriggerHF , v' ⟧ᵍᵃ × pvCanFollow v' v
   validHFAction _ _ _ = ⊤
 \end{code}
 \end{AgdaMultiCode}
@@ -216,7 +263,7 @@ _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionI
 \begin{code}
 enactable  : EnactState → List (GovActionID × GovActionID)
            → GovActionID × GovActionState → Type
-enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
+enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as .gaType) of
 \end{code}
 \begin{code}[hide]
   λ where
@@ -229,8 +276,8 @@ enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as) of
 allEnactable : EnactState → GovState → Type
 allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid×states
 
-hasParentE : EnactState → GovActionID → GovAction → Type
-hasParentE e aid a = case getHashES e a of
+hasParentE : EnactState → GovActionID → GovActionType → Type
+hasParentE e aid gaTy = case getHashES e gaTy of
 \end{code}
 \begin{code}[hide]
   λ where
@@ -239,33 +286,33 @@ hasParentE e aid a = case getHashES e a of
    nothing    → ⊤
    (just id)  → id ≡ aid
 
-hasParent : EnactState → GovState → (a : GovAction) → NeedsHash a → Type
-hasParent e s a aid = case getHash aid of
+hasParent : EnactState → GovState → (gaTy : GovActionType) → NeedsHash gaTy → Type
+hasParent e s gaTy aid = case getHash aid of
 \end{code}
 \begin{code}[hide]
   λ where
 \end{code}
 \begin{code}
     nothing      → ⊤
-    (just aid')  → hasParentE e aid' a
-                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × Overlap (gas .action) a) s
+    (just aid')  → hasParentE e aid' gaTy
+                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × Overlap (gas .action .gaType) gaTy) s
 \end{code}
 \begin{code}[hide]
 open Equivalence
 
 hasParentE? : ∀ e aid a → Dec (hasParentE e aid a)
-hasParentE? e aid a with getHashES e a
+hasParentE? e aid gaTy with getHashES e gaTy
 ... | nothing   = yes _
 ... | (just id) = id ≟ aid
 
 hasParent? : ∀ e s a aid → Dec (hasParent e s a aid)
-hasParent? e s a aid with getHash aid
-... | just aid' = hasParentE? e aid' a
-                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec Overlap? (gas .action) a) s
+hasParent? e s gaTy aid with getHash aid
+... | just aid' = hasParentE? e aid' gaTy
+                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec Overlap? (gas .action .gaType) gaTy) s
 ... | nothing = yes _
 
 -- newtype to make the instance resolution work
-data hasParent' : EnactState → GovState → (a : GovAction) → NeedsHash a → Type where
+data hasParent' : EnactState → GovState → (gaTy : GovActionType) → NeedsHash gaTy → Type where
   HasParent' : ∀ {x y z w} → hasParent x y z w → hasParent' x y z w
 
 instance
@@ -288,7 +335,7 @@ any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l co
 ∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
 
 enactable? : ∀ eState aidPairs aidNew×st → Dec (enactable eState aidPairs aidNew×st)
-enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as)
+enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as .gaType)
 ... | nothing = yes tt
 ... | just aidOld = from (map′⇔ ∃-sublist-⇔) (∃?-connecting-subset aidPairs)
 
@@ -339,18 +386,18 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 \begin{figure*}
 \begin{code}
 actionValid : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
-actionValid rewardCreds p ppolicy epoch (ChangePParams x) =
+actionValid rewardCreds p ppolicy epoch ⟦ ChangePParams , _ ⟧ᵍᵃ =
   p ≡ ppolicy
-actionValid rewardCreds p ppolicy epoch (TreasuryWdrl x) =
+actionValid rewardCreds p ppolicy epoch ⟦ TreasuryWdrl  , x ⟧ᵍᵃ =
   p ≡ ppolicy × mapˢ RwdAddr.stake (dom x) ⊆ rewardCreds
-actionValid rewardCreds p ppolicy epoch (UpdateCommittee new rem q) =
+actionValid rewardCreds p ppolicy epoch ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ =
   p ≡ nothing × (∀[ e ∈ range new ]  epoch < e) × (dom new ∩ rem ≡ᵉ ∅)
 actionValid rewardCreds p ppolicy epoch _ =
   p ≡ nothing
 
 actionWellFormed : GovAction → Type
-actionWellFormed (ChangePParams x) = ppdWellFormed x
-actionWellFormed (TreasuryWdrl x)  =
+actionWellFormed ⟦ ChangePParams , x ⟧ᵍᵃ = ppdWellFormed x
+actionWellFormed ⟦ TreasuryWdrl  , x ⟧ᵍᵃ =
   (∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
 actionWellFormed _                 = ⊤
 \end{code}
@@ -381,22 +428,22 @@ of the GOV rule to ensure that a governance action is valid and well-formed.
 
 \begin{code}[hide]
 actionValid? : ∀ {rewardCreds p ppolicy epoch a} → actionValid rewardCreds p ppolicy epoch a ⁇
-actionValid? {a = NoConfidence}          = it
-actionValid? {a = UpdateCommittee _ _ _} = it
-actionValid? {a = NewConstitution _ _}   = it
-actionValid? {a = TriggerHF _}           = it
-actionValid? {a = ChangePParams _}       = it
-actionValid? {a = TreasuryWdrl _}        = it
-actionValid? {a = Info}                  = it
+actionValid? {a = ⟦ NoConfidence    , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ UpdateCommittee , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ NewConstitution , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ TriggerHF       , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ ChangePParams   , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ TreasuryWdrl    , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ Info            , _ ⟧ᵍᵃ} = it
 
 actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
-actionWellFormed? {NoConfidence}          = it
-actionWellFormed? {UpdateCommittee _ _ _} = it
-actionWellFormed? {NewConstitution _ _}   = it
-actionWellFormed? {TriggerHF _}           = it
-actionWellFormed? {ChangePParams _}       = it
-actionWellFormed? {TreasuryWdrl _}        = it
-actionWellFormed? {Info}                  = it
+actionWellFormed? {⟦ NoConfidence    , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ UpdateCommittee , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ NewConstitution , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ TriggerHF       , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ ChangePParams   , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ TreasuryWdrl    , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ Info            , _ ⟧ᵍᵃ} = it
 \end{code}
 
 \clearpage
@@ -436,7 +483,7 @@ data _⊢_⇀⦇_,GOV⦈_ where
     ∙ actionValid rewardCreds p (Γ .ppolicy) e a
     ∙ d ≡ pp .govActionDeposit
     ∙ validHFAction prop s enactState
-    ∙ hasParent enactState s a prev
+    ∙ hasParent enactState s (a .gaType) prev
     ∙ addr .RwdAddr.net ≡ NetworkId
     ∙ addr .RwdAddr.stake ∈ rewardCreds
       ───────────────────────────────────────

@@ -41,7 +41,7 @@ ratify-debug env st sig =
         open GovActionState (from gas)
         open RatifyState (from st)
         open EnactState es
-        votes'  = actualVotes (from env) (proj₁ pparams) (proj₁ cc) action votes
+        votes'  = actualVotes (from env) (proj₁ pparams) (proj₁ cc) (action .gaType) votes
         showAcceptedStakeRatio role = Rational.show (acceptedStakeRatio role (dom votes') stakeDistrs votes')
         showIsAccepted role = case acceptedBy? (from env) es (from gas) role of λ where
           (yes _) → "✓"
