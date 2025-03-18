@@ -1,10 +1,12 @@
 \section{Protocol Parameters}
 \label{sec:protocol-parameters}
-\modulenote{\LedgerModule{PParams}}
+\modulenote{\LedgerModule{PParams}}, in which we define the adjustable protocol
+parameters of the Cardano ledger.  
 
-This section defines the adjustable protocol parameters of the Cardano ledger.
-These parameters are used in block validation and can affect various features of the system,
-such as minimum fees, maximum and minimum sizes of certain components, and more.
+Protocol parameters are used in block validation and
+can affect various features of the system, such as minimum fees, maximum and minimum
+sizes of certain components, and more.
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -412,6 +414,13 @@ to the general purpose that each parameter serves.
   \item \GovernanceGroup{}: parameters related to governance settings;
   \item \SecurityGroup{}: parameters that can impact the security of the system.
 \end{itemize}
+The purpose of these groups is to determine voting thresholds for
+proposals aiming to change parameters.  Given a proposal to change a certain set of
+parameters, we look at which groups those parameters fall into and from this we
+determine the voting threshold for that proposal.  (The voting threshold
+calculation is described in detail in \cref{sec:ratification-requirements}; in
+particular, the definition of the \threshold{} function appears in
+\cref{fig:ratification-requirements}.)
 
 The first four groups have the property that every protocol parameter
 is associated to precisely one of these groups.  The \SecurityGroup{} is
@@ -422,13 +431,8 @@ concept of security-relevant protocol parameters (see \textcite{cip1694}).
 The difference between these notions is only social, so we implement
 security-relevant protocol parameters as a group.
 
-The purpose of the groups is to determine voting thresholds for
-proposals aiming to change parameters. The thresholds depend on the
-groups of the parameters contained in such a proposal.
-
-These new parameters are declared in \cref{fig:protocol-parameter-declarations} and denote the
-following concepts.
-
+The new protocol parameters are declared in \cref{fig:protocol-parameter-declarations}
+and denote the following concepts:
 \begin{itemize}
   \item \drepThresholds{}: governance thresholds for \DReps{}; these are rational
     numbers named \Pone{}, \Ptwoa{}, \Ptwob{}, \Pthree{}, \Pfour{}, \Pfivea{},
@@ -444,22 +448,9 @@ following concepts.
   \item \drepActivity{}: \DRep{} activity period;
   \item \minimumAVS{}: the minimum active voting threshold.
 \end{itemize}
-
 \Cref{fig:protocol-parameter-declarations} also defines the
-function \paramsWellFormed{}. It performs some sanity checks on protocol
+function \paramsWellFormed{} which performs some sanity checks on protocol
 parameters.
-
-\begin{code}[hide]
-instance
-  pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
-  pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
-  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
-                                           canFollowMinor → ¬p₁ refl
-  ... | no ¬p    | yes refl = yes canFollowMinor
-  ... | yes refl | no ¬p    = yes canFollowMajor
-  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
-\end{code}
-
 \Cref{fig:pp-update-type} defines types and functions to update
 parameters. These consist of an abstract type \AgdaField{UpdateT} and
 two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
@@ -475,6 +466,18 @@ The type \AgdaField{UpdateT} is to be instantiated by a type that
 An element of the type \AgdaField{UpdateT} is well formed if it
 updates at least one group and applying the update preserves
 well-formedness.
+
+
+\begin{code}[hide]
+instance
+  pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
+  pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
+  ... | no ¬p    | no ¬p₁   = no $ λ where canFollowMajor → ¬p  refl
+                                           canFollowMinor → ¬p₁ refl
+  ... | no ¬p    | yes refl = yes canFollowMinor
+  ... | yes refl | no ¬p    = yes canFollowMajor
+  ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
+\end{code}
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
