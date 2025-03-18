@@ -15,17 +15,13 @@
 
       specsDerivationsPackages = key: lib.mapAttrs'
         (k: lib.nameValuePair "${key}-${k}")
-        (lib.filterAttrs (k: v: builtins.elem k [ "docs" "hsExe" ]) exposed.${key});
+        (lib.filterAttrs (k: v: builtins.elem k [ "docs" ]) exposed.${key});
 
       jobs = {
         inherit (exposed)
-          agda
-          agdaWithDeps
-          latex
           formalLedger;
       } //
-        specsDerivationsPackages "ledger" //
-        specsDerivationsPackages "midnight";
+        specsDerivationsPackages "ledger";
     in jobs // {
       required = pkgs.releaseTools.aggregate {
         name = "required";

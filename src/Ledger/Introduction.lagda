@@ -60,6 +60,128 @@ Conway~\cite{cip1694} & Complete & Partial & Partial \\
 \caption{Specification progress}
 \label{fig:eras-progress}
 \end{longtable}
+
+\subsection{Overview}
+\label{sec:overview}
+This document describes, in a precise and executable way, the behavior of the Cardano ledger
+that can be updated in response to a series of events.  Because of the precise nature
+of the document, it can be dense and difficult to read at times, and it can be
+helpful to have a high-level understanding of what it is trying to describe, which we
+present below.  Keep in mind that this section focuses on intuition, using
+terms (set in \textit{italics}) which may be unfamiliar to some readers, but rest assured that
+later sections of the document will make the intuition and italicized terms precise.
+
+By \textit{ledger} we mean a structure that contains information about
+how funds in the system are distributed accross accounts---that is, account
+balances, how such balances should be adjusted when transactions and
+proposals are processed, the ADA currently held in the treasury reserve, a
+list of \textit{stake pools} operating the network, and so on.
+
+The ledger can be updated in response to certain events, such as receiving a new
+transaction, time passing and crossing an \textit{epoch boundary}, enacting a
+\textit{governance proposal}, to name a few.  This document defines, as part of the
+behaior of the ledger, a set of rules that determine which events are valid and
+exactly how the state of the ledger should be updated in response to those events.
+The primary aim of this document is to provide a precise description of this
+system---the ledger state, valid events and the rules for processing them.
+
+We will model this via a number of \textit{state transition systems} (STS) which
+from now on we refer to as ``transition rules'' or just ``rules.''
+These rules describe the different behaviors that determine how the whole system
+evolves and, taken together, they comprise a full description of the ledger protocol.
+Each transition rule consists of the following components:
+\begin{itemize}
+  \item an \textit{environment} consisting of data, read from the ledger state
+        or the outside world, which should be considered constant for the
+        purposes of the rule;
+  \item an \textit{initial state}, consisting of the subset of the full ledger
+        state that is relevant to the rule and which the rule can update;
+  \item a \textit{signal} or \textit{event}, with associated data, that the
+        rule can receive or observe;
+  \item a set of \textit{preconditions} that must be met in order for the transition
+        to be valid;
+  \item a new state that results from the transition rule.
+\end{itemize}
+For example, the UTXOW transition rule defined in \cref{fig:rules:utxow} of
+\cref{sec:witnessing} checks that, among other things, a given transaction is signed
+by the appropriate parties.
+
+The transition rules can be composed in the sense that they may require other
+transition rules to hold as part of their preconditions.  For example, the UTXOW rule
+mentioned above requires the UTXO rule, which checks that the inputs to the
+transaction exist, that the transaction is balanced, and several other conditions.
+
+\begin{figure}[h!]
+  \centering
+  \input{Diagrams/CardanoLedger}
+  \caption{State transition rules of the ledger specification, presented as a
+  directed graph; each node represents a transition rule; an arrow from rule A to
+  rule B indicates that B appears among the premises of A; a dotted arrow represents
+  a dependency in the sense that the output of the target node is an input to the
+  source node, either as part of the source state, the environment or the event
+    (\legendbox{\ConwayColor}~rules added in Conway;
+     \legendbox{\BabbageColor}~rules modified in Conway; dotted ellipses represent rules
+  that are not yet formalized in Agda).
+  }
+  \label{fig:latest-sts-diagram}
+\end{figure}
+
+A brief description of each transition rule is provided below, with a link to
+an Agda module and reference to a section where the rule is formally defined.
+
+\begin{itemize}[itemsep=1pt]
+\item
+  \LedgerModText{Chain}{CHAIN} is the top level transition in response to a new
+  block that applies the NEWEPOCH transition when crossing an epoch boundary, and the
+  LEDGERS transition on the list of transactions in the body (\cref{sec:blockchain-layer}).
+\item
+  \LedgerModText{Epoch}{NEWEPOCH} computes the new state as of the start of a new
+  epoch; includes the previous EPOCH transition (\cref{sec:epoch-boundary}).
+\item
+  \LedgerModText{Epoch}{EPOCH} computes the new state as of the end of an epoch;
+  includes the ENACT, RATIFY, and SNAP transition rules (\cref{sec:epoch-boundary}).
+\item
+  \LedgerModText{Ratify}{RATIFY} decides whether a pending governance action has
+  reached the thresholds it needs to be ratified (\cref{sec:ratification}).
+\item
+  \LedgerModText{Enact}{ENACT} applies the result of a previously ratified
+  governance action, such as triggering a hard fork or updating the protocol
+  parameters (\cref{sec:enactment}).
+\item
+  \LedgerModText{Epoch}{SNAP} computes new stake distribution snapshots (\cref{sec:epoch-boundary}).
+\item
+  \LedgerModText{Ledger}{LEDGERS} applies LEDGER repeatedly as needed, for each
+  transaction in a list of transactions (\cref{sec:ledger}).
+\item
+  \LedgerModText{Ledger}{LEDGER} is the full state update in response to a
+  single transaction; it includes the UTXOW, GOV, and CERTS rules (\cref{sec:ledger}).
+\item
+  \LedgerModText{Certs}{CERTS} applies CERT repeatedly for each certificate in
+  the transaction (\cref{sec:certificates}).
+\item
+  \LedgerModText{Certs}{CERT} combines DELEG, POOL, GOVCERT transition rules,
+  as well as some additional rules shared by all three (\cref{sec:certificates}).
+\item
+  \LedgerModText{Certs}{DELEG} handles registering stake addresses and delegating
+  to a stake pool (\cref{sec:certificates}).
+\item
+  \LedgerModText{Certs}{GOVCERT} handles registering and delegating to DReps (\cref{sec:certificates}).
+\item
+  \LedgerModText{Certs}{POOL} handles registering and retiring stake pools (\cref{sec:certificates}).
+\item
+  \LedgerModText{Gov}{GOV} handles voting and submitting governance proposals (\cref{sec:governance}).
+\item
+  \LedgerModText{Utxow}{UTXOW} checks that a transaction is witnessed correctly
+  with the appropriate signatures, datums, and scripts; includes the UTXO transition
+  rule (\cref{sec:witnessing}).
+\item
+  \LedgerModText{Utxo}{UTXO} checks core invariants for an individual transaction
+  to be valid, such as the transaction being balanced, fees being paid, etc; include
+  the UTXOS transition rule (\cref{sec:utxo}).
+\item
+  \LedgerModText{Utxo}{UTXOS} checks that any relevant scripts needed by the
+  transaction evaluate to true (\cref{sec:utxo}).
+\end{itemize}
 \end{NoConway}
 
 \subsection{A Note on Agda}
@@ -74,10 +196,8 @@ meaning that some instances of uncommon notation are very difficult or
 impossible to avoid. Some are explained in
 \cref{sec:notation}, but there is no guarantee that this
 section is complete.  If the meaning of an expression is confusing
-or unclear, please
-\href{https://github.com/IntersectMBO/formal-ledger-specifications/issues}%
-     {open an issue} in
-\href{\repourl}{our GitHub repository} with the `notation' label.
+or unclear, please \href{\repourl/issues}{open an issue} in
+\href{\repourl}{the formal ledger GitHub repository} with the `notation' label.
 
 \subsection{Separation of Concerns}
 
@@ -104,10 +224,9 @@ for the name of the transition rule.
 
 \subsection{Reflexive-transitive Closure}
 
-Some STS (state transition system) relations need to be applied as
-many times as they can to arrive at a final state. Since we use this
-pattern multiple times, we define a closure operation which takes a
-STS relation and applies it as many times as possible.
+Some state transition rules need to be applied as many times as possible to arrive at
+a final state.  Since we use this pattern multiple times, we define a closure
+operation which takes a transition rule and applies it as many times as possible.
 
 The closure \RTCI{} of a relation \RTCB{} is defined in \cref{fig:rt-closure}.
 In the remainder of the text, the closure operation is called \RTC{}.
