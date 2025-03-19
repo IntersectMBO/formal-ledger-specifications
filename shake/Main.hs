@@ -110,7 +110,7 @@ tex2pdf = do
         maintexfile = _latexIn </> proj <.> "tex"
 
     -- depend on the project tex file
-    -- need [ maintexfile ]
+    need [ maintexfile ]
 
     -- read the Agda inputs from the tex file
     agdainputs <- getAgdaInputs <$> readFileLines maintexfile
@@ -211,12 +211,14 @@ hsRule = phony "hs" $ do
 htmlIndex :: Rules ()
 htmlIndex =
   _htmlOut </> "index.html" %> \out -> do
+
     -- declare dependencies on all agda files
     lagdafiles <- getDirectoryFiles "src" [ "//*.lagda" ]
     agdafiles  <- getDirectoryFiles "src" [ "//*.agda"  ]
     need . map (_htmlPP </>) $ map (`replaceExtension` "agda") lagdafiles
                                ++ agdafiles
 
+        -- agda-lib file
     let agdaprojectfile =
           [ "name: formal-ledger-html"
           , "depend:"
@@ -229,6 +231,7 @@ htmlIndex =
           , "  ./"
           ]
         agdamodules = sort . map agdafile2module $ agdafiles ++ lagdafiles
+        -- index file
         indexfile =
           [ "module index where"
           , "" ] ++ map ("import " ++) agdamodules

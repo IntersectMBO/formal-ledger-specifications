@@ -109,7 +109,7 @@ in rec
     checkPhase = ''
       sh scripts/checkTypeChecked.sh -m
     '';
-    postInstall = ''
+    install = ''
       awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
       cp -r latex/ Makefile $out
       rm typecheck.log
@@ -126,13 +126,13 @@ in rec
     buildInputs = [ agdaWithDeps latex python310 fls-shake ];
     buildPhase = ''
       export XDG_CACHE_HOME="$(mktemp -d)"
-      fls-shake _build/pdf/${project}-ledger.pdf
-      mkdir $out/pdf
-      cp _build/pdf/${project}-ledger.pdf $out/pdf
+      fls-shake --trace "_build/pdf/${project}-ledger.pdf"
+      mkdir "$out/pdf"
+      cp "_build/pdf/${project}-ledger.pdf" "$out/pdf"
     '';
     doCheck = true;
     checkPhase = ''
-        test -f $out/${project}-ledger.pdf
+        test -f "$out/${project}-ledger.pdf"
       '';
     dontInstall = true;
   };
@@ -145,7 +145,7 @@ in rec
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
-       fls-shake _build/html/html.out/index.html
+       fls-shake --trace _build/html/html.out/index.html
        mkdir "$out/html"
        cp -r _build/html/html.out "$out/html"
     '';
@@ -164,9 +164,9 @@ in rec
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
-      fls-shake hs
-      mkdir $out/hs
-      cp -r _build/hs $out/hs
+      fls-shake --trace hs
+      mkdir "$out/hs"
+      cp -r _build/hs "$out/hs"
     '';
     doCheck = true;
     checkPhase = ''
