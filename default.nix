@@ -133,7 +133,7 @@ in rec
       fls-shake --trace "_build/pdf/${project}-ledger.pdf"
     '';
     installPhase = ''
-      mkdir "$out/pdf"
+      mkdir -p "$out/pdf"
       cp "_build/pdf/${project}-ledger.pdf" "$out/pdf"
     '';
     doInstallCheck = true;
@@ -153,7 +153,7 @@ in rec
      fls-shake --trace _build/html/html.out/index.html
     '';
     installPhase = ''
-     mkdir "$out/html"
+     mkdir -p "$out/html"
      cp -r _build/html/html.out "$out/html"
     '';
     doInstallCheck = true;
@@ -173,7 +173,7 @@ in rec
       fls-shake --trace hs
     '';
     installPhase = ''
-      mkdir "$out/hs"
+      mkdir -p "$out/hs"
       cp -r _build/hs "$out/hs"
     '';
     doInstallCheck = true;
