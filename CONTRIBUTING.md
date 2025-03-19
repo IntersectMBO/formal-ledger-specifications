@@ -56,37 +56,165 @@ To install Agda locally and use that install with emacs, you can do the followin
 
    There are other options as well, but this should work with all kinds of custom emacs setups or distributions (assuming there isn't already some other stuff going on with your Agda setup).
 
+## Working on the formal ledger specification
 
-## Setup with nix-shell
+For nix users, `nix-shell` provides Agda with the correct dependencies. You
+should be able to run your preferred editor within `nix-shell` and it should see
+the required `agda` executable.
 
-`nix-shell` provides Agda complete with the correct dependencies. So you should be able to run your preferred editor within `nix-shell` and it should see the required `agda` executable.
+For instructions to setup Agda without nix, check [Setup without
+nix](#setup-without-nix).
 
-For instructions _not using_ `nix-shell`, check [Setup without nix-shell](setup-without-nix-shell).
+To typecheck the formal specification, run:
 
-## Working on libraries
-
-To work simultaneously on the ledger and one of its dependencies, the easiest way to do this is to remove the library from the ledger's `.agda-lib` file and add its path to the `include:` section. Then, when finished, push the changes to the library, then update `default.nix` to point to your new commit.
-
-Warning: Don't forget to update the SHA when updating `default.nix`. Nix will fail silently on your local machine if you do that. Just change a few characters, run `nix-build -A ledger` and nix will tell you the correct hash to put there.
-
-## Building the PDF quickly
-
-The Makefile can be used to build the PDF without having to build everything else. Either run `make` from within `nix-shell`, or use
 ```
-nix-shell --command 'make docs'
+agda src/Everything.agda
 ```
-to run `make` without launching an interactive shell.
 
-This combines well with the ability to invoke the TeX backend of Agda within Emacs,
-which is much faster when you have already loaded an Agda file/interface.
+### Modifying the Agda libraries
 
-## Building other artifacts
+To work simultaneously on the ledger and one of its dependencies, the easiest
+way to do this is to remove the library from the ledger's `.agda-lib` file and
+add its path to the `include:` section. 
 
-Apart from the PDF specification, the `Makefile` can be used to also generate the following:
-- `make html`: generate HTML under `dist/html/`
-- `make hs`: generate Haskell code under `dist/MAlonzo/`
-- `make hsTest`: run the Haskell tests of each Agda formalisation
-- `make staticWebsite`: gather all resources above in a central webpage `dist/index.html`
+When finished, push the changes to the library and update `default.nix` to point
+to your new commit.
+
+*Warning:* Don't forget to update the SHA when updating `default.nix`. Nix will
+fail silently on your local machine if you do that. Just change a few
+characters, run `nix-build -A ledger` and nix will tell you the correct hash to
+put there.
+
+## Building the artifacts
+
+`formal-ledger-specifications` is built using a custom system written in the
+Haskell DSL [Shake](https://shakebuild.com/). The file
+[`Shakefile.hs`](Shakefile.hs) contains the source code of the build system. We
+refer to the build-system binary as `fls-shake`.
+
+Depending on whether one uses nix or not, the commands given in the rest of this
+instructions are to be run differently:
+
+- For nix users, the commands should be executed using nix shell via:
+
+    ```
+    nix-shell --run COMMAND
+    ```
+
+    This ensures that the correct dependencies are in scope.
+
+- For non nix users, the commands are to be executed verbatim, assuming
+`fls-shake` and Agda and its dependencies are setup. For instructions on how to
+compile `fls-shake` and set up Agda and its dependencies see [Setup without
+nix](#setup-without-nix).
+
+`fls-shake` uses three top level directories:
+    - `_build` to store intermediate build objects
+    - `.shake` to store build information
+    - `dist` to store built artifacts
+
+### Building artifacts
+
+#### PDF
+
+`fls-shake` provides two targets, `conway-ledger.pdf` and `cardano-ledger.pdf`,
+to build the respective pdfs. For example:
+
+```
+fls-shake conway-ledger.pdf
+```
+
+produces the output `dist/conway-ledger.pdf`
+
+In addition, `fls-shake` has internal rules to generate intermediate files.
+
+Agda-generated `tex` files from literate Agda source code are stored in
+`_build/latex.gen`. This are shared between pdf artifacts.
+
+Pdf-artifact specific files are stored under `_build/target` (where e.g., the
+target is `conway-ledger.pdf`, `_build/conway-ledger.pdf`).
+
+The structure of `_build/target` is the following:
+
+- `latex.in`: For verbatim latex related files copied from the top level `latex`
+directory
+- `latex.pp`: For post processed `tex` files from Agda-generated `tex` (e.g.,
+applying [`agda2vec.py`](agda2vec.py))
+- `latex.out`: For latex intermediate build files.
+
+#### Haskell code (for conformance testing)
+
+`fls-shake` provides a target to build the Haskell code:
+
+```
+fls-shake hs
+```
+
+this produces the output `dist/hs`
+
+#### Html-hyperlinked Agda code
+
+`fls-shake` provides a target to build the html:
+
+```
+fls-shake html
+```
+
+This produces the output `dist/html`
+
+In addition, `fls-shake` has internal rules to generate intermediate files. This
+are stored under `_build/html`. The structure of `_build/html` is as follows:
+
+- `html.in` contains the Agda source code. Agda files are copied verbatim,
+literate Agda files are `illiterated`
+- `html.out` contains the output html
+
+## Setup without nix
+
+### Agda and its dependencies
+
+- Install Agda version `2.7.0` (e.g. follow the instructions in
+<https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda>).
+
+- In a folder `LIB`, clone the dependencies
+    + [agda-stdlib](https://github.com/agda/agda-stdlib)
+    + [agda-stdlib-classes](https://github.com/agda/agda-stdlib-classes)
+    + [agda-stdlib-meta](https://github.com/agda/agda-stdlib-meta)
+    + [agda-sets](https://github.com/input-output-hk/agda-sets)
+
+and checkout the commits/tags found in `default.nix` (e.g. `v2.1.1` for `agda-stdlib-meta`).
+
+- Create a file `LIB/libraries` with the following content:
+```
+LIB/agda-stdlib/standard-library.agda-lib
+LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
+LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
+LIB/agda-sets/abstract-set-theory.agda-lib
+```
+
+- Use `AGDA_DIR=LIB agda` instead of `agda`.
+  For example:
+    - To typecheck the formal specification, run:
+    ```
+    AGDA_DIR=LIB agda src/Everything.agda
+    ```
+
+    - To build the `conway-ledger.pdf` artifact, run:
+    ```
+    AGDA_DIR=LIB fls-shake conway-ledger.pdf
+    ```
+
+### `fls-shake`
+
+`fls-shake` can be compiled the file
+[`Shakefile.hs`](Shakefile.hs) using GHC.
+
+For this, do the same as the derivation `fls-shake` in
+[default.nix](default.nix):
+
+- Install the packages it depends upon, which are listed under `nativeBuildInputs`
+
+- Compile using the command under `buildPhase`
 
 ## Updating nixpkgs
 
@@ -106,33 +234,6 @@ niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c
 niv update nixpkgs -v 21.11.337905.902d91def1e
 ```
 
-## Setup without nix-shell
-
-- Install Agda version `2.7.0` (e.g. follow the instructions in <https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda>
-).
-- In a folder `LIB`, clone the dependencies
-    + [agda-stdlib](https://github.com/agda/agda-stdlib)
-    + [agda-stdlib-classes](https://github.com/agda/agda-stdlib-classes)
-    + [agda-stdlib-meta](https://github.com/agda/agda-stdlib-meta)
-    + [agda-sets](https://github.com/input-output-hk/agda-sets)
-and checkout the commits/tags found in `default.nix` (e.g. `v2.1.1` for `agda-stdlib-meta`).
-- Create a file `LIB/libraries` with the following content:
-```
-LIB/agda-stdlib/standard-library.agda-lib
-LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
-LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
-LIB/agda-sets/abstract-set-theory.agda-lib
-```
-- Instead of `agda` use `agda --library-file LIB/libraries`. For example, to typecheck `Everything.agda`:
-  ```
-  cd src/
-  agda --library-file LIB/libraries Everything.agda
-  ```
-
-  To build targets from the Makefile (e.g. see [Building other artifacts](building-other-artifacts)), use:
-  ```
-  AGDA="agda --library-file LIB/libraries" make html
-  ```
 
 ## Maintainer
 
