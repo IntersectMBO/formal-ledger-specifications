@@ -72,6 +72,12 @@ let
   deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets ];
   agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
 
+  fs = pkgs.lib.fileset;
+  addToAgdaSrc = other: fs.toSource {
+    root = ./.;
+    fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ] ++ other);
+  };
+
 in rec
 {
 
@@ -99,7 +105,7 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "formal-ledger";
     version = "0.1";
-    src = ./.;
+    src = addToAgdaSrc [ ./scripts/checkTypeChecked.sh ];
     meta = { };
     buildInputs = deps;
     buildPhase = ''
@@ -121,7 +127,7 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = pname;
     version = version;
-    src = ./.;
+    src = addToAgdaSrc [ ./latex ];
     meta = { };
     buildInputs = [ agdaWithDeps latex python310 fls-shake ];
     buildPhase = ''
@@ -132,9 +138,9 @@ in rec
       mkdir "$out/pdf"
       cp "_build/pdf/${project}-ledger.pdf" "$out/pdf"
     '';
-    doCheck = true;
-    checkPhase = ''
-        test -f "$out/${project}-ledger.pdf"
+    doInstallCheck = true;
+    installCheck = ''
+        test -f "$out/pdf/${project}-ledger.pdf"
       '';
   };
 
@@ -142,7 +148,7 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "html";
     version = "0.1";
-    src = ./.;
+    src = addToAgdaSrc [];
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
@@ -152,8 +158,8 @@ in rec
      mkdir "$out/html"
      cp -r _build/html/html.out "$out/html"
     '';
-    doCheck = true;
-    checkPhase = ''
+    doInstallCheck = true;
+    installCheck = ''
       test -f "$out/html/index.html"
     '';
   };
@@ -162,18 +168,18 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "hs-src";
     version = "0.1";
-    src = ./.;
+    src = addToAgdaSrc [ ./hs-src ];
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
       fls-shake --trace hs
     '';
-    doCheck = true;
     install = ''
       mkdir "$out/hs"
       cp -r _build/hs "$out/hs"
     '';
-    checkPhase = ''
+    doInstallCheck = true;
+    installCheck = ''
       test -f "$out/hs/cardano-ledger-executable-spec.cabal"
     '';
   };
