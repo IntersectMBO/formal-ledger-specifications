@@ -94,7 +94,7 @@ private variable
   s s' s'' : LState
   utxoSt utxoSt' : UTxOState
   govSt govSt' : GovState
-  certState certState' : CertState
+  certState certState' certState'' : CertState
   tx : Tx
   slot : Slot
   ppolicy : Maybe ScriptHash
@@ -115,11 +115,18 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
          open TxBody txb
 \end{code}
 \begin{code}
-         rewards     = certState .dState .rewards
+         rewards     = certState' .dState .rewards
+         wdrlCreds   = mapˢ RwdAddr.stake (dom txwdrls)
+         rewards' = constMap wdrlCreds 0 ∪ˡ rewards
+         dState = certState .CertState.dState
+         dState' = record dState { rewards = rewards' }
+         certState' = record certState { dState = dState' }
+         voteDelegs = certState' .CertState.dState .voteDelegs
     in
     ∙ isValid tx ≡ true
     ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙ ⟦ epoch slot , pp , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
+    ∙ ⟦ epoch slot , pp , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState' ⇀⦇ txcerts ,CERTS⦈ certState''
+    ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ ⟦ txid , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
@@ -134,7 +141,7 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
 \caption{LEDGER transition system}
 \end{figure*}
 \begin{code}[hide]
-pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
+pattern LEDGER-V⋯ w x y z a = LEDGER-V (w , x , y , z , a)
 pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 \end{code}
 

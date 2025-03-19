@@ -320,7 +320,7 @@ module _ where  -- achieves uniform (but perhaps misleading) alignment of type s
   _⊢_⇀⦇_,CERTS⦈_     : CertEnv     → CertState  → List DCert  → CertState  → Type
 \end{code}
 \begin{code}[hide]
-  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
+  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}
@@ -466,15 +466,12 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
                                         ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []) )
     in
-    ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
-    ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
-      ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
         ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧
         , stᵖ
         , ⟦ dReps , ccHotKeys ⟧
         ⟧ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧
+        ⟦ ⟦ validVoteDelegs , stakeDelegs , rewards ⟧
         , stᵖ
         , ⟦ refreshedDReps , ccHotKeys ⟧
         ⟧

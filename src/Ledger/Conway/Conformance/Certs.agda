@@ -200,24 +200,21 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → T
 data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
   CERT-base :
     let open PParams pp
-        refresh         = mapPartial getDRepVote (fromList vs)
-        refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dReps refresh
-        wdrlCreds       = mapˢ stake (dom wdrls)
+        refresh          = mapPartial getDRepVote (fromList vs)
+        refreshedDReps   = mapValueRestricted (const (e + drepActivity)) dReps refresh
+        wdrlCreds        = mapˢ stake (dom wdrls)
         validVoteDelegs  = voteDelegs ∣^ (mapˢ (credVoter DRep) (dom dReps) ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []))
     in
-    ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
-    ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
-      ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
       ⟦ ⟦ voteDelegs , stakeDelegs , rewards , ddep ⟧
       , stᵖ
       , ⟦ dReps , ccHotKeys , gdep ⟧
       ⟧
       ⇀⦇ _ ,CERTBASE⦈
-      ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards , ddep ⟧
+      ⟦ ⟦ validVoteDelegs , stakeDelegs , rewards , ddep ⟧
       , stᵖ
       , ⟦ refreshedDReps , ccHotKeys , gdep ⟧
       ⟧
 
 _⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_}{_⊢_⇀⦇_,CERT⦈_}
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_}{_⊢_⇀⦇_,CERT⦈_}

@@ -74,7 +74,6 @@ let
 
 in rec
 {
-
   agdaWithDeps = agdaWithPkgs deps;
 
   latex = texlive.combine {
