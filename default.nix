@@ -117,8 +117,7 @@ in rec
     '';
     install = ''
       awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
-      cp -r latex/ Makefile $out
-      rm typecheck.log
+      cp -r "_build" $out
     '';
     extraExtensions = [ "hs" "cabal" "py" ];
   };
@@ -139,7 +138,7 @@ in rec
       cp "_build/pdf/${project}-ledger.pdf" "$out/pdf"
     '';
     doInstallCheck = true;
-    installCheck = ''
+    installCheckPhase = ''
         test -f "$out/pdf/${project}-ledger.pdf"
       '';
   };
@@ -159,7 +158,7 @@ in rec
      cp -r _build/html/html.out "$out/html"
     '';
     doInstallCheck = true;
-    installCheck = ''
+    installCheckPhase = ''
       test -f "$out/html/index.html"
     '';
   };
@@ -179,7 +178,7 @@ in rec
       cp -r _build/hs "$out/hs"
     '';
     doInstallCheck = true;
-    installCheck = ''
+    installCheckPhase = ''
       test -f "$out/hs/cardano-ledger-executable-spec.cabal"
     '';
   };
