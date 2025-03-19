@@ -119,14 +119,13 @@ in rec
       awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
       cp -r "_build" $out
     '';
-    extraExtensions = [ "hs" "cabal" "py" ];
   };
 
   mkDocsDerivation = { pname, version, project }: stdenv.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = pname;
     version = version;
-    src = addToAgdaSrc [ ./latex ];
+    src = addToAgdaSrc [ ./latex ./scripts/agda2vec.py ./scripts/hldiff.py ];
     meta = { };
     buildInputs = [ agdaWithDeps latex python310 fls-shake ];
     buildPhase = ''
