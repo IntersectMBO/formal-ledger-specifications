@@ -12,6 +12,7 @@ let specs = callPackage ./default.nix {};
 in {
   shell = mkShell {
     nativeBuildInputs = [
+      specs.fls-shake
       specs.agdaWithDeps
       specs.latex
       python310
@@ -20,6 +21,7 @@ in {
 
   run.shell = mkShell {
     nativeBuildInputs = [
+      specs.fls-shake
       specs.agda
       cabal-install
     ];

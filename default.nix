@@ -75,6 +75,8 @@ let
 in rec
 {
 
+  fls-shake = import ./shake/default.nix {};
+
   agdaWithDeps = agdaWithPkgs deps;
 
   latex = texlive.combine {
@@ -121,13 +123,16 @@ in rec
     version = version;
     src = ./.;
     meta = { };
-    buildInputs = [ agdaWithDeps latex python310 ];
+    buildInputs = [ agdaWithDeps latex python310 fls-shake ];
     buildPhase = ''
-        OUT_DIR=$out make ${project}.docs
-      '';
+      export XDG_CACHE_HOME="$(mktemp -d)"
+      fls-shake _build/pdf/${project}-ledger.pdf
+      mkdir $out/pdf
+      cp _build/pdf/${project}-ledger.pdf $out/pdf
+    '';
     doCheck = true;
     checkPhase = ''
-        test -n "$(find $out/pdfs/ -type f -name '*.pdf')"
+        test -f $out/${project}-ledger.pdf
       '';
     dontInstall = true;
   };
@@ -138,13 +143,15 @@ in rec
     version = "0.1";
     src = ./.;
     meta = { };
-    buildInputs = [ agdaWithDeps ];
+    buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
-      OUT_DIR=$out make ledger.html
+       fls-shake _build/html/html.out/index.html
+       mkdir "$out/html"
+       cp -r _build/html/html.out "$out/html"
     '';
     doCheck = true;
     checkPhase = ''
-      test -n "$(find $out/html/ -type f -name '*.html')"
+      test -f "$out/html/index.html"
     '';
     dontInstall = true;
   };
@@ -155,13 +162,15 @@ in rec
     version = "0.1";
     src = ./.;
     meta = { };
-    buildInputs = [ agdaWithDeps ];
+    buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
-      OUT_DIR=$out make ledger.hs
+      fls-shake hs
+      mkdir $out/hs
+      cp -r _build/hs $out/hs
     '';
     doCheck = true;
     checkPhase = ''
-      test -n "$(find $out/haskell/ -type f -name '*.hs')"
+      test -f "$out/hs/cardano-ledger-executable-spec.cabal"
     '';
     dontInstall = true;
   };
@@ -169,7 +178,7 @@ in rec
   ledger = {
     html   = html;
     hsSrc  = hsSrc;
-    docs   = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "ledger"; };
-    conway = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "ledger.conway"; };
+    docs   = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
+    conway = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "conway"; };
   };
 }

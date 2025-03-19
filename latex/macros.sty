@@ -67,6 +67,10 @@
 % produces a link to url https://agda.readthedocs.io/en/\AgdaVersion/language/record-types.html
 % with link text "agda.readthedocs.io/record-types".
 
+% Agda input tex macro for use by the build system
+\NewDocumentCommand{\includeAgda}{m}{\include{#1}}
+\NewDocumentCommand{\inputAgda}{m}{\input{#1}}
+
 \NewDocumentCommand{\email}{m}{%
   \href{mailto:#1}{#1}
 }
