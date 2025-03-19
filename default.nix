@@ -138,8 +138,8 @@ in rec
     '';
     doInstallCheck = true;
     installCheckPhase = ''
-        test -f "$out/pdf/${project}-ledger.pdf"
-      '';
+      test -f "$out/pdf/${project}-ledger.pdf"
+    '';
   };
 
   html = stdenv.mkDerivation {
@@ -150,11 +150,12 @@ in rec
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
-     fls-shake --trace _build/html/html.out/index.html
+      fls-shake --trace _build/html/html.out/index.html
     '';
     installPhase = ''
-     mkdir -p "$out/html"
-     cp -r _build/html/html.out "$out/html"
+      mkdir -p "$out/html"
+      cp -r _build/html/html.out "$out"
+      mv "$out/html.out" html
     '';
     doInstallCheck = true;
     installCheckPhase = ''
@@ -174,7 +175,7 @@ in rec
     '';
     installPhase = ''
       mkdir -p "$out/hs"
-      cp -r _build/hs "$out/hs"
+      cp -r _build/hs "$out"
     '';
     doInstallCheck = true;
     installCheckPhase = ''
