@@ -258,7 +258,9 @@ agda2htmlPP =
     isagdafile <- doesFileExist srcfile
     if isagdafile
       then copyFileChanged srcfile out
-      else do lcontents <- readFileLines $ replaceExtension srcfile "lagda"
+      else do let lagdafile = replaceExtension srcfile "lagda"
+              putInfo $ mconcat ["Illiterating from ", lagdafile, " to ", out]
+              lcontents <- readFileLines lagdafile
               let ilcontents = illiterate lcontents
               writeFileLines out ilcontents
 

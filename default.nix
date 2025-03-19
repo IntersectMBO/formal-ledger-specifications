@@ -127,6 +127,8 @@ in rec
     buildPhase = ''
       export XDG_CACHE_HOME="$(mktemp -d)"
       fls-shake --trace "_build/pdf/${project}-ledger.pdf"
+    '';
+    install = ''
       mkdir "$out/pdf"
       cp "_build/pdf/${project}-ledger.pdf" "$out/pdf"
     '';
@@ -134,7 +136,6 @@ in rec
     checkPhase = ''
         test -f "$out/${project}-ledger.pdf"
       '';
-    dontInstall = true;
   };
 
   html = stdenv.mkDerivation {
@@ -145,15 +146,16 @@ in rec
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
-       fls-shake --trace _build/html/html.out/index.html
-       mkdir "$out/html"
-       cp -r _build/html/html.out "$out/html"
+     fls-shake --trace _build/html/html.out/index.html
+    '';
+    install = ''
+     mkdir "$out/html"
+     cp -r _build/html/html.out "$out/html"
     '';
     doCheck = true;
     checkPhase = ''
       test -f "$out/html/index.html"
     '';
-    dontInstall = true;
   };
 
   hsSrc = stdenv.mkDerivation {
@@ -165,14 +167,15 @@ in rec
     buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
       fls-shake --trace hs
+    '';
+    doCheck = true;
+    install = ''
       mkdir "$out/hs"
       cp -r _build/hs "$out/hs"
     '';
-    doCheck = true;
     checkPhase = ''
       test -f "$out/hs/cardano-ledger-executable-spec.cabal"
     '';
-    dontInstall = true;
   };
 
   ledger = {
