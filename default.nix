@@ -115,7 +115,7 @@ in rec
     checkPhase = ''
       sh scripts/checkTypeChecked.sh -m
     '';
-    install = ''
+    installPhase = ''
       awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
       cp -r "_build" $out
     '';
@@ -132,7 +132,7 @@ in rec
       export XDG_CACHE_HOME="$(mktemp -d)"
       fls-shake --trace "_build/pdf/${project}-ledger.pdf"
     '';
-    install = ''
+    installPhase = ''
       mkdir "$out/pdf"
       cp "_build/pdf/${project}-ledger.pdf" "$out/pdf"
     '';
@@ -152,7 +152,7 @@ in rec
     buildPhase = ''
      fls-shake --trace _build/html/html.out/index.html
     '';
-    install = ''
+    installPhase = ''
      mkdir "$out/html"
      cp -r _build/html/html.out "$out/html"
     '';
@@ -172,7 +172,7 @@ in rec
     buildPhase = ''
       fls-shake --trace hs
     '';
-    install = ''
+    installPhase = ''
       mkdir "$out/hs"
       cp -r _build/hs "$out/hs"
     '';
