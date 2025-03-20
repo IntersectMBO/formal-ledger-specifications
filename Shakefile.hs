@@ -161,6 +161,7 @@ tex2pdf = do
     xelatex
     biber
     xelatex
+    xelatex
 
 
 -- | Generate a pdf in _build/pdf
