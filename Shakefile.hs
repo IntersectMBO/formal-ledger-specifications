@@ -125,6 +125,7 @@ tex2pdf = do
     let agdafiles  = map ((_latexPP </>) . (<.> "tex")) agdainputs
     let otherfiles = map (_latexIn </>)
                          [ "references.bib", "Notation.tex", "macros.sty", "preamble.tex"
+                         , "Diagrams/CardanoLedger.tex"
                          , "ConwayBootstrap.tex", "ConwayBootstrapEnact.tex" ]
     fontfiles <- map (_latexIn </>) <$> getDirectoryFiles "latex" [ "fonts/*.ttf" ]
 
