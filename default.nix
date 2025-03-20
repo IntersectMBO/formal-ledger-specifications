@@ -81,7 +81,23 @@ let
 in rec
 {
 
-  fls-shake = import ./shake/default.nix {};
+  fls-shake = stdenv.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    name = "fls-shake";
+    src = fs.toSource {
+      root = ./.;
+      fileset = ./Shakefile.hs;
+    };
+    nativeBuildInputs = [ (haskellPackages.ghcWithPackages (ps: with ps;
+                            ([ shake binary deepseq hashable ]))) ];
+    buildPhase = ''
+      ghc -o fls-shake Shakefile.hs -threaded -with-rtsopts -A128M -rtsopts
+    '';
+    installPhase = ''
+      mkdir -p "$out/bin"
+      cp fls-shake "$out/bin/"
+    '';
+  };
 
   agdaWithDeps = agdaWithPkgs deps;
 
@@ -116,8 +132,9 @@ in rec
       sh scripts/checkTypeChecked.sh -m
     '';
     installPhase = ''
+      mkdir "$out"
       awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
-      cp -r "_build" $out
+      cp -r _build "$out"
     '';
   };
 
@@ -134,11 +151,11 @@ in rec
     '';
     installPhase = ''
       mkdir -p "$out/pdf"
-      cp "_build/pdf/${project}-ledger.pdf" "$out/pdf"
+      cp "_build/pdf/${project}-ledger.pdf" "$out"
     '';
     doInstallCheck = true;
     installCheckPhase = ''
-      test -f "$out/pdf/${project}-ledger.pdf"
+      test -f "$out/${project}-ledger.pdf"
     '';
   };
 
@@ -155,7 +172,7 @@ in rec
     installPhase = ''
       mkdir -p "$out/html"
       cp -r _build/html/html.out "$out"
-      mv "$out/html.out" html
+      mv "$out/html.out" "$out/html"
     '';
     doInstallCheck = true;
     installCheckPhase = ''
@@ -175,7 +192,7 @@ in rec
     '';
     installPhase = ''
       mkdir -p "$out/hs"
-      cp -r _build/hs "$out"
+      cp -r _build/hs/* "$out"
     '';
     doInstallCheck = true;
     installCheckPhase = ''

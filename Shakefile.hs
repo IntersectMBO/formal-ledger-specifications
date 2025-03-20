@@ -1,3 +1,12 @@
+{-|
+Module      : Main
+Description : Build system for formal ledger specifications
+Copyright   : IOHK
+License     : Apache-2.0
+Maintainer  : carlos.tome-cortinas@iohk.io
+Stability   : experimental
+Portability : POSIX
+-}
 {-# LANGUAGE GeneralisedNewtypeDeriving #-}
 {-# LANGUAGE TypeFamilies               #-}
 module Main where
@@ -50,7 +59,6 @@ copyIn =
 -- _build/latex.gen/
 lagda2tex :: Rules ()
 lagda2tex =
- --  _build/latex.gen//*.tex
   _build </> latexGen <//> "*.tex" %> \out -> do
     let modulename = dropDirectory 2 . dropExtension $ out
         lagdaifile = "src" </> modulename <.> "lagda"
@@ -89,7 +97,7 @@ tex2texPP =
 -- To generate the pdf we:
 -- 1. Get the \agdainputs from the tex main file
 -- 2. Declare as dependencies the Agda, tex, and font input files
--- 3. Run latexmk on the main tex file
+-- 3. Run xelatex and biber on the main tex file
 --
 -- The way the pdf looks depends only on the Agda-generated tex files which the
 -- main imports. Therefore if those files don't change, even if their
@@ -105,7 +113,6 @@ tex2pdf = do
     let proj        = takeBaseName out
         _latexIn    = _build </> proj </> latexIn  -- static inputs
         _latexPP    = _build </> proj </> latexPP  -- postprocessed files
-        _latexAux   = _build </> proj </> latexAux -- auxiliary files for latex compilation
         _latexOut   = _build </> proj </> latexOut -- outputs
         maintexfile = _latexIn </> proj <.> "tex"
 
@@ -124,24 +131,36 @@ tex2pdf = do
     -- declare the dependencies
     need $ fontfiles ++ otherfiles ++ agdafiles
 
-    -- xelatex and biber command
     -- copy the references file for biber
-    copyFileChanged (_latexIn </> "references.bib") (_latexAux </> "references.bib")
+    copyFileChanged (_latexIn </> "references.bib") (_latexOut </> "references.bib")
 
     -- copy the agda.sty
     agdasty <- (</> "latex/agda.sty") <$> agdaDataDir (AgdaDataDir ())
     copyFileChanged agdasty (_latexIn </> "agda.sty")
 
-    -- run latexmk
-    command_ [ Cwd $ _build </> proj
-             , AddEnv "TEXINPUTS" (concat [ latexIn, "//:", latexPP, "//:" ])
-             , AddEnv "TTFONTS" (latexIn ++ "/fonts//:") ]
-             "latexmk"
-             [ "--pdfxe"
-             , "-halt-on-error"
-             , "--output-directory=" ++ latexOut
-             , "--aux-directory=" ++ latexAux
-             , proj ]
+    -- xelatex and biber command
+    let xelatex =
+          command_ [ Cwd $ _build </> proj
+                   , AddEnv "TEXINPUTS" (concat [ latexIn, "//:", latexPP, "//:" ])
+                   , AddEnv "TTFONTS" (latexIn ++ "/fonts//:") ]
+                   "xelatex"
+                   [ "-halt-on-error"
+                   , "-output-directory=" ++ latexOut
+                   , proj ]
+        biber =
+          command_ [ Cwd $ _build </> proj
+                   , AddEnv "TEXINPUTS" (concat [ latexIn, "//:", latexPP, "//:" ]) ]
+                   "biber"
+                   [ "-output-directory=" ++ latexOut
+                   , proj ]
+
+    xelatex
+    biber
+    xelatex
+    xelatex
+    biber
+    xelatex
+
 
 -- | Generate a pdf in _build/pdf
 pdf :: Rules ()
@@ -279,11 +298,10 @@ _build :: FilePath
 _build = "_build"
 
 -- | Various directories for latex
-latexIn, latexOut, latexGen, latexPP, latexAux :: FilePath
+latexIn, latexOut, latexGen, latexPP :: FilePath
 latexIn  = "latex.in"  -- static latex inputs
 latexGen = "latex.gen" -- generated latex (from agda)
 latexPP  = "latex.pp"  -- latex postprocessed
-latexAux = "latex.aux" -- latex outputs
 latexOut = "latex.out" -- latex outputs
 
 _latexGen :: FilePath
