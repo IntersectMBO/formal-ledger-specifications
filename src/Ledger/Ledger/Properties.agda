@@ -578,9 +578,9 @@ module EPOCH-PROPS {eps : EpochState} where
     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     → govDepsMatch (EpochState.ls eps) → govDepsMatch (EpochState.ls eps')
 
-  EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
-      ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
-      ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+  EPOCH-govDepsMatch ratify-removed (EPOCH x _) = 
+    ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
+    ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
     where
 
     -- the combinator used in the EPOCH rule
