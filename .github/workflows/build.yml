@@ -35,19 +35,19 @@ jobs:
         with:
           name: _build
           path: outputs/_build
-      - name:
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Docs-formalLedger
-          path: docs
-      - name: Upload typechecking times
-        if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Typechecking durations - FormalLedger
-          path: docs/*.time
-
+      # - name:
+      #   if: github.ref == 'refs/heads/master'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Docs-formalLedger
+      #     path: docs
+      # - name: Upload typechecking times
+      #   if: github.event_name == 'pull_request'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: Typechecking durations - FormalLedger
+      #     path: docs/*.time
+      #
   # MAlonzo:
   #   runs-on: ubuntu-latest
   #   steps:
