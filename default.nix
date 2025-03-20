@@ -170,7 +170,7 @@ in rec
       fls-shake --trace _build/html/html.out/index.html
     '';
     installPhase = ''
-      mkdir -p "$out/html"
+      mkdir "$out"
       cp -r _build/html/html.out "$out"
       mv "$out/html.out" "$out/html"
     '';

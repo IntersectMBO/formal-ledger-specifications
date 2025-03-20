@@ -123,6 +123,7 @@ jobs:
         id: ledger-pdf
         run: |
           echo -n html docs conway | xargs -d' ' -I{} nix-build -A ledger.{} -j1
+          printf "nix-build success"
           rsync -r --exclude={'**/nix-support','**/lib'} outputs/* docs/
       - name: Upload docs
         if: github.ref == 'refs/heads/master'
