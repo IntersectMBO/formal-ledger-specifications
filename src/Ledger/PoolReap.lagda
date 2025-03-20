@@ -8,7 +8,7 @@
 open import Ledger.Abstract
 open import Ledger.Transaction
 
-module Ledger.Reap
+module Ledger.PoolReap
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
@@ -22,17 +22,16 @@ open import Ledger.Certs govStructure
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
-record ReapState : Type where
+record PlReapState : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_,_⟧ʳˢ
+  constructor ⟦_,_,_,_⟧ᵖ
 \end{code}
 \begin{code}
   field
-    utxost     : UTxOState
-    acnt       : Acnt
-    dstate     : DState
-    gstate     : GState
-    pstate     : PState
-    govst      : GovState
+    utxoSt     : UTxOState   -- utxo state
+    acnt       : Acnt        -- accounting
+    dState     : DState      -- delegation state
+    pState     : PState      -- pool state
 \end{code}
+

@@ -28,7 +28,7 @@ open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 open import Ledger.Certs govStructure
-open import Ledger.Reap txs abs
+open import Ledger.PoolReap txs abs
 \end{code}
 \begin{NoConway}
 \begin{figure*}[ht]
@@ -93,12 +93,12 @@ record NewEpochState : Type where
 \end{figure*}
 \begin{code}[hide]
 instance
-  unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState To-ReapState = derive-To
+  unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState To-PlReapState = derive-To
     (   (quote RewardUpdate   , To-RewardUpdate)
     ∷   (quote Snapshot       , To-Snapshot)
     ∷   (quote Snapshots      , To-Snapshots)
     ∷   (quote EpochState     , To-EpochState)
-    ∷   (quote ReapState      , To-ReapState)
+    ∷   (quote PlReapState    , To-PlReapState)
     ∷ [ (quote NewEpochState  , To-NewEpochState)])
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
@@ -189,7 +189,7 @@ private variable
   nes nes' : NewEpochState
   e lastEpoch : Epoch
   fut fut' : RatifyState
-  reapState : ReapState
+  plReapState : PlReapState
   eps eps' eps'' : EpochState
   ls : LState
   es₀ : EnactState
@@ -202,50 +202,81 @@ private variable
   pp : PParams
 \end{code}
 
+Let m be a map on A × B; that is m ⊆ A × B and ∀ a : A, there is at most one b
+such that (a , b) ∈ m.  The Shelley ledger uses some special notation for such
+maps, which we review here, adding the more standard mathematical notation on
+the right-hand side.
+
+s ◃ m = { (k , v) ∈ m | k ∈ s } = m ∩ (s × B) = m ↾ s,
+s ⋪ m = { (k , v) ∈ m | k ∉ s } = m ∩ (sᶜ × B) = m ↾ sᶜ,
+m ▹ s = { (k , v) ∈ m | v ∈ s } = m ∩ (A × s),
+m ⋫ s = { (k , v) ∈ m | v ∉ s } = m ∩ (A × sᶜ).
+
+
+Recall, \PState{} is a record with two fields, \pools{} and \retiring{} (maps
+on \KeyHash{} with codomains \PoolParams{} and \Epoch{}, respe.)  \PoolParams{}
+is a record with just one field, the \rewardAddr{} credential.
 
 \begin{code}
-data _⊢_⇀⦇_,REAP⦈_ : PParams → ReapState → Epoch → ReapState → Type where
+data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PlReapState → Epoch → PlReapState → Type where
   REAP : let
     -- open LState ls
-    open ReapState reapState
+    open PlReapState plReapState
     open RatifyState fut renaming (es to esW)
     open UTxOState
-    open PState; open DState; open GState
-    open Acnt; open EnactState; open GovActionState
+    open PState; open DState
+    open Acnt; open EnactState
+    open PParams
 
-    es                = record esW { withdrawals = ∅ }
-    tmpGovSt          = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govst
-    orphans           = fromList $ getOrphans es tmpGovSt
-    removed'          = removed ∪ orphans
-    removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
-      mapˢ (returnAddr gaSt ,_) ((utxost .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
-    govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+    trWithdrawals : RwdAddr ⇀ Coin
+    trWithdrawals = esW .withdrawals
 
-    trWithdrawals   = esW .withdrawals
-    totWithdrawals  = ∑[ x ← trWithdrawals ] x
+    totWithdrawals : Coin
+    totWithdrawals = ∑[ x ← trWithdrawals ] x
 
-    retired    = (pstate .retiring) ⁻¹ e
-    payout     = govActionReturns ∪⁺ trWithdrawals
-    refunds    = pullbackMap payout toRwdAddr (dom (dstate .rewards))
-    unclaimed  = getCoin payout - getCoin refunds
+    -- retired := dom (retiring⁻¹ e) = { hk : (hk , e) ∈ retiring }  (Shelley Fig 41)
+    retired    = (pState .retiring) ⁻¹ e
 
-    govst' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govst
 
-    dstate' = ⟦ dstate .voteDelegs , dstate .stakeDelegs ,  dstate .rewards ∪⁺ refunds ⟧
+    -- pr = { hk ↦ (poolDeposit pp) | hk ∈ retired }
+    --    = { (hk , poolDeposit pp) ∈ KeyHash × Coin | hk ∈ retired }  (Shelley Fig 41)
+    pr = constMap retired  (pp .poolDeposit)
 
-    pstate' = ⟦ pstate .pools ∣ retired ᶜ , pstate .retiring ∣ retired ᶜ ⟧
+    -- rewardAcnts := { (hk , poolRAcnt pool) ∈ KeyHash × Credential | (hk , pool) ∈ poolParams ↾ retired }  (Shelley Fig 41)
+    -- rewardAcnts : KeyHash ⇀ Credential
+    rewardAcnts = (pState .pools) ∣ retired
 
-    gstate' = ⟦ (if null govst' then mapValues (1 +_) (gstate .dreps) else (gstate .dreps))
-              , gstate .ccHotKeys ∣ ccCreds (es .cc) ⟧
+    -- rewardAcnts' : RwdAddr ⇀ Coin
+    -- rewardAcnts' =?= constMap (range (rewardAcnts ˢ)) (pp .poolDeposit)
 
-    utxost' = ⟦ utxost .utxo , utxost .fees , utxost .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+    
+
+    -- refunds := rewardAcnts' ↾ dom rewards         (recall, rewards : Credential ⇀ Coin is stored in DState))
+    refunds    = pullbackMap (esW .withdrawals) toRwdAddr (dom (dState .rewards))
+    --(recall, pullbackMap : (m : Map A B) → ⦃ ∀ {x} → (x ∈ dom (m ˢ)) ⁇ ⦄ → (A' → A) → Set A' → Map A' B)
+
+    -- refunds =?= rewardAcnts' ∣ (dom (dState .rewards))
+
+    -- mRefunds := rewardAcnts' ↾ (dom rewards)ᶜ
+
+    unclaimed  = getCoin (esW .withdrawals) - getCoin refunds
+    -- cf. Shelley Fig 41: unclaimed := ∑ {c | ∃ hk (hk , c) ∈ mRefunds }
+
+    utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits , 0 ⟧
+    -- cf. Shelley Fig 41: utxoSt' .deposits = utxoSt .deposits - (unclaimed + getCoin refunds)
+    --                                       = utxoSt .deposits - getCoin (esW .withdrawals)
 
     acnt' = record acnt
-      { treasury  = acnt .treasury ∸ totWithdrawals + utxost .donations + unclaimed }
+      { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
+    -- cf. Shelley spec fig 41: acnt' = acnt .treasury + utxoSt .donations + unclaimed 
+
+    dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
+
+    pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
+
     in
     ────────────────────────────────
-    pp ⊢ ⟦ utxost , acnt , dstate , gstate , pstate , govst ⟧ ⇀⦇ e ,REAP⦈
-         ⟦ utxost' , acnt' , dstate' , gstate' , pstate' , govst' ⟧
+    pp ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt' , acnt' , dState' , pState' ⟧
 \end{code}
 
 
@@ -294,29 +325,58 @@ its results by carrying out each of the following tasks.
   EPOCH : let
 \end{code}
 \begin{code}[hide]
-    open LState ls            -- ⟦ utxoSt , govSt , certState ⟧
-    open CertState certState  -- ⟦ dState , pState , gState ⟧
-    open RatifyState fut renaming (es to esW)
-    open UTxOState
-    open PState; open DState
-    open Acnt
+      open LState ls
+      open CertState certState
+      open RatifyState fut renaming (es to esW)
+      open UTxOState
+      open PState; open DState; open GState
+      open Acnt; open EnactState; open GovActionState
 \end{code}
 \begin{code}
-    es = record esW { withdrawals = ∅ }
+
+      es                = record esW { withdrawals = ∅ }
+      tmpGovSt          = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
+      orphans           = fromList $ getOrphans es tmpGovSt
+      removed'          = removed ∪ orphans
+      removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
+        mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+      govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+
+      trWithdrawals   = esW .withdrawals
+      totWithdrawals  = ∑[ x ← trWithdrawals ] x
+
+      retired    = (pState .retiring) ⁻¹ e
+      payout     = govActionReturns ∪⁺ trWithdrawals
+      refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
+      unclaimed  = getCoin payout - getCoin refunds
+
+      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
+
+      dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
+
+      pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
+
+      gState' = ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
+                , gState .ccHotKeys ∣ ccCreds (es .cc) ⟧
+
+      certState' : CertState
+      certState' = ⟦ dState' , pState' , gState' ⟧
+
+      utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+
+      acnt' = record acnt
+        { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
     in
-      pp   ⊢  ⟦ utxoSt , acnt , dState , gState , pState , govSt ⟧ ⇀⦇ e ,REAP⦈
-              ⟦ utxoSt' , acnt' , dState' , gState' , pState' , govSt' ⟧
-      → record  { currentEpoch = e
-                ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                               (utxoSt' .deposits) (voteDelegs dState)
-                ; treasury = acnt .treasury ; GState gState
-                ; pools = pState .pools ; delegatees = dState .voteDelegs
-                }
-            ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
-      → ls  ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+    record { currentEpoch = e
+           ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
+                                          (utxoSt' .deposits) (voteDelegs dState)
+           ; treasury = acnt .treasury ; GState gState
+           ; pools = pState .pools ; delegatees = dState .voteDelegs }
+        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
+      → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────
-    _     ⊢  ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
-             ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , ⟦ dState' , pState' , gState' ⟧ ⟧ , es , fut' ⟧
+    _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
+        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ , es , fut' ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}
