@@ -150,7 +150,7 @@ in rec
       fls-shake --trace "_build/pdf/${project}-ledger.pdf"
     '';
     installPhase = ''
-      mkdir -p "$out/pdf"
+      mkdir "$out"
       cp "_build/pdf/${project}-ledger.pdf" "$out"
     '';
     doInstallCheck = true;
@@ -191,12 +191,12 @@ in rec
       fls-shake --trace hs
     '';
     installPhase = ''
-      mkdir -p "$out/hs"
+      mkdir "$out"
       cp -r _build/hs/* "$out"
     '';
     doInstallCheck = true;
     installCheckPhase = ''
-      test -f "$out/hs/cardano-ledger-executable-spec.cabal"
+      test -f "$out/cardano-ledger-executable-spec.cabal"
     '';
   };
 
