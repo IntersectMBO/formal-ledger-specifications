@@ -259,7 +259,7 @@ htmlIndex =
 
     -- write formal-ledger-html.agda-lib and index.agda files
     writeFileLines (_html </> "formal-ledger-html.agda-lib") agdaprojectfile
-    writeFileLines out indexfile
+    writeFileLines (_html </> "index.agda") indexfile
 
     -- run agda to generate the html
     command_ [ Cwd _html ]
