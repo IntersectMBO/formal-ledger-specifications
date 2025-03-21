@@ -16,6 +16,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: _build
+          path: _build
       - name: debug
         run: ls -R
       - uses: cachix/install-nix-action@v20
