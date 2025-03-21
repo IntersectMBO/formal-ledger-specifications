@@ -36,14 +36,29 @@ jobs:
           name: _build
           path: outputs/_build
 
-  formal-ledger-targets:
+  formal-ledger-hs:
     needs: [formal-ledger-agda]
-    strategy:
-      matrix:
-        target: [cardano-ledger.pdf, conway-ledger.pdf, html, hs]
     uses: ./.github/workflows/reusable.yml
     with:
-      target: ${{ matrix.target }}
+      target: hs
+
+  formal-ledger-cardano-ledger.pdf:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: cardano-ledger.pdf
+
+  formal-ledger-conway-ledger.pdf:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: conway-ledger.pdf
+
+  formal-ledger-html:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: html
 
       # - name:
       #   if: github.ref == 'refs/heads/master'
