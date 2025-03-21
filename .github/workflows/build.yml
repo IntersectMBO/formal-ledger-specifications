@@ -24,18 +24,18 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: build formalLedger
+      - name: Build formalLedger
         id: formalLedger
         run: |
           nix-build -A formalLedger -o outputs
           rsync -r --include={'**/*.time'} outputs/* docs/
-      - name: upload agda _build directory
+      - name: Upload agda _build artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: _build
           path: outputs/_build
-      - name: upload agda typechecking time
+      - name: Upload agda typechecking time artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
@@ -52,10 +52,10 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: build the target html
+      - name: Build the target html
         run: |
           nix-shell --run 'fls-shake --trace html'
-      - name: upload output
+      - name: Upload html artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
@@ -100,7 +100,7 @@ jobs:
           git checkout -b ${{ env.MAlonzo_branch }} origin/MAlonzo-code
           git push origin ${{ env.MAlonzo_branch }}
       - uses: actions/checkout@v4
-      - name: download hs artifact
+      - name: Download hs artifact
         uses: actions/download-artifact@v4
         with:
           name: formal-ledger-hs
@@ -112,7 +112,7 @@ jobs:
             git stash push
             git fetch origin ${{ env.MAlonzo_branch }} --unshallow
             git checkout ${{ env.MAlonzo_branch }}
-            mv hs generated
+            rsync -r hs/* generated/
             git add -f generated && git commit -m "Generate code for ${{ github.sha }}" || echo "Everything is up-to-date."
       - name: Push ${{ env.MAlonzo_branch }}
         if: github.ref != 'refs/heads/master'

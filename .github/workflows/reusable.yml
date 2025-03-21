@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: download agda _build
+      - name: Download agda _build artifact
         uses: actions/download-artifact@v4
         with:
           name: _build
@@ -23,10 +23,10 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: build the target ${{ inputs.target }}
+      - name: Build the target ${{ inputs.target }}
         run: |
           nix-shell --run 'fls-shake --trace ${{ inputs.target }}'
-      - name: upload output
+      - name: Upload ${{ inputs.target }} artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
