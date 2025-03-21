@@ -173,7 +173,7 @@ pdfRule = do
   copyIn
 
   -- Top level pdf rule
-  pdfDist </> "*.pdf" %> \out -> do
+  dist </> "*.pdf" %> \out -> do
     let file = takeFileName out
         proj = dropExtension file
         dep  = _build </> proj </> latexOut </> proj <.> "pdf"
@@ -181,10 +181,10 @@ pdfRule = do
     copyFile' dep out
 
   phony "cardano-ledger.pdf" $ do
-    need [ pdfDist </> "cardano-ledger.pdf" ]
+    need [ dist </> "cardano-ledger.pdf" ]
 
   phony "conway-ledger.pdf" $ do
-    need [ pdfDist </> "conway-ledger.pdf" ]
+    need [ dist </> "conway-ledger.pdf" ]
 
 -- | Generate a Haskell package for conformance testing
 -- This depends on:
