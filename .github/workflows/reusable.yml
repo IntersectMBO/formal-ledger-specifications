@@ -26,8 +26,8 @@ jobs:
       - name: build the target ${{ inputs.target }}
         run: |
           nix-shell --run 'fls-shake --trace ${{ inputs.target }}'
-      - name: upload docs
-        if: github.ref == 'refs/heads/master'
+      - name: upload output
+        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: formal-ledger-${{ inputs.target }}

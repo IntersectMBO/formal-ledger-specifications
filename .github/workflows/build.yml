@@ -27,7 +27,7 @@ jobs:
       - name: build formalLedger
         id: formalLedger
         run: |
-          nix-build -A formalLedger -j1 -o outputs
+          nix-build -A formalLedger -o outputs
           rsync -r --include={'**/*.time'} outputs/* docs/
       - name: upload agda _build directory
         if: github.event_name == 'pull_request'
@@ -35,6 +35,12 @@ jobs:
         with:
           name: _build
           path: outputs/_build
+      - name: upload agda typechecking time
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: typecheck.time
+          path: outputs/typecheck.time
 
   formal-ledger-hs:
     needs: [formal-ledger-agda]
