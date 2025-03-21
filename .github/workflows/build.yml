@@ -89,7 +89,7 @@ jobs:
       - name: Download hs artifact
         uses: actions/download-artifact@v4
         with:
-          name: formal-ledger-hs
+          name: hs
       - name: Commit generated code at ${{ env.MAlonzo_branch }}
         if: github.ref != 'refs/heads/master'
         run: |
