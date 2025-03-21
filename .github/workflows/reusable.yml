@@ -23,6 +23,11 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
+      - if: ${{ inputs.target }} = 'html'
+        run: |
+          cp -r _build _build.tmp
+          mkdir -p _build/html
+          mv _build.tmp _build/html/_build
       - name: build the target ${{ inputs.target }}
         run: |
           nix-shell --run 'fls-shake --trace ${{ inputs.target }}'
