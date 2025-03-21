@@ -12,7 +12,9 @@ open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunc
 open import Ledger.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Types.Epoch
+open import Ledger.Types.Numeric using (mkUnitInterval)
 open EpochStructure SVEpochStructure
+open import Data.Integer using (ℤ; +_)
 open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)
 open import Data.Nat.Coprimality using (Coprime; gcd≡1⇒coprime)
 open Implementation
@@ -33,6 +35,8 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                ; minUTxOValue = 0
                                ; poolDeposit = 500000000 -- lovelace
                                ; keyDeposit = 500000000 -- lovelace
+                               ; tau = mkUnitInterval (+ 2 / 10) refl
+                               ; rho = mkUnitInterval (+ 3 / 1000) refl
                                ; coinsPerUTxOByte = 0  --lovelace
                                -- ^^^ was 4310, but that value resulted in failed tests once
                                -- we replaced `minUTxOValue` with `coinsPerUTxOByte`; see `HelloWorld.agda`
