@@ -36,11 +36,11 @@ jobs:
           name: _build
           path: outputs/_build
 
-  reusable-matrix:
+  formal-ledger-targets:
     needs: [formal-ledger-agda]
     strategy:
       matrix:
-        targets: [cardano-ledger.pdf, conway-ledger.pdf, html, hs]
+        target: [cardano-ledger.pdf, conway-ledger.pdf, html, hs]
     uses: ./.github/workflows/reusable.yml
     with:
       target: ${{ matrix.target }}

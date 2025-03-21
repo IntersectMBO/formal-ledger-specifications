@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  reusable_workflow_job:
+  build-${{ inputs.target }}:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
