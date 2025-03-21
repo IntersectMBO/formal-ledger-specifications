@@ -26,10 +26,9 @@ jobs:
       - name: build the target ${{ inputs.target }}
         run: |
           nix-shell --run 'fls-shake --trace ${{ inputs.target }}'
-          rsync -r --exclude={'**/nix-support','**/lib'} dist/${{ inputs.target }} docs/
       - name: upload docs
         if: github.ref == 'refs/heads/master'
         uses: actions/upload-artifact@v4
         with:
           name: formal-ledger-${{ inputs.target }}
-          path: docs
+          path: dist
