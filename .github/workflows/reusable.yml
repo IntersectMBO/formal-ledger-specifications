@@ -8,6 +8,7 @@ on:
         type: string
 
 jobs:
+  reusable_workflow_job:
     needs: [formal-ledger-agda]
     runs-on: ubuntu-latest
     steps:
