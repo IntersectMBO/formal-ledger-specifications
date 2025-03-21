@@ -96,7 +96,7 @@ makeTx s script (propose id w v tw d) = makeProposeTx id s script w v tw d
 -- Add Sig trace
 addSigTrace : List Tx'
 addSigTrace = openContract 6 5 800000000000 6
-              ∷ propose 7 5 100000000000 2 3
+              ∷ propose 7 5 100000000000 2 4
               ∷ addSig 8 5
               ∷ addSig 9 2
               ∷ pay 10 5 
@@ -138,7 +138,7 @@ opaque
   t1 = evalTransanctions initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) haskellTrace
 
   _ : isSuccess t1 ≡ false
-  _ = refl
+  _ = refl 
 
   t2 : ComputationResult String UTxOState
   t2 = evalTransanctionsW initEnv (success ⟦ initState' , 0 , ∅ , 0 ⟧ᵘ) utxowTrace

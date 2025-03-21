@@ -12,7 +12,9 @@ instance
     ((quote Label , DecEq-Label) ∷ [])
 
 data Input : Set where
+  -- Propose: Ada amount, Target Wallet, Slot Deadline
   Propose : ℕ -> ℕ -> ℕ -> Input
+  --  Add: Wallet signature to add
   Add     : ℕ -> Input
   Pay     : Input
   Cancel  : Input
