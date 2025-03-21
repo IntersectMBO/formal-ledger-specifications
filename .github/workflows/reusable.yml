@@ -25,7 +25,7 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build the target ${{ inputs.target }}
         run: |
-          nix-shell --run 'fls-shake --trace ${{ inputs.target }}'
+          nix-shell --run 'fls-shake --trace -j8 ${{ inputs.target }}'
       - name: Upload ${{ inputs.target }} artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
