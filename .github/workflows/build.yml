@@ -24,7 +24,7 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build formalLedger
+      - name: build formalLedger
         id: formalLedger
         run: |
           nix-build -A formalLedger -j1 -o outputs
@@ -35,6 +35,15 @@ jobs:
         with:
           name: _build
           path: outputs/_build
+
+  reusable-matrix:
+    strategy:
+      matrix:
+        targets: [cardano-ledger.pdf, conway-ledger.pdf, html, hs]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: ${{ matrix.target }}
+
       # - name:
       #   if: github.ref == 'refs/heads/master'
       #   uses: actions/upload-artifact@v4
@@ -93,32 +102,31 @@ jobs:
   #           force: false
   #           directory: .
 
-  formal-ledger-hs:
-    needs: [formal-ledger-agda]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: download agda _build
-        uses: actions/download-artifact@v4
-      - uses: cachix/install-nix-action@v20
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: debug
-        run: ls -R
-
-      - name: build Haskell source code
-        run: |
-          nix-shell --run 'fls-shake --trace hs'
-          rsync -r --exclude={'**/nix-support','**/lib'} _build/hs* docs/
-      - name: Upload docs
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Docs-ledger-hs
-          path: docs
+  # formal-ledger-hs:
+  #   needs: [formal-ledger-agda]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: download agda _build
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: _build
+  #     - uses: cachix/install-nix-action@v20
+  #       with:
+  #         nix_path: nixpkgs=channel:nixos-unstable
+  #         extra_nix_config: |
+  #           trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+  #           substituters = https://cache.iog.io https://cache.nixos.org/
+  #     - name: build Haskell source code
+  #       run: |
+  #         nix-shell --run 'fls-shake --trace hs'
+  #         rsync -r --exclude={'**/nix-support','**/lib'} _build/hs* docs/
+  #     - name: Upload docs
+  #       if: github.ref == 'refs/heads/master'
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: Docs-ledger-hs
+  #         path: docs
 
   # Ledger-pdf:
   #   runs-on: ubuntu-latest

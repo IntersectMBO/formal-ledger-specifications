@@ -26,9 +26,9 @@ import Data.Binary (Binary)
 
 main :: IO ()
 main = shakeArgs shakeOptions $ do
-  pdfRules
+  pdfRule
+  htmlRule
   hsRule
-  htmlRules
 
 ------------------------------------------------------------------------------
 -- Build rules
@@ -163,25 +163,28 @@ tex2pdf = do
     xelatex
     xelatex
 
+-- | All rules required to generate a pdf
+pdfRule :: Rules ()
+pdfRule = do
+  -- Auxiliary rules
+  lagda2tex
+  tex2pdf
+  tex2texPP
+  copyIn
 
--- | Generate a pdf in _build/pdf
-pdf :: Rules ()
-pdf =
-  _build </> "pdf/*.pdf" %> \out -> do
+  -- Top level pdf rule
+  pdfDist </> "*.pdf" %> \out -> do
     let file = takeFileName out
         proj = dropExtension file
         dep  = _build </> proj </> latexOut </> proj <.> "pdf"
     need [ dep ]
     copyFile' dep out
 
--- | All rules required to generate a pdf
-pdfRules :: Rules ()
-pdfRules = do
-  pdf
-  lagda2tex
-  tex2pdf
-  tex2texPP
-  copyIn
+  phony "cardano-ledger.pdf" $ do
+    need [ pdfDist </> "cardano-ledger.pdf" ]
+
+  phony "conway-ledger.pdf" $ do
+    need [ pdfDist </> "conway-ledger.pdf" ]
 
 -- | Generate a Haskell package for conformance testing
 -- This depends on:
@@ -198,7 +201,7 @@ hsRule = phony "hs" $ do
   -- read and copy the Haskell files in hs-src to _hs
   hsfiles <- getDirectoryFiles "hs-src" [ "//*.hs" ]
   forM_ hsfiles $ \file -> do
-    copyFileChanged ("hs-src" </> file) (_hs </> file)
+    copyFileChanged ("hs-src" </> file) (hsDist </> file)
 
   -- run Agda on the entrypoint and put the results in _build
   cmd_ "agda" [ "-c"
@@ -210,7 +213,7 @@ hsRule = phony "hs" $ do
   -- copy over the Agda-generated MAlonzo files to _hs
   malonzofiles <- getDirectoryFiles _malonzo [ "//*.hs" ]
   forM_ malonzofiles $ \file -> do
-    copyFileChanged (_malonzo </> file) (_hs </> file)
+    copyFileChanged (_malonzo </> file) (hsDist </> file)
 
   -- copy the .cabal file appending the Agda-generated Haskell modules
   let agdafile2hsmodule =
@@ -222,7 +225,7 @@ hsRule = phony "hs" $ do
         . sort
         $ malonzofiles
   cabalfile <- readFileLines $ "hs-src" </> "cardano-ledger-executable-spec.cabal"
-  writeFileLines (_hs </> "cardano-ledger-executable-spec.cabal") (cabalfile ++ hsmodules)
+  writeFileLines (hsDist </> "cardano-ledger-executable-spec.cabal") (cabalfile ++ hsmodules)
 
 -- | Generate the index.html file
 -- For this:
@@ -231,7 +234,7 @@ hsRule = phony "hs" $ do
 -- 3. Call agda on index.agda to generate the html in _htmlOut
 htmlIndex :: Rules ()
 htmlIndex =
-  _htmlOut </> "index.html" %> \out -> do
+  htmlDist </> "index.html" %> \out -> do
 
     -- declare dependencies on all agda files
     lagdafiles <- getDirectoryFiles "src" [ "//*.lagda" ]
@@ -265,7 +268,7 @@ htmlIndex =
     command_ [ Cwd _html ]
              "agda"
              [ "--html"
-             , "--html-dir=" ++ htmlOut
+             , "--html-dir=" ++ "../../" ++ htmlDist
              , "index.agda" ]
 
 -- | Preprocess Agda files to generate the html.
@@ -285,11 +288,16 @@ agda2htmlPP =
               let ilcontents = illiterate lcontents
               writeFileLines out ilcontents
 
--- | All rules required to generate the html
-htmlRules :: Rules ()
-htmlRules = do
+-- | html rule
+htmlRule :: Rules ()
+htmlRule = do
+  -- Auxiliary rules
   htmlIndex
   agda2htmlPP
+
+  -- Top level target
+  phony "html" $ do
+    need [ htmlDist </> "index.html" ]
 
 ------------------------------------------------------------------------------
 -- Build directory paths
@@ -317,20 +325,22 @@ _malonzo, _malonzoGen :: FilePath
 _malonzo    = _build </> malonzo
 _malonzoGen = _build </> malonzoGen
 
-_hs :: FilePath
-_hs = _build </> "hs"
-
-html, htmlPP, htmlOut :: FilePath
+html, htmlPP :: FilePath
 html    = "html"
 htmlPP  = "html.pp"
-htmlOut = "html.out"
 
-_html, _htmlPP, _htmlOut :: FilePath
+_html, _htmlPP :: FilePath
 _html    = _build </> html
 _htmlPP  = _html  </> htmlPP
-_htmlOut = _html  </> htmlOut
 
+-- | Root output directory
+dist :: FilePath
+dist = "dist"
 
+pdfDist, htmlDist, hsDist :: FilePath
+pdfDist  = dist </> "pdf"
+htmlDist = dist </> "html"
+hsDist   = dist </> "hs"
 ------------------------------------------------------------------------------
 -- Shake oracles
 ------------------------------------------------------------------------------

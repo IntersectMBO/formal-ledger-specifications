@@ -89,7 +89,7 @@ in rec
       fileset = ./Shakefile.hs;
     };
     nativeBuildInputs = [ (haskellPackages.ghcWithPackages (ps: with ps;
-                            ([ shake binary deepseq hashable ]))) ];
+                            ([ shake binary deepseq hashable directory ]))) ];
     buildPhase = ''
       ghc -o fls-shake Shakefile.hs -threaded -with-rtsopts -A128M -rtsopts
     '';
@@ -147,11 +147,11 @@ in rec
     buildInputs = [ agdaWithDeps latex python310 fls-shake ];
     buildPhase = ''
       export XDG_CACHE_HOME="$(mktemp -d)"
-      fls-shake --trace "_build/pdf/${project}-ledger.pdf"
+      fls-shake --trace "${project}-ledger.pdf"
     '';
     installPhase = ''
       mkdir "$out"
-      cp "_build/pdf/${project}-ledger.pdf" "$out"
+      cp "dist/pdf/${project}-ledger.pdf" "$out"
     '';
     doInstallCheck = true;
     installCheckPhase = ''
@@ -167,12 +167,11 @@ in rec
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake ];
     buildPhase = ''
-      fls-shake --trace _build/html/html.out/index.html
+      fls-shake --trace html
     '';
     installPhase = ''
       mkdir "$out"
-      cp -r _build/html/html.out "$out"
-      mv "$out/html.out" "$out/html"
+      cp -r dist/html "$out"
     '';
     doInstallCheck = true;
     installCheckPhase = ''
@@ -192,11 +191,11 @@ in rec
     '';
     installPhase = ''
       mkdir "$out"
-      cp -r _build/hs/* "$out"
+      cp -r dist/hs "$out"
     '';
     doInstallCheck = true;
     installCheckPhase = ''
-      test -f "$out/cardano-ledger-executable-spec.cabal"
+      test -f "$out/hs/cardano-ledger-executable-spec.cabal"
     '';
   };
 
