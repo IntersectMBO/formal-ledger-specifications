@@ -37,6 +37,7 @@ jobs:
           path: outputs/_build
 
   reusable-matrix:
+    needs: [formal-ledger-agda]
     strategy:
       matrix:
         targets: [cardano-ledger.pdf, conway-ledger.pdf, html, hs]

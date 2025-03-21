@@ -9,7 +9,6 @@ on:
 
 jobs:
   reusable_workflow_job:
-    needs: [formal-ledger-agda]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,4 +32,3 @@ jobs:
         with:
           name: formal-ledger-${{ inputs.target }}
           path: docs
-
