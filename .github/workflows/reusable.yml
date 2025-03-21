@@ -16,6 +16,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: _build
+      - name: debug
+        run: ls -R
       - uses: cachix/install-nix-action@v20
         with:
           nix_path: nixpkgs=channel:nixos-unstable
