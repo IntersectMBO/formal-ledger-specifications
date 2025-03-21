@@ -42,23 +42,23 @@ jobs:
     with:
       target: hs
 
-  # formal-ledger-cardano-ledger-pdf:
-  #   needs: [formal-ledger-agda]
-  #   uses: ./.github/workflows/reusable.yml
-  #   with:
-  #     target: dist/cardano-ledger.pdf
-  #
-  # formal-ledger-conway-ledger-pdf:
-  #   needs: [formal-ledger-agda]
-  #   uses: ./.github/workflows/reusable.yml
-  #   with:
-  #     target: dist/conway-ledger.pdf
-  #
-  # formal-ledger-html:
-  #   needs: [formal-ledger-agda]
-  #   uses: ./.github/workflows/reusable.yml
-  #   with:
-  #     target: html
+  formal-ledger-cardano-ledger-pdf:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: dist/cardano-ledger.pdf
+
+  formal-ledger-conway-ledger-pdf:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: dist/conway-ledger.pdf
+
+  formal-ledger-html:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: html
   #
       # - name:
       #   if: github.ref == 'refs/heads/master'
