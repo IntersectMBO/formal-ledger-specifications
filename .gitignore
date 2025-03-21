@@ -1,30 +1,8 @@
-## Ignore LaTeX build products
-**/*.aux
-**/*.lof
-**/*.log
-**/*.lot
-**/*.fls
-**/*.out
-**/*.toc
-**/*.fmt
-**/*.fot
-**/*.cb
-**/*.cb2
-**/*.lb
-**/*.ptb
-**/*.xdv
-**/*.pdf
-**/*.fdb_latexmk
-**/auto
-**/*.synctex.gz
+## Ignore build products
+_build/
 
-## Bibliography auxiliary files (bibtex/biblatex/biber):
-**/*.bbl
-**/*.bcf
-**/*.blg
-**/*-blx.aux
-**/*-blx.bib
-**/*.run.xml
+## Ignore shake folder
+.shake/
 
 ## Cabal & Stack
 */dist
@@ -47,12 +25,3 @@ result*
 
 ## macOS
 .DS_Store
-
-## Other
-*.agdai
-dist/
-src/latex/Conway/
-src/latex/EssentialAgda.tex
-src/latex/Ledger/
-src/latex/MidnightExample/
-src/latex/ScriptVerification/
