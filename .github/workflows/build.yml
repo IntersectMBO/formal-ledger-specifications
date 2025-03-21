@@ -67,7 +67,7 @@ jobs:
       target: hs
 
   MAlonzo:
-    needs: [formal-ledger-hs]
+    needs: [hs]
     runs-on: ubuntu-latest
     steps:
       - name: Check if ${{ env.MAlonzo_branch }} exists
