@@ -64,7 +64,7 @@ jobs:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/reusable.yml
     with:
-      target: hs
+      target: html
 
   MAlonzo:
     needs: [hs]
