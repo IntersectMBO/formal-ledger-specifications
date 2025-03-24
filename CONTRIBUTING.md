@@ -109,9 +109,10 @@ compile `fls-shake` and set up Agda and its dependencies see [Setup without
 nix](#setup-without-nix).
 
 `fls-shake` uses three top level directories:
-    - `_build` to store intermediate build objects
-    - `.shake` to store build information
-    - `dist` to store built artifacts
+
+- `_build` to store intermediate build objects
+- `.shake` to store build information
+- `dist` to store built artifacts
 
 ### Building artifacts
 
