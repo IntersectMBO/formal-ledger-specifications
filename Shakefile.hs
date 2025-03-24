@@ -146,6 +146,7 @@ tex2pdf = do
              , AddEnv "TTFONTS" (latexIn ++ "/fonts//:") ]
              "latexmk"
              [ "-halt-on-error"
+             , "-xelatex"
              , "-output-directory=" ++ latexOut
              , proj ]
 
