@@ -140,29 +140,14 @@ tex2pdf = do
     agdasty <- (</> "latex/agda.sty") <$> agdaDataDir (AgdaDataDir ())
     copyFileChanged agdasty (_latexIn </> "agda.sty")
 
-    -- xelatex and biber command
-    let xelatex =
-          command_ [ Cwd $ _proj
-                   , AddEnv "TEXINPUTS" (concat [ latexIn, "//:", latexPP, "//:" ])
-                   , AddEnv "TTFONTS" (latexIn ++ "/fonts//:") ]
-                   "xelatex"
-                   [ "-halt-on-error"
-                   , "-output-directory=" ++ latexOut
-                   , proj ]
-        biber =
-          command_ [ Cwd $ _proj
-                   , AddEnv "TEXINPUTS" (concat [ latexIn, "//:", latexPP, "//:" ]) ]
-                   "biber"
-                   [ "-output-directory=" ++ latexOut
-                   , proj ]
-
-    xelatex
-    biber
-    xelatex
-    xelatex
-    biber
-    xelatex
-    xelatex
+    -- latexmk
+    command_ [ Cwd $ _proj
+             , AddEnv "TEXINPUTS" (concat [ latexIn, "//:", latexPP, "//:" ])
+             , AddEnv "TTFONTS" (latexIn ++ "/fonts//:") ]
+             "latexmk"
+             [ "-halt-on-error"
+             , "-output-directory=" ++ latexOut
+             , proj ]
 
 -- | All rules required to generate a pdf
 pdfRule :: Rules ()
