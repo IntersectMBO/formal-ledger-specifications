@@ -111,7 +111,7 @@ tex2pdf = do
   _build <//> "latex.out/*.pdf" %> \out -> do
     -- define the project and latex build directories
     let proj        = takeBaseName out
-        _proj       = _build </> proj <.> "pdf"
+        _proj       = _build </> proj
         _latexIn    = _proj </> latexIn  -- static inputs
         _latexPP    = _proj </> latexPP  -- postprocessed files
         _latexOut   = _proj </> latexOut -- outputs
@@ -175,9 +175,8 @@ pdfRule = do
 
   -- Top level pdf rule
   dist </> "*.pdf" %> \out -> do
-    let file = takeFileName out
-        proj = dropExtension file
-        dep  = _build </> proj </> latexOut </> file
+    let proj = takeBaseName out
+        dep  = _build </> proj </> latexOut </> proj <.> "pdf"
     need [ dep ]
     copyFile' dep out
 
