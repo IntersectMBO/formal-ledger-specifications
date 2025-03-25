@@ -1,6 +1,14 @@
 \subsection{Witnessing}
 \label{sec:witnessing}
-\modulenote{\LedgerModule{Utxow}}
+\modulenote{\LedgerModule{Utxow}}, in which we define witnessing.
+
+The purpose of witnessing is make sure the intended action is
+authorized by the holder of the signing key.  (For details
+see \textcite[\sectionname~8.3]{shelley-ledger-spec}.)
+\Cref{fig:functions:utxow} defines functions used for witnessing.
+\witsVKeyNeeded{} and \scriptsNeeded{} are now defined by projecting the same
+information out of \credsNeeded{}.  Note that the last component of \credsNeeded{}
+adds the script in the proposal policy only if it is present.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
@@ -18,14 +26,6 @@ open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Certs govStructure
 \end{code}
-
-The purpose of witnessing is make sure the intended action is
-authorized by the holder of the signing key.  (For details
-see \textcite[\sectionname~8.3]{shelley-ledger-spec}.)
-\Cref{fig:functions:utxow} defines functions used for witnessing.
-\witsVKeyNeeded{} and \scriptsNeeded{} are now defined by projecting the same
-information out of \credsNeeded{}.  Note that the last component of \credsNeeded{}
-adds the script in the proposal policy only if it is present.
 
 \allowedLanguages{} has additional conditions for new features in
 Conway. If a transaction contains any votes, proposals, a treasury

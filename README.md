@@ -6,8 +6,8 @@ This repository currently contains the work-in-progress specification for Cardan
 
 Formal Specification | HTML Version | Haskell Tests |
 ----------------------|--------------|---------------|
-[Full Cardano Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/pdfs/cardano-ledger.pdf) | [Ledger.PDF](https://IntersectMBO.github.io/formal-ledger-specifications/html/Ledger.PDF.html) | [UTXOW test](https://IntersectMBO.github.io/formal-ledger-specifications/haskell/Ledger/test/UtxowSpec.hs) |
-[Conway](https://IntersectMBO.github.io/formal-ledger-specifications/pdfs/conway-ledger.pdf) | [Ledger.PDF](https://IntersectMBO.github.io/formal-ledger-specifications/html/Ledger.PDF.html) | [UTXOW test](https://IntersectMBO.github.io/formal-ledger-specifications/haskell/Ledger/test/UtxowSpec.hs) |
+[Full Cardano Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/pdfs/cardano-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/Ledger.html) | [UTXOW test](https://IntersectMBO.github.io/formal-ledger-specifications/haskell/Ledger/test/UtxowSpec.hs) |
+[Conway](https://IntersectMBO.github.io/formal-ledger-specifications/pdfs/conway-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/Ledger.html) | [UTXOW test](https://IntersectMBO.github.io/formal-ledger-specifications/haskell/Ledger/test/UtxowSpec.hs) |
 
 Note: the HTML version of the specification is interactive, but many modules currently contain LaTeX code which is used to generate the PDF. We intend to fix this eventually.
 

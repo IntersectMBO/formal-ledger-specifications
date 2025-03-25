@@ -1,22 +1,14 @@
 \section{Governance Actions}
 \label{sec:governance-actions}
-\modulenote{\LedgerModule{GovernanceActions}}
+\modulenote{\LedgerModule{GovernanceActions}}.
 
-We introduce three distinct bodies that have specific functions in the new governance framework:
+We introduce the following distinct bodies with specific functions in the new governance framework:
 \begin{enumerate}
-\item
-  a constitutional committee  (henceforth called \CC{});
-\item
-  a group of delegate representatives (henceforth called \DReps{});
-\item
-  the stake pool operators (henceforth called \SPOs{}).
-
-In the following figure, \DocHash{} is abstract but in the
-implementation it will be instantiated with a 32-bit hash type (like
-e.g. \ScriptHash{}). We keep it separate because it is used for a
-different purpose.
-
+  \item a constitutional committee (henceforth called \CC{});
+  \item a group of delegate representatives (henceforth called \DReps{});
+  \item the stake pool operators (henceforth called \SPOs{}).
 \end{enumerate}
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -30,11 +22,8 @@ open import Ledger.Prelude hiding (yes; no)
 open import Ledger.Types.GovStructure
 
 module Ledger.GovernanceActions (gs : _) (open GovStructure gs) where
-
--- TODO: this could be generic
-maximum : ℙ ℚ → ℚ
-maximum x = foldl Data.Rational._⊔_ 0ℚ (proj₁ $ finiteness x)
 \end{code}
+
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
@@ -84,7 +73,12 @@ open GovAction public
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
-\Cref{defs:governance} defines several data types used to represent governance actions including:
+\Cref{defs:governance} defines several data types used to represent
+governance actions. The type \DocHash{} is abstract but in the
+implementation it will be instantiated with a 32-bit hash type (like
+e.g.\@ \ScriptHash{}). We keep it separate because it is used for a
+different purpose.
+%
 \begin{itemize}
   \item \GovActionID{}: a unique identifier for a governance action, consisting of the
     \TxId{} of the proposing transaction and an index to identify a proposal within a transaction;
@@ -96,7 +90,9 @@ open GovAction public
   \item \GovAction{} (\defn{governance action}): one of seven possible actions
     (see \cref{fig:types-of-governance-actions} for definitions);
 \end{itemize}
+
 The governance actions carry the following information:
+%
 \begin{itemize}
   \item \UpdateCommittee{}: a map of credentials and terms to add and a set of
     credentials to remove from the committee;
