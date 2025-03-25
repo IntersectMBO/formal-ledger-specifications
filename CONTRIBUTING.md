@@ -85,12 +85,12 @@ fail silently on your local machine if you do that. Just change a few
 characters, run `nix-build -A ledger` and nix will tell you the correct hash to
 put there.
 
-## Building the artifacts
+## Working on the artifacts
 
-`formal-ledger-specifications` is built using a custom system written in the
-Haskell DSL [Shake](https://shakebuild.com/). The file
-[`Shakefile.hs`](Shakefile.hs) contains the source code of the build system. We
-refer to the build-system binary as `fls-shake`.
+The artifacts that `formal-ledger-specifications` provides are built using a
+custom system written in the Haskell DSL [Shake](https://shakebuild.com/). The
+file [`Shakefile.hs`](Shakefile.hs) contains the source code of the build
+system. We refer to the build-system binary as `fls-shake`.
 
 Depending on whether one uses nix or not, the commands given in the rest of this
 instructions are to be run differently:
@@ -103,6 +103,18 @@ instructions are to be run differently:
 
     This ensures that the correct dependencies are in scope.
 
+    As an example, the instructions to build the [html](#html)-hyperlinked Agda
+    code specify to run the command:
+
+    ```
+    fls-shake html
+    ```
+
+    Using nix, the following should be run instead:
+    ```
+    nix-shell --run 'fls-shake html'
+    ```
+
 - For non nix users, the commands are to be executed verbatim, assuming
 `fls-shake` and Agda and its dependencies are setup. For instructions on how to
 compile `fls-shake` and set up Agda and its dependencies see [Setup without
@@ -114,7 +126,7 @@ nix](#setup-without-nix).
 - `.shake` to store build information
 - `dist` to store built artifacts
 
-### Building artifacts
+### Building the artifacts
 
 #### PDF
 
