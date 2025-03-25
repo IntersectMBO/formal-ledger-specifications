@@ -129,7 +129,7 @@ in rec
     '';
     doCheck = true;
     checkPhase = ''
-      sh scripts/checkTypeChecked.sh -m
+      sh scripts/checkTypeChecked.sh
     '';
     installPhase = ''
       mkdir "$out"
