@@ -380,7 +380,7 @@ illiterate = discard
 
 -- | Nary apply
 applyN :: Int -> (a -> a) -> (a -> a)
-applyN 0 _ = error "applyN"
+applyN 0 _ = id
 applyN 1 f = f
 applyN n f = f . applyN (n - 1) f
 
