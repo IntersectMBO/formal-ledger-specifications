@@ -6,6 +6,9 @@ on:
   pull_request:
     branches:
     - master
+  # For running the workflow manually - useful for branches without PRs, for
+  # which CI isn't run automatically
+  workflow_dispatch:
 
 permissions:
   contents: write
