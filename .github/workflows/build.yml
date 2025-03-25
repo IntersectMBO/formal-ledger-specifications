@@ -42,13 +42,13 @@ jobs:
       - name: Commit generated code at ${{ env.MAlonzo_branch }}
         if: github.ref != 'refs/heads/master'
         run: |
-            nix-build -A ledger.hsSrc -j1 -o outputs/MAlonzo
+            nix-build -A ledger.hsSrc -j1 -o outputs
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git stash push
             git fetch origin ${{ env.MAlonzo_branch }} --unshallow
             git checkout ${{ env.MAlonzo_branch }}
-            rsync -r --exclude={'**/nix-support','**/lib'} outputs/MAlonzo/haskell/Ledger/* generated/
+            rsync -r --exclude={'**/nix-support','**/lib'} outputs/hs generated/
             git add -f generated && git commit -m "Generate code for ${{ github.sha }}" || echo "Everything is up-to-date."
       - name: Push ${{ env.MAlonzo_branch }}
         if: github.ref != 'refs/heads/master'
@@ -135,7 +135,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: PDF specs - Ledger
-          path: docs/pdfs/*.pdf
+          path: docs/*.pdf
 
   Uploads:
     needs: [Formal-Ledger, Ledger-hs, Ledger-pdf]
@@ -155,7 +155,27 @@ jobs:
           echo "** Generated PDF files:"; find -L docs/ -name '*.pdf'
           echo "** Generated HTML files:"; find -L docs/ -name '*.html'
           echo "** Generated Haskell files:"; find -L docs/ -name '*.hs'
-          OUT_DIR=docs make staticWebsite
+
+          cat << EOF > docs/index.html
+          <!DOCTYPE html>
+          <html>
+          <body>
+          <h3>PDF specs</h3>
+            <ul>
+              <li><a href="cardano-ledger.pdf">Cardano ledger.pdf</a></li>
+              <li><a href="conway-ledger.pdf">Conway ledger.pdf</a></li>
+          </ul>
+          <h3>HTML specs</h3>
+          <ul>
+            <li><a href="html/Everything.html">Everything.agda</a></li>
+          </ul>
+          <h3>Haskell tests</h3>
+          <ul>
+            <li><a href="hs/UtxowSpec.hs">UtxowSpec.hs</a></li>
+          </ul>
+          </body>
+          </html>
+          EOF
       - name: Add files
         if: github.ref == 'refs/heads/master'
         run: |
