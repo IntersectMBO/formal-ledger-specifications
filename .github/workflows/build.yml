@@ -6,6 +6,9 @@ on:
   pull_request:
     branches:
     - master
+  # For running the workflow manually - useful for branches without PRs, for
+  # which CI isn't run automatically
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -14,7 +17,59 @@ env:
   MAlonzo_branch: ${{ github.event.pull_request.head.ref }}-MAlonzo
 
 jobs:
+  formal-ledger-agda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/0da3c44a9460a26d2025ec3ed2ec60a895eb1114.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Build formalLedger
+        id: formalLedger
+        run: |
+          nix-build -A formalLedger -o outputs
+      - name: Upload agda _build artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: _build
+          path: outputs/_build
+      - name: Upload agda typechecking time artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: typecheck.time
+          path: outputs/typecheck.time
+
+  hs:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: hs
+
+  cardano-ledger-pdf:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: cardano-ledger.pdf
+
+  conway-ledger-pdf:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: conway-ledger.pdf
+
+  html:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/reusable.yml
+    with:
+      target: html
+
   MAlonzo:
+    needs: [hs]
     runs-on: ubuntu-latest
     steps:
       - name: Check if ${{ env.MAlonzo_branch }} exists
@@ -33,22 +88,19 @@ jobs:
           git checkout -b ${{ env.MAlonzo_branch }} origin/MAlonzo-code
           git push origin ${{ env.MAlonzo_branch }}
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v20
+      - name: Download hs artifact
+        uses: actions/download-artifact@v4
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
+          name: hs
       - name: Commit generated code at ${{ env.MAlonzo_branch }}
         if: github.ref != 'refs/heads/master'
         run: |
-            nix-build -A ledger.hsSrc -j1 -o outputs/MAlonzo
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git stash push
             git fetch origin ${{ env.MAlonzo_branch }} --unshallow
             git checkout ${{ env.MAlonzo_branch }}
-            rsync -r --exclude={'**/nix-support','**/lib'} outputs/MAlonzo/haskell/Ledger/* generated/
+            rsync -r hs/* generated/
             git add -f generated && git commit -m "Generate code for ${{ github.sha }}" || echo "Everything is up-to-date."
       - name: Push ${{ env.MAlonzo_branch }}
         if: github.ref != 'refs/heads/master'
@@ -59,103 +111,40 @@ jobs:
             force: false
             directory: .
 
-  Formal-Ledger:
+  github-pages:
+    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v20
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build formalLedger
-        id: formalLedger
-        run: |
-          nix-build -A formalLedger -j1 -o outputs/formalLedger
-          rsync -r --include={'**/*.time'} outputs/formalLedger*/* docs/
-      - name: Upload docs
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Docs-formalLedger
-          path: docs
-      - name: Upload typechecking times
-        if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Typechecking durations - FormalLedger
-          path: docs/*.time
-
-  Ledger-hs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v20
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build ledger
-        id: ledger-hs
-        run: |
-          nix-build -A ledger.hsSrc -j1 -o outputs/ledger
-          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
-      - name: Upload docs
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Docs-ledger-hs
-          path: docs
-
-  Ledger-pdf:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v20
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build ledger
-        id: ledger-pdf
-        run: |
-          echo -n html docs conway | xargs -d' ' -I{} nix-build -A ledger.{} -j1 -o outputs/ledger-{}
-          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
-      - name: Upload docs
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Docs-ledger-pdf
-          path: docs
-      - name: Upload PDF artifacts
-        if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-          name: PDF specs - Ledger
-          path: docs/pdfs/*.pdf
-
-  Uploads:
-    needs: [Formal-Ledger, Ledger-hs, Ledger-pdf]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Download docs
+      - name: Download artifacts
         if: github.ref == 'refs/heads/master'
         uses: actions/download-artifact@v4
         with:
-          pattern: Docs-*
           path: docs
           merge-multiple: true
       - name: Generate main website
         if: github.ref == 'refs/heads/master'
         run: |
-          echo "** Generated PDF files:"; find -L docs/ -name '*.pdf'
-          echo "** Generated HTML files:"; find -L docs/ -name '*.html'
-          echo "** Generated Haskell files:"; find -L docs/ -name '*.hs'
-          OUT_DIR=docs make staticWebsite
+          cat << EOF > docs/index.html
+          <!DOCTYPE html>
+          <html>
+          <body>
+          <h3>PDF specs</h3>
+            <ul>
+              <li><a href="cardano-ledger.pdf">Cardano ledger.pdf</a></li>
+              <li><a href="conway-ledger.pdf">Conway ledger.pdf</a></li>
+          </ul>
+          <h3>HTML specs</h3>
+          <ul>
+            <li><a href="html/Everything.html">Everything.agda</a></li>
+          </ul>
+          <h3>Haskell tests</h3>
+          <ul>
+            <li><a href="hs/UtxowSpec.hs">UtxowSpec.hs</a></li>
+          </ul>
+          </body>
+          </html>
+          EOF
       - name: Add files
         if: github.ref == 'refs/heads/master'
         run: |

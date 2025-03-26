@@ -19,7 +19,8 @@
 
       jobs = {
         inherit (exposed)
-          formalLedger;
+          formalLedger
+          fls-shake;
       } //
         specsDerivationsPackages "ledger";
     in jobs // {

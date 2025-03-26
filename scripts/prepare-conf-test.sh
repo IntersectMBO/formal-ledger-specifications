@@ -6,7 +6,6 @@
 set -o errexit
 set -o nounset
 set -o noglob
-set -o pipefail
 
 usage() {
   script_name="$(basename "$0")"
