@@ -7,9 +7,11 @@ open import Prelude
   hiding ([_,_]; [_]; _*_)
 
 open import Agda.Builtin.FromNat
+open import Class.Show using (Show; show)
 open import Data.Irrelevant using ([_])
 import Data.Rational as ℚ
 open import Data.Rational.Properties
+import Data.Rational.Show as ℚshow
 open import Data.Rational using (ℚ; _≤_; _≤?_; _*_)
 open import Data.Refinement using (Refinement-syntax; value; _,_)
 
@@ -59,6 +61,10 @@ inUnitInterval-* x y ux (0≤y , y≤1) =
 -- UnitInterval: rational number in the unit interval [0, 1].
 UnitInterval : Type
 UnitInterval = [ x ∈ ℚ ∣ inUnitInterval x ]
+
+instance
+  Show-UnitInterval : Show UnitInterval
+  Show-UnitInterval .show = ℚshow.show ∘ value
 
 -- In the cardano-ledger codebase:
 --  unboundRational
