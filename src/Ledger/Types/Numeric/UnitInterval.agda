@@ -7,10 +7,12 @@ open import Prelude
   hiding ([_,_]; [_]; _*_)
 
 open import Agda.Builtin.FromNat
+open import Class.Show using (Show; show)
 open import Class.DecEq.Instances.Extra using (DecEq-Refinement)
 open import Data.Irrelevant using ([_])
 import Data.Rational as ℚ
 open import Data.Rational.Properties
+import Data.Rational.Show as ℚshow
 open import Data.Rational using (ℚ; _≤_; _≤?_; _*_)
 open import Data.Refinement using (Refinement-syntax; value; _,_)
 
@@ -64,6 +66,10 @@ UnitInterval = [ x ∈ ℚ ∣ inUnitInterval x ]
 instance
   DecEq-UnitInterval : DecEq UnitInterval
   DecEq-UnitInterval = DecEq-Refinement ℚ inUnitInterval
+
+instance
+  Show-UnitInterval : Show UnitInterval
+  Show-UnitInterval .show = ℚshow.show ∘ value
 
 -- In the cardano-ledger codebase:
 --  unboundRational
