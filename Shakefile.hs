@@ -199,7 +199,7 @@ hsRule = phony "hs" $ do
   -- copy over the Agda-generated MAlonzo files to _hs
   malonzofiles <- getDirectoryFiles _malonzo [ "//*.hs" ]
   forM_ malonzofiles $ \file -> do
-    copyFileChanged (_malonzo </> file) (hsDist </> file)
+    copyFileChanged (_malonzo </> file) (hsDist </> malonzo </> file)
 
   -- copy the .cabal file appending the Agda-generated Haskell modules
   let agdafile2hsmodule =

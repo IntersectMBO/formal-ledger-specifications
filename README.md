@@ -6,12 +6,10 @@ This repository currently contains the work-in-progress specification for Cardan
 
 | Formal Specification | HTML Version |
 | -------------------- | ------------ |
-| [Full Cardano Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/pdfs/cardano-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/Ledger.html) |
-| [Conway](https://IntersectMBO.github.io/formal-ledger-specifications/pdfs/conway-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/Ledger.html) |
+| [Full Cardano Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/index.html) |
+| [Conway](https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/index.html) |
 
-Note: the HTML version of the specification is interactive, but many modules currently contain LaTeX code which is used to generate the PDF. We intend to fix this eventually.
-
---------------------
+---
 
 ## Building
 
