@@ -66,26 +66,8 @@ jobs:
     with:
       target: html
 
-  package-haskell-code:
-    needs: [hs]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download hs artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: 'hs'
-      - name: Package hs
-        run: |
-          cd hs
-          cabal sdist -o ..
-          cd ..
-      - uses: actions/upload-artifact@v4
-        with:
-          name: cardano-ledger-executable-spec-0.1.0.0
-          path: cardano-ledger-executable-spec-0.1.0.0.tar.gz
-
   upload-artifacts:
-    needs: [formal-ledger-agda, hs, package-haskell-code, conway-ledger-pdf, cardano-ledger-pdf, html]
+    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -106,6 +88,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: '!_build'
+          pattern: '!hs'
           merge-multiple: true
       - name: Generate website
         run: |
