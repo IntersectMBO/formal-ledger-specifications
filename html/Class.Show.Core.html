@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Class.Show.Core</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--without-K</a> <a id="25" class="Symbol">#-}</a>
+<a id="29" class="Keyword">module</a> <a id="36" href="Class.Show.Core.html" class="Module">Class.Show.Core</a> <a id="52" class="Keyword">where</a>
+
+<a id="59" class="Keyword">open</a> <a id="64" class="Keyword">import</a> <a id="71" href="Class.Prelude.html" class="Module">Class.Prelude</a>
+<a id="85" class="Keyword">open</a> <a id="90" class="Keyword">import</a> <a id="97" href="Class.Core.html" class="Module">Class.Core</a>
+
+<a id="109" class="Keyword">record</a> <a id="Show"></a><a id="116" href="Class.Show.Core.html#116" class="Record">Show</a> <a id="121" class="Symbol">(</a><a id="122" href="Class.Show.Core.html#122" class="Bound">A</a> <a id="124" class="Symbol">:</a> <a id="126" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="131" href="Class.Prelude.html#2028" class="Generalizable">ℓ</a><a id="132" class="Symbol">)</a> <a id="134" class="Symbol">:</a> <a id="136" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="141" href="Class.Show.Core.html#131" class="Bound">ℓ</a> <a id="143" class="Keyword">where</a>
+  <a id="151" class="Keyword">constructor</a> <a id="mkShow"></a><a id="163" href="Class.Show.Core.html#163" class="InductiveConstructor">mkShow</a>
+  <a id="172" class="Keyword">field</a> <a id="Show.show"></a><a id="178" href="Class.Show.Core.html#178" class="Field">show</a> <a id="183" class="Symbol">:</a> <a id="185" href="Class.Show.Core.html#122" class="Bound">A</a> <a id="187" class="Symbol">→</a> <a id="189" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
+<a id="196" class="Keyword">open</a> <a id="201" href="Class.Show.Core.html#116" class="Module">Show</a> <a id="206" class="Symbol">⦃...⦄</a> <a id="212" class="Keyword">public</a>
+
+<a id="Show¹"></a><a id="220" href="Class.Show.Core.html#220" class="Function">Show¹</a> <a id="226" class="Symbol">=</a> <a id="228" href="Class.Show.Core.html#116" class="Record">Show</a> <a id="233" href="Class.Core.html#235" class="Function Operator">¹</a>
+<a id="Show²"></a><a id="235" href="Class.Show.Core.html#235" class="Function">Show²</a> <a id="241" class="Symbol">=</a> <a id="243" href="Class.Show.Core.html#116" class="Record">Show</a> <a id="248" href="Class.Core.html#290" class="Function Operator">²</a>
+<a id="Show³"></a><a id="250" href="Class.Show.Core.html#250" class="Function">Show³</a> <a id="256" class="Symbol">=</a> <a id="258" href="Class.Show.Core.html#116" class="Record">Show</a> <a id="263" href="Class.Core.html#355" class="Function Operator">³</a>
+</pre></body></html>
