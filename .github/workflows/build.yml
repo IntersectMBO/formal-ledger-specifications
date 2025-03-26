@@ -1,4 +1,4 @@
-name: Formal Ledger Specs
+name: Build and upload artifacts
 on:
   push:
     branches:
@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 env:
-  MAlonzo_branch: ${{ github.event.pull_request.head.ref }}-MAlonzo
+  artifacts_branch: ${{ github.event.pull_request.head.ref }}-artifacts
 
 jobs:
   formal-ledger-agda:
@@ -32,13 +32,11 @@ jobs:
         run: |
           nix-build -A formalLedger -o outputs
       - name: Upload agda _build artifact
-        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: _build
           path: outputs/_build
       - name: Upload agda typechecking time artifact
-        if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4
         with:
           name: typecheck.time
@@ -46,117 +44,123 @@ jobs:
 
   hs:
     needs: [formal-ledger-agda]
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/build_artifact.yml
     with:
       target: hs
 
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/build_artifact.yml
     with:
       target: cardano-ledger.pdf
 
   conway-ledger-pdf:
     needs: [formal-ledger-agda]
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/build_artifact.yml
     with:
       target: conway-ledger.pdf
 
   html:
     needs: [formal-ledger-agda]
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/build_artifact.yml
     with:
       target: html
 
-  MAlonzo:
+  package-haskell-code:
     needs: [hs]
     runs-on: ubuntu-latest
     steps:
-      - name: Check if ${{ env.MAlonzo_branch }} exists
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ env.MAlonzo_branch }}
-        id: MAlonzo-exists
-        continue-on-error: true
-        if: github.ref != 'refs/heads/master'
-      - uses: actions/checkout@v4
-        with:
-          ref: MAlonzo-code
-      - name: Create branch ${{ env.MAlonzo_branch }} for generated code
-        if: github.ref != 'refs/heads/master' && steps.MAlonzo-exists.outcome == 'failure'
-        run: |
-          git checkout -b ${{ env.MAlonzo_branch }} origin/MAlonzo-code
-          git push origin ${{ env.MAlonzo_branch }}
-      - uses: actions/checkout@v4
       - name: Download hs artifact
         uses: actions/download-artifact@v4
         with:
-          name: hs
-      - name: Commit generated code at ${{ env.MAlonzo_branch }}
-        if: github.ref != 'refs/heads/master'
+          name: 'hs'
+      - name: Package hs
         run: |
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git stash push
-            git fetch origin ${{ env.MAlonzo_branch }} --unshallow
-            git checkout ${{ env.MAlonzo_branch }}
-            rsync -r hs/* generated/
-            git add -f generated && git commit -m "Generate code for ${{ github.sha }}" || echo "Everything is up-to-date."
-      - name: Push ${{ env.MAlonzo_branch }}
-        if: github.ref != 'refs/heads/master'
-        uses: ad-m/github-push-action@v0.6.0
+          cd hs
+          cabal sdist -o ..
+          cd ..
+      - uses: actions/upload-artifact@v4
         with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            branch: ${{ env.MAlonzo_branch }}
-            force: false
-            directory: .
+          name: cardano-ledger-executable-spec-0.1.0.0
+          path: cardano-ledger-executable-spec-0.1.0.0.tar.gz
 
-  github-pages:
-    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
+  upload-artifacts:
+    needs: [formal-ledger-agda, hs, package-haskell-code, conway-ledger-pdf, cardano-ledger-pdf, html]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      # Checkout env.artifacts_branch if it already exists
+      # otherwise create a new orphan branch.
+      # Lastly, remove all files from the repo
+      - name: Checkout ${{ env.artifacts_branch }}
+        run: |
+          if [[ -n $(git ls-remote --heads origin ${{ env.artifacts_branch }}) ]]; then
+            git checkout ${{ env.artifacts_branch }}
+          else
+            git checkout --orphan ${{ env.artifacts_branch }}
+          fi
+          git rm -rf .
       - name: Download artifacts
-        if: github.ref == 'refs/heads/master'
         uses: actions/download-artifact@v4
         with:
-          path: docs
+          pattern: '!_build'
           merge-multiple: true
-      - name: Generate main website
-        if: github.ref == 'refs/heads/master'
+      - name: Generate website
         run: |
-          cat << EOF > docs/index.html
+          cat << EOF > index.html
           <!DOCTYPE html>
           <html>
+          <head>
+           <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <meta name="Author" content="IOHK">
+           <title>Formal Ledger Specifications</title>
+           <style type="text/css">
+            BODY { font-family : monospace, sans-serif;  color: black;}
+            P { font-family : monospace, sans-serif; color: black; margin:0px; padding: 0px;}
+            A:visited { text-decoration : none; margin : 0px; padding : 0px;}
+            A:link    { text-decoration : none; margin : 0px; padding : 0px;}
+            A:hover   { text-decoration: underline; background-color : yellow; margin : 0px; padding : 0px;}
+            A:active  { margin : 0px; padding : 0px;}
+            .VERSION { font-size: small; font-family : arial, sans-serif; }
+           </style>
+          </head>
           <body>
-          <h3>PDF specs</h3>
-            <ul>
-              <li><a href="cardano-ledger.pdf">Cardano ledger.pdf</a></li>
-              <li><a href="conway-ledger.pdf">Conway ledger.pdf</a></li>
-          </ul>
-          <h3>HTML specs</h3>
-          <ul>
-            <li><a href="html/Everything.html">Everything.agda</a></li>
-          </ul>
-          <h3>Haskell tests</h3>
-          <ul>
-            <li><a href="hs/UtxowSpec.hs">UtxowSpec.hs</a></li>
-          </ul>
+          	<h1>Directory Tree</h1><p>
+          EOF
+
+          tree -H '.'                     \
+               -L 1                       \
+               --dirsfirst                \
+               --hintro=/dev/null         \
+               --houtro=/dev/null         \
+               --metafirst                \
+               --charset utf-8            \
+               --timefmt '%d-%b-%Y %H:%M' \
+               -I "index.html"            \
+               -I "hs"                    \
+               -h -D --du                 \
+               >> index.html
+
+          cat << EOF >> index.html
+          	<hr>
+          	<p class="VERSION">
+              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a>
+          	</p>
           </body>
           </html>
           EOF
-      - name: Add files
-        if: github.ref == 'refs/heads/master'
+
+      - name: Commit artifacts at ${{ env.artifacts_branch }}
         run: |
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git add -f docs/
-            git commit -m "Updated for ${{ github.sha }}"
-      - name: Push to gh-pages
-        if: github.ref == 'refs/heads/master'
+            git add -A
+            git commit -m "Artifacts generated from ${{ github.sha }}"
+      - name: Push ${{ env.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            branch: gh-pages
+            branch: ${{ env.artifacts_branch }}
             force: true
-            directory: .
