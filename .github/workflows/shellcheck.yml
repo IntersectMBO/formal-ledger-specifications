@@ -28,7 +28,7 @@ jobs:
         with:
           packages: shellcheck
           script: |
-            printf "Checking that shellcheck on all scripts.\n"
+            printf "Checking shellcheck on all scripts.\n"
 
             git ls-files scripts/       \
               | grep '\.sh'             \
