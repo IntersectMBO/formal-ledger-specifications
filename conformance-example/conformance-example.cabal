@@ -1,5 +1,5 @@
 cabal-version:      2.4
-name:               cardano-ledger-executable-spec
+name:               conformance-example
 version:            0.1.0.0
 synopsis:
 
@@ -9,7 +9,7 @@ homepage:
 
 -- A URL where users can report bugs.
 -- bug-reports:
-license:            NONE
+license:            Apache-2.0
 author:             Andre Knispel
 maintainer:         andre.knispel@iohk.io
 
@@ -27,13 +27,19 @@ common globalOptions
     ghc-options:
         -Wno-overlapping-patterns
 
-library
+executable test
     import: globalOptions
-    hs-source-dirs: .
-    exposed-modules:
-        Lib
-    build-depends:
-        text,
-        ieee
--- This will be generated automatically when building with nix
+    hs-source-dirs: test
+    main-is: Spec.hs
     other-modules:
+        UtxowSpec
+    build-depends:
+        cardano-ledger-executable-spec,
+        hspec,
+        HUnit,
+        text
+    build-tool-depends: hspec-discover:hspec-discover
+    ghc-options:
+        -Wall
+        -threaded -rtsopts -with-rtsopts=-N
+        -fno-warn-type-defaults
