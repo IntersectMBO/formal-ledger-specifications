@@ -7,6 +7,7 @@ open import Prelude
   hiding ([_,_]; [_]; _*_)
 
 open import Agda.Builtin.FromNat
+open import Class.DecEq.Instances.Extra using (DecEq-Refinement)
 open import Data.Irrelevant using ([_])
 import Data.Rational as ℚ
 open import Data.Rational.Properties
@@ -59,6 +60,10 @@ inUnitInterval-* x y ux (0≤y , y≤1) =
 -- UnitInterval: rational number in the unit interval [0, 1].
 UnitInterval : Type
 UnitInterval = [ x ∈ ℚ ∣ inUnitInterval x ]
+
+instance
+  DecEq-UnitInterval : DecEq UnitInterval
+  DecEq-UnitInterval = DecEq-Refinement ℚ inUnitInterval
 
 -- In the cardano-ledger codebase:
 --  unboundRational
