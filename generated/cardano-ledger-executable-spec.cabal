@@ -145,6 +145,7 @@ library
         MAlonzo.Code.Class.DecEq
         MAlonzo.Code.Class.DecEq.Core
         MAlonzo.Code.Class.DecEq.Instances
+        MAlonzo.Code.Class.DecEq.Instances.Extra
         MAlonzo.Code.Class.Decidable
         MAlonzo.Code.Class.Decidable.Core
         MAlonzo.Code.Class.Decidable.Instances
@@ -508,6 +509,8 @@ library
         MAlonzo.Code.Ledger.Transaction
         MAlonzo.Code.Ledger.Types.Epoch
         MAlonzo.Code.Ledger.Types.GovStructure
+        MAlonzo.Code.Ledger.Types.Numeric
+        MAlonzo.Code.Ledger.Types.Numeric.UnitInterval
         MAlonzo.Code.Ledger.Utxo
         MAlonzo.Code.Ledger.Utxow
         MAlonzo.Code.Level
@@ -623,8 +626,10 @@ library
         MAlonzo.Code.Tactic.Derive.DecEq
         MAlonzo.Code.Tactic.Derive.Show
         MAlonzo.Code.Tactic.Derive.TestTypes
+        MAlonzo.Code.Tactic.EquationalReasoning
         MAlonzo.Code.Tactic.GenError
         MAlonzo.Code.Tactic.Inline
+        MAlonzo.Code.Tactic.MonoidSolver
         MAlonzo.Code.Tactic.Premises
         MAlonzo.Code.Tactic.Substitute
         MAlonzo.Code.Text.Format

@@ -40,103 +40,103 @@ d_GovActionID_152 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
 d_GovActionID_152 = erased
 -- Ledger.Ratify.Properties._._⊢_⇀⦇_,RATIFIES⦈_
-d__'8866'_'8640''10631'_'44'RATIFIES'10632'__1666 ::
+d__'8866'_'8640''10631'_'44'RATIFIES'10632'__1674 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 -> ()
-d__'8866'_'8640''10631'_'44'RATIFIES'10632'__1666 = erased
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 -> ()
+d__'8866'_'8640''10631'_'44'RATIFIES'10632'__1674 = erased
 -- Ledger.Ratify.Properties._._⊢_⇀⦇_,RATIFY⦈_
-d__'8866'_'8640''10631'_'44'RATIFY'10632'__1668 a0 a1 a2 a3 a4 = ()
+d__'8866'_'8640''10631'_'44'RATIFY'10632'__1676 a0 a1 a2 a3 a4 = ()
 -- Ledger.Ratify.Properties._.RatifyState
-d_RatifyState_1688 a0 = ()
+d_RatifyState_1696 a0 = ()
 -- Ledger.Ratify.Properties._.To-RatifyState
-d_To'45'RatifyState_1692 ::
+d_To'45'RatifyState_1700 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Class.To.T_To_8
-d_To'45'RatifyState_1692 ~v0 = du_To'45'RatifyState_1692
-du_To'45'RatifyState_1692 :: MAlonzo.Code.Class.To.T_To_8
-du_To'45'RatifyState_1692
-  = coe MAlonzo.Code.Ledger.Ratify.du_To'45'RatifyState_2026
+d_To'45'RatifyState_1700 ~v0 = du_To'45'RatifyState_1700
+du_To'45'RatifyState_1700 :: MAlonzo.Code.Class.To.T_To_8
+du_To'45'RatifyState_1700
+  = coe MAlonzo.Code.Ledger.Ratify.du_To'45'RatifyState_2038
 -- Ledger.Ratify.Properties._.acceptConds
-d_acceptConds_1694 ::
+d_acceptConds_1702 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> ()
-d_acceptConds_1694 = erased
+d_acceptConds_1702 = erased
 -- Ledger.Ratify.Properties._.RatifyState.delay
-d_delay_1766 ::
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 -> Bool
-d_delay_1766 v0
-  = coe MAlonzo.Code.Ledger.Ratify.d_delay_2006 (coe v0)
+d_delay_1774 ::
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 -> Bool
+d_delay_1774 v0
+  = coe MAlonzo.Code.Ledger.Ratify.d_delay_2018 (coe v0)
 -- Ledger.Ratify.Properties._.RatifyState.es
-d_es_1768 ::
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
-  MAlonzo.Code.Ledger.Enact.T_EnactState_826
-d_es_1768 v0 = coe MAlonzo.Code.Ledger.Ratify.d_es_2002 (coe v0)
+d_es_1776 ::
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
+  MAlonzo.Code.Ledger.Enact.T_EnactState_834
+d_es_1776 v0 = coe MAlonzo.Code.Ledger.Ratify.d_es_2014 (coe v0)
 -- Ledger.Ratify.Properties._.RatifyState.removed
-d_removed_1770 ::
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+d_removed_1778 ::
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_removed_1770 v0
-  = coe MAlonzo.Code.Ledger.Ratify.d_removed_2004 (coe v0)
+d_removed_1778 v0
+  = coe MAlonzo.Code.Ledger.Ratify.d_removed_2016 (coe v0)
 -- Ledger.Ratify.Properties.Implementation.exp?
-d_exp'63'_1844 ::
+d_exp'63'_1852 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_exp'63'_1844 v0 v1 ~v2 v3 = du_exp'63'_1844 v0 v1 v3
-du_exp'63'_1844 ::
+d_exp'63'_1852 v0 v1 ~v2 v3 = du_exp'63'_1852 v0 v1 v3
+du_exp'63'_1852 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_exp'63'_1844 v0 v1 v2
+du_exp'63'_1852 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Ratify.d_expired'63'_2560 (coe v0)
-      (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1982 (coe v1))
+      MAlonzo.Code.Ledger.Ratify.d_expired'63'_2580 (coe v0)
+      (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1994 (coe v1))
       (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2))
 -- Ledger.Ratify.Properties.Implementation.acceptConds?
-d_acceptConds'63'_1850 ::
+d_acceptConds'63'_1858 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_acceptConds'63'_1850 v0 v1 v2 ~v3 v4
-  = du_acceptConds'63'_1850 v0 v1 v2 v4
-du_acceptConds'63'_1850 ::
+d_acceptConds'63'_1858 v0 v1 v2 ~v3 v4
+  = du_acceptConds'63'_1858 v0 v1 v2 v4
+du_acceptConds'63'_1858 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_acceptConds'63'_1850 v0 v1 v2 v3
+du_acceptConds'63'_1858 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
       (coe
-         MAlonzo.Code.Ledger.Ratify.d_accepted'63'_2544 (coe v0) (coe v1)
-         (coe MAlonzo.Code.Ledger.Ratify.d_es_2002 (coe v2))
+         MAlonzo.Code.Ledger.Ratify.d_accepted'63'_2564 (coe v0) (coe v1)
+         (coe MAlonzo.Code.Ledger.Ratify.d_es_2014 (coe v2))
          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
       (coe
          MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
          (coe
             MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'8594''45'dec__96
             (coe
-               MAlonzo.Code.Ledger.Ratify.d_delayed'63'_2500 (coe v0)
+               MAlonzo.Code.Ledger.Ratify.d_delayed'63'_2520 (coe v0)
                (coe
-                  MAlonzo.Code.Ledger.GovernanceActions.d_action_782
+                  MAlonzo.Code.Ledger.GovernanceActions.d_action_790
                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
                (coe
-                  MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_784
+                  MAlonzo.Code.Ledger.GovernanceActions.d_prevAction_792
                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
-               (coe MAlonzo.Code.Ledger.Ratify.d_es_2002 (coe v2))
-               (coe MAlonzo.Code.Ledger.Ratify.d_delay_2006 (coe v2)))
+               (coe MAlonzo.Code.Ledger.Ratify.d_es_2014 (coe v2))
+               (coe MAlonzo.Code.Ledger.Ratify.d_delay_2018 (coe v2)))
             (coe
                MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
                (coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8)
@@ -145,38 +145,38 @@ du_acceptConds'63'_1850 v0 v1 v2 v3
             MAlonzo.Code.Interface.ComputationalRelation.du_Computational'8658'Dec''_696
             (coe
                MAlonzo.Code.Class.To.d_'10214'_'10215'_16
-               (coe MAlonzo.Code.Ledger.Enact.du_To'45'EnactEnv_848)
+               (coe MAlonzo.Code.Ledger.Enact.du_To'45'EnactEnv_856)
                (coe
                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
                   (coe
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                     (coe MAlonzo.Code.Ledger.Ratify.d_treasury_1988 (coe v1))
-                     (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1982 (coe v1)))))
-            (coe MAlonzo.Code.Ledger.Ratify.d_es_2002 (coe v2))
+                     (coe MAlonzo.Code.Ledger.Ratify.d_treasury_2000 (coe v1))
+                     (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1994 (coe v1)))))
+            (coe MAlonzo.Code.Ledger.Ratify.d_es_2014 (coe v2))
             (coe
-               MAlonzo.Code.Ledger.GovernanceActions.d_action_782
+               MAlonzo.Code.Ledger.GovernanceActions.d_action_790
                (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))
             (coe
-               MAlonzo.Code.Ledger.GovernanceActions.Properties.d_Computational'45'ENACT_898
+               MAlonzo.Code.Ledger.GovernanceActions.Properties.d_Computational'45'ENACT_906
                (coe
-                  MAlonzo.Code.Ledger.Transaction.d_govStructure_2330 (coe v0)))))
+                  MAlonzo.Code.Ledger.Transaction.d_govStructure_2346 (coe v0)))))
 -- Ledger.Ratify.Properties.Implementation.RATIFY-total
-d_RATIFY'45'total_1854 ::
+d_RATIFY'45'total_1862 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RATIFY'45'total_1854 v0 v1 v2 v3
+d_RATIFY'45'total_1862 v0 v1 v2 v3
   = let v4
           = coe
-              du_acceptConds'63'_1850 (coe v0) (coe v1) (coe v2) (coe v3) in
+              du_acceptConds'63'_1858 (coe v0) (coe v1) (coe v2) (coe v3) in
     coe
       (let v5
-             = MAlonzo.Code.Ledger.Ratify.d_expired'63'_2560
+             = MAlonzo.Code.Ledger.Ratify.d_expired'63'_2580
                  (coe v0)
-                 (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1982 (coe v1))
+                 (coe MAlonzo.Code.Ledger.Ratify.d_currentEpoch_1994 (coe v1))
                  (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)) in
        coe
          (case coe v4 of
@@ -195,7 +195,7 @@ d_RATIFY'45'total_1854 v0 v1 v2 v3
                                                       (coe
                                                          MAlonzo.Code.Class.To.d_'10214'_'10215'_16
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Ratify.du_To'45'RatifyState_2026)
+                                                            MAlonzo.Code.Ledger.Ratify.du_To'45'RatifyState_2038)
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe v13)
@@ -219,17 +219,17 @@ d_RATIFY'45'total_1854 v0 v1 v2 v3
                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
                                                                         v3)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Ratify.d_removed_2004
+                                                                        MAlonzo.Code.Ledger.Ratify.d_removed_2016
                                                                         (coe v2))))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Ratify.du_delayingAction_2374
+                                                                  MAlonzo.Code.Ledger.Ratify.du_delayingAction_2394
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.d_action_782
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.d_action_790
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                         (coe v3)))))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Ratify.C_RATIFY'45'Accept_2590
+                                                         MAlonzo.Code.Ledger.Ratify.C_RATIFY'45'Accept_2610
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                             (coe v8) (coe v14)))
@@ -249,11 +249,11 @@ d_RATIFY'45'total_1854 v0 v1 v2 v3
                                                   (coe
                                                      MAlonzo.Code.Class.To.d_'10214'_'10215'_16
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Ratify.du_To'45'RatifyState_2026)
+                                                        MAlonzo.Code.Ledger.Ratify.du_To'45'RatifyState_2038)
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Ratify.d_es_2002
+                                                           MAlonzo.Code.Ledger.Ratify.d_es_2014
                                                            (coe v2))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -275,13 +275,13 @@ d_RATIFY'45'total_1854 v0 v1 v2 v3
                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
                                                                     v3)
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Ratify.d_removed_2004
+                                                                    MAlonzo.Code.Ledger.Ratify.d_removed_2016
                                                                     (coe v2))))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Ratify.d_delay_2006
+                                                              MAlonzo.Code.Ledger.Ratify.d_delay_2018
                                                               (coe v2)))))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Ratify.C_RATIFY'45'Reject_2598
+                                                     MAlonzo.Code.Ledger.Ratify.C_RATIFY'45'Reject_2618
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                         erased (coe v10)))
@@ -293,120 +293,120 @@ d_RATIFY'45'total_1854 v0 v1 v2 v3
                                               (coe
                                                  MAlonzo.Code.Class.To.d_'10214'_'10215'_16
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Ratify.du_To'45'RatifyState_2026)
+                                                    MAlonzo.Code.Ledger.Ratify.du_To'45'RatifyState_2038)
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Ratify.d_es_2002
+                                                       MAlonzo.Code.Ledger.Ratify.d_es_2014
                                                        (coe v2))
                                                     (coe
                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Ratify.d_removed_2004
+                                                          MAlonzo.Code.Ledger.Ratify.d_removed_2016
                                                           (coe v2))
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Ratify.d_delay_2006
+                                                          MAlonzo.Code.Ledger.Ratify.d_delay_2018
                                                           (coe v2)))))
                                               (coe
-                                                 MAlonzo.Code.Ledger.Ratify.C_RATIFY'45'Continue_2606
+                                                 MAlonzo.Code.Ledger.Ratify.C_RATIFY'45'Continue_2626
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                     erased erased)))
                              _ -> MAlonzo.RTE.mazUnreachableError)
             _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Ratify.Properties.Implementation.computeProof
-d_computeProof_1872 ::
+d_computeProof_1880 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_1872 v0 v1 v2 v3
+d_computeProof_1880 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_success_42
-      (coe d_RATIFY'45'total_1854 (coe v0) (coe v1) (coe v2) (coe v3))
+      (coe d_RATIFY'45'total_1862 (coe v0) (coe v1) (coe v2) (coe v3))
 -- Ledger.Ratify.Properties.Implementation.RATIFY-completeness
-d_RATIFY'45'completeness_1876 ::
+d_RATIFY'45'completeness_1884 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
-  MAlonzo.Code.Ledger.Ratify.T__'8866'_'8640''10631'_'44'RATIFY'10632'__2578 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
+  MAlonzo.Code.Ledger.Ratify.T__'8866'_'8640''10631'_'44'RATIFY'10632'__2598 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_RATIFY'45'completeness_1876 = erased
+d_RATIFY'45'completeness_1884 = erased
 -- Ledger.Ratify.Properties.Implementation.completeness
-d_completeness_1934 ::
+d_completeness_1942 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
-  MAlonzo.Code.Ledger.Ratify.T__'8866'_'8640''10631'_'44'RATIFY'10632'__2578 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
+  MAlonzo.Code.Ledger.Ratify.T__'8866'_'8640''10631'_'44'RATIFY'10632'__2598 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_1934 = erased
+d_completeness_1942 = erased
 -- Ledger.Ratify.Properties.Computational-RATIFY
-d_Computational'45'RATIFY_1936 ::
+d_Computational'45'RATIFY_1944 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'RATIFY_1936 v0
+d_Computational'45'RATIFY_1944 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_1872 (coe v0))
+      (d_computeProof_1880 (coe v0))
 -- Ledger.Ratify.Properties.Computational-RATIFIES
-d_Computational'45'RATIFIES_1938 ::
+d_Computational'45'RATIFIES_1946 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'RATIFIES_1938 v0
+d_Computational'45'RATIFIES_1946 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'_774
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'Id_738)
-      (coe d_Computational'45'RATIFY_1936 (coe v0))
+      (coe d_Computational'45'RATIFY_1944 (coe v0))
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_726)
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45''8869'_726)
 -- Ledger.Ratify.Properties.RATIFIES-total
-d_RATIFIES'45'total_1948 ::
+d_RATIFIES'45'total_1956 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RATIFIES'45'total_1948 v0 v1 v2 v3
+d_RATIFIES'45'total_1956 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Interface.STS.du_ReflexiveTransitiveClosure'45'total_148
       (coe
          (\ v4 v5 v6 ->
-            d_RATIFY'45'total_1854 (coe v0) (coe v4) (coe v5) (coe v6)))
+            d_RATIFY'45'total_1862 (coe v0) (coe v4) (coe v5) (coe v6)))
       (coe v1) (coe v2) (coe v3)
 -- Ledger.Ratify.Properties.RATIFIES-complete
-d_RATIFIES'45'complete_1958 ::
+d_RATIFIES'45'complete_1966 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__68 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_RATIFIES'45'complete_1958 = erased
+d_RATIFIES'45'complete_1966 = erased
 -- Ledger.Ratify.Properties.RATIFIES-total'
-d_RATIFIES'45'total''_1968 ::
+d_RATIFIES'45'total''_1976 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RATIFIES'45'total''_1968 v0 v1 v2 v3
-  = coe d_RATIFIES'45'total_1948 (coe v0) (coe v1) (coe v2) (coe v3)
+d_RATIFIES'45'total''_1976 v0 v1 v2 v3
+  = coe d_RATIFIES'45'total_1956 (coe v0) (coe v1) (coe v2) (coe v3)
 -- Ledger.Ratify.Properties.RATIFIES-complete'
-d_RATIFIES'45'complete''_1978 ::
+d_RATIFIES'45'complete''_1986 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1964 ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyEnv_1976 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Ledger.Ratify.T_RatifyState_1994 ->
+  MAlonzo.Code.Ledger.Ratify.T_RatifyState_2006 ->
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__68 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_RATIFIES'45'complete''_1978 = erased
+d_RATIFIES'45'complete''_1986 = erased
