@@ -88,7 +88,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           pattern: '!_build'
-          pattern: '!hs'
           merge-multiple: true
       - name: Generate website
         run: |
