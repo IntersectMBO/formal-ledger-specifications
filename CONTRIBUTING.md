@@ -182,50 +182,79 @@ are stored under `_build/html`. The structure of `_build/html` is as follows:
 literate Agda files are `illiterated`
 - `html.out` contains the output html
 
+---
+
 ## Setup without nix
 
 ### Agda and its dependencies
 
-- Install Agda version `2.7.0` (e.g. follow the instructions in
-<https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda>).
++  Install Agda version `2.7.0` (e.g. follow the instructions in
+   <https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda>).
 
-- In a folder `LIB`, clone the dependencies
-    + [agda-stdlib](https://github.com/agda/agda-stdlib)
-    + [agda-stdlib-classes](https://github.com/agda/agda-stdlib-classes)
-    + [agda-stdlib-meta](https://github.com/agda/agda-stdlib-meta)
-    + [agda-sets](https://github.com/input-output-hk/agda-sets)
++  In a folder `LIB`, clone the dependencies
+   + [agda-stdlib](https://github.com/agda/agda-stdlib)
+   + [agda-stdlib-classes](https://github.com/agda/agda-stdlib-classes)
+   + [agda-stdlib-meta](https://github.com/agda/agda-stdlib-meta)
+   + [agda-sets](https://github.com/input-output-hk/agda-sets)
 
-and checkout the commits/tags found in `default.nix` (e.g. `v2.1.1` for `agda-stdlib-meta`).
+   ```
+   mkdir -p LIB; cd LIB
+   git clone --config advice.detachedHead=false --single-branch \
+     -b "v2.2" https://github.com/agda/agda-stdlib.git
+   git clone --config advice.detachedHead=false --single-branch \
+     -b "v2.0" https://github.com/agda/agda-stdlib-classes.git
+   git clone --config advice.detachedHead=false --single-branch \
+     -b "v2.1.1" https://github.com/agda/agda-stdlib-meta.git
+   git clone --config advice.detachedHead=false --single-branch \
+     -b "master" https://github.com/input-output-hk/agda-sets.git
+   ```
 
-- Create a file `LIB/libraries` with the following content:
-```
-LIB/agda-stdlib/standard-library.agda-lib
-LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
-LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
-LIB/agda-sets/abstract-set-theory.agda-lib
-```
++  Create a file `LIB/libraries` with the following content:
 
-- Use `AGDA_DIR=LIB agda` instead of `agda`.
-  For example:
-    - To typecheck the formal specification, run:
-    ```
-    AGDA_DIR=LIB agda src/Everything.agda
-    ```
+   ```
+   LIB/agda-stdlib/standard-library.agda-lib
+   LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
+   LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
+   LIB/agda-sets/abstract-set-theory.agda-lib
+   ```
 
-    - To build the `conway-ledger.pdf` artifact, run:
-    ```
-    AGDA_DIR=LIB fls-shake conway-ledger.pdf
-    ```
++  Use `AGDA_DIR=LIB agda` instead of `agda`.
+
+   For example:
+
+    +  To typecheck the formal specification, run:
+
+       ```
+       AGDA_DIR=LIB agda src/Everything.agda
+       ```
+
+    +  To build the `conway-ledger.pdf` artifact, run:
+
+       ```
+       AGDA_DIR=LIB fls-shake conway-ledger.pdf
+       ```
+
+---
 
 ### `fls-shake`
 
-`fls-shake` can be compiled the file
-[`Shakefile.hs`](Shakefile.hs) using GHC.
+`fls-shake` can be compiled from the file [`Shakefile.hs`](Shakefile.hs) using GHC.
 
-For this, do the same as the derivation `fls-shake` in
-[default.nix](default.nix):
+For this, do the same as the derivation `fls-shake` in [default.nix](default.nix):
 
-- Install the packages it depends upon, which are listed under `nativeBuildInputs`
++  Install the packages it depends upon, which are listed under `nativeBuildInputs`
+
+   haskellPackages.ghcWithPackages (ps: with ps;
+                            ([ shake binary deepseq hashable ]))) ];
+    buildPhase = ''
+      ghc -o fls-shake Shakefile.hs -threaded
+    '';
+    installPhase = ''
+      mkdir -p "$out/bin"
+      cp fls-shake "$out/bin/"
+    '';
+  };
+
 
 - Compile using the command under `buildPhase`
 
