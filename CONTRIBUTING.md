@@ -246,8 +246,6 @@ are stored under `_build/html`. The structure of `_build/html` is as follows:
        AGDA_DIR=LIB fls-shake conway-ledger.pdf
        ```
 
----
-
 ### `fls-shake`
 
 When making nontrivial changes to the Agda code or its documentation,
@@ -318,7 +316,7 @@ For Ubuntu users not using Nix, compile `fls-shake` by taking the following step
     ```
     cabal run fls-shake -- cardano-ledger.pdf
     ```
-    (Alternatively, run `./result/bin/fls-shake cardano-ledger.pdf`.)
+    Alternatively, `./result/bin/fls-shake cardano-ledger.pdf`.
 
     Here is a list of commands for the various targets that `fls-shake` can build:
     
@@ -330,13 +328,13 @@ For Ubuntu users not using Nix, compile `fls-shake` by taking the following step
     ```    
 ---
 
-### 🔄 Nix-based Alternative (Recommended)
+### Setup with Nix (Recommended)
 
 If you're using Nix or Flakes, you can build everything reproducibly with:
 
 ```bash
 nix build
-./result/bin/fls-shake conway-ledger.pdf
+./result/bin/fls-shake cardano-ledger.pdf
 ```
 
 This guarantees exact dependency versions and UTF-8-safe execution.
