@@ -13,9 +13,6 @@ on:
 permissions:
   contents: write
 
-env:
-  artifacts_branch: ${{ github.event.pull_request.head.ref }}-artifacts
-
 jobs:
   formal-ledger-agda:
     runs-on: ubuntu-latest
@@ -67,23 +64,40 @@ jobs:
       target: html
 
   upload-artifacts:
+    # This job runs only if the workflow has not been manually dispached
+    if: ${{ github.event_name != 'workflow_dispatch' }}
     needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      - name: Set artifacts_branch variable
+        id: set-artifacts-branch
+        run: |
+          printf "Set the artifacts branch name"
+          if [[ -n "${{ github.event.pull_request.head.ref }}" ]]; then
+            printf "This workflow was triggered by a PR to master\n"
+            echo "artifacts_branch=${{ github.event.pull_request.head.ref }}-artifacts" >> $GITHUB_OUTPUT
+            printf "artifacts_branch: %s" "${{ github.event.pull_request.head.ref }}-artifacts\n"
+          else
+            printf "This workflow was triggered by a push event to master\n"
+            echo "artifacts_branch=master-artifacts" >> $GITHUB_OUTPUT
+            printf "artifacts_branch: %s\n" "master-artifacts"
+          fi
       # Checkout env.artifacts_branch if it already exists
       # otherwise create a new orphan branch.
       # Lastly, remove all files from the repo
-      - name: Checkout ${{ env.artifacts_branch }}
+      - name: Checkout artifacts branch
         run: |
-          if [[ -n $(git ls-remote --heads origin ${{ env.artifacts_branch }}) ]]; then
-            git checkout ${{ env.artifacts_branch }}
+          if [[ -n "$(git ls-remote --heads origin "${ARTIFACTS_BRANCH}")" ]]; then
+            git checkout "${ARTIFACTS_BRANCH}"
           else
-            git checkout --orphan ${{ env.artifacts_branch }}
+            git checkout --orphan "${ARTIFACTS_BRANCH}"
           fi
           git rm -rf .
+        env:
+          ARTIFACTS_BRANCH: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
@@ -134,7 +148,7 @@ jobs:
           </html>
           EOF
 
-      - name: Commit artifacts at ${{ env.artifacts_branch }}
+      - name: Commit artifacts
         run: |
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
@@ -144,5 +158,5 @@ jobs:
         uses: ad-m/github-push-action@v0.6.0
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            branch: ${{ env.artifacts_branch }}
+            branch: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
             force: true
