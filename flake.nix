@@ -1,33 +1,48 @@
+### flake.nix
 {
-  outputs = _: let
-    systems = [ "x86_64-linux" ];
+  description = "Formal Ledger Specifications";
 
-    # let's use niv instead of flake inputs
-    sources = import nix/sources.nix;
-    pkgs = import sources.nixpkgs { system = builtins.head systems; };
-    inherit (pkgs) lib;
-  in {
-    hydraJobs = lib.genAttrs systems (system: let
-      exposed = import ./. {
-        inherit sources;
-        pkgs = import sources.nixpkgs { inherit system; };
-      };
-
-      specsDerivationsPackages = key: lib.mapAttrs'
-        (k: lib.nameValuePair "${key}-${k}")
-        (lib.filterAttrs (k: v: builtins.elem k [ "docs" ]) exposed.${key});
-
-      jobs = {
-        inherit (exposed)
-          formalLedger
-          fls-shake;
-      } //
-        specsDerivationsPackages "ledger";
-    in jobs // {
-      required = pkgs.releaseTools.aggregate {
-        name = "required";
-        constituents = lib.collect lib.isDerivation jobs;
-      };
-    });
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
   };
+
+  outputs = { self, nixpkgs, flake-utils, ... }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgs = import nixpkgs { inherit system; };
+        haskellPackages = pkgs.haskellPackages;
+
+        # Build fls-shake from its own nix file
+        fls-shake = pkgs.callPackage ./fls-shake.nix {};
+      in {
+        packages.default = fls-shake;
+
+        apps.default = flake-utils.lib.mkApp {
+          drv = fls-shake;
+        };
+
+        devShells.default = pkgs.mkShell {
+          buildInputs = with haskellPackages; [
+            ghc
+            cabal-install
+            shake
+            binary
+            hashable
+          ];
+        };
+
+        legacyPackages = {
+          inherit fls-shake;
+        };
+
+        hydraJobs = {
+          inherit (self.packages.${system}) default;
+        };
+
+        formalLedger = {
+          inherit fls-shake;
+        };
+      });
 }
+
