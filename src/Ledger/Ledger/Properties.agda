@@ -406,8 +406,8 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
         ≡ᵉ fromList (dpMap (propUpdate gSt p k))
   dpMap-update-∪ [] p k = ∪-identityˡ (fromList (dpMap [ mkAction p k ]))
   dpMap-update-∪ (g@(gaID₀ , gaSt₀) ∷ gSt) p k
-    with (govActionPriority (GovActionState.action gaSt₀))
-         ≤? (govActionPriority (GovActionState.action (proj₂ (mkAction p k))))
+    with (govActionPriority (GovActionState.action gaSt₀ .gaType))
+         ≤? (govActionPriority (GovActionState.action (proj₂ (mkAction p k)) .gaType))
   ... | yes _  = begin
       fromList (dpMap (g ∷ gSt)) ∪ ❴ GovActionDeposit (txid , k) ❵
         ≈⟨ ∪-cong fromList-∪-singleton ≡ᵉ.refl ⟩
