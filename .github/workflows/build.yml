@@ -75,11 +75,11 @@ jobs:
       - name: Set artifacts_branch variable
         id: set-artifacts-branch
         run: |
-          printf "Set the artifacts branch name"
+          printf "Set the artifacts branch name.\n"
           if [[ -n "${{ github.event.pull_request.head.ref }}" ]]; then
             printf "This workflow was triggered by a PR to master\n"
             echo "artifacts_branch=${{ github.event.pull_request.head.ref }}-artifacts" >> $GITHUB_OUTPUT
-            printf "artifacts_branch: %s" "${{ github.event.pull_request.head.ref }}-artifacts\n"
+            printf "artifacts_branch: %s\n" "${{ github.event.pull_request.head.ref }}-artifacts"
           else
             printf "This workflow was triggered by a push event to master\n"
             echo "artifacts_branch=master-artifacts" >> $GITHUB_OUTPUT
