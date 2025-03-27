@@ -17,7 +17,10 @@ pkgs.stdenv.mkDerivation {
   pname = "fls-shake";
   version = "0.1.0.0";
 
-  src = ./.;
+  src = pkgs.fileset.toSource {
+      root = ./.;
+      fileset = ./Shakefile.hs;
+    };
 
   nativeBuildInputs = [ ghcEnv ];
 
