@@ -72,11 +72,34 @@ let
   deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets ];
   agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
 
-in
-rec {
+  fs = pkgs.lib.fileset;
+  addToAgdaSrc = other: fs.toSource {
+    root = ./.;
+    fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ] ++ other);
+  };
+
+in rec
+{
+
+  fls-shake = stdenv.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    name = "fls-shake";
+    src = fs.toSource {
+      root = ./.;
+      fileset = ./Shakefile.hs;
+    };
+    nativeBuildInputs = [ (haskellPackages.ghcWithPackages (ps: with ps;
+                            ([ shake binary deepseq hashable ]))) ];
+    buildPhase = ''
+      ghc -o fls-shake Shakefile.hs -threaded
+    '';
+    installPhase = ''
+      mkdir -p "$out/bin"
+      cp fls-shake "$out/bin/"
+    '';
+  };
 
   agdaWithDeps = agdaWithPkgs deps;
-  agda = agdaWithPkgs (deps ++ [ formalLedger ]);
 
   latex = texlive.combine {
     inherit (texlive)
@@ -98,116 +121,88 @@ rec {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "formal-ledger";
     version = "0.1";
-    src = ./src;
+    src = addToAgdaSrc [ ./scripts/checkTypeChecked.sh ];
     meta = { };
     buildInputs = deps;
     buildPhase = ''
-      bash typeCheck.sh
+      agda --profile=modules src/Everything.agda | tee typecheck.log
     '';
-    postInstall = ''
-      cp -r latex/ Makefile typecheck.time $out
-      sh checkTypeChecked.sh -m
-    '';
-    extraExtensions = [ "hs" "cabal" "py" ];
-  };
-
-  mkSpecDerivation = { project, main }: rec {
-    docs = stdenv.mkDerivation {
-      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-      pname = "docs";
-      version = "0.1";
-      src = "${formalLedger}";
-      meta = { };
-      buildInputs = [ agdaWithDeps latex python310 ];
-      buildPhase = ''
-        OUT_DIR=$out make "${project}".docs
-      '';
-      doCheck = true;
-      checkPhase = ''
-        test -n "$(find $out/pdfs/ -type f -name '*.pdf')"
-      '';
-      dontInstall = true;
-    };
-
-    html = stdenv.mkDerivation {
-      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-      pname = "html";
-      version = "0.1";
-      src = "${formalLedger}";
-      meta = { };
-      buildInputs = [ agdaWithDeps ];
-      buildPhase = ''
-        OUT_DIR=$out make "${project}".html
-      '';
-      doCheck = true;
-      checkPhase = ''
-        test -n "$(find $out/html/ -type f -name '*.html')"
-      '';
-      dontInstall = true;
-    };
-
-    hsSrc = stdenv.mkDerivation {
-      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-      pname = "hs-src";
-      version = "0.1";
-      src = "${formalLedger}";
-      meta = { };
-      buildInputs = [ agdaWithDeps ];
-      buildPhase = ''
-        OUT_DIR=$out make "${project}".hs
-      '';
-      doCheck = true;
-      checkPhase = ''
-        test -n "$(find $out/haskell/ -type f -name '*.hs')"
-        # OUT_DIR=$out make "${project}".hsTest
-      '';
-      dontInstall = true;
-    };
-
-    # hsDocs = stdenv.mkDerivation {
-    #   pname = "hs-docs";
-    #   version = "0.1";
-    #   src = "${formalLedger}";
-    #   meta = { };
-    #   buildInputs = [ agdaWithDeps ];
-    #   configurePhase = ''
-    #     export HOME=$TMP
-    #   '';
-    #   buildPhase = ''
-    #     OUT_DIR=$out make "${project}".hsDocs
-    #   '';
-    #   doCheck = true;
-    #   checkPhase = ''
-    #     test -n "$(find $out/haskell/ -type f -name '*.html')"
-    #   '';
-    #   dontInstall = true;
-    # };
-
-    hsExe = haskell.lib.disableLibraryProfiling (haskellPackages.callCabal2nixWithOptions "${project}" "${hsSrc}/haskell/${main}" "--no-haddock" {});
-
-  };
-
-  mkPdfDerivation = name: version: project: stdenv.mkDerivation {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-    pname = name;
-    version = version;
-    src = "${formalLedger}";
-    meta = { };
-    buildInputs = [ agdaWithDeps latex python310 ];
-    buildPhase = ''
-        OUT_DIR=$out make ${project}
-      '';
     doCheck = true;
     checkPhase = ''
-        test -n "$(find $out/pdfs/ -type f -name '*.pdf')"
-      '';
-    dontInstall = true;
+      sh scripts/checkTypeChecked.sh
+    '';
+    installPhase = ''
+      mkdir "$out"
+      awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
+      cp -r _build "$out"
+    '';
   };
 
-  ledger = mkSpecDerivation {
-    project = "ledger";
-    main = "Ledger";
-  } // {
-    conway = mkPdfDerivation "conway-formal-spec" "0.9" "ledger.conway.docs";
+  mkDocsDerivation = { pname, version, project }: stdenv.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    pname = pname;
+    version = version;
+    src = addToAgdaSrc [ ./latex ./scripts/agda2vec.py ./scripts/hldiff.py ];
+    meta = { };
+    buildInputs = [ agdaWithDeps latex python310 fls-shake ];
+    buildPhase = ''
+      export XDG_CACHE_HOME="$(mktemp -d)"
+      fls-shake --trace "${project}-ledger.pdf"
+    '';
+    installPhase = ''
+      mkdir "$out"
+      cp "dist/${project}-ledger.pdf" "$out"
+    '';
+    doInstallCheck = true;
+    installCheckPhase = ''
+      test -f "$out/${project}-ledger.pdf"
+    '';
+  };
+
+  html = stdenv.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    pname = "html";
+    version = "0.1";
+    src = addToAgdaSrc [];
+    meta = { };
+    buildInputs = [ agdaWithDeps fls-shake ];
+    buildPhase = ''
+      fls-shake --trace html
+    '';
+    installPhase = ''
+      mkdir "$out"
+      cp -r dist/html "$out"
+    '';
+    doInstallCheck = true;
+    installCheckPhase = ''
+      test -f "$out/html/index.html"
+    '';
+  };
+
+  hsSrc = stdenv.mkDerivation {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+    pname = "hs-src";
+    version = "0.1";
+    src = addToAgdaSrc [ ./hs-src ];
+    meta = { };
+    buildInputs = [ agdaWithDeps fls-shake ];
+    buildPhase = ''
+      fls-shake --trace hs
+    '';
+    installPhase = ''
+      mkdir "$out"
+      cp -r dist/hs "$out"
+    '';
+    doInstallCheck = true;
+    installCheckPhase = ''
+      test -f "$out/hs/cardano-ledger-executable-spec.cabal"
+    '';
+  };
+
+  ledger = {
+    html   = html;
+    hsSrc  = hsSrc;
+    docs   = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
+    conway = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "conway"; };
   };
 }

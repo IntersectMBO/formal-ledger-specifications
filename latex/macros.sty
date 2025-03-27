@@ -29,8 +29,8 @@
 %% Consistent references to GitHub repo and Agda modules.
 %%
 \newcommand{\repourl}{https://github.com/IntersectMBO/formal-ledger-specifications}
-\newcommand{\modulenote}[1]{Code in this section is part of the #1 module
-                            of the \href{\repourl}{formal ledger specification}.}
+\newcommand{\modulenote}[1]{This section is part of the #1 module
+                            of the \href{\repourl}{formal ledger specification}}
 \newcommand{\modulefootnotetext}[1]{\footnotetext{\modulenote{#1}}}
 
 %%
@@ -66,6 +66,10 @@
 % For example, \hrefAgdaDocs[language/record-types.html][agda.readthedocs.io/record-types],
 % produces a link to url https://agda.readthedocs.io/en/\AgdaVersion/language/record-types.html
 % with link text "agda.readthedocs.io/record-types".
+
+% Agda input tex macro for use by the build system
+\NewDocumentCommand{\includeAgda}{m}{\clearpage \input{#1} \clearpage}
+\NewDocumentCommand{\inputAgda}{m}{\input{#1}}
 
 \NewDocumentCommand{\email}{m}{%
   \href{mailto:#1}{#1}
@@ -119,7 +123,6 @@
 
 \newcommand\agdaFont{StrippedJuliaMono}
 \newcommand\agdaFontOptions{
-Path=fonts/,
 Extension=.ttf,
 UprightFont=*-Regular,
 BoldFont=*-Bold,

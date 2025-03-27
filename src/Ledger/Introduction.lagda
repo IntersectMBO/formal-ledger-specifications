@@ -1,7 +1,5 @@
 \section{Introduction}
 \label{sec:introduction}
-\modulenote{\LedgerModule{Introduction}}
-
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -25,7 +23,6 @@ private variable
 \end{code}
 
 \begin{Conway}
-
 This is the specification of the Conway era of the Cardano ledger. As
 with previous specifications, this document is an incremental
 specification, so everything that isn't defined here refers to the
@@ -33,7 +30,6 @@ most recent definition from an older specification.
 
 Note: As of now, this specification is still a draft. Some details and
 explanations may be missing or wrong.
-
 \end{Conway}
 
 \begin{NoConway}
@@ -70,8 +66,54 @@ helpful to have a high-level understanding of what it is trying to describe, whi
 present below.  Keep in mind that this section focuses on intuition, using
 terms (set in \textit{italics}) which may be unfamiliar to some readers, but rest assured that
 later sections of the document will make the intuition and italicized terms precise.
+\end{NoConway}
 
-By \textit{ledger} we mean a structure that contains information about
+
+\subsection{A Note on Agda}
+This specification is written using the
+\hrefAgdaWiki[Agda programming language and proof assistant]~\parencite{agda2024}.
+We have made a considerable effort to ensure
+that this document is readable by people unfamiliar with Agda (or other proof
+assistants, functional programming languages, etc.).  However, by the
+nature of working in a formal language we have to play by its rules,
+meaning that some instances of uncommon notation are very difficult or
+impossible to avoid.  Some are explained in
+\cref{sec:notation,sec:appendix-agda-essentials},
+but there is no guarantee that those sections are complete.  If the meaning of an
+expression is confusing or unclear, please \href{\repourl/issues}{open an issue} in
+\href{\repourl}{the formal ledger GitHub repository} with the `notation' label.
+
+\subsection{Separation of Concerns}
+The \emph{Cardano Node} consists of three pieces,
+\begin{itemize}
+  \item a \textit{networking layer} responsible for sending messages across the internet,
+  \item a \textit{consensus layer} establishing a common order of valid blocks, and
+  \item a \textit{ledger layer} which determines whether a sequence of blocks is valid.
+\end{itemize}
+Because of this separation, the ledger gets to be a state machine,
+\[
+  s \xrightarrow[X]{b} s'.
+\]
+More generally, we will consider state machines with an environment,
+\[
+  Γ ⊢ s \xrightarrow[X]{b} s'.
+\]
+These are modelled as 4-ary relations between the environment \(Γ\), an
+initial state \(s\), a signal \(b\) and a final state \(s'\). The ledger consists of
+roughly 25 (depending on the version) such relations that depend on each
+other, forming a directed graph that is almost a tree.
+\begin{NoConway}
+(See \cref{fig:latest-sts-diagram}.)
+\end{NoConway}
+% TODO: Uncomment the next line and replace XXXX with ref to cardano-ledger.pdf.
+% \begin{Conway}(See \cite{XXXX}.\end{Conway}
+Thus each such relation represents the transition rule of the state machine; \(X\) is
+simply a placeholder for the name of the transition rule.
+
+\begin{NoConway}
+\subsection{Ledger State Transition Rules}
+\label{sec:ledger-state-transition-rules}
+By a \textit{ledger} we mean a structure that contains information about
 how funds in the system are distributed accross accounts---that is, account
 balances, how such balances should be adjusted when transactions and
 proposals are processed, the ADA currently held in the treasury reserve, a
@@ -129,7 +171,7 @@ transaction exist, that the transaction is balanced, and several other condition
 A brief description of each transition rule is provided below, with a link to
 an Agda module and reference to a section where the rule is formally defined.
 
-\begin{itemize}[itemsep=1pt]
+\begin{itemize}
 \item
   \LedgerModText{Chain}{CHAIN} is the top level transition in response to a new
   block that applies the NEWEPOCH transition when crossing an epoch boundary, and the
@@ -183,44 +225,6 @@ an Agda module and reference to a section where the rule is formally defined.
   transaction evaluate to true (\cref{sec:utxo}).
 \end{itemize}
 \end{NoConway}
-
-\subsection{A Note on Agda}
-
-This specification is written using the
-\hrefAgdaWiki[Agda programming language and proof assistant]~\parencite{agda2024}.
-We have made a considerable effort to ensure
-that this document is readable by people unfamiliar with Agda (or other proof
-assistants, functional programming languages, etc.).  However, by the
-nature of working in a formal language we have to play by its rules,
-meaning that some instances of uncommon notation are very difficult or
-impossible to avoid. Some are explained in
-\cref{sec:notation}, but there is no guarantee that this
-section is complete.  If the meaning of an expression is confusing
-or unclear, please \href{\repourl/issues}{open an issue} in
-\href{\repourl}{the formal ledger GitHub repository} with the `notation' label.
-
-\subsection{Separation of Concerns}
-
-The \emph{Cardano Node} consists of three pieces:
-
-\begin{itemize}
-  \item Networking layer, which deals with sending messages across the internet;
-  \item Consensus layer, which establishes a common order of valid blocks;
-  \item Ledger layer, which decides whether a sequence of blocks is valid.
-\end{itemize}
-
-Because of this separation, the ledger gets to be a state machine:
-\[ s \xrightarrow[X]{b} s' \]
-
-More generally, we will consider state machines with an environment:
-\[ Γ ⊢ s \xrightarrow[X]{b} s' \]
-
-These are modelled as 4-ary relations between the environment \(Γ\), an
-initial state \(s\), a signal \(b\) and a final state \(s'\). The ledger consists of
-25-ish (depending on the version) such relations that depend on each
-other, forming a directed graph that is almost a tree.  Thus each such relation
-represents the transition rule of the state machine; \(X\) is simply a placeholder
-for the name of the transition rule.
 
 \subsection{Reflexive-transitive Closure}
 
@@ -313,7 +317,6 @@ that lets anyone run this code.
 
 \subsection{Sets \& Maps}
 \label{sec:sets-maps}
-
 The ledger heavily uses set theory. For various reasons it was
 necessary to implement our own set theory (there will be a paper on this
 some time in the future). Crucially, the set theory is completely
@@ -358,7 +361,7 @@ A ⇀ B = r ∈ Rel A B ﹐ left-unique r
 \end{figure*}
 
 \subsection{Propositions as Types, Properties and Relations}
-
+\label{sec:prop-as-types}
 In type theory we represent propositions as types and proofs of a proposition as
 elements of the corresponding type.
 A unary predicate is a function that takes each \AgdaBound{x} (of some type \AgdaBound{A}) and
@@ -370,24 +373,3 @@ asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \Ag
 Thus, such a relation is a function of type
 \AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}
 or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}.
-
-\subsection{Superscripts and Other Special Notations}
-
-In the current version of this specification, superscript letters are
-heavily used for things such as disambiguations or type
-conversions. These are essentially meaningless, only present for
-technical reasons and can safely be ignored. However there are the
-two exceptions:
-\begin{itemize}
-\item \AgdaFunction{∪ˡ} for left-biased union
-\item \AgdaFunction{ᶜ} in the context of set restrictions, where it indicates the complement
-\end{itemize}
-Also, non-letter superscripts do carry meaning.\footnote{At some point in the future we
-  hope to be able to remove all those non-essential superscripts.  Since we prefer doing
-  this by changing the Agda source code instead of via hiding them in this document, this
-  is a non-trivial problem that will take some time to address.}
-
-Finally, there are some \AgdaFunction{?} and \AgdaFunction{¿} operations.
-These relate to decision procedures and can also safely be ignored.\footnote{We
-  plan on refactoring the code so that these special symbols will also disappear
-  from this document.}

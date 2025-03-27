@@ -15,14 +15,12 @@
 
       specsDerivationsPackages = key: lib.mapAttrs'
         (k: lib.nameValuePair "${key}-${k}")
-        (lib.filterAttrs (k: v: builtins.elem k [ "docs" "hsExe" ]) exposed.${key});
+        (lib.filterAttrs (k: v: builtins.elem k [ "docs" ]) exposed.${key});
 
       jobs = {
         inherit (exposed)
-          agda
-          agdaWithDeps
-          latex
-          formalLedger;
+          formalLedger
+          fls-shake;
       } //
         specsDerivationsPackages "ledger";
     in jobs // {

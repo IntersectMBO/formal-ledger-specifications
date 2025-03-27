@@ -24,8 +24,8 @@ open Any
 
 import Axiom.Set
 import Axiom.Set.Rel
-{-# DISPLAY Axiom.Set.Theory._∈_ th a b = a ∈ b #-}
-{-# DISPLAY Axiom.Set.Rel.dom th a = dom a #-}
+{-# DISPLAY Axiom.Set.Theory._∈_ _ a b = a ∈ b #-}
+{-# DISPLAY Axiom.Set.Rel.dom _ a = dom a #-}
 
 module _  {A B : Type}
   (open AlgStrucs {A = B} _≡_)

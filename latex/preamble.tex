@@ -65,6 +65,9 @@
 \usepackage{macros}
 
 \usepackage{enumitem}
+\setlist[itemize]{itemsep=1pt}
+\setlist[enumerate]{itemsep=1pt}
+% \setlist[description]{itemsep=2pt, topsep=4pt}
 
 %%
 %% for diagrams
@@ -91,3 +94,6 @@
 \newcommand{\legendbox}[1]{%
   \textcolor{#1}{\rule{\fontcharht\font`X}{\fontcharht\font`X}}%
 }
+
+%% Change the following to adjust the spacing between items for all itemized and
+%% enumerated lists in the document.
