@@ -1867,7 +1867,7 @@ du_indexedSum'7504'_1110 v0 v1 v2 v3 v4
                -> coe
                     du_indexedSum_936 v2
                     (coe
-                       MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160 (coe v0)
+                       MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 (coe v0)
                        (coe v1))
                     v3
                     (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5) (coe v8))
@@ -1933,7 +1933,7 @@ du_indexedSum'7504''45'cong_1124 v0 v1 v2 v3 v4 v5
                              -> coe
                                   du_indexedSum'45'cong_1038 (coe v2)
                                   (coe
-                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160
+                                     MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                      (coe v0) (coe v1))
                                   (coe (\ v14 -> coe v3 v14))
                                   (coe
@@ -2183,7 +2183,7 @@ du_indexedSum'7504''45''8746'_1196 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                         (coe
                                            du_indexedSum_936 v8
                                            (coe
-                                              MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160
+                                              MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                               (coe v1) (coe v2))
                                            v7
                                            (coe
@@ -2233,7 +2233,7 @@ du_indexedSum'7504''45''8746'_1196 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                               (coe
                                                  du_indexedSum_936 v8
                                                  (coe
-                                                    MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160
+                                                    MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                                     (coe v1) (coe v2))
                                                  v7
                                                  (coe
@@ -2307,13 +2307,13 @@ du_indexedSum'7504''45''8746'_1196 v0 v1 v2 v3 v4 v5 v6 v7 v8
                                               (coe
                                                  du_indexedSum'45''8746'_1050 (coe v8)
                                                  (coe
-                                                    MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160
+                                                    MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                                     (coe v1) (coe v2))
                                                  (coe (\ v19 -> coe v7 v19)) (coe v12) (coe v16))))
                                         (coe
                                            du_indexedSum'45'cong_1038 v8
                                            (coe
-                                              MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160
+                                              MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182
                                               (coe v1) (coe v2))
                                            (\ v18 -> coe v7 v18)
                                            (coe

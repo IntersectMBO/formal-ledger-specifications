@@ -45,7 +45,7 @@ d_DecEq'45''215''8242'_4 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45''215''8242'_4 v0 v1 v2 v3 v4 v5
   = coe
-      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160 v4 v5
+      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 v4 v5
 -- Prelude.∃⁇
 d_'8707''8263'_8 :: MAlonzo.Code.Agda.Primitive.T_Level_18 -> ()
 d_'8707''8263'_8 = erased

@@ -17,9 +17,11 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Data.Empty
 import qualified MAlonzo.Code.Data.Irrelevant
+import qualified MAlonzo.Code.Relation.Nullary.Decidable
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
@@ -312,3 +314,15 @@ du_'191'_'191''179'_174 v0 = coe du_dec'179'_166 (coe v0)
 d_auto'8758'__178 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> T__'8263'_10 -> ()
 d_auto'8758'__178 = erased
+-- Class.Decidable.Core.dec-✓
+d_dec'45''10003'_190 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  T__'8263'_10 -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_dec'45''10003'_190 ~v0 ~v1 v2 = du_dec'45''10003'_190 v2
+du_dec'45''10003'_190 ::
+  T__'8263'_10 -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_dec'45''10003'_190 v0 v1
+  = coe
+      MAlonzo.Code.Relation.Nullary.Decidable.du_dec'45'yes_282
+      (coe du_'191'_'191'_42 (coe v0))

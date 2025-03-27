@@ -156,7 +156,7 @@ d_genPremises_24 v0 v1
                                           (MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
                                              (coe
                                                 MAlonzo.Code.Class.Show.Core.d_show_16
-                                                MAlonzo.Code.Class.Show.Instances.d_Show'45'Name_58
+                                                MAlonzo.Code.Class.Show.Instances.d_Show'45'Name_68
                                                 v0)
                                              (coe
                                                 MAlonzo.Code.Data.String.Base.d__'60''43''62'__50
@@ -166,7 +166,7 @@ d_genPremises_24 v0 v1
                                                    MAlonzo.Code.Class.Semigroup.Instances.d_Semigroup'45'String_20
                                                    (coe
                                                       MAlonzo.Code.Class.Show.Core.d_show_16
-                                                      MAlonzo.Code.Class.Show.Instances.d_Show'45'Term_82
+                                                      MAlonzo.Code.Class.Show.Instances.d_Show'45'Term_92
                                                       (MAlonzo.Code.Reflection.Utils.d_tyView_158
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32

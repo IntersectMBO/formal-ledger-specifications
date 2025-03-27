@@ -366,7 +366,7 @@ d_showAbsTel_202 ::
 d_showAbsTel_202 v0
   = coe
       MAlonzo.Code.Class.Show.Core.d_show_16
-      MAlonzo.Code.Class.Show.Instances.d_Show'45'Tel_94
+      MAlonzo.Code.Class.Show.Instances.d_Show'45'Tel_104
       (coe d_absTelescope_192 v0)
 -- Reflection.Ext.hasInstance
 d_hasInstance_204 ::
