@@ -1,19 +1,17 @@
-# Formal ledger specifications
+# Formal Ledger Specifications
 
 This repository contains the formal ledger specifications that are intended to eventually replace the existing formal specifications of the Cardano ledger found [here](https://github.com/IntersectMBO/cardano-ledger). This project is currently incomplete and work in progress.
 
-This repository currently contains the work-in-progress specification for Cardano (up to and including the Conway era). The specification is executable and contains some documentation in the form of a PDF document. It can be built by following the steps below.
+This repository currently contains the work-in-progress specification for Cardano (up to and including the Conway era). The specification is executable and contains some documentation in the form of a PDF document. It can be built by following the steps in [Building](#building).
 
-Formal Specification | HTML Version | Haskell Tests |
-----------------------|--------------|---------------|
-[Full Cardano Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/pdfs/cardano-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/Ledger.html) | [UTXOW test](https://IntersectMBO.github.io/formal-ledger-specifications/haskell/Ledger/test/UtxowSpec.hs) |
-[Conway](https://IntersectMBO.github.io/formal-ledger-specifications/pdfs/conway-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/Ledger.html) | [UTXOW test](https://IntersectMBO.github.io/formal-ledger-specifications/haskell/Ledger/test/UtxowSpec.hs) |
+| Formal Specification | HTML Version |
+| -------------------- | ------------ |
+| [Full Cardano Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/index.html) |
+| [Conway](https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/index.html) |
 
-Note: the HTML version of the specification is interactive, but many modules currently contain LaTeX code which is used to generate the PDF. We intend to fix this eventually.
+---
 
---------------------
-
-## Build and Test the Formal Spec
+## Building
 
 ### Clone this repository and enter its directory
 
@@ -22,29 +20,20 @@ git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
 cd formal-ledger-specifications
 ```
 
+### Using `nix-build`
 
-### Build the spec using nix-build
-
-Invoke the following `nix-build` commands from inside the `formal-ledger-specifications` directory.
+Invoke the following `nix-build` commands from inside the
+`formal-ledger-specifications` directory:
 
 ```
 nix-build -A ledger.docs      # generate the PDF spec of the Cardano ledger
 nix-build -A ledger.hsSrc     # extract the Haskell code of the Cardano ledger
 ```
 
-### Test the spec using nix-shell
+## Conformance-testing example
 
-The `hsExe` is a `cabal` package, which can be loaded into GHCI like this:
-
-```
-nix-shell -A run --command "cabal repl --build-depends 'cardano-ledger'"
-λ> :m Lib
-λ> :i UTxOState
-```
-
-Building the `hsExe` derivation will also run the test suite, which you can manually do using `cabal test`.
-
-
+For an example on how to use the Agda-generated Haskell code for conformance
+testing see [`conformance-example`)(conformance-example)
 
 ## Contributions and Feedback
 
