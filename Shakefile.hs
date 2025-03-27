@@ -20,6 +20,10 @@ import Control.DeepSeq (NFData)
 import Data.Hashable (Hashable)
 import Data.Binary (Binary)
 
+import qualified Data.Text as Text
+import qualified Data.Text.Encoding as TE
+import qualified Data.ByteString as BS
+
 ------------------------------------------------------------------------------
 -- Main function
 ------------------------------------------------------------------------------
@@ -121,7 +125,8 @@ tex2pdf = do
     need [ maintexfile ]
 
     -- read the Agda inputs from the tex file
-    agdainputs <- getAgdaInputs <$> readFileLines maintexfile
+    raw <- liftIO $ BS.readFile maintexfile
+    let agdainputs = getAgdaInputs (map Text.unpack (Text.lines (TE.decodeUtf8 raw)))
 
     let agdafiles  = map ((_latexPP </>) . (<.> "tex")) agdainputs
     let otherfiles = map (_latexIn </>)

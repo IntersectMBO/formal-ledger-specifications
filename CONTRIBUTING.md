@@ -56,20 +56,23 @@ To install Agda locally and use that install with emacs, you can do the followin
 
    There are other options as well, but this should work with all kinds of custom emacs setups or distributions (assuming there isn't already some other stuff going on with your Agda setup).
 
+---
+
 ## Working on the formal ledger specification
 
 For nix users, `nix-shell` provides Agda with the correct dependencies. You
 should be able to run your preferred editor within `nix-shell` and it should see
 the required `agda` executable.
 
-For instructions to setup Agda without nix, check [Setup without
-nix](#setup-without-nix).
+For instructions to setup Agda without nix, check [Setup without nix](#setup-without-nix).
 
 To typecheck the formal specification, run:
 
 ```
 agda src/Everything.agda
 ```
+
+--- 
 
 ### Modifying the Agda libraries
 
@@ -85,59 +88,61 @@ fail silently on your local machine if you do that. Just change a few
 characters, run `nix-build -A ledger` and nix will tell you the correct hash to
 put there.
 
+---
+
 ## Working on the artifacts
 
 The artifacts that `formal-ledger-specifications` provides are built using a
-custom system written in the Haskell DSL [Shake](https://shakebuild.com/). The
-file [`Shakefile.hs`](Shakefile.hs) contains the source code of the build
-system. We refer to the build-system binary as `fls-shake`.
+custom system written in a Haskell DSL called [Shake](https://shakebuild.com/). 
+The file [`Shakefile.hs`](Shakefile.hs) contains the source code of the build
+system.  We refer to the build-system binary as `fls-shake`.
 
-Depending on whether one uses nix or not, the commands given in the rest of this
-instructions are to be run differently:
+Depending on whether you use Nix or not, the commands given in the rest of this
+instructions are to be run differently.
 
-- For nix users, the commands should be executed using nix shell via:
++  For Nix users, the commands should be executed as follows:
 
-    ```
-    nix-shell --run COMMAND
-    ```
+   ```
+   nix-shell --run COMMAND
+   ```
 
-    This ensures that the correct dependencies are in scope.
+   This ensures that the correct dependencies are in scope.
 
-    As an example, the instructions to build the [html](#html)-hyperlinked Agda
-    code specify to run the command:
+   As an example, the instructions to build the [html](#html)-hyperlinked Agda
+   code specify to run the command `fls-shake html`, but using Nix you would enter
+   this command as follows:
 
-    ```
-    fls-shake html
-    ```
+   ```
+   nix-shell --run 'fls-shake html'
+   ```
 
-    Using nix, the following should be run instead:
-    ```
-    nix-shell --run 'fls-shake html'
-    ```
++  For non-Nix users, the commands are to be executed verbatim, assuming 
+   `fls-shake` and Agda and their dependencies are installed.
+   Instructions for compiling `fls-shake` and setting up Agda and its dependencies
+   are provided in the section [Setup without Nix](#setup-without-nix) below.
 
-- For non nix users, the commands are to be executed verbatim, assuming
-`fls-shake` and Agda and its dependencies are setup. For instructions on how to
-compile `fls-shake` and set up Agda and its dependencies see [Setup without
-nix](#setup-without-nix).
 
 `fls-shake` uses three top level directories:
 
-- `_build` to store intermediate build objects
-- `.shake` to store build information
-- `dist` to store built artifacts
++ `_build` to store intermediate build objects;
++ `.shake` to store build information;
++ `dist` to store built artifacts.
+
+
+---
 
 ### Building the artifacts
 
 #### PDF
 
 `fls-shake` provides two targets, `conway-ledger.pdf` and `cardano-ledger.pdf`,
-to build the respective pdfs. For example:
+to build the respective pdfs.  For example, the command
 
 ```
-fls-shake conway-ledger.pdf
+fls-shake cardano-ledger.pdf    # OR nix-shell --run 'fls-shake cardano-ledger.pdf'
 ```
 
-produces the output `dist/conway-ledger.pdf`
+produces the output `dist/cardano-ledger.pdf`.
 
 In addition, `fls-shake` has internal rules to generate intermediate files.
 
@@ -145,7 +150,7 @@ Agda-generated `tex` files from literate Agda source code are stored in
 `_build/latex.gen`. This are shared between pdf artifacts.
 
 Pdf-artifact specific files are stored under `_build/target` (where e.g., the
-target is `conway-ledger.pdf`, `_build/conway-ledger.pdf`).
+target is `cardano-ledger.pdf`, `_build/cardano-ledger.pdf`).
 
 The structure of `_build/target` is the following:
 
@@ -154,6 +159,8 @@ directory
 - `latex.pp`: For post processed `tex` files from Agda-generated `tex` (e.g.,
 applying [`agda2vec.py`](agda2vec.py))
 - `latex.out`: For latex intermediate build files.
+
+---
 
 #### Haskell code (for conformance testing)
 
@@ -164,6 +171,8 @@ fls-shake hs
 ```
 
 this produces the output `dist/hs`
+
+---
 
 #### Html-hyperlinked Agda code
 
@@ -178,20 +187,21 @@ This produces the output `dist/html`
 In addition, `fls-shake` has internal rules to generate intermediate files. This
 are stored under `_build/html`. The structure of `_build/html` is as follows:
 
-- `html.in` contains the Agda source code. Agda files are copied verbatim,
-literate Agda files are `illiterated`
-- `html.out` contains the output html
++  `html.in` contains the Agda source code.
+   Agda files are copied verbatim, literate Agda files are `illiterated`.
++  `html.out` contains the output html.
 
 ---
 
-## Setup without nix
+## Setup Without Nix
 
 ### Agda and its dependencies
 
 +  Install Agda version `2.7.0` (e.g. follow the instructions in
    <https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda>).
 
-+  In a folder `LIB`, clone the dependencies
++  In a folder `LIB`, clone the following dependencies:
+
    + [agda-stdlib](https://github.com/agda/agda-stdlib)
    + [agda-stdlib-classes](https://github.com/agda/agda-stdlib-classes)
    + [agda-stdlib-meta](https://github.com/agda/agda-stdlib-meta)
@@ -208,6 +218,8 @@ literate Agda files are `illiterated`
    git clone --config advice.detachedHead=false --single-branch \
      -b "master" https://github.com/input-output-hk/agda-sets.git
    ```
+
+(TODO: change the versions above to match those in the `default.nix` file.)
 
 +  Create a file `LIB/libraries` with the following content:
 
@@ -238,25 +250,98 @@ literate Agda files are `illiterated`
 
 ### `fls-shake`
 
-`fls-shake` can be compiled from the file [`Shakefile.hs`](Shakefile.hs) using GHC.
+When making nontrivial changes to the Agda code or its documentation,
+it's advisable to use `fls-shake`, our build system (a `make` alternative that
+handles type-checking the Agda code, generating  html, recompiling pdfs, etc.). 
 
-For this, do the same as the derivation `fls-shake` in [default.nix](default.nix):
+The easiest way to build `fls-shake` is to simply type `nix-build -A fls-shake`.
 
-+  Install the packages it depends upon, which are listed under `nativeBuildInputs`
+If that doesn't work, you can try to compile the [`Shakefile.hs`](Shakefile.hs) manually and
+build `fls-shake` from scratch.
 
-   haskellPackages.ghcWithPackages (ps: with ps;
-                            ([ shake binary deepseq hashable ]))) ];
-    buildPhase = ''
-      ghc -o fls-shake Shakefile.hs -threaded
-    '';
-    installPhase = ''
-      mkdir -p "$out/bin"
-      cp fls-shake "$out/bin/"
-    '';
-  };
+#### Building `fls-shake` manually
 
+For Ubuntu users not using Nix, compile `fls-shake` by taking the following steps:
 
-- Compile using the command under `buildPhase`
+1.  **Install** GHC and Cabal.
+
+    First, install the Haskell compiler and `cabal` package manager.
+
+    ```bash
+    sudo apt update
+    sudo apt install ghc cabal-install
+    ```
+
+    Verify the installation.
+
+    ```bash
+    ghc --version
+    cabal --version
+    ```
+
+2.  **Install** dependencies.
+
+    The following libraries are required:
+
+    + [`shake`](https://hackage.haskell.org/package/shake) – build system
+    + [`binary`](https://hackage.haskell.org/package/binary) – serialization
+    + [`deepseq`](https://hackage.haskell.org/package/deepseq) – deep evaluation
+    + [`hashable`](https://hackage.haskell.org/package/hashable) – hashing
+
+    Install them via Cabal:
+
+    ```bash
+    cabal update
+    cabal install shake binary deepseq hashable
+    ```
+
+    This will install the libraries into your Cabal user environment.
+
+3.  **Compile** the `Shakefile.hs` script.
+
+    Assuming the dependencies were installed with `cabal install` in the last step, run
+
+    ```bash
+    cabal exec -- ghc -o fls-shake Shakefile.hs -threaded
+    ```
+    Or use `ghc` with the `-package` flag, as follows:
+
+    ```bash
+    ghc -o fls-shake Shakefile.hs -threaded -package shake -package binary -package deepseq -package hashable
+    ```
+
+4.  **Run** it.
+
+    Once built, run `fls-shake` on one of the build targets 
+    (e.g., `cardano-ledger.pdf`) as follows:
+    
+    ```
+    cabal run fls-shake -- cardano-ledger.pdf
+    ```
+    (Alternatively, run `./result/bin/fls-shake cardano-ledger.pdf`.)
+
+    Here is a list of commands for the various targets that `fls-shake` can build:
+    
+    ```
+    cabal run fls-shake -- cardano-ledger.pdf
+    cabal run fls-shake -- conway-ledger.pdf
+    cabal run fls-shake -- html
+    cabal run fls-shake -- hs
+    ```    
+---
+
+### 🔄 Nix-based Alternative (Recommended)
+
+If you're using Nix or Flakes, you can build everything reproducibly with:
+
+```bash
+nix build
+./result/bin/fls-shake conway-ledger.pdf
+```
+
+This guarantees exact dependency versions and UTF-8-safe execution.
+
+---
 
 ## Updating nixpkgs
 
@@ -276,6 +361,56 @@ niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c
 niv update nixpkgs -v 21.11.337905.902d91def1e
 ```
 
+---
+
+## Troubleshooting
+
++  🔥 **Problem**. After installing `fls-shake` as described above, the command 
+
+   ```
+   ./result/bin/fls-shake -- cardano-ledger.pdf
+   ```
+
+   produces error messages ending with the line
+
+   ```
+   latexmk: createProcess: exec: invalid argument (Bad file descriptor)
+   ```
+
+
+   🔍 **Root Causes**.  Most likely either `latexmk` is not installed or the `texlive` installation
+   is missing some required components.
+
+
+   1.  **`latexmk` is not installed** (most likely).
+
+       Shake tried to run `latexmk`, but the command doesn't exist in the system's `PATH`.
+       On Nix this gets injected via dependencies, but in a `cabal`-based setup, you
+       need to manually install it.
+
+       🧯 **Solution**: install `latexmk` and `texlive`.
+
+       On Ubuntu:
+
+       ```
+       sudo apt update
+       sudo apt install latexmk
+       ```
+
+       And (optionally) install a full LaTeX suite: `sudo apt install texlive-full`
+
+       or a minimal alternative: `sudo apt install texlive-latex-extra`
+
+       Once these dependencies are installed, verify with `latexmk --version`,
+       and then re-run the command that failed (e.g., `cabal run fls-shake -- cardano-ledger.pdf`.)
+
+
+   2.  `PATH` issues inside `cabal run` (less likely). 
+
+       If you have `latexmk` installed but it's still not found, you may need to make
+       sure it's in your shell `PATH`.
+       
+---
 
 ## Maintainer
 
@@ -284,3 +419,9 @@ This repository is maintained by @WhatisRT.
 
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
+[binary]: https://github.com/haskell/binary
+[deepseq]: https://github.com/haskell/deepseq
+[hashable]: https://github.com/haskell-unordered-containers/hashable
+[shake]: https://shakebuild.com/
+
+
