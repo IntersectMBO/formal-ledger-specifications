@@ -1,12 +1,7 @@
-{ sources ? import ./nix/sources.nix
-, pkgs ? import sources.nixpkgs {
-    overlays = [ ];
-    config = { };
-  }
-}:
+{ pkgs ? import <nixpkgs> {} }:
 
 let
-  ghc = pkgs.haskellPackages.ghcWithPackages (hp: [
+  ghcEnv = pkgs.haskellPackages.ghcWithPackages (hp: [
     hp.shake
     hp.hashable
     hp.binary
@@ -17,10 +12,7 @@ pkgs.stdenv.mkDerivation {
   pname = "fls-shake";
   version = "0.1.0.0";
 
-  src = pkgs.fileset.toSource {
-      root = ./.;
-      fileset = ./Shakefile.hs;
-    };
+  src = ./.;
 
   nativeBuildInputs = [ ghcEnv ];
 
