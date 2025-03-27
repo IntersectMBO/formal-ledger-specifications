@@ -6,7 +6,7 @@
 }:
 
 let
-  ghcEnv = pkgs.haskellPackages.ghcWithPackages (hp: [
+  ghc = pkgs.haskellPackages.ghcWithPackages (hp: [
     hp.shake
     hp.hashable
     hp.binary
