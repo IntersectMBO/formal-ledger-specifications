@@ -201,8 +201,6 @@ refScriptCostStride>0 pp pwf = paramsWF-elim pp pwf (PParams.refScriptCostStride
 \end{figure*}
 \begin{code}[hide]
 instance
-  Show-ℚ = Show _ ∋ record {M}
-    where import Data.Rational.Show as M
   unquoteDecl DecEq-DrepThresholds = derive-DecEq
     ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
   unquoteDecl DecEq-PoolThresholds = derive-DecEq
