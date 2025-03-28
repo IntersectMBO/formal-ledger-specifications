@@ -24,6 +24,7 @@ import qualified MAlonzo.Code.Class.Semigroup.Core
 import qualified MAlonzo.Code.Data.Integer.Base
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.NonEmpty.Base
+import qualified MAlonzo.Code.Data.Nat.Binary.Base
 import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Data.Vec.Base
 
@@ -121,7 +122,7 @@ du_SemigroupLaws'45'Maybe_40 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_40
 du_SemigroupLaws'45'Maybe_40
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2189
+      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2219
       erased erased
 -- Class.Semigroup.Instances._.Semigroup-ℕ-+
 d_Semigroup'45'ℕ'45''43'_62 ::
@@ -135,7 +136,7 @@ d_SemigroupLaws'45'ℕ'45''43'_66 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_40
 d_SemigroupLaws'45'ℕ'45''43'_66
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2189
+      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2219
       erased erased
 -- Class.Semigroup.Instances._.Semigroup-ℕ-*
 d_Semigroup'45'ℕ'45''42'_74 ::
@@ -149,33 +150,47 @@ d_SemigroupLaws'45'ℕ'45''42'_78 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_40
 d_SemigroupLaws'45'ℕ'45''42'_78
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2189
+      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2219
+      erased erased
+-- Class.Semigroup.Instances._.Semigroup-ℕᵇ-+
+d_Semigroup'45'ℕ'7495''45''43'_90 ::
+  MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10
+d_Semigroup'45'ℕ'7495''45''43'_90
+  = coe
+      MAlonzo.Code.Class.Semigroup.Core.C_Semigroup'46'constructor_25
+      (coe MAlonzo.Code.Data.Nat.Binary.Base.d__'43'__110)
+-- Class.Semigroup.Instances._.SemigroupLaws-ℕᵇ-+
+d_SemigroupLaws'45'ℕ'7495''45''43'_94 ::
+  MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_40
+d_SemigroupLaws'45'ℕ'7495''45''43'_94
+  = coe
+      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2219
       erased erased
 -- Class.Semigroup.Instances._.Semigroup-ℤ-+
-d_Semigroup'45'ℤ'45''43'_90 ::
+d_Semigroup'45'ℤ'45''43'_106 ::
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10
-d_Semigroup'45'ℤ'45''43'_90
+d_Semigroup'45'ℤ'45''43'_106
   = coe
       MAlonzo.Code.Class.Semigroup.Core.C_Semigroup'46'constructor_25
       (coe MAlonzo.Code.Data.Integer.Base.d__'43'__276)
 -- Class.Semigroup.Instances._.SemigroupLaws-ℤ-+
-d_SemigroupLaws'45'ℤ'45''43'_94 ::
+d_SemigroupLaws'45'ℤ'45''43'_110 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_40
-d_SemigroupLaws'45'ℤ'45''43'_94
+d_SemigroupLaws'45'ℤ'45''43'_110
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2189
+      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2219
       erased erased
 -- Class.Semigroup.Instances._.Semigroup-ℤ-*
-d_Semigroup'45'ℤ'45''42'_102 ::
+d_Semigroup'45'ℤ'45''42'_118 ::
   MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10
-d_Semigroup'45'ℤ'45''42'_102
+d_Semigroup'45'ℤ'45''42'_118
   = coe
       MAlonzo.Code.Class.Semigroup.Core.C_Semigroup'46'constructor_25
       (coe MAlonzo.Code.Data.Integer.Base.d__'42'__308)
 -- Class.Semigroup.Instances._.SemigroupLaws-ℤ-*
-d_SemigroupLaws'45'ℤ'45''42'_106 ::
+d_SemigroupLaws'45'ℤ'45''42'_122 ::
   MAlonzo.Code.Class.Semigroup.Core.T_SemigroupLaws_40
-d_SemigroupLaws'45'ℤ'45''42'_106
+d_SemigroupLaws'45'ℤ'45''42'_122
   = coe
-      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2189
+      MAlonzo.Code.Class.Semigroup.Core.C_SemigroupLaws'46'constructor_2219
       erased erased

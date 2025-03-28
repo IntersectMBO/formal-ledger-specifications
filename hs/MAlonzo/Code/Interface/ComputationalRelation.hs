@@ -110,7 +110,7 @@ du_Bifunctor'45'ComputationResult_126 ::
   MAlonzo.Code.Class.Bifunctor.T_Bifunctor_80
 du_Bifunctor'45'ComputationResult_126
   = coe
-      MAlonzo.Code.Class.Bifunctor.C_Bifunctor'46'constructor_3915
+      MAlonzo.Code.Class.Bifunctor.C_Bifunctor'46'constructor_3949
       (coe
          (\ v0 v1 v2 v3 v4 v5 v6 ->
             case coe v6 of
