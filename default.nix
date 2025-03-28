@@ -27,9 +27,9 @@ let
     version = "2.0";
     src = fetchFromGitHub {
       repo = "agda-stdlib-classes";
-      owner = "omelkonian";
-      rev = "28df278381c94a25c54f6819524cd9f8cb99f092";
-      sha256 = "sha256-TdPJ3K4jyAIQgX1sUrqd0QeA72n2mkBVzlg8WfrqWWY=";
+      owner = "agda";
+      rev = "aa62ce6348d39c554ef89487079871d5590e155e";
+      sha256 = "sha256-I/g0BOdeAHVEtsfmPBICySOd6Jz5ymGUSE/G66EfHK8=";
     };
     meta = { };
     libraryFile = "agda-stdlib-classes.agda-lib";
