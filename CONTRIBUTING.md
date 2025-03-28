@@ -1,5 +1,31 @@
 # Contributing to the formal ledger specifications
 
+## Contents
+
+- [Style guidelines](#style-guidelines)
+- [Nix Dependencies](#nix-dependencies)
+- [Agda Setup](#agda-setup)
+  - [Global `ledger-agda` installation](#global-ledger-agda-installation)
+  - [Local `ledger-agda`installation](#local-ledger-agdainstallation)
+- [Quick Start: type-check the formal ledger code and build the pdf](#quick-start-type-check-the-formal-ledger-code-and-build-the-pdf)
+- [Working on the artifacts](#working-on-the-artifacts)
+- [Building the artifacts](#building-the-artifacts)
+  - [PDF](#pdf)
+  - [Haskell code (for conformance testing)](#haskell-code-for-conformance-testing)
+  - [Html-hyperlinked Agda code](#html-hyperlinked-agda-code)
+  - [fls-shake intermediate outputs](#fls-shake-intermediate-outputs)
+- [Modifying the Agda libraries](#modifying-the-agda-libraries)
+- [Setup Without Nix](#setup-without-nix)
+  - [Agda and its dependencies](#agda-and-its-dependencies)
+  - [`fls-shake`](#fls-shake)
+    - [Building `fls-shake` manually](#building-fls-shake-manually)
+- [Updating nixpkgs](#updating-nixpkgs)
+- [Troubleshooting](#troubleshooting)
+- [Maintainer](#maintainer)
+
+
+---
+
 ## Style guidelines
 
 We are currently aspiring to follow the [Agda standard library style guide][] as much as reasonable. Since some of our code will be rendered into a PDF, the formatting of the PDF takes priority over formatting of the code, so deviations are to be expected.
@@ -10,52 +36,53 @@ We also have a separate style guide for formatting the PDF: [PDF style guide](PD
 
 ## Nix Dependencies
 
-Our code base relies heavily on Nix to set up an environment with all dependencies
-installed correctly.  While it is possible to work with this repository without using
-Nix, and some instructions for doing so are included below, those wishing to make
-nontrivial contributions to this repository are advised to follow the Nix-based
-approach descibed here. 
+We use Nix to set up an environment with all dependencies installed correctly.  
 
-It's not necessary to run the NixOS, but having the Nix package manager
-installed is highly recommended.  See the official [Nix download instructions][].
+While it is possible to work with this repository without using Nix
+(instructions for doing so are included [below][Setup without nix]) those wishing to
+make nontrivial contributions to this repository are advised to follow the Nix-based
+approach described here.  This doesn't require running the NixOS, but does require
+the Nix package manager which can be installed by following the official 
+[Nix download instructions][]. 
 
 ---
 
 ## Agda Setup
 
 We use Agda version 2.7 and various dependencies.  For the purposes of this
- documentation, we'll call this custom setup `ledger-agda`.
-Though not recommended, it's possible to piece together `ledger-agda` without using
-Nix (as described in [Setup without nix](#setup-without-nix)), however, we focus
-on the the recommended Nix-based installation procedure.
+documentation, we call our custom setup `ledger-agda`.
 
-### Install ledger-agda
+### Global `ledger-agda` installation
 
-#### Global Installation
+After cloning this repository, the single command `nix-env -iA agda -f .` will
+install `ledger-agda`.  This is a *global install*, which you may not want if you
+also have other Agda projects.
 
-`ledger-agda` can be installed with the single command `nix-env -iA agda -f .`.
-However, this is a *global install*, which you may not want if you also have other Agda
-projects.
+### Local `ledger-agda`installation
 
-#### Local Installation
+To install a local version of `ledger-agda`,
 
-To install a non-destructive, "local" version of `ledger-agda`, do the following: 
+1.  Build `agda` and `agda-mode` binaries.
 
-+  Build `agda` and `agda-mode` binaries.
+    ```
+    nix-build -A agdaWithDeps -o ~/IOHK/ledger-agda
+    ```
 
-   ```
-   nix-build -A agdaWithDeps -o ~/IOHK/ledger-agda
-   ```
+    **Notes**
 
-   **Notes**
+    *  Replace `~/IOHK/ledger-agda` with whatever path you like; make sure to replace
+       it in `my/agda-versions` below as well.
 
-   1. Replace `~/IOHK/ledger-agda` with whatever path you like; make sure to replace it in `my/agda-versions` below as well.
+    *  It is not necessary to have built/installed Agda prior to invoking this
+       `nix-build` command (though it's okay if you have).
 
-   2. It is not necessary to have built/installed Agda prior to invoking this `nix-build` command (though it's okay if you have).
+    *  Check which Agda is the default with `which agda` and `agda --version`.
 
-   3. To ensure the commands described below use the `ledger-agda` version of Agda, invoke them like so: `AGDA=~/IOHK/ledger-agda COMMAND`.
+    *  To ensure the commands described below use the `ledger-agda` version of Agda,
+       invoke them like so: `AGDA=~/IOHK/ledger-agda COMMAND`.
 
-+  Put the following into your Emacs init file (highlight and `M-x eval-region` to load it without restarting emacs):
++  Put the following in your [Emacs init file][] 
+   (highlight and `M-x eval-region` to load it without restarting emacs):
 
    ```
    ;; Defines a function `my/switch-agda' that switches between different
@@ -87,48 +114,73 @@ To install a non-destructive, "local" version of `ledger-agda`, do the following
    (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
    ```
 
-   *Note*. This assumes that your regular install of Agda is in your path with the
-   name `agda` and version `2.6.4`, otherwise edit `my/agda-versions` to match your
-   existing Agda installation.
+   **Notes** 
 
-   Once you make these changes, the Emacs command `M-x my/toggle-ledger-agda` (or
-   `C-c C-x C-t`) will switch between your regular Agda and the IOHK version.
+   *  This assumes that your regular install of Agda is in your path with the name
+      `agda` and version `2.6.4`, otherwise edit  `my/agda-versions` to match your
+      existing Agda installation. 
 
-   There are other options as well, but this should work with all kinds of custom
-   emacs setups or distributions (assuming there isn't already some other stuff going
-   on with your Agda setup).
+   *  Once you make these changes, the Emacs command `M-x my/toggle-ledger-agda` 
+      (or `C-c C-x C-t`) will switch between your regular Agda and the IOHK version.
+
+   *  There are other options as well, but this should work with all kinds of custom
+      emacs setups or distributions (assuming there isn't already some other stuff
+      going on with your Agda setup).
    
    **If you encounter any problems, please open a [New Issue][]**. 
 
 ---
 
-## Working on the formal ledger specification
+## Quick Start: type-check the formal ledger code and build the pdf
 
-For Nix users, `nix-shell` provides Agda with the correct dependencies.  You
-should be able to run your preferred editor within `nix-shell` and it should see
+`nix-shell` provides Agda with the correct dependencies.
+You should be able to run your preferred editor within `nix-shell` and it should see
 the required `agda` executable.
 
-To typecheck the formal specification, run:
+Here are some examples of *alternative* ways to interact with the code in this
+repository.  (You will probably do some but not all of these things.)
+
+All of these assume you have at least cloned this repository to your local machine:
 
 ```
-agda src/Everything.agda
+git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
+cd formal-ledger-specifications
 ```
 
---- 
++  Open a Nix shell (in which the correct version of Agda will be available) and
+   launch your favorite editor:
 
-### Modifying the Agda libraries
+   ```
+   nix-shell
+   emacs src/Everything.agda
+   ```
 
-To work simultaneously on the ledger and one of its dependencies, the easiest
-way to do this is to remove the library from the ledger's `.agda-lib` file and
-add its path to the `include:` section. 
+   Type-check everything inside Emacs with `C-c C-l`.
+   (You may need to do `M-x my/toggle-ledger-agda` first.)
 
-When finished, push the changes to the library and update `default.nix` to point
-to your new commit.
++  Type-check the formal ledger Agda code from the command line,
 
-*Warning:* Don't forget to update the SHA when updating `default.nix`. Nix will
-fail silently on your local machine if you do that. Just change a few
-characters, run `nix-build -A ledger` and nix will tell you the correct hash to
-put there.
+   ```
+   agda src/Everything.agda
+   ```
+
++  Type-check the formal ledger Agda code and generate the `cardano-ledger.pdf` document,
+
+   ```
+   nix-shell --run 'fls-shake cardano-ledger.pdf'
+   ```
+
++  Use Nix flakes to build everything,
+
+   ```
+   nix build
+   ```
+
+   and then compile `cardano-ledger.pdf`:
+
+   ```
+   ./result/bin/fls-shake cardano-ledger.pdf
+   ```
 
 ---
 
@@ -173,65 +225,87 @@ instructions are to be run differently.
 
 ---
 
-### Building the artifacts
+## Building the artifacts
 
-#### PDF
+### PDF
 
 `fls-shake` provides two targets, `conway-ledger.pdf` and `cardano-ledger.pdf`,
 to build the respective pdfs.  For example, the command
 
 ```
-fls-shake cardano-ledger.pdf    # OR nix-shell --run 'fls-shake cardano-ledger.pdf'
+nix-shell --run 'fls-shake cardano-ledger.pdf'
 ```
 
 produces the output `dist/cardano-ledger.pdf`.
 
-In addition, `fls-shake` has internal rules to generate intermediate files.
+In addition, `fls-shake` has internal rules to generate 
+[intermediate outputs][fls-shake intermediate outputs].
 
-Agda-generated `tex` files from literate Agda source code are stored in
-`_build/latex.gen`. This are shared between pdf artifacts.
 
-Pdf-artifact specific files are stored under `_build/target` (where e.g., the
-target is `cardano-ledger.pdf`, `_build/cardano-ledger.pdf`).
-
-The structure of `_build/target` is the following:
-
-- `latex.in`: For verbatim latex related files copied from the top level `latex`
-directory
-- `latex.pp`: For post processed `tex` files from Agda-generated `tex` (e.g.,
-applying [`agda2vec.py`](agda2vec.py))
-- `latex.out`: For latex intermediate build files.
-
----
-
-#### Haskell code (for conformance testing)
+### Haskell code (for conformance testing)
 
 `fls-shake` provides a target to build the Haskell code:
 
 ```
-fls-shake hs
+nix-shell --run 'fls-shake hs'
 ```
 
 this produces the output `dist/hs`
 
----
 
-#### Html-hyperlinked Agda code
+### Html-hyperlinked Agda code
 
 `fls-shake` provides a target to build the html:
 
 ```
-fls-shake html
+nix-shell --run 'fls-shake html'
 ```
 
 This produces the output `dist/html`
 
-In addition, `fls-shake` has internal rules to generate intermediate files. This
-are stored under `_build/html`. The structure of `_build/html` is as follows:
+In addition, `fls-shake` has internal rules to generate 
+[intermediate outputs][fls-shake intermediate outputs].
 
-+  `html.in` contains the Agda source code.
-   Agda files are copied verbatim, literate Agda files are `illiterated`.
-+  `html.out` contains the output html.
+
+### fls-shake intermediate outputs
+
++  **Agda-generated `tex` files** from literate Agda source code are stored in
+   `_build/latex.gen`. This are shared between pdf artifacts.
+
++  **Pdf-artifact specific files** are stored under `_build/target` (where e.g., 
+   the target is `cardano-ledger.pdf`, `_build/cardano-ledger.pdf`).
+
+   The structure of `_build/target` is the following:
+
+   +  `latex.in` for verbatim latex related files copied from the top level `latex`
+      directory.
+   +  `latex.pp` for post processed `tex` files from Agda-generated `tex` 
+      (e.g., applying [`agda2vec.py`](agda2vec.py)).
+   +  `latex.out` for latex intermediate build files.
+
++  **Html files**s are stored under `_build/html`.
+
+   The structure of `_build/html` is as follows:
+
+   +  `html.in` contains the Agda source code.  Agda files are copied verbatim,
+      literate Agda files are `illiterated`. 
+   +  `html.out` contains the output html.
+
+---
+
+## Modifying the Agda libraries
+
+To work simultaneously on the ledger and one of its dependencies, the easiest
+way to do this is to remove the library from the ledger's `.agda-lib` file and
+add its path to the `include:` section. 
+
+When finished, push the changes to the library and update `default.nix` to point
+to your new commit.
+
+*Warning:* Don't forget to update the SHA when updating `default.nix`. Nix will
+fail silently on your local machine if you do that. Just change a few
+characters, run `nix-build -A ledger` and nix will tell you the correct hash to
+put there.
 
 ---
 
@@ -251,14 +325,10 @@ are stored under `_build/html`. The structure of `_build/html` is as follows:
 
    ```
    mkdir -p LIB; cd LIB
-   git clone --config advice.detachedHead=false --single-branch \
-     -b "v2.2" https://github.com/agda/agda-stdlib.git
-   git clone --config advice.detachedHead=false --single-branch \
-     -b "v2.0" https://github.com/agda/agda-stdlib-classes.git
-   git clone --config advice.detachedHead=false --single-branch \
-     -b "v2.1.1" https://github.com/agda/agda-stdlib-meta.git
-   git clone --config advice.detachedHead=false --single-branch \
-     -b "master" https://github.com/input-output-hk/agda-sets.git
+   git clone --config advice.detachedHead=false --single-branch -b "v2.2" https://github.com/agda/agda-stdlib.git
+   git clone --config advice.detachedHead=false --single-branch -b "v2.0" https://github.com/agda/agda-stdlib-classes.git
+   git clone --config advice.detachedHead=false --single-branch -b "v2.1.1" https://github.com/agda/agda-stdlib-meta.git
+   git clone --config advice.detachedHead=false --single-branch -b "master" https://github.com/input-output-hk/agda-sets.git
    ```
 
 (TODO: change the versions above to match those in the `default.nix` file.)
@@ -367,19 +437,7 @@ For Ubuntu users not using Nix, compile `fls-shake` by taking the following step
     cabal run fls-shake -- conway-ledger.pdf
     cabal run fls-shake -- html
     cabal run fls-shake -- hs
-    ```    
----
-
-### Setup with Nix (Recommended)
-
-If you're using Nix or Flakes, you can build everything reproducibly with:
-
-```bash
-nix build
-./result/bin/fls-shake cardano-ledger.pdf
-```
-
-This guarantees exact dependency versions and UTF-8-safe execution.
+    ```
 
 ---
 
@@ -499,3 +557,6 @@ This repository is maintained by @WhatisRT.
 [shake]: https://shakebuild.com/
 [Nix download instructions]: https://nixos.org/download/
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
+[Setup without nix]: #setup-without-nix
+[formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
+[Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
