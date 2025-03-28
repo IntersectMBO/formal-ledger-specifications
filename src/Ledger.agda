@@ -33,6 +33,7 @@ open import Ledger.Chain.Properties
 open import Ledger.Gov
 open import Ledger.Enact
 open import Ledger.Ratify
+open import Ledger.Rewards
 open import Ledger.Epoch
 open import Ledger.Chain
 
