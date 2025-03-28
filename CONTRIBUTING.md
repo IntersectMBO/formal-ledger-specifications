@@ -408,6 +408,40 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
        If you have `latexmk` installed but it's still not found, you may need to make
        sure it's in your shell `PATH`.
        
+
++  🔥 **Problem**. After installing `fls-shake` as described above, the command 
+
+   ```
+   ./result/bin/fls-shake -- cardano-ledger.pdf
+   ```
+
+   produces error messages containing the line
+
+   ```
+   commitBuffer: invalid argument (cannot encode character '\8474')
+   ```
+   
+   🔍 **Root Cause**.  Most likely Agda is trying to write a character (Ⅎ, U+2112)
+   into a file or stdout using the wrong encoding — probably ASCII or Latin-1.
+   
+   🧯 **Solution**: Ensure Agda runs in a UTF-8 locale.
+
+    ✅ Option 1: Set `LANG/LC_ALL` manually when running
+
+    ```
+    LC_ALL=en_US.UTF-8 ./result/bin/fls-shake -- cardano-ledger.pdf
+    ```
+
+    ✅ Option 2: Add locale settings globally in your shell:
+
+    ```
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+    ```
+
+    Then try the `fls-shake` command again.
+
+
 ---
 
 ## Maintainer
