@@ -2,12 +2,14 @@
 
 ## Contents
 
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+
+- [Quick Start: type-check the formal ledger code and build the pdf](#quick-start-type-check-the-formal-ledger-code-and-build-the-pdf)
 - [Style guidelines](#style-guidelines)
 - [Nix Dependencies](#nix-dependencies)
 - [Agda Setup](#agda-setup)
   - [Global `ledger-agda` installation](#global-ledger-agda-installation)
   - [Local `ledger-agda`installation](#local-ledger-agdainstallation)
-- [Quick Start: type-check the formal ledger code and build the pdf](#quick-start-type-check-the-formal-ledger-code-and-build-the-pdf)
 - [Working on the artifacts](#working-on-the-artifacts)
 - [Building the artifacts](#building-the-artifacts)
   - [PDF](#pdf)
@@ -23,6 +25,60 @@
 - [Troubleshooting](#troubleshooting)
 - [Maintainer](#maintainer)
 
+<!-- markdown-toc end -->
+
+---
+
+## Quick Start: type-check the formal ledger code and build the pdf
+
+`nix-shell` provides Agda with the correct dependencies.
+You should be able to run your preferred editor within `nix-shell` and it should see
+the required `agda` executable.
+
+Here are some examples of *alternative* ways to interact with the code in this
+repository.  (You will probably do some but not all of these things.)
+
+All of these assume you have at least cloned this repository to your local machine:
+
+```
+git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
+cd formal-ledger-specifications
+```
+
++  Open a Nix shell (in which the correct version of Agda will be available) and
+   launch your favorite editor:
+
+   ```
+   nix-shell
+   emacs src/Everything.agda
+   ```
+
+   Type-check everything inside Emacs with `C-c C-l`.
+   (You may need to do `M-x my/toggle-ledger-agda` first.)
+
++  Type-check the formal ledger Agda code from the command line,
+
+   ```
+   agda src/Everything.agda
+   ```
+
++  Type-check the formal ledger Agda code and generate the `cardano-ledger.pdf` document,
+
+   ```
+   nix-shell --run 'fls-shake cardano-ledger.pdf'
+   ```
+
++  Use Nix flakes to build everything,
+
+   ```
+   nix build
+   ```
+
+   and then compile `cardano-ledger.pdf`:
+
+   ```
+   ./result/bin/fls-shake cardano-ledger.pdf
+   ```
 
 ---
 
@@ -128,59 +184,6 @@ To install a local version of `ledger-agda`,
       going on with your Agda setup).
    
    **If you encounter any problems, please open a [New Issue][]**. 
-
----
-
-## Quick Start: type-check the formal ledger code and build the pdf
-
-`nix-shell` provides Agda with the correct dependencies.
-You should be able to run your preferred editor within `nix-shell` and it should see
-the required `agda` executable.
-
-Here are some examples of *alternative* ways to interact with the code in this
-repository.  (You will probably do some but not all of these things.)
-
-All of these assume you have at least cloned this repository to your local machine:
-
-```
-git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
-cd formal-ledger-specifications
-```
-
-+  Open a Nix shell (in which the correct version of Agda will be available) and
-   launch your favorite editor:
-
-   ```
-   nix-shell
-   emacs src/Everything.agda
-   ```
-
-   Type-check everything inside Emacs with `C-c C-l`.
-   (You may need to do `M-x my/toggle-ledger-agda` first.)
-
-+  Type-check the formal ledger Agda code from the command line,
-
-   ```
-   agda src/Everything.agda
-   ```
-
-+  Type-check the formal ledger Agda code and generate the `cardano-ledger.pdf` document,
-
-   ```
-   nix-shell --run 'fls-shake cardano-ledger.pdf'
-   ```
-
-+  Use Nix flakes to build everything,
-
-   ```
-   nix build
-   ```
-
-   and then compile `cardano-ledger.pdf`:
-
-   ```
-   ./result/bin/fls-shake cardano-ledger.pdf
-   ```
 
 ---
 
