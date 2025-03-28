@@ -40,4 +40,4 @@ d_DecEq'45''215''8242'_6 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45''215''8242'_6 v0 v1 v2 v3 v4 v5
   = coe
-      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160 v4 v5
+      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 v4 v5

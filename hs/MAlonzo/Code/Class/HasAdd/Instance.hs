@@ -23,26 +23,26 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.String.Base
 
 -- Class.HasAdd.Instance.addInt
-d_addInt_6 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
+d_addInt_6 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 d_addInt_6
   = coe
-      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_7
+      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_25
       (coe MAlonzo.Code.Data.Integer.Base.d__'43'__276)
 -- Class.HasAdd.Instance.addNat
-d_addNat_8 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
+d_addNat_8 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 d_addNat_8
   = coe
-      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_7
+      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_25
       (coe addInt)
 -- Class.HasAdd.Instance.addRat
-d_addRat_10 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
+d_addRat_10 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 d_addRat_10
   = coe
-      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_7
+      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_25
       (coe MAlonzo.Code.Data.Rational.Base.d__'43'__270)
 -- Class.HasAdd.Instance.addString
-d_addString_12 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
+d_addString_12 :: MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 d_addString_12
   = coe
-      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_7
+      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_25
       (coe MAlonzo.Code.Data.String.Base.d__'43''43'__20)

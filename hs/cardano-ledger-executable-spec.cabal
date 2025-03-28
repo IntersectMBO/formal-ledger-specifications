@@ -308,6 +308,9 @@ library
         MAlonzo.Code.Data.Maybe.Relation.Unary.Any
         MAlonzo.Code.Data.Nat
         MAlonzo.Code.Data.Nat.Base
+        MAlonzo.Code.Data.Nat.Binary
+        MAlonzo.Code.Data.Nat.Binary.Base
+        MAlonzo.Code.Data.Nat.Binary.Properties
         MAlonzo.Code.Data.Nat.Coprimality
         MAlonzo.Code.Data.Nat.DivMod
         MAlonzo.Code.Data.Nat.DivMod.Core
@@ -322,6 +325,7 @@ library
         MAlonzo.Code.Data.Nat.Properties
         MAlonzo.Code.Data.Nat.Properties.Ext
         MAlonzo.Code.Data.Nat.Show
+        MAlonzo.Code.Data.Nat.Solver
         MAlonzo.Code.Data.Parity.Base
         MAlonzo.Code.Data.Product
         MAlonzo.Code.Data.Product.Algebra
@@ -509,6 +513,8 @@ library
         MAlonzo.Code.Ledger.Transaction
         MAlonzo.Code.Ledger.Types.Epoch
         MAlonzo.Code.Ledger.Types.GovStructure
+        MAlonzo.Code.Ledger.Types.Numeric
+        MAlonzo.Code.Ledger.Types.Numeric.UnitInterval
         MAlonzo.Code.Ledger.Utxo
         MAlonzo.Code.Ledger.Utxow
         MAlonzo.Code.Level
@@ -624,8 +630,10 @@ library
         MAlonzo.Code.Tactic.Derive.DecEq
         MAlonzo.Code.Tactic.Derive.Show
         MAlonzo.Code.Tactic.Derive.TestTypes
+        MAlonzo.Code.Tactic.EquationalReasoning
         MAlonzo.Code.Tactic.GenError
         MAlonzo.Code.Tactic.Inline
+        MAlonzo.Code.Tactic.MonoidSolver
         MAlonzo.Code.Tactic.Premises
         MAlonzo.Code.Tactic.Substitute
         MAlonzo.Code.Text.Format

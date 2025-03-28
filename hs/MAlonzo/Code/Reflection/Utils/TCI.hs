@@ -1770,7 +1770,7 @@ du_isDefT_466 v0 v1 v2 v3
                         erased
                         (coe
                            MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Name_178 v2 v6))
+                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Name_200 v2 v6))
               _ -> coe v5))
 -- Reflection.Utils.TCI.withSafeReset
 d_withSafeReset_476 ::

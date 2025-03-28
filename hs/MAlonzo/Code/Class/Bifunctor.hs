@@ -199,7 +199,7 @@ du_Bifunctor'45'Σ_72
 -- Class.Bifunctor.Bifunctor
 d_Bifunctor_80 a0 a1 a2 = ()
 newtype T_Bifunctor_80
-  = C_Bifunctor'46'constructor_3915 (() ->
+  = C_Bifunctor'46'constructor_3949 (() ->
                                      () ->
                                      () ->
                                      () ->
@@ -215,7 +215,7 @@ d_bimap_102 ::
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 d_bimap_102 v0
   = case coe v0 of
-      C_Bifunctor'46'constructor_3915 v1 -> coe v1
+      C_Bifunctor'46'constructor_3949 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.Bifunctor.Bifunctor.map₁
 d_map'8321'_110 ::
@@ -360,7 +360,7 @@ d_Bifunctor'45''215'_152 ~v0 ~v1 = du_Bifunctor'45''215'_152
 du_Bifunctor'45''215'_152 :: T_Bifunctor_80
 du_Bifunctor'45''215'_152
   = coe
-      C_Bifunctor'46'constructor_3915
+      C_Bifunctor'46'constructor_3949
       (coe
          (\ v0 v1 v2 v3 v4 v5 ->
             coe
@@ -374,5 +374,5 @@ d_Bifunctor'45''8846'_158 ~v0 ~v1 = du_Bifunctor'45''8846'_158
 du_Bifunctor'45''8846'_158 :: T_Bifunctor_80
 du_Bifunctor'45''8846'_158
   = coe
-      C_Bifunctor'46'constructor_3915
+      C_Bifunctor'46'constructor_3949
       (coe (\ v0 v1 v2 v3 -> coe MAlonzo.Code.Data.Sum.Base.du_map_84))

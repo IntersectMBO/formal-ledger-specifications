@@ -118,7 +118,7 @@ du_HasCoin'45'Set_32 v0
             coe
               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum''_1196
               (coe
-                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160 (coe v0)
+                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 (coe v0)
                  (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
               (coe
                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62

@@ -7399,7 +7399,7 @@ du_indexedSum'7515''''45'cong_1230 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Axiom.Set.Sum.du_indexedSum'45'cong_1038 (coe v2)
       (coe
-         MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_160 (coe v0)
+         MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 (coe v0)
          (coe v1))
       (coe
          (\ v6 ->

@@ -21,6 +21,7 @@ import qualified MAlonzo.Code.Agda.Builtin.Bool
 import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.Unit
+import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Algebra.Bundles
 import qualified MAlonzo.Code.Algebra.Morphism.Construct.Identity
 import qualified MAlonzo.Code.Algebra.Morphism.Structures
@@ -223,15 +224,16 @@ d_isKeyPair_62 :: Integer -> T_HSVKey_14 -> ()
 d_isKeyPair_62 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.sign
 d_sign_68 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8 ->
+  MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_sign_68 ~v0 v1 = du_sign_68 v1
+d_sign_68 ~v0 ~v1 v2 = du_sign_68 v2
 du_sign_68 ::
-  MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8 ->
+  MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10 ->
   AgdaAny -> AgdaAny -> AgdaAny
 du_sign_68 v0
-  = coe MAlonzo.Code.Class.HasAdd.Core.d__'43'__14 (coe v0)
+  = coe MAlonzo.Code.Class.HasAdd.Core.d__'43'__16 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.ScriptHash
 d_ScriptHash_70 :: ()
 d_ScriptHash_70 = erased

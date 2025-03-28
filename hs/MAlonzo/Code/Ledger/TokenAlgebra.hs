@@ -484,13 +484,14 @@ d_Dec'45''8804''7511'_220 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.TokenAlgebra.TokenAlgebra.addValue
 d_addValue_222 ::
-  () -> T_TokenAlgebra_8 -> MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
+  () ->
+  T_TokenAlgebra_8 -> MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 d_addValue_222 ~v0 v1 = du_addValue_222 v1
 du_addValue_222 ::
-  T_TokenAlgebra_8 -> MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_8
+  T_TokenAlgebra_8 -> MAlonzo.Code.Class.HasAdd.Core.T_HasAdd_10
 du_addValue_222 v0
   = coe
-      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_7
+      MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_25
       (coe
          MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
          (coe

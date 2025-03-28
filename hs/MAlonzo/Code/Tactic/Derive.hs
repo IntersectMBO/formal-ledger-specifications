@@ -569,7 +569,7 @@ du_genMutualHelpers_90 v0 v1
               MAlonzo.Code.Data.List.Base.du_deduplicate_898
               (coe
                  MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                 (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Name_178))
+                 (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Name_200))
               (coe
                  MAlonzo.Code.Data.List.Base.du_mapMaybe_258
                  (coe du_helper_98 (coe v0)) (coe v2))))
