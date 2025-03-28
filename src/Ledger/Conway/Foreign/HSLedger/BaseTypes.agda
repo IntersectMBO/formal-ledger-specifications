@@ -2,6 +2,7 @@ module Ledger.Conway.Foreign.HSLedger.BaseTypes where
 
 open import Data.Rational
 
+open import Ledger.Types.Numeric.UnitInterval
 open import Ledger.Conway.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.HSLedger.Core public
 import Ledger.Conway.Foreign.HSTypes as F
@@ -77,3 +78,28 @@ unquoteDecl = do
   hsTypeAlias ExUnits
   hsTypeAlias Epoch
   hsTypeAlias ScriptHash
+
+-- UnitInterval: Haskell type corresponding to 'UnitInterval'
+record HsUnitInterval : Type where
+  field getHsUnitInterval : F.Rational
+    -- I would like to use ℚ here, but F.Rational converts better.
+open HsUnitInterval
+
+{-# FOREIGN GHC
+  data HsUnitInterval = MkUnitInterval
+    { getHsUnitInterval :: Rational
+    }
+    deriving (Eq, Show)
+#-}
+{-# COMPILE GHC HsUnitInterval = data HsUnitInterval (MkUnitInterval) #-}
+
+instance
+  HsTy-UnitInterval : HasHsType UnitInterval
+  HsTy-UnitInterval .HasHsType.HsType = HsUnitInterval
+
+  Conv-UnitInterval : Convertible UnitInterval HsUnitInterval
+  Conv-UnitInterval .to x = record { getHsUnitInterval = to (fromUnitInterval x) }
+  Conv-UnitInterval .from x =
+    case toUnitInterval (from (getHsUnitInterval x)) of λ where
+      (just x) → x
+      nothing → error "Formal Spec: rational outside of unit interval"
