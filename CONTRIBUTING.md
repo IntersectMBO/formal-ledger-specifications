@@ -6,19 +6,56 @@ We are currently aspiring to follow the [Agda standard library style guide][] as
 
 We also have a separate style guide for formatting the PDF: [PDF style guide](PDF-style-guide.md).
 
-## Setup with emacs
+--- 
 
-We use Agda version 2.7 and various dependencies. You can install the correct version of Agda and the dependencies using `nix-env -iA agda -f .`, but this is a global install which you may not want if you also have other Agda projects.
+## Nix Dependencies
 
-To install Agda locally and use that install with emacs, you can do the following:
+Our code base relies heavily on Nix to set up an environment with all dependencies
+installed correctly.  While it is possible to work with this repository without using
+Nix, and some instructions for doing so are included below, those wishing to make
+nontrivial contributions to this repository are advised to follow the Nix-based
+approach descibed here. 
 
--  Build `agda` and `agda-mode` binaries by invoking the following: `nix-build -A agdaWithDeps -o ~/IOHK/ledger-agda`. You can replace `~/IOHK/ledger-agda` with whatever path you like, just make sure to replace it in `my/agda-versions` below as well.
+It's not necessary to run the NixOS, but having the Nix package manager
+installed is highly recommended.  See the official [Nix download instructions][].
 
-   *Note*. You need not have built/installed Agda prior to invoking this `nix-build` command (though it's okay if you have).
+---
 
-   *Note*. To instruct the `Makefile` to use this local Agda binary, invoke it like so: `AGDA=~/IOHK/ledger-agda make -C src/`
+## Agda Setup
 
--  Put the following into your init file (highlight and `M-x eval-region` to load it without restarting emacs).
+We use Agda version 2.7 and various dependencies.  For the purposes of this
+ documentation, we'll call this custom setup `ledger-agda`.
+Though not recommended, it's possible to piece together `ledger-agda` without using
+Nix (as described in [Setup without nix](#setup-without-nix)), however, we focus
+on the the recommended Nix-based installation procedure.
+
+### Install ledger-agda
+
+#### Global Installation
+
+`ledger-agda` can be installed with the single command `nix-env -iA agda -f .`.
+However, this is a *global install*, which you may not want if you also have other Agda
+projects.
+
+#### Local Installation
+
+To install a non-destructive, "local" version of `ledger-agda`, do the following: 
+
++  Build `agda` and `agda-mode` binaries.
+
+   ```
+   nix-build -A agdaWithDeps -o ~/IOHK/ledger-agda
+   ```
+
+   **Notes**
+
+   1. Replace `~/IOHK/ledger-agda` with whatever path you like; make sure to replace it in `my/agda-versions` below as well.
+
+   2. It is not necessary to have built/installed Agda prior to invoking this `nix-build` command (though it's okay if you have).
+
+   3. To ensure the commands described below use the `ledger-agda` version of Agda, invoke them like so: `AGDA=~/IOHK/ledger-agda COMMAND`.
+
++  Put the following into your Emacs init file (highlight and `M-x eval-region` to load it without restarting emacs):
 
    ```
    ;; Defines a function `my/switch-agda' that switches between different
@@ -50,21 +87,26 @@ To install Agda locally and use that install with emacs, you can do the followin
    (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
    ```
 
-   *Note*. This assumes that your regular install of Agda is in your path with the name `agda` and version `2.6.4`, otherwise you'll have to edit `my/agda-versions`.
+   *Note*. This assumes that your regular install of Agda is in your path with the
+   name `agda` and version `2.6.4`, otherwise edit `my/agda-versions` to match your
+   existing Agda installation.
 
-   You can then use `M-x my/toggle-ledger-agda`, or `C-c C-x C-t`, to switch between your regular install of Agda and the locally installed version.
+   Once you make these changes, the Emacs command `M-x my/toggle-ledger-agda` (or
+   `C-c C-x C-t`) will switch between your regular Agda and the IOHK version.
 
-   There are other options as well, but this should work with all kinds of custom emacs setups or distributions (assuming there isn't already some other stuff going on with your Agda setup).
+   There are other options as well, but this should work with all kinds of custom
+   emacs setups or distributions (assuming there isn't already some other stuff going
+   on with your Agda setup).
+   
+   **If you encounter any problems, please open a [New Issue][]**. 
 
 ---
 
 ## Working on the formal ledger specification
 
-For nix users, `nix-shell` provides Agda with the correct dependencies. You
+For Nix users, `nix-shell` provides Agda with the correct dependencies.  You
 should be able to run your preferred editor within `nix-shell` and it should see
 the required `agda` executable.
-
-For instructions to setup Agda without nix, check [Setup without nix](#setup-without-nix).
 
 To typecheck the formal specification, run:
 
@@ -455,5 +497,5 @@ This repository is maintained by @WhatisRT.
 [deepseq]: https://github.com/haskell/deepseq
 [hashable]: https://github.com/haskell-unordered-containers/hashable
 [shake]: https://shakebuild.com/
-
-
+[Nix download instructions]: https://nixos.org/download/
+[New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
