@@ -36,7 +36,7 @@ You should be able to run your preferred editor within `nix-shell` and it should
 the required `agda` executable.
 
 Here are some examples of *alternative* ways to interact with the code in this
-repository.  (You will probably do some but not all of these things.)
+repository.  (You will probably do some but not all of these.)
 
 All of these assume you have at least cloned this repository to your local machine:
 
@@ -140,7 +140,7 @@ To install a local version of `ledger-agda`,
 +  Put the following in your [Emacs init file][] 
    (highlight and `M-x eval-region` to load it without restarting emacs):
 
-   ```
+   ```lisp
    ;; Defines a function `my/switch-agda' that switches between different
    ;; `agda' executables defined in `my/agda-versions'. The first entry of
    ;; `my/agda-versions' is assumed to be the default Agda.
