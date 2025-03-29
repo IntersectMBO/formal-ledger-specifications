@@ -48,7 +48,7 @@ cd formal-ledger-specifications
 +  Open a Nix shell (in which the correct version of Agda will be available) and
    launch your favorite editor:
 
-   ```
+   ```zsh
    nix-shell
    emacs src/Everything.agda
    ```
@@ -58,25 +58,25 @@ cd formal-ledger-specifications
 
 +  Type-check the formal ledger Agda code from the command line,
 
-   ```
+   ```zsh
    agda src/Everything.agda
    ```
 
 +  Type-check the formal ledger Agda code and generate the `cardano-ledger.pdf` document,
 
-   ```
+   ```bash
    nix-shell --run 'fls-shake cardano-ledger.pdf'
    ```
 
 +  Use Nix flakes to build everything,
 
-   ```
+   ```bash
    nix build
    ```
 
    and then compile `cardano-ledger.pdf`:
 
-   ```
+   ```sh
    ./result/bin/fls-shake cardano-ledger.pdf
    ```
 
