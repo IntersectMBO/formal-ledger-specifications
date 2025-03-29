@@ -1,35 +1,41 @@
-# Contributing to the formal ledger specifications
-
-## Contents
-
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
 
-- [Quick Start: type-check the formal ledger code and build the pdf](#quick-start-type-check-the-formal-ledger-code-and-build-the-pdf)
-- [Style guidelines](#style-guidelines)
-- [Nix Dependencies](#nix-dependencies)
-- [Agda Setup](#agda-setup)
-  - [Global `ledger-agda` installation](#global-ledger-agda-installation)
-  - [Local `ledger-agda`installation](#local-ledger-agdainstallation)
-- [Working on the artifacts](#working-on-the-artifacts)
-- [Building the artifacts](#building-the-artifacts)
-  - [PDF](#pdf)
-  - [Haskell code (for conformance testing)](#haskell-code-for-conformance-testing)
-  - [Html-hyperlinked Agda code](#html-hyperlinked-agda-code)
-  - [fls-shake intermediate outputs](#fls-shake-intermediate-outputs)
-- [Modifying the Agda libraries](#modifying-the-agda-libraries)
-- [Setup Without Nix](#setup-without-nix)
-  - [Agda and its dependencies](#agda-and-its-dependencies)
-  - [`fls-shake`](#fls-shake)
-    - [Building `fls-shake` manually](#building-fls-shake-manually)
-- [Updating nixpkgs](#updating-nixpkgs)
-- [Troubleshooting](#troubleshooting)
-- [Maintainer](#maintainer)
+- [Contributing to the formal ledger specifications](#contributing-to-the-formal-ledger-specifications)
+  - [Style guidelines](#style-guidelines)
+  - [Quick Start](#quick-start)
+  - [Nix Dependencies](#nix-dependencies)
+  - [Agda Setup](#agda-setup)
+    - [Global `ledger-agda` installation](#global-ledger-agda-installation)
+    - [Local `ledger-agda`installation](#local-ledger-agdainstallation)
+  - [Working on the artifacts](#working-on-the-artifacts)
+  - [Building the artifacts](#building-the-artifacts)
+    - [PDF](#pdf)
+    - [Haskell code (for conformance testing)](#haskell-code-for-conformance-testing)
+    - [Html-hyperlinked Agda code](#html-hyperlinked-agda-code)
+    - [fls-shake intermediate outputs](#fls-shake-intermediate-outputs)
+  - [Modifying the Agda libraries](#modifying-the-agda-libraries)
+  - [Setup Without Nix](#setup-without-nix)
+    - [Agda and its dependencies](#agda-and-its-dependencies)
+    - [`fls-shake`](#fls-shake)
+      - [Building `fls-shake` manually](#building-fls-shake-manually)
+  - [Updating nixpkgs](#updating-nixpkgs)
+  - [Troubleshooting](#troubleshooting)
+  - [Maintainer](#maintainer)
 
 <!-- markdown-toc end -->
 
----
+# Contributing to the formal ledger specifications
 
-## Quick Start: type-check the formal ledger code and build the pdf
+## Style guidelines
+
+We are currently aspiring to follow the [Agda standard library style guide][] as much as reasonable. Since some of our code will be rendered into a PDF, the formatting of the PDF takes priority over formatting of the code, so deviations are to be expected.
+
+We also have a separate style guide for formatting the PDF: [PDF style guide](PDF-style-guide.md).
+
+--- 
+
+## Quick Start
 
 `nix-shell` provides Agda with the correct dependencies.
 You should be able to run your preferred editor within `nix-shell` and it should see
@@ -81,14 +87,6 @@ cd formal-ledger-specifications
    ```
 
 ---
-
-## Style guidelines
-
-We are currently aspiring to follow the [Agda standard library style guide][] as much as reasonable. Since some of our code will be rendered into a PDF, the formatting of the PDF takes priority over formatting of the code, so deviations are to be expected.
-
-We also have a separate style guide for formatting the PDF: [PDF style guide](PDF-style-guide.md).
-
---- 
 
 ## Nix Dependencies
 
