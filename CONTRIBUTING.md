@@ -530,20 +530,20 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
    
    🧯 **Solution**: Ensure Agda runs in a UTF-8 locale.
 
-    ✅ Option 1: Set `LANG/LC_ALL` manually when running
+      Option 1: Set `LANG/LC_ALL` manually when running
 
-    ```bash
-    LC_ALL=en_US.UTF-8 ./result/bin/fls-shake -- cardano-ledger.pdf
-    ```
+      ```bash
+      LC_ALL=en_US.UTF-8 ./result/bin/fls-shake -- cardano-ledger.pdf
+      ```
 
-    ✅ Option 2: Add locale settings globally in your shell:
+      Option 2: Add locale settings globally in your shell:
 
-    ```bash
-    export LANG=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
-    ```
+      ```bash
+      export LANG=en_US.UTF-8
+      export LC_ALL=en_US.UTF-8
+      ```
 
-    Then try the `fls-shake` command again.
+      Then try the `fls-shake` command again.
 
 
 ---
