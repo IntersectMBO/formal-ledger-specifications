@@ -48,7 +48,7 @@ cd formal-ledger-specifications
 +  Open a Nix shell (in which the correct version of Agda will be available) and
    launch your favorite editor:
 
-   ```zsh
+   ```bash
    nix-shell
    emacs src/Everything.agda
    ```
@@ -58,7 +58,7 @@ cd formal-ledger-specifications
 
 +  Type-check the formal ledger Agda code from the command line,
 
-   ```zsh
+   ```bash
    agda src/Everything.agda
    ```
 
@@ -76,7 +76,7 @@ cd formal-ledger-specifications
 
    and then compile `cardano-ledger.pdf`:
 
-   ```sh
+   ```bash
    ./result/bin/fls-shake cardano-ledger.pdf
    ```
 
@@ -199,7 +199,7 @@ instructions are to be run differently.
 
 +  For Nix users, the commands should be executed as follows:
 
-   ```
+   ```bash
    nix-shell --run COMMAND
    ```
 
@@ -209,7 +209,7 @@ instructions are to be run differently.
    code specify to run the command `fls-shake html`, but using Nix you would enter
    this command as follows:
 
-   ```
+   ```bash
    nix-shell --run 'fls-shake html'
    ```
 
@@ -235,7 +235,7 @@ instructions are to be run differently.
 `fls-shake` provides two targets, `conway-ledger.pdf` and `cardano-ledger.pdf`,
 to build the respective pdfs.  For example, the command
 
-```
+```bash
 nix-shell --run 'fls-shake cardano-ledger.pdf'
 ```
 
@@ -249,7 +249,7 @@ In addition, `fls-shake` has internal rules to generate
 
 `fls-shake` provides a target to build the Haskell code:
 
-```
+```bash
 nix-shell --run 'fls-shake hs'
 ```
 
@@ -260,7 +260,7 @@ this produces the output `dist/hs`
 
 `fls-shake` provides a target to build the html:
 
-```
+```bash
 nix-shell --run 'fls-shake html'
 ```
 
@@ -326,7 +326,7 @@ put there.
    + [agda-stdlib-meta](https://github.com/agda/agda-stdlib-meta)
    + [agda-sets](https://github.com/input-output-hk/agda-sets)
 
-   ```
+   ```bash
    mkdir -p LIB; cd LIB
    git clone --config advice.detachedHead=false --single-branch -b "v2.2" https://github.com/agda/agda-stdlib.git
    git clone --config advice.detachedHead=false --single-branch -b "v2.0" https://github.com/agda/agda-stdlib-classes.git
@@ -351,13 +351,13 @@ put there.
 
     +  To typecheck the formal specification, run:
 
-       ```
+       ```bash
        AGDA_DIR=LIB agda src/Everything.agda
        ```
 
     +  To build the `conway-ledger.pdf` artifact, run:
 
-       ```
+       ```bash
        AGDA_DIR=LIB fls-shake conway-ledger.pdf
        ```
 
@@ -428,14 +428,14 @@ For Ubuntu users not using Nix, compile `fls-shake` by taking the following step
     Once built, run `fls-shake` on one of the build targets 
     (e.g., `cardano-ledger.pdf`) as follows:
     
-    ```
+    ```bash
     cabal run fls-shake -- cardano-ledger.pdf
     ```
     Alternatively, `./result/bin/fls-shake cardano-ledger.pdf`.
 
     Here is a list of commands for the various targets that `fls-shake` can build:
     
-    ```
+    ```bash
     cabal run fls-shake -- cardano-ledger.pdf
     cabal run fls-shake -- conway-ledger.pdf
     cabal run fls-shake -- html
@@ -447,17 +447,20 @@ For Ubuntu users not using Nix, compile `fls-shake` by taking the following step
 ## Updating nixpkgs
 
 To update the default nixpkgs used to build the derivations, run
-```
+
+```bash
 niv update nixpkgs -r <revision>
 ```
 
 or
-```
+
+```bash
 niv update nixpkgs -v <version>
 ```
 
 For example:
-```
+
+```bash
 niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c
 niv update nixpkgs -v 21.11.337905.902d91def1e
 ```
@@ -468,13 +471,13 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
 +  🔥 **Problem**. After installing `fls-shake` as described above, the command 
 
-   ```
+   ```bash
    ./result/bin/fls-shake -- cardano-ledger.pdf
    ```
 
    produces error messages ending with the line
 
-   ```
+   ```bash
    latexmk: createProcess: exec: invalid argument (Bad file descriptor)
    ```
 
@@ -493,7 +496,7 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
        On Ubuntu:
 
-       ```
+       ```bash
        sudo apt update
        sudo apt install latexmk
        ```
@@ -514,13 +517,13 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
 +  🔥 **Problem**. After installing `fls-shake` as described above, the command 
 
-   ```
+   ```bash
    ./result/bin/fls-shake -- cardano-ledger.pdf
    ```
 
    produces error messages containing the line
 
-   ```
+   ```bash
    commitBuffer: invalid argument (cannot encode character '\8474')
    ```
    
@@ -531,13 +534,13 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
     ✅ Option 1: Set `LANG/LC_ALL` manually when running
 
-    ```
+    ```bash
     LC_ALL=en_US.UTF-8 ./result/bin/fls-shake -- cardano-ledger.pdf
     ```
 
     ✅ Option 2: Add locale settings globally in your shell:
 
-    ```
+    ```bash
     export LANG=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
     ```
