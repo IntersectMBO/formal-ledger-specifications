@@ -525,10 +525,10 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
    commitBuffer: invalid argument (cannot encode character '\8474')
    ```
    
-   🔍 **Root Cause**.  Most likely Agda is trying to write a character (Ⅎ, U+2112)
-   into a file or stdout using the wrong encoding — probably ASCII or Latin-1.
+   +  🔍 **Root Cause**.  Most likely Agda is trying to write a character (Ⅎ, U+2112)
+      into a file or stdout using the wrong encoding — probably ASCII or Latin-1.
    
-   🧯 **Solution**: Ensure Agda runs in a UTF-8 locale.
+   +  🧯 **Solution**: Ensure Agda runs in a UTF-8 locale.
 
       Option 1: Set `LANG/LC_ALL` manually when running
 
