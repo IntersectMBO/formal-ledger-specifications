@@ -135,53 +135,53 @@ To install a local version of `ledger-agda`,
     *  To ensure the commands described below use the `ledger-agda` version of Agda,
        invoke them like so: `AGDA=~/IOHK/ledger-agda COMMAND`.
 
-+  Put the following in your [Emacs init file][] 
-   (highlight and `M-x eval-region` to load it without restarting emacs):
+2.  Put the following in your [Emacs init file][] 
+    (highlight and `M-x eval-region` to load it without restarting emacs):
 
-   ```lisp
-   ;; Defines a function `my/switch-agda' that switches between different
-   ;; `agda' executables defined in `my/agda-versions'. The first entry of
-   ;; `my/agda-versions' is assumed to be the default Agda.
-   ;;
-   ;; If there are two entries in `my/agda-versions', `my/switch-agda' toggles
-   ;; between the two. If there are more entries, it will ask which one
-   ;; to choose.
+    ```lisp
+    ;; Defines a function `my/switch-agda' that switches between different
+    ;; `agda' executables defined in `my/agda-versions'. The first entry of
+    ;; `my/agda-versions' is assumed to be the default Agda.
+    ;;
+    ;; If there are two entries in `my/agda-versions', `my/switch-agda' toggles
+    ;; between the two. If there are more entries, it will ask which one
+    ;; to choose.
 
-   (setq my/agda-versions `(("Agda"        "2.6.4" "agda")
-                            ("Ledger Agda" "2.7.0" "~/IOHK/ledger-agda/bin/agda")))
+    (setq my/agda-versions `(("Agda"        "2.6.4" "agda")
+                             ("Ledger Agda" "2.7.0" "~/IOHK/ledger-agda/bin/agda")))
 
-   (setq my/selected-agda (caar my/agda-versions))
+    (setq my/selected-agda (caar my/agda-versions))
 
-   (defun my/switch-agda (name version path)
-     (interactive
-      (cond ((> (length my/agda-versions) 2)
-             (assoc (completing-read "Agda" my/agda-versions '(lambda (x) 't) 't) my/agda-versions))
-            ((= (length my/agda-versions) 2)
-             (car (seq-filter '(lambda (x) (not (string= my/selected-agda (car x)))) my/agda-versions)))
-            (t (error "my/agda-versions needs to have at least two elements!"))))
-     (message "Selecting %s, version %s" name version)
-     (setq my/selected-agda   name
-           agda2-version      version
-           agda2-program-name path)
-     (agda2-restart))
+    (defun my/switch-agda (name version path)
+      (interactive
+       (cond ((> (length my/agda-versions) 2)
+              (assoc (completing-read "Agda" my/agda-versions '(lambda (x) 't) 't) my/agda-versions))
+             ((= (length my/agda-versions) 2)
+              (car (seq-filter '(lambda (x) (not (string= my/selected-agda (car x)))) my/agda-versions)))
+             (t (error "my/agda-versions needs to have at least two elements!"))))
+      (message "Selecting %s, version %s" name version)
+      (setq my/selected-agda   name
+            agda2-version      version
+            agda2-program-name path)
+      (agda2-restart))
 
-   (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
-   ```
+    (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
+    ```
 
-   **Notes** 
+    **Notes** 
 
-   *  This assumes that your regular install of Agda is in your path with the name
-      `agda` and version `2.6.4`, otherwise edit  `my/agda-versions` to match your
-      existing Agda installation. 
+    *  This assumes that your regular install of Agda is in your path with the name
+       `agda` and version `2.6.4`, otherwise edit  `my/agda-versions` to match your
+       existing Agda installation. 
 
-   *  Once you make these changes, the Emacs command `M-x my/toggle-ledger-agda` 
-      (or `C-c C-x C-t`) will switch between your regular Agda and the IOHK version.
+    *  Once you make these changes, the Emacs command `M-x my/toggle-ledger-agda` 
+       (or `C-c C-x C-t`) will switch between your regular Agda and the IOHK version.
 
-   *  There are other options as well, but this should work with all kinds of custom
-      emacs setups or distributions (assuming there isn't already some other stuff
-      going on with your Agda setup).
+    *  There are other options as well, but this should work with all kinds of custom
+       emacs setups or distributions (assuming there isn't already some other stuff
+       going on with your Agda setup).
    
-   **If you encounter any problems, please open a [New Issue][]**. 
+**If you encounter any problems, please open a [New Issue][]**. 
 
 ---
 
@@ -223,6 +223,7 @@ instructions are to be run differently.
 + `.shake` to store build information;
 + `dist` to store built artifacts.
 
+**If you encounter any problems, please open a [New Issue][]**. 
 
 ---
 
@@ -291,6 +292,9 @@ In addition, `fls-shake` has internal rules to generate
    +  `html.in` contains the Agda source code.  Agda files are copied verbatim,
       literate Agda files are `illiterated`. 
    +  `html.out` contains the output html.
+
+
+**If you encounter any problems, please open a [New Issue][]**. 
 
 ---
 
@@ -370,7 +374,7 @@ The easiest way to build `fls-shake` is to simply type `nix-build -A fls-shake`.
 If that doesn't work, you can try to compile the [`Shakefile.hs`](Shakefile.hs) manually and
 build `fls-shake` from scratch.
 
-#### Building `fls-shake` manually
+### Building `fls-shake` manually
 
 For Ubuntu users not using Nix, compile `fls-shake` by taking the following steps:
 
@@ -439,6 +443,8 @@ For Ubuntu users not using Nix, compile `fls-shake` by taking the following step
     cabal run fls-shake -- html
     cabal run fls-shake -- hs
     ```
+
+**If you encounter any problems, please open a [New Issue][]**. 
 
 ---
 
@@ -551,6 +557,10 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 ## Maintainer
 
 This repository is maintained by @WhatisRT.
+
+
+**If you encounter any problems, please open a [New Issue][]**. 
+
 
 
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
