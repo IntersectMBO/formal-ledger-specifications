@@ -86,6 +86,9 @@ cd formal-ledger-specifications
    ./result/bin/fls-shake cardano-ledger.pdf
    ```
 
+**If you encounter any problems, please read the rest of these instructions and open
+a [New Issue][] if necessary**. 
+
 ---
 
 ## Nix Dependencies
@@ -181,7 +184,9 @@ To install a local version of `ledger-agda`,
        emacs setups or distributions (assuming there isn't already some other stuff
        going on with your Agda setup).
    
-**If you encounter any problems, please open a [New Issue][]**. 
+**If you encounter any problems, please read the rest of these instructions and open
+a [New Issue][] if necessary**. 
+
 
 ---
 
@@ -223,7 +228,8 @@ instructions are to be run differently.
 + `.shake` to store build information;
 + `dist` to store built artifacts.
 
-**If you encounter any problems, please open a [New Issue][]**. 
+**If you encounter any problems, please read the rest of these instructions
+(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**. 
 
 ---
 
@@ -294,7 +300,8 @@ In addition, `fls-shake` has internal rules to generate
    +  `html.out` contains the output html.
 
 
-**If you encounter any problems, please open a [New Issue][]**. 
+**If you encounter any problems, please read the rest of these instructions
+(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**. 
 
 ---
 
@@ -444,7 +451,8 @@ For Ubuntu users not using Nix, compile `fls-shake` by taking the following step
     cabal run fls-shake -- hs
     ```
 
-**If you encounter any problems, please open a [New Issue][]**. 
+**If you encounter any problems, please read the rest of these instructions
+(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**. 
 
 ---
 
@@ -574,3 +582,4 @@ This repository is maintained by @WhatisRT.
 [Setup without nix]: #setup-without-nix
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
 [Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
+[Troubleshooting]: #troubleshooting
