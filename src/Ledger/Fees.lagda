@@ -28,7 +28,7 @@ are bundled with the protocol parameters; see
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_%_; _*_)
+open import Ledger.Prelude hiding (_%_; _*_; ≤-trans)
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -39,7 +39,7 @@ module Ledger.Fees
 open import Data.Rational using (0ℚ; ℚ; mkℚ+; _*_; floor)
 open import Data.Rational.Literals using (number)
 open import Data.Nat.Induction using (<′-wellFounded)
-open import Data.Nat.Properties as ℕ using (<⇒<′; ≰⇒>; ∸-monoʳ-≤; +-monoʳ-≤; n≤1+n; m+[n∸m]≡n; ≤-reflexive)
+open import Data.Nat.Properties using (<⇒<′; ≰⇒>; ∸-monoʳ-≤; +-monoʳ-≤; n≤1+n; m+[n∸m]≡n; ≤-reflexive; ≤-trans)
 open import Data.Integer using (∣_∣)
 open import Induction.WellFounded using (Acc; acc)
 open import Agda.Builtin.FromNat using (Number)
@@ -92,13 +92,13 @@ scriptsCost pp scriptSize
                                       (n - refScriptCostStride)
 \end{code}
 \begin{code}[hide]
-                                     (rs $ <⇒<′ (suc∸≤ (ℕ.≤-trans (s<s z≤n) (≰⇒> p)) (s≤s z≤n)))
+                                     (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (s≤s z≤n)))
 \end{code}
 \begin{code}[hide]
       where
-        suc∸≤ : ∀ {n m} → n > 0 → m > 0 → n ∸ m < n
-        suc∸≤ {n} {.suc m} p (s≤s q) = ℕ.≤-trans (+-monoʳ-≤ 1 (∸-monoʳ-≤ n (s<s q)))
-                                                 (≤-reflexive (m+[n∸m]≡n p))
+        suc∸≤ : ∀ {n m : ℕ} → n > 0 → m > 0 → n ∸ m < n
+        suc∸≤ {n} {.suc m} p (s≤s q) = ≤-trans (+-monoʳ-≤ 1 (∸-monoʳ-≤ n (s<s q)))
+                                               (≤-reflexive (m+[n∸m]≡n p))
 \end{code}
 \end{AgdaMultiCode}
 \caption{Calculation of fees for reference scripts}
