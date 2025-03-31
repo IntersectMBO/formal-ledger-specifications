@@ -186,7 +186,7 @@ literate Agda files are `illiterated`
 
 ### Agda and its dependencies
 
-- Install Agda version `2.7.0` (e.g. follow the instructions in
+- Install Agda version `2.7.0.1` (e.g. follow the instructions in
 <https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda>).
 
 - In a folder `LIB`, clone the dependencies

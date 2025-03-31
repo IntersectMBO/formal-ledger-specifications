@@ -39,7 +39,7 @@ module Ledger.Fees
 open import Data.Rational using (0ℚ; ℚ; mkℚ+; _*_; floor)
 open import Data.Rational.Literals using (number)
 open import Data.Nat.Induction using (<′-wellFounded)
-open import Data.Nat.Properties using (≤′-trans; <⇒<′; ≰⇒>)
+open import Data.Nat.Properties as ℕ using (<⇒<′; ≰⇒>; ∸-monoʳ-≤; +-monoʳ-≤; n≤1+n; m+[n∸m]≡n; ≤-reflexive)
 open import Data.Integer using (∣_∣)
 open import Induction.WellFounded using (Acc; acc)
 open import Agda.Builtin.FromNat using (Number)
@@ -92,15 +92,13 @@ scriptsCost pp scriptSize
                                       (n - refScriptCostStride)
 \end{code}
 \begin{code}[hide]
-                                     (rs $ suc∸≤′ (≤′-trans (<⇒<′ z<s) (<⇒<′ $ ≰⇒> p)) (<⇒<′ z<s))
+                                     (rs $ <⇒<′ (suc∸≤ (ℕ.≤-trans (s<s z≤n) (≰⇒> p)) (s≤s z≤n)))
 \end{code}
 \begin{code}[hide]
       where
-        suc∸≤′ : ∀ {n m} → n >′ 0 → m >′ 0 → n ∸ m <′ n
-        suc∸≤′ {suc .0} {suc zero} <′-base x = x
-        suc∸≤′ {suc .0} {2+ m} <′-base _ = <′-base
-        suc∸≤′ {suc _} {suc .0} (≤′-step _) <′-base = <′-base
-        suc∸≤′ {suc _} {suc _} (≤′-step x) (≤′-step y) = ≤′-step (suc∸≤′ x y)
+        suc∸≤ : ∀ {n m} → n > 0 → m > 0 → n ∸ m < n
+        suc∸≤ {n} {.suc m} p (s≤s q) = ℕ.≤-trans (+-monoʳ-≤ 1 (∸-monoʳ-≤ n (s<s q)))
+                                                 (≤-reflexive (m+[n∸m]≡n p))
 \end{code}
 \end{AgdaMultiCode}
 \caption{Calculation of fees for reference scripts}

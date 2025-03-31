@@ -4,7 +4,7 @@ module Tactic.Premises where
 
 open import Prelude hiding (Type)
 open import PreludeMeta
-open import MetaPrelude using (enumerate)
+open import Meta.Prelude using (enumerate)
 
 import Data.List as L
 open import Data.Fin using (toℕ)
