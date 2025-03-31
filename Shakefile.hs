@@ -19,7 +19,9 @@ import Data.Typeable (Typeable)
 import Control.DeepSeq (NFData)
 import Data.Hashable (Hashable)
 import Data.Binary (Binary)
-import Main.Utf8 (withUtf8)
+import qualified Data.Text as Text
+import qualified Data.Text.Encoding as TE
+import qualified Data.ByteString as BS
 
 ------------------------------------------------------------------------------
 -- Main function
@@ -360,7 +362,10 @@ getAgdaInputs =
 
 -- | UTF8 version of readFileLines
 readFileLinesUtf8 :: FilePath -> Action [String]
-readFileLinesUtf8 file = need [file] >> lines <$> liftIO (withUtf8 (readFile file))
+readFileLinesUtf8 file = do
+  need [file]
+  text <- TE.decodeUtf8' <$> liftIO (BS.readFile file)
+  either (fail . show) (return . map Text.unpack . Text.lines) text
 
 -- | Transform an lagda file to a agda file.
 -- discard and copy are mutually recursive:
