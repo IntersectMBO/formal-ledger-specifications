@@ -7,8 +7,18 @@
 
 open import Agda.Builtin.FromNat
 
-open import Ledger.Prelude
+open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_)
+import Data.Rational as ℚ renaming (_⊓_ to min; _⊔_ to max)
+open import Data.Rational.Literals using (number)
+import Data.Rational.Properties as ℚ
+import Data.Nat as ℕ renaming (_⊔_ to max)
+import Data.Integer as ℤ renaming (_⊔_ to max)
+import Data.Integer.Properties as ℤ
+open Number number renaming (fromNat to fromℕ)
+
+open import Ledger.Prelude hiding (_/_; _*_; _-_)
 open import Ledger.Types.GovStructure
+open import Ledger.Types.Numeric.UnitInterval
 
 module Ledger.Rewards
   (gs : _) (open GovStructure gs)
@@ -76,6 +86,75 @@ system, see Ref.~\parencite{shelley-delegation-design}.
 This section defines the amount of rewards that are paid out
 to stake pools and their delegators.
 
+\Cref{fig:functions:maxPool} defines the function \AgdaFunction{maxPool}
+which gives the maximum reward a stake pool can receive in an epoch.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaArgument{rewardPot}: Total rewards to be paid out after the epoch.
+  \item \AgdaArgument{stake}: Relative stake of the pool.
+  \item \AgdaArgument{pledge}: Relative stake that the pool owner has pledged themselves to the pool.
+  \item \AgdaFunction{z0}: Relative stake of a fully saturated pool.
+  \item \AgdaFunction{nopt}: Protocol parameter, planned number of block producers.
+  \item \AgdaFunction{a0}: Protocol parameter that incentivizes higher pledges.
+  \item \AgdaFunction{rewardℚ}: Pool rewards as a rational number.
+  \item \AgdaFunction{rewardℕ}: Pool rewards after rounding to a natural number of lovelace.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}[hide]
+nonZero-max-1 : ∀ (n : ℕ) → ℕ.NonZero (ℕ.max 1 n)
+nonZero-max-1 zero = ℕ.nonZero
+nonZero-max-1 (suc n) = ℕ.nonZero
+
+nonZero-1/n : ∀ (n : ℕ) → .{{_ : ℕ.NonZero n}} → ℚ.NonZero (1 / n)
+nonZero-1/n n {{prf}} =
+  ℚ.pos⇒nonZero (1 / n) {{ℚ.normalize-pos 1 n {{prf}} {{_}} }}
+
+nonZero-1+max0-x : ∀ (x : ℚ) → ℚ.NonZero (1 + ℚ.max 0 x)
+nonZero-1+max0-x x =
+  ℚ.>-nonZero (ℚ.+-mono-<-≤ (ℚ.positive⁻¹ 1) (ℚ.p≤p⊔q 0 x))
+
+private instance
+  nonNegative : ∀ {i} → ℤ.NonNegative (ℤ.max 0 i)
+  nonNegative {i} = ℤ.nonNegative (ℤ.i≤i⊔j 0 i)
+\end{code}
+\begin{code}
+maxPool : PParams → Coin → UnitInterval → UnitInterval → Coin
+maxPool pparams rewardPot stake pledge = rewardℕ
+  where
+    a0      = ℚ.max 0 (pparams .PParams.a0)
+    1+a0    = 1 + a0
+    nopt    = ℕ.max 1 (pparams .PParams.nopt)
+\end{code}
+\begin{code}[hide]
+    instance
+      nonZero-nopt : ℕ.NonZero nopt
+      nonZero-nopt = nonZero-max-1 (pparams .PParams.nopt)
+\end{code}
+\begin{code}
+    z0       = 1 / nopt
+    stake'   = ℚ.min (fromUnitInterval stake) z0
+    pledge'  = ℚ.min (fromUnitInterval pledge) z0
+\end{code}
+\begin{code}[hide]
+    instance
+      nonZeroz0 : ℚ.NonZero z0
+      nonZeroz0 = nonZero-1/n nopt
+
+      nonZero-1+a0 : ℚ.NonZero (1+a0)
+      nonZero-1+a0 = nonZero-1+max0-x (pparams .PParams.a0)
+\end{code}
+\begin{code}
+    rewardℚ =
+        ((fromℕ rewardPot) ÷ 1+a0)
+        * (stake' + pledge' * a0 * (stake' - pledge' * (z0 - stake') ÷ z0) ÷ z0)
+    rewardℕ = posPart (floor rewardℚ)
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function maxPool used for computing a Reward Update}
+\label{fig:functions:maxPool}
+\end{figure*}
 
 \subsection{Reward Update}
 \label{sec:reward-update}
