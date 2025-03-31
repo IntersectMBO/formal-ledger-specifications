@@ -19,10 +19,7 @@ import Data.Typeable (Typeable)
 import Control.DeepSeq (NFData)
 import Data.Hashable (Hashable)
 import Data.Binary (Binary)
-
-import qualified Data.Text as Text
-import qualified Data.Text.Encoding as TE
-import qualified Data.ByteString as BS
+import Main.Utf8 (withUtf8)
 
 ------------------------------------------------------------------------------
 -- Main function
@@ -125,8 +122,7 @@ tex2pdf = do
     need [ maintexfile ]
 
     -- read the Agda inputs from the tex file
-    raw <- liftIO $ BS.readFile maintexfile
-    let agdainputs = getAgdaInputs (map Text.unpack (Text.lines (TE.decodeUtf8 raw)))
+    agdainputs <- getAgdaInputs <$> readFileLinesUtf8 maintexfile
 
     let agdafiles  = map ((_latexPP </>) . (<.> "tex")) agdainputs
     let otherfiles = map (_latexIn </>)
@@ -361,6 +357,10 @@ getAgdaInputs =
   in map init -- remove the trailing "}"
    . map (\l -> drop (length $ if prefix2 `isPrefixOf` l then prefix2 else prefix1) l) -- remove the initial "\i{"
    . filter (\l -> prefix1 `isPrefixOf` l || prefix2 `isPrefixOf` l) -- filter lines that start with "\I{"
+
+-- | UTF8 version of readFileLines
+readFileLinesUtf8 :: FilePath -> Action [String]
+readFileLinesUtf8 file = need [file] >> lines <$> liftIO (withUtf8 (readFile file))
 
 -- | Transform an lagda file to a agda file.
 -- discard and copy are mutually recursive:
