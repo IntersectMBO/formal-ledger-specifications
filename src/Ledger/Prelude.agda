@@ -19,7 +19,6 @@ open import Class.HasAdd public
 open import Class.HasOrder public
 open import Class.ToBool public
 open import Class.To public
-open import Data.Product.Ext public
 open import Interface.ComputationalRelation public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
