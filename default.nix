@@ -15,16 +15,20 @@ let
                      else "";
   };
 
-  customAgda = import sources.agda-nixpkgs {
-    inherit (pkgs) system;
-  };
+  agdaStdlib = agdaPackages.standard-library.overrideAttrs (oldAttrs: {
+                 version = "2.2";
+                 src = fetchFromGitHub {
+                   repo = "agda-stdlib";
+                   owner = "agda";
+                   rev = "v2.2";
+                   hash = "sha256-/Fy5EOSbVNXt6Jq0yKSnlNPW4SYfn+eCTAYFnMZrbR0=";
+                 };
+               });
 
-  agdaStdlib = customAgda.agdaPackages.standard-library;
-
-  agdaStdlibClasses = customAgda.agdaPackages.mkDerivation {
+  agdaStdlibClasses = agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-classes";
-    version = "2.0";
+    version = "2.2.+";
     src = fetchFromGitHub {
       repo = "agda-stdlib-classes";
       owner = "agda";
@@ -37,26 +41,26 @@ let
     buildInputs = [ agdaStdlib ];
   };
 
-  agdaStdlibMeta = customAgda.agdaPackages.mkDerivation {
+  agdaStdlibMeta = agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-meta";
-    version = "2.1.1";
+    version = "2.2.+";
     src = fetchFromGitHub {
-      repo = "stdlib-meta";
-      owner = "omelkonian";
-      rev = "v2.1.1";
-      sha256 = "qOoThYMG0dzjKvwmzzVZmGcerfb++MApbaGRzLEq3/4=";
+      repo = "agda-stdlib-meta";
+      owner = "agda";
+      rev = "5ff853375180ef69f243ce72f2d3f6294bdb6aff";
+      sha256 = "sha256-CNKEnDUToKEv+6Gaa8p5igLNpQDuasQ01JJLOXcU1bA=";
     };
     meta = { };
     libraryFile = "agda-stdlib-meta.agda-lib";
-    everythingFile = "Main.agda";
+    everythingFile = "standard-library-meta.agda";
     buildInputs = [ agdaStdlib agdaStdlibClasses ];
   };
 
-  agdaSets = customAgda.agdaPackages.mkDerivation {
+  agdaSets = agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-sets";
-    version = "2.1.1";
+    version = "";
     src = fetchFromGitHub {
       repo = "agda-sets";
       owner = "input-output-hk";
@@ -70,7 +74,6 @@ let
   };
 
   deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets ];
-  agdaWithPkgs = p: customAgda.agda.withPackages { pkgs = p; ghc = pkgs.ghc; };
 
   fs = pkgs.lib.fileset;
   addToAgdaSrc = other: fs.toSource {
@@ -89,7 +92,7 @@ in rec
       fileset = ./Shakefile.hs;
     };
     nativeBuildInputs = [ (haskellPackages.ghcWithPackages (ps: with ps;
-                            ([ shake binary deepseq hashable ]))) ];
+                            ([ shake binary deepseq hashable text ]))) ];
     buildPhase = ''
       ghc -o fls-shake Shakefile.hs -threaded
     '';
@@ -99,7 +102,7 @@ in rec
     '';
   };
 
-  agdaWithDeps = agdaWithPkgs deps;
+  agdaWithDeps = agda.withPackages { pkgs = deps; };
 
   latex = texlive.combine {
     inherit (texlive)
@@ -117,7 +120,7 @@ in rec
       environ;
   };
 
-  formalLedger = customAgda.agdaPackages.mkDerivation {
+  formalLedger = agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "formal-ledger";
     version = "0.1";

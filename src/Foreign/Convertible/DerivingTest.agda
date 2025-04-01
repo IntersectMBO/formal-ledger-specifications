@@ -2,8 +2,8 @@
 module Foreign.Convertible.DerivingTest where
 
 open import Level
-open import MetaPrelude
-open import Meta
+open import Meta.Prelude
+open import Meta.Init
 
 import Data.List as L
 import Data.List.NonEmpty as NE

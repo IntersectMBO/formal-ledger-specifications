@@ -1,27 +1,14 @@
 {
-    "agda-nixpkgs": {
+    "nixpkgs": {
         "branch": "nixpkgs-unstable",
         "description": "Nix Packages collection",
         "homepage": "",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "7438ebd9431243aa0b01502fae89c022e4facb0c",
-        "sha256": "0vp87mp4zjxsxji5h8wjlj4agr82cnk3fbjrz265g340446m2bqq",
+        "rev": "6c5963357f3c1c840201eda129a99d455074db04",
+        "sha256": "033fwpsm2a3f6sqr3qvy365sy3b89k13gczsa6m5xpz2axss02y9",
         "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/7438ebd9431243aa0b01502fae89c022e4facb0c.tar.gz",
+        "url": "https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
-    },
-    "nixpkgs": {
-        "branch": "release-24.05",
-        "description": "Nix Packages collection",
-        "homepage": "",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "0da3c44a9460a26d2025ec3ed2ec60a895eb1114",
-        "sha256": "1n435wya14pbl04g6n4zrqaslpik4xq0fv1i2g2mz8sq3dqg7dk0",
-        "type": "tarball",
-        "url": "https://github.com/NixOS/nixpkgs/archive/0da3c44a9460a26d2025ec3ed2ec60a895eb1114.tar.gz",
-        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz",
-        "version": "24.05"
     }
 }

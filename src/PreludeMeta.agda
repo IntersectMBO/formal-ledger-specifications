@@ -41,7 +41,7 @@ instance
   iTCE = MonadError-TC
 
 -- * MonadTC interface for TCI
-open import Meta public
+open import Meta.Init public
   renaming (TC to TCI)
   hiding (Monad-TC; MonadError-TC; toℕ)
 open import Reflection.Utils.TCI public
