@@ -92,7 +92,7 @@ in rec
       fileset = ./Shakefile.hs;
     };
     nativeBuildInputs = [ (haskellPackages.ghcWithPackages (ps: with ps;
-                            ([ shake binary deepseq hashable ]))) ];
+                            ([ shake binary deepseq hashable text ]))) ];
     buildPhase = ''
       ghc -o fls-shake Shakefile.hs -threaded
     '';
