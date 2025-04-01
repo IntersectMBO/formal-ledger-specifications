@@ -622,6 +622,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
 [hashable]: https://github.com/haskell-unordered-containers/hashable
+[Haskell]: https://www.haskell.org/downloads/
 [Nix download instructions]: https://nixos.org/download/
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [shake]: https://shakebuild.com/
