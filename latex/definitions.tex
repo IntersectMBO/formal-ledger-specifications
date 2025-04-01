@@ -2,14 +2,36 @@
 \label{sec:misc-defs}
 To keep this document fairly self-contained, this section collects definitions of
 many of the technical terms we use in presenting the Cardano ledger specification.
-Some online references for this section are
-\cite{www-essential-cardano-glossary,www-developers-cardano-reintro,www-ledger-academy-glossary}.
+This collection is far from comprehensive and the reader may wish to consult some of
+the following online resources to help fill in any gaps:
 
+\begin{itemize}
+  \item
+        \href{https://www.ledger.com/academy/glossary}%
+             {Glossary from ledger.com} \textcite{www-ledger-academy-glossary}
+
+  \item 
+        \href{https://www.essentialcardano.io/glossary?sort=alphabetical}%
+             {Glossary from essentialcardano.io} \textcite{www-essential-cardano-glossary}
+  \item
+        \href{https://docs.cardano.org/about-cardano/explore-more/time}%
+             {Time handling on Cardano} \textcite{www-docs-cardano-time};
+  \item
+        \href{https://developers.cardano.org/docs/operate-a-stake-pool/introduction-to-cardano/}%
+             {Cardano network: operate a stake pool} \textcite{www-docs-cardano-network};
+  \item
+        \href{https://developers.cardano.org/docs/operate-a-stake-pool/introduction-to-cardano/}%
+             {(Re)introduction to Cardano} \textcite{www-developers-cardano-reintro};
+  \item
+        \href{https://iohk.io/en/blog/posts/2021/10/27/ouroboros-chronos-provides-the-first-high-resilience-cryptographic-time-source-based-on-blockchain/}%
+             {Ouroboros Chronos provides the first high-resilience, cryptographic time source based on blockchain technology} \textcite{www-iohk-blog-ouroboros};
+  \item
+        \href{https://www.ledger.com/academy/cardano-staking-how-to-stake-ada}%
+             {Cardano Staking: How To Stake ADA} \textcite{www-ledger-academy-stake-ada}.
+\end{itemize}
 
 \subsection{Cardano Time Handling}
 \label{sec:cardano-time-handling}
-Some online references for this subsection are
-\cite{www-docs-cardano-network,www-docs-cardano-time,www-iohk-blog-ouroboros,www-ledger-academy-stake-ada}.
 
 In Cardano, the Ouroboros proof-of-stake (PoS) consensus protocol models the passage
 of physical time as an infinite sequence of time slots and epochs.
@@ -56,11 +78,5 @@ The parameter values mentioned in the examples above,
   \item block coefficient = 0.05,
   \item slots/epoch = 432,000,
 \end{itemize}
-% \begin{align*}
-%   \text{block time}        &= 20~\text{seconds},\\
-%   \text{slot length}       &= 1~\text{second},\\
-%   \text{block coefficient} &= 0.05,\\
-%   \text{slots/epoch}       &= 432,000,
-% \end{align*}
 are unlikely to change in the short-term.  However, the longer term plan is to replace the current Ouroboros  protocol with Ouroboros Chronos, which addresses timekeeping challenges by providing the first
 high-resilience cryptographic time source based on blockchain technology (see~\textcite{www-iohk-blog-ouroboros}).
