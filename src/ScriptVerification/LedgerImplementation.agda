@@ -11,6 +11,7 @@ open import Data.Rational using (0ℚ; ½)
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid)
 open import Relation.Binary.Morphism.Structures
+open import Algebra.Construct.DirectProduct
 open import Foreign.Convertible
 import Foreign.Haskell as F
 open import Ledger.Crypto
@@ -53,13 +54,8 @@ module Implementation where
   ScriptHash = ℕ
 
   ExUnits      = ℕ × ℕ
-  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ExUnits ∋ (Conversion.fromBundle record
-    { Carrier = ExUnits
-    ; _≈_ = _≈ᵖ_
-    ; _∙_ = _∙ᵖ_
-    ; ε = zero , zero
-    ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
-    }) where open import Algebra.PairOp ℕ zero _≡_ _+_
+  ExUnit-CommutativeMonoid =
+    Conversion.fromBundle (commutativeMonoid +-0-commutativeMonoid +-0-commutativeMonoid)
   _≥ᵉ_ : ExUnits → ExUnits → Type
   _≥ᵉ_ = _≡_
   instance
