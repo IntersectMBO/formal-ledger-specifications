@@ -428,8 +428,7 @@ For users not using Nix, compile `fls-shake` by taking the following steps:
 
 1.  **Install** GHC and Cabal.
 
-    Follow the instructions in [Haskell][].
-    ```
+    Follow the [official instructions][Haskell].
 
     Verify the installation.
 
@@ -535,30 +534,36 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
    is missing some required components.
 
 
-   1.  **`latexmk` is not installed** (most likely).
+   1.  **`latexmk` is not installed**.
 
        Shake tried to run `latexmk`, but the command doesn't exist in the system's `PATH`.
        On Nix this gets injected via dependencies, but in a `cabal`-based setup, you
        need to manually install it.
 
-       **Solution**: install `latexmk` and `texlive`.
+       **Solution**
+       
+       +  Install `latexmk`.
 
-       On Ubuntu:
+          Follow the [official instructions][latexmk].
 
-       ```bash
-       sudo apt update
-       sudo apt install latexmk
-       ```
+          For example, on Ubuntu,
+          ```bash
+          sudo apt update
+          sudo apt install latexmk
+          ```
 
-       And (optionally) install a full LaTeX suite: `sudo apt install texlive-full`
+       +  Install `latex`.
+       
+          Follow [the official instructions][latex].
 
-       or a minimal alternative: `sudo apt install texlive-latex-extra`
+          For example, on Ubuntu, `sudo apt install texlive-full` (or, for a minimal
+          alternative, `sudo apt install texlive-latex-extra`).
 
        Once these dependencies are installed, verify with `latexmk --version`,
        and then re-run the command that failed (e.g., `cabal run fls-shake -- cardano-ledger.pdf`.)
 
 
-   2.  `PATH` issues inside `cabal run` (less likely). 
+   2.  `PATH` issues inside `cabal run`.
 
        If you have `latexmk` installed but it's still not found, you may need to make
        sure it's in your shell `PATH`.
@@ -623,6 +628,8 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
 [hashable]: https://github.com/haskell-unordered-containers/hashable
 [Haskell]: https://www.haskell.org/downloads/
+[latex]: https://www.latex-project.org/get/
+[latexmk]: https://ctan.org/pkg/latexmk
 [Nix download instructions]: https://nixos.org/download/
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [shake]: https://shakebuild.com/
