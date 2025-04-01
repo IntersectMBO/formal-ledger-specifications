@@ -424,15 +424,11 @@ build `fls-shake` from scratch.
 
 ### Building `fls-shake` manually
 
-For Ubuntu users not using Nix, compile `fls-shake` by taking the following steps:
+For users not using Nix, compile `fls-shake` by taking the following steps:
 
 1.  **Install** GHC and Cabal.
 
-    First, install the Haskell compiler and `cabal` package manager.
-
-    ```bash
-    sudo apt update
-    sudo apt install ghc cabal-install
+    Follow the instructions in [Haskell][].
     ```
 
     Verify the installation.
