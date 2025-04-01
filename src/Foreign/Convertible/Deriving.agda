@@ -1,8 +1,8 @@
 module Foreign.Convertible.Deriving where
 
 open import Level
-open import MetaPrelude
-open import Meta
+open import Meta.Prelude
+open import Meta.Init
 
 import Data.List as L
 import Data.List.NonEmpty as NE
@@ -18,6 +18,7 @@ open import Reflection.AST.DeBruijn
 import Reflection.TCM as R
 open import Reflection.Utils
 open import Reflection.Utils.TCI
+open import Reflection.Utils.Substitute
 import Function.Identity.Effectful as Identity
 
 open import Class.DecEq
@@ -29,7 +30,6 @@ open import Class.Traversable
 open import Class.Show
 open import Class.MonadReader
 
-open import Tactic.Substitute
 open import Foreign.Convertible
 open import Foreign.HaskellTypes
 open import Foreign.HaskellTypes.Deriving
@@ -37,16 +37,9 @@ open import Foreign.HaskellTypes.Deriving
 private instance
   _ = Functor-M {TC}
 
--- TODO: move to agda-stdlib-meta
-liftTC : ∀ {a} {A : Set a} → R.TC A → TC A
-liftTC m _ = m
-
 private
 
   open MonadReader ⦃...⦄
-
-  variable
-    A B C : Set
 
   TyViewTel = List (Abs (Arg Type))
 
