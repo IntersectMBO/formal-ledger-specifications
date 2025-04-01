@@ -109,8 +109,7 @@ cd formal-ledger-specifications
 nix-shell
 ```
 
-drops you into a shell in which Agda will be available with the required
-dependencies and then you could, for example, typecheck the Agda formal
+drops you into a shell in which you could, for example, typecheck the Agda formal
 specification by running
 
 ```
@@ -120,7 +119,7 @@ agda src/Everything.agda
 You should also be able to launch your preferred editor within `nix-shell` and it should
 see the required `agda` executable.
 
-For instructions to setup Agda without Nix, check [Setup without nix](#setup-without-nix).
+For instructions on setting up Agda without Nix, check [Setup without nix](#setup-without-nix).
 
 ---
 
@@ -137,21 +136,22 @@ approach described here.  This doesn't require running the NixOS, but does requi
 the Nix package manager which can be installed by following the official 
 [Nix download instructions][]. 
 
---- 
-
 ### Agda Dependencies
 
-The Agda libraries on which this project depends are (specific versions of) the following:
-
-   + [agda-stdlib](https://github.com/agda/agda-stdlib)
-   + [agda-stdlib-classes](https://github.com/agda/agda-stdlib-classes)
-   + [agda-stdlib-meta](https://github.com/agda/agda-stdlib-meta)
-   + [agda-sets](https://github.com/input-output-hk/agda-sets)
+The Agda libraries on which this project depends are (specific versions of)
+[agda-sets][], [agda-stdlib][], [agda-stdlib-classes][], and [agda-stdlib-meta][].
 
 At the time of this writing, the specific versions of these libraries that we use
-are:
+are as follows: 
 
-TODO: fill in this info
+   + [agda-sets f517d0d](https://github.com/input-output-hk/agda-sets/tree/f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6)
+   + [agda-stdlib v2.2](https://github.com/agda/agda-stdlib/tree/v2.2-release)
+   + [agda-stdlib-classes v2.2](https://github.com/agda/agda-stdlib-classes/releases/tag/v2.2)
+   + [agda-stdlib-meta v2.2](https://github.com/agda/agda-stdlib-meta/releases/tag/v2.2)
+
+**Note**.  These versions may change.  The authoritative source for the commits/tags
+of the versions we currently use is the `default.nix` file (e.g. `v2.2` for `agda-stdlib-meta`).
+
 
 #### Modifying the Agda libraries
 
@@ -612,16 +612,26 @@ This repository is maintained by @WhatisRT.
 
 **If you encounter any problems, please open a [New Issue][]**. 
 
+---
+
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
+[agda-stdlib]: https://github.com/agda/agda-stdlib
+[agda-stdlib v2.2]: https://github.com/agda/agda-stdlib/tree/v2.2-release
+[agda-stdlib-classes]: https://github.com/agda/agda-stdlib-classes
+[agda-stdlib-classes v2.2]: https://github.com/agda/agda-stdlib-classes/releases/tag/v2.2
+[agda-stdlib-meta]: https://github.com/agda/agda-stdlib-meta
+[agda-stdlib-meta v2.2]: https://github.com/agda/agda-stdlib-meta/releases/tag/v2.2
+[agda-sets]: https://github.com/input-output-hk/agda-sets
+[agda-sets f517d0d]: https://github.com/input-output-hk/agda-sets/tree/f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6
 [binary]: https://github.com/haskell/binary
 [deepseq]: https://github.com/haskell/deepseq
+[Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
+[formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
 [hashable]: https://github.com/haskell-unordered-containers/hashable
-[shake]: https://shakebuild.com/
 [Nix download instructions]: https://nixos.org/download/
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
-[formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
-[Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
+[shake]: https://shakebuild.com/
 
 <!-- Links to sections of this document (copied from `markdown-toc-generate-toc` output) -->
 <!-- These links will probably need to be updated by hand whenever -->
