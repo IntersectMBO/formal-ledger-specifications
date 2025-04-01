@@ -24,7 +24,7 @@ import qualified MAlonzo.Code.Class.To
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Product.Nary.NonDependent
 import qualified MAlonzo.Code.Data.Rational.Base
-import qualified MAlonzo.Code.Data.Refinement
+import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Ledger.Abstract
 import qualified MAlonzo.Code.Ledger.Address
@@ -250,7 +250,7 @@ d_minUTxOValue_972 v0
 -- _.PParams.monetaryExpansion
 d_monetaryExpansion_974 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_974 v0
   = coe MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_340 (coe v0)
 -- _.PParams.nopt
@@ -293,7 +293,7 @@ d_refScriptCostStride_988 v0
 -- _.PParams.treasuryCut
 d_treasuryCut_990 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_990 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_342 (coe v0)
 -- Ledger.Conway.Conformance.Gov._.EnactState

@@ -54,7 +54,7 @@ d_'8801''45'setoid_10
       MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402
 -- Data.Unit.Properties.≡-decSetoid
 d_'8801''45'decSetoid_12 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86
 d_'8801''45'decSetoid_12
   = coe
       MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_decSetoid_406
@@ -87,38 +87,38 @@ d_'8801''45'isPreorder_20
       (coe (\ v0 v1 v2 -> v2)) erased
 -- Data.Unit.Properties.≡-isPartialOrder
 d_'8801''45'isPartialOrder_24 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
 d_'8801''45'isPartialOrder_24
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9853
+      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_11935
       (coe d_'8801''45'isPreorder_20) erased
 -- Data.Unit.Properties.≡-isTotalOrder
 d_'8801''45'isTotalOrder_26 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsTotalOrder_404
+  MAlonzo.Code.Relation.Binary.Structures.T_IsTotalOrder_468
 d_'8801''45'isTotalOrder_26
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsTotalOrder'46'constructor_20555
+      MAlonzo.Code.Relation.Binary.Structures.C_IsTotalOrder'46'constructor_22821
       (coe d_'8801''45'isPartialOrder_24)
       (\ v0 v1 -> coe du_'8801''45'total_14)
 -- Data.Unit.Properties.≡-isDecTotalOrder
 d_'8801''45'isDecTotalOrder_28 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_460
+  MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_524
 d_'8801''45'isDecTotalOrder_28
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecTotalOrder'46'constructor_22695
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecTotalOrder'46'constructor_24961
       (coe d_'8801''45'isTotalOrder_26) (\ v0 v1 -> coe du__'8799'__8)
       (\ v0 v1 -> coe du__'8799'__8)
 -- Data.Unit.Properties.≡-poset
 d_'8801''45'poset_30 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
 d_'8801''45'poset_30
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6389
+      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_9149
       d_'8801''45'isPartialOrder_24
 -- Data.Unit.Properties.≡-decTotalOrder
 d_'8801''45'decTotalOrder_32 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_866
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_1076
 d_'8801''45'decTotalOrder_32
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecTotalOrder'46'constructor_17849
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecTotalOrder'46'constructor_21007
       d_'8801''45'isDecTotalOrder_28

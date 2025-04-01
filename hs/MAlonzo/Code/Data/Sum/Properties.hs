@@ -115,13 +115,13 @@ d_swap'45''8596'_78 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Function.Bundles.T_Inverse_1960
+  () -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
 d_swap'45''8596'_78 ~v0 ~v1 ~v2 ~v3 = du_swap'45''8596'_78
 du_swap'45''8596'_78 ::
-  MAlonzo.Code.Function.Bundles.T_Inverse_1960
+  MAlonzo.Code.Function.Bundles.T_Inverse_2068
 du_swap'45''8596'_78
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2366
+      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2482
       (coe MAlonzo.Code.Data.Sum.Base.du_swap_78)
       (coe MAlonzo.Code.Data.Sum.Base.du_swap_78)
 -- Data.Sum.Properties.map-id

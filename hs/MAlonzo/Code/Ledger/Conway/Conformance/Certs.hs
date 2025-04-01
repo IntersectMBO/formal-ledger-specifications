@@ -34,7 +34,7 @@ import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Nary.NonDependent
 import qualified MAlonzo.Code.Data.Rational.Base
-import qualified MAlonzo.Code.Data.Refinement
+import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Ledger.Address
 import qualified MAlonzo.Code.Ledger.Certs
@@ -229,7 +229,7 @@ d_minUTxOValue_502 v0
 -- _.PParams.monetaryExpansion
 d_monetaryExpansion_504 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_504 v0
   = coe MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_340 (coe v0)
 -- _.PParams.nopt
@@ -272,7 +272,7 @@ d_refScriptCostStride_518 v0
 -- _.PParams.treasuryCut
 d_treasuryCut_520 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_520 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_342 (coe v0)
 -- _.RwdAddr.net
@@ -2949,7 +2949,7 @@ d_updateCertDeposit_1146 v0 v1 v2 v3
              (coe
                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                 (coe
-                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
              (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848 (coe v0))
              v3
              (coe
@@ -2989,7 +2989,7 @@ d_updateCertDeposit_1146 v0 v1 v2 v3
              (coe
                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                 (coe
-                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
              (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848 (coe v0))
              v3
              (coe
@@ -3010,7 +3010,7 @@ d_updateCertDeposit_1146 v0 v1 v2 v3
              (coe
                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                 (coe
-                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
              (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848 (coe v0))
              v3
              (coe
@@ -3050,7 +3050,7 @@ d_updateCertDeposit_1146 v0 v1 v2 v3
              (coe
                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                 (coe
-                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
              (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848 (coe v0))
              v3
              (coe

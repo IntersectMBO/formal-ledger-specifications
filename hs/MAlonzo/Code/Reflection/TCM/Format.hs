@@ -17,6 +17,7 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.Char
 import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Agda.Builtin.String
@@ -97,6 +98,13 @@ d_printfSpec_24
             coe
               MAlonzo.Code.Data.List.Base.du_'91'_'93'_286
               (coe MAlonzo.Code.Agda.Builtin.Reflection.C_strErr_310 (coe v0))))
+-- Reflection.TCM.Format._.Chunk
+d_Chunk_42 = ()
+-- Reflection.TCM.Format._.Error
+d_Error_44 = ()
+-- Reflection.TCM.Format._.Format
+d_Format_46 :: ()
+d_Format_46 = erased
 -- Reflection.TCM.Format._.lexer
 d_lexer_54 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
@@ -104,11 +112,47 @@ d_lexer_54 ::
 d_lexer_54
   = coe
       MAlonzo.Code.Text.Format.Generic.d_lexer_88 (coe d_formatSpec_22)
+-- Reflection.TCM.Format._.size
+d_size_56 ::
+  [MAlonzo.Code.Text.Format.Generic.T_Chunk_60] -> Integer
+d_size_56 = coe MAlonzo.Code.Text.Format.Generic.du_size_68
+-- Reflection.TCM.Format._.⟦_⟧
+d_'10214'_'10215'_58 ::
+  [MAlonzo.Code.Text.Format.Generic.T_Chunk_60] -> AgdaAny
+d_'10214'_'10215'_58
+  = coe MAlonzo.Code.Text.Format.Generic.du_'10214'_'10215'_74
+-- Reflection.TCM.Format._.Error
+d_Error_74 a0 a1 = ()
 -- Reflection.TCM.Format._.Printf
 d_Printf_76 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> () -> ()
 d_Printf_76 = erased
+-- Reflection.TCM.Format._.map
+d_map_78 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
+d_map_78 v0 v1 v2 v3 v4 v5 v6
+  = coe MAlonzo.Code.Text.Printf.Generic.du_map_118 v4 v5 v6
+-- Reflection.TCM.Format._.assemble
+d_assemble_84 ::
+  [MAlonzo.Code.Text.Format.Generic.T_Chunk_60] ->
+  AgdaAny -> [[MAlonzo.Code.Agda.Builtin.Reflection.T_ErrorPart_308]]
+d_assemble_84
+  = coe
+      MAlonzo.Code.Text.Printf.Generic.du_assemble_198
+      (coe d_printfSpec_24)
+-- Reflection.TCM.Format._.printf
+d_printf_86 ::
+  MAlonzo.Code.Agda.Builtin.String.T_String_6 -> AgdaAny
+d_printf_86
+  = coe
+      MAlonzo.Code.Text.Printf.Generic.du_printf_226
+      (coe d_formatSpec_22) (coe d_printfSpec_24)
 -- Reflection.TCM.Format.typeErrorFmt
 d_typeErrorFmt_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

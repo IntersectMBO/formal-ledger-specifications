@@ -132,9 +132,9 @@ d_'42''45'assoc_64 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'assoc_64 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_2676
+      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_2698
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe d_isHeytingCommutativeRing_54 (coe v0))))
@@ -143,7 +143,7 @@ d_'42''45'comm_66 ::
   T_HeytingCommutativeRing_12 -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'comm_66 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_2814
+      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_2836
       (coe
          MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
          (coe d_isHeytingCommutativeRing_54 (coe v0)))
@@ -154,9 +154,9 @@ d_'42''45'cong_68 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'cong_68 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_2674
+      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_2696
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe d_isHeytingCommutativeRing_54 (coe v0))))
@@ -173,27 +173,37 @@ du_'8729''45'cong'691'_70 ::
   T_HeytingCommutativeRing_12 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8729''45'cong'691'_70 v0
-  = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
+  = let v1 = d__'43'__44 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                 (coe v1) in
+      (let v2 = d__'42'__46 (coe v0) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = d_'45'__48 (coe v0) in
           coe
-            (let v4
-                   = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-                       (coe v3) in
+            (let v4 = d_0'35'_50 (coe v0) in
              coe
-               (let v5
-                      = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_2390
-                          (coe v4) in
+               (let v5 = d_isHeytingCommutativeRing_54 (coe v0) in
                 coe
-                  (coe
-                     MAlonzo.Code.Algebra.Structures.du_'8729''45'cong'691'_206
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v5)))))))
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                             (coe v5) in
+                   coe
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
+                      coe
+                        (let v8
+                               = coe
+                                   MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                   (coe v7) in
+                         coe
+                           (let v9
+                                  = coe
+                                      MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408
+                                      (coe v1) (coe v2) (coe v3) (coe v4) (coe v8) in
+                            coe
+                              (coe
+                                 MAlonzo.Code.Algebra.Structures.du_'8729''45'cong'691'_206
+                                 (coe
+                                    MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1282
+                                    (coe v9)))))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.∙-congˡ
 d_'8729''45'cong'737'_72 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -207,36 +217,46 @@ du_'8729''45'cong'737'_72 ::
   T_HeytingCommutativeRing_12 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8729''45'cong'737'_72 v0
-  = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
+  = let v1 = d__'43'__44 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                 (coe v1) in
+      (let v2 = d__'42'__46 (coe v0) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = d_'45'__48 (coe v0) in
           coe
-            (let v4
-                   = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-                       (coe v3) in
+            (let v4 = d_0'35'_50 (coe v0) in
              coe
-               (let v5
-                      = coe
-                          MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_2390
-                          (coe v4) in
+               (let v5 = d_isHeytingCommutativeRing_54 (coe v0) in
                 coe
-                  (coe
-                     MAlonzo.Code.Algebra.Structures.du_'8729''45'cong'737'_202
-                     (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v5)))))))
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                             (coe v5) in
+                   coe
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
+                      coe
+                        (let v8
+                               = coe
+                                   MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                   (coe v7) in
+                         coe
+                           (let v9
+                                  = coe
+                                      MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408
+                                      (coe v1) (coe v2) (coe v3) (coe v4) (coe v8) in
+                            coe
+                              (coe
+                                 MAlonzo.Code.Algebra.Structures.du_'8729''45'cong'737'_202
+                                 (coe
+                                    MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1282
+                                    (coe v9)))))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.*-identity
 d_'42''45'identity_74 ::
   T_HeytingCommutativeRing_12 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'42''45'identity_74 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_2678
+      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_2700
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe d_isHeytingCommutativeRing_54 (coe v0))))
@@ -250,19 +270,27 @@ d_identity'691'_76 ~v0 ~v1 ~v2 v3 = du_identity'691'_76 v3
 du_identity'691'_76 ::
   T_HeytingCommutativeRing_12 -> AgdaAny -> AgdaAny
 du_identity'691'_76 v0
-  = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
+  = let v1 = d__'43'__44 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                 (coe v1) in
+      (let v2 = d__'42'__46 (coe v0) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = d_'45'__48 (coe v0) in
           coe
-            (coe
-               MAlonzo.Code.Algebra.Structures.du_identity'691'_728
-               (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2768
-                  (coe v3)))))
+            (let v4 = d_0'35'_50 (coe v0) in
+             coe
+               (let v5 = d_isHeytingCommutativeRing_54 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                             (coe v5) in
+                   coe
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
+                      coe
+                        (coe
+                           MAlonzo.Code.Algebra.Structures.du_identity'691'_728
+                           (coe
+                              MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2792 (coe v1)
+                              (coe v2) (coe v3) (coe v4) (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.identityˡ
 d_identity'737'_78 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -273,19 +301,27 @@ d_identity'737'_78 ~v0 ~v1 ~v2 v3 = du_identity'737'_78 v3
 du_identity'737'_78 ::
   T_HeytingCommutativeRing_12 -> AgdaAny -> AgdaAny
 du_identity'737'_78 v0
-  = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
+  = let v1 = d__'43'__44 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                 (coe v1) in
+      (let v2 = d__'42'__46 (coe v0) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = d_'45'__48 (coe v0) in
           coe
-            (coe
-               MAlonzo.Code.Algebra.Structures.du_identity'737'_726
-               (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2768
-                  (coe v3)))))
+            (let v4 = d_0'35'_50 (coe v0) in
+             coe
+               (let v5 = d_isHeytingCommutativeRing_54 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                             (coe v5) in
+                   coe
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
+                      coe
+                        (coe
+                           MAlonzo.Code.Algebra.Structures.du_identity'737'_726
+                           (coe
+                              MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2792 (coe v1)
+                              (coe v2) (coe v3) (coe v4) (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isCommutativeMagma
 d_isCommutativeMagma_80 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -315,18 +351,18 @@ du_isCommutativeMagma_80 v0
                    coe
                      (let v7
                             = coe
-                                MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                                MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                                 (coe v1) (coe v2) (coe v3) (coe v4) (coe v6) in
                       coe
                         (let v8
                                = coe
-                                   MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1780
+                                   MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1800
                                    (coe v7) in
                          coe
                            (coe
                               MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_586
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1454
+                                 MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1474
                                  (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.*-isCommutativeMonoid
 d_'42''45'isCommutativeMonoid_82 ::
@@ -356,9 +392,9 @@ du_'42''45'isCommutativeMonoid_82 v0
                              (coe v5) in
                    coe
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1788
+                        MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1808
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                           MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                            (coe v1) (coe v2) (coe v3) (coe v4) (coe v6))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.*-isCommutativeSemigroup
 d_'42''45'isCommutativeSemigroup_84 ::
@@ -389,13 +425,13 @@ du_'42''45'isCommutativeSemigroup_84 v0
                    coe
                      (let v7
                             = coe
-                                MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                                MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                                 (coe v1) (coe v2) (coe v3) (coe v4) (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1454
+                           MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1474
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1780
+                              MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1800
                               (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.*-isMagma
 d_'42''45'isMagma_86 ::
@@ -409,19 +445,32 @@ du_'42''45'isMagma_86 ::
   T_HeytingCommutativeRing_12 ->
   MAlonzo.Code.Algebra.Structures.T_IsMagma_176
 du_'42''45'isMagma_86 v0
-  = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
+  = let v1 = d__'43'__44 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                 (coe v1) in
+      (let v2 = d__'42'__46 (coe v0) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = d_'45'__48 (coe v0) in
           coe
-            (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_2388
-               (coe
-                  MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-                  (coe v3)))))
+            (let v4 = d_0'35'_50 (coe v0) in
+             coe
+               (let v5 = d_isHeytingCommutativeRing_54 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                             (coe v5) in
+                   coe
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
+                      coe
+                        (let v8
+                               = coe
+                                   MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                   (coe v7) in
+                         coe
+                           (coe
+                              MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1282
+                              (coe
+                                 MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408 (coe v1)
+                                 (coe v2) (coe v3) (coe v4) (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.*-isMonoid
 d_'42''45'isMonoid_88 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -434,15 +483,24 @@ du_'42''45'isMonoid_88 ::
   T_HeytingCommutativeRing_12 ->
   MAlonzo.Code.Algebra.Structures.T_IsMonoid_686
 du_'42''45'isMonoid_88 v0
-  = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
+  = let v1 = d__'43'__44 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                 (coe v1) in
+      (let v2 = d__'42'__46 (coe v0) in
        coe
-         (coe
-            MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2768
-            (coe MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2))))
+         (let v3 = d_'45'__48 (coe v0) in
+          coe
+            (let v4 = d_0'35'_50 (coe v0) in
+             coe
+               (let v5 = d_isHeytingCommutativeRing_54 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                             (coe v5) in
+                   coe
+                     (coe
+                        MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2792 (coe v1)
+                        (coe v2) (coe v3) (coe v4)
+                        (coe MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.*-isSemigroup
 d_'42''45'isSemigroup_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -456,19 +514,32 @@ du_'42''45'isSemigroup_90 ::
   T_HeytingCommutativeRing_12 ->
   MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472
 du_'42''45'isSemigroup_90 v0
-  = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
+  = let v1 = d__'43'__44 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                 (coe v1) in
+      (let v2 = d__'42'__46 (coe v0) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = d_'45'__48 (coe v0) in
           coe
-            (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_2390
-               (coe
-                  MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-                  (coe v3)))))
+            (let v4 = d_0'35'_50 (coe v0) in
+             coe
+               (let v5 = d_isHeytingCommutativeRing_54 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                             (coe v5) in
+                   coe
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
+                      coe
+                        (let v8
+                               = coe
+                                   MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                   (coe v7) in
+                         coe
+                           (coe
+                              MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1284
+                              (coe
+                                 MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408 (coe v1)
+                                 (coe v2) (coe v3) (coe v4) (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.assoc
 d_assoc_92 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -487,7 +558,7 @@ du_assoc_92 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_assoc_482
@@ -498,7 +569,7 @@ du_assoc_92 v0
                      (coe
                         MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                           MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                            (coe v3))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.comm
 d_comm_94 ::
@@ -516,12 +587,12 @@ du_comm_94 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_comm_1146
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                   (coe v3)))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.∙-cong
 d_'8729''45'cong_96 ::
@@ -543,7 +614,7 @@ du_'8729''45'cong_96 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_186
@@ -556,7 +627,7 @@ du_'8729''45'cong_96 v0
                         (coe
                            MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                               (coe v3)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.∙-congʳ
 d_'8729''45'cong'691'_98 ::
@@ -577,15 +648,15 @@ du_'8729''45'cong'691'_98 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -620,15 +691,15 @@ du_'8729''45'cong'737'_100 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -662,7 +733,7 @@ du_identity_102 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_identity_698
@@ -671,7 +742,7 @@ du_identity_102 v0
                   (coe
                      MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                         (coe v3)))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.identityʳ
 d_identity'691'_104 ::
@@ -689,15 +760,15 @@ du_identity'691'_104 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -723,15 +794,15 @@ du_identity'737'_106 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -747,9 +818,9 @@ d_'43''45'isAbelianGroup_108 ::
   MAlonzo.Code.Algebra.Structures.T_IsAbelianGroup_1132
 d_'43''45'isAbelianGroup_108 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+      MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe d_isHeytingCommutativeRing_54 (coe v0))))
@@ -772,15 +843,15 @@ du_isCommutativeMagma_110 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -812,17 +883,17 @@ du_isCommutativeMonoid_112 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.du_isCommutativeMonoid_1204
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                      (coe v4))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isCommutativeSemigroup
 d_isCommutativeSemigroup_114 ::
@@ -843,15 +914,15 @@ du_isCommutativeSemigroup_114 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (coe
@@ -877,12 +948,12 @@ du_isGroup_116 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                (coe
-                  MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                  MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                   (coe v3)))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isInvertibleMagma
 d_isInvertibleMagma_118 ::
@@ -903,15 +974,15 @@ du_isInvertibleMagma_118 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (coe
@@ -936,15 +1007,15 @@ du_isInvertibleUnitalMagma_120 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (coe
@@ -968,7 +1039,7 @@ du_isMagma_122 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_isMagma_480
@@ -979,7 +1050,7 @@ du_isMagma_122 v0
                      (coe
                         MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                           MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                            (coe v3))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isMonoid
 d_isMonoid_124 ::
@@ -999,14 +1070,14 @@ du_isMonoid_124 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_isMonoid_1050
                (coe
                   MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                      (coe v3))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isSemigroup
 d_isSemigroup_126 ::
@@ -1026,7 +1097,7 @@ du_isSemigroup_126 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
@@ -1035,7 +1106,7 @@ du_isSemigroup_126 v0
                   (coe
                      MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                         (coe v3)))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isUnitalMagma
 d_isUnitalMagma_128 ::
@@ -1055,15 +1126,15 @@ du_isUnitalMagma_128 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -1092,14 +1163,14 @@ du_'8315''185''45'cong_130 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_'8315''185''45'cong_1054
                (coe
                   MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                      (coe v3))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.inverse
 d_inverse_132 ::
@@ -1119,14 +1190,14 @@ du_inverse_132 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_inverse_1052
                (coe
                   MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                      (coe v3))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.inverseʳ
 d_inverse'691'_134 ::
@@ -1144,15 +1215,15 @@ du_inverse'691'_134 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (coe
@@ -1174,15 +1245,15 @@ du_inverse'737'_136 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (coe
@@ -1196,7 +1267,7 @@ d_cotrans_138 ::
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
 d_cotrans_138 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_cotrans_670
+      MAlonzo.Code.Relation.Binary.Structures.d_cotrans_736
       (coe
          MAlonzo.Code.Algebra.Apartness.Structures.d_isApartnessRelation_314
          (coe d_isHeytingCommutativeRing_54 (coe v0)))
@@ -1206,9 +1277,9 @@ d_distrib_140 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_distrib_140 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_distrib_2680
+      MAlonzo.Code.Algebra.Structures.d_distrib_2702
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe d_isHeytingCommutativeRing_54 (coe v0))))
@@ -1230,12 +1301,12 @@ du_distrib'691'_142 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'691'_2380
+               MAlonzo.Code.Algebra.Structures.du_distrib'691'_2400
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                  MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                   (coe v3)))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.distribˡ
 d_distrib'737'_144 ::
@@ -1255,12 +1326,12 @@ du_distrib'737'_144 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_distrib'737'_2378
+               MAlonzo.Code.Algebra.Structures.du_distrib'737'_2398
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                  MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                   (coe v3)))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.invertible⇒#
 d_invertible'8658''35'_146 ::
@@ -1281,7 +1352,7 @@ d_irrefl_148 = erased
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isApartnessRelation
 d_isApartnessRelation_150 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsApartnessRelation_656
+  MAlonzo.Code.Relation.Binary.Structures.T_IsApartnessRelation_722
 d_isApartnessRelation_150 v0
   = coe
       MAlonzo.Code.Algebra.Apartness.Structures.d_isApartnessRelation_314
@@ -1289,7 +1360,7 @@ d_isApartnessRelation_150 v0
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isCommutativeRing
 d_isCommutativeRing_152 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeRing_2796
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeRing_2818
 d_isCommutativeRing_152 v0
   = coe
       MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
@@ -1300,12 +1371,12 @@ d_isCommutativeSemiring_154 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1678
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1698
 d_isCommutativeSemiring_154 ~v0 ~v1 ~v2 v3
   = du_isCommutativeSemiring_154 v3
 du_isCommutativeSemiring_154 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1678
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1698
 du_isCommutativeSemiring_154 v0
   = let v1 = d__'43'__44 (coe v0) in
     coe
@@ -1318,7 +1389,7 @@ du_isCommutativeSemiring_154 v0
                (let v5 = d_isHeytingCommutativeRing_54 (coe v0) in
                 coe
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                     MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                      (coe v1) (coe v2) (coe v3) (coe v4)
                      (coe
                         MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
@@ -1329,12 +1400,12 @@ d_isCommutativeSemiringWithoutOne_156 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1382
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1392
 d_isCommutativeSemiringWithoutOne_156 ~v0 ~v1 ~v2 v3
   = du_isCommutativeSemiringWithoutOne_156 v3
 du_isCommutativeSemiringWithoutOne_156 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1382
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1392
 du_isCommutativeSemiringWithoutOne_156 v0
   = let v1 = d__'43'__44 (coe v0) in
     coe
@@ -1351,9 +1422,9 @@ du_isCommutativeSemiringWithoutOne_156 v0
                              (coe v5) in
                    coe
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1780
+                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1800
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                           MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                            (coe v1) (coe v2) (coe v3) (coe v4) (coe v6))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isEquivalence
 d_isEquivalence_158 ::
@@ -1373,7 +1444,7 @@ du_isEquivalence_158 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Algebra.Structures.d_isEquivalence_184
@@ -1386,7 +1457,7 @@ du_isEquivalence_158 v0
                         (coe
                            MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                               (coe v3)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isNearSemiring
 d_isNearSemiring_160 ::
@@ -1414,18 +1485,14 @@ du_isNearSemiring_160 v0
                          = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                              (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
                       coe
-                        (let v8
-                               = coe
-                                   MAlonzo.Code.Algebra.Structures.du_isSemiring_2778 (coe v1)
-                                   (coe v2) (coe v3) (coe v4) (coe v7) in
-                         coe
+                        (coe
+                           MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408 (coe v1)
+                           (coe v2) (coe v3) (coe v4)
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1374
-                              (coe
-                                 MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1660
-                                 (coe v8))))))))))
+                              MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                              (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isPartialEquivalence
 d_isPartialEquivalence_162 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -1445,15 +1512,15 @@ du_isPartialEquivalence_162 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -1475,10 +1542,10 @@ du_isPartialEquivalence_162 v0
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isRing
 d_isRing_164 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsRing_2650
+  MAlonzo.Code.Algebra.Structures.T_IsRing_2672
 d_isRing_164 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isRing_2812
+      MAlonzo.Code.Algebra.Structures.d_isRing_2834
       (coe
          MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
          (coe d_isHeytingCommutativeRing_54 (coe v0)))
@@ -1488,11 +1555,11 @@ d_isRingWithoutOne_166 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsRingWithoutOne_2286
+  MAlonzo.Code.Algebra.Structures.T_IsRingWithoutOne_2306
 d_isRingWithoutOne_166 ~v0 ~v1 ~v2 v3 = du_isRingWithoutOne_166 v3
 du_isRingWithoutOne_166 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsRingWithoutOne_2286
+  MAlonzo.Code.Algebra.Structures.T_IsRingWithoutOne_2306
 du_isRingWithoutOne_166 v0
   = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
     coe
@@ -1501,19 +1568,19 @@ du_isRingWithoutOne_166 v0
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-            (coe MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2))))
+            MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+            (coe MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isSemiring
 d_isSemiring_168 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1570
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1590
 d_isSemiring_168 ~v0 ~v1 ~v2 v3 = du_isSemiring_168 v3
 du_isSemiring_168 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1570
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1590
 du_isSemiring_168 v0
   = let v1 = d__'43'__44 (coe v0) in
     coe
@@ -1530,21 +1597,21 @@ du_isSemiring_168 v0
                              (coe v5) in
                    coe
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_isSemiring_2778 (coe v1)
+                        MAlonzo.Code.Algebra.Structures.du_isSemiring_2802 (coe v1)
                         (coe v2) (coe v3) (coe v4)
-                        (coe MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v6))))))))
+                        (coe MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isSemiringWithoutAnnihilatingZero
 d_isSemiringWithoutAnnihilatingZero_170 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1468
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1488
 d_isSemiringWithoutAnnihilatingZero_170 ~v0 ~v1 ~v2 v3
   = du_isSemiringWithoutAnnihilatingZero_170 v3
 du_isSemiringWithoutAnnihilatingZero_170 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1468
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1488
 du_isSemiringWithoutAnnihilatingZero_170 v0
   = let v1 = d_isHeytingCommutativeRing_54 (coe v0) in
     coe
@@ -1553,8 +1620,8 @@ du_isSemiringWithoutAnnihilatingZero_170 v0
                  (coe v1) in
        coe
          (coe
-            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutAnnihilatingZero_2776
-            (coe MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2))))
+            MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutAnnihilatingZero_2800
+            (coe MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.isSemiringWithoutOne
 d_isSemiringWithoutOne_172 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -1582,12 +1649,12 @@ du_isSemiringWithoutOne_172 v0
                          = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                              (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1660
+                           MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1680
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isSemiring_2778 (coe v1)
+                              MAlonzo.Code.Algebra.Structures.du_isSemiring_2802 (coe v1)
                               (coe v2) (coe v3) (coe v4) (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.refl
 d_refl_174 ::
@@ -1604,7 +1671,7 @@ du_refl_174 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_refl_34
@@ -1619,7 +1686,7 @@ du_refl_174 v0
                            (coe
                               MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                                  (coe v3))))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.reflexive
 d_reflexive_176 ::
@@ -1643,15 +1710,15 @@ du_reflexive_176 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -1689,15 +1756,15 @@ du_setoid_178 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (let v4
                    = coe
-                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                       MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                      = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                           (coe v4) in
                 coe
                   (let v6
@@ -1731,7 +1798,7 @@ du_sym_180 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_sym_36
@@ -1746,7 +1813,7 @@ du_sym_180 v0
                            (coe
                               MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                                  (coe v3))))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.sym
 d_sym_182 ::
@@ -1754,7 +1821,7 @@ d_sym_182 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_sym_182 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_sym_668
+      MAlonzo.Code.Relation.Binary.Structures.d_sym_734
       (coe
          MAlonzo.Code.Algebra.Apartness.Structures.d_isApartnessRelation_314
          (coe d_isHeytingCommutativeRing_54 (coe v0)))
@@ -1776,7 +1843,7 @@ du_trans_184 v0
              = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                  (coe v1) in
        coe
-         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v2) in
+         (let v3 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Relation.Binary.Structures.d_trans_38
@@ -1791,7 +1858,7 @@ du_trans_184 v0
                            (coe
                               MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                                  (coe v3))))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.uniqueʳ-⁻¹
 d_unique'691''45''8315''185'_186 ::
@@ -1818,15 +1885,15 @@ du_unique'691''45''8315''185'_186 v0
                       = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                           (coe v4) in
                 coe
-                  (let v6 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v5) in
+                  (let v6 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v5) in
                    coe
                      (let v7
                             = coe
-                                MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                                MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                                 (coe v6) in
                       coe
                         (let v8
-                               = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                               = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                                    (coe v7) in
                          coe
                            (coe
@@ -1859,15 +1926,15 @@ du_unique'737''45''8315''185'_188 v0
                       = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                           (coe v4) in
                 coe
-                  (let v6 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v5) in
+                  (let v6 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v5) in
                    coe
                      (let v7
                             = coe
-                                MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                                MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                                 (coe v6) in
                       coe
                         (let v8
-                               = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                               = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                                    (coe v7) in
                          coe
                            (coe
@@ -1901,13 +1968,13 @@ du_zero_190 v0
                          = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                              (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_zero_2386 (coe v1) (coe v2)
+                           MAlonzo.Code.Algebra.Structures.du_zero_2406 (coe v1) (coe v2)
                            (coe v3) (coe v4)
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                              MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                               (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.zeroʳ
 d_zero'691'_192 ::
@@ -1933,13 +2000,13 @@ du_zero'691'_192 v0
                          = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                              (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_zero'691'_2384 (coe v1) (coe v2)
+                           MAlonzo.Code.Algebra.Structures.du_zero'691'_2404 (coe v1) (coe v2)
                            (coe v3) (coe v4)
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                              MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                               (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.zeroˡ
 d_zero'737'_194 ::
@@ -1965,13 +2032,13 @@ du_zero'737'_194 v0
                          = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                              (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_zero'737'_2382 (coe v1) (coe v2)
+                           MAlonzo.Code.Algebra.Structures.du_zero'737'_2402 (coe v1) (coe v2)
                            (coe v3) (coe v4)
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                              MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                               (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingCommutativeRing._.¬#-isEquivalence
 d_'172''35''45'isEquivalence_196 ::
@@ -1993,14 +2060,14 @@ d_commutativeRing_198 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeRing_4016
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeRing_4054
 d_commutativeRing_198 ~v0 ~v1 ~v2 v3 = du_commutativeRing_198 v3
 du_commutativeRing_198 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeRing_4016
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeRing_4054
 du_commutativeRing_198 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.C_CommutativeRing'46'constructor_72553
+      MAlonzo.Code.Algebra.Bundles.C_CommutativeRing'46'constructor_73489
       (d__'43'__44 (coe v0)) (d__'42'__46 (coe v0)) (d_'45'__48 (coe v0))
       (d_0'35'_50 (coe v0)) (d_1'35'_52 (coe v0))
       (MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
@@ -2011,15 +2078,15 @@ d_apartnessRelation_200 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_ApartnessRelation_1248
+  MAlonzo.Code.Relation.Binary.Bundles.T_ApartnessRelation_1484
 d_apartnessRelation_200 ~v0 ~v1 ~v2 v3
   = du_apartnessRelation_200 v3
 du_apartnessRelation_200 ::
   T_HeytingCommutativeRing_12 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_ApartnessRelation_1248
+  MAlonzo.Code.Relation.Binary.Bundles.T_ApartnessRelation_1484
 du_apartnessRelation_200 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_ApartnessRelation'46'constructor_25337
+      MAlonzo.Code.Relation.Binary.Bundles.C_ApartnessRelation'46'constructor_28831
       (MAlonzo.Code.Algebra.Apartness.Structures.d_isApartnessRelation_314
          (coe d_isHeytingCommutativeRing_54 (coe v0)))
 -- Algebra.Apartness.Bundles.HeytingField
@@ -2117,9 +2184,9 @@ d_'42''45'assoc_260 ::
   T_HeytingField_208 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'assoc_260 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_2676
+      MAlonzo.Code.Algebra.Structures.d_'42''45'assoc_2698
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe
@@ -2130,7 +2197,7 @@ d_'42''45'comm_262 ::
   T_HeytingField_208 -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'comm_262 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_2814
+      MAlonzo.Code.Algebra.Structures.d_'42''45'comm_2836
       (coe
          MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
          (coe
@@ -2143,9 +2210,9 @@ d_'42''45'cong_264 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_'42''45'cong_264 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_2674
+      MAlonzo.Code.Algebra.Structures.d_'42''45'cong_2696
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe
@@ -2164,31 +2231,41 @@ du_'8729''45'cong'691'_266 ::
   T_HeytingField_208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8729''45'cong'691'_266 v0
-  = let v1 = d_isHeytingField_250 (coe v0) in
+  = let v1 = d__'43'__240 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
-                 (coe v1) in
+      (let v2 = d__'42'__242 (coe v0) in
        coe
-         (let v3
-                = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                    (coe v2) in
+         (let v3 = d_'45'__244 (coe v0) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = d_0'35'_246 (coe v0) in
              coe
-               (let v5
-                      = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-                          (coe v4) in
+               (let v5 = d_isHeytingField_250 (coe v0) in
                 coe
                   (let v6
-                         = coe
-                             MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_2390
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
                              (coe v5) in
                    coe
-                     (coe
-                        MAlonzo.Code.Algebra.Structures.du_'8729''45'cong'691'_206
-                        (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v6))))))))
+                     (let v7
+                            = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                                (coe v6) in
+                      coe
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
+                         coe
+                           (let v9
+                                  = coe
+                                      MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                      (coe v8) in
+                            coe
+                              (let v10
+                                     = coe
+                                         MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408
+                                         (coe v1) (coe v2) (coe v3) (coe v4) (coe v9) in
+                               coe
+                                 (coe
+                                    MAlonzo.Code.Algebra.Structures.du_'8729''45'cong'691'_206
+                                    (coe
+                                       MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1282
+                                       (coe v10))))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.∙-congˡ
 d_'8729''45'cong'737'_268 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2202,39 +2279,49 @@ du_'8729''45'cong'737'_268 ::
   T_HeytingField_208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_'8729''45'cong'737'_268 v0
-  = let v1 = d_isHeytingField_250 (coe v0) in
+  = let v1 = d__'43'__240 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
-                 (coe v1) in
+      (let v2 = d__'42'__242 (coe v0) in
        coe
-         (let v3
-                = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                    (coe v2) in
+         (let v3 = d_'45'__244 (coe v0) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = d_0'35'_246 (coe v0) in
              coe
-               (let v5
-                      = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-                          (coe v4) in
+               (let v5 = d_isHeytingField_250 (coe v0) in
                 coe
                   (let v6
-                         = coe
-                             MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_2390
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
                              (coe v5) in
                    coe
-                     (coe
-                        MAlonzo.Code.Algebra.Structures.du_'8729''45'cong'737'_202
-                        (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v6))))))))
+                     (let v7
+                            = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                                (coe v6) in
+                      coe
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
+                         coe
+                           (let v9
+                                  = coe
+                                      MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                      (coe v8) in
+                            coe
+                              (let v10
+                                     = coe
+                                         MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408
+                                         (coe v1) (coe v2) (coe v3) (coe v4) (coe v9) in
+                               coe
+                                 (coe
+                                    MAlonzo.Code.Algebra.Structures.du_'8729''45'cong'737'_202
+                                    (coe
+                                       MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1282
+                                       (coe v10))))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.*-identity
 d_'42''45'identity_270 ::
   T_HeytingField_208 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_'42''45'identity_270 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_2678
+      MAlonzo.Code.Algebra.Structures.d_'42''45'identity_2700
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe
@@ -2249,23 +2336,31 @@ d_identity'691'_272 ::
 d_identity'691'_272 ~v0 ~v1 ~v2 v3 = du_identity'691'_272 v3
 du_identity'691'_272 :: T_HeytingField_208 -> AgdaAny -> AgdaAny
 du_identity'691'_272 v0
-  = let v1 = d_isHeytingField_250 (coe v0) in
+  = let v1 = d__'43'__240 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
-                 (coe v1) in
+      (let v2 = d__'42'__242 (coe v0) in
        coe
-         (let v3
-                = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                    (coe v2) in
+         (let v3 = d_'45'__244 (coe v0) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = d_0'35'_246 (coe v0) in
              coe
-               (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'691'_728
-                  (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2768
-                     (coe v4))))))
+               (let v5 = d_isHeytingField_250 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
+                             (coe v5) in
+                   coe
+                     (let v7
+                            = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                                (coe v6) in
+                      coe
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
+                         coe
+                           (coe
+                              MAlonzo.Code.Algebra.Structures.du_identity'691'_728
+                              (coe
+                                 MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2792 (coe v1)
+                                 (coe v2) (coe v3) (coe v4) (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.identityˡ
 d_identity'737'_274 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2275,23 +2370,31 @@ d_identity'737'_274 ::
 d_identity'737'_274 ~v0 ~v1 ~v2 v3 = du_identity'737'_274 v3
 du_identity'737'_274 :: T_HeytingField_208 -> AgdaAny -> AgdaAny
 du_identity'737'_274 v0
-  = let v1 = d_isHeytingField_250 (coe v0) in
+  = let v1 = d__'43'__240 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
-                 (coe v1) in
+      (let v2 = d__'42'__242 (coe v0) in
        coe
-         (let v3
-                = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                    (coe v2) in
+         (let v3 = d_'45'__244 (coe v0) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = d_0'35'_246 (coe v0) in
              coe
-               (coe
-                  MAlonzo.Code.Algebra.Structures.du_identity'737'_726
-                  (coe
-                     MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2768
-                     (coe v4))))))
+               (let v5 = d_isHeytingField_250 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
+                             (coe v5) in
+                   coe
+                     (let v7
+                            = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                                (coe v6) in
+                      coe
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
+                         coe
+                           (coe
+                              MAlonzo.Code.Algebra.Structures.du_identity'737'_726
+                              (coe
+                                 MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2792 (coe v1)
+                                 (coe v2) (coe v3) (coe v4) (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isCommutativeMagma
 d_isCommutativeMagma_276 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2325,18 +2428,18 @@ du_isCommutativeMagma_276 v0
                       coe
                         (let v8
                                = coe
-                                   MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                                   MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                                    (coe v1) (coe v2) (coe v3) (coe v4) (coe v7) in
                          coe
                            (let v9
                                   = coe
-                                      MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1780
+                                      MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1800
                                       (coe v8) in
                             coe
                               (coe
                                  MAlonzo.Code.Algebra.Structures.du_isCommutativeMagma_586
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1454
+                                    MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1474
                                     (coe v9)))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.*-isCommutativeMonoid
 d_'42''45'isCommutativeMonoid_278 ::
@@ -2370,9 +2473,9 @@ du_'42''45'isCommutativeMonoid_278 v0
                                 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1788
+                           MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeMonoid_1808
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                              MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                               (coe v1) (coe v2) (coe v3) (coe v4) (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.*-isCommutativeSemigroup
 d_'42''45'isCommutativeSemigroup_280 ::
@@ -2407,13 +2510,13 @@ du_'42''45'isCommutativeSemigroup_280 v0
                       coe
                         (let v8
                                = coe
-                                   MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                                   MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                                    (coe v1) (coe v2) (coe v3) (coe v4) (coe v7) in
                          coe
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1454
+                              MAlonzo.Code.Algebra.Structures.du_'42''45'isCommutativeSemigroup_1474
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1780
+                                 MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1800
                                  (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.*-isMagma
 d_'42''45'isMagma_282 ::
@@ -2425,23 +2528,36 @@ d_'42''45'isMagma_282 ~v0 ~v1 ~v2 v3 = du_'42''45'isMagma_282 v3
 du_'42''45'isMagma_282 ::
   T_HeytingField_208 -> MAlonzo.Code.Algebra.Structures.T_IsMagma_176
 du_'42''45'isMagma_282 v0
-  = let v1 = d_isHeytingField_250 (coe v0) in
+  = let v1 = d__'43'__240 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
-                 (coe v1) in
+      (let v2 = d__'42'__242 (coe v0) in
        coe
-         (let v3
-                = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                    (coe v2) in
+         (let v3 = d_'45'__244 (coe v0) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = d_0'35'_246 (coe v0) in
              coe
-               (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_2388
-                  (coe
-                     MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-                     (coe v4))))))
+               (let v5 = d_isHeytingField_250 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
+                             (coe v5) in
+                   coe
+                     (let v7
+                            = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                                (coe v6) in
+                      coe
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
+                         coe
+                           (let v9
+                                  = coe
+                                      MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                      (coe v8) in
+                            coe
+                              (coe
+                                 MAlonzo.Code.Algebra.Structures.du_'42''45'isMagma_1282
+                                 (coe
+                                    MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408 (coe v1)
+                                    (coe v2) (coe v3) (coe v4) (coe v9)))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.*-isMonoid
 d_'42''45'isMonoid_284 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2454,19 +2570,28 @@ du_'42''45'isMonoid_284 ::
   T_HeytingField_208 ->
   MAlonzo.Code.Algebra.Structures.T_IsMonoid_686
 du_'42''45'isMonoid_284 v0
-  = let v1 = d_isHeytingField_250 (coe v0) in
+  = let v1 = d__'43'__240 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
-                 (coe v1) in
+      (let v2 = d__'42'__242 (coe v0) in
        coe
-         (let v3
-                = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                    (coe v2) in
+         (let v3 = d_'45'__244 (coe v0) in
           coe
-            (coe
-               MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2768
-               (coe MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3)))))
+            (let v4 = d_0'35'_246 (coe v0) in
+             coe
+               (let v5 = d_isHeytingField_250 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
+                             (coe v5) in
+                   coe
+                     (let v7
+                            = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                                (coe v6) in
+                      coe
+                        (coe
+                           MAlonzo.Code.Algebra.Structures.du_'42''45'isMonoid_2792 (coe v1)
+                           (coe v2) (coe v3) (coe v4)
+                           (coe MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.*-isSemigroup
 d_'42''45'isSemigroup_286 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2480,23 +2605,36 @@ du_'42''45'isSemigroup_286 ::
   T_HeytingField_208 ->
   MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472
 du_'42''45'isSemigroup_286 v0
-  = let v1 = d_isHeytingField_250 (coe v0) in
+  = let v1 = d__'43'__240 (coe v0) in
     coe
-      (let v2
-             = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
-                 (coe v1) in
+      (let v2 = d__'42'__242 (coe v0) in
        coe
-         (let v3
-                = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
-                    (coe v2) in
+         (let v3 = d_'45'__244 (coe v0) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = d_0'35'_246 (coe v0) in
              coe
-               (coe
-                  MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_2390
-                  (coe
-                     MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-                     (coe v4))))))
+               (let v5 = d_isHeytingField_250 (coe v0) in
+                coe
+                  (let v6
+                         = MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470
+                             (coe v5) in
+                   coe
+                     (let v7
+                            = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
+                                (coe v6) in
+                      coe
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
+                         coe
+                           (let v9
+                                  = coe
+                                      MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                      (coe v8) in
+                            coe
+                              (coe
+                                 MAlonzo.Code.Algebra.Structures.du_'42''45'isSemigroup_1284
+                                 (coe
+                                    MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408 (coe v1)
+                                    (coe v2) (coe v3) (coe v4) (coe v9)))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.assoc
 d_assoc_288 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2517,7 +2655,7 @@ du_assoc_288 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_assoc_482
@@ -2528,7 +2666,7 @@ du_assoc_288 v0
                         (coe
                            MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                               (coe v4)))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.comm
 d_comm_290 ::
@@ -2549,12 +2687,12 @@ du_comm_290 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_comm_1146
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                      (coe v4))))))
 -- Algebra.Apartness.Bundles.HeytingField._.∙-cong
 d_'8729''45'cong_292 ::
@@ -2580,7 +2718,7 @@ du_'8729''45'cong_292 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_'8729''45'cong_186
@@ -2593,7 +2731,7 @@ du_'8729''45'cong_292 v0
                            (coe
                               MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                                  (coe v4))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.∙-congʳ
 d_'8729''45'cong'691'_294 ::
@@ -2618,15 +2756,15 @@ du_'8729''45'cong'691'_294 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -2665,15 +2803,15 @@ du_'8729''45'cong'737'_296 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -2709,7 +2847,7 @@ du_identity_298 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_identity_698
@@ -2718,7 +2856,7 @@ du_identity_298 v0
                      (coe
                         MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                           MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                            (coe v4))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.identityʳ
 d_identity'691'_300 ::
@@ -2739,15 +2877,15 @@ du_identity'691'_300 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -2776,15 +2914,15 @@ du_identity'737'_302 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -2800,9 +2938,9 @@ d_'43''45'isAbelianGroup_304 ::
   MAlonzo.Code.Algebra.Structures.T_IsAbelianGroup_1132
 d_'43''45'isAbelianGroup_304 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+      MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe
@@ -2831,15 +2969,15 @@ du_isCommutativeMagma_306 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -2875,17 +3013,17 @@ du_isCommutativeMonoid_308 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (coe
                      MAlonzo.Code.Algebra.Structures.du_isCommutativeMonoid_1204
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                         (coe v5)))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isCommutativeSemigroup
 d_isCommutativeSemigroup_310 ::
@@ -2910,15 +3048,15 @@ du_isCommutativeSemigroup_310 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (coe
@@ -2948,12 +3086,12 @@ du_isGroup_312 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                   (coe
-                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                     MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                      (coe v4))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isInvertibleMagma
 d_isInvertibleMagma_314 ::
@@ -2978,15 +3116,15 @@ du_isInvertibleMagma_314 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (coe
@@ -3015,15 +3153,15 @@ du_isInvertibleUnitalMagma_316 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (coe
@@ -3049,7 +3187,7 @@ du_isMagma_318 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_isMagma_480
@@ -3060,7 +3198,7 @@ du_isMagma_318 v0
                         (coe
                            MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                            (coe
-                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                              MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                               (coe v4)))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isMonoid
 d_isMonoid_320 ::
@@ -3084,14 +3222,14 @@ du_isMonoid_320 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_isMonoid_1050
                   (coe
                      MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                         (coe v4)))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isSemigroup
 d_isSemigroup_322 ::
@@ -3115,7 +3253,7 @@ du_isSemigroup_322 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
@@ -3124,7 +3262,7 @@ du_isSemigroup_322 v0
                      (coe
                         MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                         (coe
-                           MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                           MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                            (coe v4))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isUnitalMagma
 d_isUnitalMagma_324 ::
@@ -3148,15 +3286,15 @@ du_isUnitalMagma_324 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -3187,14 +3325,14 @@ du_'8315''185''45'cong_326 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_'8315''185''45'cong_1054
                   (coe
                      MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                         (coe v4)))))))
 -- Algebra.Apartness.Bundles.HeytingField._.inverse
 d_inverse_328 ::
@@ -3216,14 +3354,14 @@ du_inverse_328 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_inverse_1052
                   (coe
                      MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                      (coe
-                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                        MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                         (coe v4)))))))
 -- Algebra.Apartness.Bundles.HeytingField._.inverseʳ
 d_inverse'691'_330 ::
@@ -3244,15 +3382,15 @@ du_inverse'691'_330 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (coe
@@ -3277,15 +3415,15 @@ du_inverse'737'_332 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (coe
@@ -3299,7 +3437,7 @@ d_cotrans_334 ::
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
 d_cotrans_334 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_cotrans_670
+      MAlonzo.Code.Relation.Binary.Structures.d_cotrans_736
       (coe
          MAlonzo.Code.Algebra.Apartness.Structures.d_isApartnessRelation_314
          (coe
@@ -3310,9 +3448,9 @@ d_distrib_336 ::
   T_HeytingField_208 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_distrib_336 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_distrib_2680
+      MAlonzo.Code.Algebra.Structures.d_distrib_2702
       (coe
-         MAlonzo.Code.Algebra.Structures.d_isRing_2812
+         MAlonzo.Code.Algebra.Structures.d_isRing_2834
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
             (coe
@@ -3338,12 +3476,12 @@ du_distrib'691'_338 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_distrib'691'_2380
+                  MAlonzo.Code.Algebra.Structures.du_distrib'691'_2400
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                     MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                      (coe v4))))))
 -- Algebra.Apartness.Bundles.HeytingField._.distribˡ
 d_distrib'737'_340 ::
@@ -3365,12 +3503,12 @@ du_distrib'737'_340 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
-                  MAlonzo.Code.Algebra.Structures.du_distrib'737'_2378
+                  MAlonzo.Code.Algebra.Structures.du_distrib'737'_2398
                   (coe
-                     MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                     MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                      (coe v4))))))
 -- Algebra.Apartness.Bundles.HeytingField._.invertible⇒#
 d_invertible'8658''35'_342 ::
@@ -3393,7 +3531,7 @@ d_irrefl_344 = erased
 -- Algebra.Apartness.Bundles.HeytingField._.isApartnessRelation
 d_isApartnessRelation_346 ::
   T_HeytingField_208 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsApartnessRelation_656
+  MAlonzo.Code.Relation.Binary.Structures.T_IsApartnessRelation_722
 d_isApartnessRelation_346 v0
   = coe
       MAlonzo.Code.Algebra.Apartness.Structures.d_isApartnessRelation_314
@@ -3403,7 +3541,7 @@ d_isApartnessRelation_346 v0
 -- Algebra.Apartness.Bundles.HeytingField._.isCommutativeRing
 d_isCommutativeRing_348 ::
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeRing_2796
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeRing_2818
 d_isCommutativeRing_348 v0
   = coe
       MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
@@ -3416,12 +3554,12 @@ d_isCommutativeSemiring_350 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1678
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1698
 d_isCommutativeSemiring_350 ~v0 ~v1 ~v2 v3
   = du_isCommutativeSemiring_350 v3
 du_isCommutativeSemiring_350 ::
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1678
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiring_1698
 du_isCommutativeSemiring_350 v0
   = let v1 = d__'43'__240 (coe v0) in
     coe
@@ -3438,7 +3576,7 @@ du_isCommutativeSemiring_350 v0
                              (coe v5) in
                    coe
                      (coe
-                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                        MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                         (coe v1) (coe v2) (coe v3) (coe v4)
                         (coe
                            MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
@@ -3449,12 +3587,12 @@ d_isCommutativeSemiringWithoutOne_352 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1382
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1392
 d_isCommutativeSemiringWithoutOne_352 ~v0 ~v1 ~v2 v3
   = du_isCommutativeSemiringWithoutOne_352 v3
 du_isCommutativeSemiringWithoutOne_352 ::
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1382
+  MAlonzo.Code.Algebra.Structures.T_IsCommutativeSemiringWithoutOne_1392
 du_isCommutativeSemiringWithoutOne_352 v0
   = let v1 = d__'43'__240 (coe v0) in
     coe
@@ -3475,9 +3613,9 @@ du_isCommutativeSemiringWithoutOne_352 v0
                                 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1780
+                           MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiringWithoutOne_1800
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2926
+                              MAlonzo.Code.Algebra.Structures.du_isCommutativeSemiring_2948
                               (coe v1) (coe v2) (coe v3) (coe v4) (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isEquivalence
 d_isEquivalence_354 ::
@@ -3501,7 +3639,7 @@ du_isEquivalence_354 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Algebra.Structures.d_isEquivalence_184
@@ -3514,7 +3652,7 @@ du_isEquivalence_354 v0
                            (coe
                               MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                                 MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                                  (coe v4))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isHeytingCommutativeRing
 d_isHeytingCommutativeRing_356 ::
@@ -3554,18 +3692,14 @@ du_isNearSemiring_358 v0
                             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                                 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
                          coe
-                           (let v9
-                                  = coe
-                                      MAlonzo.Code.Algebra.Structures.du_isSemiring_2778 (coe v1)
-                                      (coe v2) (coe v3) (coe v4) (coe v8) in
-                            coe
+                           (coe
+                              MAlonzo.Code.Algebra.Structures.du_isNearSemiring_2408 (coe v1)
+                              (coe v2) (coe v3) (coe v4)
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.du_isNearSemiring_1374
-                                 (coe
-                                    MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1660
-                                    (coe v9)))))))))))
+                                 MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+                                 (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isPartialEquivalence
 d_isPartialEquivalence_360 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -3589,15 +3723,15 @@ du_isPartialEquivalence_360 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -3619,10 +3753,10 @@ du_isPartialEquivalence_360 v0
                                        (coe v10))))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isRing
 d_isRing_362 ::
-  T_HeytingField_208 -> MAlonzo.Code.Algebra.Structures.T_IsRing_2650
+  T_HeytingField_208 -> MAlonzo.Code.Algebra.Structures.T_IsRing_2672
 d_isRing_362 v0
   = coe
-      MAlonzo.Code.Algebra.Structures.d_isRing_2812
+      MAlonzo.Code.Algebra.Structures.d_isRing_2834
       (coe
          MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
          (coe
@@ -3634,11 +3768,11 @@ d_isRingWithoutOne_364 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsRingWithoutOne_2286
+  MAlonzo.Code.Algebra.Structures.T_IsRingWithoutOne_2306
 d_isRingWithoutOne_364 ~v0 ~v1 ~v2 v3 = du_isRingWithoutOne_364 v3
 du_isRingWithoutOne_364 ::
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsRingWithoutOne_2286
+  MAlonzo.Code.Algebra.Structures.T_IsRingWithoutOne_2306
 du_isRingWithoutOne_364 v0
   = let v1 = d_isHeytingField_250 (coe v0) in
     coe
@@ -3651,19 +3785,19 @@ du_isRingWithoutOne_364 v0
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
-               (coe MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3)))))
+               MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
+               (coe MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3)))))
 -- Algebra.Apartness.Bundles.HeytingField._.isSemiring
 d_isSemiring_366 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1570
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1590
 d_isSemiring_366 ~v0 ~v1 ~v2 v3 = du_isSemiring_366 v3
 du_isSemiring_366 ::
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1570
+  MAlonzo.Code.Algebra.Structures.T_IsSemiring_1590
 du_isSemiring_366 v0
   = let v1 = d__'43'__240 (coe v0) in
     coe
@@ -3684,21 +3818,21 @@ du_isSemiring_366 v0
                                 (coe v6) in
                       coe
                         (coe
-                           MAlonzo.Code.Algebra.Structures.du_isSemiring_2778 (coe v1)
+                           MAlonzo.Code.Algebra.Structures.du_isSemiring_2802 (coe v1)
                            (coe v2) (coe v3) (coe v4)
-                           (coe MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v7)))))))))
+                           (coe MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7)))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.isSemiringWithoutAnnihilatingZero
 d_isSemiringWithoutAnnihilatingZero_368 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1468
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1488
 d_isSemiringWithoutAnnihilatingZero_368 ~v0 ~v1 ~v2 v3
   = du_isSemiringWithoutAnnihilatingZero_368 v3
 du_isSemiringWithoutAnnihilatingZero_368 ::
   T_HeytingField_208 ->
-  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1468
+  MAlonzo.Code.Algebra.Structures.T_IsSemiringWithoutAnnihilatingZero_1488
 du_isSemiringWithoutAnnihilatingZero_368 v0
   = let v1 = d_isHeytingField_250 (coe v0) in
     coe
@@ -3711,8 +3845,8 @@ du_isSemiringWithoutAnnihilatingZero_368 v0
                     (coe v2) in
           coe
             (coe
-               MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutAnnihilatingZero_2776
-               (coe MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3)))))
+               MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutAnnihilatingZero_2800
+               (coe MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3)))))
 -- Algebra.Apartness.Bundles.HeytingField._.isSemiringWithoutOne
 d_isSemiringWithoutOne_370 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -3744,12 +3878,12 @@ du_isSemiringWithoutOne_370 v0
                             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                                 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
                          coe
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1660
+                              MAlonzo.Code.Algebra.Structures.du_isSemiringWithoutOne_1680
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.du_isSemiring_2778 (coe v1)
+                                 MAlonzo.Code.Algebra.Structures.du_isSemiring_2802 (coe v1)
                                  (coe v2) (coe v3) (coe v4) (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.refl
 d_refl_372 ::
@@ -3770,7 +3904,7 @@ du_refl_372 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_refl_34
@@ -3785,7 +3919,7 @@ du_refl_372 v0
                               (coe
                                  MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                                    MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                                     (coe v4)))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.reflexive
 d_reflexive_374 ::
@@ -3813,15 +3947,15 @@ du_reflexive_374 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -3865,15 +3999,15 @@ du_setoid_376 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (let v5
                       = coe
-                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                          MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                         = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                              (coe v5) in
                    coe
                      (let v7
@@ -3909,7 +4043,7 @@ du_sym_378 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_sym_36
@@ -3924,14 +4058,14 @@ du_sym_378 v0
                               (coe
                                  MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                                    MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                                     (coe v4)))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.sym
 d_sym_380 ::
   T_HeytingField_208 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_sym_380 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_sym_668
+      MAlonzo.Code.Relation.Binary.Structures.d_sym_734
       (coe
          MAlonzo.Code.Algebra.Apartness.Structures.d_isApartnessRelation_314
          (coe
@@ -3967,7 +4101,7 @@ du_trans_384 v0
                 = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                     (coe v2) in
           coe
-            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v3) in
+            (let v4 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.d_trans_38
@@ -3982,7 +4116,7 @@ du_trans_384 v0
                               (coe
                                  MAlonzo.Code.Algebra.Structures.d_isGroup_1144
                                  (coe
-                                    MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2672
+                                    MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2694
                                     (coe v4)))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.uniqueʳ-⁻¹
 d_unique'691''45''8315''185'_386 ::
@@ -4011,15 +4145,15 @@ du_unique'691''45''8315''185'_386 v0
                          = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                              (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
                       coe
                         (let v8
                                = coe
-                                   MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                                   MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                                    (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                                  = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                                       (coe v8) in
                             coe
                               (coe
@@ -4055,15 +4189,15 @@ du_unique'737''45''8315''185'_388 v0
                          = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                              (coe v5) in
                    coe
-                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v6) in
+                     (let v7 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v6) in
                       coe
                         (let v8
                                = coe
-                                   MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                                   MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                                    (coe v7) in
                          coe
                            (let v9
-                                  = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2304
+                                  = MAlonzo.Code.Algebra.Structures.d_'43''45'isAbelianGroup_2324
                                       (coe v8) in
                             coe
                               (coe
@@ -4100,13 +4234,13 @@ du_zero_390 v0
                             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                                 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
                          coe
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_zero_2386 (coe v1) (coe v2)
+                              MAlonzo.Code.Algebra.Structures.du_zero_2406 (coe v1) (coe v2)
                               (coe v3) (coe v4)
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                                 MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                                  (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.zeroʳ
 d_zero'691'_392 ::
@@ -4135,13 +4269,13 @@ du_zero'691'_392 v0
                             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                                 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
                          coe
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_zero'691'_2384 (coe v1) (coe v2)
+                              MAlonzo.Code.Algebra.Structures.du_zero'691'_2404 (coe v1) (coe v2)
                               (coe v3) (coe v4)
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                                 MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                                  (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.zeroˡ
 d_zero'737'_394 ::
@@ -4170,13 +4304,13 @@ du_zero'737'_394 v0
                             = MAlonzo.Code.Algebra.Apartness.Structures.d_isCommutativeRing_312
                                 (coe v6) in
                       coe
-                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2812 (coe v7) in
+                        (let v8 = MAlonzo.Code.Algebra.Structures.d_isRing_2834 (coe v7) in
                          coe
                            (coe
-                              MAlonzo.Code.Algebra.Structures.du_zero'737'_2382 (coe v1) (coe v2)
+                              MAlonzo.Code.Algebra.Structures.du_zero'737'_2402 (coe v1) (coe v2)
                               (coe v3) (coe v4)
                               (coe
-                                 MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2682
+                                 MAlonzo.Code.Algebra.Structures.du_isRingWithoutOne_2704
                                  (coe v8))))))))))
 -- Algebra.Apartness.Bundles.HeytingField._.¬#-isEquivalence
 d_'172''35''45'isEquivalence_396 ::
@@ -4215,15 +4349,15 @@ d_apartnessRelation_400 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   T_HeytingField_208 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_ApartnessRelation_1248
+  MAlonzo.Code.Relation.Binary.Bundles.T_ApartnessRelation_1484
 d_apartnessRelation_400 ~v0 ~v1 ~v2 v3
   = du_apartnessRelation_400 v3
 du_apartnessRelation_400 ::
   T_HeytingField_208 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_ApartnessRelation_1248
+  MAlonzo.Code.Relation.Binary.Bundles.T_ApartnessRelation_1484
 du_apartnessRelation_400 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_ApartnessRelation'46'constructor_25337
+      MAlonzo.Code.Relation.Binary.Bundles.C_ApartnessRelation'46'constructor_28831
       (MAlonzo.Code.Algebra.Apartness.Structures.d_isApartnessRelation_314
          (coe
             MAlonzo.Code.Algebra.Apartness.Structures.d_isHeytingCommutativeRing_470

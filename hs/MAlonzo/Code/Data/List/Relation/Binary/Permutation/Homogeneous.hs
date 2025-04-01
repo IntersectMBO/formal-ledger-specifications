@@ -124,7 +124,7 @@ du_setoid_120 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_setoid_120 v0 v1
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
       (coe du_isEquivalence_114 (coe v0) (coe v1))
 -- Data.List.Relation.Binary.Permutation.Homogeneous.map
 d_map_130 ::
@@ -179,4 +179,48 @@ du_map_130 v0 v1 v2 v3
         -> coe
              C_trans_76 v5 (coe du_map_130 (coe v0) (coe v1) (coe v5) (coe v7))
              (coe du_map_130 (coe v0) (coe v5) (coe v2) (coe v8))
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Data.List.Relation.Binary.Permutation.Homogeneous.steps
+d_steps_162 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  [AgdaAny] -> [AgdaAny] -> T_Permutation_28 -> Integer
+d_steps_162 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 = du_steps_162 v4 v5 v6
+du_steps_162 ::
+  [AgdaAny] -> [AgdaAny] -> T_Permutation_28 -> Integer
+du_steps_162 v0 v1 v2
+  = case coe v2 of
+      C_refl_38 v5 -> coe (1 :: Integer)
+      C_prep_50 v7 v8
+        -> case coe v0 of
+             (:) v9 v10
+               -> case coe v1 of
+                    (:) v11 v12
+                      -> coe
+                           addInt (coe (1 :: Integer))
+                           (coe du_steps_162 (coe v10) (coe v12) (coe v8))
+                    _ -> MAlonzo.RTE.mazUnreachableError
+             _ -> MAlonzo.RTE.mazUnreachableError
+      C_swap_68 v9 v10 v11
+        -> case coe v0 of
+             (:) v12 v13
+               -> case coe v13 of
+                    (:) v14 v15
+                      -> case coe v1 of
+                           (:) v16 v17
+                             -> case coe v17 of
+                                  (:) v18 v19
+                                    -> coe
+                                         addInt (coe (1 :: Integer))
+                                         (coe du_steps_162 (coe v15) (coe v19) (coe v11))
+                                  _ -> MAlonzo.RTE.mazUnreachableError
+                           _ -> MAlonzo.RTE.mazUnreachableError
+                    _ -> MAlonzo.RTE.mazUnreachableError
+             _ -> MAlonzo.RTE.mazUnreachableError
+      C_trans_76 v4 v6 v7
+        -> coe
+             addInt (coe du_steps_162 (coe v0) (coe v4) (coe v6))
+             (coe du_steps_162 (coe v4) (coe v1) (coe v7))
       _ -> MAlonzo.RTE.mazUnreachableError

@@ -241,8 +241,8 @@ d_stdlibTypes_124
                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                     (coe
                                        (MAlonzo.RTE.QName
-                                          (24 :: Integer) (11738221722338741495 :: Integer)
-                                          "Data.Refinement.Refinement"
+                                          (28 :: Integer) (17505360159310801561 :: Integer)
+                                          "Data.Refinement.Base.Refinement"
                                           (MAlonzo.RTE.Fixity
                                              MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                     (coe

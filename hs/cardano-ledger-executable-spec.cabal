@@ -97,6 +97,7 @@ library
         MAlonzo.Code.Algebra.Lattice.Structures
         MAlonzo.Code.Algebra.Lattice.Structures.Biased
         MAlonzo.Code.Algebra.Morphism
+        MAlonzo.Code.Algebra.Morphism.Bundles
         MAlonzo.Code.Algebra.Morphism.Construct.Identity
         MAlonzo.Code.Algebra.Morphism.Definitions
         MAlonzo.Code.Algebra.Morphism.GroupMonomorphism
@@ -106,7 +107,6 @@ library
         MAlonzo.Code.Algebra.Morphism.Structures
         MAlonzo.Code.Algebra.PairOp
         MAlonzo.Code.Algebra.Properties.AbelianGroup
-        MAlonzo.Code.Algebra.Properties.CommutativeMonoid
         MAlonzo.Code.Algebra.Properties.CommutativeSemigroup
         MAlonzo.Code.Algebra.Properties.Group
         MAlonzo.Code.Algebra.Properties.Loop
@@ -275,6 +275,7 @@ library
         MAlonzo.Code.Data.List.Relation.Binary.Subset.Setoid.Properties
         MAlonzo.Code.Data.List.Relation.Unary.All
         MAlonzo.Code.Data.List.Relation.Unary.All.Properties
+        MAlonzo.Code.Data.List.Relation.Unary.All.Properties.Core
         MAlonzo.Code.Data.List.Relation.Unary.AllPairs
         MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core
         MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Properties
@@ -348,6 +349,8 @@ library
         MAlonzo.Code.Data.Rational.Unnormalised.Properties
         MAlonzo.Code.Data.Record
         MAlonzo.Code.Data.Refinement
+        MAlonzo.Code.Data.Refinement.Base
+        MAlonzo.Code.Data.Refinement.Properties
         MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext
         MAlonzo.Code.Data.Sign
         MAlonzo.Code.Data.Sign.Base
@@ -518,8 +521,8 @@ library
         MAlonzo.Code.Ledger.Utxo
         MAlonzo.Code.Ledger.Utxow
         MAlonzo.Code.Level
-        MAlonzo.Code.Meta
-        MAlonzo.Code.MetaPrelude
+        MAlonzo.Code.Meta.Init
+        MAlonzo.Code.Meta.Prelude
         MAlonzo.Code.MyDebugOptions
         MAlonzo.Code.Prelude
         MAlonzo.Code.PreludeMeta
@@ -552,10 +555,16 @@ library
         MAlonzo.Code.Reflection.TCM.Syntax
         MAlonzo.Code.Reflection.Tactic
         MAlonzo.Code.Reflection.Utils
+        MAlonzo.Code.Reflection.Utils.Args
+        MAlonzo.Code.Reflection.Utils.Core
         MAlonzo.Code.Reflection.Utils.Debug
+        MAlonzo.Code.Reflection.Utils.Metas
+        MAlonzo.Code.Reflection.Utils.Records
+        MAlonzo.Code.Reflection.Utils.Substitute
         MAlonzo.Code.Reflection.Utils.TCI
         MAlonzo.Code.Relation.Binary
         MAlonzo.Code.Relation.Binary.Bundles
+        MAlonzo.Code.Relation.Binary.Bundles.Raw
         MAlonzo.Code.Relation.Binary.Consequences
         MAlonzo.Code.Relation.Binary.Construct.Closure.Reflexive
         MAlonzo.Code.Relation.Binary.Construct.Closure.Reflexive.Properties
@@ -635,7 +644,6 @@ library
         MAlonzo.Code.Tactic.Inline
         MAlonzo.Code.Tactic.MonoidSolver
         MAlonzo.Code.Tactic.Premises
-        MAlonzo.Code.Tactic.Substitute
         MAlonzo.Code.Text.Format
         MAlonzo.Code.Text.Format.Generic
         MAlonzo.Code.Text.Printf

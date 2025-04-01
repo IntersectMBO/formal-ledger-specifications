@@ -44,7 +44,7 @@ d_Carrier_24 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 -> ()
 d_Carrier_24 = erased
 -- Function.Consequences.Setoid.contraInjective
-d_contraInjective_70 ::
+d_contraInjective_74 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -57,9 +57,9 @@ d_contraInjective_70 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_contraInjective_70 = erased
+d_contraInjective_74 = erased
 -- Function.Consequences.Setoid.inverseˡ⇒surjective
-d_inverse'737''8658'surjective_72 ::
+d_inverse'737''8658'surjective_76 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -70,18 +70,18 @@ d_inverse'737''8658'surjective_72 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_inverse'737''8658'surjective_72 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_inverse'737''8658'surjective_72 v7
-du_inverse'737''8658'surjective_72 ::
+d_inverse'737''8658'surjective_76 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_inverse'737''8658'surjective_76 v7
+du_inverse'737''8658'surjective_76 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_inverse'737''8658'surjective_72 v0
+du_inverse'737''8658'surjective_76 v0
   = coe
       MAlonzo.Code.Function.Consequences.du_inverse'737''8658'surjective_38
       (coe v0)
 -- Function.Consequences.Setoid.inverseʳ⇒injective
-d_inverse'691''8658'injective_76 ::
+d_inverse'691''8658'injective_80 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -92,16 +92,16 @@ d_inverse'691''8658'injective_76 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_inverse'691''8658'injective_76 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
-  = du_inverse'691''8658'injective_76 v4 v5 v6 v7
-du_inverse'691''8658'injective_76 ::
+d_inverse'691''8658'injective_80 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
+  = du_inverse'691''8658'injective_80 v4 v5 v6 v7
+du_inverse'691''8658'injective_80 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_inverse'691''8658'injective_76 v0 v1 v2 v3
+du_inverse'691''8658'injective_80 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Function.Consequences.du_inverse'691''8658'injective_50
       (coe v2) (coe v3)
@@ -118,7 +118,7 @@ du_inverse'691''8658'injective_76 v0 v1 v2 v3
          (coe
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0)))
 -- Function.Consequences.Setoid.inverseᵇ⇒bijective
-d_inverse'7495''8658'bijective_80 ::
+d_inverse'7495''8658'bijective_84 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -129,16 +129,16 @@ d_inverse'7495''8658'bijective_80 ::
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_inverse'7495''8658'bijective_80 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
-  = du_inverse'7495''8658'bijective_80 v4 v5 v6 v7
-du_inverse'7495''8658'bijective_80 ::
+d_inverse'7495''8658'bijective_84 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
+  = du_inverse'7495''8658'bijective_84 v4 v5 v6 v7
+du_inverse'7495''8658'bijective_84 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_inverse'7495''8658'bijective_80 v0 v1 v2 v3
+du_inverse'7495''8658'bijective_84 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Function.Consequences.du_inverse'7495''8658'bijective_72
       (coe v2) (coe v3)
@@ -155,7 +155,7 @@ du_inverse'7495''8658'bijective_80 v0 v1 v2 v3
          (coe
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0)))
 -- Function.Consequences.Setoid.surjective⇒strictlySurjective
-d_surjective'8658'strictlySurjective_82 ::
+d_surjective'8658'strictlySurjective_86 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -165,13 +165,13 @@ d_surjective'8658'strictlySurjective_82 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_surjective'8658'strictlySurjective_82 ~v0 ~v1 ~v2 ~v3 v4 ~v5 ~v6
-  = du_surjective'8658'strictlySurjective_82 v4
-du_surjective'8658'strictlySurjective_82 ::
+d_surjective'8658'strictlySurjective_86 ~v0 ~v1 ~v2 ~v3 v4 ~v5 ~v6
+  = du_surjective'8658'strictlySurjective_86 v4
+du_surjective'8658'strictlySurjective_86 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_surjective'8658'strictlySurjective_82 v0
+du_surjective'8658'strictlySurjective_86 v0
   = coe
       MAlonzo.Code.Function.Consequences.du_surjective'8658'strictlySurjective_90
       (coe
@@ -179,7 +179,7 @@ du_surjective'8658'strictlySurjective_82 v0
          (coe
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0)))
 -- Function.Consequences.Setoid.strictlySurjective⇒surjective
-d_strictlySurjective'8658'surjective_84 ::
+d_strictlySurjective'8658'surjective_88 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -190,15 +190,15 @@ d_strictlySurjective'8658'surjective_84 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_strictlySurjective'8658'surjective_84 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6
-  = du_strictlySurjective'8658'surjective_84 v5 v6
-du_strictlySurjective'8658'surjective_84 ::
+d_strictlySurjective'8658'surjective_88 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6
+  = du_strictlySurjective'8658'surjective_88 v5 v6
+du_strictlySurjective'8658'surjective_88 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_strictlySurjective'8658'surjective_84 v0 v1
+du_strictlySurjective'8658'surjective_88 v0 v1
   = coe
       MAlonzo.Code.Function.Consequences.du_strictlySurjective'8658'surjective_100
       (coe v1)
@@ -207,7 +207,7 @@ du_strictlySurjective'8658'surjective_84 v0 v1
          (coe
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0)))
 -- Function.Consequences.Setoid.inverseˡ⇒strictlyInverseˡ
-d_inverse'737''8658'strictlyInverse'737'_86 ::
+d_inverse'737''8658'strictlyInverse'737'_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -217,14 +217,14 @@ d_inverse'737''8658'strictlyInverse'737'_86 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_inverse'737''8658'strictlyInverse'737'_86 ~v0 ~v1 ~v2 ~v3 v4 ~v5
+d_inverse'737''8658'strictlyInverse'737'_90 ~v0 ~v1 ~v2 ~v3 v4 ~v5
                                             ~v6 v7
-  = du_inverse'737''8658'strictlyInverse'737'_86 v4 v7
-du_inverse'737''8658'strictlyInverse'737'_86 ::
+  = du_inverse'737''8658'strictlyInverse'737'_90 v4 v7
+du_inverse'737''8658'strictlyInverse'737'_90 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_inverse'737''8658'strictlyInverse'737'_86 v0 v1
+du_inverse'737''8658'strictlyInverse'737'_90 v0 v1
   = coe
       MAlonzo.Code.Function.Consequences.du_inverse'737''8658'strictlyInverse'737'_118
       (coe v1)
@@ -233,7 +233,7 @@ du_inverse'737''8658'strictlyInverse'737'_86 v0 v1
          (coe
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0)))
 -- Function.Consequences.Setoid.strictlyInverseˡ⇒inverseˡ
-d_strictlyInverse'737''8658'inverse'737'_88 ::
+d_strictlyInverse'737''8658'inverse'737'_92 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -244,16 +244,16 @@ d_strictlyInverse'737''8658'inverse'737'_88 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_strictlyInverse'737''8658'inverse'737'_88 ~v0 ~v1 ~v2 ~v3 ~v4 v5
+d_strictlyInverse'737''8658'inverse'737'_92 ~v0 ~v1 ~v2 ~v3 ~v4 v5
                                             v6 v7
-  = du_strictlyInverse'737''8658'inverse'737'_88 v5 v6 v7
-du_strictlyInverse'737''8658'inverse'737'_88 ::
+  = du_strictlyInverse'737''8658'inverse'737'_92 v5 v6 v7
+du_strictlyInverse'737''8658'inverse'737'_92 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_strictlyInverse'737''8658'inverse'737'_88 v0 v1 v2
+du_strictlyInverse'737''8658'inverse'737'_92 v0 v1 v2
   = coe
       MAlonzo.Code.Function.Consequences.du_strictlyInverse'737''8658'inverse'737'_126
       (coe v1) (coe v2)
@@ -262,7 +262,7 @@ du_strictlyInverse'737''8658'inverse'737'_88 v0 v1 v2
          (coe
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0)))
 -- Function.Consequences.Setoid.inverseʳ⇒strictlyInverseʳ
-d_inverse'691''8658'strictlyInverse'691'_90 ::
+d_inverse'691''8658'strictlyInverse'691'_94 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -272,14 +272,14 @@ d_inverse'691''8658'strictlyInverse'691'_90 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_inverse'691''8658'strictlyInverse'691'_90 ~v0 ~v1 ~v2 ~v3 ~v4 v5
+d_inverse'691''8658'strictlyInverse'691'_94 ~v0 ~v1 ~v2 ~v3 ~v4 v5
                                             v6 ~v7
-  = du_inverse'691''8658'strictlyInverse'691'_90 v5 v6
-du_inverse'691''8658'strictlyInverse'691'_90 ::
+  = du_inverse'691''8658'strictlyInverse'691'_94 v5 v6
+du_inverse'691''8658'strictlyInverse'691'_94 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_inverse'691''8658'strictlyInverse'691'_90 v0 v1
+du_inverse'691''8658'strictlyInverse'691'_94 v0 v1
   = coe
       MAlonzo.Code.Function.Consequences.du_inverse'691''8658'strictlyInverse'691'_142
       (coe v1)
@@ -288,7 +288,7 @@ du_inverse'691''8658'strictlyInverse'691'_90 v0 v1
          (coe
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0)))
 -- Function.Consequences.Setoid.strictlyInverseʳ⇒inverseʳ
-d_strictlyInverse'691''8658'inverse'691'_92 ::
+d_strictlyInverse'691''8658'inverse'691'_96 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -299,16 +299,16 @@ d_strictlyInverse'691''8658'inverse'691'_92 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_strictlyInverse'691''8658'inverse'691'_92 ~v0 ~v1 ~v2 ~v3 v4 ~v5
+d_strictlyInverse'691''8658'inverse'691'_96 ~v0 ~v1 ~v2 ~v3 v4 ~v5
                                             v6 v7
-  = du_strictlyInverse'691''8658'inverse'691'_92 v4 v6 v7
-du_strictlyInverse'691''8658'inverse'691'_92 ::
+  = du_strictlyInverse'691''8658'inverse'691'_96 v4 v6 v7
+du_strictlyInverse'691''8658'inverse'691'_96 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_strictlyInverse'691''8658'inverse'691'_92 v0 v1 v2
+du_strictlyInverse'691''8658'inverse'691'_96 v0 v1 v2
   = coe
       MAlonzo.Code.Function.Consequences.du_strictlyInverse'691''8658'inverse'691'_150
       (coe v1) (coe v2)

@@ -372,37 +372,37 @@ d_'60''45'isStrictPartialOrder_278 ::
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_290 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_290
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_354 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_354
 d_'60''45'isStrictPartialOrder_278 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
   = du_'60''45'isStrictPartialOrder_278 v6
 du_'60''45'isStrictPartialOrder_278 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_290 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_290
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_354 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_354
 du_'60''45'isStrictPartialOrder_278 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsStrictPartialOrder'46'constructor_14045
+      MAlonzo.Code.Relation.Binary.Structures.C_IsStrictPartialOrder'46'constructor_16311
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Pointwise.du_isEquivalence_56
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_302
+            MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_366
             (coe v0)))
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Lex.du_transitive_132
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_302
+            MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_366
             (coe v0))
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_'60''45'resp'45''8776'_308
+            MAlonzo.Code.Relation.Binary.Structures.d_'60''45'resp'45''8776'_372
             (coe v0))
-         (coe MAlonzo.Code.Relation.Binary.Structures.d_trans_306 (coe v0)))
+         (coe MAlonzo.Code.Relation.Binary.Structures.d_trans_370 (coe v0)))
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Lex.du_respects'8322'_180
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_302
+            MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_366
             (coe v0))
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_'60''45'resp'45''8776'_308
+            MAlonzo.Code.Relation.Binary.Structures.d_'60''45'resp'45''8776'_372
             (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict._._.<-isStrictTotalOrder
 d_'60''45'isStrictTotalOrder_314 ::
@@ -412,74 +412,74 @@ d_'60''45'isStrictTotalOrder_314 ::
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600
 d_'60''45'isStrictTotalOrder_314 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
   = du_'60''45'isStrictTotalOrder_314 v6
 du_'60''45'isStrictTotalOrder_314 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600
 du_'60''45'isStrictTotalOrder_314 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsStrictTotalOrder'46'constructor_24953
+      MAlonzo.Code.Relation.Binary.Structures.C_IsStrictTotalOrder'46'constructor_27253
       (coe
          du_'60''45'isStrictPartialOrder_278
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_542
+            MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_608
             (coe v0)))
       (coe
          du_'60''45'compare_106
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_sym_36
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_302
+               MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_366
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_542
+                  MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_608
                   (coe v0))))
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_compare_544 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Structures.d_compare_610 (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict.<-strictPartialOrder
 d_'60''45'strictPartialOrder_374 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_556 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_556
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_744 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_744
 d_'60''45'strictPartialOrder_374 ~v0 ~v1 ~v2 v3
   = du_'60''45'strictPartialOrder_374 v3
 du_'60''45'strictPartialOrder_374 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_556 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_556
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_744 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_744
 du_'60''45'strictPartialOrder_374 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_StrictPartialOrder'46'constructor_11097
+      MAlonzo.Code.Relation.Binary.Bundles.C_StrictPartialOrder'46'constructor_14243
       (coe
          du_'60''45'isStrictPartialOrder_278
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictPartialOrder_578
+            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictPartialOrder_766
             (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict.<-strictTotalOrder
-d_'60''45'strictTotalOrder_442 ::
+d_'60''45'strictTotalOrder_450 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036
-d_'60''45'strictTotalOrder_442 ~v0 ~v1 ~v2 v3
-  = du_'60''45'strictTotalOrder_442 v3
-du_'60''45'strictTotalOrder_442 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036
-du_'60''45'strictTotalOrder_442 v0
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1256 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1256
+d_'60''45'strictTotalOrder_450 ~v0 ~v1 ~v2 v3
+  = du_'60''45'strictTotalOrder_450 v3
+du_'60''45'strictTotalOrder_450 ::
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1256 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1256
+du_'60''45'strictTotalOrder_450 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_StrictTotalOrder'46'constructor_21059
+      MAlonzo.Code.Relation.Binary.Bundles.C_StrictTotalOrder'46'constructor_24345
       (coe
          du_'60''45'isStrictTotalOrder_314
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictTotalOrder_1058
+            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictTotalOrder_1278
             (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict._.≤-reflexive
-d_'8804''45'reflexive_544 ::
+d_'8804''45'reflexive_560 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -490,14 +490,14 @@ d_'8804''45'reflexive_544 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32
-d_'8804''45'reflexive_544 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du_'8804''45'reflexive_544 v6 v7 v8
-du_'8804''45'reflexive_544 ::
+d_'8804''45'reflexive_560 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du_'8804''45'reflexive_560 v6 v7 v8
+du_'8804''45'reflexive_560 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32
-du_'8804''45'reflexive_544 v0 v1 v2
+du_'8804''45'reflexive_560 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56
         -> coe
@@ -510,30 +510,30 @@ du_'8804''45'reflexive_544 v0 v1 v2
                     (:) v11 v12
                       -> coe
                            MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.C_next_74 v7
-                           (coe du_'8804''45'reflexive_544 (coe v10) (coe v12) (coe v8))
+                           (coe du_'8804''45'reflexive_560 (coe v10) (coe v12) (coe v8))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Lex.Strict._._._≋_
-d__'8779'__566 ::
+d__'8779'__582 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) -> [AgdaAny] -> [AgdaAny] -> ()
-d__'8779'__566 = erased
+d__'8779'__582 = erased
 -- Data.List.Relation.Binary.Lex.Strict._._._≤_
-d__'8804'__568 ::
+d__'8804'__584 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) -> [AgdaAny] -> [AgdaAny] -> ()
-d__'8804'__568 = erased
+d__'8804'__584 = erased
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-antisymmetric
-d_'8804''45'antisymmetric_570 ::
+d_'8804''45'antisymmetric_586 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -554,9 +554,9 @@ d_'8804''45'antisymmetric_570 ::
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32 ->
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_'8804''45'antisymmetric_570 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-  = du_'8804''45'antisymmetric_570
-du_'8804''45'antisymmetric_570 ::
+d_'8804''45'antisymmetric_586 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_'8804''45'antisymmetric_586
+du_'8804''45'antisymmetric_586 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny ->
    AgdaAny ->
@@ -571,12 +571,12 @@ du_'8804''45'antisymmetric_570 ::
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32 ->
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_'8804''45'antisymmetric_570 v0 v1 v2 v3 v4
+du_'8804''45'antisymmetric_586 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Data.List.Relation.Binary.Lex.du_antisymmetric_78 v3
       v4
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-transitive
-d_'8804''45'transitive_572 ::
+d_'8804''45'transitive_588 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -592,9 +592,9 @@ d_'8804''45'transitive_572 ::
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32 ->
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32 ->
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32
-d_'8804''45'transitive_572 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-  = du_'8804''45'transitive_572
-du_'8804''45'transitive_572 ::
+d_'8804''45'transitive_588 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_'8804''45'transitive_588
+du_'8804''45'transitive_588 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -604,10 +604,10 @@ du_'8804''45'transitive_572 ::
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32 ->
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32 ->
   MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.T_Lex_32
-du_'8804''45'transitive_572
+du_'8804''45'transitive_588
   = coe MAlonzo.Code.Data.List.Relation.Binary.Lex.du_transitive_132
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-total
-d_'8804''45'total_574 ::
+d_'8804''45'total_590 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -618,14 +618,14 @@ d_'8804''45'total_574 ::
   (AgdaAny ->
    AgdaAny -> MAlonzo.Code.Relation.Binary.Definitions.T_Tri_158) ->
   [AgdaAny] -> [AgdaAny] -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
-d_'8804''45'total_574 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8 v9
-  = du_'8804''45'total_574 v6 v7 v8 v9
-du_'8804''45'total_574 ::
+d_'8804''45'total_590 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8 v9
+  = du_'8804''45'total_590 v6 v7 v8 v9
+du_'8804''45'total_590 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny ->
    AgdaAny -> MAlonzo.Code.Relation.Binary.Definitions.T_Tri_158) ->
   [AgdaAny] -> [AgdaAny] -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
-du_'8804''45'total_574 v0 v1 v2 v3
+du_'8804''45'total_590 v0 v1 v2 v3
   = case coe v2 of
       []
         -> case coe v3 of
@@ -657,7 +657,7 @@ du_'8804''45'total_574 v0 v1 v2 v3
                        MAlonzo.Code.Relation.Binary.Definitions.C_tri'8776'_180 v10
                          -> let v12
                                   = coe
-                                      du_'8804''45'total_574 (coe v0) (coe v1) (coe v5) (coe v7) in
+                                      du_'8804''45'total_590 (coe v0) (coe v1) (coe v5) (coe v7) in
                             coe
                               (case coe v12 of
                                  MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v13
@@ -681,7 +681,7 @@ du_'8804''45'total_574 v0 v1 v2 v3
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-decidable
-d_'8804''45'decidable_678 ::
+d_'8804''45'decidable_694 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -696,9 +696,9 @@ d_'8804''45'decidable_678 ::
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   [AgdaAny] ->
   [AgdaAny] -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_'8804''45'decidable_678 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-  = du_'8804''45'decidable_678
-du_'8804''45'decidable_678 ::
+d_'8804''45'decidable_694 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_'8804''45'decidable_694
+du_'8804''45'decidable_694 ::
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
@@ -707,7 +707,7 @@ du_'8804''45'decidable_678 ::
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   [AgdaAny] ->
   [AgdaAny] -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_'8804''45'decidable_678
+du_'8804''45'decidable_694
   = coe
       MAlonzo.Code.Data.List.Relation.Binary.Lex.du_decidable_260
       (coe
@@ -717,7 +717,7 @@ du_'8804''45'decidable_678
             MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
             (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-respects₂
-d_'8804''45'respects'8322'_680 ::
+d_'8804''45'respects'8322'_696 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -727,17 +727,17 @@ d_'8804''45'respects'8322'_680 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'8804''45'respects'8322'_680 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-  = du_'8804''45'respects'8322'_680
-du_'8804''45'respects'8322'_680 ::
+d_'8804''45'respects'8322'_696 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_'8804''45'respects'8322'_696
+du_'8804''45'respects'8322'_696 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_'8804''45'respects'8322'_680
+du_'8804''45'respects'8322'_696
   = coe
       MAlonzo.Code.Data.List.Relation.Binary.Lex.du_respects'8322'_180
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-isPreorder
-d_'8804''45'isPreorder_682 ::
+d_'8804''45'isPreorder_698 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -748,236 +748,236 @@ d_'8804''45'isPreorder_682 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
-d_'8804''45'isPreorder_682 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du_'8804''45'isPreorder_682 v6 v7 v8
-du_'8804''45'isPreorder_682 ::
+d_'8804''45'isPreorder_698 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du_'8804''45'isPreorder_698 v6 v7 v8
+du_'8804''45'isPreorder_698 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
-du_'8804''45'isPreorder_682 v0 v1 v2
+du_'8804''45'isPreorder_698 v0 v1 v2
   = coe
       MAlonzo.Code.Relation.Binary.Structures.C_IsPreorder'46'constructor_4003
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Pointwise.du_isEquivalence_56
          (coe v0))
-      (coe du_'8804''45'reflexive_544)
+      (coe du_'8804''45'reflexive_560)
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Lex.du_transitive_132
          (coe v0) (coe v2) (coe v1))
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-isPartialOrder
-d_'8804''45'isPartialOrder_690 ::
+d_'8804''45'isPartialOrder_706 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_290 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
-d_'8804''45'isPartialOrder_690 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
-  = du_'8804''45'isPartialOrder_690 v6
-du_'8804''45'isPartialOrder_690 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_290 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
-du_'8804''45'isPartialOrder_690 v0
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_354 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
+d_'8804''45'isPartialOrder_706 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
+  = du_'8804''45'isPartialOrder_706 v6
+du_'8804''45'isPartialOrder_706 ::
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictPartialOrder_354 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
+du_'8804''45'isPartialOrder_706 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9853
+      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_11935
       (coe
-         du_'8804''45'isPreorder_682
+         du_'8804''45'isPreorder_698
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_302
+            MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_366
             (coe v0))
-         (coe MAlonzo.Code.Relation.Binary.Structures.d_trans_306 (coe v0))
+         (coe MAlonzo.Code.Relation.Binary.Structures.d_trans_370 (coe v0))
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_'60''45'resp'45''8776'_308
+            MAlonzo.Code.Relation.Binary.Structures.d_'60''45'resp'45''8776'_372
             (coe v0)))
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Lex.du_antisymmetric_78)
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-isDecPartialOrder
-d_'8804''45'isDecPartialOrder_726 ::
+d_'8804''45'isDecPartialOrder_742 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsDecPartialOrder_224
-d_'8804''45'isDecPartialOrder_726 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
-  = du_'8804''45'isDecPartialOrder_726 v6
-du_'8804''45'isDecPartialOrder_726 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsDecPartialOrder_224
-du_'8804''45'isDecPartialOrder_726 v0
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsDecPartialOrder_286
+d_'8804''45'isDecPartialOrder_742 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
+  = du_'8804''45'isDecPartialOrder_742 v6
+du_'8804''45'isDecPartialOrder_742 ::
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsDecPartialOrder_286
+du_'8804''45'isDecPartialOrder_742 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecPartialOrder'46'constructor_11683
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecPartialOrder'46'constructor_13765
       (coe
-         du_'8804''45'isPartialOrder_690
+         du_'8804''45'isPartialOrder_706
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_542
+            MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_608
             (coe v0)))
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties.du_decidable_112
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.du__'8799'__562 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Structures.du__'8799'__628 (coe v0)))
       (coe
-         du_'8804''45'decidable_678
+         du_'8804''45'decidable_694
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.du__'8799'__562 (coe v0))
+            MAlonzo.Code.Relation.Binary.Structures.du__'8799'__628 (coe v0))
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.du__'60''63'__564
+            MAlonzo.Code.Relation.Binary.Structures.du__'60''63'__630
             (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-isTotalOrder
-d_'8804''45'isTotalOrder_780 ::
+d_'8804''45'isTotalOrder_796 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsTotalOrder_404
-d_'8804''45'isTotalOrder_780 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
-  = du_'8804''45'isTotalOrder_780 v6
-du_'8804''45'isTotalOrder_780 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsTotalOrder_404
-du_'8804''45'isTotalOrder_780 v0
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsTotalOrder_468
+d_'8804''45'isTotalOrder_796 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
+  = du_'8804''45'isTotalOrder_796 v6
+du_'8804''45'isTotalOrder_796 ::
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsTotalOrder_468
+du_'8804''45'isTotalOrder_796 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsTotalOrder'46'constructor_20555
+      MAlonzo.Code.Relation.Binary.Structures.C_IsTotalOrder'46'constructor_22821
       (coe
-         du_'8804''45'isPartialOrder_690
+         du_'8804''45'isPartialOrder_706
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_542
+            MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_608
             (coe v0)))
       (coe
-         du_'8804''45'total_574
+         du_'8804''45'total_590
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_sym_36
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_302
+               MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_366
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_542
+                  MAlonzo.Code.Relation.Binary.Structures.d_isStrictPartialOrder_608
                   (coe v0))))
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_compare_544 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Structures.d_compare_610 (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict._._.≤-isDecTotalOrder
-d_'8804''45'isDecTotalOrder_834 ::
+d_'8804''45'isDecTotalOrder_850 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_460
-d_'8804''45'isDecTotalOrder_834 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
-  = du_'8804''45'isDecTotalOrder_834 v6
-du_'8804''45'isDecTotalOrder_834 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_534 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_460
-du_'8804''45'isDecTotalOrder_834 v0
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_524
+d_'8804''45'isDecTotalOrder_850 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
+  = du_'8804''45'isDecTotalOrder_850 v6
+du_'8804''45'isDecTotalOrder_850 ::
+  MAlonzo.Code.Relation.Binary.Structures.T_IsStrictTotalOrder_600 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsDecTotalOrder_524
+du_'8804''45'isDecTotalOrder_850 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecTotalOrder'46'constructor_22695
-      (coe du_'8804''45'isTotalOrder_780 (coe v0))
+      MAlonzo.Code.Relation.Binary.Structures.C_IsDecTotalOrder'46'constructor_24961
+      (coe du_'8804''45'isTotalOrder_796 (coe v0))
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties.du_decidable_112
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.du__'8799'__562 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Structures.du__'8799'__628 (coe v0)))
       (coe
-         du_'8804''45'decidable_678
+         du_'8804''45'decidable_694
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.du__'8799'__562 (coe v0))
+            MAlonzo.Code.Relation.Binary.Structures.du__'8799'__628 (coe v0))
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.du__'60''63'__564
+            MAlonzo.Code.Relation.Binary.Structures.du__'60''63'__630
             (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict.≤-preorder
-d_'8804''45'preorder_894 ::
+d_'8804''45'preorder_910 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132
-d_'8804''45'preorder_894 ~v0 ~v1 ~v2 v3
-  = du_'8804''45'preorder_894 v3
-du_'8804''45'preorder_894 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132
-du_'8804''45'preorder_894 v0
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+d_'8804''45'preorder_910 ~v0 ~v1 ~v2 v3
+  = du_'8804''45'preorder_910 v3
+du_'8804''45'preorder_910 ::
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+du_'8804''45'preorder_910 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Preorder'46'constructor_2267
+      MAlonzo.Code.Relation.Binary.Bundles.C_Preorder'46'constructor_2331
       (coe
-         du_'8804''45'isPreorder_682
+         du_'8804''45'isPreorder_698
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
             (coe
-               MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_154 (coe v0)))
+               MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)))
          (coe
             MAlonzo.Code.Relation.Binary.Structures.d_trans_84
             (coe
-               MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_154 (coe v0)))
+               MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)))
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'45''8776'_118
             (coe
-               MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_154 (coe v0))))
+               MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0))))
 -- Data.List.Relation.Binary.Lex.Strict.≤-partialOrder
-d_'8804''45'partialOrder_970 ::
+d_'8804''45'partialOrder_994 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_556 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
-d_'8804''45'partialOrder_970 ~v0 ~v1 ~v2 v3
-  = du_'8804''45'partialOrder_970 v3
-du_'8804''45'partialOrder_970 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_556 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
-du_'8804''45'partialOrder_970 v0
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_744 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
+d_'8804''45'partialOrder_994 ~v0 ~v1 ~v2 v3
+  = du_'8804''45'partialOrder_994 v3
+du_'8804''45'partialOrder_994 ::
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictPartialOrder_744 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
+du_'8804''45'partialOrder_994 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6389
+      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_9149
       (coe
-         du_'8804''45'isPartialOrder_690
+         du_'8804''45'isPartialOrder_706
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictPartialOrder_578
+            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictPartialOrder_766
             (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict.≤-decPoset
-d_'8804''45'decPoset_1038 ::
+d_'8804''45'decPoset_1070 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecPoset_406
-d_'8804''45'decPoset_1038 ~v0 ~v1 ~v2 v3
-  = du_'8804''45'decPoset_1038 v3
-du_'8804''45'decPoset_1038 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecPoset_406
-du_'8804''45'decPoset_1038 v0
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1256 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecPoset_582
+d_'8804''45'decPoset_1070 ~v0 ~v1 ~v2 v3
+  = du_'8804''45'decPoset_1070 v3
+du_'8804''45'decPoset_1070 ::
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1256 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecPoset_582
+du_'8804''45'decPoset_1070 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecPoset'46'constructor_8213
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecPoset'46'constructor_11149
       (coe
-         du_'8804''45'isDecPartialOrder_726
+         du_'8804''45'isDecPartialOrder_742
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictTotalOrder_1058
+            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictTotalOrder_1278
             (coe v0)))
 -- Data.List.Relation.Binary.Lex.Strict.≤-decTotalOrder
-d_'8804''45'decTotalOrder_1130 ::
+d_'8804''45'decTotalOrder_1170 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_866
-d_'8804''45'decTotalOrder_1130 ~v0 ~v1 ~v2 v3
-  = du_'8804''45'decTotalOrder_1130 v3
-du_'8804''45'decTotalOrder_1130 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1036 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_866
-du_'8804''45'decTotalOrder_1130 v0
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1256 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_1076
+d_'8804''45'decTotalOrder_1170 ~v0 ~v1 ~v2 v3
+  = du_'8804''45'decTotalOrder_1170 v3
+du_'8804''45'decTotalOrder_1170 ::
+  MAlonzo.Code.Relation.Binary.Bundles.T_StrictTotalOrder_1256 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecTotalOrder_1076
+du_'8804''45'decTotalOrder_1170 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecTotalOrder'46'constructor_17849
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecTotalOrder'46'constructor_21007
       (coe
-         du_'8804''45'isDecTotalOrder_834
+         du_'8804''45'isDecTotalOrder_850
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictTotalOrder_1058
+            MAlonzo.Code.Relation.Binary.Bundles.d_isStrictTotalOrder_1278
             (coe v0)))

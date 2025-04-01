@@ -44,7 +44,7 @@ du_deduplicate'45''33'_42 ::
   MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.T_AllPairs_20
 du_deduplicate'45''33'_42 v0
   = coe
-      MAlonzo.Code.Data.List.Relation.Unary.Unique.DecSetoid.Properties.du_deduplicate'45''33'_78
+      MAlonzo.Code.Data.List.Relation.Unary.Unique.DecSetoid.Properties.du_deduplicate'45''33'_80
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_decSetoid_406
          (coe v0))

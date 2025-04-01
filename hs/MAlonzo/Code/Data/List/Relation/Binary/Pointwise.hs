@@ -118,24 +118,24 @@ d_isPartialOrder_142 ::
   (AgdaAny -> AgdaAny -> ()) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
 d_isPartialOrder_142 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
   = du_isPartialOrder_142 v6
 du_isPartialOrder_142 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
 du_isPartialOrder_142 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_9853
+      MAlonzo.Code.Relation.Binary.Structures.C_IsPartialOrder'46'constructor_11935
       (coe
          du_isPreorder_100
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244 (coe v0)))
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties.du_antisymmetric_64
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_antisym_184 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Structures.d_antisym_246 (coe v0)))
 -- Data.List.Relation.Binary.Pointwise.setoid
 d_setoid_188 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -148,7 +148,7 @@ du_setoid_188 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_setoid_188 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
       (coe
          du_isEquivalence_56
          (coe
@@ -157,56 +157,56 @@ du_setoid_188 v0
 d_decSetoid_192 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86
 d_decSetoid_192 ~v0 ~v1 v2 = du_decSetoid_192 v2
 du_decSetoid_192 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86
 du_decSetoid_192 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1389
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1435
       (coe
          du_isDecEquivalence_76
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isDecEquivalence_100
+            MAlonzo.Code.Relation.Binary.Bundles.d_isDecEquivalence_102
             (coe v0)))
 -- Data.List.Relation.Binary.Pointwise.preorder
 d_preorder_196 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
 d_preorder_196 ~v0 ~v1 ~v2 v3 = du_preorder_196 v3
 du_preorder_196 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_132
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
 du_preorder_196 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Preorder'46'constructor_2267
+      MAlonzo.Code.Relation.Binary.Bundles.C_Preorder'46'constructor_2331
       (coe
          du_isPreorder_100
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_154 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)))
 -- Data.List.Relation.Binary.Pointwise.poset
 d_poset_200 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
 d_poset_200 ~v0 ~v1 ~v2 v3 = du_poset_200 v3
 du_poset_200 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
 du_poset_200 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_6389
+      MAlonzo.Code.Relation.Binary.Bundles.C_Poset'46'constructor_9149
       (coe
          du_isPartialOrder_142
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isPartialOrder_336
+            MAlonzo.Code.Relation.Binary.Bundles.d_isPartialOrder_502
             (coe v0)))
 -- Data.List.Relation.Binary.Pointwise.All-resp-Pointwise
 d_All'45'resp'45'Pointwise_206 ::
@@ -541,8 +541,60 @@ du_'43''43''45'cancel'691'_328 v0 v1 v2
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Data.List.Relation.Binary.Pointwise._.++⁺ˡ
+d_'43''43''8314''737'_370 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny) ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
+  MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
+d_'43''43''8314''737'_370 ~v0 ~v1 ~v2 ~v3 v4 v5 ~v6 ~v7
+  = du_'43''43''8314''737'_370 v4 v5
+du_'43''43''8314''737'_370 ::
+  (AgdaAny -> AgdaAny) ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
+  MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
+du_'43''43''8314''737'_370 v0 v1
+  = coe
+      du_'43''43''8314'_302 (coe v1) (coe v1)
+      (coe
+         MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties.du_refl_30
+         (coe v0) (coe v1))
+-- Data.List.Relation.Binary.Pointwise._.++⁺ʳ
+d_'43''43''8314''691'_378 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny) ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
+  MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
+d_'43''43''8314''691'_378 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_'43''43''8314''691'_378 v4 v5 v6 v7 v8
+du_'43''43''8314''691'_378 ::
+  (AgdaAny -> AgdaAny) ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
+  MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
+du_'43''43''8314''691'_378 v0 v1 v2 v3 v4
+  = coe
+      du_'43''43''8314'_302 (coe v2) (coe v3) (coe v4)
+      (coe
+         MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties.du_refl_30
+         (coe v0) (coe v1))
 -- Data.List.Relation.Binary.Pointwise.concat⁺
-d_concat'8314'_362 ::
+d_concat'8314'_388 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -553,14 +605,14 @@ d_concat'8314'_362 ::
   [[AgdaAny]] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_concat'8314'_362 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du_concat'8314'_362 v6 v7 v8
-du_concat'8314'_362 ::
+d_concat'8314'_388 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du_concat'8314'_388 v6 v7 v8
+du_concat'8314'_388 ::
   [[AgdaAny]] ->
   [[AgdaAny]] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_concat'8314'_362 v0 v1 v2
+du_concat'8314'_388 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56
         -> coe v2
@@ -571,12 +623,12 @@ du_concat'8314'_362 v0 v1 v2
                     (:) v11 v12
                       -> coe
                            du_'43''43''8314'_302 (coe v9) (coe v11) (coe v7)
-                           (coe du_concat'8314'_362 (coe v10) (coe v12) (coe v8))
+                           (coe du_concat'8314'_388 (coe v10) (coe v12) (coe v8))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Pointwise.reverseAcc⁺
-d_reverseAcc'8314'_368 ::
+d_reverseAcc'8314'_394 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -590,16 +642,16 @@ d_reverseAcc'8314'_368 ::
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_reverseAcc'8314'_368 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9 v10
+d_reverseAcc'8314'_394 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9 v10
                        v11
-  = du_reverseAcc'8314'_368 v8 v9 v10 v11
-du_reverseAcc'8314'_368 ::
+  = du_reverseAcc'8314'_394 v8 v9 v10 v11
+du_reverseAcc'8314'_394 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_reverseAcc'8314'_368 v0 v1 v2 v3
+du_reverseAcc'8314'_394 v0 v1 v2 v3
   = case coe v3 of
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56
         -> coe v2
@@ -609,7 +661,7 @@ du_reverseAcc'8314'_368 v0 v1 v2 v3
                -> case coe v1 of
                     (:) v12 v13
                       -> coe
-                           du_reverseAcc'8314'_368 (coe v11) (coe v13)
+                           du_reverseAcc'8314'_394 (coe v11) (coe v13)
                            (coe
                               MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62
                               v8 v2)
@@ -618,7 +670,7 @@ du_reverseAcc'8314'_368 v0 v1 v2 v3
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Pointwise.ʳ++⁺
-d_'691''43''43''8314'_378 ::
+d_'691''43''43''8314'_404 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -632,19 +684,19 @@ d_'691''43''43''8314'_378 ::
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_'691''43''43''8314'_378 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 ~v8 ~v9 v10
+d_'691''43''43''8314'_404 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 ~v8 ~v9 v10
                           v11
-  = du_'691''43''43''8314'_378 v6 v7 v10 v11
-du_'691''43''43''8314'_378 ::
+  = du_'691''43''43''8314'_404 v6 v7 v10 v11
+du_'691''43''43''8314'_404 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_'691''43''43''8314'_378 v0 v1 v2 v3
-  = coe du_reverseAcc'8314'_368 (coe v0) (coe v1) (coe v3) (coe v2)
+du_'691''43''43''8314'_404 v0 v1 v2 v3
+  = coe du_reverseAcc'8314'_394 (coe v0) (coe v1) (coe v3) (coe v2)
 -- Data.List.Relation.Binary.Pointwise.reverse⁺
-d_reverse'8314'_384 ::
+d_reverse'8314'_410 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -655,20 +707,20 @@ d_reverse'8314'_384 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_reverse'8314'_384 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7
-  = du_reverse'8314'_384 v6 v7
-du_reverse'8314'_384 ::
+d_reverse'8314'_410 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7
+  = du_reverse'8314'_410 v6 v7
+du_reverse'8314'_410 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_reverse'8314'_384 v0 v1
+du_reverse'8314'_410 v0 v1
   = coe
-      du_reverseAcc'8314'_368 (coe v0) (coe v1)
+      du_reverseAcc'8314'_394 (coe v0) (coe v1)
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56)
 -- Data.List.Relation.Binary.Pointwise.map⁺
-d_map'8314'_394 ::
+d_map'8314'_420 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -685,15 +737,15 @@ d_map'8314'_394 ::
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_map'8314'_394 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 v11
+d_map'8314'_420 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 v11
                 ~v12 ~v13 v14
-  = du_map'8314'_394 v10 v11 v14
-du_map'8314'_394 ::
+  = du_map'8314'_420 v10 v11 v14
+du_map'8314'_420 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_map'8314'_394 v0 v1 v2
+du_map'8314'_420 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56
         -> coe v2
@@ -704,12 +756,12 @@ du_map'8314'_394 v0 v1 v2
                     (:) v11 v12
                       -> coe
                            MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62
-                           v7 (coe du_map'8314'_394 (coe v10) (coe v12) (coe v8))
+                           v7 (coe du_map'8314'_420 (coe v10) (coe v12) (coe v8))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Pointwise.map⁻
-d_map'8315'_416 ::
+d_map'8315'_442 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -726,15 +778,15 @@ d_map'8315'_416 ::
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_map'8315'_416 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 v11
+d_map'8315'_442 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 v11
                 ~v12 ~v13 v14
-  = du_map'8315'_416 v10 v11 v14
-du_map'8315'_416 ::
+  = du_map'8315'_442 v10 v11 v14
+du_map'8315'_442 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_map'8315'_416 v0 v1 v2
+du_map'8315'_442 v0 v1 v2
   = case coe v0 of
       []
         -> coe
@@ -750,12 +802,12 @@ du_map'8315'_416 v0 v1 v2
                     MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62 v11 v12
                       -> coe
                            MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62
-                           v11 (coe du_map'8315'_416 (coe v4) (coe v6) (coe v12))
+                           v11 (coe du_map'8315'_442 (coe v4) (coe v6) (coe v12))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Pointwise.foldr⁺
-d_foldr'8314'_446 ::
+d_foldr'8314'_472 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -773,10 +825,10 @@ d_foldr'8314'_446 ::
   AgdaAny ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   AgdaAny
-d_foldr'8314'_446 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8 v9 v10 v11 v12
+d_foldr'8314'_472 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8 v9 v10 v11 v12
                   v13 v14
-  = du_foldr'8314'_446 v6 v7 v8 v9 v10 v11 v12 v13 v14
-du_foldr'8314'_446 ::
+  = du_foldr'8314'_472 v6 v7 v8 v9 v10 v11 v12 v13 v14
+du_foldr'8314'_472 ::
   [AgdaAny] ->
   [AgdaAny] ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -788,7 +840,7 @@ du_foldr'8314'_446 ::
   AgdaAny ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   AgdaAny
-du_foldr'8314'_446 v0 v1 v2 v3 v4 v5 v6 v7 v8
+du_foldr'8314'_472 v0 v1 v2 v3 v4 v5 v6 v7 v8
   = case coe v8 of
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56
         -> coe v7
@@ -807,13 +859,13 @@ du_foldr'8314'_446 v0 v1 v2 v3 v4 v5 v6 v7 v8
                               (coe v18))
                            v13
                            (coe
-                              du_foldr'8314'_446 (coe v16) (coe v18) (coe v2) (coe v3) (coe v4)
+                              du_foldr'8314'_472 (coe v16) (coe v18) (coe v2) (coe v3) (coe v4)
                               (coe v5) (coe v6) (coe v7) (coe v14))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Pointwise._.filter⁺
-d_filter'8314'_492 ::
+d_filter'8314'_518 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -834,10 +886,10 @@ d_filter'8314'_492 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_filter'8314'_492 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 v11
+d_filter'8314'_518 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10 v11
                    ~v12 ~v13 v14 v15 v16
-  = du_filter'8314'_492 v10 v11 v14 v15 v16
-du_filter'8314'_492 ::
+  = du_filter'8314'_518 v10 v11 v14 v15 v16
+du_filter'8314'_518 ::
   (AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   (AgdaAny ->
@@ -846,7 +898,7 @@ du_filter'8314'_492 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_filter'8314'_492 v0 v1 v2 v3 v4
+du_filter'8314'_518 v0 v1 v2 v3 v4
   = case coe v4 of
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56
         -> coe v4
@@ -869,7 +921,7 @@ du_filter'8314'_492 v0 v1 v2 v3 v4
                                                              MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62
                                                              v9
                                                              (coe
-                                                                du_filter'8314'_492 (coe v0)
+                                                                du_filter'8314'_518 (coe v0)
                                                                 (coe v1) (coe v12) (coe v14)
                                                                 (coe v10))
                                                       else coe
@@ -891,7 +943,7 @@ du_filter'8314'_492 v0 v1 v2 v3 v4
                                                                     MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
                                                                     erased))
                                                        else coe
-                                                              du_filter'8314'_492 (coe v0) (coe v1)
+                                                              du_filter'8314'_518 (coe v0) (coe v1)
                                                               (coe v12) (coe v14) (coe v10)
                                                 _ -> MAlonzo.RTE.mazUnreachableError)
                                  _ -> MAlonzo.RTE.mazUnreachableError))
@@ -899,7 +951,7 @@ du_filter'8314'_492 v0 v1 v2 v3 v4
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Pointwise.replicate⁺
-d_replicate'8314'_548 ::
+d_replicate'8314'_574 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -911,13 +963,13 @@ d_replicate'8314'_548 ::
   AgdaAny ->
   Integer ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_replicate'8314'_548 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
-  = du_replicate'8314'_548 v8 v9
-du_replicate'8314'_548 ::
+d_replicate'8314'_574 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8 v9
+  = du_replicate'8314'_574 v8 v9
+du_replicate'8314'_574 ::
   AgdaAny ->
   Integer ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_replicate'8314'_548 v0 v1
+du_replicate'8314'_574 v0 v1
   = case coe v1 of
       0 -> coe
              MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C_'91''93'_56
@@ -925,9 +977,9 @@ du_replicate'8314'_548 v0 v1
            coe
              (coe
                 MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62
-                v0 (coe du_replicate'8314'_548 (coe v0) (coe v2)))
+                v0 (coe du_replicate'8314'_574 (coe v0) (coe v2)))
 -- Data.List.Relation.Binary.Pointwise.lookup⁻
-d_lookup'8315'_560 ::
+d_lookup'8315'_586 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
@@ -941,16 +993,16 @@ d_lookup'8315'_560 ::
    MAlonzo.Code.Data.Fin.Base.T_Fin_10 ->
    MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny) ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_lookup'8315'_560 ~v0 ~v1 v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8 v9
-  = du_lookup'8315'_560 v2 v5 v9
-du_lookup'8315'_560 ::
+d_lookup'8315'_586 ~v0 ~v1 v2 ~v3 ~v4 v5 ~v6 ~v7 ~v8 v9
+  = du_lookup'8315'_586 v2 v5 v9
+du_lookup'8315'_586 ::
   [AgdaAny] ->
   [AgdaAny] ->
   (MAlonzo.Code.Data.Fin.Base.T_Fin_10 ->
    MAlonzo.Code.Data.Fin.Base.T_Fin_10 ->
    MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny) ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_lookup'8315'_560 v0 v1 v2
+du_lookup'8315'_586 v0 v1 v2
   = case coe v0 of
       []
         -> coe
@@ -966,7 +1018,7 @@ du_lookup'8315'_560 v0 v1 v2
                        v2 (coe MAlonzo.Code.Data.Fin.Base.C_zero_12)
                        (coe MAlonzo.Code.Data.Fin.Base.C_zero_12) erased)
                     (coe
-                       du_lookup'8315'_560 (coe v4) (coe v6)
+                       du_lookup'8315'_586 (coe v4) (coe v6)
                        (coe
                           (\ v7 v8 v9 ->
                              coe
@@ -975,7 +1027,7 @@ du_lookup'8315'_560 v0 v1 v2
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Pointwise.lookup⁺
-d_lookup'8314'_572 ::
+d_lookup'8314'_598 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -986,14 +1038,14 @@ d_lookup'8314'_572 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.Fin.Base.T_Fin_10 -> AgdaAny
-d_lookup'8314'_572 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8 v9
-  = du_lookup'8314'_572 v6 v7 v8 v9
-du_lookup'8314'_572 ::
+d_lookup'8314'_598 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8 v9
+  = du_lookup'8314'_598 v6 v7 v8 v9
+du_lookup'8314'_598 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Data.Fin.Base.T_Fin_10 -> AgdaAny
-du_lookup'8314'_572 v0 v1 v2 v3
+du_lookup'8314'_598 v0 v1 v2 v3
   = case coe v2 of
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.C__'8759'__62 v8 v9
         -> case coe v0 of
@@ -1003,52 +1055,52 @@ du_lookup'8314'_572 v0 v1 v2 v3
                       -> case coe v3 of
                            MAlonzo.Code.Data.Fin.Base.C_zero_12 -> coe v8
                            MAlonzo.Code.Data.Fin.Base.C_suc_16 v15
-                             -> coe du_lookup'8314'_572 (coe v11) (coe v13) (coe v9) (coe v15)
+                             -> coe du_lookup'8314'_598 (coe v11) (coe v13) (coe v9) (coe v15)
                            _ -> MAlonzo.RTE.mazUnreachableError
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.Pointwise.Pointwise-≡⇒≡
-d_Pointwise'45''8801''8658''8801'_580 ::
+d_Pointwise'45''8801''8658''8801'_606 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_Pointwise'45''8801''8658''8801'_580 = erased
+d_Pointwise'45''8801''8658''8801'_606 = erased
 -- Data.List.Relation.Binary.Pointwise.≡⇒Pointwise-≡
-d_'8801''8658'Pointwise'45''8801'_590 ::
+d_'8801''8658'Pointwise'45''8801'_612 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-d_'8801''8658'Pointwise'45''8801'_590 ~v0 ~v1 v2 ~v3 ~v4
-  = du_'8801''8658'Pointwise'45''8801'_590 v2
-du_'8801''8658'Pointwise'45''8801'_590 ::
+d_'8801''8658'Pointwise'45''8801'_612 ~v0 ~v1 v2 ~v3 ~v4
+  = du_'8801''8658'Pointwise'45''8801'_612 v2
+du_'8801''8658'Pointwise'45''8801'_612 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base.T_Pointwise_48
-du_'8801''8658'Pointwise'45''8801'_590 v0
+du_'8801''8658'Pointwise'45''8801'_612 v0
   = coe
       MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties.du_refl_30
       erased (coe v0)
 -- Data.List.Relation.Binary.Pointwise.Pointwise-≡↔≡
-d_Pointwise'45''8801''8596''8801'_592 ::
+d_Pointwise'45''8801''8596''8801'_614 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Function.Bundles.T_Inverse_1960
-d_Pointwise'45''8801''8596''8801'_592 ~v0 ~v1
-  = du_Pointwise'45''8801''8596''8801'_592
-du_Pointwise'45''8801''8596''8801'_592 ::
-  MAlonzo.Code.Function.Bundles.T_Inverse_1960
-du_Pointwise'45''8801''8596''8801'_592
+  () -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+d_Pointwise'45''8801''8596''8801'_614 ~v0 ~v1
+  = du_Pointwise'45''8801''8596''8801'_614
+du_Pointwise'45''8801''8596''8801'_614 ::
+  MAlonzo.Code.Function.Bundles.T_Inverse_2068
+du_Pointwise'45''8801''8596''8801'_614
   = coe
-      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_38621
+      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_39905
       (coe (\ v0 -> v0)) (coe (\ v0 -> v0)) erased
-      (\ v0 v1 v2 -> coe du_'8801''8658'Pointwise'45''8801'_590 v0)
+      (\ v0 v1 v2 -> coe du_'8801''8658'Pointwise'45''8801'_612 v0)
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased
          (coe
             (\ v0 v1 v2 ->
-               coe du_'8801''8658'Pointwise'45''8801'_590 (coe v1))))
+               coe du_'8801''8658'Pointwise'45''8801'_612 (coe v1))))

@@ -99,7 +99,7 @@ du_lookup_76 v0 v1 v2
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
              (coe
-                MAlonzo.Code.Function.Bundles.d_from_1726
+                MAlonzo.Code.Function.Bundles.d_from_1822
                 (coe
                    MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
                    (coe d_rel_66 (coe v1)) (coe v3))
@@ -119,7 +119,7 @@ du_lookup'8712'rel_84 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
-         MAlonzo.Code.Function.Bundles.d_from_1726
+         MAlonzo.Code.Function.Bundles.d_from_1822
          (coe
             MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
             (coe d_rel_66 (coe v1)) (coe v2))
@@ -207,7 +207,7 @@ du_mapWithKeyOn_144 v0 v1 v2
            (let v5
                   = MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                       (coe
-                         MAlonzo.Code.Function.Bundles.d_from_1726
+                         MAlonzo.Code.Function.Bundles.d_from_1822
                          (coe
                             MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
                             (coe d_rel_66 (coe v2)) (coe v3))
@@ -231,7 +231,7 @@ du_mapWithKeyOn_144 v0 v1 v2
                  (coe
                     MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                     (coe
-                       MAlonzo.Code.Function.Bundles.d_from_1726
+                       MAlonzo.Code.Function.Bundles.d_from_1822
                        (coe
                           MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
                           (coe d_rel_66 (coe v2)) (coe v3))
@@ -239,7 +239,7 @@ du_mapWithKeyOn_144 v0 v1 v2
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (coe
-                    MAlonzo.Code.Function.Bundles.d_from_1726
+                    MAlonzo.Code.Function.Bundles.d_from_1822
                     (coe
                        MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
                        (coe d_rel_66 (coe v2)) (coe v3))

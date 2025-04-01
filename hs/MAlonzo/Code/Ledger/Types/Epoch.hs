@@ -48,7 +48,7 @@ du_additionVia_8 v0 v1 v2
 -- Ledger.Types.Epoch.EpochStructure
 d_EpochStructure_20 = ()
 data T_EpochStructure_20
-  = C_EpochStructure'46'constructor_1323 MAlonzo.Code.Algebra.Bundles.T_Semiring_2280
+  = C_EpochStructure'46'constructor_1323 MAlonzo.Code.Algebra.Bundles.T_Semiring_2304
                                          MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
                                          MAlonzo.Code.Class.Show.Core.T_Show_10
                                          MAlonzo.Code.Class.HasOrder.Core.T_HasDecPartialOrder_256
@@ -57,7 +57,7 @@ data T_EpochStructure_20
                                          (AgdaAny -> AgdaAny) (Integer -> AgdaAny -> AgdaAny)
 -- Ledger.Types.Epoch.EpochStructure.Slotʳ
 d_Slot'691'_54 ::
-  T_EpochStructure_20 -> MAlonzo.Code.Algebra.Bundles.T_Semiring_2280
+  T_EpochStructure_20 -> MAlonzo.Code.Algebra.Bundles.T_Semiring_2304
 d_Slot'691'_54 v0
   = case coe v0 of
       C_EpochStructure'46'constructor_1323 v1 v3 v4 v5 v6 v7 v8 v9 v10 v11
@@ -157,7 +157,7 @@ d_preoEpoch_86 v0
   = coe
       MAlonzo.Code.Class.HasOrder.Core.du_hasPreorderFromStrictPartialOrder_598
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.C_IsStrictPartialOrder'46'constructor_14045
+         MAlonzo.Code.Relation.Binary.Structures.C_IsStrictPartialOrder'46'constructor_16311
          (coe
             MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_isEquivalence_396)
          (\ v1 v2 v3 ->
@@ -184,7 +184,7 @@ d_ℕtoEpoch_240 v0 v1
   = case coe v1 of
       0 -> coe
              d_epoch_68 v0
-             (MAlonzo.Code.Algebra.Bundles.d_0'35'_2308
+             (MAlonzo.Code.Algebra.Bundles.d_0'35'_2332
                 (coe d_Slot'691'_54 (coe v0)))
       _ -> let v2 = subInt (coe v1) (coe (1 :: Integer)) in
            coe (coe d_suc'7497'_74 v0 (d_ℕtoEpoch_240 (coe v0) (coe v2)))
@@ -195,7 +195,7 @@ d_addSlot_244 v0
   = coe
       MAlonzo.Code.Class.HasAdd.Core.C_HasAdd'46'constructor_25
       (coe
-         MAlonzo.Code.Algebra.Bundles.d__'43'__2304
+         MAlonzo.Code.Algebra.Bundles.d__'43'__2328
          (coe d_Slot'691'_54 (coe v0)))
 -- Ledger.Types.Epoch.EpochStructure.addEpoch
 d_addEpoch_246 ::
@@ -208,7 +208,7 @@ d_addEpoch_246 v0
             coe
               d_epoch_68 v0
               (coe
-                 MAlonzo.Code.Algebra.Bundles.d__'43'__2304
+                 MAlonzo.Code.Algebra.Bundles.d__'43'__2328
                  (d_Slot'691'_54 (coe v0)) (coe d_firstSlot_70 v0 v1)
                  (coe d_firstSlot_70 v0 v2))))
 -- Ledger.Types.Epoch.EpochStructure.Number-Epoch
@@ -293,7 +293,7 @@ d_ℕEpochStructure_302 ::
 d_ℕEpochStructure_302 v0
   = coe
       C_EpochStructure'46'constructor_1323
-      MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3768
+      MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3794
       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
       MAlonzo.Code.Class.Show.Instances.d_Show'45'ℕ_36
       MAlonzo.Code.Class.HasOrder.Instance.d_ℕ'45'hasDecPartialOrder_18

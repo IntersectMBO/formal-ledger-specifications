@@ -37,29 +37,256 @@ import qualified MAlonzo.Code.Relation.Binary.Reasoning.Syntax
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
+-- Data.Nat.GCD.Algebra._Absorbs_
+d__Absorbs__8 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d__Absorbs__8 = erased
+-- Data.Nat.GCD.Algebra._DistributesOver_
+d__DistributesOver__10 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d__DistributesOver__10 = erased
+-- Data.Nat.GCD.Algebra._DistributesOverʳ_
+d__DistributesOver'691'__12 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d__DistributesOver'691'__12 = erased
+-- Data.Nat.GCD.Algebra._DistributesOverˡ_
+d__DistributesOver'737'__14 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d__DistributesOver'737'__14 = erased
+-- Data.Nat.GCD.Algebra._IdempotentOn_
+d__IdempotentOn__16 ::
+  (Integer -> Integer -> Integer) -> Integer -> ()
+d__IdempotentOn__16 = erased
+-- Data.Nat.GCD.Algebra._MiddleFourExchange_
+d__MiddleFourExchange__18 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d__MiddleFourExchange__18 = erased
+-- Data.Nat.GCD.Algebra.Absorptive
+d_Absorptive_20 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_Absorptive_20 = erased
+-- Data.Nat.GCD.Algebra.AlmostCancellative
+d_AlmostCancellative_22 ::
+  Integer -> (Integer -> Integer -> Integer) -> ()
+d_AlmostCancellative_22 = erased
+-- Data.Nat.GCD.Algebra.AlmostLeftCancellative
+d_AlmostLeftCancellative_24 ::
+  Integer -> (Integer -> Integer -> Integer) -> ()
+d_AlmostLeftCancellative_24 = erased
+-- Data.Nat.GCD.Algebra.AlmostRightCancellative
+d_AlmostRightCancellative_26 ::
+  Integer -> (Integer -> Integer -> Integer) -> ()
+d_AlmostRightCancellative_26 = erased
+-- Data.Nat.GCD.Algebra.Alternative
+d_Alternative_28 :: (Integer -> Integer -> Integer) -> ()
+d_Alternative_28 = erased
 -- Data.Nat.GCD.Algebra.Associative
 d_Associative_30 :: (Integer -> Integer -> Integer) -> ()
 d_Associative_30 = erased
+-- Data.Nat.GCD.Algebra.Cancellative
+d_Cancellative_32 :: (Integer -> Integer -> Integer) -> ()
+d_Cancellative_32 = erased
 -- Data.Nat.GCD.Algebra.Commutative
 d_Commutative_34 :: (Integer -> Integer -> Integer) -> ()
 d_Commutative_34 = erased
+-- Data.Nat.GCD.Algebra.Congruent₁
+d_Congruent'8321'_36 :: (Integer -> Integer) -> ()
+d_Congruent'8321'_36 = erased
+-- Data.Nat.GCD.Algebra.Congruent₂
+d_Congruent'8322'_38 :: (Integer -> Integer -> Integer) -> ()
+d_Congruent'8322'_38 = erased
+-- Data.Nat.GCD.Algebra.Conical
+d_Conical_40 :: Integer -> (Integer -> Integer -> Integer) -> ()
+d_Conical_40 = erased
+-- Data.Nat.GCD.Algebra.Flexible
+d_Flexible_42 :: (Integer -> Integer -> Integer) -> ()
+d_Flexible_42 = erased
+-- Data.Nat.GCD.Algebra.Idempotent
+d_Idempotent_44 :: (Integer -> Integer -> Integer) -> ()
+d_Idempotent_44 = erased
+-- Data.Nat.GCD.Algebra.IdempotentFun
+d_IdempotentFun_46 :: (Integer -> Integer) -> ()
+d_IdempotentFun_46 = erased
+-- Data.Nat.GCD.Algebra.Identical
+d_Identical_48 :: (Integer -> Integer -> Integer) -> ()
+d_Identical_48 = erased
 -- Data.Nat.GCD.Algebra.Identity
 d_Identity_50 :: Integer -> (Integer -> Integer -> Integer) -> ()
 d_Identity_50 = erased
+-- Data.Nat.GCD.Algebra.Interchangable
+d_Interchangable_52 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_Interchangable_52 = erased
+-- Data.Nat.GCD.Algebra.Inverse
+d_Inverse_54 ::
+  Integer ->
+  (Integer -> Integer) -> (Integer -> Integer -> Integer) -> ()
+d_Inverse_54 = erased
+-- Data.Nat.GCD.Algebra.Invertible
+d_Invertible_56 ::
+  Integer -> (Integer -> Integer -> Integer) -> Integer -> ()
+d_Invertible_56 = erased
+-- Data.Nat.GCD.Algebra.Involutive
+d_Involutive_58 :: (Integer -> Integer) -> ()
+d_Involutive_58 = erased
+-- Data.Nat.GCD.Algebra.LeftAlternative
+d_LeftAlternative_60 :: (Integer -> Integer -> Integer) -> ()
+d_LeftAlternative_60 = erased
+-- Data.Nat.GCD.Algebra.LeftBol
+d_LeftBol_62 :: (Integer -> Integer -> Integer) -> ()
+d_LeftBol_62 = erased
+-- Data.Nat.GCD.Algebra.LeftCancellative
+d_LeftCancellative_64 :: (Integer -> Integer -> Integer) -> ()
+d_LeftCancellative_64 = erased
+-- Data.Nat.GCD.Algebra.LeftCongruent
+d_LeftCongruent_66 :: (Integer -> Integer -> Integer) -> ()
+d_LeftCongruent_66 = erased
+-- Data.Nat.GCD.Algebra.LeftConical
+d_LeftConical_68 ::
+  Integer -> (Integer -> Integer -> Integer) -> ()
+d_LeftConical_68 = erased
+-- Data.Nat.GCD.Algebra.LeftDivides
+d_LeftDivides_70 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_LeftDivides_70 = erased
+-- Data.Nat.GCD.Algebra.LeftDividesʳ
+d_LeftDivides'691'_72 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_LeftDivides'691'_72 = erased
+-- Data.Nat.GCD.Algebra.LeftDividesˡ
+d_LeftDivides'737'_74 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_LeftDivides'737'_74 = erased
 -- Data.Nat.GCD.Algebra.LeftIdentity
 d_LeftIdentity_76 ::
   Integer -> (Integer -> Integer -> Integer) -> ()
 d_LeftIdentity_76 = erased
+-- Data.Nat.GCD.Algebra.LeftInverse
+d_LeftInverse_78 ::
+  Integer ->
+  (Integer -> Integer) -> (Integer -> Integer -> Integer) -> ()
+d_LeftInverse_78 = erased
+-- Data.Nat.GCD.Algebra.LeftInvertible
+d_LeftInvertible_80 ::
+  Integer -> (Integer -> Integer -> Integer) -> Integer -> ()
+d_LeftInvertible_80 = erased
+-- Data.Nat.GCD.Algebra.LeftSemimedial
+d_LeftSemimedial_82 :: (Integer -> Integer -> Integer) -> ()
+d_LeftSemimedial_82 = erased
 -- Data.Nat.GCD.Algebra.LeftZero
 d_LeftZero_84 :: Integer -> (Integer -> Integer -> Integer) -> ()
 d_LeftZero_84 = erased
+-- Data.Nat.GCD.Algebra.Medial
+d_Medial_86 :: (Integer -> Integer -> Integer) -> ()
+d_Medial_86 = erased
+-- Data.Nat.GCD.Algebra.MiddleBol
+d_MiddleBol_88 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_MiddleBol_88 = erased
+-- Data.Nat.GCD.Algebra.RightAlternative
+d_RightAlternative_90 :: (Integer -> Integer -> Integer) -> ()
+d_RightAlternative_90 = erased
+-- Data.Nat.GCD.Algebra.RightBol
+d_RightBol_92 :: (Integer -> Integer -> Integer) -> ()
+d_RightBol_92 = erased
+-- Data.Nat.GCD.Algebra.RightCancellative
+d_RightCancellative_94 :: (Integer -> Integer -> Integer) -> ()
+d_RightCancellative_94 = erased
+-- Data.Nat.GCD.Algebra.RightCongruent
+d_RightCongruent_96 :: (Integer -> Integer -> Integer) -> ()
+d_RightCongruent_96 = erased
+-- Data.Nat.GCD.Algebra.RightConical
+d_RightConical_98 ::
+  Integer -> (Integer -> Integer -> Integer) -> ()
+d_RightConical_98 = erased
+-- Data.Nat.GCD.Algebra.RightDivides
+d_RightDivides_100 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_RightDivides_100 = erased
+-- Data.Nat.GCD.Algebra.RightDividesʳ
+d_RightDivides'691'_102 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_RightDivides'691'_102 = erased
+-- Data.Nat.GCD.Algebra.RightDividesˡ
+d_RightDivides'737'_104 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> ()
+d_RightDivides'737'_104 = erased
 -- Data.Nat.GCD.Algebra.RightIdentity
 d_RightIdentity_106 ::
   Integer -> (Integer -> Integer -> Integer) -> ()
 d_RightIdentity_106 = erased
+-- Data.Nat.GCD.Algebra.RightInverse
+d_RightInverse_108 ::
+  Integer ->
+  (Integer -> Integer) -> (Integer -> Integer -> Integer) -> ()
+d_RightInverse_108 = erased
+-- Data.Nat.GCD.Algebra.RightInvertible
+d_RightInvertible_110 ::
+  Integer -> (Integer -> Integer -> Integer) -> Integer -> ()
+d_RightInvertible_110 = erased
+-- Data.Nat.GCD.Algebra.RightSemimedial
+d_RightSemimedial_112 :: (Integer -> Integer -> Integer) -> ()
+d_RightSemimedial_112 = erased
 -- Data.Nat.GCD.Algebra.RightZero
 d_RightZero_114 :: Integer -> (Integer -> Integer -> Integer) -> ()
 d_RightZero_114 = erased
+-- Data.Nat.GCD.Algebra.Selective
+d_Selective_116 :: (Integer -> Integer -> Integer) -> ()
+d_Selective_116 = erased
+-- Data.Nat.GCD.Algebra.SelfInverse
+d_SelfInverse_118 :: (Integer -> Integer) -> ()
+d_SelfInverse_118 = erased
+-- Data.Nat.GCD.Algebra.Semimedial
+d_Semimedial_120 :: (Integer -> Integer -> Integer) -> ()
+d_Semimedial_120 = erased
+-- Data.Nat.GCD.Algebra.StarDestructive
+d_StarDestructive_122 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
+d_StarDestructive_122 = erased
+-- Data.Nat.GCD.Algebra.StarExpansive
+d_StarExpansive_124 ::
+  Integer ->
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
+d_StarExpansive_124 = erased
+-- Data.Nat.GCD.Algebra.StarLeftDestructive
+d_StarLeftDestructive_126 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
+d_StarLeftDestructive_126 = erased
+-- Data.Nat.GCD.Algebra.StarLeftExpansive
+d_StarLeftExpansive_128 ::
+  Integer ->
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
+d_StarLeftExpansive_128 = erased
+-- Data.Nat.GCD.Algebra.StarRightDestructive
+d_StarRightDestructive_130 ::
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
+d_StarRightDestructive_130 = erased
+-- Data.Nat.GCD.Algebra.StarRightExpansive
+d_StarRightExpansive_132 ::
+  Integer ->
+  (Integer -> Integer -> Integer) ->
+  (Integer -> Integer -> Integer) -> (Integer -> Integer) -> ()
+d_StarRightExpansive_132 = erased
 -- Data.Nat.GCD.Algebra.Zero
 d_Zero_134 :: Integer -> (Integer -> Integer -> Integer) -> ()
 d_Zero_134 = erased
@@ -86,7 +313,7 @@ d_gcd_152 v0 v1
               erased
               (\ v2 ->
                  coe
-                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2678
+                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2700
                    (coe v0))
               (coe
                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -113,7 +340,7 @@ d_gcd_152 v0 v1
                                              (coe
                                                 MAlonzo.Code.Relation.Binary.Definitions.C_tri'60'_172
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2716
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2738
                                                    (coe v0)))
                                       else coe
                                              seq
@@ -123,10 +350,10 @@ d_gcd_152 v0 v1
                                              (coe
                                                 MAlonzo.Code.Relation.Binary.Definitions.C_tri'62'_188
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_2918
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_2944
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_2902
+                                                      MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_2928
                                                       (coe v0) (coe v1)))))) in
                       coe
                         (case coe v5 of
@@ -209,7 +436,7 @@ d_gcd'91'm'44'n'93''8739'm_248 v0 v1
               erased
               (\ v2 ->
                  coe
-                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2678
+                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2700
                    (coe v0))
               (coe
                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -238,7 +465,7 @@ d_gcd'91'm'44'n'93''8739'm_248 v0 v1
                                              (coe
                                                 MAlonzo.Code.Relation.Binary.Definitions.C_tri'60'_172
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2716
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2738
                                                    (coe v0)))
                                       else coe
                                              seq
@@ -248,10 +475,10 @@ d_gcd'91'm'44'n'93''8739'm_248 v0 v1
                                              (coe
                                                 MAlonzo.Code.Relation.Binary.Definitions.C_tri'62'_188
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_2918
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_2944
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_2902
+                                                      MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_2928
                                                       (coe v0) (coe v1)))))) in
                       coe
                         (case coe v5 of
@@ -278,7 +505,7 @@ d_gcd'91'm'44'n'93''8739'n_278 v0 v1
               erased
               (\ v2 ->
                  coe
-                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2678
+                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2700
                    (coe v0))
               (coe
                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -307,7 +534,7 @@ d_gcd'91'm'44'n'93''8739'n_278 v0 v1
                                              (coe
                                                 MAlonzo.Code.Relation.Binary.Definitions.C_tri'60'_172
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2716
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2738
                                                    (coe v0)))
                                       else coe
                                              seq
@@ -317,10 +544,10 @@ d_gcd'91'm'44'n'93''8739'n_278 v0 v1
                                              (coe
                                                 MAlonzo.Code.Relation.Binary.Definitions.C_tri'62'_188
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_2918
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_2944
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_2902
+                                                      MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_2928
                                                       (coe v0) (coe v1)))))) in
                       coe
                         (case coe v5 of
@@ -351,7 +578,7 @@ d_gcd'45'greatest_310 v0 v1 v2 v3 v4
               erased
               (\ v5 ->
                  coe
-                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2678
+                   MAlonzo.Code.Data.Nat.Properties.du_'8801''8658''8801''7495'_2700
                    (coe v0))
               (coe
                  MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32
@@ -378,7 +605,7 @@ d_gcd'45'greatest_310 v0 v1 v2 v3 v4
                                              (coe
                                                 MAlonzo.Code.Relation.Binary.Definitions.C_tri'60'_172
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2716
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'60''7495''8658''60'_2738
                                                    (coe v0)))
                                       else coe
                                              seq
@@ -388,10 +615,10 @@ d_gcd'45'greatest_310 v0 v1 v2 v3 v4
                                              (coe
                                                 MAlonzo.Code.Relation.Binary.Definitions.C_tri'62'_188
                                                 (coe
-                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_2918
+                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8743''8802''8658''60'_2944
                                                    (coe v0)
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_2902
+                                                      MAlonzo.Code.Data.Nat.Properties.du_'8814''8658''8805'_2928
                                                       (coe v0) (coe v1)))))) in
                       coe
                         (case coe v8 of
@@ -454,7 +681,7 @@ d_gcd'91'gcd'91'm'44'n'93''44'p'93''124'm_430 v0 v1 v2
           = MAlonzo.Code.Data.Nat.Divisibility.d_'8739''45'preorder_204 in
     coe
       (let v4
-             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_154 (coe v3) in
+             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v3) in
        coe
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -499,7 +726,7 @@ d_gcd'91'gcd'91'm'44'n'93''44'p'93''8739'n_432 v0 v1 v2
           = MAlonzo.Code.Data.Nat.Divisibility.d_'8739''45'preorder_204 in
     coe
       (let v4
-             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_154 (coe v3) in
+             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v3) in
        coe
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -562,7 +789,7 @@ d_gcd'91'm'44'gcd'91'n'44'p'93''93''8739'n_438 v0 v1 v2
           = MAlonzo.Code.Data.Nat.Divisibility.d_'8739''45'preorder_204 in
     coe
       (let v4
-             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_154 (coe v3) in
+             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v3) in
        coe
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -607,7 +834,7 @@ d_gcd'91'm'44'gcd'91'n'44'p'93''93''8739'p_440 v0 v1 v2
           = MAlonzo.Code.Data.Nat.Divisibility.d_'8739''45'preorder_204 in
     coe
       (let v4
-             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_154 (coe v3) in
+             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v3) in
        coe
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -1009,7 +1236,7 @@ d_gcd'63'_746 v0 v1 v2
       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
       (\ v3 -> coe du_'46'extendedlambda0_754 (coe v0) (coe v1)) erased
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688
+         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710
          (coe d_gcd_152 (coe v0) (coe v1)) (coe v2))
 -- Data.Nat.GCD..extendedlambda0
 d_'46'extendedlambda0_754 ::
@@ -1138,18 +1365,18 @@ du_step_904 v0
   = case coe v0 of
       C_'43''45'_858 v1 v2
         -> let v4
-                 = MAlonzo.Code.Data.Nat.Base.d_compare_460 (coe v1) (coe v2) in
+                 = MAlonzo.Code.Data.Nat.Base.d_compare_470 (coe v1) (coe v2) in
            coe
              (case coe v4 of
-                MAlonzo.Code.Data.Nat.Base.C_less_444 v6
+                MAlonzo.Code.Data.Nat.Base.C_less_454 v6
                   -> coe
                        C_'43''45'_858
                        (d__'8853'__892
                           (coe mulInt (coe (2 :: Integer)) (coe v1)) (coe v6))
                        (d__'8853'__892 (coe v1) (coe v6))
-                MAlonzo.Code.Data.Nat.Base.C_equal_448
+                MAlonzo.Code.Data.Nat.Base.C_equal_458
                   -> coe C_'43''45'_858 (mulInt (coe (2 :: Integer)) (coe v1)) v1
-                MAlonzo.Code.Data.Nat.Base.C_greater_454 v6
+                MAlonzo.Code.Data.Nat.Base.C_greater_464 v6
                   -> coe
                        C_'43''45'_858
                        (d__'8853'__892
@@ -1158,18 +1385,18 @@ du_step_904 v0
                 _ -> MAlonzo.RTE.mazUnreachableError)
       C_'45''43'_866 v1 v2
         -> let v4
-                 = MAlonzo.Code.Data.Nat.Base.d_compare_460 (coe v1) (coe v2) in
+                 = MAlonzo.Code.Data.Nat.Base.d_compare_470 (coe v1) (coe v2) in
            coe
              (case coe v4 of
-                MAlonzo.Code.Data.Nat.Base.C_less_444 v6
+                MAlonzo.Code.Data.Nat.Base.C_less_454 v6
                   -> coe
                        C_'45''43'_866
                        (d__'8853'__892
                           (coe mulInt (coe (2 :: Integer)) (coe v1)) (coe v6))
                        (d__'8853'__892 (coe v1) (coe v6))
-                MAlonzo.Code.Data.Nat.Base.C_equal_448
+                MAlonzo.Code.Data.Nat.Base.C_equal_458
                   -> coe C_'45''43'_866 (mulInt (coe (2 :: Integer)) (coe v1)) v1
-                MAlonzo.Code.Data.Nat.Base.C_greater_454 v6
+                MAlonzo.Code.Data.Nat.Base.C_greater_464 v6
                   -> coe
                        C_'45''43'_866
                        (d__'8853'__892
@@ -1258,10 +1485,10 @@ du_gcd'8243'_1098 v0 v1
                        _ -> let v5 = subInt (coe v3) (coe (1 :: Integer)) in
                             coe
                               (let v6
-                                     = MAlonzo.Code.Data.Nat.Base.d_compare_460 (coe v4) (coe v5) in
+                                     = MAlonzo.Code.Data.Nat.Base.d_compare_470 (coe v4) (coe v5) in
                                coe
                                  (case coe v6 of
-                                    MAlonzo.Code.Data.Nat.Base.C_less_444 v8
+                                    MAlonzo.Code.Data.Nat.Base.C_less_454 v8
                                       -> coe
                                            du_step'737'_1058
                                            (coe
@@ -1269,9 +1496,9 @@ du_gcd'8243'_1098 v0 v1
                                               (addInt (coe (1 :: Integer)) (coe v8))
                                               (MAlonzo.Code.Data.Nat.GCD.Lemmas.d_lem'8321'_70
                                                  (coe v8) (coe v4)))
-                                    MAlonzo.Code.Data.Nat.Base.C_equal_448
+                                    MAlonzo.Code.Data.Nat.Base.C_equal_458
                                       -> coe d_refl_1050 (coe v2)
-                                    MAlonzo.Code.Data.Nat.Base.C_greater_454 v8
+                                    MAlonzo.Code.Data.Nat.Base.C_greater_464 v8
                                       -> coe
                                            du_step'691'_1074
                                            (coe

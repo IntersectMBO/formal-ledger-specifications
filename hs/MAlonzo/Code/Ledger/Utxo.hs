@@ -46,7 +46,7 @@ import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Nary.NonDependent
 import qualified MAlonzo.Code.Data.Rational.Base
-import qualified MAlonzo.Code.Data.Refinement
+import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
@@ -422,7 +422,7 @@ d_minUTxOValue_970 v0
 -- _.PParams.monetaryExpansion
 d_monetaryExpansion_972 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_972 v0
   = coe MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_340 (coe v0)
 -- _.PParams.nopt
@@ -465,7 +465,7 @@ d_refScriptCostStride_986 v0
 -- _.PParams.treasuryCut
 d_treasuryCut_988 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_988 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_342 (coe v0)
 -- _.Tx.body
@@ -2074,7 +2074,7 @@ du_validCertDeposits'63'_2232 v0 v1 v2 v3
                                                       C_dereg_2200
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Function.Bundles.d_from_1726
+                                                            MAlonzo.Code.Function.Bundles.d_from_1822
                                                             (coe
                                                                MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428
                                                                (coe
@@ -2090,7 +2090,7 @@ du_validCertDeposits'63'_2232 v0 v1 v2 v3
                                                             v11))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                          (coe
-                                                            MAlonzo.Code.Function.Bundles.d_from_1726
+                                                            MAlonzo.Code.Function.Bundles.d_from_1822
                                                             (coe
                                                                MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428
                                                                (coe
@@ -2398,7 +2398,7 @@ du_updateCertDeposits_2406 v0 v1 v2 v3
                           (coe
                              MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                              (coe
-                                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
                           (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0)))
                           v3 (coe du_certDeposit_2118 (coe v4) (coe v1)))
@@ -2428,7 +2428,7 @@ du_updateCertDeposits_2406 v0 v1 v2 v3
                           (coe
                              MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                              (coe
-                                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
                           (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0)))
                           v3 (coe du_certDeposit_2118 (coe v4) (coe v1)))
@@ -2441,7 +2441,7 @@ du_updateCertDeposits_2406 v0 v1 v2 v3
                           (coe
                              MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                              (coe
-                                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
                           (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0)))
                           v3 (coe du_certDeposit_2118 (coe v4) (coe v1)))
@@ -2471,7 +2471,7 @@ du_updateCertDeposits_2406 v0 v1 v2 v3
                           (coe
                              MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                              (coe
-                                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                                MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
                           (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0)))
                           v3 (coe du_certDeposit_2118 (coe v4) (coe v1)))
@@ -2505,7 +2505,7 @@ du_updateProposalDeposits_2484 v0 v1 v2 v3 v4
              (coe
                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                 (coe
-                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                   MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
              (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
                 (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0)))
              (coe
@@ -2603,11 +2603,11 @@ du_depositsChange_2602 v0 v1 v2 v3
             (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0)))
          (coe
             MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
          (coe (\ v4 -> v4))
          (coe du_updateDeposits_2496 (coe v0) (coe v1) (coe v2) (coe v3)))
       (coe
@@ -2617,11 +2617,11 @@ du_depositsChange_2602 v0 v1 v2 v3
             (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0)))
          (coe
             MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
          (coe (\ v4 -> v4)) (coe v3))
 -- Ledger.Utxo.inInterval
 d_inInterval_2612 a0 a1 a2 a3 = ()
@@ -2814,11 +2814,11 @@ du_HasCoin'45'UTxOState_2734 v0
                     (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0)))
                  (coe
                     MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-                    (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+                    (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
                  (coe
                     MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                       MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
                  (coe (\ v2 -> v2)) (coe d_deposits_2066 (coe v1)))))
 -- Ledger.Utxo.coinPolicies
 d_coinPolicies_2738 ::
@@ -3050,11 +3050,11 @@ du_consumed_2924 v0 v1 v2 v3
                   (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1230 (coe v0))))
             (coe
                MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-               (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+               (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
             (coe
                MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                (coe
-                  MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                  MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
             (coe (\ v4 -> v4))
             (coe MAlonzo.Code.Ledger.Transaction.d_txwdrls_2606 (coe v3))))
 -- Ledger.Utxo._._.produced

@@ -42,7 +42,7 @@ du_map'45'identity_24 ::
   MAlonzo.Code.Data.Container.Relation.Binary.Pointwise.T_Pointwise_36
 du_map'45'identity_24 v0 v1
   = coe
-      MAlonzo.Code.Data.Container.Relation.Binary.Equality.Setoid.du_refl_52
+      MAlonzo.Code.Data.Container.Relation.Binary.Equality.Setoid.du_refl_54
       (coe v0)
       (coe MAlonzo.Code.Data.Container.Core.du_map_56 (\ v2 -> v2) v1)
 -- Data.Container.Properties._.map-compose
@@ -72,7 +72,7 @@ du_map'45'compose_50 ::
   MAlonzo.Code.Data.Container.Relation.Binary.Pointwise.T_Pointwise_36
 du_map'45'compose_50 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Data.Container.Relation.Binary.Equality.Setoid.du_refl_52
+      MAlonzo.Code.Data.Container.Relation.Binary.Equality.Setoid.du_refl_54
       (coe v0)
       (coe
          MAlonzo.Code.Data.Container.Core.du_map_56 v1

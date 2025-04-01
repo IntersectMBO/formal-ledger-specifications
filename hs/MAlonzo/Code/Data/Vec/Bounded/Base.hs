@@ -26,13 +26,599 @@ import qualified MAlonzo.Code.Data.List.Extrema
 import qualified MAlonzo.Code.Data.List.Membership.Setoid
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All.Properties
+import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
+import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Data.These.Base
 import qualified MAlonzo.Code.Data.Vec.Base
 import qualified MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 
+-- Data.Vec.Bounded.Base._.argmax
+d_argmax_10 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> (AgdaAny -> Integer) -> AgdaAny -> [AgdaAny] -> AgdaAny
+d_argmax_10 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmax_144
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2
+-- Data.Vec.Bounded.Base._.argmax-all
+d_argmax'45'all_12 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> Integer) ->
+  (AgdaAny -> ()) ->
+  AgdaAny ->
+  [AgdaAny] ->
+  AgdaAny ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny
+d_argmax'45'all_12 v0 v1 v2 v3 v4 v5 v6 v7 v8
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmax'45'all_518
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v3 v5 v6 v7 v8
+-- Data.Vec.Bounded.Base._.argmax-sel
+d_argmax'45'sel_14 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  AgdaAny -> [AgdaAny] -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
+d_argmax'45'sel_14 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmax'45'sel_506
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2
+-- Data.Vec.Bounded.Base._.argmax[xs]<argmax[ys]⁺
+d_argmax'91'xs'93''60'argmax'91'ys'93''8314'_16 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  AgdaAny ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_argmax'91'xs'93''60'argmax'91'ys'93''8314'_16 v0 v1 v2 v3 v4 v5
+                                                v6 v7 v8 v9
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmax'91'xs'93''60'argmax'91'ys'93''8314'_490
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3 v4 v5 v6 v7 v8 v9
+-- Data.Vec.Bounded.Base._.argmax[xs]≤argmax[ys]⁺
+d_argmax'91'xs'93''8804'argmax'91'ys'93''8314'_18 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  AgdaAny ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_argmax'91'xs'93''8804'argmax'91'ys'93''8314'_18 v0 v1 v2 v3 v4 v5
+                                                  v6 v7 v8 v9
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmax'91'xs'93''8804'argmax'91'ys'93''8314'_462
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3 v4 v5 v6 v7 v8 v9
+-- Data.Vec.Bounded.Base._.argmin
+d_argmin_20 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () -> (AgdaAny -> Integer) -> AgdaAny -> [AgdaAny] -> AgdaAny
+d_argmin_20 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmin_140
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2
+-- Data.Vec.Bounded.Base._.argmin-all
+d_argmin'45'all_22 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  [AgdaAny] ->
+  (AgdaAny -> ()) ->
+  AgdaAny ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 -> AgdaAny
+d_argmin'45'all_22 v0 v1 v2 v3 v4 v5 v6 v7 v8
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmin'45'all_312
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v3 v4 v5 v7 v8
+-- Data.Vec.Bounded.Base._.argmin-sel
+d_argmin'45'sel_24 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  AgdaAny -> [AgdaAny] -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
+d_argmin'45'sel_24 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmin'45'sel_300
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2
+-- Data.Vec.Bounded.Base._.argmin[xs]<argmin[ys]⁺
+d_argmin'91'xs'93''60'argmin'91'ys'93''8314'_26 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  AgdaAny ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_argmin'91'xs'93''60'argmin'91'ys'93''8314'_26 v0 v1 v2 v3 v4 v5
+                                                v6 v7 v8 v9
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmin'91'xs'93''60'argmin'91'ys'93''8314'_284
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3 v4 v5 v6 v7 v8 v9
+-- Data.Vec.Bounded.Base._.argmin[xs]≤argmin[ys]⁺
+d_argmin'91'xs'93''8804'argmin'91'ys'93''8314'_28 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  AgdaAny ->
+  [AgdaAny] ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_argmin'91'xs'93''8804'argmin'91'ys'93''8314'_28 v0 v1 v2 v3 v4 v5
+                                                  v6 v7 v8 v9
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_argmin'91'xs'93''8804'argmin'91'ys'93''8314'_256
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3 v4 v5 v6 v7 v8 v9
+-- Data.Vec.Bounded.Base._.f[argmax]<v⁺
+d_f'91'argmax'93''60'v'8314'_30 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  Integer ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_f'91'argmax'93''60'v'8314'_30 v0 v1 v2 v3 v4 v5
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_f'91'argmax'93''60'v'8314'_404
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v4 v5
+-- Data.Vec.Bounded.Base._.f[argmax]≈f[v]⁺
+d_f'91'argmax'93''8776'f'91'v'93''8314'_32 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_f'91'argmax'93''8776'f'91'v'93''8314'_32 = erased
+-- Data.Vec.Bounded.Base._.f[argmax]≤v⁺
+d_f'91'argmax'93''8804'v'8314'_34 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  Integer ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_f'91'argmax'93''8804'v'8314'_34 v0 v1 v2 v3 v4 v5
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_f'91'argmax'93''8804'v'8314'_394
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v4 v5
+-- Data.Vec.Bounded.Base._.f[argmin]<v⁺
+d_f'91'argmin'93''60'v'8314'_36 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  Integer ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_f'91'argmin'93''60'v'8314'_36 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_f'91'argmin'93''60'v'8314'_178
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3
+-- Data.Vec.Bounded.Base._.f[argmin]≈f[v]⁺
+d_f'91'argmin'93''8776'f'91'v'93''8314'_38 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_f'91'argmin'93''8776'f'91'v'93''8314'_38 = erased
+-- Data.Vec.Bounded.Base._.f[argmin]≤f[xs]
+d_f'91'argmin'93''8804'f'91'xs'93'_40 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  [AgdaAny] -> MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
+d_f'91'argmin'93''8804'f'91'xs'93'_40 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_f'91'argmin'93''8804'f'91'xs'93'_216
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3 v4
+-- Data.Vec.Bounded.Base._.f[argmin]≤f[⊤]
+d_f'91'argmin'93''8804'f'91''8868''93'_42 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  AgdaAny -> [AgdaAny] -> MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_f'91'argmin'93''8804'f'91''8868''93'_42 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_f'91'argmin'93''8804'f'91''8868''93'_204
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3 v4
+-- Data.Vec.Bounded.Base._.f[argmin]≤v⁺
+d_f'91'argmin'93''8804'v'8314'_44 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  Integer ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_f'91'argmin'93''8804'v'8314'_44 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_f'91'argmin'93''8804'v'8314'_168
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3
+-- Data.Vec.Bounded.Base._.f[xs]≤f[argmax]
+d_f'91'xs'93''8804'f'91'argmax'93'_46 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  AgdaAny ->
+  [AgdaAny] -> MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
+d_f'91'xs'93''8804'f'91'argmax'93'_46 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_f'91'xs'93''8804'f'91'argmax'93'_422
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3 v4
+-- Data.Vec.Bounded.Base._.f[⊥]≤f[argmax]
+d_f'91''8869''93''8804'f'91'argmax'93'_48 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  AgdaAny -> [AgdaAny] -> MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_f'91''8869''93''8804'f'91'argmax'93'_48 v0 v1 v2 v3 v4
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_f'91''8869''93''8804'f'91'argmax'93'_410
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3 v4
+-- Data.Vec.Bounded.Base._.max
+d_max_50 :: Integer -> [Integer] -> Integer
+d_max_50
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_max_150
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.max-mono-⊆
+d_max'45'mono'45''8838'_52 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  [Integer] ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  (Integer ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_max'45'mono'45''8838'_52
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_max'45'mono'45''8838'_780
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.max<v⁺
+d_max'60'v'8314'_54 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_max'60'v'8314'_54 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_max'60'v'8314'_694
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v1 v2
+-- Data.Vec.Bounded.Base._.max[xs]<max[ys]⁺
+d_max'91'xs'93''60'max'91'ys'93''8314'_56 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  [Integer] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_max'91'xs'93''60'max'91'ys'93''8314'_56
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_max'91'xs'93''60'max'91'ys'93''8314'_770
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.max[xs]≤max[ys]⁺
+d_max'91'xs'93''8804'max'91'ys'93''8314'_58 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  [Integer] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_max'91'xs'93''8804'max'91'ys'93''8314'_58
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_max'91'xs'93''8804'max'91'ys'93''8314'_754
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.max≈v⁺
+d_max'8776'v'8314'_60 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_max'8776'v'8314'_60 = erased
+-- Data.Vec.Bounded.Base._.max≤v⁺
+d_max'8804'v'8314'_62 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_max'8804'v'8314'_62 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_max'8804'v'8314'_684
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v1 v2
+-- Data.Vec.Bounded.Base._.min
+d_min_64 :: Integer -> [Integer] -> Integer
+d_min_64
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_min_148
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.min-mono-⊆
+d_min'45'mono'45''8838'_66 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  [Integer] ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  (Integer ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34) ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_min'45'mono'45''8838'_66
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_min'45'mono'45''8838'_668
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.min<v⁺
+d_min'60'v'8314'_68 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_min'60'v'8314'_68
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_min'60'v'8314'_582
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.min[xs]<min[ys]⁺
+d_min'91'xs'93''60'min'91'ys'93''8314'_70 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  [Integer] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_min'91'xs'93''60'min'91'ys'93''8314'_70
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_min'91'xs'93''60'min'91'ys'93''8314'_658
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.min[xs]≤min[ys]⁺
+d_min'91'xs'93''8804'min'91'ys'93''8314'_72 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  [Integer] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_min'91'xs'93''8804'min'91'ys'93''8314'_72
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_min'91'xs'93''8804'min'91'ys'93''8314'_642
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.min≈v⁺
+d_min'8776'v'8314'_74 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_min'8776'v'8314'_74 = erased
+-- Data.Vec.Bounded.Base._.min≤v⁺
+d_min'8804'v'8314'_76 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_min'8804'v'8314'_76
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_min'8804'v'8314'_572
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.min≤xs
+d_min'8804'xs_78 ::
+  Integer ->
+  [Integer] -> MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
+d_min'8804'xs_78
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_min'8804'xs_616
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.min≤⊤
+d_min'8804''8868'_80 ::
+  Integer -> [Integer] -> MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_min'8804''8868'_80
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_min'8804''8868'_608
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.v<f[argmax]⁺
+d_v'60'f'91'argmax'93''8314'_82 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  Integer ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_v'60'f'91'argmax'93''8314'_82 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_v'60'f'91'argmax'93''8314'_384
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3
+-- Data.Vec.Bounded.Base._.v<f[argmin]⁺
+d_v'60'f'91'argmin'93''8314'_84 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  Integer ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_v'60'f'91'argmin'93''8314'_84 v0 v1 v2 v3 v4 v5
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_v'60'f'91'argmin'93''8314'_198
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v4 v5
+-- Data.Vec.Bounded.Base._.v<max⁺
+d_v'60'max'8314'_86 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_v'60'max'8314'_86
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_v'60'max'8314'_714
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.v<min⁺
+d_v'60'min'8314'_88 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_v'60'min'8314'_88 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_v'60'min'8314'_602
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v1 v2
+-- Data.Vec.Bounded.Base._.v≤f[argmax]⁺
+d_v'8804'f'91'argmax'93''8314'_90 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  Integer ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_v'8804'f'91'argmax'93''8314'_90 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_v'8804'f'91'argmax'93''8314'_374
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v3
+-- Data.Vec.Bounded.Base._.v≤f[argmin]⁺
+d_v'8804'f'91'argmin'93''8314'_92 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> Integer) ->
+  Integer ->
+  AgdaAny ->
+  [AgdaAny] ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_v'8804'f'91'argmin'93''8314'_92 v0 v1 v2 v3 v4 v5
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_v'8804'f'91'argmin'93''8314'_188
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v2 v4 v5
+-- Data.Vec.Bounded.Base._.v≤max⁺
+d_v'8804'max'8314'_94 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_v'8804'max'8314'_94
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_v'8804'max'8314'_704
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.v≤min⁺
+d_v'8804'min'8314'_96 ::
+  Integer ->
+  Integer ->
+  [Integer] ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22 ->
+  MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_v'8804'min'8314'_96 v0 v1 v2
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_v'8804'min'8314'_592
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      v1 v2
+-- Data.Vec.Bounded.Base._.xs≤max
+d_xs'8804'max_98 ::
+  Integer ->
+  [Integer] -> MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
+d_xs'8804'max_98
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_xs'8804'max_728
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+-- Data.Vec.Bounded.Base._.⊥≤max
+d_'8869''8804'max_100 ::
+  Integer -> [Integer] -> MAlonzo.Code.Data.Nat.Base.T__'8804'__22
+d_'8869''8804'max_100
+  = coe
+      MAlonzo.Code.Data.List.Extrema.du_'8869''8804'max_720
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
 -- Data.Vec.Bounded.Base.Vec≤
 d_Vec'8804'_126 a0 a1 a2 = ()
 data T_Vec'8804'_126
@@ -64,7 +650,7 @@ du_isBounded_148 v0 v1
       C__'44'__144 v2 v3
         -> coe
              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_recompute_54
-             (MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2802
+             (MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2824
                 (coe v2) (coe v0))
              erased
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -433,8 +1019,8 @@ d_width_374 ~v0 ~v1 v2 = du_width_374 v2
 du_width_374 :: [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Integer
 du_width_374 v0
   = coe
-      MAlonzo.Code.Data.List.Extrema.du_max_142
-      MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2826
+      MAlonzo.Code.Data.List.Extrema.du_max_150
+      MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848
       (0 :: Integer) (coe du_sizes_372 (coe v0))
 -- Data.Vec.Bounded.Base._.all≤
 d_all'8804'_378 ::
@@ -448,11 +1034,11 @@ du_all'8804'_378 ::
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44
 du_all'8804'_378 v0
   = coe
-      MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_map'8315'_684
+      MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_map'8315'_504
       (coe v0)
       (coe
-         MAlonzo.Code.Data.List.Extrema.du_xs'8804'max_720
-         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2826
+         MAlonzo.Code.Data.List.Extrema.du_xs'8804'max_728
+         MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848
          (0 :: Integer) (coe du_sizes_372 (coe v0)))
 -- Data.Vec.Bounded.Base._.padded
 d_padded_380 ::
@@ -463,7 +1049,7 @@ du_padded_380 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> [T_Vec'8804'_126]
 du_padded_380 v0
   = coe
-      MAlonzo.Code.Data.List.Membership.Setoid.du_mapWith'8712'_62
+      MAlonzo.Code.Data.List.Membership.Setoid.du_mapWith'8712'_64
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
       (coe v0)

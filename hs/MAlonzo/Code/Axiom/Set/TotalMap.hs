@@ -92,7 +92,7 @@ du_lookup_188 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
       (coe
-         MAlonzo.Code.Function.Bundles.d_from_1726
+         MAlonzo.Code.Function.Bundles.d_from_1822
          (coe
             MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
             (coe d_rel_180 (coe v1)) (coe v2))
@@ -110,7 +110,7 @@ du_lookup'8712'rel_192 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
-         MAlonzo.Code.Function.Bundles.d_from_1726
+         MAlonzo.Code.Function.Bundles.d_from_1822
          (coe
             MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
             (coe d_rel_180 (coe v1)) (coe v2))
@@ -203,7 +203,7 @@ du_mapWithKey_260 v0 v1 v2
            (let v4
                   = MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                       (coe
-                         MAlonzo.Code.Function.Bundles.d_from_1726
+                         MAlonzo.Code.Function.Bundles.d_from_1822
                          (coe
                             MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
                             (coe d_rel_180 (coe v2)) (coe v3))
@@ -227,7 +227,7 @@ du_mapWithKey_260 v0 v1 v2
                  (coe
                     MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                     (coe
-                       MAlonzo.Code.Function.Bundles.d_from_1726
+                       MAlonzo.Code.Function.Bundles.d_from_1822
                        (coe
                           MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
                           (coe d_rel_180 (coe v2)) (coe v3))
@@ -235,7 +235,7 @@ du_mapWithKey_260 v0 v1 v2
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (coe
-                    MAlonzo.Code.Function.Bundles.d_from_1726
+                    MAlonzo.Code.Function.Bundles.d_from_1822
                     (coe
                        MAlonzo.Code.Axiom.Set.Rel.du_dom'8712'_428 (coe v0)
                        (coe d_rel_180 (coe v2)) (coe v3))
@@ -279,7 +279,7 @@ du_'8712''45'rel'45'update_300 ::
   T_TotalMap_168 -> AgdaAny
 du_'8712''45'rel'45'update_300 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Function.Bundles.d_to_1724
+      MAlonzo.Code.Function.Bundles.d_to_1820
       (coe
          MAlonzo.Code.Axiom.Set.du_'8712''45'map_406 (coe v0)
          (coe d_rel_180 (coe v4))

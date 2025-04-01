@@ -29,176 +29,176 @@ import qualified MAlonzo.Code.Relation.Binary.Reasoning.Syntax
 import qualified MAlonzo.Code.Relation.Binary.Structures
 
 -- Algebra.Consequences.Setoid._._Absorbs_
-d__Absorbs__36 ::
+d__Absorbs__38 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__Absorbs__36 = erased
+d__Absorbs__38 = erased
 -- Algebra.Consequences.Setoid._._DistributesOver_
-d__DistributesOver__38 ::
+d__DistributesOver__40 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__DistributesOver__38 = erased
+d__DistributesOver__40 = erased
 -- Algebra.Consequences.Setoid._._DistributesOverʳ_
-d__DistributesOver'691'__40 ::
+d__DistributesOver'691'__42 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__DistributesOver'691'__40 = erased
+d__DistributesOver'691'__42 = erased
 -- Algebra.Consequences.Setoid._._DistributesOverˡ_
-d__DistributesOver'737'__42 ::
+d__DistributesOver'737'__44 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__DistributesOver'737'__42 = erased
+d__DistributesOver'737'__44 = erased
 -- Algebra.Consequences.Setoid._._MiddleFourExchange_
-d__MiddleFourExchange__46 ::
+d__MiddleFourExchange__48 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d__MiddleFourExchange__46 = erased
+d__MiddleFourExchange__48 = erased
 -- Algebra.Consequences.Setoid._.AlmostLeftCancellative
-d_AlmostLeftCancellative_52 ::
+d_AlmostLeftCancellative_54 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_AlmostLeftCancellative_52 = erased
+d_AlmostLeftCancellative_54 = erased
 -- Algebra.Consequences.Setoid._.AlmostRightCancellative
-d_AlmostRightCancellative_54 ::
+d_AlmostRightCancellative_56 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_AlmostRightCancellative_54 = erased
+d_AlmostRightCancellative_56 = erased
 -- Algebra.Consequences.Setoid._.Associative
-d_Associative_58 ::
+d_Associative_60 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Associative_58 = erased
+d_Associative_60 = erased
 -- Algebra.Consequences.Setoid._.Commutative
-d_Commutative_62 ::
+d_Commutative_64 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Commutative_62 = erased
+d_Commutative_64 = erased
 -- Algebra.Consequences.Setoid._.Congruent₂
-d_Congruent'8322'_66 ::
+d_Congruent'8322'_68 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Congruent'8322'_66 = erased
+d_Congruent'8322'_68 = erased
 -- Algebra.Consequences.Setoid._.Identity
-d_Identity_78 ::
+d_Identity_80 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Identity_78 = erased
+d_Identity_80 = erased
 -- Algebra.Consequences.Setoid._.Inverse
-d_Inverse_82 ::
+d_Inverse_84 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Inverse_82 = erased
+d_Inverse_84 = erased
 -- Algebra.Consequences.Setoid._.Involutive
-d_Involutive_86 ::
+d_Involutive_88 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) -> ()
-d_Involutive_86 = erased
+d_Involutive_88 = erased
 -- Algebra.Consequences.Setoid._.LeftCancellative
-d_LeftCancellative_92 ::
+d_LeftCancellative_94 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftCancellative_92 = erased
+d_LeftCancellative_94 = erased
 -- Algebra.Consequences.Setoid._.LeftIdentity
-d_LeftIdentity_104 ::
+d_LeftIdentity_106 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftIdentity_104 = erased
+d_LeftIdentity_106 = erased
 -- Algebra.Consequences.Setoid._.LeftInverse
-d_LeftInverse_106 ::
+d_LeftInverse_108 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftInverse_106 = erased
+d_LeftInverse_108 = erased
 -- Algebra.Consequences.Setoid._.LeftZero
-d_LeftZero_112 ::
+d_LeftZero_114 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_LeftZero_112 = erased
+d_LeftZero_114 = erased
 -- Algebra.Consequences.Setoid._.RightCancellative
-d_RightCancellative_122 ::
+d_RightCancellative_124 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightCancellative_122 = erased
+d_RightCancellative_124 = erased
 -- Algebra.Consequences.Setoid._.RightIdentity
-d_RightIdentity_134 ::
+d_RightIdentity_136 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightIdentity_134 = erased
+d_RightIdentity_136 = erased
 -- Algebra.Consequences.Setoid._.RightInverse
-d_RightInverse_136 ::
+d_RightInverse_138 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightInverse_136 = erased
+d_RightInverse_138 = erased
 -- Algebra.Consequences.Setoid._.RightZero
-d_RightZero_142 ::
+d_RightZero_144 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_RightZero_142 = erased
+d_RightZero_144 = erased
 -- Algebra.Consequences.Setoid._.SelfInverse
-d_SelfInverse_146 ::
+d_SelfInverse_148 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) -> ()
-d_SelfInverse_146 = erased
+d_SelfInverse_148 = erased
 -- Algebra.Consequences.Setoid._.Zero
-d_Zero_162 ::
+d_Zero_164 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   AgdaAny -> (AgdaAny -> AgdaAny -> AgdaAny) -> ()
-d_Zero_162 = erased
+d_Zero_164 = erased
 -- Algebra.Consequences.Setoid._.comm∧assoc⇒middleFour
-d_comm'8743'assoc'8658'middleFour_212 ::
+d_comm'8743'assoc'8658'middleFour_214 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -208,11 +208,11 @@ d_comm'8743'assoc'8658'middleFour_212 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'8743'assoc'8658'middleFour_212 ~v0 ~v1 v2 v3 v4 v5 v6 v7 v8
+d_comm'8743'assoc'8658'middleFour_214 ~v0 ~v1 v2 v3 v4 v5 v6 v7 v8
                                       v9 v10
-  = du_comm'8743'assoc'8658'middleFour_212
+  = du_comm'8743'assoc'8658'middleFour_214
       v2 v3 v4 v5 v6 v7 v8 v9 v10
-du_comm'8743'assoc'8658'middleFour_212 ::
+du_comm'8743'assoc'8658'middleFour_214 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny ->
@@ -220,7 +220,7 @@ du_comm'8743'assoc'8658'middleFour_212 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'8743'assoc'8658'middleFour_212 v0 v1 v2 v3 v4 v5 v6 v7 v8
+du_comm'8743'assoc'8658'middleFour_214 v0 v1 v2 v3 v4 v5 v6 v7 v8
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v9 v10 v11 ->
@@ -333,7 +333,7 @@ du_comm'8743'assoc'8658'middleFour_212 v0 v1 v2 v3 v4 v5 v6 v7 v8
                   (coe v4 v6 v7 v8))))
          (coe v4 v5 v6 (coe v1 v7 v8)))
 -- Algebra.Consequences.Setoid._.identity∧middleFour⇒assoc
-d_identity'8743'middleFour'8658'assoc_228 ::
+d_identity'8743'middleFour'8658'assoc_230 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -344,11 +344,11 @@ d_identity'8743'middleFour'8658'assoc_228 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_identity'8743'middleFour'8658'assoc_228 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+d_identity'8743'middleFour'8658'assoc_230 ~v0 ~v1 v2 v3 v4 v5 v6 v7
                                           v8 v9 v10
-  = du_identity'8743'middleFour'8658'assoc_228
+  = du_identity'8743'middleFour'8658'assoc_230
       v2 v3 v4 v5 v6 v7 v8 v9 v10
-du_identity'8743'middleFour'8658'assoc_228 ::
+du_identity'8743'middleFour'8658'assoc_230 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny ->
@@ -357,7 +357,7 @@ du_identity'8743'middleFour'8658'assoc_228 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_identity'8743'middleFour'8658'assoc_228 v0 v1 v2 v3 v4 v5 v6 v7
+du_identity'8743'middleFour'8658'assoc_230 v0 v1 v2 v3 v4 v5 v6 v7
                                            v8
   = case coe v4 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v9 v10
@@ -428,7 +428,7 @@ du_identity'8743'middleFour'8658'assoc_228 v0 v1 v2 v3 v4 v5 v6 v7
                       (coe v1 v3 v8) v8 (coe v9 v8))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Consequences.Setoid._.identity∧middleFour⇒comm
-d_identity'8743'middleFour'8658'comm_248 ::
+d_identity'8743'middleFour'8658'comm_250 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -440,11 +440,11 @@ d_identity'8743'middleFour'8658'comm_248 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_identity'8743'middleFour'8658'comm_248 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+d_identity'8743'middleFour'8658'comm_250 ~v0 ~v1 v2 v3 v4 v5 v6 v7
                                          v8 v9 v10
-  = du_identity'8743'middleFour'8658'comm_248
+  = du_identity'8743'middleFour'8658'comm_250
       v2 v3 v4 v5 v6 v7 v8 v9 v10
-du_identity'8743'middleFour'8658'comm_248 ::
+du_identity'8743'middleFour'8658'comm_250 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny ->
@@ -454,7 +454,7 @@ du_identity'8743'middleFour'8658'comm_248 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny
-du_identity'8743'middleFour'8658'comm_248 v0 v1 v2 v3 v4 v5 v6 v7
+du_identity'8743'middleFour'8658'comm_250 v0 v1 v2 v3 v4 v5 v6 v7
                                           v8
   = case coe v5 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v9 v10
@@ -517,19 +517,19 @@ du_identity'8743'middleFour'8658'comm_248 v0 v1 v2 v3 v4 v5 v6 v7
                       v2 (coe v3 v4 v7) v7 (coe v3 v8 v4) v8 (coe v9 v7) (coe v10 v8))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Consequences.Setoid._.selfInverse⇒involutive
-d_selfInverse'8658'involutive_272 ::
+d_selfInverse'8658'involutive_274 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_selfInverse'8658'involutive_272 ~v0 ~v1 v2 v3 v4
-  = du_selfInverse'8658'involutive_272 v2 v3 v4
-du_selfInverse'8658'involutive_272 ::
+d_selfInverse'8658'involutive_274 ~v0 ~v1 v2 v3 v4
+  = du_selfInverse'8658'involutive_274 v2 v3 v4
+du_selfInverse'8658'involutive_274 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_selfInverse'8658'involutive_272 v0 v1 v2
+du_selfInverse'8658'involutive_274 v0 v1 v2
   = coe
       MAlonzo.Code.Algebra.Consequences.Base.du_reflexive'8743'selfInverse'8658'involutive_36
       (coe v1)
@@ -539,21 +539,21 @@ du_selfInverse'8658'involutive_272 v0 v1 v2
             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0)))
       (coe v2)
 -- Algebra.Consequences.Setoid._.selfInverse⇒congruent
-d_selfInverse'8658'congruent_274 ::
+d_selfInverse'8658'congruent_276 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_selfInverse'8658'congruent_274 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_selfInverse'8658'congruent_274 v2 v3 v4 v5 v6 v7
-du_selfInverse'8658'congruent_274 ::
+d_selfInverse'8658'congruent_276 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_selfInverse'8658'congruent_276 v2 v3 v4 v5 v6 v7
+du_selfInverse'8658'congruent_276 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_selfInverse'8658'congruent_274 v0 v1 v2 v3 v4 v5
+du_selfInverse'8658'congruent_276 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0))
@@ -597,23 +597,23 @@ du_selfInverse'8658'congruent_274 v0 v1 v2 v3 v4 v5
                            (coe v6))
                         (coe v4)))
                   v5)
-               (coe du_selfInverse'8658'involutive_272 v0 v1 v2 v3))))
+               (coe du_selfInverse'8658'involutive_274 v0 v1 v2 v3))))
 -- Algebra.Consequences.Setoid._.selfInverse⇒inverseᵇ
-d_selfInverse'8658'inverse'7495'_282 ::
+d_selfInverse'8658'inverse'7495'_284 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_selfInverse'8658'inverse'7495'_282 ~v0 ~v1 v2 v3 v4
-  = du_selfInverse'8658'inverse'7495'_282 v2 v3 v4
-du_selfInverse'8658'inverse'7495'_282 ::
+d_selfInverse'8658'inverse'7495'_284 ~v0 ~v1 v2 v3 v4
+  = du_selfInverse'8658'inverse'7495'_284 v2 v3 v4
+du_selfInverse'8658'inverse'7495'_284 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_selfInverse'8658'inverse'7495'_282 v0 v1 v2
+du_selfInverse'8658'inverse'7495'_284 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
@@ -633,21 +633,21 @@ du_selfInverse'8658'inverse'7495'_282 v0 v1 v2
                  (MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0))
                  v4 (coe v1 v3) v5)))
 -- Algebra.Consequences.Setoid._.selfInverse⇒surjective
-d_selfInverse'8658'surjective_284 ::
+d_selfInverse'8658'surjective_286 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_selfInverse'8658'surjective_284 ~v0 ~v1 v2 v3 v4 v5
-  = du_selfInverse'8658'surjective_284 v2 v3 v4 v5
-du_selfInverse'8658'surjective_284 ::
+d_selfInverse'8658'surjective_286 ~v0 ~v1 v2 v3 v4 v5
+  = du_selfInverse'8658'surjective_286 v2 v3 v4 v5
+du_selfInverse'8658'surjective_286 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_selfInverse'8658'surjective_284 v0 v1 v2 v3
+du_selfInverse'8658'surjective_286 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v1 v3)
       (coe
@@ -659,21 +659,21 @@ du_selfInverse'8658'surjective_284 v0 v1 v2 v3
                  (MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0))
                  v4 (coe v1 v3) v5)))
 -- Algebra.Consequences.Setoid._.selfInverse⇒injective
-d_selfInverse'8658'injective_288 ::
+d_selfInverse'8658'injective_290 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_selfInverse'8658'injective_288 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_selfInverse'8658'injective_288 v2 v3 v4 v5 v6 v7
-du_selfInverse'8658'injective_288 ::
+d_selfInverse'8658'injective_290 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_selfInverse'8658'injective_290 v2 v3 v4 v5 v6 v7
+du_selfInverse'8658'injective_290 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_selfInverse'8658'injective_288 v0 v1 v2 v3 v4 v5
+du_selfInverse'8658'injective_290 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v6 v7 v8 ->
@@ -713,30 +713,30 @@ du_selfInverse'8658'injective_288 v0 v1 v2 v3 v4 v5
                      MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_stop_54
                      (coe v6))
                   (coe v4)))
-            (coe du_selfInverse'8658'involutive_272 v0 v1 v2 v4))
+            (coe du_selfInverse'8658'involutive_274 v0 v1 v2 v4))
          (coe v2 v3 (coe v1 v4) v5))
 -- Algebra.Consequences.Setoid._.selfInverse⇒bijective
-d_selfInverse'8658'bijective_296 ::
+d_selfInverse'8658'bijective_298 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_selfInverse'8658'bijective_296 ~v0 ~v1 v2 v3 v4
-  = du_selfInverse'8658'bijective_296 v2 v3 v4
-du_selfInverse'8658'bijective_296 ::
+d_selfInverse'8658'bijective_298 ~v0 ~v1 v2 v3 v4
+  = du_selfInverse'8658'bijective_298 v2 v3 v4
+du_selfInverse'8658'bijective_298 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_selfInverse'8658'bijective_296 v0 v1 v2
+du_selfInverse'8658'bijective_298 v0 v1 v2
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-      (coe du_selfInverse'8658'injective_288 (coe v0) (coe v1) (coe v2))
-      (coe du_selfInverse'8658'surjective_284 (coe v0) (coe v1) (coe v2))
+      (coe du_selfInverse'8658'injective_290 (coe v0) (coe v1) (coe v2))
+      (coe du_selfInverse'8658'surjective_286 (coe v0) (coe v1) (coe v2))
 -- Algebra.Consequences.Setoid._.comm∧cancelˡ⇒cancelʳ
-d_comm'8743'cancel'737''8658'cancel'691'_306 ::
+d_comm'8743'cancel'737''8658'cancel'691'_308 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -744,17 +744,17 @@ d_comm'8743'cancel'737''8658'cancel'691'_306 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'8743'cancel'737''8658'cancel'691'_306 ~v0 ~v1 v2 v3 v4 v5 v6
+d_comm'8743'cancel'737''8658'cancel'691'_308 ~v0 ~v1 v2 v3 v4 v5 v6
                                              v7 v8 v9
-  = du_comm'8743'cancel'737''8658'cancel'691'_306
+  = du_comm'8743'cancel'737''8658'cancel'691'_308
       v2 v3 v4 v5 v6 v7 v8 v9
-du_comm'8743'cancel'737''8658'cancel'691'_306 ::
+du_comm'8743'cancel'737''8658'cancel'691'_308 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'8743'cancel'737''8658'cancel'691'_306 v0 v1 v2 v3 v4 v5 v6
+du_comm'8743'cancel'737''8658'cancel'691'_308 v0 v1 v2 v3 v4 v5 v6
                                               v7
   = coe
       v3 v4 v5 v6
@@ -807,7 +807,7 @@ du_comm'8743'cancel'737''8658'cancel'691'_306 v0 v1 v2 v3 v4 v5 v6
                v7)
             (coe v2 v4 v5)))
 -- Algebra.Consequences.Setoid._.comm∧cancelʳ⇒cancelˡ
-d_comm'8743'cancel'691''8658'cancel'737'_318 ::
+d_comm'8743'cancel'691''8658'cancel'737'_320 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -815,17 +815,17 @@ d_comm'8743'cancel'691''8658'cancel'737'_318 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'8743'cancel'691''8658'cancel'737'_318 ~v0 ~v1 v2 v3 v4 v5 v6
+d_comm'8743'cancel'691''8658'cancel'737'_320 ~v0 ~v1 v2 v3 v4 v5 v6
                                              v7 v8 v9
-  = du_comm'8743'cancel'691''8658'cancel'737'_318
+  = du_comm'8743'cancel'691''8658'cancel'737'_320
       v2 v3 v4 v5 v6 v7 v8 v9
-du_comm'8743'cancel'691''8658'cancel'737'_318 ::
+du_comm'8743'cancel'691''8658'cancel'737'_320 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'8743'cancel'691''8658'cancel'737'_318 v0 v1 v2 v3 v4 v5 v6
+du_comm'8743'cancel'691''8658'cancel'737'_320 v0 v1 v2 v3 v4 v5 v6
                                               v7
   = coe
       v3 v4 v5 v6
@@ -878,21 +878,21 @@ du_comm'8743'cancel'691''8658'cancel'737'_318 v0 v1 v2 v3 v4 v5 v6
                v7)
             (coe v2 v5 v4)))
 -- Algebra.Consequences.Setoid._.comm∧idˡ⇒idʳ
-d_comm'8743'id'737''8658'id'691'_340 ::
+d_comm'8743'id'737''8658'id'691'_342 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'8743'id'737''8658'id'691'_340 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_comm'8743'id'737''8658'id'691'_340 v2 v3 v4 v5 v6 v7
-du_comm'8743'id'737''8658'id'691'_340 ::
+d_comm'8743'id'737''8658'id'691'_342 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_comm'8743'id'737''8658'id'691'_342 v2 v3 v4 v5 v6 v7
+du_comm'8743'id'737''8658'id'691'_342 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'8743'id'737''8658'id'691'_340 v0 v1 v2 v3 v4 v5
+du_comm'8743'id'737''8658'id'691'_342 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v6 v7 v8 ->
@@ -932,21 +932,21 @@ du_comm'8743'id'737''8658'id'691'_340 v0 v1 v2 v3 v4 v5
             (coe v4 v5))
          (coe v2 v5 v3))
 -- Algebra.Consequences.Setoid._.comm∧idʳ⇒idˡ
-d_comm'8743'id'691''8658'id'737'_346 ::
+d_comm'8743'id'691''8658'id'737'_348 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'8743'id'691''8658'id'737'_346 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_comm'8743'id'691''8658'id'737'_346 v2 v3 v4 v5 v6 v7
-du_comm'8743'id'691''8658'id'737'_346 ::
+d_comm'8743'id'691''8658'id'737'_348 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_comm'8743'id'691''8658'id'737'_348 v2 v3 v4 v5 v6 v7
+du_comm'8743'id'691''8658'id'737'_348 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'8743'id'691''8658'id'737'_346 v0 v1 v2 v3 v4 v5
+du_comm'8743'id'691''8658'id'737'_348 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v6 v7 v8 ->
@@ -986,7 +986,7 @@ du_comm'8743'id'691''8658'id'737'_346 v0 v1 v2 v3 v4 v5
             (coe v4 v5))
          (coe v2 v3 v5))
 -- Algebra.Consequences.Setoid._.comm∧idˡ⇒id
-d_comm'8743'id'737''8658'id_352 ::
+d_comm'8743'id'737''8658'id_354 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -994,22 +994,22 @@ d_comm'8743'id'737''8658'id_352 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'8743'id'737''8658'id_352 ~v0 ~v1 v2 v3 v4 v5 v6
-  = du_comm'8743'id'737''8658'id_352 v2 v3 v4 v5 v6
-du_comm'8743'id'737''8658'id_352 ::
+d_comm'8743'id'737''8658'id_354 ~v0 ~v1 v2 v3 v4 v5 v6
+  = du_comm'8743'id'737''8658'id_354 v2 v3 v4 v5 v6
+du_comm'8743'id'737''8658'id_354 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'8743'id'737''8658'id_352 v0 v1 v2 v3 v4
+du_comm'8743'id'737''8658'id_354 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v4)
       (coe
-         du_comm'8743'id'737''8658'id'691'_340 (coe v0) (coe v1) (coe v2)
+         du_comm'8743'id'737''8658'id'691'_342 (coe v0) (coe v1) (coe v2)
          (coe v3) (coe v4))
 -- Algebra.Consequences.Setoid._.comm∧idʳ⇒id
-d_comm'8743'id'691''8658'id_356 ::
+d_comm'8743'id'691''8658'id_358 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1017,37 +1017,37 @@ d_comm'8743'id'691''8658'id_356 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'8743'id'691''8658'id_356 ~v0 ~v1 v2 v3 v4 v5 v6
-  = du_comm'8743'id'691''8658'id_356 v2 v3 v4 v5 v6
-du_comm'8743'id'691''8658'id_356 ::
+d_comm'8743'id'691''8658'id_358 ~v0 ~v1 v2 v3 v4 v5 v6
+  = du_comm'8743'id'691''8658'id_358 v2 v3 v4 v5 v6
+du_comm'8743'id'691''8658'id_358 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'8743'id'691''8658'id_356 v0 v1 v2 v3 v4
+du_comm'8743'id'691''8658'id_358 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
-         du_comm'8743'id'691''8658'id'737'_346 (coe v0) (coe v1) (coe v2)
+         du_comm'8743'id'691''8658'id'737'_348 (coe v0) (coe v1) (coe v2)
          (coe v3) (coe v4))
       (coe v4)
 -- Algebra.Consequences.Setoid._.comm∧zeˡ⇒zeʳ
-d_comm'8743'ze'737''8658'ze'691'_360 ::
+d_comm'8743'ze'737''8658'ze'691'_362 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'8743'ze'737''8658'ze'691'_360 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_comm'8743'ze'737''8658'ze'691'_360 v2 v3 v4 v5 v6 v7
-du_comm'8743'ze'737''8658'ze'691'_360 ::
+d_comm'8743'ze'737''8658'ze'691'_362 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_comm'8743'ze'737''8658'ze'691'_362 v2 v3 v4 v5 v6 v7
+du_comm'8743'ze'737''8658'ze'691'_362 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'8743'ze'737''8658'ze'691'_360 v0 v1 v2 v3 v4 v5
+du_comm'8743'ze'737''8658'ze'691'_362 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v6 v7 v8 ->
@@ -1087,21 +1087,21 @@ du_comm'8743'ze'737''8658'ze'691'_360 v0 v1 v2 v3 v4 v5
             (coe v4 v5))
          (coe v2 v5 v3))
 -- Algebra.Consequences.Setoid._.comm∧zeʳ⇒zeˡ
-d_comm'8743'ze'691''8658'ze'737'_366 ::
+d_comm'8743'ze'691''8658'ze'737'_368 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'8743'ze'691''8658'ze'737'_366 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_comm'8743'ze'691''8658'ze'737'_366 v2 v3 v4 v5 v6 v7
-du_comm'8743'ze'691''8658'ze'737'_366 ::
+d_comm'8743'ze'691''8658'ze'737'_368 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_comm'8743'ze'691''8658'ze'737'_368 v2 v3 v4 v5 v6 v7
+du_comm'8743'ze'691''8658'ze'737'_368 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'8743'ze'691''8658'ze'737'_366 v0 v1 v2 v3 v4 v5
+du_comm'8743'ze'691''8658'ze'737'_368 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v6 v7 v8 ->
@@ -1141,7 +1141,7 @@ du_comm'8743'ze'691''8658'ze'737'_366 v0 v1 v2 v3 v4 v5
             (coe v4 v5))
          (coe v2 v3 v5))
 -- Algebra.Consequences.Setoid._.comm∧zeˡ⇒ze
-d_comm'8743'ze'737''8658'ze_372 ::
+d_comm'8743'ze'737''8658'ze_374 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1149,22 +1149,22 @@ d_comm'8743'ze'737''8658'ze_372 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'8743'ze'737''8658'ze_372 ~v0 ~v1 v2 v3 v4 v5 v6
-  = du_comm'8743'ze'737''8658'ze_372 v2 v3 v4 v5 v6
-du_comm'8743'ze'737''8658'ze_372 ::
+d_comm'8743'ze'737''8658'ze_374 ~v0 ~v1 v2 v3 v4 v5 v6
+  = du_comm'8743'ze'737''8658'ze_374 v2 v3 v4 v5 v6
+du_comm'8743'ze'737''8658'ze_374 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'8743'ze'737''8658'ze_372 v0 v1 v2 v3 v4
+du_comm'8743'ze'737''8658'ze_374 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v4)
       (coe
-         du_comm'8743'ze'737''8658'ze'691'_360 (coe v0) (coe v1) (coe v2)
+         du_comm'8743'ze'737''8658'ze'691'_362 (coe v0) (coe v1) (coe v2)
          (coe v3) (coe v4))
 -- Algebra.Consequences.Setoid._.comm∧zeʳ⇒ze
-d_comm'8743'ze'691''8658'ze_376 ::
+d_comm'8743'ze'691''8658'ze_378 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1172,23 +1172,23 @@ d_comm'8743'ze'691''8658'ze_376 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'8743'ze'691''8658'ze_376 ~v0 ~v1 v2 v3 v4 v5 v6
-  = du_comm'8743'ze'691''8658'ze_376 v2 v3 v4 v5 v6
-du_comm'8743'ze'691''8658'ze_376 ::
+d_comm'8743'ze'691''8658'ze_378 ~v0 ~v1 v2 v3 v4 v5 v6
+  = du_comm'8743'ze'691''8658'ze_378 v2 v3 v4 v5 v6
+du_comm'8743'ze'691''8658'ze_378 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'8743'ze'691''8658'ze_376 v0 v1 v2 v3 v4
+du_comm'8743'ze'691''8658'ze_378 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
-         du_comm'8743'ze'691''8658'ze'737'_366 (coe v0) (coe v1) (coe v2)
+         du_comm'8743'ze'691''8658'ze'737'_368 (coe v0) (coe v1) (coe v2)
          (coe v3) (coe v4))
       (coe v4)
 -- Algebra.Consequences.Setoid._.comm∧almostCancelˡ⇒almostCancelʳ
-d_comm'8743'almostCancel'737''8658'almostCancel'691'_380 ::
+d_comm'8743'almostCancel'737''8658'almostCancel'691'_382 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1205,11 +1205,11 @@ d_comm'8743'almostCancel'737''8658'almostCancel'691'_380 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-d_comm'8743'almostCancel'737''8658'almostCancel'691'_380 ~v0 ~v1 v2
+d_comm'8743'almostCancel'737''8658'almostCancel'691'_382 ~v0 ~v1 v2
                                                          v3 v4 ~v5 v6 v7 v8 v9 v10 v11
-  = du_comm'8743'almostCancel'737''8658'almostCancel'691'_380
+  = du_comm'8743'almostCancel'737''8658'almostCancel'691'_382
       v2 v3 v4 v6 v7 v8 v9 v10 v11
-du_comm'8743'almostCancel'737''8658'almostCancel'691'_380 ::
+du_comm'8743'almostCancel'737''8658'almostCancel'691'_382 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -1223,7 +1223,7 @@ du_comm'8743'almostCancel'737''8658'almostCancel'691'_380 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-du_comm'8743'almostCancel'737''8658'almostCancel'691'_380 v0 v1 v2
+du_comm'8743'almostCancel'737''8658'almostCancel'691'_382 v0 v1 v2
                                                           v3 v4 v5 v6 v7 v8
   = coe
       v3 v4 v5 v6 v7
@@ -1276,7 +1276,7 @@ du_comm'8743'almostCancel'737''8658'almostCancel'691'_380 v0 v1 v2
                v8)
             (coe v2 v4 v5)))
 -- Algebra.Consequences.Setoid._.comm∧almostCancelʳ⇒almostCancelˡ
-d_comm'8743'almostCancel'691''8658'almostCancel'737'_394 ::
+d_comm'8743'almostCancel'691''8658'almostCancel'737'_396 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1293,11 +1293,11 @@ d_comm'8743'almostCancel'691''8658'almostCancel'737'_394 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-d_comm'8743'almostCancel'691''8658'almostCancel'737'_394 ~v0 ~v1 v2
+d_comm'8743'almostCancel'691''8658'almostCancel'737'_396 ~v0 ~v1 v2
                                                          v3 v4 ~v5 v6 v7 v8 v9 v10 v11
-  = du_comm'8743'almostCancel'691''8658'almostCancel'737'_394
+  = du_comm'8743'almostCancel'691''8658'almostCancel'737'_396
       v2 v3 v4 v6 v7 v8 v9 v10 v11
-du_comm'8743'almostCancel'691''8658'almostCancel'737'_394 ::
+du_comm'8743'almostCancel'691''8658'almostCancel'737'_396 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -1311,7 +1311,7 @@ du_comm'8743'almostCancel'691''8658'almostCancel'737'_394 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-du_comm'8743'almostCancel'691''8658'almostCancel'737'_394 v0 v1 v2
+du_comm'8743'almostCancel'691''8658'almostCancel'737'_396 v0 v1 v2
                                                           v3 v4 v5 v6 v7 v8
   = coe
       v3 v4 v5 v6 v7
@@ -1364,7 +1364,7 @@ du_comm'8743'almostCancel'691''8658'almostCancel'737'_394 v0 v1 v2
                v8)
             (coe v2 v5 v4)))
 -- Algebra.Consequences.Setoid._.comm∧invˡ⇒invʳ
-d_comm'8743'inv'737''8658'inv'691'_420 ::
+d_comm'8743'inv'737''8658'inv'691'_422 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1373,16 +1373,16 @@ d_comm'8743'inv'737''8658'inv'691'_420 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'8743'inv'737''8658'inv'691'_420 ~v0 ~v1 v2 v3 v4 v5 v6 v7 v8
-  = du_comm'8743'inv'737''8658'inv'691'_420 v2 v3 v4 v5 v6 v7 v8
-du_comm'8743'inv'737''8658'inv'691'_420 ::
+d_comm'8743'inv'737''8658'inv'691'_422 ~v0 ~v1 v2 v3 v4 v5 v6 v7 v8
+  = du_comm'8743'inv'737''8658'inv'691'_422 v2 v3 v4 v5 v6 v7 v8
+du_comm'8743'inv'737''8658'inv'691'_422 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'8743'inv'737''8658'inv'691'_420 v0 v1 v2 v3 v4 v5 v6
+du_comm'8743'inv'737''8658'inv'691'_422 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v7 v8 v9 ->
@@ -1422,7 +1422,7 @@ du_comm'8743'inv'737''8658'inv'691'_420 v0 v1 v2 v3 v4 v5 v6
             (coe v5 v6))
          (coe v4 v6 (coe v2 v6)))
 -- Algebra.Consequences.Setoid._.comm∧invˡ⇒inv
-d_comm'8743'inv'737''8658'inv_426 ::
+d_comm'8743'inv'737''8658'inv_428 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1431,23 +1431,23 @@ d_comm'8743'inv'737''8658'inv_426 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'8743'inv'737''8658'inv_426 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_comm'8743'inv'737''8658'inv_426 v2 v3 v4 v5 v6 v7
-du_comm'8743'inv'737''8658'inv_426 ::
+d_comm'8743'inv'737''8658'inv_428 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_comm'8743'inv'737''8658'inv_428 v2 v3 v4 v5 v6 v7
+du_comm'8743'inv'737''8658'inv_428 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'8743'inv'737''8658'inv_426 v0 v1 v2 v3 v4 v5
+du_comm'8743'inv'737''8658'inv_428 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
       (coe
-         du_comm'8743'inv'737''8658'inv'691'_420 (coe v0) (coe v1) (coe v2)
+         du_comm'8743'inv'737''8658'inv'691'_422 (coe v0) (coe v1) (coe v2)
          (coe v3) (coe v4) (coe v5))
 -- Algebra.Consequences.Setoid._.comm∧invʳ⇒invˡ
-d_comm'8743'inv'691''8658'inv'737'_430 ::
+d_comm'8743'inv'691''8658'inv'737'_432 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1456,16 +1456,16 @@ d_comm'8743'inv'691''8658'inv'737'_430 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'8743'inv'691''8658'inv'737'_430 ~v0 ~v1 v2 v3 v4 v5 v6 v7 v8
-  = du_comm'8743'inv'691''8658'inv'737'_430 v2 v3 v4 v5 v6 v7 v8
-du_comm'8743'inv'691''8658'inv'737'_430 ::
+d_comm'8743'inv'691''8658'inv'737'_432 ~v0 ~v1 v2 v3 v4 v5 v6 v7 v8
+  = du_comm'8743'inv'691''8658'inv'737'_432 v2 v3 v4 v5 v6 v7 v8
+du_comm'8743'inv'691''8658'inv'737'_432 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'8743'inv'691''8658'inv'737'_430 v0 v1 v2 v3 v4 v5 v6
+du_comm'8743'inv'691''8658'inv'737'_432 v0 v1 v2 v3 v4 v5 v6
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v7 v8 v9 ->
@@ -1505,7 +1505,7 @@ du_comm'8743'inv'691''8658'inv'737'_430 v0 v1 v2 v3 v4 v5 v6
             (coe v5 v6))
          (coe v4 (coe v2 v6) v6))
 -- Algebra.Consequences.Setoid._.comm∧invʳ⇒inv
-d_comm'8743'inv'691''8658'inv_436 ::
+d_comm'8743'inv'691''8658'inv_438 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1514,24 +1514,24 @@ d_comm'8743'inv'691''8658'inv_436 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'8743'inv'691''8658'inv_436 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_comm'8743'inv'691''8658'inv_436 v2 v3 v4 v5 v6 v7
-du_comm'8743'inv'691''8658'inv_436 ::
+d_comm'8743'inv'691''8658'inv_438 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_comm'8743'inv'691''8658'inv_438 v2 v3 v4 v5 v6 v7
+du_comm'8743'inv'691''8658'inv_438 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'8743'inv'691''8658'inv_436 v0 v1 v2 v3 v4 v5
+du_comm'8743'inv'691''8658'inv_438 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
-         du_comm'8743'inv'691''8658'inv'737'_430 (coe v0) (coe v1) (coe v2)
+         du_comm'8743'inv'691''8658'inv'737'_432 (coe v0) (coe v1) (coe v2)
          (coe v3) (coe v4) (coe v5))
       (coe v5)
 -- Algebra.Consequences.Setoid._.assoc∧id∧invʳ⇒invˡ-unique
-d_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456 ::
+d_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_458 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1543,11 +1543,11 @@ d_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456 ~v0 ~v1
+d_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_458 ~v0 ~v1
                                                           v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
-  = du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456
+  = du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_458
       v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
-du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456 ::
+du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_458 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
@@ -1557,7 +1557,7 @@ du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456 v0 v1 v2
+du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_458 v0 v1 v2
                                                            v3 v4 v5 v6 v7 v8 v9 v10
   = case coe v6 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
@@ -1656,7 +1656,7 @@ du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456 v0 v1 v2
                    (coe v1 v8 v3) v8 (coe v12 v8)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Consequences.Setoid._.assoc∧id∧invˡ⇒invʳ-unique
-d_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476 ::
+d_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_478 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1668,11 +1668,11 @@ d_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476 ~v0 ~v1
+d_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_478 ~v0 ~v1
                                                           v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
-  = du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476
+  = du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_478
       v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12
-du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476 ::
+du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_478 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
@@ -1682,7 +1682,7 @@ du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476 v0 v1 v2
+du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_478 v0 v1 v2
                                                            v3 v4 v5 v6 v7 v8 v9 v10
   = case coe v6 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
@@ -1778,7 +1778,7 @@ du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476 v0 v1 v2
                    (coe v1 v3 v9) v9 (coe v11 v9)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Consequences.Setoid._.comm∧distrˡ⇒distrʳ
-d_comm'8743'distr'737''8658'distr'691'_504 ::
+d_comm'8743'distr'737''8658'distr'691'_506 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1789,11 +1789,11 @@ d_comm'8743'distr'737''8658'distr'691'_504 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'8743'distr'737''8658'distr'691'_504 ~v0 ~v1 v2 v3 v4 v5 v6
+d_comm'8743'distr'737''8658'distr'691'_506 ~v0 ~v1 v2 v3 v4 v5 v6
                                            v7 v8 v9 v10
-  = du_comm'8743'distr'737''8658'distr'691'_504
+  = du_comm'8743'distr'737''8658'distr'691'_506
       v2 v3 v4 v5 v6 v7 v8 v9 v10
-du_comm'8743'distr'737''8658'distr'691'_504 ::
+du_comm'8743'distr'737''8658'distr'691'_506 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -1802,7 +1802,7 @@ du_comm'8743'distr'737''8658'distr'691'_504 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'8743'distr'737''8658'distr'691'_504 v0 v1 v2 v3 v4 v5 v6 v7
+du_comm'8743'distr'737''8658'distr'691'_506 v0 v1 v2 v3 v4 v5 v6 v7
                                             v8
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -1859,7 +1859,7 @@ du_comm'8743'distr'737''8658'distr'691'_504 v0 v1 v2 v3 v4 v5 v6 v7
             (coe v5 v6 v7 v8))
          (coe v4 (coe v2 v7 v8) v6))
 -- Algebra.Consequences.Setoid._.comm∧distrʳ⇒distrˡ
-d_comm'8743'distr'691''8658'distr'737'_514 ::
+d_comm'8743'distr'691''8658'distr'737'_516 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1870,11 +1870,11 @@ d_comm'8743'distr'691''8658'distr'737'_514 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'8743'distr'691''8658'distr'737'_514 ~v0 ~v1 v2 v3 v4 v5 v6
+d_comm'8743'distr'691''8658'distr'737'_516 ~v0 ~v1 v2 v3 v4 v5 v6
                                            v7 v8 v9 v10
-  = du_comm'8743'distr'691''8658'distr'737'_514
+  = du_comm'8743'distr'691''8658'distr'737'_516
       v2 v3 v4 v5 v6 v7 v8 v9 v10
-du_comm'8743'distr'691''8658'distr'737'_514 ::
+du_comm'8743'distr'691''8658'distr'737'_516 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -1883,7 +1883,7 @@ du_comm'8743'distr'691''8658'distr'737'_514 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'8743'distr'691''8658'distr'737'_514 v0 v1 v2 v3 v4 v5 v6 v7
+du_comm'8743'distr'691''8658'distr'737'_516 v0 v1 v2 v3 v4 v5 v6 v7
                                             v8
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -1940,7 +1940,7 @@ du_comm'8743'distr'691''8658'distr'737'_514 v0 v1 v2 v3 v4 v5 v6 v7
             (coe v5 v6 v7 v8))
          (coe v4 v6 (coe v2 v7 v8)))
 -- Algebra.Consequences.Setoid._.comm∧distrˡ⇒distr
-d_comm'8743'distr'737''8658'distr_524 ::
+d_comm'8743'distr'737''8658'distr_526 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1951,9 +1951,9 @@ d_comm'8743'distr'737''8658'distr_524 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'8743'distr'737''8658'distr_524 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_comm'8743'distr'737''8658'distr_524 v2 v3 v4 v5 v6 v7
-du_comm'8743'distr'737''8658'distr_524 ::
+d_comm'8743'distr'737''8658'distr_526 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_comm'8743'distr'737''8658'distr_526 v2 v3 v4 v5 v6 v7
+du_comm'8743'distr'737''8658'distr_526 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -1962,14 +1962,14 @@ du_comm'8743'distr'737''8658'distr_524 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'8743'distr'737''8658'distr_524 v0 v1 v2 v3 v4 v5
+du_comm'8743'distr'737''8658'distr_526 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
       (coe
-         du_comm'8743'distr'737''8658'distr'691'_504 (coe v0) (coe v1)
+         du_comm'8743'distr'737''8658'distr'691'_506 (coe v0) (coe v1)
          (coe v2) (coe v3) (coe v4) (coe v5))
 -- Algebra.Consequences.Setoid._.comm∧distrʳ⇒distr
-d_comm'8743'distr'691''8658'distr_528 ::
+d_comm'8743'distr'691''8658'distr_530 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -1980,9 +1980,9 @@ d_comm'8743'distr'691''8658'distr_528 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'8743'distr'691''8658'distr_528 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_comm'8743'distr'691''8658'distr_528 v2 v3 v4 v5 v6 v7
-du_comm'8743'distr'691''8658'distr_528 ::
+d_comm'8743'distr'691''8658'distr_530 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_comm'8743'distr'691''8658'distr_530 v2 v3 v4 v5 v6 v7
+du_comm'8743'distr'691''8658'distr_530 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -1991,15 +1991,15 @@ du_comm'8743'distr'691''8658'distr_528 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'8743'distr'691''8658'distr_528 v0 v1 v2 v3 v4 v5
+du_comm'8743'distr'691''8658'distr_530 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
-         du_comm'8743'distr'691''8658'distr'737'_514 (coe v0) (coe v1)
+         du_comm'8743'distr'691''8658'distr'737'_516 (coe v0) (coe v1)
          (coe v2) (coe v3) (coe v4) (coe v5))
       (coe v5)
 -- Algebra.Consequences.Setoid._.comm⇒sym[distribˡ]
-d_comm'8658'sym'91'distrib'737''93'_538 ::
+d_comm'8658'sym'91'distrib'737''93'_540 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2009,11 +2009,11 @@ d_comm'8658'sym'91'distrib'737''93'_538 ::
    AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'8658'sym'91'distrib'737''93'_538 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+d_comm'8658'sym'91'distrib'737''93'_540 ~v0 ~v1 v2 v3 v4 v5 v6 v7
                                         v8 v9 v10
-  = du_comm'8658'sym'91'distrib'737''93'_538
+  = du_comm'8658'sym'91'distrib'737''93'_540
       v2 v3 v4 v5 v6 v7 v8 v9 v10
-du_comm'8658'sym'91'distrib'737''93'_538 ::
+du_comm'8658'sym'91'distrib'737''93'_540 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -2021,7 +2021,7 @@ du_comm'8658'sym'91'distrib'737''93'_538 ::
    AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'8658'sym'91'distrib'737''93'_538 v0 v1 v2 v3 v4 v5 v6 v7 v8
+du_comm'8658'sym'91'distrib'737''93'_540 v0 v1 v2 v3 v4 v5 v6 v7 v8
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v9 v10 v11 ->
@@ -2081,7 +2081,7 @@ du_comm'8658'sym'91'distrib'737''93'_538 v0 v1 v2 v3 v4 v5 v6 v7 v8
                v5)
             (coe v4 v7 v6)))
 -- Algebra.Consequences.Setoid._.distrib∧absorbs⇒distribˡ
-d_distrib'8743'absorbs'8658'distrib'737'_562 ::
+d_distrib'8743'absorbs'8658'distrib'737'_564 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2095,11 +2095,11 @@ d_distrib'8743'absorbs'8658'distrib'737'_562 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'8743'absorbs'8658'distrib'737'_562 ~v0 ~v1 v2 v3 v4 v5 v6
+d_distrib'8743'absorbs'8658'distrib'737'_564 ~v0 ~v1 v2 v3 v4 v5 v6
                                              v7 v8 v9 v10 v11 v12 v13
-  = du_distrib'8743'absorbs'8658'distrib'737'_562
+  = du_distrib'8743'absorbs'8658'distrib'737'_564
       v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13
-du_distrib'8743'absorbs'8658'distrib'737'_562 ::
+du_distrib'8743'absorbs'8658'distrib'737'_564 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -2111,7 +2111,7 @@ du_distrib'8743'absorbs'8658'distrib'737'_562 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'8743'absorbs'8658'distrib'737'_562 v0 v1 v2 v3 v4 v5 v6
+du_distrib'8743'absorbs'8658'distrib'737'_564 v0 v1 v2 v3 v4 v5 v6
                                               v7 v8 v9 v10 v11
   = case coe v8 of
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v12 v13
@@ -2256,7 +2256,7 @@ du_distrib'8743'absorbs'8658'distrib'737'_562 v0 v1 v2 v3 v4 v5 v6
                       (coe v2 v10 v11))))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Consequences.Setoid._.assoc∧distribʳ∧idʳ∧invʳ⇒zeˡ
-d_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594 ::
+d_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_596 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2271,12 +2271,12 @@ d_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594 ~v0
+d_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_596 ~v0
                                                                       ~v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                       v10 v11 v12 v13
-  = du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594
+  = du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_596
       v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13
-du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594 ::
+du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_596 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -2289,7 +2289,7 @@ du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594 v0
+du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_596 v0
                                                                        v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                        v10 v11
   = coe
@@ -2433,7 +2433,7 @@ du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594 v0
             (coe v1 (coe v2 v4 v11) v4) (coe v2 v4 v11)
             (coe v9 (coe v2 v4 v11))))
 -- Algebra.Consequences.Setoid._.assoc∧distribˡ∧idʳ∧invʳ⇒zeʳ
-d_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606 ::
+d_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_608 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2448,12 +2448,12 @@ d_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606 ~v0
+d_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_608 ~v0
                                                                       ~v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                       v10 v11 v12 v13
-  = du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606
+  = du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_608
       v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13
-du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606 ::
+du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_608 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -2466,7 +2466,7 @@ du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606 v0
+du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_608 v0
                                                                        v1 v2 v3 v4 v5 v6 v7 v8 v9
                                                                        v10 v11
   = coe
@@ -2611,7 +2611,7 @@ du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606 v0
             (coe v1 (coe v2 v11 v4) v4) (coe v2 v11 v4)
             (coe v9 (coe v2 v11 v4))))
 -- Algebra.Consequences.Setoid._.subst∧comm⇒sym
-d_subst'8743'comm'8658'sym_636 ::
+d_subst'8743'comm'8658'sym_638 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -2620,19 +2620,19 @@ d_subst'8743'comm'8658'sym_636 ::
    AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_subst'8743'comm'8658'sym_636 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_subst'8743'comm'8658'sym_636 v2 v3 v4 v5 v6 v7
-du_subst'8743'comm'8658'sym_636 ::
+d_subst'8743'comm'8658'sym_638 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_subst'8743'comm'8658'sym_638 v2 v3 v4 v5 v6 v7
+du_subst'8743'comm'8658'sym_638 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> ()) ->
   ((AgdaAny -> ()) ->
    AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_subst'8743'comm'8658'sym_636 v0 v1 v2 v3 v4 v5
+du_subst'8743'comm'8658'sym_638 v0 v1 v2 v3 v4 v5
   = coe v2 v1 (coe v0 v4 v5) (coe v0 v5 v4) (coe v3 v4 v5)
 -- Algebra.Consequences.Setoid._.wlog
-d_wlog_650 ::
+d_wlog_652 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2647,9 +2647,9 @@ d_wlog_650 ::
   (AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_wlog_650 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 ~v9 v10
-  = du_wlog_650 v4 v5 v6 v7 v10
-du_wlog_650 ::
+d_wlog_652 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 ~v9 v10
+  = du_wlog_652 v4 v5 v6 v7 v10
+du_wlog_652 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> ()) ->
   ((AgdaAny -> ()) ->
@@ -2658,14 +2658,14 @@ du_wlog_650 ::
   (AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny
-du_wlog_650 v0 v1 v2 v3 v4
+du_wlog_652 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Relation.Binary.Consequences.du_wlog_748 (coe v4)
       (coe
          (\ v5 v6 ->
             coe v2 v1 (coe v0 v5 v6) (coe v0 v6 v5) (coe v3 v5 v6)))
 -- Algebra.Consequences.Setoid.comm+assoc⇒middleFour
-d_comm'43'assoc'8658'middleFour_654 ::
+d_comm'43'assoc'8658'middleFour_656 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2675,9 +2675,9 @@ d_comm'43'assoc'8658'middleFour_654 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'43'assoc'8658'middleFour_654 ~v0 ~v1 v2
-  = du_comm'43'assoc'8658'middleFour_654 v2
-du_comm'43'assoc'8658'middleFour_654 ::
+d_comm'43'assoc'8658'middleFour_656 ~v0 ~v1 v2
+  = du_comm'43'assoc'8658'middleFour_656 v2
+du_comm'43'assoc'8658'middleFour_656 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny ->
@@ -2685,10 +2685,10 @@ du_comm'43'assoc'8658'middleFour_654 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'43'assoc'8658'middleFour_654 v0
-  = coe du_comm'8743'assoc'8658'middleFour_212 (coe v0)
+du_comm'43'assoc'8658'middleFour_656 v0
+  = coe du_comm'8743'assoc'8658'middleFour_214 (coe v0)
 -- Algebra.Consequences.Setoid.identity+middleFour⇒assoc
-d_identity'43'middleFour'8658'assoc_656 ::
+d_identity'43'middleFour'8658'assoc_658 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2699,9 +2699,9 @@ d_identity'43'middleFour'8658'assoc_656 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_identity'43'middleFour'8658'assoc_656 ~v0 ~v1 v2
-  = du_identity'43'middleFour'8658'assoc_656 v2
-du_identity'43'middleFour'8658'assoc_656 ::
+d_identity'43'middleFour'8658'assoc_658 ~v0 ~v1 v2
+  = du_identity'43'middleFour'8658'assoc_658 v2
+du_identity'43'middleFour'8658'assoc_658 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny ->
@@ -2710,10 +2710,10 @@ du_identity'43'middleFour'8658'assoc_656 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_identity'43'middleFour'8658'assoc_656 v0
-  = coe du_identity'8743'middleFour'8658'assoc_228 (coe v0)
+du_identity'43'middleFour'8658'assoc_658 v0
+  = coe du_identity'8743'middleFour'8658'assoc_230 (coe v0)
 -- Algebra.Consequences.Setoid.identity+middleFour⇒comm
-d_identity'43'middleFour'8658'comm_658 ::
+d_identity'43'middleFour'8658'comm_660 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2725,9 +2725,9 @@ d_identity'43'middleFour'8658'comm_658 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_identity'43'middleFour'8658'comm_658 ~v0 ~v1 v2
-  = du_identity'43'middleFour'8658'comm_658 v2
-du_identity'43'middleFour'8658'comm_658 ::
+d_identity'43'middleFour'8658'comm_660 ~v0 ~v1 v2
+  = du_identity'43'middleFour'8658'comm_660 v2
+du_identity'43'middleFour'8658'comm_660 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny ->
@@ -2737,10 +2737,10 @@ du_identity'43'middleFour'8658'comm_658 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny
-du_identity'43'middleFour'8658'comm_658 v0
-  = coe du_identity'8743'middleFour'8658'comm_248 (coe v0)
+du_identity'43'middleFour'8658'comm_660 v0
+  = coe du_identity'8743'middleFour'8658'comm_250 (coe v0)
 -- Algebra.Consequences.Setoid.comm+cancelˡ⇒cancelʳ
-d_comm'43'cancel'737''8658'cancel'691'_660 ::
+d_comm'43'cancel'737''8658'cancel'691'_662 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2748,18 +2748,18 @@ d_comm'43'cancel'737''8658'cancel'691'_660 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'43'cancel'737''8658'cancel'691'_660 ~v0 ~v1 v2
-  = du_comm'43'cancel'737''8658'cancel'691'_660 v2
-du_comm'43'cancel'737''8658'cancel'691'_660 ::
+d_comm'43'cancel'737''8658'cancel'691'_662 ~v0 ~v1 v2
+  = du_comm'43'cancel'737''8658'cancel'691'_662 v2
+du_comm'43'cancel'737''8658'cancel'691'_662 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'43'cancel'737''8658'cancel'691'_660 v0
-  = coe du_comm'8743'cancel'737''8658'cancel'691'_306 (coe v0)
+du_comm'43'cancel'737''8658'cancel'691'_662 v0
+  = coe du_comm'8743'cancel'737''8658'cancel'691'_308 (coe v0)
 -- Algebra.Consequences.Setoid.comm+cancelʳ⇒cancelˡ
-d_comm'43'cancel'691''8658'cancel'737'_662 ::
+d_comm'43'cancel'691''8658'cancel'737'_664 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2767,86 +2767,86 @@ d_comm'43'cancel'691''8658'cancel'737'_662 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'43'cancel'691''8658'cancel'737'_662 ~v0 ~v1 v2
-  = du_comm'43'cancel'691''8658'cancel'737'_662 v2
-du_comm'43'cancel'691''8658'cancel'737'_662 ::
+d_comm'43'cancel'691''8658'cancel'737'_664 ~v0 ~v1 v2
+  = du_comm'43'cancel'691''8658'cancel'737'_664 v2
+du_comm'43'cancel'691''8658'cancel'737'_664 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'43'cancel'691''8658'cancel'737'_662 v0
-  = coe du_comm'8743'cancel'691''8658'cancel'737'_318 (coe v0)
+du_comm'43'cancel'691''8658'cancel'737'_664 v0
+  = coe du_comm'8743'cancel'691''8658'cancel'737'_320 (coe v0)
 -- Algebra.Consequences.Setoid.comm+idˡ⇒idʳ
-d_comm'43'id'737''8658'id'691'_664 ::
+d_comm'43'id'737''8658'id'691'_666 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'43'id'737''8658'id'691'_664 ~v0 ~v1 v2
-  = du_comm'43'id'737''8658'id'691'_664 v2
-du_comm'43'id'737''8658'id'691'_664 ::
+d_comm'43'id'737''8658'id'691'_666 ~v0 ~v1 v2
+  = du_comm'43'id'737''8658'id'691'_666 v2
+du_comm'43'id'737''8658'id'691'_666 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'43'id'737''8658'id'691'_664 v0
-  = coe du_comm'8743'id'737''8658'id'691'_340 (coe v0)
+du_comm'43'id'737''8658'id'691'_666 v0
+  = coe du_comm'8743'id'737''8658'id'691'_342 (coe v0)
 -- Algebra.Consequences.Setoid.comm+idʳ⇒idˡ
-d_comm'43'id'691''8658'id'737'_666 ::
+d_comm'43'id'691''8658'id'737'_668 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'43'id'691''8658'id'737'_666 ~v0 ~v1 v2
-  = du_comm'43'id'691''8658'id'737'_666 v2
-du_comm'43'id'691''8658'id'737'_666 ::
+d_comm'43'id'691''8658'id'737'_668 ~v0 ~v1 v2
+  = du_comm'43'id'691''8658'id'737'_668 v2
+du_comm'43'id'691''8658'id'737'_668 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'43'id'691''8658'id'737'_666 v0
-  = coe du_comm'8743'id'691''8658'id'737'_346 (coe v0)
+du_comm'43'id'691''8658'id'737'_668 v0
+  = coe du_comm'8743'id'691''8658'id'737'_348 (coe v0)
 -- Algebra.Consequences.Setoid.comm+zeˡ⇒zeʳ
-d_comm'43'ze'737''8658'ze'691'_668 ::
+d_comm'43'ze'737''8658'ze'691'_670 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'43'ze'737''8658'ze'691'_668 ~v0 ~v1 v2
-  = du_comm'43'ze'737''8658'ze'691'_668 v2
-du_comm'43'ze'737''8658'ze'691'_668 ::
+d_comm'43'ze'737''8658'ze'691'_670 ~v0 ~v1 v2
+  = du_comm'43'ze'737''8658'ze'691'_670 v2
+du_comm'43'ze'737''8658'ze'691'_670 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'43'ze'737''8658'ze'691'_668 v0
-  = coe du_comm'8743'ze'737''8658'ze'691'_360 (coe v0)
+du_comm'43'ze'737''8658'ze'691'_670 v0
+  = coe du_comm'8743'ze'737''8658'ze'691'_362 (coe v0)
 -- Algebra.Consequences.Setoid.comm+zeʳ⇒zeˡ
-d_comm'43'ze'691''8658'ze'737'_670 ::
+d_comm'43'ze'691''8658'ze'737'_672 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'43'ze'691''8658'ze'737'_670 ~v0 ~v1 v2
-  = du_comm'43'ze'691''8658'ze'737'_670 v2
-du_comm'43'ze'691''8658'ze'737'_670 ::
+d_comm'43'ze'691''8658'ze'737'_672 ~v0 ~v1 v2
+  = du_comm'43'ze'691''8658'ze'737'_672 v2
+du_comm'43'ze'691''8658'ze'737'_672 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'43'ze'691''8658'ze'737'_670 v0
-  = coe du_comm'8743'ze'691''8658'ze'737'_366 (coe v0)
+du_comm'43'ze'691''8658'ze'737'_672 v0
+  = coe du_comm'8743'ze'691''8658'ze'737'_368 (coe v0)
 -- Algebra.Consequences.Setoid.comm+almostCancelˡ⇒almostCancelʳ
-d_comm'43'almostCancel'737''8658'almostCancel'691'_672 ::
+d_comm'43'almostCancel'737''8658'almostCancel'691'_674 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2863,9 +2863,9 @@ d_comm'43'almostCancel'737''8658'almostCancel'691'_672 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-d_comm'43'almostCancel'737''8658'almostCancel'691'_672 ~v0 ~v1 v2
-  = du_comm'43'almostCancel'737''8658'almostCancel'691'_672 v2
-du_comm'43'almostCancel'737''8658'almostCancel'691'_672 ::
+d_comm'43'almostCancel'737''8658'almostCancel'691'_674 ~v0 ~v1 v2
+  = du_comm'43'almostCancel'737''8658'almostCancel'691'_674 v2
+du_comm'43'almostCancel'737''8658'almostCancel'691'_674 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -2880,13 +2880,13 @@ du_comm'43'almostCancel'737''8658'almostCancel'691'_672 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-du_comm'43'almostCancel'737''8658'almostCancel'691'_672 v0 v1 v2 v3
+du_comm'43'almostCancel'737''8658'almostCancel'691'_674 v0 v1 v2 v3
                                                         v4 v5 v6 v7 v8 v9
   = coe
-      du_comm'8743'almostCancel'737''8658'almostCancel'691'_380 (coe v0)
+      du_comm'8743'almostCancel'737''8658'almostCancel'691'_382 (coe v0)
       v1 v2 v4 v5 v6 v7 v8 v9
 -- Algebra.Consequences.Setoid.comm+almostCancelʳ⇒almostCancelˡ
-d_comm'43'almostCancel'691''8658'almostCancel'737'_674 ::
+d_comm'43'almostCancel'691''8658'almostCancel'737'_676 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2903,9 +2903,9 @@ d_comm'43'almostCancel'691''8658'almostCancel'737'_674 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-d_comm'43'almostCancel'691''8658'almostCancel'737'_674 ~v0 ~v1 v2
-  = du_comm'43'almostCancel'691''8658'almostCancel'737'_674 v2
-du_comm'43'almostCancel'691''8658'almostCancel'737'_674 ::
+d_comm'43'almostCancel'691''8658'almostCancel'737'_676 ~v0 ~v1 v2
+  = du_comm'43'almostCancel'691''8658'almostCancel'737'_676 v2
+du_comm'43'almostCancel'691''8658'almostCancel'737'_676 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -2920,13 +2920,13 @@ du_comm'43'almostCancel'691''8658'almostCancel'737'_674 ::
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-du_comm'43'almostCancel'691''8658'almostCancel'737'_674 v0 v1 v2 v3
+du_comm'43'almostCancel'691''8658'almostCancel'737'_676 v0 v1 v2 v3
                                                         v4 v5 v6 v7 v8 v9
   = coe
-      du_comm'8743'almostCancel'691''8658'almostCancel'737'_394 (coe v0)
+      du_comm'8743'almostCancel'691''8658'almostCancel'737'_396 (coe v0)
       v1 v2 v4 v5 v6 v7 v8 v9
 -- Algebra.Consequences.Setoid.comm+invˡ⇒invʳ
-d_comm'43'inv'737''8658'inv'691'_676 ::
+d_comm'43'inv'737''8658'inv'691'_678 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2935,19 +2935,19 @@ d_comm'43'inv'737''8658'inv'691'_676 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'43'inv'737''8658'inv'691'_676 ~v0 ~v1 v2
-  = du_comm'43'inv'737''8658'inv'691'_676 v2
-du_comm'43'inv'737''8658'inv'691'_676 ::
+d_comm'43'inv'737''8658'inv'691'_678 ~v0 ~v1 v2
+  = du_comm'43'inv'737''8658'inv'691'_678 v2
+du_comm'43'inv'737''8658'inv'691'_678 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'43'inv'737''8658'inv'691'_676 v0
-  = coe du_comm'8743'inv'737''8658'inv'691'_420 (coe v0)
+du_comm'43'inv'737''8658'inv'691'_678 v0
+  = coe du_comm'8743'inv'737''8658'inv'691'_422 (coe v0)
 -- Algebra.Consequences.Setoid.comm+invʳ⇒invˡ
-d_comm'43'inv'691''8658'inv'737'_678 ::
+d_comm'43'inv'691''8658'inv'737'_680 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2956,19 +2956,19 @@ d_comm'43'inv'691''8658'inv'737'_678 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_comm'43'inv'691''8658'inv'737'_678 ~v0 ~v1 v2
-  = du_comm'43'inv'691''8658'inv'737'_678 v2
-du_comm'43'inv'691''8658'inv'737'_678 ::
+d_comm'43'inv'691''8658'inv'737'_680 ~v0 ~v1 v2
+  = du_comm'43'inv'691''8658'inv'737'_680 v2
+du_comm'43'inv'691''8658'inv'737'_680 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_comm'43'inv'691''8658'inv'737'_678 v0
-  = coe du_comm'8743'inv'691''8658'inv'737'_430 (coe v0)
+du_comm'43'inv'691''8658'inv'737'_680 v0
+  = coe du_comm'8743'inv'691''8658'inv'737'_432 (coe v0)
 -- Algebra.Consequences.Setoid.comm+invˡ⇒inv
-d_comm'43'inv'737''8658'inv_680 ::
+d_comm'43'inv'737''8658'inv_682 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2977,19 +2977,19 @@ d_comm'43'inv'737''8658'inv_680 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'43'inv'737''8658'inv_680 ~v0 ~v1 v2
-  = du_comm'43'inv'737''8658'inv_680 v2
-du_comm'43'inv'737''8658'inv_680 ::
+d_comm'43'inv'737''8658'inv_682 ~v0 ~v1 v2
+  = du_comm'43'inv'737''8658'inv_682 v2
+du_comm'43'inv'737''8658'inv_682 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'43'inv'737''8658'inv_680 v0
-  = coe du_comm'8743'inv'737''8658'inv_426 (coe v0)
+du_comm'43'inv'737''8658'inv_682 v0
+  = coe du_comm'8743'inv'737''8658'inv_428 (coe v0)
 -- Algebra.Consequences.Setoid.comm+invʳ⇒inv
-d_comm'43'inv'691''8658'inv_682 ::
+d_comm'43'inv'691''8658'inv_684 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -2998,19 +2998,19 @@ d_comm'43'inv'691''8658'inv_682 ::
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_comm'43'inv'691''8658'inv_682 ~v0 ~v1 v2
-  = du_comm'43'inv'691''8658'inv_682 v2
-du_comm'43'inv'691''8658'inv_682 ::
+d_comm'43'inv'691''8658'inv_684 ~v0 ~v1 v2
+  = du_comm'43'inv'691''8658'inv_684 v2
+du_comm'43'inv'691''8658'inv_684 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_comm'43'inv'691''8658'inv_682 v0
-  = coe du_comm'8743'inv'691''8658'inv_436 (coe v0)
+du_comm'43'inv'691''8658'inv_684 v0
+  = coe du_comm'8743'inv'691''8658'inv_438 (coe v0)
 -- Algebra.Consequences.Setoid.comm+distrˡ⇒distrʳ
-d_comm'43'distr'737''8658'distr'691'_684 ::
+d_comm'43'distr'737''8658'distr'691'_686 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -3021,9 +3021,9 @@ d_comm'43'distr'737''8658'distr'691'_684 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'43'distr'737''8658'distr'691'_684 ~v0 ~v1 v2
-  = du_comm'43'distr'737''8658'distr'691'_684 v2
-du_comm'43'distr'737''8658'distr'691'_684 ::
+d_comm'43'distr'737''8658'distr'691'_686 ~v0 ~v1 v2
+  = du_comm'43'distr'737''8658'distr'691'_686 v2
+du_comm'43'distr'737''8658'distr'691'_686 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -3032,10 +3032,10 @@ du_comm'43'distr'737''8658'distr'691'_684 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'43'distr'737''8658'distr'691'_684 v0
-  = coe du_comm'8743'distr'737''8658'distr'691'_504 (coe v0)
+du_comm'43'distr'737''8658'distr'691'_686 v0
+  = coe du_comm'8743'distr'737''8658'distr'691'_506 (coe v0)
 -- Algebra.Consequences.Setoid.comm+distrʳ⇒distrˡ
-d_comm'43'distr'691''8658'distr'737'_686 ::
+d_comm'43'distr'691''8658'distr'737'_688 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -3046,9 +3046,9 @@ d_comm'43'distr'691''8658'distr'737'_686 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm'43'distr'691''8658'distr'737'_686 ~v0 ~v1 v2
-  = du_comm'43'distr'691''8658'distr'737'_686 v2
-du_comm'43'distr'691''8658'distr'737'_686 ::
+d_comm'43'distr'691''8658'distr'737'_688 ~v0 ~v1 v2
+  = du_comm'43'distr'691''8658'distr'737'_688 v2
+du_comm'43'distr'691''8658'distr'737'_688 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -3057,10 +3057,10 @@ du_comm'43'distr'691''8658'distr'737'_686 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm'43'distr'691''8658'distr'737'_686 v0
-  = coe du_comm'8743'distr'691''8658'distr'737'_514 (coe v0)
+du_comm'43'distr'691''8658'distr'737'_688 v0
+  = coe du_comm'8743'distr'691''8658'distr'737'_516 (coe v0)
 -- Algebra.Consequences.Setoid.assoc+distribʳ+idʳ+invʳ⇒zeˡ
-d_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_688 ::
+d_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_690 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -3075,11 +3075,11 @@ d_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_688 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_688 ~v0
+d_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_690 ~v0
                                                                 ~v1 v2
-  = du_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_688
+  = du_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_690
       v2
-du_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_688 ::
+du_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_690 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -3092,12 +3092,12 @@ du_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_688 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_688 v0
+du_assoc'43'distrib'691''43'id'691''43'inv'691''8658'ze'737'_690 v0
   = coe
-      du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594
+      du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_596
       (coe v0)
 -- Algebra.Consequences.Setoid.assoc+distribˡ+idʳ+invʳ⇒zeʳ
-d_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_690 ::
+d_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_692 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -3112,11 +3112,11 @@ d_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_690 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_690 ~v0
+d_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_692 ~v0
                                                                 ~v1 v2
-  = du_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_690
+  = du_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_692
       v2
-du_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_690 ::
+du_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_692 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -3129,12 +3129,12 @@ du_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_690 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-du_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_690 v0
+du_assoc'43'distrib'737''43'id'691''43'inv'691''8658'ze'691'_692 v0
   = coe
-      du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606
+      du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_608
       (coe v0)
 -- Algebra.Consequences.Setoid.assoc+id+invʳ⇒invˡ-unique
-d_assoc'43'id'43'inv'691''8658'inv'737''45'unique_692 ::
+d_assoc'43'id'43'inv'691''8658'inv'737''45'unique_694 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -3146,9 +3146,9 @@ d_assoc'43'id'43'inv'691''8658'inv'737''45'unique_692 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc'43'id'43'inv'691''8658'inv'737''45'unique_692 ~v0 ~v1 v2
-  = du_assoc'43'id'43'inv'691''8658'inv'737''45'unique_692 v2
-du_assoc'43'id'43'inv'691''8658'inv'737''45'unique_692 ::
+d_assoc'43'id'43'inv'691''8658'inv'737''45'unique_694 ~v0 ~v1 v2
+  = du_assoc'43'id'43'inv'691''8658'inv'737''45'unique_694 v2
+du_assoc'43'id'43'inv'691''8658'inv'737''45'unique_694 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
@@ -3158,11 +3158,11 @@ du_assoc'43'id'43'inv'691''8658'inv'737''45'unique_692 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_assoc'43'id'43'inv'691''8658'inv'737''45'unique_692 v0
+du_assoc'43'id'43'inv'691''8658'inv'737''45'unique_694 v0
   = coe
-      du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456 (coe v0)
+      du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_458 (coe v0)
 -- Algebra.Consequences.Setoid.assoc+id+invˡ⇒invʳ-unique
-d_assoc'43'id'43'inv'737''8658'inv'691''45'unique_694 ::
+d_assoc'43'id'43'inv'737''8658'inv'691''45'unique_696 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
@@ -3174,9 +3174,9 @@ d_assoc'43'id'43'inv'737''8658'inv'691''45'unique_694 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc'43'id'43'inv'737''8658'inv'691''45'unique_694 ~v0 ~v1 v2
-  = du_assoc'43'id'43'inv'737''8658'inv'691''45'unique_694 v2
-du_assoc'43'id'43'inv'737''8658'inv'691''45'unique_694 ::
+d_assoc'43'id'43'inv'737''8658'inv'691''45'unique_696 ~v0 ~v1 v2
+  = du_assoc'43'id'43'inv'737''8658'inv'691''45'unique_696 v2
+du_assoc'43'id'43'inv'737''8658'inv'691''45'unique_696 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
@@ -3186,11 +3186,11 @@ du_assoc'43'id'43'inv'737''8658'inv'691''45'unique_694 ::
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_assoc'43'id'43'inv'737''8658'inv'691''45'unique_694 v0
+du_assoc'43'id'43'inv'737''8658'inv'691''45'unique_696 v0
   = coe
-      du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476 (coe v0)
+      du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_478 (coe v0)
 -- Algebra.Consequences.Setoid.subst+comm⇒sym
-d_subst'43'comm'8658'sym_696 ::
+d_subst'43'comm'8658'sym_698 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
@@ -3199,14 +3199,14 @@ d_subst'43'comm'8658'sym_696 ::
    AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_subst'43'comm'8658'sym_696 ~v0 ~v1 v2 v3 v4 v5 v6 v7
-  = du_subst'43'comm'8658'sym_696 v2 v3 v4 v5 v6 v7
-du_subst'43'comm'8658'sym_696 ::
+d_subst'43'comm'8658'sym_698 ~v0 ~v1 v2 v3 v4 v5 v6 v7
+  = du_subst'43'comm'8658'sym_698 v2 v3 v4 v5 v6 v7
+du_subst'43'comm'8658'sym_698 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> ()) ->
   ((AgdaAny -> ()) ->
    AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_subst'43'comm'8658'sym_696 v0 v1 v2 v3 v4 v5
+du_subst'43'comm'8658'sym_698 v0 v1 v2 v3 v4 v5
   = coe v2 v1 (coe v0 v4 v5) (coe v0 v5 v4) (coe v3 v4 v5)

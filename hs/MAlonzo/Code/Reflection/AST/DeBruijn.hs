@@ -31,10 +31,121 @@ import qualified MAlonzo.Code.Effect.Applicative
 import qualified MAlonzo.Code.Function.Identity.Effectful
 import qualified MAlonzo.Code.Reflection.AST.Traversal
 
+-- Reflection.AST.DeBruijn._._.Action
+d_Action_16 :: () -> ()
+d_Action_16 = erased
 -- Reflection.AST.DeBruijn._._.Actions
 d_Actions_18 = ()
 -- Reflection.AST.DeBruijn._._.Cxt
 d_Cxt_20 = ()
+-- Reflection.AST.DeBruijn._._.defaultActions
+d_defaultActions_22 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76
+d_defaultActions_22
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_defaultActions_94
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traverseAbs
+d_traverseAbs_24 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112
+d_traverseAbs_24
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseAbs_124
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traverseArg
+d_traverseArg_26 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88
+d_traverseArg_26
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseArg_120
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traverseArgs
+d_traverseArgs_28 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88]
+d_traverseArgs_28
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseArgs_118
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traverseClause
+d_traverseClause_30 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160
+d_traverseClause_30
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseClause_128
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traverseClauses
+d_traverseClauses_32 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160] ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160]
+d_traverseClauses_32
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseClauses_126
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traversePats
+d_traversePats_34 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88]
+d_traversePats_34
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traversePats_122
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traversePattern
+d_traversePattern_36 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158
+d_traversePattern_36
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traversePattern_116
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traverseSort
+d_traverseSort_38 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Sort_156 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Sort_156
+d_traverseSort_38
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseSort_114
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traverseTel
+d_traverseTel_40 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_traverseTel_40
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseTel_130
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
+-- Reflection.AST.DeBruijn._._.traverseTerm
+d_traverseTerm_42 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
+d_traverseTerm_42
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseTerm_112
+      (coe MAlonzo.Code.Function.Identity.Effectful.du_applicative_16)
 -- Reflection.AST.DeBruijn._._.Actions.onCon
 d_onCon_46 ::
   MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
@@ -232,10 +343,121 @@ d_η'45'expand_110 v0 v1
              (coe v3)
       MAlonzo.Code.Agda.Builtin.Reflection.C_unknown_216 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Reflection.AST.DeBruijn._._.Action
+d_Action_170 :: () -> ()
+d_Action_170 = erased
 -- Reflection.AST.DeBruijn._._.Actions
 d_Actions_172 = ()
 -- Reflection.AST.DeBruijn._._.Cxt
 d_Cxt_174 = ()
+-- Reflection.AST.DeBruijn._._.defaultActions
+d_defaultActions_176 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76
+d_defaultActions_176
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_defaultActions_94
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traverseAbs
+d_traverseAbs_178 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112 ->
+  Maybe MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112
+d_traverseAbs_178
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseAbs_124
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traverseArg
+d_traverseArg_180 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
+  Maybe MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88
+d_traverseArg_180
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseArg_120
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traverseArgs
+d_traverseArgs_182 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] ->
+  Maybe [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88]
+d_traverseArgs_182
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseArgs_118
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traverseClause
+d_traverseClause_184 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160 ->
+  Maybe MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160
+d_traverseClause_184
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseClause_128
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traverseClauses
+d_traverseClauses_186 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160] ->
+  Maybe [MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160]
+d_traverseClauses_186
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseClauses_126
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traversePats
+d_traversePats_188 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] ->
+  Maybe [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88]
+d_traversePats_188
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traversePats_122
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traversePattern
+d_traversePattern_190 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158 ->
+  Maybe MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158
+d_traversePattern_190
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traversePattern_116
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traverseSort
+d_traverseSort_192 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Sort_156 ->
+  Maybe MAlonzo.Code.Agda.Builtin.Reflection.T_Sort_156
+d_traverseSort_192
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseSort_114
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traverseTel
+d_traverseTel_194 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  Maybe [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_traverseTel_194
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseTel_130
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
+-- Reflection.AST.DeBruijn._._.traverseTerm
+d_traverseTerm_196 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+  Maybe MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
+d_traverseTerm_196
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseTerm_112
+      (coe MAlonzo.Code.Data.Maybe.Effectful.du_applicative_24)
 -- Reflection.AST.DeBruijn._._.Actions.onCon
 d_onCon_200 ::
   MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
@@ -376,10 +598,111 @@ du_anyApplicative_294
       MAlonzo.Code.Effect.Applicative.du_mkRawApplicative_94
       (coe (\ v0 v1 -> coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8))
       (coe (\ v0 v1 -> MAlonzo.Code.Data.Bool.Base.d__'8744'__30))
+-- Reflection.AST.DeBruijn._._.Action
+d_Action_302 :: () -> ()
+d_Action_302 = erased
 -- Reflection.AST.DeBruijn._._.Actions
 d_Actions_304 = ()
 -- Reflection.AST.DeBruijn._._.Cxt
 d_Cxt_306 = ()
+-- Reflection.AST.DeBruijn._._.defaultActions
+d_defaultActions_308 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76
+d_defaultActions_308
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_defaultActions_94
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traverseAbs
+d_traverseAbs_310 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112 -> Bool
+d_traverseAbs_310
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseAbs_124
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traverseArg
+d_traverseArg_312 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 -> Bool
+d_traverseArg_312
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseArg_120
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traverseArgs
+d_traverseArgs_314 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] -> Bool
+d_traverseArgs_314
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseArgs_118
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traverseClause
+d_traverseClause_316 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160 -> Bool
+d_traverseClause_316
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseClause_128
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traverseClauses
+d_traverseClauses_318 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160] -> Bool
+d_traverseClauses_318
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseClauses_126
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traversePats
+d_traversePats_320 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] -> Bool
+d_traversePats_320
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traversePats_122
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traversePattern
+d_traversePattern_322 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158 -> Bool
+d_traversePattern_322
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traversePattern_116
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traverseSort
+d_traverseSort_324 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Sort_156 -> Bool
+d_traverseSort_324
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseSort_114
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traverseTel
+d_traverseTel_326 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Bool
+d_traverseTel_326
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseTel_130
+      (coe du_anyApplicative_294)
+-- Reflection.AST.DeBruijn._._.traverseTerm
+d_traverseTerm_328 ::
+  MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->
+  MAlonzo.Code.Reflection.AST.Traversal.T_Cxt_44 ->
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> Bool
+d_traverseTerm_328
+  = coe
+      MAlonzo.Code.Reflection.AST.Traversal.du_traverseTerm_112
+      (coe du_anyApplicative_294)
 -- Reflection.AST.DeBruijn._._.Actions.onCon
 d_onCon_332 ::
   MAlonzo.Code.Reflection.AST.Traversal.T_Actions_76 ->

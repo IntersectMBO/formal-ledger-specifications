@@ -112,7 +112,7 @@ d_coprime'63'_70 v0 v1
       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
       erased erased
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688
+         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710
          (coe MAlonzo.Code.Data.Nat.GCD.d_gcd_152 (coe v0) (coe v1))
          (coe (1 :: Integer)))
 -- Data.Nat.Coprimality.1-coprimeTo

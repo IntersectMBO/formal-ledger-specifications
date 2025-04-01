@@ -41,12 +41,12 @@ d_magma_20 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Bundles.T_Magma_68
+  MAlonzo.Code.Algebra.Bundles.T_Magma_72
 d_magma_20 ~v0 ~v1 v2 = du_magma_20 v2
 du_magma_20 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Bundles.T_Magma_68
+  MAlonzo.Code.Algebra.Bundles.T_Magma_72
 du_magma_20 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.C_Magma'46'constructor_1279 v0
+      MAlonzo.Code.Algebra.Bundles.C_Magma'46'constructor_1323 v0
       (coe du_isMagma_14)

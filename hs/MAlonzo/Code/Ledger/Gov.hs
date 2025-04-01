@@ -52,7 +52,7 @@ import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Product.Nary.NonDependent
 import qualified MAlonzo.Code.Data.Product.Properties
 import qualified MAlonzo.Code.Data.Rational.Base
-import qualified MAlonzo.Code.Data.Refinement
+import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Base
@@ -443,7 +443,7 @@ d_minUTxOValue_968 v0
 -- _.PParams.monetaryExpansion
 d_monetaryExpansion_970 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_970 v0
   = coe MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_340 (coe v0)
 -- _.PParams.nopt
@@ -486,7 +486,7 @@ d_refScriptCostStride_984 v0
 -- _.PParams.treasuryCut
 d_treasuryCut_986 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_986 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_342 (coe v0)
 -- _.RwdAddr.net
@@ -1325,7 +1325,7 @@ du_insertGovAction_1994 v0 v1
                                  coe
                                    MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
                                    (coe
-                                      MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2802 (coe v8)
+                                      MAlonzo.Code.Data.Nat.Properties.d__'8804''63'__2824 (coe v8)
                                       (coe v9)))
                               (coe
                                  du_govActionPriority_1980
@@ -1762,7 +1762,7 @@ d_any'63''45'connecting'45'subperm_2324 v0 v1 v2 v3
             coe
               MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
               (coe
-                 MAlonzo.Code.Data.List.Relation.Unary.Unique.DecSetoid.du_unique'63'_64
+                 MAlonzo.Code.Data.List.Relation.Unary.Unique.DecSetoid.du_unique'63'_66
                  (coe
                     MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_decSetoid_406
                     (coe
@@ -1791,14 +1791,14 @@ d_'8707''63''45'connecting'45'subperm_2342 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_'8707''63''45'connecting'45'subperm_2342 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Bundles.d_from_1726
+      MAlonzo.Code.Function.Bundles.d_from_1822
       (coe
          MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext.du_map'8242''8660'_16
          (coe
             MAlonzo.Code.Function.Related.Propositional.du_'8596''8658'_82
             (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12)
             (coe
-               MAlonzo.Code.Data.List.Membership.Propositional.Properties.Core.du_Any'8596'_144
+               MAlonzo.Code.Data.List.Membership.Propositional.Properties.Core.du_Any'8596'_146
                (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v3)))))
       (d_any'63''45'connecting'45'subperm_2324
          (coe v0) (coe v1) (coe v2) (coe v3))
@@ -1811,7 +1811,7 @@ d_'8707''63''45'connecting'45'subset_2354 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_'8707''63''45'connecting'45'subset_2354 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Bundles.d_from_1726
+      MAlonzo.Code.Function.Bundles.d_from_1822
       (coe
          MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext.du_map'8242''8660'_16
          (coe
@@ -1840,7 +1840,7 @@ d_enactable'63'_2364 v0 v1 v2 v3
              (case coe v6 of
                 MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v7
                   -> coe
-                       MAlonzo.Code.Function.Bundles.d_from_1726
+                       MAlonzo.Code.Function.Bundles.d_from_1822
                        (coe
                           MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext.du_map'8242''8660'_16
                           (coe
@@ -1869,7 +1869,7 @@ d_allEnactable'63'_2400 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_allEnactable'63'_2400 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.List.Relation.Unary.All.du_all'63'_506
+      MAlonzo.Code.Data.List.Relation.Unary.All.du_all'63'_510
       (coe
          d_enactable'63'_2364 (coe v0) (coe v1)
          (coe du_getAidPairsList_2102 (coe v2)))
@@ -1918,12 +1918,12 @@ d_'8712''45'maxAllEnactable'8594'allEnactable_2436 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe
-         MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_506
+         MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_512
          (d_allEnactable'63'_2400 (coe v0) (coe v1)) v3
          (coe MAlonzo.Code.Data.List.Ext.du_sublists_20 (coe v2))
          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
             (coe
-               MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_506
+               MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_512
                (\ v5 ->
                   coe
                     MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
@@ -1969,7 +1969,7 @@ du_'8712''45'maxAllEnactable'8594'maxLength_2456 v0 v1 v2 v3 v4
          (coe d_allEnactable'63'_2400 (coe v0) (coe v1))
          (coe MAlonzo.Code.Data.List.Ext.du_sublists_20 (coe v2)))
       (coe
-         MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8314'_500
+         MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8314'_510
          (d_allEnactable'63'_2400 (coe v0) (coe v1))
          (coe MAlonzo.Code.Data.List.Ext.du_sublists_20 (coe v2)) v3 v4)
 -- Ledger.Gov.actionValid

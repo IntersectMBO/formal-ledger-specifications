@@ -81,7 +81,7 @@ du_unique'63'_30 ::
   [AgdaAny] -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_unique'63'_30 v0
   = coe
-      MAlonzo.Code.Data.List.Relation.Unary.Unique.DecSetoid.du_unique'63'_64
+      MAlonzo.Code.Data.List.Relation.Unary.Unique.DecSetoid.du_unique'63'_66
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_decSetoid_406
          (coe v0))

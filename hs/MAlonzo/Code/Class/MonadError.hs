@@ -24,34 +24,34 @@ import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 
 -- Class.MonadError.MonadError
-d_MonadError_18 a0 a1 a2 = ()
-data T_MonadError_18
-  = C_MonadError'46'constructor_371 (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+d_MonadError_16 a0 a1 a2 = ()
+data T_MonadError_16
+  = C_MonadError'46'constructor_359 (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
                                      () -> AgdaAny -> AgdaAny)
                                     (MAlonzo.Code.Agda.Primitive.T_Level_18 ->
                                      () -> AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny)
 -- Class.MonadError.MonadError.error
-d_error_28 ::
-  T_MonadError_18 ->
+d_error_26 ::
+  T_MonadError_16 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> AgdaAny -> AgdaAny
-d_error_28 v0
+d_error_26 v0
   = case coe v0 of
-      C_MonadError'46'constructor_371 v1 v2 -> coe v1
+      C_MonadError'46'constructor_359 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.MonadError.MonadError.catch
-d_catch_30 ::
-  T_MonadError_18 ->
+d_catch_28 ::
+  T_MonadError_16 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
-d_catch_30 v0
+d_catch_28 v0
   = case coe v0 of
-      C_MonadError'46'constructor_371 v1 v2 -> coe v2
+      C_MonadError'46'constructor_359 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.MonadError.MonadError-TC
-d_MonadError'45'TC_32 :: T_MonadError_18
-d_MonadError'45'TC_32
+d_MonadError'45'TC_30 :: T_MonadError_16
+d_MonadError'45'TC_30
   = coe
-      C_MonadError'46'constructor_371
+      C_MonadError'46'constructor_359
       (coe
          (\ v0 v1 ->
             coe
@@ -69,22 +69,22 @@ d_MonadError'45'TC_32
                        (coe
                           ("TC doesn't provide which error to catch" :: Data.Text.Text)))))))
 -- Class.MonadError.ErrorT
-d_ErrorT_46 ::
+d_ErrorT_44 ::
   () ->
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()
-d_ErrorT_46 = erased
+d_ErrorT_44 = erased
 -- Class.MonadError._.Monad-ErrorT
-d_Monad'45'ErrorT_66 ::
+d_Monad'45'ErrorT_64 ::
   () ->
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
   MAlonzo.Code.Class.Monad.Core.T_Monad_8 ->
   MAlonzo.Code.Class.Monad.Core.T_Monad_8
-d_Monad'45'ErrorT_66 ~v0 ~v1 v2 = du_Monad'45'ErrorT_66 v2
-du_Monad'45'ErrorT_66 ::
+d_Monad'45'ErrorT_64 ~v0 ~v1 v2 = du_Monad'45'ErrorT_64 v2
+du_Monad'45'ErrorT_64 ::
   MAlonzo.Code.Class.Monad.Core.T_Monad_8 ->
   MAlonzo.Code.Class.Monad.Core.T_Monad_8
-du_Monad'45'ErrorT_66 v0
+du_Monad'45'ErrorT_64 v0
   = coe
       MAlonzo.Code.Class.Monad.Core.C_Monad'46'constructor_213
       (coe
@@ -104,17 +104,17 @@ du_Monad'45'ErrorT_66 v0
                    MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v8 -> coe v6 v8
                    _ -> MAlonzo.RTE.mazUnreachableError)))
 -- Class.MonadError._.MonadError-ErrorT
-d_MonadError'45'ErrorT_80 ::
+d_MonadError'45'ErrorT_78 ::
   () ->
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
-  MAlonzo.Code.Class.Monad.Core.T_Monad_8 -> T_MonadError_18
-d_MonadError'45'ErrorT_80 ~v0 ~v1 v2
-  = du_MonadError'45'ErrorT_80 v2
-du_MonadError'45'ErrorT_80 ::
-  MAlonzo.Code.Class.Monad.Core.T_Monad_8 -> T_MonadError_18
-du_MonadError'45'ErrorT_80 v0
+  MAlonzo.Code.Class.Monad.Core.T_Monad_8 -> T_MonadError_16
+d_MonadError'45'ErrorT_78 ~v0 ~v1 v2
+  = du_MonadError'45'ErrorT_78 v2
+du_MonadError'45'ErrorT_78 ::
+  MAlonzo.Code.Class.Monad.Core.T_Monad_8 -> T_MonadError_16
+du_MonadError'45'ErrorT_78 v0
   = coe
-      C_MonadError'46'constructor_371
+      C_MonadError'46'constructor_359
       (coe
          (\ v1 v2 v3 ->
             coe

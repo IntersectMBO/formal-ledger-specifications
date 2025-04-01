@@ -61,7 +61,7 @@ du_identity'737'_280 ::
   AgdaAny -> AgdaAny
 du_identity'737'_280 v0 v1
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_antisym_184
+      MAlonzo.Code.Relation.Binary.Structures.d_antisym_246
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
          (coe
             MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isJoinSemilattice_126
@@ -107,7 +107,7 @@ du_identity'737'_280 v0 v1
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_refl_98
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182 (coe v4))
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244 (coe v4))
                      (coe v1))))))
       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
          (coe
@@ -134,7 +134,7 @@ du_identity'691'_288 ::
   AgdaAny -> AgdaAny
 du_identity'691'_288 v0 v1
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_antisym_184
+      MAlonzo.Code.Relation.Binary.Structures.d_antisym_246
       (MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isPartialOrder_30
          (coe
             MAlonzo.Code.Relation.Binary.Lattice.Structures.d_isJoinSemilattice_126
@@ -174,7 +174,7 @@ du_identity'691'_288 v0 v1
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_refl_98
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182 (coe v4))
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244 (coe v4))
                      (coe v1)))))
          (coe
             MAlonzo.Code.Relation.Binary.Lattice.Structures.d_minimum_128
@@ -225,7 +225,7 @@ du_dualIsBoundedMeetSemilattice_298 v0
       (coe
          MAlonzo.Code.Relation.Binary.Lattice.Structures.C_IsMeetSemilattice'46'constructor_7577
          (coe
-            MAlonzo.Code.Relation.Binary.Properties.Poset.du_'8805''45'isPartialOrder_142
+            MAlonzo.Code.Relation.Binary.Properties.Poset.du_'8805''45'isPartialOrder_150
             (coe
                MAlonzo.Code.Relation.Binary.Lattice.Bundles.du_poset_90
                (coe

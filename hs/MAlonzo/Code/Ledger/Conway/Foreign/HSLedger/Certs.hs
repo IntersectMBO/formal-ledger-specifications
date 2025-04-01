@@ -156,6 +156,42 @@ d_dreps_50 ::
 d_dreps_50 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1094 (coe v0)
+-- Ledger.Conway.Foreign.HSLedger.Certs._.Computational-DELEG
+d_Computational'45'DELEG_54 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'DELEG_54
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'DELEG_1138
+      (coe
+         MAlonzo.Code.Ledger.Transaction.d_govStructure_2342
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+            (coe
+               MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14)))
+-- Ledger.Conway.Foreign.HSLedger.Certs._.Computational-GOVCERT
+d_Computational'45'GOVCERT_56 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'GOVCERT_56
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'GOVCERT_1366
+      (coe
+         MAlonzo.Code.Ledger.Transaction.d_govStructure_2342
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+            (coe
+               MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14)))
+-- Ledger.Conway.Foreign.HSLedger.Certs._.Computational-POOL
+d_Computational'45'POOL_58 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'POOL_58
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties.d_Computational'45'POOL_1340
+      (coe
+         MAlonzo.Code.Ledger.Transaction.d_govStructure_2342
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+            (coe
+               MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14)))
 -- Ledger.Conway.Foreign.HSLedger.Certs.HsTy-PoolParams
 d_HsTy'45'PoolParams_60 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
@@ -169,7 +205,7 @@ d_Conv'45'PoolParams_62
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_13177 v1
+              MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12677 v1
                 -> coe
                      C_PoolParams_85
                      (coe
@@ -203,7 +239,7 @@ d_Conv'45'PoolParams_62
             case coe v0 of
               C_PoolParams_85 v1
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_13177
+                     MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12677
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -412,7 +448,7 @@ d_Conv'45'DelegEnv_70
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_18435 v1 v2 v3
+              MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_17935 v1 v2 v3
                 -> coe
                      C_MkDelegEnv_1629
                      (coe
@@ -963,7 +999,7 @@ d_Conv'45'DelegEnv_70
             case coe v0 of
               C_MkDelegEnv_1629 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_18435
+                     MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_17935
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2773,7 +2809,7 @@ d_Conv'45'PState_74
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17597 v1 v2
+              MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17097 v1 v2
                 -> coe
                      C_MkPState_3485
                      (coe
@@ -2807,7 +2843,7 @@ d_Conv'45'PState_74
             case coe v0 of
               C_MkPState_3485 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17597
+                     MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17097
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2843,7 +2879,7 @@ d_Conv'45'CertEnv_78
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Certs.C_CertEnv'46'constructor_16893 v1 v2 v3 v4 v5
+              MAlonzo.Code.Ledger.Certs.C_CertEnv'46'constructor_16393 v1 v2 v3 v4 v5
                 -> coe
                      C_MkCertEnv_4789 (coe v1)
                      (coe
@@ -3403,7 +3439,7 @@ d_Conv'45'CertEnv_78
             case coe v0 of
               C_MkCertEnv_4789 v1 v2 v3 v4 v5
                 -> coe
-                     MAlonzo.Code.Ledger.Certs.C_CertEnv'46'constructor_16893 (coe v1)
+                     MAlonzo.Code.Ledger.Certs.C_CertEnv'46'constructor_16393 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -5781,7 +5817,7 @@ d_Conv'45'DCert_86
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_13177 v4
+                                   MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12677 v4
                                      -> coe
                                           C_PoolParams_85
                                           (coe
@@ -5819,7 +5855,7 @@ d_Conv'45'DCert_86
                                  case coe v3 of
                                    C_PoolParams_85 v4
                                      -> coe
-                                          MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_13177
+                                          MAlonzo.Code.Ledger.Certs.C_PoolParams'46'constructor_12677
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_from_20
                                              (coe

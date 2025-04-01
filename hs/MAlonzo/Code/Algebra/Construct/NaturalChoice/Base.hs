@@ -21,117 +21,119 @@ import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Relation.Binary.Bundles
 
 -- Algebra.Construct.NaturalChoice.Base._._≥_
-d__'8805'__96 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
+d__'8805'__104 ::
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_232 ->
   AgdaAny -> AgdaAny -> ()
-d__'8805'__96 = erased
+d__'8805'__104 = erased
 -- Algebra.Construct.NaturalChoice.Base._.MinOperator
-d_MinOperator_98 a0 a1 a2 a3 = ()
-data T_MinOperator_98
-  = C_MinOperator'46'constructor_1121 (AgdaAny -> AgdaAny -> AgdaAny)
+d_MinOperator_106 a0 a1 a2 a3 = ()
+data T_MinOperator_106
+  = C_MinOperator'46'constructor_1157 (AgdaAny -> AgdaAny -> AgdaAny)
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Construct.NaturalChoice.Base._.MinOperator._⊓_
-d__'8851'__114 :: T_MinOperator_98 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8851'__114 v0
+d__'8851'__122 ::
+  T_MinOperator_106 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8851'__122 v0
   = case coe v0 of
-      C_MinOperator'46'constructor_1121 v1 v2 v3 -> coe v1
+      C_MinOperator'46'constructor_1157 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base._.MinOperator.x≤y⇒x⊓y≈x
-d_x'8804'y'8658'x'8851'y'8776'x_120 ::
-  T_MinOperator_98 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8804'y'8658'x'8851'y'8776'x_120 v0
+d_x'8804'y'8658'x'8851'y'8776'x_128 ::
+  T_MinOperator_106 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_x'8804'y'8658'x'8851'y'8776'x_128 v0
   = case coe v0 of
-      C_MinOperator'46'constructor_1121 v1 v2 v3 -> coe v2
+      C_MinOperator'46'constructor_1157 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base._.MinOperator.x≥y⇒x⊓y≈y
-d_x'8805'y'8658'x'8851'y'8776'y_126 ::
-  T_MinOperator_98 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8805'y'8658'x'8851'y'8776'y_126 v0
+d_x'8805'y'8658'x'8851'y'8776'y_134 ::
+  T_MinOperator_106 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_x'8805'y'8658'x'8851'y'8776'y_134 v0
   = case coe v0 of
-      C_MinOperator'46'constructor_1121 v1 v2 v3 -> coe v3
+      C_MinOperator'46'constructor_1157 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base._.MaxOperator
-d_MaxOperator_128 a0 a1 a2 a3 = ()
-data T_MaxOperator_128
-  = C_MaxOperator'46'constructor_1665 (AgdaAny -> AgdaAny -> AgdaAny)
+d_MaxOperator_136 a0 a1 a2 a3 = ()
+data T_MaxOperator_136
+  = C_MaxOperator'46'constructor_1701 (AgdaAny -> AgdaAny -> AgdaAny)
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Construct.NaturalChoice.Base._.MaxOperator._⊔_
-d__'8852'__144 ::
-  T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8852'__144 v0
+d__'8852'__152 ::
+  T_MaxOperator_136 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8852'__152 v0
   = case coe v0 of
-      C_MaxOperator'46'constructor_1665 v1 v2 v3 -> coe v1
+      C_MaxOperator'46'constructor_1701 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base._.MaxOperator.x≤y⇒x⊔y≈y
-d_x'8804'y'8658'x'8852'y'8776'y_150 ::
-  T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8804'y'8658'x'8852'y'8776'y_150 v0
+d_x'8804'y'8658'x'8852'y'8776'y_158 ::
+  T_MaxOperator_136 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_x'8804'y'8658'x'8852'y'8776'y_158 v0
   = case coe v0 of
-      C_MaxOperator'46'constructor_1665 v1 v2 v3 -> coe v2
+      C_MaxOperator'46'constructor_1701 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base._.MaxOperator.x≥y⇒x⊔y≈x
-d_x'8805'y'8658'x'8852'y'8776'x_156 ::
-  T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8805'y'8658'x'8852'y'8776'x_156 v0
+d_x'8805'y'8658'x'8852'y'8776'x_164 ::
+  T_MaxOperator_136 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_x'8805'y'8658'x'8852'y'8776'x_164 v0
   = case coe v0 of
-      C_MaxOperator'46'constructor_1665 v1 v2 v3 -> coe v3
+      C_MaxOperator'46'constructor_1701 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Construct.NaturalChoice.Base.MinOp⇒MaxOp
-d_MinOp'8658'MaxOp_158 ::
+d_MinOp'8658'MaxOp_166 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
-  T_MinOperator_98 -> T_MaxOperator_128
-d_MinOp'8658'MaxOp_158 ~v0 ~v1 ~v2 ~v3 v4
-  = du_MinOp'8658'MaxOp_158 v4
-du_MinOp'8658'MaxOp_158 :: T_MinOperator_98 -> T_MaxOperator_128
-du_MinOp'8658'MaxOp_158 v0
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_232 ->
+  T_MinOperator_106 -> T_MaxOperator_136
+d_MinOp'8658'MaxOp_166 ~v0 ~v1 ~v2 ~v3 v4
+  = du_MinOp'8658'MaxOp_166 v4
+du_MinOp'8658'MaxOp_166 :: T_MinOperator_106 -> T_MaxOperator_136
+du_MinOp'8658'MaxOp_166 v0
   = coe
-      C_MaxOperator'46'constructor_1665 (coe d__'8851'__114 (coe v0))
-      (coe d_x'8805'y'8658'x'8851'y'8776'y_126 (coe v0))
-      (coe d_x'8804'y'8658'x'8851'y'8776'x_120 (coe v0))
+      C_MaxOperator'46'constructor_1701 (coe d__'8851'__122 (coe v0))
+      (coe d_x'8805'y'8658'x'8851'y'8776'y_134 (coe v0))
+      (coe d_x'8804'y'8658'x'8851'y'8776'x_128 (coe v0))
 -- Algebra.Construct.NaturalChoice.Base._._._⊓_
-d__'8851'__168 :: T_MinOperator_98 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8851'__168 v0 = coe d__'8851'__114 (coe v0)
+d__'8851'__176 ::
+  T_MinOperator_106 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8851'__176 v0 = coe d__'8851'__122 (coe v0)
 -- Algebra.Construct.NaturalChoice.Base._._.x≤y⇒x⊓y≈x
-d_x'8804'y'8658'x'8851'y'8776'x_170 ::
-  T_MinOperator_98 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8804'y'8658'x'8851'y'8776'x_170 v0
-  = coe d_x'8804'y'8658'x'8851'y'8776'x_120 (coe v0)
+d_x'8804'y'8658'x'8851'y'8776'x_178 ::
+  T_MinOperator_106 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_x'8804'y'8658'x'8851'y'8776'x_178 v0
+  = coe d_x'8804'y'8658'x'8851'y'8776'x_128 (coe v0)
 -- Algebra.Construct.NaturalChoice.Base._._.x≥y⇒x⊓y≈y
-d_x'8805'y'8658'x'8851'y'8776'y_172 ::
-  T_MinOperator_98 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8805'y'8658'x'8851'y'8776'y_172 v0
-  = coe d_x'8805'y'8658'x'8851'y'8776'y_126 (coe v0)
+d_x'8805'y'8658'x'8851'y'8776'y_180 ::
+  T_MinOperator_106 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_x'8805'y'8658'x'8851'y'8776'y_180 v0
+  = coe d_x'8805'y'8658'x'8851'y'8776'y_134 (coe v0)
 -- Algebra.Construct.NaturalChoice.Base.MaxOp⇒MinOp
-d_MaxOp'8658'MinOp_174 ::
+d_MaxOp'8658'MinOp_182 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
-  T_MaxOperator_128 -> T_MinOperator_98
-d_MaxOp'8658'MinOp_174 ~v0 ~v1 ~v2 ~v3 v4
-  = du_MaxOp'8658'MinOp_174 v4
-du_MaxOp'8658'MinOp_174 :: T_MaxOperator_128 -> T_MinOperator_98
-du_MaxOp'8658'MinOp_174 v0
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_232 ->
+  T_MaxOperator_136 -> T_MinOperator_106
+d_MaxOp'8658'MinOp_182 ~v0 ~v1 ~v2 ~v3 v4
+  = du_MaxOp'8658'MinOp_182 v4
+du_MaxOp'8658'MinOp_182 :: T_MaxOperator_136 -> T_MinOperator_106
+du_MaxOp'8658'MinOp_182 v0
   = coe
-      C_MinOperator'46'constructor_1121 (coe d__'8852'__144 (coe v0))
-      (coe d_x'8805'y'8658'x'8852'y'8776'x_156 (coe v0))
-      (coe d_x'8804'y'8658'x'8852'y'8776'y_150 (coe v0))
+      C_MinOperator'46'constructor_1157 (coe d__'8852'__152 (coe v0))
+      (coe d_x'8805'y'8658'x'8852'y'8776'x_164 (coe v0))
+      (coe d_x'8804'y'8658'x'8852'y'8776'y_158 (coe v0))
 -- Algebra.Construct.NaturalChoice.Base._._._⊔_
-d__'8852'__184 ::
-  T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8852'__184 v0 = coe d__'8852'__144 (coe v0)
+d__'8852'__192 ::
+  T_MaxOperator_136 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8852'__192 v0 = coe d__'8852'__152 (coe v0)
 -- Algebra.Construct.NaturalChoice.Base._._.x≤y⇒x⊔y≈y
-d_x'8804'y'8658'x'8852'y'8776'y_186 ::
-  T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8804'y'8658'x'8852'y'8776'y_186 v0
-  = coe d_x'8804'y'8658'x'8852'y'8776'y_150 (coe v0)
+d_x'8804'y'8658'x'8852'y'8776'y_194 ::
+  T_MaxOperator_136 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_x'8804'y'8658'x'8852'y'8776'y_194 v0
+  = coe d_x'8804'y'8658'x'8852'y'8776'y_158 (coe v0)
 -- Algebra.Construct.NaturalChoice.Base._._.x≥y⇒x⊔y≈x
-d_x'8805'y'8658'x'8852'y'8776'x_188 ::
-  T_MaxOperator_128 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_x'8805'y'8658'x'8852'y'8776'x_188 v0
-  = coe d_x'8805'y'8658'x'8852'y'8776'x_156 (coe v0)
+d_x'8805'y'8658'x'8852'y'8776'x_196 ::
+  T_MaxOperator_136 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_x'8805'y'8658'x'8852'y'8776'x_196 v0
+  = coe d_x'8805'y'8658'x'8852'y'8776'x_164 (coe v0)

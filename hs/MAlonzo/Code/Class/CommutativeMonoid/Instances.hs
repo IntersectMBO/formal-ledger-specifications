@@ -27,7 +27,7 @@ d_CommMonoid'45'ℕ'45''43'_8
   = coe
       MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334)
+         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360)
 -- Class.CommutativeMonoid.Instances.NonUniqueInstances.CommMonoid-ℕ-*
 d_CommMonoid'45'ℕ'45''42'_10 ::
   MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
@@ -35,4 +35,4 @@ d_CommMonoid'45'ℕ'45''42'_10
   = coe
       MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_'42''45'1'45'commutativeMonoid_3766)
+         MAlonzo.Code.Data.Nat.Properties.d_'42''45'1'45'commutativeMonoid_3792)

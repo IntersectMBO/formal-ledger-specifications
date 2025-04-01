@@ -211,87 +211,100 @@ d_maybe'8242''45'map_172 ::
   (AgdaAny -> AgdaAny) ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_maybe'8242''45'map_172 = erased
+-- Data.Maybe.Properties.maybe′-∘
+d_maybe'8242''45''8728'_180 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  AgdaAny ->
+  (AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_maybe'8242''45''8728'_180 = erased
 -- Data.Maybe.Properties._._.Associative
-d_Associative_206 ::
+d_Associative_216 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (Maybe AgdaAny -> Maybe AgdaAny -> Maybe AgdaAny) -> ()
-d_Associative_206 = erased
+d_Associative_216 = erased
 -- Data.Maybe.Properties._._.Idempotent
-d_Idempotent_220 ::
+d_Idempotent_230 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (Maybe AgdaAny -> Maybe AgdaAny -> Maybe AgdaAny) -> ()
-d_Idempotent_220 = erased
+d_Idempotent_230 = erased
 -- Data.Maybe.Properties._._.Identity
-d_Identity_226 ::
+d_Identity_236 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   Maybe AgdaAny ->
   (Maybe AgdaAny -> Maybe AgdaAny -> Maybe AgdaAny) -> ()
-d_Identity_226 = erased
+d_Identity_236 = erased
 -- Data.Maybe.Properties._._.LeftIdentity
-d_LeftIdentity_252 ::
+d_LeftIdentity_262 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   Maybe AgdaAny ->
   (Maybe AgdaAny -> Maybe AgdaAny -> Maybe AgdaAny) -> ()
-d_LeftIdentity_252 = erased
+d_LeftIdentity_262 = erased
 -- Data.Maybe.Properties._._.RightIdentity
-d_RightIdentity_282 ::
+d_RightIdentity_292 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   Maybe AgdaAny ->
   (Maybe AgdaAny -> Maybe AgdaAny -> Maybe AgdaAny) -> ()
-d_RightIdentity_282 = erased
+d_RightIdentity_292 = erased
 -- Data.Maybe.Properties._.<∣>-assoc
-d_'60''8739''62''45'assoc_312 ::
+d_'60''8739''62''45'assoc_322 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   Maybe AgdaAny ->
   Maybe AgdaAny ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'60''8739''62''45'assoc_312 = erased
+d_'60''8739''62''45'assoc_322 = erased
 -- Data.Maybe.Properties._.<∣>-identityˡ
-d_'60''8739''62''45'identity'737'_324 ::
+d_'60''8739''62''45'identity'737'_334 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'60''8739''62''45'identity'737'_324 = erased
+d_'60''8739''62''45'identity'737'_334 = erased
 -- Data.Maybe.Properties._.<∣>-identityʳ
-d_'60''8739''62''45'identity'691'_328 ::
+d_'60''8739''62''45'identity'691'_338 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'60''8739''62''45'identity'691'_328 = erased
+d_'60''8739''62''45'identity'691'_338 = erased
 -- Data.Maybe.Properties._.<∣>-identity
-d_'60''8739''62''45'identity_332 ::
+d_'60''8739''62''45'identity_342 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'60''8739''62''45'identity_332 ~v0 ~v1
-  = du_'60''8739''62''45'identity_332
-du_'60''8739''62''45'identity_332 ::
+d_'60''8739''62''45'identity_342 ~v0 ~v1
+  = du_'60''8739''62''45'identity_342
+du_'60''8739''62''45'identity_342 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_'60''8739''62''45'identity_332
+du_'60''8739''62''45'identity_342
   = coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased
 -- Data.Maybe.Properties._.<∣>-idem
-d_'60''8739''62''45'idem_334 ::
+d_'60''8739''62''45'idem_344 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'60''8739''62''45'idem_334 = erased
+d_'60''8739''62''45'idem_344 = erased
 -- Data.Maybe.Properties._._.IsMagma
-d_IsMagma_392 a0 a1 a2 = ()
+d_IsMagma_402 a0 a1 a2 = ()
 -- Data.Maybe.Properties._._.IsMonoid
-d_IsMonoid_398 a0 a1 a2 a3 = ()
+d_IsMonoid_408 a0 a1 a2 a3 = ()
 -- Data.Maybe.Properties._._.IsSemigroup
-d_IsSemigroup_420 a0 a1 a2 = ()
+d_IsSemigroup_430 a0 a1 a2 = ()
 -- Data.Maybe.Properties._._.IsMagma.isEquivalence
-d_isEquivalence_1692 ::
+d_isEquivalence_1712 ::
   MAlonzo.Code.Algebra.Structures.T_IsMagma_176 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_1692 v0
+d_isEquivalence_1712 v0
   = coe MAlonzo.Code.Algebra.Structures.d_isEquivalence_184 (coe v0)
 -- Data.Maybe.Properties._._.IsMagma.∙-cong
-d_'8729''45'cong_1706 ::
+d_'8729''45'cong_1726 ::
   MAlonzo.Code.Algebra.Structures.T_IsMagma_176 ->
   Maybe AgdaAny ->
   Maybe AgdaAny ->
@@ -300,109 +313,109 @@ d_'8729''45'cong_1706 ::
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8729''45'cong_1706 = erased
+d_'8729''45'cong_1726 = erased
 -- Data.Maybe.Properties._._.IsMonoid.identity
-d_identity_1802 ::
+d_identity_1822 ::
   MAlonzo.Code.Algebra.Structures.T_IsMonoid_686 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_1802 v0
+d_identity_1822 v0
   = coe MAlonzo.Code.Algebra.Structures.d_identity_698 (coe v0)
 -- Data.Maybe.Properties._._.IsMonoid.isSemigroup
-d_isSemigroup_1814 ::
+d_isSemigroup_1834 ::
   MAlonzo.Code.Algebra.Structures.T_IsMonoid_686 ->
   MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472
-d_isSemigroup_1814 v0
+d_isSemigroup_1834 v0
   = coe MAlonzo.Code.Algebra.Structures.d_isSemigroup_696 (coe v0)
 -- Data.Maybe.Properties._._.IsSemigroup.assoc
-d_assoc_2546 ::
+d_assoc_2568 ::
   MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472 ->
   Maybe AgdaAny ->
   Maybe AgdaAny ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_assoc_2546 = erased
+d_assoc_2568 = erased
 -- Data.Maybe.Properties._._.IsSemigroup.isMagma
-d_isMagma_2550 ::
+d_isMagma_2572 ::
   MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472 ->
   MAlonzo.Code.Algebra.Structures.T_IsMagma_176
-d_isMagma_2550 v0
+d_isMagma_2572 v0
   = coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v0)
 -- Data.Maybe.Properties._.<∣>-isMagma
-d_'60''8739''62''45'isMagma_2860 ::
+d_'60''8739''62''45'isMagma_2892 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> MAlonzo.Code.Algebra.Structures.T_IsMagma_176
-d_'60''8739''62''45'isMagma_2860 ~v0 ~v1
-  = du_'60''8739''62''45'isMagma_2860
-du_'60''8739''62''45'isMagma_2860 ::
+d_'60''8739''62''45'isMagma_2892 ~v0 ~v1
+  = du_'60''8739''62''45'isMagma_2892
+du_'60''8739''62''45'isMagma_2892 ::
   MAlonzo.Code.Algebra.Structures.T_IsMagma_176
-du_'60''8739''62''45'isMagma_2860
+du_'60''8739''62''45'isMagma_2892
   = coe
       MAlonzo.Code.Algebra.Structures.C_IsMagma'46'constructor_1867
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_isEquivalence_396)
       erased
 -- Data.Maybe.Properties._.<∣>-isSemigroup
-d_'60''8739''62''45'isSemigroup_2862 ::
+d_'60''8739''62''45'isSemigroup_2894 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472
-d_'60''8739''62''45'isSemigroup_2862 ~v0 ~v1
-  = du_'60''8739''62''45'isSemigroup_2862
-du_'60''8739''62''45'isSemigroup_2862 ::
+d_'60''8739''62''45'isSemigroup_2894 ~v0 ~v1
+  = du_'60''8739''62''45'isSemigroup_2894
+du_'60''8739''62''45'isSemigroup_2894 ::
   MAlonzo.Code.Algebra.Structures.T_IsSemigroup_472
-du_'60''8739''62''45'isSemigroup_2862
+du_'60''8739''62''45'isSemigroup_2894
   = coe
       MAlonzo.Code.Algebra.Structures.C_IsSemigroup'46'constructor_10417
-      (coe du_'60''8739''62''45'isMagma_2860) erased
+      (coe du_'60''8739''62''45'isMagma_2892) erased
 -- Data.Maybe.Properties._.<∣>-isMonoid
-d_'60''8739''62''45'isMonoid_2864 ::
+d_'60''8739''62''45'isMonoid_2896 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> MAlonzo.Code.Algebra.Structures.T_IsMonoid_686
-d_'60''8739''62''45'isMonoid_2864 ~v0 ~v1
-  = du_'60''8739''62''45'isMonoid_2864
-du_'60''8739''62''45'isMonoid_2864 ::
+d_'60''8739''62''45'isMonoid_2896 ~v0 ~v1
+  = du_'60''8739''62''45'isMonoid_2896
+du_'60''8739''62''45'isMonoid_2896 ::
   MAlonzo.Code.Algebra.Structures.T_IsMonoid_686
-du_'60''8739''62''45'isMonoid_2864
+du_'60''8739''62''45'isMonoid_2896
   = coe
       MAlonzo.Code.Algebra.Structures.C_IsMonoid'46'constructor_15873
-      (coe du_'60''8739''62''45'isSemigroup_2862)
-      (coe du_'60''8739''62''45'identity_332)
+      (coe du_'60''8739''62''45'isSemigroup_2894)
+      (coe du_'60''8739''62''45'identity_342)
 -- Data.Maybe.Properties._.<∣>-semigroup
-d_'60''8739''62''45'semigroup_2866 ::
+d_'60''8739''62''45'semigroup_2898 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Bundles.T_Semigroup_536
-d_'60''8739''62''45'semigroup_2866 ~v0 ~v1
-  = du_'60''8739''62''45'semigroup_2866
-du_'60''8739''62''45'semigroup_2866 ::
-  MAlonzo.Code.Algebra.Bundles.T_Semigroup_536
-du_'60''8739''62''45'semigroup_2866
+  () -> MAlonzo.Code.Algebra.Bundles.T_Semigroup_540
+d_'60''8739''62''45'semigroup_2898 ~v0 ~v1
+  = du_'60''8739''62''45'semigroup_2898
+du_'60''8739''62''45'semigroup_2898 ::
+  MAlonzo.Code.Algebra.Bundles.T_Semigroup_540
+du_'60''8739''62''45'semigroup_2898
   = coe
-      MAlonzo.Code.Algebra.Bundles.C_Semigroup'46'constructor_9793
+      MAlonzo.Code.Algebra.Bundles.C_Semigroup'46'constructor_9837
       (coe MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80)
-      (coe du_'60''8739''62''45'isSemigroup_2862)
+      (coe du_'60''8739''62''45'isSemigroup_2894)
 -- Data.Maybe.Properties._.<∣>-monoid
-d_'60''8739''62''45'monoid_2868 ::
+d_'60''8739''62''45'monoid_2900 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Algebra.Bundles.T_Monoid_882
-d_'60''8739''62''45'monoid_2868 ~v0 ~v1
-  = du_'60''8739''62''45'monoid_2868
-du_'60''8739''62''45'monoid_2868 ::
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882
-du_'60''8739''62''45'monoid_2868
+  () -> MAlonzo.Code.Algebra.Bundles.T_Monoid_886
+d_'60''8739''62''45'monoid_2900 ~v0 ~v1
+  = du_'60''8739''62''45'monoid_2900
+du_'60''8739''62''45'monoid_2900 ::
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886
+du_'60''8739''62''45'monoid_2900
   = coe
-      MAlonzo.Code.Algebra.Bundles.C_Monoid'46'constructor_16157
+      MAlonzo.Code.Algebra.Bundles.C_Monoid'46'constructor_16201
       (coe MAlonzo.Code.Data.Maybe.Base.du__'60''8739''62'__80)
       (coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)
-      (coe du_'60''8739''62''45'isMonoid_2864)
+      (coe du_'60''8739''62''45'isMonoid_2896)
 -- Data.Maybe.Properties.map-id₂
-d_map'45'id'8322'_2870 ::
+d_map'45'id'8322'_2902 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny) ->
   Maybe AgdaAny ->
   MAlonzo.Code.Data.Maybe.Relation.Unary.All.T_All_18 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45'id'8322'_2870 = erased
+d_map'45'id'8322'_2902 = erased
 -- Data.Maybe.Properties.map-cong₂
-d_map'45'cong'8322'_2872 ::
+d_map'45'cong'8322'_2904 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -412,9 +425,9 @@ d_map'45'cong'8322'_2872 ::
   Maybe AgdaAny ->
   MAlonzo.Code.Data.Maybe.Relation.Unary.All.T_All_18 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45'cong'8322'_2872 = erased
+d_map'45'cong'8322'_2904 = erased
 -- Data.Maybe.Properties.map-compose
-d_map'45'compose_2874 ::
+d_map'45'compose_2906 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -424,9 +437,9 @@ d_map'45'compose_2874 ::
   (AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45'compose_2874 = erased
+d_map'45'compose_2906 = erased
 -- Data.Maybe.Properties.map-<∣>-commute
-d_map'45''60''8739''62''45'commute_2876 ::
+d_map'45''60''8739''62''45'commute_2908 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -434,4 +447,4 @@ d_map'45''60''8739''62''45'commute_2876 ::
   (AgdaAny -> AgdaAny) ->
   Maybe AgdaAny ->
   Maybe AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_map'45''60''8739''62''45'commute_2876 = erased
+d_map'45''60''8739''62''45'commute_2908 = erased

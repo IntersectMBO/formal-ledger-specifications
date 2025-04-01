@@ -95,11 +95,11 @@ du_HasCoin'45'Map_24 v0
               (coe v0)
               (coe
                  MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-                 (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+                 (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
               (coe
                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                  (coe
-                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
               (coe (\ v2 -> v2)) (coe v1)))
 -- Ledger.Prelude.HasCoin-Set
 d_HasCoin'45'Set_32 ::
@@ -123,7 +123,7 @@ du_HasCoin'45'Set_32 v0
               (coe
                  MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                  (coe
-                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
               (coe (\ v2 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2)))
               (coe v1)))
 -- Ledger.Prelude.HasSubset-Set
