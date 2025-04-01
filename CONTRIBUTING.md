@@ -138,11 +138,9 @@ the Nix package manager which can be installed by following the official
 
 ### Agda Dependencies
 
-The Agda libraries on which this project depends are (specific versions of)
-[agda-sets][], [agda-stdlib][], [agda-stdlib-classes][], and [agda-stdlib-meta][].
-
-At the time of this writing, the specific versions of these libraries that we use
-are as follows: 
+This project depends on the following libraries: [agda-sets][], [agda-stdlib][],
+[agda-stdlib-classes][], and [agda-stdlib-meta][].  At the time of this writing, the
+specific versions of these that we use are as follows: 
 
    + [agda-sets f517d0d](https://github.com/input-output-hk/agda-sets/tree/f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6)
    + [agda-stdlib v2.2](https://github.com/agda/agda-stdlib/tree/v2.2-release)
@@ -524,7 +522,7 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
 ## Troubleshooting
 
-+  🔥 **Problem**. After installing `fls-shake` as described above, the command 
++  **Problem**. After installing `fls-shake` as described above, the command 
 
    ```bash
    ./result/bin/fls-shake -- cardano-ledger.pdf
@@ -537,7 +535,7 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
    ```
 
 
-   🔍 **Root Causes**.  Most likely either `latexmk` is not installed or the `texlive` installation
+   **Root Causes**.  Most likely either `latexmk` is not installed or the `texlive` installation
    is missing some required components.
 
 
@@ -547,7 +545,7 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
        On Nix this gets injected via dependencies, but in a `cabal`-based setup, you
        need to manually install it.
 
-       🧯 **Solution**: install `latexmk` and `texlive`.
+       **Solution**: install `latexmk` and `texlive`.
 
        On Ubuntu:
 
@@ -570,7 +568,7 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
        sure it's in your shell `PATH`.
        
 
-+  🔥 **Problem**. After installing `fls-shake` as described above, the command 
++  **Problem**. After installing `fls-shake` as described above, the command 
 
    ```bash
    ./result/bin/fls-shake -- cardano-ledger.pdf
@@ -582,10 +580,10 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
    commitBuffer: invalid argument (cannot encode character '\8474')
    ```
    
-   +  🔍 **Root Cause**.  Most likely Agda is trying to write a character (Ⅎ, U+2112)
+   +  **Root Cause**.  Most likely Agda is trying to write a character (Ⅎ, U+2112)
       into a file or stdout using the wrong encoding — probably ASCII or Latin-1.
    
-   +  🧯 **Solution**: Ensure Agda runs in a UTF-8 locale.
+   +  **Solution**: Ensure Agda runs in a UTF-8 locale.
 
       Option 1: Set `LANG/LC_ALL` manually when running
 
@@ -602,12 +600,11 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
       Then try the `fls-shake` command again.
 
-
 ---
 
 ## Maintainer
 
-This repository is maintained by @WhatisRT.
+This repository is maintained by @WhatisRT, @carlostome, and @williamdemeo.
 
 
 **If you encounter any problems, please open a [New Issue][]**. 
