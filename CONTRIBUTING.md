@@ -6,9 +6,11 @@
 - [Contributing to the formal ledger specifications](#contributing-to-the-formal-ledger-specifications)
   - [Style guidelines](#style-guidelines)
   - [Quick Start](#quick-start)
+  - [Working on the ledger spec from inside a Nix shell ](#working-on-the-ledger-spec-from-inside-a-nix-shell)
   - [Dependencies](#dependencies)
     - [Nix Dependencies](#nix-dependencies)
     - [Agda Dependencies](#agda-dependencies)
+      - [Modifying the Agda libraries](#modifying-the-agda-libraries)
   - [Agda Setup](#agda-setup)
     - [Global `ledger-agda` installation](#global-ledger-agda-installation)
     - [Local `ledger-agda`installation](#local-ledger-agdainstallation)
@@ -18,7 +20,6 @@
     - [Haskell code (for conformance testing)](#haskell-code-for-conformance-testing)
     - [Html-hyperlinked Agda code](#html-hyperlinked-agda-code)
     - [fls-shake intermediate outputs](#fls-shake-intermediate-outputs)
-  - [Modifying the Agda libraries](#modifying-the-agda-libraries)
   - [Setup Without Nix](#setup-without-nix)
     - [Agda and its dependencies](#agda-and-its-dependencies)
     - [`fls-shake`](#fls-shake)
@@ -28,6 +29,10 @@
   - [Maintainer](#maintainer)
 
 <!-- markdown-toc end -->
+
+
+**If you encounter any problems, please read the rest of these instructions
+(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**. 
 
 ## Style guidelines
 
@@ -627,6 +632,7 @@ This repository is maintained by @WhatisRT.
 <!--       links to sections of .md documents automatic) -->
 [Style guidelines]: #style-guidelines
 [Quick Start]: #quick-start
+[Working on the ledger spec from inside a Nix shell]: #working-on-the-ledger-spec-from-inside-a-nix-shell
 [Dependencies]: #dependencies
 [Nix Dependencies]: #nix-dependencies
 [Agda Dependencies]: #agda-dependencies
@@ -645,5 +651,4 @@ This repository is maintained by @WhatisRT.
 [`fls-shake`]: #fls-shake
 [Building `fls-shake` manually]: #building-fls-shake-manually
 [Updating nixpkgs]: #updating-nixpkgs
-[Troubleshooting]: #troubleshooting
 [Maintainer]: #maintainer
