@@ -132,7 +132,7 @@ We use Nix to set up an environment with all dependencies installed correctly.
 While it is possible to work with this repository without using Nix
 (instructions for doing so are included [below][Setup without nix]) those wishing to
 make nontrivial contributions to this repository are advised to follow the Nix-based
-approach described here.  This doesn't require running the NixOS, but does require
+approach described here.  This doesn't require running NixOS, but does require
 the Nix package manager which can be installed by following the official 
 [Nix download instructions][]. 
 
