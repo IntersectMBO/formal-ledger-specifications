@@ -4,7 +4,6 @@
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
 import Data.Integer as ℤ
-open import Data.Integer.Ext
 
 open import Agda.Builtin.FromNat
 
