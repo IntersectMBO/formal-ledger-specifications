@@ -26,7 +26,7 @@
     - [Building `fls-shake` manually](#building-fls-shake-manually)
   - [Updating nixpkgs](#updating-nixpkgs)
   - [Troubleshooting](#troubleshooting)
-  - [Maintainer](#maintainer)
+  - [Maintainers](#maintainers)
 
 <!-- markdown-toc end -->
 
@@ -602,9 +602,9 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
 ---
 
-## Maintainer
+## Maintainers
 
-This repository is maintained by @WhatisRT, @carlostome, and @williamdemeo.
+This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamdemeo][].
 
 
 **If you encounter any problems, please open a [New Issue][]**. 
@@ -629,6 +629,10 @@ This repository is maintained by @WhatisRT, @carlostome, and @williamdemeo.
 [Nix download instructions]: https://nixos.org/download/
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [shake]: https://shakebuild.com/
+
+[@WhatisRT]: https://github.com/whatisrt
+[@carlostome]: https://github.com/carlostome
+[@williamdemeo]: https://github.com/williamdemeo
 
 <!-- Links to sections of this document (copied from `markdown-toc-generate-toc` output) -->
 <!-- These links will probably need to be updated by hand whenever -->
@@ -656,4 +660,4 @@ This repository is maintained by @WhatisRT, @carlostome, and @williamdemeo.
 [Building `fls-shake` manually]: #building-fls-shake-manually
 [Updating nixpkgs]: #updating-nixpkgs
 [Troubleshooting]: #troubleshooting
-[Maintainer]: #maintainer
+[Maintainers]: #maintainers
