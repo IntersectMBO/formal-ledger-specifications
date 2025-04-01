@@ -280,7 +280,7 @@ d_'8801''45'success'8660'STS_300 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_'8801''45'success'8660'STS_300 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8 v9
   = du_'8801''45'success'8660'STS_300 v5 v6 v7 v8 v9
 du_'8801''45'success'8660'STS_300 ::
@@ -288,7 +288,7 @@ du_'8801''45'success'8660'STS_300 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_'8801''45'success'8660'STS_300 v0 v1 v2 v3 v4
   = let v5 = coe d_computeProof_272 v0 v1 v2 v3 in
     coe
@@ -297,7 +297,7 @@ du_'8801''45'success'8660'STS_300 v0 v1 v2 v3 v4
            -> case coe v6 of
                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v7 v8
                   -> coe
-                       MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 (coe (\ v9 -> v8))
+                       MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 (coe (\ v9 -> v8))
                        (coe
                           (\ v9 ->
                              coe
@@ -321,7 +321,7 @@ du_'8801''45'success'8660'STS_300 v0 v1 v2 v3 v4
                 _ -> MAlonzo.RTE.mazUnreachableError
          C_failure_44 v6
            -> coe
-                MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                 (coe
                    (\ v7 ->
                       coe
@@ -396,17 +396,17 @@ d_failure'8660''8704''172'STS_398 ::
   T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_failure'8660''8704''172'STS_398 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6 v7 v8
   = du_failure'8660''8704''172'STS_398 v5 v6 v7 v8
 du_failure'8660''8704''172'STS_398 ::
   T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_failure'8660''8704''172'STS_398 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
       (\ v4 ->
          coe
            du_'8704''172'STS'8658'failure_360 (coe v0) (coe v1) (coe v2)
@@ -489,14 +489,14 @@ d_failure'8660''8704''172'STS_442 ::
   T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_failure'8660''8704''172'STS_442 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_failure'8660''8704''172'STS_442 v5
 du_failure'8660''8704''172'STS_442 ::
   T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_failure'8660''8704''172'STS_442 v0
   = coe du_failure'8660''8704''172'STS_398 (coe v0)
 -- Interface.ComputationalRelation._._.recomputeProof
@@ -554,7 +554,7 @@ d_'8801''45'success'8660'STS_448 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_'8801''45'success'8660'STS_448 ~v0 ~v1 ~v2 ~v3 ~v4 v5
   = du_'8801''45'success'8660'STS_448 v5
 du_'8801''45'success'8660'STS_448 ::
@@ -562,7 +562,7 @@ du_'8801''45'success'8660'STS_448 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_'8801''45'success'8660'STS_448 v0
   = coe du_'8801''45'success'8660'STS_300 (coe v0)
 -- Interface.ComputationalRelation._.ExtendedRelSTS
@@ -598,7 +598,7 @@ du_ExtendedRel'45'compute_452 v0 v1 v2 v3
       (case coe v4 of
          C_success_42 v5
            -> coe
-                MAlonzo.Code.Function.Bundles.d_to_1724
+                MAlonzo.Code.Function.Bundles.d_to_1820
                 (coe
                    du_'8801''45'success'8660'STS_300 (coe v0) (coe v1) (coe v2)
                    (coe v3) (coe v5))
@@ -680,7 +680,7 @@ du_Computational'8658'Dec_542 v0 v1 v2 v3 v4 v5
                  (case coe v7 of
                     C_success_42 v8
                       -> coe
-                           MAlonzo.Code.Function.Bundles.d_to_1724
+                           MAlonzo.Code.Function.Bundles.d_to_1820
                            (coe
                               du_'8801''45'success'8660'STS_300 (coe v0) (coe v1) (coe v2)
                               (coe v3) (coe v8))
@@ -799,14 +799,14 @@ d_failure'8660''8704''172'STS_640 ::
   T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_failure'8660''8704''172'STS_640 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_failure'8660''8704''172'STS_640 v5
 du_failure'8660''8704''172'STS_640 ::
   T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_failure'8660''8704''172'STS_640 v0
   = coe du_failure'8660''8704''172'STS_398 (coe v0)
 -- Interface.ComputationalRelation._._.recomputeProof
@@ -867,7 +867,7 @@ d_'8801''45'success'8660'STS_646 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_'8801''45'success'8660'STS_646 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
   = du_'8801''45'success'8660'STS_646 v5
 du_'8801''45'success'8660'STS_646 ::
@@ -875,7 +875,7 @@ du_'8801''45'success'8660'STS_646 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_'8801''45'success'8660'STS_646 v0
   = coe du_'8801''45'success'8660'STS_300 (coe v0)
 -- Interface.ComputationalRelation._._.completeness
@@ -943,14 +943,14 @@ d_failure'8660''8704''172'STS_660 ::
   T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_failure'8660''8704''172'STS_660 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
   = du_failure'8660''8704''172'STS_660 v6
 du_failure'8660''8704''172'STS_660 ::
   T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_failure'8660''8704''172'STS_660 v0
   = coe du_failure'8660''8704''172'STS_398 (coe v0)
 -- Interface.ComputationalRelation._._.recomputeProof
@@ -1011,7 +1011,7 @@ d_'8801''45'success'8660'STS_666 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_'8801''45'success'8660'STS_666 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
   = du_'8801''45'success'8660'STS_666 v6
 du_'8801''45'success'8660'STS_666 ::
@@ -1019,7 +1019,7 @@ du_'8801''45'success'8660'STS_666 ::
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_'8801''45'success'8660'STS_666 v0
   = coe du_'8801''45'success'8660'STS_300 (coe v0)
 -- Interface.ComputationalRelation._.compute-ext≡

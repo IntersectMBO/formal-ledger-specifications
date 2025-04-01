@@ -516,14 +516,14 @@ d_'91''93''60''91''93''45''8660'_234 ::
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_'91''93''60''91''93''45''8660'_234 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
   = du_'91''93''60''91''93''45''8660'_234
 du_'91''93''60''91''93''45''8660'_234 ::
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_'91''93''60''91''93''45''8660'_234
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2414
       (coe MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.C_base_42)
       (coe du_'46'extendedlambda0_236)
 -- Data.List.Relation.Binary.Lex._..extendedlambda0
@@ -557,15 +557,15 @@ d_'8759''60''8759''45''8660'_248 ::
   AgdaAny ->
   AgdaAny ->
   [AgdaAny] ->
-  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_'8759''60''8759''45''8660'_248 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
                                  ~v8 ~v9 ~v10
   = du_'8759''60''8759''45''8660'_248
 du_'8759''60''8759''45''8660'_248 ::
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_'8759''60''8759''45''8660'_248
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2414
       (coe
          MAlonzo.Code.Data.Sum.Base.du_'91'_'44'_'93'_52
          (coe MAlonzo.Code.Data.List.Relation.Binary.Lex.Core.C_this_60)

@@ -62,14 +62,14 @@ d_toBundle_44 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   T_CommutativeMonoid_12 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_966
 d_toBundle_44 ~v0 ~v1 ~v2 v3 = du_toBundle_44 v3
 du_toBundle_44 ::
   T_CommutativeMonoid_12 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_966
 du_toBundle_44 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.C_CommutativeMonoid'46'constructor_17931
+      MAlonzo.Code.Algebra.Bundles.C_CommutativeMonoid'46'constructor_17975
       (MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16
          (coe d_semigroup_30 (coe v0)))
       (MAlonzo.Code.Class.Monoid.Core.d_ε_20 (coe d_monoid_32 (coe v0)))
@@ -96,19 +96,19 @@ d_semigroup_58 v0 = coe d_semigroup_30 (coe v0)
 d_fromBundle_62 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_966 ->
   T_CommutativeMonoid_12
 d_fromBundle_62 ~v0 ~v1 v2 = du_fromBundle_62 v2
 du_fromBundle_62 ::
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_962 ->
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_966 ->
   T_CommutativeMonoid_12
 du_fromBundle_62 v0
   = coe
       C_CommutativeMonoid'46'constructor_677
       (coe
          MAlonzo.Code.Class.Semigroup.Core.C_Semigroup'46'constructor_25
-         (coe MAlonzo.Code.Algebra.Bundles.d__'8729'__982 (coe v0)))
+         (coe MAlonzo.Code.Algebra.Bundles.d__'8729'__986 (coe v0)))
       (coe
          MAlonzo.Code.Class.Monoid.Core.C_Monoid'46'constructor_37
-         (coe MAlonzo.Code.Algebra.Bundles.d_ε_984 (coe v0)))
-      (MAlonzo.Code.Algebra.Bundles.d_isCommutativeMonoid_986 (coe v0))
+         (coe MAlonzo.Code.Algebra.Bundles.d_ε_988 (coe v0)))
+      (MAlonzo.Code.Algebra.Bundles.d_isCommutativeMonoid_990 (coe v0))

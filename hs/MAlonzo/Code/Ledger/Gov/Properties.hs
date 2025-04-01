@@ -41,7 +41,7 @@ import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Product.Properties
 import qualified MAlonzo.Code.Data.Rational.Base
-import qualified MAlonzo.Code.Data.Refinement
+import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Base
 import qualified MAlonzo.Code.Function.Bundles
@@ -237,7 +237,7 @@ d_minUTxOValue_502 v0
 -- _.PParams.monetaryExpansion
 d_monetaryExpansion_504 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_504 v0
   = coe MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_340 (coe v0)
 -- _.PParams.nopt
@@ -280,7 +280,7 @@ d_refScriptCostStride_518 v0
 -- _.PParams.treasuryCut
 d_treasuryCut_520 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_520 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_342 (coe v0)
 -- Ledger.Gov.Properties._.getHash
@@ -757,7 +757,7 @@ d_validHFAction'63'_1232 v0 v1 v2 v3
                                                                               MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v25
                                                                                 -> let v26
                                                                                          = coe
-                                                                                             MAlonzo.Code.Data.List.Membership.Setoid.du_find_84
+                                                                                             MAlonzo.Code.Data.List.Membership.Setoid.du_find_86
                                                                                              (coe
                                                                                                 MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
                                                                                              (coe
@@ -801,7 +801,7 @@ d_validHFAction'63'_1232 v0 v1 v2 v3
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Function.Bundles.d_to_1724
+                                                                                                                                                MAlonzo.Code.Function.Bundles.d_to_1820
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Axiom.Set.du_'8712''45'fromList_432
                                                                                                                                                    (coe
@@ -1042,9 +1042,9 @@ d_computeProof_1370 v0 v1 v2 v3
                                                    MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v12
                                                      -> let v13
                                                               = coe
-                                                                  MAlonzo.Code.Function.Bundles.d_from_1974
+                                                                  MAlonzo.Code.Function.Bundles.d_from_2082
                                                                   (coe
-                                                                     MAlonzo.Code.Data.List.Membership.Propositional.Properties.Core.du_Any'8596'_144
+                                                                     MAlonzo.Code.Data.List.Membership.Propositional.Properties.Core.du_Any'8596'_146
                                                                      (coe v2))
                                                                   v9 in
                                                         coe
@@ -1085,7 +1085,7 @@ d_computeProof_1370 v0 v1 v2 v3
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Function.Bundles.d_to_1724
+                                                                                                            MAlonzo.Code.Function.Bundles.d_to_1820
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.du_'8712''45'fromList_432
                                                                                                                (coe

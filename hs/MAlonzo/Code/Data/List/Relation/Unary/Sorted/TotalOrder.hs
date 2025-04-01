@@ -25,70 +25,70 @@ import qualified MAlonzo.Code.Relation.Binary.Bundles
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 
 -- Data.List.Relation.Unary.Sorted.TotalOrder.Sorted
-d_Sorted_98 ::
+d_Sorted_106 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_966 ->
   [AgdaAny] -> ()
-d_Sorted_98 = erased
+d_Sorted_106 = erased
 -- Data.List.Relation.Unary.Sorted.TotalOrder._.head
-d_head_112 ::
+d_head_120 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_966 ->
   AgdaAny ->
   AgdaAny ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26 -> AgdaAny
-d_head_112 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 = du_head_112
-du_head_112 ::
+d_head_120 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 = du_head_120
+du_head_120 ::
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26 -> AgdaAny
-du_head_112
+du_head_120
   = coe MAlonzo.Code.Data.List.Relation.Unary.Linked.du_head_58
 -- Data.List.Relation.Unary.Sorted.TotalOrder._.tail
-d_tail_114 ::
+d_tail_122 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_966 ->
   AgdaAny ->
   AgdaAny ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26 ->
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26
-d_tail_114 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 = du_tail_114
-du_tail_114 ::
+d_tail_122 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 = du_tail_122
+du_tail_122 ::
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26 ->
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26
-du_tail_114
+du_tail_122
   = coe MAlonzo.Code.Data.List.Relation.Unary.Linked.du_tail_68
 -- Data.List.Relation.Unary.Sorted.TotalOrder.sorted?
-d_sorted'63'_116 ::
+d_sorted'63'_124 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_966 ->
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   [AgdaAny] -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_sorted'63'_116 ~v0 ~v1 ~v2 ~v3 = du_sorted'63'_116
-du_sorted'63'_116 ::
+d_sorted'63'_124 ~v0 ~v1 ~v2 ~v3 = du_sorted'63'_124
+du_sorted'63'_124 ::
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
   [AgdaAny] -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_sorted'63'_116
+du_sorted'63'_124
   = coe
       MAlonzo.Code.Data.List.Relation.Unary.Linked.du_linked'63'_186
 -- Data.List.Relation.Unary.Sorted.TotalOrder.irrelevant
-d_irrelevant_118 ::
+d_irrelevant_126 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_966 ->
   (AgdaAny ->
    AgdaAny ->
    AgdaAny ->
@@ -97,16 +97,16 @@ d_irrelevant_118 ::
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26 ->
   MAlonzo.Code.Data.List.Relation.Unary.Linked.T_Linked_26 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_irrelevant_118 = erased
+d_irrelevant_126 = erased
 -- Data.List.Relation.Unary.Sorted.TotalOrder.satisfiable
-d_satisfiable_120 ::
+d_satisfiable_128 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_764 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalOrder_966 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_satisfiable_120 ~v0 ~v1 ~v2 ~v3 = du_satisfiable_120
-du_satisfiable_120 :: MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_satisfiable_120
+d_satisfiable_128 ~v0 ~v1 ~v2 ~v3 = du_satisfiable_128
+du_satisfiable_128 :: MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_satisfiable_128
   = coe
       MAlonzo.Code.Data.List.Relation.Unary.Linked.du_satisfiable_218

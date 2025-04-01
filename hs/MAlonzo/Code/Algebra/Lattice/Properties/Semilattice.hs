@@ -30,14 +30,14 @@ d_poset_162 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
 d_poset_162 ~v0 ~v1 v2 = du_poset_162 v2
 du_poset_162 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_314
+  MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
 du_poset_162 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_poset_3784
+      MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_poset_3806
       (coe MAlonzo.Code.Algebra.Lattice.Bundles.d__'8729'__28 (coe v0))
       (coe
          MAlonzo.Code.Algebra.Lattice.Bundles.d_isSemilattice_30 (coe v0))
@@ -48,13 +48,13 @@ d__'8804'__166 ::
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10 ->
   AgdaAny -> AgdaAny -> ()
 d__'8804'__166 = erased
--- Algebra.Lattice.Properties.Semilattice._._≳_
-d__'8819'__168 ::
+-- Algebra.Lattice.Properties.Semilattice._._∼ᵒ_
+d__'8764''7506'__168 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10 ->
   AgdaAny -> AgdaAny -> ()
-d__'8819'__168 = erased
+d__'8764''7506'__168 = erased
 -- Algebra.Lattice.Properties.Semilattice.∧-isOrderTheoreticMeetSemilattice
 d_'8743''45'isOrderTheoreticMeetSemilattice_176 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -70,10 +70,10 @@ du_'8743''45'isOrderTheoreticMeetSemilattice_176 v0
   = coe
       MAlonzo.Code.Relation.Binary.Lattice.Structures.C_IsMeetSemilattice'46'constructor_7577
       (coe
-         MAlonzo.Code.Relation.Binary.Bundles.d_isPartialOrder_336
+         MAlonzo.Code.Relation.Binary.Bundles.d_isPartialOrder_502
          (coe du_poset_162 (coe v0)))
       (coe
-         MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_infimum_3640
+         MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_infimum_3662
          (coe MAlonzo.Code.Algebra.Lattice.Bundles.d__'8729'__28 (coe v0))
          (coe
             MAlonzo.Code.Algebra.Lattice.Bundles.d_isSemilattice_30 (coe v0)))
@@ -92,10 +92,10 @@ du_'8743''45'isOrderTheoreticJoinSemilattice_178 v0
   = coe
       MAlonzo.Code.Relation.Binary.Lattice.Structures.C_IsJoinSemilattice'46'constructor_527
       (coe
-         MAlonzo.Code.Relation.Binary.Properties.Poset.du_'8805''45'isPartialOrder_142
+         MAlonzo.Code.Relation.Binary.Properties.Poset.du_'8805''45'isPartialOrder_150
          (coe du_poset_162 (coe v0)))
       (coe
-         MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_infimum_3640
+         MAlonzo.Code.Relation.Binary.Construct.NaturalOrder.Left.du_infimum_3662
          (coe MAlonzo.Code.Algebra.Lattice.Bundles.d__'8729'__28 (coe v0))
          (coe
             MAlonzo.Code.Algebra.Lattice.Bundles.d_isSemilattice_30 (coe v0)))

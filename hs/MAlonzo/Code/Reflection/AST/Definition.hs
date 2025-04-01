@@ -197,9 +197,9 @@ d__'8799'__102 v0 v1
                     (coe
                        MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
                        (coe
-                          MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688 (coe v2) (coe v4))
+                          MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710 (coe v2) (coe v4))
                        (coe
-                          MAlonzo.Code.Data.List.Properties.du_'8801''45'dec_58
+                          MAlonzo.Code.Data.List.Properties.du_'8801''45'dec_60
                           (coe MAlonzo.Code.Reflection.AST.Name.d__'8799'__12) (coe v3)
                           (coe v5)))
              MAlonzo.Code.Agda.Builtin.Reflection.C_record'45'type_296 v4 v5
@@ -245,7 +245,7 @@ d__'8799'__102 v0 v1
                        (coe
                           MAlonzo.Code.Reflection.AST.Name.d__'8799'__12 (coe v2) (coe v4))
                        (coe
-                          MAlonzo.Code.Data.List.Properties.du_'8801''45'dec_58
+                          MAlonzo.Code.Data.List.Properties.du_'8801''45'dec_60
                           (coe
                              MAlonzo.Code.Reflection.AST.Argument.du_'8801''45'dec_96
                              (coe MAlonzo.Code.Reflection.AST.Name.d__'8799'__12))

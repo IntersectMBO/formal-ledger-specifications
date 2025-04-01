@@ -96,7 +96,7 @@ d__'8799'__48 v0 v1
                     MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
                     erased erased
                     (coe
-                       MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688 (coe v2) (coe v3))
+                       MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710 (coe v2) (coe v3))
              MAlonzo.Code.Agda.Builtin.Reflection.C_word64_132 v3
                -> coe
                     MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32

@@ -17,6 +17,7 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.String
@@ -25,11 +26,13 @@ import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
+import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Foreign.Convertible
 import qualified MAlonzo.Code.Foreign.Haskell.Coerce
 import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Interface.ComputationalRelation
+import qualified MAlonzo.Code.Interface.STS
 import qualified MAlonzo.Code.Ledger.Address
 import qualified MAlonzo.Code.Ledger.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
@@ -69,10 +72,66 @@ data ChainState = ChainState {newEpochState :: MAlonzo.Code.Ledger.Conway.Foreig
   deriving (Show, Eq, Generic)
 data Block = Block {ts :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.Tx], slot :: Integer}
   deriving (Show, Eq, Generic)
+-- Ledger.Conway.Foreign.HSLedger.Chain._._⊢_⇀⦇_,CHAIN⦈_
+d__'8866'_'8640''10631'_'44'CHAIN'10632'__12 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Foreign.HSLedger.Chain._.Block
 d_Block_14 = ()
 -- Ledger.Conway.Foreign.HSLedger.Chain._.ChainState
 d_ChainState_18 = ()
+-- Ledger.Conway.Foreign.HSLedger.Chain._.calculateStakeDistrs
+d_calculateStakeDistrs_20 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_1986 ->
+  MAlonzo.Code.Ledger.Ratify.T_StakeDistrs_1998
+d_calculateStakeDistrs_20
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Chain.du_calculateStakeDistrs_2374
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
+-- Ledger.Conway.Foreign.HSLedger.Chain._.filterPurpose
+d_filterPurpose_22 ::
+  MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_filterPurpose_22
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Chain.du_filterPurpose_2304
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
+-- Ledger.Conway.Foreign.HSLedger.Chain._.govActionDeposits
+d_govActionDeposits_24 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_1986 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_govActionDeposits_24
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Chain.du_govActionDeposits_2318
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
+-- Ledger.Conway.Foreign.HSLedger.Chain._.maybePurpose
+d_maybePurpose_26 ::
+  MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Integer -> Maybe Integer
+d_maybePurpose_26
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Chain.du_maybePurpose_2230
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
+-- Ledger.Conway.Foreign.HSLedger.Chain._.maybePurpose-prop
+d_maybePurpose'45'prop_28 ::
+  MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
+  MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
+  MAlonzo.Code.Ledger.Address.T_Credential_16 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_maybePurpose'45'prop_28 = erased
 -- Ledger.Conway.Foreign.HSLedger.Chain._.Block.slot
 d_slot_36 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Chain.T_Block_2210 ->
@@ -95,6 +154,18 @@ d_newEpochState_42 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Chain.d_newEpochState_2208
       (coe v0)
+-- Ledger.Conway.Foreign.HSLedger.Chain._.Computational-CHAIN
+d_Computational'45'CHAIN_46 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'CHAIN_46
+  = coe
+      MAlonzo.Code.Ledger.Conway.Conformance.Chain.Properties.d_Computational'45'CHAIN_1730
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
+      (coe
+         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.du_HSAbstractFunctions_2412)
 -- Ledger.Conway.Foreign.HSLedger.Chain.HsTy-ChainState
 d_HsTy'45'ChainState_48 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14
@@ -4028,7 +4099,7 @@ d_Conv'45'ChainState_50
                                                                                                                   (\ v20 ->
                                                                                                                      case coe
                                                                                                                             v20 of
-                                                                                                                       MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17597 v21 v22
+                                                                                                                       MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17097 v21 v22
                                                                                                                          -> coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3485
                                                                                                                               (coe
@@ -4068,7 +4139,7 @@ d_Conv'45'ChainState_50
                                                                                                                             v20 of
                                                                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_3485 v21 v22
                                                                                                                          -> coe
-                                                                                                                              MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17597
+                                                                                                                              MAlonzo.Code.Ledger.Certs.C_PState'46'constructor_17097
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                                                                  (coe

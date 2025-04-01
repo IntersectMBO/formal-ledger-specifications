@@ -27,20 +27,20 @@ d_map'8242''8660'_16 ::
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714 ->
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810 ->
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_map'8242''8660'_16 ~v0 ~v1 ~v2 ~v3 v4 = du_map'8242''8660'_16 v4
 du_map'8242''8660'_16 ::
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714 ->
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810 ->
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_map'8242''8660'_16 v0
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2414
       (coe
          MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
-         (coe MAlonzo.Code.Function.Bundles.d_to_1724 (coe v0))
-         (coe MAlonzo.Code.Function.Bundles.d_from_1726 (coe v0)))
+         (coe MAlonzo.Code.Function.Bundles.d_to_1820 (coe v0))
+         (coe MAlonzo.Code.Function.Bundles.d_from_1822 (coe v0)))
       (coe
          MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
-         (coe MAlonzo.Code.Function.Bundles.d_from_1726 (coe v0))
-         (coe MAlonzo.Code.Function.Bundles.d_to_1724 (coe v0)))
+         (coe MAlonzo.Code.Function.Bundles.d_from_1822 (coe v0))
+         (coe MAlonzo.Code.Function.Bundles.d_to_1820 (coe v0)))

@@ -186,7 +186,7 @@ du_lem_144 ::
   Integer -> MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338
 du_lem_144 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''8242'_6128
+      MAlonzo.Code.Data.Nat.Properties.du_'8804''8658''8804''8242'_6164
       (coe
          addInt
          (coe
@@ -197,9 +197,9 @@ du_lem_144 v0 v1 v2
          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Base.Triple.du_start_96
-            (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'isPreorder_2810)
+            (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'isPreorder_2832)
             (\ v3 v4 v5 ->
-               coe MAlonzo.Code.Data.Nat.Properties.du_'60''8658''8804'_2854 v5))
+               coe MAlonzo.Code.Data.Nat.Properties.du_'60''8658''8804'_2880 v5))
          (addInt (coe (2 :: Integer)) (coe v0))
          (addInt
             (coe
@@ -210,10 +210,10 @@ du_lem_144 v0 v1 v2
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8804'_308
             (coe
                MAlonzo.Code.Relation.Binary.Reasoning.Base.Triple.du_'8804''45'go_138
-               (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'isPreorder_2810)
+               (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'isPreorder_2832)
                (\ v3 v4 v5 v6 v7 ->
                   coe
-                    MAlonzo.Code.Data.Nat.Properties.du_'8804''45''60''45'trans_2986 v6
+                    MAlonzo.Code.Data.Nat.Properties.du_'8804''45''60''45'trans_3012 v6
                     v7))
             (addInt (coe (2 :: Integer)) (coe v0))
             (addInt
@@ -424,7 +424,7 @@ du_lem_144 v0 v1 v2
                                  (coe
                                     MAlonzo.Code.Relation.Binary.Reasoning.Base.Triple.du_stop_166
                                     (coe
-                                       MAlonzo.Code.Data.Nat.Properties.d_'8804''45'isPreorder_2810))
+                                       MAlonzo.Code.Data.Nat.Properties.d_'8804''45'isPreorder_2832))
                                  (coe
                                     addInt
                                     (coe
@@ -438,7 +438,7 @@ du_lem_144 v0 v1 v2
                   erased)
                erased)
             (coe
-               MAlonzo.Code.Data.Nat.Properties.du_m'8804'm'43'n_3482
+               MAlonzo.Code.Data.Nat.Properties.du_m'8804'm'43'n_3508
                (coe addInt (coe (2 :: Integer)) (coe v0)))))
 -- Data.Digit._.helper
 d_helper_166 ::

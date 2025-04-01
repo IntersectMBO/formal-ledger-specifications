@@ -56,14 +56,14 @@ d_just'45'equivalence_62 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_just'45'equivalence_62 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
   = du_just'45'equivalence_62
 du_just'45'equivalence_62 ::
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_just'45'equivalence_62
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 (coe C_just_50)
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 (coe C_just_50)
       (coe du_drop'45'just_58)
 -- Data.Maybe.Relation.Binary.Connected.refl
 d_refl_64 ::

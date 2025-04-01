@@ -333,7 +333,7 @@ du_govActionDeposits_2318 v0 v1
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
          (coe
             MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_812
             (coe

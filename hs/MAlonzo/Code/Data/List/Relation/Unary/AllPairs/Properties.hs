@@ -24,6 +24,7 @@ import qualified MAlonzo.Code.Data.Fin.Base
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All.Properties
+import qualified MAlonzo.Code.Data.List.Relation.Unary.All.Properties.Core
 import qualified MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core
 import qualified MAlonzo.Code.Data.Maybe.Relation.Binary.Pointwise
 import qualified MAlonzo.Code.Data.Nat.Base
@@ -58,7 +59,7 @@ du_map'8314'_48 v0 v1
                -> coe
                     MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.C__'8759'__28
                     (coe
-                       MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_map'8314'_676
+                       MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_map'8314'_496
                        (coe v7) (coe v4))
                     (coe du_map'8314'_48 (coe v7) (coe v5))
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -95,7 +96,7 @@ du_'43''43''8314'_70 v0 v1 v2 v3
                       -> coe
                            MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.C__'8759'__28
                            (coe
-                              MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_'43''43''8314'_760
+                              MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_'43''43''8314'_580
                               (coe v9) (coe v6) (coe v12))
                            (coe du_'43''43''8314'_70 (coe v9) (coe v7) (coe v2) (coe v13))
                     _ -> MAlonzo.RTE.mazUnreachableError
@@ -138,11 +139,11 @@ du_concat'8314'_102 v0 v1 v2
                               (coe
                                  (\ v13 ->
                                     coe
-                                      MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_concat'8314'_862
+                                      MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_concat'8314'_682
                                       (coe v8)))
                               (coe v7)
                               (coe
-                                 MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_All'45'swap_230
+                                 MAlonzo.Code.Data.List.Relation.Unary.All.Properties.Core.du_All'45'swap_198
                                  (coe v8) (coe v7) (coe v11)))
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -179,7 +180,7 @@ du_take'8314'_126 v0 v1 v2
                          -> coe
                               MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.C__'8759'__28
                               (coe
-                                 MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_take'8314'_1116
+                                 MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_take'8314'_952
                                  (coe v9) (coe v3) (coe v6))
                               (coe du_take'8314'_126 (coe v9) (coe v3) (coe v7))
                        _ -> MAlonzo.RTE.mazUnreachableError
@@ -245,7 +246,7 @@ du_applyUpTo'8314''8321'_170 v0 v1
              (coe
                 MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.C__'8759'__28
                 (coe
-                   MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_applyUpTo'8314''8321'_1248
+                   MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_applyUpTo'8314''8321'_1062
                    (coe v2)
                    (coe
                       (\ v3 v4 ->
@@ -315,13 +316,13 @@ du_applyDownFrom'8314''8321'_224 v0 v1
              (coe
                 MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.C__'8759'__28
                 (coe
-                   MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_applyDownFrom'8314''8321'_1312
+                   MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_applyDownFrom'8314''8321'_1126
                    (coe v2)
                    (coe
                       (\ v3 v4 ->
                          coe
                            v1 v2 v3 v4
-                           (MAlonzo.Code.Data.Nat.Properties.d_'8804''45'refl_2776
+                           (MAlonzo.Code.Data.Nat.Properties.d_'8804''45'refl_2798
                               (coe v0)))))
                 (coe
                    du_applyDownFrom'8314''8321'_224 (coe v2)
@@ -330,7 +331,7 @@ du_applyDownFrom'8314''8321'_224 v0 v1
                          coe
                            v1 v3 v4 v5
                            (coe
-                              MAlonzo.Code.Data.Nat.Properties.du_m'60'n'8658'm'60'1'43'n_3062
+                              MAlonzo.Code.Data.Nat.Properties.du_m'60'n'8658'm'60'1'43'n_3088
                               (coe v6))))))
 -- Data.List.Relation.Unary.AllPairs.Properties._.applyDownFrom⁺₂
 d_applyDownFrom'8314''8322'_248 ::
@@ -381,7 +382,7 @@ du_tabulate'8314''45''60'_278 v0 v1
              (coe
                 MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.C__'8759'__28
                 (coe
-                   MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_tabulate'8314'_1346
+                   MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_tabulate'8314'_1160
                    (coe v2)
                    (coe
                       (\ v3 ->
@@ -463,7 +464,7 @@ du_filter'8314'_318 v0 v1 v2
                        then coe
                               MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.C__'8759'__28
                               (coe
-                                 MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_filter'8314'_1428
+                                 MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_filter'8314'_1242
                                  (coe v0) (coe v8) (coe v5))
                               (coe du_filter'8314'_318 (coe v0) (coe v8) (coe v6))
                        else coe du_filter'8314'_318 (coe v0) (coe v8) (coe v6))
@@ -499,7 +500,7 @@ du_catMaybes'8314'_360 v0 v1
                       -> coe
                            MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.C__'8759'__28
                            (coe
-                              MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_Any'45'catMaybes'8314'_758
+                              MAlonzo.Code.Data.List.Relation.Unary.All.Properties.du_Any'45'catMaybes'8314'_578
                               (coe v3)
                               (coe
                                  MAlonzo.Code.Data.List.Relation.Unary.All.du_map_164

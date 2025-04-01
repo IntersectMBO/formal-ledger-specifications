@@ -506,7 +506,7 @@ d_computeProof_2254 v0 v1 v2 v3 v4
                                                                                v15 v16 v17
                                                                                (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                   (coe
-                                                                                     MAlonzo.Code.Function.Bundles.d_from_1726
+                                                                                     MAlonzo.Code.Function.Bundles.d_from_1822
                                                                                      (coe
                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                         (coe
@@ -571,7 +571,7 @@ d_computeProof_2254 v0 v1 v2 v3 v4
                                                                                      v18))
                                                                                (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                   (coe
-                                                                                     MAlonzo.Code.Function.Bundles.d_from_1726
+                                                                                     MAlonzo.Code.Function.Bundles.d_from_1822
                                                                                      (coe
                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                         (coe
@@ -695,7 +695,7 @@ d_computeProof_2254 v0 v1 v2 v3 v4
                                                                                      v15 v16 v17
                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                         (coe
-                                                                                           MAlonzo.Code.Function.Bundles.d_from_1726
+                                                                                           MAlonzo.Code.Function.Bundles.d_from_1822
                                                                                            (coe
                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                               (coe
@@ -752,7 +752,7 @@ d_computeProof_2254 v0 v1 v2 v3 v4
                                                                                            v18))
                                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                         (coe
-                                                                                           MAlonzo.Code.Function.Bundles.d_from_1726
+                                                                                           MAlonzo.Code.Function.Bundles.d_from_1822
                                                                                            (coe
                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                               (coe
@@ -1984,7 +1984,7 @@ d_UTXO'45'step'45'computes'45'UTXO_2578 ::
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_2052 ->
   MAlonzo.Code.Ledger.Transaction.T_Tx_2652 ->
   MAlonzo.Code.Ledger.Utxo.T_UTxOState_2052 ->
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_UTXO'45'step'45'computes'45'UTXO_2578 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_'8801''45'success'8660'STS_300

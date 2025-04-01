@@ -275,7 +275,7 @@ du_DecEq'45'GovActionType_806
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_UpdateCommittee_700
                             -> coe
@@ -327,7 +327,7 @@ du_DecEq'45'GovActionType_806
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_NewConstitution_702
                             -> coe
@@ -379,7 +379,7 @@ du_DecEq'45'GovActionType_806
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_TriggerHF_704
                             -> coe
@@ -431,7 +431,7 @@ du_DecEq'45'GovActionType_806
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_ChangePParams_706
                             -> coe
@@ -483,7 +483,7 @@ du_DecEq'45'GovActionType_806
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_TreasuryWdrl_708
                             -> coe
@@ -535,7 +535,7 @@ du_DecEq'45'GovActionType_806
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_Info_710
                             -> coe
@@ -587,7 +587,7 @@ du_DecEq'45'GovActionType_806
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
@@ -617,7 +617,7 @@ du_DecEq'45'GovRole_808
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_DRep_670
                             -> coe
@@ -649,7 +649,7 @@ du_DecEq'45'GovRole_808
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_SPO_672
                             -> coe
@@ -681,7 +681,7 @@ du_DecEq'45'GovRole_808
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
@@ -711,7 +711,7 @@ du_DecEq'45'Vote_810
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_no_736
                             -> coe
@@ -743,7 +743,7 @@ du_DecEq'45'Vote_810
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_abstain_738
                             -> coe
@@ -775,7 +775,7 @@ du_DecEq'45'Vote_810
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v2 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
@@ -827,7 +827,7 @@ d_DecEq'45'VDeleg_812 v0
                                        MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                        (coe du_DecEq'45'GovRole_808) v5 v2))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe
                                        (\ v7 ->
                                           coe
@@ -866,7 +866,7 @@ d_DecEq'45'VDeleg_812 v0
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v3 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           C_noConfidenceRep_684
                             -> coe
@@ -898,7 +898,7 @@ d_DecEq'45'VDeleg_812 v0
                                        MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                        (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe (\ v3 -> coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
