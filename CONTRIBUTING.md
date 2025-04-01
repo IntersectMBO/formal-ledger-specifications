@@ -47,7 +47,7 @@ You should be able to run your preferred editor within `nix-shell` and it should
 the required `agda` executable.
 
 Here are some examples of *alternative* ways to interact with the code in this
-repository.  (You will probably do some but not all of these.)
+repository.  (You will probably use some but not all of these.)
 
 All of these assume you have at least cloned this repository to your local machine:
 
