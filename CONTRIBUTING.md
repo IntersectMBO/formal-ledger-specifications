@@ -30,9 +30,7 @@
 
 <!-- markdown-toc end -->
 
-
-**If you encounter any problems, please read the rest of these instructions
-(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**. 
+---
 
 ## Style guidelines
 
@@ -614,8 +612,6 @@ This repository is maintained by @WhatisRT.
 
 **If you encounter any problems, please open a [New Issue][]**. 
 
-
-
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
 [binary]: https://github.com/haskell/binary
@@ -628,8 +624,9 @@ This repository is maintained by @WhatisRT.
 [Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
 
 <!-- Links to sections of this document (copied from `markdown-toc-generate-toc` output) -->
-<!-- TODO: Check if these are not necessary (perhaps markdown is smart enough to make -->
-<!--       links to sections of .md documents automatic) -->
+<!-- These links will probably need to be updated by hand whenever -->
+<!-- `markdown-toc-generate-toc` is used to update the toc. -->
+<!-- TODO: find or make a script/utility that generates all the links from the toc -->
 [Style guidelines]: #style-guidelines
 [Quick Start]: #quick-start
 [Working on the ledger spec from inside a Nix shell]: #working-on-the-ledger-spec-from-inside-a-nix-shell
@@ -651,4 +648,5 @@ This repository is maintained by @WhatisRT.
 [`fls-shake`]: #fls-shake
 [Building `fls-shake` manually]: #building-fls-shake-manually
 [Updating nixpkgs]: #updating-nixpkgs
+[Troubleshooting]: #troubleshooting
 [Maintainer]: #maintainer
