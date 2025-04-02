@@ -28,28 +28,6 @@
 
 \usepackage{fontspec}
 
-%%
-%% cleveref (for more consistent and robust cross references)
-%%
-\usepackage[capitalize,nameinlink]{cleveref}
-%% Wherever we previously used \ref, we now use \cref instead
-%% (except at the beginning of a sentence, where we use \Cref) so we
-%% no longer need to explicitly name the kind of thing being referenced.
-%% + Use "\cref{eq1}" instead of "Eq.~(\ref{eq1})".
-%% + For a range of labels, use the \crefrange command:
-%%   `\crefrange{eq1}{eq5}` produces "Eqs.~(1) to~(5)".
-%% + To refer to multiple things at once, combine them all into one:
-%%   `\cref{eq2,eq1,eq3,eq5,thm2,def1}` produces:
-%%   "Eqs.~(1) to~(3) and~(5), Theorem~5, and Definition~1".
-\Crefname{figure}{Fig.}{Figs.}
-\Crefname{equation}{Eq.}{Eqs.}
-\Crefname{tabular}{Tab.}{Tabs.}
-\NewDocumentCommand{\sectionname}{}{Sec}
-\crefname{section}{\sectionname.}{\sectionname{}s.}
-\Crefname{section}{\sectionname.}{\sectionname{}s.}
-%% The above help enforce consistency among citations that mention sections;
-%% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
-%%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
 
 
 %%
@@ -91,6 +69,25 @@
 \newcommand{\legendbox}[1]{%
   \textcolor{#1}{\rule{\fontcharht\font`X}{\fontcharht\font`X}}%
 }
-
-%% Change the following to adjust the spacing between items for all itemized and
-%% enumerated lists in the document.
+%%
+%% cleveref (for more consistent and robust cross references)
+%%
+\usepackage[capitalize,nameinlink]{cleveref}
+%% Wherever we previously used \ref, we now use \cref instead
+%% (except at the beginning of a sentence, where we use \Cref) so we
+%% no longer need to explicitly name the kind of thing being referenced.
+%% + Use "\cref{eq1}" instead of "Eq.~(\ref{eq1})".
+%% + For a range of labels, use the \crefrange command:
+%%   `\crefrange{eq1}{eq5}` produces "Eqs.~(1) to~(5)".
+%% + To refer to multiple things at once, combine them all into one:
+%%   `\cref{eq2,eq1,eq3,eq5,thm2,def1}` produces:
+%%   "Eqs.~(1) to~(3) and~(5), Theorem~5, and Definition~1".
+\Crefname{figure}{Fig.}{Figs.}
+\Crefname{equation}{Eq.}{Eqs.}
+\Crefname{tabular}{Tab.}{Tabs.}
+\NewDocumentCommand{\sectionname}{}{Sec}
+\crefname{section}{\sectionname.}{\sectionname{}s.}
+\Crefname{section}{\sectionname.}{\sectionname{}s.}
+%% The above help enforce consistency among citations that mention sections;
+%% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
+%%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
