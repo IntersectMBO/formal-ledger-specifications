@@ -6,6 +6,6 @@ depend:
   abstract-set-theory
 include:
   src
-  libs/stdlib
-  libs/stdlib-classes
-  libs/stdlib-meta
+  lib-exts/stdlib
+  lib-exts/stdlib-classes
+  lib-exts/stdlib-meta
