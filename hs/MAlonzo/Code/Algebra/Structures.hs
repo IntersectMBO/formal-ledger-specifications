@@ -495,7 +495,7 @@ du_setoid_172 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_setoid_172 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
       (d_isEquivalence_156 (coe v0))
 -- Algebra.Structures.IsMagma
 d_IsMagma_176 a0 a1 a2 a3 a4 = ()
@@ -593,7 +593,7 @@ du_setoid_200 ::
   T_IsMagma_176 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_setoid_200 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
       (d_isEquivalence_184 (coe v0))
 -- Algebra.Structures.IsMagma.∙-congˡ
 d_'8729''45'cong'737'_202 ::
@@ -4574,7 +4574,7 @@ du_unique'737''45''8315''185'_1114 ::
   T_IsGroup_1036 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_unique'737''45''8315''185'_1114 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_456
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_assoc'8743'id'8743'inv'691''8658'inv'737''45'unique_458
       (let v4 = d_isSemigroup_696 (coe d_isMonoid_1050 (coe v3)) in
        coe (coe du_setoid_200 (coe d_isMagma_480 (coe v4))))
       (coe v0) (coe v2) (coe v1)
@@ -4606,7 +4606,7 @@ du_unique'691''45''8315''185'_1120 ::
   T_IsGroup_1036 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 du_unique'691''45''8315''185'_1120 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_476
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_assoc'8743'id'8743'inv'737''8658'inv'691''45'unique_478
       (let v4 = d_isSemigroup_696 (coe d_isMonoid_1050 (coe v3)) in
        coe (coe du_setoid_200 (coe d_isMagma_480 (coe v4))))
       (coe v0) (coe v2) (coe v1)
@@ -5555,13 +5555,125 @@ d_zero_1324 v0
       C_IsSemiringWithoutOne'46'constructor_37629 v1 v2 v3 v4 v5
         -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Algebra.Structures.IsSemiringWithoutOne._.assoc
+d_assoc_1328 ::
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_1328 v0
+  = coe
+      d_assoc_482
+      (coe
+         d_isSemigroup_696
+         (coe
+            d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))))
 -- Algebra.Structures.IsSemiringWithoutOne._.comm
-d_comm_1328 ::
+d_comm_1330 ::
   T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_1328 v0
+d_comm_1330 v0
   = coe d_comm_748 (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))
+-- Algebra.Structures.IsSemiringWithoutOne._.∙-cong
+d_'8729''45'cong_1332 ::
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong_1332 v0
+  = coe
+      d_'8729''45'cong_186
+      (coe
+         d_isMagma_480
+         (coe
+            d_isSemigroup_696
+            (coe
+               d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)))))
+-- Algebra.Structures.IsSemiringWithoutOne._.∙-congʳ
+d_'8729''45'cong'691'_1334 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong'691'_1334 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'691'_1334 v7
+du_'8729''45'cong'691'_1334 ::
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8729''45'cong'691'_1334 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1316 (coe v0) in
+    coe
+      (let v2 = d_isMonoid_746 (coe v1) in
+       coe
+         (let v3 = d_isSemigroup_696 (coe v2) in
+          coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v3)))))
+-- Algebra.Structures.IsSemiringWithoutOne._.∙-congˡ
+d_'8729''45'cong'737'_1336 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong'737'_1336 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'737'_1336 v7
+du_'8729''45'cong'737'_1336 ::
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8729''45'cong'737'_1336 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1316 (coe v0) in
+    coe
+      (let v2 = d_isMonoid_746 (coe v1) in
+       coe
+         (let v3 = d_isSemigroup_696 (coe v2) in
+          coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v3)))))
+-- Algebra.Structures.IsSemiringWithoutOne._.identity
+d_identity_1338 ::
+  T_IsSemiringWithoutOne_1298 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_1338 v0
+  = coe
+      d_identity_698
+      (coe
+         d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)))
+-- Algebra.Structures.IsSemiringWithoutOne._.identityʳ
+d_identity'691'_1340 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
+d_identity'691'_1340 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_identity'691'_1340 v7
+du_identity'691'_1340 ::
+  T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
+du_identity'691'_1340 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1316 (coe v0) in
+    coe (coe du_identity'691'_728 (coe d_isMonoid_746 (coe v1)))
+-- Algebra.Structures.IsSemiringWithoutOne._.identityˡ
+d_identity'737'_1342 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
+d_identity'737'_1342 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_identity'737'_1342 v7
+du_identity'737'_1342 ::
+  T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
+du_identity'737'_1342 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1316 (coe v0) in
+    coe (coe du_identity'737'_726 (coe d_isMonoid_746 (coe v1)))
 -- Algebra.Structures.IsSemiringWithoutOne._.isCommutativeMagma
-d_isCommutativeMagma_1330 ::
+d_isCommutativeMagma_1344 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5569,18 +5681,18 @@ d_isCommutativeMagma_1330 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> T_IsSemiringWithoutOne_1298 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_1330 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isCommutativeMagma_1330 v7
-du_isCommutativeMagma_1330 ::
+d_isCommutativeMagma_1344 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isCommutativeMagma_1344 v7
+du_isCommutativeMagma_1344 ::
   T_IsSemiringWithoutOne_1298 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_1330 v0
+du_isCommutativeMagma_1344 v0
   = let v1 = d_'43''45'isCommutativeMonoid_1316 (coe v0) in
     coe
       (coe
          du_isCommutativeMagma_586
          (coe du_isCommutativeSemigroup_786 (coe v1)))
 -- Algebra.Structures.IsSemiringWithoutOne._.isCommutativeSemigroup
-d_isCommutativeSemigroup_1332 ::
+d_isCommutativeSemigroup_1346 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5589,21 +5701,34 @@ d_isCommutativeSemigroup_1332 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   T_IsSemiringWithoutOne_1298 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_1332 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isCommutativeSemigroup_1332 v7
-du_isCommutativeSemigroup_1332 ::
+d_isCommutativeSemigroup_1346 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isCommutativeSemigroup_1346 v7
+du_isCommutativeSemigroup_1346 ::
   T_IsSemiringWithoutOne_1298 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_1332 v0
+du_isCommutativeSemigroup_1346 v0
   = coe
       du_isCommutativeSemigroup_786
       (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutOne._.isMonoid
-d_isMonoid_1334 :: T_IsSemiringWithoutOne_1298 -> T_IsMonoid_686
-d_isMonoid_1334 v0
+d_isMonoid_1348 :: T_IsSemiringWithoutOne_1298 -> T_IsMonoid_686
+d_isMonoid_1348 v0
   = coe
       d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))
+-- Algebra.Structures.IsSemiringWithoutOne._.isEquivalence
+d_isEquivalence_1350 ::
+  T_IsSemiringWithoutOne_1298 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
+d_isEquivalence_1350 v0
+  = coe
+      d_isEquivalence_184
+      (coe
+         d_isMagma_480
+         (coe
+            d_isSemigroup_696
+            (coe
+               d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)))))
 -- Algebra.Structures.IsSemiringWithoutOne._.setoid
-d_setoid_1336 ::
+d_setoid_1352 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5613,74 +5738,19 @@ d_setoid_1336 ::
   AgdaAny ->
   T_IsSemiringWithoutOne_1298 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_1336 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_setoid_1336 v7
-du_setoid_1336 ::
+d_setoid_1352 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_setoid_1352 v7
+du_setoid_1352 ::
   T_IsSemiringWithoutOne_1298 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_1336 v0
+du_setoid_1352 v0
   = let v1 = d_'43''45'isCommutativeMonoid_1316 (coe v0) in
     coe
       (let v2 = d_isMonoid_746 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3)))))
--- Algebra.Structures.IsSemiringWithoutOne._._≈_
-d__'8776'__1340 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__1340 = erased
--- Algebra.Structures.IsSemiringWithoutOne._._≉_
-d__'8777'__1342 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__1342 = erased
--- Algebra.Structures.IsSemiringWithoutOne._.Carrier
-d_Carrier_1344 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsSemiringWithoutOne_1298 -> ()
-d_Carrier_1344 = erased
--- Algebra.Structures.IsSemiringWithoutOne._.isEquivalence
-d_isEquivalence_1346 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  T_IsSemiringWithoutOne_1298 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_1346 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isEquivalence_1346 v7
-du_isEquivalence_1346 ::
-  T_IsSemiringWithoutOne_1298 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-du_isEquivalence_1346 v0
-  = coe
-      MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-      (let v1
-             = d_isMonoid_746
-                 (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)) in
-       coe
-         (let v2 = d_isSemigroup_696 (coe v1) in
-          coe (coe du_setoid_200 (coe d_isMagma_480 (coe v2)))))
 -- Algebra.Structures.IsSemiringWithoutOne._.isPartialEquivalence
-d_isPartialEquivalence_1348 ::
+d_isPartialEquivalence_1356 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5690,73 +5760,39 @@ d_isPartialEquivalence_1348 ::
   AgdaAny ->
   T_IsSemiringWithoutOne_1298 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_1348 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isPartialEquivalence_1348 v7
-du_isPartialEquivalence_1348 ::
+d_isPartialEquivalence_1356 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isPartialEquivalence_1356 v7
+du_isPartialEquivalence_1356 ::
   T_IsSemiringWithoutOne_1298 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_1348 v0
-  = let v1
-          = let v1
-                  = d_isMonoid_746
-                      (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)) in
-            coe
-              (let v2 = d_isSemigroup_696 (coe v1) in
-               coe (coe du_setoid_200 (coe d_isMagma_480 (coe v2)))) in
-    coe
-      (coe
-         MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
-         (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v1)))
--- Algebra.Structures.IsSemiringWithoutOne._.partialSetoid
-d_partialSetoid_1350 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  T_IsSemiringWithoutOne_1298 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_PartialSetoid_10
-d_partialSetoid_1350 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_partialSetoid_1350 v7
-du_partialSetoid_1350 ::
-  T_IsSemiringWithoutOne_1298 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_PartialSetoid_10
-du_partialSetoid_1350 v0
+du_isPartialEquivalence_1356 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.du_partialSetoid_70
-      (let v1
-             = d_isMonoid_746
-                 (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)) in
-       coe
-         (let v2 = d_isSemigroup_696 (coe v1) in
-          coe (coe du_setoid_200 (coe d_isMagma_480 (coe v2)))))
+      MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
+      (coe
+         d_isEquivalence_184
+         (coe
+            d_isMagma_480
+            (coe
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))))))
 -- Algebra.Structures.IsSemiringWithoutOne._.refl
-d_refl_1352 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
-d_refl_1352 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_refl_1352 v7
-du_refl_1352 :: T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
-du_refl_1352 v0
+d_refl_1358 :: T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
+d_refl_1358 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
-         MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-         (let v1
-                = d_isMonoid_746
-                    (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)) in
-          coe
-            (let v2 = d_isSemigroup_696 (coe v1) in
-             coe (coe du_setoid_200 (coe d_isMagma_480 (coe v2))))))
+         d_isEquivalence_184
+         (coe
+            d_isMagma_480
+            (coe
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))))))
 -- Algebra.Structures.IsSemiringWithoutOne._.reflexive
-d_reflexive_1354 ::
+d_reflexive_1360 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5768,86 +5804,60 @@ d_reflexive_1354 ::
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_1354 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_reflexive_1354 v7
-du_reflexive_1354 ::
+d_reflexive_1360 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_reflexive_1360 v7
+du_reflexive_1360 ::
   T_IsSemiringWithoutOne_1298 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_1354 v0
-  = let v1
-          = let v1
-                  = d_isMonoid_746
-                      (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)) in
-            coe
-              (let v2 = d_isSemigroup_696 (coe v1) in
-               coe (coe du_setoid_200 (coe d_isMagma_480 (coe v2)))) in
-    coe
-      (\ v2 v3 v4 ->
-         coe
-           MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
-           (coe
-              MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v1))
-           v2)
+du_reflexive_1360 v0 v1 v2 v3
+  = coe
+      MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
+      (coe
+         d_isEquivalence_184
+         (coe
+            d_isMagma_480
+            (coe
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))))))
+      v1
 -- Algebra.Structures.IsSemiringWithoutOne._.sym
-d_sym_1356 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
+d_sym_1362 ::
   T_IsSemiringWithoutOne_1298 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_1356 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_sym_1356 v7
-du_sym_1356 ::
-  T_IsSemiringWithoutOne_1298 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_sym_1356 v0
-  = let v1
-          = let v1
-                  = d_isMonoid_746
-                      (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)) in
-            coe
-              (let v2 = d_isSemigroup_696 (coe v1) in
-               coe (coe du_setoid_200 (coe d_isMagma_480 (coe v2)))) in
-    coe
+d_sym_1362 v0
+  = coe
+      MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_sym_36
+         d_isEquivalence_184
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v1)))
+            d_isMagma_480
+            (coe
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))))))
 -- Algebra.Structures.IsSemiringWithoutOne._.trans
-d_trans_1358 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
+d_trans_1364 ::
   T_IsSemiringWithoutOne_1298 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_1358 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_trans_1358 v7
-du_trans_1358 ::
-  T_IsSemiringWithoutOne_1298 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_trans_1358 v0
-  = let v1
-          = let v1
-                  = d_isMonoid_746
-                      (coe d_'43''45'isCommutativeMonoid_1316 (coe v0)) in
-            coe
-              (let v2 = d_isSemigroup_696 (coe v1) in
-               coe (coe du_setoid_200 (coe d_isMagma_480 (coe v2)))) in
-    coe
+d_trans_1364 v0
+  = coe
+      MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_trans_38
+         d_isEquivalence_184
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v1)))
+            d_isMagma_480
+            (coe
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))))))
 -- Algebra.Structures.IsSemiringWithoutOne.*-isMagma
-d_'42''45'isMagma_1360 ::
+d_'42''45'isMagma_1366 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5855,24 +5865,25 @@ d_'42''45'isMagma_1360 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> T_IsSemiringWithoutOne_1298 -> T_IsMagma_176
-d_'42''45'isMagma_1360 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'42''45'isMagma_1360 v7
-du_'42''45'isMagma_1360 ::
+d_'42''45'isMagma_1366 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'42''45'isMagma_1366 v7
+du_'42''45'isMagma_1366 ::
   T_IsSemiringWithoutOne_1298 -> T_IsMagma_176
-du_'42''45'isMagma_1360 v0
+du_'42''45'isMagma_1366 v0
   = coe
       C_IsMagma'46'constructor_1867
       (coe
-         MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-         (let v1
-                = d_isSemigroup_696
-                    (coe
-                       d_isMonoid_746
-                       (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))) in
-          coe (coe du_setoid_200 (coe d_isMagma_480 (coe v1)))))
+         d_isEquivalence_184
+         (coe
+            d_isMagma_480
+            (coe
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe d_'43''45'isCommutativeMonoid_1316 (coe v0))))))
       (coe d_'42''45'cong_1318 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutOne.*-isSemigroup
-d_'42''45'isSemigroup_1362 ::
+d_'42''45'isSemigroup_1368 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5880,17 +5891,17 @@ d_'42''45'isSemigroup_1362 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> T_IsSemiringWithoutOne_1298 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_1362 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'42''45'isSemigroup_1362 v7
-du_'42''45'isSemigroup_1362 ::
+d_'42''45'isSemigroup_1368 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'42''45'isSemigroup_1368 v7
+du_'42''45'isSemigroup_1368 ::
   T_IsSemiringWithoutOne_1298 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_1362 v0
+du_'42''45'isSemigroup_1368 v0
   = coe
       C_IsSemigroup'46'constructor_10417
-      (coe du_'42''45'isMagma_1360 (coe v0))
+      (coe du_'42''45'isMagma_1366 (coe v0))
       (coe d_'42''45'assoc_1320 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutOne._.∙-congʳ
-d_'8729''45'cong'691'_1366 ::
+d_'8729''45'cong'691'_1372 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5900,16 +5911,16 @@ d_'8729''45'cong'691'_1366 ::
   AgdaAny ->
   T_IsSemiringWithoutOne_1298 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1366 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'8729''45'cong'691'_1366 v7
-du_'8729''45'cong'691'_1366 ::
+d_'8729''45'cong'691'_1372 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'691'_1372 v7
+du_'8729''45'cong'691'_1372 ::
   T_IsSemiringWithoutOne_1298 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1366 v0
+du_'8729''45'cong'691'_1372 v0
   = coe
-      du_'8729''45'cong'691'_206 (coe du_'42''45'isMagma_1360 (coe v0))
+      du_'8729''45'cong'691'_206 (coe du_'42''45'isMagma_1366 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutOne._.∙-congˡ
-d_'8729''45'cong'737'_1368 ::
+d_'8729''45'cong'737'_1374 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5919,16 +5930,56 @@ d_'8729''45'cong'737'_1368 ::
   AgdaAny ->
   T_IsSemiringWithoutOne_1298 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1368 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'8729''45'cong'737'_1368 v7
-du_'8729''45'cong'737'_1368 ::
+d_'8729''45'cong'737'_1374 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'737'_1374 v7
+du_'8729''45'cong'737'_1374 ::
   T_IsSemiringWithoutOne_1298 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1368 v0
+du_'8729''45'cong'737'_1374 v0
   = coe
-      du_'8729''45'cong'737'_202 (coe du_'42''45'isMagma_1360 (coe v0))
+      du_'8729''45'cong'737'_202 (coe du_'42''45'isMagma_1366 (coe v0))
+-- Algebra.Structures.IsSemiringWithoutOne.distribˡ
+d_distrib'737'_1376 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'737'_1376 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_distrib'737'_1376 v7
+du_distrib'737'_1376 ::
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'737'_1376 v0
+  = coe
+      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
+      (coe d_distrib_1322 (coe v0))
+-- Algebra.Structures.IsSemiringWithoutOne.distribʳ
+d_distrib'691'_1378 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'691'_1378 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_distrib'691'_1378 v7
+du_distrib'691'_1378 ::
+  T_IsSemiringWithoutOne_1298 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'691'_1378 v0
+  = coe
+      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+      (coe d_distrib_1322 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutOne.zeroˡ
-d_zero'737'_1370 ::
+d_zero'737'_1380 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5936,15 +5987,15 @@ d_zero'737'_1370 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
-d_zero'737'_1370 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_zero'737'_1370 v7
-du_zero'737'_1370 ::
+d_zero'737'_1380 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_zero'737'_1380 v7
+du_zero'737'_1380 ::
   T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
-du_zero'737'_1370 v0
+du_zero'737'_1380 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe d_zero_1324 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutOne.zeroʳ
-d_zero'691'_1372 ::
+d_zero'691'_1382 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5952,15 +6003,15 @@ d_zero'691'_1372 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
-d_zero'691'_1372 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_zero'691'_1372 v7
-du_zero'691'_1372 ::
+d_zero'691'_1382 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_zero'691'_1382 v7
+du_zero'691'_1382 ::
   T_IsSemiringWithoutOne_1298 -> AgdaAny -> AgdaAny
-du_zero'691'_1372 v0
+du_zero'691'_1382 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe d_zero_1324 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutOne.isNearSemiring
-d_isNearSemiring_1374 ::
+d_isNearSemiring_1384 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -5968,11 +6019,11 @@ d_isNearSemiring_1374 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> T_IsSemiringWithoutOne_1298 -> T_IsNearSemiring_1218
-d_isNearSemiring_1374 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isNearSemiring_1374 v7
-du_isNearSemiring_1374 ::
+d_isNearSemiring_1384 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isNearSemiring_1384 v7
+du_isNearSemiring_1384 ::
   T_IsSemiringWithoutOne_1298 -> T_IsNearSemiring_1218
-du_isNearSemiring_1374 v0
+du_isNearSemiring_1384 v0
   = coe
       C_IsNearSemiring'46'constructor_35025
       (coe
@@ -5982,69 +6033,47 @@ du_isNearSemiring_1374 v0
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
          (coe d_distrib_1322 (coe v0)))
-      (coe du_zero'737'_1370 (coe v0))
+      (coe du_zero'737'_1380 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne
-d_IsCommutativeSemiringWithoutOne_1382 a0 a1 a2 a3 a4 a5 a6 = ()
-data T_IsCommutativeSemiringWithoutOne_1382
-  = C_IsCommutativeSemiringWithoutOne'46'constructor_41457 T_IsSemiringWithoutOne_1298
+d_IsCommutativeSemiringWithoutOne_1392 a0 a1 a2 a3 a4 a5 a6 = ()
+data T_IsCommutativeSemiringWithoutOne_1392
+  = C_IsCommutativeSemiringWithoutOne'46'constructor_42635 T_IsSemiringWithoutOne_1298
                                                            (AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne.isSemiringWithoutOne
-d_isSemiringWithoutOne_1394 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_isSemiringWithoutOne_1404 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   T_IsSemiringWithoutOne_1298
-d_isSemiringWithoutOne_1394 v0
+d_isSemiringWithoutOne_1404 v0
   = case coe v0 of
-      C_IsCommutativeSemiringWithoutOne'46'constructor_41457 v1 v2
+      C_IsCommutativeSemiringWithoutOne'46'constructor_42635 v1 v2
         -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne.*-comm
-d_'42''45'comm_1396 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_'42''45'comm_1406 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'comm_1396 v0
+d_'42''45'comm_1406 v0
   = case coe v0 of
-      C_IsCommutativeSemiringWithoutOne'46'constructor_41457 v1 v2
+      C_IsCommutativeSemiringWithoutOne'46'constructor_42635 v1 v2
         -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._._≈_
-d__'8776'__1400 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__1400 = erased
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._._≉_
-d__'8777'__1402 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__1402 = erased
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.*-assoc
-d_'42''45'assoc_1404 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_'42''45'assoc_1410 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_1404 v0
+d_'42''45'assoc_1410 v0
   = coe
-      d_'42''45'assoc_1320 (coe d_isSemiringWithoutOne_1394 (coe v0))
+      d_'42''45'assoc_1320 (coe d_isSemiringWithoutOne_1404 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.*-cong
-d_'42''45'cong_1406 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_'42''45'cong_1412 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_1406 v0
+d_'42''45'cong_1412 v0
   = coe
-      d_'42''45'cong_1318 (coe d_isSemiringWithoutOne_1394 (coe v0))
+      d_'42''45'cong_1318 (coe d_isSemiringWithoutOne_1404 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.∙-congʳ
-d_'8729''45'cong'691'_1408 ::
+d_'8729''45'cong'691'_1414 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6052,20 +6081,20 @@ d_'8729''45'cong'691'_1408 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1408 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'8729''45'cong'691'_1408 v7
-du_'8729''45'cong'691'_1408 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_'8729''45'cong'691'_1414 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'691'_1414 v7
+du_'8729''45'cong'691'_1414 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1408 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
+du_'8729''45'cong'691'_1414 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
     coe
       (coe
-         du_'8729''45'cong'691'_206 (coe du_'42''45'isMagma_1360 (coe v1)))
+         du_'8729''45'cong'691'_206 (coe du_'42''45'isMagma_1366 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.∙-congˡ
-d_'8729''45'cong'737'_1410 ::
+d_'8729''45'cong'737'_1416 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6073,36 +6102,36 @@ d_'8729''45'cong'737'_1410 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1410 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'8729''45'cong'737'_1410 v7
-du_'8729''45'cong'737'_1410 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_'8729''45'cong'737'_1416 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'737'_1416 v7
+du_'8729''45'cong'737'_1416 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1410 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
+du_'8729''45'cong'737'_1416 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
     coe
       (coe
-         du_'8729''45'cong'737'_202 (coe du_'42''45'isMagma_1360 (coe v1)))
+         du_'8729''45'cong'737'_202 (coe du_'42''45'isMagma_1366 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.*-isMagma
-d_'42''45'isMagma_1412 ::
+d_'42''45'isMagma_1418 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeSemiringWithoutOne_1382 -> T_IsMagma_176
-d_'42''45'isMagma_1412 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'42''45'isMagma_1412 v7
-du_'42''45'isMagma_1412 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsMagma_176
-du_'42''45'isMagma_1412 v0
+  AgdaAny -> T_IsCommutativeSemiringWithoutOne_1392 -> T_IsMagma_176
+d_'42''45'isMagma_1418 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'42''45'isMagma_1418 v7
+du_'42''45'isMagma_1418 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsMagma_176
+du_'42''45'isMagma_1418 v0
   = coe
-      du_'42''45'isMagma_1360 (coe d_isSemiringWithoutOne_1394 (coe v0))
+      du_'42''45'isMagma_1366 (coe d_isSemiringWithoutOne_1404 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.*-isSemigroup
-d_'42''45'isSemigroup_1414 ::
+d_'42''45'isSemigroup_1420 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6110,27 +6139,58 @@ d_'42''45'isSemigroup_1414 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_1414 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'42''45'isSemigroup_1414 v7
-du_'42''45'isSemigroup_1414 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_1414 v0
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_1420 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'42''45'isSemigroup_1420 v7
+du_'42''45'isSemigroup_1420 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_1420 v0
   = coe
-      du_'42''45'isSemigroup_1362
-      (coe d_isSemiringWithoutOne_1394 (coe v0))
+      du_'42''45'isSemigroup_1368
+      (coe d_isSemiringWithoutOne_1404 (coe v0))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.assoc
+d_assoc_1422 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_1422 v0
+  = coe
+      d_assoc_482
+      (coe
+         d_isSemigroup_696
+         (coe
+            d_isMonoid_746
+            (coe
+               d_'43''45'isCommutativeMonoid_1316
+               (coe d_isSemiringWithoutOne_1404 (coe v0)))))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.comm
-d_comm_1416 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_comm_1424 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_comm_1416 v0
+d_comm_1424 v0
   = coe
       d_comm_748
       (coe
          d_'43''45'isCommutativeMonoid_1316
-         (coe d_isSemiringWithoutOne_1394 (coe v0)))
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isCommutativeMagma
-d_isCommutativeMagma_1418 ::
+         (coe d_isSemiringWithoutOne_1404 (coe v0)))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.∙-cong
+d_'8729''45'cong_1426 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong_1426 v0
+  = coe
+      d_'8729''45'cong_186
+      (coe
+         d_isMagma_480
+         (coe
+            d_isSemigroup_696
+            (coe
+               d_isMonoid_746
+               (coe
+                  d_'43''45'isCommutativeMonoid_1316
+                  (coe d_isSemiringWithoutOne_1404 (coe v0))))))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.∙-congʳ
+d_'8729''45'cong'691'_1428 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6138,13 +6198,115 @@ d_isCommutativeMagma_1418 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_1418 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isCommutativeMagma_1418 v7
-du_isCommutativeMagma_1418 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_1418 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong'691'_1428 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'691'_1428 v7
+du_'8729''45'cong'691'_1428 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8729''45'cong'691'_1428 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
+    coe
+      (let v2 = d_'43''45'isCommutativeMonoid_1316 (coe v1) in
+       coe
+         (let v3 = d_isMonoid_746 (coe v2) in
+          coe
+            (let v4 = d_isSemigroup_696 (coe v3) in
+             coe
+               (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v4))))))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.∙-congˡ
+d_'8729''45'cong'737'_1430 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong'737'_1430 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'737'_1430 v7
+du_'8729''45'cong'737'_1430 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8729''45'cong'737'_1430 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
+    coe
+      (let v2 = d_'43''45'isCommutativeMonoid_1316 (coe v1) in
+       coe
+         (let v3 = d_isMonoid_746 (coe v2) in
+          coe
+            (let v4 = d_isSemigroup_696 (coe v3) in
+             coe
+               (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v4))))))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.identity
+d_identity_1432 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_1432 v0
+  = coe
+      d_identity_698
+      (coe
+         d_isMonoid_746
+         (coe
+            d_'43''45'isCommutativeMonoid_1316
+            (coe d_isSemiringWithoutOne_1404 (coe v0))))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.identityʳ
+d_identity'691'_1434 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+d_identity'691'_1434 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_identity'691'_1434 v7
+du_identity'691'_1434 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+du_identity'691'_1434 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
+    coe
+      (let v2 = d_'43''45'isCommutativeMonoid_1316 (coe v1) in
+       coe (coe du_identity'691'_728 (coe d_isMonoid_746 (coe v2))))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.identityˡ
+d_identity'737'_1436 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+d_identity'737'_1436 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_identity'737'_1436 v7
+du_identity'737'_1436 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+du_identity'737'_1436 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
+    coe
+      (let v2 = d_'43''45'isCommutativeMonoid_1316 (coe v1) in
+       coe (coe du_identity'737'_726 (coe d_isMonoid_746 (coe v2))))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isCommutativeMagma
+d_isCommutativeMagma_1438 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_1438 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isCommutativeMagma_1438 v7
+du_isCommutativeMagma_1438 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_1438 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
     coe
       (let v2 = d_'43''45'isCommutativeMonoid_1316 (coe v1) in
        coe
@@ -6152,14 +6314,14 @@ du_isCommutativeMagma_1418 v0
             du_isCommutativeMagma_586
             (coe du_isCommutativeSemigroup_786 (coe v2))))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.+-isCommutativeMonoid
-d_'43''45'isCommutativeMonoid_1420 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsCommutativeMonoid_736
-d_'43''45'isCommutativeMonoid_1420 v0
+d_'43''45'isCommutativeMonoid_1440 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsCommutativeMonoid_736
+d_'43''45'isCommutativeMonoid_1440 v0
   = coe
       d_'43''45'isCommutativeMonoid_1316
-      (coe d_isSemiringWithoutOne_1394 (coe v0))
+      (coe d_isSemiringWithoutOne_1404 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isCommutativeSemigroup
-d_isCommutativeSemigroup_1422 ::
+d_isCommutativeSemigroup_1442 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6167,46 +6329,36 @@ d_isCommutativeSemigroup_1422 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_1422 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isCommutativeSemigroup_1422 v7
-du_isCommutativeSemigroup_1422 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_isCommutativeSemigroup_1442 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isCommutativeSemigroup_1442 v7
+du_isCommutativeSemigroup_1442 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_1422 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
+du_isCommutativeSemigroup_1442 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
     coe
       (coe
          du_isCommutativeSemigroup_786
          (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isMonoid
-d_isMonoid_1424 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsMonoid_686
-d_isMonoid_1424 v0
+d_isMonoid_1444 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsMonoid_686
+d_isMonoid_1444 v0
   = coe
       d_isMonoid_746
       (coe
          d_'43''45'isCommutativeMonoid_1316
-         (coe d_isSemiringWithoutOne_1394 (coe v0)))
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._.Carrier
-d_Carrier_1426 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeSemiringWithoutOne_1382 -> ()
-d_Carrier_1426 = erased
+         (coe d_isSemiringWithoutOne_1404 (coe v0)))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.distrib
-d_distrib_1428 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_distrib_1446 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_1428 v0
-  = coe d_distrib_1322 (coe d_isSemiringWithoutOne_1394 (coe v0))
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isEquivalence
-d_isEquivalence_1430 ::
+d_distrib_1446 v0
+  = coe d_distrib_1322 (coe d_isSemiringWithoutOne_1404 (coe v0))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.distribʳ
+d_distrib'691'_1448 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6214,43 +6366,18 @@ d_isEquivalence_1430 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_1430 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isEquivalence_1430 v7
-du_isEquivalence_1430 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-du_isEquivalence_1430 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-         (let v2
-                = d_isMonoid_746
-                    (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)) in
-          coe
-            (let v3 = d_isSemigroup_696 (coe v2) in
-             coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3))))))
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isNearSemiring
-d_isNearSemiring_1432 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsNearSemiring_1218
-d_isNearSemiring_1432 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isNearSemiring_1432 v7
-du_isNearSemiring_1432 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsNearSemiring_1218
-du_isNearSemiring_1432 v0
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'691'_1448 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_distrib'691'_1448 v7
+du_distrib'691'_1448 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'691'_1448 v0
   = coe
-      du_isNearSemiring_1374 (coe d_isSemiringWithoutOne_1394 (coe v0))
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isPartialEquivalence
-d_isPartialEquivalence_1434 ::
+      du_distrib'691'_1378 (coe d_isSemiringWithoutOne_1404 (coe v0))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.distribˡ
+d_distrib'737'_1450 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6258,30 +6385,34 @@ d_isPartialEquivalence_1434 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_1434 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isPartialEquivalence_1434 v7
-du_isPartialEquivalence_1434 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_1434 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
-    coe
-      (let v2
-             = let v2
-                     = d_isMonoid_746
-                         (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)) in
-               coe
-                 (let v3 = d_isSemigroup_696 (coe v2) in
-                  coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3)))) in
-       coe
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'737'_1450 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_distrib'737'_1450 v7
+du_distrib'737'_1450 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'737'_1450 v0
+  = coe
+      du_distrib'737'_1376 (coe d_isSemiringWithoutOne_1404 (coe v0))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isEquivalence
+d_isEquivalence_1452 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
+d_isEquivalence_1452 v0
+  = coe
+      d_isEquivalence_184
+      (coe
+         d_isMagma_480
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
+            d_isSemigroup_696
             (coe
-               MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v2))))
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._.partialSetoid
-d_partialSetoid_1436 ::
+               d_isMonoid_746
+               (coe
+                  d_'43''45'isCommutativeMonoid_1316
+                  (coe d_isSemiringWithoutOne_1404 (coe v0))))))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isNearSemiring
+d_isNearSemiring_1454 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6289,26 +6420,16 @@ d_partialSetoid_1436 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_PartialSetoid_10
-d_partialSetoid_1436 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_partialSetoid_1436 v7
-du_partialSetoid_1436 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_PartialSetoid_10
-du_partialSetoid_1436 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
-    coe
-      (coe
-         MAlonzo.Code.Relation.Binary.Bundles.du_partialSetoid_70
-         (let v2
-                = d_isMonoid_746
-                    (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)) in
-          coe
-            (let v3 = d_isSemigroup_696 (coe v2) in
-             coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3))))))
--- Algebra.Structures.IsCommutativeSemiringWithoutOne._.refl
-d_refl_1438 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsNearSemiring_1218
+d_isNearSemiring_1454 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isNearSemiring_1454 v7
+du_isNearSemiring_1454 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsNearSemiring_1218
+du_isNearSemiring_1454 v0
+  = coe
+      du_isNearSemiring_1384 (coe d_isSemiringWithoutOne_1404 (coe v0))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isPartialEquivalence
+d_isPartialEquivalence_1456 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6316,25 +6437,46 @@ d_refl_1438 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> AgdaAny -> AgdaAny
-d_refl_1438 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_refl_1438 v7
-du_refl_1438 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> AgdaAny -> AgdaAny
-du_refl_1438 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
+d_isPartialEquivalence_1456 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isPartialEquivalence_1456 v7
+du_isPartialEquivalence_1456 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
+du_isPartialEquivalence_1456 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_refl_34
+         MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-            (let v2
-                   = d_isMonoid_746
-                       (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)) in
-             coe
-               (let v3 = d_isSemigroup_696 (coe v2) in
-                coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3)))))))
+            d_isEquivalence_184
+            (coe
+               d_isMagma_480
+               (coe
+                  d_isSemigroup_696
+                  (coe
+                     d_isMonoid_746
+                     (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)))))))
+-- Algebra.Structures.IsCommutativeSemiringWithoutOne._.refl
+d_refl_1458 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+d_refl_1458 v0
+  = coe
+      MAlonzo.Code.Relation.Binary.Structures.d_refl_34
+      (coe
+         d_isEquivalence_184
+         (coe
+            d_isMagma_480
+            (coe
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe
+                     d_'43''45'isCommutativeMonoid_1316
+                     (coe d_isSemiringWithoutOne_1404 (coe v0)))))))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.reflexive
-d_reflexive_1440 ::
+d_reflexive_1460 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6342,36 +6484,35 @@ d_reflexive_1440 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_1440 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_reflexive_1440 v7
-du_reflexive_1440 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_reflexive_1460 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_reflexive_1460 v7
+du_reflexive_1460 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_1440 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
+du_reflexive_1460 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
     coe
-      (let v2
-             = let v2
-                     = d_isMonoid_746
-                         (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)) in
-               coe
-                 (let v3 = d_isSemigroup_696 (coe v2) in
-                  coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3)))) in
-       coe
-         (\ v3 v4 v5 ->
-            coe
-              MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
+      (\ v2 v3 v4 ->
+         coe
+           MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
+           (coe
+              d_isEquivalence_184
               (coe
-                 MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v2))
-              v3))
+                 d_isMagma_480
+                 (coe
+                    d_isSemigroup_696
+                    (coe
+                       d_isMonoid_746
+                       (coe d_'43''45'isCommutativeMonoid_1316 (coe v1))))))
+           v2)
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.setoid
-d_setoid_1442 ::
+d_setoid_1462 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6379,14 +6520,14 @@ d_setoid_1442 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_1442 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_setoid_1442 v7
-du_setoid_1442 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_setoid_1462 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_setoid_1462 v7
+du_setoid_1462 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_1442 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
+du_setoid_1462 v0
+  = let v1 = d_isSemiringWithoutOne_1404 (coe v0) in
     coe
       (let v2 = d_'43''45'isCommutativeMonoid_1316 (coe v1) in
        coe
@@ -6395,73 +6536,49 @@ du_setoid_1442 v0
             (let v4 = d_isSemigroup_696 (coe v3) in
              coe (coe du_setoid_200 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.sym
-d_sym_1444 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_sym_1464 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_1444 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_sym_1444 v7
-du_sym_1444 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_sym_1444 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
-    coe
-      (let v2
-             = let v2
-                     = d_isMonoid_746
-                         (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)) in
-               coe
-                 (let v3 = d_isSemigroup_696 (coe v2) in
-                  coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3)))) in
-       coe
+d_sym_1464 v0
+  = coe
+      MAlonzo.Code.Relation.Binary.Structures.d_sym_36
+      (coe
+         d_isEquivalence_184
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_sym_36
+            d_isMagma_480
             (coe
-               MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v2))))
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe
+                     d_'43''45'isCommutativeMonoid_1316
+                     (coe d_isSemiringWithoutOne_1404 (coe v0)))))))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.trans
-d_trans_1446 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_trans_1466 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_1446 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_trans_1446 v7
-du_trans_1446 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_trans_1446 v0
-  = let v1 = d_isSemiringWithoutOne_1394 (coe v0) in
-    coe
-      (let v2
-             = let v2
-                     = d_isMonoid_746
-                         (coe d_'43''45'isCommutativeMonoid_1316 (coe v1)) in
-               coe
-                 (let v3 = d_isSemigroup_696 (coe v2) in
-                  coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3)))) in
-       coe
+d_trans_1466 v0
+  = coe
+      MAlonzo.Code.Relation.Binary.Structures.d_trans_38
+      (coe
+         d_isEquivalence_184
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_trans_38
+            d_isMagma_480
             (coe
-               MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v2))))
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_746
+                  (coe
+                     d_'43''45'isCommutativeMonoid_1316
+                     (coe d_isSemiringWithoutOne_1404 (coe v0)))))))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.zero
-d_zero_1448 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+d_zero_1468 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_1448 v0
-  = coe d_zero_1324 (coe d_isSemiringWithoutOne_1394 (coe v0))
+d_zero_1468 v0
+  = coe d_zero_1324 (coe d_isSemiringWithoutOne_1404 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.zeroʳ
-d_zero'691'_1450 ::
+d_zero'691'_1470 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6469,15 +6586,15 @@ d_zero'691'_1450 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> AgdaAny -> AgdaAny
-d_zero'691'_1450 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_zero'691'_1450 v7
-du_zero'691'_1450 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> AgdaAny -> AgdaAny
-du_zero'691'_1450 v0
-  = coe du_zero'691'_1372 (coe d_isSemiringWithoutOne_1394 (coe v0))
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+d_zero'691'_1470 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_zero'691'_1470 v7
+du_zero'691'_1470 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+du_zero'691'_1470 v0
+  = coe du_zero'691'_1382 (coe d_isSemiringWithoutOne_1404 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.zeroˡ
-d_zero'737'_1452 ::
+d_zero'737'_1472 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6485,15 +6602,15 @@ d_zero'737'_1452 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> AgdaAny -> AgdaAny
-d_zero'737'_1452 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_zero'737'_1452 v7
-du_zero'737'_1452 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> AgdaAny -> AgdaAny
-du_zero'737'_1452 v0
-  = coe du_zero'737'_1370 (coe d_isSemiringWithoutOne_1394 (coe v0))
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+d_zero'737'_1472 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_zero'737'_1472 v7
+du_zero'737'_1472 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> AgdaAny -> AgdaAny
+du_zero'737'_1472 v0
+  = coe du_zero'737'_1380 (coe d_isSemiringWithoutOne_1404 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne.*-isCommutativeSemigroup
-d_'42''45'isCommutativeSemigroup_1454 ::
+d_'42''45'isCommutativeSemigroup_1474 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6501,23 +6618,23 @@ d_'42''45'isCommutativeSemigroup_1454 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   T_IsCommutativeSemigroup_548
-d_'42''45'isCommutativeSemigroup_1454 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
+d_'42''45'isCommutativeSemigroup_1474 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                       v7
-  = du_'42''45'isCommutativeSemigroup_1454 v7
-du_'42''45'isCommutativeSemigroup_1454 ::
-  T_IsCommutativeSemiringWithoutOne_1382 ->
+  = du_'42''45'isCommutativeSemigroup_1474 v7
+du_'42''45'isCommutativeSemigroup_1474 ::
+  T_IsCommutativeSemiringWithoutOne_1392 ->
   T_IsCommutativeSemigroup_548
-du_'42''45'isCommutativeSemigroup_1454 v0
+du_'42''45'isCommutativeSemigroup_1474 v0
   = coe
       C_IsCommutativeSemigroup'46'constructor_12093
       (coe
-         du_'42''45'isSemigroup_1362
-         (coe d_isSemiringWithoutOne_1394 (coe v0)))
-      (coe d_'42''45'comm_1396 (coe v0))
+         du_'42''45'isSemigroup_1368
+         (coe d_isSemiringWithoutOne_1404 (coe v0)))
+      (coe d_'42''45'comm_1406 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiringWithoutOne._.isCommutativeMagma
-d_isCommutativeMagma_1458 ::
+d_isCommutativeMagma_1478 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6525,20 +6642,20 @@ d_isCommutativeMagma_1458 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_1458 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isCommutativeMagma_1458 v7
-du_isCommutativeMagma_1458 ::
-  T_IsCommutativeSemiringWithoutOne_1382 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_1458 v0
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_1478 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isCommutativeMagma_1478 v7
+du_isCommutativeMagma_1478 ::
+  T_IsCommutativeSemiringWithoutOne_1392 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_1478 v0
   = coe
       du_isCommutativeMagma_586
-      (coe du_'42''45'isCommutativeSemigroup_1454 (coe v0))
+      (coe du_'42''45'isCommutativeSemigroup_1474 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero
-d_IsSemiringWithoutAnnihilatingZero_1468 a0 a1 a2 a3 a4 a5 a6 a7
+d_IsSemiringWithoutAnnihilatingZero_1488 a0 a1 a2 a3 a4 a5 a6 a7
   = ()
-data T_IsSemiringWithoutAnnihilatingZero_1468
-  = C_IsSemiringWithoutAnnihilatingZero'46'constructor_43811 T_IsCommutativeMonoid_736
+data T_IsSemiringWithoutAnnihilatingZero_1488
+  = C_IsSemiringWithoutAnnihilatingZero'46'constructor_45411 T_IsCommutativeMonoid_736
                                                              (AgdaAny ->
                                                               AgdaAny ->
                                                               AgdaAny ->
@@ -6549,53 +6666,53 @@ data T_IsSemiringWithoutAnnihilatingZero_1468
                                                              MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                                              MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.+-isCommutativeMonoid
-d_'43''45'isCommutativeMonoid_1488 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'43''45'isCommutativeMonoid_1508 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   T_IsCommutativeMonoid_736
-d_'43''45'isCommutativeMonoid_1488 v0
+d_'43''45'isCommutativeMonoid_1508 v0
   = case coe v0 of
-      C_IsSemiringWithoutAnnihilatingZero'46'constructor_43811 v1 v2 v3 v4 v5
+      C_IsSemiringWithoutAnnihilatingZero'46'constructor_45411 v1 v2 v3 v4 v5
         -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.*-cong
-d_'42''45'cong_1490 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'42''45'cong_1510 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_1490 v0
+d_'42''45'cong_1510 v0
   = case coe v0 of
-      C_IsSemiringWithoutAnnihilatingZero'46'constructor_43811 v1 v2 v3 v4 v5
+      C_IsSemiringWithoutAnnihilatingZero'46'constructor_45411 v1 v2 v3 v4 v5
         -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.*-assoc
-d_'42''45'assoc_1492 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'42''45'assoc_1512 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_1492 v0
+d_'42''45'assoc_1512 v0
   = case coe v0 of
-      C_IsSemiringWithoutAnnihilatingZero'46'constructor_43811 v1 v2 v3 v4 v5
+      C_IsSemiringWithoutAnnihilatingZero'46'constructor_45411 v1 v2 v3 v4 v5
         -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.*-identity
-d_'42''45'identity_1494 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'42''45'identity_1514 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_1494 v0
+d_'42''45'identity_1514 v0
   = case coe v0 of
-      C_IsSemiringWithoutAnnihilatingZero'46'constructor_43811 v1 v2 v3 v4 v5
+      C_IsSemiringWithoutAnnihilatingZero'46'constructor_45411 v1 v2 v3 v4 v5
         -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.distrib
-d_distrib_1496 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_distrib_1516 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_1496 v0
+d_distrib_1516 v0
   = case coe v0 of
-      C_IsSemiringWithoutAnnihilatingZero'46'constructor_43811 v1 v2 v3 v4 v5
+      C_IsSemiringWithoutAnnihilatingZero'46'constructor_45411 v1 v2 v3 v4 v5
         -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.distribˡ
-d_distrib'737'_1498 ::
+d_distrib'737'_1518 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6604,19 +6721,19 @@ d_distrib'737'_1498 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_1498 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'737'_1498 v8
-du_distrib'737'_1498 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_distrib'737'_1518 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'737'_1518 v8
+du_distrib'737'_1518 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_1498 v0
+du_distrib'737'_1518 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_distrib_1496 (coe v0))
+      (coe d_distrib_1516 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.distribʳ
-d_distrib'691'_1500 ::
+d_distrib'691'_1520 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6625,40 +6742,40 @@ d_distrib'691'_1500 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_1500 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'691'_1500 v8
-du_distrib'691'_1500 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_distrib'691'_1520 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'691'_1520 v8
+du_distrib'691'_1520 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_1500 v0
+du_distrib'691'_1520 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_distrib_1496 (coe v0))
+      (coe d_distrib_1516 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.assoc
-d_assoc_1504 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_assoc_1524 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_1504 v0
+d_assoc_1524 v0
   = coe
       d_assoc_482
       (coe
          d_isSemigroup_696
          (coe
-            d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))))
+            d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.comm
-d_comm_1506 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_comm_1526 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_comm_1506 v0
-  = coe d_comm_748 (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))
+d_comm_1526 v0
+  = coe d_comm_748 (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.∙-cong
-d_'8729''45'cong_1508 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'8729''45'cong_1528 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_1508 v0
+d_'8729''45'cong_1528 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -6666,9 +6783,9 @@ d_'8729''45'cong_1508 v0
          (coe
             d_isSemigroup_696
             (coe
-               d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1488 (coe v0)))))
+               d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1508 (coe v0)))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.∙-congʳ
-d_'8729''45'cong'691'_1510 ::
+d_'8729''45'cong'691'_1530 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6677,22 +6794,22 @@ d_'8729''45'cong'691'_1510 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1510 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1510 v8
-du_'8729''45'cong'691'_1510 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'8729''45'cong'691'_1530 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1530 v8
+du_'8729''45'cong'691'_1530 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1510 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+du_'8729''45'cong'691'_1530 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe
       (let v2 = d_isMonoid_746 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.∙-congˡ
-d_'8729''45'cong'737'_1512 ::
+d_'8729''45'cong'737'_1532 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6701,31 +6818,31 @@ d_'8729''45'cong'737'_1512 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1512 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1512 v8
-du_'8729''45'cong'737'_1512 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'8729''45'cong'737'_1532 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1532 v8
+du_'8729''45'cong'737'_1532 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1512 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+du_'8729''45'cong'737'_1532 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe
       (let v2 = d_isMonoid_746 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.identity
-d_identity_1514 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_identity_1534 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_1514 v0
+d_identity_1534 v0
   = coe
       d_identity_698
       (coe
-         d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1488 (coe v0)))
+         d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1508 (coe v0)))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.identityʳ
-d_identity'691'_1516 ::
+d_identity'691'_1536 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6734,16 +6851,16 @@ d_identity'691'_1516 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-d_identity'691'_1516 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1516 v8
-du_identity'691'_1516 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-du_identity'691'_1516 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+d_identity'691'_1536 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1536 v8
+du_identity'691'_1536 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+du_identity'691'_1536 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe (coe du_identity'691'_728 (coe d_isMonoid_746 (coe v1)))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.identityˡ
-d_identity'737'_1518 ::
+d_identity'737'_1538 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6752,16 +6869,16 @@ d_identity'737'_1518 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-d_identity'737'_1518 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1518 v8
-du_identity'737'_1518 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-du_identity'737'_1518 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+d_identity'737'_1538 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1538 v8
+du_identity'737'_1538 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+du_identity'737'_1538 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe (coe du_identity'737'_726 (coe d_isMonoid_746 (coe v1)))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.isCommutativeMagma
-d_isCommutativeMagma_1520 ::
+d_isCommutativeMagma_1540 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6770,21 +6887,21 @@ d_isCommutativeMagma_1520 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   T_IsCommutativeMagma_212
-d_isCommutativeMagma_1520 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMagma_1520 v8
-du_isCommutativeMagma_1520 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_isCommutativeMagma_1540 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMagma_1540 v8
+du_isCommutativeMagma_1540 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   T_IsCommutativeMagma_212
-du_isCommutativeMagma_1520 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+du_isCommutativeMagma_1540 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe
       (coe
          du_isCommutativeMagma_586
          (coe du_isCommutativeSemigroup_786 (coe v1)))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.isCommutativeSemigroup
-d_isCommutativeSemigroup_1522 ::
+d_isCommutativeSemigroup_1542 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6793,43 +6910,43 @@ d_isCommutativeSemigroup_1522 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_1522 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeSemigroup_1522 v8
-du_isCommutativeSemigroup_1522 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_isCommutativeSemigroup_1542 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeSemigroup_1542 v8
+du_isCommutativeSemigroup_1542 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_1522 v0
+du_isCommutativeSemigroup_1542 v0
   = coe
       du_isCommutativeSemigroup_786
-      (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))
+      (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.isMagma
-d_isMagma_1524 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsMagma_176
-d_isMagma_1524 v0
+d_isMagma_1544 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsMagma_176
+d_isMagma_1544 v0
   = coe
       d_isMagma_480
       (coe
          d_isSemigroup_696
          (coe
-            d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))))
+            d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.isMonoid
-d_isMonoid_1526 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsMonoid_686
-d_isMonoid_1526 v0
+d_isMonoid_1546 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsMonoid_686
+d_isMonoid_1546 v0
   = coe
-      d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))
+      d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.isSemigroup
-d_isSemigroup_1528 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsSemigroup_472
-d_isSemigroup_1528 v0
+d_isSemigroup_1548 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsSemigroup_472
+d_isSemigroup_1548 v0
   = coe
       d_isSemigroup_696
       (coe
-         d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1488 (coe v0)))
+         d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1508 (coe v0)))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.isUnitalMagma
-d_isUnitalMagma_1530 ::
+d_isUnitalMagma_1550 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6838,19 +6955,19 @@ d_isUnitalMagma_1530 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsUnitalMagma_642
-d_isUnitalMagma_1530 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isUnitalMagma_1530 v8
-du_isUnitalMagma_1530 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsUnitalMagma_642
-du_isUnitalMagma_1530 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsUnitalMagma_642
+d_isUnitalMagma_1550 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isUnitalMagma_1550 v8
+du_isUnitalMagma_1550 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsUnitalMagma_642
+du_isUnitalMagma_1550 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe (coe du_isUnitalMagma_730 (coe d_isMonoid_746 (coe v1)))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.isEquivalence
-d_isEquivalence_1532 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_isEquivalence_1552 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_1532 v0
+d_isEquivalence_1552 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -6858,9 +6975,9 @@ d_isEquivalence_1532 v0
          (coe
             d_isSemigroup_696
             (coe
-               d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1488 (coe v0)))))
+               d_isMonoid_746 (coe d_'43''45'isCommutativeMonoid_1508 (coe v0)))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.isPartialEquivalence
-d_isPartialEquivalence_1534 ::
+d_isPartialEquivalence_1554 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6869,15 +6986,15 @@ d_isPartialEquivalence_1534 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_1534 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_1534 v8
-du_isPartialEquivalence_1534 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_isPartialEquivalence_1554 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_1554 v8
+du_isPartialEquivalence_1554 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_1534 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+du_isPartialEquivalence_1554 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe
       (let v2 = d_isMonoid_746 (coe v1) in
        coe
@@ -6889,9 +7006,9 @@ du_isPartialEquivalence_1534 v0
                   MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                   (coe d_isEquivalence_184 (coe v4))))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.refl
-d_refl_1536 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-d_refl_1536 v0
+d_refl_1556 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+d_refl_1556 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -6902,9 +7019,9 @@ d_refl_1536 v0
                d_isSemigroup_696
                (coe
                   d_isMonoid_746
-                  (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))))))
+                  (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.reflexive
-d_reflexive_1538 ::
+d_reflexive_1558 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6913,19 +7030,19 @@ d_reflexive_1538 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_1538 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_1538 v8
-du_reflexive_1538 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_reflexive_1558 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_1558 v8
+du_reflexive_1558 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_1538 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+du_reflexive_1558 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe
       (let v2 = d_isMonoid_746 (coe v1) in
        coe
@@ -6938,7 +7055,7 @@ du_reflexive_1538 v0
                     MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                     (coe d_isEquivalence_184 (coe v4)) v5))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.setoid
-d_setoid_1540 ::
+d_setoid_1560 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -6947,25 +7064,25 @@ d_setoid_1540 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_1540 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_1540 v8
-du_setoid_1540 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_setoid_1560 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_1560 v8
+du_setoid_1560 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_1540 v0
-  = let v1 = d_'43''45'isCommutativeMonoid_1488 (coe v0) in
+du_setoid_1560 v0
+  = let v1 = d_'43''45'isCommutativeMonoid_1508 (coe v0) in
     coe
       (let v2 = d_isMonoid_746 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.sym
-d_sym_1542 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_sym_1562 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_1542 v0
+d_sym_1562 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -6976,12 +7093,12 @@ d_sym_1542 v0
                d_isSemigroup_696
                (coe
                   d_isMonoid_746
-                  (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))))))
+                  (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.trans
-d_trans_1544 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_trans_1564 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_1544 v0
+d_trans_1564 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -6992,9 +7109,9 @@ d_trans_1544 v0
                d_isSemigroup_696
                (coe
                   d_isMonoid_746
-                  (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))))))
+                  (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.*-isMagma
-d_'42''45'isMagma_1546 ::
+d_'42''45'isMagma_1566 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7003,12 +7120,12 @@ d_'42''45'isMagma_1546 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsMagma_176
-d_'42''45'isMagma_1546 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMagma_1546 v8
-du_'42''45'isMagma_1546 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsMagma_176
-du_'42''45'isMagma_1546 v0
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsMagma_176
+d_'42''45'isMagma_1566 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMagma_1566 v8
+du_'42''45'isMagma_1566 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsMagma_176
+du_'42''45'isMagma_1566 v0
   = coe
       C_IsMagma'46'constructor_1867
       (coe
@@ -7019,10 +7136,10 @@ du_'42''45'isMagma_1546 v0
                d_isSemigroup_696
                (coe
                   d_isMonoid_746
-                  (coe d_'43''45'isCommutativeMonoid_1488 (coe v0))))))
-      (coe d_'42''45'cong_1490 (coe v0))
+                  (coe d_'43''45'isCommutativeMonoid_1508 (coe v0))))))
+      (coe d_'42''45'cong_1510 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.*-isSemigroup
-d_'42''45'isSemigroup_1548 ::
+d_'42''45'isSemigroup_1568 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7031,18 +7148,18 @@ d_'42''45'isSemigroup_1548 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_1548 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isSemigroup_1548 v8
-du_'42''45'isSemigroup_1548 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_1548 v0
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_1568 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isSemigroup_1568 v8
+du_'42''45'isSemigroup_1568 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_1568 v0
   = coe
       C_IsSemigroup'46'constructor_10417
-      (coe du_'42''45'isMagma_1546 (coe v0))
-      (coe d_'42''45'assoc_1492 (coe v0))
+      (coe du_'42''45'isMagma_1566 (coe v0))
+      (coe d_'42''45'assoc_1512 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero.*-isMonoid
-d_'42''45'isMonoid_1550 ::
+d_'42''45'isMonoid_1570 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7051,18 +7168,18 @@ d_'42''45'isMonoid_1550 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsMonoid_686
-d_'42''45'isMonoid_1550 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMonoid_1550 v8
-du_'42''45'isMonoid_1550 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> T_IsMonoid_686
-du_'42''45'isMonoid_1550 v0
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsMonoid_686
+d_'42''45'isMonoid_1570 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMonoid_1570 v8
+du_'42''45'isMonoid_1570 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> T_IsMonoid_686
+du_'42''45'isMonoid_1570 v0
   = coe
       C_IsMonoid'46'constructor_15873
-      (coe du_'42''45'isSemigroup_1548 (coe v0))
-      (coe d_'42''45'identity_1494 (coe v0))
+      (coe du_'42''45'isSemigroup_1568 (coe v0))
+      (coe d_'42''45'identity_1514 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.∙-congʳ
-d_'8729''45'cong'691'_1554 ::
+d_'8729''45'cong'691'_1574 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7071,20 +7188,20 @@ d_'8729''45'cong'691'_1554 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1554 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1554 v8
-du_'8729''45'cong'691'_1554 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'8729''45'cong'691'_1574 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1574 v8
+du_'8729''45'cong'691'_1574 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1554 v0
-  = let v1 = coe du_'42''45'isMonoid_1550 (coe v0) in
+du_'8729''45'cong'691'_1574 v0
+  = let v1 = coe du_'42''45'isMonoid_1570 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v2))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.∙-congˡ
-d_'8729''45'cong'737'_1556 ::
+d_'8729''45'cong'737'_1576 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7093,20 +7210,20 @@ d_'8729''45'cong'737'_1556 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1556 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1556 v8
-du_'8729''45'cong'737'_1556 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 ->
+d_'8729''45'cong'737'_1576 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1576 v8
+du_'8729''45'cong'737'_1576 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1556 v0
-  = let v1 = coe du_'42''45'isMonoid_1550 (coe v0) in
+du_'8729''45'cong'737'_1576 v0
+  = let v1 = coe du_'42''45'isMonoid_1570 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v2))))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.identityʳ
-d_identity'691'_1558 ::
+d_identity'691'_1578 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7115,15 +7232,15 @@ d_identity'691'_1558 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-d_identity'691'_1558 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1558 v8
-du_identity'691'_1558 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-du_identity'691'_1558 v0
-  = coe du_identity'691'_728 (coe du_'42''45'isMonoid_1550 (coe v0))
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+d_identity'691'_1578 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1578 v8
+du_identity'691'_1578 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+du_identity'691'_1578 v0
+  = coe du_identity'691'_728 (coe du_'42''45'isMonoid_1570 (coe v0))
 -- Algebra.Structures.IsSemiringWithoutAnnihilatingZero._.identityˡ
-d_identity'737'_1560 ::
+d_identity'737'_1580 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7132,50 +7249,50 @@ d_identity'737'_1560 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-d_identity'737'_1560 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1560 v8
-du_identity'737'_1560 ::
-  T_IsSemiringWithoutAnnihilatingZero_1468 -> AgdaAny -> AgdaAny
-du_identity'737'_1560 v0
-  = coe du_identity'737'_726 (coe du_'42''45'isMonoid_1550 (coe v0))
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+d_identity'737'_1580 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1580 v8
+du_identity'737'_1580 ::
+  T_IsSemiringWithoutAnnihilatingZero_1488 -> AgdaAny -> AgdaAny
+du_identity'737'_1580 v0
+  = coe du_identity'737'_726 (coe du_'42''45'isMonoid_1570 (coe v0))
 -- Algebra.Structures.IsSemiring
-d_IsSemiring_1570 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsSemiring_1570
-  = C_IsSemiring'46'constructor_48071 T_IsSemiringWithoutAnnihilatingZero_1468
+d_IsSemiring_1590 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsSemiring_1590
+  = C_IsSemiring'46'constructor_49671 T_IsSemiringWithoutAnnihilatingZero_1488
                                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsSemiring.isSemiringWithoutAnnihilatingZero
-d_isSemiringWithoutAnnihilatingZero_1584 ::
-  T_IsSemiring_1570 -> T_IsSemiringWithoutAnnihilatingZero_1468
-d_isSemiringWithoutAnnihilatingZero_1584 v0
+d_isSemiringWithoutAnnihilatingZero_1604 ::
+  T_IsSemiring_1590 -> T_IsSemiringWithoutAnnihilatingZero_1488
+d_isSemiringWithoutAnnihilatingZero_1604 v0
   = case coe v0 of
-      C_IsSemiring'46'constructor_48071 v1 v2 -> coe v1
+      C_IsSemiring'46'constructor_49671 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsSemiring.zero
-d_zero_1586 ::
-  T_IsSemiring_1570 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_1586 v0
+d_zero_1606 ::
+  T_IsSemiring_1590 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_zero_1606 v0
   = case coe v0 of
-      C_IsSemiring'46'constructor_48071 v1 v2 -> coe v2
+      C_IsSemiring'46'constructor_49671 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsSemiring._.*-assoc
-d_'42''45'assoc_1590 ::
-  T_IsSemiring_1570 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_1590 v0
+d_'42''45'assoc_1610 ::
+  T_IsSemiring_1590 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'42''45'assoc_1610 v0
   = coe
-      d_'42''45'assoc_1492
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      d_'42''45'assoc_1512
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.*-cong
-d_'42''45'cong_1592 ::
-  T_IsSemiring_1570 ->
+d_'42''45'cong_1612 ::
+  T_IsSemiring_1590 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_1592 v0
+d_'42''45'cong_1612 v0
   = coe
-      d_'42''45'cong_1490
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      d_'42''45'cong_1510
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.∙-congʳ
-d_'8729''45'cong'691'_1594 ::
+d_'8729''45'cong'691'_1614 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7184,22 +7301,22 @@ d_'8729''45'cong'691'_1594 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 ->
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1594 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1594 v8
-du_'8729''45'cong'691'_1594 ::
-  T_IsSemiring_1570 ->
+d_'8729''45'cong'691'_1614 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1614 v8
+du_'8729''45'cong'691'_1614 ::
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1594 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+du_'8729''45'cong'691'_1614 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = coe du_'42''45'isMonoid_1550 (coe v1) in
+      (let v2 = coe du_'42''45'isMonoid_1570 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsSemiring._.∙-congˡ
-d_'8729''45'cong'737'_1596 ::
+d_'8729''45'cong'737'_1616 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7208,112 +7325,112 @@ d_'8729''45'cong'737'_1596 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 ->
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1596 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1596 v8
-du_'8729''45'cong'737'_1596 ::
-  T_IsSemiring_1570 ->
+d_'8729''45'cong'737'_1616 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1616 v8
+du_'8729''45'cong'737'_1616 ::
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1596 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+du_'8729''45'cong'737'_1616 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = coe du_'42''45'isMonoid_1550 (coe v1) in
+      (let v2 = coe du_'42''45'isMonoid_1570 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsSemiring._.*-identity
-d_'42''45'identity_1598 ::
-  T_IsSemiring_1570 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_1598 v0
+d_'42''45'identity_1618 ::
+  T_IsSemiring_1590 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'42''45'identity_1618 v0
   = coe
-      d_'42''45'identity_1494
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      d_'42''45'identity_1514
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.identityʳ
-d_identity'691'_1600 ::
+d_identity'691'_1620 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-d_identity'691'_1600 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1600 v8
-du_identity'691'_1600 :: T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-du_identity'691'_1600 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+d_identity'691'_1620 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1620 v8
+du_identity'691'_1620 :: T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+du_identity'691'_1620 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (coe du_identity'691'_728 (coe du_'42''45'isMonoid_1550 (coe v1)))
+      (coe du_identity'691'_728 (coe du_'42''45'isMonoid_1570 (coe v1)))
 -- Algebra.Structures.IsSemiring._.identityˡ
-d_identity'737'_1602 ::
+d_identity'737'_1622 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-d_identity'737'_1602 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1602 v8
-du_identity'737'_1602 :: T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-du_identity'737'_1602 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+d_identity'737'_1622 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1622 v8
+du_identity'737'_1622 :: T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+du_identity'737'_1622 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (coe du_identity'737'_726 (coe du_'42''45'isMonoid_1550 (coe v1)))
+      (coe du_identity'737'_726 (coe du_'42''45'isMonoid_1570 (coe v1)))
 -- Algebra.Structures.IsSemiring._.*-isMagma
-d_'42''45'isMagma_1604 ::
+d_'42''45'isMagma_1624 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> T_IsMagma_176
-d_'42''45'isMagma_1604 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMagma_1604 v8
-du_'42''45'isMagma_1604 :: T_IsSemiring_1570 -> T_IsMagma_176
-du_'42''45'isMagma_1604 v0
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> T_IsMagma_176
+d_'42''45'isMagma_1624 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMagma_1624 v8
+du_'42''45'isMagma_1624 :: T_IsSemiring_1590 -> T_IsMagma_176
+du_'42''45'isMagma_1624 v0
   = coe
-      du_'42''45'isMagma_1546
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      du_'42''45'isMagma_1566
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.*-isMonoid
-d_'42''45'isMonoid_1606 ::
+d_'42''45'isMonoid_1626 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> T_IsMonoid_686
-d_'42''45'isMonoid_1606 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMonoid_1606 v8
-du_'42''45'isMonoid_1606 :: T_IsSemiring_1570 -> T_IsMonoid_686
-du_'42''45'isMonoid_1606 v0
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> T_IsMonoid_686
+d_'42''45'isMonoid_1626 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMonoid_1626 v8
+du_'42''45'isMonoid_1626 :: T_IsSemiring_1590 -> T_IsMonoid_686
+du_'42''45'isMonoid_1626 v0
   = coe
-      du_'42''45'isMonoid_1550
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      du_'42''45'isMonoid_1570
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.*-isSemigroup
-d_'42''45'isSemigroup_1608 ::
+d_'42''45'isSemigroup_1628 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_1608 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isSemigroup_1608 v8
-du_'42''45'isSemigroup_1608 ::
-  T_IsSemiring_1570 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_1608 v0
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_1628 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isSemigroup_1628 v8
+du_'42''45'isSemigroup_1628 ::
+  T_IsSemiring_1590 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_1628 v0
   = coe
-      du_'42''45'isSemigroup_1548
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      du_'42''45'isSemigroup_1568
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.assoc
-d_assoc_1610 ::
-  T_IsSemiring_1570 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_1610 v0
+d_assoc_1630 ::
+  T_IsSemiring_1590 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_1630 v0
   = coe
       d_assoc_482
       (coe
@@ -7321,22 +7438,22 @@ d_assoc_1610 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
-               (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))))
+               d_'43''45'isCommutativeMonoid_1508
+               (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))))
 -- Algebra.Structures.IsSemiring._.comm
-d_comm_1612 :: T_IsSemiring_1570 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_1612 v0
+d_comm_1632 :: T_IsSemiring_1590 -> AgdaAny -> AgdaAny -> AgdaAny
+d_comm_1632 v0
   = coe
       d_comm_748
       (coe
-         d_'43''45'isCommutativeMonoid_1488
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))
+         d_'43''45'isCommutativeMonoid_1508
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))
 -- Algebra.Structures.IsSemiring._.∙-cong
-d_'8729''45'cong_1614 ::
-  T_IsSemiring_1570 ->
+d_'8729''45'cong_1634 ::
+  T_IsSemiring_1590 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_1614 v0
+d_'8729''45'cong_1634 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -7346,10 +7463,10 @@ d_'8729''45'cong_1614 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
-                  (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))))))
+                  d_'43''45'isCommutativeMonoid_1508
+                  (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))))))
 -- Algebra.Structures.IsSemiring._.∙-congʳ
-d_'8729''45'cong'691'_1616 ::
+d_'8729''45'cong'691'_1636 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7358,17 +7475,17 @@ d_'8729''45'cong'691'_1616 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 ->
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1616 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1616 v8
-du_'8729''45'cong'691'_1616 ::
-  T_IsSemiring_1570 ->
+d_'8729''45'cong'691'_1636 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1636 v8
+du_'8729''45'cong'691'_1636 ::
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1616 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+du_'8729''45'cong'691'_1636 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe
          (let v3 = d_isMonoid_746 (coe v2) in
           coe
@@ -7376,7 +7493,7 @@ du_'8729''45'cong'691'_1616 v0
              coe
                (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsSemiring._.∙-congˡ
-d_'8729''45'cong'737'_1618 ::
+d_'8729''45'cong'737'_1638 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7385,17 +7502,17 @@ d_'8729''45'cong'737'_1618 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 ->
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1618 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1618 v8
-du_'8729''45'cong'737'_1618 ::
-  T_IsSemiring_1570 ->
+d_'8729''45'cong'737'_1638 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1638 v8
+du_'8729''45'cong'737'_1638 ::
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1618 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+du_'8729''45'cong'737'_1638 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe
          (let v3 = d_isMonoid_746 (coe v2) in
           coe
@@ -7403,80 +7520,80 @@ du_'8729''45'cong'737'_1618 v0
              coe
                (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsSemiring._.identity
-d_identity_1620 ::
-  T_IsSemiring_1570 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_1620 v0
+d_identity_1640 ::
+  T_IsSemiring_1590 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_1640 v0
   = coe
       d_identity_698
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))))
+            d_'43''45'isCommutativeMonoid_1508
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))))
 -- Algebra.Structures.IsSemiring._.identityʳ
-d_identity'691'_1622 ::
+d_identity'691'_1642 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-d_identity'691'_1622 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1622 v8
-du_identity'691'_1622 :: T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-du_identity'691'_1622 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+d_identity'691'_1642 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1642 v8
+du_identity'691'_1642 :: T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+du_identity'691'_1642 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe (coe du_identity'691'_728 (coe d_isMonoid_746 (coe v2))))
 -- Algebra.Structures.IsSemiring._.identityˡ
-d_identity'737'_1624 ::
+d_identity'737'_1644 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-d_identity'737'_1624 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1624 v8
-du_identity'737'_1624 :: T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-du_identity'737'_1624 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+d_identity'737'_1644 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1644 v8
+du_identity'737'_1644 :: T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+du_identity'737'_1644 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe (coe du_identity'737'_726 (coe d_isMonoid_746 (coe v2))))
 -- Algebra.Structures.IsSemiring._.isCommutativeMagma
-d_isCommutativeMagma_1626 ::
+d_isCommutativeMagma_1646 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_1626 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMagma_1626 v8
-du_isCommutativeMagma_1626 ::
-  T_IsSemiring_1570 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_1626 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_1646 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMagma_1646 v8
+du_isCommutativeMagma_1646 ::
+  T_IsSemiring_1590 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_1646 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe
          (coe
             du_isCommutativeMagma_586
             (coe du_isCommutativeSemigroup_786 (coe v2))))
 -- Algebra.Structures.IsSemiring._.+-isCommutativeMonoid
-d_'43''45'isCommutativeMonoid_1628 ::
-  T_IsSemiring_1570 -> T_IsCommutativeMonoid_736
-d_'43''45'isCommutativeMonoid_1628 v0
+d_'43''45'isCommutativeMonoid_1648 ::
+  T_IsSemiring_1590 -> T_IsCommutativeMonoid_736
+d_'43''45'isCommutativeMonoid_1648 v0
   = coe
-      d_'43''45'isCommutativeMonoid_1488
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      d_'43''45'isCommutativeMonoid_1508
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.isCommutativeSemigroup
-d_isCommutativeSemigroup_1630 ::
+d_isCommutativeSemigroup_1650 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7484,20 +7601,20 @@ d_isCommutativeSemigroup_1630 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsSemiring_1570 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_1630 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeSemigroup_1630 v8
-du_isCommutativeSemigroup_1630 ::
-  T_IsSemiring_1570 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_1630 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+  AgdaAny -> T_IsSemiring_1590 -> T_IsCommutativeSemigroup_548
+d_isCommutativeSemigroup_1650 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeSemigroup_1650 v8
+du_isCommutativeSemigroup_1650 ::
+  T_IsSemiring_1590 -> T_IsCommutativeSemigroup_548
+du_isCommutativeSemigroup_1650 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
       (coe
          du_isCommutativeSemigroup_786
-         (coe d_'43''45'isCommutativeMonoid_1488 (coe v1)))
+         (coe d_'43''45'isCommutativeMonoid_1508 (coe v1)))
 -- Algebra.Structures.IsSemiring._.isMagma
-d_isMagma_1632 :: T_IsSemiring_1570 -> T_IsMagma_176
-d_isMagma_1632 v0
+d_isMagma_1652 :: T_IsSemiring_1590 -> T_IsMagma_176
+d_isMagma_1652 v0
   = coe
       d_isMagma_480
       (coe
@@ -7505,52 +7622,52 @@ d_isMagma_1632 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
-               (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))))
+               d_'43''45'isCommutativeMonoid_1508
+               (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))))
 -- Algebra.Structures.IsSemiring._.isMonoid
-d_isMonoid_1634 :: T_IsSemiring_1570 -> T_IsMonoid_686
-d_isMonoid_1634 v0
+d_isMonoid_1654 :: T_IsSemiring_1590 -> T_IsMonoid_686
+d_isMonoid_1654 v0
   = coe
       d_isMonoid_746
       (coe
-         d_'43''45'isCommutativeMonoid_1488
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))
+         d_'43''45'isCommutativeMonoid_1508
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))
 -- Algebra.Structures.IsSemiring._.isSemigroup
-d_isSemigroup_1636 :: T_IsSemiring_1570 -> T_IsSemigroup_472
-d_isSemigroup_1636 v0
+d_isSemigroup_1656 :: T_IsSemiring_1590 -> T_IsSemigroup_472
+d_isSemigroup_1656 v0
   = coe
       d_isSemigroup_696
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))))
+            d_'43''45'isCommutativeMonoid_1508
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))))
 -- Algebra.Structures.IsSemiring._.isUnitalMagma
-d_isUnitalMagma_1638 ::
+d_isUnitalMagma_1658 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> T_IsUnitalMagma_642
-d_isUnitalMagma_1638 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isUnitalMagma_1638 v8
-du_isUnitalMagma_1638 :: T_IsSemiring_1570 -> T_IsUnitalMagma_642
-du_isUnitalMagma_1638 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> T_IsUnitalMagma_642
+d_isUnitalMagma_1658 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isUnitalMagma_1658 v8
+du_isUnitalMagma_1658 :: T_IsSemiring_1590 -> T_IsUnitalMagma_642
+du_isUnitalMagma_1658 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe (coe du_isUnitalMagma_730 (coe d_isMonoid_746 (coe v2))))
 -- Algebra.Structures.IsSemiring._.distrib
-d_distrib_1640 ::
-  T_IsSemiring_1570 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_1640 v0
+d_distrib_1660 ::
+  T_IsSemiring_1590 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_distrib_1660 v0
   = coe
-      d_distrib_1496
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      d_distrib_1516
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.distribʳ
-d_distrib'691'_1642 ::
+d_distrib'691'_1662 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7559,17 +7676,17 @@ d_distrib'691'_1642 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_1642 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'691'_1642 v8
-du_distrib'691'_1642 ::
-  T_IsSemiring_1570 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_1642 v0
+  T_IsSemiring_1590 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'691'_1662 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'691'_1662 v8
+du_distrib'691'_1662 ::
+  T_IsSemiring_1590 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'691'_1662 v0
   = coe
-      du_distrib'691'_1500
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      du_distrib'691'_1520
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.distribˡ
-d_distrib'737'_1644 ::
+d_distrib'737'_1664 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7578,20 +7695,20 @@ d_distrib'737'_1644 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_1644 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'737'_1644 v8
-du_distrib'737'_1644 ::
-  T_IsSemiring_1570 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_1644 v0
+  T_IsSemiring_1590 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'737'_1664 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'737'_1664 v8
+du_distrib'737'_1664 ::
+  T_IsSemiring_1590 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'737'_1664 v0
   = coe
-      du_distrib'737'_1498
-      (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))
+      du_distrib'737'_1518
+      (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))
 -- Algebra.Structures.IsSemiring._.isEquivalence
-d_isEquivalence_1646 ::
-  T_IsSemiring_1570 ->
+d_isEquivalence_1666 ::
+  T_IsSemiring_1590 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_1646 v0
+d_isEquivalence_1666 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -7601,10 +7718,10 @@ d_isEquivalence_1646 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
-                  (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0))))))
+                  d_'43''45'isCommutativeMonoid_1508
+                  (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0))))))
 -- Algebra.Structures.IsSemiring._.isPartialEquivalence
-d_isPartialEquivalence_1648 ::
+d_isPartialEquivalence_1668 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7613,17 +7730,17 @@ d_isPartialEquivalence_1648 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 ->
+  T_IsSemiring_1590 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_1648 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_1648 v8
-du_isPartialEquivalence_1648 ::
-  T_IsSemiring_1570 ->
+d_isPartialEquivalence_1668 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_1668 v8
+du_isPartialEquivalence_1668 ::
+  T_IsSemiring_1590 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_1648 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+du_isPartialEquivalence_1668 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe
          (let v3 = d_isMonoid_746 (coe v2) in
           coe
@@ -7635,8 +7752,8 @@ du_isPartialEquivalence_1648 v0
                      MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                      (coe d_isEquivalence_184 (coe v5)))))))
 -- Algebra.Structures.IsSemiring._.refl
-d_refl_1650 :: T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-d_refl_1650 v0
+d_refl_1670 :: T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+d_refl_1670 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -7648,10 +7765,10 @@ d_refl_1650 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
-                     (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))))))
+                     d_'43''45'isCommutativeMonoid_1508
+                     (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))))))
 -- Algebra.Structures.IsSemiring._.reflexive
-d_reflexive_1652 ::
+d_reflexive_1672 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7660,21 +7777,21 @@ d_reflexive_1652 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 ->
+  T_IsSemiring_1590 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_1652 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_1652 v8
-du_reflexive_1652 ::
-  T_IsSemiring_1570 ->
+d_reflexive_1672 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_1672 v8
+du_reflexive_1672 ::
+  T_IsSemiring_1590 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_1652 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+du_reflexive_1672 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe
          (let v3 = d_isMonoid_746 (coe v2) in
           coe
@@ -7687,7 +7804,7 @@ du_reflexive_1652 v0
                        MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                        (coe d_isEquivalence_184 (coe v5)) v6)))))
 -- Algebra.Structures.IsSemiring._.setoid
-d_setoid_1654 ::
+d_setoid_1674 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7696,26 +7813,26 @@ d_setoid_1654 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsSemiring_1570 ->
+  T_IsSemiring_1590 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_1654 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_1654 v8
-du_setoid_1654 ::
-  T_IsSemiring_1570 ->
+d_setoid_1674 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_1674 v8
+du_setoid_1674 ::
+  T_IsSemiring_1590 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_1654 v0
-  = let v1 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v0) in
+du_setoid_1674 v0
+  = let v1 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v0) in
     coe
-      (let v2 = d_'43''45'isCommutativeMonoid_1488 (coe v1) in
+      (let v2 = d_'43''45'isCommutativeMonoid_1508 (coe v1) in
        coe
          (let v3 = d_isMonoid_746 (coe v2) in
           coe
             (let v4 = d_isSemigroup_696 (coe v3) in
              coe (coe du_setoid_200 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsSemiring._.sym
-d_sym_1656 ::
-  T_IsSemiring_1570 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_1656 v0
+d_sym_1676 ::
+  T_IsSemiring_1590 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_1676 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -7727,13 +7844,13 @@ d_sym_1656 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
-                     (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))))))
+                     d_'43''45'isCommutativeMonoid_1508
+                     (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))))))
 -- Algebra.Structures.IsSemiring._.trans
-d_trans_1658 ::
-  T_IsSemiring_1570 ->
+d_trans_1678 ::
+  T_IsSemiring_1590 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_1658 v0
+d_trans_1678 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -7745,10 +7862,10 @@ d_trans_1658 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
-                     (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))))))
+                     d_'43''45'isCommutativeMonoid_1508
+                     (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))))))
 -- Algebra.Structures.IsSemiring.isSemiringWithoutOne
-d_isSemiringWithoutOne_1660 ::
+d_isSemiringWithoutOne_1680 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7756,113 +7873,113 @@ d_isSemiringWithoutOne_1660 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsSemiring_1570 -> T_IsSemiringWithoutOne_1298
-d_isSemiringWithoutOne_1660 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isSemiringWithoutOne_1660 v8
-du_isSemiringWithoutOne_1660 ::
-  T_IsSemiring_1570 -> T_IsSemiringWithoutOne_1298
-du_isSemiringWithoutOne_1660 v0
+  AgdaAny -> T_IsSemiring_1590 -> T_IsSemiringWithoutOne_1298
+d_isSemiringWithoutOne_1680 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isSemiringWithoutOne_1680 v8
+du_isSemiringWithoutOne_1680 ::
+  T_IsSemiring_1590 -> T_IsSemiringWithoutOne_1298
+du_isSemiringWithoutOne_1680 v0
   = coe
       C_IsSemiringWithoutOne'46'constructor_37629
       (coe
-         d_'43''45'isCommutativeMonoid_1488
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))
+         d_'43''45'isCommutativeMonoid_1508
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))
       (coe
-         d_'42''45'cong_1490
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))
+         d_'42''45'cong_1510
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))
       (coe
-         d_'42''45'assoc_1492
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))
+         d_'42''45'assoc_1512
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))
       (coe
-         d_distrib_1496
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v0)))
-      (coe d_zero_1586 (coe v0))
+         d_distrib_1516
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v0)))
+      (coe d_zero_1606 (coe v0))
 -- Algebra.Structures.IsSemiring._.isNearSemiring
-d_isNearSemiring_1664 ::
+d_isNearSemiring_1684 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> T_IsNearSemiring_1218
-d_isNearSemiring_1664 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isNearSemiring_1664 v8
-du_isNearSemiring_1664 ::
-  T_IsSemiring_1570 -> T_IsNearSemiring_1218
-du_isNearSemiring_1664 v0
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> T_IsNearSemiring_1218
+d_isNearSemiring_1684 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isNearSemiring_1684 v8
+du_isNearSemiring_1684 ::
+  T_IsSemiring_1590 -> T_IsNearSemiring_1218
+du_isNearSemiring_1684 v0
   = coe
-      du_isNearSemiring_1374 (coe du_isSemiringWithoutOne_1660 (coe v0))
+      du_isNearSemiring_1384 (coe du_isSemiringWithoutOne_1680 (coe v0))
 -- Algebra.Structures.IsSemiring._.zeroʳ
-d_zero'691'_1666 ::
+d_zero'691'_1686 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-d_zero'691'_1666 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'691'_1666 v8
-du_zero'691'_1666 :: T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-du_zero'691'_1666 v0
-  = coe du_zero'691'_1372 (coe du_isSemiringWithoutOne_1660 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+d_zero'691'_1686 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'691'_1686 v8
+du_zero'691'_1686 :: T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+du_zero'691'_1686 v0
+  = coe du_zero'691'_1382 (coe du_isSemiringWithoutOne_1680 (coe v0))
 -- Algebra.Structures.IsSemiring._.zeroˡ
-d_zero'737'_1668 ::
+d_zero'737'_1688 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-d_zero'737'_1668 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'737'_1668 v8
-du_zero'737'_1668 :: T_IsSemiring_1570 -> AgdaAny -> AgdaAny
-du_zero'737'_1668 v0
-  = coe du_zero'737'_1370 (coe du_isSemiringWithoutOne_1660 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+d_zero'737'_1688 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'737'_1688 v8
+du_zero'737'_1688 :: T_IsSemiring_1590 -> AgdaAny -> AgdaAny
+du_zero'737'_1688 v0
+  = coe du_zero'737'_1380 (coe du_isSemiringWithoutOne_1680 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiring
-d_IsCommutativeSemiring_1678 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsCommutativeSemiring_1678
-  = C_IsCommutativeSemiring'46'constructor_51895 T_IsSemiring_1570
+d_IsCommutativeSemiring_1698 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsCommutativeSemiring_1698
+  = C_IsCommutativeSemiring'46'constructor_53495 T_IsSemiring_1590
                                                  (AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsCommutativeSemiring.isSemiring
-d_isSemiring_1692 ::
-  T_IsCommutativeSemiring_1678 -> T_IsSemiring_1570
-d_isSemiring_1692 v0
+d_isSemiring_1712 ::
+  T_IsCommutativeSemiring_1698 -> T_IsSemiring_1590
+d_isSemiring_1712 v0
   = case coe v0 of
-      C_IsCommutativeSemiring'46'constructor_51895 v1 v2 -> coe v1
+      C_IsCommutativeSemiring'46'constructor_53495 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsCommutativeSemiring.*-comm
-d_'42''45'comm_1694 ::
-  T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'comm_1694 v0
+d_'42''45'comm_1714 ::
+  T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny -> AgdaAny
+d_'42''45'comm_1714 v0
   = case coe v0 of
-      C_IsCommutativeSemiring'46'constructor_51895 v1 v2 -> coe v2
+      C_IsCommutativeSemiring'46'constructor_53495 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsCommutativeSemiring._.*-assoc
-d_'42''45'assoc_1698 ::
-  T_IsCommutativeSemiring_1678 ->
+d_'42''45'assoc_1718 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_1698 v0
+d_'42''45'assoc_1718 v0
   = coe
-      d_'42''45'assoc_1492
+      d_'42''45'assoc_1512
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1692 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1712 (coe v0)))
 -- Algebra.Structures.IsCommutativeSemiring._.*-cong
-d_'42''45'cong_1700 ::
-  T_IsCommutativeSemiring_1678 ->
+d_'42''45'cong_1720 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_1700 v0
+d_'42''45'cong_1720 v0
   = coe
-      d_'42''45'cong_1490
+      d_'42''45'cong_1510
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1692 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1712 (coe v0)))
 -- Algebra.Structures.IsCommutativeSemiring._.∙-congʳ
-d_'8729''45'cong'691'_1702 ::
+d_'8729''45'cong'691'_1722 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7871,25 +7988,25 @@ d_'8729''45'cong'691'_1702 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1702 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1702 v8
-du_'8729''45'cong'691'_1702 ::
-  T_IsCommutativeSemiring_1678 ->
+d_'8729''45'cong'691'_1722 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1722 v8
+du_'8729''45'cong'691'_1722 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1702 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_'8729''45'cong'691'_1722 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = coe du_'42''45'isMonoid_1550 (coe v2) in
+         (let v3 = coe du_'42''45'isMonoid_1570 (coe v2) in
           coe
             (let v4 = d_isSemigroup_696 (coe v3) in
              coe
                (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsCommutativeSemiring._.∙-congˡ
-d_'8729''45'cong'737'_1704 ::
+d_'8729''45'cong'737'_1724 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7898,35 +8015,35 @@ d_'8729''45'cong'737'_1704 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1704 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1704 v8
-du_'8729''45'cong'737'_1704 ::
-  T_IsCommutativeSemiring_1678 ->
+d_'8729''45'cong'737'_1724 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1724 v8
+du_'8729''45'cong'737'_1724 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1704 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_'8729''45'cong'737'_1724 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = coe du_'42''45'isMonoid_1550 (coe v2) in
+         (let v3 = coe du_'42''45'isMonoid_1570 (coe v2) in
           coe
             (let v4 = d_isSemigroup_696 (coe v3) in
              coe
                (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsCommutativeSemiring._.*-identity
-d_'42''45'identity_1706 ::
-  T_IsCommutativeSemiring_1678 ->
+d_'42''45'identity_1726 ::
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_1706 v0
+d_'42''45'identity_1726 v0
   = coe
-      d_'42''45'identity_1494
+      d_'42''45'identity_1514
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1692 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1712 (coe v0)))
 -- Algebra.Structures.IsCommutativeSemiring._.identityʳ
-d_identity'691'_1708 ::
+d_identity'691'_1728 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7934,19 +8051,19 @@ d_identity'691'_1708 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-d_identity'691'_1708 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1708 v8
-du_identity'691'_1708 ::
-  T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-du_identity'691'_1708 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+d_identity'691'_1728 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1728 v8
+du_identity'691'_1728 ::
+  T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+du_identity'691'_1728 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (coe du_identity'691'_728 (coe du_'42''45'isMonoid_1550 (coe v2))))
+         (coe du_identity'691'_728 (coe du_'42''45'isMonoid_1570 (coe v2))))
 -- Algebra.Structures.IsCommutativeSemiring._.identityˡ
-d_identity'737'_1710 ::
+d_identity'737'_1730 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7954,38 +8071,38 @@ d_identity'737'_1710 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-d_identity'737'_1710 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1710 v8
-du_identity'737'_1710 ::
-  T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-du_identity'737'_1710 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+d_identity'737'_1730 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1730 v8
+du_identity'737'_1730 ::
+  T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+du_identity'737'_1730 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (coe du_identity'737'_726 (coe du_'42''45'isMonoid_1550 (coe v2))))
+         (coe du_identity'737'_726 (coe du_'42''45'isMonoid_1570 (coe v2))))
 -- Algebra.Structures.IsCommutativeSemiring._.*-isMagma
-d_'42''45'isMagma_1712 ::
+d_'42''45'isMagma_1732 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeSemiring_1678 -> T_IsMagma_176
-d_'42''45'isMagma_1712 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMagma_1712 v8
-du_'42''45'isMagma_1712 ::
-  T_IsCommutativeSemiring_1678 -> T_IsMagma_176
-du_'42''45'isMagma_1712 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsCommutativeSemiring_1698 -> T_IsMagma_176
+d_'42''45'isMagma_1732 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMagma_1732 v8
+du_'42''45'isMagma_1732 ::
+  T_IsCommutativeSemiring_1698 -> T_IsMagma_176
+du_'42''45'isMagma_1732 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
       (coe
-         du_'42''45'isMagma_1546
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_'42''45'isMagma_1566
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring._.*-isMonoid
-d_'42''45'isMonoid_1714 ::
+d_'42''45'isMonoid_1734 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -7993,19 +8110,19 @@ d_'42''45'isMonoid_1714 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> T_IsMonoid_686
-d_'42''45'isMonoid_1714 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMonoid_1714 v8
-du_'42''45'isMonoid_1714 ::
-  T_IsCommutativeSemiring_1678 -> T_IsMonoid_686
-du_'42''45'isMonoid_1714 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> T_IsMonoid_686
+d_'42''45'isMonoid_1734 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMonoid_1734 v8
+du_'42''45'isMonoid_1734 ::
+  T_IsCommutativeSemiring_1698 -> T_IsMonoid_686
+du_'42''45'isMonoid_1734 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
       (coe
-         du_'42''45'isMonoid_1550
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_'42''45'isMonoid_1570
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring._.*-isSemigroup
-d_'42''45'isSemigroup_1716 ::
+d_'42''45'isSemigroup_1736 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8013,22 +8130,22 @@ d_'42''45'isSemigroup_1716 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_1716 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isSemigroup_1716 v8
-du_'42''45'isSemigroup_1716 ::
-  T_IsCommutativeSemiring_1678 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_1716 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_1736 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isSemigroup_1736 v8
+du_'42''45'isSemigroup_1736 ::
+  T_IsCommutativeSemiring_1698 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_1736 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
       (coe
-         du_'42''45'isSemigroup_1548
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_'42''45'isSemigroup_1568
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring._.assoc
-d_assoc_1718 ::
-  T_IsCommutativeSemiring_1678 ->
+d_assoc_1738 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_1718 v0
+d_assoc_1738 v0
   = coe
       d_assoc_482
       (coe
@@ -8036,27 +8153,27 @@ d_assoc_1718 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
+               d_'43''45'isCommutativeMonoid_1508
                (coe
-                  d_isSemiringWithoutAnnihilatingZero_1584
-                  (coe d_isSemiring_1692 (coe v0))))))
+                  d_isSemiringWithoutAnnihilatingZero_1604
+                  (coe d_isSemiring_1712 (coe v0))))))
 -- Algebra.Structures.IsCommutativeSemiring._.comm
-d_comm_1720 ::
-  T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_1720 v0
+d_comm_1740 ::
+  T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny -> AgdaAny
+d_comm_1740 v0
   = coe
       d_comm_748
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
-            (coe d_isSemiring_1692 (coe v0))))
+            d_isSemiringWithoutAnnihilatingZero_1604
+            (coe d_isSemiring_1712 (coe v0))))
 -- Algebra.Structures.IsCommutativeSemiring._.∙-cong
-d_'8729''45'cong_1722 ::
-  T_IsCommutativeSemiring_1678 ->
+d_'8729''45'cong_1742 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_1722 v0
+d_'8729''45'cong_1742 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -8066,12 +8183,12 @@ d_'8729''45'cong_1722 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
+                  d_'43''45'isCommutativeMonoid_1508
                   (coe
-                     d_isSemiringWithoutAnnihilatingZero_1584
-                     (coe d_isSemiring_1692 (coe v0)))))))
+                     d_isSemiringWithoutAnnihilatingZero_1604
+                     (coe d_isSemiring_1712 (coe v0)))))))
 -- Algebra.Structures.IsCommutativeSemiring._.∙-congʳ
-d_'8729''45'cong'691'_1724 ::
+d_'8729''45'cong'691'_1744 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8080,19 +8197,19 @@ d_'8729''45'cong'691'_1724 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1724 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1724 v8
-du_'8729''45'cong'691'_1724 ::
-  T_IsCommutativeSemiring_1678 ->
+d_'8729''45'cong'691'_1744 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1744 v8
+du_'8729''45'cong'691'_1744 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1724 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_'8729''45'cong'691'_1744 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
@@ -8100,7 +8217,7 @@ du_'8729''45'cong'691'_1724 v0
                 coe
                   (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsCommutativeSemiring._.∙-congˡ
-d_'8729''45'cong'737'_1726 ::
+d_'8729''45'cong'737'_1746 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8109,19 +8226,19 @@ d_'8729''45'cong'737'_1726 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1726 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1726 v8
-du_'8729''45'cong'737'_1726 ::
-  T_IsCommutativeSemiring_1678 ->
+d_'8729''45'cong'737'_1746 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1746 v8
+du_'8729''45'cong'737'_1746 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1726 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_'8729''45'cong'737'_1746 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
@@ -8129,21 +8246,21 @@ du_'8729''45'cong'737'_1726 v0
                 coe
                   (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsCommutativeSemiring._.identity
-d_identity_1728 ::
-  T_IsCommutativeSemiring_1678 ->
+d_identity_1748 ::
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_1728 v0
+d_identity_1748 v0
   = coe
       d_identity_698
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
+            d_'43''45'isCommutativeMonoid_1508
             (coe
-               d_isSemiringWithoutAnnihilatingZero_1584
-               (coe d_isSemiring_1692 (coe v0)))))
+               d_isSemiringWithoutAnnihilatingZero_1604
+               (coe d_isSemiring_1712 (coe v0)))))
 -- Algebra.Structures.IsCommutativeSemiring._.identityʳ
-d_identity'691'_1730 ::
+d_identity'691'_1750 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8151,20 +8268,20 @@ d_identity'691'_1730 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-d_identity'691'_1730 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1730 v8
-du_identity'691'_1730 ::
-  T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-du_identity'691'_1730 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+d_identity'691'_1750 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1750 v8
+du_identity'691'_1750 ::
+  T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+du_identity'691'_1750 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe (coe du_identity'691'_728 (coe d_isMonoid_746 (coe v3)))))
 -- Algebra.Structures.IsCommutativeSemiring._.identityˡ
-d_identity'737'_1732 ::
+d_identity'737'_1752 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8172,20 +8289,20 @@ d_identity'737'_1732 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-d_identity'737'_1732 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1732 v8
-du_identity'737'_1732 ::
-  T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-du_identity'737'_1732 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+d_identity'737'_1752 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1752 v8
+du_identity'737'_1752 ::
+  T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+du_identity'737'_1752 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe (coe du_identity'737'_726 (coe d_isMonoid_746 (coe v3)))))
 -- Algebra.Structures.IsCommutativeSemiring._.isCommutativeMagma
-d_isCommutativeMagma_1734 ::
+d_isCommutativeMagma_1754 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8193,32 +8310,32 @@ d_isCommutativeMagma_1734 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_1734 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMagma_1734 v8
-du_isCommutativeMagma_1734 ::
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_1734 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_1754 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMagma_1754 v8
+du_isCommutativeMagma_1754 ::
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_1754 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (coe
                du_isCommutativeMagma_586
                (coe du_isCommutativeSemigroup_786 (coe v3)))))
 -- Algebra.Structures.IsCommutativeSemiring._.+-isCommutativeMonoid
-d_'43''45'isCommutativeMonoid_1736 ::
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeMonoid_736
-d_'43''45'isCommutativeMonoid_1736 v0
+d_'43''45'isCommutativeMonoid_1756 ::
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeMonoid_736
+d_'43''45'isCommutativeMonoid_1756 v0
   = coe
-      d_'43''45'isCommutativeMonoid_1488
+      d_'43''45'isCommutativeMonoid_1508
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1692 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1712 (coe v0)))
 -- Algebra.Structures.IsCommutativeSemiring._.isCommutativeSemigroup
-d_isCommutativeSemigroup_1738 ::
+d_isCommutativeSemigroup_1758 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8227,22 +8344,22 @@ d_isCommutativeSemigroup_1738 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_1738 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeSemigroup_1738 v8
-du_isCommutativeSemigroup_1738 ::
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_1738 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeSemigroup_548
+d_isCommutativeSemigroup_1758 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeSemigroup_1758 v8
+du_isCommutativeSemigroup_1758 ::
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeSemigroup_548
+du_isCommutativeSemigroup_1758 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
          (coe
             du_isCommutativeSemigroup_786
-            (coe d_'43''45'isCommutativeMonoid_1488 (coe v2))))
+            (coe d_'43''45'isCommutativeMonoid_1508 (coe v2))))
 -- Algebra.Structures.IsCommutativeSemiring._.isMagma
-d_isMagma_1740 :: T_IsCommutativeSemiring_1678 -> T_IsMagma_176
-d_isMagma_1740 v0
+d_isMagma_1760 :: T_IsCommutativeSemiring_1698 -> T_IsMagma_176
+d_isMagma_1760 v0
   = coe
       d_isMagma_480
       (coe
@@ -8250,35 +8367,35 @@ d_isMagma_1740 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
+               d_'43''45'isCommutativeMonoid_1508
                (coe
-                  d_isSemiringWithoutAnnihilatingZero_1584
-                  (coe d_isSemiring_1692 (coe v0))))))
+                  d_isSemiringWithoutAnnihilatingZero_1604
+                  (coe d_isSemiring_1712 (coe v0))))))
 -- Algebra.Structures.IsCommutativeSemiring._.isMonoid
-d_isMonoid_1742 :: T_IsCommutativeSemiring_1678 -> T_IsMonoid_686
-d_isMonoid_1742 v0
+d_isMonoid_1762 :: T_IsCommutativeSemiring_1698 -> T_IsMonoid_686
+d_isMonoid_1762 v0
   = coe
       d_isMonoid_746
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
-            (coe d_isSemiring_1692 (coe v0))))
+            d_isSemiringWithoutAnnihilatingZero_1604
+            (coe d_isSemiring_1712 (coe v0))))
 -- Algebra.Structures.IsCommutativeSemiring._.isSemigroup
-d_isSemigroup_1744 ::
-  T_IsCommutativeSemiring_1678 -> T_IsSemigroup_472
-d_isSemigroup_1744 v0
+d_isSemigroup_1764 ::
+  T_IsCommutativeSemiring_1698 -> T_IsSemigroup_472
+d_isSemigroup_1764 v0
   = coe
       d_isSemigroup_696
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
+            d_'43''45'isCommutativeMonoid_1508
             (coe
-               d_isSemiringWithoutAnnihilatingZero_1584
-               (coe d_isSemiring_1692 (coe v0)))))
+               d_isSemiringWithoutAnnihilatingZero_1604
+               (coe d_isSemiring_1712 (coe v0)))))
 -- Algebra.Structures.IsCommutativeSemiring._.isUnitalMagma
-d_isUnitalMagma_1746 ::
+d_isUnitalMagma_1766 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8286,30 +8403,30 @@ d_isUnitalMagma_1746 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> T_IsUnitalMagma_642
-d_isUnitalMagma_1746 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isUnitalMagma_1746 v8
-du_isUnitalMagma_1746 ::
-  T_IsCommutativeSemiring_1678 -> T_IsUnitalMagma_642
-du_isUnitalMagma_1746 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> T_IsUnitalMagma_642
+d_isUnitalMagma_1766 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isUnitalMagma_1766 v8
+du_isUnitalMagma_1766 ::
+  T_IsCommutativeSemiring_1698 -> T_IsUnitalMagma_642
+du_isUnitalMagma_1766 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe (coe du_isUnitalMagma_730 (coe d_isMonoid_746 (coe v3)))))
 -- Algebra.Structures.IsCommutativeSemiring._.distrib
-d_distrib_1748 ::
-  T_IsCommutativeSemiring_1678 ->
+d_distrib_1768 ::
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_1748 v0
+d_distrib_1768 v0
   = coe
-      d_distrib_1496
+      d_distrib_1516
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1692 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1712 (coe v0)))
 -- Algebra.Structures.IsCommutativeSemiring._.distribʳ
-d_distrib'691'_1750 ::
+d_distrib'691'_1770 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8318,21 +8435,21 @@ d_distrib'691'_1750 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_1750 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'691'_1750 v8
-du_distrib'691'_1750 ::
-  T_IsCommutativeSemiring_1678 ->
+d_distrib'691'_1770 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'691'_1770 v8
+du_distrib'691'_1770 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_1750 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_distrib'691'_1770 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
       (coe
-         du_distrib'691'_1500
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_distrib'691'_1520
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring._.distribˡ
-d_distrib'737'_1752 ::
+d_distrib'737'_1772 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8341,24 +8458,24 @@ d_distrib'737'_1752 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_1752 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'737'_1752 v8
-du_distrib'737'_1752 ::
-  T_IsCommutativeSemiring_1678 ->
+d_distrib'737'_1772 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'737'_1772 v8
+du_distrib'737'_1772 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_1752 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_distrib'737'_1772 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
       (coe
-         du_distrib'737'_1498
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_distrib'737'_1518
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring._.isEquivalence
-d_isEquivalence_1754 ::
-  T_IsCommutativeSemiring_1678 ->
+d_isEquivalence_1774 ::
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_1754 v0
+d_isEquivalence_1774 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -8368,12 +8485,12 @@ d_isEquivalence_1754 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
+                  d_'43''45'isCommutativeMonoid_1508
                   (coe
-                     d_isSemiringWithoutAnnihilatingZero_1584
-                     (coe d_isSemiring_1692 (coe v0)))))))
+                     d_isSemiringWithoutAnnihilatingZero_1604
+                     (coe d_isSemiring_1712 (coe v0)))))))
 -- Algebra.Structures.IsCommutativeSemiring._.isNearSemiring
-d_isNearSemiring_1756 ::
+d_isNearSemiring_1776 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8381,18 +8498,18 @@ d_isNearSemiring_1756 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> T_IsNearSemiring_1218
-d_isNearSemiring_1756 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isNearSemiring_1756 v8
-du_isNearSemiring_1756 ::
-  T_IsCommutativeSemiring_1678 -> T_IsNearSemiring_1218
-du_isNearSemiring_1756 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> T_IsNearSemiring_1218
+d_isNearSemiring_1776 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isNearSemiring_1776 v8
+du_isNearSemiring_1776 ::
+  T_IsCommutativeSemiring_1698 -> T_IsNearSemiring_1218
+du_isNearSemiring_1776 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
       (coe
-         du_isNearSemiring_1374 (coe du_isSemiringWithoutOne_1660 (coe v1)))
+         du_isNearSemiring_1384 (coe du_isSemiringWithoutOne_1680 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring._.isPartialEquivalence
-d_isPartialEquivalence_1758 ::
+d_isPartialEquivalence_1778 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8401,19 +8518,19 @@ d_isPartialEquivalence_1758 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_1758 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_1758 v8
-du_isPartialEquivalence_1758 ::
-  T_IsCommutativeSemiring_1678 ->
+d_isPartialEquivalence_1778 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_1778 v8
+du_isPartialEquivalence_1778 ::
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_1758 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_isPartialEquivalence_1778 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
@@ -8425,15 +8542,15 @@ du_isPartialEquivalence_1758 v0
                         MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                         (coe d_isEquivalence_184 (coe v6))))))))
 -- Algebra.Structures.IsCommutativeSemiring._.isSemiringWithoutAnnihilatingZero
-d_isSemiringWithoutAnnihilatingZero_1760 ::
-  T_IsCommutativeSemiring_1678 ->
-  T_IsSemiringWithoutAnnihilatingZero_1468
-d_isSemiringWithoutAnnihilatingZero_1760 v0
+d_isSemiringWithoutAnnihilatingZero_1780 ::
+  T_IsCommutativeSemiring_1698 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488
+d_isSemiringWithoutAnnihilatingZero_1780 v0
   = coe
-      d_isSemiringWithoutAnnihilatingZero_1584
-      (coe d_isSemiring_1692 (coe v0))
+      d_isSemiringWithoutAnnihilatingZero_1604
+      (coe d_isSemiring_1712 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiring._.isSemiringWithoutOne
-d_isSemiringWithoutOne_1762 ::
+d_isSemiringWithoutOne_1782 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8442,16 +8559,16 @@ d_isSemiringWithoutOne_1762 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 -> T_IsSemiringWithoutOne_1298
-d_isSemiringWithoutOne_1762 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isSemiringWithoutOne_1762 v8
-du_isSemiringWithoutOne_1762 ::
-  T_IsCommutativeSemiring_1678 -> T_IsSemiringWithoutOne_1298
-du_isSemiringWithoutOne_1762 v0
-  = coe du_isSemiringWithoutOne_1660 (coe d_isSemiring_1692 (coe v0))
+  T_IsCommutativeSemiring_1698 -> T_IsSemiringWithoutOne_1298
+d_isSemiringWithoutOne_1782 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isSemiringWithoutOne_1782 v8
+du_isSemiringWithoutOne_1782 ::
+  T_IsCommutativeSemiring_1698 -> T_IsSemiringWithoutOne_1298
+du_isSemiringWithoutOne_1782 v0
+  = coe du_isSemiringWithoutOne_1680 (coe d_isSemiring_1712 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiring._.refl
-d_refl_1764 :: T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-d_refl_1764 v0
+d_refl_1784 :: T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+d_refl_1784 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -8463,12 +8580,12 @@ d_refl_1764 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
-                        (coe d_isSemiring_1692 (coe v0))))))))
+                        d_isSemiringWithoutAnnihilatingZero_1604
+                        (coe d_isSemiring_1712 (coe v0))))))))
 -- Algebra.Structures.IsCommutativeSemiring._.reflexive
-d_reflexive_1766 ::
+d_reflexive_1786 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8477,23 +8594,23 @@ d_reflexive_1766 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_1766 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_1766 v8
-du_reflexive_1766 ::
-  T_IsCommutativeSemiring_1678 ->
+d_reflexive_1786 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_1786 v8
+du_reflexive_1786 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_1766 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_reflexive_1786 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
@@ -8506,7 +8623,7 @@ du_reflexive_1766 v0
                           MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                           (coe d_isEquivalence_184 (coe v6)) v7))))))
 -- Algebra.Structures.IsCommutativeSemiring._.setoid
-d_setoid_1768 ::
+d_setoid_1788 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8515,29 +8632,29 @@ d_setoid_1768 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_1768 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_1768 v8
-du_setoid_1768 ::
-  T_IsCommutativeSemiring_1678 ->
+d_setoid_1788 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_1788 v8
+du_setoid_1788 ::
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_1768 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+du_setoid_1788 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
                (let v5 = d_isSemigroup_696 (coe v4) in
                 coe (coe du_setoid_200 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsCommutativeSemiring._.sym
-d_sym_1770 ::
-  T_IsCommutativeSemiring_1678 ->
+d_sym_1790 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_1770 v0
+d_sym_1790 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -8549,15 +8666,15 @@ d_sym_1770 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
-                        (coe d_isSemiring_1692 (coe v0))))))))
+                        d_isSemiringWithoutAnnihilatingZero_1604
+                        (coe d_isSemiring_1712 (coe v0))))))))
 -- Algebra.Structures.IsCommutativeSemiring._.trans
-d_trans_1772 ::
-  T_IsCommutativeSemiring_1678 ->
+d_trans_1792 ::
+  T_IsCommutativeSemiring_1698 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_1772 v0
+d_trans_1792 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -8569,17 +8686,17 @@ d_trans_1772 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
-                        (coe d_isSemiring_1692 (coe v0))))))))
+                        d_isSemiringWithoutAnnihilatingZero_1604
+                        (coe d_isSemiring_1712 (coe v0))))))))
 -- Algebra.Structures.IsCommutativeSemiring._.zero
-d_zero_1774 ::
-  T_IsCommutativeSemiring_1678 ->
+d_zero_1794 ::
+  T_IsCommutativeSemiring_1698 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_1774 v0 = coe d_zero_1586 (coe d_isSemiring_1692 (coe v0))
+d_zero_1794 v0 = coe d_zero_1606 (coe d_isSemiring_1712 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiring._.zeroʳ
-d_zero'691'_1776 ::
+d_zero'691'_1796 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8587,17 +8704,17 @@ d_zero'691'_1776 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-d_zero'691'_1776 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'691'_1776 v8
-du_zero'691'_1776 ::
-  T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-du_zero'691'_1776 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+d_zero'691'_1796 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'691'_1796 v8
+du_zero'691'_1796 ::
+  T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+du_zero'691'_1796 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (coe du_zero'691'_1372 (coe du_isSemiringWithoutOne_1660 (coe v1)))
+      (coe du_zero'691'_1382 (coe du_isSemiringWithoutOne_1680 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring._.zeroˡ
-d_zero'737'_1778 ::
+d_zero'737'_1798 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8605,17 +8722,17 @@ d_zero'737'_1778 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-d_zero'737'_1778 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'737'_1778 v8
-du_zero'737'_1778 ::
-  T_IsCommutativeSemiring_1678 -> AgdaAny -> AgdaAny
-du_zero'737'_1778 v0
-  = let v1 = d_isSemiring_1692 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+d_zero'737'_1798 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'737'_1798 v8
+du_zero'737'_1798 ::
+  T_IsCommutativeSemiring_1698 -> AgdaAny -> AgdaAny
+du_zero'737'_1798 v0
+  = let v1 = d_isSemiring_1712 (coe v0) in
     coe
-      (coe du_zero'737'_1370 (coe du_isSemiringWithoutOne_1660 (coe v1)))
+      (coe du_zero'737'_1380 (coe du_isSemiringWithoutOne_1680 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring.isCommutativeSemiringWithoutOne
-d_isCommutativeSemiringWithoutOne_1780 ::
+d_isCommutativeSemiringWithoutOne_1800 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8624,21 +8741,21 @@ d_isCommutativeSemiringWithoutOne_1780 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 ->
-  T_IsCommutativeSemiringWithoutOne_1382
-d_isCommutativeSemiringWithoutOne_1780 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
+  T_IsCommutativeSemiring_1698 ->
+  T_IsCommutativeSemiringWithoutOne_1392
+d_isCommutativeSemiringWithoutOne_1800 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                        ~v7 v8
-  = du_isCommutativeSemiringWithoutOne_1780 v8
-du_isCommutativeSemiringWithoutOne_1780 ::
-  T_IsCommutativeSemiring_1678 ->
-  T_IsCommutativeSemiringWithoutOne_1382
-du_isCommutativeSemiringWithoutOne_1780 v0
+  = du_isCommutativeSemiringWithoutOne_1800 v8
+du_isCommutativeSemiringWithoutOne_1800 ::
+  T_IsCommutativeSemiring_1698 ->
+  T_IsCommutativeSemiringWithoutOne_1392
+du_isCommutativeSemiringWithoutOne_1800 v0
   = coe
-      C_IsCommutativeSemiringWithoutOne'46'constructor_41457
-      (coe du_isSemiringWithoutOne_1660 (coe d_isSemiring_1692 (coe v0)))
-      (coe d_'42''45'comm_1694 (coe v0))
+      C_IsCommutativeSemiringWithoutOne'46'constructor_42635
+      (coe du_isSemiringWithoutOne_1680 (coe d_isSemiring_1712 (coe v0)))
+      (coe d_'42''45'comm_1714 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiring._.isCommutativeMagma
-d_isCommutativeMagma_1784 ::
+d_isCommutativeMagma_1804 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8646,19 +8763,19 @@ d_isCommutativeMagma_1784 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeSemiring_1678 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_1784 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMagma_1784 v8
-du_isCommutativeMagma_1784 ::
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_1784 v0
-  = let v1 = coe du_isCommutativeSemiringWithoutOne_1780 (coe v0) in
+  AgdaAny -> T_IsCommutativeSemiring_1698 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_1804 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMagma_1804 v8
+du_isCommutativeMagma_1804 ::
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_1804 v0
+  = let v1 = coe du_isCommutativeSemiringWithoutOne_1800 (coe v0) in
     coe
       (coe
          du_isCommutativeMagma_586
-         (coe du_'42''45'isCommutativeSemigroup_1454 (coe v1)))
+         (coe du_'42''45'isCommutativeSemigroup_1474 (coe v1)))
 -- Algebra.Structures.IsCommutativeSemiring._.*-isCommutativeSemigroup
-d_'42''45'isCommutativeSemigroup_1786 ::
+d_'42''45'isCommutativeSemigroup_1806 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8667,18 +8784,18 @@ d_'42''45'isCommutativeSemigroup_1786 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeSemigroup_548
-d_'42''45'isCommutativeSemigroup_1786 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeSemigroup_548
+d_'42''45'isCommutativeSemigroup_1806 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                       ~v7 v8
-  = du_'42''45'isCommutativeSemigroup_1786 v8
-du_'42''45'isCommutativeSemigroup_1786 ::
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeSemigroup_548
-du_'42''45'isCommutativeSemigroup_1786 v0
+  = du_'42''45'isCommutativeSemigroup_1806 v8
+du_'42''45'isCommutativeSemigroup_1806 ::
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeSemigroup_548
+du_'42''45'isCommutativeSemigroup_1806 v0
   = coe
-      du_'42''45'isCommutativeSemigroup_1454
-      (coe du_isCommutativeSemiringWithoutOne_1780 (coe v0))
+      du_'42''45'isCommutativeSemigroup_1474
+      (coe du_isCommutativeSemiringWithoutOne_1800 (coe v0))
 -- Algebra.Structures.IsCommutativeSemiring.*-isCommutativeMonoid
-d_'42''45'isCommutativeMonoid_1788 ::
+d_'42''45'isCommutativeMonoid_1808 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8687,26 +8804,26 @@ d_'42''45'isCommutativeMonoid_1788 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeMonoid_736
-d_'42''45'isCommutativeMonoid_1788 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeMonoid_736
+d_'42''45'isCommutativeMonoid_1808 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
                                    v8
-  = du_'42''45'isCommutativeMonoid_1788 v8
-du_'42''45'isCommutativeMonoid_1788 ::
-  T_IsCommutativeSemiring_1678 -> T_IsCommutativeMonoid_736
-du_'42''45'isCommutativeMonoid_1788 v0
+  = du_'42''45'isCommutativeMonoid_1808 v8
+du_'42''45'isCommutativeMonoid_1808 ::
+  T_IsCommutativeSemiring_1698 -> T_IsCommutativeMonoid_736
+du_'42''45'isCommutativeMonoid_1808 v0
   = coe
       C_IsCommutativeMonoid'46'constructor_17695
       (coe
-         du_'42''45'isMonoid_1550
+         du_'42''45'isMonoid_1570
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
-            (coe d_isSemiring_1692 (coe v0))))
-      (coe d_'42''45'comm_1694 (coe v0))
+            d_isSemiringWithoutAnnihilatingZero_1604
+            (coe d_isSemiring_1712 (coe v0))))
+      (coe d_'42''45'comm_1714 (coe v0))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring
-d_IsCancellativeCommutativeSemiring_1798 a0 a1 a2 a3 a4 a5 a6 a7
+d_IsCancellativeCommutativeSemiring_1818 a0 a1 a2 a3 a4 a5 a6 a7
   = ()
-data T_IsCancellativeCommutativeSemiring_1798
-  = C_IsCancellativeCommutativeSemiring'46'constructor_55863 T_IsCommutativeSemiring_1678
+data T_IsCancellativeCommutativeSemiring_1818
+  = C_IsCancellativeCommutativeSemiring'46'constructor_57463 T_IsCommutativeSemiring_1698
                                                              (AgdaAny ->
                                                               AgdaAny ->
                                                               AgdaAny ->
@@ -8714,59 +8831,59 @@ data T_IsCancellativeCommutativeSemiring_1798
                                                                MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
                                                               AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsCancellativeCommutativeSemiring.isCommutativeSemiring
-d_isCommutativeSemiring_1812 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
-  T_IsCommutativeSemiring_1678
-d_isCommutativeSemiring_1812 v0
+d_isCommutativeSemiring_1832 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
+  T_IsCommutativeSemiring_1698
+d_isCommutativeSemiring_1832 v0
   = case coe v0 of
-      C_IsCancellativeCommutativeSemiring'46'constructor_55863 v1 v2
+      C_IsCancellativeCommutativeSemiring'46'constructor_57463 v1 v2
         -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsCancellativeCommutativeSemiring.*-cancelˡ-nonZero
-d_'42''45'cancel'737''45'nonZero_1814 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'42''45'cancel'737''45'nonZero_1834 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-d_'42''45'cancel'737''45'nonZero_1814 v0
+d_'42''45'cancel'737''45'nonZero_1834 v0
   = case coe v0 of
-      C_IsCancellativeCommutativeSemiring'46'constructor_55863 v1 v2
+      C_IsCancellativeCommutativeSemiring'46'constructor_57463 v1 v2
         -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-assoc
-d_'42''45'assoc_1818 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'42''45'assoc_1838 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_1818 v0
+d_'42''45'assoc_1838 v0
   = coe
-      d_'42''45'assoc_1492
+      d_'42''45'assoc_1512
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
+         d_isSemiringWithoutAnnihilatingZero_1604
          (coe
-            d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))
+            d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-comm
-d_'42''45'comm_1820 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'42''45'comm_1840 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'comm_1820 v0
+d_'42''45'comm_1840 v0
   = coe
-      d_'42''45'comm_1694 (coe d_isCommutativeSemiring_1812 (coe v0))
+      d_'42''45'comm_1714 (coe d_isCommutativeSemiring_1832 (coe v0))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-cong
-d_'42''45'cong_1822 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'42''45'cong_1842 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_1822 v0
+d_'42''45'cong_1842 v0
   = coe
-      d_'42''45'cong_1490
+      d_'42''45'cong_1510
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
+         d_isSemiringWithoutAnnihilatingZero_1604
          (coe
-            d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))
+            d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.∙-congʳ
-d_'8729''45'cong'691'_1824 ::
+d_'8729''45'cong'691'_1844 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8775,27 +8892,27 @@ d_'8729''45'cong'691'_1824 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1824 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1824 v8
-du_'8729''45'cong'691'_1824 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'8729''45'cong'691'_1844 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1844 v8
+du_'8729''45'cong'691'_1844 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1824 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_'8729''45'cong'691'_1844 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = coe du_'42''45'isMonoid_1550 (coe v3) in
+            (let v4 = coe du_'42''45'isMonoid_1570 (coe v3) in
              coe
                (let v5 = d_isSemigroup_696 (coe v4) in
                 coe
                   (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.∙-congˡ
-d_'8729''45'cong'737'_1826 ::
+d_'8729''45'cong'737'_1846 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8804,38 +8921,38 @@ d_'8729''45'cong'737'_1826 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1826 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1826 v8
-du_'8729''45'cong'737'_1826 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'8729''45'cong'737'_1846 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1846 v8
+du_'8729''45'cong'737'_1846 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1826 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_'8729''45'cong'737'_1846 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = coe du_'42''45'isMonoid_1550 (coe v3) in
+            (let v4 = coe du_'42''45'isMonoid_1570 (coe v3) in
              coe
                (let v5 = d_isSemigroup_696 (coe v4) in
                 coe
                   (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-identity
-d_'42''45'identity_1828 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'42''45'identity_1848 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_1828 v0
+d_'42''45'identity_1848 v0
   = coe
-      d_'42''45'identity_1494
+      d_'42''45'identity_1514
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
+         d_isSemiringWithoutAnnihilatingZero_1604
          (coe
-            d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))
+            d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.identityʳ
-d_identity'691'_1830 ::
+d_identity'691'_1850 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8844,22 +8961,22 @@ d_identity'691'_1830 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-d_identity'691'_1830 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1830 v8
-du_identity'691'_1830 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-du_identity'691'_1830 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+d_identity'691'_1850 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1850 v8
+du_identity'691'_1850 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+du_identity'691'_1850 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
             (coe
-               du_identity'691'_728 (coe du_'42''45'isMonoid_1550 (coe v3)))))
+               du_identity'691'_728 (coe du_'42''45'isMonoid_1570 (coe v3)))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.identityˡ
-d_identity'737'_1832 ::
+d_identity'737'_1852 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8868,22 +8985,22 @@ d_identity'737'_1832 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-d_identity'737'_1832 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1832 v8
-du_identity'737'_1832 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-du_identity'737'_1832 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+d_identity'737'_1852 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1852 v8
+du_identity'737'_1852 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+du_identity'737'_1852 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
             (coe
-               du_identity'737'_726 (coe du_'42''45'isMonoid_1550 (coe v3)))))
+               du_identity'737'_726 (coe du_'42''45'isMonoid_1570 (coe v3)))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isCommutativeMagma
-d_isCommutativeMagma_1834 ::
+d_isCommutativeMagma_1854 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8892,23 +9009,23 @@ d_isCommutativeMagma_1834 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeMagma_212
-d_isCommutativeMagma_1834 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMagma_1834 v8
-du_isCommutativeMagma_1834 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_isCommutativeMagma_1854 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMagma_1854 v8
+du_isCommutativeMagma_1854 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeMagma_212
-du_isCommutativeMagma_1834 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_isCommutativeMagma_1854 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = coe du_isCommutativeSemiringWithoutOne_1780 (coe v1) in
+      (let v2 = coe du_isCommutativeSemiringWithoutOne_1800 (coe v1) in
        coe
          (coe
             du_isCommutativeMagma_586
-            (coe du_'42''45'isCommutativeSemigroup_1454 (coe v2))))
+            (coe du_'42''45'isCommutativeSemigroup_1474 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-isCommutativeMonoid
-d_'42''45'isCommutativeMonoid_1836 ::
+d_'42''45'isCommutativeMonoid_1856 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8917,20 +9034,20 @@ d_'42''45'isCommutativeMonoid_1836 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeMonoid_736
-d_'42''45'isCommutativeMonoid_1836 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
+d_'42''45'isCommutativeMonoid_1856 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
                                    v8
-  = du_'42''45'isCommutativeMonoid_1836 v8
-du_'42''45'isCommutativeMonoid_1836 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  = du_'42''45'isCommutativeMonoid_1856 v8
+du_'42''45'isCommutativeMonoid_1856 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeMonoid_736
-du_'42''45'isCommutativeMonoid_1836 v0
+du_'42''45'isCommutativeMonoid_1856 v0
   = coe
-      du_'42''45'isCommutativeMonoid_1788
-      (coe d_isCommutativeSemiring_1812 (coe v0))
+      du_'42''45'isCommutativeMonoid_1808
+      (coe d_isCommutativeSemiring_1832 (coe v0))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-isCommutativeSemigroup
-d_'42''45'isCommutativeSemigroup_1838 ::
+d_'42''45'isCommutativeSemigroup_1858 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8939,22 +9056,22 @@ d_'42''45'isCommutativeSemigroup_1838 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeSemigroup_548
-d_'42''45'isCommutativeSemigroup_1838 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
+d_'42''45'isCommutativeSemigroup_1858 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                       ~v7 v8
-  = du_'42''45'isCommutativeSemigroup_1838 v8
-du_'42''45'isCommutativeSemigroup_1838 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  = du_'42''45'isCommutativeSemigroup_1858 v8
+du_'42''45'isCommutativeSemigroup_1858 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeSemigroup_548
-du_'42''45'isCommutativeSemigroup_1838 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_'42''45'isCommutativeSemigroup_1858 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
       (coe
-         du_'42''45'isCommutativeSemigroup_1454
-         (coe du_isCommutativeSemiringWithoutOne_1780 (coe v1)))
+         du_'42''45'isCommutativeSemigroup_1474
+         (coe du_isCommutativeSemiringWithoutOne_1800 (coe v1)))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-isMagma
-d_'42''45'isMagma_1840 ::
+d_'42''45'isMagma_1860 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8963,21 +9080,21 @@ d_'42''45'isMagma_1840 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsMagma_176
-d_'42''45'isMagma_1840 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMagma_1840 v8
-du_'42''45'isMagma_1840 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsMagma_176
-du_'42''45'isMagma_1840 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsMagma_176
+d_'42''45'isMagma_1860 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMagma_1860 v8
+du_'42''45'isMagma_1860 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsMagma_176
+du_'42''45'isMagma_1860 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
          (coe
-            du_'42''45'isMagma_1546
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_'42''45'isMagma_1566
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-isMonoid
-d_'42''45'isMonoid_1842 ::
+d_'42''45'isMonoid_1862 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -8986,21 +9103,21 @@ d_'42''45'isMonoid_1842 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsMonoid_686
-d_'42''45'isMonoid_1842 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMonoid_1842 v8
-du_'42''45'isMonoid_1842 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsMonoid_686
-du_'42''45'isMonoid_1842 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsMonoid_686
+d_'42''45'isMonoid_1862 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMonoid_1862 v8
+du_'42''45'isMonoid_1862 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsMonoid_686
+du_'42''45'isMonoid_1862 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
          (coe
-            du_'42''45'isMonoid_1550
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_'42''45'isMonoid_1570
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.*-isSemigroup
-d_'42''45'isSemigroup_1844 ::
+d_'42''45'isSemigroup_1864 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9009,24 +9126,24 @@ d_'42''45'isSemigroup_1844 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_1844 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isSemigroup_1844 v8
-du_'42''45'isSemigroup_1844 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_1844 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_1864 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isSemigroup_1864 v8
+du_'42''45'isSemigroup_1864 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_1864 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
          (coe
-            du_'42''45'isSemigroup_1548
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_'42''45'isSemigroup_1568
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.assoc
-d_assoc_1846 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_assoc_1866 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_1846 v0
+d_assoc_1866 v0
   = coe
       d_assoc_482
       (coe
@@ -9034,30 +9151,30 @@ d_assoc_1846 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
+               d_'43''45'isCommutativeMonoid_1508
                (coe
-                  d_isSemiringWithoutAnnihilatingZero_1584
+                  d_isSemiringWithoutAnnihilatingZero_1604
                   (coe
-                     d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0)))))))
+                     d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0)))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.comm
-d_comm_1848 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_comm_1868 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny
-d_comm_1848 v0
+d_comm_1868 v0
   = coe
       d_comm_748
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
+            d_isSemiringWithoutAnnihilatingZero_1604
             (coe
-               d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0)))))
+               d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0)))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.∙-cong
-d_'8729''45'cong_1850 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'8729''45'cong_1870 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_1850 v0
+d_'8729''45'cong_1870 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -9067,13 +9184,13 @@ d_'8729''45'cong_1850 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
+                  d_'43''45'isCommutativeMonoid_1508
                   (coe
-                     d_isSemiringWithoutAnnihilatingZero_1584
+                     d_isSemiringWithoutAnnihilatingZero_1604
                      (coe
-                        d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))))))
+                        d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.∙-congʳ
-d_'8729''45'cong'691'_1852 ::
+d_'8729''45'cong'691'_1872 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9082,21 +9199,21 @@ d_'8729''45'cong'691'_1852 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1852 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1852 v8
-du_'8729''45'cong'691'_1852 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'8729''45'cong'691'_1872 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1872 v8
+du_'8729''45'cong'691'_1872 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1852 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_'8729''45'cong'691'_1872 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -9104,7 +9221,7 @@ du_'8729''45'cong'691'_1852 v0
                    coe
                      (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v6))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.∙-congˡ
-d_'8729''45'cong'737'_1854 ::
+d_'8729''45'cong'737'_1874 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9113,21 +9230,21 @@ d_'8729''45'cong'737'_1854 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1854 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1854 v8
-du_'8729''45'cong'737'_1854 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'8729''45'cong'737'_1874 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1874 v8
+du_'8729''45'cong'737'_1874 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1854 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_'8729''45'cong'737'_1874 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -9135,22 +9252,22 @@ du_'8729''45'cong'737'_1854 v0
                    coe
                      (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v6))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.identity
-d_identity_1856 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_identity_1876 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_1856 v0
+d_identity_1876 v0
   = coe
       d_identity_698
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
+            d_'43''45'isCommutativeMonoid_1508
             (coe
-               d_isSemiringWithoutAnnihilatingZero_1584
+               d_isSemiringWithoutAnnihilatingZero_1604
                (coe
-                  d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))))
+                  d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.identityʳ
-d_identity'691'_1858 ::
+d_identity'691'_1878 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9159,22 +9276,22 @@ d_identity'691'_1858 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-d_identity'691'_1858 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1858 v8
-du_identity'691'_1858 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-du_identity'691'_1858 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+d_identity'691'_1878 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1878 v8
+du_identity'691'_1878 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+du_identity'691'_1878 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe (coe du_identity'691'_728 (coe d_isMonoid_746 (coe v4))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.identityˡ
-d_identity'737'_1860 ::
+d_identity'737'_1880 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9183,22 +9300,22 @@ d_identity'737'_1860 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-d_identity'737'_1860 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1860 v8
-du_identity'737'_1860 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-du_identity'737'_1860 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+d_identity'737'_1880 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1880 v8
+du_identity'737'_1880 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+du_identity'737'_1880 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe (coe du_identity'737'_726 (coe d_isMonoid_746 (coe v4))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isCommutativeMagma
-d_isCommutativeMagma_1862 ::
+d_isCommutativeMagma_1882 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9207,38 +9324,38 @@ d_isCommutativeMagma_1862 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeMagma_212
-d_isCommutativeMagma_1862 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMagma_1862 v8
-du_isCommutativeMagma_1862 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_isCommutativeMagma_1882 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMagma_1882 v8
+du_isCommutativeMagma_1882 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeMagma_212
-du_isCommutativeMagma_1862 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_isCommutativeMagma_1882 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (coe
                   du_isCommutativeMagma_586
                   (coe du_isCommutativeSemigroup_786 (coe v4))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.+-isCommutativeMonoid
-d_'43''45'isCommutativeMonoid_1864 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_'43''45'isCommutativeMonoid_1884 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeMonoid_736
-d_'43''45'isCommutativeMonoid_1864 v0
+d_'43''45'isCommutativeMonoid_1884 v0
   = coe
-      d_'43''45'isCommutativeMonoid_1488
+      d_'43''45'isCommutativeMonoid_1508
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
+         d_isSemiringWithoutAnnihilatingZero_1604
          (coe
-            d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))
+            d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isCommutativeSemigroup
-d_isCommutativeSemigroup_1866 ::
+d_isCommutativeSemigroup_1886 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9247,27 +9364,27 @@ d_isCommutativeSemigroup_1866 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_1866 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeSemigroup_1866 v8
-du_isCommutativeSemigroup_1866 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_isCommutativeSemigroup_1886 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeSemigroup_1886 v8
+du_isCommutativeSemigroup_1886 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_1866 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_isCommutativeSemigroup_1886 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
             (coe
                du_isCommutativeSemigroup_786
-               (coe d_'43''45'isCommutativeMonoid_1488 (coe v3)))))
+               (coe d_'43''45'isCommutativeMonoid_1508 (coe v3)))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isMagma
-d_isMagma_1868 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsMagma_176
-d_isMagma_1868 v0
+d_isMagma_1888 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsMagma_176
+d_isMagma_1888 v0
   = coe
       d_isMagma_480
       (coe
@@ -9275,39 +9392,39 @@ d_isMagma_1868 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
+               d_'43''45'isCommutativeMonoid_1508
                (coe
-                  d_isSemiringWithoutAnnihilatingZero_1584
+                  d_isSemiringWithoutAnnihilatingZero_1604
                   (coe
-                     d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0)))))))
+                     d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0)))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isMonoid
-d_isMonoid_1870 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsMonoid_686
-d_isMonoid_1870 v0
+d_isMonoid_1890 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsMonoid_686
+d_isMonoid_1890 v0
   = coe
       d_isMonoid_746
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
+            d_isSemiringWithoutAnnihilatingZero_1604
             (coe
-               d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0)))))
+               d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0)))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isSemigroup
-d_isSemigroup_1872 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsSemigroup_472
-d_isSemigroup_1872 v0
+d_isSemigroup_1892 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsSemigroup_472
+d_isSemigroup_1892 v0
   = coe
       d_isSemigroup_696
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
+            d_'43''45'isCommutativeMonoid_1508
             (coe
-               d_isSemiringWithoutAnnihilatingZero_1584
+               d_isSemiringWithoutAnnihilatingZero_1604
                (coe
-                  d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))))
+                  d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isUnitalMagma
-d_isUnitalMagma_1874 ::
+d_isUnitalMagma_1894 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9316,33 +9433,33 @@ d_isUnitalMagma_1874 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsUnitalMagma_642
-d_isUnitalMagma_1874 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isUnitalMagma_1874 v8
-du_isUnitalMagma_1874 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsUnitalMagma_642
-du_isUnitalMagma_1874 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsUnitalMagma_642
+d_isUnitalMagma_1894 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isUnitalMagma_1894 v8
+du_isUnitalMagma_1894 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsUnitalMagma_642
+du_isUnitalMagma_1894 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe (coe du_isUnitalMagma_730 (coe d_isMonoid_746 (coe v4))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.distrib
-d_distrib_1876 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_distrib_1896 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_1876 v0
+d_distrib_1896 v0
   = coe
-      d_distrib_1496
+      d_distrib_1516
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
+         d_isSemiringWithoutAnnihilatingZero_1604
          (coe
-            d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))
+            d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.distribʳ
-d_distrib'691'_1878 ::
+d_distrib'691'_1898 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9351,23 +9468,23 @@ d_distrib'691'_1878 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_1878 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'691'_1878 v8
-du_distrib'691'_1878 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_distrib'691'_1898 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'691'_1898 v8
+du_distrib'691'_1898 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_1878 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_distrib'691'_1898 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
          (coe
-            du_distrib'691'_1500
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_distrib'691'_1520
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.distribˡ
-d_distrib'737'_1880 ::
+d_distrib'737'_1900 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9376,23 +9493,23 @@ d_distrib'737'_1880 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_1880 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'737'_1880 v8
-du_distrib'737'_1880 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_distrib'737'_1900 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'737'_1900 v8
+du_distrib'737'_1900 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_1880 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_distrib'737'_1900 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
          (coe
-            du_distrib'737'_1498
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_distrib'737'_1518
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isCommutativeSemiringWithoutOne
-d_isCommutativeSemiringWithoutOne_1882 ::
+d_isCommutativeSemiringWithoutOne_1902 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9401,23 +9518,23 @@ d_isCommutativeSemiringWithoutOne_1882 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
-  T_IsCommutativeSemiringWithoutOne_1382
-d_isCommutativeSemiringWithoutOne_1882 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
+  T_IsCancellativeCommutativeSemiring_1818 ->
+  T_IsCommutativeSemiringWithoutOne_1392
+d_isCommutativeSemiringWithoutOne_1902 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                        ~v7 v8
-  = du_isCommutativeSemiringWithoutOne_1882 v8
-du_isCommutativeSemiringWithoutOne_1882 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
-  T_IsCommutativeSemiringWithoutOne_1382
-du_isCommutativeSemiringWithoutOne_1882 v0
+  = du_isCommutativeSemiringWithoutOne_1902 v8
+du_isCommutativeSemiringWithoutOne_1902 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
+  T_IsCommutativeSemiringWithoutOne_1392
+du_isCommutativeSemiringWithoutOne_1902 v0
   = coe
-      du_isCommutativeSemiringWithoutOne_1780
-      (coe d_isCommutativeSemiring_1812 (coe v0))
+      du_isCommutativeSemiringWithoutOne_1800
+      (coe d_isCommutativeSemiring_1832 (coe v0))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isEquivalence
-d_isEquivalence_1884 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_isEquivalence_1904 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_1884 v0
+d_isEquivalence_1904 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -9427,13 +9544,13 @@ d_isEquivalence_1884 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
+                  d_'43''45'isCommutativeMonoid_1508
                   (coe
-                     d_isSemiringWithoutAnnihilatingZero_1584
+                     d_isSemiringWithoutAnnihilatingZero_1604
                      (coe
-                        d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))))))))
+                        d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isNearSemiring
-d_isNearSemiring_1886 ::
+d_isNearSemiring_1906 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9442,21 +9559,21 @@ d_isNearSemiring_1886 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsNearSemiring_1218
-d_isNearSemiring_1886 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isNearSemiring_1886 v8
-du_isNearSemiring_1886 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsNearSemiring_1218
-du_isNearSemiring_1886 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsNearSemiring_1218
+d_isNearSemiring_1906 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isNearSemiring_1906 v8
+du_isNearSemiring_1906 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsNearSemiring_1218
+du_isNearSemiring_1906 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
          (coe
-            du_isNearSemiring_1374
-            (coe du_isSemiringWithoutOne_1660 (coe v2))))
+            du_isNearSemiring_1384
+            (coe du_isSemiringWithoutOne_1680 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isPartialEquivalence
-d_isPartialEquivalence_1888 ::
+d_isPartialEquivalence_1908 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9465,21 +9582,21 @@ d_isPartialEquivalence_1888 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_1888 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_1888 v8
-du_isPartialEquivalence_1888 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_isPartialEquivalence_1908 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_1908 v8
+du_isPartialEquivalence_1908 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_1888 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_isPartialEquivalence_1908 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -9491,20 +9608,20 @@ du_isPartialEquivalence_1888 v0
                            MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                            (coe d_isEquivalence_184 (coe v7)))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isSemiring
-d_isSemiring_1890 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> T_IsSemiring_1570
-d_isSemiring_1890 v0
-  = coe d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0))
+d_isSemiring_1910 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> T_IsSemiring_1590
+d_isSemiring_1910 v0
+  = coe d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isSemiringWithoutAnnihilatingZero
-d_isSemiringWithoutAnnihilatingZero_1892 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
-  T_IsSemiringWithoutAnnihilatingZero_1468
-d_isSemiringWithoutAnnihilatingZero_1892 v0
+d_isSemiringWithoutAnnihilatingZero_1912 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488
+d_isSemiringWithoutAnnihilatingZero_1912 v0
   = coe
-      d_isSemiringWithoutAnnihilatingZero_1584
-      (coe d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0)))
+      d_isSemiringWithoutAnnihilatingZero_1604
+      (coe d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0)))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.isSemiringWithoutOne
-d_isSemiringWithoutOne_1894 ::
+d_isSemiringWithoutOne_1914 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9513,21 +9630,21 @@ d_isSemiringWithoutOne_1894 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsSemiringWithoutOne_1298
-d_isSemiringWithoutOne_1894 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isSemiringWithoutOne_1894 v8
-du_isSemiringWithoutOne_1894 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_isSemiringWithoutOne_1914 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isSemiringWithoutOne_1914 v8
+du_isSemiringWithoutOne_1914 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   T_IsSemiringWithoutOne_1298
-du_isSemiringWithoutOne_1894 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_isSemiringWithoutOne_1914 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (coe du_isSemiringWithoutOne_1660 (coe d_isSemiring_1692 (coe v1)))
+      (coe du_isSemiringWithoutOne_1680 (coe d_isSemiring_1712 (coe v1)))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.refl
-d_refl_1896 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-d_refl_1896 v0
+d_refl_1916 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+d_refl_1916 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -9539,14 +9656,14 @@ d_refl_1896 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
+                        d_isSemiringWithoutAnnihilatingZero_1604
                         (coe
-                           d_isSemiring_1692
-                           (coe d_isCommutativeSemiring_1812 (coe v0)))))))))
+                           d_isSemiring_1712
+                           (coe d_isCommutativeSemiring_1832 (coe v0)))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.reflexive
-d_reflexive_1898 ::
+d_reflexive_1918 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9555,25 +9672,25 @@ d_reflexive_1898 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_1898 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_1898 v8
-du_reflexive_1898 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_reflexive_1918 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_1918 v8
+du_reflexive_1918 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_1898 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_reflexive_1918 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -9586,7 +9703,7 @@ du_reflexive_1898 v0
                              MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                              (coe d_isEquivalence_184 (coe v7)) v8)))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.setoid
-d_setoid_1900 ::
+d_setoid_1920 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9595,31 +9712,31 @@ d_setoid_1900 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_1900 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_1900 v8
-du_setoid_1900 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_setoid_1920 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_1920 v8
+du_setoid_1920 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_1900 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+du_setoid_1920 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
                   (let v6 = d_isSemigroup_696 (coe v5) in
                    coe (coe du_setoid_200 (coe d_isMagma_480 (coe v6))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.sym
-d_sym_1902 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_sym_1922 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_1902 v0
+d_sym_1922 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -9631,17 +9748,17 @@ d_sym_1902 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
+                        d_isSemiringWithoutAnnihilatingZero_1604
                         (coe
-                           d_isSemiring_1692
-                           (coe d_isCommutativeSemiring_1812 (coe v0)))))))))
+                           d_isSemiring_1712
+                           (coe d_isCommutativeSemiring_1832 (coe v0)))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.trans
-d_trans_1904 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_trans_1924 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_1904 v0
+d_trans_1924 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -9653,22 +9770,22 @@ d_trans_1904 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
+                        d_isSemiringWithoutAnnihilatingZero_1604
                         (coe
-                           d_isSemiring_1692
-                           (coe d_isCommutativeSemiring_1812 (coe v0)))))))))
+                           d_isSemiring_1712
+                           (coe d_isCommutativeSemiring_1832 (coe v0)))))))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.zero
-d_zero_1906 ::
-  T_IsCancellativeCommutativeSemiring_1798 ->
+d_zero_1926 ::
+  T_IsCancellativeCommutativeSemiring_1818 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_1906 v0
+d_zero_1926 v0
   = coe
-      d_zero_1586
-      (coe d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v0)))
+      d_zero_1606
+      (coe d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v0)))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.zeroʳ
-d_zero'691'_1908 ::
+d_zero'691'_1928 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9677,20 +9794,20 @@ d_zero'691'_1908 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-d_zero'691'_1908 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'691'_1908 v8
-du_zero'691'_1908 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-du_zero'691'_1908 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+d_zero'691'_1928 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'691'_1928 v8
+du_zero'691'_1928 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+du_zero'691'_1928 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
          (coe
-            du_zero'691'_1372 (coe du_isSemiringWithoutOne_1660 (coe v2))))
+            du_zero'691'_1382 (coe du_isSemiringWithoutOne_1680 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring._.zeroˡ
-d_zero'737'_1910 ::
+d_zero'737'_1930 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9699,20 +9816,20 @@ d_zero'737'_1910 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-d_zero'737'_1910 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'737'_1910 v8
-du_zero'737'_1910 ::
-  T_IsCancellativeCommutativeSemiring_1798 -> AgdaAny -> AgdaAny
-du_zero'737'_1910 v0
-  = let v1 = d_isCommutativeSemiring_1812 (coe v0) in
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+d_zero'737'_1930 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'737'_1930 v8
+du_zero'737'_1930 ::
+  T_IsCancellativeCommutativeSemiring_1818 -> AgdaAny -> AgdaAny
+du_zero'737'_1930 v0
+  = let v1 = d_isCommutativeSemiring_1832 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1692 (coe v1) in
+      (let v2 = d_isSemiring_1712 (coe v1) in
        coe
          (coe
-            du_zero'737'_1370 (coe du_isSemiringWithoutOne_1660 (coe v2))))
+            du_zero'737'_1380 (coe du_isSemiringWithoutOne_1680 (coe v2))))
 -- Algebra.Structures.IsCancellativeCommutativeSemiring.*-cancelʳ-nonZero
-d_'42''45'cancel'691''45'nonZero_1912 ::
+d_'42''45'cancel'691''45'nonZero_1932 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9721,32 +9838,32 @@ d_'42''45'cancel'691''45'nonZero_1912 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-d_'42''45'cancel'691''45'nonZero_1912 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
+d_'42''45'cancel'691''45'nonZero_1932 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
                                       ~v7 v8
-  = du_'42''45'cancel'691''45'nonZero_1912 v5 v8
-du_'42''45'cancel'691''45'nonZero_1912 ::
+  = du_'42''45'cancel'691''45'nonZero_1932 v5 v8
+du_'42''45'cancel'691''45'nonZero_1932 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsCancellativeCommutativeSemiring_1798 ->
+  T_IsCancellativeCommutativeSemiring_1818 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> AgdaAny
-du_'42''45'cancel'691''45'nonZero_1912 v0 v1
+du_'42''45'cancel'691''45'nonZero_1932 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'almostCancel'737''8658'almostCancel'691'_380
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'almostCancel'737''8658'almostCancel'691'_382
       (let v2
-             = d_isSemiring_1692 (coe d_isCommutativeSemiring_1812 (coe v1)) in
+             = d_isSemiring_1712 (coe d_isCommutativeSemiring_1832 (coe v1)) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -9754,50 +9871,50 @@ du_'42''45'cancel'691''45'nonZero_1912 v0 v1
                    coe (coe du_setoid_200 (coe d_isMagma_480 (coe v6))))))))
       (coe v0)
       (coe
-         d_'42''45'comm_1694 (coe d_isCommutativeSemiring_1812 (coe v1)))
-      (coe d_'42''45'cancel'737''45'nonZero_1814 (coe v1))
+         d_'42''45'comm_1714 (coe d_isCommutativeSemiring_1832 (coe v1)))
+      (coe d_'42''45'cancel'737''45'nonZero_1834 (coe v1))
 -- Algebra.Structures.IsIdempotentSemiring
-d_IsIdempotentSemiring_1922 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsIdempotentSemiring_1922
-  = C_IsIdempotentSemiring'46'constructor_60011 T_IsSemiring_1570
+d_IsIdempotentSemiring_1942 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsIdempotentSemiring_1942
+  = C_IsIdempotentSemiring'46'constructor_61611 T_IsSemiring_1590
                                                 (AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsIdempotentSemiring.isSemiring
-d_isSemiring_1936 ::
-  T_IsIdempotentSemiring_1922 -> T_IsSemiring_1570
-d_isSemiring_1936 v0
+d_isSemiring_1956 ::
+  T_IsIdempotentSemiring_1942 -> T_IsSemiring_1590
+d_isSemiring_1956 v0
   = case coe v0 of
-      C_IsIdempotentSemiring'46'constructor_60011 v1 v2 -> coe v1
+      C_IsIdempotentSemiring'46'constructor_61611 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsIdempotentSemiring.+-idem
-d_'43''45'idem_1938 ::
-  T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-d_'43''45'idem_1938 v0
+d_'43''45'idem_1958 ::
+  T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+d_'43''45'idem_1958 v0
   = case coe v0 of
-      C_IsIdempotentSemiring'46'constructor_60011 v1 v2 -> coe v2
+      C_IsIdempotentSemiring'46'constructor_61611 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsIdempotentSemiring._.*-assoc
-d_'42''45'assoc_1942 ::
-  T_IsIdempotentSemiring_1922 ->
+d_'42''45'assoc_1962 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_1942 v0
+d_'42''45'assoc_1962 v0
   = coe
-      d_'42''45'assoc_1492
+      d_'42''45'assoc_1512
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe v0)))
 -- Algebra.Structures.IsIdempotentSemiring._.*-cong
-d_'42''45'cong_1944 ::
-  T_IsIdempotentSemiring_1922 ->
+d_'42''45'cong_1964 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_1944 v0
+d_'42''45'cong_1964 v0
   = coe
-      d_'42''45'cong_1490
+      d_'42''45'cong_1510
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe v0)))
 -- Algebra.Structures.IsIdempotentSemiring._.∙-congʳ
-d_'8729''45'cong'691'_1946 ::
+d_'8729''45'cong'691'_1966 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9806,25 +9923,25 @@ d_'8729''45'cong'691'_1946 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1946 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1946 v8
-du_'8729''45'cong'691'_1946 ::
-  T_IsIdempotentSemiring_1922 ->
+d_'8729''45'cong'691'_1966 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1966 v8
+du_'8729''45'cong'691'_1966 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1946 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_'8729''45'cong'691'_1966 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = coe du_'42''45'isMonoid_1550 (coe v2) in
+         (let v3 = coe du_'42''45'isMonoid_1570 (coe v2) in
           coe
             (let v4 = d_isSemigroup_696 (coe v3) in
              coe
                (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsIdempotentSemiring._.∙-congˡ
-d_'8729''45'cong'737'_1948 ::
+d_'8729''45'cong'737'_1968 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9833,35 +9950,35 @@ d_'8729''45'cong'737'_1948 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1948 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1948 v8
-du_'8729''45'cong'737'_1948 ::
-  T_IsIdempotentSemiring_1922 ->
+d_'8729''45'cong'737'_1968 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1968 v8
+du_'8729''45'cong'737'_1968 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1948 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_'8729''45'cong'737'_1968 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = coe du_'42''45'isMonoid_1550 (coe v2) in
+         (let v3 = coe du_'42''45'isMonoid_1570 (coe v2) in
           coe
             (let v4 = d_isSemigroup_696 (coe v3) in
              coe
                (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsIdempotentSemiring._.*-identity
-d_'42''45'identity_1950 ::
-  T_IsIdempotentSemiring_1922 ->
+d_'42''45'identity_1970 ::
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_1950 v0
+d_'42''45'identity_1970 v0
   = coe
-      d_'42''45'identity_1494
+      d_'42''45'identity_1514
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe v0)))
 -- Algebra.Structures.IsIdempotentSemiring._.identityʳ
-d_identity'691'_1952 ::
+d_identity'691'_1972 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9869,19 +9986,19 @@ d_identity'691'_1952 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-d_identity'691'_1952 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1952 v8
-du_identity'691'_1952 ::
-  T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-du_identity'691'_1952 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+d_identity'691'_1972 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1972 v8
+du_identity'691'_1972 ::
+  T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+du_identity'691'_1972 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (coe du_identity'691'_728 (coe du_'42''45'isMonoid_1550 (coe v2))))
+         (coe du_identity'691'_728 (coe du_'42''45'isMonoid_1570 (coe v2))))
 -- Algebra.Structures.IsIdempotentSemiring._.identityˡ
-d_identity'737'_1954 ::
+d_identity'737'_1974 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9889,57 +10006,57 @@ d_identity'737'_1954 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-d_identity'737'_1954 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1954 v8
-du_identity'737'_1954 ::
-  T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-du_identity'737'_1954 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+d_identity'737'_1974 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1974 v8
+du_identity'737'_1974 ::
+  T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+du_identity'737'_1974 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (coe du_identity'737'_726 (coe du_'42''45'isMonoid_1550 (coe v2))))
+         (coe du_identity'737'_726 (coe du_'42''45'isMonoid_1570 (coe v2))))
 -- Algebra.Structures.IsIdempotentSemiring._.*-isMagma
-d_'42''45'isMagma_1956 ::
+d_'42''45'isMagma_1976 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsMagma_176
-d_'42''45'isMagma_1956 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMagma_1956 v8
-du_'42''45'isMagma_1956 ::
-  T_IsIdempotentSemiring_1922 -> T_IsMagma_176
-du_'42''45'isMagma_1956 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsMagma_176
+d_'42''45'isMagma_1976 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMagma_1976 v8
+du_'42''45'isMagma_1976 ::
+  T_IsIdempotentSemiring_1942 -> T_IsMagma_176
+du_'42''45'isMagma_1976 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
       (coe
-         du_'42''45'isMagma_1546
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_'42''45'isMagma_1566
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring._.*-isMonoid
-d_'42''45'isMonoid_1958 ::
+d_'42''45'isMonoid_1978 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsMonoid_686
-d_'42''45'isMonoid_1958 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMonoid_1958 v8
-du_'42''45'isMonoid_1958 ::
-  T_IsIdempotentSemiring_1922 -> T_IsMonoid_686
-du_'42''45'isMonoid_1958 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsMonoid_686
+d_'42''45'isMonoid_1978 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMonoid_1978 v8
+du_'42''45'isMonoid_1978 ::
+  T_IsIdempotentSemiring_1942 -> T_IsMonoid_686
+du_'42''45'isMonoid_1978 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
       (coe
-         du_'42''45'isMonoid_1550
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_'42''45'isMonoid_1570
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring._.*-isSemigroup
-d_'42''45'isSemigroup_1960 ::
+d_'42''45'isSemigroup_1980 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -9947,22 +10064,22 @@ d_'42''45'isSemigroup_1960 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_1960 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isSemigroup_1960 v8
-du_'42''45'isSemigroup_1960 ::
-  T_IsIdempotentSemiring_1922 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_1960 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_1980 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isSemigroup_1980 v8
+du_'42''45'isSemigroup_1980 ::
+  T_IsIdempotentSemiring_1942 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_1980 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
       (coe
-         du_'42''45'isSemigroup_1548
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_'42''45'isSemigroup_1568
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring._.assoc
-d_assoc_1962 ::
-  T_IsIdempotentSemiring_1922 ->
+d_assoc_1982 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_1962 v0
+d_assoc_1982 v0
   = coe
       d_assoc_482
       (coe
@@ -9970,27 +10087,27 @@ d_assoc_1962 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
+               d_'43''45'isCommutativeMonoid_1508
                (coe
-                  d_isSemiringWithoutAnnihilatingZero_1584
-                  (coe d_isSemiring_1936 (coe v0))))))
+                  d_isSemiringWithoutAnnihilatingZero_1604
+                  (coe d_isSemiring_1956 (coe v0))))))
 -- Algebra.Structures.IsIdempotentSemiring._.comm
-d_comm_1964 ::
-  T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_1964 v0
+d_comm_1984 ::
+  T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny -> AgdaAny
+d_comm_1984 v0
   = coe
       d_comm_748
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
-            (coe d_isSemiring_1936 (coe v0))))
+            d_isSemiringWithoutAnnihilatingZero_1604
+            (coe d_isSemiring_1956 (coe v0))))
 -- Algebra.Structures.IsIdempotentSemiring._.∙-cong
-d_'8729''45'cong_1966 ::
-  T_IsIdempotentSemiring_1922 ->
+d_'8729''45'cong_1986 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_1966 v0
+d_'8729''45'cong_1986 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -10000,12 +10117,12 @@ d_'8729''45'cong_1966 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
+                  d_'43''45'isCommutativeMonoid_1508
                   (coe
-                     d_isSemiringWithoutAnnihilatingZero_1584
-                     (coe d_isSemiring_1936 (coe v0)))))))
+                     d_isSemiringWithoutAnnihilatingZero_1604
+                     (coe d_isSemiring_1956 (coe v0)))))))
 -- Algebra.Structures.IsIdempotentSemiring._.∙-congʳ
-d_'8729''45'cong'691'_1968 ::
+d_'8729''45'cong'691'_1988 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10014,19 +10131,19 @@ d_'8729''45'cong'691'_1968 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_1968 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_1968 v8
-du_'8729''45'cong'691'_1968 ::
-  T_IsIdempotentSemiring_1922 ->
+d_'8729''45'cong'691'_1988 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_1988 v8
+du_'8729''45'cong'691'_1988 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_1968 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_'8729''45'cong'691'_1988 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
@@ -10034,7 +10151,7 @@ du_'8729''45'cong'691'_1968 v0
                 coe
                   (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsIdempotentSemiring._.∙-congˡ
-d_'8729''45'cong'737'_1970 ::
+d_'8729''45'cong'737'_1990 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10043,19 +10160,19 @@ d_'8729''45'cong'737'_1970 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_1970 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_1970 v8
-du_'8729''45'cong'737'_1970 ::
-  T_IsIdempotentSemiring_1922 ->
+d_'8729''45'cong'737'_1990 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_1990 v8
+du_'8729''45'cong'737'_1990 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_1970 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_'8729''45'cong'737'_1990 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
@@ -10063,21 +10180,21 @@ du_'8729''45'cong'737'_1970 v0
                 coe
                   (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsIdempotentSemiring._.identity
-d_identity_1972 ::
-  T_IsIdempotentSemiring_1922 ->
+d_identity_1992 ::
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_1972 v0
+d_identity_1992 v0
   = coe
       d_identity_698
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
+            d_'43''45'isCommutativeMonoid_1508
             (coe
-               d_isSemiringWithoutAnnihilatingZero_1584
-               (coe d_isSemiring_1936 (coe v0)))))
+               d_isSemiringWithoutAnnihilatingZero_1604
+               (coe d_isSemiring_1956 (coe v0)))))
 -- Algebra.Structures.IsIdempotentSemiring._.identityʳ
-d_identity'691'_1974 ::
+d_identity'691'_1994 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10085,20 +10202,20 @@ d_identity'691'_1974 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-d_identity'691'_1974 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_1974 v8
-du_identity'691'_1974 ::
-  T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-du_identity'691'_1974 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+d_identity'691'_1994 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_1994 v8
+du_identity'691'_1994 ::
+  T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+du_identity'691'_1994 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe (coe du_identity'691'_728 (coe d_isMonoid_746 (coe v3)))))
 -- Algebra.Structures.IsIdempotentSemiring._.identityˡ
-d_identity'737'_1976 ::
+d_identity'737'_1996 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10106,20 +10223,20 @@ d_identity'737'_1976 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-d_identity'737'_1976 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_1976 v8
-du_identity'737'_1976 ::
-  T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-du_identity'737'_1976 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+d_identity'737'_1996 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_1996 v8
+du_identity'737'_1996 ::
+  T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+du_identity'737'_1996 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe (coe du_identity'737'_726 (coe d_isMonoid_746 (coe v3)))))
 -- Algebra.Structures.IsIdempotentSemiring._.isCommutativeMagma
-d_isCommutativeMagma_1978 ::
+d_isCommutativeMagma_1998 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10127,32 +10244,32 @@ d_isCommutativeMagma_1978 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_1978 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMagma_1978 v8
-du_isCommutativeMagma_1978 ::
-  T_IsIdempotentSemiring_1922 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_1978 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_1998 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMagma_1998 v8
+du_isCommutativeMagma_1998 ::
+  T_IsIdempotentSemiring_1942 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_1998 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (coe
                du_isCommutativeMagma_586
                (coe du_isCommutativeSemigroup_786 (coe v3)))))
 -- Algebra.Structures.IsIdempotentSemiring._.+-isCommutativeMonoid
-d_'43''45'isCommutativeMonoid_1980 ::
-  T_IsIdempotentSemiring_1922 -> T_IsCommutativeMonoid_736
-d_'43''45'isCommutativeMonoid_1980 v0
+d_'43''45'isCommutativeMonoid_2000 ::
+  T_IsIdempotentSemiring_1942 -> T_IsCommutativeMonoid_736
+d_'43''45'isCommutativeMonoid_2000 v0
   = coe
-      d_'43''45'isCommutativeMonoid_1488
+      d_'43''45'isCommutativeMonoid_1508
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe v0)))
 -- Algebra.Structures.IsIdempotentSemiring._.isCommutativeSemigroup
-d_isCommutativeSemigroup_1982 ::
+d_isCommutativeSemigroup_2002 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10161,22 +10278,22 @@ d_isCommutativeSemigroup_1982 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_1982 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeSemigroup_1982 v8
-du_isCommutativeSemigroup_1982 ::
-  T_IsIdempotentSemiring_1922 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_1982 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  T_IsIdempotentSemiring_1942 -> T_IsCommutativeSemigroup_548
+d_isCommutativeSemigroup_2002 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeSemigroup_2002 v8
+du_isCommutativeSemigroup_2002 ::
+  T_IsIdempotentSemiring_1942 -> T_IsCommutativeSemigroup_548
+du_isCommutativeSemigroup_2002 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
          (coe
             du_isCommutativeSemigroup_786
-            (coe d_'43''45'isCommutativeMonoid_1488 (coe v2))))
+            (coe d_'43''45'isCommutativeMonoid_1508 (coe v2))))
 -- Algebra.Structures.IsIdempotentSemiring._.isMagma
-d_isMagma_1984 :: T_IsIdempotentSemiring_1922 -> T_IsMagma_176
-d_isMagma_1984 v0
+d_isMagma_2004 :: T_IsIdempotentSemiring_1942 -> T_IsMagma_176
+d_isMagma_2004 v0
   = coe
       d_isMagma_480
       (coe
@@ -10184,35 +10301,35 @@ d_isMagma_1984 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
+               d_'43''45'isCommutativeMonoid_1508
                (coe
-                  d_isSemiringWithoutAnnihilatingZero_1584
-                  (coe d_isSemiring_1936 (coe v0))))))
+                  d_isSemiringWithoutAnnihilatingZero_1604
+                  (coe d_isSemiring_1956 (coe v0))))))
 -- Algebra.Structures.IsIdempotentSemiring._.isMonoid
-d_isMonoid_1986 :: T_IsIdempotentSemiring_1922 -> T_IsMonoid_686
-d_isMonoid_1986 v0
+d_isMonoid_2006 :: T_IsIdempotentSemiring_1942 -> T_IsMonoid_686
+d_isMonoid_2006 v0
   = coe
       d_isMonoid_746
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
-            (coe d_isSemiring_1936 (coe v0))))
+            d_isSemiringWithoutAnnihilatingZero_1604
+            (coe d_isSemiring_1956 (coe v0))))
 -- Algebra.Structures.IsIdempotentSemiring._.isSemigroup
-d_isSemigroup_1988 ::
-  T_IsIdempotentSemiring_1922 -> T_IsSemigroup_472
-d_isSemigroup_1988 v0
+d_isSemigroup_2008 ::
+  T_IsIdempotentSemiring_1942 -> T_IsSemigroup_472
+d_isSemigroup_2008 v0
   = coe
       d_isSemigroup_696
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
+            d_'43''45'isCommutativeMonoid_1508
             (coe
-               d_isSemiringWithoutAnnihilatingZero_1584
-               (coe d_isSemiring_1936 (coe v0)))))
+               d_isSemiringWithoutAnnihilatingZero_1604
+               (coe d_isSemiring_1956 (coe v0)))))
 -- Algebra.Structures.IsIdempotentSemiring._.isUnitalMagma
-d_isUnitalMagma_1990 ::
+d_isUnitalMagma_2010 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10220,30 +10337,30 @@ d_isUnitalMagma_1990 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsUnitalMagma_642
-d_isUnitalMagma_1990 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isUnitalMagma_1990 v8
-du_isUnitalMagma_1990 ::
-  T_IsIdempotentSemiring_1922 -> T_IsUnitalMagma_642
-du_isUnitalMagma_1990 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsUnitalMagma_642
+d_isUnitalMagma_2010 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isUnitalMagma_2010 v8
+du_isUnitalMagma_2010 ::
+  T_IsIdempotentSemiring_1942 -> T_IsUnitalMagma_642
+du_isUnitalMagma_2010 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe (coe du_isUnitalMagma_730 (coe d_isMonoid_746 (coe v3)))))
 -- Algebra.Structures.IsIdempotentSemiring._.distrib
-d_distrib_1992 ::
-  T_IsIdempotentSemiring_1922 ->
+d_distrib_2012 ::
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_1992 v0
+d_distrib_2012 v0
   = coe
-      d_distrib_1496
+      d_distrib_1516
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe v0)))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe v0)))
 -- Algebra.Structures.IsIdempotentSemiring._.distribʳ
-d_distrib'691'_1994 ::
+d_distrib'691'_2014 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10252,21 +10369,21 @@ d_distrib'691'_1994 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_1994 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'691'_1994 v8
-du_distrib'691'_1994 ::
-  T_IsIdempotentSemiring_1922 ->
+d_distrib'691'_2014 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'691'_2014 v8
+du_distrib'691'_2014 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_1994 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_distrib'691'_2014 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
       (coe
-         du_distrib'691'_1500
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_distrib'691'_1520
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring._.distribˡ
-d_distrib'737'_1996 ::
+d_distrib'737'_2016 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10275,24 +10392,24 @@ d_distrib'737'_1996 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_1996 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'737'_1996 v8
-du_distrib'737'_1996 ::
-  T_IsIdempotentSemiring_1922 ->
+d_distrib'737'_2016 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'737'_2016 v8
+du_distrib'737'_2016 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_1996 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_distrib'737'_2016 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
       (coe
-         du_distrib'737'_1498
-         (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v1)))
+         du_distrib'737'_1518
+         (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring._.isEquivalence
-d_isEquivalence_1998 ::
-  T_IsIdempotentSemiring_1922 ->
+d_isEquivalence_2018 ::
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_1998 v0
+d_isEquivalence_2018 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -10302,12 +10419,12 @@ d_isEquivalence_1998 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
+                  d_'43''45'isCommutativeMonoid_1508
                   (coe
-                     d_isSemiringWithoutAnnihilatingZero_1584
-                     (coe d_isSemiring_1936 (coe v0)))))))
+                     d_isSemiringWithoutAnnihilatingZero_1604
+                     (coe d_isSemiring_1956 (coe v0)))))))
 -- Algebra.Structures.IsIdempotentSemiring._.isNearSemiring
-d_isNearSemiring_2000 ::
+d_isNearSemiring_2020 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10315,18 +10432,18 @@ d_isNearSemiring_2000 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsNearSemiring_1218
-d_isNearSemiring_2000 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isNearSemiring_2000 v8
-du_isNearSemiring_2000 ::
-  T_IsIdempotentSemiring_1922 -> T_IsNearSemiring_1218
-du_isNearSemiring_2000 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsNearSemiring_1218
+d_isNearSemiring_2020 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isNearSemiring_2020 v8
+du_isNearSemiring_2020 ::
+  T_IsIdempotentSemiring_1942 -> T_IsNearSemiring_1218
+du_isNearSemiring_2020 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
       (coe
-         du_isNearSemiring_1374 (coe du_isSemiringWithoutOne_1660 (coe v1)))
+         du_isNearSemiring_1384 (coe du_isSemiringWithoutOne_1680 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring._.isPartialEquivalence
-d_isPartialEquivalence_2002 ::
+d_isPartialEquivalence_2022 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10335,19 +10452,19 @@ d_isPartialEquivalence_2002 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2002 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_2002 v8
-du_isPartialEquivalence_2002 ::
-  T_IsIdempotentSemiring_1922 ->
+d_isPartialEquivalence_2022 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_2022 v8
+du_isPartialEquivalence_2022 ::
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2002 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_isPartialEquivalence_2022 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
@@ -10359,15 +10476,15 @@ du_isPartialEquivalence_2002 v0
                         MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                         (coe d_isEquivalence_184 (coe v6))))))))
 -- Algebra.Structures.IsIdempotentSemiring._.isSemiringWithoutAnnihilatingZero
-d_isSemiringWithoutAnnihilatingZero_2004 ::
-  T_IsIdempotentSemiring_1922 ->
-  T_IsSemiringWithoutAnnihilatingZero_1468
-d_isSemiringWithoutAnnihilatingZero_2004 v0
+d_isSemiringWithoutAnnihilatingZero_2024 ::
+  T_IsIdempotentSemiring_1942 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488
+d_isSemiringWithoutAnnihilatingZero_2024 v0
   = coe
-      d_isSemiringWithoutAnnihilatingZero_1584
-      (coe d_isSemiring_1936 (coe v0))
+      d_isSemiringWithoutAnnihilatingZero_1604
+      (coe d_isSemiring_1956 (coe v0))
 -- Algebra.Structures.IsIdempotentSemiring._.isSemiringWithoutOne
-d_isSemiringWithoutOne_2006 ::
+d_isSemiringWithoutOne_2026 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10376,16 +10493,16 @@ d_isSemiringWithoutOne_2006 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 -> T_IsSemiringWithoutOne_1298
-d_isSemiringWithoutOne_2006 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isSemiringWithoutOne_2006 v8
-du_isSemiringWithoutOne_2006 ::
-  T_IsIdempotentSemiring_1922 -> T_IsSemiringWithoutOne_1298
-du_isSemiringWithoutOne_2006 v0
-  = coe du_isSemiringWithoutOne_1660 (coe d_isSemiring_1936 (coe v0))
+  T_IsIdempotentSemiring_1942 -> T_IsSemiringWithoutOne_1298
+d_isSemiringWithoutOne_2026 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isSemiringWithoutOne_2026 v8
+du_isSemiringWithoutOne_2026 ::
+  T_IsIdempotentSemiring_1942 -> T_IsSemiringWithoutOne_1298
+du_isSemiringWithoutOne_2026 v0
+  = coe du_isSemiringWithoutOne_1680 (coe d_isSemiring_1956 (coe v0))
 -- Algebra.Structures.IsIdempotentSemiring._.refl
-d_refl_2008 :: T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-d_refl_2008 v0
+d_refl_2028 :: T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+d_refl_2028 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -10397,12 +10514,12 @@ d_refl_2008 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
-                        (coe d_isSemiring_1936 (coe v0))))))))
+                        d_isSemiringWithoutAnnihilatingZero_1604
+                        (coe d_isSemiring_1956 (coe v0))))))))
 -- Algebra.Structures.IsIdempotentSemiring._.reflexive
-d_reflexive_2010 ::
+d_reflexive_2030 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10411,23 +10528,23 @@ d_reflexive_2010 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2010 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_2010 v8
-du_reflexive_2010 ::
-  T_IsIdempotentSemiring_1922 ->
+d_reflexive_2030 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_2030 v8
+du_reflexive_2030 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2010 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_reflexive_2030 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
@@ -10440,7 +10557,7 @@ du_reflexive_2010 v0
                           MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                           (coe d_isEquivalence_184 (coe v6)) v7))))))
 -- Algebra.Structures.IsIdempotentSemiring._.setoid
-d_setoid_2012 ::
+d_setoid_2032 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10449,29 +10566,29 @@ d_setoid_2012 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 ->
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2012 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_2012 v8
-du_setoid_2012 ::
-  T_IsIdempotentSemiring_1922 ->
+d_setoid_2032 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_2032 v8
+du_setoid_2032 ::
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2012 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+du_setoid_2032 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (let v2 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v1) in
+      (let v2 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v1) in
        coe
-         (let v3 = d_'43''45'isCommutativeMonoid_1488 (coe v2) in
+         (let v3 = d_'43''45'isCommutativeMonoid_1508 (coe v2) in
           coe
             (let v4 = d_isMonoid_746 (coe v3) in
              coe
                (let v5 = d_isSemigroup_696 (coe v4) in
                 coe (coe du_setoid_200 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsIdempotentSemiring._.sym
-d_sym_2014 ::
-  T_IsIdempotentSemiring_1922 ->
+d_sym_2034 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2014 v0
+d_sym_2034 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -10483,15 +10600,15 @@ d_sym_2014 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
-                        (coe d_isSemiring_1936 (coe v0))))))))
+                        d_isSemiringWithoutAnnihilatingZero_1604
+                        (coe d_isSemiring_1956 (coe v0))))))))
 -- Algebra.Structures.IsIdempotentSemiring._.trans
-d_trans_2016 ::
-  T_IsIdempotentSemiring_1922 ->
+d_trans_2036 ::
+  T_IsIdempotentSemiring_1942 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2016 v0
+d_trans_2036 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -10503,17 +10620,17 @@ d_trans_2016 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
-                        (coe d_isSemiring_1936 (coe v0))))))))
+                        d_isSemiringWithoutAnnihilatingZero_1604
+                        (coe d_isSemiring_1956 (coe v0))))))))
 -- Algebra.Structures.IsIdempotentSemiring._.zero
-d_zero_2018 ::
-  T_IsIdempotentSemiring_1922 ->
+d_zero_2038 ::
+  T_IsIdempotentSemiring_1942 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_2018 v0 = coe d_zero_1586 (coe d_isSemiring_1936 (coe v0))
+d_zero_2038 v0 = coe d_zero_1606 (coe d_isSemiring_1956 (coe v0))
 -- Algebra.Structures.IsIdempotentSemiring._.zeroʳ
-d_zero'691'_2020 ::
+d_zero'691'_2040 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10521,17 +10638,17 @@ d_zero'691'_2020 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-d_zero'691'_2020 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'691'_2020 v8
-du_zero'691'_2020 ::
-  T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-du_zero'691'_2020 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+d_zero'691'_2040 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'691'_2040 v8
+du_zero'691'_2040 ::
+  T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+du_zero'691'_2040 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (coe du_zero'691'_1372 (coe du_isSemiringWithoutOne_1660 (coe v1)))
+      (coe du_zero'691'_1382 (coe du_isSemiringWithoutOne_1680 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring._.zeroˡ
-d_zero'737'_2022 ::
+d_zero'737'_2042 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10539,17 +10656,17 @@ d_zero'737'_2022 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-d_zero'737'_2022 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'737'_2022 v8
-du_zero'737'_2022 ::
-  T_IsIdempotentSemiring_1922 -> AgdaAny -> AgdaAny
-du_zero'737'_2022 v0
-  = let v1 = d_isSemiring_1936 (coe v0) in
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+d_zero'737'_2042 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'737'_2042 v8
+du_zero'737'_2042 ::
+  T_IsIdempotentSemiring_1942 -> AgdaAny -> AgdaAny
+du_zero'737'_2042 v0
+  = let v1 = d_isSemiring_1956 (coe v0) in
     coe
-      (coe du_zero'737'_1370 (coe du_isSemiringWithoutOne_1660 (coe v1)))
+      (coe du_zero'737'_1380 (coe du_isSemiringWithoutOne_1680 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring.+-isIdempotentCommutativeMonoid
-d_'43''45'isIdempotentCommutativeMonoid_2024 ::
+d_'43''45'isIdempotentCommutativeMonoid_2044 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10558,39 +10675,39 @@ d_'43''45'isIdempotentCommutativeMonoid_2024 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsIdempotentSemiring_1922 -> T_IsIdempotentCommutativeMonoid_852
-d_'43''45'isIdempotentCommutativeMonoid_2024 ~v0 ~v1 ~v2 ~v3 ~v4
+  T_IsIdempotentSemiring_1942 -> T_IsIdempotentCommutativeMonoid_852
+d_'43''45'isIdempotentCommutativeMonoid_2044 ~v0 ~v1 ~v2 ~v3 ~v4
                                              ~v5 ~v6 ~v7 v8
-  = du_'43''45'isIdempotentCommutativeMonoid_2024 v8
-du_'43''45'isIdempotentCommutativeMonoid_2024 ::
-  T_IsIdempotentSemiring_1922 -> T_IsIdempotentCommutativeMonoid_852
-du_'43''45'isIdempotentCommutativeMonoid_2024 v0
+  = du_'43''45'isIdempotentCommutativeMonoid_2044 v8
+du_'43''45'isIdempotentCommutativeMonoid_2044 ::
+  T_IsIdempotentSemiring_1942 -> T_IsIdempotentCommutativeMonoid_852
+du_'43''45'isIdempotentCommutativeMonoid_2044 v0
   = coe
       C_IsIdempotentCommutativeMonoid'46'constructor_20685
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
-            (coe d_isSemiring_1936 (coe v0))))
-      (coe d_'43''45'idem_1938 (coe v0))
+            d_isSemiringWithoutAnnihilatingZero_1604
+            (coe d_isSemiring_1956 (coe v0))))
+      (coe d_'43''45'idem_1958 (coe v0))
 -- Algebra.Structures.IsIdempotentSemiring._.isBand
-d_isBand_2028 ::
+d_isBand_2048 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsBand_508
-d_isBand_2028 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isBand_2028 v8
-du_isBand_2028 :: T_IsIdempotentSemiring_1922 -> T_IsBand_508
-du_isBand_2028 v0
+  AgdaAny -> AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsBand_508
+d_isBand_2048 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isBand_2048 v8
+du_isBand_2048 :: T_IsIdempotentSemiring_1942 -> T_IsBand_508
+du_isBand_2048 v0
   = let v1
-          = coe du_'43''45'isIdempotentCommutativeMonoid_2024 (coe v0) in
+          = coe du_'43''45'isIdempotentCommutativeMonoid_2044 (coe v0) in
     coe (coe du_isBand_846 (coe du_isIdempotentMonoid_910 (coe v1)))
 -- Algebra.Structures.IsIdempotentSemiring._.isCommutativeBand
-d_isCommutativeBand_2030 ::
+d_isCommutativeBand_2050 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10598,17 +10715,17 @@ d_isCommutativeBand_2030 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsCommutativeBand_590
-d_isCommutativeBand_2030 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeBand_2030 v8
-du_isCommutativeBand_2030 ::
-  T_IsIdempotentSemiring_1922 -> T_IsCommutativeBand_590
-du_isCommutativeBand_2030 v0
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsCommutativeBand_590
+d_isCommutativeBand_2050 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeBand_2050 v8
+du_isCommutativeBand_2050 ::
+  T_IsIdempotentSemiring_1942 -> T_IsCommutativeBand_590
+du_isCommutativeBand_2050 v0
   = coe
       du_isCommutativeBand_916
-      (coe du_'43''45'isIdempotentCommutativeMonoid_2024 (coe v0))
+      (coe du_'43''45'isIdempotentCommutativeMonoid_2044 (coe v0))
 -- Algebra.Structures.IsIdempotentSemiring._.isIdempotentMonoid
-d_isIdempotentMonoid_2032 ::
+d_isIdempotentMonoid_2052 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10616,64 +10733,64 @@ d_isIdempotentMonoid_2032 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsIdempotentSemiring_1922 -> T_IsIdempotentMonoid_796
-d_isIdempotentMonoid_2032 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isIdempotentMonoid_2032 v8
-du_isIdempotentMonoid_2032 ::
-  T_IsIdempotentSemiring_1922 -> T_IsIdempotentMonoid_796
-du_isIdempotentMonoid_2032 v0
+  AgdaAny -> T_IsIdempotentSemiring_1942 -> T_IsIdempotentMonoid_796
+d_isIdempotentMonoid_2052 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isIdempotentMonoid_2052 v8
+du_isIdempotentMonoid_2052 ::
+  T_IsIdempotentSemiring_1942 -> T_IsIdempotentMonoid_796
+du_isIdempotentMonoid_2052 v0
   = coe
       du_isIdempotentMonoid_910
-      (coe du_'43''45'isIdempotentCommutativeMonoid_2024 (coe v0))
+      (coe du_'43''45'isIdempotentCommutativeMonoid_2044 (coe v0))
 -- Algebra.Structures.IsKleeneAlgebra
-d_IsKleeneAlgebra_2044 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
-data T_IsKleeneAlgebra_2044
-  = C_IsKleeneAlgebra'46'constructor_63875 T_IsIdempotentSemiring_1922
+d_IsKleeneAlgebra_2064 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
+data T_IsKleeneAlgebra_2064
+  = C_IsKleeneAlgebra'46'constructor_65475 T_IsIdempotentSemiring_1942
                                            MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                            MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsKleeneAlgebra.isIdempotentSemiring
-d_isIdempotentSemiring_2062 ::
-  T_IsKleeneAlgebra_2044 -> T_IsIdempotentSemiring_1922
-d_isIdempotentSemiring_2062 v0
+d_isIdempotentSemiring_2082 ::
+  T_IsKleeneAlgebra_2064 -> T_IsIdempotentSemiring_1942
+d_isIdempotentSemiring_2082 v0
   = case coe v0 of
-      C_IsKleeneAlgebra'46'constructor_63875 v1 v2 v3 -> coe v1
+      C_IsKleeneAlgebra'46'constructor_65475 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsKleeneAlgebra.starExpansive
-d_starExpansive_2064 ::
-  T_IsKleeneAlgebra_2044 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_starExpansive_2064 v0
+d_starExpansive_2084 ::
+  T_IsKleeneAlgebra_2064 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_starExpansive_2084 v0
   = case coe v0 of
-      C_IsKleeneAlgebra'46'constructor_63875 v1 v2 v3 -> coe v2
+      C_IsKleeneAlgebra'46'constructor_65475 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsKleeneAlgebra.starDestructive
-d_starDestructive_2066 ::
-  T_IsKleeneAlgebra_2044 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_starDestructive_2066 v0
+d_starDestructive_2086 ::
+  T_IsKleeneAlgebra_2064 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_starDestructive_2086 v0
   = case coe v0 of
-      C_IsKleeneAlgebra'46'constructor_63875 v1 v2 v3 -> coe v3
+      C_IsKleeneAlgebra'46'constructor_65475 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsKleeneAlgebra._.*-assoc
-d_'42''45'assoc_2070 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_2070 v0
+d_'42''45'assoc_2090 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'42''45'assoc_2090 v0
   = coe
-      d_'42''45'assoc_1492
+      d_'42''45'assoc_1512
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))
 -- Algebra.Structures.IsKleeneAlgebra._.*-cong
-d_'42''45'cong_2072 ::
-  T_IsKleeneAlgebra_2044 ->
+d_'42''45'cong_2092 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_2072 v0
+d_'42''45'cong_2092 v0
   = coe
-      d_'42''45'cong_1490
+      d_'42''45'cong_1510
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))
 -- Algebra.Structures.IsKleeneAlgebra._.∙-congʳ
-d_'8729''45'cong'691'_2074 ::
+d_'8729''45'cong'691'_2094 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10683,27 +10800,27 @@ d_'8729''45'cong'691'_2074 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2074 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2074 v9
-du_'8729''45'cong'691'_2074 ::
-  T_IsKleeneAlgebra_2044 ->
+d_'8729''45'cong'691'_2094 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'691'_2094 v9
+du_'8729''45'cong'691'_2094 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2074 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+du_'8729''45'cong'691'_2094 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = coe du_'42''45'isMonoid_1550 (coe v3) in
+            (let v4 = coe du_'42''45'isMonoid_1570 (coe v3) in
              coe
                (let v5 = d_isSemigroup_696 (coe v4) in
                 coe
                   (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsKleeneAlgebra._.∙-congˡ
-d_'8729''45'cong'737'_2076 ::
+d_'8729''45'cong'737'_2096 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10713,36 +10830,36 @@ d_'8729''45'cong'737'_2076 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2076 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2076 v9
-du_'8729''45'cong'737'_2076 ::
-  T_IsKleeneAlgebra_2044 ->
+d_'8729''45'cong'737'_2096 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'737'_2096 v9
+du_'8729''45'cong'737'_2096 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2076 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+du_'8729''45'cong'737'_2096 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = coe du_'42''45'isMonoid_1550 (coe v3) in
+            (let v4 = coe du_'42''45'isMonoid_1570 (coe v3) in
              coe
                (let v5 = d_isSemigroup_696 (coe v4) in
                 coe
                   (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsKleeneAlgebra._.*-identity
-d_'42''45'identity_2078 ::
-  T_IsKleeneAlgebra_2044 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_2078 v0
+d_'42''45'identity_2098 ::
+  T_IsKleeneAlgebra_2064 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'42''45'identity_2098 v0
   = coe
-      d_'42''45'identity_1494
+      d_'42''45'identity_1514
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))
 -- Algebra.Structures.IsKleeneAlgebra._.identityʳ
-d_identity'691'_2080 ::
+d_identity'691'_2100 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10750,22 +10867,22 @@ d_identity'691'_2080 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_identity'691'_2080 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2080 v9
-du_identity'691'_2080 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-du_identity'691'_2080 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_identity'691'_2100 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'691'_2100 v9
+du_identity'691'_2100 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+du_identity'691'_2100 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
             (coe
-               du_identity'691'_728 (coe du_'42''45'isMonoid_1550 (coe v3)))))
+               du_identity'691'_728 (coe du_'42''45'isMonoid_1570 (coe v3)))))
 -- Algebra.Structures.IsKleeneAlgebra._.identityˡ
-d_identity'737'_2082 ::
+d_identity'737'_2102 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10773,22 +10890,22 @@ d_identity'737'_2082 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_identity'737'_2082 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2082 v9
-du_identity'737'_2082 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-du_identity'737'_2082 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_identity'737'_2102 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'737'_2102 v9
+du_identity'737'_2102 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+du_identity'737'_2102 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
             (coe
-               du_identity'737'_726 (coe du_'42''45'isMonoid_1550 (coe v3)))))
+               du_identity'737'_726 (coe du_'42''45'isMonoid_1570 (coe v3)))))
 -- Algebra.Structures.IsKleeneAlgebra._.*-isMagma
-d_'42''45'isMagma_2084 ::
+d_'42''45'isMagma_2104 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10796,20 +10913,20 @@ d_'42''45'isMagma_2084 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsMagma_176
-d_'42''45'isMagma_2084 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMagma_2084 v9
-du_'42''45'isMagma_2084 :: T_IsKleeneAlgebra_2044 -> T_IsMagma_176
-du_'42''45'isMagma_2084 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsMagma_176
+d_'42''45'isMagma_2104 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'isMagma_2104 v9
+du_'42''45'isMagma_2104 :: T_IsKleeneAlgebra_2064 -> T_IsMagma_176
+du_'42''45'isMagma_2104 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
          (coe
-            du_'42''45'isMagma_1546
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_'42''45'isMagma_1566
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra._.*-isMonoid
-d_'42''45'isMonoid_2086 ::
+d_'42''45'isMonoid_2106 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10817,21 +10934,21 @@ d_'42''45'isMonoid_2086 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsMonoid_686
-d_'42''45'isMonoid_2086 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMonoid_2086 v9
-du_'42''45'isMonoid_2086 ::
-  T_IsKleeneAlgebra_2044 -> T_IsMonoid_686
-du_'42''45'isMonoid_2086 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsMonoid_686
+d_'42''45'isMonoid_2106 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'isMonoid_2106 v9
+du_'42''45'isMonoid_2106 ::
+  T_IsKleeneAlgebra_2064 -> T_IsMonoid_686
+du_'42''45'isMonoid_2106 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
          (coe
-            du_'42''45'isMonoid_1550
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_'42''45'isMonoid_1570
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra._.*-isSemigroup
-d_'42''45'isSemigroup_2088 ::
+d_'42''45'isSemigroup_2108 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10839,23 +10956,23 @@ d_'42''45'isSemigroup_2088 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_2088 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isSemigroup_2088 v9
-du_'42''45'isSemigroup_2088 ::
-  T_IsKleeneAlgebra_2044 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_2088 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_2108 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'isSemigroup_2108 v9
+du_'42''45'isSemigroup_2108 ::
+  T_IsKleeneAlgebra_2064 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_2108 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
          (coe
-            du_'42''45'isSemigroup_1548
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_'42''45'isSemigroup_1568
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra._.assoc
-d_assoc_2090 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_2090 v0
+d_assoc_2110 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_2110 v0
   = coe
       d_assoc_482
       (coe
@@ -10863,29 +10980,29 @@ d_assoc_2090 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
+               d_'43''45'isCommutativeMonoid_1508
                (coe
-                  d_isSemiringWithoutAnnihilatingZero_1584
+                  d_isSemiringWithoutAnnihilatingZero_1604
                   (coe
-                     d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))))))
+                     d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))))))
 -- Algebra.Structures.IsKleeneAlgebra._.comm
-d_comm_2092 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_2092 v0
+d_comm_2112 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny -> AgdaAny
+d_comm_2112 v0
   = coe
       d_comm_748
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
+            d_isSemiringWithoutAnnihilatingZero_1604
             (coe
-               d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))))
+               d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))))
 -- Algebra.Structures.IsKleeneAlgebra._.∙-cong
-d_'8729''45'cong_2094 ::
-  T_IsKleeneAlgebra_2044 ->
+d_'8729''45'cong_2114 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_2094 v0
+d_'8729''45'cong_2114 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -10895,13 +11012,13 @@ d_'8729''45'cong_2094 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
+                  d_'43''45'isCommutativeMonoid_1508
                   (coe
-                     d_isSemiringWithoutAnnihilatingZero_1584
+                     d_isSemiringWithoutAnnihilatingZero_1604
                      (coe
-                        d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))))))
+                        d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.∙-congʳ
-d_'8729''45'cong'691'_2096 ::
+d_'8729''45'cong'691'_2116 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10911,21 +11028,21 @@ d_'8729''45'cong'691'_2096 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2096 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2096 v9
-du_'8729''45'cong'691'_2096 ::
-  T_IsKleeneAlgebra_2044 ->
+d_'8729''45'cong'691'_2116 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'691'_2116 v9
+du_'8729''45'cong'691'_2116 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2096 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+du_'8729''45'cong'691'_2116 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -10933,7 +11050,7 @@ du_'8729''45'cong'691'_2096 v0
                    coe
                      (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v6))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.∙-congˡ
-d_'8729''45'cong'737'_2098 ::
+d_'8729''45'cong'737'_2118 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10943,21 +11060,21 @@ d_'8729''45'cong'737'_2098 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2098 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2098 v9
-du_'8729''45'cong'737'_2098 ::
-  T_IsKleeneAlgebra_2044 ->
+d_'8729''45'cong'737'_2118 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'737'_2118 v9
+du_'8729''45'cong'737'_2118 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2098 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+du_'8729''45'cong'737'_2118 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -10965,26 +11082,26 @@ du_'8729''45'cong'737'_2098 v0
                    coe
                      (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v6))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.+-idem
-d_'43''45'idem_2100 :: T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_'43''45'idem_2100 v0
+d_'43''45'idem_2120 :: T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_'43''45'idem_2120 v0
   = coe
-      d_'43''45'idem_1938 (coe d_isIdempotentSemiring_2062 (coe v0))
+      d_'43''45'idem_1958 (coe d_isIdempotentSemiring_2082 (coe v0))
 -- Algebra.Structures.IsKleeneAlgebra._.identity
-d_identity_2102 ::
-  T_IsKleeneAlgebra_2044 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_2102 v0
+d_identity_2122 ::
+  T_IsKleeneAlgebra_2064 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_2122 v0
   = coe
       d_identity_698
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
+            d_'43''45'isCommutativeMonoid_1508
             (coe
-               d_isSemiringWithoutAnnihilatingZero_1584
+               d_isSemiringWithoutAnnihilatingZero_1604
                (coe
-                  d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))))
+                  d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))))
 -- Algebra.Structures.IsKleeneAlgebra._.identityʳ
-d_identity'691'_2104 ::
+d_identity'691'_2124 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -10992,22 +11109,22 @@ d_identity'691'_2104 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_identity'691'_2104 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2104 v9
-du_identity'691'_2104 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-du_identity'691'_2104 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_identity'691'_2124 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'691'_2124 v9
+du_identity'691'_2124 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+du_identity'691'_2124 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe (coe du_identity'691'_728 (coe d_isMonoid_746 (coe v4))))))
 -- Algebra.Structures.IsKleeneAlgebra._.identityˡ
-d_identity'737'_2106 ::
+d_identity'737'_2126 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11015,22 +11132,22 @@ d_identity'737'_2106 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_identity'737'_2106 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2106 v9
-du_identity'737'_2106 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-du_identity'737'_2106 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_identity'737'_2126 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'737'_2126 v9
+du_identity'737'_2126 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+du_identity'737'_2126 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe (coe du_identity'737'_726 (coe d_isMonoid_746 (coe v4))))))
 -- Algebra.Structures.IsKleeneAlgebra._.isBand
-d_isBand_2108 ::
+d_isBand_2128 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11038,18 +11155,18 @@ d_isBand_2108 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsBand_508
-d_isBand_2108 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isBand_2108 v9
-du_isBand_2108 :: T_IsKleeneAlgebra_2044 -> T_IsBand_508
-du_isBand_2108 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsBand_508
+d_isBand_2128 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isBand_2128 v9
+du_isBand_2128 :: T_IsKleeneAlgebra_2064 -> T_IsBand_508
+du_isBand_2128 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
       (let v2
-             = coe du_'43''45'isIdempotentCommutativeMonoid_2024 (coe v1) in
+             = coe du_'43''45'isIdempotentCommutativeMonoid_2044 (coe v1) in
        coe (coe du_isBand_846 (coe du_isIdempotentMonoid_910 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra._.isCommutativeBand
-d_isCommutativeBand_2110 ::
+d_isCommutativeBand_2130 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11058,19 +11175,19 @@ d_isCommutativeBand_2110 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsCommutativeBand_590
-d_isCommutativeBand_2110 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isCommutativeBand_2110 v9
-du_isCommutativeBand_2110 ::
-  T_IsKleeneAlgebra_2044 -> T_IsCommutativeBand_590
-du_isCommutativeBand_2110 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsCommutativeBand_590
+d_isCommutativeBand_2130 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isCommutativeBand_2130 v9
+du_isCommutativeBand_2130 ::
+  T_IsKleeneAlgebra_2064 -> T_IsCommutativeBand_590
+du_isCommutativeBand_2130 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
       (coe
          du_isCommutativeBand_916
-         (coe du_'43''45'isIdempotentCommutativeMonoid_2024 (coe v1)))
+         (coe du_'43''45'isIdempotentCommutativeMonoid_2044 (coe v1)))
 -- Algebra.Structures.IsKleeneAlgebra._.isCommutativeMagma
-d_isCommutativeMagma_2112 ::
+d_isCommutativeMagma_2132 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11079,34 +11196,34 @@ d_isCommutativeMagma_2112 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_2112 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isCommutativeMagma_2112 v9
-du_isCommutativeMagma_2112 ::
-  T_IsKleeneAlgebra_2044 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_2112 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_2132 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isCommutativeMagma_2132 v9
+du_isCommutativeMagma_2132 ::
+  T_IsKleeneAlgebra_2064 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_2132 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (coe
                   du_isCommutativeMagma_586
                   (coe du_isCommutativeSemigroup_786 (coe v4))))))
 -- Algebra.Structures.IsKleeneAlgebra._.+-isCommutativeMonoid
-d_'43''45'isCommutativeMonoid_2114 ::
-  T_IsKleeneAlgebra_2044 -> T_IsCommutativeMonoid_736
-d_'43''45'isCommutativeMonoid_2114 v0
+d_'43''45'isCommutativeMonoid_2134 ::
+  T_IsKleeneAlgebra_2064 -> T_IsCommutativeMonoid_736
+d_'43''45'isCommutativeMonoid_2134 v0
   = coe
-      d_'43''45'isCommutativeMonoid_1488
+      d_'43''45'isCommutativeMonoid_1508
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))
 -- Algebra.Structures.IsKleeneAlgebra._.isCommutativeSemigroup
-d_isCommutativeSemigroup_2116 ::
+d_isCommutativeSemigroup_2136 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11115,24 +11232,24 @@ d_isCommutativeSemigroup_2116 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_2116 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+  AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsCommutativeSemigroup_548
+d_isCommutativeSemigroup_2136 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                               v9
-  = du_isCommutativeSemigroup_2116 v9
-du_isCommutativeSemigroup_2116 ::
-  T_IsKleeneAlgebra_2044 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_2116 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  = du_isCommutativeSemigroup_2136 v9
+du_isCommutativeSemigroup_2136 ::
+  T_IsKleeneAlgebra_2064 -> T_IsCommutativeSemigroup_548
+du_isCommutativeSemigroup_2136 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
             (coe
                du_isCommutativeSemigroup_786
-               (coe d_'43''45'isCommutativeMonoid_1488 (coe v3)))))
+               (coe d_'43''45'isCommutativeMonoid_1508 (coe v3)))))
 -- Algebra.Structures.IsKleeneAlgebra._.+-isIdempotentCommutativeMonoid
-d_'43''45'isIdempotentCommutativeMonoid_2118 ::
+d_'43''45'isIdempotentCommutativeMonoid_2138 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11142,18 +11259,18 @@ d_'43''45'isIdempotentCommutativeMonoid_2118 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 -> T_IsIdempotentCommutativeMonoid_852
-d_'43''45'isIdempotentCommutativeMonoid_2118 ~v0 ~v1 ~v2 ~v3 ~v4
+  T_IsKleeneAlgebra_2064 -> T_IsIdempotentCommutativeMonoid_852
+d_'43''45'isIdempotentCommutativeMonoid_2138 ~v0 ~v1 ~v2 ~v3 ~v4
                                              ~v5 ~v6 ~v7 ~v8 v9
-  = du_'43''45'isIdempotentCommutativeMonoid_2118 v9
-du_'43''45'isIdempotentCommutativeMonoid_2118 ::
-  T_IsKleeneAlgebra_2044 -> T_IsIdempotentCommutativeMonoid_852
-du_'43''45'isIdempotentCommutativeMonoid_2118 v0
+  = du_'43''45'isIdempotentCommutativeMonoid_2138 v9
+du_'43''45'isIdempotentCommutativeMonoid_2138 ::
+  T_IsKleeneAlgebra_2064 -> T_IsIdempotentCommutativeMonoid_852
+du_'43''45'isIdempotentCommutativeMonoid_2138 v0
   = coe
-      du_'43''45'isIdempotentCommutativeMonoid_2024
-      (coe d_isIdempotentSemiring_2062 (coe v0))
+      du_'43''45'isIdempotentCommutativeMonoid_2044
+      (coe d_isIdempotentSemiring_2082 (coe v0))
 -- Algebra.Structures.IsKleeneAlgebra._.isIdempotentMonoid
-d_isIdempotentMonoid_2120 ::
+d_isIdempotentMonoid_2140 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11162,20 +11279,20 @@ d_isIdempotentMonoid_2120 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsIdempotentMonoid_796
-d_isIdempotentMonoid_2120 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isIdempotentMonoid_2120 v9
-du_isIdempotentMonoid_2120 ::
-  T_IsKleeneAlgebra_2044 -> T_IsIdempotentMonoid_796
-du_isIdempotentMonoid_2120 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsIdempotentMonoid_796
+d_isIdempotentMonoid_2140 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isIdempotentMonoid_2140 v9
+du_isIdempotentMonoid_2140 ::
+  T_IsKleeneAlgebra_2064 -> T_IsIdempotentMonoid_796
+du_isIdempotentMonoid_2140 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
       (coe
          du_isIdempotentMonoid_910
-         (coe du_'43''45'isIdempotentCommutativeMonoid_2024 (coe v1)))
+         (coe du_'43''45'isIdempotentCommutativeMonoid_2044 (coe v1)))
 -- Algebra.Structures.IsKleeneAlgebra._.isMagma
-d_isMagma_2122 :: T_IsKleeneAlgebra_2044 -> T_IsMagma_176
-d_isMagma_2122 v0
+d_isMagma_2142 :: T_IsKleeneAlgebra_2064 -> T_IsMagma_176
+d_isMagma_2142 v0
   = coe
       d_isMagma_480
       (coe
@@ -11183,37 +11300,37 @@ d_isMagma_2122 v0
          (coe
             d_isMonoid_746
             (coe
-               d_'43''45'isCommutativeMonoid_1488
+               d_'43''45'isCommutativeMonoid_1508
                (coe
-                  d_isSemiringWithoutAnnihilatingZero_1584
+                  d_isSemiringWithoutAnnihilatingZero_1604
                   (coe
-                     d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))))))
+                     d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))))))
 -- Algebra.Structures.IsKleeneAlgebra._.isMonoid
-d_isMonoid_2124 :: T_IsKleeneAlgebra_2044 -> T_IsMonoid_686
-d_isMonoid_2124 v0
+d_isMonoid_2144 :: T_IsKleeneAlgebra_2064 -> T_IsMonoid_686
+d_isMonoid_2144 v0
   = coe
       d_isMonoid_746
       (coe
-         d_'43''45'isCommutativeMonoid_1488
+         d_'43''45'isCommutativeMonoid_1508
          (coe
-            d_isSemiringWithoutAnnihilatingZero_1584
+            d_isSemiringWithoutAnnihilatingZero_1604
             (coe
-               d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))))
+               d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))))
 -- Algebra.Structures.IsKleeneAlgebra._.isSemigroup
-d_isSemigroup_2126 :: T_IsKleeneAlgebra_2044 -> T_IsSemigroup_472
-d_isSemigroup_2126 v0
+d_isSemigroup_2146 :: T_IsKleeneAlgebra_2064 -> T_IsSemigroup_472
+d_isSemigroup_2146 v0
   = coe
       d_isSemigroup_696
       (coe
          d_isMonoid_746
          (coe
-            d_'43''45'isCommutativeMonoid_1488
+            d_'43''45'isCommutativeMonoid_1508
             (coe
-               d_isSemiringWithoutAnnihilatingZero_1584
+               d_isSemiringWithoutAnnihilatingZero_1604
                (coe
-                  d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))))
+                  d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))))
 -- Algebra.Structures.IsKleeneAlgebra._.isUnitalMagma
-d_isUnitalMagma_2128 ::
+d_isUnitalMagma_2148 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11221,31 +11338,31 @@ d_isUnitalMagma_2128 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsUnitalMagma_642
-d_isUnitalMagma_2128 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isUnitalMagma_2128 v9
-du_isUnitalMagma_2128 ::
-  T_IsKleeneAlgebra_2044 -> T_IsUnitalMagma_642
-du_isUnitalMagma_2128 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsUnitalMagma_642
+d_isUnitalMagma_2148 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isUnitalMagma_2148 v9
+du_isUnitalMagma_2148 ::
+  T_IsKleeneAlgebra_2064 -> T_IsUnitalMagma_642
+du_isUnitalMagma_2148 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe (coe du_isUnitalMagma_730 (coe d_isMonoid_746 (coe v4))))))
 -- Algebra.Structures.IsKleeneAlgebra._.distrib
-d_distrib_2130 ::
-  T_IsKleeneAlgebra_2044 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_2130 v0
+d_distrib_2150 ::
+  T_IsKleeneAlgebra_2064 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_distrib_2150 v0
   = coe
-      d_distrib_1496
+      d_distrib_1516
       (coe
-         d_isSemiringWithoutAnnihilatingZero_1584
-         (coe d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))
+         d_isSemiringWithoutAnnihilatingZero_1604
+         (coe d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))
 -- Algebra.Structures.IsKleeneAlgebra._.distribʳ
-d_distrib'691'_2132 ::
+d_distrib'691'_2152 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11255,21 +11372,21 @@ d_distrib'691'_2132 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_2132 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'691'_2132 v9
-du_distrib'691'_2132 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_2132 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'691'_2152 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'691'_2152 v9
+du_distrib'691'_2152 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'691'_2152 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
          (coe
-            du_distrib'691'_1500
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_distrib'691'_1520
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra._.distribˡ
-d_distrib'737'_2134 ::
+d_distrib'737'_2154 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11279,24 +11396,24 @@ d_distrib'737'_2134 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_2134 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'737'_2134 v9
-du_distrib'737'_2134 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_2134 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'737'_2154 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'737'_2154 v9
+du_distrib'737'_2154 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'737'_2154 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
          (coe
-            du_distrib'737'_1498
-            (coe d_isSemiringWithoutAnnihilatingZero_1584 (coe v2))))
+            du_distrib'737'_1518
+            (coe d_isSemiringWithoutAnnihilatingZero_1604 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra._.isEquivalence
-d_isEquivalence_2136 ::
-  T_IsKleeneAlgebra_2044 ->
+d_isEquivalence_2156 ::
+  T_IsKleeneAlgebra_2064 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_2136 v0
+d_isEquivalence_2156 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -11306,13 +11423,13 @@ d_isEquivalence_2136 v0
             (coe
                d_isMonoid_746
                (coe
-                  d_'43''45'isCommutativeMonoid_1488
+                  d_'43''45'isCommutativeMonoid_1508
                   (coe
-                     d_isSemiringWithoutAnnihilatingZero_1584
+                     d_isSemiringWithoutAnnihilatingZero_1604
                      (coe
-                        d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))))))))
+                        d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.isNearSemiring
-d_isNearSemiring_2138 ::
+d_isNearSemiring_2158 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11321,21 +11438,21 @@ d_isNearSemiring_2138 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsNearSemiring_1218
-d_isNearSemiring_2138 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isNearSemiring_2138 v9
-du_isNearSemiring_2138 ::
-  T_IsKleeneAlgebra_2044 -> T_IsNearSemiring_1218
-du_isNearSemiring_2138 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsNearSemiring_1218
+d_isNearSemiring_2158 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isNearSemiring_2158 v9
+du_isNearSemiring_2158 ::
+  T_IsKleeneAlgebra_2064 -> T_IsNearSemiring_1218
+du_isNearSemiring_2158 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
          (coe
-            du_isNearSemiring_1374
-            (coe du_isSemiringWithoutOne_1660 (coe v2))))
+            du_isNearSemiring_1384
+            (coe du_isSemiringWithoutOne_1680 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra._.isPartialEquivalence
-d_isPartialEquivalence_2140 ::
+d_isPartialEquivalence_2160 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11345,21 +11462,21 @@ d_isPartialEquivalence_2140 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2140 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isPartialEquivalence_2140 v9
-du_isPartialEquivalence_2140 ::
-  T_IsKleeneAlgebra_2044 ->
+d_isPartialEquivalence_2160 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isPartialEquivalence_2160 v9
+du_isPartialEquivalence_2160 ::
+  T_IsKleeneAlgebra_2064 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2140 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+du_isPartialEquivalence_2160 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -11371,18 +11488,18 @@ du_isPartialEquivalence_2140 v0
                            MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                            (coe d_isEquivalence_184 (coe v7)))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.isSemiring
-d_isSemiring_2142 :: T_IsKleeneAlgebra_2044 -> T_IsSemiring_1570
-d_isSemiring_2142 v0
-  = coe d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0))
+d_isSemiring_2162 :: T_IsKleeneAlgebra_2064 -> T_IsSemiring_1590
+d_isSemiring_2162 v0
+  = coe d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0))
 -- Algebra.Structures.IsKleeneAlgebra._.isSemiringWithoutAnnihilatingZero
-d_isSemiringWithoutAnnihilatingZero_2144 ::
-  T_IsKleeneAlgebra_2044 -> T_IsSemiringWithoutAnnihilatingZero_1468
-d_isSemiringWithoutAnnihilatingZero_2144 v0
+d_isSemiringWithoutAnnihilatingZero_2164 ::
+  T_IsKleeneAlgebra_2064 -> T_IsSemiringWithoutAnnihilatingZero_1488
+d_isSemiringWithoutAnnihilatingZero_2164 v0
   = coe
-      d_isSemiringWithoutAnnihilatingZero_1584
-      (coe d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))
+      d_isSemiringWithoutAnnihilatingZero_1604
+      (coe d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))
 -- Algebra.Structures.IsKleeneAlgebra._.isSemiringWithoutOne
-d_isSemiringWithoutOne_2146 ::
+d_isSemiringWithoutOne_2166 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11391,18 +11508,18 @@ d_isSemiringWithoutOne_2146 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsKleeneAlgebra_2044 -> T_IsSemiringWithoutOne_1298
-d_isSemiringWithoutOne_2146 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isSemiringWithoutOne_2146 v9
-du_isSemiringWithoutOne_2146 ::
-  T_IsKleeneAlgebra_2044 -> T_IsSemiringWithoutOne_1298
-du_isSemiringWithoutOne_2146 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> T_IsKleeneAlgebra_2064 -> T_IsSemiringWithoutOne_1298
+d_isSemiringWithoutOne_2166 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isSemiringWithoutOne_2166 v9
+du_isSemiringWithoutOne_2166 ::
+  T_IsKleeneAlgebra_2064 -> T_IsSemiringWithoutOne_1298
+du_isSemiringWithoutOne_2166 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (coe du_isSemiringWithoutOne_1660 (coe d_isSemiring_1936 (coe v1)))
+      (coe du_isSemiringWithoutOne_1680 (coe d_isSemiring_1956 (coe v1)))
 -- Algebra.Structures.IsKleeneAlgebra._.refl
-d_refl_2148 :: T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_refl_2148 v0
+d_refl_2168 :: T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_refl_2168 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -11414,13 +11531,13 @@ d_refl_2148 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
+                        d_isSemiringWithoutAnnihilatingZero_1604
                         (coe
-                           d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))))))))
+                           d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.reflexive
-d_reflexive_2150 ::
+d_reflexive_2170 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11430,25 +11547,25 @@ d_reflexive_2150 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2150 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_reflexive_2150 v9
-du_reflexive_2150 ::
-  T_IsKleeneAlgebra_2044 ->
+d_reflexive_2170 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_reflexive_2170 v9
+du_reflexive_2170 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2150 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+du_reflexive_2170 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
@@ -11461,7 +11578,7 @@ du_reflexive_2150 v0
                              MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                              (coe d_isEquivalence_184 (coe v7)) v8)))))))
 -- Algebra.Structures.IsKleeneAlgebra._.setoid
-d_setoid_2152 ::
+d_setoid_2172 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11471,30 +11588,30 @@ d_setoid_2152 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2152 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_setoid_2152 v9
-du_setoid_2152 ::
-  T_IsKleeneAlgebra_2044 ->
+d_setoid_2172 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_setoid_2172 v9
+du_setoid_2172 ::
+  T_IsKleeneAlgebra_2064 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2152 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+du_setoid_2172 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
-         (let v3 = d_isSemiringWithoutAnnihilatingZero_1584 (coe v2) in
+         (let v3 = d_isSemiringWithoutAnnihilatingZero_1604 (coe v2) in
           coe
-            (let v4 = d_'43''45'isCommutativeMonoid_1488 (coe v3) in
+            (let v4 = d_'43''45'isCommutativeMonoid_1508 (coe v3) in
              coe
                (let v5 = d_isMonoid_746 (coe v4) in
                 coe
                   (let v6 = d_isSemigroup_696 (coe v5) in
                    coe (coe du_setoid_200 (coe d_isMagma_480 (coe v6))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.sym
-d_sym_2154 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2154 v0
+d_sym_2174 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_2174 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -11506,16 +11623,16 @@ d_sym_2154 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
+                        d_isSemiringWithoutAnnihilatingZero_1604
                         (coe
-                           d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))))))))
+                           d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.trans
-d_trans_2156 ::
-  T_IsKleeneAlgebra_2044 ->
+d_trans_2176 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2156 v0
+d_trans_2176 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -11527,20 +11644,20 @@ d_trans_2156 v0
                (coe
                   d_isMonoid_746
                   (coe
-                     d_'43''45'isCommutativeMonoid_1488
+                     d_'43''45'isCommutativeMonoid_1508
                      (coe
-                        d_isSemiringWithoutAnnihilatingZero_1584
+                        d_isSemiringWithoutAnnihilatingZero_1604
                         (coe
-                           d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))))))))
+                           d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))))))))
 -- Algebra.Structures.IsKleeneAlgebra._.zero
-d_zero_2158 ::
-  T_IsKleeneAlgebra_2044 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_2158 v0
+d_zero_2178 ::
+  T_IsKleeneAlgebra_2064 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_zero_2178 v0
   = coe
-      d_zero_1586
-      (coe d_isSemiring_1936 (coe d_isIdempotentSemiring_2062 (coe v0)))
+      d_zero_1606
+      (coe d_isSemiring_1956 (coe d_isIdempotentSemiring_2082 (coe v0)))
 -- Algebra.Structures.IsKleeneAlgebra._.zeroʳ
-d_zero'691'_2160 ::
+d_zero'691'_2180 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11548,19 +11665,19 @@ d_zero'691'_2160 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_zero'691'_2160 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_zero'691'_2160 v9
-du_zero'691'_2160 :: T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-du_zero'691'_2160 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_zero'691'_2180 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_zero'691'_2180 v9
+du_zero'691'_2180 :: T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+du_zero'691'_2180 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
          (coe
-            du_zero'691'_1372 (coe du_isSemiringWithoutOne_1660 (coe v2))))
+            du_zero'691'_1382 (coe du_isSemiringWithoutOne_1680 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra._.zeroˡ
-d_zero'737'_2162 ::
+d_zero'737'_2182 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11568,19 +11685,19 @@ d_zero'737'_2162 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_zero'737'_2162 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_zero'737'_2162 v9
-du_zero'737'_2162 :: T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-du_zero'737'_2162 v0
-  = let v1 = d_isIdempotentSemiring_2062 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_zero'737'_2182 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_zero'737'_2182 v9
+du_zero'737'_2182 :: T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+du_zero'737'_2182 v0
+  = let v1 = d_isIdempotentSemiring_2082 (coe v0) in
     coe
-      (let v2 = d_isSemiring_1936 (coe v1) in
+      (let v2 = d_isSemiring_1956 (coe v1) in
        coe
          (coe
-            du_zero'737'_1370 (coe du_isSemiringWithoutOne_1660 (coe v2))))
+            du_zero'737'_1380 (coe du_isSemiringWithoutOne_1680 (coe v2))))
 -- Algebra.Structures.IsKleeneAlgebra.starExpansiveˡ
-d_starExpansive'737'_2164 ::
+d_starExpansive'737'_2184 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11588,17 +11705,17 @@ d_starExpansive'737'_2164 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_starExpansive'737'_2164 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_starExpansive'737'_2164 v9
-du_starExpansive'737'_2164 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-du_starExpansive'737'_2164 v0
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_starExpansive'737'_2184 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_starExpansive'737'_2184 v9
+du_starExpansive'737'_2184 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+du_starExpansive'737'_2184 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_starExpansive_2064 (coe v0))
+      (coe d_starExpansive_2084 (coe v0))
 -- Algebra.Structures.IsKleeneAlgebra.starExpansiveʳ
-d_starExpansive'691'_2166 ::
+d_starExpansive'691'_2186 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11606,17 +11723,17 @@ d_starExpansive'691'_2166 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-d_starExpansive'691'_2166 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_starExpansive'691'_2166 v9
-du_starExpansive'691'_2166 ::
-  T_IsKleeneAlgebra_2044 -> AgdaAny -> AgdaAny
-du_starExpansive'691'_2166 v0
+  AgdaAny -> AgdaAny -> T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+d_starExpansive'691'_2186 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_starExpansive'691'_2186 v9
+du_starExpansive'691'_2186 ::
+  T_IsKleeneAlgebra_2064 -> AgdaAny -> AgdaAny
+du_starExpansive'691'_2186 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_starExpansive_2064 (coe v0))
+      (coe d_starExpansive_2084 (coe v0))
 -- Algebra.Structures.IsKleeneAlgebra.starDestructiveˡ
-d_starDestructive'737'_2168 ::
+d_starDestructive'737'_2188 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11626,19 +11743,19 @@ d_starDestructive'737'_2168 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_starDestructive'737'_2168 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_starDestructive'737'_2168 v9
-du_starDestructive'737'_2168 ::
-  T_IsKleeneAlgebra_2044 ->
+d_starDestructive'737'_2188 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_starDestructive'737'_2188 v9
+du_starDestructive'737'_2188 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_starDestructive'737'_2168 v0
+du_starDestructive'737'_2188 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_starDestructive_2066 (coe v0))
+      (coe d_starDestructive_2086 (coe v0))
 -- Algebra.Structures.IsKleeneAlgebra.starDestructiveʳ
-d_starDestructive'691'_2170 ::
+d_starDestructive'691'_2190 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11648,21 +11765,21 @@ d_starDestructive'691'_2170 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsKleeneAlgebra_2044 ->
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_starDestructive'691'_2170 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_starDestructive'691'_2170 v9
-du_starDestructive'691'_2170 ::
-  T_IsKleeneAlgebra_2044 ->
+d_starDestructive'691'_2190 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_starDestructive'691'_2190 v9
+du_starDestructive'691'_2190 ::
+  T_IsKleeneAlgebra_2064 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_starDestructive'691'_2170 v0
+du_starDestructive'691'_2190 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_starDestructive_2066 (coe v0))
+      (coe d_starDestructive_2086 (coe v0))
 -- Algebra.Structures.IsQuasiring
-d_IsQuasiring_2180 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsQuasiring_2180
-  = C_IsQuasiring'46'constructor_69993 T_IsMonoid_686
+d_IsQuasiring_2200 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsQuasiring_2200
+  = C_IsQuasiring'46'constructor_71593 T_IsMonoid_686
                                        (AgdaAny ->
                                         AgdaAny ->
                                         AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
@@ -11671,68 +11788,68 @@ data T_IsQuasiring_2180
                                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                        MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsQuasiring.+-isMonoid
-d_'43''45'isMonoid_2202 :: T_IsQuasiring_2180 -> T_IsMonoid_686
-d_'43''45'isMonoid_2202 v0
+d_'43''45'isMonoid_2222 :: T_IsQuasiring_2200 -> T_IsMonoid_686
+d_'43''45'isMonoid_2222 v0
   = case coe v0 of
-      C_IsQuasiring'46'constructor_69993 v1 v2 v3 v4 v5 v6 -> coe v1
+      C_IsQuasiring'46'constructor_71593 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasiring.*-cong
-d_'42''45'cong_2204 ::
-  T_IsQuasiring_2180 ->
+d_'42''45'cong_2224 ::
+  T_IsQuasiring_2200 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_2204 v0
+d_'42''45'cong_2224 v0
   = case coe v0 of
-      C_IsQuasiring'46'constructor_69993 v1 v2 v3 v4 v5 v6 -> coe v2
+      C_IsQuasiring'46'constructor_71593 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasiring.*-assoc
-d_'42''45'assoc_2206 ::
-  T_IsQuasiring_2180 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_2206 v0
+d_'42''45'assoc_2226 ::
+  T_IsQuasiring_2200 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'42''45'assoc_2226 v0
   = case coe v0 of
-      C_IsQuasiring'46'constructor_69993 v1 v2 v3 v4 v5 v6 -> coe v3
+      C_IsQuasiring'46'constructor_71593 v1 v2 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasiring.*-identity
-d_'42''45'identity_2208 ::
-  T_IsQuasiring_2180 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_2208 v0
+d_'42''45'identity_2228 ::
+  T_IsQuasiring_2200 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'42''45'identity_2228 v0
   = case coe v0 of
-      C_IsQuasiring'46'constructor_69993 v1 v2 v3 v4 v5 v6 -> coe v4
+      C_IsQuasiring'46'constructor_71593 v1 v2 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasiring.distrib
-d_distrib_2210 ::
-  T_IsQuasiring_2180 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_2210 v0
+d_distrib_2230 ::
+  T_IsQuasiring_2200 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_distrib_2230 v0
   = case coe v0 of
-      C_IsQuasiring'46'constructor_69993 v1 v2 v3 v4 v5 v6 -> coe v5
+      C_IsQuasiring'46'constructor_71593 v1 v2 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasiring.zero
-d_zero_2212 ::
-  T_IsQuasiring_2180 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_2212 v0
+d_zero_2232 ::
+  T_IsQuasiring_2200 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_zero_2232 v0
   = case coe v0 of
-      C_IsQuasiring'46'constructor_69993 v1 v2 v3 v4 v5 v6 -> coe v6
+      C_IsQuasiring'46'constructor_71593 v1 v2 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasiring._.assoc
-d_assoc_2216 ::
-  T_IsQuasiring_2180 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_2216 v0
+d_assoc_2236 ::
+  T_IsQuasiring_2200 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_2236 v0
   = coe
       d_assoc_482
-      (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0)))
+      (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0)))
 -- Algebra.Structures.IsQuasiring._.∙-cong
-d_'8729''45'cong_2218 ::
-  T_IsQuasiring_2180 ->
+d_'8729''45'cong_2238 ::
+  T_IsQuasiring_2200 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_2218 v0
+d_'8729''45'cong_2238 v0
   = coe
       d_'8729''45'cong_186
       (coe
          d_isMagma_480
-         (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0))))
+         (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0))))
 -- Algebra.Structures.IsQuasiring._.∙-congʳ
-d_'8729''45'cong'691'_2220 ::
+d_'8729''45'cong'691'_2240 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11741,20 +11858,20 @@ d_'8729''45'cong'691'_2220 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 ->
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2220 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_2220 v8
-du_'8729''45'cong'691'_2220 ::
-  T_IsQuasiring_2180 ->
+d_'8729''45'cong'691'_2240 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_2240 v8
+du_'8729''45'cong'691'_2240 ::
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2220 v0
-  = let v1 = d_'43''45'isMonoid_2202 (coe v0) in
+du_'8729''45'cong'691'_2240 v0
+  = let v1 = d_'43''45'isMonoid_2222 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v2))))
 -- Algebra.Structures.IsQuasiring._.∙-congˡ
-d_'8729''45'cong'737'_2222 ::
+d_'8729''45'cong'737'_2242 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11763,87 +11880,87 @@ d_'8729''45'cong'737'_2222 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 ->
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2222 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_2222 v8
-du_'8729''45'cong'737'_2222 ::
-  T_IsQuasiring_2180 ->
+d_'8729''45'cong'737'_2242 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_2242 v8
+du_'8729''45'cong'737'_2242 ::
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2222 v0
-  = let v1 = d_'43''45'isMonoid_2202 (coe v0) in
+du_'8729''45'cong'737'_2242 v0
+  = let v1 = d_'43''45'isMonoid_2222 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v2))))
 -- Algebra.Structures.IsQuasiring._.identity
-d_identity_2224 ::
-  T_IsQuasiring_2180 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_2224 v0
-  = coe d_identity_698 (coe d_'43''45'isMonoid_2202 (coe v0))
+d_identity_2244 ::
+  T_IsQuasiring_2200 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_2244 v0
+  = coe d_identity_698 (coe d_'43''45'isMonoid_2222 (coe v0))
 -- Algebra.Structures.IsQuasiring._.identityʳ
-d_identity'691'_2226 ::
+d_identity'691'_2246 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_identity'691'_2226 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_2226 v8
-du_identity'691'_2226 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-du_identity'691'_2226 v0
-  = coe du_identity'691'_728 (coe d_'43''45'isMonoid_2202 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_identity'691'_2246 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_2246 v8
+du_identity'691'_2246 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+du_identity'691'_2246 v0
+  = coe du_identity'691'_728 (coe d_'43''45'isMonoid_2222 (coe v0))
 -- Algebra.Structures.IsQuasiring._.identityˡ
-d_identity'737'_2228 ::
+d_identity'737'_2248 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_identity'737'_2228 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_2228 v8
-du_identity'737'_2228 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-du_identity'737'_2228 v0
-  = coe du_identity'737'_726 (coe d_'43''45'isMonoid_2202 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_identity'737'_2248 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_2248 v8
+du_identity'737'_2248 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+du_identity'737'_2248 v0
+  = coe du_identity'737'_726 (coe d_'43''45'isMonoid_2222 (coe v0))
 -- Algebra.Structures.IsQuasiring._.isMagma
-d_isMagma_2230 :: T_IsQuasiring_2180 -> T_IsMagma_176
-d_isMagma_2230 v0
+d_isMagma_2250 :: T_IsQuasiring_2200 -> T_IsMagma_176
+d_isMagma_2250 v0
   = coe
       d_isMagma_480
-      (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0)))
+      (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0)))
 -- Algebra.Structures.IsQuasiring._.isSemigroup
-d_isSemigroup_2232 :: T_IsQuasiring_2180 -> T_IsSemigroup_472
-d_isSemigroup_2232 v0
-  = coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0))
+d_isSemigroup_2252 :: T_IsQuasiring_2200 -> T_IsSemigroup_472
+d_isSemigroup_2252 v0
+  = coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0))
 -- Algebra.Structures.IsQuasiring._.isUnitalMagma
-d_isUnitalMagma_2234 ::
+d_isUnitalMagma_2254 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> T_IsUnitalMagma_642
-d_isUnitalMagma_2234 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isUnitalMagma_2234 v8
-du_isUnitalMagma_2234 :: T_IsQuasiring_2180 -> T_IsUnitalMagma_642
-du_isUnitalMagma_2234 v0
-  = coe du_isUnitalMagma_730 (coe d_'43''45'isMonoid_2202 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> T_IsUnitalMagma_642
+d_isUnitalMagma_2254 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isUnitalMagma_2254 v8
+du_isUnitalMagma_2254 :: T_IsQuasiring_2200 -> T_IsUnitalMagma_642
+du_isUnitalMagma_2254 v0
+  = coe du_isUnitalMagma_730 (coe d_'43''45'isMonoid_2222 (coe v0))
 -- Algebra.Structures.IsQuasiring._.isEquivalence
-d_isEquivalence_2236 ::
-  T_IsQuasiring_2180 ->
+d_isEquivalence_2256 ::
+  T_IsQuasiring_2200 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_2236 v0
+d_isEquivalence_2256 v0
   = coe
       d_isEquivalence_184
       (coe
          d_isMagma_480
-         (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0))))
+         (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0))))
 -- Algebra.Structures.IsQuasiring._.isPartialEquivalence
-d_isPartialEquivalence_2238 ::
+d_isPartialEquivalence_2258 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11852,15 +11969,15 @@ d_isPartialEquivalence_2238 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 ->
+  T_IsQuasiring_2200 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2238 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_2238 v8
-du_isPartialEquivalence_2238 ::
-  T_IsQuasiring_2180 ->
+d_isPartialEquivalence_2258 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_2258 v8
+du_isPartialEquivalence_2258 ::
+  T_IsQuasiring_2200 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2238 v0
-  = let v1 = d_'43''45'isMonoid_2202 (coe v0) in
+du_isPartialEquivalence_2258 v0
+  = let v1 = d_'43''45'isMonoid_2222 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe
@@ -11870,17 +11987,17 @@ du_isPartialEquivalence_2238 v0
                MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                (coe d_isEquivalence_184 (coe v3)))))
 -- Algebra.Structures.IsQuasiring._.refl
-d_refl_2240 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_refl_2240 v0
+d_refl_2260 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_refl_2260 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
          d_isEquivalence_184
          (coe
             d_isMagma_480
-            (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0)))))
+            (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0)))))
 -- Algebra.Structures.IsQuasiring._.reflexive
-d_reflexive_2242 ::
+d_reflexive_2262 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11889,19 +12006,19 @@ d_reflexive_2242 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 ->
+  T_IsQuasiring_2200 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2242 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_2242 v8
-du_reflexive_2242 ::
-  T_IsQuasiring_2180 ->
+d_reflexive_2262 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_2262 v8
+du_reflexive_2262 ::
+  T_IsQuasiring_2200 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2242 v0
-  = let v1 = d_'43''45'isMonoid_2202 (coe v0) in
+du_reflexive_2262 v0
+  = let v1 = d_'43''45'isMonoid_2222 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe
@@ -11912,7 +12029,7 @@ du_reflexive_2242 v0
                  MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                  (coe d_isEquivalence_184 (coe v3)) v4)))
 -- Algebra.Structures.IsQuasiring._.setoid
-d_setoid_2244 ::
+d_setoid_2264 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11921,43 +12038,43 @@ d_setoid_2244 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 ->
+  T_IsQuasiring_2200 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2244 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_2244 v8
-du_setoid_2244 ::
-  T_IsQuasiring_2180 ->
+d_setoid_2264 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_2264 v8
+du_setoid_2264 ::
+  T_IsQuasiring_2200 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2244 v0
-  = let v1 = d_'43''45'isMonoid_2202 (coe v0) in
+du_setoid_2264 v0
+  = let v1 = d_'43''45'isMonoid_2222 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe (coe du_setoid_200 (coe d_isMagma_480 (coe v2))))
 -- Algebra.Structures.IsQuasiring._.sym
-d_sym_2246 ::
-  T_IsQuasiring_2180 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2246 v0
+d_sym_2266 ::
+  T_IsQuasiring_2200 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_2266 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
          d_isEquivalence_184
          (coe
             d_isMagma_480
-            (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0)))))
+            (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0)))))
 -- Algebra.Structures.IsQuasiring._.trans
-d_trans_2248 ::
-  T_IsQuasiring_2180 ->
+d_trans_2268 ::
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2248 v0
+d_trans_2268 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
          d_isEquivalence_184
          (coe
             d_isMagma_480
-            (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0)))))
+            (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0)))))
 -- Algebra.Structures.IsQuasiring.distribˡ
-d_distrib'737'_2250 ::
+d_distrib'737'_2270 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11966,17 +12083,17 @@ d_distrib'737'_2250 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_2250 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'737'_2250 v8
-du_distrib'737'_2250 ::
-  T_IsQuasiring_2180 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_2250 v0
+  T_IsQuasiring_2200 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'737'_2270 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'737'_2270 v8
+du_distrib'737'_2270 ::
+  T_IsQuasiring_2200 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'737'_2270 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_distrib_2210 (coe v0))
+      (coe d_distrib_2230 (coe v0))
 -- Algebra.Structures.IsQuasiring.distribʳ
-d_distrib'691'_2252 ::
+d_distrib'691'_2272 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -11985,135 +12102,135 @@ d_distrib'691'_2252 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_2252 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'691'_2252 v8
-du_distrib'691'_2252 ::
-  T_IsQuasiring_2180 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_2252 v0
+  T_IsQuasiring_2200 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'691'_2272 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'691'_2272 v8
+du_distrib'691'_2272 ::
+  T_IsQuasiring_2200 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'691'_2272 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_distrib_2210 (coe v0))
+      (coe d_distrib_2230 (coe v0))
 -- Algebra.Structures.IsQuasiring.zeroˡ
-d_zero'737'_2254 ::
+d_zero'737'_2274 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_zero'737'_2254 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'737'_2254 v8
-du_zero'737'_2254 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-du_zero'737'_2254 v0
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_zero'737'_2274 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'737'_2274 v8
+du_zero'737'_2274 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+du_zero'737'_2274 v0
   = coe
-      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe d_zero_2212 (coe v0))
+      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe d_zero_2232 (coe v0))
 -- Algebra.Structures.IsQuasiring.zeroʳ
-d_zero'691'_2256 ::
+d_zero'691'_2276 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_zero'691'_2256 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_zero'691'_2256 v8
-du_zero'691'_2256 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-du_zero'691'_2256 v0
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_zero'691'_2276 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_zero'691'_2276 v8
+du_zero'691'_2276 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+du_zero'691'_2276 v0
   = coe
-      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe d_zero_2212 (coe v0))
+      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe d_zero_2232 (coe v0))
 -- Algebra.Structures.IsQuasiring.identityˡ
-d_identity'737'_2258 ::
+d_identity'737'_2278 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_identity'737'_2258 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_2258 v8
-du_identity'737'_2258 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-du_identity'737'_2258 v0
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_identity'737'_2278 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_2278 v8
+du_identity'737'_2278 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+du_identity'737'_2278 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_'42''45'identity_2208 (coe v0))
+      (coe d_'42''45'identity_2228 (coe v0))
 -- Algebra.Structures.IsQuasiring.identityʳ
-d_identity'691'_2260 ::
+d_identity'691'_2280 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_identity'691'_2260 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_2260 v8
-du_identity'691'_2260 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-du_identity'691'_2260 v0
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_identity'691'_2280 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_2280 v8
+du_identity'691'_2280 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+du_identity'691'_2280 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_'42''45'identity_2208 (coe v0))
+      (coe d_'42''45'identity_2228 (coe v0))
 -- Algebra.Structures.IsQuasiring.*-isMagma
-d_'42''45'isMagma_2262 ::
+d_'42''45'isMagma_2282 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> T_IsMagma_176
-d_'42''45'isMagma_2262 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMagma_2262 v8
-du_'42''45'isMagma_2262 :: T_IsQuasiring_2180 -> T_IsMagma_176
-du_'42''45'isMagma_2262 v0
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> T_IsMagma_176
+d_'42''45'isMagma_2282 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMagma_2282 v8
+du_'42''45'isMagma_2282 :: T_IsQuasiring_2200 -> T_IsMagma_176
+du_'42''45'isMagma_2282 v0
   = coe
       C_IsMagma'46'constructor_1867
       (coe
          d_isEquivalence_184
          (coe
             d_isMagma_480
-            (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2202 (coe v0)))))
-      (coe d_'42''45'cong_2204 (coe v0))
+            (coe d_isSemigroup_696 (coe d_'43''45'isMonoid_2222 (coe v0)))))
+      (coe d_'42''45'cong_2224 (coe v0))
 -- Algebra.Structures.IsQuasiring.*-isSemigroup
-d_'42''45'isSemigroup_2264 ::
+d_'42''45'isSemigroup_2284 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_2264 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isSemigroup_2264 v8
-du_'42''45'isSemigroup_2264 ::
-  T_IsQuasiring_2180 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_2264 v0
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_2284 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isSemigroup_2284 v8
+du_'42''45'isSemigroup_2284 ::
+  T_IsQuasiring_2200 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_2284 v0
   = coe
       C_IsSemigroup'46'constructor_10417
-      (coe du_'42''45'isMagma_2262 (coe v0))
-      (coe d_'42''45'assoc_2206 (coe v0))
+      (coe du_'42''45'isMagma_2282 (coe v0))
+      (coe d_'42''45'assoc_2226 (coe v0))
 -- Algebra.Structures.IsQuasiring.*-isMonoid
-d_'42''45'isMonoid_2266 ::
+d_'42''45'isMonoid_2286 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> T_IsMonoid_686
-d_'42''45'isMonoid_2266 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMonoid_2266 v8
-du_'42''45'isMonoid_2266 :: T_IsQuasiring_2180 -> T_IsMonoid_686
-du_'42''45'isMonoid_2266 v0
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> T_IsMonoid_686
+d_'42''45'isMonoid_2286 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'42''45'isMonoid_2286 v8
+du_'42''45'isMonoid_2286 :: T_IsQuasiring_2200 -> T_IsMonoid_686
+du_'42''45'isMonoid_2286 v0
   = coe
       C_IsMonoid'46'constructor_15873
-      (coe du_'42''45'isSemigroup_2264 (coe v0))
-      (coe d_'42''45'identity_2208 (coe v0))
+      (coe du_'42''45'isSemigroup_2284 (coe v0))
+      (coe d_'42''45'identity_2228 (coe v0))
 -- Algebra.Structures.IsQuasiring._.∙-congʳ
-d_'8729''45'cong'691'_2270 ::
+d_'8729''45'cong'691'_2290 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12122,20 +12239,20 @@ d_'8729''45'cong'691'_2270 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 ->
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2270 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_2270 v8
-du_'8729''45'cong'691'_2270 ::
-  T_IsQuasiring_2180 ->
+d_'8729''45'cong'691'_2290 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_2290 v8
+du_'8729''45'cong'691'_2290 ::
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2270 v0
-  = let v1 = coe du_'42''45'isMonoid_2266 (coe v0) in
+du_'8729''45'cong'691'_2290 v0
+  = let v1 = coe du_'42''45'isMonoid_2286 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v2))))
 -- Algebra.Structures.IsQuasiring._.∙-congˡ
-d_'8729''45'cong'737'_2272 ::
+d_'8729''45'cong'737'_2292 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12144,87 +12261,87 @@ d_'8729''45'cong'737'_2272 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsQuasiring_2180 ->
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2272 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_2272 v8
-du_'8729''45'cong'737'_2272 ::
-  T_IsQuasiring_2180 ->
+d_'8729''45'cong'737'_2292 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_2292 v8
+du_'8729''45'cong'737'_2292 ::
+  T_IsQuasiring_2200 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2272 v0
-  = let v1 = coe du_'42''45'isMonoid_2266 (coe v0) in
+du_'8729''45'cong'737'_2292 v0
+  = let v1 = coe du_'42''45'isMonoid_2286 (coe v0) in
     coe
       (let v2 = d_isSemigroup_696 (coe v1) in
        coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v2))))
 -- Algebra.Structures.IsQuasiring._.identityʳ
-d_identity'691'_2274 ::
+d_identity'691'_2294 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_identity'691'_2274 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_2274 v8
-du_identity'691'_2274 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-du_identity'691'_2274 v0
-  = coe du_identity'691'_728 (coe du_'42''45'isMonoid_2266 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_identity'691'_2294 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_2294 v8
+du_identity'691'_2294 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+du_identity'691'_2294 v0
+  = coe du_identity'691'_728 (coe du_'42''45'isMonoid_2286 (coe v0))
 -- Algebra.Structures.IsQuasiring._.identityˡ
-d_identity'737'_2276 ::
+d_identity'737'_2296 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-d_identity'737'_2276 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_2276 v8
-du_identity'737'_2276 :: T_IsQuasiring_2180 -> AgdaAny -> AgdaAny
-du_identity'737'_2276 v0
-  = coe du_identity'737'_726 (coe du_'42''45'isMonoid_2266 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+d_identity'737'_2296 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_2296 v8
+du_identity'737'_2296 :: T_IsQuasiring_2200 -> AgdaAny -> AgdaAny
+du_identity'737'_2296 v0
+  = coe du_identity'737'_726 (coe du_'42''45'isMonoid_2286 (coe v0))
 -- Algebra.Structures.IsRingWithoutOne
-d_IsRingWithoutOne_2286 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsRingWithoutOne_2286
-  = C_IsRingWithoutOne'46'constructor_75855 T_IsAbelianGroup_1132
+d_IsRingWithoutOne_2306 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsRingWithoutOne_2306
+  = C_IsRingWithoutOne'46'constructor_77455 T_IsAbelianGroup_1132
                                             (AgdaAny ->
                                              AgdaAny ->
                                              AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                             (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                             MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsRingWithoutOne.+-isAbelianGroup
-d_'43''45'isAbelianGroup_2304 ::
-  T_IsRingWithoutOne_2286 -> T_IsAbelianGroup_1132
-d_'43''45'isAbelianGroup_2304 v0
+d_'43''45'isAbelianGroup_2324 ::
+  T_IsRingWithoutOne_2306 -> T_IsAbelianGroup_1132
+d_'43''45'isAbelianGroup_2324 v0
   = case coe v0 of
-      C_IsRingWithoutOne'46'constructor_75855 v1 v2 v3 v4 -> coe v1
+      C_IsRingWithoutOne'46'constructor_77455 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRingWithoutOne.*-cong
-d_'42''45'cong_2306 ::
-  T_IsRingWithoutOne_2286 ->
+d_'42''45'cong_2326 ::
+  T_IsRingWithoutOne_2306 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_2306 v0
+d_'42''45'cong_2326 v0
   = case coe v0 of
-      C_IsRingWithoutOne'46'constructor_75855 v1 v2 v3 v4 -> coe v2
+      C_IsRingWithoutOne'46'constructor_77455 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRingWithoutOne.*-assoc
-d_'42''45'assoc_2308 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_2308 v0
+d_'42''45'assoc_2328 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'42''45'assoc_2328 v0
   = case coe v0 of
-      C_IsRingWithoutOne'46'constructor_75855 v1 v2 v3 v4 -> coe v3
+      C_IsRingWithoutOne'46'constructor_77455 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRingWithoutOne.distrib
-d_distrib_2310 ::
-  T_IsRingWithoutOne_2286 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_2310 v0
+d_distrib_2330 ::
+  T_IsRingWithoutOne_2306 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_distrib_2330 v0
   = case coe v0 of
-      C_IsRingWithoutOne'46'constructor_75855 v1 v2 v3 v4 -> coe v4
+      C_IsRingWithoutOne'46'constructor_77455 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRingWithoutOne._._//_
-d__'47''47'__2314 ::
+d__'47''47'__2334 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12232,35 +12349,35 @@ d__'47''47'__2314 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'47''47'__2314 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8
-  = du__'47''47'__2314 v4 v6
-du__'47''47'__2314 ::
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'47''47'__2334 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8
+  = du__'47''47'__2334 v4 v6
+du__'47''47'__2334 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'47''47'__2314 v0 v1 = coe du__'47''47'__1098 (coe v0) (coe v1)
+du__'47''47'__2334 v0 v1 = coe du__'47''47'__1098 (coe v0) (coe v1)
 -- Algebra.Structures.IsRingWithoutOne._.assoc
-d_assoc_2316 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_2316 v0
+d_assoc_2336 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_2336 v0
   = coe
       d_assoc_482
       (coe
          d_isSemigroup_696
          (coe
             d_isMonoid_1050
-            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))))
+            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0)))))
 -- Algebra.Structures.IsRingWithoutOne._.comm
-d_comm_2318 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_2318 v0
-  = coe d_comm_1146 (coe d_'43''45'isAbelianGroup_2304 (coe v0))
+d_comm_2338 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny
+d_comm_2338 v0
+  = coe d_comm_1146 (coe d_'43''45'isAbelianGroup_2324 (coe v0))
 -- Algebra.Structures.IsRingWithoutOne._.∙-cong
-d_'8729''45'cong_2320 ::
-  T_IsRingWithoutOne_2286 ->
+d_'8729''45'cong_2340 ::
+  T_IsRingWithoutOne_2306 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_2320 v0
+d_'8729''45'cong_2340 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -12270,9 +12387,9 @@ d_'8729''45'cong_2320 v0
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0))))))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0))))))
 -- Algebra.Structures.IsRingWithoutOne._.∙-congʳ
-d_'8729''45'cong'691'_2322 ::
+d_'8729''45'cong'691'_2342 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12281,15 +12398,15 @@ d_'8729''45'cong'691'_2322 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 ->
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2322 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_2322 v8
-du_'8729''45'cong'691'_2322 ::
-  T_IsRingWithoutOne_2286 ->
+d_'8729''45'cong'691'_2342 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_2342 v8
+du_'8729''45'cong'691'_2342 ::
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2322 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+du_'8729''45'cong'691'_2342 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -12299,7 +12416,7 @@ du_'8729''45'cong'691'_2322 v0
              coe
                (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsRingWithoutOne._.∙-congˡ
-d_'8729''45'cong'737'_2324 ::
+d_'8729''45'cong'737'_2344 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12308,15 +12425,15 @@ d_'8729''45'cong'737'_2324 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 ->
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2324 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_2324 v8
-du_'8729''45'cong'737'_2324 ::
-  T_IsRingWithoutOne_2286 ->
+d_'8729''45'cong'737'_2344 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_2344 v8
+du_'8729''45'cong'737'_2344 ::
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2324 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+du_'8729''45'cong'737'_2344 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -12326,16 +12443,16 @@ du_'8729''45'cong'737'_2324 v0
              coe
                (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsRingWithoutOne._.identity
-d_identity_2326 ::
-  T_IsRingWithoutOne_2286 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_2326 v0
+d_identity_2346 ::
+  T_IsRingWithoutOne_2306 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_2346 v0
   = coe
       d_identity_698
       (coe
          d_isMonoid_1050
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0))))
 -- Algebra.Structures.IsRingWithoutOne._.identityʳ
-d_identity'691'_2328 ::
+d_identity'691'_2348 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12343,18 +12460,18 @@ d_identity'691'_2328 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-d_identity'691'_2328 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_2328 v8
-du_identity'691'_2328 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-du_identity'691'_2328 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+d_identity'691'_2348 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_2348 v8
+du_identity'691'_2348 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+du_identity'691'_2348 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe (coe du_identity'691'_728 (coe d_isMonoid_1050 (coe v2))))
 -- Algebra.Structures.IsRingWithoutOne._.identityˡ
-d_identity'737'_2330 ::
+d_identity'737'_2350 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12362,18 +12479,18 @@ d_identity'737'_2330 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-d_identity'737'_2330 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_2330 v8
-du_identity'737'_2330 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-du_identity'737'_2330 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+d_identity'737'_2350 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_2350 v8
+du_identity'737'_2350 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+du_identity'737'_2350 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe (coe du_identity'737'_726 (coe d_isMonoid_1050 (coe v2))))
 -- Algebra.Structures.IsRingWithoutOne._.isCommutativeMagma
-d_isCommutativeMagma_2332 ::
+d_isCommutativeMagma_2352 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12381,13 +12498,13 @@ d_isCommutativeMagma_2332 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_2332 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMagma_2332 v8
-du_isCommutativeMagma_2332 ::
-  T_IsRingWithoutOne_2286 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_2332 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_2352 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMagma_2352 v8
+du_isCommutativeMagma_2352 ::
+  T_IsRingWithoutOne_2306 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_2352 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = coe du_isCommutativeMonoid_1204 (coe v1) in
        coe
@@ -12395,7 +12512,7 @@ du_isCommutativeMagma_2332 v0
             du_isCommutativeMagma_586
             (coe du_isCommutativeSemigroup_786 (coe v2))))
 -- Algebra.Structures.IsRingWithoutOne._.isCommutativeMonoid
-d_isCommutativeMonoid_2334 ::
+d_isCommutativeMonoid_2354 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12403,17 +12520,17 @@ d_isCommutativeMonoid_2334 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> T_IsCommutativeMonoid_736
-d_isCommutativeMonoid_2334 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeMonoid_2334 v8
-du_isCommutativeMonoid_2334 ::
-  T_IsRingWithoutOne_2286 -> T_IsCommutativeMonoid_736
-du_isCommutativeMonoid_2334 v0
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsCommutativeMonoid_736
+d_isCommutativeMonoid_2354 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeMonoid_2354 v8
+du_isCommutativeMonoid_2354 ::
+  T_IsRingWithoutOne_2306 -> T_IsCommutativeMonoid_736
+du_isCommutativeMonoid_2354 v0
   = coe
       du_isCommutativeMonoid_1204
-      (coe d_'43''45'isAbelianGroup_2304 (coe v0))
+      (coe d_'43''45'isAbelianGroup_2324 (coe v0))
 -- Algebra.Structures.IsRingWithoutOne._.isCommutativeSemigroup
-d_isCommutativeSemigroup_2336 ::
+d_isCommutativeSemigroup_2356 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12421,23 +12538,23 @@ d_isCommutativeSemigroup_2336 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_2336 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isCommutativeSemigroup_2336 v8
-du_isCommutativeSemigroup_2336 ::
-  T_IsRingWithoutOne_2286 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_2336 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsCommutativeSemigroup_548
+d_isCommutativeSemigroup_2356 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isCommutativeSemigroup_2356 v8
+du_isCommutativeSemigroup_2356 ::
+  T_IsRingWithoutOne_2306 -> T_IsCommutativeSemigroup_548
+du_isCommutativeSemigroup_2356 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (coe
          du_isCommutativeSemigroup_786
          (coe du_isCommutativeMonoid_1204 (coe v1)))
 -- Algebra.Structures.IsRingWithoutOne._.isGroup
-d_isGroup_2338 :: T_IsRingWithoutOne_2286 -> T_IsGroup_1036
-d_isGroup_2338 v0
-  = coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0))
+d_isGroup_2358 :: T_IsRingWithoutOne_2306 -> T_IsGroup_1036
+d_isGroup_2358 v0
+  = coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0))
 -- Algebra.Structures.IsRingWithoutOne._.isInvertibleMagma
-d_isInvertibleMagma_2340 ::
+d_isInvertibleMagma_2360 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12445,16 +12562,16 @@ d_isInvertibleMagma_2340 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> T_IsInvertibleMagma_924
-d_isInvertibleMagma_2340 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isInvertibleMagma_2340 v8
-du_isInvertibleMagma_2340 ::
-  T_IsRingWithoutOne_2286 -> T_IsInvertibleMagma_924
-du_isInvertibleMagma_2340 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsInvertibleMagma_924
+d_isInvertibleMagma_2360 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isInvertibleMagma_2360 v8
+du_isInvertibleMagma_2360 ::
+  T_IsRingWithoutOne_2306 -> T_IsInvertibleMagma_924
+du_isInvertibleMagma_2360 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe (coe du_isInvertibleMagma_1122 (coe d_isGroup_1144 (coe v1)))
 -- Algebra.Structures.IsRingWithoutOne._.isInvertibleUnitalMagma
-d_isInvertibleUnitalMagma_2342 ::
+d_isInvertibleUnitalMagma_2362 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12462,41 +12579,41 @@ d_isInvertibleUnitalMagma_2342 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> T_IsInvertibleUnitalMagma_976
-d_isInvertibleUnitalMagma_2342 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isInvertibleUnitalMagma_2342 v8
-du_isInvertibleUnitalMagma_2342 ::
-  T_IsRingWithoutOne_2286 -> T_IsInvertibleUnitalMagma_976
-du_isInvertibleUnitalMagma_2342 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsInvertibleUnitalMagma_976
+d_isInvertibleUnitalMagma_2362 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isInvertibleUnitalMagma_2362 v8
+du_isInvertibleUnitalMagma_2362 ::
+  T_IsRingWithoutOne_2306 -> T_IsInvertibleUnitalMagma_976
+du_isInvertibleUnitalMagma_2362 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (coe du_isInvertibleUnitalMagma_1124 (coe d_isGroup_1144 (coe v1)))
 -- Algebra.Structures.IsRingWithoutOne._.isMagma
-d_isMagma_2344 :: T_IsRingWithoutOne_2286 -> T_IsMagma_176
-d_isMagma_2344 v0
+d_isMagma_2364 :: T_IsRingWithoutOne_2306 -> T_IsMagma_176
+d_isMagma_2364 v0
   = coe
       d_isMagma_480
       (coe
          d_isSemigroup_696
          (coe
             d_isMonoid_1050
-            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))))
+            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0)))))
 -- Algebra.Structures.IsRingWithoutOne._.isMonoid
-d_isMonoid_2346 :: T_IsRingWithoutOne_2286 -> T_IsMonoid_686
-d_isMonoid_2346 v0
+d_isMonoid_2366 :: T_IsRingWithoutOne_2306 -> T_IsMonoid_686
+d_isMonoid_2366 v0
   = coe
       d_isMonoid_1050
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0)))
 -- Algebra.Structures.IsRingWithoutOne._.isSemigroup
-d_isSemigroup_2348 :: T_IsRingWithoutOne_2286 -> T_IsSemigroup_472
-d_isSemigroup_2348 v0
+d_isSemigroup_2368 :: T_IsRingWithoutOne_2306 -> T_IsSemigroup_472
+d_isSemigroup_2368 v0
   = coe
       d_isSemigroup_696
       (coe
          d_isMonoid_1050
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0))))
 -- Algebra.Structures.IsRingWithoutOne._.isUnitalMagma
-d_isUnitalMagma_2350 ::
+d_isUnitalMagma_2370 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12504,32 +12621,32 @@ d_isUnitalMagma_2350 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> T_IsUnitalMagma_642
-d_isUnitalMagma_2350 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isUnitalMagma_2350 v8
-du_isUnitalMagma_2350 ::
-  T_IsRingWithoutOne_2286 -> T_IsUnitalMagma_642
-du_isUnitalMagma_2350 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsUnitalMagma_642
+d_isUnitalMagma_2370 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isUnitalMagma_2370 v8
+du_isUnitalMagma_2370 ::
+  T_IsRingWithoutOne_2306 -> T_IsUnitalMagma_642
+du_isUnitalMagma_2370 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe (coe du_isUnitalMagma_730 (coe d_isMonoid_1050 (coe v2))))
 -- Algebra.Structures.IsRingWithoutOne._.⁻¹-cong
-d_'8315''185''45'cong_2352 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8315''185''45'cong_2352 v0
+d_'8315''185''45'cong_2372 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8315''185''45'cong_2372 v0
   = coe
       d_'8315''185''45'cong_1054
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0)))
 -- Algebra.Structures.IsRingWithoutOne._.inverse
-d_inverse_2354 ::
-  T_IsRingWithoutOne_2286 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_inverse_2354 v0
+d_inverse_2374 ::
+  T_IsRingWithoutOne_2306 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_inverse_2374 v0
   = coe
       d_inverse_1052
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0)))
 -- Algebra.Structures.IsRingWithoutOne._.inverseʳ
-d_inverse'691'_2356 ::
+d_inverse'691'_2376 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12537,16 +12654,16 @@ d_inverse'691'_2356 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-d_inverse'691'_2356 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_inverse'691'_2356 v8
-du_inverse'691'_2356 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-du_inverse'691'_2356 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+d_inverse'691'_2376 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_inverse'691'_2376 v8
+du_inverse'691'_2376 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+du_inverse'691'_2376 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe (coe du_inverse'691'_1108 (coe d_isGroup_1144 (coe v1)))
 -- Algebra.Structures.IsRingWithoutOne._.inverseˡ
-d_inverse'737'_2358 ::
+d_inverse'737'_2378 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12554,19 +12671,19 @@ d_inverse'737'_2358 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-d_inverse'737'_2358 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_inverse'737'_2358 v8
-du_inverse'737'_2358 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-du_inverse'737'_2358 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+d_inverse'737'_2378 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_inverse'737'_2378 v8
+du_inverse'737'_2378 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+du_inverse'737'_2378 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe (coe du_inverse'737'_1106 (coe d_isGroup_1144 (coe v1)))
 -- Algebra.Structures.IsRingWithoutOne._.isEquivalence
-d_isEquivalence_2360 ::
-  T_IsRingWithoutOne_2286 ->
+d_isEquivalence_2380 ::
+  T_IsRingWithoutOne_2306 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_2360 v0
+d_isEquivalence_2380 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -12576,9 +12693,9 @@ d_isEquivalence_2360 v0
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0))))))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0))))))
 -- Algebra.Structures.IsRingWithoutOne._.isPartialEquivalence
-d_isPartialEquivalence_2362 ::
+d_isPartialEquivalence_2382 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12587,15 +12704,15 @@ d_isPartialEquivalence_2362 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 ->
+  T_IsRingWithoutOne_2306 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2362 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_2362 v8
-du_isPartialEquivalence_2362 ::
-  T_IsRingWithoutOne_2286 ->
+d_isPartialEquivalence_2382 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_2382 v8
+du_isPartialEquivalence_2382 ::
+  T_IsRingWithoutOne_2306 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2362 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+du_isPartialEquivalence_2382 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -12609,8 +12726,8 @@ du_isPartialEquivalence_2362 v0
                      MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                      (coe d_isEquivalence_184 (coe v5)))))))
 -- Algebra.Structures.IsRingWithoutOne._.refl
-d_refl_2364 :: T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-d_refl_2364 v0
+d_refl_2384 :: T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+d_refl_2384 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -12622,9 +12739,9 @@ d_refl_2364 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0)))))))
 -- Algebra.Structures.IsRingWithoutOne._.reflexive
-d_reflexive_2366 ::
+d_reflexive_2386 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12633,19 +12750,19 @@ d_reflexive_2366 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 ->
+  T_IsRingWithoutOne_2306 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2366 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_2366 v8
-du_reflexive_2366 ::
-  T_IsRingWithoutOne_2286 ->
+d_reflexive_2386 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_2386 v8
+du_reflexive_2386 ::
+  T_IsRingWithoutOne_2306 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2366 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+du_reflexive_2386 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -12660,7 +12777,7 @@ du_reflexive_2366 v0
                        MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                        (coe d_isEquivalence_184 (coe v5)) v6)))))
 -- Algebra.Structures.IsRingWithoutOne._.setoid
-d_setoid_2368 ::
+d_setoid_2388 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12669,15 +12786,15 @@ d_setoid_2368 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 ->
+  T_IsRingWithoutOne_2306 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2368 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_2368 v8
-du_setoid_2368 ::
-  T_IsRingWithoutOne_2286 ->
+d_setoid_2388 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_2388 v8
+du_setoid_2388 ::
+  T_IsRingWithoutOne_2306 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2368 v0
-  = let v1 = d_'43''45'isAbelianGroup_2304 (coe v0) in
+du_setoid_2388 v0
+  = let v1 = d_'43''45'isAbelianGroup_2324 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -12686,9 +12803,9 @@ du_setoid_2368 v0
             (let v4 = d_isSemigroup_696 (coe v3) in
              coe (coe du_setoid_200 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsRingWithoutOne._.sym
-d_sym_2370 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2370 v0
+d_sym_2390 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_2390 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -12700,12 +12817,12 @@ d_sym_2370 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0)))))))
 -- Algebra.Structures.IsRingWithoutOne._.trans
-d_trans_2372 ::
-  T_IsRingWithoutOne_2286 ->
+d_trans_2392 ::
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2372 v0
+d_trans_2392 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -12717,9 +12834,9 @@ d_trans_2372 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v0)))))))
 -- Algebra.Structures.IsRingWithoutOne._.uniqueʳ-⁻¹
-d_unique'691''45''8315''185'_2374 ::
+d_unique'691''45''8315''185'_2394 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12728,22 +12845,22 @@ d_unique'691''45''8315''185'_2374 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_unique'691''45''8315''185'_2374 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 v8
-  = du_unique'691''45''8315''185'_2374 v4 v6 v7 v8
-du_unique'691''45''8315''185'_2374 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_unique'691''45''8315''185'_2394 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 v8
+  = du_unique'691''45''8315''185'_2394 v4 v6 v7 v8
+du_unique'691''45''8315''185'_2394 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_unique'691''45''8315''185'_2374 v0 v1 v2 v3
-  = let v4 = d_'43''45'isAbelianGroup_2304 (coe v3) in
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_unique'691''45''8315''185'_2394 v0 v1 v2 v3
+  = let v4 = d_'43''45'isAbelianGroup_2324 (coe v3) in
     coe
       (coe
          du_unique'691''45''8315''185'_1120 (coe v0) (coe v2) (coe v1)
          (coe d_isGroup_1144 (coe v4)))
 -- Algebra.Structures.IsRingWithoutOne._.uniqueˡ-⁻¹
-d_unique'737''45''8315''185'_2376 ::
+d_unique'737''45''8315''185'_2396 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12752,22 +12869,22 @@ d_unique'737''45''8315''185'_2376 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_unique'737''45''8315''185'_2376 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 v8
-  = du_unique'737''45''8315''185'_2376 v4 v6 v7 v8
-du_unique'737''45''8315''185'_2376 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_unique'737''45''8315''185'_2396 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 v8
+  = du_unique'737''45''8315''185'_2396 v4 v6 v7 v8
+du_unique'737''45''8315''185'_2396 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_unique'737''45''8315''185'_2376 v0 v1 v2 v3
-  = let v4 = d_'43''45'isAbelianGroup_2304 (coe v3) in
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_unique'737''45''8315''185'_2396 v0 v1 v2 v3
+  = let v4 = d_'43''45'isAbelianGroup_2324 (coe v3) in
     coe
       (coe
          du_unique'737''45''8315''185'_1114 (coe v0) (coe v2) (coe v1)
          (coe d_isGroup_1144 (coe v4)))
 -- Algebra.Structures.IsRingWithoutOne.distribˡ
-d_distrib'737'_2378 ::
+d_distrib'737'_2398 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12776,17 +12893,17 @@ d_distrib'737'_2378 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_2378 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'737'_2378 v8
-du_distrib'737'_2378 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_2378 v0
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'737'_2398 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'737'_2398 v8
+du_distrib'737'_2398 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'737'_2398 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_distrib_2310 (coe v0))
+      (coe d_distrib_2330 (coe v0))
 -- Algebra.Structures.IsRingWithoutOne.distribʳ
-d_distrib'691'_2380 ::
+d_distrib'691'_2400 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12795,17 +12912,17 @@ d_distrib'691'_2380 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_2380 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_distrib'691'_2380 v8
-du_distrib'691'_2380 ::
-  T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_2380 v0
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'691'_2400 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_distrib'691'_2400 v8
+du_distrib'691'_2400 ::
+  T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'691'_2400 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_distrib_2310 (coe v0))
+      (coe d_distrib_2330 (coe v0))
 -- Algebra.Structures.IsRingWithoutOne.zeroˡ
-d_zero'737'_2382 ::
+d_zero'737'_2402 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12813,19 +12930,19 @@ d_zero'737'_2382 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-d_zero'737'_2382 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
-  = du_zero'737'_2382 v4 v5 v6 v7 v8
-du_zero'737'_2382 ::
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+d_zero'737'_2402 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_zero'737'_2402 v4 v5 v6 v7 v8
+du_zero'737'_2402 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-du_zero'737'_2382 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+du_zero'737'_2402 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_594
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_assoc'8743'distrib'691''8743'id'691''8743'inv'691''8658'ze'737'_596
       (let v5
-             = d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4)) in
+             = d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4)) in
        coe
          (let v6 = d_isMonoid_1050 (coe v5) in
           coe
@@ -12841,8 +12958,8 @@ du_zero'737'_2382 v0 v1 v2 v3 v4
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4)))))))
-      (coe d_'42''45'cong_2306 (coe v4))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4)))))))
+      (coe d_'42''45'cong_2326 (coe v4))
       (coe
          d_assoc_482
          (coe
@@ -12850,16 +12967,16 @@ du_zero'737'_2382 v0 v1 v2 v3 v4
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4))))))
-      (coe du_distrib'691'_2380 (coe v4))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4))))))
+      (coe du_distrib'691'_2400 (coe v4))
       (let v5
-             = d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4)) in
+             = d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4)) in
        coe (coe du_identity'691'_728 (coe d_isMonoid_1050 (coe v5))))
       (coe
          du_inverse'691'_1108
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4))))
 -- Algebra.Structures.IsRingWithoutOne.zeroʳ
-d_zero'691'_2384 ::
+d_zero'691'_2404 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12867,19 +12984,19 @@ d_zero'691'_2384 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-d_zero'691'_2384 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
-  = du_zero'691'_2384 v4 v5 v6 v7 v8
-du_zero'691'_2384 ::
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+d_zero'691'_2404 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_zero'691'_2404 v4 v5 v6 v7 v8
+du_zero'691'_2404 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> AgdaAny -> AgdaAny
-du_zero'691'_2384 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsRingWithoutOne_2306 -> AgdaAny -> AgdaAny
+du_zero'691'_2404 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_606
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_assoc'8743'distrib'737''8743'id'691''8743'inv'691''8658'ze'691'_608
       (let v5
-             = d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4)) in
+             = d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4)) in
        coe
          (let v6 = d_isMonoid_1050 (coe v5) in
           coe
@@ -12895,8 +13012,8 @@ du_zero'691'_2384 v0 v1 v2 v3 v4
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4)))))))
-      (coe d_'42''45'cong_2306 (coe v4))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4)))))))
+      (coe d_'42''45'cong_2326 (coe v4))
       (coe
          d_assoc_482
          (coe
@@ -12904,16 +13021,16 @@ du_zero'691'_2384 v0 v1 v2 v3 v4
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4))))))
-      (coe du_distrib'737'_2378 (coe v4))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4))))))
+      (coe du_distrib'737'_2398 (coe v4))
       (let v5
-             = d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4)) in
+             = d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4)) in
        coe (coe du_identity'691'_728 (coe d_isMonoid_1050 (coe v5))))
       (coe
          du_inverse'691'_1108
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v4))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4))))
 -- Algebra.Structures.IsRingWithoutOne.zero
-d_zero_2386 ::
+d_zero_2406 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12922,24 +13039,24 @@ d_zero_2386 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_2386 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
-  = du_zero_2386 v4 v5 v6 v7 v8
-du_zero_2386 ::
+  T_IsRingWithoutOne_2306 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_zero_2406 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_zero_2406 v4 v5 v6 v7 v8
+du_zero_2406 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_zero_2386 v0 v1 v2 v3 v4
+  T_IsRingWithoutOne_2306 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_zero_2406 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
       (coe
-         du_zero'737'_2382 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
+         du_zero'737'_2402 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
       (coe
-         du_zero'691'_2384 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
--- Algebra.Structures.IsRingWithoutOne.*-isMagma
-d_'42''45'isMagma_2388 ::
+         du_zero'691'_2404 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
+-- Algebra.Structures.IsRingWithoutOne.isNearSemiring
+d_isNearSemiring_2408 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12947,45 +13064,27 @@ d_'42''45'isMagma_2388 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> T_IsMagma_176
-d_'42''45'isMagma_2388 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isMagma_2388 v8
-du_'42''45'isMagma_2388 :: T_IsRingWithoutOne_2286 -> T_IsMagma_176
-du_'42''45'isMagma_2388 v0
-  = coe
-      C_IsMagma'46'constructor_1867
-      (coe
-         d_isEquivalence_184
-         (coe
-            d_isMagma_480
-            (coe
-               d_isSemigroup_696
-               (coe
-                  d_isMonoid_1050
-                  (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2304 (coe v0)))))))
-      (coe d_'42''45'cong_2306 (coe v0))
--- Algebra.Structures.IsRingWithoutOne.*-isSemigroup
-d_'42''45'isSemigroup_2390 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsNearSemiring_1218
+d_isNearSemiring_2408 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_isNearSemiring_2408 v4 v5 v6 v7 v8
+du_isNearSemiring_2408 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRingWithoutOne_2286 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_2390 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'42''45'isSemigroup_2390 v8
-du_'42''45'isSemigroup_2390 ::
-  T_IsRingWithoutOne_2286 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_2390 v0
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsNearSemiring_1218
+du_isNearSemiring_2408 v0 v1 v2 v3 v4
   = coe
-      C_IsSemigroup'46'constructor_10417
-      (coe du_'42''45'isMagma_2388 (coe v0))
-      (coe d_'42''45'assoc_2308 (coe v0))
+      C_IsNearSemiring'46'constructor_35025
+      (coe
+         d_isMonoid_1050
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2324 (coe v4))))
+      (coe d_'42''45'cong_2326 (coe v4))
+      (coe d_'42''45'assoc_2328 (coe v4))
+      (coe du_distrib'691'_2400 (coe v4))
+      (coe
+         du_zero'737'_2402 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
 -- Algebra.Structures.IsRingWithoutOne._.∙-congʳ
-d_'8729''45'cong'691'_2394 ::
+d_'8729''45'cong'691'_2412 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -12994,18 +13093,27 @@ d_'8729''45'cong'691'_2394 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 ->
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2394 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_2394 v8
-du_'8729''45'cong'691'_2394 ::
-  T_IsRingWithoutOne_2286 ->
+d_'8729''45'cong'691'_2412 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_'8729''45'cong'691'_2412 v4 v5 v6 v7 v8
+du_'8729''45'cong'691'_2412 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2394 v0
-  = let v1 = coe du_'42''45'isSemigroup_2390 (coe v0) in
-    coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v1)))
+du_'8729''45'cong'691'_2412 v0 v1 v2 v3 v4
+  = let v5
+          = coe
+              du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+              (coe v4) in
+    coe
+      (coe
+         du_'8729''45'cong'691'_206 (coe du_'42''45'isMagma_1282 (coe v5)))
 -- Algebra.Structures.IsRingWithoutOne._.∙-congˡ
-d_'8729''45'cong'737'_2396 ::
+d_'8729''45'cong'737'_2414 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13014,20 +13122,75 @@ d_'8729''45'cong'737'_2396 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRingWithoutOne_2286 ->
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2396 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_2396 v8
-du_'8729''45'cong'737'_2396 ::
-  T_IsRingWithoutOne_2286 ->
+d_'8729''45'cong'737'_2414 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_'8729''45'cong'737'_2414 v4 v5 v6 v7 v8
+du_'8729''45'cong'737'_2414 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsRingWithoutOne_2306 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2396 v0
-  = let v1 = coe du_'42''45'isSemigroup_2390 (coe v0) in
-    coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v1)))
+du_'8729''45'cong'737'_2414 v0 v1 v2 v3 v4
+  = let v5
+          = coe
+              du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+              (coe v4) in
+    coe
+      (coe
+         du_'8729''45'cong'737'_202 (coe du_'42''45'isMagma_1282 (coe v5)))
+-- Algebra.Structures.IsRingWithoutOne._.*-isMagma
+d_'42''45'isMagma_2416 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsMagma_176
+d_'42''45'isMagma_2416 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_'42''45'isMagma_2416 v4 v5 v6 v7 v8
+du_'42''45'isMagma_2416 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsMagma_176
+du_'42''45'isMagma_2416 v0 v1 v2 v3 v4
+  = coe
+      du_'42''45'isMagma_1282
+      (coe
+         du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe v4))
+-- Algebra.Structures.IsRingWithoutOne._.*-isSemigroup
+d_'42''45'isSemigroup_2418 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_2418 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 v8
+  = du_'42''45'isSemigroup_2418 v4 v5 v6 v7 v8
+du_'42''45'isSemigroup_2418 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsRingWithoutOne_2306 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_2418 v0 v1 v2 v3 v4
+  = coe
+      du_'42''45'isSemigroup_1284
+      (coe
+         du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe v4))
 -- Algebra.Structures.IsNonAssociativeRing
-d_IsNonAssociativeRing_2408 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
-data T_IsNonAssociativeRing_2408
-  = C_IsNonAssociativeRing'46'constructor_83447 T_IsAbelianGroup_1132
+d_IsNonAssociativeRing_2430 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
+data T_IsNonAssociativeRing_2430
+  = C_IsNonAssociativeRing'46'constructor_85097 T_IsAbelianGroup_1132
                                                 (AgdaAny ->
                                                  AgdaAny ->
                                                  AgdaAny ->
@@ -13036,52 +13199,52 @@ data T_IsNonAssociativeRing_2408
                                                 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                                 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsNonAssociativeRing.+-isAbelianGroup
-d_'43''45'isAbelianGroup_2430 ::
-  T_IsNonAssociativeRing_2408 -> T_IsAbelianGroup_1132
-d_'43''45'isAbelianGroup_2430 v0
+d_'43''45'isAbelianGroup_2452 ::
+  T_IsNonAssociativeRing_2430 -> T_IsAbelianGroup_1132
+d_'43''45'isAbelianGroup_2452 v0
   = case coe v0 of
-      C_IsNonAssociativeRing'46'constructor_83447 v1 v2 v3 v4 v5
+      C_IsNonAssociativeRing'46'constructor_85097 v1 v2 v3 v4 v5
         -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsNonAssociativeRing.*-cong
-d_'42''45'cong_2432 ::
-  T_IsNonAssociativeRing_2408 ->
+d_'42''45'cong_2454 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_2432 v0
+d_'42''45'cong_2454 v0
   = case coe v0 of
-      C_IsNonAssociativeRing'46'constructor_83447 v1 v2 v3 v4 v5
+      C_IsNonAssociativeRing'46'constructor_85097 v1 v2 v3 v4 v5
         -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsNonAssociativeRing.*-identity
-d_'42''45'identity_2434 ::
-  T_IsNonAssociativeRing_2408 ->
+d_'42''45'identity_2456 ::
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_2434 v0
+d_'42''45'identity_2456 v0
   = case coe v0 of
-      C_IsNonAssociativeRing'46'constructor_83447 v1 v2 v3 v4 v5
+      C_IsNonAssociativeRing'46'constructor_85097 v1 v2 v3 v4 v5
         -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsNonAssociativeRing.distrib
-d_distrib_2436 ::
-  T_IsNonAssociativeRing_2408 ->
+d_distrib_2458 ::
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_2436 v0
+d_distrib_2458 v0
   = case coe v0 of
-      C_IsNonAssociativeRing'46'constructor_83447 v1 v2 v3 v4 v5
+      C_IsNonAssociativeRing'46'constructor_85097 v1 v2 v3 v4 v5
         -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsNonAssociativeRing.zero
-d_zero_2438 ::
-  T_IsNonAssociativeRing_2408 ->
+d_zero_2460 ::
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_2438 v0
+d_zero_2460 v0
   = case coe v0 of
-      C_IsNonAssociativeRing'46'constructor_83447 v1 v2 v3 v4 v5
+      C_IsNonAssociativeRing'46'constructor_85097 v1 v2 v3 v4 v5
         -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsNonAssociativeRing._._//_
-d__'47''47'__2442 ::
+d__'47''47'__2464 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13091,36 +13254,36 @@ d__'47''47'__2442 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'47''47'__2442 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8 ~v9
-  = du__'47''47'__2442 v4 v6
-du__'47''47'__2442 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'47''47'__2464 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8 ~v9
+  = du__'47''47'__2464 v4 v6
+du__'47''47'__2464 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'47''47'__2442 v0 v1 = coe du__'47''47'__1098 (coe v0) (coe v1)
+du__'47''47'__2464 v0 v1 = coe du__'47''47'__1098 (coe v0) (coe v1)
 -- Algebra.Structures.IsNonAssociativeRing._.assoc
-d_assoc_2444 ::
-  T_IsNonAssociativeRing_2408 ->
+d_assoc_2466 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_2444 v0
+d_assoc_2466 v0
   = coe
       d_assoc_482
       (coe
          d_isSemigroup_696
          (coe
             d_isMonoid_1050
-            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))))
+            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))))
 -- Algebra.Structures.IsNonAssociativeRing._.comm
-d_comm_2446 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_2446 v0
-  = coe d_comm_1146 (coe d_'43''45'isAbelianGroup_2430 (coe v0))
+d_comm_2468 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny -> AgdaAny
+d_comm_2468 v0
+  = coe d_comm_1146 (coe d_'43''45'isAbelianGroup_2452 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing._.∙-cong
-d_'8729''45'cong_2448 ::
-  T_IsNonAssociativeRing_2408 ->
+d_'8729''45'cong_2470 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_2448 v0
+d_'8729''45'cong_2470 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -13130,9 +13293,9 @@ d_'8729''45'cong_2448 v0
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0))))))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0))))))
 -- Algebra.Structures.IsNonAssociativeRing._.∙-congʳ
-d_'8729''45'cong'691'_2450 ::
+d_'8729''45'cong'691'_2472 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13142,15 +13305,15 @@ d_'8729''45'cong'691'_2450 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2450 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2450 v9
-du_'8729''45'cong'691'_2450 ::
-  T_IsNonAssociativeRing_2408 ->
+d_'8729''45'cong'691'_2472 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'691'_2472 v9
+du_'8729''45'cong'691'_2472 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2450 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+du_'8729''45'cong'691'_2472 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -13160,7 +13323,7 @@ du_'8729''45'cong'691'_2450 v0
              coe
                (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsNonAssociativeRing._.∙-congˡ
-d_'8729''45'cong'737'_2452 ::
+d_'8729''45'cong'737'_2474 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13170,15 +13333,15 @@ d_'8729''45'cong'737'_2452 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2452 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2452 v9
-du_'8729''45'cong'737'_2452 ::
-  T_IsNonAssociativeRing_2408 ->
+d_'8729''45'cong'737'_2474 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'737'_2474 v9
+du_'8729''45'cong'737'_2474 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2452 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+du_'8729''45'cong'737'_2474 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -13188,17 +13351,17 @@ du_'8729''45'cong'737'_2452 v0
              coe
                (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsNonAssociativeRing._.identity
-d_identity_2454 ::
-  T_IsNonAssociativeRing_2408 ->
+d_identity_2476 ::
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_2454 v0
+d_identity_2476 v0
   = coe
       d_identity_698
       (coe
          d_isMonoid_1050
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0))))
 -- Algebra.Structures.IsNonAssociativeRing._.identityʳ
-d_identity'691'_2456 ::
+d_identity'691'_2478 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13207,18 +13370,18 @@ d_identity'691'_2456 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_identity'691'_2456 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2456 v9
-du_identity'691'_2456 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-du_identity'691'_2456 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_identity'691'_2478 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'691'_2478 v9
+du_identity'691'_2478 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+du_identity'691'_2478 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe (coe du_identity'691'_728 (coe d_isMonoid_1050 (coe v2))))
 -- Algebra.Structures.IsNonAssociativeRing._.identityˡ
-d_identity'737'_2458 ::
+d_identity'737'_2480 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13227,18 +13390,18 @@ d_identity'737'_2458 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_identity'737'_2458 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2458 v9
-du_identity'737'_2458 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-du_identity'737'_2458 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_identity'737'_2480 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'737'_2480 v9
+du_identity'737'_2480 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+du_identity'737'_2480 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe (coe du_identity'737'_726 (coe d_isMonoid_1050 (coe v2))))
 -- Algebra.Structures.IsNonAssociativeRing._.isCommutativeMagma
-d_isCommutativeMagma_2460 ::
+d_isCommutativeMagma_2482 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13247,13 +13410,13 @@ d_isCommutativeMagma_2460 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_2460 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isCommutativeMagma_2460 v9
-du_isCommutativeMagma_2460 ::
-  T_IsNonAssociativeRing_2408 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_2460 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_2482 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isCommutativeMagma_2482 v9
+du_isCommutativeMagma_2482 ::
+  T_IsNonAssociativeRing_2430 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_2482 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = coe du_isCommutativeMonoid_1204 (coe v1) in
        coe
@@ -13261,7 +13424,7 @@ du_isCommutativeMagma_2460 v0
             du_isCommutativeMagma_586
             (coe du_isCommutativeSemigroup_786 (coe v2))))
 -- Algebra.Structures.IsNonAssociativeRing._.isCommutativeMonoid
-d_isCommutativeMonoid_2462 ::
+d_isCommutativeMonoid_2484 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13270,17 +13433,17 @@ d_isCommutativeMonoid_2462 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> T_IsCommutativeMonoid_736
-d_isCommutativeMonoid_2462 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isCommutativeMonoid_2462 v9
-du_isCommutativeMonoid_2462 ::
-  T_IsNonAssociativeRing_2408 -> T_IsCommutativeMonoid_736
-du_isCommutativeMonoid_2462 v0
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> T_IsCommutativeMonoid_736
+d_isCommutativeMonoid_2484 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isCommutativeMonoid_2484 v9
+du_isCommutativeMonoid_2484 ::
+  T_IsNonAssociativeRing_2430 -> T_IsCommutativeMonoid_736
+du_isCommutativeMonoid_2484 v0
   = coe
       du_isCommutativeMonoid_1204
-      (coe d_'43''45'isAbelianGroup_2430 (coe v0))
+      (coe d_'43''45'isAbelianGroup_2452 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing._.isCommutativeSemigroup
-d_isCommutativeSemigroup_2464 ::
+d_isCommutativeSemigroup_2486 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13290,24 +13453,24 @@ d_isCommutativeSemigroup_2464 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_2464 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+  T_IsNonAssociativeRing_2430 -> T_IsCommutativeSemigroup_548
+d_isCommutativeSemigroup_2486 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                               v9
-  = du_isCommutativeSemigroup_2464 v9
-du_isCommutativeSemigroup_2464 ::
-  T_IsNonAssociativeRing_2408 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_2464 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  = du_isCommutativeSemigroup_2486 v9
+du_isCommutativeSemigroup_2486 ::
+  T_IsNonAssociativeRing_2430 -> T_IsCommutativeSemigroup_548
+du_isCommutativeSemigroup_2486 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (coe
          du_isCommutativeSemigroup_786
          (coe du_isCommutativeMonoid_1204 (coe v1)))
 -- Algebra.Structures.IsNonAssociativeRing._.isGroup
-d_isGroup_2466 :: T_IsNonAssociativeRing_2408 -> T_IsGroup_1036
-d_isGroup_2466 v0
-  = coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0))
+d_isGroup_2488 :: T_IsNonAssociativeRing_2430 -> T_IsGroup_1036
+d_isGroup_2488 v0
+  = coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing._.isInvertibleMagma
-d_isInvertibleMagma_2468 ::
+d_isInvertibleMagma_2490 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13316,16 +13479,16 @@ d_isInvertibleMagma_2468 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> T_IsInvertibleMagma_924
-d_isInvertibleMagma_2468 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isInvertibleMagma_2468 v9
-du_isInvertibleMagma_2468 ::
-  T_IsNonAssociativeRing_2408 -> T_IsInvertibleMagma_924
-du_isInvertibleMagma_2468 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> T_IsInvertibleMagma_924
+d_isInvertibleMagma_2490 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isInvertibleMagma_2490 v9
+du_isInvertibleMagma_2490 ::
+  T_IsNonAssociativeRing_2430 -> T_IsInvertibleMagma_924
+du_isInvertibleMagma_2490 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe (coe du_isInvertibleMagma_1122 (coe d_isGroup_1144 (coe v1)))
 -- Algebra.Structures.IsNonAssociativeRing._.isInvertibleUnitalMagma
-d_isInvertibleUnitalMagma_2470 ::
+d_isInvertibleUnitalMagma_2492 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13335,43 +13498,43 @@ d_isInvertibleUnitalMagma_2470 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 -> T_IsInvertibleUnitalMagma_976
-d_isInvertibleUnitalMagma_2470 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+  T_IsNonAssociativeRing_2430 -> T_IsInvertibleUnitalMagma_976
+d_isInvertibleUnitalMagma_2492 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                                v9
-  = du_isInvertibleUnitalMagma_2470 v9
-du_isInvertibleUnitalMagma_2470 ::
-  T_IsNonAssociativeRing_2408 -> T_IsInvertibleUnitalMagma_976
-du_isInvertibleUnitalMagma_2470 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  = du_isInvertibleUnitalMagma_2492 v9
+du_isInvertibleUnitalMagma_2492 ::
+  T_IsNonAssociativeRing_2430 -> T_IsInvertibleUnitalMagma_976
+du_isInvertibleUnitalMagma_2492 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (coe du_isInvertibleUnitalMagma_1124 (coe d_isGroup_1144 (coe v1)))
 -- Algebra.Structures.IsNonAssociativeRing._.isMagma
-d_isMagma_2472 :: T_IsNonAssociativeRing_2408 -> T_IsMagma_176
-d_isMagma_2472 v0
+d_isMagma_2494 :: T_IsNonAssociativeRing_2430 -> T_IsMagma_176
+d_isMagma_2494 v0
   = coe
       d_isMagma_480
       (coe
          d_isSemigroup_696
          (coe
             d_isMonoid_1050
-            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))))
+            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))))
 -- Algebra.Structures.IsNonAssociativeRing._.isMonoid
-d_isMonoid_2474 :: T_IsNonAssociativeRing_2408 -> T_IsMonoid_686
-d_isMonoid_2474 v0
+d_isMonoid_2496 :: T_IsNonAssociativeRing_2430 -> T_IsMonoid_686
+d_isMonoid_2496 v0
   = coe
       d_isMonoid_1050
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))
 -- Algebra.Structures.IsNonAssociativeRing._.isSemigroup
-d_isSemigroup_2476 ::
-  T_IsNonAssociativeRing_2408 -> T_IsSemigroup_472
-d_isSemigroup_2476 v0
+d_isSemigroup_2498 ::
+  T_IsNonAssociativeRing_2430 -> T_IsSemigroup_472
+d_isSemigroup_2498 v0
   = coe
       d_isSemigroup_696
       (coe
          d_isMonoid_1050
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0))))
 -- Algebra.Structures.IsNonAssociativeRing._.isUnitalMagma
-d_isUnitalMagma_2478 ::
+d_isUnitalMagma_2500 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13380,34 +13543,34 @@ d_isUnitalMagma_2478 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> T_IsUnitalMagma_642
-d_isUnitalMagma_2478 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isUnitalMagma_2478 v9
-du_isUnitalMagma_2478 ::
-  T_IsNonAssociativeRing_2408 -> T_IsUnitalMagma_642
-du_isUnitalMagma_2478 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> T_IsUnitalMagma_642
+d_isUnitalMagma_2500 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isUnitalMagma_2500 v9
+du_isUnitalMagma_2500 ::
+  T_IsNonAssociativeRing_2430 -> T_IsUnitalMagma_642
+du_isUnitalMagma_2500 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe (coe du_isUnitalMagma_730 (coe d_isMonoid_1050 (coe v2))))
 -- Algebra.Structures.IsNonAssociativeRing._.⁻¹-cong
-d_'8315''185''45'cong_2480 ::
-  T_IsNonAssociativeRing_2408 ->
+d_'8315''185''45'cong_2502 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8315''185''45'cong_2480 v0
+d_'8315''185''45'cong_2502 v0
   = coe
       d_'8315''185''45'cong_1054
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))
 -- Algebra.Structures.IsNonAssociativeRing._.inverse
-d_inverse_2482 ::
-  T_IsNonAssociativeRing_2408 ->
+d_inverse_2504 ::
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_inverse_2482 v0
+d_inverse_2504 v0
   = coe
       d_inverse_1052
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))
 -- Algebra.Structures.IsNonAssociativeRing._.inverseʳ
-d_inverse'691'_2484 ::
+d_inverse'691'_2506 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13416,16 +13579,16 @@ d_inverse'691'_2484 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_inverse'691'_2484 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_inverse'691'_2484 v9
-du_inverse'691'_2484 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-du_inverse'691'_2484 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_inverse'691'_2506 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_inverse'691'_2506 v9
+du_inverse'691'_2506 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+du_inverse'691'_2506 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe (coe du_inverse'691'_1108 (coe d_isGroup_1144 (coe v1)))
 -- Algebra.Structures.IsNonAssociativeRing._.inverseˡ
-d_inverse'737'_2486 ::
+d_inverse'737'_2508 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13434,19 +13597,19 @@ d_inverse'737'_2486 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_inverse'737'_2486 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_inverse'737'_2486 v9
-du_inverse'737'_2486 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-du_inverse'737'_2486 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_inverse'737'_2508 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_inverse'737'_2508 v9
+du_inverse'737'_2508 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+du_inverse'737'_2508 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe (coe du_inverse'737'_1106 (coe d_isGroup_1144 (coe v1)))
 -- Algebra.Structures.IsNonAssociativeRing._.isEquivalence
-d_isEquivalence_2488 ::
-  T_IsNonAssociativeRing_2408 ->
+d_isEquivalence_2510 ::
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_2488 v0
+d_isEquivalence_2510 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -13456,9 +13619,9 @@ d_isEquivalence_2488 v0
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0))))))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0))))))
 -- Algebra.Structures.IsNonAssociativeRing._.isPartialEquivalence
-d_isPartialEquivalence_2490 ::
+d_isPartialEquivalence_2512 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13468,15 +13631,15 @@ d_isPartialEquivalence_2490 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2490 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isPartialEquivalence_2490 v9
-du_isPartialEquivalence_2490 ::
-  T_IsNonAssociativeRing_2408 ->
+d_isPartialEquivalence_2512 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isPartialEquivalence_2512 v9
+du_isPartialEquivalence_2512 ::
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2490 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+du_isPartialEquivalence_2512 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -13490,8 +13653,8 @@ du_isPartialEquivalence_2490 v0
                      MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                      (coe d_isEquivalence_184 (coe v5)))))))
 -- Algebra.Structures.IsNonAssociativeRing._.refl
-d_refl_2492 :: T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_refl_2492 v0
+d_refl_2514 :: T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_refl_2514 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -13503,9 +13666,9 @@ d_refl_2492 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))))))
 -- Algebra.Structures.IsNonAssociativeRing._.reflexive
-d_reflexive_2494 ::
+d_reflexive_2516 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13515,19 +13678,19 @@ d_reflexive_2494 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2494 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_reflexive_2494 v9
-du_reflexive_2494 ::
-  T_IsNonAssociativeRing_2408 ->
+d_reflexive_2516 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_reflexive_2516 v9
+du_reflexive_2516 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2494 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+du_reflexive_2516 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -13542,7 +13705,7 @@ du_reflexive_2494 v0
                        MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                        (coe d_isEquivalence_184 (coe v5)) v6)))))
 -- Algebra.Structures.IsNonAssociativeRing._.setoid
-d_setoid_2496 ::
+d_setoid_2518 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13552,15 +13715,15 @@ d_setoid_2496 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2496 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_setoid_2496 v9
-du_setoid_2496 ::
-  T_IsNonAssociativeRing_2408 ->
+d_setoid_2518 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_setoid_2518 v9
+du_setoid_2518 ::
+  T_IsNonAssociativeRing_2430 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2496 v0
-  = let v1 = d_'43''45'isAbelianGroup_2430 (coe v0) in
+du_setoid_2518 v0
+  = let v1 = d_'43''45'isAbelianGroup_2452 (coe v0) in
     coe
       (let v2 = d_isGroup_1144 (coe v1) in
        coe
@@ -13569,10 +13732,10 @@ du_setoid_2496 v0
             (let v4 = d_isSemigroup_696 (coe v3) in
              coe (coe du_setoid_200 (coe d_isMagma_480 (coe v4))))))
 -- Algebra.Structures.IsNonAssociativeRing._.sym
-d_sym_2498 ::
-  T_IsNonAssociativeRing_2408 ->
+d_sym_2520 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2498 v0
+d_sym_2520 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -13584,12 +13747,12 @@ d_sym_2498 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))))))
 -- Algebra.Structures.IsNonAssociativeRing._.trans
-d_trans_2500 ::
-  T_IsNonAssociativeRing_2408 ->
+d_trans_2522 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2500 v0
+d_trans_2522 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -13601,9 +13764,9 @@ d_trans_2500 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))))))
 -- Algebra.Structures.IsNonAssociativeRing._.uniqueʳ-⁻¹
-d_unique'691''45''8315''185'_2502 ::
+d_unique'691''45''8315''185'_2524 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13613,25 +13776,25 @@ d_unique'691''45''8315''185'_2502 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_unique'691''45''8315''185'_2502 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
+d_unique'691''45''8315''185'_2524 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
                                   v9
-  = du_unique'691''45''8315''185'_2502 v4 v6 v7 v9
-du_unique'691''45''8315''185'_2502 ::
+  = du_unique'691''45''8315''185'_2524 v4 v6 v7 v9
+du_unique'691''45''8315''185'_2524 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_unique'691''45''8315''185'_2502 v0 v1 v2 v3
-  = let v4 = d_'43''45'isAbelianGroup_2430 (coe v3) in
+du_unique'691''45''8315''185'_2524 v0 v1 v2 v3
+  = let v4 = d_'43''45'isAbelianGroup_2452 (coe v3) in
     coe
       (coe
          du_unique'691''45''8315''185'_1120 (coe v0) (coe v2) (coe v1)
          (coe d_isGroup_1144 (coe v4)))
 -- Algebra.Structures.IsNonAssociativeRing._.uniqueˡ-⁻¹
-d_unique'737''45''8315''185'_2504 ::
+d_unique'737''45''8315''185'_2526 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13641,25 +13804,25 @@ d_unique'737''45''8315''185'_2504 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_unique'737''45''8315''185'_2504 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
+d_unique'737''45''8315''185'_2526 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
                                   v9
-  = du_unique'737''45''8315''185'_2504 v4 v6 v7 v9
-du_unique'737''45''8315''185'_2504 ::
+  = du_unique'737''45''8315''185'_2526 v4 v6 v7 v9
+du_unique'737''45''8315''185'_2526 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_unique'737''45''8315''185'_2504 v0 v1 v2 v3
-  = let v4 = d_'43''45'isAbelianGroup_2430 (coe v3) in
+du_unique'737''45''8315''185'_2526 v0 v1 v2 v3
+  = let v4 = d_'43''45'isAbelianGroup_2452 (coe v3) in
     coe
       (coe
          du_unique'737''45''8315''185'_1114 (coe v0) (coe v2) (coe v1)
          (coe d_isGroup_1144 (coe v4)))
 -- Algebra.Structures.IsNonAssociativeRing.zeroˡ
-d_zero'737'_2506 ::
+d_zero'737'_2528 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13668,16 +13831,16 @@ d_zero'737'_2506 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_zero'737'_2506 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_zero'737'_2506 v9
-du_zero'737'_2506 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-du_zero'737'_2506 v0
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_zero'737'_2528 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_zero'737'_2528 v9
+du_zero'737'_2528 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+du_zero'737'_2528 v0
   = coe
-      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe d_zero_2438 (coe v0))
+      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe d_zero_2460 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing.zeroʳ
-d_zero'691'_2508 ::
+d_zero'691'_2530 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13686,16 +13849,16 @@ d_zero'691'_2508 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_zero'691'_2508 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_zero'691'_2508 v9
-du_zero'691'_2508 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-du_zero'691'_2508 v0
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_zero'691'_2530 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_zero'691'_2530 v9
+du_zero'691'_2530 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+du_zero'691'_2530 v0
   = coe
-      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe d_zero_2438 (coe v0))
+      MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe d_zero_2460 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing.distribˡ
-d_distrib'737'_2510 ::
+d_distrib'737'_2532 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13705,19 +13868,19 @@ d_distrib'737'_2510 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_2510 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'737'_2510 v9
-du_distrib'737'_2510 ::
-  T_IsNonAssociativeRing_2408 ->
+d_distrib'737'_2532 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'737'_2532 v9
+du_distrib'737'_2532 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_2510 v0
+du_distrib'737'_2532 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_distrib_2436 (coe v0))
+      (coe d_distrib_2458 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing.distribʳ
-d_distrib'691'_2512 ::
+d_distrib'691'_2534 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13727,19 +13890,19 @@ d_distrib'691'_2512 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_2512 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'691'_2512 v9
-du_distrib'691'_2512 ::
-  T_IsNonAssociativeRing_2408 ->
+d_distrib'691'_2534 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'691'_2534 v9
+du_distrib'691'_2534 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_2512 v0
+du_distrib'691'_2534 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_distrib_2436 (coe v0))
+      (coe d_distrib_2458 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing.*-isMagma
-d_'42''45'isMagma_2514 ::
+d_'42''45'isMagma_2536 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13747,12 +13910,12 @@ d_'42''45'isMagma_2514 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsNonAssociativeRing_2408 -> T_IsMagma_176
-d_'42''45'isMagma_2514 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMagma_2514 v9
-du_'42''45'isMagma_2514 ::
-  T_IsNonAssociativeRing_2408 -> T_IsMagma_176
-du_'42''45'isMagma_2514 v0
+  AgdaAny -> AgdaAny -> T_IsNonAssociativeRing_2430 -> T_IsMagma_176
+d_'42''45'isMagma_2536 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'isMagma_2536 v9
+du_'42''45'isMagma_2536 ::
+  T_IsNonAssociativeRing_2430 -> T_IsMagma_176
+du_'42''45'isMagma_2536 v0
   = coe
       C_IsMagma'46'constructor_1867
       (coe
@@ -13764,10 +13927,10 @@ du_'42''45'isMagma_2514 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2430 (coe v0)))))))
-      (coe d_'42''45'cong_2432 (coe v0))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2452 (coe v0)))))))
+      (coe d_'42''45'cong_2454 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing.*-identityˡ
-d_'42''45'identity'737'_2516 ::
+d_'42''45'identity'737'_2538 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13776,17 +13939,17 @@ d_'42''45'identity'737'_2516 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_'42''45'identity'737'_2516 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'identity'737'_2516 v9
-du_'42''45'identity'737'_2516 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-du_'42''45'identity'737'_2516 v0
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_'42''45'identity'737'_2538 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'identity'737'_2538 v9
+du_'42''45'identity'737'_2538 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+du_'42''45'identity'737'_2538 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_'42''45'identity_2434 (coe v0))
+      (coe d_'42''45'identity_2456 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing.*-identityʳ
-d_'42''45'identity'691'_2518 ::
+d_'42''45'identity'691'_2540 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13795,17 +13958,17 @@ d_'42''45'identity'691'_2518 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-d_'42''45'identity'691'_2518 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'identity'691'_2518 v9
-du_'42''45'identity'691'_2518 ::
-  T_IsNonAssociativeRing_2408 -> AgdaAny -> AgdaAny
-du_'42''45'identity'691'_2518 v0
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+d_'42''45'identity'691'_2540 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'identity'691'_2540 v9
+du_'42''45'identity'691'_2540 ::
+  T_IsNonAssociativeRing_2430 -> AgdaAny -> AgdaAny
+du_'42''45'identity'691'_2540 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_'42''45'identity_2434 (coe v0))
+      (coe d_'42''45'identity_2456 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing.*-isUnitalMagma
-d_'42''45'isUnitalMagma_2520 ::
+d_'42''45'isUnitalMagma_2542 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13814,18 +13977,18 @@ d_'42''45'isUnitalMagma_2520 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsNonAssociativeRing_2408 -> T_IsUnitalMagma_642
-d_'42''45'isUnitalMagma_2520 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isUnitalMagma_2520 v9
-du_'42''45'isUnitalMagma_2520 ::
-  T_IsNonAssociativeRing_2408 -> T_IsUnitalMagma_642
-du_'42''45'isUnitalMagma_2520 v0
+  AgdaAny -> T_IsNonAssociativeRing_2430 -> T_IsUnitalMagma_642
+d_'42''45'isUnitalMagma_2542 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'isUnitalMagma_2542 v9
+du_'42''45'isUnitalMagma_2542 ::
+  T_IsNonAssociativeRing_2430 -> T_IsUnitalMagma_642
+du_'42''45'isUnitalMagma_2542 v0
   = coe
       C_IsUnitalMagma'46'constructor_14317
-      (coe du_'42''45'isMagma_2514 (coe v0))
-      (coe d_'42''45'identity_2434 (coe v0))
+      (coe du_'42''45'isMagma_2536 (coe v0))
+      (coe d_'42''45'identity_2456 (coe v0))
 -- Algebra.Structures.IsNonAssociativeRing._.∙-congʳ
-d_'8729''45'cong'691'_2524 ::
+d_'8729''45'cong'691'_2546 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13835,18 +13998,18 @@ d_'8729''45'cong'691'_2524 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2524 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2524 v9
-du_'8729''45'cong'691'_2524 ::
-  T_IsNonAssociativeRing_2408 ->
+d_'8729''45'cong'691'_2546 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'691'_2546 v9
+du_'8729''45'cong'691'_2546 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2524 v0
-  = let v1 = coe du_'42''45'isUnitalMagma_2520 (coe v0) in
+du_'8729''45'cong'691'_2546 v0
+  = let v1 = coe du_'42''45'isUnitalMagma_2542 (coe v0) in
     coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_652 (coe v1)))
 -- Algebra.Structures.IsNonAssociativeRing._.∙-congˡ
-d_'8729''45'cong'737'_2526 ::
+d_'8729''45'cong'737'_2548 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13856,56 +14019,56 @@ d_'8729''45'cong'737'_2526 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsNonAssociativeRing_2408 ->
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2526 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2526 v9
-du_'8729''45'cong'737'_2526 ::
-  T_IsNonAssociativeRing_2408 ->
+d_'8729''45'cong'737'_2548 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'737'_2548 v9
+du_'8729''45'cong'737'_2548 ::
+  T_IsNonAssociativeRing_2430 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2526 v0
-  = let v1 = coe du_'42''45'isUnitalMagma_2520 (coe v0) in
+du_'8729''45'cong'737'_2548 v0
+  = let v1 = coe du_'42''45'isUnitalMagma_2542 (coe v0) in
     coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_652 (coe v1)))
 -- Algebra.Structures.IsNearring
-d_IsNearring_2538 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
-data T_IsNearring_2538
-  = C_IsNearring'46'constructor_90609 T_IsQuasiring_2180
+d_IsNearring_2560 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
+data T_IsNearring_2560
+  = C_IsNearring'46'constructor_92259 T_IsQuasiring_2200
                                       MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                       (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsNearring.isQuasiring
-d_isQuasiring_2556 :: T_IsNearring_2538 -> T_IsQuasiring_2180
-d_isQuasiring_2556 v0
+d_isQuasiring_2578 :: T_IsNearring_2560 -> T_IsQuasiring_2200
+d_isQuasiring_2578 v0
   = case coe v0 of
-      C_IsNearring'46'constructor_90609 v1 v2 v3 -> coe v1
+      C_IsNearring'46'constructor_92259 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsNearring.+-inverse
-d_'43''45'inverse_2558 ::
-  T_IsNearring_2538 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'43''45'inverse_2558 v0
+d_'43''45'inverse_2580 ::
+  T_IsNearring_2560 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'43''45'inverse_2580 v0
   = case coe v0 of
-      C_IsNearring'46'constructor_90609 v1 v2 v3 -> coe v2
+      C_IsNearring'46'constructor_92259 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsNearring.⁻¹-cong
-d_'8315''185''45'cong_2560 ::
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8315''185''45'cong_2560 v0
+d_'8315''185''45'cong_2582 ::
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8315''185''45'cong_2582 v0
   = case coe v0 of
-      C_IsNearring'46'constructor_90609 v1 v2 v3 -> coe v3
+      C_IsNearring'46'constructor_92259 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsNearring._.*-assoc
-d_'42''45'assoc_2564 ::
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_2564 v0
-  = coe d_'42''45'assoc_2206 (coe d_isQuasiring_2556 (coe v0))
+d_'42''45'assoc_2586 ::
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'42''45'assoc_2586 v0
+  = coe d_'42''45'assoc_2226 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.*-cong
-d_'42''45'cong_2566 ::
-  T_IsNearring_2538 ->
+d_'42''45'cong_2588 ::
+  T_IsNearring_2560 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_2566 v0
-  = coe d_'42''45'cong_2204 (coe d_isQuasiring_2556 (coe v0))
+d_'42''45'cong_2588 v0
+  = coe d_'42''45'cong_2224 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.∙-congʳ
-d_'8729''45'cong'691'_2568 ::
+d_'8729''45'cong'691'_2590 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13915,22 +14078,22 @@ d_'8729''45'cong'691'_2568 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 ->
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2568 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2568 v9
-du_'8729''45'cong'691'_2568 ::
-  T_IsNearring_2538 ->
+d_'8729''45'cong'691'_2590 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'691'_2590 v9
+du_'8729''45'cong'691'_2590 ::
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2568 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+du_'8729''45'cong'691'_2590 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (let v2 = coe du_'42''45'isMonoid_2266 (coe v1) in
+      (let v2 = coe du_'42''45'isMonoid_2286 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsNearring._.∙-congˡ
-d_'8729''45'cong'737'_2570 ::
+d_'8729''45'cong'737'_2592 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13940,27 +14103,27 @@ d_'8729''45'cong'737'_2570 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 ->
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2570 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2570 v9
-du_'8729''45'cong'737'_2570 ::
-  T_IsNearring_2538 ->
+d_'8729''45'cong'737'_2592 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'737'_2592 v9
+du_'8729''45'cong'737'_2592 ::
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2570 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+du_'8729''45'cong'737'_2592 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (let v2 = coe du_'42''45'isMonoid_2266 (coe v1) in
+      (let v2 = coe du_'42''45'isMonoid_2286 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsNearring._.*-identity
-d_'42''45'identity_2572 ::
-  T_IsNearring_2538 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_2572 v0
-  = coe d_'42''45'identity_2208 (coe d_isQuasiring_2556 (coe v0))
+d_'42''45'identity_2594 ::
+  T_IsNearring_2560 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'42''45'identity_2594 v0
+  = coe d_'42''45'identity_2228 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.identityʳ
-d_identity'691'_2574 ::
+d_identity'691'_2596 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13969,16 +14132,16 @@ d_identity'691'_2574 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_identity'691'_2574 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2574 v9
-du_identity'691'_2574 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_identity'691'_2574 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_identity'691'_2596 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'691'_2596 v9
+du_identity'691'_2596 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_identity'691'_2596 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (coe du_identity'691'_728 (coe du_'42''45'isMonoid_2266 (coe v1)))
+      (coe du_identity'691'_728 (coe du_'42''45'isMonoid_2286 (coe v1)))
 -- Algebra.Structures.IsNearring._.identityˡ
-d_identity'737'_2576 ::
+d_identity'737'_2598 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -13987,16 +14150,16 @@ d_identity'737'_2576 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_identity'737'_2576 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2576 v9
-du_identity'737'_2576 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_identity'737'_2576 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_identity'737'_2598 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'737'_2598 v9
+du_identity'737'_2598 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_identity'737'_2598 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (coe du_identity'737'_726 (coe du_'42''45'isMonoid_2266 (coe v1)))
+      (coe du_identity'737'_726 (coe du_'42''45'isMonoid_2286 (coe v1)))
 -- Algebra.Structures.IsNearring._.*-isMagma
-d_'42''45'isMagma_2578 ::
+d_'42''45'isMagma_2600 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14005,14 +14168,14 @@ d_'42''45'isMagma_2578 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> T_IsMagma_176
-d_'42''45'isMagma_2578 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMagma_2578 v9
-du_'42''45'isMagma_2578 :: T_IsNearring_2538 -> T_IsMagma_176
-du_'42''45'isMagma_2578 v0
-  = coe du_'42''45'isMagma_2262 (coe d_isQuasiring_2556 (coe v0))
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> T_IsMagma_176
+d_'42''45'isMagma_2600 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'isMagma_2600 v9
+du_'42''45'isMagma_2600 :: T_IsNearring_2560 -> T_IsMagma_176
+du_'42''45'isMagma_2600 v0
+  = coe du_'42''45'isMagma_2282 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.*-isMonoid
-d_'42''45'isMonoid_2580 ::
+d_'42''45'isMonoid_2602 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14021,14 +14184,14 @@ d_'42''45'isMonoid_2580 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> T_IsMonoid_686
-d_'42''45'isMonoid_2580 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMonoid_2580 v9
-du_'42''45'isMonoid_2580 :: T_IsNearring_2538 -> T_IsMonoid_686
-du_'42''45'isMonoid_2580 v0
-  = coe du_'42''45'isMonoid_2266 (coe d_isQuasiring_2556 (coe v0))
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> T_IsMonoid_686
+d_'42''45'isMonoid_2602 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'isMonoid_2602 v9
+du_'42''45'isMonoid_2602 :: T_IsNearring_2560 -> T_IsMonoid_686
+du_'42''45'isMonoid_2602 v0
+  = coe du_'42''45'isMonoid_2286 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.*-isSemigroup
-d_'42''45'isSemigroup_2582 ::
+d_'42''45'isSemigroup_2604 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14037,37 +14200,37 @@ d_'42''45'isSemigroup_2582 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_2582 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isSemigroup_2582 v9
-du_'42''45'isSemigroup_2582 ::
-  T_IsNearring_2538 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_2582 v0
-  = coe du_'42''45'isSemigroup_2264 (coe d_isQuasiring_2556 (coe v0))
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_2604 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'42''45'isSemigroup_2604 v9
+du_'42''45'isSemigroup_2604 ::
+  T_IsNearring_2560 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_2604 v0
+  = coe du_'42''45'isSemigroup_2284 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.assoc
-d_assoc_2584 ::
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_2584 v0
+d_assoc_2606 ::
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_2606 v0
   = coe
       d_assoc_482
       (coe
          d_isSemigroup_696
-         (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0))))
+         (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0))))
 -- Algebra.Structures.IsNearring._.∙-cong
-d_'8729''45'cong_2586 ::
-  T_IsNearring_2538 ->
+d_'8729''45'cong_2608 ::
+  T_IsNearring_2560 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_2586 v0
+d_'8729''45'cong_2608 v0
   = coe
       d_'8729''45'cong_186
       (coe
          d_isMagma_480
          (coe
             d_isSemigroup_696
-            (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0)))))
+            (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0)))))
 -- Algebra.Structures.IsNearring._.∙-congʳ
-d_'8729''45'cong'691'_2588 ::
+d_'8729''45'cong'691'_2610 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14077,22 +14240,22 @@ d_'8729''45'cong'691'_2588 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 ->
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2588 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2588 v9
-du_'8729''45'cong'691'_2588 ::
-  T_IsNearring_2538 ->
+d_'8729''45'cong'691'_2610 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'691'_2610 v9
+du_'8729''45'cong'691'_2610 ::
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2588 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+du_'8729''45'cong'691'_2610 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (let v2 = d_'43''45'isMonoid_2202 (coe v1) in
+      (let v2 = d_'43''45'isMonoid_2222 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsNearring._.∙-congˡ
-d_'8729''45'cong'737'_2590 ::
+d_'8729''45'cong'737'_2612 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14102,29 +14265,29 @@ d_'8729''45'cong'737'_2590 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 ->
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2590 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2590 v9
-du_'8729''45'cong'737'_2590 ::
-  T_IsNearring_2538 ->
+d_'8729''45'cong'737'_2612 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'737'_2612 v9
+du_'8729''45'cong'737'_2612 ::
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2590 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+du_'8729''45'cong'737'_2612 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (let v2 = d_'43''45'isMonoid_2202 (coe v1) in
+      (let v2 = d_'43''45'isMonoid_2222 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsNearring._.identity
-d_identity_2592 ::
-  T_IsNearring_2538 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_2592 v0
+d_identity_2614 ::
+  T_IsNearring_2560 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_2614 v0
   = coe
       d_identity_698
-      (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0)))
+      (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0)))
 -- Algebra.Structures.IsNearring._.identityʳ
-d_identity'691'_2594 ::
+d_identity'691'_2616 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14133,16 +14296,16 @@ d_identity'691'_2594 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_identity'691'_2594 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2594 v9
-du_identity'691'_2594 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_identity'691'_2594 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_identity'691'_2616 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'691'_2616 v9
+du_identity'691'_2616 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_identity'691'_2616 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (coe du_identity'691'_728 (coe d_'43''45'isMonoid_2202 (coe v1)))
+      (coe du_identity'691'_728 (coe d_'43''45'isMonoid_2222 (coe v1)))
 -- Algebra.Structures.IsNearring._.identityˡ
-d_identity'737'_2596 ::
+d_identity'737'_2618 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14151,34 +14314,34 @@ d_identity'737'_2596 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_identity'737'_2596 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2596 v9
-du_identity'737'_2596 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_identity'737'_2596 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_identity'737'_2618 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'737'_2618 v9
+du_identity'737'_2618 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_identity'737'_2618 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (coe du_identity'737'_726 (coe d_'43''45'isMonoid_2202 (coe v1)))
+      (coe du_identity'737'_726 (coe d_'43''45'isMonoid_2222 (coe v1)))
 -- Algebra.Structures.IsNearring._.isMagma
-d_isMagma_2598 :: T_IsNearring_2538 -> T_IsMagma_176
-d_isMagma_2598 v0
+d_isMagma_2620 :: T_IsNearring_2560 -> T_IsMagma_176
+d_isMagma_2620 v0
   = coe
       d_isMagma_480
       (coe
          d_isSemigroup_696
-         (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0))))
+         (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0))))
 -- Algebra.Structures.IsNearring._.+-isMonoid
-d_'43''45'isMonoid_2600 :: T_IsNearring_2538 -> T_IsMonoid_686
-d_'43''45'isMonoid_2600 v0
-  = coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0))
+d_'43''45'isMonoid_2622 :: T_IsNearring_2560 -> T_IsMonoid_686
+d_'43''45'isMonoid_2622 v0
+  = coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.isSemigroup
-d_isSemigroup_2602 :: T_IsNearring_2538 -> T_IsSemigroup_472
-d_isSemigroup_2602 v0
+d_isSemigroup_2624 :: T_IsNearring_2560 -> T_IsSemigroup_472
+d_isSemigroup_2624 v0
   = coe
       d_isSemigroup_696
-      (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0)))
+      (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0)))
 -- Algebra.Structures.IsNearring._.isUnitalMagma
-d_isUnitalMagma_2604 ::
+d_isUnitalMagma_2626 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14187,21 +14350,21 @@ d_isUnitalMagma_2604 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> T_IsUnitalMagma_642
-d_isUnitalMagma_2604 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isUnitalMagma_2604 v9
-du_isUnitalMagma_2604 :: T_IsNearring_2538 -> T_IsUnitalMagma_642
-du_isUnitalMagma_2604 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> T_IsUnitalMagma_642
+d_isUnitalMagma_2626 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isUnitalMagma_2626 v9
+du_isUnitalMagma_2626 :: T_IsNearring_2560 -> T_IsUnitalMagma_642
+du_isUnitalMagma_2626 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (coe du_isUnitalMagma_730 (coe d_'43''45'isMonoid_2202 (coe v1)))
+      (coe du_isUnitalMagma_730 (coe d_'43''45'isMonoid_2222 (coe v1)))
 -- Algebra.Structures.IsNearring._.distrib
-d_distrib_2606 ::
-  T_IsNearring_2538 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_2606 v0
-  = coe d_distrib_2210 (coe d_isQuasiring_2556 (coe v0))
+d_distrib_2628 ::
+  T_IsNearring_2560 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_distrib_2628 v0
+  = coe d_distrib_2230 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.distribʳ
-d_distrib'691'_2608 ::
+d_distrib'691'_2630 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14211,15 +14374,15 @@ d_distrib'691'_2608 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_2608 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'691'_2608 v9
-du_distrib'691'_2608 ::
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_2608 v0
-  = coe du_distrib'691'_2252 (coe d_isQuasiring_2556 (coe v0))
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'691'_2630 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'691'_2630 v9
+du_distrib'691'_2630 ::
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'691'_2630 v0
+  = coe du_distrib'691'_2272 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.distribˡ
-d_distrib'737'_2610 ::
+d_distrib'737'_2632 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14229,15 +14392,15 @@ d_distrib'737'_2610 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_2610 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'737'_2610 v9
-du_distrib'737'_2610 ::
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_2610 v0
-  = coe du_distrib'737'_2250 (coe d_isQuasiring_2556 (coe v0))
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'737'_2632 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'737'_2632 v9
+du_distrib'737'_2632 ::
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'737'_2632 v0
+  = coe du_distrib'737'_2270 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.identityʳ
-d_identity'691'_2612 ::
+d_identity'691'_2634 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14246,14 +14409,14 @@ d_identity'691'_2612 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_identity'691'_2612 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2612 v9
-du_identity'691'_2612 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_identity'691'_2612 v0
-  = coe du_identity'691'_2260 (coe d_isQuasiring_2556 (coe v0))
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_identity'691'_2634 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'691'_2634 v9
+du_identity'691'_2634 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_identity'691'_2634 v0
+  = coe du_identity'691'_2280 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.identityˡ
-d_identity'737'_2614 ::
+d_identity'737'_2636 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14262,26 +14425,26 @@ d_identity'737'_2614 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_identity'737'_2614 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2614 v9
-du_identity'737'_2614 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_identity'737'_2614 v0
-  = coe du_identity'737'_2258 (coe d_isQuasiring_2556 (coe v0))
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_identity'737'_2636 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'737'_2636 v9
+du_identity'737'_2636 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_identity'737'_2636 v0
+  = coe du_identity'737'_2278 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.isEquivalence
-d_isEquivalence_2616 ::
-  T_IsNearring_2538 ->
+d_isEquivalence_2638 ::
+  T_IsNearring_2560 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_2616 v0
+d_isEquivalence_2638 v0
   = coe
       d_isEquivalence_184
       (coe
          d_isMagma_480
          (coe
             d_isSemigroup_696
-            (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0)))))
+            (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0)))))
 -- Algebra.Structures.IsNearring._.isPartialEquivalence
-d_isPartialEquivalence_2618 ::
+d_isPartialEquivalence_2640 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14291,17 +14454,17 @@ d_isPartialEquivalence_2618 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 ->
+  T_IsNearring_2560 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2618 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isPartialEquivalence_2618 v9
-du_isPartialEquivalence_2618 ::
-  T_IsNearring_2538 ->
+d_isPartialEquivalence_2640 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isPartialEquivalence_2640 v9
+du_isPartialEquivalence_2640 ::
+  T_IsNearring_2560 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2618 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+du_isPartialEquivalence_2640 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (let v2 = d_'43''45'isMonoid_2202 (coe v1) in
+      (let v2 = d_'43''45'isMonoid_2222 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe
@@ -14311,8 +14474,8 @@ du_isPartialEquivalence_2618 v0
                   MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                   (coe d_isEquivalence_184 (coe v4))))))
 -- Algebra.Structures.IsNearring._.refl
-d_refl_2620 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_refl_2620 v0
+d_refl_2642 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_refl_2642 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -14321,9 +14484,9 @@ d_refl_2620 v0
             d_isMagma_480
             (coe
                d_isSemigroup_696
-               (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0))))))
+               (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0))))))
 -- Algebra.Structures.IsNearring._.reflexive
-d_reflexive_2622 ::
+d_reflexive_2644 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14333,21 +14496,21 @@ d_reflexive_2622 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 ->
+  T_IsNearring_2560 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2622 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_reflexive_2622 v9
-du_reflexive_2622 ::
-  T_IsNearring_2538 ->
+d_reflexive_2644 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_reflexive_2644 v9
+du_reflexive_2644 ::
+  T_IsNearring_2560 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2622 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+du_reflexive_2644 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (let v2 = d_'43''45'isMonoid_2202 (coe v1) in
+      (let v2 = d_'43''45'isMonoid_2222 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe
@@ -14358,7 +14521,7 @@ du_reflexive_2622 v0
                     MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                     (coe d_isEquivalence_184 (coe v4)) v5))))
 -- Algebra.Structures.IsNearring._.setoid
-d_setoid_2624 ::
+d_setoid_2646 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14368,24 +14531,24 @@ d_setoid_2624 ::
   AgdaAny ->
   AgdaAny ->
   (AgdaAny -> AgdaAny) ->
-  T_IsNearring_2538 ->
+  T_IsNearring_2560 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2624 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_setoid_2624 v9
-du_setoid_2624 ::
-  T_IsNearring_2538 ->
+d_setoid_2646 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_setoid_2646 v9
+du_setoid_2646 ::
+  T_IsNearring_2560 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2624 v0
-  = let v1 = d_isQuasiring_2556 (coe v0) in
+du_setoid_2646 v0
+  = let v1 = d_isQuasiring_2578 (coe v0) in
     coe
-      (let v2 = d_'43''45'isMonoid_2202 (coe v1) in
+      (let v2 = d_'43''45'isMonoid_2222 (coe v1) in
        coe
          (let v3 = d_isSemigroup_696 (coe v2) in
           coe (coe du_setoid_200 (coe d_isMagma_480 (coe v3)))))
 -- Algebra.Structures.IsNearring._.sym
-d_sym_2626 ::
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2626 v0
+d_sym_2648 ::
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_2648 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -14394,12 +14557,12 @@ d_sym_2626 v0
             d_isMagma_480
             (coe
                d_isSemigroup_696
-               (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0))))))
+               (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0))))))
 -- Algebra.Structures.IsNearring._.trans
-d_trans_2628 ::
-  T_IsNearring_2538 ->
+d_trans_2650 ::
+  T_IsNearring_2560 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2628 v0
+d_trans_2650 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -14408,13 +14571,13 @@ d_trans_2628 v0
             d_isMagma_480
             (coe
                d_isSemigroup_696
-               (coe d_'43''45'isMonoid_2202 (coe d_isQuasiring_2556 (coe v0))))))
+               (coe d_'43''45'isMonoid_2222 (coe d_isQuasiring_2578 (coe v0))))))
 -- Algebra.Structures.IsNearring._.zero
-d_zero_2630 ::
-  T_IsNearring_2538 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_2630 v0 = coe d_zero_2212 (coe d_isQuasiring_2556 (coe v0))
+d_zero_2652 ::
+  T_IsNearring_2560 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_zero_2652 v0 = coe d_zero_2232 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.zeroʳ
-d_zero'691'_2632 ::
+d_zero'691'_2654 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14423,14 +14586,14 @@ d_zero'691'_2632 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_zero'691'_2632 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_zero'691'_2632 v9
-du_zero'691'_2632 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_zero'691'_2632 v0
-  = coe du_zero'691'_2256 (coe d_isQuasiring_2556 (coe v0))
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_zero'691'_2654 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_zero'691'_2654 v9
+du_zero'691'_2654 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_zero'691'_2654 v0
+  = coe du_zero'691'_2276 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring._.zeroˡ
-d_zero'737'_2634 ::
+d_zero'737'_2656 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14439,14 +14602,14 @@ d_zero'737'_2634 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_zero'737'_2634 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_zero'737'_2634 v9
-du_zero'737'_2634 :: T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_zero'737'_2634 v0
-  = coe du_zero'737'_2254 (coe d_isQuasiring_2556 (coe v0))
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_zero'737'_2656 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_zero'737'_2656 v9
+du_zero'737'_2656 :: T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_zero'737'_2656 v0
+  = coe du_zero'737'_2274 (coe d_isQuasiring_2578 (coe v0))
 -- Algebra.Structures.IsNearring.+-inverseˡ
-d_'43''45'inverse'737'_2636 ::
+d_'43''45'inverse'737'_2658 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14455,17 +14618,17 @@ d_'43''45'inverse'737'_2636 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_'43''45'inverse'737'_2636 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'43''45'inverse'737'_2636 v9
-du_'43''45'inverse'737'_2636 ::
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_'43''45'inverse'737'_2636 v0
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_'43''45'inverse'737'_2658 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'43''45'inverse'737'_2658 v9
+du_'43''45'inverse'737'_2658 ::
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_'43''45'inverse'737'_2658 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_'43''45'inverse_2558 (coe v0))
+      (coe d_'43''45'inverse_2580 (coe v0))
 -- Algebra.Structures.IsNearring.+-inverseʳ
-d_'43''45'inverse'691'_2638 ::
+d_'43''45'inverse'691'_2660 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14474,63 +14637,63 @@ d_'43''45'inverse'691'_2638 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  (AgdaAny -> AgdaAny) -> T_IsNearring_2538 -> AgdaAny -> AgdaAny
-d_'43''45'inverse'691'_2638 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'43''45'inverse'691'_2638 v9
-du_'43''45'inverse'691'_2638 ::
-  T_IsNearring_2538 -> AgdaAny -> AgdaAny
-du_'43''45'inverse'691'_2638 v0
+  (AgdaAny -> AgdaAny) -> T_IsNearring_2560 -> AgdaAny -> AgdaAny
+d_'43''45'inverse'691'_2660 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'43''45'inverse'691'_2660 v9
+du_'43''45'inverse'691'_2660 ::
+  T_IsNearring_2560 -> AgdaAny -> AgdaAny
+du_'43''45'inverse'691'_2660 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_'43''45'inverse_2558 (coe v0))
+      (coe d_'43''45'inverse_2580 (coe v0))
 -- Algebra.Structures.IsRing
-d_IsRing_2650 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
-data T_IsRing_2650
-  = C_IsRing'46'constructor_95033 T_IsAbelianGroup_1132
+d_IsRing_2672 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
+data T_IsRing_2672
+  = C_IsRing'46'constructor_96683 T_IsAbelianGroup_1132
                                   (AgdaAny ->
                                    AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsRing.+-isAbelianGroup
-d_'43''45'isAbelianGroup_2672 ::
-  T_IsRing_2650 -> T_IsAbelianGroup_1132
-d_'43''45'isAbelianGroup_2672 v0
+d_'43''45'isAbelianGroup_2694 ::
+  T_IsRing_2672 -> T_IsAbelianGroup_1132
+d_'43''45'isAbelianGroup_2694 v0
   = case coe v0 of
-      C_IsRing'46'constructor_95033 v1 v2 v3 v4 v5 -> coe v1
+      C_IsRing'46'constructor_96683 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRing.*-cong
-d_'42''45'cong_2674 ::
-  T_IsRing_2650 ->
+d_'42''45'cong_2696 ::
+  T_IsRing_2672 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_2674 v0
+d_'42''45'cong_2696 v0
   = case coe v0 of
-      C_IsRing'46'constructor_95033 v1 v2 v3 v4 v5 -> coe v2
+      C_IsRing'46'constructor_96683 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRing.*-assoc
-d_'42''45'assoc_2676 ::
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_2676 v0
+d_'42''45'assoc_2698 ::
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'42''45'assoc_2698 v0
   = case coe v0 of
-      C_IsRing'46'constructor_95033 v1 v2 v3 v4 v5 -> coe v3
+      C_IsRing'46'constructor_96683 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRing.*-identity
-d_'42''45'identity_2678 ::
-  T_IsRing_2650 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_2678 v0
+d_'42''45'identity_2700 ::
+  T_IsRing_2672 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'42''45'identity_2700 v0
   = case coe v0 of
-      C_IsRing'46'constructor_95033 v1 v2 v3 v4 v5 -> coe v4
+      C_IsRing'46'constructor_96683 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRing.distrib
-d_distrib_2680 ::
-  T_IsRing_2650 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_2680 v0
+d_distrib_2702 ::
+  T_IsRing_2672 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_distrib_2702 v0
   = case coe v0 of
-      C_IsRing'46'constructor_95033 v1 v2 v3 v4 v5 -> coe v5
+      C_IsRing'46'constructor_96683 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRing.isRingWithoutOne
-d_isRingWithoutOne_2682 ::
+d_isRingWithoutOne_2704 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14538,19 +14701,19 @@ d_isRingWithoutOne_2682 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsRingWithoutOne_2286
-d_isRingWithoutOne_2682 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isRingWithoutOne_2682 v9
-du_isRingWithoutOne_2682 ::
-  T_IsRing_2650 -> T_IsRingWithoutOne_2286
-du_isRingWithoutOne_2682 v0
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsRingWithoutOne_2306
+d_isRingWithoutOne_2704 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isRingWithoutOne_2704 v9
+du_isRingWithoutOne_2704 ::
+  T_IsRing_2672 -> T_IsRingWithoutOne_2306
+du_isRingWithoutOne_2704 v0
   = coe
-      C_IsRingWithoutOne'46'constructor_75855
-      (coe d_'43''45'isAbelianGroup_2672 (coe v0))
-      (coe d_'42''45'cong_2674 (coe v0))
-      (coe d_'42''45'assoc_2676 (coe v0)) (coe d_distrib_2680 (coe v0))
+      C_IsRingWithoutOne'46'constructor_77455
+      (coe d_'43''45'isAbelianGroup_2694 (coe v0))
+      (coe d_'42''45'cong_2696 (coe v0))
+      (coe d_'42''45'assoc_2698 (coe v0)) (coe d_distrib_2702 (coe v0))
 -- Algebra.Structures.IsRing._._//_
-d__'47''47'__2686 ::
+d__'47''47'__2708 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14559,15 +14722,15 @@ d__'47''47'__2686 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'47''47'__2686 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8 ~v9
-  = du__'47''47'__2686 v4 v6
-du__'47''47'__2686 ::
+  AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'47''47'__2708 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8 ~v9
+  = du__'47''47'__2708 v4 v6
+du__'47''47'__2708 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'47''47'__2686 v0 v1 = coe du__'47''47'__1098 (coe v0) (coe v1)
+du__'47''47'__2708 v0 v1 = coe du__'47''47'__1098 (coe v0) (coe v1)
 -- Algebra.Structures.IsRing._.∙-congʳ
-d_'8729''45'cong'691'_2688 ::
+d_'8729''45'cong'691'_2710 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14577,20 +14740,29 @@ d_'8729''45'cong'691'_2688 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2688 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2688 v9
-du_'8729''45'cong'691'_2688 ::
-  T_IsRing_2650 ->
+d_'8729''45'cong'691'_2710 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'8729''45'cong'691'_2710 v4 v5 v6 v7 v9
+du_'8729''45'cong'691'_2710 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2688 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+du_'8729''45'cong'691'_2710 v0 v1 v2 v3 v4
+  = let v5 = coe du_isRingWithoutOne_2704 (coe v4) in
     coe
-      (let v2 = coe du_'42''45'isSemigroup_2390 (coe v1) in
-       coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v2))))
+      (let v6
+             = coe
+                 du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+                 (coe v5) in
+       coe
+         (coe
+            du_'8729''45'cong'691'_206 (coe du_'42''45'isMagma_1282 (coe v6))))
 -- Algebra.Structures.IsRing._.∙-congˡ
-d_'8729''45'cong'737'_2690 ::
+d_'8729''45'cong'737'_2712 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14600,20 +14772,29 @@ d_'8729''45'cong'737'_2690 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2690 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2690 v9
-du_'8729''45'cong'737'_2690 ::
-  T_IsRing_2650 ->
+d_'8729''45'cong'737'_2712 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'8729''45'cong'737'_2712 v4 v5 v6 v7 v9
+du_'8729''45'cong'737'_2712 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2690 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+du_'8729''45'cong'737'_2712 v0 v1 v2 v3 v4
+  = let v5 = coe du_isRingWithoutOne_2704 (coe v4) in
     coe
-      (let v2 = coe du_'42''45'isSemigroup_2390 (coe v1) in
-       coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v2))))
+      (let v6
+             = coe
+                 du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+                 (coe v5) in
+       coe
+         (coe
+            du_'8729''45'cong'737'_202 (coe du_'42''45'isMagma_1282 (coe v6))))
 -- Algebra.Structures.IsRing._.*-isMagma
-d_'42''45'isMagma_2692 ::
+d_'42''45'isMagma_2714 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14621,15 +14802,23 @@ d_'42''45'isMagma_2692 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsMagma_176
-d_'42''45'isMagma_2692 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMagma_2692 v9
-du_'42''45'isMagma_2692 :: T_IsRing_2650 -> T_IsMagma_176
-du_'42''45'isMagma_2692 v0
-  = coe
-      du_'42''45'isMagma_2388 (coe du_isRingWithoutOne_2682 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsMagma_176
+d_'42''45'isMagma_2714 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'42''45'isMagma_2714 v4 v5 v6 v7 v9
+du_'42''45'isMagma_2714 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) -> AgdaAny -> T_IsRing_2672 -> T_IsMagma_176
+du_'42''45'isMagma_2714 v0 v1 v2 v3 v4
+  = let v5 = coe du_isRingWithoutOne_2704 (coe v4) in
+    coe
+      (coe
+         du_'42''45'isMagma_1282
+         (coe
+            du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+            (coe v5)))
 -- Algebra.Structures.IsRing._.*-isSemigroup
-d_'42''45'isSemigroup_2694 ::
+d_'42''45'isSemigroup_2716 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14637,15 +14826,24 @@ d_'42''45'isSemigroup_2694 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_2694 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isSemigroup_2694 v9
-du_'42''45'isSemigroup_2694 :: T_IsRing_2650 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_2694 v0
-  = coe
-      du_'42''45'isSemigroup_2390 (coe du_isRingWithoutOne_2682 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_2716 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'42''45'isSemigroup_2716 v4 v5 v6 v7 v9
+du_'42''45'isSemigroup_2716 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsRing_2672 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_2716 v0 v1 v2 v3 v4
+  = let v5 = coe du_isRingWithoutOne_2704 (coe v4) in
+    coe
+      (coe
+         du_'42''45'isSemigroup_1284
+         (coe
+            du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+            (coe v5)))
 -- Algebra.Structures.IsRing._.assoc
-d_assoc_2696 ::
+d_assoc_2718 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14655,21 +14853,21 @@ d_assoc_2696 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_2696 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_assoc_2696 v9
-du_assoc_2696 ::
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_assoc_2696 v0
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_2718 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_assoc_2718 v9
+du_assoc_2718 ::
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_assoc_2718 v0
   = coe
       d_assoc_482
       (coe
          d_isSemigroup_696
          (coe
             d_isMonoid_1050
-            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0)))))
+            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0)))))
 -- Algebra.Structures.IsRing._.comm
-d_comm_2698 ::
+d_comm_2720 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14678,14 +14876,14 @@ d_comm_2698 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_2698 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_comm_2698 v9
-du_comm_2698 :: T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm_2698 v0
-  = coe d_comm_1146 (coe d_'43''45'isAbelianGroup_2672 (coe v0))
+  AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny
+d_comm_2720 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_comm_2720 v9
+du_comm_2720 :: T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny
+du_comm_2720 v0
+  = coe d_comm_1146 (coe d_'43''45'isAbelianGroup_2694 (coe v0))
 -- Algebra.Structures.IsRing._.∙-cong
-d_'8729''45'cong_2700 ::
+d_'8729''45'cong_2722 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14695,16 +14893,16 @@ d_'8729''45'cong_2700 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_2700 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong_2700 v9
-du_'8729''45'cong_2700 ::
-  T_IsRing_2650 ->
+d_'8729''45'cong_2722 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong_2722 v9
+du_'8729''45'cong_2722 ::
+  T_IsRing_2672 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong_2700 v0
+du_'8729''45'cong_2722 v0
   = coe
       d_'8729''45'cong_186
       (coe
@@ -14714,9 +14912,9 @@ du_'8729''45'cong_2700 v0
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0))))))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0))))))
 -- Algebra.Structures.IsRing._.∙-congʳ
-d_'8729''45'cong'691'_2702 ::
+d_'8729''45'cong'691'_2724 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14726,17 +14924,17 @@ d_'8729''45'cong'691'_2702 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2702 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2702 v9
-du_'8729''45'cong'691'_2702 ::
-  T_IsRing_2650 ->
+d_'8729''45'cong'691'_2724 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'691'_2724 v9
+du_'8729''45'cong'691'_2724 ::
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2702 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+du_'8729''45'cong'691'_2724 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = d_isGroup_1144 (coe v2) in
           coe
@@ -14746,7 +14944,7 @@ du_'8729''45'cong'691'_2702 v0
                 coe
                   (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsRing._.∙-congˡ
-d_'8729''45'cong'737'_2704 ::
+d_'8729''45'cong'737'_2726 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14756,17 +14954,17 @@ d_'8729''45'cong'737'_2704 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2704 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2704 v9
-du_'8729''45'cong'737'_2704 ::
-  T_IsRing_2650 ->
+d_'8729''45'cong'737'_2726 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'737'_2726 v9
+du_'8729''45'cong'737'_2726 ::
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2704 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+du_'8729''45'cong'737'_2726 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = d_isGroup_1144 (coe v2) in
           coe
@@ -14776,7 +14974,7 @@ du_'8729''45'cong'737'_2704 v0
                 coe
                   (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsRing._.identity
-d_identity_2706 ::
+d_identity_2728 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14785,19 +14983,19 @@ d_identity_2706 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsRing_2650 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_2706 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity_2706 v9
-du_identity_2706 ::
-  T_IsRing_2650 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_identity_2706 v0
+  AgdaAny -> T_IsRing_2672 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_2728 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity_2728 v9
+du_identity_2728 ::
+  T_IsRing_2672 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_identity_2728 v0
   = coe
       d_identity_698
       (coe
          d_isMonoid_1050
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0))))
 -- Algebra.Structures.IsRing._.identityʳ
-d_identity'691'_2708 ::
+d_identity'691'_2730 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14805,19 +15003,19 @@ d_identity'691'_2708 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_identity'691'_2708 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2708 v9
-du_identity'691'_2708 :: T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_identity'691'_2708 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_identity'691'_2730 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'691'_2730 v9
+du_identity'691'_2730 :: T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_identity'691'_2730 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = d_isGroup_1144 (coe v2) in
           coe (coe du_identity'691'_728 (coe d_isMonoid_1050 (coe v3)))))
 -- Algebra.Structures.IsRing._.identityˡ
-d_identity'737'_2710 ::
+d_identity'737'_2732 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14825,19 +15023,19 @@ d_identity'737'_2710 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_identity'737'_2710 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2710 v9
-du_identity'737'_2710 :: T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_identity'737'_2710 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_identity'737'_2732 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'737'_2732 v9
+du_identity'737'_2732 :: T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_identity'737'_2732 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = d_isGroup_1144 (coe v2) in
           coe (coe du_identity'737'_726 (coe d_isMonoid_1050 (coe v3)))))
 -- Algebra.Structures.IsRing._.isCommutativeMagma
-d_isCommutativeMagma_2712 ::
+d_isCommutativeMagma_2734 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14845,15 +15043,15 @@ d_isCommutativeMagma_2712 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_2712 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isCommutativeMagma_2712 v9
-du_isCommutativeMagma_2712 ::
-  T_IsRing_2650 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_2712 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_2734 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isCommutativeMagma_2734 v9
+du_isCommutativeMagma_2734 ::
+  T_IsRing_2672 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_2734 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = coe du_isCommutativeMonoid_1204 (coe v2) in
           coe
@@ -14861,7 +15059,7 @@ du_isCommutativeMagma_2712 v0
                du_isCommutativeMagma_586
                (coe du_isCommutativeSemigroup_786 (coe v3)))))
 -- Algebra.Structures.IsRing._.isCommutativeMonoid
-d_isCommutativeMonoid_2714 ::
+d_isCommutativeMonoid_2736 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14869,19 +15067,19 @@ d_isCommutativeMonoid_2714 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsCommutativeMonoid_736
-d_isCommutativeMonoid_2714 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isCommutativeMonoid_2714 v9
-du_isCommutativeMonoid_2714 ::
-  T_IsRing_2650 -> T_IsCommutativeMonoid_736
-du_isCommutativeMonoid_2714 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsCommutativeMonoid_736
+d_isCommutativeMonoid_2736 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isCommutativeMonoid_2736 v9
+du_isCommutativeMonoid_2736 ::
+  T_IsRing_2672 -> T_IsCommutativeMonoid_736
+du_isCommutativeMonoid_2736 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
       (coe
          du_isCommutativeMonoid_1204
-         (coe d_'43''45'isAbelianGroup_2304 (coe v1)))
+         (coe d_'43''45'isAbelianGroup_2324 (coe v1)))
 -- Algebra.Structures.IsRing._.isCommutativeSemigroup
-d_isCommutativeSemigroup_2716 ::
+d_isCommutativeSemigroup_2738 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14889,22 +15087,22 @@ d_isCommutativeSemigroup_2716 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_2716 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsCommutativeSemigroup_548
+d_isCommutativeSemigroup_2738 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                               v9
-  = du_isCommutativeSemigroup_2716 v9
-du_isCommutativeSemigroup_2716 ::
-  T_IsRing_2650 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_2716 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  = du_isCommutativeSemigroup_2738 v9
+du_isCommutativeSemigroup_2738 ::
+  T_IsRing_2672 -> T_IsCommutativeSemigroup_548
+du_isCommutativeSemigroup_2738 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (coe
             du_isCommutativeSemigroup_786
             (coe du_isCommutativeMonoid_1204 (coe v2))))
 -- Algebra.Structures.IsRing._.isGroup
-d_isGroup_2718 ::
+d_isGroup_2740 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14912,14 +15110,14 @@ d_isGroup_2718 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsGroup_1036
-d_isGroup_2718 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isGroup_2718 v9
-du_isGroup_2718 :: T_IsRing_2650 -> T_IsGroup_1036
-du_isGroup_2718 v0
-  = coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0))
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsGroup_1036
+d_isGroup_2740 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isGroup_2740 v9
+du_isGroup_2740 :: T_IsRing_2672 -> T_IsGroup_1036
+du_isGroup_2740 v0
+  = coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0))
 -- Algebra.Structures.IsRing._.isInvertibleMagma
-d_isInvertibleMagma_2720 ::
+d_isInvertibleMagma_2742 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14927,18 +15125,18 @@ d_isInvertibleMagma_2720 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsInvertibleMagma_924
-d_isInvertibleMagma_2720 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isInvertibleMagma_2720 v9
-du_isInvertibleMagma_2720 ::
-  T_IsRing_2650 -> T_IsInvertibleMagma_924
-du_isInvertibleMagma_2720 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsInvertibleMagma_924
+d_isInvertibleMagma_2742 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isInvertibleMagma_2742 v9
+du_isInvertibleMagma_2742 ::
+  T_IsRing_2672 -> T_IsInvertibleMagma_924
+du_isInvertibleMagma_2742 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe (coe du_isInvertibleMagma_1122 (coe d_isGroup_1144 (coe v2))))
 -- Algebra.Structures.IsRing._.isInvertibleUnitalMagma
-d_isInvertibleUnitalMagma_2722 ::
+d_isInvertibleUnitalMagma_2744 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14947,21 +15145,21 @@ d_isInvertibleUnitalMagma_2722 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsRing_2650 -> T_IsInvertibleUnitalMagma_976
-d_isInvertibleUnitalMagma_2722 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+  AgdaAny -> T_IsRing_2672 -> T_IsInvertibleUnitalMagma_976
+d_isInvertibleUnitalMagma_2744 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                                v9
-  = du_isInvertibleUnitalMagma_2722 v9
-du_isInvertibleUnitalMagma_2722 ::
-  T_IsRing_2650 -> T_IsInvertibleUnitalMagma_976
-du_isInvertibleUnitalMagma_2722 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  = du_isInvertibleUnitalMagma_2744 v9
+du_isInvertibleUnitalMagma_2744 ::
+  T_IsRing_2672 -> T_IsInvertibleUnitalMagma_976
+du_isInvertibleUnitalMagma_2744 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (coe
             du_isInvertibleUnitalMagma_1124 (coe d_isGroup_1144 (coe v2))))
 -- Algebra.Structures.IsRing._.isMagma
-d_isMagma_2724 ::
+d_isMagma_2746 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14969,20 +15167,20 @@ d_isMagma_2724 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsMagma_176
-d_isMagma_2724 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isMagma_2724 v9
-du_isMagma_2724 :: T_IsRing_2650 -> T_IsMagma_176
-du_isMagma_2724 v0
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsMagma_176
+d_isMagma_2746 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isMagma_2746 v9
+du_isMagma_2746 :: T_IsRing_2672 -> T_IsMagma_176
+du_isMagma_2746 v0
   = coe
       d_isMagma_480
       (coe
          d_isSemigroup_696
          (coe
             d_isMonoid_1050
-            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0)))))
+            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0)))))
 -- Algebra.Structures.IsRing._.isMonoid
-d_isMonoid_2726 ::
+d_isMonoid_2748 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -14990,16 +15188,16 @@ d_isMonoid_2726 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsMonoid_686
-d_isMonoid_2726 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isMonoid_2726 v9
-du_isMonoid_2726 :: T_IsRing_2650 -> T_IsMonoid_686
-du_isMonoid_2726 v0
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsMonoid_686
+d_isMonoid_2748 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isMonoid_2748 v9
+du_isMonoid_2748 :: T_IsRing_2672 -> T_IsMonoid_686
+du_isMonoid_2748 v0
   = coe
       d_isMonoid_1050
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0)))
 -- Algebra.Structures.IsRing._.isSemigroup
-d_isSemigroup_2728 ::
+d_isSemigroup_2750 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15007,18 +15205,18 @@ d_isSemigroup_2728 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsSemigroup_472
-d_isSemigroup_2728 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isSemigroup_2728 v9
-du_isSemigroup_2728 :: T_IsRing_2650 -> T_IsSemigroup_472
-du_isSemigroup_2728 v0
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsSemigroup_472
+d_isSemigroup_2750 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isSemigroup_2750 v9
+du_isSemigroup_2750 :: T_IsRing_2672 -> T_IsSemigroup_472
+du_isSemigroup_2750 v0
   = coe
       d_isSemigroup_696
       (coe
          d_isMonoid_1050
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0))))
 -- Algebra.Structures.IsRing._.isUnitalMagma
-d_isUnitalMagma_2730 ::
+d_isUnitalMagma_2752 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15026,19 +15224,19 @@ d_isUnitalMagma_2730 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsUnitalMagma_642
-d_isUnitalMagma_2730 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isUnitalMagma_2730 v9
-du_isUnitalMagma_2730 :: T_IsRing_2650 -> T_IsUnitalMagma_642
-du_isUnitalMagma_2730 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsUnitalMagma_642
+d_isUnitalMagma_2752 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isUnitalMagma_2752 v9
+du_isUnitalMagma_2752 :: T_IsRing_2672 -> T_IsUnitalMagma_642
+du_isUnitalMagma_2752 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = d_isGroup_1144 (coe v2) in
           coe (coe du_isUnitalMagma_730 (coe d_isMonoid_1050 (coe v3)))))
 -- Algebra.Structures.IsRing._.⁻¹-cong
-d_'8315''185''45'cong_2732 ::
+d_'8315''185''45'cong_2754 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15048,17 +15246,17 @@ d_'8315''185''45'cong_2732 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8315''185''45'cong_2732 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8315''185''45'cong_2732 v9
-du_'8315''185''45'cong_2732 ::
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8315''185''45'cong_2732 v0
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8315''185''45'cong_2754 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8315''185''45'cong_2754 v9
+du_'8315''185''45'cong_2754 ::
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8315''185''45'cong_2754 v0
   = coe
       d_'8315''185''45'cong_1054
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0)))
 -- Algebra.Structures.IsRing._.inverse
-d_inverse_2734 ::
+d_inverse_2756 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15067,17 +15265,17 @@ d_inverse_2734 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsRing_2650 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_inverse_2734 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_inverse_2734 v9
-du_inverse_2734 ::
-  T_IsRing_2650 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_inverse_2734 v0
+  AgdaAny -> T_IsRing_2672 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_inverse_2756 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_inverse_2756 v9
+du_inverse_2756 ::
+  T_IsRing_2672 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_inverse_2756 v0
   = coe
       d_inverse_1052
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0)))
 -- Algebra.Structures.IsRing._.inverseʳ
-d_inverse'691'_2736 ::
+d_inverse'691'_2758 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15085,17 +15283,17 @@ d_inverse'691'_2736 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_inverse'691'_2736 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_inverse'691'_2736 v9
-du_inverse'691'_2736 :: T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_inverse'691'_2736 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_inverse'691'_2758 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_inverse'691'_2758 v9
+du_inverse'691'_2758 :: T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_inverse'691'_2758 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe (coe du_inverse'691'_1108 (coe d_isGroup_1144 (coe v2))))
 -- Algebra.Structures.IsRing._.inverseˡ
-d_inverse'737'_2738 ::
+d_inverse'737'_2760 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15103,17 +15301,17 @@ d_inverse'737'_2738 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_inverse'737'_2738 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_inverse'737'_2738 v9
-du_inverse'737'_2738 :: T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_inverse'737'_2738 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_inverse'737'_2760 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_inverse'737'_2760 v9
+du_inverse'737'_2760 :: T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_inverse'737'_2760 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe (coe du_inverse'737'_1106 (coe d_isGroup_1144 (coe v2))))
 -- Algebra.Structures.IsRing._.distribʳ
-d_distrib'691'_2740 ::
+d_distrib'691'_2762 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15123,15 +15321,15 @@ d_distrib'691'_2740 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_2740 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'691'_2740 v9
-du_distrib'691'_2740 ::
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_2740 v0
-  = coe du_distrib'691'_2380 (coe du_isRingWithoutOne_2682 (coe v0))
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'691'_2762 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'691'_2762 v9
+du_distrib'691'_2762 ::
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'691'_2762 v0
+  = coe du_distrib'691'_2400 (coe du_isRingWithoutOne_2704 (coe v0))
 -- Algebra.Structures.IsRing._.distribˡ
-d_distrib'737'_2742 ::
+d_distrib'737'_2764 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15141,15 +15339,15 @@ d_distrib'737'_2742 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_2742 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'737'_2742 v9
-du_distrib'737'_2742 ::
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_2742 v0
-  = coe du_distrib'737'_2378 (coe du_isRingWithoutOne_2682 (coe v0))
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_distrib'737'_2764 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'737'_2764 v9
+du_distrib'737'_2764 ::
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_distrib'737'_2764 v0
+  = coe du_distrib'737'_2398 (coe du_isRingWithoutOne_2704 (coe v0))
 -- Algebra.Structures.IsRing._.isEquivalence
-d_isEquivalence_2744 ::
+d_isEquivalence_2766 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15159,14 +15357,14 @@ d_isEquivalence_2744 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_2744 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isEquivalence_2744 v9
-du_isEquivalence_2744 ::
-  T_IsRing_2650 ->
+d_isEquivalence_2766 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isEquivalence_2766 v9
+du_isEquivalence_2766 ::
+  T_IsRing_2672 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-du_isEquivalence_2744 v0
+du_isEquivalence_2766 v0
   = coe
       d_isEquivalence_184
       (coe
@@ -15176,9 +15374,30 @@ du_isEquivalence_2744 v0
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0))))))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0))))))
+-- Algebra.Structures.IsRing._.isNearSemiring
+d_isNearSemiring_2768 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsNearSemiring_1218
+d_isNearSemiring_2768 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_isNearSemiring_2768 v4 v5 v6 v7 v9
+du_isNearSemiring_2768 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsRing_2672 -> T_IsNearSemiring_1218
+du_isNearSemiring_2768 v0 v1 v2 v3 v4
+  = coe
+      du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+      (coe du_isRingWithoutOne_2704 (coe v4))
 -- Algebra.Structures.IsRing._.isPartialEquivalence
-d_isPartialEquivalence_2746 ::
+d_isPartialEquivalence_2770 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15188,17 +15407,17 @@ d_isPartialEquivalence_2746 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2746 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isPartialEquivalence_2746 v9
-du_isPartialEquivalence_2746 ::
-  T_IsRing_2650 ->
+d_isPartialEquivalence_2770 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isPartialEquivalence_2770 v9
+du_isPartialEquivalence_2770 ::
+  T_IsRing_2672 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2746 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+du_isPartialEquivalence_2770 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = d_isGroup_1144 (coe v2) in
           coe
@@ -15212,7 +15431,7 @@ du_isPartialEquivalence_2746 v0
                         MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                         (coe d_isEquivalence_184 (coe v6))))))))
 -- Algebra.Structures.IsRing._.refl
-d_refl_2748 ::
+d_refl_2772 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15220,11 +15439,11 @@ d_refl_2748 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_refl_2748 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_refl_2748 v9
-du_refl_2748 :: T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_refl_2748 v0
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_refl_2772 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_refl_2772 v9
+du_refl_2772 :: T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_refl_2772 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
@@ -15236,9 +15455,9 @@ du_refl_2748 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0)))))))
 -- Algebra.Structures.IsRing._.reflexive
-d_reflexive_2750 ::
+d_reflexive_2774 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15248,21 +15467,21 @@ d_reflexive_2750 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2750 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_reflexive_2750 v9
-du_reflexive_2750 ::
-  T_IsRing_2650 ->
+d_reflexive_2774 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_reflexive_2774 v9
+du_reflexive_2774 ::
+  T_IsRing_2672 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2750 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+du_reflexive_2774 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = d_isGroup_1144 (coe v2) in
           coe
@@ -15277,7 +15496,7 @@ du_reflexive_2750 v0
                           MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                           (coe d_isEquivalence_184 (coe v6)) v7))))))
 -- Algebra.Structures.IsRing._.setoid
-d_setoid_2752 ::
+d_setoid_2776 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15287,15 +15506,15 @@ d_setoid_2752 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2752 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_setoid_2752 v9
-du_setoid_2752 ::
-  T_IsRing_2650 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2752 v0
-  = let v1 = coe du_isRingWithoutOne_2682 (coe v0) in
+  T_IsRing_2672 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+d_setoid_2776 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_setoid_2776 v9
+du_setoid_2776 ::
+  T_IsRing_2672 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+du_setoid_2776 v0
+  = let v1 = coe du_isRingWithoutOne_2704 (coe v0) in
     coe
-      (let v2 = d_'43''45'isAbelianGroup_2304 (coe v1) in
+      (let v2 = d_'43''45'isAbelianGroup_2324 (coe v1) in
        coe
          (let v3 = d_isGroup_1144 (coe v2) in
           coe
@@ -15304,7 +15523,7 @@ du_setoid_2752 v0
                (let v5 = d_isSemigroup_696 (coe v4) in
                 coe (coe du_setoid_200 (coe d_isMagma_480 (coe v5)))))))
 -- Algebra.Structures.IsRing._.sym
-d_sym_2754 ::
+d_sym_2778 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15314,11 +15533,11 @@ d_sym_2754 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2754 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9 = du_sym_2754 v9
-du_sym_2754 ::
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_sym_2754 v0
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_2778 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9 = du_sym_2778 v9
+du_sym_2778 ::
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_sym_2778 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
@@ -15330,9 +15549,9 @@ du_sym_2754 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0)))))))
 -- Algebra.Structures.IsRing._.trans
-d_trans_2756 ::
+d_trans_2780 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15342,14 +15561,14 @@ d_trans_2756 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 ->
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2756 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_trans_2756 v9
-du_trans_2756 ::
-  T_IsRing_2650 ->
+d_trans_2780 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_trans_2780 v9
+du_trans_2780 ::
+  T_IsRing_2672 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_trans_2756 v0
+du_trans_2780 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
@@ -15361,9 +15580,9 @@ du_trans_2756 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v0)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v0)))))))
 -- Algebra.Structures.IsRing._.uniqueʳ-⁻¹
-d_unique'691''45''8315''185'_2758 ::
+d_unique'691''45''8315''185'_2782 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15373,25 +15592,25 @@ d_unique'691''45''8315''185'_2758 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_unique'691''45''8315''185'_2758 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_unique'691''45''8315''185'_2782 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
                                   v9
-  = du_unique'691''45''8315''185'_2758 v4 v6 v7 v9
-du_unique'691''45''8315''185'_2758 ::
+  = du_unique'691''45''8315''185'_2782 v4 v6 v7 v9
+du_unique'691''45''8315''185'_2782 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_unique'691''45''8315''185'_2758 v0 v1 v2 v3
-  = let v4 = coe du_isRingWithoutOne_2682 (coe v3) in
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_unique'691''45''8315''185'_2782 v0 v1 v2 v3
+  = let v4 = coe du_isRingWithoutOne_2704 (coe v3) in
     coe
-      (let v5 = d_'43''45'isAbelianGroup_2304 (coe v4) in
+      (let v5 = d_'43''45'isAbelianGroup_2324 (coe v4) in
        coe
          (coe
             du_unique'691''45''8315''185'_1120 (coe v0) (coe v2) (coe v1)
             (coe d_isGroup_1144 (coe v5))))
 -- Algebra.Structures.IsRing._.uniqueˡ-⁻¹
-d_unique'737''45''8315''185'_2760 ::
+d_unique'737''45''8315''185'_2784 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15401,25 +15620,25 @@ d_unique'737''45''8315''185'_2760 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_unique'737''45''8315''185'_2760 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_unique'737''45''8315''185'_2784 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
                                   v9
-  = du_unique'737''45''8315''185'_2760 v4 v6 v7 v9
-du_unique'737''45''8315''185'_2760 ::
+  = du_unique'737''45''8315''185'_2784 v4 v6 v7 v9
+du_unique'737''45''8315''185'_2784 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRing_2650 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_unique'737''45''8315''185'_2760 v0 v1 v2 v3
-  = let v4 = coe du_isRingWithoutOne_2682 (coe v3) in
+  T_IsRing_2672 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_unique'737''45''8315''185'_2784 v0 v1 v2 v3
+  = let v4 = coe du_isRingWithoutOne_2704 (coe v3) in
     coe
-      (let v5 = d_'43''45'isAbelianGroup_2304 (coe v4) in
+      (let v5 = d_'43''45'isAbelianGroup_2324 (coe v4) in
        coe
          (coe
             du_unique'737''45''8315''185'_1114 (coe v0) (coe v2) (coe v1)
             (coe d_isGroup_1144 (coe v5))))
 -- Algebra.Structures.IsRing._.zero
-d_zero_2762 ::
+d_zero_2786 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15428,20 +15647,20 @@ d_zero_2762 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsRing_2650 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_2762 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_zero_2762 v4 v5 v6 v7 v9
-du_zero_2762 ::
+  AgdaAny -> T_IsRing_2672 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_zero_2786 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_zero_2786 v4 v5 v6 v7 v9
+du_zero_2786 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRing_2650 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_zero_2762 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsRing_2672 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_zero_2786 v0 v1 v2 v3 v4
   = coe
-      du_zero_2386 (coe v0) (coe v1) (coe v2) (coe v3)
-      (coe du_isRingWithoutOne_2682 (coe v4))
+      du_zero_2406 (coe v0) (coe v1) (coe v2) (coe v3)
+      (coe du_isRingWithoutOne_2704 (coe v4))
 -- Algebra.Structures.IsRing._.zeroʳ
-d_zero'691'_2764 ::
+d_zero'691'_2788 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15449,20 +15668,20 @@ d_zero'691'_2764 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_zero'691'_2764 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_zero'691'_2764 v4 v5 v6 v7 v9
-du_zero'691'_2764 ::
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_zero'691'_2788 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_zero'691'_2788 v4 v5 v6 v7 v9
+du_zero'691'_2788 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_zero'691'_2764 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_zero'691'_2788 v0 v1 v2 v3 v4
   = coe
-      du_zero'691'_2384 (coe v0) (coe v1) (coe v2) (coe v3)
-      (coe du_isRingWithoutOne_2682 (coe v4))
+      du_zero'691'_2404 (coe v0) (coe v1) (coe v2) (coe v3)
+      (coe du_isRingWithoutOne_2704 (coe v4))
 -- Algebra.Structures.IsRing._.zeroˡ
-d_zero'737'_2766 ::
+d_zero'737'_2790 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15470,20 +15689,20 @@ d_zero'737'_2766 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_zero'737'_2766 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_zero'737'_2766 v4 v5 v6 v7 v9
-du_zero'737'_2766 ::
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_zero'737'_2790 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_zero'737'_2790 v4 v5 v6 v7 v9
+du_zero'737'_2790 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_zero'737'_2766 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_zero'737'_2790 v0 v1 v2 v3 v4
   = coe
-      du_zero'737'_2382 (coe v0) (coe v1) (coe v2) (coe v3)
-      (coe du_isRingWithoutOne_2682 (coe v4))
+      du_zero'737'_2402 (coe v0) (coe v1) (coe v2) (coe v3)
+      (coe du_isRingWithoutOne_2704 (coe v4))
 -- Algebra.Structures.IsRing.*-isMonoid
-d_'42''45'isMonoid_2768 ::
+d_'42''45'isMonoid_2792 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15491,19 +15710,24 @@ d_'42''45'isMonoid_2768 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsMonoid_686
-d_'42''45'isMonoid_2768 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMonoid_2768 v9
-du_'42''45'isMonoid_2768 :: T_IsRing_2650 -> T_IsMonoid_686
-du_'42''45'isMonoid_2768 v0
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsMonoid_686
+d_'42''45'isMonoid_2792 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'42''45'isMonoid_2792 v4 v5 v6 v7 v9
+du_'42''45'isMonoid_2792 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) -> AgdaAny -> T_IsRing_2672 -> T_IsMonoid_686
+du_'42''45'isMonoid_2792 v0 v1 v2 v3 v4
   = coe
       C_IsMonoid'46'constructor_15873
       (coe
-         du_'42''45'isSemigroup_2390
-         (coe du_isRingWithoutOne_2682 (coe v0)))
-      (coe d_'42''45'identity_2678 (coe v0))
+         du_'42''45'isSemigroup_1284
+         (coe
+            du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+            (coe du_isRingWithoutOne_2704 (coe v4))))
+      (coe d_'42''45'identity_2700 (coe v4))
 -- Algebra.Structures.IsRing._.identityʳ
-d_identity'691'_2772 ::
+d_identity'691'_2796 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15511,56 +15735,72 @@ d_identity'691'_2772 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_identity'691'_2772 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2772 v9
-du_identity'691'_2772 :: T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_identity'691'_2772 v0
-  = coe du_identity'691'_728 (coe du_'42''45'isMonoid_2768 (coe v0))
--- Algebra.Structures.IsRing._.identityˡ
-d_identity'737'_2774 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_identity'691'_2796 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_identity'691'_2796 v4 v5 v6 v7 v9
+du_identity'691'_2796 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> AgdaAny -> AgdaAny
-d_identity'737'_2774 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2774 v9
-du_identity'737'_2774 :: T_IsRing_2650 -> AgdaAny -> AgdaAny
-du_identity'737'_2774 v0
-  = coe du_identity'737'_726 (coe du_'42''45'isMonoid_2768 (coe v0))
--- Algebra.Structures.IsRing.isSemiringWithoutAnnihilatingZero
-d_isSemiringWithoutAnnihilatingZero_2776 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  AgdaAny ->
-  T_IsRing_2650 -> T_IsSemiringWithoutAnnihilatingZero_1468
-d_isSemiringWithoutAnnihilatingZero_2776 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-                                         ~v6 ~v7 ~v8 v9
-  = du_isSemiringWithoutAnnihilatingZero_2776 v9
-du_isSemiringWithoutAnnihilatingZero_2776 ::
-  T_IsRing_2650 -> T_IsSemiringWithoutAnnihilatingZero_1468
-du_isSemiringWithoutAnnihilatingZero_2776 v0
+  AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_identity'691'_2796 v0 v1 v2 v3 v4
   = coe
-      C_IsSemiringWithoutAnnihilatingZero'46'constructor_43811
+      du_identity'691'_728
+      (coe
+         du_'42''45'isMonoid_2792 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe v4))
+-- Algebra.Structures.IsRing._.identityˡ
+d_identity'737'_2798 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+d_identity'737'_2798 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_identity'737'_2798 v4 v5 v6 v7 v9
+du_identity'737'_2798 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsRing_2672 -> AgdaAny -> AgdaAny
+du_identity'737'_2798 v0 v1 v2 v3 v4
+  = coe
+      du_identity'737'_726
+      (coe
+         du_'42''45'isMonoid_2792 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe v4))
+-- Algebra.Structures.IsRing.isSemiringWithoutAnnihilatingZero
+d_isSemiringWithoutAnnihilatingZero_2800 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny ->
+  T_IsRing_2672 -> T_IsSemiringWithoutAnnihilatingZero_1488
+d_isSemiringWithoutAnnihilatingZero_2800 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+                                         ~v6 ~v7 ~v8 v9
+  = du_isSemiringWithoutAnnihilatingZero_2800 v9
+du_isSemiringWithoutAnnihilatingZero_2800 ::
+  T_IsRing_2672 -> T_IsSemiringWithoutAnnihilatingZero_1488
+du_isSemiringWithoutAnnihilatingZero_2800 v0
+  = coe
+      C_IsSemiringWithoutAnnihilatingZero'46'constructor_45411
       (coe
          du_isCommutativeMonoid_1204
-         (coe d_'43''45'isAbelianGroup_2672 (coe v0)))
-      (coe d_'42''45'cong_2674 (coe v0))
-      (coe d_'42''45'assoc_2676 (coe v0))
-      (coe d_'42''45'identity_2678 (coe v0))
-      (coe d_distrib_2680 (coe v0))
+         (coe d_'43''45'isAbelianGroup_2694 (coe v0)))
+      (coe d_'42''45'cong_2696 (coe v0))
+      (coe d_'42''45'assoc_2698 (coe v0))
+      (coe d_'42''45'identity_2700 (coe v0))
+      (coe d_distrib_2702 (coe v0))
 -- Algebra.Structures.IsRing.isSemiring
-d_isSemiring_2778 ::
+d_isSemiring_2802 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15568,47 +15808,23 @@ d_isSemiring_2778 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsSemiring_1570
-d_isSemiring_2778 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_isSemiring_2778 v4 v5 v6 v7 v9
-du_isSemiring_2778 ::
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsSemiring_1590
+d_isSemiring_2802 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_isSemiring_2802 v4 v5 v6 v7 v9
+du_isSemiring_2802 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRing_2650 -> T_IsSemiring_1570
-du_isSemiring_2778 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsRing_2672 -> T_IsSemiring_1590
+du_isSemiring_2802 v0 v1 v2 v3 v4
   = coe
-      C_IsSemiring'46'constructor_48071
-      (coe du_isSemiringWithoutAnnihilatingZero_2776 (coe v4))
+      C_IsSemiring'46'constructor_49671
+      (coe du_isSemiringWithoutAnnihilatingZero_2800 (coe v4))
       (coe
-         du_zero_2386 (coe v0) (coe v1) (coe v2) (coe v3)
-         (coe du_isRingWithoutOne_2682 (coe v4)))
--- Algebra.Structures.IsRing._.isNearSemiring
-d_isNearSemiring_2782 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsNearSemiring_1218
-d_isNearSemiring_2782 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_isNearSemiring_2782 v4 v5 v6 v7 v9
-du_isNearSemiring_2782 ::
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRing_2650 -> T_IsNearSemiring_1218
-du_isNearSemiring_2782 v0 v1 v2 v3 v4
-  = let v5
-          = coe
-              du_isSemiring_2778 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4) in
-    coe
-      (coe
-         du_isNearSemiring_1374 (coe du_isSemiringWithoutOne_1660 (coe v5)))
+         du_zero_2406 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe du_isRingWithoutOne_2704 (coe v4)))
 -- Algebra.Structures.IsRing._.isSemiringWithoutOne
-d_isSemiringWithoutOne_2784 ::
+d_isSemiringWithoutOne_2806 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15616,39 +15832,39 @@ d_isSemiringWithoutOne_2784 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsRing_2650 -> T_IsSemiringWithoutOne_1298
-d_isSemiringWithoutOne_2784 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_isSemiringWithoutOne_2784 v4 v5 v6 v7 v9
-du_isSemiringWithoutOne_2784 ::
+  AgdaAny -> AgdaAny -> T_IsRing_2672 -> T_IsSemiringWithoutOne_1298
+d_isSemiringWithoutOne_2806 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_isSemiringWithoutOne_2806 v4 v5 v6 v7 v9
+du_isSemiringWithoutOne_2806 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRing_2650 -> T_IsSemiringWithoutOne_1298
-du_isSemiringWithoutOne_2784 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsRing_2672 -> T_IsSemiringWithoutOne_1298
+du_isSemiringWithoutOne_2806 v0 v1 v2 v3 v4
   = coe
-      du_isSemiringWithoutOne_1660
+      du_isSemiringWithoutOne_1680
       (coe
-         du_isSemiring_2778 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
+         du_isSemiring_2802 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
 -- Algebra.Structures.IsCommutativeRing
-d_IsCommutativeRing_2796 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
-data T_IsCommutativeRing_2796
-  = C_IsCommutativeRing'46'constructor_100945 T_IsRing_2650
+d_IsCommutativeRing_2818 a0 a1 a2 a3 a4 a5 a6 a7 a8 = ()
+data T_IsCommutativeRing_2818
+  = C_IsCommutativeRing'46'constructor_102595 T_IsRing_2672
                                               (AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsCommutativeRing.isRing
-d_isRing_2812 :: T_IsCommutativeRing_2796 -> T_IsRing_2650
-d_isRing_2812 v0
+d_isRing_2834 :: T_IsCommutativeRing_2818 -> T_IsRing_2672
+d_isRing_2834 v0
   = case coe v0 of
-      C_IsCommutativeRing'46'constructor_100945 v1 v2 -> coe v1
+      C_IsCommutativeRing'46'constructor_102595 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsCommutativeRing.*-comm
-d_'42''45'comm_2814 ::
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'comm_2814 v0
+d_'42''45'comm_2836 ::
+  T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny -> AgdaAny
+d_'42''45'comm_2836 v0
   = case coe v0 of
-      C_IsCommutativeRing'46'constructor_100945 v1 v2 -> coe v2
+      C_IsCommutativeRing'46'constructor_102595 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsCommutativeRing._._//_
-d__'47''47'__2818 ::
+d__'47''47'__2840 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -15658,255 +15874,26 @@ d__'47''47'__2818 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'47''47'__2818 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8 ~v9
-  = du__'47''47'__2818 v4 v6
-du__'47''47'__2818 ::
+  T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'47''47'__2840 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 ~v7 ~v8 ~v9
+  = du__'47''47'__2840 v4 v6
+du__'47''47'__2840 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny -> AgdaAny
-du__'47''47'__2818 v0 v1 = coe du__'47''47'__1098 (coe v0) (coe v1)
+du__'47''47'__2840 v0 v1 = coe du__'47''47'__1098 (coe v0) (coe v1)
 -- Algebra.Structures.IsCommutativeRing._.*-assoc
-d_'42''45'assoc_2820 ::
-  T_IsCommutativeRing_2796 ->
+d_'42''45'assoc_2842 ::
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'assoc_2820 v0
-  = coe d_'42''45'assoc_2676 (coe d_isRing_2812 (coe v0))
+d_'42''45'assoc_2842 v0
+  = coe d_'42''45'assoc_2698 (coe d_isRing_2834 (coe v0))
 -- Algebra.Structures.IsCommutativeRing._.*-cong
-d_'42''45'cong_2822 ::
-  T_IsCommutativeRing_2796 ->
+d_'42''45'cong_2844 ::
+  T_IsCommutativeRing_2818 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'42''45'cong_2822 v0
-  = coe d_'42''45'cong_2674 (coe d_isRing_2812 (coe v0))
--- Algebra.Structures.IsCommutativeRing._.∙-congʳ
-d_'8729''45'cong'691'_2824 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  AgdaAny ->
-  T_IsCommutativeRing_2796 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2824 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2824 v9
-du_'8729''45'cong'691'_2824 ::
-  T_IsCommutativeRing_2796 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2824 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
-       coe
-         (let v3 = coe du_'42''45'isSemigroup_2390 (coe v2) in
-          coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v3)))))
--- Algebra.Structures.IsCommutativeRing._.∙-congˡ
-d_'8729''45'cong'737'_2826 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  AgdaAny ->
-  T_IsCommutativeRing_2796 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2826 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2826 v9
-du_'8729''45'cong'737'_2826 ::
-  T_IsCommutativeRing_2796 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2826 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
-       coe
-         (let v3 = coe du_'42''45'isSemigroup_2390 (coe v2) in
-          coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v3)))))
--- Algebra.Structures.IsCommutativeRing._.*-identity
-d_'42''45'identity_2828 ::
-  T_IsCommutativeRing_2796 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_'42''45'identity_2828 v0
-  = coe d_'42''45'identity_2678 (coe d_isRing_2812 (coe v0))
--- Algebra.Structures.IsCommutativeRing._.identityʳ
-d_identity'691'_2830 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_identity'691'_2830 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2830 v9
-du_identity'691'_2830 ::
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_identity'691'_2830 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (coe du_identity'691'_728 (coe du_'42''45'isMonoid_2768 (coe v1)))
--- Algebra.Structures.IsCommutativeRing._.identityˡ
-d_identity'737'_2832 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_identity'737'_2832 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2832 v9
-du_identity'737'_2832 ::
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_identity'737'_2832 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (coe du_identity'737'_726 (coe du_'42''45'isMonoid_2768 (coe v1)))
--- Algebra.Structures.IsCommutativeRing._.*-isMagma
-d_'42''45'isMagma_2834 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2796 -> T_IsMagma_176
-d_'42''45'isMagma_2834 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMagma_2834 v9
-du_'42''45'isMagma_2834 ::
-  T_IsCommutativeRing_2796 -> T_IsMagma_176
-du_'42''45'isMagma_2834 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (coe
-         du_'42''45'isMagma_2388 (coe du_isRingWithoutOne_2682 (coe v1)))
--- Algebra.Structures.IsCommutativeRing._.*-isMonoid
-d_'42''45'isMonoid_2836 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2796 -> T_IsMonoid_686
-d_'42''45'isMonoid_2836 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isMonoid_2836 v9
-du_'42''45'isMonoid_2836 ::
-  T_IsCommutativeRing_2796 -> T_IsMonoid_686
-du_'42''45'isMonoid_2836 v0
-  = coe du_'42''45'isMonoid_2768 (coe d_isRing_2812 (coe v0))
--- Algebra.Structures.IsCommutativeRing._.*-isSemigroup
-d_'42''45'isSemigroup_2838 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2796 -> T_IsSemigroup_472
-d_'42''45'isSemigroup_2838 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'42''45'isSemigroup_2838 v9
-du_'42''45'isSemigroup_2838 ::
-  T_IsCommutativeRing_2796 -> T_IsSemigroup_472
-du_'42''45'isSemigroup_2838 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (coe
-         du_'42''45'isSemigroup_2390
-         (coe du_isRingWithoutOne_2682 (coe v1)))
--- Algebra.Structures.IsCommutativeRing._.assoc
-d_assoc_2840 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  AgdaAny ->
-  T_IsCommutativeRing_2796 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_assoc_2840 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_assoc_2840 v9
-du_assoc_2840 ::
-  T_IsCommutativeRing_2796 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_assoc_2840 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (coe
-         d_assoc_482
-         (coe
-            d_isSemigroup_696
-            (coe
-               d_isMonoid_1050
-               (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1))))))
--- Algebra.Structures.IsCommutativeRing._.comm
-d_comm_2842 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  AgdaAny ->
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny -> AgdaAny
-d_comm_2842 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_comm_2842 v9
-du_comm_2842 ::
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny -> AgdaAny
-du_comm_2842 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe (coe d_comm_1146 (coe d_'43''45'isAbelianGroup_2672 (coe v1)))
--- Algebra.Structures.IsCommutativeRing._.∙-cong
-d_'8729''45'cong_2844 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny -> AgdaAny) ->
-  (AgdaAny -> AgdaAny) ->
-  AgdaAny ->
-  AgdaAny ->
-  T_IsCommutativeRing_2796 ->
-  AgdaAny ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_2844 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong_2844 v9
-du_'8729''45'cong_2844 ::
-  T_IsCommutativeRing_2796 ->
-  AgdaAny ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong_2844 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (coe
-         d_'8729''45'cong_186
-         (coe
-            d_isMagma_480
-            (coe
-               d_isSemigroup_696
-               (coe
-                  d_isMonoid_1050
-                  (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1)))))))
+d_'42''45'cong_2844 v0
+  = coe d_'42''45'cong_2696 (coe d_isRing_2834 (coe v0))
 -- Algebra.Structures.IsCommutativeRing._.∙-congʳ
 d_'8729''45'cong'691'_2846 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -15918,27 +15905,30 @@ d_'8729''45'cong'691'_2846 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2846 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'691'_2846 v9
+d_'8729''45'cong'691'_2846 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'8729''45'cong'691'_2846 v4 v5 v6 v7 v9
 du_'8729''45'cong'691'_2846 ::
-  T_IsCommutativeRing_2796 ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2846 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_'8729''45'cong'691'_2846 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v6 = coe du_isRingWithoutOne_2704 (coe v5) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v7
+                = coe
+                    du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+                    (coe v6) in
           coe
-            (let v4 = d_isGroup_1144 (coe v3) in
-             coe
-               (let v5 = d_isMonoid_1050 (coe v4) in
-                coe
-                  (let v6 = d_isSemigroup_696 (coe v5) in
-                   coe
-                     (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v6))))))))
+            (coe
+               du_'8729''45'cong'691'_206
+               (coe du_'42''45'isMagma_1282 (coe v7)))))
 -- Algebra.Structures.IsCommutativeRing._.∙-congˡ
 d_'8729''45'cong'737'_2848 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -15950,51 +15940,35 @@ d_'8729''45'cong'737'_2848 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2848 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8729''45'cong'737'_2848 v9
+d_'8729''45'cong'737'_2848 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'8729''45'cong'737'_2848 v4 v5 v6 v7 v9
 du_'8729''45'cong'737'_2848 ::
-  T_IsCommutativeRing_2796 ->
-  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2848 v0
-  = let v1 = d_isRing_2812 (coe v0) in
-    coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
-       coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
-          coe
-            (let v4 = d_isGroup_1144 (coe v3) in
-             coe
-               (let v5 = d_isMonoid_1050 (coe v4) in
-                coe
-                  (let v6 = d_isSemigroup_696 (coe v5) in
-                   coe
-                     (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v6))))))))
--- Algebra.Structures.IsCommutativeRing._.identity
-d_identity_2850 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny ->
-  T_IsCommutativeRing_2796 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_2850 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity_2850 v9
-du_identity_2850 ::
-  T_IsCommutativeRing_2796 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_identity_2850 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  T_IsCommutativeRing_2818 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8729''45'cong'737'_2848 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
-      (coe
-         d_identity_698
-         (coe
-            d_isMonoid_1050
-            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1)))))
+      (let v6 = coe du_isRingWithoutOne_2704 (coe v5) in
+       coe
+         (let v7
+                = coe
+                    du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+                    (coe v6) in
+          coe
+            (coe
+               du_'8729''45'cong'737'_202
+               (coe du_'42''45'isMagma_1282 (coe v7)))))
+-- Algebra.Structures.IsCommutativeRing._.*-identity
+d_'42''45'identity_2850 ::
+  T_IsCommutativeRing_2818 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_'42''45'identity_2850 v0
+  = coe d_'42''45'identity_2700 (coe d_isRing_2834 (coe v0))
 -- Algebra.Structures.IsCommutativeRing._.identityʳ
 d_identity'691'_2852 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -16005,20 +15979,22 @@ d_identity'691'_2852 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_identity'691'_2852 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'691'_2852 v9
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_identity'691'_2852 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_identity'691'_2852 v4 v5 v6 v7 v9
 du_identity'691'_2852 ::
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_identity'691'_2852 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_identity'691'_2852 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
-       coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
-          coe
-            (let v4 = d_isGroup_1144 (coe v3) in
-             coe (coe du_identity'691'_728 (coe d_isMonoid_1050 (coe v4))))))
+      (coe
+         du_identity'691'_728
+         (coe
+            du_'42''45'isMonoid_2792 (coe v0) (coe v1) (coe v2) (coe v3)
+            (coe v5)))
 -- Algebra.Structures.IsCommutativeRing._.identityˡ
 d_identity'737'_2854 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -16029,27 +16005,99 @@ d_identity'737'_2854 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_identity'737'_2854 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_identity'737'_2854 v9
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_identity'737'_2854 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_identity'737'_2854 v4 v5 v6 v7 v9
 du_identity'737'_2854 ::
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_identity'737'_2854 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_identity'737'_2854 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (coe
+         du_identity'737'_726
+         (coe
+            du_'42''45'isMonoid_2792 (coe v0) (coe v1) (coe v2) (coe v3)
+            (coe v5)))
+-- Algebra.Structures.IsCommutativeRing._.*-isMagma
+d_'42''45'isMagma_2856 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2818 -> T_IsMagma_176
+d_'42''45'isMagma_2856 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'42''45'isMagma_2856 v4 v5 v6 v7 v9
+du_'42''45'isMagma_2856 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsMagma_176
+du_'42''45'isMagma_2856 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
+    coe
+      (let v6 = coe du_isRingWithoutOne_2704 (coe v5) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
-          coe
-            (let v4 = d_isGroup_1144 (coe v3) in
-             coe (coe du_identity'737'_726 (coe d_isMonoid_1050 (coe v4))))))
--- Algebra.Structures.IsCommutativeRing._.+-isAbelianGroup
-d_'43''45'isAbelianGroup_2856 ::
-  T_IsCommutativeRing_2796 -> T_IsAbelianGroup_1132
-d_'43''45'isAbelianGroup_2856 v0
-  = coe d_'43''45'isAbelianGroup_2672 (coe d_isRing_2812 (coe v0))
--- Algebra.Structures.IsCommutativeRing._.isCommutativeMagma
-d_isCommutativeMagma_2858 ::
+         (coe
+            du_'42''45'isMagma_1282
+            (coe
+               du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+               (coe v6))))
+-- Algebra.Structures.IsCommutativeRing._.*-isMonoid
+d_'42''45'isMonoid_2858 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2818 -> T_IsMonoid_686
+d_'42''45'isMonoid_2858 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'42''45'isMonoid_2858 v4 v5 v6 v7 v9
+du_'42''45'isMonoid_2858 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsMonoid_686
+du_'42''45'isMonoid_2858 v0 v1 v2 v3 v4
+  = coe
+      du_'42''45'isMonoid_2792 (coe v0) (coe v1) (coe v2) (coe v3)
+      (coe d_isRing_2834 (coe v4))
+-- Algebra.Structures.IsCommutativeRing._.*-isSemigroup
+d_'42''45'isSemigroup_2860 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2818 -> T_IsSemigroup_472
+d_'42''45'isSemigroup_2860 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_'42''45'isSemigroup_2860 v4 v5 v6 v7 v9
+du_'42''45'isSemigroup_2860 ::
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsSemigroup_472
+du_'42''45'isSemigroup_2860 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
+    coe
+      (let v6 = coe du_isRingWithoutOne_2704 (coe v5) in
+       coe
+         (coe
+            du_'42''45'isSemigroup_1284
+            (coe
+               du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+               (coe v6))))
+-- Algebra.Structures.IsCommutativeRing._.assoc
+d_assoc_2862 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16058,17 +16106,239 @@ d_isCommutativeMagma_2858 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_2858 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isCommutativeMagma_2858 v9
-du_isCommutativeMagma_2858 ::
-  T_IsCommutativeRing_2796 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_2858 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny ->
+  T_IsCommutativeRing_2818 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_assoc_2862 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_assoc_2862 v9
+du_assoc_2862 ::
+  T_IsCommutativeRing_2818 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_assoc_2862 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (coe
+         d_assoc_482
+         (coe
+            d_isSemigroup_696
+            (coe
+               d_isMonoid_1050
+               (coe
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1))))))
+-- Algebra.Structures.IsCommutativeRing._.comm
+d_comm_2864 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny ->
+  T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny -> AgdaAny
+d_comm_2864 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_comm_2864 v9
+du_comm_2864 ::
+  T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny -> AgdaAny
+du_comm_2864 v0
+  = let v1 = d_isRing_2834 (coe v0) in
+    coe (coe d_comm_1146 (coe d_'43''45'isAbelianGroup_2694 (coe v1)))
+-- Algebra.Structures.IsCommutativeRing._.∙-cong
+d_'8729''45'cong_2866 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny ->
+  T_IsCommutativeRing_2818 ->
+  AgdaAny ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong_2866 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong_2866 v9
+du_'8729''45'cong_2866 ::
+  T_IsCommutativeRing_2818 ->
+  AgdaAny ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8729''45'cong_2866 v0
+  = let v1 = d_isRing_2834 (coe v0) in
+    coe
+      (coe
+         d_'8729''45'cong_186
+         (coe
+            d_isMagma_480
+            (coe
+               d_isSemigroup_696
+               (coe
+                  d_isMonoid_1050
+                  (coe
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1)))))))
+-- Algebra.Structures.IsCommutativeRing._.∙-congʳ
+d_'8729''45'cong'691'_2868 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny ->
+  T_IsCommutativeRing_2818 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong'691'_2868 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'691'_2868 v9
+du_'8729''45'cong'691'_2868 ::
+  T_IsCommutativeRing_2818 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8729''45'cong'691'_2868 v0
+  = let v1 = d_isRing_2834 (coe v0) in
+    coe
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
+          coe
+            (let v4 = d_isGroup_1144 (coe v3) in
+             coe
+               (let v5 = d_isMonoid_1050 (coe v4) in
+                coe
+                  (let v6 = d_isSemigroup_696 (coe v5) in
+                   coe
+                     (coe du_'8729''45'cong'691'_206 (coe d_isMagma_480 (coe v6))))))))
+-- Algebra.Structures.IsCommutativeRing._.∙-congˡ
+d_'8729''45'cong'737'_2870 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny ->
+  T_IsCommutativeRing_2818 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_'8729''45'cong'737'_2870 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8729''45'cong'737'_2870 v9
+du_'8729''45'cong'737'_2870 ::
+  T_IsCommutativeRing_2818 ->
+  AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+du_'8729''45'cong'737'_2870 v0
+  = let v1 = d_isRing_2834 (coe v0) in
+    coe
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
+       coe
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
+          coe
+            (let v4 = d_isGroup_1144 (coe v3) in
+             coe
+               (let v5 = d_isMonoid_1050 (coe v4) in
+                coe
+                  (let v6 = d_isSemigroup_696 (coe v5) in
+                   coe
+                     (coe du_'8729''45'cong'737'_202 (coe d_isMagma_480 (coe v6))))))))
+-- Algebra.Structures.IsCommutativeRing._.identity
+d_identity_2872 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny ->
+  T_IsCommutativeRing_2818 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_2872 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity_2872 v9
+du_identity_2872 ::
+  T_IsCommutativeRing_2818 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_identity_2872 v0
+  = let v1 = d_isRing_2834 (coe v0) in
+    coe
+      (coe
+         d_identity_698
+         (coe
+            d_isMonoid_1050
+            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1)))))
+-- Algebra.Structures.IsCommutativeRing._.identityʳ
+d_identity'691'_2874 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_identity'691'_2874 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'691'_2874 v9
+du_identity'691'_2874 ::
+  T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_identity'691'_2874 v0
+  = let v1 = d_isRing_2834 (coe v0) in
+    coe
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
+       coe
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
+          coe
+            (let v4 = d_isGroup_1144 (coe v3) in
+             coe (coe du_identity'691'_728 (coe d_isMonoid_1050 (coe v4))))))
+-- Algebra.Structures.IsCommutativeRing._.identityˡ
+d_identity'737'_2876 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_identity'737'_2876 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_identity'737'_2876 v9
+du_identity'737'_2876 ::
+  T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_identity'737'_2876 v0
+  = let v1 = d_isRing_2834 (coe v0) in
+    coe
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
+       coe
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
+          coe
+            (let v4 = d_isGroup_1144 (coe v3) in
+             coe (coe du_identity'737'_726 (coe d_isMonoid_1050 (coe v4))))))
+-- Algebra.Structures.IsCommutativeRing._.+-isAbelianGroup
+d_'43''45'isAbelianGroup_2878 ::
+  T_IsCommutativeRing_2818 -> T_IsAbelianGroup_1132
+d_'43''45'isAbelianGroup_2878 v0
+  = coe d_'43''45'isAbelianGroup_2694 (coe d_isRing_2834 (coe v0))
+-- Algebra.Structures.IsCommutativeRing._.isCommutativeMagma
+d_isCommutativeMagma_2880 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> AgdaAny -> ()) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny -> AgdaAny) ->
+  (AgdaAny -> AgdaAny) ->
+  AgdaAny ->
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_2880 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isCommutativeMagma_2880 v9
+du_isCommutativeMagma_2880 ::
+  T_IsCommutativeRing_2818 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_2880 v0
+  = let v1 = d_isRing_2834 (coe v0) in
+    coe
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
+       coe
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe
             (let v4 = coe du_isCommutativeMonoid_1204 (coe v3) in
              coe
@@ -16076,7 +16346,7 @@ du_isCommutativeMagma_2858 v0
                   du_isCommutativeMagma_586
                   (coe du_isCommutativeSemigroup_786 (coe v4))))))
 -- Algebra.Structures.IsCommutativeRing._.isCommutativeMonoid
-d_isCommutativeMonoid_2860 ::
+d_isCommutativeMonoid_2882 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16085,21 +16355,21 @@ d_isCommutativeMonoid_2860 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeMonoid_736
-d_isCommutativeMonoid_2860 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isCommutativeMonoid_2860 v9
-du_isCommutativeMonoid_2860 ::
-  T_IsCommutativeRing_2796 -> T_IsCommutativeMonoid_736
-du_isCommutativeMonoid_2860 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeMonoid_736
+d_isCommutativeMonoid_2882 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isCommutativeMonoid_2882 v9
+du_isCommutativeMonoid_2882 ::
+  T_IsCommutativeRing_2818 -> T_IsCommutativeMonoid_736
+du_isCommutativeMonoid_2882 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
          (coe
             du_isCommutativeMonoid_1204
-            (coe d_'43''45'isAbelianGroup_2304 (coe v2))))
+            (coe d_'43''45'isAbelianGroup_2324 (coe v2))))
 -- Algebra.Structures.IsCommutativeRing._.isCommutativeSemigroup
-d_isCommutativeSemigroup_2862 ::
+d_isCommutativeSemigroup_2884 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16108,24 +16378,24 @@ d_isCommutativeSemigroup_2862 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeSemigroup_548
-d_isCommutativeSemigroup_2862 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeSemigroup_548
+d_isCommutativeSemigroup_2884 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                               v9
-  = du_isCommutativeSemigroup_2862 v9
-du_isCommutativeSemigroup_2862 ::
-  T_IsCommutativeRing_2796 -> T_IsCommutativeSemigroup_548
-du_isCommutativeSemigroup_2862 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  = du_isCommutativeSemigroup_2884 v9
+du_isCommutativeSemigroup_2884 ::
+  T_IsCommutativeRing_2818 -> T_IsCommutativeSemigroup_548
+du_isCommutativeSemigroup_2884 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe
             (coe
                du_isCommutativeSemigroup_786
                (coe du_isCommutativeMonoid_1204 (coe v3)))))
 -- Algebra.Structures.IsCommutativeRing._.isGroup
-d_isGroup_2864 ::
+d_isGroup_2886 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16133,16 +16403,16 @@ d_isGroup_2864 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2796 -> T_IsGroup_1036
-d_isGroup_2864 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isGroup_2864 v9
-du_isGroup_2864 :: T_IsCommutativeRing_2796 -> T_IsGroup_1036
-du_isGroup_2864 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2818 -> T_IsGroup_1036
+d_isGroup_2886 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isGroup_2886 v9
+du_isGroup_2886 :: T_IsCommutativeRing_2818 -> T_IsGroup_1036
+du_isGroup_2886 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1)))
+      (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1)))
 -- Algebra.Structures.IsCommutativeRing._.isInvertibleMagma
-d_isInvertibleMagma_2866 ::
+d_isInvertibleMagma_2888 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16151,20 +16421,20 @@ d_isInvertibleMagma_2866 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsInvertibleMagma_924
-d_isInvertibleMagma_2866 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isInvertibleMagma_2866 v9
-du_isInvertibleMagma_2866 ::
-  T_IsCommutativeRing_2796 -> T_IsInvertibleMagma_924
-du_isInvertibleMagma_2866 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsInvertibleMagma_924
+d_isInvertibleMagma_2888 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isInvertibleMagma_2888 v9
+du_isInvertibleMagma_2888 ::
+  T_IsCommutativeRing_2818 -> T_IsInvertibleMagma_924
+du_isInvertibleMagma_2888 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe (coe du_isInvertibleMagma_1122 (coe d_isGroup_1144 (coe v3)))))
 -- Algebra.Structures.IsCommutativeRing._.isInvertibleUnitalMagma
-d_isInvertibleUnitalMagma_2868 ::
+d_isInvertibleUnitalMagma_2890 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16174,23 +16444,23 @@ d_isInvertibleUnitalMagma_2868 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 -> T_IsInvertibleUnitalMagma_976
-d_isInvertibleUnitalMagma_2868 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
+  T_IsCommutativeRing_2818 -> T_IsInvertibleUnitalMagma_976
+d_isInvertibleUnitalMagma_2890 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8
                                v9
-  = du_isInvertibleUnitalMagma_2868 v9
-du_isInvertibleUnitalMagma_2868 ::
-  T_IsCommutativeRing_2796 -> T_IsInvertibleUnitalMagma_976
-du_isInvertibleUnitalMagma_2868 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  = du_isInvertibleUnitalMagma_2890 v9
+du_isInvertibleUnitalMagma_2890 ::
+  T_IsCommutativeRing_2818 -> T_IsInvertibleUnitalMagma_976
+du_isInvertibleUnitalMagma_2890 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe
             (coe
                du_isInvertibleUnitalMagma_1124 (coe d_isGroup_1144 (coe v3)))))
 -- Algebra.Structures.IsCommutativeRing._.isMagma
-d_isMagma_2870 ::
+d_isMagma_2892 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16198,12 +16468,12 @@ d_isMagma_2870 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2796 -> T_IsMagma_176
-d_isMagma_2870 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isMagma_2870 v9
-du_isMagma_2870 :: T_IsCommutativeRing_2796 -> T_IsMagma_176
-du_isMagma_2870 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2818 -> T_IsMagma_176
+d_isMagma_2892 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isMagma_2892 v9
+du_isMagma_2892 :: T_IsCommutativeRing_2818 -> T_IsMagma_176
+du_isMagma_2892 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          d_isMagma_480
@@ -16212,9 +16482,9 @@ du_isMagma_2870 v0
             (coe
                d_isMonoid_1050
                (coe
-                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1))))))
+                  d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1))))))
 -- Algebra.Structures.IsCommutativeRing._.isMonoid
-d_isMonoid_2872 ::
+d_isMonoid_2894 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16222,18 +16492,18 @@ d_isMonoid_2872 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2796 -> T_IsMonoid_686
-d_isMonoid_2872 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isMonoid_2872 v9
-du_isMonoid_2872 :: T_IsCommutativeRing_2796 -> T_IsMonoid_686
-du_isMonoid_2872 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2818 -> T_IsMonoid_686
+d_isMonoid_2894 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isMonoid_2894 v9
+du_isMonoid_2894 :: T_IsCommutativeRing_2818 -> T_IsMonoid_686
+du_isMonoid_2894 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          d_isMonoid_1050
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1))))
 -- Algebra.Structures.IsCommutativeRing._.isSemigroup
-d_isSemigroup_2874 ::
+d_isSemigroup_2896 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16241,21 +16511,21 @@ d_isSemigroup_2874 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2796 -> T_IsSemigroup_472
-d_isSemigroup_2874 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isSemigroup_2874 v9
-du_isSemigroup_2874 ::
-  T_IsCommutativeRing_2796 -> T_IsSemigroup_472
-du_isSemigroup_2874 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2818 -> T_IsSemigroup_472
+d_isSemigroup_2896 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isSemigroup_2896 v9
+du_isSemigroup_2896 ::
+  T_IsCommutativeRing_2818 -> T_IsSemigroup_472
+du_isSemigroup_2896 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          d_isSemigroup_696
          (coe
             d_isMonoid_1050
-            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1)))))
+            (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1)))))
 -- Algebra.Structures.IsCommutativeRing._.isUnitalMagma
-d_isUnitalMagma_2876 ::
+d_isUnitalMagma_2898 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16264,22 +16534,22 @@ d_isUnitalMagma_2876 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsUnitalMagma_642
-d_isUnitalMagma_2876 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isUnitalMagma_2876 v9
-du_isUnitalMagma_2876 ::
-  T_IsCommutativeRing_2796 -> T_IsUnitalMagma_642
-du_isUnitalMagma_2876 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsUnitalMagma_642
+d_isUnitalMagma_2898 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isUnitalMagma_2898 v9
+du_isUnitalMagma_2898 ::
+  T_IsCommutativeRing_2818 -> T_IsUnitalMagma_642
+du_isUnitalMagma_2898 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe
             (let v4 = d_isGroup_1144 (coe v3) in
              coe (coe du_isUnitalMagma_730 (coe d_isMonoid_1050 (coe v4))))))
 -- Algebra.Structures.IsCommutativeRing._.⁻¹-cong
-d_'8315''185''45'cong_2878 ::
+d_'8315''185''45'cong_2900 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16289,21 +16559,21 @@ d_'8315''185''45'cong_2878 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8315''185''45'cong_2878 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_'8315''185''45'cong_2878 v9
-du_'8315''185''45'cong_2878 ::
-  T_IsCommutativeRing_2796 ->
+d_'8315''185''45'cong_2900 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_'8315''185''45'cong_2900 v9
+du_'8315''185''45'cong_2900 ::
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8315''185''45'cong_2878 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_'8315''185''45'cong_2900 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          d_'8315''185''45'cong_1054
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1))))
 -- Algebra.Structures.IsCommutativeRing._.inverse
-d_inverse_2880 ::
+d_inverse_2902 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16313,19 +16583,19 @@ d_inverse_2880 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_inverse_2880 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_inverse_2880 v9
-du_inverse_2880 ::
-  T_IsCommutativeRing_2796 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_inverse_2880 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  T_IsCommutativeRing_2818 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_inverse_2902 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_inverse_2902 v9
+du_inverse_2902 ::
+  T_IsCommutativeRing_2818 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_inverse_2902 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          d_inverse_1052
-         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1))))
+         (coe d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1))))
 -- Algebra.Structures.IsCommutativeRing._.inverseʳ
-d_inverse'691'_2882 ::
+d_inverse'691'_2904 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16334,20 +16604,20 @@ d_inverse'691'_2882 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_inverse'691'_2882 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_inverse'691'_2882 v9
-du_inverse'691'_2882 ::
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_inverse'691'_2882 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_inverse'691'_2904 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_inverse'691'_2904 v9
+du_inverse'691'_2904 ::
+  T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_inverse'691'_2904 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe (coe du_inverse'691'_1108 (coe d_isGroup_1144 (coe v3)))))
 -- Algebra.Structures.IsCommutativeRing._.inverseˡ
-d_inverse'737'_2884 ::
+d_inverse'737'_2906 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16356,24 +16626,24 @@ d_inverse'737'_2884 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_inverse'737'_2884 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_inverse'737'_2884 v9
-du_inverse'737'_2884 ::
-  T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_inverse'737'_2884 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_inverse'737'_2906 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_inverse'737'_2906 v9
+du_inverse'737'_2906 ::
+  T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_inverse'737'_2906 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe (coe du_inverse'737'_1106 (coe d_isGroup_1144 (coe v3)))))
 -- Algebra.Structures.IsCommutativeRing._.distrib
-d_distrib_2886 ::
-  T_IsCommutativeRing_2796 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_distrib_2886 v0 = coe d_distrib_2680 (coe d_isRing_2812 (coe v0))
+d_distrib_2908 ::
+  T_IsCommutativeRing_2818 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_distrib_2908 v0 = coe d_distrib_2702 (coe d_isRing_2834 (coe v0))
 -- Algebra.Structures.IsCommutativeRing._.distribʳ
-d_distrib'691'_2888 ::
+d_distrib'691'_2910 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16383,19 +16653,19 @@ d_distrib'691'_2888 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'691'_2888 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'691'_2888 v9
-du_distrib'691'_2888 ::
-  T_IsCommutativeRing_2796 ->
+d_distrib'691'_2910 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'691'_2910 v9
+du_distrib'691'_2910 ::
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'691'_2888 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_distrib'691'_2910 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (coe du_distrib'691'_2380 (coe du_isRingWithoutOne_2682 (coe v1)))
+      (coe du_distrib'691'_2400 (coe du_isRingWithoutOne_2704 (coe v1)))
 -- Algebra.Structures.IsCommutativeRing._.distribˡ
-d_distrib'737'_2890 ::
+d_distrib'737'_2912 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16405,19 +16675,19 @@ d_distrib'737'_2890 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_distrib'737'_2890 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_distrib'737'_2890 v9
-du_distrib'737'_2890 ::
-  T_IsCommutativeRing_2796 ->
+d_distrib'737'_2912 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_distrib'737'_2912 v9
+du_distrib'737'_2912 ::
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_distrib'737'_2890 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_distrib'737'_2912 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (coe du_distrib'737'_2378 (coe du_isRingWithoutOne_2682 (coe v1)))
+      (coe du_distrib'737'_2398 (coe du_isRingWithoutOne_2704 (coe v1)))
 -- Algebra.Structures.IsCommutativeRing._.isEquivalence
-d_isEquivalence_2892 ::
+d_isEquivalence_2914 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16427,15 +16697,15 @@ d_isEquivalence_2892 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_2892 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isEquivalence_2892 v9
-du_isEquivalence_2892 ::
-  T_IsCommutativeRing_2796 ->
+d_isEquivalence_2914 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isEquivalence_2914 v9
+du_isEquivalence_2914 ::
+  T_IsCommutativeRing_2818 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-du_isEquivalence_2892 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_isEquivalence_2914 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          d_isEquivalence_184
@@ -16446,9 +16716,9 @@ du_isEquivalence_2892 v0
                (coe
                   d_isMonoid_1050
                   (coe
-                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1)))))))
+                     d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1)))))))
 -- Algebra.Structures.IsCommutativeRing._.isNearSemiring
-d_isNearSemiring_2894 ::
+d_isNearSemiring_2916 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16457,26 +16727,22 @@ d_isNearSemiring_2894 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsNearSemiring_1218
-d_isNearSemiring_2894 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_isNearSemiring_2894 v4 v5 v6 v7 v9
-du_isNearSemiring_2894 ::
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsNearSemiring_1218
+d_isNearSemiring_2916 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_isNearSemiring_2916 v4 v5 v6 v7 v9
+du_isNearSemiring_2916 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsNearSemiring_1218
-du_isNearSemiring_2894 v0 v1 v2 v3 v4
-  = let v5 = d_isRing_2812 (coe v4) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsNearSemiring_1218
+du_isNearSemiring_2916 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
-      (let v6
-             = coe
-                 du_isSemiring_2778 (coe v0) (coe v1) (coe v2) (coe v3) (coe v5) in
-       coe
-         (coe
-            du_isNearSemiring_1374
-            (coe du_isSemiringWithoutOne_1660 (coe v6))))
+      (coe
+         du_isNearSemiring_2408 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe du_isRingWithoutOne_2704 (coe v5)))
 -- Algebra.Structures.IsCommutativeRing._.isPartialEquivalence
-d_isPartialEquivalence_2896 ::
+d_isPartialEquivalence_2918 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16486,19 +16752,19 @@ d_isPartialEquivalence_2896 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2896 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isPartialEquivalence_2896 v9
-du_isPartialEquivalence_2896 ::
-  T_IsCommutativeRing_2796 ->
+d_isPartialEquivalence_2918 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isPartialEquivalence_2918 v9
+du_isPartialEquivalence_2918 ::
+  T_IsCommutativeRing_2818 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2896 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_isPartialEquivalence_2918 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe
             (let v4 = d_isGroup_1144 (coe v3) in
              coe
@@ -16512,7 +16778,7 @@ du_isPartialEquivalence_2896 v0
                            MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                            (coe d_isEquivalence_184 (coe v7)))))))))
 -- Algebra.Structures.IsCommutativeRing._.isRingWithoutOne
-d_isRingWithoutOne_2898 ::
+d_isRingWithoutOne_2920 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16521,15 +16787,15 @@ d_isRingWithoutOne_2898 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsRingWithoutOne_2286
-d_isRingWithoutOne_2898 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_isRingWithoutOne_2898 v9
-du_isRingWithoutOne_2898 ::
-  T_IsCommutativeRing_2796 -> T_IsRingWithoutOne_2286
-du_isRingWithoutOne_2898 v0
-  = coe du_isRingWithoutOne_2682 (coe d_isRing_2812 (coe v0))
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsRingWithoutOne_2306
+d_isRingWithoutOne_2920 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_isRingWithoutOne_2920 v9
+du_isRingWithoutOne_2920 ::
+  T_IsCommutativeRing_2818 -> T_IsRingWithoutOne_2306
+du_isRingWithoutOne_2920 v0
+  = coe du_isRingWithoutOne_2704 (coe d_isRing_2834 (coe v0))
 -- Algebra.Structures.IsCommutativeRing._.isSemiring
-d_isSemiring_2900 ::
+d_isSemiring_2922 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16537,20 +16803,20 @@ d_isSemiring_2900 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2796 -> T_IsSemiring_1570
-d_isSemiring_2900 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_isSemiring_2900 v4 v5 v6 v7 v9
-du_isSemiring_2900 ::
+  AgdaAny -> AgdaAny -> T_IsCommutativeRing_2818 -> T_IsSemiring_1590
+d_isSemiring_2922 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_isSemiring_2922 v4 v5 v6 v7 v9
+du_isSemiring_2922 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsSemiring_1570
-du_isSemiring_2900 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsSemiring_1590
+du_isSemiring_2922 v0 v1 v2 v3 v4
   = coe
-      du_isSemiring_2778 (coe v0) (coe v1) (coe v2) (coe v3)
-      (coe d_isRing_2812 (coe v4))
+      du_isSemiring_2802 (coe v0) (coe v1) (coe v2) (coe v3)
+      (coe d_isRing_2834 (coe v4))
 -- Algebra.Structures.IsCommutativeRing._.isSemiringWithoutAnnihilatingZero
-d_isSemiringWithoutAnnihilatingZero_2902 ::
+d_isSemiringWithoutAnnihilatingZero_2924 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16560,20 +16826,20 @@ d_isSemiringWithoutAnnihilatingZero_2902 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
-  T_IsSemiringWithoutAnnihilatingZero_1468
-d_isSemiringWithoutAnnihilatingZero_2902 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  T_IsCommutativeRing_2818 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488
+d_isSemiringWithoutAnnihilatingZero_2924 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
                                          ~v6 ~v7 ~v8 v9
-  = du_isSemiringWithoutAnnihilatingZero_2902 v9
-du_isSemiringWithoutAnnihilatingZero_2902 ::
-  T_IsCommutativeRing_2796 ->
-  T_IsSemiringWithoutAnnihilatingZero_1468
-du_isSemiringWithoutAnnihilatingZero_2902 v0
+  = du_isSemiringWithoutAnnihilatingZero_2924 v9
+du_isSemiringWithoutAnnihilatingZero_2924 ::
+  T_IsCommutativeRing_2818 ->
+  T_IsSemiringWithoutAnnihilatingZero_1488
+du_isSemiringWithoutAnnihilatingZero_2924 v0
   = coe
-      du_isSemiringWithoutAnnihilatingZero_2776
-      (coe d_isRing_2812 (coe v0))
+      du_isSemiringWithoutAnnihilatingZero_2800
+      (coe d_isRing_2834 (coe v0))
 -- Algebra.Structures.IsCommutativeRing._.isSemiringWithoutOne
-d_isSemiringWithoutOne_2904 ::
+d_isSemiringWithoutOne_2926 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16582,23 +16848,23 @@ d_isSemiringWithoutOne_2904 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsSemiringWithoutOne_1298
-d_isSemiringWithoutOne_2904 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_isSemiringWithoutOne_2904 v4 v5 v6 v7 v9
-du_isSemiringWithoutOne_2904 ::
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsSemiringWithoutOne_1298
+d_isSemiringWithoutOne_2926 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_isSemiringWithoutOne_2926 v4 v5 v6 v7 v9
+du_isSemiringWithoutOne_2926 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsSemiringWithoutOne_1298
-du_isSemiringWithoutOne_2904 v0 v1 v2 v3 v4
-  = let v5 = d_isRing_2812 (coe v4) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsSemiringWithoutOne_1298
+du_isSemiringWithoutOne_2926 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
       (coe
-         du_isSemiringWithoutOne_1660
+         du_isSemiringWithoutOne_1680
          (coe
-            du_isSemiring_2778 (coe v0) (coe v1) (coe v2) (coe v3) (coe v5)))
+            du_isSemiring_2802 (coe v0) (coe v1) (coe v2) (coe v3) (coe v5)))
 -- Algebra.Structures.IsCommutativeRing._.refl
-d_refl_2906 ::
+d_refl_2928 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16607,12 +16873,12 @@ d_refl_2906 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_refl_2906 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_refl_2906 v9
-du_refl_2906 :: T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_refl_2906 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_refl_2928 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_refl_2928 v9
+du_refl_2928 :: T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_refl_2928 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_refl_34
@@ -16625,9 +16891,9 @@ du_refl_2906 v0
                   (coe
                      d_isMonoid_1050
                      (coe
-                        d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1))))))))
+                        d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1))))))))
 -- Algebra.Structures.IsCommutativeRing._.reflexive
-d_reflexive_2908 ::
+d_reflexive_2930 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16637,23 +16903,23 @@ d_reflexive_2908 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2908 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_reflexive_2908 v9
-du_reflexive_2908 ::
-  T_IsCommutativeRing_2796 ->
+d_reflexive_2930 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_reflexive_2930 v9
+du_reflexive_2930 ::
+  T_IsCommutativeRing_2818 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2908 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_reflexive_2930 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe
             (let v4 = d_isGroup_1144 (coe v3) in
              coe
@@ -16668,7 +16934,7 @@ du_reflexive_2908 v0
                              MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                              (coe d_isEquivalence_184 (coe v7)) v8)))))))
 -- Algebra.Structures.IsCommutativeRing._.setoid
-d_setoid_2910 ::
+d_setoid_2932 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16678,19 +16944,19 @@ d_setoid_2910 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2910 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_setoid_2910 v9
-du_setoid_2910 ::
-  T_IsCommutativeRing_2796 ->
+d_setoid_2932 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_setoid_2932 v9
+du_setoid_2932 ::
+  T_IsCommutativeRing_2818 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2910 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_setoid_2932 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
-      (let v2 = coe du_isRingWithoutOne_2682 (coe v1) in
+      (let v2 = coe du_isRingWithoutOne_2704 (coe v1) in
        coe
-         (let v3 = d_'43''45'isAbelianGroup_2304 (coe v2) in
+         (let v3 = d_'43''45'isAbelianGroup_2324 (coe v2) in
           coe
             (let v4 = d_isGroup_1144 (coe v3) in
              coe
@@ -16699,7 +16965,7 @@ du_setoid_2910 v0
                   (let v6 = d_isSemigroup_696 (coe v5) in
                    coe (coe du_setoid_200 (coe d_isMagma_480 (coe v6))))))))
 -- Algebra.Structures.IsCommutativeRing._.sym
-d_sym_2912 ::
+d_sym_2934 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16709,14 +16975,14 @@ d_sym_2912 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2912 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9 = du_sym_2912 v9
-du_sym_2912 ::
-  T_IsCommutativeRing_2796 ->
+d_sym_2934 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9 = du_sym_2934 v9
+du_sym_2934 ::
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_sym_2912 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_sym_2934 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_sym_36
@@ -16729,9 +16995,9 @@ du_sym_2912 v0
                   (coe
                      d_isMonoid_1050
                      (coe
-                        d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1))))))))
+                        d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1))))))))
 -- Algebra.Structures.IsCommutativeRing._.trans
-d_trans_2914 ::
+d_trans_2936 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16741,15 +17007,15 @@ d_trans_2914 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2914 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
-  = du_trans_2914 v9
-du_trans_2914 ::
-  T_IsCommutativeRing_2796 ->
+d_trans_2936 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
+  = du_trans_2936 v9
+du_trans_2936 ::
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_trans_2914 v0
-  = let v1 = d_isRing_2812 (coe v0) in
+du_trans_2936 v0
+  = let v1 = d_isRing_2834 (coe v0) in
     coe
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_trans_38
@@ -16762,9 +17028,9 @@ du_trans_2914 v0
                   (coe
                      d_isMonoid_1050
                      (coe
-                        d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2672 (coe v1))))))))
+                        d_isGroup_1144 (coe d_'43''45'isAbelianGroup_2694 (coe v1))))))))
 -- Algebra.Structures.IsCommutativeRing._.uniqueʳ-⁻¹
-d_unique'691''45''8315''185'_2916 ::
+d_unique'691''45''8315''185'_2938 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16774,29 +17040,29 @@ d_unique'691''45''8315''185'_2916 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_unique'691''45''8315''185'_2916 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
+d_unique'691''45''8315''185'_2938 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
                                   v9
-  = du_unique'691''45''8315''185'_2916 v4 v6 v7 v9
-du_unique'691''45''8315''185'_2916 ::
+  = du_unique'691''45''8315''185'_2938 v4 v6 v7 v9
+du_unique'691''45''8315''185'_2938 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_unique'691''45''8315''185'_2916 v0 v1 v2 v3
-  = let v4 = d_isRing_2812 (coe v3) in
+du_unique'691''45''8315''185'_2938 v0 v1 v2 v3
+  = let v4 = d_isRing_2834 (coe v3) in
     coe
-      (let v5 = coe du_isRingWithoutOne_2682 (coe v4) in
+      (let v5 = coe du_isRingWithoutOne_2704 (coe v4) in
        coe
-         (let v6 = d_'43''45'isAbelianGroup_2304 (coe v5) in
+         (let v6 = d_'43''45'isAbelianGroup_2324 (coe v5) in
           coe
             (coe
                du_unique'691''45''8315''185'_1120 (coe v0) (coe v2) (coe v1)
                (coe d_isGroup_1144 (coe v6)))))
 -- Algebra.Structures.IsCommutativeRing._.uniqueˡ-⁻¹
-d_unique'737''45''8315''185'_2918 ::
+d_unique'737''45''8315''185'_2940 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16806,29 +17072,29 @@ d_unique'737''45''8315''185'_2918 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_unique'737''45''8315''185'_2918 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
+d_unique'737''45''8315''185'_2940 ~v0 ~v1 ~v2 ~v3 v4 ~v5 v6 v7 ~v8
                                   v9
-  = du_unique'737''45''8315''185'_2918 v4 v6 v7 v9
-du_unique'737''45''8315''185'_2918 ::
+  = du_unique'737''45''8315''185'_2940 v4 v6 v7 v9
+du_unique'737''45''8315''185'_2940 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 ->
+  T_IsCommutativeRing_2818 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_unique'737''45''8315''185'_2918 v0 v1 v2 v3
-  = let v4 = d_isRing_2812 (coe v3) in
+du_unique'737''45''8315''185'_2940 v0 v1 v2 v3
+  = let v4 = d_isRing_2834 (coe v3) in
     coe
-      (let v5 = coe du_isRingWithoutOne_2682 (coe v4) in
+      (let v5 = coe du_isRingWithoutOne_2704 (coe v4) in
        coe
-         (let v6 = d_'43''45'isAbelianGroup_2304 (coe v5) in
+         (let v6 = d_'43''45'isAbelianGroup_2324 (coe v5) in
           coe
             (coe
                du_unique'737''45''8315''185'_1114 (coe v0) (coe v2) (coe v1)
                (coe d_isGroup_1144 (coe v6)))))
 -- Algebra.Structures.IsCommutativeRing._.zero
-d_zero_2920 ::
+d_zero_2942 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16838,23 +17104,23 @@ d_zero_2920 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_zero_2920 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_zero_2920 v4 v5 v6 v7 v9
-du_zero_2920 ::
+  T_IsCommutativeRing_2818 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_zero_2942 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_zero_2942 v4 v5 v6 v7 v9
+du_zero_2942 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_zero_2920 v0 v1 v2 v3 v4
-  = let v5 = d_isRing_2812 (coe v4) in
+  T_IsCommutativeRing_2818 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_zero_2942 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
       (coe
-         du_zero_2386 (coe v0) (coe v1) (coe v2) (coe v3)
-         (coe du_isRingWithoutOne_2682 (coe v5)))
+         du_zero_2406 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe du_isRingWithoutOne_2704 (coe v5)))
 -- Algebra.Structures.IsCommutativeRing._.zeroʳ
-d_zero'691'_2922 ::
+d_zero'691'_2944 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16863,22 +17129,22 @@ d_zero'691'_2922 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_zero'691'_2922 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_zero'691'_2922 v4 v5 v6 v7 v9
-du_zero'691'_2922 ::
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_zero'691'_2944 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_zero'691'_2944 v4 v5 v6 v7 v9
+du_zero'691'_2944 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_zero'691'_2922 v0 v1 v2 v3 v4
-  = let v5 = d_isRing_2812 (coe v4) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_zero'691'_2944 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
       (coe
-         du_zero'691'_2384 (coe v0) (coe v1) (coe v2) (coe v3)
-         (coe du_isRingWithoutOne_2682 (coe v5)))
+         du_zero'691'_2404 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe du_isRingWithoutOne_2704 (coe v5)))
 -- Algebra.Structures.IsCommutativeRing._.zeroˡ
-d_zero'737'_2924 ::
+d_zero'737'_2946 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16887,22 +17153,22 @@ d_zero'737'_2924 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-d_zero'737'_2924 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_zero'737'_2924 v4 v5 v6 v7 v9
-du_zero'737'_2924 ::
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+d_zero'737'_2946 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_zero'737'_2946 v4 v5 v6 v7 v9
+du_zero'737'_2946 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> AgdaAny -> AgdaAny
-du_zero'737'_2924 v0 v1 v2 v3 v4
-  = let v5 = d_isRing_2812 (coe v4) in
+  AgdaAny -> T_IsCommutativeRing_2818 -> AgdaAny -> AgdaAny
+du_zero'737'_2946 v0 v1 v2 v3 v4
+  = let v5 = d_isRing_2834 (coe v4) in
     coe
       (coe
-         du_zero'737'_2382 (coe v0) (coe v1) (coe v2) (coe v3)
-         (coe du_isRingWithoutOne_2682 (coe v5)))
+         du_zero'737'_2402 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe du_isRingWithoutOne_2704 (coe v5)))
 -- Algebra.Structures.IsCommutativeRing.isCommutativeSemiring
-d_isCommutativeSemiring_2926 ::
+d_isCommutativeSemiring_2948 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16911,23 +17177,23 @@ d_isCommutativeSemiring_2926 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeSemiring_1678
-d_isCommutativeSemiring_2926 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_isCommutativeSemiring_2926 v4 v5 v6 v7 v9
-du_isCommutativeSemiring_2926 ::
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeSemiring_1698
+d_isCommutativeSemiring_2948 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_isCommutativeSemiring_2948 v4 v5 v6 v7 v9
+du_isCommutativeSemiring_2948 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeSemiring_1678
-du_isCommutativeSemiring_2926 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeSemiring_1698
+du_isCommutativeSemiring_2948 v0 v1 v2 v3 v4
   = coe
-      C_IsCommutativeSemiring'46'constructor_51895
+      C_IsCommutativeSemiring'46'constructor_53495
       (coe
-         du_isSemiring_2778 (coe v0) (coe v1) (coe v2) (coe v3)
-         (coe d_isRing_2812 (coe v4)))
-      (coe d_'42''45'comm_2814 (coe v4))
+         du_isSemiring_2802 (coe v0) (coe v1) (coe v2) (coe v3)
+         (coe d_isRing_2834 (coe v4)))
+      (coe d_'42''45'comm_2836 (coe v4))
 -- Algebra.Structures.IsCommutativeRing._.isCommutativeMagma
-d_isCommutativeMagma_2930 ::
+d_isCommutativeMagma_2952 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16936,27 +17202,27 @@ d_isCommutativeMagma_2930 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeMagma_212
-d_isCommutativeMagma_2930 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
-  = du_isCommutativeMagma_2930 v4 v5 v6 v7 v9
-du_isCommutativeMagma_2930 ::
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeMagma_212
+d_isCommutativeMagma_2952 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8 v9
+  = du_isCommutativeMagma_2952 v4 v5 v6 v7 v9
+du_isCommutativeMagma_2952 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeMagma_212
-du_isCommutativeMagma_2930 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeMagma_212
+du_isCommutativeMagma_2952 v0 v1 v2 v3 v4
   = let v5
           = coe
-              du_isCommutativeSemiring_2926 (coe v0) (coe v1) (coe v2) (coe v3)
+              du_isCommutativeSemiring_2948 (coe v0) (coe v1) (coe v2) (coe v3)
               (coe v4) in
     coe
-      (let v6 = coe du_isCommutativeSemiringWithoutOne_1780 (coe v5) in
+      (let v6 = coe du_isCommutativeSemiringWithoutOne_1800 (coe v5) in
        coe
          (coe
             du_isCommutativeMagma_586
-            (coe du_'42''45'isCommutativeSemigroup_1454 (coe v6))))
+            (coe du_'42''45'isCommutativeSemigroup_1474 (coe v6))))
 -- Algebra.Structures.IsCommutativeRing._.*-isCommutativeMonoid
-d_'42''45'isCommutativeMonoid_2932 ::
+d_'42''45'isCommutativeMonoid_2954 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16965,23 +17231,23 @@ d_'42''45'isCommutativeMonoid_2932 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeMonoid_736
-d_'42''45'isCommutativeMonoid_2932 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeMonoid_736
+d_'42''45'isCommutativeMonoid_2954 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7 ~v8
                                    v9
-  = du_'42''45'isCommutativeMonoid_2932 v4 v5 v6 v7 v9
-du_'42''45'isCommutativeMonoid_2932 ::
+  = du_'42''45'isCommutativeMonoid_2954 v4 v5 v6 v7 v9
+du_'42''45'isCommutativeMonoid_2954 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeMonoid_736
-du_'42''45'isCommutativeMonoid_2932 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeMonoid_736
+du_'42''45'isCommutativeMonoid_2954 v0 v1 v2 v3 v4
   = coe
-      du_'42''45'isCommutativeMonoid_1788
+      du_'42''45'isCommutativeMonoid_1808
       (coe
-         du_isCommutativeSemiring_2926 (coe v0) (coe v1) (coe v2) (coe v3)
+         du_isCommutativeSemiring_2948 (coe v0) (coe v1) (coe v2) (coe v3)
          (coe v4))
 -- Algebra.Structures.IsCommutativeRing._.*-isCommutativeSemigroup
-d_'42''45'isCommutativeSemigroup_2934 ::
+d_'42''45'isCommutativeSemigroup_2956 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -16990,26 +17256,26 @@ d_'42''45'isCommutativeSemigroup_2934 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeSemigroup_548
-d_'42''45'isCommutativeSemigroup_2934 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeSemigroup_548
+d_'42''45'isCommutativeSemigroup_2956 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
                                       ~v8 v9
-  = du_'42''45'isCommutativeSemigroup_2934 v4 v5 v6 v7 v9
-du_'42''45'isCommutativeSemigroup_2934 ::
+  = du_'42''45'isCommutativeSemigroup_2956 v4 v5 v6 v7 v9
+du_'42''45'isCommutativeSemigroup_2956 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsCommutativeRing_2796 -> T_IsCommutativeSemigroup_548
-du_'42''45'isCommutativeSemigroup_2934 v0 v1 v2 v3 v4
+  AgdaAny -> T_IsCommutativeRing_2818 -> T_IsCommutativeSemigroup_548
+du_'42''45'isCommutativeSemigroup_2956 v0 v1 v2 v3 v4
   = let v5
           = coe
-              du_isCommutativeSemiring_2926 (coe v0) (coe v1) (coe v2) (coe v3)
+              du_isCommutativeSemiring_2948 (coe v0) (coe v1) (coe v2) (coe v3)
               (coe v4) in
     coe
       (coe
-         du_'42''45'isCommutativeSemigroup_1454
-         (coe du_isCommutativeSemiringWithoutOne_1780 (coe v5)))
+         du_'42''45'isCommutativeSemigroup_1474
+         (coe du_isCommutativeSemiringWithoutOne_1800 (coe v5)))
 -- Algebra.Structures.IsCommutativeRing._.isCommutativeSemiringWithoutOne
-d_isCommutativeSemiringWithoutOne_2936 ::
+d_isCommutativeSemiringWithoutOne_2958 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17019,26 +17285,26 @@ d_isCommutativeSemiringWithoutOne_2936 ::
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 -> T_IsCommutativeSemiringWithoutOne_1382
-d_isCommutativeSemiringWithoutOne_2936 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
+  T_IsCommutativeRing_2818 -> T_IsCommutativeSemiringWithoutOne_1392
+d_isCommutativeSemiringWithoutOne_2958 ~v0 ~v1 ~v2 ~v3 v4 v5 v6 v7
                                        ~v8 v9
-  = du_isCommutativeSemiringWithoutOne_2936 v4 v5 v6 v7 v9
-du_isCommutativeSemiringWithoutOne_2936 ::
+  = du_isCommutativeSemiringWithoutOne_2958 v4 v5 v6 v7 v9
+du_isCommutativeSemiringWithoutOne_2958 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsCommutativeRing_2796 -> T_IsCommutativeSemiringWithoutOne_1382
-du_isCommutativeSemiringWithoutOne_2936 v0 v1 v2 v3 v4
+  T_IsCommutativeRing_2818 -> T_IsCommutativeSemiringWithoutOne_1392
+du_isCommutativeSemiringWithoutOne_2958 v0 v1 v2 v3 v4
   = coe
-      du_isCommutativeSemiringWithoutOne_1780
+      du_isCommutativeSemiringWithoutOne_1800
       (coe
-         du_isCommutativeSemiring_2926 (coe v0) (coe v1) (coe v2) (coe v3)
+         du_isCommutativeSemiring_2948 (coe v0) (coe v1) (coe v2) (coe v3)
          (coe v4))
 -- Algebra.Structures.IsQuasigroup
-d_IsQuasigroup_2944 a0 a1 a2 a3 a4 a5 a6 = ()
-data T_IsQuasigroup_2944
-  = C_IsQuasigroup'46'constructor_106057 T_IsMagma_176
+d_IsQuasigroup_2966 a0 a1 a2 a3 a4 a5 a6 = ()
+data T_IsQuasigroup_2966
+  = C_IsQuasigroup'46'constructor_107707 T_IsMagma_176
                                          (AgdaAny ->
                                           AgdaAny ->
                                           AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
@@ -17048,51 +17314,51 @@ data T_IsQuasigroup_2944
                                          MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                          MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsQuasigroup.isMagma
-d_isMagma_2962 :: T_IsQuasigroup_2944 -> T_IsMagma_176
-d_isMagma_2962 v0
+d_isMagma_2984 :: T_IsQuasigroup_2966 -> T_IsMagma_176
+d_isMagma_2984 v0
   = case coe v0 of
-      C_IsQuasigroup'46'constructor_106057 v1 v2 v3 v4 v5 -> coe v1
+      C_IsQuasigroup'46'constructor_107707 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasigroup.\\-cong
-d_'92''92''45'cong_2964 ::
-  T_IsQuasigroup_2944 ->
+d_'92''92''45'cong_2986 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong_2964 v0
+d_'92''92''45'cong_2986 v0
   = case coe v0 of
-      C_IsQuasigroup'46'constructor_106057 v1 v2 v3 v4 v5 -> coe v2
+      C_IsQuasigroup'46'constructor_107707 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasigroup.//-cong
-d_'47''47''45'cong_2966 ::
-  T_IsQuasigroup_2944 ->
+d_'47''47''45'cong_2988 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong_2966 v0
+d_'47''47''45'cong_2988 v0
   = case coe v0 of
-      C_IsQuasigroup'46'constructor_106057 v1 v2 v3 v4 v5 -> coe v3
+      C_IsQuasigroup'46'constructor_107707 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasigroup.leftDivides
-d_leftDivides_2968 ::
-  T_IsQuasigroup_2944 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_leftDivides_2968 v0
+d_leftDivides_2990 ::
+  T_IsQuasigroup_2966 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_leftDivides_2990 v0
   = case coe v0 of
-      C_IsQuasigroup'46'constructor_106057 v1 v2 v3 v4 v5 -> coe v4
+      C_IsQuasigroup'46'constructor_107707 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasigroup.rightDivides
-d_rightDivides_2970 ::
-  T_IsQuasigroup_2944 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rightDivides_2970 v0
+d_rightDivides_2992 ::
+  T_IsQuasigroup_2966 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_rightDivides_2992 v0
   = case coe v0 of
-      C_IsQuasigroup'46'constructor_106057 v1 v2 v3 v4 v5 -> coe v5
+      C_IsQuasigroup'46'constructor_107707 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsQuasigroup._.isEquivalence
-d_isEquivalence_2974 ::
-  T_IsQuasigroup_2944 ->
+d_isEquivalence_2996 ::
+  T_IsQuasigroup_2966 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_2974 v0
-  = coe d_isEquivalence_184 (coe d_isMagma_2962 (coe v0))
+d_isEquivalence_2996 v0
+  = coe d_isEquivalence_184 (coe d_isMagma_2984 (coe v0))
 -- Algebra.Structures.IsQuasigroup._.isPartialEquivalence
-d_isPartialEquivalence_2976 ::
+d_isPartialEquivalence_2998 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17100,27 +17366,27 @@ d_isPartialEquivalence_2976 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_2976 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_isPartialEquivalence_2976 v7
-du_isPartialEquivalence_2976 ::
-  T_IsQuasigroup_2944 ->
+d_isPartialEquivalence_2998 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_isPartialEquivalence_2998 v7
+du_isPartialEquivalence_2998 ::
+  T_IsQuasigroup_2966 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_2976 v0
-  = let v1 = d_isMagma_2962 (coe v0) in
+du_isPartialEquivalence_2998 v0
+  = let v1 = d_isMagma_2984 (coe v0) in
     coe
       (coe
          MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
          (coe d_isEquivalence_184 (coe v1)))
 -- Algebra.Structures.IsQuasigroup._.refl
-d_refl_2978 :: T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny
-d_refl_2978 v0
+d_refl_3000 :: T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny
+d_refl_3000 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
-      (coe d_isEquivalence_184 (coe d_isMagma_2962 (coe v0)))
+      (coe d_isEquivalence_184 (coe d_isMagma_2984 (coe v0)))
 -- Algebra.Structures.IsQuasigroup._.reflexive
-d_reflexive_2980 ::
+d_reflexive_3002 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17128,26 +17394,26 @@ d_reflexive_2980 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_2980 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_reflexive_2980 v7
-du_reflexive_2980 ::
-  T_IsQuasigroup_2944 ->
+d_reflexive_3002 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_reflexive_3002 v7
+du_reflexive_3002 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_2980 v0
-  = let v1 = d_isMagma_2962 (coe v0) in
+du_reflexive_3002 v0
+  = let v1 = d_isMagma_2984 (coe v0) in
     coe
       (\ v2 v3 v4 ->
          coe
            MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
            (coe d_isEquivalence_184 (coe v1)) v2)
 -- Algebra.Structures.IsQuasigroup._.setoid
-d_setoid_2982 ::
+d_setoid_3004 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17155,37 +17421,37 @@ d_setoid_2982 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_2982 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_setoid_2982 v7
-du_setoid_2982 ::
-  T_IsQuasigroup_2944 ->
+d_setoid_3004 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 = du_setoid_3004 v7
+du_setoid_3004 ::
+  T_IsQuasigroup_2966 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_2982 v0 = coe du_setoid_200 (coe d_isMagma_2962 (coe v0))
+du_setoid_3004 v0 = coe du_setoid_200 (coe d_isMagma_2984 (coe v0))
 -- Algebra.Structures.IsQuasigroup._.sym
-d_sym_2984 ::
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_2984 v0
+d_sym_3006 ::
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_3006 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
-      (coe d_isEquivalence_184 (coe d_isMagma_2962 (coe v0)))
+      (coe d_isEquivalence_184 (coe d_isMagma_2984 (coe v0)))
 -- Algebra.Structures.IsQuasigroup._.trans
-d_trans_2986 ::
-  T_IsQuasigroup_2944 ->
+d_trans_3008 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_2986 v0
+d_trans_3008 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
-      (coe d_isEquivalence_184 (coe d_isMagma_2962 (coe v0)))
+      (coe d_isEquivalence_184 (coe d_isMagma_2984 (coe v0)))
 -- Algebra.Structures.IsQuasigroup._.∙-cong
-d_'8729''45'cong_2988 ::
-  T_IsQuasigroup_2944 ->
+d_'8729''45'cong_3010 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_2988 v0
-  = coe d_'8729''45'cong_186 (coe d_isMagma_2962 (coe v0))
+d_'8729''45'cong_3010 v0
+  = coe d_'8729''45'cong_186 (coe d_isMagma_2984 (coe v0))
 -- Algebra.Structures.IsQuasigroup._.∙-congʳ
-d_'8729''45'cong'691'_2990 ::
+d_'8729''45'cong'691'_3012 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17193,17 +17459,17 @@ d_'8729''45'cong'691'_2990 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_2990 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'8729''45'cong'691'_2990 v7
-du_'8729''45'cong'691'_2990 ::
-  T_IsQuasigroup_2944 ->
+d_'8729''45'cong'691'_3012 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'691'_3012 v7
+du_'8729''45'cong'691'_3012 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_2990 v0
-  = coe du_'8729''45'cong'691'_206 (coe d_isMagma_2962 (coe v0))
+du_'8729''45'cong'691'_3012 v0
+  = coe du_'8729''45'cong'691'_206 (coe d_isMagma_2984 (coe v0))
 -- Algebra.Structures.IsQuasigroup._.∙-congˡ
-d_'8729''45'cong'737'_2992 ::
+d_'8729''45'cong'737'_3014 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17211,17 +17477,17 @@ d_'8729''45'cong'737'_2992 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_2992 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_'8729''45'cong'737'_2992 v7
-du_'8729''45'cong'737'_2992 ::
-  T_IsQuasigroup_2944 ->
+d_'8729''45'cong'737'_3014 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_'8729''45'cong'737'_3014 v7
+du_'8729''45'cong'737'_3014 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_2992 v0
-  = coe du_'8729''45'cong'737'_202 (coe d_isMagma_2962 (coe v0))
+du_'8729''45'cong'737'_3014 v0
+  = coe du_'8729''45'cong'737'_202 (coe d_isMagma_2984 (coe v0))
 -- Algebra.Structures.IsQuasigroup.\\-congˡ
-d_'92''92''45'cong'737'_2994 ::
+d_'92''92''45'cong'737'_3016 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17229,23 +17495,23 @@ d_'92''92''45'cong'737'_2994 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'737'_2994 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
+d_'92''92''45'cong'737'_3016 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
                              v10 v11
-  = du_'92''92''45'cong'737'_2994 v7 v8 v9 v10 v11
-du_'92''92''45'cong'737'_2994 ::
-  T_IsQuasigroup_2944 ->
+  = du_'92''92''45'cong'737'_3016 v7 v8 v9 v10 v11
+du_'92''92''45'cong'737'_3016 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'737'_2994 v0 v1 v2 v3 v4
+du_'92''92''45'cong'737'_3016 v0 v1 v2 v3 v4
   = coe
-      d_'92''92''45'cong_2964 v0 v1 v1 v2 v3
+      d_'92''92''45'cong_2986 v0 v1 v1 v2 v3
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_refl_34
-         (d_isEquivalence_184 (coe d_isMagma_2962 (coe v0))) v1)
+         (d_isEquivalence_184 (coe d_isMagma_2984 (coe v0))) v1)
       v4
 -- Algebra.Structures.IsQuasigroup.\\-congʳ
-d_'92''92''45'cong'691'_2998 ::
+d_'92''92''45'cong'691'_3020 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17253,22 +17519,22 @@ d_'92''92''45'cong'691'_2998 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'691'_2998 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
+d_'92''92''45'cong'691'_3020 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
                              v10 v11
-  = du_'92''92''45'cong'691'_2998 v7 v8 v9 v10 v11
-du_'92''92''45'cong'691'_2998 ::
-  T_IsQuasigroup_2944 ->
+  = du_'92''92''45'cong'691'_3020 v7 v8 v9 v10 v11
+du_'92''92''45'cong'691'_3020 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'691'_2998 v0 v1 v2 v3 v4
+du_'92''92''45'cong'691'_3020 v0 v1 v2 v3 v4
   = coe
-      d_'92''92''45'cong_2964 v0 v2 v3 v1 v1 v4
+      d_'92''92''45'cong_2986 v0 v2 v3 v1 v1 v4
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_refl_34
-         (d_isEquivalence_184 (coe d_isMagma_2962 (coe v0))) v1)
+         (d_isEquivalence_184 (coe d_isMagma_2984 (coe v0))) v1)
 -- Algebra.Structures.IsQuasigroup.//-congˡ
-d_'47''47''45'cong'737'_3002 ::
+d_'47''47''45'cong'737'_3024 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17276,23 +17542,23 @@ d_'47''47''45'cong'737'_3002 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'737'_3002 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
+d_'47''47''45'cong'737'_3024 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
                              v10 v11
-  = du_'47''47''45'cong'737'_3002 v7 v8 v9 v10 v11
-du_'47''47''45'cong'737'_3002 ::
-  T_IsQuasigroup_2944 ->
+  = du_'47''47''45'cong'737'_3024 v7 v8 v9 v10 v11
+du_'47''47''45'cong'737'_3024 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'737'_3002 v0 v1 v2 v3 v4
+du_'47''47''45'cong'737'_3024 v0 v1 v2 v3 v4
   = coe
-      d_'47''47''45'cong_2966 v0 v1 v1 v2 v3
+      d_'47''47''45'cong_2988 v0 v1 v1 v2 v3
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_refl_34
-         (d_isEquivalence_184 (coe d_isMagma_2962 (coe v0))) v1)
+         (d_isEquivalence_184 (coe d_isMagma_2984 (coe v0))) v1)
       v4
 -- Algebra.Structures.IsQuasigroup.//-congʳ
-d_'47''47''45'cong'691'_3006 ::
+d_'47''47''45'cong'691'_3028 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17300,22 +17566,22 @@ d_'47''47''45'cong'691'_3006 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 ->
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'691'_3006 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
+d_'47''47''45'cong'691'_3028 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7 v8 v9
                              v10 v11
-  = du_'47''47''45'cong'691'_3006 v7 v8 v9 v10 v11
-du_'47''47''45'cong'691'_3006 ::
-  T_IsQuasigroup_2944 ->
+  = du_'47''47''45'cong'691'_3028 v7 v8 v9 v10 v11
+du_'47''47''45'cong'691'_3028 ::
+  T_IsQuasigroup_2966 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'691'_3006 v0 v1 v2 v3 v4
+du_'47''47''45'cong'691'_3028 v0 v1 v2 v3 v4
   = coe
-      d_'47''47''45'cong_2966 v0 v2 v3 v1 v1 v4
+      d_'47''47''45'cong_2988 v0 v2 v3 v1 v1 v4
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_refl_34
-         (d_isEquivalence_184 (coe d_isMagma_2962 (coe v0))) v1)
+         (d_isEquivalence_184 (coe d_isMagma_2984 (coe v0))) v1)
 -- Algebra.Structures.IsQuasigroup.leftDividesˡ
-d_leftDivides'737'_3010 ::
+d_leftDivides'737'_3032 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17323,17 +17589,17 @@ d_leftDivides'737'_3010 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'737'_3010 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_leftDivides'737'_3010 v7
-du_leftDivides'737'_3010 ::
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'737'_3010 v0
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'737'_3032 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_leftDivides'737'_3032 v7
+du_leftDivides'737'_3032 ::
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'737'_3032 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_leftDivides_2968 (coe v0))
+      (coe d_leftDivides_2990 (coe v0))
 -- Algebra.Structures.IsQuasigroup.leftDividesʳ
-d_leftDivides'691'_3012 ::
+d_leftDivides'691'_3034 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17341,17 +17607,17 @@ d_leftDivides'691'_3012 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'691'_3012 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_leftDivides'691'_3012 v7
-du_leftDivides'691'_3012 ::
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'691'_3012 v0
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'691'_3034 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_leftDivides'691'_3034 v7
+du_leftDivides'691'_3034 ::
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'691'_3034 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_leftDivides_2968 (coe v0))
+      (coe d_leftDivides_2990 (coe v0))
 -- Algebra.Structures.IsQuasigroup.rightDividesˡ
-d_rightDivides'737'_3014 ::
+d_rightDivides'737'_3036 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17359,17 +17625,17 @@ d_rightDivides'737'_3014 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'737'_3014 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_rightDivides'737'_3014 v7
-du_rightDivides'737'_3014 ::
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'737'_3014 v0
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'737'_3036 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_rightDivides'737'_3036 v7
+du_rightDivides'737'_3036 ::
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'737'_3036 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_rightDivides_2970 (coe v0))
+      (coe d_rightDivides_2992 (coe v0))
 -- Algebra.Structures.IsQuasigroup.rightDividesʳ
-d_rightDivides'691'_3016 ::
+d_rightDivides'691'_3038 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17377,42 +17643,42 @@ d_rightDivides'691'_3016 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'691'_3016 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
-  = du_rightDivides'691'_3016 v7
-du_rightDivides'691'_3016 ::
-  T_IsQuasigroup_2944 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'691'_3016 v0
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'691'_3038 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 v7
+  = du_rightDivides'691'_3038 v7
+du_rightDivides'691'_3038 ::
+  T_IsQuasigroup_2966 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'691'_3038 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_rightDivides_2970 (coe v0))
+      (coe d_rightDivides_2992 (coe v0))
 -- Algebra.Structures.IsLoop
-d_IsLoop_3026 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsLoop_3026
-  = C_IsLoop'46'constructor_111285 T_IsQuasigroup_2944
+d_IsLoop_3048 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsLoop_3048
+  = C_IsLoop'46'constructor_112935 T_IsQuasigroup_2966
                                    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Algebra.Structures.IsLoop.isQuasigroup
-d_isQuasigroup_3040 :: T_IsLoop_3026 -> T_IsQuasigroup_2944
-d_isQuasigroup_3040 v0
+d_isQuasigroup_3062 :: T_IsLoop_3048 -> T_IsQuasigroup_2966
+d_isQuasigroup_3062 v0
   = case coe v0 of
-      C_IsLoop'46'constructor_111285 v1 v2 -> coe v1
+      C_IsLoop'46'constructor_112935 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsLoop.identity
-d_identity_3042 ::
-  T_IsLoop_3026 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_3042 v0
+d_identity_3064 ::
+  T_IsLoop_3048 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_3064 v0
   = case coe v0 of
-      C_IsLoop'46'constructor_111285 v1 v2 -> coe v2
+      C_IsLoop'46'constructor_112935 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsLoop._.//-cong
-d_'47''47''45'cong_3046 ::
-  T_IsLoop_3026 ->
+d_'47''47''45'cong_3068 ::
+  T_IsLoop_3048 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong_3046 v0
-  = coe d_'47''47''45'cong_2966 (coe d_isQuasigroup_3040 (coe v0))
+d_'47''47''45'cong_3068 v0
+  = coe d_'47''47''45'cong_2988 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.//-congʳ
-d_'47''47''45'cong'691'_3048 ::
+d_'47''47''45'cong'691'_3070 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17421,18 +17687,18 @@ d_'47''47''45'cong'691'_3048 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 ->
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'691'_3048 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'691'_3048 v8
-du_'47''47''45'cong'691'_3048 ::
-  T_IsLoop_3026 ->
+d_'47''47''45'cong'691'_3070 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'691'_3070 v8
+du_'47''47''45'cong'691'_3070 ::
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'691'_3048 v0
+du_'47''47''45'cong'691'_3070 v0
   = coe
-      du_'47''47''45'cong'691'_3006 (coe d_isQuasigroup_3040 (coe v0))
+      du_'47''47''45'cong'691'_3028 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.//-congˡ
-d_'47''47''45'cong'737'_3050 ::
+d_'47''47''45'cong'737'_3072 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17441,25 +17707,25 @@ d_'47''47''45'cong'737'_3050 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 ->
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'737'_3050 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'737'_3050 v8
-du_'47''47''45'cong'737'_3050 ::
-  T_IsLoop_3026 ->
+d_'47''47''45'cong'737'_3072 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'737'_3072 v8
+du_'47''47''45'cong'737'_3072 ::
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'737'_3050 v0
+du_'47''47''45'cong'737'_3072 v0
   = coe
-      du_'47''47''45'cong'737'_3002 (coe d_isQuasigroup_3040 (coe v0))
+      du_'47''47''45'cong'737'_3024 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.\\-cong
-d_'92''92''45'cong_3052 ::
-  T_IsLoop_3026 ->
+d_'92''92''45'cong_3074 ::
+  T_IsLoop_3048 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong_3052 v0
-  = coe d_'92''92''45'cong_2964 (coe d_isQuasigroup_3040 (coe v0))
+d_'92''92''45'cong_3074 v0
+  = coe d_'92''92''45'cong_2986 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.\\-congʳ
-d_'92''92''45'cong'691'_3054 ::
+d_'92''92''45'cong'691'_3076 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17468,18 +17734,18 @@ d_'92''92''45'cong'691'_3054 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 ->
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'691'_3054 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'691'_3054 v8
-du_'92''92''45'cong'691'_3054 ::
-  T_IsLoop_3026 ->
+d_'92''92''45'cong'691'_3076 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'691'_3076 v8
+du_'92''92''45'cong'691'_3076 ::
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'691'_3054 v0
+du_'92''92''45'cong'691'_3076 v0
   = coe
-      du_'92''92''45'cong'691'_2998 (coe d_isQuasigroup_3040 (coe v0))
+      du_'92''92''45'cong'691'_3020 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.\\-congˡ
-d_'92''92''45'cong'737'_3056 ::
+d_'92''92''45'cong'737'_3078 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17488,30 +17754,30 @@ d_'92''92''45'cong'737'_3056 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 ->
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'737'_3056 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'737'_3056 v8
-du_'92''92''45'cong'737'_3056 ::
-  T_IsLoop_3026 ->
+d_'92''92''45'cong'737'_3078 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'737'_3078 v8
+du_'92''92''45'cong'737'_3078 ::
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'737'_3056 v0
+du_'92''92''45'cong'737'_3078 v0
   = coe
-      du_'92''92''45'cong'737'_2994 (coe d_isQuasigroup_3040 (coe v0))
+      du_'92''92''45'cong'737'_3016 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.isEquivalence
-d_isEquivalence_3058 ::
-  T_IsLoop_3026 ->
+d_isEquivalence_3080 ::
+  T_IsLoop_3048 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_3058 v0
+d_isEquivalence_3080 v0
   = coe
       d_isEquivalence_184
-      (coe d_isMagma_2962 (coe d_isQuasigroup_3040 (coe v0)))
+      (coe d_isMagma_2984 (coe d_isQuasigroup_3062 (coe v0)))
 -- Algebra.Structures.IsLoop._.isMagma
-d_isMagma_3060 :: T_IsLoop_3026 -> T_IsMagma_176
-d_isMagma_3060 v0
-  = coe d_isMagma_2962 (coe d_isQuasigroup_3040 (coe v0))
+d_isMagma_3082 :: T_IsLoop_3048 -> T_IsMagma_176
+d_isMagma_3082 v0
+  = coe d_isMagma_2984 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.isPartialEquivalence
-d_isPartialEquivalence_3062 ::
+d_isPartialEquivalence_3084 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17520,28 +17786,28 @@ d_isPartialEquivalence_3062 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 ->
+  T_IsLoop_3048 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_3062 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_3062 v8
-du_isPartialEquivalence_3062 ::
-  T_IsLoop_3026 ->
+d_isPartialEquivalence_3084 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_3084 v8
+du_isPartialEquivalence_3084 ::
+  T_IsLoop_3048 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_3062 v0
-  = let v1 = d_isQuasigroup_3040 (coe v0) in
+du_isPartialEquivalence_3084 v0
+  = let v1 = d_isQuasigroup_3062 (coe v0) in
     coe
-      (let v2 = d_isMagma_2962 (coe v1) in
+      (let v2 = d_isMagma_2984 (coe v1) in
        coe
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
             (coe d_isEquivalence_184 (coe v2))))
 -- Algebra.Structures.IsLoop._.leftDivides
-d_leftDivides_3064 ::
-  T_IsLoop_3026 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_leftDivides_3064 v0
-  = coe d_leftDivides_2968 (coe d_isQuasigroup_3040 (coe v0))
+d_leftDivides_3086 ::
+  T_IsLoop_3048 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_leftDivides_3086 v0
+  = coe d_leftDivides_2990 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.leftDividesʳ
-d_leftDivides'691'_3066 ::
+d_leftDivides'691'_3088 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17549,15 +17815,15 @@ d_leftDivides'691'_3066 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'691'_3066 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'691'_3066 v8
-du_leftDivides'691'_3066 ::
-  T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'691'_3066 v0
-  = coe du_leftDivides'691'_3012 (coe d_isQuasigroup_3040 (coe v0))
+  AgdaAny -> T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'691'_3088 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'691'_3088 v8
+du_leftDivides'691'_3088 ::
+  T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'691'_3088 v0
+  = coe du_leftDivides'691'_3034 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.leftDividesˡ
-d_leftDivides'737'_3068 ::
+d_leftDivides'737'_3090 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17565,23 +17831,23 @@ d_leftDivides'737'_3068 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'737'_3068 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'737'_3068 v8
-du_leftDivides'737'_3068 ::
-  T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'737'_3068 v0
-  = coe du_leftDivides'737'_3010 (coe d_isQuasigroup_3040 (coe v0))
+  AgdaAny -> T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'737'_3090 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'737'_3090 v8
+du_leftDivides'737'_3090 ::
+  T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'737'_3090 v0
+  = coe du_leftDivides'737'_3032 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.refl
-d_refl_3070 :: T_IsLoop_3026 -> AgdaAny -> AgdaAny
-d_refl_3070 v0
+d_refl_3092 :: T_IsLoop_3048 -> AgdaAny -> AgdaAny
+d_refl_3092 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
          d_isEquivalence_184
-         (coe d_isMagma_2962 (coe d_isQuasigroup_3040 (coe v0))))
+         (coe d_isMagma_2984 (coe d_isQuasigroup_3062 (coe v0))))
 -- Algebra.Structures.IsLoop._.reflexive
-d_reflexive_3072 ::
+d_reflexive_3094 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17590,33 +17856,33 @@ d_reflexive_3072 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 ->
+  T_IsLoop_3048 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_3072 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_3072 v8
-du_reflexive_3072 ::
-  T_IsLoop_3026 ->
+d_reflexive_3094 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_3094 v8
+du_reflexive_3094 ::
+  T_IsLoop_3048 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_3072 v0
-  = let v1 = d_isQuasigroup_3040 (coe v0) in
+du_reflexive_3094 v0
+  = let v1 = d_isQuasigroup_3062 (coe v0) in
     coe
-      (let v2 = d_isMagma_2962 (coe v1) in
+      (let v2 = d_isMagma_2984 (coe v1) in
        coe
          (\ v3 v4 v5 ->
             coe
               MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
               (coe d_isEquivalence_184 (coe v2)) v3))
 -- Algebra.Structures.IsLoop._.rightDivides
-d_rightDivides_3074 ::
-  T_IsLoop_3026 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rightDivides_3074 v0
-  = coe d_rightDivides_2970 (coe d_isQuasigroup_3040 (coe v0))
+d_rightDivides_3096 ::
+  T_IsLoop_3048 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_rightDivides_3096 v0
+  = coe d_rightDivides_2992 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.rightDividesʳ
-d_rightDivides'691'_3076 ::
+d_rightDivides'691'_3098 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17624,15 +17890,15 @@ d_rightDivides'691'_3076 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'691'_3076 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'691'_3076 v8
-du_rightDivides'691'_3076 ::
-  T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'691'_3076 v0
-  = coe du_rightDivides'691'_3016 (coe d_isQuasigroup_3040 (coe v0))
+  AgdaAny -> T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'691'_3098 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'691'_3098 v8
+du_rightDivides'691'_3098 ::
+  T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'691'_3098 v0
+  = coe du_rightDivides'691'_3038 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.rightDividesˡ
-d_rightDivides'737'_3078 ::
+d_rightDivides'737'_3100 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17640,15 +17906,15 @@ d_rightDivides'737'_3078 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'737'_3078 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'737'_3078 v8
-du_rightDivides'737'_3078 ::
-  T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'737'_3078 v0
-  = coe du_rightDivides'737'_3014 (coe d_isQuasigroup_3040 (coe v0))
+  AgdaAny -> T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'737'_3100 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'737'_3100 v8
+du_rightDivides'737'_3100 ::
+  T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'737'_3100 v0
+  = coe du_rightDivides'737'_3036 (coe d_isQuasigroup_3062 (coe v0))
 -- Algebra.Structures.IsLoop._.setoid
-d_setoid_3080 ::
+d_setoid_3102 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17657,44 +17923,44 @@ d_setoid_3080 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_3080 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_3080 v8
-du_setoid_3080 ::
-  T_IsLoop_3026 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_3080 v0
-  = let v1 = d_isQuasigroup_3040 (coe v0) in
-    coe (coe du_setoid_200 (coe d_isMagma_2962 (coe v1)))
+  T_IsLoop_3048 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+d_setoid_3102 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_3102 v8
+du_setoid_3102 ::
+  T_IsLoop_3048 -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+du_setoid_3102 v0
+  = let v1 = d_isQuasigroup_3062 (coe v0) in
+    coe (coe du_setoid_200 (coe d_isMagma_2984 (coe v1)))
 -- Algebra.Structures.IsLoop._.sym
-d_sym_3082 ::
-  T_IsLoop_3026 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_3082 v0
+d_sym_3104 ::
+  T_IsLoop_3048 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_3104 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
          d_isEquivalence_184
-         (coe d_isMagma_2962 (coe d_isQuasigroup_3040 (coe v0))))
+         (coe d_isMagma_2984 (coe d_isQuasigroup_3062 (coe v0))))
 -- Algebra.Structures.IsLoop._.trans
-d_trans_3084 ::
-  T_IsLoop_3026 ->
+d_trans_3106 ::
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_3084 v0
+d_trans_3106 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
          d_isEquivalence_184
-         (coe d_isMagma_2962 (coe d_isQuasigroup_3040 (coe v0))))
+         (coe d_isMagma_2984 (coe d_isQuasigroup_3062 (coe v0))))
 -- Algebra.Structures.IsLoop._.∙-cong
-d_'8729''45'cong_3086 ::
-  T_IsLoop_3026 ->
+d_'8729''45'cong_3108 ::
+  T_IsLoop_3048 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_3086 v0
+d_'8729''45'cong_3108 v0
   = coe
       d_'8729''45'cong_186
-      (coe d_isMagma_2962 (coe d_isQuasigroup_3040 (coe v0)))
+      (coe d_isMagma_2984 (coe d_isQuasigroup_3062 (coe v0)))
 -- Algebra.Structures.IsLoop._.∙-congʳ
-d_'8729''45'cong'691'_3088 ::
+d_'8729''45'cong'691'_3110 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17703,18 +17969,18 @@ d_'8729''45'cong'691'_3088 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 ->
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_3088 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_3088 v8
-du_'8729''45'cong'691'_3088 ::
-  T_IsLoop_3026 ->
+d_'8729''45'cong'691'_3110 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_3110 v8
+du_'8729''45'cong'691'_3110 ::
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_3088 v0
-  = let v1 = d_isQuasigroup_3040 (coe v0) in
-    coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2962 (coe v1)))
+du_'8729''45'cong'691'_3110 v0
+  = let v1 = d_isQuasigroup_3062 (coe v0) in
+    coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2984 (coe v1)))
 -- Algebra.Structures.IsLoop._.∙-congˡ
-d_'8729''45'cong'737'_3090 ::
+d_'8729''45'cong'737'_3112 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17723,18 +17989,18 @@ d_'8729''45'cong'737'_3090 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLoop_3026 ->
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_3090 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_3090 v8
-du_'8729''45'cong'737'_3090 ::
-  T_IsLoop_3026 ->
+d_'8729''45'cong'737'_3112 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_3112 v8
+du_'8729''45'cong'737'_3112 ::
+  T_IsLoop_3048 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_3090 v0
-  = let v1 = d_isQuasigroup_3040 (coe v0) in
-    coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2962 (coe v1)))
+du_'8729''45'cong'737'_3112 v0
+  = let v1 = d_isQuasigroup_3062 (coe v0) in
+    coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2984 (coe v1)))
 -- Algebra.Structures.IsLoop.identityˡ
-d_identity'737'_3092 ::
+d_identity'737'_3114 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17742,16 +18008,16 @@ d_identity'737'_3092 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLoop_3026 -> AgdaAny -> AgdaAny
-d_identity'737'_3092 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_3092 v8
-du_identity'737'_3092 :: T_IsLoop_3026 -> AgdaAny -> AgdaAny
-du_identity'737'_3092 v0
+  AgdaAny -> T_IsLoop_3048 -> AgdaAny -> AgdaAny
+d_identity'737'_3114 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_3114 v8
+du_identity'737'_3114 :: T_IsLoop_3048 -> AgdaAny -> AgdaAny
+du_identity'737'_3114 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-      (coe d_identity_3042 (coe v0))
+      (coe d_identity_3064 (coe v0))
 -- Algebra.Structures.IsLoop.identityʳ
-d_identity'691'_3094 ::
+d_identity'691'_3116 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17759,43 +18025,43 @@ d_identity'691'_3094 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLoop_3026 -> AgdaAny -> AgdaAny
-d_identity'691'_3094 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_3094 v8
-du_identity'691'_3094 :: T_IsLoop_3026 -> AgdaAny -> AgdaAny
-du_identity'691'_3094 v0
+  AgdaAny -> T_IsLoop_3048 -> AgdaAny -> AgdaAny
+d_identity'691'_3116 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_3116 v8
+du_identity'691'_3116 :: T_IsLoop_3048 -> AgdaAny -> AgdaAny
+du_identity'691'_3116 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-      (coe d_identity_3042 (coe v0))
+      (coe d_identity_3064 (coe v0))
 -- Algebra.Structures.IsLeftBolLoop
-d_IsLeftBolLoop_3104 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsLeftBolLoop_3104
-  = C_IsLeftBolLoop'46'constructor_114283 T_IsLoop_3026
+d_IsLeftBolLoop_3126 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsLeftBolLoop_3126
+  = C_IsLeftBolLoop'46'constructor_115933 T_IsLoop_3048
                                           (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsLeftBolLoop.isLoop
-d_isLoop_3118 :: T_IsLeftBolLoop_3104 -> T_IsLoop_3026
-d_isLoop_3118 v0
+d_isLoop_3140 :: T_IsLeftBolLoop_3126 -> T_IsLoop_3048
+d_isLoop_3140 v0
   = case coe v0 of
-      C_IsLeftBolLoop'46'constructor_114283 v1 v2 -> coe v1
+      C_IsLeftBolLoop'46'constructor_115933 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsLeftBolLoop.leftBol
-d_leftBol_3120 ::
-  T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftBol_3120 v0
+d_leftBol_3142 ::
+  T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftBol_3142 v0
   = case coe v0 of
-      C_IsLeftBolLoop'46'constructor_114283 v1 v2 -> coe v2
+      C_IsLeftBolLoop'46'constructor_115933 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsLeftBolLoop._.//-cong
-d_'47''47''45'cong_3124 ::
-  T_IsLeftBolLoop_3104 ->
+d_'47''47''45'cong_3146 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong_3124 v0
+d_'47''47''45'cong_3146 v0
   = coe
-      d_'47''47''45'cong_2966
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0)))
+      d_'47''47''45'cong_2988
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0)))
 -- Algebra.Structures.IsLeftBolLoop._.//-congʳ
-d_'47''47''45'cong'691'_3126 ::
+d_'47''47''45'cong'691'_3148 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17804,20 +18070,20 @@ d_'47''47''45'cong'691'_3126 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'691'_3126 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'691'_3126 v8
-du_'47''47''45'cong'691'_3126 ::
-  T_IsLeftBolLoop_3104 ->
+d_'47''47''45'cong'691'_3148 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'691'_3148 v8
+du_'47''47''45'cong'691'_3148 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'691'_3126 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_'47''47''45'cong'691'_3148 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
       (coe
-         du_'47''47''45'cong'691'_3006 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'47''47''45'cong'691'_3028 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsLeftBolLoop._.//-congˡ
-d_'47''47''45'cong'737'_3128 ::
+d_'47''47''45'cong'737'_3150 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17826,29 +18092,29 @@ d_'47''47''45'cong'737'_3128 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'737'_3128 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'737'_3128 v8
-du_'47''47''45'cong'737'_3128 ::
-  T_IsLeftBolLoop_3104 ->
+d_'47''47''45'cong'737'_3150 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'737'_3150 v8
+du_'47''47''45'cong'737'_3150 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'737'_3128 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_'47''47''45'cong'737'_3150 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
       (coe
-         du_'47''47''45'cong'737'_3002 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'47''47''45'cong'737'_3024 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsLeftBolLoop._.\\-cong
-d_'92''92''45'cong_3130 ::
-  T_IsLeftBolLoop_3104 ->
+d_'92''92''45'cong_3152 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong_3130 v0
+d_'92''92''45'cong_3152 v0
   = coe
-      d_'92''92''45'cong_2964
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0)))
+      d_'92''92''45'cong_2986
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0)))
 -- Algebra.Structures.IsLeftBolLoop._.\\-congʳ
-d_'92''92''45'cong'691'_3132 ::
+d_'92''92''45'cong'691'_3154 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17857,20 +18123,20 @@ d_'92''92''45'cong'691'_3132 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'691'_3132 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'691'_3132 v8
-du_'92''92''45'cong'691'_3132 ::
-  T_IsLeftBolLoop_3104 ->
+d_'92''92''45'cong'691'_3154 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'691'_3154 v8
+du_'92''92''45'cong'691'_3154 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'691'_3132 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_'92''92''45'cong'691'_3154 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
       (coe
-         du_'92''92''45'cong'691'_2998 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'92''92''45'cong'691'_3020 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsLeftBolLoop._.\\-congˡ
-d_'92''92''45'cong'737'_3134 ::
+d_'92''92''45'cong'737'_3156 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17879,25 +18145,25 @@ d_'92''92''45'cong'737'_3134 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'737'_3134 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'737'_3134 v8
-du_'92''92''45'cong'737'_3134 ::
-  T_IsLeftBolLoop_3104 ->
+d_'92''92''45'cong'737'_3156 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'737'_3156 v8
+du_'92''92''45'cong'737'_3156 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'737'_3134 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_'92''92''45'cong'737'_3156 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
       (coe
-         du_'92''92''45'cong'737'_2994 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'92''92''45'cong'737'_3016 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsLeftBolLoop._.identity
-d_identity_3136 ::
-  T_IsLeftBolLoop_3104 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_3136 v0
-  = coe d_identity_3042 (coe d_isLoop_3118 (coe v0))
+d_identity_3158 ::
+  T_IsLeftBolLoop_3126 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_3158 v0
+  = coe d_identity_3064 (coe d_isLoop_3140 (coe v0))
 -- Algebra.Structures.IsLeftBolLoop._.identityʳ
-d_identity'691'_3138 ::
+d_identity'691'_3160 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17905,14 +18171,14 @@ d_identity'691'_3138 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny
-d_identity'691'_3138 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_3138 v8
-du_identity'691'_3138 :: T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny
-du_identity'691'_3138 v0
-  = coe du_identity'691'_3094 (coe d_isLoop_3118 (coe v0))
+  AgdaAny -> T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny
+d_identity'691'_3160 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_3160 v8
+du_identity'691'_3160 :: T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny
+du_identity'691'_3160 v0
+  = coe du_identity'691'_3116 (coe d_isLoop_3140 (coe v0))
 -- Algebra.Structures.IsLeftBolLoop._.identityˡ
-d_identity'737'_3140 ::
+d_identity'737'_3162 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17920,30 +18186,30 @@ d_identity'737'_3140 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny
-d_identity'737'_3140 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_3140 v8
-du_identity'737'_3140 :: T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny
-du_identity'737'_3140 v0
-  = coe du_identity'737'_3092 (coe d_isLoop_3118 (coe v0))
+  AgdaAny -> T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny
+d_identity'737'_3162 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_3162 v8
+du_identity'737'_3162 :: T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny
+du_identity'737'_3162 v0
+  = coe du_identity'737'_3114 (coe d_isLoop_3140 (coe v0))
 -- Algebra.Structures.IsLeftBolLoop._.isEquivalence
-d_isEquivalence_3142 ::
-  T_IsLeftBolLoop_3104 ->
+d_isEquivalence_3164 ::
+  T_IsLeftBolLoop_3126 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_3142 v0
+d_isEquivalence_3164 v0
   = coe
       d_isEquivalence_184
       (coe
-         d_isMagma_2962
-         (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0))))
+         d_isMagma_2984
+         (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0))))
 -- Algebra.Structures.IsLeftBolLoop._.isMagma
-d_isMagma_3144 :: T_IsLeftBolLoop_3104 -> T_IsMagma_176
-d_isMagma_3144 v0
+d_isMagma_3166 :: T_IsLeftBolLoop_3126 -> T_IsMagma_176
+d_isMagma_3166 v0
   = coe
-      d_isMagma_2962
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0)))
+      d_isMagma_2984
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0)))
 -- Algebra.Structures.IsLeftBolLoop._.isPartialEquivalence
-d_isPartialEquivalence_3146 ::
+d_isPartialEquivalence_3168 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17952,36 +18218,36 @@ d_isPartialEquivalence_3146 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_3146 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_3146 v8
-du_isPartialEquivalence_3146 ::
-  T_IsLeftBolLoop_3104 ->
+d_isPartialEquivalence_3168 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_3168 v8
+du_isPartialEquivalence_3168 ::
+  T_IsLeftBolLoop_3126 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_3146 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_isPartialEquivalence_3168 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
        coe
-         (let v3 = d_isMagma_2962 (coe v2) in
+         (let v3 = d_isMagma_2984 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                (coe d_isEquivalence_184 (coe v3)))))
 -- Algebra.Structures.IsLeftBolLoop._.isQuasigroup
-d_isQuasigroup_3148 :: T_IsLeftBolLoop_3104 -> T_IsQuasigroup_2944
-d_isQuasigroup_3148 v0
-  = coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0))
+d_isQuasigroup_3170 :: T_IsLeftBolLoop_3126 -> T_IsQuasigroup_2966
+d_isQuasigroup_3170 v0
+  = coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0))
 -- Algebra.Structures.IsLeftBolLoop._.leftDivides
-d_leftDivides_3150 ::
-  T_IsLeftBolLoop_3104 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_leftDivides_3150 v0
+d_leftDivides_3172 ::
+  T_IsLeftBolLoop_3126 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_leftDivides_3172 v0
   = coe
-      d_leftDivides_2968
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0)))
+      d_leftDivides_2990
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0)))
 -- Algebra.Structures.IsLeftBolLoop._.leftDividesʳ
-d_leftDivides'691'_3152 ::
+d_leftDivides'691'_3174 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -17989,17 +18255,17 @@ d_leftDivides'691'_3152 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'691'_3152 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'691'_3152 v8
-du_leftDivides'691'_3152 ::
-  T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'691'_3152 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+  AgdaAny -> T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'691'_3174 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'691'_3174 v8
+du_leftDivides'691'_3174 ::
+  T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'691'_3174 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (coe du_leftDivides'691'_3012 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_leftDivides'691'_3034 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsLeftBolLoop._.leftDividesˡ
-d_leftDivides'737'_3154 ::
+d_leftDivides'737'_3176 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18007,27 +18273,27 @@ d_leftDivides'737'_3154 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'737'_3154 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'737'_3154 v8
-du_leftDivides'737'_3154 ::
-  T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'737'_3154 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+  AgdaAny -> T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'737'_3176 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'737'_3176 v8
+du_leftDivides'737'_3176 ::
+  T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'737'_3176 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (coe du_leftDivides'737'_3010 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_leftDivides'737'_3032 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsLeftBolLoop._.refl
-d_refl_3156 :: T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny
-d_refl_3156 v0
+d_refl_3178 :: T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny
+d_refl_3178 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0)))))
 -- Algebra.Structures.IsLeftBolLoop._.reflexive
-d_reflexive_3158 ::
+d_reflexive_3180 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18036,37 +18302,37 @@ d_reflexive_3158 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_3158 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_3158 v8
-du_reflexive_3158 ::
-  T_IsLeftBolLoop_3104 ->
+d_reflexive_3180 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_3180 v8
+du_reflexive_3180 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_3158 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_reflexive_3180 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
        coe
-         (let v3 = d_isMagma_2962 (coe v2) in
+         (let v3 = d_isMagma_2984 (coe v2) in
           coe
             (\ v4 v5 v6 ->
                coe
                  MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                  (coe d_isEquivalence_184 (coe v3)) v4)))
 -- Algebra.Structures.IsLeftBolLoop._.rightDivides
-d_rightDivides_3160 ::
-  T_IsLeftBolLoop_3104 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rightDivides_3160 v0
+d_rightDivides_3182 ::
+  T_IsLeftBolLoop_3126 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_rightDivides_3182 v0
   = coe
-      d_rightDivides_2970
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0)))
+      d_rightDivides_2992
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0)))
 -- Algebra.Structures.IsLeftBolLoop._.rightDividesʳ
-d_rightDivides'691'_3162 ::
+d_rightDivides'691'_3184 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18074,17 +18340,17 @@ d_rightDivides'691'_3162 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'691'_3162 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'691'_3162 v8
-du_rightDivides'691'_3162 ::
-  T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'691'_3162 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+  AgdaAny -> T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'691'_3184 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'691'_3184 v8
+du_rightDivides'691'_3184 ::
+  T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'691'_3184 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (coe du_rightDivides'691'_3016 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_rightDivides'691'_3038 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsLeftBolLoop._.rightDividesˡ
-d_rightDivides'737'_3164 ::
+d_rightDivides'737'_3186 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18092,17 +18358,17 @@ d_rightDivides'737'_3164 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'737'_3164 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'737'_3164 v8
-du_rightDivides'737'_3164 ::
-  T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'737'_3164 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+  AgdaAny -> T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'737'_3186 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'737'_3186 v8
+du_rightDivides'737'_3186 ::
+  T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'737'_3186 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (coe du_rightDivides'737'_3014 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_rightDivides'737'_3036 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsLeftBolLoop._.setoid
-d_setoid_3166 ::
+d_setoid_3188 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18111,54 +18377,54 @@ d_setoid_3166 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_3166 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_3166 v8
-du_setoid_3166 ::
-  T_IsLeftBolLoop_3104 ->
+d_setoid_3188 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_3188 v8
+du_setoid_3188 ::
+  T_IsLeftBolLoop_3126 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_3166 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_setoid_3188 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_setoid_200 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_setoid_200 (coe d_isMagma_2984 (coe v2))))
 -- Algebra.Structures.IsLeftBolLoop._.sym
-d_sym_3168 ::
-  T_IsLeftBolLoop_3104 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_3168 v0
+d_sym_3190 ::
+  T_IsLeftBolLoop_3126 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_3190 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0)))))
 -- Algebra.Structures.IsLeftBolLoop._.trans
-d_trans_3170 ::
-  T_IsLeftBolLoop_3104 ->
+d_trans_3192 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_3170 v0
+d_trans_3192 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0)))))
 -- Algebra.Structures.IsLeftBolLoop._.∙-cong
-d_'8729''45'cong_3172 ::
-  T_IsLeftBolLoop_3104 ->
+d_'8729''45'cong_3194 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_3172 v0
+d_'8729''45'cong_3194 v0
   = coe
       d_'8729''45'cong_186
       (coe
-         d_isMagma_2962
-         (coe d_isQuasigroup_3040 (coe d_isLoop_3118 (coe v0))))
+         d_isMagma_2984
+         (coe d_isQuasigroup_3062 (coe d_isLoop_3140 (coe v0))))
 -- Algebra.Structures.IsLeftBolLoop._.∙-congʳ
-d_'8729''45'cong'691'_3174 ::
+d_'8729''45'cong'691'_3196 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18167,20 +18433,20 @@ d_'8729''45'cong'691'_3174 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_3174 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_3174 v8
-du_'8729''45'cong'691'_3174 ::
-  T_IsLeftBolLoop_3104 ->
+d_'8729''45'cong'691'_3196 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_3196 v8
+du_'8729''45'cong'691'_3196 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_3174 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_'8729''45'cong'691'_3196 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2984 (coe v2))))
 -- Algebra.Structures.IsLeftBolLoop._.∙-congˡ
-d_'8729''45'cong'737'_3176 ::
+d_'8729''45'cong'737'_3198 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18189,47 +18455,47 @@ d_'8729''45'cong'737'_3176 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsLeftBolLoop_3104 ->
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_3176 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_3176 v8
-du_'8729''45'cong'737'_3176 ::
-  T_IsLeftBolLoop_3104 ->
+d_'8729''45'cong'737'_3198 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_3198 v8
+du_'8729''45'cong'737'_3198 ::
+  T_IsLeftBolLoop_3126 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_3176 v0
-  = let v1 = d_isLoop_3118 (coe v0) in
+du_'8729''45'cong'737'_3198 v0
+  = let v1 = d_isLoop_3140 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2984 (coe v2))))
 -- Algebra.Structures.IsRightBolLoop
-d_IsRightBolLoop_3186 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsRightBolLoop_3186
-  = C_IsRightBolLoop'46'constructor_116761 T_IsLoop_3026
+d_IsRightBolLoop_3208 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsRightBolLoop_3208
+  = C_IsRightBolLoop'46'constructor_118411 T_IsLoop_3048
                                            (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsRightBolLoop.isLoop
-d_isLoop_3200 :: T_IsRightBolLoop_3186 -> T_IsLoop_3026
-d_isLoop_3200 v0
+d_isLoop_3222 :: T_IsRightBolLoop_3208 -> T_IsLoop_3048
+d_isLoop_3222 v0
   = case coe v0 of
-      C_IsRightBolLoop'46'constructor_116761 v1 v2 -> coe v1
+      C_IsRightBolLoop'46'constructor_118411 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRightBolLoop.rightBol
-d_rightBol_3202 ::
-  T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightBol_3202 v0
+d_rightBol_3224 ::
+  T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightBol_3224 v0
   = case coe v0 of
-      C_IsRightBolLoop'46'constructor_116761 v1 v2 -> coe v2
+      C_IsRightBolLoop'46'constructor_118411 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsRightBolLoop._.//-cong
-d_'47''47''45'cong_3206 ::
-  T_IsRightBolLoop_3186 ->
+d_'47''47''45'cong_3228 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong_3206 v0
+d_'47''47''45'cong_3228 v0
   = coe
-      d_'47''47''45'cong_2966
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0)))
+      d_'47''47''45'cong_2988
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0)))
 -- Algebra.Structures.IsRightBolLoop._.//-congʳ
-d_'47''47''45'cong'691'_3208 ::
+d_'47''47''45'cong'691'_3230 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18238,20 +18504,20 @@ d_'47''47''45'cong'691'_3208 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'691'_3208 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'691'_3208 v8
-du_'47''47''45'cong'691'_3208 ::
-  T_IsRightBolLoop_3186 ->
+d_'47''47''45'cong'691'_3230 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'691'_3230 v8
+du_'47''47''45'cong'691'_3230 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'691'_3208 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_'47''47''45'cong'691'_3230 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
       (coe
-         du_'47''47''45'cong'691'_3006 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'47''47''45'cong'691'_3028 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsRightBolLoop._.//-congˡ
-d_'47''47''45'cong'737'_3210 ::
+d_'47''47''45'cong'737'_3232 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18260,29 +18526,29 @@ d_'47''47''45'cong'737'_3210 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'737'_3210 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'737'_3210 v8
-du_'47''47''45'cong'737'_3210 ::
-  T_IsRightBolLoop_3186 ->
+d_'47''47''45'cong'737'_3232 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'737'_3232 v8
+du_'47''47''45'cong'737'_3232 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'737'_3210 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_'47''47''45'cong'737'_3232 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
       (coe
-         du_'47''47''45'cong'737'_3002 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'47''47''45'cong'737'_3024 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsRightBolLoop._.\\-cong
-d_'92''92''45'cong_3212 ::
-  T_IsRightBolLoop_3186 ->
+d_'92''92''45'cong_3234 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong_3212 v0
+d_'92''92''45'cong_3234 v0
   = coe
-      d_'92''92''45'cong_2964
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0)))
+      d_'92''92''45'cong_2986
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0)))
 -- Algebra.Structures.IsRightBolLoop._.\\-congʳ
-d_'92''92''45'cong'691'_3214 ::
+d_'92''92''45'cong'691'_3236 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18291,20 +18557,20 @@ d_'92''92''45'cong'691'_3214 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'691'_3214 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'691'_3214 v8
-du_'92''92''45'cong'691'_3214 ::
-  T_IsRightBolLoop_3186 ->
+d_'92''92''45'cong'691'_3236 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'691'_3236 v8
+du_'92''92''45'cong'691'_3236 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'691'_3214 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_'92''92''45'cong'691'_3236 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
       (coe
-         du_'92''92''45'cong'691'_2998 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'92''92''45'cong'691'_3020 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsRightBolLoop._.\\-congˡ
-d_'92''92''45'cong'737'_3216 ::
+d_'92''92''45'cong'737'_3238 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18313,25 +18579,25 @@ d_'92''92''45'cong'737'_3216 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'737'_3216 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'737'_3216 v8
-du_'92''92''45'cong'737'_3216 ::
-  T_IsRightBolLoop_3186 ->
+d_'92''92''45'cong'737'_3238 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'737'_3238 v8
+du_'92''92''45'cong'737'_3238 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'737'_3216 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_'92''92''45'cong'737'_3238 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
       (coe
-         du_'92''92''45'cong'737'_2994 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'92''92''45'cong'737'_3016 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsRightBolLoop._.identity
-d_identity_3218 ::
-  T_IsRightBolLoop_3186 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_3218 v0
-  = coe d_identity_3042 (coe d_isLoop_3200 (coe v0))
+d_identity_3240 ::
+  T_IsRightBolLoop_3208 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_3240 v0
+  = coe d_identity_3064 (coe d_isLoop_3222 (coe v0))
 -- Algebra.Structures.IsRightBolLoop._.identityʳ
-d_identity'691'_3220 ::
+d_identity'691'_3242 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18339,15 +18605,15 @@ d_identity'691'_3220 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny
-d_identity'691'_3220 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_3220 v8
-du_identity'691'_3220 ::
-  T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny
-du_identity'691'_3220 v0
-  = coe du_identity'691'_3094 (coe d_isLoop_3200 (coe v0))
+  AgdaAny -> T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny
+d_identity'691'_3242 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_3242 v8
+du_identity'691'_3242 ::
+  T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny
+du_identity'691'_3242 v0
+  = coe du_identity'691'_3116 (coe d_isLoop_3222 (coe v0))
 -- Algebra.Structures.IsRightBolLoop._.identityˡ
-d_identity'737'_3222 ::
+d_identity'737'_3244 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18355,31 +18621,31 @@ d_identity'737'_3222 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny
-d_identity'737'_3222 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_3222 v8
-du_identity'737'_3222 ::
-  T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny
-du_identity'737'_3222 v0
-  = coe du_identity'737'_3092 (coe d_isLoop_3200 (coe v0))
+  AgdaAny -> T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny
+d_identity'737'_3244 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_3244 v8
+du_identity'737'_3244 ::
+  T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny
+du_identity'737'_3244 v0
+  = coe du_identity'737'_3114 (coe d_isLoop_3222 (coe v0))
 -- Algebra.Structures.IsRightBolLoop._.isEquivalence
-d_isEquivalence_3224 ::
-  T_IsRightBolLoop_3186 ->
+d_isEquivalence_3246 ::
+  T_IsRightBolLoop_3208 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_3224 v0
+d_isEquivalence_3246 v0
   = coe
       d_isEquivalence_184
       (coe
-         d_isMagma_2962
-         (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0))))
+         d_isMagma_2984
+         (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0))))
 -- Algebra.Structures.IsRightBolLoop._.isMagma
-d_isMagma_3226 :: T_IsRightBolLoop_3186 -> T_IsMagma_176
-d_isMagma_3226 v0
+d_isMagma_3248 :: T_IsRightBolLoop_3208 -> T_IsMagma_176
+d_isMagma_3248 v0
   = coe
-      d_isMagma_2962
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0)))
+      d_isMagma_2984
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0)))
 -- Algebra.Structures.IsRightBolLoop._.isPartialEquivalence
-d_isPartialEquivalence_3228 ::
+d_isPartialEquivalence_3250 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18388,36 +18654,36 @@ d_isPartialEquivalence_3228 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_3228 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_3228 v8
-du_isPartialEquivalence_3228 ::
-  T_IsRightBolLoop_3186 ->
+d_isPartialEquivalence_3250 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_3250 v8
+du_isPartialEquivalence_3250 ::
+  T_IsRightBolLoop_3208 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_3228 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_isPartialEquivalence_3250 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
        coe
-         (let v3 = d_isMagma_2962 (coe v2) in
+         (let v3 = d_isMagma_2984 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                (coe d_isEquivalence_184 (coe v3)))))
 -- Algebra.Structures.IsRightBolLoop._.isQuasigroup
-d_isQuasigroup_3230 :: T_IsRightBolLoop_3186 -> T_IsQuasigroup_2944
-d_isQuasigroup_3230 v0
-  = coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0))
+d_isQuasigroup_3252 :: T_IsRightBolLoop_3208 -> T_IsQuasigroup_2966
+d_isQuasigroup_3252 v0
+  = coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0))
 -- Algebra.Structures.IsRightBolLoop._.leftDivides
-d_leftDivides_3232 ::
-  T_IsRightBolLoop_3186 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_leftDivides_3232 v0
+d_leftDivides_3254 ::
+  T_IsRightBolLoop_3208 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_leftDivides_3254 v0
   = coe
-      d_leftDivides_2968
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0)))
+      d_leftDivides_2990
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0)))
 -- Algebra.Structures.IsRightBolLoop._.leftDividesʳ
-d_leftDivides'691'_3234 ::
+d_leftDivides'691'_3256 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18425,17 +18691,17 @@ d_leftDivides'691'_3234 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'691'_3234 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'691'_3234 v8
-du_leftDivides'691'_3234 ::
-  T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'691'_3234 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+  AgdaAny -> T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'691'_3256 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'691'_3256 v8
+du_leftDivides'691'_3256 ::
+  T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'691'_3256 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (coe du_leftDivides'691'_3012 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_leftDivides'691'_3034 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsRightBolLoop._.leftDividesˡ
-d_leftDivides'737'_3236 ::
+d_leftDivides'737'_3258 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18443,27 +18709,27 @@ d_leftDivides'737'_3236 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'737'_3236 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'737'_3236 v8
-du_leftDivides'737'_3236 ::
-  T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'737'_3236 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+  AgdaAny -> T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'737'_3258 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'737'_3258 v8
+du_leftDivides'737'_3258 ::
+  T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'737'_3258 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (coe du_leftDivides'737'_3010 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_leftDivides'737'_3032 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsRightBolLoop._.refl
-d_refl_3238 :: T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny
-d_refl_3238 v0
+d_refl_3260 :: T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny
+d_refl_3260 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0)))))
 -- Algebra.Structures.IsRightBolLoop._.reflexive
-d_reflexive_3240 ::
+d_reflexive_3262 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18472,37 +18738,37 @@ d_reflexive_3240 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_3240 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_3240 v8
-du_reflexive_3240 ::
-  T_IsRightBolLoop_3186 ->
+d_reflexive_3262 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_3262 v8
+du_reflexive_3262 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_3240 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_reflexive_3262 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
        coe
-         (let v3 = d_isMagma_2962 (coe v2) in
+         (let v3 = d_isMagma_2984 (coe v2) in
           coe
             (\ v4 v5 v6 ->
                coe
                  MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                  (coe d_isEquivalence_184 (coe v3)) v4)))
 -- Algebra.Structures.IsRightBolLoop._.rightDivides
-d_rightDivides_3242 ::
-  T_IsRightBolLoop_3186 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rightDivides_3242 v0
+d_rightDivides_3264 ::
+  T_IsRightBolLoop_3208 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_rightDivides_3264 v0
   = coe
-      d_rightDivides_2970
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0)))
+      d_rightDivides_2992
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0)))
 -- Algebra.Structures.IsRightBolLoop._.rightDividesʳ
-d_rightDivides'691'_3244 ::
+d_rightDivides'691'_3266 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18510,17 +18776,17 @@ d_rightDivides'691'_3244 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'691'_3244 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'691'_3244 v8
-du_rightDivides'691'_3244 ::
-  T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'691'_3244 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+  AgdaAny -> T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'691'_3266 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'691'_3266 v8
+du_rightDivides'691'_3266 ::
+  T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'691'_3266 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (coe du_rightDivides'691'_3016 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_rightDivides'691'_3038 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsRightBolLoop._.rightDividesˡ
-d_rightDivides'737'_3246 ::
+d_rightDivides'737'_3268 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18528,17 +18794,17 @@ d_rightDivides'737'_3246 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'737'_3246 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'737'_3246 v8
-du_rightDivides'737'_3246 ::
-  T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'737'_3246 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+  AgdaAny -> T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'737'_3268 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'737'_3268 v8
+du_rightDivides'737'_3268 ::
+  T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'737'_3268 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (coe du_rightDivides'737'_3014 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_rightDivides'737'_3036 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsRightBolLoop._.setoid
-d_setoid_3248 ::
+d_setoid_3270 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18547,54 +18813,54 @@ d_setoid_3248 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_3248 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_3248 v8
-du_setoid_3248 ::
-  T_IsRightBolLoop_3186 ->
+d_setoid_3270 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_3270 v8
+du_setoid_3270 ::
+  T_IsRightBolLoop_3208 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_3248 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_setoid_3270 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_setoid_200 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_setoid_200 (coe d_isMagma_2984 (coe v2))))
 -- Algebra.Structures.IsRightBolLoop._.sym
-d_sym_3250 ::
-  T_IsRightBolLoop_3186 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_3250 v0
+d_sym_3272 ::
+  T_IsRightBolLoop_3208 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_3272 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0)))))
 -- Algebra.Structures.IsRightBolLoop._.trans
-d_trans_3252 ::
-  T_IsRightBolLoop_3186 ->
+d_trans_3274 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_3252 v0
+d_trans_3274 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0)))))
 -- Algebra.Structures.IsRightBolLoop._.∙-cong
-d_'8729''45'cong_3254 ::
-  T_IsRightBolLoop_3186 ->
+d_'8729''45'cong_3276 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_3254 v0
+d_'8729''45'cong_3276 v0
   = coe
       d_'8729''45'cong_186
       (coe
-         d_isMagma_2962
-         (coe d_isQuasigroup_3040 (coe d_isLoop_3200 (coe v0))))
+         d_isMagma_2984
+         (coe d_isQuasigroup_3062 (coe d_isLoop_3222 (coe v0))))
 -- Algebra.Structures.IsRightBolLoop._.∙-congʳ
-d_'8729''45'cong'691'_3256 ::
+d_'8729''45'cong'691'_3278 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18603,20 +18869,20 @@ d_'8729''45'cong'691'_3256 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_3256 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_3256 v8
-du_'8729''45'cong'691'_3256 ::
-  T_IsRightBolLoop_3186 ->
+d_'8729''45'cong'691'_3278 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_3278 v8
+du_'8729''45'cong'691'_3278 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_3256 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_'8729''45'cong'691'_3278 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2984 (coe v2))))
 -- Algebra.Structures.IsRightBolLoop._.∙-congˡ
-d_'8729''45'cong'737'_3258 ::
+d_'8729''45'cong'737'_3280 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18625,58 +18891,58 @@ d_'8729''45'cong'737'_3258 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsRightBolLoop_3186 ->
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_3258 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_3258 v8
-du_'8729''45'cong'737'_3258 ::
-  T_IsRightBolLoop_3186 ->
+d_'8729''45'cong'737'_3280 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_3280 v8
+du_'8729''45'cong'737'_3280 ::
+  T_IsRightBolLoop_3208 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_3258 v0
-  = let v1 = d_isLoop_3200 (coe v0) in
+du_'8729''45'cong'737'_3280 v0
+  = let v1 = d_isLoop_3222 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2984 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop
-d_IsMoufangLoop_3268 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsMoufangLoop_3268
-  = C_IsMoufangLoop'46'constructor_119263 T_IsLeftBolLoop_3104
+d_IsMoufangLoop_3290 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsMoufangLoop_3290
+  = C_IsMoufangLoop'46'constructor_120913 T_IsLeftBolLoop_3126
                                           (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
                                           (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsMoufangLoop.isLeftBolLoop
-d_isLeftBolLoop_3284 ::
-  T_IsMoufangLoop_3268 -> T_IsLeftBolLoop_3104
-d_isLeftBolLoop_3284 v0
+d_isLeftBolLoop_3306 ::
+  T_IsMoufangLoop_3290 -> T_IsLeftBolLoop_3126
+d_isLeftBolLoop_3306 v0
   = case coe v0 of
-      C_IsMoufangLoop'46'constructor_119263 v1 v2 v3 -> coe v1
+      C_IsMoufangLoop'46'constructor_120913 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsMoufangLoop.rightBol
-d_rightBol_3286 ::
-  T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightBol_3286 v0
+d_rightBol_3308 ::
+  T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightBol_3308 v0
   = case coe v0 of
-      C_IsMoufangLoop'46'constructor_119263 v1 v2 v3 -> coe v2
+      C_IsMoufangLoop'46'constructor_120913 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsMoufangLoop.identical
-d_identical_3288 ::
-  T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_identical_3288 v0
+d_identical_3310 ::
+  T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_identical_3310 v0
   = case coe v0 of
-      C_IsMoufangLoop'46'constructor_119263 v1 v2 v3 -> coe v3
+      C_IsMoufangLoop'46'constructor_120913 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsMoufangLoop._.//-cong
-d_'47''47''45'cong_3292 ::
-  T_IsMoufangLoop_3268 ->
+d_'47''47''45'cong_3314 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong_3292 v0
+d_'47''47''45'cong_3314 v0
   = coe
-      d_'47''47''45'cong_2966
+      d_'47''47''45'cong_2988
       (coe
-         d_isQuasigroup_3040
-         (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))))
+         d_isQuasigroup_3062
+         (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))))
 -- Algebra.Structures.IsMoufangLoop._.//-congʳ
-d_'47''47''45'cong'691'_3294 ::
+d_'47''47''45'cong'691'_3316 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18685,22 +18951,22 @@ d_'47''47''45'cong'691'_3294 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'691'_3294 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'691'_3294 v8
-du_'47''47''45'cong'691'_3294 ::
-  T_IsMoufangLoop_3268 ->
+d_'47''47''45'cong'691'_3316 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'691'_3316 v8
+du_'47''47''45'cong'691'_3316 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'691'_3294 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_'47''47''45'cong'691'_3316 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
          (coe
-            du_'47''47''45'cong'691'_3006 (coe d_isQuasigroup_3040 (coe v2))))
+            du_'47''47''45'cong'691'_3028 (coe d_isQuasigroup_3062 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop._.//-congˡ
-d_'47''47''45'cong'737'_3296 ::
+d_'47''47''45'cong'737'_3318 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18709,33 +18975,33 @@ d_'47''47''45'cong'737'_3296 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'737'_3296 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'737'_3296 v8
-du_'47''47''45'cong'737'_3296 ::
-  T_IsMoufangLoop_3268 ->
+d_'47''47''45'cong'737'_3318 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'737'_3318 v8
+du_'47''47''45'cong'737'_3318 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'737'_3296 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_'47''47''45'cong'737'_3318 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
          (coe
-            du_'47''47''45'cong'737'_3002 (coe d_isQuasigroup_3040 (coe v2))))
+            du_'47''47''45'cong'737'_3024 (coe d_isQuasigroup_3062 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop._.\\-cong
-d_'92''92''45'cong_3298 ::
-  T_IsMoufangLoop_3268 ->
+d_'92''92''45'cong_3320 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong_3298 v0
+d_'92''92''45'cong_3320 v0
   = coe
-      d_'92''92''45'cong_2964
+      d_'92''92''45'cong_2986
       (coe
-         d_isQuasigroup_3040
-         (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))))
+         d_isQuasigroup_3062
+         (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))))
 -- Algebra.Structures.IsMoufangLoop._.\\-congʳ
-d_'92''92''45'cong'691'_3300 ::
+d_'92''92''45'cong'691'_3322 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18744,22 +19010,22 @@ d_'92''92''45'cong'691'_3300 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'691'_3300 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'691'_3300 v8
-du_'92''92''45'cong'691'_3300 ::
-  T_IsMoufangLoop_3268 ->
+d_'92''92''45'cong'691'_3322 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'691'_3322 v8
+du_'92''92''45'cong'691'_3322 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'691'_3300 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_'92''92''45'cong'691'_3322 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
          (coe
-            du_'92''92''45'cong'691'_2998 (coe d_isQuasigroup_3040 (coe v2))))
+            du_'92''92''45'cong'691'_3020 (coe d_isQuasigroup_3062 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop._.\\-congˡ
-d_'92''92''45'cong'737'_3302 ::
+d_'92''92''45'cong'737'_3324 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18768,29 +19034,29 @@ d_'92''92''45'cong'737'_3302 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'737'_3302 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'737'_3302 v8
-du_'92''92''45'cong'737'_3302 ::
-  T_IsMoufangLoop_3268 ->
+d_'92''92''45'cong'737'_3324 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'737'_3324 v8
+du_'92''92''45'cong'737'_3324 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'737'_3302 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_'92''92''45'cong'737'_3324 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
          (coe
-            du_'92''92''45'cong'737'_2994 (coe d_isQuasigroup_3040 (coe v2))))
+            du_'92''92''45'cong'737'_3016 (coe d_isQuasigroup_3062 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop._.identity
-d_identity_3304 ::
-  T_IsMoufangLoop_3268 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_3304 v0
+d_identity_3326 ::
+  T_IsMoufangLoop_3290 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_3326 v0
   = coe
-      d_identity_3042
-      (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0)))
+      d_identity_3064
+      (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0)))
 -- Algebra.Structures.IsMoufangLoop._.identityʳ
-d_identity'691'_3306 ::
+d_identity'691'_3328 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18798,15 +19064,15 @@ d_identity'691'_3306 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny
-d_identity'691'_3306 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_3306 v8
-du_identity'691'_3306 :: T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny
-du_identity'691'_3306 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
-    coe (coe du_identity'691'_3094 (coe d_isLoop_3118 (coe v1)))
+  AgdaAny -> T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny
+d_identity'691'_3328 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_3328 v8
+du_identity'691'_3328 :: T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny
+du_identity'691'_3328 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
+    coe (coe du_identity'691'_3116 (coe d_isLoop_3140 (coe v1)))
 -- Algebra.Structures.IsMoufangLoop._.identityˡ
-d_identity'737'_3308 ::
+d_identity'737'_3330 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18814,39 +19080,39 @@ d_identity'737'_3308 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny
-d_identity'737'_3308 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_3308 v8
-du_identity'737'_3308 :: T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny
-du_identity'737'_3308 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
-    coe (coe du_identity'737'_3092 (coe d_isLoop_3118 (coe v1)))
+  AgdaAny -> T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny
+d_identity'737'_3330 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_3330 v8
+du_identity'737'_3330 :: T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny
+du_identity'737'_3330 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
+    coe (coe du_identity'737'_3114 (coe d_isLoop_3140 (coe v1)))
 -- Algebra.Structures.IsMoufangLoop._.isEquivalence
-d_isEquivalence_3310 ::
-  T_IsMoufangLoop_3268 ->
+d_isEquivalence_3332 ::
+  T_IsMoufangLoop_3290 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_3310 v0
+d_isEquivalence_3332 v0
   = coe
       d_isEquivalence_184
       (coe
-         d_isMagma_2962
+         d_isMagma_2984
          (coe
-            d_isQuasigroup_3040
-            (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0)))))
+            d_isQuasigroup_3062
+            (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0)))))
 -- Algebra.Structures.IsMoufangLoop._.isLoop
-d_isLoop_3312 :: T_IsMoufangLoop_3268 -> T_IsLoop_3026
-d_isLoop_3312 v0
-  = coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))
+d_isLoop_3334 :: T_IsMoufangLoop_3290 -> T_IsLoop_3048
+d_isLoop_3334 v0
+  = coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))
 -- Algebra.Structures.IsMoufangLoop._.isMagma
-d_isMagma_3314 :: T_IsMoufangLoop_3268 -> T_IsMagma_176
-d_isMagma_3314 v0
+d_isMagma_3336 :: T_IsMoufangLoop_3290 -> T_IsMagma_176
+d_isMagma_3336 v0
   = coe
-      d_isMagma_2962
+      d_isMagma_2984
       (coe
-         d_isQuasigroup_3040
-         (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))))
+         d_isQuasigroup_3062
+         (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))))
 -- Algebra.Structures.IsMoufangLoop._.isPartialEquivalence
-d_isPartialEquivalence_3316 ::
+d_isPartialEquivalence_3338 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18855,47 +19121,47 @@ d_isPartialEquivalence_3316 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_3316 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_3316 v8
-du_isPartialEquivalence_3316 ::
-  T_IsMoufangLoop_3268 ->
+d_isPartialEquivalence_3338 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_3338 v8
+du_isPartialEquivalence_3338 ::
+  T_IsMoufangLoop_3290 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_3316 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_isPartialEquivalence_3338 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (let v3 = d_isQuasigroup_3040 (coe v2) in
+         (let v3 = d_isQuasigroup_3062 (coe v2) in
           coe
-            (let v4 = d_isMagma_2962 (coe v3) in
+            (let v4 = d_isMagma_2984 (coe v3) in
              coe
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                   (coe d_isEquivalence_184 (coe v4))))))
 -- Algebra.Structures.IsMoufangLoop._.isQuasigroup
-d_isQuasigroup_3318 :: T_IsMoufangLoop_3268 -> T_IsQuasigroup_2944
-d_isQuasigroup_3318 v0
+d_isQuasigroup_3340 :: T_IsMoufangLoop_3290 -> T_IsQuasigroup_2966
+d_isQuasigroup_3340 v0
   = coe
-      d_isQuasigroup_3040
-      (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0)))
+      d_isQuasigroup_3062
+      (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0)))
 -- Algebra.Structures.IsMoufangLoop._.leftBol
-d_leftBol_3320 ::
-  T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftBol_3320 v0
-  = coe d_leftBol_3120 (coe d_isLeftBolLoop_3284 (coe v0))
+d_leftBol_3342 ::
+  T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftBol_3342 v0
+  = coe d_leftBol_3142 (coe d_isLeftBolLoop_3306 (coe v0))
 -- Algebra.Structures.IsMoufangLoop._.leftDivides
-d_leftDivides_3322 ::
-  T_IsMoufangLoop_3268 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_leftDivides_3322 v0
+d_leftDivides_3344 ::
+  T_IsMoufangLoop_3290 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_leftDivides_3344 v0
   = coe
-      d_leftDivides_2968
+      d_leftDivides_2990
       (coe
-         d_isQuasigroup_3040
-         (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))))
+         d_isQuasigroup_3062
+         (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))))
 -- Algebra.Structures.IsMoufangLoop._.leftDividesʳ
-d_leftDivides'691'_3324 ::
+d_leftDivides'691'_3346 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18903,19 +19169,19 @@ d_leftDivides'691'_3324 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'691'_3324 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'691'_3324 v8
-du_leftDivides'691'_3324 ::
-  T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'691'_3324 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+  AgdaAny -> T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'691'_3346 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'691'_3346 v8
+du_leftDivides'691'_3346 ::
+  T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'691'_3346 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (coe du_leftDivides'691'_3012 (coe d_isQuasigroup_3040 (coe v2))))
+         (coe du_leftDivides'691'_3034 (coe d_isQuasigroup_3062 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop._.leftDividesˡ
-d_leftDivides'737'_3326 ::
+d_leftDivides'737'_3348 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18923,31 +19189,31 @@ d_leftDivides'737'_3326 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'737'_3326 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'737'_3326 v8
-du_leftDivides'737'_3326 ::
-  T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'737'_3326 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+  AgdaAny -> T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'737'_3348 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'737'_3348 v8
+du_leftDivides'737'_3348 ::
+  T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'737'_3348 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (coe du_leftDivides'737'_3010 (coe d_isQuasigroup_3040 (coe v2))))
+         (coe du_leftDivides'737'_3032 (coe d_isQuasigroup_3062 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop._.refl
-d_refl_3328 :: T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny
-d_refl_3328 v0
+d_refl_3350 :: T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny
+d_refl_3350 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
+            d_isMagma_2984
             (coe
-               d_isQuasigroup_3040
-               (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))))))
+               d_isQuasigroup_3062
+               (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))))))
 -- Algebra.Structures.IsMoufangLoop._.reflexive
-d_reflexive_3330 ::
+d_reflexive_3352 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18956,41 +19222,41 @@ d_reflexive_3330 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_3330 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_3330 v8
-du_reflexive_3330 ::
-  T_IsMoufangLoop_3268 ->
+d_reflexive_3352 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_3352 v8
+du_reflexive_3352 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_3330 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_reflexive_3352 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (let v3 = d_isQuasigroup_3040 (coe v2) in
+         (let v3 = d_isQuasigroup_3062 (coe v2) in
           coe
-            (let v4 = d_isMagma_2962 (coe v3) in
+            (let v4 = d_isMagma_2984 (coe v3) in
              coe
                (\ v5 v6 v7 ->
                   coe
                     MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                     (coe d_isEquivalence_184 (coe v4)) v5))))
 -- Algebra.Structures.IsMoufangLoop._.rightDivides
-d_rightDivides_3332 ::
-  T_IsMoufangLoop_3268 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rightDivides_3332 v0
+d_rightDivides_3354 ::
+  T_IsMoufangLoop_3290 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_rightDivides_3354 v0
   = coe
-      d_rightDivides_2970
+      d_rightDivides_2992
       (coe
-         d_isQuasigroup_3040
-         (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))))
+         d_isQuasigroup_3062
+         (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))))
 -- Algebra.Structures.IsMoufangLoop._.rightDividesʳ
-d_rightDivides'691'_3334 ::
+d_rightDivides'691'_3356 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -18998,19 +19264,19 @@ d_rightDivides'691'_3334 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'691'_3334 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'691'_3334 v8
-du_rightDivides'691'_3334 ::
-  T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'691'_3334 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+  AgdaAny -> T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'691'_3356 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'691'_3356 v8
+du_rightDivides'691'_3356 ::
+  T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'691'_3356 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (coe du_rightDivides'691'_3016 (coe d_isQuasigroup_3040 (coe v2))))
+         (coe du_rightDivides'691'_3038 (coe d_isQuasigroup_3062 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop._.rightDividesˡ
-d_rightDivides'737'_3336 ::
+d_rightDivides'737'_3358 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19018,19 +19284,19 @@ d_rightDivides'737'_3336 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'737'_3336 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'737'_3336 v8
-du_rightDivides'737'_3336 ::
-  T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'737'_3336 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+  AgdaAny -> T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'737'_3358 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'737'_3358 v8
+du_rightDivides'737'_3358 ::
+  T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'737'_3358 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (coe du_rightDivides'737'_3014 (coe d_isQuasigroup_3040 (coe v2))))
+         (coe du_rightDivides'737'_3036 (coe d_isQuasigroup_3062 (coe v2))))
 -- Algebra.Structures.IsMoufangLoop._.setoid
-d_setoid_3338 ::
+d_setoid_3360 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19039,62 +19305,62 @@ d_setoid_3338 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_3338 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_3338 v8
-du_setoid_3338 ::
-  T_IsMoufangLoop_3268 ->
+d_setoid_3360 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_3360 v8
+du_setoid_3360 ::
+  T_IsMoufangLoop_3290 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_3338 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_setoid_3360 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (let v3 = d_isQuasigroup_3040 (coe v2) in
-          coe (coe du_setoid_200 (coe d_isMagma_2962 (coe v3)))))
+         (let v3 = d_isQuasigroup_3062 (coe v2) in
+          coe (coe du_setoid_200 (coe d_isMagma_2984 (coe v3)))))
 -- Algebra.Structures.IsMoufangLoop._.sym
-d_sym_3340 ::
-  T_IsMoufangLoop_3268 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_3340 v0
+d_sym_3362 ::
+  T_IsMoufangLoop_3290 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_3362 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
+            d_isMagma_2984
             (coe
-               d_isQuasigroup_3040
-               (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))))))
+               d_isQuasigroup_3062
+               (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))))))
 -- Algebra.Structures.IsMoufangLoop._.trans
-d_trans_3342 ::
-  T_IsMoufangLoop_3268 ->
+d_trans_3364 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_3342 v0
+d_trans_3364 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
+            d_isMagma_2984
             (coe
-               d_isQuasigroup_3040
-               (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0))))))
+               d_isQuasigroup_3062
+               (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0))))))
 -- Algebra.Structures.IsMoufangLoop._.∙-cong
-d_'8729''45'cong_3344 ::
-  T_IsMoufangLoop_3268 ->
+d_'8729''45'cong_3366 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_3344 v0
+d_'8729''45'cong_3366 v0
   = coe
       d_'8729''45'cong_186
       (coe
-         d_isMagma_2962
+         d_isMagma_2984
          (coe
-            d_isQuasigroup_3040
-            (coe d_isLoop_3118 (coe d_isLeftBolLoop_3284 (coe v0)))))
+            d_isQuasigroup_3062
+            (coe d_isLoop_3140 (coe d_isLeftBolLoop_3306 (coe v0)))))
 -- Algebra.Structures.IsMoufangLoop._.∙-congʳ
-d_'8729''45'cong'691'_3346 ::
+d_'8729''45'cong'691'_3368 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19103,23 +19369,23 @@ d_'8729''45'cong'691'_3346 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_3346 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_3346 v8
-du_'8729''45'cong'691'_3346 ::
-  T_IsMoufangLoop_3268 ->
+d_'8729''45'cong'691'_3368 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_3368 v8
+du_'8729''45'cong'691'_3368 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_3346 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_'8729''45'cong'691'_3368 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (let v3 = d_isQuasigroup_3040 (coe v2) in
+         (let v3 = d_isQuasigroup_3062 (coe v2) in
           coe
-            (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2962 (coe v3)))))
+            (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2984 (coe v3)))))
 -- Algebra.Structures.IsMoufangLoop._.∙-congˡ
-d_'8729''45'cong'737'_3348 ::
+d_'8729''45'cong'737'_3370 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19128,50 +19394,50 @@ d_'8729''45'cong'737'_3348 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMoufangLoop_3268 ->
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_3348 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_3348 v8
-du_'8729''45'cong'737'_3348 ::
-  T_IsMoufangLoop_3268 ->
+d_'8729''45'cong'737'_3370 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_3370 v8
+du_'8729''45'cong'737'_3370 ::
+  T_IsMoufangLoop_3290 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_3348 v0
-  = let v1 = d_isLeftBolLoop_3284 (coe v0) in
+du_'8729''45'cong'737'_3370 v0
+  = let v1 = d_isLeftBolLoop_3306 (coe v0) in
     coe
-      (let v2 = d_isLoop_3118 (coe v1) in
+      (let v2 = d_isLoop_3140 (coe v1) in
        coe
-         (let v3 = d_isQuasigroup_3040 (coe v2) in
+         (let v3 = d_isQuasigroup_3062 (coe v2) in
           coe
-            (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2962 (coe v3)))))
+            (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2984 (coe v3)))))
 -- Algebra.Structures.IsMiddleBolLoop
-d_IsMiddleBolLoop_3358 a0 a1 a2 a3 a4 a5 a6 a7 = ()
-data T_IsMiddleBolLoop_3358
-  = C_IsMiddleBolLoop'46'constructor_121973 T_IsLoop_3026
+d_IsMiddleBolLoop_3380 a0 a1 a2 a3 a4 a5 a6 a7 = ()
+data T_IsMiddleBolLoop_3380
+  = C_IsMiddleBolLoop'46'constructor_123623 T_IsLoop_3048
                                             (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Structures.IsMiddleBolLoop.isLoop
-d_isLoop_3372 :: T_IsMiddleBolLoop_3358 -> T_IsLoop_3026
-d_isLoop_3372 v0
+d_isLoop_3394 :: T_IsMiddleBolLoop_3380 -> T_IsLoop_3048
+d_isLoop_3394 v0
   = case coe v0 of
-      C_IsMiddleBolLoop'46'constructor_121973 v1 v2 -> coe v1
+      C_IsMiddleBolLoop'46'constructor_123623 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsMiddleBolLoop.middleBol
-d_middleBol_3374 ::
-  T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_middleBol_3374 v0
+d_middleBol_3396 ::
+  T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_middleBol_3396 v0
   = case coe v0 of
-      C_IsMiddleBolLoop'46'constructor_121973 v1 v2 -> coe v2
+      C_IsMiddleBolLoop'46'constructor_123623 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Structures.IsMiddleBolLoop._.//-cong
-d_'47''47''45'cong_3378 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'47''47''45'cong_3400 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong_3378 v0
+d_'47''47''45'cong_3400 v0
   = coe
-      d_'47''47''45'cong_2966
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0)))
+      d_'47''47''45'cong_2988
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0)))
 -- Algebra.Structures.IsMiddleBolLoop._.//-congʳ
-d_'47''47''45'cong'691'_3380 ::
+d_'47''47''45'cong'691'_3402 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19180,20 +19446,20 @@ d_'47''47''45'cong'691'_3380 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'691'_3380 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'691'_3380 v8
-du_'47''47''45'cong'691'_3380 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'47''47''45'cong'691'_3402 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'691'_3402 v8
+du_'47''47''45'cong'691'_3402 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'691'_3380 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_'47''47''45'cong'691'_3402 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
       (coe
-         du_'47''47''45'cong'691'_3006 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'47''47''45'cong'691'_3028 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsMiddleBolLoop._.//-congˡ
-d_'47''47''45'cong'737'_3382 ::
+d_'47''47''45'cong'737'_3404 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19202,29 +19468,29 @@ d_'47''47''45'cong'737'_3382 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'47''47''45'cong'737'_3382 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'47''47''45'cong'737'_3382 v8
-du_'47''47''45'cong'737'_3382 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'47''47''45'cong'737'_3404 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'47''47''45'cong'737'_3404 v8
+du_'47''47''45'cong'737'_3404 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'47''47''45'cong'737'_3382 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_'47''47''45'cong'737'_3404 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
       (coe
-         du_'47''47''45'cong'737'_3002 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'47''47''45'cong'737'_3024 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsMiddleBolLoop._.\\-cong
-d_'92''92''45'cong_3384 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'92''92''45'cong_3406 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong_3384 v0
+d_'92''92''45'cong_3406 v0
   = coe
-      d_'92''92''45'cong_2964
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0)))
+      d_'92''92''45'cong_2986
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0)))
 -- Algebra.Structures.IsMiddleBolLoop._.\\-congʳ
-d_'92''92''45'cong'691'_3386 ::
+d_'92''92''45'cong'691'_3408 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19233,20 +19499,20 @@ d_'92''92''45'cong'691'_3386 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'691'_3386 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'691'_3386 v8
-du_'92''92''45'cong'691'_3386 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'92''92''45'cong'691'_3408 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'691'_3408 v8
+du_'92''92''45'cong'691'_3408 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'691'_3386 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_'92''92''45'cong'691'_3408 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
       (coe
-         du_'92''92''45'cong'691'_2998 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'92''92''45'cong'691'_3020 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsMiddleBolLoop._.\\-congˡ
-d_'92''92''45'cong'737'_3388 ::
+d_'92''92''45'cong'737'_3410 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19255,25 +19521,25 @@ d_'92''92''45'cong'737'_3388 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'92''92''45'cong'737'_3388 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'92''92''45'cong'737'_3388 v8
-du_'92''92''45'cong'737'_3388 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'92''92''45'cong'737'_3410 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'92''92''45'cong'737'_3410 v8
+du_'92''92''45'cong'737'_3410 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'92''92''45'cong'737'_3388 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_'92''92''45'cong'737'_3410 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
       (coe
-         du_'92''92''45'cong'737'_2994 (coe d_isQuasigroup_3040 (coe v1)))
+         du_'92''92''45'cong'737'_3016 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsMiddleBolLoop._.identity
-d_identity_3390 ::
-  T_IsMiddleBolLoop_3358 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_identity_3390 v0
-  = coe d_identity_3042 (coe d_isLoop_3372 (coe v0))
+d_identity_3412 ::
+  T_IsMiddleBolLoop_3380 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_identity_3412 v0
+  = coe d_identity_3064 (coe d_isLoop_3394 (coe v0))
 -- Algebra.Structures.IsMiddleBolLoop._.identityʳ
-d_identity'691'_3392 ::
+d_identity'691'_3414 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19281,15 +19547,15 @@ d_identity'691'_3392 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny
-d_identity'691'_3392 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'691'_3392 v8
-du_identity'691'_3392 ::
-  T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny
-du_identity'691'_3392 v0
-  = coe du_identity'691'_3094 (coe d_isLoop_3372 (coe v0))
+  AgdaAny -> T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny
+d_identity'691'_3414 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'691'_3414 v8
+du_identity'691'_3414 ::
+  T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny
+du_identity'691'_3414 v0
+  = coe du_identity'691'_3116 (coe d_isLoop_3394 (coe v0))
 -- Algebra.Structures.IsMiddleBolLoop._.identityˡ
-d_identity'737'_3394 ::
+d_identity'737'_3416 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19297,31 +19563,31 @@ d_identity'737'_3394 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny
-d_identity'737'_3394 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_identity'737'_3394 v8
-du_identity'737'_3394 ::
-  T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny
-du_identity'737'_3394 v0
-  = coe du_identity'737'_3092 (coe d_isLoop_3372 (coe v0))
+  AgdaAny -> T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny
+d_identity'737'_3416 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_identity'737'_3416 v8
+du_identity'737'_3416 ::
+  T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny
+du_identity'737'_3416 v0
+  = coe du_identity'737'_3114 (coe d_isLoop_3394 (coe v0))
 -- Algebra.Structures.IsMiddleBolLoop._.isEquivalence
-d_isEquivalence_3396 ::
-  T_IsMiddleBolLoop_3358 ->
+d_isEquivalence_3418 ::
+  T_IsMiddleBolLoop_3380 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
-d_isEquivalence_3396 v0
+d_isEquivalence_3418 v0
   = coe
       d_isEquivalence_184
       (coe
-         d_isMagma_2962
-         (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0))))
+         d_isMagma_2984
+         (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0))))
 -- Algebra.Structures.IsMiddleBolLoop._.isMagma
-d_isMagma_3398 :: T_IsMiddleBolLoop_3358 -> T_IsMagma_176
-d_isMagma_3398 v0
+d_isMagma_3420 :: T_IsMiddleBolLoop_3380 -> T_IsMagma_176
+d_isMagma_3420 v0
   = coe
-      d_isMagma_2962
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0)))
+      d_isMagma_2984
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0)))
 -- Algebra.Structures.IsMiddleBolLoop._.isPartialEquivalence
-d_isPartialEquivalence_3400 ::
+d_isPartialEquivalence_3422 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19330,37 +19596,37 @@ d_isPartialEquivalence_3400 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-d_isPartialEquivalence_3400 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_isPartialEquivalence_3400 v8
-du_isPartialEquivalence_3400 ::
-  T_IsMiddleBolLoop_3358 ->
+d_isPartialEquivalence_3422 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_isPartialEquivalence_3422 v8
+du_isPartialEquivalence_3422 ::
+  T_IsMiddleBolLoop_3380 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsPartialEquivalence_16
-du_isPartialEquivalence_3400 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_isPartialEquivalence_3422 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
        coe
-         (let v3 = d_isMagma_2962 (coe v2) in
+         (let v3 = d_isMagma_2984 (coe v2) in
           coe
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_isPartialEquivalence_42
                (coe d_isEquivalence_184 (coe v3)))))
 -- Algebra.Structures.IsMiddleBolLoop._.isQuasigroup
-d_isQuasigroup_3402 ::
-  T_IsMiddleBolLoop_3358 -> T_IsQuasigroup_2944
-d_isQuasigroup_3402 v0
-  = coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0))
+d_isQuasigroup_3424 ::
+  T_IsMiddleBolLoop_3380 -> T_IsQuasigroup_2966
+d_isQuasigroup_3424 v0
+  = coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0))
 -- Algebra.Structures.IsMiddleBolLoop._.leftDivides
-d_leftDivides_3404 ::
-  T_IsMiddleBolLoop_3358 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_leftDivides_3404 v0
+d_leftDivides_3426 ::
+  T_IsMiddleBolLoop_3380 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_leftDivides_3426 v0
   = coe
-      d_leftDivides_2968
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0)))
+      d_leftDivides_2990
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0)))
 -- Algebra.Structures.IsMiddleBolLoop._.leftDividesʳ
-d_leftDivides'691'_3406 ::
+d_leftDivides'691'_3428 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19368,17 +19634,17 @@ d_leftDivides'691'_3406 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'691'_3406 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'691'_3406 v8
-du_leftDivides'691'_3406 ::
-  T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'691'_3406 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+  AgdaAny -> T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'691'_3428 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'691'_3428 v8
+du_leftDivides'691'_3428 ::
+  T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'691'_3428 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (coe du_leftDivides'691'_3012 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_leftDivides'691'_3034 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsMiddleBolLoop._.leftDividesˡ
-d_leftDivides'737'_3408 ::
+d_leftDivides'737'_3430 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19386,27 +19652,27 @@ d_leftDivides'737'_3408 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny
-d_leftDivides'737'_3408 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_leftDivides'737'_3408 v8
-du_leftDivides'737'_3408 ::
-  T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny
-du_leftDivides'737'_3408 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+  AgdaAny -> T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny
+d_leftDivides'737'_3430 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_leftDivides'737'_3430 v8
+du_leftDivides'737'_3430 ::
+  T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny
+du_leftDivides'737'_3430 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (coe du_leftDivides'737'_3010 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_leftDivides'737'_3032 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsMiddleBolLoop._.refl
-d_refl_3410 :: T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny
-d_refl_3410 v0
+d_refl_3432 :: T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny
+d_refl_3432 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_refl_34
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0)))))
 -- Algebra.Structures.IsMiddleBolLoop._.reflexive
-d_reflexive_3412 ::
+d_reflexive_3434 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19415,37 +19681,37 @@ d_reflexive_3412 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-d_reflexive_3412 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_reflexive_3412 v8
-du_reflexive_3412 ::
-  T_IsMiddleBolLoop_3358 ->
+d_reflexive_3434 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_reflexive_3434 v8
+du_reflexive_3434 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 -> AgdaAny
-du_reflexive_3412 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_reflexive_3434 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
        coe
-         (let v3 = d_isMagma_2962 (coe v2) in
+         (let v3 = d_isMagma_2984 (coe v2) in
           coe
             (\ v4 v5 v6 ->
                coe
                  MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
                  (coe d_isEquivalence_184 (coe v3)) v4)))
 -- Algebra.Structures.IsMiddleBolLoop._.rightDivides
-d_rightDivides_3414 ::
-  T_IsMiddleBolLoop_3358 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rightDivides_3414 v0
+d_rightDivides_3436 ::
+  T_IsMiddleBolLoop_3380 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_rightDivides_3436 v0
   = coe
-      d_rightDivides_2970
-      (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0)))
+      d_rightDivides_2992
+      (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0)))
 -- Algebra.Structures.IsMiddleBolLoop._.rightDividesʳ
-d_rightDivides'691'_3416 ::
+d_rightDivides'691'_3438 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19453,17 +19719,17 @@ d_rightDivides'691'_3416 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'691'_3416 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'691'_3416 v8
-du_rightDivides'691'_3416 ::
-  T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'691'_3416 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+  AgdaAny -> T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'691'_3438 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'691'_3438 v8
+du_rightDivides'691'_3438 ::
+  T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'691'_3438 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (coe du_rightDivides'691'_3016 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_rightDivides'691'_3038 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsMiddleBolLoop._.rightDividesˡ
-d_rightDivides'737'_3418 ::
+d_rightDivides'737'_3440 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19471,17 +19737,17 @@ d_rightDivides'737'_3418 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  AgdaAny -> T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny
-d_rightDivides'737'_3418 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_rightDivides'737'_3418 v8
-du_rightDivides'737'_3418 ::
-  T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny
-du_rightDivides'737'_3418 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+  AgdaAny -> T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny
+d_rightDivides'737'_3440 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_rightDivides'737'_3440 v8
+du_rightDivides'737'_3440 ::
+  T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny
+du_rightDivides'737'_3440 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (coe du_rightDivides'737'_3014 (coe d_isQuasigroup_3040 (coe v1)))
+      (coe du_rightDivides'737'_3036 (coe d_isQuasigroup_3062 (coe v1)))
 -- Algebra.Structures.IsMiddleBolLoop._.setoid
-d_setoid_3420 ::
+d_setoid_3442 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19490,54 +19756,54 @@ d_setoid_3420 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_setoid_3420 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_setoid_3420 v8
-du_setoid_3420 ::
-  T_IsMiddleBolLoop_3358 ->
+d_setoid_3442 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_setoid_3442 v8
+du_setoid_3442 ::
+  T_IsMiddleBolLoop_3380 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-du_setoid_3420 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_setoid_3442 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_setoid_200 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_setoid_200 (coe d_isMagma_2984 (coe v2))))
 -- Algebra.Structures.IsMiddleBolLoop._.sym
-d_sym_3422 ::
-  T_IsMiddleBolLoop_3358 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_sym_3422 v0
+d_sym_3444 ::
+  T_IsMiddleBolLoop_3380 -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
+d_sym_3444 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_sym_36
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0)))))
 -- Algebra.Structures.IsMiddleBolLoop._.trans
-d_trans_3424 ::
-  T_IsMiddleBolLoop_3358 ->
+d_trans_3446 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_trans_3424 v0
+d_trans_3446 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
       (coe
          d_isEquivalence_184
          (coe
-            d_isMagma_2962
-            (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0)))))
+            d_isMagma_2984
+            (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0)))))
 -- Algebra.Structures.IsMiddleBolLoop._.∙-cong
-d_'8729''45'cong_3426 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'8729''45'cong_3448 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong_3426 v0
+d_'8729''45'cong_3448 v0
   = coe
       d_'8729''45'cong_186
       (coe
-         d_isMagma_2962
-         (coe d_isQuasigroup_3040 (coe d_isLoop_3372 (coe v0))))
+         d_isMagma_2984
+         (coe d_isQuasigroup_3062 (coe d_isLoop_3394 (coe v0))))
 -- Algebra.Structures.IsMiddleBolLoop._.∙-congʳ
-d_'8729''45'cong'691'_3428 ::
+d_'8729''45'cong'691'_3450 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19546,20 +19812,20 @@ d_'8729''45'cong'691'_3428 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'691'_3428 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'691'_3428 v8
-du_'8729''45'cong'691'_3428 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'8729''45'cong'691'_3450 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'691'_3450 v8
+du_'8729''45'cong'691'_3450 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'691'_3428 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_'8729''45'cong'691'_3450 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_'8729''45'cong'691'_206 (coe d_isMagma_2984 (coe v2))))
 -- Algebra.Structures.IsMiddleBolLoop._.∙-congˡ
-d_'8729''45'cong'737'_3430 ::
+d_'8729''45'cong'737'_3452 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -19568,15 +19834,15 @@ d_'8729''45'cong'737'_3430 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny ->
-  T_IsMiddleBolLoop_3358 ->
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_'8729''45'cong'737'_3430 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
-  = du_'8729''45'cong'737'_3430 v8
-du_'8729''45'cong'737'_3430 ::
-  T_IsMiddleBolLoop_3358 ->
+d_'8729''45'cong'737'_3452 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
+  = du_'8729''45'cong'737'_3452 v8
+du_'8729''45'cong'737'_3452 ::
+  T_IsMiddleBolLoop_3380 ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_'8729''45'cong'737'_3430 v0
-  = let v1 = d_isLoop_3372 (coe v0) in
+du_'8729''45'cong'737'_3452 v0
+  = let v1 = d_isLoop_3394 (coe v0) in
     coe
-      (let v2 = d_isQuasigroup_3040 (coe v1) in
-       coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2962 (coe v2))))
+      (let v2 = d_isQuasigroup_3062 (coe v1) in
+       coe (coe du_'8729''45'cong'737'_202 (coe d_isMagma_2984 (coe v2))))

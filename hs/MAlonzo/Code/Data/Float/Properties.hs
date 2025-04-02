@@ -91,7 +91,7 @@ d__'8776''63'__30
               (coe MAlonzo.Code.Agda.Builtin.Float.d_primFloatToWord64_22 v0)))
       (coe
          MAlonzo.Code.Data.Maybe.Properties.du_'8801''45'dec_24
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
 -- Data.Float.Properties.≈-isEquivalence
 d_'8776''45'isEquivalence_32 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
@@ -104,7 +104,7 @@ d_'8776''45'setoid_46 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 d_'8776''45'setoid_46
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
       d_'8776''45'isEquivalence_32
 -- Data.Float.Properties.≈-isDecEquivalence
 d_'8776''45'isDecEquivalence_48 ::
@@ -115,10 +115,10 @@ d_'8776''45'isDecEquivalence_48
       (coe d_'8776''45'isEquivalence_32) (coe d__'8776''63'__30)
 -- Data.Float.Properties.≈-decSetoid
 d_'8776''45'decSetoid_50 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86
 d_'8776''45'decSetoid_50
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1389
+      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1435
       d_'8776''45'isDecEquivalence_48
 -- Data.Float.Properties._≟_
 d__'8799'__52 ::
@@ -137,7 +137,7 @@ d_'8801''45'setoid_58
       MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402
 -- Data.Float.Properties.≡-decSetoid
 d_'8801''45'decSetoid_60 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_84
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86
 d_'8801''45'decSetoid_60
   = coe
       MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_decSetoid_406

@@ -1581,7 +1581,7 @@ du_applyRUpd_2320 v0 v1 v2
                                                                    (coe
                                                                       MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                                                                       (coe
-                                                                         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                                                                         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                                                                       (coe
@@ -1780,11 +1780,11 @@ du_unregRU''_2370 v0 v1 v2
             (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1230 (coe v0))))
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
       (coe (\ v3 -> v3)) (coe du_unregRU_2368 (coe v0) (coe v1) (coe v2))
 -- Ledger.Conway.Conformance.Epoch.stakeDistr
 d_stakeDistr_2374 ::
@@ -1979,7 +1979,7 @@ du_stakeDistr_2374 v0 v1 v2
                    (coe
                       MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                       (coe
-                         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                         MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
                    (coe
                       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                       (coe
@@ -2135,10 +2135,10 @@ du_gaDepositStake_2396 v0 v1 v2
       (coe
          MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
          (coe
-            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+            MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+         (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
       (coe
          MAlonzo.Code.Axiom.Set.du_map_398
          (MAlonzo.Code.Axiom.Set.d_th_1470
@@ -2262,10 +2262,10 @@ du_mkStakeDistrs_2418 v0 v1 v2 v3 v4
          (coe
             MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
             (coe
-               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+               MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
          (coe
             MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688))
+            (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
          (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4))
          (coe
             MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__502
@@ -2273,7 +2273,7 @@ du_mkStakeDistrs_2418 v0 v1 v2 v3 v4
             (coe
                MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
                (coe
-                  MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3334))
+                  MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
             (coe
                MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
                (coe

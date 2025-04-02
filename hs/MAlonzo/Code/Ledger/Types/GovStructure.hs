@@ -34,7 +34,7 @@ import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Show
 import qualified MAlonzo.Code.Data.Rational.Base
-import qualified MAlonzo.Code.Data.Refinement
+import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.Hashable
@@ -292,7 +292,7 @@ d_Slot_610 :: T_GovStructure_6 -> ()
 d_Slot_610 = erased
 -- Ledger.Types.GovStructure.GovStructure._.Slotʳ
 d_Slot'691'_612 ::
-  T_GovStructure_6 -> MAlonzo.Code.Algebra.Bundles.T_Semiring_2280
+  T_GovStructure_6 -> MAlonzo.Code.Algebra.Bundles.T_Semiring_2304
 d_Slot'691'_612 v0
   = coe
       MAlonzo.Code.Ledger.Types.Epoch.d_Slot'691'_54
@@ -1086,7 +1086,7 @@ d_minUTxOValue_894 v0
 -- Ledger.Types.GovStructure.GovStructure._.PParams.monetaryExpansion
 d_monetaryExpansion_896 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_896 v0
   = coe MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_340 (coe v0)
 -- Ledger.Types.GovStructure.GovStructure._.PParams.nopt
@@ -1129,7 +1129,7 @@ d_refScriptCostStride_910 v0
 -- Ledger.Types.GovStructure.GovStructure._.PParams.treasuryCut
 d_treasuryCut_912 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
-  MAlonzo.Code.Data.Refinement.T_Refinement_24
+  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_912 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_342 (coe v0)
 -- Ledger.Types.GovStructure.GovStructure._.PParamsDiff.UpdateT
@@ -1269,13 +1269,13 @@ d_'8801''45'update_952 ::
   () ->
   Maybe AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 d_'8801''45'update_952 ~v0 = du_'8801''45'update_952
 du_'8801''45'update_952 ::
   () ->
   Maybe AgdaAny ->
   AgdaAny ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1714
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
 du_'8801''45'update_952 v0 v1 v2 v3
   = coe MAlonzo.Code.Ledger.PParams.du_'8801''45'update_1156 v1
 -- Ledger.Types.GovStructure.GovStructure._.PParamsUpdate.PParamsUpdate.Emax
@@ -1416,7 +1416,7 @@ d_minUTxOValue_1006 v0
 -- Ledger.Types.GovStructure.GovStructure._.PParamsUpdate.PParamsUpdate.monetaryExpansion
 d_monetaryExpansion_1008 ::
   MAlonzo.Code.Ledger.PParams.T_PParamsUpdate_518 ->
-  Maybe MAlonzo.Code.Data.Refinement.T_Refinement_24
+  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_monetaryExpansion_1008 v0
   = coe MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_614 (coe v0)
 -- Ledger.Types.GovStructure.GovStructure._.PParamsUpdate.PParamsUpdate.nopt
@@ -1461,7 +1461,7 @@ d_refScriptCostStride_1022 v0
 -- Ledger.Types.GovStructure.GovStructure._.PParamsUpdate.PParamsUpdate.treasuryCut
 d_treasuryCut_1024 ::
   MAlonzo.Code.Ledger.PParams.T_PParamsUpdate_518 ->
-  Maybe MAlonzo.Code.Data.Refinement.T_Refinement_24
+  Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_treasuryCut_1024 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_616 (coe v0)
 -- Ledger.Types.GovStructure.GovStructure._.PoolThresholds.Q1

@@ -33,127 +33,127 @@ import qualified MAlonzo.Code.Relation.Binary.Structures
 -- Function.Properties.Surjection._.Eq₁._≈_
 d__'8776'__40 ::
   T_GeneralizeTel_423 ->
-  MAlonzo.Code.Function.Bundles.T_Func_714 ->
+  MAlonzo.Code.Function.Bundles.T_Func_754 ->
   AgdaAny -> AgdaAny -> ()
 d__'8776'__40 = erased
 -- Function.Properties.Surjection._.Eq₂._≈_
-d__'8776'__64 ::
+d__'8776'__66 ::
   T_GeneralizeTel_423 ->
-  MAlonzo.Code.Function.Bundles.T_Func_714 ->
+  MAlonzo.Code.Function.Bundles.T_Func_754 ->
   AgdaAny -> AgdaAny -> ()
-d__'8776'__64 = erased
+d__'8776'__66 = erased
 -- Function.Properties.Surjection.mkSurjection
-d_mkSurjection_86 ::
+d_mkSurjection_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
-  MAlonzo.Code.Function.Bundles.T_Func_714 ->
+  MAlonzo.Code.Function.Bundles.T_Func_754 ->
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846
-d_mkSurjection_86 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7
-  = du_mkSurjection_86 v6 v7
-du_mkSurjection_86 ::
-  MAlonzo.Code.Function.Bundles.T_Func_714 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894
+d_mkSurjection_90 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7
+  = du_mkSurjection_90 v6 v7
+du_mkSurjection_90 ::
+  MAlonzo.Code.Function.Bundles.T_Func_754 ->
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846
-du_mkSurjection_86 v0 v1
+  MAlonzo.Code.Function.Bundles.T_Surjection_894
+du_mkSurjection_90 v0 v1
   = coe
-      MAlonzo.Code.Function.Bundles.C_Surjection'46'constructor_11197
-      (coe MAlonzo.Code.Function.Bundles.d_to_720 (coe v0))
-      (coe MAlonzo.Code.Function.Bundles.d_cong_722 (coe v0)) (coe v1)
+      MAlonzo.Code.Function.Bundles.C_Surjection'46'constructor_11713
+      (coe MAlonzo.Code.Function.Bundles.d_to_760 (coe v0))
+      (coe MAlonzo.Code.Function.Bundles.d_cong_762 (coe v0)) (coe v1)
 -- Function.Properties.Surjection.↠⇒⟶
-d_'8608''8658''10230'_150 ::
+d_'8608''8658''10230'_158 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_Func_714
-d_'8608''8658''10230'_150 ~v0 ~v1 ~v2 ~v3
-  = du_'8608''8658''10230'_150
-du_'8608''8658''10230'_150 ::
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_Func_714
-du_'8608''8658''10230'_150
-  = coe MAlonzo.Code.Function.Bundles.du_function_860
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_Func_754
+d_'8608''8658''10230'_158 ~v0 ~v1 ~v2 ~v3
+  = du_'8608''8658''10230'_158
+du_'8608''8658''10230'_158 ::
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_Func_754
+du_'8608''8658''10230'_158
+  = coe MAlonzo.Code.Function.Bundles.du_function_908
 -- Function.Properties.Surjection.↠⇒↪
-d_'8608''8658''8618'_152 ::
+d_'8608''8658''8618'_160 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_RightInverse_1880
-d_'8608''8658''8618'_152 ~v0 ~v1 ~v2 ~v3 v4
-  = du_'8608''8658''8618'_152 v4
-du_'8608''8658''8618'_152 ::
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_RightInverse_1880
-du_'8608''8658''8618'_152 v0
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_RightInverse_1984
+d_'8608''8658''8618'_160 ~v0 ~v1 ~v2 ~v3 v4
+  = du_'8608''8658''8618'_160 v4
+du_'8608''8658''8618'_160 ::
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_RightInverse_1984
+du_'8608''8658''8618'_160 v0
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8618'_2320
+      MAlonzo.Code.Function.Bundles.du_mk'8618'_2436
       (coe
          (\ v1 ->
             MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
               (coe
-                 MAlonzo.Code.Function.Structures.du_strictlySurjective_230
+                 MAlonzo.Code.Function.Structures.du_strictlySurjective_242
                  (coe
-                    MAlonzo.Code.Function.Bundles.du_isSurjection_914
+                    MAlonzo.Code.Function.Bundles.du_isSurjection_966
                     (coe
                        MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
                     (coe
                        MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
                     (coe v0))
                  (coe v1))))
-      (coe MAlonzo.Code.Function.Bundles.d_to_854 (coe v0)) erased
+      (coe MAlonzo.Code.Function.Bundles.d_to_902 (coe v0)) erased
 -- Function.Properties.Surjection._..extendedlambda0
-d_'46'extendedlambda0_228 ::
+d_'46'extendedlambda0_240 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'46'extendedlambda0_228 = erased
+d_'46'extendedlambda0_240 = erased
 -- Function.Properties.Surjection.↠⇒⇔
-d_'8608''8658''8660'_230 ::
+d_'8608''8658''8660'_242 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
-d_'8608''8658''8660'_230 ~v0 ~v1 ~v2 ~v3 v4
-  = du_'8608''8658''8660'_230 v4
-du_'8608''8658''8660'_230 ::
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_Equivalence_1714
-du_'8608''8658''8660'_230 v0
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
+d_'8608''8658''8660'_242 ~v0 ~v1 ~v2 ~v3 v4
+  = du_'8608''8658''8660'_242 v4
+du_'8608''8658''8660'_242 ::
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_Equivalence_1810
+du_'8608''8658''8660'_242 v0
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2298
-      (coe MAlonzo.Code.Function.Bundles.d_to_854 (coe v0))
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2414
+      (coe MAlonzo.Code.Function.Bundles.d_to_902 (coe v0))
       (coe
          (\ v1 ->
             MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
-              (coe MAlonzo.Code.Function.Bundles.d_surjective_858 v0 v1)))
+              (coe MAlonzo.Code.Function.Bundles.d_surjective_906 v0 v1)))
 -- Function.Properties.Surjection.refl
-d_refl_306 ::
+d_refl_322 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846
-d_refl_306 ~v0 ~v1 ~v2 = du_refl_306
-du_refl_306 :: MAlonzo.Code.Function.Bundles.T_Surjection_846
-du_refl_306
-  = coe MAlonzo.Code.Function.Construct.Identity.du_surjection_786
+  MAlonzo.Code.Function.Bundles.T_Surjection_894
+d_refl_322 ~v0 ~v1 ~v2 = du_refl_322
+du_refl_322 :: MAlonzo.Code.Function.Bundles.T_Surjection_894
+du_refl_322
+  = coe MAlonzo.Code.Function.Construct.Identity.du_surjection_828
 -- Function.Properties.Surjection.trans
-d_trans_310 ::
+d_trans_326 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -163,80 +163,80 @@ d_trans_310 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846
-d_trans_310 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 = du_trans_310
-du_trans_310 ::
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846
-du_trans_310
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894
+d_trans_326 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 = du_trans_326
+du_trans_326 ::
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894
+du_trans_326
   = coe
-      MAlonzo.Code.Function.Construct.Composition.du_surjection_1460
+      MAlonzo.Code.Function.Construct.Composition.du_surjection_1532
 -- Function.Properties.Surjection._.to⁻
-d_to'8315'_330 ::
-  T_GeneralizeTel_9221 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
+d_to'8315'_346 ::
+  T_GeneralizeTel_9413 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
   AgdaAny -> AgdaAny
-d_to'8315'_330 ~v0 v1 = du_to'8315'_330 v1
-du_to'8315'_330 ::
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
+d_to'8315'_346 ~v0 v1 = du_to'8315'_346 v1
+du_to'8315'_346 ::
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
   AgdaAny -> AgdaAny
-du_to'8315'_330 v0
-  = coe MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v0)
+du_to'8315'_346 v0
+  = coe MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v0)
 -- Function.Properties.Surjection._.Eq₁._≈_
-d__'8776'__336 ::
-  T_GeneralizeTel_9221 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
+d__'8776'__352 ::
+  T_GeneralizeTel_9413 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
   AgdaAny -> AgdaAny -> ()
-d__'8776'__336 = erased
+d__'8776'__352 = erased
 -- Function.Properties.Surjection._.Eq₂._≈_
-d__'8776'__360 ::
-  T_GeneralizeTel_9221 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
+d__'8776'__378 ::
+  T_GeneralizeTel_9413 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
   AgdaAny -> AgdaAny -> ()
-d__'8776'__360 = erased
+d__'8776'__378 = erased
 -- Function.Properties.Surjection.injective⇒to⁻-cong
-d_injective'8658'to'8315''45'cong_382 ::
+d_injective'8658'to'8315''45'cong_402 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-d_injective'8658'to'8315''45'cong_382 ~v0 ~v1 v2 ~v3 ~v4 v5 v6 v7
+d_injective'8658'to'8315''45'cong_402 ~v0 ~v1 v2 ~v3 ~v4 v5 v6 v7
                                       v8 v9 v10
-  = du_injective'8658'to'8315''45'cong_382 v2 v5 v6 v7 v8 v9 v10
-du_injective'8658'to'8315''45'cong_382 ::
+  = du_injective'8658'to'8315''45'cong_402 v2 v5 v6 v7 v8 v9 v10
+du_injective'8658'to'8315''45'cong_402 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
-  MAlonzo.Code.Function.Bundles.T_Surjection_846 ->
+  MAlonzo.Code.Function.Bundles.T_Surjection_894 ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny) ->
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
-du_injective'8658'to'8315''45'cong_382 v0 v1 v2 v3 v4 v5 v6
+du_injective'8658'to'8315''45'cong_402 v0 v1 v2 v3 v4 v5 v6
   = coe
       v3
       (coe
-         MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v4))
+         MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v4))
       (coe
-         MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v5))
+         MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v5))
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
          (\ v7 v8 v9 ->
             coe
               MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_start_36 v9)
          (coe
-            MAlonzo.Code.Function.Bundles.d_to_854 v2
+            MAlonzo.Code.Function.Bundles.d_to_902 v2
             (coe
-               MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v4)))
+               MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v4)))
          (coe
-            MAlonzo.Code.Function.Bundles.d_to_854 v2
+            MAlonzo.Code.Function.Bundles.d_to_902 v2
             (coe
-               MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v5)))
+               MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v5)))
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_368
             (coe
@@ -246,14 +246,14 @@ du_injective'8658'to'8315''45'cong_382 v0 v1 v2 v3 v4 v5 v6
                   (coe
                      MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v1))))
             (coe
-               MAlonzo.Code.Function.Bundles.d_to_854 v2
+               MAlonzo.Code.Function.Bundles.d_to_902 v2
                (coe
-                  MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v4)))
+                  MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v4)))
             v4
             (coe
-               MAlonzo.Code.Function.Bundles.d_to_854 v2
+               MAlonzo.Code.Function.Bundles.d_to_902 v2
                (coe
-                  MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v5)))
+                  MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v5)))
             (coe
                MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_368
                (coe
@@ -264,9 +264,9 @@ du_injective'8658'to'8315''45'cong_382 v0 v1 v2 v3 v4 v5 v6
                         MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v1))))
                v4 v5
                (coe
-                  MAlonzo.Code.Function.Bundles.d_to_854 v2
+                  MAlonzo.Code.Function.Bundles.d_to_902 v2
                   (coe
-                     MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v5)))
+                     MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v5)))
                (coe
                   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10216'_370
                   (coe
@@ -280,13 +280,13 @@ du_injective'8658'to'8315''45'cong_382 v0 v1 v2 v3 v4 v5 v6
                         MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v1)))
                   v5
                   (coe
-                     MAlonzo.Code.Function.Bundles.d_to_854 v2
+                     MAlonzo.Code.Function.Bundles.d_to_902 v2
                      (coe
-                        MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v5)))
+                        MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v5)))
                   (coe
-                     MAlonzo.Code.Function.Bundles.d_to_854 v2
+                     MAlonzo.Code.Function.Bundles.d_to_902 v2
                      (coe
-                        MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v5)))
+                        MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v5)))
                   (let v7
                          = MAlonzo.Code.Relation.Binary.Structures.d_refl_34
                              (coe
@@ -299,15 +299,15 @@ du_injective'8658'to'8315''45'cong_382 v0 v1 v2 v3 v4 v5 v6
                            MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_stop_54
                            (coe v7))
                         (coe
-                           MAlonzo.Code.Function.Bundles.d_to_854 v2
+                           MAlonzo.Code.Function.Bundles.d_to_902 v2
                            (coe
-                              MAlonzo.Code.Function.Bundles.du_to'8315'_920 (coe v2) (coe v5)))))
+                              MAlonzo.Code.Function.Bundles.du_to'8315'_972 (coe v2) (coe v5)))))
                   (coe
-                     MAlonzo.Code.Function.Bundles.du_to'8728'to'8315'_924 (coe v0)
+                     MAlonzo.Code.Function.Bundles.du_to'8728'to'8315'_976 (coe v0)
                      (coe v1) (coe v2) (coe v5)))
                v6)
             (coe
-               MAlonzo.Code.Function.Bundles.du_to'8728'to'8315'_924 (coe v0)
+               MAlonzo.Code.Function.Bundles.du_to'8728'to'8315'_976 (coe v0)
                (coe v1) (coe v2) (coe v4))))
 -- Function.Properties.Surjection..generalizedField-S.a
 d_'46'generalizedField'45'S'46'a_411 ::
@@ -363,53 +363,53 @@ data T_GeneralizeTel_423
                           MAlonzo.Code.Agda.Primitive.T_Level_18
                           MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 -- Function.Properties.Surjection..generalizedField-S.a
-d_'46'generalizedField'45'S'46'a_9209 ::
-  T_GeneralizeTel_9221 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'S'46'a_9209 v0
+d_'46'generalizedField'45'S'46'a_9401 ::
+  T_GeneralizeTel_9413 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'S'46'a_9401 v0
   = case coe v0 of
-      C_mkGeneralizeTel_9223 v1 v2 v3 v4 v5 v6 -> coe v1
+      C_mkGeneralizeTel_9415 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Properties.Surjection..generalizedField-S.ℓ
-d_'46'generalizedField'45'S'46'ℓ_9211 ::
-  T_GeneralizeTel_9221 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'S'46'ℓ_9211 v0
+d_'46'generalizedField'45'S'46'ℓ_9403 ::
+  T_GeneralizeTel_9413 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'S'46'ℓ_9403 v0
   = case coe v0 of
-      C_mkGeneralizeTel_9223 v1 v2 v3 v4 v5 v6 -> coe v2
+      C_mkGeneralizeTel_9415 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Properties.Surjection..generalizedField-S
-d_'46'generalizedField'45'S_9213 ::
-  T_GeneralizeTel_9221 ->
+d_'46'generalizedField'45'S_9405 ::
+  T_GeneralizeTel_9413 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_'46'generalizedField'45'S_9213 v0
+d_'46'generalizedField'45'S_9405 v0
   = case coe v0 of
-      C_mkGeneralizeTel_9223 v1 v2 v3 v4 v5 v6 -> coe v3
+      C_mkGeneralizeTel_9415 v1 v2 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Properties.Surjection..generalizedField-T.a
-d_'46'generalizedField'45'T'46'a_9215 ::
-  T_GeneralizeTel_9221 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'T'46'a_9215 v0
+d_'46'generalizedField'45'T'46'a_9407 ::
+  T_GeneralizeTel_9413 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'T'46'a_9407 v0
   = case coe v0 of
-      C_mkGeneralizeTel_9223 v1 v2 v3 v4 v5 v6 -> coe v4
+      C_mkGeneralizeTel_9415 v1 v2 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Properties.Surjection..generalizedField-T.ℓ
-d_'46'generalizedField'45'T'46'ℓ_9217 ::
-  T_GeneralizeTel_9221 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'T'46'ℓ_9217 v0
+d_'46'generalizedField'45'T'46'ℓ_9409 ::
+  T_GeneralizeTel_9413 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'T'46'ℓ_9409 v0
   = case coe v0 of
-      C_mkGeneralizeTel_9223 v1 v2 v3 v4 v5 v6 -> coe v5
+      C_mkGeneralizeTel_9415 v1 v2 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Properties.Surjection..generalizedField-T
-d_'46'generalizedField'45'T_9219 ::
-  T_GeneralizeTel_9221 ->
+d_'46'generalizedField'45'T_9411 ::
+  T_GeneralizeTel_9413 ->
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
-d_'46'generalizedField'45'T_9219 v0
+d_'46'generalizedField'45'T_9411 v0
   = case coe v0 of
-      C_mkGeneralizeTel_9223 v1 v2 v3 v4 v5 v6 -> coe v6
+      C_mkGeneralizeTel_9415 v1 v2 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Function.Properties.Surjection.GeneralizeTel
-d_GeneralizeTel_9221 = ()
-data T_GeneralizeTel_9221
-  = C_mkGeneralizeTel_9223 MAlonzo.Code.Agda.Primitive.T_Level_18
+d_GeneralizeTel_9413 = ()
+data T_GeneralizeTel_9413
+  = C_mkGeneralizeTel_9415 MAlonzo.Code.Agda.Primitive.T_Level_18
                            MAlonzo.Code.Agda.Primitive.T_Level_18
                            MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
                            MAlonzo.Code.Agda.Primitive.T_Level_18

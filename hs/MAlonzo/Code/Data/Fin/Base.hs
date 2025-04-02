@@ -87,7 +87,7 @@ du_fromℕ'60'_52 v0
 d_fromℕ'60''8243'_62 ::
   Integer ->
   Integer ->
-  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__26 ->
+  MAlonzo.Code.Algebra.Definitions.RawMagma.T__'8739''737'__28 ->
   T_Fin_10
 d_fromℕ'60''8243'_62 v0 ~v1 ~v2 = du_fromℕ'60''8243'_62 v0
 du_fromℕ'60''8243'_62 :: Integer -> T_Fin_10

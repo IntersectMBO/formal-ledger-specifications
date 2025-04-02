@@ -22,14 +22,14 @@ import qualified MAlonzo.Code.Class.MonadError
 
 -- Class.MonadError.Instances._.catch
 d_catch_8 ::
-  MAlonzo.Code.Class.MonadError.T_MonadError_18 ->
+  MAlonzo.Code.Class.MonadError.T_MonadError_16 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> (AgdaAny -> AgdaAny) -> AgdaAny
 d_catch_8 v0
-  = coe MAlonzo.Code.Class.MonadError.d_catch_30 (coe v0)
+  = coe MAlonzo.Code.Class.MonadError.d_catch_28 (coe v0)
 -- Class.MonadError.Instances._.error
 d_error_10 ::
-  MAlonzo.Code.Class.MonadError.T_MonadError_18 ->
+  MAlonzo.Code.Class.MonadError.T_MonadError_16 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> AgdaAny -> AgdaAny
 d_error_10 v0
-  = coe MAlonzo.Code.Class.MonadError.d_error_28 (coe v0)
+  = coe MAlonzo.Code.Class.MonadError.d_error_26 (coe v0)

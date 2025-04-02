@@ -23,27 +23,27 @@
 <a id="706" class="Keyword">open</a> <a id="711" class="Keyword">import</a> <a id="718" href="Reflection.Syntax.html" class="Module">Reflection.Syntax</a> <a id="736" class="Keyword">public</a>
   <a id="745" class="Keyword">hiding</a> <a id="752" class="Symbol">(</a><a id="753" href="Reflection.AST.Meta.html#837" class="Primitive">toℕ</a><a id="756" class="Symbol">)</a>
 <a id="758" class="Keyword">open</a> <a id="763" class="Keyword">import</a> <a id="770" href="Reflection.Utils.html" class="Module">Reflection.Utils</a> <a id="787" class="Keyword">public</a>
-  <a id="796" class="Keyword">hiding</a> <a id="803" class="Symbol">(</a><a id="804" href="Reflection.Utils.html#6985" class="Function">mkRecord</a><a id="812" class="Symbol">)</a>
+  <a id="796" class="Keyword">hiding</a> <a id="803" class="Symbol">(</a><a id="804" href="Reflection.Utils.Records.html#195" class="Function">mkRecord</a><a id="812" class="Symbol">)</a>
 <a id="814" class="Keyword">open</a> <a id="819" class="Keyword">import</a> <a id="826" href="Reflection.Debug.html" class="Module">Reflection.Debug</a> <a id="843" class="Keyword">public</a>
 <a id="850" class="Keyword">open</a> <a id="855" class="Keyword">import</a> <a id="862" href="Reflection.Utils.Debug.html" class="Module">Reflection.Utils.Debug</a> <a id="885" class="Keyword">public</a>
-  <a id="894" class="Keyword">hiding</a> <a id="901" class="Symbol">(</a><a id="902" href="Reflection.Utils.Debug.html#456" class="Function">error</a><a id="907" class="Symbol">)</a>
+  <a id="894" class="Keyword">hiding</a> <a id="901" class="Symbol">(</a><a id="902" href="Reflection.Utils.Debug.html#415" class="Function">error</a><a id="907" class="Symbol">)</a>
 <a id="909" class="Keyword">open</a> <a id="914" class="Keyword">import</a> <a id="921" href="Reflection.Tactic.html" class="Module">Reflection.Tactic</a> <a id="939" class="Keyword">public</a>
 
 <a id="947" class="Comment">-- * MonadTC interface for TC</a>
 <a id="977" class="Keyword">open</a> <a id="982" class="Keyword">import</a> <a id="989" href="Class.MonadTC.html" class="Module">Class.MonadTC</a> <a id="1003" class="Keyword">public</a>
-  <a id="1012" class="Keyword">hiding</a> <a id="1019" class="Symbol">(</a><a id="1020" href="Class.MonadTC.html#7926" class="Function">extendContext</a><a id="1033" class="Symbol">)</a>
-<a id="1035" class="Keyword">open</a> <a id="1040" href="Class.MonadTC.html#1517" class="Module">MonadTC</a> <a id="1048" class="Symbol">⦃...⦄</a> <a id="1054" class="Keyword">public</a>
+  <a id="1012" class="Keyword">hiding</a> <a id="1019" class="Symbol">(</a><a id="1020" href="Class.MonadTC.html#10352" class="Function">extendContext</a><a id="1033" class="Symbol">)</a>
+<a id="1035" class="Keyword">open</a> <a id="1040" href="Class.MonadTC.html#1519" class="Module">MonadTC</a> <a id="1048" class="Symbol">⦃...⦄</a> <a id="1054" class="Keyword">public</a>
 <a id="1061" class="Keyword">open</a> <a id="1066" class="Keyword">import</a> <a id="1073" href="Class.MonadError.html" class="Module">Class.MonadError</a> <a id="1090" class="Keyword">public</a>
-  <a id="1099" class="Keyword">using</a> <a id="1105" class="Symbol">(</a><a id="1106" href="Class.MonadError.html#267" class="Record">MonadError</a><a id="1116" class="Symbol">;</a> <a id="1118" href="Class.MonadError.html#411" class="Function">MonadError-TC</a><a id="1131" class="Symbol">)</a>
-<a id="1133" class="Keyword">open</a> <a id="1138" href="Class.MonadError.html#267" class="Module">MonadError</a> <a id="1149" class="Symbol">⦃...⦄</a> <a id="1155" class="Keyword">public</a>
-  <a id="1164" class="Keyword">using</a> <a id="1170" class="Symbol">(</a><a id="1171" href="Class.MonadError.html#343" class="Field">error</a><a id="1176" class="Symbol">;</a> <a id="1178" href="Class.MonadError.html#363" class="Field">catch</a><a id="1183" class="Symbol">)</a>
+  <a id="1099" class="Keyword">using</a> <a id="1105" class="Symbol">(</a><a id="1106" href="Class.MonadError.html#248" class="Record">MonadError</a><a id="1116" class="Symbol">;</a> <a id="1118" href="Class.MonadError.html#392" class="Function">MonadError-TC</a><a id="1131" class="Symbol">)</a>
+<a id="1133" class="Keyword">open</a> <a id="1138" href="Class.MonadError.html#248" class="Module">MonadError</a> <a id="1149" class="Symbol">⦃...⦄</a> <a id="1155" class="Keyword">public</a>
+  <a id="1164" class="Keyword">using</a> <a id="1170" class="Symbol">(</a><a id="1171" href="Class.MonadError.html#324" class="Field">error</a><a id="1176" class="Symbol">;</a> <a id="1178" href="Class.MonadError.html#344" class="Field">catch</a><a id="1183" class="Symbol">)</a>
 <a id="1185" class="Keyword">instance</a>
-  <a id="iTC"></a><a id="1196" href="PreludeMeta.html#1196" class="Function">iTC</a>  <a id="1201" class="Symbol">=</a> <a id="1203" href="Class.MonadTC.html#11654" class="Function">MonadTC-TC</a>
-  <a id="iTCE"></a><a id="1216" href="PreludeMeta.html#1216" class="Function">iTCE</a> <a id="1221" class="Symbol">=</a> <a id="1223" href="Class.MonadError.html#411" class="Function">MonadError-TC</a>
+  <a id="iTC"></a><a id="1196" href="PreludeMeta.html#1196" class="Function">iTC</a>  <a id="1201" class="Symbol">=</a> <a id="1203" href="Class.MonadTC.html#14080" class="Function">MonadTC-TC</a>
+  <a id="iTCE"></a><a id="1216" href="PreludeMeta.html#1216" class="Function">iTCE</a> <a id="1221" class="Symbol">=</a> <a id="1223" href="Class.MonadError.html#392" class="Function">MonadError-TC</a>
 
 <a id="1238" class="Comment">-- * MonadTC interface for TCI</a>
-<a id="1269" class="Keyword">open</a> <a id="1274" class="Keyword">import</a> <a id="1281" href="Meta.html" class="Module">Meta</a> <a id="1286" class="Keyword">public</a>
-  <a id="1295" class="Keyword">renaming</a> <a id="1304" class="Symbol">(</a><a id="1305" href="Reflection.TCI.html#616" class="Function">TC</a> <a id="1308" class="Symbol">to</a> <a id="1311" class="Function">TCI</a><a id="1314" class="Symbol">)</a>
-  <a id="1318" class="Keyword">hiding</a> <a id="1325" class="Symbol">(</a><a id="1326" href="Reflection.TCI.html#660" class="Function">Monad-TC</a><a id="1334" class="Symbol">;</a> <a id="1336" href="Reflection.TCI.html#845" class="Function">MonadError-TC</a><a id="1349" class="Symbol">;</a> <a id="1351" href="Reflection.AST.Meta.html#837" class="Primitive">toℕ</a><a id="1354" class="Symbol">)</a>
-<a id="1356" class="Keyword">open</a> <a id="1361" class="Keyword">import</a> <a id="1368" href="Reflection.Utils.TCI.html" class="Module">Reflection.Utils.TCI</a> <a id="1389" class="Keyword">public</a>
+<a id="1269" class="Keyword">open</a> <a id="1274" class="Keyword">import</a> <a id="1281" href="Meta.Init.html" class="Module">Meta.Init</a> <a id="1291" class="Keyword">public</a>
+  <a id="1300" class="Keyword">renaming</a> <a id="1309" class="Symbol">(</a><a id="1310" href="Reflection.TCI.html#554" class="Function">TC</a> <a id="1313" class="Symbol">to</a> <a id="1316" class="Function">TCI</a><a id="1319" class="Symbol">)</a>
+  <a id="1323" class="Keyword">hiding</a> <a id="1330" class="Symbol">(</a><a id="1331" href="Reflection.TCI.html#598" class="Function">Monad-TC</a><a id="1339" class="Symbol">;</a> <a id="1341" href="Reflection.TCI.html#783" class="Function">MonadError-TC</a><a id="1354" class="Symbol">;</a> <a id="1356" href="Reflection.AST.Meta.html#837" class="Primitive">toℕ</a><a id="1359" class="Symbol">)</a>
+<a id="1361" class="Keyword">open</a> <a id="1366" class="Keyword">import</a> <a id="1373" href="Reflection.Utils.TCI.html" class="Module">Reflection.Utils.TCI</a> <a id="1394" class="Keyword">public</a>
 </pre></body></html>

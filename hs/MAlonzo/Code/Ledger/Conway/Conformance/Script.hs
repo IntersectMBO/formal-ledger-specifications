@@ -154,7 +154,7 @@ d_DecEq'45'HSTimelock_352 v0 v1
                                                 MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22
                                                 (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                           (coe
-                                             MAlonzo.Code.Data.Nat.Properties.d__'8799'__2688
+                                             MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710
                                              (coe v9) (coe v5)))
                                        (coe
                                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
@@ -167,7 +167,7 @@ d_DecEq'45'HSTimelock_352 v0 v1
                                           (coe v0) (coe v1))
                                        v7 v3))
                                  (coe
-                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2298 erased
+                                    MAlonzo.Code.Function.Bundles.du_mk'8660'_2414 erased
                                     (coe
                                        (\ v10 ->
                                           coe

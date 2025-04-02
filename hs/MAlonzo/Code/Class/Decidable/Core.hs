@@ -324,5 +324,5 @@ du_dec'45''10003'_190 ::
   T__'8263'_10 -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_dec'45''10003'_190 v0 v1
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.du_dec'45'yes_282
+      MAlonzo.Code.Relation.Nullary.Decidable.du_dec'45'yes_294
       (coe du_'191'_'191'_42 (coe v0))

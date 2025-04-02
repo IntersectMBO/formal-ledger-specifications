@@ -228,7 +228,7 @@ du_comm'43'inv'691''8658'inv_176 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'43'inv'691''8658'inv_176
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'43'inv'691''8658'inv_682
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'43'inv'691''8658'inv_684
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm+invʳ⇒invˡ
@@ -266,7 +266,7 @@ du_comm'43'inv'737''8658'inv_180 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'43'inv'737''8658'inv_180
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'43'inv'737''8658'inv_680
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'43'inv'737''8658'inv_682
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm+invˡ⇒invʳ
@@ -424,7 +424,7 @@ du_comm'8743'distr'691''8658'distr_200 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'8743'distr'691''8658'distr_200
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'distr'691''8658'distr_528
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'distr'691''8658'distr_530
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm∧distrˡ⇒distr
@@ -466,7 +466,7 @@ du_comm'8743'distr'737''8658'distr_204 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'8743'distr'737''8658'distr_204
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'distr'737''8658'distr_524
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'distr'737''8658'distr_526
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm∧idʳ⇒id
@@ -490,7 +490,7 @@ du_comm'8743'id'691''8658'id_208 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'8743'id'691''8658'id_208
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'id'691''8658'id_356
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'id'691''8658'id_358
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm∧idʳ⇒idˡ
@@ -525,7 +525,7 @@ du_comm'8743'id'737''8658'id_212 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'8743'id'737''8658'id_212
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'id'737''8658'id_352
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'id'737''8658'id_354
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm∧idˡ⇒idʳ
@@ -562,7 +562,7 @@ du_comm'8743'inv'691''8658'inv_216 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'8743'inv'691''8658'inv_216
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'inv'691''8658'inv_436
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'inv'691''8658'inv_438
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm∧invʳ⇒invˡ
@@ -600,7 +600,7 @@ du_comm'8743'inv'737''8658'inv_220 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'8743'inv'737''8658'inv_220
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'inv'737''8658'inv_426
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'inv'737''8658'inv_428
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm∧invˡ⇒invʳ
@@ -636,7 +636,7 @@ du_comm'8743'ze'691''8658'ze_224 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'8743'ze'691''8658'ze_224
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'ze'691''8658'ze_376
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'ze'691''8658'ze_378
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm∧zeʳ⇒zeˡ
@@ -671,7 +671,7 @@ du_comm'8743'ze'737''8658'ze_228 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_comm'8743'ze'737''8658'ze_228
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'ze'737''8658'ze_372
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_comm'8743'ze'737''8658'ze_374
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.comm∧zeˡ⇒zeʳ
@@ -733,7 +733,7 @@ du_selfInverse'8658'bijective_242 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_selfInverse'8658'bijective_242
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_selfInverse'8658'bijective_296
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_selfInverse'8658'bijective_298
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.selfInverse⇒congruent
@@ -785,7 +785,7 @@ du_selfInverse'8658'inverse'7495'_248 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_selfInverse'8658'inverse'7495'_248
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_selfInverse'8658'inverse'7495'_282
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_selfInverse'8658'inverse'7495'_284
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.selfInverse⇒involutive
@@ -820,7 +820,7 @@ du_selfInverse'8658'surjective_252 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_selfInverse'8658'surjective_252
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_selfInverse'8658'surjective_284
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_selfInverse'8658'surjective_286
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Algebra.Consequences.Propositional.Base.Base.reflexive+selfInverse⇒involutive
@@ -1082,7 +1082,7 @@ du_wlog_392 ::
   AgdaAny -> AgdaAny -> AgdaAny
 du_wlog_392 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Algebra.Consequences.Setoid.du_wlog_650 (coe v0)
+      MAlonzo.Code.Algebra.Consequences.Setoid.du_wlog_652 (coe v0)
       erased (coe (\ v5 v6 v7 v8 v9 -> v9)) v1 v4
 -- Algebra.Consequences.Propositional.comm+assoc⇒middleFour
 d_comm'43'assoc'8658'middleFour_394 ::

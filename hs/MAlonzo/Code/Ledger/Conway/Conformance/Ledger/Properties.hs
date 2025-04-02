@@ -1221,7 +1221,7 @@ du_certΓ_2876 v0 v1 v2 v3
                                                          MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                         (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
-      (coe MAlonzo.Code.Ledger.Certs.C_CertEnv'46'constructor_16893)
+      (coe MAlonzo.Code.Ledger.Certs.C_CertEnv'46'constructor_16393)
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
          (coe
@@ -1710,7 +1710,7 @@ d_computeProof_2884 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
 d_computeProof_2884 v0 v1 v2 v3 v4
   = let v5
-          = MAlonzo.Code.Data.Bool.Properties.d__'8799'__3082
+          = MAlonzo.Code.Data.Bool.Properties.d__'8799'__3104
               (coe MAlonzo.Code.Ledger.Transaction.d_isValid_2666 (coe v4))
               (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10) in
     coe

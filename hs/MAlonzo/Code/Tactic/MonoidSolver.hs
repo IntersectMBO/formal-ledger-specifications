@@ -41,30 +41,30 @@ data T_Expr_8
 d_'91'_'8595''93'_128 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 -> T_Expr_8 -> AgdaAny
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 -> T_Expr_8 -> AgdaAny
 d_'91'_'8595''93'_128 ~v0 ~v1 v2 v3 = du_'91'_'8595''93'_128 v2 v3
 du_'91'_'8595''93'_128 ::
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 -> T_Expr_8 -> AgdaAny
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 -> T_Expr_8 -> AgdaAny
 du_'91'_'8595''93'_128 v0 v1
   = case coe v1 of
       C__'8729''8242'__14 v2 v3
         -> coe
-             MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+             MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
              (coe du_'91'_'8595''93'_128 (coe v0) (coe v2))
              (coe du_'91'_'8595''93'_128 (coe v0) (coe v3))
-      C_ε'8242'_16 -> coe MAlonzo.Code.Algebra.Bundles.d_ε_904 (coe v0)
+      C_ε'8242'_16 -> coe MAlonzo.Code.Algebra.Bundles.d_ε_908 (coe v0)
       C_'91'_'8593''93'_18 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.MonoidSolver._.[_⇓]′
 d_'91'_'8659''93''8242'_136 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 ->
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 ->
   T_Expr_8 -> AgdaAny -> AgdaAny
 d_'91'_'8659''93''8242'_136 ~v0 ~v1 v2 v3 v4
   = du_'91'_'8659''93''8242'_136 v2 v3 v4
 du_'91'_'8659''93''8242'_136 ::
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 ->
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 ->
   T_Expr_8 -> AgdaAny -> AgdaAny
 du_'91'_'8659''93''8242'_136 v0 v1 v2
   = case coe v1 of
@@ -74,29 +74,29 @@ du_'91'_'8659''93''8242'_136 v0 v1 v2
              (coe du_'91'_'8659''93''8242'_136 (coe v0) (coe v4) (coe v2))
       C_ε'8242'_16 -> coe v2
       C_'91'_'8593''93'_18 v3
-        -> coe MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0 v3 v2
+        -> coe MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0 v3 v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.MonoidSolver._.[_⇓]
 d_'91'_'8659''93'_150 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 -> T_Expr_8 -> AgdaAny
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 -> T_Expr_8 -> AgdaAny
 d_'91'_'8659''93'_150 ~v0 ~v1 v2 v3 = du_'91'_'8659''93'_150 v2 v3
 du_'91'_'8659''93'_150 ::
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 -> T_Expr_8 -> AgdaAny
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 -> T_Expr_8 -> AgdaAny
 du_'91'_'8659''93'_150 v0 v1
   = coe
       du_'91'_'8659''93''8242'_136 (coe v0) (coe v1)
-      (coe MAlonzo.Code.Algebra.Bundles.d_ε_904 (coe v0))
+      (coe MAlonzo.Code.Algebra.Bundles.d_ε_908 (coe v0))
 -- Tactic.MonoidSolver._.homo′
 d_homo'8242'_158 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 ->
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 ->
   T_Expr_8 -> AgdaAny -> AgdaAny
 d_homo'8242'_158 ~v0 ~v1 v2 v3 v4 = du_homo'8242'_158 v2 v3 v4
 du_homo'8242'_158 ::
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 ->
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 ->
   T_Expr_8 -> AgdaAny -> AgdaAny
 du_homo'8242'_158 v0 v1 v2
   = case coe v1 of
@@ -107,7 +107,7 @@ du_homo'8242'_158 v0 v1 v2
                 coe
                   MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_start_36 v7)
              (coe
-                MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                 (coe du_'91'_'8659''93'_150 (coe v0) (coe v1)) v2)
              (coe
                 du_'91'_'8659''93''8242'_136 (coe v0) (coe v3)
@@ -120,7 +120,7 @@ du_homo'8242'_158 v0 v1 v2
                       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
                       (coe
                          MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                         (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                         (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                           coe
                             (let v6
                                    = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696 (coe v5) in
@@ -131,7 +131,7 @@ du_homo'8242'_158 v0 v1 v2
                 (MAlonzo.Code.Relation.Binary.Structures.d_sym_36
                    (coe
                       MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                      (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                      (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                        coe
                          (let v6
                                 = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696 (coe v5) in
@@ -140,15 +140,15 @@ du_homo'8242'_158 v0 v1 v2
                                MAlonzo.Code.Algebra.Structures.du_setoid_200
                                (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v6)))))))
                 (coe
-                   MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                   MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                    (coe
                       du_'91'_'8659''93''8242'_136 (coe v0) (coe v3)
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v4)))
                    v2)
                 (coe
-                   MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                   MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                    (coe
-                      MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                      MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v4)))
                    v2)
@@ -163,7 +163,7 @@ du_homo'8242'_158 v0 v1 v2
                          MAlonzo.Code.Relation.Binary.Structures.d_trans_38
                          (coe
                             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                            (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                            (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                              coe
                                (let v6
                                       = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
@@ -175,17 +175,17 @@ du_homo'8242'_158 v0 v1 v2
                                         MAlonzo.Code.Algebra.Structures.d_isMagma_480
                                         (coe v6))))))))
                    (coe
-                      MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                      MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                       (coe
-                         MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                         MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                          (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                          (coe du_'91'_'8659''93'_150 (coe v0) (coe v4)))
                       v2)
                    (coe
-                      MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                      MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                       (coe
-                         MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                         MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                          (coe du_'91'_'8659''93'_150 (coe v0) (coe v4)) v2))
                    (coe
                       du_'91'_'8659''93''8242'_136 (coe v0) (coe v3)
@@ -198,7 +198,7 @@ du_homo'8242'_158 v0 v1 v2
                             MAlonzo.Code.Relation.Binary.Structures.d_trans_38
                             (coe
                                MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                               (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                               (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                                 coe
                                   (let v6
                                          = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
@@ -210,13 +210,13 @@ du_homo'8242'_158 v0 v1 v2
                                            MAlonzo.Code.Algebra.Structures.d_isMagma_480
                                            (coe v6))))))))
                       (coe
-                         MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                         MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                          (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                          (coe
-                            MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                            MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                             (coe du_'91'_'8659''93'_150 (coe v0) (coe v4)) v2))
                       (coe
-                         MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                         MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                          (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                          (coe du_'91'_'8659''93''8242'_136 (coe v0) (coe v4) (coe v2)))
                       (coe
@@ -230,7 +230,7 @@ du_homo'8242'_158 v0 v1 v2
                                MAlonzo.Code.Relation.Binary.Structures.d_trans_38
                                (coe
                                   MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                                  (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                                  (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                                    coe
                                      (let v6
                                             = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
@@ -242,7 +242,7 @@ du_homo'8242'_158 v0 v1 v2
                                               MAlonzo.Code.Algebra.Structures.d_isMagma_480
                                               (coe v6))))))))
                          (coe
-                            MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                            MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                             (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                             (coe du_'91'_'8659''93''8242'_136 (coe v0) (coe v4) (coe v2)))
                          (coe
@@ -256,7 +256,7 @@ du_homo'8242'_158 v0 v1 v2
                                     (coe
                                        MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
                                        (let v5
-                                              = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906
+                                              = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910
                                                   (coe v0) in
                                         coe
                                           (let v6
@@ -280,7 +280,7 @@ du_homo'8242'_158 v0 v1 v2
                          (coe
                             du_homo'8242'_158 (coe v0) (coe v3)
                             (coe du_'91'_'8659''93''8242'_136 (coe v0) (coe v4) (coe v2))))
-                      (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                      (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                        coe
                          (let v6
                                 = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696 (coe v5) in
@@ -290,17 +290,17 @@ du_homo'8242'_158 v0 v1 v2
                                (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v6))
                                (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                                (coe
-                                  MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                                  MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                                   (coe du_'91'_'8659''93'_150 (coe v0) (coe v4)) v2)
                                (coe du_'91'_'8659''93''8242'_136 (coe v0) (coe v4) (coe v2))
                                (coe du_homo'8242'_158 (coe v0) (coe v4) (coe v2))))))
                    (coe
                       MAlonzo.Code.Algebra.Structures.d_assoc_482
                       (MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
-                         (coe MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0)))
+                         (coe MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0)))
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v4)) v2))
-                (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                (let v5 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                  coe
                    (let v6
                           = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696 (coe v5) in
@@ -310,7 +310,7 @@ du_homo'8242'_158 v0 v1 v2
                          (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v6))
                          (coe v2)
                          (coe
-                            MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                            MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                             (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
                             (coe du_'91'_'8659''93'_150 (coe v0) (coe v4)))
                          (coe
@@ -322,9 +322,9 @@ du_homo'8242'_158 v0 v1 v2
       C_ε'8242'_16
         -> coe
              MAlonzo.Code.Algebra.Structures.du_identity'737'_726
-             (MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0)) v2
+             (MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0)) v2
       C_'91'_'8593''93'_18 v3
-        -> let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+        -> let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
            coe
              (let v5
                     = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696 (coe v4) in
@@ -334,21 +334,21 @@ du_homo'8242'_158 v0 v1 v2
                    (coe MAlonzo.Code.Algebra.Structures.d_isMagma_480 (coe v5))
                    (coe v2)
                    (coe
-                      MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0 v3
-                      (MAlonzo.Code.Algebra.Bundles.d_ε_904 (coe v0)))
+                      MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0 v3
+                      (MAlonzo.Code.Algebra.Bundles.d_ε_908 (coe v0)))
                    (coe v3)
                    (coe
                       MAlonzo.Code.Algebra.Structures.du_identity'691'_728
-                      (MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0)) v3)))
+                      (MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0)) v3)))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.MonoidSolver._.homo
 d_homo_174 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 -> T_Expr_8 -> AgdaAny
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 -> T_Expr_8 -> AgdaAny
 d_homo_174 ~v0 ~v1 v2 v3 = du_homo_174 v2 v3
 du_homo_174 ::
-  MAlonzo.Code.Algebra.Bundles.T_Monoid_882 -> T_Expr_8 -> AgdaAny
+  MAlonzo.Code.Algebra.Bundles.T_Monoid_886 -> T_Expr_8 -> AgdaAny
 du_homo_174 v0 v1
   = case coe v1 of
       C__'8729''8242'__14 v2 v3
@@ -359,7 +359,7 @@ du_homo_174 v0 v1
                   MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_start_36 v6)
              (coe du_'91'_'8659''93'_150 (coe v0) (coe v1))
              (coe
-                MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                 (coe du_'91'_'8595''93'_128 (coe v0) (coe v2))
                 (coe du_'91'_'8595''93'_128 (coe v0) (coe v3)))
              (coe
@@ -370,7 +370,7 @@ du_homo_174 v0 v1
                       MAlonzo.Code.Relation.Binary.Structures.d_trans_38
                       (coe
                          MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                         (let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                         (let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                           coe
                             (let v5
                                    = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696 (coe v4) in
@@ -381,7 +381,7 @@ du_homo_174 v0 v1
                 (MAlonzo.Code.Relation.Binary.Structures.d_sym_36
                    (coe
                       MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                      (let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                      (let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                        coe
                          (let v5
                                 = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696 (coe v4) in
@@ -393,11 +393,11 @@ du_homo_174 v0 v1
                    du_'91'_'8659''93''8242'_136 (coe v0) (coe v2)
                    (coe du_'91'_'8659''93'_150 (coe v0) (coe v3)))
                 (coe
-                   MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                   MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                    (coe du_'91'_'8659''93'_150 (coe v0) (coe v2))
                    (coe du_'91'_'8659''93'_150 (coe v0) (coe v3)))
                 (coe
-                   MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                   MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                    (coe du_'91'_'8595''93'_128 (coe v0) (coe v2))
                    (coe du_'91'_'8595''93'_128 (coe v0) (coe v3)))
                 (coe
@@ -408,7 +408,7 @@ du_homo_174 v0 v1
                          MAlonzo.Code.Relation.Binary.Structures.d_trans_38
                          (coe
                             MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                            (let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                            (let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                              coe
                                (let v5
                                       = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
@@ -420,22 +420,22 @@ du_homo_174 v0 v1
                                         MAlonzo.Code.Algebra.Structures.d_isMagma_480
                                         (coe v5))))))))
                    (coe
-                      MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                      MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v2))
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v3)))
                    (coe
-                      MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                      MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                       (coe du_'91'_'8595''93'_128 (coe v0) (coe v2))
                       (coe du_'91'_'8595''93'_128 (coe v0) (coe v3)))
                    (coe
-                      MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                      MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                       (coe du_'91'_'8595''93'_128 (coe v0) (coe v2))
                       (coe du_'91'_'8595''93'_128 (coe v0) (coe v3)))
                    (let v4
                           = MAlonzo.Code.Relation.Binary.Structures.d_refl_34
                               (coe
                                  MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                                 (let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0) in
+                                 (let v4 = MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0) in
                                   coe
                                     (let v5
                                            = MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
@@ -453,7 +453,7 @@ du_homo_174 v0 v1
                             MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_stop_54
                             (coe v4))
                          (coe
-                            MAlonzo.Code.Algebra.Bundles.d__'8729'__902 v0
+                            MAlonzo.Code.Algebra.Bundles.d__'8729'__906 v0
                             (coe du_'91'_'8595''93'_128 (coe v0) (coe v2))
                             (coe du_'91'_'8595''93'_128 (coe v0) (coe v3)))))
                    (coe
@@ -461,7 +461,7 @@ du_homo_174 v0 v1
                       (MAlonzo.Code.Algebra.Structures.d_isMagma_480
                          (coe
                             MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
-                            (coe MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0))))
+                            (coe MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0))))
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v2))
                       (coe du_'91'_'8595''93'_128 (coe v0) (coe v2))
                       (coe du_'91'_'8659''93'_150 (coe v0) (coe v3))
@@ -479,12 +479,12 @@ du_homo_174 v0 v1
                    MAlonzo.Code.Algebra.Structures.d_isMagma_480
                    (coe
                       MAlonzo.Code.Algebra.Structures.d_isSemigroup_696
-                      (coe MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0)))))
+                      (coe MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0)))))
              (coe du_'91'_'8659''93'_150 (coe v0) (coe v1))
       C_'91'_'8593''93'_18 v2
         -> coe
              MAlonzo.Code.Algebra.Structures.du_identity'691'_728
-             (MAlonzo.Code.Algebra.Bundles.d_isMonoid_906 (coe v0)) v2
+             (MAlonzo.Code.Algebra.Bundles.d_isMonoid_910 (coe v0)) v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.MonoidSolver.getArgs
 d_getArgs_182 ::
@@ -617,7 +617,7 @@ d_findMonoidNames_222 v0
             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
             (coe
                (MAlonzo.RTE.QName
-                  (902 :: Integer) (5645577459263225835 :: Integer)
+                  (906 :: Integer) (5645577459263225835 :: Integer)
                   "Algebra.Bundles.Monoid._\8729_"
                   (MAlonzo.RTE.Fixity
                      MAlonzo.RTE.LeftAssoc (MAlonzo.RTE.Related (7.0 :: Double)))))
@@ -668,7 +668,7 @@ d_findMonoidNames_222 v0
                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                  (coe
                     (MAlonzo.RTE.QName
-                       (904 :: Integer) (5645577459263225835 :: Integer)
+                       (908 :: Integer) (5645577459263225835 :: Integer)
                        "Algebra.Bundles.Monoid.\949"
                        (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                  (let v2 = 2 :: Integer in
@@ -719,7 +719,7 @@ d_findMonoidNames_222 v0
                       d_buildMatcher_210
                       (coe
                          (MAlonzo.RTE.QName
-                            (902 :: Integer) (5645577459263225835 :: Integer)
+                            (906 :: Integer) (5645577459263225835 :: Integer)
                             "Algebra.Bundles.Monoid._\8729_"
                             (MAlonzo.RTE.Fixity
                                MAlonzo.RTE.LeftAssoc (MAlonzo.RTE.Related (7.0 :: Double)))))
@@ -728,7 +728,7 @@ d_findMonoidNames_222 v0
                       d_buildMatcher_210
                       (coe
                          (MAlonzo.RTE.QName
-                            (904 :: Integer) (5645577459263225835 :: Integer)
+                            (908 :: Integer) (5645577459263225835 :: Integer)
                             "Algebra.Bundles.Monoid.\949"
                             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                       (coe MAlonzo.Code.Reflection.AST.Term.d_getName_60 (coe v2))))))
@@ -943,7 +943,7 @@ d_constructSoln_274 v0 v1 v2 v3
       MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
       (coe
          (MAlonzo.RTE.QName
-            (936 :: Integer) (5645577459263225835 :: Integer)
+            (940 :: Integer) (5645577459263225835 :: Integer)
             "Algebra.Bundles.Monoid._.trans"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (coe MAlonzo.Code.Agda.Builtin.Reflection.C_def_184)
@@ -977,7 +977,7 @@ d_constructSoln_274 v0 v1 v2 v3
                              MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                              (coe
                                 (MAlonzo.RTE.QName
-                                   (934 :: Integer) (5645577459263225835 :: Integer)
+                                   (938 :: Integer) (5645577459263225835 :: Integer)
                                    "Algebra.Bundles.Monoid._.sym"
                                    (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                              (coe MAlonzo.Code.Agda.Builtin.Reflection.C_def_184)

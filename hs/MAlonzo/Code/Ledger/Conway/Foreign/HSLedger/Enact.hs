@@ -20,7 +20,12 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.String
+import qualified MAlonzo.Code.Class.To
+import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
+import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Product.Base
+import qualified MAlonzo.Code.Data.Rational.Base
+import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Foreign.Convertible
 import qualified MAlonzo.Code.Foreign.Haskell.Coerce
 import qualified MAlonzo.Code.Foreign.Haskell.Pair
@@ -36,7 +41,9 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
 import qualified MAlonzo.Code.Ledger.Crypto
 import qualified MAlonzo.Code.Ledger.Enact
+import qualified MAlonzo.Code.Ledger.GovernanceActions
 import qualified MAlonzo.Code.Ledger.GovernanceActions.Properties
+import qualified MAlonzo.Code.Ledger.PParams
 import qualified MAlonzo.Code.Ledger.Transaction
 import qualified MAlonzo.Code.Ledger.Types.Epoch
 
@@ -45,10 +52,32 @@ data EnactState = MkEnactState {esCc :: ((Maybe ((MAlonzo.Code.Ledger.Conway.For
   deriving (Show, Eq, Generic)
 data EnactEnv = MkEnactEnv {eeGid :: (Integer, Integer), eeTreasury :: Integer, eeEpoch :: Integer}
   deriving (Show, Eq, Generic)
+-- Ledger.Conway.Foreign.HSLedger.Enact._._⊢_⇀⦇_,ENACT⦈_
+d__'8866'_'8640''10631'_'44'ENACT'10632'__12 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactEnv
 d_EnactEnv_28 = ()
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactState
 d_EnactState_30 = ()
+-- Ledger.Conway.Foreign.HSLedger.Enact._.To-EnactEnv
+d_To'45'EnactEnv_32 :: MAlonzo.Code.Class.To.T_To_8
+d_To'45'EnactEnv_32
+  = coe MAlonzo.Code.Ledger.Enact.du_To'45'EnactEnv_872
+-- Ledger.Conway.Foreign.HSLedger.Enact._.ccCreds
+d_ccCreds_34 ::
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  [MAlonzo.Code.Ledger.Address.T_Credential_16]
+d_ccCreds_34 = coe MAlonzo.Code.Ledger.Enact.du_ccCreds_874
+-- Ledger.Conway.Foreign.HSLedger.Enact._.getHash
+d_getHash_36 ::
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovActionType_696 ->
+  AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_getHash_36 = coe MAlonzo.Code.Ledger.Enact.du_getHash_880
+-- Ledger.Conway.Foreign.HSLedger.Enact._.getHashES
+d_getHashES_38 ::
+  MAlonzo.Code.Ledger.Enact.T_EnactState_850 ->
+  MAlonzo.Code.Ledger.GovernanceActions.T_GovActionType_696 ->
+  Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_getHashES_38 = coe MAlonzo.Code.Ledger.Enact.du_getHashES_892
 -- Ledger.Conway.Foreign.HSLedger.Enact._.EnactEnv.epoch
 d_epoch_58 :: MAlonzo.Code.Ledger.Enact.T_EnactEnv_836 -> Integer
 d_epoch_58 v0 = coe MAlonzo.Code.Ledger.Enact.d_epoch_848 (coe v0)
@@ -90,6 +119,18 @@ d_withdrawals_74 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_withdrawals_74 v0
   = coe MAlonzo.Code.Ledger.Enact.d_withdrawals_870 (coe v0)
+-- Ledger.Conway.Foreign.HSLedger.Enact._.Computational-ENACT
+d_Computational'45'ENACT_78 ::
+  MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
+d_Computational'45'ENACT_78
+  = coe
+      MAlonzo.Code.Ledger.GovernanceActions.Properties.d_Computational'45'ENACT_922
+      (coe
+         MAlonzo.Code.Ledger.Transaction.d_govStructure_2342
+         (coe
+            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_658
+            (coe
+               MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14)))
 -- Ledger.Conway.Foreign.HSLedger.Enact.HsTy-EnactState
 d_HsTy'45'EnactState_80 ::
   MAlonzo.Code.Foreign.HaskellTypes.T_HasHsType_14

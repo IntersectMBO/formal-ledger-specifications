@@ -23,7 +23,7 @@ import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Class.Functor.Core
 import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Data.List.Base
-import qualified MAlonzo.Code.Reflection.Utils
+import qualified MAlonzo.Code.Reflection.Utils.Core
 
 -- Tactic.ByEq.by-eq
 d_by'45'eq_4 ::
@@ -50,7 +50,7 @@ d_by'45'eq_4 v0
                        MAlonzo.Code.Class.Functor.Core.du__'60''38''62'__30
                        (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'List_20)
                        (coe ()) (coe ())
-                       (coe MAlonzo.Code.Reflection.Utils.d_argTys_192 (coe v1))
+                       (coe MAlonzo.Code.Reflection.Utils.Core.d_argTys_68 (coe v1))
                        (coe
                           MAlonzo.Code.Class.Functor.Core.du_fmap_22
                           MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Arg_94 () erased

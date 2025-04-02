@@ -44,7 +44,7 @@ du_negInduction_14 v0 v1
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v2 v3
         -> let v4
                  = coe
-                     MAlonzo.Code.Data.Nat.Properties.du_anyUpTo'63'_6424
+                     MAlonzo.Code.Data.Nat.Properties.du_anyUpTo'63'_6458
                      (coe
                         (\ v4 ->
                            coe

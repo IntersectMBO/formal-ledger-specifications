@@ -70,7 +70,7 @@ d_antisym_62 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_antisym_62 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_antisym_184
+      MAlonzo.Code.Relation.Binary.Structures.d_antisym_246
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe d_isProtoMetric_58 (coe v0)))
@@ -91,14 +91,14 @@ d_isEquivalence_66 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe d_isProtoMetric_58 (coe v0))))
 -- Function.Metric.Bundles.ProtoMetric._.isPartialOrder
 d_isPartialOrder_68 ::
   T_ProtoMetric_16 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
 d_isPartialOrder_68 v0
   = coe
       MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
@@ -109,7 +109,7 @@ d_isPreorder_70 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
 d_isPreorder_70 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe d_isProtoMetric_58 (coe v0)))
@@ -140,7 +140,7 @@ du_refl_74 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_refl_98
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                (coe v2))))
 -- Function.Metric.Bundles.ProtoMetric._.reflexive
 d_reflexive_76 ::
@@ -149,7 +149,7 @@ d_reflexive_76 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_reflexive_82
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe d_isProtoMetric_58 (coe v0))))
@@ -161,7 +161,7 @@ d_trans_78 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_84
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe d_isProtoMetric_58 (coe v0))))
@@ -195,7 +195,7 @@ du_'8764''45'resp'45''8776'_82 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'45''8776'_118
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                (coe v2))))
 -- Function.Metric.Bundles.ProtoMetric._.∼-respʳ-≈
 d_'8764''45'resp'691''45''8776'_84 ::
@@ -221,7 +221,7 @@ du_'8764''45'resp'691''45''8776'_84 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'691''45''8776'_116
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                (coe v2))))
 -- Function.Metric.Bundles.ProtoMetric._.∼-respˡ-≈
 d_'8764''45'resp'737''45''8776'_86 ::
@@ -247,7 +247,7 @@ du_'8764''45'resp'737''45''8776'_86 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'737''45''8776'_114
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                (coe v2))))
 -- Function.Metric.Bundles.ProtoMetric._.≲-resp-≈
 d_'8818''45'resp'45''8776'_88 ::
@@ -271,7 +271,7 @@ du_'8818''45'resp'45''8776'_88 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'45''8776'_112
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                (coe v2))))
 -- Function.Metric.Bundles.ProtoMetric._.≲-respʳ-≈
 d_'8818''45'resp'691''45''8776'_90 ::
@@ -297,7 +297,7 @@ du_'8818''45'resp'691''45''8776'_90 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'691''45''8776'_106
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                (coe v2))))
 -- Function.Metric.Bundles.ProtoMetric._.≲-respˡ-≈
 d_'8818''45'resp'737''45''8776'_92 ::
@@ -323,7 +323,7 @@ du_'8818''45'resp'737''45''8776'_92 v0
          (coe
             MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'737''45''8776'_100
             (coe
-               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+               MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                (coe v2))))
 -- Function.Metric.Bundles.ProtoMetric._.EqC.isPartialEquivalence
 d_isPartialEquivalence_96 ::
@@ -423,7 +423,7 @@ du_isPartialEquivalence_108 v0
                  (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                     (coe v2) in
           coe
             (coe
@@ -439,7 +439,7 @@ d_refl_110 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe d_isProtoMetric_58 (coe v0)))))
@@ -468,7 +468,7 @@ du_reflexive_112 v0
                  (coe v1) in
        coe
          (let v3
-                = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                     (coe v2) in
           coe
             (\ v4 v5 v6 ->
@@ -487,7 +487,7 @@ d_sym_114 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe d_isProtoMetric_58 (coe v0)))))
@@ -501,7 +501,7 @@ d_trans_116 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe d_isProtoMetric_58 (coe v0)))))
@@ -552,7 +552,7 @@ d_antisym_174 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_antisym_174 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_antisym_184
+      MAlonzo.Code.Relation.Binary.Structures.d_antisym_246
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe
@@ -577,7 +577,7 @@ d_isEquivalence_178 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -586,7 +586,7 @@ d_isEquivalence_178 v0
 -- Function.Metric.Bundles.PreMetric._.isPartialOrder
 d_isPartialOrder_180 ::
   T_PreMetric_128 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
 d_isPartialOrder_180 v0
   = coe
       MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
@@ -599,7 +599,7 @@ d_isPreorder_182 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
 d_isPreorder_182 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe
@@ -646,7 +646,7 @@ du_refl_188 v0
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_refl_98
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                   (coe v3)))))
 -- Function.Metric.Bundles.PreMetric._.reflexive
 d_reflexive_190 ::
@@ -655,7 +655,7 @@ d_reflexive_190 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_reflexive_82
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -669,7 +669,7 @@ d_trans_192 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_84
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -718,7 +718,7 @@ du_'8764''45'resp'45''8776'_198 v0
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'45''8776'_118
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                   (coe v3)))))
 -- Function.Metric.Bundles.PreMetric._.∼-respʳ-≈
 d_'8764''45'resp'691''45''8776'_200 ::
@@ -748,7 +748,7 @@ du_'8764''45'resp'691''45''8776'_200 v0
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'691''45''8776'_116
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                   (coe v3)))))
 -- Function.Metric.Bundles.PreMetric._.∼-respˡ-≈
 d_'8764''45'resp'737''45''8776'_202 ::
@@ -778,7 +778,7 @@ du_'8764''45'resp'737''45''8776'_202 v0
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'737''45''8776'_114
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                   (coe v3)))))
 -- Function.Metric.Bundles.PreMetric._.≲-resp-≈
 d_'8818''45'resp'45''8776'_204 ::
@@ -806,7 +806,7 @@ du_'8818''45'resp'45''8776'_204 v0
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'45''8776'_112
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                   (coe v3)))))
 -- Function.Metric.Bundles.PreMetric._.≲-respʳ-≈
 d_'8818''45'resp'691''45''8776'_206 ::
@@ -836,7 +836,7 @@ du_'8818''45'resp'691''45''8776'_206 v0
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'691''45''8776'_106
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                   (coe v3)))))
 -- Function.Metric.Bundles.PreMetric._.≲-respˡ-≈
 d_'8818''45'resp'737''45''8776'_208 ::
@@ -866,7 +866,7 @@ du_'8818''45'resp'737''45''8776'_208 v0
             (coe
                MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'737''45''8776'_100
                (coe
-                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                  MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                   (coe v3)))))
 -- Function.Metric.Bundles.PreMetric._.EqC.isPartialEquivalence
 d_isPartialEquivalence_212 ::
@@ -984,7 +984,7 @@ du_isPartialEquivalence_224 v0
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                   = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                        (coe v3) in
              coe
                (coe
@@ -1000,7 +1000,7 @@ d_refl_226 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -1035,7 +1035,7 @@ du_reflexive_228 v0
                     (coe v2) in
           coe
             (let v4
-                   = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                   = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                        (coe v3) in
              coe
                (\ v5 v6 v7 ->
@@ -1054,7 +1054,7 @@ d_sym_230 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -1070,7 +1070,7 @@ d_trans_232 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -1147,7 +1147,7 @@ d_antisym_294 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_antisym_294 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_antisym_184
+      MAlonzo.Code.Relation.Binary.Structures.d_antisym_246
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe
@@ -1176,7 +1176,7 @@ d_isEquivalence_298 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -1187,7 +1187,7 @@ d_isEquivalence_298 v0
 -- Function.Metric.Bundles.QuasiSemiMetric._.isPartialOrder
 d_isPartialOrder_300 ::
   T_QuasiSemiMetric_246 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
 d_isPartialOrder_300 v0
   = coe
       MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
@@ -1210,7 +1210,7 @@ d_isPreorder_304 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
 d_isPreorder_304 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe
@@ -1267,7 +1267,7 @@ du_refl_310 v0
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.du_refl_98
                   (coe
-                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                      (coe v4))))))
 -- Function.Metric.Bundles.QuasiSemiMetric._.reflexive
 d_reflexive_312 ::
@@ -1276,7 +1276,7 @@ d_reflexive_312 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_reflexive_82
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -1292,7 +1292,7 @@ d_trans_314 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_84
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -1351,7 +1351,7 @@ du_'8764''45'resp'45''8776'_320 v0
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'45''8776'_118
                   (coe
-                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                      (coe v4))))))
 -- Function.Metric.Bundles.QuasiSemiMetric._.∼-respʳ-≈
 d_'8764''45'resp'691''45''8776'_322 ::
@@ -1385,7 +1385,7 @@ du_'8764''45'resp'691''45''8776'_322 v0
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'691''45''8776'_116
                   (coe
-                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                      (coe v4))))))
 -- Function.Metric.Bundles.QuasiSemiMetric._.∼-respˡ-≈
 d_'8764''45'resp'737''45''8776'_324 ::
@@ -1419,7 +1419,7 @@ du_'8764''45'resp'737''45''8776'_324 v0
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'737''45''8776'_114
                   (coe
-                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                      (coe v4))))))
 -- Function.Metric.Bundles.QuasiSemiMetric._.≲-resp-≈
 d_'8818''45'resp'45''8776'_326 ::
@@ -1451,7 +1451,7 @@ du_'8818''45'resp'45''8776'_326 v0
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'45''8776'_112
                   (coe
-                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                      (coe v4))))))
 -- Function.Metric.Bundles.QuasiSemiMetric._.≲-respʳ-≈
 d_'8818''45'resp'691''45''8776'_328 ::
@@ -1485,7 +1485,7 @@ du_'8818''45'resp'691''45''8776'_328 v0
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'691''45''8776'_106
                   (coe
-                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                      (coe v4))))))
 -- Function.Metric.Bundles.QuasiSemiMetric._.≲-respˡ-≈
 d_'8818''45'resp'737''45''8776'_330 ::
@@ -1519,7 +1519,7 @@ du_'8818''45'resp'737''45''8776'_330 v0
                (coe
                   MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'737''45''8776'_100
                   (coe
-                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                     MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                      (coe v4))))))
 -- Function.Metric.Bundles.QuasiSemiMetric._.EqC.isPartialEquivalence
 d_isPartialEquivalence_334 ::
@@ -1655,7 +1655,7 @@ du_isPartialEquivalence_346 v0
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                      = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                           (coe v4) in
                 coe
                   (coe
@@ -1671,7 +1671,7 @@ d_refl_348 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -1712,7 +1712,7 @@ du_reflexive_350 v0
                        (coe v3) in
              coe
                (let v5
-                      = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                      = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                           (coe v4) in
                 coe
                   (\ v6 v7 v8 ->
@@ -1731,7 +1731,7 @@ d_sym_352 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -1749,7 +1749,7 @@ d_trans_354 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -1842,7 +1842,7 @@ d_antisym_420 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_antisym_420 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_antisym_184
+      MAlonzo.Code.Relation.Binary.Structures.d_antisym_246
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe
@@ -1875,7 +1875,7 @@ d_isEquivalence_424 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -1888,7 +1888,7 @@ d_isEquivalence_424 v0
 -- Function.Metric.Bundles.SemiMetric._.isPartialOrder
 d_isPartialOrder_426 ::
   T_SemiMetric_372 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
 d_isPartialOrder_426 v0
   = coe
       MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
@@ -1915,7 +1915,7 @@ d_isPreorder_430 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
 d_isPreorder_430 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe
@@ -1990,7 +1990,7 @@ du_refl_438 v0
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_refl_98
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                         (coe v5)))))))
 -- Function.Metric.Bundles.SemiMetric._.reflexive
 d_reflexive_440 ::
@@ -1999,7 +1999,7 @@ d_reflexive_440 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_reflexive_82
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -2023,7 +2023,7 @@ d_trans_444 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_84
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -2092,7 +2092,7 @@ du_'8764''45'resp'45''8776'_450 v0
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'45''8776'_118
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                         (coe v5)))))))
 -- Function.Metric.Bundles.SemiMetric._.∼-respʳ-≈
 d_'8764''45'resp'691''45''8776'_452 ::
@@ -2130,7 +2130,7 @@ du_'8764''45'resp'691''45''8776'_452 v0
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'691''45''8776'_116
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                         (coe v5)))))))
 -- Function.Metric.Bundles.SemiMetric._.∼-respˡ-≈
 d_'8764''45'resp'737''45''8776'_454 ::
@@ -2168,7 +2168,7 @@ du_'8764''45'resp'737''45''8776'_454 v0
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'737''45''8776'_114
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                         (coe v5)))))))
 -- Function.Metric.Bundles.SemiMetric._.≲-resp-≈
 d_'8818''45'resp'45''8776'_456 ::
@@ -2204,7 +2204,7 @@ du_'8818''45'resp'45''8776'_456 v0
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'45''8776'_112
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                         (coe v5)))))))
 -- Function.Metric.Bundles.SemiMetric._.≲-respʳ-≈
 d_'8818''45'resp'691''45''8776'_458 ::
@@ -2242,7 +2242,7 @@ du_'8818''45'resp'691''45''8776'_458 v0
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'691''45''8776'_106
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                         (coe v5)))))))
 -- Function.Metric.Bundles.SemiMetric._.≲-respˡ-≈
 d_'8818''45'resp'737''45''8776'_460 ::
@@ -2280,7 +2280,7 @@ du_'8818''45'resp'737''45''8776'_460 v0
                   (coe
                      MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'737''45''8776'_100
                      (coe
-                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                        MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                         (coe v5)))))))
 -- Function.Metric.Bundles.SemiMetric._.EqC.isPartialEquivalence
 d_isPartialEquivalence_464 ::
@@ -2434,7 +2434,7 @@ du_isPartialEquivalence_476 v0
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                         = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                              (coe v5) in
                    coe
                      (coe
@@ -2450,7 +2450,7 @@ d_refl_478 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -2497,7 +2497,7 @@ du_reflexive_480 v0
                           (coe v4) in
                 coe
                   (let v6
-                         = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                         = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                              (coe v5) in
                    coe
                      (\ v7 v8 v9 ->
@@ -2516,7 +2516,7 @@ d_sym_482 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -2536,7 +2536,7 @@ d_trans_484 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -2655,7 +2655,7 @@ d_antisym_556 ::
   AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny
 d_antisym_556 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_antisym_184
+      MAlonzo.Code.Relation.Binary.Structures.d_antisym_246
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe
@@ -2692,7 +2692,7 @@ d_isEquivalence_560 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -2707,7 +2707,7 @@ d_isEquivalence_560 v0
 -- Function.Metric.Bundles.GeneralMetric._.isPartialOrder
 d_isPartialOrder_562 ::
   T_GeneralMetric_504 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_174
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
 d_isPartialOrder_562 v0
   = coe
       MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
@@ -2738,7 +2738,7 @@ d_isPreorder_566 ::
   MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
 d_isPreorder_566 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+      MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
       (coe
          MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
          (coe
@@ -2833,7 +2833,7 @@ du_refl_576 v0
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.du_refl_98
                         (coe
-                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                            (coe v6))))))))
 -- Function.Metric.Bundles.GeneralMetric._.reflexive
 d_reflexive_578 ::
@@ -2842,7 +2842,7 @@ d_reflexive_578 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_reflexive_82
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -2870,7 +2870,7 @@ d_trans_582 v0
   = coe
       MAlonzo.Code.Relation.Binary.Structures.d_trans_84
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+         MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
          (coe
             MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
             (coe
@@ -2956,7 +2956,7 @@ du_'8764''45'resp'45''8776'_590 v0
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'45''8776'_118
                         (coe
-                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                            (coe v6))))))))
 -- Function.Metric.Bundles.GeneralMetric._.∼-respʳ-≈
 d_'8764''45'resp'691''45''8776'_592 ::
@@ -2998,7 +2998,7 @@ du_'8764''45'resp'691''45''8776'_592 v0
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'691''45''8776'_116
                         (coe
-                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                            (coe v6))))))))
 -- Function.Metric.Bundles.GeneralMetric._.∼-respˡ-≈
 d_'8764''45'resp'737''45''8776'_594 ::
@@ -3040,7 +3040,7 @@ du_'8764''45'resp'737''45''8776'_594 v0
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.du_'8764''45'resp'737''45''8776'_114
                         (coe
-                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                            (coe v6))))))))
 -- Function.Metric.Bundles.GeneralMetric._.≲-resp-≈
 d_'8818''45'resp'45''8776'_596 ::
@@ -3080,7 +3080,7 @@ du_'8818''45'resp'45''8776'_596 v0
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'45''8776'_112
                         (coe
-                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                            (coe v6))))))))
 -- Function.Metric.Bundles.GeneralMetric._.≲-respʳ-≈
 d_'8818''45'resp'691''45''8776'_598 ::
@@ -3122,7 +3122,7 @@ du_'8818''45'resp'691''45''8776'_598 v0
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'691''45''8776'_106
                         (coe
-                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                            (coe v6))))))))
 -- Function.Metric.Bundles.GeneralMetric._.≲-respˡ-≈
 d_'8818''45'resp'737''45''8776'_600 ::
@@ -3164,7 +3164,7 @@ du_'8818''45'resp'737''45''8776'_600 v0
                      (coe
                         MAlonzo.Code.Relation.Binary.Structures.du_'8818''45'resp'737''45''8776'_100
                         (coe
-                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                           MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                            (coe v6))))))))
 -- Function.Metric.Bundles.GeneralMetric._.EqC.isPartialEquivalence
 d_isPartialEquivalence_604 ::
@@ -3336,7 +3336,7 @@ du_isPartialEquivalence_616 v0
                              (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                            = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                                 (coe v6) in
                       coe
                         (coe
@@ -3352,7 +3352,7 @@ d_refl_618 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -3405,7 +3405,7 @@ du_reflexive_620 v0
                              (coe v5) in
                    coe
                      (let v7
-                            = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+                            = MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
                                 (coe v6) in
                       coe
                         (\ v8 v9 v10 ->
@@ -3424,7 +3424,7 @@ d_sym_622 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe
@@ -3446,7 +3446,7 @@ d_trans_624 v0
       (coe
          MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_182
+            MAlonzo.Code.Relation.Binary.Structures.d_isPreorder_244
             (coe
                MAlonzo.Code.Function.Metric.Structures.d_isPartialOrder_42
                (coe

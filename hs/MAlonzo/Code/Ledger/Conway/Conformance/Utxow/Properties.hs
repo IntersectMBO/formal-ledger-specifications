@@ -110,24 +110,15 @@ d_computeProof_1658 v0 v1 v2 v3 v4
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                              (coe
-                                                                                                (\ v25 ->
-                                                                                                   coe
-                                                                                                     v9
-                                                                                                     v25))
+                                                                                                v9)
                                                                                              (coe
                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                 (coe
-                                                                                                   (\ v25 ->
-                                                                                                      coe
-                                                                                                        v11
-                                                                                                        v25))
+                                                                                                   v11)
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                    (coe
-                                                                                                      (\ v25 ->
-                                                                                                         coe
-                                                                                                           v13
-                                                                                                           v25))
+                                                                                                      v13)
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                       (coe
@@ -135,24 +126,15 @@ d_computeProof_1658 v0 v1 v2 v3 v4
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                          (coe
-                                                                                                            (\ v25 ->
-                                                                                                               coe
-                                                                                                                 v17
-                                                                                                                 v25))
+                                                                                                            v17)
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                             (coe
-                                                                                                               (\ v25 ->
-                                                                                                                  coe
-                                                                                                                    v19
-                                                                                                                    v25))
+                                                                                                               v19)
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                (coe
-                                                                                                                  (\ v25 ->
-                                                                                                                     coe
-                                                                                                                       v21
-                                                                                                                       v25))
+                                                                                                                  v21)
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                   (coe

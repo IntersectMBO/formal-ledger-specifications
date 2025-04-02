@@ -30,44 +30,44 @@ d_'8851''45'isSemilattice_22 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
-  MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_128 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_232 ->
+  MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_136 ->
   MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_590
 d_'8851''45'isSemilattice_22 ~v0 ~v1 ~v2 v3 v4
   = du_'8851''45'isSemilattice_22 v3 v4
 du_'8851''45'isSemilattice_22 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
-  MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_128 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_232 ->
+  MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_136 ->
   MAlonzo.Code.Algebra.Structures.T_IsCommutativeBand_590
 du_'8851''45'isSemilattice_22 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'isSemilattice_602
+      MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'isSemilattice_610
       (coe
-         MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_746
+         MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_760
          (coe v0))
       (coe
-         MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.du_MaxOp'8658'MinOp_174
+         MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.du_MaxOp'8658'MinOp_182
          (coe v1))
 -- Algebra.Lattice.Construct.NaturalChoice.MaxOp.Min.⊓-semilattice
 d_'8851''45'semilattice_24 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
-  MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_128 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_232 ->
+  MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_136 ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10
 d_'8851''45'semilattice_24 ~v0 ~v1 ~v2 v3 v4
   = du_'8851''45'semilattice_24 v3 v4
 du_'8851''45'semilattice_24 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_222 ->
-  MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_128 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_TotalPreorder_232 ->
+  MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.T_MaxOperator_136 ->
   MAlonzo.Code.Algebra.Lattice.Bundles.T_Semilattice_10
 du_'8851''45'semilattice_24 v0 v1
   = coe
-      MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'semilattice_604
+      MAlonzo.Code.Algebra.Lattice.Construct.NaturalChoice.MinOp.du_'8851''45'semilattice_612
       (coe
-         MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_746
+         MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_totalPreorder_760
          (coe v0))
       (coe
-         MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.du_MaxOp'8658'MinOp_174
+         MAlonzo.Code.Algebra.Construct.NaturalChoice.Base.du_MaxOp'8658'MinOp_182
          (coe v1))

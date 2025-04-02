@@ -38,7 +38,7 @@ du_'8801''45'setoid_18 ::
   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
 du_'8801''45'setoid_18 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_733
+      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
       (coe
          MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
          (coe

@@ -112,7 +112,7 @@ du_inverse'737''8658'surjective_24 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_inverse'737''8658'surjective_24 v0 v1
   = coe
-      MAlonzo.Code.Function.Consequences.Setoid.du_inverse'737''8658'surjective_72
+      MAlonzo.Code.Function.Consequences.Setoid.du_inverse'737''8658'surjective_76
       v1
 -- Function.Consequences.Propositional.Setoid.inverseᵇ⇒bijective
 d_inverse'7495''8658'bijective_26 ::
@@ -133,7 +133,7 @@ du_inverse'7495''8658'bijective_26 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_inverse'7495''8658'bijective_26
   = coe
-      MAlonzo.Code.Function.Consequences.Setoid.du_inverse'7495''8658'bijective_80
+      MAlonzo.Code.Function.Consequences.Setoid.du_inverse'7495''8658'bijective_84
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
       (coe
@@ -155,7 +155,7 @@ du_surjective'8658'strictlySurjective_34 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_surjective'8658'strictlySurjective_34 v0
   = coe
-      MAlonzo.Code.Function.Consequences.Setoid.du_surjective'8658'strictlySurjective_82
+      MAlonzo.Code.Function.Consequences.Setoid.du_surjective'8658'strictlySurjective_86
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
 -- Function.Consequences.Propositional.strictlySurjective⇒surjective
@@ -175,7 +175,7 @@ du_strictlySurjective'8658'surjective_40 ::
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_strictlySurjective'8658'surjective_40 v0
   = coe
-      MAlonzo.Code.Function.Consequences.Setoid.du_strictlySurjective'8658'surjective_84
+      MAlonzo.Code.Function.Consequences.Setoid.du_strictlySurjective'8658'surjective_88
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
       v0 erased

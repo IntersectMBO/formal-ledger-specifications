@@ -29,7 +29,7 @@ d_'172''35''45'isEquivalence_20 ::
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny -> ()) ->
   (AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsApartnessRelation_656 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsApartnessRelation_722 ->
   MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
 d_'172''35''45'isEquivalence_20 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7
   = du_'172''35''45'isEquivalence_20

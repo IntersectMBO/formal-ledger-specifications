@@ -2663,7 +2663,7 @@ d_Computational'45'CERT_1642 v0
                                                     (coe
                                                        MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-                         (coe MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_18435)
+                         (coe MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_17935)
                          (coe
                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                             (coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v1))

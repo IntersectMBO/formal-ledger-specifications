@@ -7,7 +7,7 @@
 <a id="101" class="Keyword">open</a> <a id="106" class="Keyword">import</a> <a id="113" href="Data.Nat.Properties.html" class="Module">Data.Nat.Properties</a> <a id="133" class="Keyword">hiding</a> <a id="140" class="Symbol">(</a><a id="141" href="Data.Nat.Properties.html#3874" class="Function Operator">_≟_</a><a id="144" class="Symbol">;</a> <a id="146" href="Data.Nat.Properties.html#6709" class="Function Operator">_≤?_</a><a id="150" class="Symbol">)</a>
 <a id="152" class="Keyword">open</a> <a id="157" class="Keyword">import</a> <a id="164" href="Data.Nat.Properties.Ext.html" class="Module">Data.Nat.Properties.Ext</a>
 
-<a id="189" class="Keyword">open</a> <a id="194" class="Keyword">import</a> <a id="201" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="216" class="Keyword">hiding</a> <a id="223" class="Symbol">(</a><a id="224" href="Data.Bool.Base.html#995" class="Function Operator">_∧_</a><a id="227" class="Symbol">;</a> <a id="229" href="Data.Nat.Base.html#5479" class="Function Operator">_⊔_</a><a id="232" class="Symbol">)</a> <a id="234" class="Keyword">renaming</a> <a id="243" class="Symbol">(</a><a id="244" href="abstract-set-theory.FiniteSetTheory.html#2895" class="Function">filterᵐ</a> <a id="252" class="Symbol">to</a> <a id="255" class="Function">filter</a><a id="261" class="Symbol">)</a>
+<a id="189" class="Keyword">open</a> <a id="194" class="Keyword">import</a> <a id="201" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="216" class="Keyword">hiding</a> <a id="223" class="Symbol">(</a><a id="224" href="Data.Bool.Base.html#995" class="Function Operator">_∧_</a><a id="227" class="Symbol">;</a> <a id="229" href="Data.Nat.Base.html#5485" class="Function Operator">_⊔_</a><a id="232" class="Symbol">)</a> <a id="234" class="Keyword">renaming</a> <a id="243" class="Symbol">(</a><a id="244" href="abstract-set-theory.FiniteSetTheory.html#2895" class="Function">filterᵐ</a> <a id="252" class="Symbol">to</a> <a id="255" class="Function">filter</a><a id="261" class="Symbol">)</a>
 <a id="263" class="Keyword">open</a> <a id="268" class="Keyword">import</a> <a id="275" href="Ledger.Transaction.html" class="Module">Ledger.Transaction</a> <a id="294" class="Keyword">hiding</a> <a id="301" class="Symbol">(</a><a id="302" href="Ledger.Transaction.html#770" class="InductiveConstructor">Vote</a><a id="306" class="Symbol">)</a>
 
 <a id="309" class="Keyword">module</a> <a id="316" href="Ledger.Ratify.html" class="Module">Ledger.Ratify</a> <a id="330" class="Symbol">(</a><a id="331" href="Ledger.Ratify.html#331" class="Bound">txs</a> <a id="335" class="Symbol">:</a> <a id="337" class="Symbol">_)</a> <a id="340" class="Symbol">(</a><a id="341" class="Keyword">open</a> <a id="346" href="Ledger.Transaction.html#867" class="Module">TransactionStructure</a> <a id="367" href="Ledger.Ratify.html#331" class="Bound">txs</a><a id="370" class="Symbol">)</a> <a id="372" class="Keyword">where</a>
@@ -20,7 +20,7 @@
 <a id="_∧_"></a><a id="532" href="Ledger.Ratify.html#532" class="Function Operator">_∧_</a> <a id="536" class="Symbol">=</a> <a id="538" href="Data.Product.Base.html#1618" class="Function Operator">_×_</a>
 
 <a id="543" class="Keyword">instance</a>
-  <a id="554" href="Ledger.Ratify.html#554" class="Function">_</a> <a id="556" class="Symbol">=</a> <a id="558" href="Data.Nat.Properties.html#17135" class="Function">+-0-commutativeMonoid</a>
+  <a id="554" href="Ledger.Ratify.html#554" class="Function">_</a> <a id="556" class="Symbol">=</a> <a id="558" href="Data.Nat.Properties.html#17331" class="Function">+-0-commutativeMonoid</a>
 
 
 <a id="582" class="Keyword">private</a>
@@ -134,7 +134,7 @@
 
 
 <a id="3706" class="Keyword">instance</a>
-  <a id="3717" class="Keyword">unquoteDecl</a> <a id="To-RatifyState"></a><a id="3729" href="Ledger.Ratify.html#3729" class="Function">To-RatifyState</a> <a id="3744" class="Symbol">=</a> <a id="3746" href="Class.To.html#2693" class="Function">derive-To</a>
+  <a id="3717" class="Keyword">unquoteDecl</a> <a id="To-RatifyState"></a><a id="3729" href="Ledger.Ratify.html#3729" class="Function">To-RatifyState</a> <a id="3744" class="Symbol">=</a> <a id="3746" href="Class.To.html#2699" class="Function">derive-To</a>
     <a id="3760" href="Data.List.Base.html#5205" class="Function Operator">[</a> <a id="3762" class="Symbol">(</a><a id="3763" class="Keyword">quote</a> <a id="3769" href="Ledger.Ratify.html#3255" class="Record">RatifyState</a> <a id="3781" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3783" href="Ledger.Ratify.html#3729" class="Function">To-RatifyState</a><a id="3797" class="Symbol">)</a> <a id="3799" href="Data.List.Base.html#5205" class="Function Operator">]</a>
 
 <a id="3802" class="Keyword">open</a> <a id="3807" href="Ledger.Ratify.html#2890" class="Module">StakeDistrs</a>
