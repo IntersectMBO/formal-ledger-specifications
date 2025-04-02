@@ -7,3 +7,5 @@ depend:
 include:
   src
   libs/stdlib
+  libs/stdlib-classes
+  libs/stdlib-meta
