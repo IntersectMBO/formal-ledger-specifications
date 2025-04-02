@@ -10,12 +10,14 @@ module Tactic.GenError where
 open import Meta.Prelude
 open import Meta.Init
 
+open import Class.Decidable
 open import Class.Functor
 open import Class.Monad
 open import Class.MonadError.Instances
 open import Class.MonadReader.Instances
 open import Class.MonadTC.Instances
 open import Class.Show
+open import Relation.Nullary using (¬_)
 
 open import Reflection.Tactic
 open import Reflection.Utils
@@ -24,9 +26,10 @@ import Reflection as R
 import Agda.Builtin.Reflection as R
 open import Tactic.ClauseBuilder
 
-module _ where
-  open import Ledger.Prelude using (dec-de-morgan; _⁇; ¬_; Dec-⊤; Dec-⊥) public
-
+private
+  dec-de-morgan : ∀{P Q : Set} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
+  dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
+  dec-de-morgan ⦃ ⁇ yes p ⦄ ¬pq = inj₂ λ q → ¬pq (p , q)
 
 instance
   _ = MonadTC-TCI
