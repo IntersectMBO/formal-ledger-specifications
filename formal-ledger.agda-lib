@@ -9,3 +9,4 @@ include:
   lib-exts/stdlib
   lib-exts/stdlib-classes
   lib-exts/stdlib-meta
+  lib-exts/iog-prelude
