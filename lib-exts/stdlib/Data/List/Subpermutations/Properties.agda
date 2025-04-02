@@ -1,15 +1,15 @@
-{-# OPTIONS --safe #-}
+{-# OPTIONS --safe --without-K #-}
 
 module Data.List.Subpermutations.Properties where
 
-open import Prelude hiding (lookup; map)
-
-open import Data.List using (List; [_]; []; _++_; head; tail; length; map; filter)
-open import Data.List.Subpermutations using (insert; subpermutations; sublists)
-open import Data.List.Properties using (concat-++; map-++; ++-identityʳ; ++-assoc)
+open import Function using (_∘_; Equivalence; _⇔_; mk⇔; case_of_; _∋_)
+open import Data.Empty using (⊥-elim)
+open import Data.List
+  using (List; [_]; []; _∷_; _++_; foldr; head; tail; length; map; filter; concatMap; concat)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties
   using (∈-++⁻; ∈-++⁺ˡ; ∈-++⁺ʳ; ∈-deduplicate⁻; ∈-deduplicate⁺; ∈-map⁺)
+open import Data.List.Properties using (concat-++; map-++; ++-identityʳ; ++-assoc)
 open import Data.List.Relation.Binary.Subset.Propositional using (_⊆_)
 open import Data.List.Relation.Binary.Subset.Propositional.Properties as P
   using (xs⊆ys++xs; xs⊆xs++ys; ⊆-reflexive; ⊆-trans)
@@ -18,8 +18,15 @@ open import Data.List.Relation.Unary.All using (all?; All; lookup) renaming (tai
 open import Data.List.Relation.Unary.Any using (Any; here; there)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties using (drop⁺)
-open import Data.Nat.Properties using (_≤?_; ⊔-identityʳ; ≤-reflexive; ≤-trans; m≤n⊔m; m≤m⊔n)
-open import Data.Nat using (_⊔_; _≤_)
+open import Data.List.Subpermutations using (insert; subpermutations; sublists)
+open import Data.Nat using (ℕ; _⊔_; _≤_; z≤n)
+open import Data.Nat.Properties using (_≤?_; ⊔-identityʳ; ≤-reflexive; ≤-trans; m≤n⊔m; m≤m⊔n; _≟_)
+open import Data.Product using (_×_; _,_; proj₁; proj₂; ∃-syntax)
+open import Data.Sum using (inj₁; inj₂)
+open import Relation.Binary.PropositionalEquality
+  using (_≡_; subst; refl; sym; module ≡-Reasoning; cong)
+open import Relation.Nullary using (¬_)
+open import Relation.Unary using (Pred) renaming (Decidable to Decidable¹)
 
 open Equivalence
 
@@ -35,7 +42,7 @@ module _ {a} {A : Set a} where
   maxlen≤∷ (l' ∷ ls) l = subst (maxlen (l' ∷ ls) ≤_) refl (m≤n⊔m (length l) (maxlen (l' ∷ ls)))
 
   ∈-maxlen-≤ : ∀ {ls} l → l ∈ ls → length l ≤ maxlen ls
-  ∈-maxlen-≤ {l ∷ ls} .l (here refl) = subst (length l ≤_) refl (m≤m⊔n (length l) (maxlen ls))
+  ∈-maxlen-≤ {l ∷ ls} l (here refl) = subst (length l ≤_) refl (m≤m⊔n (length l) (maxlen ls))
   ∈-maxlen-≤ {l' ∷ ls} l (there l∈)  = ≤-trans (∈-maxlen-≤ l l∈) (maxlen≤∷ ls l')
 
 -------------------------------
@@ -92,7 +99,7 @@ module _ {a} {A : Set a}  where
                  → concatMap f (xs ++ ys) ≡ concatMap f xs ++ concatMap f ys
   concatMap-++ f xs ys = begin
     concatMap f (xs ++ ys)           ≡⟨⟩
-    concat (map f (xs ++ ys))        ≡⟨ cong concat $ map-++ f xs ys ⟩
+    concat (map f (xs ++ ys))        ≡⟨ cong concat (map-++ f xs ys) ⟩
     concat (map f xs ++ map f ys)    ≡˘⟨ concat-++ (map f xs) (map f ys) ⟩
     concatMap f xs ++ concatMap f ys ∎ where open ≡-Reasoning
 
@@ -135,7 +142,7 @@ module _ {a} {A : Set a} where
   insert⊆∷ {[]}    (_ ∷ _) (here refl) y∈ = y∈
   insert⊆∷ {_ ∷ _} (_ ∷ _) (here refl) y∈ = y∈
   insert⊆∷ {_ ∷ _} (_ ∷ _) (there l∈) {y} y∈ with map∷decomp l∈
-  ... | (l' , l'∈ , x'l'zzs) = case (subst (y ∈ˡ_) (sym x'l'zzs) y∈) of λ where
+  ... | (l' , l'∈ , x'l'zzs) = case (subst (y ∈_) (sym x'l'zzs) y∈) of λ where
     (here refl) → there (here refl)
     (there q) → case (insert⊆∷ l' l'∈ q) of λ where
       (here refl) → here refl
@@ -197,9 +204,9 @@ module _ {a} {A : Set a} where
       (inj₁ v) → case to concatMap-decomp v of λ where
         (l , l∈ , xs∈) → case ∈insert→∷∈insert' h₁ (λ p → h₂ (∈→∈-insert xs p h₄)) (l , l∈ , xs∈) of λ where
           f → let v' = x ∷ sp ∈ concatMap (insert y') (subpermutations ys) ∋ from concatMap-decomp f
-              in to concatMap-decomp (subst (x ∷ xs ∈ˡ_)
+              in to concatMap-decomp (subst (x ∷ xs ∈_)
                       (sym (concatMap-++ (insert y) (concatMap (insert y') (subpermutations ys)) _))
-                      (∈-++⁺ˡ (from concatMap-decomp (x ∷ sp , v' , (there $ ∈-map⁺ (x ∷_) h₄)))))
+                      (∈-++⁺ˡ (from concatMap-decomp (x ∷ sp , v' , (there (∈-map⁺ (x ∷_) h₄))))))
       (inj₂ v) → case ∈insert→∷∈insert' h₁ h₂ (sp , v , h₄) of λ where
         (sp' , h'₁ , h'₂) → sp' , ∈-++⁺ʳ _ h'₁ , h'₂
 
@@ -208,7 +215,7 @@ module _ {a} {A : Set a} where
                      → xs ∈ concatMap (insert y) (subpermutations ys)
                      → x ∷ xs ∈ concatMap (insert y) (subpermutations ys)
 
-  ∈insert→∷∈insert h₁ h₂ h₃ = from concatMap-decomp $ ∈insert→∷∈insert' h₁ h₂ $ to concatMap-decomp h₃
+  ∈insert→∷∈insert h₁ h₂ h₃ = from concatMap-decomp (∈insert→∷∈insert' h₁ h₂ (to concatMap-decomp h₃))
 
 
   ∈-subperm-addhead : {ys xs : List A} {x : A} → x ∈ ys → ¬ x ∈ xs
@@ -234,7 +241,7 @@ module _ {a} {A : Set a}
 
   -- sublists of a given list which satisfy P and are of maximum length among those satisfying P
   maxsublists⊧P : Decidable¹ P → List A → List (List A)
-  maxsublists⊧P P? ys = filter (λ l → length l ≟ maxlen (sublists⊧P P? ys)) (sublists⊧P P? ys)
+  maxsublists⊧P P? ys = filter (λ l → length l ≟ maxlen (sublists⊧P P? ys)) ((sublists⊧P P? ys))
 
 --------------------------------------------------------------------------
 ------------  l ⊆ ys  ⋀  l Unique   ⇔   l ∈ subpermutations ys  ----------
