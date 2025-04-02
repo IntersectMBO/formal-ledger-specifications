@@ -73,7 +73,22 @@ let
     buildInputs = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta ];
   };
 
-  deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets ];
+  iogAgdaPrelude = pkgs.agdaPackages.mkDerivation {
+    pname = "iog-prelude";
+    version = "+";
+    meta = { };
+    src = pkgs.fetchFromGitHub {
+      repo = "iog-agda-prelude";
+      owner = "input-output-hk";
+      rev = "20e4ab42fd6a980233053c8c3b1b8b2ab42946c9";
+      sha256 = "sha256-PvfxcoK5MweXfdtbfDUTY23xsaAG093MbeX9fRac4sQ=";
+    };
+    libraryFile = "iog-prelude.agda-lib";
+    everythingFile = "src/Everything.agda";
+    buildInputs = [ agdaStdlib agdaStdlibClasses ];
+  };
+
+  deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets iogAgdaPrelude ];
 
   fs = pkgs.lib.fileset;
   addToAgdaSrc = other: fs.toSource {
