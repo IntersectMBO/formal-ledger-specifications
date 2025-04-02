@@ -2,22 +2,48 @@
 {-# OPTIONS --safe #-}
 module Tactic.DeriveComp where
 
-open import Prelude hiding (Type)
-open import PreludeMeta hiding (TC) renaming (TCI to TC)
-open import Meta.Prelude using (zipWithIndex)
-open import Class.HasAdd
-open import Class.Traversable
-
-import Data.List.NonEmpty as NE
+open import Prelude.Init hiding (Type; mapMaybe)
+open import Data.Bool using (true; false)
+open import Data.List using (List; [_]; dropWhile; take; takeWhile; mapMaybe)
+open import Data.List.NonEmpty as NE using (fromList)
+open import Data.Maybe using (Maybe; just; nothing; from-just)
 open import Data.Maybe.Properties using (just-injective)
-
-open import Interface.ComputationalRelation
-open import Interface.HasSubtract; open import Interface.HasSubtract.Instance
-
+open import Data.Nat using (ℕ; _∸_)
+open import Data.String using (String; _<+>_)
+open import Class.DecEq
+open import Class.Decidable
+open import Class.MonadTC
+open import Class.Show
+open import Function using (mk⇔)
+open import Meta.Init
+open import Meta.Prelude using (zipWithIndex)
+open import Reflection.AST.DeBruijn using (weaken)
 open import Reflection.Ext using (extendContextTel′)
+open import Reflection.Utils hiding (mkRecord)
+open import Reflection.Utils.TCI
+open import Reflection.Tactic
+open import Relation.Nullary.Decidable using (_because_)
+open import Relation.Nullary.Reflects using (ofʸ; ofⁿ)
+open import Class.MonadTC
+  hiding (extendContext)
+open import Class.MonadError
+  using (MonadError; MonadError-TC)
+open import Class.Functor
+open import Class.Traversable
 open import Tactic.ClauseBuilder
 open import Tactic.ReduceDec
-open import MyDebugOptions
+open import Tactic.Defaults
+
+open import Interface.ComputationalRelation
+
+open MonadTC ⦃...⦄
+open MonadError ⦃...⦄ using (error; catch)
+
+instance
+  defaultDebugOptionsI : DebugOptions
+  defaultDebugOptionsI = record defaultDebugOptions
+    { selection = All
+    ; filter = Filter.⊥ }
 
 pattern ``yes x = quote _because_ ◇⟦ quote true ◇  ∣ quote ofʸ ◇⟦ x ⟧ ⟧
 pattern ``no x  = quote _because_ ◇⟦ quote false ◇ ∣ quote ofⁿ ◇⟦ x ⟧ ⟧
@@ -35,7 +61,7 @@ record STSConstr : Set where
     result  : Term
 
 conOrVarToPattern : ℕ → Term → Maybe Pattern
-conOrVarToPattern k (♯ v) = just (Pattern.var (v - k))
+conOrVarToPattern k (♯ v) = just (Pattern.var (v ∸ k))
 conOrVarToPattern k (con c args) =
   Pattern.con c <$> (sequence $ conOrVarToPattern′ k args)
   where
@@ -56,12 +82,12 @@ toSTSConstr (n , (cs , def _ args))
   return record
     { name = n
     ; params = takeWhile isArg cs
-    ; clauses = zipWithIndex (λ i → mapVars (_- i))
+    ; clauses = zipWithIndex (λ i → mapVars (_∸ i))
               $ (unArg ∘ unAbs) <$> dropWhile isArg cs
     ; context = c
     ; state = s
     ; signal = sig
-    ; result = mapVars (_- (length $ dropWhile isArg cs)) $ unArg r }
+    ; result = mapVars (_∸ (length $ dropWhile isArg cs)) $ unArg r }
 ... | l | l' =
   error1 ("toSTSConstr: wrong number of arguments:"
     <+> show (length l) <+> "," <+> show (length l'))
