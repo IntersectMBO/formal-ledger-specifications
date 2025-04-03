@@ -10,7 +10,7 @@
 
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
-module MAlonzo.Code.Data.List.Ext where
+module MAlonzo.Code.Data.List.Subpermutations where
 
 import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     quotInt, remInt, geqInt, ltInt, eqInt, add64, sub64, mul64, quot64,
@@ -30,7 +30,7 @@ import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 
--- Data.List.Ext._⁉_
+-- Data.List.Subpermutations._⁉_
 d__'8265'__12 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> [AgdaAny] -> Integer -> Maybe AgdaAny
@@ -45,7 +45,7 @@ du__'8265'__12 v0 v1
              _ -> let v4 = subInt (coe v1) (coe (1 :: Integer)) in
                   coe (coe du__'8265'__12 (coe v3) (coe v4))
       _ -> MAlonzo.RTE.mazUnreachableError
--- Data.List.Ext.sublists
+-- Data.List.Subpermutations.sublists
 d_sublists_20 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> [AgdaAny] -> [[AgdaAny]]
@@ -65,7 +65,7 @@ du_sublists_20 v0
                 (coe du_sublists_20 (coe v2)))
              (coe du_sublists_20 (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
--- Data.List.Ext.insert
+-- Data.List.Subpermutations.insert
 d_insert_28 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> [AgdaAny] -> [[AgdaAny]]
@@ -89,7 +89,7 @@ du_insert_28 v0 v1
                 (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v2))
                 (coe du_insert_28 (coe v0) (coe v3)))
       _ -> MAlonzo.RTE.mazUnreachableError
--- Data.List.Ext.subpermutations
+-- Data.List.Subpermutations.subpermutations
 d_subpermutations_40 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> [AgdaAny] -> [[AgdaAny]]
@@ -108,7 +108,7 @@ du_subpermutations_40 v0
                 (coe du_insert_28 (coe v1)) (coe du_subpermutations_40 (coe v2)))
              (coe du_subpermutations_40 (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
--- Data.List.Ext._.∈ˡ-map-filter⁻
+-- Data.List.Subpermutations._.∈ˡ-map-filter⁻
 d_'8712''737''45'map'45'filter'8315'_66 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -165,7 +165,7 @@ du_'8712''737''45'map'45'filter'8315'_66 v0 v1 v2
                                    v1 v4 v0 v6))))
                 _ -> MAlonzo.RTE.mazUnreachableError
          _ -> MAlonzo.RTE.mazUnreachableError)
--- Data.List.Ext._.∈ˡ-map-filter⁺
+-- Data.List.Subpermutations._.∈ˡ-map-filter⁺
 d_'8712''737''45'map'45'filter'8314'_82 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -205,7 +205,7 @@ du_'8712''737''45'map'45'filter'8314'_82 v0 v1 v2
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
--- Data.List.Ext._.∈ˡ-map-filter
+-- Data.List.Subpermutations._.∈ˡ-map-filter
 d_'8712''737''45'map'45'filter_92 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -230,27 +230,27 @@ du_'8712''737''45'map'45'filter_92 v0 v1
       MAlonzo.Code.Function.Bundles.du_mk'8660'_2414
       (coe du_'8712''737''45'map'45'filter'8314'_82 (coe v0) (coe v1))
       (coe du_'8712''737''45'map'45'filter'8315'_66 (coe v0) (coe v1))
--- Data.List.Ext..generalizedField-A.ℓ
+-- Data.List.Subpermutations..generalizedField-A.ℓ
 d_'46'generalizedField'45'A'46'ℓ_3083 ::
   T_GeneralizeTel_3091 -> MAlonzo.Code.Agda.Primitive.T_Level_18
 d_'46'generalizedField'45'A'46'ℓ_3083 v0
   = case coe v0 of
       C_mkGeneralizeTel_3093 v1 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
--- Data.List.Ext..generalizedField-A
+-- Data.List.Subpermutations..generalizedField-A
 d_'46'generalizedField'45'A_3085 :: T_GeneralizeTel_3091 -> ()
 d_'46'generalizedField'45'A_3085 = erased
--- Data.List.Ext..generalizedField-B.ℓ
+-- Data.List.Subpermutations..generalizedField-B.ℓ
 d_'46'generalizedField'45'B'46'ℓ_3087 ::
   T_GeneralizeTel_3091 -> MAlonzo.Code.Agda.Primitive.T_Level_18
 d_'46'generalizedField'45'B'46'ℓ_3087 v0
   = case coe v0 of
       C_mkGeneralizeTel_3093 v1 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
--- Data.List.Ext..generalizedField-B
+-- Data.List.Subpermutations..generalizedField-B
 d_'46'generalizedField'45'B_3089 :: T_GeneralizeTel_3091 -> ()
 d_'46'generalizedField'45'B_3089 = erased
--- Data.List.Ext.GeneralizeTel
+-- Data.List.Subpermutations.GeneralizeTel
 d_GeneralizeTel_3091 = ()
 data T_GeneralizeTel_3091
   = C_mkGeneralizeTel_3093 MAlonzo.Code.Agda.Primitive.T_Level_18

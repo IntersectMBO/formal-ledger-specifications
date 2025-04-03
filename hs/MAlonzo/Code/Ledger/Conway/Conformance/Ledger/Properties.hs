@@ -388,7 +388,7 @@ du_utxoΓ_2860 ::
   MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_2038
 du_utxoΓ_2860 v0
   = coe
-      MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_16595
+      MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_16379
       (coe MAlonzo.Code.Ledger.Ledger.d_slot_2188 (coe v0))
       (coe MAlonzo.Code.Ledger.Ledger.d_pparams_2192 (coe v0))
       (coe MAlonzo.Code.Ledger.Ledger.d_treasury_2196 (coe v0))

@@ -2608,7 +2608,7 @@ d_tokenAlgebra_784 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8
 d_tokenAlgebra_784
   = coe
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_tokenAlgebra_258
+      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_tokenAlgebra_234
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.txOutHash
 d_txOutHash_786 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->

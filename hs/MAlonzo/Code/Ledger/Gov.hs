@@ -38,13 +38,13 @@ import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Class.To
 import qualified MAlonzo.Code.Class.ToBool
 import qualified MAlonzo.Code.Data.List.Base
-import qualified MAlonzo.Code.Data.List.Ext
-import qualified MAlonzo.Code.Data.List.Ext.Properties2
 import qualified MAlonzo.Code.Data.List.Membership.Propositional.Properties
 import qualified MAlonzo.Code.Data.List.Membership.Propositional.Properties.Core
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Unique.DecSetoid
+import qualified MAlonzo.Code.Data.List.Subpermutations
+import qualified MAlonzo.Code.Data.List.Subpermutations.Properties
 import qualified MAlonzo.Code.Data.Maybe.Base
 import qualified MAlonzo.Code.Data.Maybe.Properties
 import qualified MAlonzo.Code.Data.Nat.Base
@@ -53,10 +53,9 @@ import qualified MAlonzo.Code.Data.Product.Nary.NonDependent
 import qualified MAlonzo.Code.Data.Product.Properties
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
-import qualified MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Base
-import qualified MAlonzo.Code.Function.Bundles
+import qualified MAlonzo.Code.Function.Properties.Equivalence
 import qualified MAlonzo.Code.Function.Related.Propositional
 import qualified MAlonzo.Code.Ledger.Address
 import qualified MAlonzo.Code.Ledger.Certs
@@ -69,6 +68,7 @@ import qualified MAlonzo.Code.Ledger.Types.Epoch
 import qualified MAlonzo.Code.Level
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties
+import qualified MAlonzo.Code.Relation.Nullary.Decidable
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
@@ -1781,7 +1781,9 @@ d_any'63''45'connecting'45'subperm_2324 v0 v1 v2 v3
               (coe
                  d_'91'_connects_to_'63''93'_2300 (coe v0) (coe v4) (coe v1)
                  (coe v2))))
-      (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v3))
+      (coe
+         MAlonzo.Code.Data.List.Subpermutations.du_subpermutations_40
+         (coe v3))
 -- Ledger.Gov.∃?-connecting-subperm
 d_'8707''63''45'connecting'45'subperm_2342 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
@@ -1791,15 +1793,17 @@ d_'8707''63''45'connecting'45'subperm_2342 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_'8707''63''45'connecting'45'subperm_2342 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Bundles.d_from_1822
+      MAlonzo.Code.Relation.Nullary.Decidable.du_map_18
       (coe
-         MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext.du_map'8242''8660'_16
+         MAlonzo.Code.Function.Properties.Equivalence.du_sym_48
          (coe
             MAlonzo.Code.Function.Related.Propositional.du_'8596''8658'_82
             (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12)
             (coe
                MAlonzo.Code.Data.List.Membership.Propositional.Properties.Core.du_Any'8596'_146
-               (coe MAlonzo.Code.Data.List.Ext.du_subpermutations_40 (coe v3)))))
+               (coe
+                  MAlonzo.Code.Data.List.Subpermutations.du_subpermutations_40
+                  (coe v3)))))
       (d_any'63''45'connecting'45'subperm_2324
          (coe v0) (coe v1) (coe v2) (coe v3))
 -- Ledger.Gov.∃?-connecting-subset
@@ -1811,11 +1815,11 @@ d_'8707''63''45'connecting'45'subset_2354 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_'8707''63''45'connecting'45'subset_2354 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Function.Bundles.d_from_1822
+      MAlonzo.Code.Relation.Nullary.Decidable.du_map_18
       (coe
-         MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext.du_map'8242''8660'_16
+         MAlonzo.Code.Function.Properties.Equivalence.du_sym_48
          (coe
-            MAlonzo.Code.Data.List.Ext.Properties2.du_'8707'uniqueSubset'8660''8707'uniqueSubperm_902
+            MAlonzo.Code.Data.List.Subpermutations.Properties.du_'8707'uniqueSubset'8660''8707'uniqueSubperm_902
             (coe ()) (coe v3)))
       (d_'8707''63''45'connecting'45'subperm_2342
          (coe v0) (coe v1) (coe v2) (coe v3))
@@ -1840,9 +1844,9 @@ d_enactable'63'_2364 v0 v1 v2 v3
              (case coe v6 of
                 MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v7
                   -> coe
-                       MAlonzo.Code.Function.Bundles.d_from_1822
+                       MAlonzo.Code.Relation.Nullary.Decidable.du_map_18
                        (coe
-                          MAlonzo.Code.Data.Relation.Nullary.Decidable.Ext.du_map'8242''8660'_16
+                          MAlonzo.Code.Function.Properties.Equivalence.du_sym_48
                           (coe
                              MAlonzo.Code.Axiom.Set.Properties.du_'8707''45'sublist'45''8660'_1070
                              (coe
@@ -1904,7 +1908,7 @@ d_maxAllEnactable_2426 ::
   [[MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]]
 d_maxAllEnactable_2426 v0 v1
   = coe
-      MAlonzo.Code.Data.List.Ext.Properties2.du_maxsublists'8871'P_756
+      MAlonzo.Code.Data.List.Subpermutations.Properties.du_maxsublists'8871'P_756
       (coe d_allEnactable'63'_2400 (coe v0) (coe v1))
 -- Ledger.Gov.∈-maxAllEnactable→allEnactable
 d_'8712''45'maxAllEnactable'8594'allEnactable_2436 ::
@@ -1920,7 +1924,8 @@ d_'8712''45'maxAllEnactable'8594'allEnactable_2436 v0 v1 v2 v3 v4
       (coe
          MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_512
          (d_allEnactable'63'_2400 (coe v0) (coe v1)) v3
-         (coe MAlonzo.Code.Data.List.Ext.du_sublists_20 (coe v2))
+         (coe
+            MAlonzo.Code.Data.List.Subpermutations.du_sublists_20 (coe v2))
          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
             (coe
                MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8315'_512
@@ -1930,15 +1935,16 @@ d_'8712''45'maxAllEnactable'8594'allEnactable_2436 v0 v1 v2 v3 v4
                     MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22
                     (coe MAlonzo.Code.Data.List.Base.du_length_284 v5)
                     (coe
-                       MAlonzo.Code.Data.List.Ext.Properties2.du_maxlen_16
+                       MAlonzo.Code.Data.List.Subpermutations.Properties.du_maxlen_16
                        (coe
-                          MAlonzo.Code.Data.List.Ext.Properties2.du_sublists'8871'P_750
+                          MAlonzo.Code.Data.List.Subpermutations.Properties.du_sublists'8871'P_750
                           (coe d_allEnactable'63'_2400 (coe v0) (coe v1)) (coe v2))))
                v3
                (coe
                   MAlonzo.Code.Data.List.Base.du_filter_664
                   (coe d_allEnactable'63'_2400 (coe v0) (coe v1))
-                  (coe MAlonzo.Code.Data.List.Ext.du_sublists_20 (coe v2)))
+                  (coe
+                     MAlonzo.Code.Data.List.Subpermutations.du_sublists_20 (coe v2)))
                v4)))
 -- Ledger.Gov.∈-maxAllEnactable→maxLength
 d_'8712''45'maxAllEnactable'8594'maxLength_2456 ::
@@ -1963,15 +1969,18 @@ du_'8712''45'maxAllEnactable'8594'maxLength_2456 ::
   MAlonzo.Code.Data.Nat.Base.T__'8804'__22
 du_'8712''45'maxAllEnactable'8594'maxLength_2456 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Data.List.Ext.Properties2.du_'8712''45'maxlen'45''8804'_42
+      MAlonzo.Code.Data.List.Subpermutations.Properties.du_'8712''45'maxlen'45''8804'_42
       (coe
          MAlonzo.Code.Data.List.Base.du_filter_664
          (coe d_allEnactable'63'_2400 (coe v0) (coe v1))
-         (coe MAlonzo.Code.Data.List.Ext.du_sublists_20 (coe v2)))
+         (coe
+            MAlonzo.Code.Data.List.Subpermutations.du_sublists_20 (coe v2)))
       (coe
          MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'filter'8314'_510
          (d_allEnactable'63'_2400 (coe v0) (coe v1))
-         (coe MAlonzo.Code.Data.List.Ext.du_sublists_20 (coe v2)) v3 v4)
+         (coe
+            MAlonzo.Code.Data.List.Subpermutations.du_sublists_20 (coe v2))
+         v3 v4)
 -- Ledger.Gov.actionValid
 d_actionValid_2478 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->

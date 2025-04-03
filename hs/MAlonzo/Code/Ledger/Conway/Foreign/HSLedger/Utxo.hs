@@ -312,7 +312,7 @@ d_Conv'45'UTxOEnv_100
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_16595 v1 v2 v3
+              MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_16379 v1 v2 v3
                 -> coe
                      C_MkUTxOEnv_109 (coe v1)
                      (coe
@@ -843,7 +843,7 @@ d_Conv'45'UTxOEnv_100
             case coe v0 of
               C_MkUTxOEnv_109 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_16595 (coe v1)
+                     MAlonzo.Code.Ledger.Utxo.C_UTxOEnv'46'constructor_16379 (coe v1)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe

@@ -51,6 +51,7 @@ import qualified MAlonzo.Code.Data.Maybe.Base
 import qualified MAlonzo.Code.Data.Maybe.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Show
+import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum
@@ -63,8 +64,8 @@ import qualified MAlonzo.Code.Ledger.Crypto
 import qualified MAlonzo.Code.Ledger.GovernanceActions
 import qualified MAlonzo.Code.Ledger.Interface.HasCoin
 import qualified MAlonzo.Code.Ledger.PParams
+import qualified MAlonzo.Code.Ledger.Prelude
 import qualified MAlonzo.Code.Ledger.Script
-import qualified MAlonzo.Code.Ledger.Set.HashMap
 import qualified MAlonzo.Code.Ledger.TokenAlgebra
 import qualified MAlonzo.Code.Ledger.Types.Epoch
 import qualified MAlonzo.Code.Ledger.Types.GovStructure
@@ -4848,22 +4849,32 @@ du_m_2784 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_m_2784 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Set.HashMap.du_setToHashMap_18
-      (coe
-         MAlonzo.Code.Ledger.Script.d_hashRespectsUnion_446
-         (d_scriptStructure_1796 (coe v0)) erased erased erased
-         (MAlonzo.Code.Ledger.Script.d_Hashable'45'P1Script_110
-            (coe
-               MAlonzo.Code.Ledger.Script.d_p1s_426
-               (coe d_scriptStructure_1796 (coe v0))))
-         (MAlonzo.Code.Ledger.Script.d_Hashable'45'PlutusScript_212
-            (coe
-               MAlonzo.Code.Ledger.Script.d_ps_448
-               (coe d_scriptStructure_1796 (coe v0)))))
+      MAlonzo.Code.Ledger.Prelude.du_setToMap_70
       (coe
          MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
          (coe d_crypto_1230 (coe v0)))
-      (coe d_txscripts_2762 (coe v0) (coe v1) (coe v2))
+      (coe
+         MAlonzo.Code.Axiom.Set.du_map_398
+         (MAlonzo.Code.Axiom.Set.d_th_1470
+            (coe
+               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+         (coe
+            MAlonzo.Code.Data.Product.Base.du_'60'_'44'_'62'_112
+            (coe
+               MAlonzo.Code.Interface.Hashable.d_hash_16
+               (coe
+                  MAlonzo.Code.Ledger.Script.d_hashRespectsUnion_446
+                  (d_scriptStructure_1796 (coe v0)) erased erased erased
+                  (MAlonzo.Code.Ledger.Script.d_Hashable'45'P1Script_110
+                     (coe
+                        MAlonzo.Code.Ledger.Script.d_p1s_426
+                        (coe d_scriptStructure_1796 (coe v0))))
+                  (MAlonzo.Code.Ledger.Script.d_Hashable'45'PlutusScript_212
+                     (coe
+                        MAlonzo.Code.Ledger.Script.d_ps_448
+                        (coe d_scriptStructure_1796 (coe v0))))))
+            (coe (\ v3 -> v3)))
+         (d_txscripts_2762 (coe v0) (coe v1) (coe v2)))
 -- Ledger.Transaction.TransactionStructure.isP2Script
 d_isP2Script_2786 ::
   T_TransactionStructure_20 ->
