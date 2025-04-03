@@ -338,7 +338,7 @@ any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l co
 enactable? : ∀ eState aidPairs aidNew×st → Dec (enactable eState aidPairs aidNew×st)
 enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as .gaType)
 ... | nothing = yes tt
-... | just aidOld = map-Dec (sym-Equiv ∃-sublist-⇔) (∃?-connecting-subset aidPairs) -- from (map′⇔ ∃-sublist-⇔) (∃?-connecting-subset aidPairs)
+... | just aidOld = map-Dec (sym-Equiv ∃-sublist-⇔) (∃?-connecting-subset aidPairs)
 
 allEnactable? : ∀ eState aid×states → Dec (allEnactable eState aid×states)
 allEnactable? eState aid×states =
