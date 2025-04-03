@@ -160,6 +160,45 @@ maxPool pparams rewardPot stake pledge = rewardℕ
 \label{fig:functions:maxPool}
 \end{figure*}
 
+\Cref{fig:functions:mkApparentPerformance} defines
+the function \AgdaFunction{mkApparentPerformance}
+which computes the apparent performance of a stake pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaArgument{stake}: Relative active stake of the pool.
+  \item \AgdaArgument{poolBlocks}: Number of blocks that the pool added to the chain in the last epoch.
+  \item \AgdaArgument{totalBlocks}: Total number of blocks added in the last epoch.
+  \item \AgdaFunction{÷₀}: Division operator that returns zero when the denominator is zero.
+    This result is sensible when a pool has no stake.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}[hide]
+_÷₀_ : ℚ → ℚ → ℚ
+_÷₀_ x y = case y ≟ 0 of λ where
+  (yes _) → 0
+  (no y≢0) → let instance nonZero-y = ℚ.≢-nonZero y≢0 in x ÷ y
+\end{code}
+\begin{code}
+mkApparentPerformance : UnitInterval → ℕ → ℕ → ℚ
+mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ stake'
+  where
+    stake' = fromUnitInterval stake
+\end{code}
+\begin{code}[hide]
+    instance
+      nonZero-totalBlocks : ℕ.NonZero (ℕ.max 1 totalBlocks)
+      nonZero-totalBlocks = nonZero-max-1 totalBlocks
+\end{code}
+\begin{code}
+    ratioBlocks = (ℤ.+ poolBlocks) / (ℕ.max 1 totalBlocks)
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function mkApparentPerformance used for computing a Reward Update}
+\label{fig:functions:mkApparentPerformance}
+\end{figure*}
+
 \subsection{Reward Update}
 \label{sec:reward-update}
 TODO: This section defines the \AgdaRecord{RewardUpdate} type,
