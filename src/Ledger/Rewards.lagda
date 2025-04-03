@@ -274,6 +274,57 @@ rewardMember rewards pool memberStake stake = if rewards ≤ cost
 \label{fig:functions:rewardOwners-rewardMember}
 \end{figure*}
 
+\Cref{fig:functions:rewardOnePool} defines
+the function \AgdaFunction{rewardOnePool}
+which calculates the rewards given out to each member of a given pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaArgument{rewardPot}: Total rewards to be paid out for this epoch.
+  \item \AgdaArgument{n}: Number of blocks produced by the pool in the last epoch.
+  \item \AgdaArgument{N}: Expectation value of the number of blocks to be produced by the pool.
+  \item \AgdaArgument{stakeDistr}: Distribution of stake,
+    as mapping from \AgdaInductiveConstructor{Credential} to \Coin{}.
+  \item \AgdaArgument{σ}: Total relative stake controlled by the pool.
+  \item \AgdaArgument{σa}: Total active relative stake controlled by the pool, used for selecting block producers.
+  \item \AgdaArgument{tot}: Total amount of Ada in circulation, for computing the relative stake.
+  \item \AgdaFunction{mkRelativeStake}: Compute stake relative to the total amount in circulation.
+  \item \AgdaFunction{ownerStake}: Total amount of stake controlled by the stake pool operator and owners.
+  \item \AgdaFunction{maxP}: Maximum rewards the pool can claim if the pledge is met,
+    and zero otherwise.
+  \item \AgdaFunction{poolReward}: Actual rewards to be paid out to this pool.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+Stake = Credential ⇀ Coin
+
+rewardOnePool : PParams → Coin → ℕ → ℕ → PoolParams
+  → Stake → UnitInterval → UnitInterval → Coin → (Credential ⇀ Coin)
+rewardOnePool pparams rewardPot n N pool stakeDistr σ σa tot = rewards
+  where
+    mkRelativeStake = λ coin → clamp (coin /₀ tot)
+    owners = mapˢ KeyHashObj (pool .PoolParams.owners) 
+    ownerStake = ∑[ c ← stakeDistr ∣ owners ] c
+    pledge = pool .PoolParams.pledge
+    maxP = if pledge ≤ ownerStake
+      then maxPool pparams rewardPot σ (mkRelativeStake pledge)
+      else 0
+    apparentPerformance = mkApparentPerformance σa n N
+    poolReward = posPart (floor (apparentPerformance * fromℕ maxP))
+    memberRewards =
+      mapValues (λ coin → rewardMember poolReward pool (mkRelativeStake coin) σ)
+        (stakeDistr ∣ owners ᶜ)
+    ownersRewards  =
+      ❴ pool .PoolParams.rewardAccount
+      , rewardOwners poolReward pool (mkRelativeStake ownerStake) σ ❵ᵐ
+    rewards = memberRewards ∪⁺ ownersRewards
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function rewardOnePool used for computing a Reward Update}
+\label{fig:functions:rewardOnePool}
+\end{figure*}
+
 \subsection{Reward Update}
 \label{sec:reward-update}
 TODO: This section defines the \AgdaRecord{RewardUpdate} type,
