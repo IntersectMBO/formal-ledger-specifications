@@ -43,7 +43,7 @@ instance
 \begin{code}
 record PoolParams : Type where
   field
-    rewardAddr : Credential
+    rewardAccount : Credential
 \end{code}
 \end{NoConway}
 \begin{code}
