@@ -7,6 +7,10 @@ open import Function using (_$_; case_of_)
 open import Data.Empty using (⊥-elim)
 open import Data.List using (List; []; _∷_; length)
 open import Data.List.Relation.Unary.All using (All; []; _∷_)
+open import Data.List.Relation.Binary.Sublist.Propositional.Properties
+  using ([]⊆-universal)
+open import Data.List.Relation.Binary.Sublist.Propositional
+  using (_⊆_; []; _∷_; _∷ʳ_)
 open import Data.Nat using (ℕ; zero; suc)
 open import Data.Nat.Properties using (suc-injective)
 
@@ -15,7 +19,6 @@ open import Relation.Nullary.Decidable using () renaming (map′ to mapDec)
 open import Relation.Unary using (Decidable; Pred)
 open import Relation.Binary.PropositionalEquality using (_≡_; refl; cong)
 
-open import Data.List.Relation.Binary.Sublist.Ext
 
 -- States that "m-of-n" elements of a n-element list satisfy a given predicate.
 data MOf {ℓ ℓ′}{A : Set ℓ} (m : ℕ) (P : Pred A ℓ′) (xs : List A) : Set (ℓ ⊔ ℓ′) where
@@ -33,7 +36,7 @@ private module _ {ℓ ℓ′} {A : Set ℓ} {P : Pred A ℓ′} where
   skip (mOf ys len sub ps) = mOf ys len (_ ∷ʳ sub) ps
 
   done : ∀ {xs} → MOf 0 P xs
-  done = mOf [] refl []⊆ []
+  done = mOf [] refl ([]⊆-universal _) []
 
   wk : ∀ {m xs} → MOf (suc m) P xs → MOf m P xs
   wk (mOf (_ ∷ ys) refl (_ ∷ sub) (_ ∷ ps)) = mOf ys refl (_ ∷ʳ sub) ps
