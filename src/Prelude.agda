@@ -18,8 +18,6 @@ open import Data.List.Membership.Propositional public
   using () renaming (_∈_ to _∈ˡ_; _∉_ to _∉ˡ_)
 open import Data.Maybe public
   hiding (_>>=_; align; alignWith; ap; fromMaybe; map; zip; zipWith)
-open import Data.Maybe.Relation.Binary.Connected
-  using (Connected; connected?)
 open import Data.Unit public
   using (⊤; tt)
 open import Data.Unit.Polymorphic public
@@ -81,10 +79,34 @@ import Data.Rational.Literals as ℚ
 instance Number-ℕ = ℕ.number
 instance Number-ℚ = ℚ.number
 
--- (pseudo)equality (for Maybe)
+-- (Pseudo)equality (for Maybe)
+open import Data.Maybe.Relation.Binary.Connected
+  using (Connected; connected?)
+
 _~_ : {A : Type} → Maybe A → Maybe A → Type
 _~_ = Connected _≡_
 
 instance
   ~? : {A : Type} {x y : Maybe A} → ⦃ DecEq A ⦄ → (x ~ y) ⁇
   ~? {A} {x} {y} ⦃ deqEq ⦄ = ⁇ (connected? (DecEq._≟_ deqEq) x y)
+
+-- Positive and negative part of integers
+open import Data.Integer using (sign; ∣_∣; _⊖_)
+open import Data.Integer.Properties using ([1+m]⊖[1+n]≡m⊖n)
+open import Data.Sign using (Sign)
+
+posPart : ℤ → ℕ
+posPart x with sign x
+... | Sign.+ = ∣ x ∣
+... | Sign.- = 0
+
+negPart : ℤ → ℕ
+negPart x with sign x
+... | Sign.- = ∣ x ∣
+... | Sign.+ = 0
+
+∸≡posPart⊖ : {m n : ℕ} → (m ∸ n) ≡ posPart (m ⊖ n)
+∸≡posPart⊖ {zero} {zero} = _≡_.refl
+∸≡posPart⊖ {zero} {ℕ.suc n} = _≡_.refl
+∸≡posPart⊖ {ℕ.suc m} {zero} = _≡_.refl
+∸≡posPart⊖ {ℕ.suc m} {ℕ.suc n} = trans (∸≡posPart⊖{m}{n}) (sym (cong posPart (([1+m]⊖[1+n]≡m⊖n m n))))

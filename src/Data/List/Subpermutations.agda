@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Data.List.Ext where
+module Data.List.Subpermutations where
 
 open import Agda.Primitive using () renaming (Set to Type)
 
