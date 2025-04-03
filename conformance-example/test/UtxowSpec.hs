@@ -9,7 +9,7 @@ import Data.Text
 import Test.Hspec ( Spec, describe, it )
 import Test.HUnit ( (@?=) )
 
-import Lib
+import MAlonzo.Code.Ledger.Foreign.API
 
 (.->) :: a -> b -> (a, b)
 (.->) = (,)
