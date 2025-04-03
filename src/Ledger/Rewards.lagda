@@ -199,6 +199,72 @@ mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ stake'
 \label{fig:functions:mkApparentPerformance}
 \end{figure*}
 
+\Cref{fig:functions:rewardOwners-rewardMember} defines
+the functions \AgdaFunction{rewardOwners} and \AgdaFunction{rewardMember}.
+Their purpose is to divide the reward for one pool
+between pool owners and individual delegators
+by taking into account a fixed pool cost, a relative pool margin,
+and the stake of each member.
+The rewards will be distributed as follows:
+\begin{itemize}
+  \item \AgdaArgument{rewardOwners}:
+    These funds will go to the \AgdaField{rewardAccount}
+    specified in the pool registration certificate.
+  \item \AgdaArgument{rewardMember}:
+    These funds will go to the reward accounts of the individual delegators.
+\end{itemize}
+Relevant quantities for the functions are:
+\begin{itemize}
+  \item \AgdaArgument{rewards}: Rewards paid out to this pool.
+  \item \AgdaArgument{pool}: Pool parameters, such as cost and margin.
+  \item \AgdaArgument{ownerStake}: Stake of the pool owners relative to the total amount of Ada.
+  \item \AgdaArgument{memberStake}: Stake of the pool member relative to the total amount of Ada.
+  \item \AgdaArgument{stake}: Stake of the whole pool relative to the total amount of Ada.
+  \item \AgdaFunction{÷₀}: Division operator that returns zero when the denominator is zero.
+    This result is sensible when a pool has no stake.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+rewardOwners : Coin → PoolParams → UnitInterval → UnitInterval → Coin
+rewardOwners rewards pool ownerStake stake = case rewards ≤? cost of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      (yes _) → rewards
+      (no _) → cost + posPart (floor (
+        (fromℕ rewards - fromℕ cost) * (margin + (1 - margin) * ratioStake)))
+  where
+    ratioStake   = fromUnitInterval ownerStake ÷₀ fromUnitInterval stake
+    cost         = pool .PoolParams.cost
+    margin       = fromUnitInterval (pool .PoolParams.margin)
+\end{code}
+\end{AgdaMultiCode}
+\begin{AgdaMultiCode}
+\begin{code}
+rewardMember : Coin → PoolParams → UnitInterval → UnitInterval → Coin
+rewardMember rewards pool memberStake stake = case rewards ≤? cost of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      (yes _) → 0
+      (no _) → posPart (floor (
+        (fromℕ rewards - fromℕ cost) * ((1 - margin) * ratioStake)))
+  where
+    ratioStake    = fromUnitInterval memberStake ÷₀ fromUnitInterval stake
+    cost          = pool .PoolParams.cost
+    margin        = fromUnitInterval (pool .PoolParams.margin)
+\end{code}
+\end{AgdaMultiCode}
+\caption{Functions rewardOwners and rewardMember}
+\label{fig:functions:rewardOwners-rewardMember}
+\end{figure*}
+
 \subsection{Reward Update}
 \label{sec:reward-update}
 TODO: This section defines the \AgdaRecord{RewardUpdate} type,
