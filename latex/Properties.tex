@@ -1,17 +1,87 @@
-This section presents the properties of the ledger that we would like to formally
-state and prove.  The subsections that follow restate (in Agda) the properties that
-we have already proved.
-
 \newcommand{\ab}[1]{\AgdaBound{#1}}
-\begin{property}[\textbf{Preserve Balance}]
-\noindent
+
+This section presents the properties of the ledger that we would like to formally
+state and prove.  If we have already proved the property in Agda, then the property
+is labelled ``PROVED''; otherwise, it's labelled ``TO PROVE.''  The subsections that
+follow restate (in Agda) the properties that we have already proved.
+
+
+\subsection{Transaction Properties}
+\begin{property}[\textbf{Updates have non-empty groups}] TO PROVE.
+
+\noindent If \ab{p} is a goveranance proposal that proposes a parameter update \ab{up}, then \AgdaField{updateGroups} up $≢ ∅$.
+\end{property}
+
+\subsection{Block Properties}
+\begin{property}[Chain state epoch step] TO PROVE.
+
 Let
-\begin{align*}
-  \ab{Γ}                &∈ \UTxOEnv{},\\
-  \ab{utxo}, \ab{utxo'} &∈ \UTxO{},\\
-  \ab{fees}, \ab{fees'} &∈ \Coin{},\\
-  \ab{tx}               &∈ \Tx{}.
-\end{align*}
+\begin{itemize}
+\item \ab{s}   = a \AgdaRecord{ChainState},
+\item \ab{nes} = the \AgdaField{newEpochState} of \ab{s},
+\item \ab{es}  = the \AgdaField{epochState} of \ab{nes} (= the \AgdaField{epochState} of \ab{s}),
+\item \ab{le}  = the \AgdaField{lastEpoch} of \ab{nes}.
+\end{itemize}
+Suppose there exists a chain state \ab{s'} with \AgdaField{epochState} \ab{es'} such that 
+\ab{s} \AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{s'}.  Then the following
+implication holds: if \ab{es} ≢ \ab{es'}, then the epoch of the slot of \ab{b} is
+\AgdaFunction{sucᵉ}~\ab{le} (where \AgdaFunction{sucᵉ} is the epoch successor function). 
+\end{property}
+
+\subsection{Invariant Properties}
+\begin{property}[\texttt{action-deposits≡actions-prop}] \hfill \textbf{TO PROVE}
+
+\begin{verbatim}
+  filterˢ isGADeposit (dom (UTxOState.deposits utxoSt))
+    ≡ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
+\end{verbatim}
+\end{property}
+
+\begin{property}[\texttt{dom-rwds≡credDeposits}] \hfill \textbf{TO PROVE}
+\begin{verbatim}
+  filterˢ isCredDeposit (dom (UTxOState.deposits utxoSt)) 
+    ≡ mapˢ CredentialDeposit (dom rewards)
+\end{verbatim}
+\end{property}
+
+\begin{property}[\texttt{pp-wellFormed}]  \hfill \textbf{TO PROVE}
+
+\begin{verbatim}
+  pp-wellFormed = paramsWellFormed (pparams' .proj₁)
+\end{verbatim}
+\end{property}
+
+\begin{property}[\texttt{action-deposits≡actions-inv}] \hfill \textbf{TO PROVE; see XXXX}
+% TODO: replace XXXX with citation to location of proof
+
+\begin{verbatim}
+action-deposits≡actions-inv = ChainInvariant action-deposits≡actions-prop
+\end{verbatim}
+\end{property}
+
+\begin{property}[\texttt{dom-rwds≡credDeposits-inv}] \hfill \textbf{TO PROVE}
+
+\begin{verbatim}
+dom-rwds≡credDeposits-inv = ChainInvariant dom-rwds≡credDeposits
+\end{verbatim}
+\end{property}
+
+\begin{property}[\texttt{pp-wellFormed-inv}] \hfill \textbf{TO PROVE}
+
+\begin{verbatim}
+pp-wellFormed-inv = ChainInvariant pp-wellFormed
+\end{verbatim}
+\end{property}
+
+\begin{property}[\textbf{Preserve Balance}] \hfill \textbf{PROVED} 
+
+Let
+\begin{itemize}
+\item  \ab{Γ} ∈ \UTxOEnv{},
+\item  \ab{utxo}, \ab{utxo'} ∈ \UTxO{},
+\item  \ab{fees}, \ab{fees'} ∈ \Coin{},
+\item  \ab{tx} ∈ \Tx{}.
+\end{itemize}
 If \ab{txid} ∉ \ab{mapˢ} \ab{proj₁} (\ab{dom} \ab{utxo})
 and
 \ab{Γ}~\ab{⊢}~s~\ab{⇀⦇ tx ,UTXO⦈}~s',
@@ -19,3 +89,4 @@ then
 \[
   \ab{getCoin} \ab{s} + φ(\ab{getCoin} \ab{txwdrls} , \ab{isValid}) ≡ \ab{getCoin} \ab{s'}.
 \]
+\end{property}

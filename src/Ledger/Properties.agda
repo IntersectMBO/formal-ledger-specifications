@@ -133,8 +133,11 @@ module _ (s : ChainState) where
 
     -- PROPERTY (TO PROVE) --
     propose-ChangePP-hasGroup : Type 
-    propose-ChangePP-hasGroup = ∀ {up prop} → prop ∈ txb → prop .GovProposal.action ≡ ChangePParams up → updateGroups up ≢ ∅
-    ---------------------------------
+    propose-ChangePP-hasGroup = ∀ {p up} →
+      ∙ p ∈ txb
+      ∙ p .GovProposal.action ≡ ⟦ ChangePParams , up ⟧ᵍᵃ
+        ────────────────────────────────
+        updateGroups up ≢ ∅
 
   -- Block properties
 

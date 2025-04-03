@@ -91,3 +91,16 @@
 %% The above help enforce consistency among citations that mention sections;
 %% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
 %%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
+
+%%
+%% Environments
+%%
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{property}{Property}[section]
+\newenvironment{question}
+  {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}
+  {\end{bclogo}}
+\newenvironment{note}
+  {\begin{bclogo}[logo=\bcattention, couleur=orange!10, arrondi=0.2]{ NOTE}}
+  {\end{bclogo}}

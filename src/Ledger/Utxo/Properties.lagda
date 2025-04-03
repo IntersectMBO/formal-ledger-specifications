@@ -533,7 +533,7 @@ module DepositHelpers
     ∎
 \end{code}
 
-Here, we state the fact that the UTxO relation is computable.
+Here we state the fact that the UTxO relation is computable.
 
 \begin{figure*}[h]
 \begin{code}
