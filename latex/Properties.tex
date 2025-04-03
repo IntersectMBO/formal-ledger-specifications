@@ -1,0 +1,17 @@
+\newcommand{\ab}[1]{\AgdaBound{#1}}
+\begin{property}[\textbf{Preserve Balance}]
+\noindent
+Let
+\begin{align*}
+  \ab{Γ}                &∈ \UTxOEnv{},\\
+  \ab{utxo}, \ab{utxo'} &∈ \UTxO{},\\
+  \ab{fees}, \ab{fees'} &∈ \Coin{},\\
+  \ab{tx}               &∈ \Tx{}.
+\end{align*}
+If \ab{txid} ∉ \ab{mapˢ} \ab{proj₁} (\ab{dom} \ab{utxo})
+and
+\ab{Γ}~\ab{⊢}~s~\ab{⇀⦇ tx ,UTXO⦈}~s',
+then
+\[
+  \ab{getCoin} \ab{s} + φ(\ab{getCoin} \ab{txwdrls} , \ab{isValid}) ≡ \ab{getCoin} \ab{s'}.
+\]
