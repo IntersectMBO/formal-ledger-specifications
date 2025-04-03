@@ -1,4 +1,4 @@
-name: Formal Ledger Specs
+name: Build and upload artifacts
 on:
   push:
     branches:
@@ -6,168 +6,157 @@ on:
   pull_request:
     branches:
     - master
+  # For running the workflow manually - useful for branches without PRs, for
+  # which CI isn't run automatically
+  workflow_dispatch:
 
 permissions:
   contents: write
 
-env:
-  MAlonzo_branch: ${{ github.event.pull_request.head.ref }}-MAlonzo
-
 jobs:
-  MAlonzo:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check if ${{ env.MAlonzo_branch }} exists
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ env.MAlonzo_branch }}
-        id: MAlonzo-exists
-        continue-on-error: true
-        if: github.ref != 'refs/heads/master'
-      - uses: actions/checkout@v4
-        with:
-          ref: MAlonzo-code
-      - name: Create branch ${{ env.MAlonzo_branch }} for generated code
-        if: github.ref != 'refs/heads/master' && steps.MAlonzo-exists.outcome == 'failure'
-        run: |
-          git checkout -b ${{ env.MAlonzo_branch }} origin/MAlonzo-code
-          git push origin ${{ env.MAlonzo_branch }}
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v20
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Commit generated code at ${{ env.MAlonzo_branch }}
-        if: github.ref != 'refs/heads/master'
-        run: |
-            nix-build -A ledger.hsSrc -j1 -o outputs/MAlonzo
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git stash push
-            git fetch origin ${{ env.MAlonzo_branch }} --unshallow
-            git checkout ${{ env.MAlonzo_branch }}
-            rsync -r --exclude={'**/nix-support','**/lib'} outputs/MAlonzo/haskell/Ledger/* generated/
-            git add -f generated && git commit -m "Generate code for ${{ github.sha }}" || echo "Everything is up-to-date."
-      - name: Push ${{ env.MAlonzo_branch }}
-        if: github.ref != 'refs/heads/master'
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-            github_token: ${{ secrets.GITHUB_TOKEN }}
-            branch: ${{ env.MAlonzo_branch }}
-            force: false
-            directory: .
-
-  Formal-Ledger:
+  formal-ledger-agda:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v20
+      - uses: cachix/install-nix-action@v31
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build formalLedger
         id: formalLedger
         run: |
-          nix-build -A formalLedger -j1 -o outputs/formalLedger
-          rsync -r --include={'**/*.time'} outputs/formalLedger*/* docs/
-      - name: Upload docs
-        if: github.ref == 'refs/heads/master'
+          nix-build -A formalLedger -o outputs
+      - name: Upload agda _build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Docs-formalLedger
-          path: docs
-      - name: Upload typechecking times
-        if: github.event_name == 'pull_request'
+          name: _build
+          path: outputs/_build
+      - name: Upload agda typechecking time artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Typechecking durations - FormalLedger
-          path: docs/*.time
+          name: typecheck.time
+          path: outputs/typecheck.time
 
-  Ledger-hs:
+  hs:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      target: hs
+
+  cardano-ledger-pdf:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      target: cardano-ledger.pdf
+
+  conway-ledger-pdf:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      target: conway-ledger.pdf
+
+  html:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      target: html
+
+  upload-artifacts:
+    # This job runs only if the workflow has not been manually dispached
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v20
         with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build ledger
-        id: ledger-hs
+          fetch-depth: 0
+      - name: Set artifacts_branch variable
+        id: set-artifacts-branch
         run: |
-          nix-build -A ledger.hsSrc -j1 -o outputs/ledger
-          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
-      - name: Upload docs
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Docs-ledger-hs
-          path: docs
-
-  Ledger-pdf:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: cachix/install-nix-action@v20
-        with:
-          nix_path: nixpkgs=channel:nixos-unstable
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build ledger
-        id: ledger-pdf
+          printf "Set the artifacts branch name.\n"
+          if [[ -n "${{ github.event.pull_request.head.ref }}" ]]; then
+            printf "This workflow was triggered by a PR to master\n"
+            echo "artifacts_branch=${{ github.event.pull_request.head.ref }}-artifacts" >> $GITHUB_OUTPUT
+            printf "artifacts_branch: %s\n" "${{ github.event.pull_request.head.ref }}-artifacts"
+          else
+            printf "This workflow was triggered by a push event to master\n"
+            echo "artifacts_branch=master-artifacts" >> $GITHUB_OUTPUT
+            printf "artifacts_branch: %s\n" "master-artifacts"
+          fi
+      # Checkout env.artifacts_branch if it already exists
+      # otherwise create a new orphan branch.
+      # Lastly, remove all files from the repo
+      - name: Checkout artifacts branch
         run: |
-          echo -n html docs conway | xargs -d' ' -I{} nix-build -A ledger.{} -j1 -o outputs/ledger-{}
-          rsync -r --exclude={'**/nix-support','**/lib'} outputs/ledger*/* docs/
-      - name: Upload docs
-        if: github.ref == 'refs/heads/master'
-        uses: actions/upload-artifact@v4
-        with:
-          name: Docs-ledger-pdf
-          path: docs
-      - name: Upload PDF artifacts
-        if: github.event_name == 'pull_request'
-        uses: actions/upload-artifact@v4
-        with:
-          name: PDF specs - Ledger
-          path: docs/pdfs/*.pdf
-
-  Uploads:
-    needs: [Formal-Ledger, Ledger-hs, Ledger-pdf]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Download docs
-        if: github.ref == 'refs/heads/master'
+          if [[ -n "$(git ls-remote --heads origin "${ARTIFACTS_BRANCH}")" ]]; then
+            git checkout "${ARTIFACTS_BRANCH}"
+          else
+            git checkout --orphan "${ARTIFACTS_BRANCH}"
+          fi
+          git rm -rf .
+        env:
+          ARTIFACTS_BRANCH: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
+      - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          pattern: Docs-*
-          path: docs
+          pattern: '!_build'
           merge-multiple: true
-      - name: Generate main website
-        if: github.ref == 'refs/heads/master'
+      - name: Generate website
         run: |
-          echo "** Generated PDF files:"; find -L docs/ -name '*.pdf'
-          echo "** Generated HTML files:"; find -L docs/ -name '*.html'
-          echo "** Generated Haskell files:"; find -L docs/ -name '*.hs'
-          OUT_DIR=docs make staticWebsite
-      - name: Add files
-        if: github.ref == 'refs/heads/master'
+          cat << EOF > index.html
+          <!DOCTYPE html>
+          <html>
+          <head>
+           <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+           <meta name="Author" content="IOHK">
+           <title>Formal Ledger Specifications</title>
+           <style type="text/css">
+            BODY { font-family : monospace, sans-serif;  color: black;}
+            P { font-family : monospace, sans-serif; color: black; margin:0px; padding: 0px;}
+            A:visited { text-decoration : none; margin : 0px; padding : 0px;}
+            A:link    { text-decoration : none; margin : 0px; padding : 0px;}
+            A:hover   { text-decoration: underline; background-color : yellow; margin : 0px; padding : 0px;}
+            A:active  { margin : 0px; padding : 0px;}
+            .VERSION { font-size: small; font-family : arial, sans-serif; }
+           </style>
+          </head>
+          <body>
+          	<h1>Directory Tree</h1><p>
+          EOF
+
+          tree -H '.'                     \
+               -L 1                       \
+               --dirsfirst                \
+               --hintro=/dev/null         \
+               --houtro=/dev/null         \
+               --metafirst                \
+               --charset utf-8            \
+               --timefmt '%d-%b-%Y %H:%M' \
+               -I "index.html"            \
+               -I "hs"                    \
+               -h -D --du                 \
+               >> index.html
+
+          cat << EOF >> index.html
+          	<hr>
+          	<p class="VERSION">
+              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a>
+          	</p>
+          </body>
+          </html>
+          EOF
+
+      - name: Commit artifacts
         run: |
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
-            git add -f docs/
-            git commit -m "Updated for ${{ github.sha }}"
-      - name: Push to gh-pages
-        if: github.ref == 'refs/heads/master'
+            git add -A
+            git commit -m "Artifacts generated from ${{ github.sha }}"
+      - name: Push ${{ env.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
-            branch: gh-pages
+            branch: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
             force: true
-            directory: .

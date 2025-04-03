@@ -11,8 +11,8 @@ open To ⦃...⦄ public
 -- Metaprogram to derive instances
 open import Data.List.NonEmpty as NE using (List⁺; _∷_)
 open import Data.List
-open import Meta
-open import MetaPrelude
+open import Meta.Init
+open import Meta.Prelude
 open import Reflection.Tactic
 open import Reflection.Utils.Debug
 

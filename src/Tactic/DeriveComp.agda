@@ -4,7 +4,7 @@ module Tactic.DeriveComp where
 
 open import Prelude hiding (Type)
 open import PreludeMeta hiding (TC) renaming (TCI to TC)
-open import MetaPrelude using (zipWithIndex)
+open import Meta.Prelude using (zipWithIndex)
 open import Class.HasAdd
 open import Class.Traversable
 

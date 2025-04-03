@@ -1,0 +1,31 @@
+on:
+  workflow_call:
+    inputs:
+      target:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download agda _build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: _build
+          path: _build
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Build the target ${{ inputs.target }}
+        run: |
+          nix-shell --run 'fls-shake --trace -j8 ${{ inputs.target }}'
+      - name: Upload ${{ inputs.target }} artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.target }}
+          path: dist
