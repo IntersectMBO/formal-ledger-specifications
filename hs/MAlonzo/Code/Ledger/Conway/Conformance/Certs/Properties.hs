@@ -59,6 +59,7 @@ import qualified MAlonzo.Code.Ledger.Types.GovStructure
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
+import qualified MAlonzo.Code.Tactic.GenError
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- _.DecEq-Credential
@@ -562,7 +563,7 @@ d_Computational'45'DELEG_1138 v0
                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                          (let v12
                                                 = coe
-                                                    MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                    MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                     (coe
                                                        MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
                                                        (coe
@@ -623,7 +624,7 @@ d_Computational'45'DELEG_1138 v0
                                                MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v13
                                                  -> let v14
                                                           = coe
-                                                              MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                              MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                               (coe
                                                                  MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
                                                                  (coe
@@ -675,7 +676,7 @@ d_Computational'45'DELEG_1138 v0
                                                          MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v15
                                                            -> let v16
                                                                     = coe
-                                                                        MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                        MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                         (coe
                                                                            MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                                            (coe
@@ -1060,7 +1061,7 @@ d_Computational'45'DELEG_1138 v0
                                                                                MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                                                                (let v18
                                                                                       = coe
-                                                                                          MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                                          MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                                           (coe
                                                                                              MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                                                              (coe
@@ -1118,7 +1119,7 @@ d_Computational'45'DELEG_1138 v0
                                                                                      MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v19
                                                                                        -> let v20
                                                                                                 = coe
-                                                                                                    MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                                                    MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                                                     (coe
                                                                                                        MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                                                                        (coe
@@ -1321,7 +1322,7 @@ d_Computational'45'DELEG_1138 v0
                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                          (let v10
                                                 = coe
-                                                    MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                    MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                     (coe
                                                        MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
                                                        (coe
@@ -1867,7 +1868,7 @@ d_Computational'45'GOVCERT_1366 v0
                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                          (let v10
                                                 = coe
-                                                    MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                    MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                     (coe
                                                        MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                        (coe
@@ -2083,7 +2084,7 @@ d_Computational'45'GOVCERT_1366 v0
                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                          (let v10
                                                 = coe
-                                                    MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                    MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                     (coe
                                                        MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
                                                        (coe
@@ -3081,7 +3082,7 @@ d_Computational'45'CERT_1642 v0
                                                            MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                                            (let v15
                                                                   = coe
-                                                                      MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                      MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                       (coe
                                                                          MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
                                                                          (coe
@@ -3145,7 +3146,7 @@ d_Computational'45'CERT_1642 v0
                                                                  MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v16
                                                                    -> let v17
                                                                             = coe
-                                                                                MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                                MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                                 (coe
                                                                                    MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
                                                                                    (coe
@@ -3206,7 +3207,7 @@ d_Computational'45'CERT_1642 v0
                                                                            MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v18
                                                                              -> let v19
                                                                                       = coe
-                                                                                          MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                                          MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                                           (coe
                                                                                              MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                                                              (coe
@@ -3756,7 +3757,7 @@ d_Computational'45'CERT_1642 v0
                                                                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                                                                                  (let v21
                                                                                                         = coe
-                                                                                                            MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                                                            MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                                                                                (coe
@@ -3815,7 +3816,7 @@ d_Computational'45'CERT_1642 v0
                                                                                                        MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v22
                                                                                                          -> let v23
                                                                                                                   = coe
-                                                                                                                      MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                                                                      MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                                                                       (coe
                                                                                                                          MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
                                                                                                                          (coe
@@ -4306,7 +4307,7 @@ d_Computational'45'CERT_1642 v0
                                                            MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
                                                            (let v13
                                                                   = coe
-                                                                      MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
+                                                                      MAlonzo.Code.Tactic.GenError.du_dec'45'de'45'morgan_8
                                                                       (coe
                                                                          MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
                                                                          (coe

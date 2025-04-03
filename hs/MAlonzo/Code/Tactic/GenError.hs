@@ -21,34 +21,76 @@ import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Builtin.Reflection
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Primitive
+import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Monad.Core
 import qualified MAlonzo.Code.Class.Monad.Instances
 import qualified MAlonzo.Code.Class.MonadError
 import qualified MAlonzo.Code.Class.MonadReader
 import qualified MAlonzo.Code.Class.MonadTC
+import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
+import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Meta.Init
 import qualified MAlonzo.Code.Reflection.Debug
 import qualified MAlonzo.Code.Reflection.TCI
 import qualified MAlonzo.Code.Reflection.Tactic
 import qualified MAlonzo.Code.Reflection.Utils.TCI
+import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
+import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.ClauseBuilder
 
+-- Tactic.GenError.dec-de-morgan
+d_dec'45'de'45'morgan_8 ::
+  () ->
+  () ->
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10 ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30
+d_dec'45'de'45'morgan_8 ~v0 ~v1 v2 v3
+  = du_dec'45'de'45'morgan_8 v2 v3
+du_dec'45'de'45'morgan_8 ::
+  MAlonzo.Code.Class.Decidable.Core.T__'8263'_10 ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  MAlonzo.Code.Data.Sum.Base.T__'8846'__30
+du_dec'45'de'45'morgan_8 v0 v1
+  = case coe v0 of
+      MAlonzo.Code.Class.Decidable.Core.C_'8263'__30 v2
+        -> case coe v2 of
+             MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v3 v4
+               -> if coe v3
+                    then case coe v4 of
+                           MAlonzo.Code.Relation.Nullary.Reflects.C_of'696'_22 v5
+                             -> coe
+                                  MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42
+                                  (coe
+                                     (\ v6 ->
+                                        coe
+                                          v1
+                                          (coe
+                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
+                                             (coe v6))))
+                           _ -> MAlonzo.RTE.mazUnreachableError
+                    else coe
+                           seq (coe v4) (coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 erased)
+             _ -> MAlonzo.RTE.mazUnreachableError
+      _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.GenError._
-d___12 ::
+d___24 ::
   (MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> ()) ->
   MAlonzo.Code.Class.Monad.Core.T_Monad_8 ->
   MAlonzo.Code.Class.MonadError.T_MonadError_16 ->
   MAlonzo.Code.Class.MonadReader.T_MonadReader_20 ->
   MAlonzo.Code.Class.MonadTC.T_MonadTC_80 ->
   MAlonzo.Code.Tactic.ClauseBuilder.T_ContextMonad_444
-d___12 v0 v1 v2 v3 v4
+d___24 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Tactic.ClauseBuilder.du_ContextMonad'45'MonadTC_598 v1
       v2 v3 v4
 -- Tactic.GenError.genError'
-d_genError''_14 :: MAlonzo.Code.Class.MonadTC.T_TCEnv_24 -> AgdaAny
-d_genError''_14
+d_genError''_26 :: MAlonzo.Code.Class.MonadTC.T_TCEnv_24 -> AgdaAny
+d_genError''_26
   = coe
       MAlonzo.Code.Reflection.Utils.TCI.du_inDebugPath_320
       (coe
@@ -94,19 +136,19 @@ d_genError''_14
                            (coe MAlonzo.Code.Agda.Builtin.Reflection.C_string_144 (coe v2))))
                    v0)))
 -- Tactic.GenError._.genError
-d_genError_26 ::
+d_genError_38 ::
   MAlonzo.Code.Class.MonadTC.T_TCOptions_12 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_genError_26 v0
+d_genError_38 v0
   = coe
       MAlonzo.Code.Reflection.Tactic.d_initTac_108 (coe v0)
-      (coe d_genError''_14)
+      (coe d_genError''_26)
 -- Tactic.GenError.genErrors'
-d_genErrors''_28 ::
+d_genErrors''_40 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Class.MonadTC.T_TCEnv_24 -> AgdaAny
-d_genErrors''_28 v0 v1
+d_genErrors''_40 v0 v1
   = case coe v0 of
       0 -> coe
              MAlonzo.Code.Class.MonadTC.du_error1_728
@@ -188,8 +230,8 @@ d_genErrors''_28 v0 v1
                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                               (coe
                                                  (MAlonzo.RTE.QName
-                                                    (8 :: Integer) (18014622004808103972 :: Integer)
-                                                    "Ledger.Prelude.dec-de-morgan"
+                                                    (8 :: Integer) (14659073188479195380 :: Integer)
+                                                    "Tactic.GenError.dec-de-morgan"
                                                     (MAlonzo.RTE.Fixity
                                                        MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                               (coe
@@ -216,7 +258,7 @@ d_genErrors''_28 v0 v1
                                                  (coe
                                                     MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
                                               (coe
-                                                 d___12 erased
+                                                 d___24 erased
                                                  (coe
                                                     MAlonzo.Code.Class.MonadReader.du_Monad'45'ReaderT_94
                                                     (coe
@@ -304,7 +346,7 @@ d_genErrors''_28 v0 v1
                                                              MAlonzo.Code.Meta.Init.d_iMonadTC'45'TCI_6)
                                                           (coe
                                                              MAlonzo.Code.Meta.Init.d_iMonadReader'45'TC_8)
-                                                          (coe d_genError''_14))))
+                                                          (coe d_genError''_26))))
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                     (coe
@@ -408,7 +450,7 @@ d_genErrors''_28 v0 v1
                                               (coe
                                                  MAlonzo.Code.Class.Monad.Instances.d_Monad'45'TC_6))
                                            () v5
-                                           (d_genErrors''_28
+                                           (d_genErrors''_40
                                               (coe v2)
                                               (coe
                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
@@ -416,13 +458,13 @@ d_genErrors''_28 v0 v1
                                                  (coe
                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
                                 v3))
-                        (coe d_genError''_14 v3))))
+                        (coe d_genError''_26 v3))))
 -- Tactic.GenError._.genErrors
-d_genErrors_46 ::
+d_genErrors_58 ::
   MAlonzo.Code.Class.MonadTC.T_TCOptions_12 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_genErrors_46 v0 v1
+d_genErrors_58 v0 v1
   = coe
       MAlonzo.Code.Reflection.Tactic.d_initTac_108 (coe v0)
-      (coe d_genErrors''_28 (coe (100 :: Integer)) (coe v1))
+      (coe d_genErrors''_40 (coe (100 :: Integer)) (coe v1))

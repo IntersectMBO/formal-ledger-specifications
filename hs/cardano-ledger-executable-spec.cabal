@@ -229,9 +229,7 @@ library
         MAlonzo.Code.Data.List
         MAlonzo.Code.Data.List.Base
         MAlonzo.Code.Data.List.Effectful
-        MAlonzo.Code.Data.List.Ext
         MAlonzo.Code.Data.List.Ext.Properties
-        MAlonzo.Code.Data.List.Ext.Properties2
         MAlonzo.Code.Data.List.Extrema
         MAlonzo.Code.Data.List.Extrema.Core
         MAlonzo.Code.Data.List.Membership.DecPropositional
@@ -298,6 +296,8 @@ library
         MAlonzo.Code.Data.List.Sort
         MAlonzo.Code.Data.List.Sort.Base
         MAlonzo.Code.Data.List.Sort.MergeSort
+        MAlonzo.Code.Data.List.Subpermutations
+        MAlonzo.Code.Data.List.Subpermutations.Properties
         MAlonzo.Code.Data.Maybe
         MAlonzo.Code.Data.Maybe.Base
         MAlonzo.Code.Data.Maybe.Effectful

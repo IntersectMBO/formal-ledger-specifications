@@ -176,9 +176,9 @@ d_genPremises_24 v0 v1
                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'TC_82 () erased
                  () erased (d_unbundleHypotheses_42 (coe v0) (coe v1))
                  (coe
-                    MAlonzo.Code.Reflection.Ext.du_extendContextTel_10 ()
+                    MAlonzo.Code.Reflection.Ext.du_extendContextTel_90 ()
                     (coe
-                       MAlonzo.Code.Reflection.Ext.d_absTelescope_162
+                       MAlonzo.Code.Reflection.Ext.d_absTelescope_242
                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                           (coe
                              du_breakImplicits_40
@@ -317,7 +317,7 @@ d_genPremises_24 v0 v1
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_clause_272
                                                 (coe
-                                                   MAlonzo.Code.Reflection.Ext.d_absTelescope_162
+                                                   MAlonzo.Code.Reflection.Ext.d_absTelescope_242
                                                    v6)
                                                 (coe
                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -796,7 +796,7 @@ d_fvs_84 ::
 d_fvs_84 ~v0 ~v1 ~v2 v3 = du_fvs_84 v3
 du_fvs_84 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> [Integer]
-du_fvs_84 v0 = coe MAlonzo.Code.Reflection.Ext.d_freeVars_54 v0
+du_fvs_84 v0 = coe MAlonzo.Code.Reflection.Ext.d_freeVars_134 v0
 -- Tactic.Premises._._.go
 d_go_86 ::
   AgdaAny ->
