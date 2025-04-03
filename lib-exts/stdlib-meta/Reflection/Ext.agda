@@ -1,14 +1,27 @@
-{-# OPTIONS --safe #-}
+{-# OPTIONS --safe --without-K #-}
 module Reflection.Ext where
 
-open import Prelude hiding (Type)
-open import PreludeMeta
-open import Data.Nat using (_≤ᵇ_)
 open import Data.Bool using (if_then_else_)
+open import Data.Nat using (_≤ᵇ_)
+open import Data.List using (map)
+open import Class.Monad hiding (Monad-TC)
+open import Class.MonadTC
+  hiding (extendContext)
+open import Class.MonadError
+  using (MonadError; MonadError-TC)
+open import Class.Show
+open import Meta.Prelude
+open import Meta.Init public
+  renaming (TC to TCI)
+  hiding (Monad-TC; MonadError-TC; toℕ)
+open import Reflection using (TC; extendContext)
 
-open import Class.Core using (Type↑)
+open MonadTC ⦃...⦄
+open MonadError ⦃...⦄ using (error; catch)
 
-private variable ℓ : Level; A B : Set ℓ
+instance
+  iTC  = MonadTC-TC
+  iTCE = MonadError-TC
 
 -- N-ary extension of the TC context.
 -- TODO: use `MonadTC.extendContext'` once it includes names
@@ -59,30 +72,30 @@ freeVars = go 0 where mutual
   goAbs b (abs _ t) = go b t
 
   goArgs : ℕ → Args Term → _
-  goArgs b = λ where [] → []; (a ∷ as) → goArg b a ◇ goArgs b as
+  goArgs b = λ where [] → []; (a ∷ as) → goArg b a ++ goArgs b as
 
   goCl : ℕ → Clause → _
   goCl b = λ where
-    (clause tel _ t) → go (length tel +ℕ b) t
+    (clause tel _ t) → go (length tel + b) t
     (absurd-clause _ _) → []
 
   goCls : ℕ → List Clause → _
-  goCls b = λ where [] → []; (c ∷ cs) → goCl b c ◇ goCls b cs
+  goCls b = λ where [] → []; (c ∷ cs) → goCl b c ++ goCls b cs
 
 module _ x y z where
-  _ = freeVars (quoteTerm (λ x → x +ℕ 1))
+  _ = freeVars (quoteTerm (λ x → x + 1))
     ≡ []
     ∋ refl
-  _ = freeVars (quoteTerm (λ x → x +ℕ y))
+  _ = freeVars (quoteTerm (λ x → x + y))
     ≡ [ 1 ]
     ∋ refl
-  _ = freeVars (quoteTerm (λ x y → x +ℕ y +ℕ z))
+  _ = freeVars (quoteTerm (λ x y → x + y + z))
     ≡ [ 0 ]
     ∋ refl
-  _ = freeVars (quoteTerm (λ x → x +ℕ y +ℕ z))
+  _ = freeVars (quoteTerm (λ x → x + y + z))
     ≡ (1 ∷ 0 ∷ [])
     ∋ refl
-  _ = freeVars (quoteTerm (x +ℕ y +ℕ z))
+  _ = freeVars (quoteTerm (x + y + z))
     ≡ (2 ∷ 1 ∷ 0 ∷ [])
     ∋ refl
   _ = freeVars (quote _,_ ◆⟦ ♯ 0 ∣ `λ "y" ⇒ ♯ 1 ⟧)
