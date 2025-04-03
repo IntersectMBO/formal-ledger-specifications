@@ -7,6 +7,7 @@
 
 open import Ledger.Prelude renaming (filterˢ to filter)
 open import Ledger.Types.GovStructure
+open import Ledger.Types.Numeric.UnitInterval
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
 
@@ -43,7 +44,11 @@ instance
 \begin{code}
 record PoolParams : Type where
   field
-    rewardAccount : Credential
+    owners          : ℙ KeyHash
+    cost            : Coin
+    margin          : UnitInterval
+    pledge          : Coin
+    rewardAccount   : Credential
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
