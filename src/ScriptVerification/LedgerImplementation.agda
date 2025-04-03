@@ -9,7 +9,7 @@ module ScriptVerification.LedgerImplementation
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import Data.Rational using (0ℚ; ½)
 open import Algebra.Morphism    using (module MonoidMorphisms)
-open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid)
+open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
 open import Foreign.Convertible
