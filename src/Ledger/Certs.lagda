@@ -37,7 +37,7 @@ instance
 \label{fig:certs:deposit-types}
 \end{figure*}
 
-\begin{figure*}[h!]
+\begin{figure*}
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
@@ -46,6 +46,12 @@ record PoolParams : Type where
     rewardAccount : Credential
 \end{code}
 \end{NoConway}
+\end{AgdaMultiCode}
+\caption{Stake pool parameter definitions}
+\end{figure*}
+
+\begin{figure*}[h!]
+\begin{AgdaMultiCode}
 \begin{code}
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
