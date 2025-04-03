@@ -282,7 +282,7 @@ actualVotes Γ pparams cc gaTy votes
 \end{code}
 \begin{code}
         nothing → Vote.no
-        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) , gaTy of
+        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAccount p) , gaTy of
 \end{code}
 \begin{code}[hide]
                λ where
