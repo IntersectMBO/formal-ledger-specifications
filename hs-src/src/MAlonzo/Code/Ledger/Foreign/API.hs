@@ -1,6 +1,6 @@
-module Lib
+module MAlonzo.Code.Ledger.Foreign.API
   ( module X
-  , module Lib
+  , module MAlonzo.Code.Ledger.Foreign.API
   ) where
 
 import MAlonzo.Code.Ledger.Conway.Foreign.HSTypes                    as X

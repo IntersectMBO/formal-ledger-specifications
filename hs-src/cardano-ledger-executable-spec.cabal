@@ -29,9 +29,9 @@ common globalOptions
 
 library
     import: globalOptions
-    hs-source-dirs: .
+    hs-source-dirs: src
     exposed-modules:
-        Lib
+        MAlonzo.Code.Ledger.Foreign.API
     build-depends:
         text,
         ieee
