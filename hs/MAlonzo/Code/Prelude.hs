@@ -17,14 +17,17 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
+import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.FromNat
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
+import qualified MAlonzo.Code.Data.Integer.Base
 import qualified MAlonzo.Code.Data.Maybe.Relation.Binary.Connected
 import qualified MAlonzo.Code.Data.Nat.Literals
 import qualified MAlonzo.Code.Data.Rational.Literals
+import qualified MAlonzo.Code.Data.Sign.Base
 import qualified MAlonzo.Code.Data.Unit.Polymorphic.Base
 import qualified MAlonzo.Code.Level
 
@@ -86,3 +89,28 @@ du_'126''63'_46 v0 v1 v2
          MAlonzo.Code.Data.Maybe.Relation.Binary.Connected.du_connected'63'_86
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v2)) (coe v0)
          (coe v1))
+-- Prelude.posPart
+d_posPart_56 :: Integer -> Integer
+d_posPart_56 v0
+  = let v1 = MAlonzo.Code.Data.Integer.Base.d_sign_24 (coe v0) in
+    coe
+      (case coe v1 of
+         MAlonzo.Code.Data.Sign.Base.C_'45'_8 -> coe (0 :: Integer)
+         MAlonzo.Code.Data.Sign.Base.C_'43'_10
+           -> coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v0)
+         _ -> MAlonzo.RTE.mazUnreachableError)
+-- Prelude.negPart
+d_negPart_68 :: Integer -> Integer
+d_negPart_68 v0
+  = let v1 = MAlonzo.Code.Data.Integer.Base.d_sign_24 (coe v0) in
+    coe
+      (case coe v1 of
+         MAlonzo.Code.Data.Sign.Base.C_'45'_8
+           -> coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v0)
+         MAlonzo.Code.Data.Sign.Base.C_'43'_10 -> coe (0 :: Integer)
+         _ -> MAlonzo.RTE.mazUnreachableError)
+-- Prelude.∸≡posPart⊖
+d_'8760''8801'posPart'8854'_84 ::
+  Integer ->
+  Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_'8760''8801'posPart'8854'_84 = erased

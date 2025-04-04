@@ -483,7 +483,7 @@ du_HSP2ScriptStructure_330
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
          (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8))
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_Show'45'ExUnits_110
+      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_Show'45'ExUnits_86
       (coe
          MAlonzo.Code.Class.Show.Core.C_mkShow_18
          (coe (\ v0 -> seq (coe v0) (coe ("tt" :: Data.Text.Text)))))
@@ -1124,7 +1124,7 @@ d_HSTransactionStructure_658 v0
       (coe du_HSGlobalConstants_12) (d_HSCrypto_16 (coe v0))
       (coe du_HSEpochStructure_14) (d_HSScriptStructure_308 (coe v0))
       (d_HsGovParams_616 (coe v0))
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_tokenAlgebra_258
+      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_tokenAlgebra_234
       (\ v1 -> v1)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._._+ᵉ_
 d__'43''7497'__662 ::
@@ -3189,7 +3189,7 @@ du_tokenAlgebra_1222 ::
   MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8
 du_tokenAlgebra_1222
   = coe
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_tokenAlgebra_258
+      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Core.d_tokenAlgebra_234
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.txOutHash
 d_txOutHash_1224 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->

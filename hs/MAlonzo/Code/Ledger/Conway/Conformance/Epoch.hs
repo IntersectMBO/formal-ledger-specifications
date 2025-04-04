@@ -36,7 +36,6 @@ import qualified MAlonzo.Code.Class.HasAdd.Core
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Class.To
 import qualified MAlonzo.Code.Data.Integer.Base
-import qualified MAlonzo.Code.Data.Integer.Ext
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Maybe.Properties
@@ -1543,7 +1542,7 @@ du_applyRUpd_2320 v0 v1 v2
                                                        (coe
                                                           MAlonzo.Code.Ledger.PParams.C_'10214'_'44'_'10215''7491'_154
                                                           (coe
-                                                             MAlonzo.Code.Data.Integer.Ext.d_posPart_10
+                                                             MAlonzo.Code.Prelude.d_posPart_56
                                                              (coe
                                                                 MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                 (coe
@@ -1553,7 +1552,7 @@ du_applyRUpd_2320 v0 v1 v2
                                                                    du_unregRU''_2370 (coe v0)
                                                                    (coe v6) (coe v26))))
                                                           (coe
-                                                             MAlonzo.Code.Data.Integer.Ext.d_posPart_10
+                                                             MAlonzo.Code.Prelude.d_posPart_56
                                                              (coe
                                                                 MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                 (coe v13) (coe v4))))
@@ -1564,7 +1563,7 @@ du_applyRUpd_2320 v0 v1 v2
                                                              MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2070
                                                              (coe v17)
                                                              (coe
-                                                                MAlonzo.Code.Data.Integer.Ext.d_posPart_10
+                                                                MAlonzo.Code.Prelude.d_posPart_56
                                                                 (coe
                                                                    MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                    (coe v18) (coe v5)))

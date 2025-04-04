@@ -19,6 +19,8 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
+import qualified MAlonzo.Code.Axiom.Set
+import qualified MAlonzo.Code.Axiom.Set.Map
 import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.CommutativeMonoid.Instances
 import qualified MAlonzo.Code.Class.DecEq.Core
@@ -139,3 +141,23 @@ d_'8801''7497''45'getCoin_54 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_'8801''7497''45'getCoin_54 = erased
+-- Ledger.Prelude.setToMap
+d_setToMap_70 ::
+  () ->
+  () ->
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_setToMap_70 ~v0 ~v1 v2 v3 = du_setToMap_70 v2 v3
+du_setToMap_70 ::
+  MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+du_setToMap_70 v0 v1
+  = coe
+      MAlonzo.Code.Axiom.Set.Map.du_fromList'7504'_582
+      (coe
+         MAlonzo.Code.Axiom.Set.d_th_1470
+         (coe
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+      (coe v0) (coe v1)
