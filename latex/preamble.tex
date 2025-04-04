@@ -97,7 +97,11 @@
 %%
 \usepackage{amsthm}
 \theoremstyle{definition}
-\newtheorem{property}{Property}[section]
+% \newtheorem*{property}{Property}
+\newcounter{theproperty} \setcounter{theproperty}{1}
+\newenvironment{property}[1][]{\medskip\noindent%
+ {\textbf{Property \arabic{theproperty}. (#1)} \stepcounter{theproperty} \rm}{\medskip}}
+
 \newenvironment{question}
   {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}
   {\end{bclogo}}

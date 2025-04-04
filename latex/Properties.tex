@@ -1,92 +1,173 @@
 \newcommand{\ab}[1]{\AgdaBound{#1}}
 
-This section presents the properties of the ledger that we would like to formally
-state and prove.  If we have already proved the property in Agda, then the property
-is labelled ``PROVED''; otherwise, it's labelled ``TO PROVE.''  The subsections that
-follow restate (in Agda) the properties that we have already proved.
+This section presents informal versions of the properties of the ledger that we would
+like to formally state and prove.  With each property we include metadata indicating
+in which Agda module it is formally stated and possibly proved, along
+with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}'' otherwise.
 
-
-\subsection{Transaction Properties}
-\begin{property}[\textbf{Updates have non-empty groups}] TO PROVE.
-
-\noindent If \ab{p} is a goveranance proposal that proposes a parameter update \ab{up}, then \AgdaField{updateGroups} up $≢ ∅$.
-\end{property}
-
-\subsection{Block Properties}
-\begin{property}[Chain state epoch step] TO PROVE.
-
-Let
 \begin{itemize}
-\item \ab{s}   = a \AgdaRecord{ChainState},
-\item \ab{nes} = the \AgdaField{newEpochState} of \ab{s},
-\item \ab{es}  = the \AgdaField{epochState} of \ab{nes} (= the \AgdaField{epochState} of \ab{s}),
-\item \ab{le}  = the \AgdaField{lastEpoch} of \ab{nes}.
+
+\item \textit{Transaction Properties}
+
+  \begin{property}[% ---------------------------------------------------------------
+    \textbf{Updates have non-empty groups};
+    \LedgerMod{Properties.agda}{\AgdaModule{Ledger.Properties}};
+    \textbf{to prove}%
+  ]\
+
+  If \ab{p} is a goveranance proposal that proposes a parameter update \ab{up}, then\\[4pt]
+  \(\text{\AgdaField{updateGroups}}~\ab{up} ≢ ∅\).
+  \end{property}
+
+\item \textit{Block Properties}
+
+  \begin{property}[% ---------------------------------------------------------
+    \textbf{Chain state epoch step};
+    \LedgerMod{Properties.agda}{\AgdaModule{Ledger.Properties}};
+    \textbf{to prove}%
+  ]\
+
+  Let
+
+  \(\begin{array}{rcl}
+    \ab{s}&=&\text{a \AgdaRecord{ChainState}},\\
+    \ab{nes}&=&\text{the \AgdaField{newEpochState} of \ab{s}},\\
+    \ab{es}&=&\text{the \AgdaField{epochState} of \ab{nes} (= the \AgdaField{epochState} of \ab{s})},\\
+    \ab{le}&=&\text{the \AgdaField{lastEpoch} of \ab{nes}}.
+  \end{array}\)
+
+  Suppose there exists a chain state \ab{s'} with \AgdaField{epochState} \ab{es'} such that
+  \ab{s} \AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{s'}.  Then the following
+  implication holds: if \(\ab{es} ≢ \ab{es'}\), then the epoch of the slot of \ab{b} is
+  \AgdaFunction{sucᵉ}~\ab{le} (where \AgdaFunction{sucᵉ} is the epoch successor function). 
+  \end{property}
+
+\item \textit{Invariance Properties}
+
+        To state the next property, we need to recall that a ledger state (type \LState{}) is
+        a record with three fields,
+        \begin{itemize}
+          \item[] \ab{utxoSt} : \UTxOState{},
+          \item[] \ab{govSt} : \GovState{},
+          \item[] \ab{certState} : \CertState{}.
+        \end{itemize}
+        The next property will prove the preservation of a certain connection between
+        the \ab{utxoSt} and \ab{govSt} fields of ledger states.
+
+        Recall, a governance state (\GovState{}) is a list of pairs of type
+        \GovActionID{}~×~\GovActionState{} and, associated with each
+        \GovActionID{} is a deposit of type \GovActionDeposit{}.
+
+        Recall that \UTxOState{} has a \ab{deposits}~:~\Deposits{} field, which is a map
+        from \DepositPurpose{} to \Coin{}, and \DepositPurpose{} is one of four kinds,
+        \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, and \GovActionDeposit{}.
+
+        Now, given a ledger state \ab{s}, we will focus on those deposits in the
+        \UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The connection we will
+        consider is whether or not the set of \GovActionDeposit{}s of the
+        \UTxOState{} of \ab{s} is the same as the set of \GovActionDeposit{} of the \GovState{}
+        of \ab{s}.
+
+        Finally, we are ready to state the property.
+
+  \begin{property}[% ---------------------------------------------------------
+                   % filterˢ isGADeposit (dom (UTxOState.deposits utxoSt)) ≡ᵉ fromList (dpMap govSt)
+    \textbf{\AgdaFunction{govDepsMatch} is a \AgdaDatatype{LEDGER} invariant}
+    \LedgerMod{Ledger/Properties.agda}{\AgdaModule{Ledger.Ledger.Properties}};
+    \textbf{proved}%
+  ]
+
+  \vspace{-4mm}
+
+  Suppose \ab{s}, \ab{s'} are ledger states such that
+  \ab{s} \AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}. Let \ab{utxoSt}
+  and \ab{utxoSt'} be their respective \UTxOState{}s and let \ab{govSt}
+  and \ab{govSt'} be their respective \GovState{}s.
+
+  If the set of governance action deposits of \ab{utxoSt} is the same as the set of
+  governance actions deposits of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
+  \end{property}
+
+  \begin{property}[% ---------------------------------------------------------
+    \texttt{dom-rwds$≡$credDeposits};
+    \LedgerMod{Properties.agda}{\AgdaModule{Ledger.Properties}};
+    \textbf{to prove}%
+  ]\
+
+  \begin{verbatim}
+    filterˢ isCredDeposit (dom (UTxOState.deposits utxoSt)) 
+      ≡ mapˢ CredentialDeposit (dom rewards)
+  \end{verbatim}
+  \end{property}
+
+  \begin{property}[% ---------------------------------------------------------
+    \texttt{pp-wellFormed};
+    \LedgerMod{Properties.agda}{\AgdaModule{Ledger.Properties}};
+    \textbf{to prove}%
+  ]\
+
+  \begin{verbatim}
+    paramsWellFormed (pparams' .proj₁)
+  \end{verbatim}
+  \end{property}
+
+
+  \begin{property}[% ---------------------------------------------------------
+    \texttt{action-deposits$≡$actions-inv};
+    \LedgerMod{Properties.agda}{\AgdaModule{Ledger.Properties}};
+    \textbf{to prove}%
+  ]\
+
+  \begin{verbatim}
+  ChainInvariant action-deposits≡actions-prop
+  \end{verbatim}
+  \end{property}
+
+
+  \begin{property}[% ---------------------------------------------------------
+    \texttt{dom-rwds≡credDeposits-inv};
+    \LedgerMod{Properties.agda}{\AgdaModule{Ledger.Properties}};
+    \textbf{to prove}%
+  ]\
+
+  \begin{verbatim}
+  ChainInvariant dom-rwds≡credDeposits
+  \end{verbatim}
+  \end{property}
+
+
+  \begin{property}[% ---------------------------------------------------------
+    \texttt{pp-wellFormed-inv};
+    \LedgerMod{Properties.agda}{\AgdaModule{Ledger.Properties}};
+    \textbf{to prove}%
+  ]\
+
+  \begin{verbatim}
+  ChainInvariant pp-wellFormed
+  \end{verbatim}
+  \end{property}
+
+
+\item \textit{Preservation Properties}
+
+  \begin{property}[% ---------------------------------------------------------
+    \textbf{Preserve Balance};
+    \LedgerMod{Utxo.Properties.agda}{\AgdaModule{Ledger.Utxo.Properties}};
+    \textbf{proved}%
+  ]\
+
+  Let
+
+  \(\begin{array}{rcl}
+    \ab{Γ} &∈& \UTxOEnv{},\\
+    \ab{utxo}, \ab{utxo'} &∈& \UTxO{},\\
+    \ab{fees}, \ab{fees'} &∈& \Coin{},\\
+    \ab{tx} &∈& \Tx{}.
+  \end{array}\)
+
+  If \(\ab{txid}~∉~\ab{mapˢ}~\ab{proj₁}~(\ab{dom}~\ab{utxo})\), and\\[4pt]
+  if \(\ab{Γ}~\ab{⊢}~s~\ab{⇀⦇ tx ,UTXO⦈}~s'\), then\\[4pt]
+  \(\ab{getCoin}~\ab{s} + φ(\ab{getCoin}~\ab{txwdrls} , \ab{isValid}) ≡ \ab{getCoin}~\ab{s'}\).
+  \end{property}
+
 \end{itemize}
-Suppose there exists a chain state \ab{s'} with \AgdaField{epochState} \ab{es'} such that 
-\ab{s} \AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{s'}.  Then the following
-implication holds: if \ab{es} ≢ \ab{es'}, then the epoch of the slot of \ab{b} is
-\AgdaFunction{sucᵉ}~\ab{le} (where \AgdaFunction{sucᵉ} is the epoch successor function). 
-\end{property}
-
-\subsection{Invariant Properties}
-\begin{property}[\texttt{action-deposits≡actions-prop}] \hfill \textbf{TO PROVE}
-
-\begin{verbatim}
-  filterˢ isGADeposit (dom (UTxOState.deposits utxoSt))
-    ≡ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
-\end{verbatim}
-\end{property}
-
-\begin{property}[\texttt{dom-rwds≡credDeposits}] \hfill \textbf{TO PROVE}
-\begin{verbatim}
-  filterˢ isCredDeposit (dom (UTxOState.deposits utxoSt)) 
-    ≡ mapˢ CredentialDeposit (dom rewards)
-\end{verbatim}
-\end{property}
-
-\begin{property}[\texttt{pp-wellFormed}]  \hfill \textbf{TO PROVE}
-
-\begin{verbatim}
-  pp-wellFormed = paramsWellFormed (pparams' .proj₁)
-\end{verbatim}
-\end{property}
-
-\begin{property}[\texttt{action-deposits≡actions-inv}] \hfill \textbf{TO PROVE; see XXXX}
-% TODO: replace XXXX with citation to location of proof
-
-\begin{verbatim}
-action-deposits≡actions-inv = ChainInvariant action-deposits≡actions-prop
-\end{verbatim}
-\end{property}
-
-\begin{property}[\texttt{dom-rwds≡credDeposits-inv}] \hfill \textbf{TO PROVE}
-
-\begin{verbatim}
-dom-rwds≡credDeposits-inv = ChainInvariant dom-rwds≡credDeposits
-\end{verbatim}
-\end{property}
-
-\begin{property}[\texttt{pp-wellFormed-inv}] \hfill \textbf{TO PROVE}
-
-\begin{verbatim}
-pp-wellFormed-inv = ChainInvariant pp-wellFormed
-\end{verbatim}
-\end{property}
-
-\begin{property}[\textbf{Preserve Balance}] \hfill \textbf{PROVED} 
-
-Let
-\begin{itemize}
-\item  \ab{Γ} ∈ \UTxOEnv{},
-\item  \ab{utxo}, \ab{utxo'} ∈ \UTxO{},
-\item  \ab{fees}, \ab{fees'} ∈ \Coin{},
-\item  \ab{tx} ∈ \Tx{}.
-\end{itemize}
-If \ab{txid} ∉ \ab{mapˢ} \ab{proj₁} (\ab{dom} \ab{utxo})
-and
-\ab{Γ}~\ab{⊢}~s~\ab{⇀⦇ tx ,UTXO⦈}~s',
-then
-\[
-  \ab{getCoin} \ab{s} + φ(\ab{getCoin} \ab{txwdrls} , \ab{isValid}) ≡ \ab{getCoin} \ab{s'}.
-\]
-\end{property}

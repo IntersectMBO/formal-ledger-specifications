@@ -108,7 +108,7 @@
 %%
 %% Agda macros
 %%
-\newcommand{\AgdaVersion}{v2.7.0}  % <= Change this when updating Agda version!
+\newcommand{\AgdaVersion}{v2.7.0.1}  % <= Change this when updating Agda version!
 
 \newcommand\agdaFont{StrippedJuliaMono}
 \newcommand\agdaFontOptions{
@@ -117,16 +117,22 @@ UprightFont=*-Regular,
 BoldFont=*-Bold,
 ItalicFont=*-RegularItalic,
 BoldItalicFont=*-BoldItalic,
-%% Scale=MatchLowercase
-Scale=0.80
-%% Scale=MatchUppercase
+Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 }
 
+\NewDocumentCommand\LedgerMod{mm}{%
+% first arg  : subdirectory of Ledger (if necessary), including /, and
+%              filename of the module, including .agda or .lagda suffix;
+% second arg : what text should appear in the pdf, including formatting;
+% usage      : \LedgerMod{Utxo.agda}{\texttt{UTXO}}
+%              \LedgerMod{Utxo/Properties.agda}{\AgdaModule{Ledger.Utxo.Properties}}
+  \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1}{#2}%
+}
 \NewDocumentCommand\LedgerModule{m}{% usage: \LedgerModule{Utxo}
-\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\AgdaModule{Ledger.#1}}%
+  \LedgerMod{#1.lagda}{\AgdaModule{Ledger.#1}}%
 }
 \NewDocumentCommand\LedgerModText{mm}{% usage: \LedgerModText{Utxo}{UTXO}
-\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\texttt{#2}}%
+  \LedgerMod{#1.lagda}{\texttt{#2}}%
 }
 
 \newfontfamily{\AgdaSerifFont}{\agdaFont}[\agdaFontOptions]
@@ -166,6 +172,7 @@ Scale=0.80
 \newcommand{\CCData}{\AgdaFunction{CCData}}
 \newcommand{\ccMaxTermLength}{\AgdaField{ccMaxTermLength}}
 \newcommand{\ccMinSize}{\AgdaField{ccMinSize}}
+\newcommand{\CertState}{\AgdaRecord{CertState}}
 \newcommand{\ChangePParams}{\AgdaInductiveConstructor{ChangePParams}}
 \newcommand{\Coin}{\AgdaFunction{Coin}}
 \newcommand{\coinsPerUTxOByte}{\AgdaField{coinsPerUTxOByte}}
@@ -175,6 +182,7 @@ Scale=0.80
 \newcommand{\coproduct}{\AgdaDatatype{⊎}}
 \newcommand{\corestriction}{\AgdaFunction{∣\textasciicircum{}}}
 \newcommand{\CredentialType}{\AgdaDatatype{Credential}}
+\newcommand{\CredentialDeposit}{\AgdaField{CredentialDeposit}}
 \newcommand{\credsNeeded}{\AgdaFunction{credsNeeded}}
 \newcommand{\credVoter}{\AgdaInductiveConstructor{credVoter}}
 \newcommand{\curTreasury}{\AgdaField{curTreasury}}
@@ -192,6 +200,7 @@ Scale=0.80
 \newcommand{\Deposits}{\AgdaDatatype{Deposits}}
 \newcommand{\DocHash}{\AgdaField{DocHash}}
 \newcommand{\DRep}{\AgdaInductiveConstructor{DRep}}
+\newcommand{\DRepDeposit}{\AgdaField{DRepDeposit}}
 \newcommand{\drepActivity}{\AgdaField{drepActivity}}
 \newcommand{\drepDeposit}{\AgdaField{drepDeposit}}
 \newcommand{\DReps}{\AgdaInductiveConstructor{DRep}s}
@@ -209,6 +218,7 @@ Scale=0.80
 \newcommand{\getStakeDist}{\AgdaFunction{getStakeDist}}
 \newcommand{\GovAction}{\AgdaDatatype{GovAction}}
 \newcommand{\govActionDeposit}{\AgdaField{govActionDeposit}}
+\newcommand{\GovActionDeposit}{\AgdaField{GovActionDeposit}}
 \newcommand{\GovActionID}{\AgdaDatatype{GovActionID}}
 \newcommand{\govActionLifetime}{\AgdaField{govActionLifetime}}
 \newcommand{\govActionPriority}{\AgdaFunction{govActionPriority}}
@@ -238,6 +248,7 @@ Scale=0.80
 \newcommand{\isRegistered}{\AgdaFunction{isRegistered}}
 
 \newcommand{\List}{\AgdaDatatype{List}}
+\newcommand{\LState}{\AgdaRecord{LState}}
 
 \newcommand{\mapPartial}{\AgdaFunction{mapPartial}}
 \newcommand{\maxBlockSize}{\AgdaField{maxBlockSize}}
@@ -270,6 +281,7 @@ Scale=0.80
 \newcommand{\Pfived}{\AgdaField{P5d}}
 \newcommand{\Pfour}{\AgdaField{P4}}
 \newcommand{\Pone}{\AgdaField{P1}}
+\newcommand{\PoolDeposit}{\AgdaField{PoolDeposit}}
 \newcommand{\poolThresholds}{\AgdaField{poolThresholds}}
 \newcommand{\PowerSet}{\AgdaFunction{ℙ}}
 \newcommand{\PParams}{\AgdaRecord{PParams}}
