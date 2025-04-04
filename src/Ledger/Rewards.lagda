@@ -362,6 +362,55 @@ rewardOnePool pparams rewardPot n N pool stakeDistr σ σa tot = rewards
 \label{fig:functions:rewardOnePool}
 \end{figure*}
 
+\Cref{fig:functions:reward} defines
+the function \AgdaFunction{reward}
+which applies \AgdaFunction{rewardOnePool} to each registered stake pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaArgument{blocks}: Number of blocks produced by pools in the last epoch,
+    as mapping from \AgdaInductiveConstructor{KeyHash} to \Coin{}.
+  \item \AgdaArgument{stake}: Distribution of stake,
+    as mapping from \AgdaInductiveConstructor{Credential} to \Coin{}.
+  \item \AgdaArgument{total}: Total amount of Ada in circulation, for computing the relative stake.
+  \item \AgdaFunction{totalActive}: Total amount of Ada that was used for selecting block producers.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+BlocksMade = KeyHash ⇀ ℕ
+Delegations = Credential ⇀ KeyHash
+
+-- FIXME Correct definition of poolStake
+poolStake : PoolParams → Delegations → Stake → Stake
+poolStake pool _ _ =
+  ❴ pool .PoolParams.rewardAccount
+  , pool .PoolParams.pledge
+  ❵ᵐ
+
+reward : PParams → BlocksMade → Coin → (KeyHash ⇀ PoolParams)
+  → Stake → Delegations → Coin → (Credential ⇀ Coin)
+reward pp blocks rewardPot poolParams stake delegs total = rewards
+  where -- FIXME Clean this up
+    totalActive = ∑[ c ← stake ] c
+    mkRelative = λ coin → clamp (coin /₀ total)
+    mkRelativeActive = λ coin → clamp (coin /₀ totalActive)
+    sums : Stake → Coin -- FIXME Get rid of this definition
+    sums s = ∑[ c ← s ] c
+    N = ∑[ m ← blocks ] m
+    -- FIXME Fetch n from blocks, implied filter.
+    pdata   = mapWithKey (λ hk p → let n = N in (n , p , poolStake p delegs stake)) poolParams
+    results = mapValues (λ { (n , p , s)
+      → rewardOnePool pp rewardPot n N p s (mkRelative (sums s)) (mkRelativeActive (sums s)) total
+      }) pdata
+    -- FIXME clean up the notation for rewards
+    rewards = foldl _∪⁺_ ∅ $ setToList $ range results
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function reward used for computing a Reward Update}
+\label{fig:functions:reward}
+\end{figure*}
+
 \subsection{Reward Update}
 \label{sec:reward-update}
 TODO: This section defines the \AgdaRecord{RewardUpdate} type,
