@@ -23,8 +23,8 @@ import qualified MAlonzo.Code.Agda.Builtin.List
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Data.Empty
 import qualified MAlonzo.Code.Data.Irrelevant
-import qualified MAlonzo.Code.Data.List.Relation.Binary.Sublist.Ext
 import qualified MAlonzo.Code.Data.List.Relation.Binary.Sublist.Heterogeneous.Core
+import qualified MAlonzo.Code.Data.List.Relation.Binary.Sublist.Setoid.Properties
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -86,8 +86,8 @@ du_done_86 v0
   = coe
       C_mOf_38 (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (coe
-         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Ext.du_'91''93''8838'_18
-         (coe v0))
+         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Setoid.Properties.du_'91''93''8838''45'universal_832
+         v0)
       (coe MAlonzo.Code.Data.List.Relation.Unary.All.C_'91''93'_50)
 -- Data.List.Relation.Unary.MOf._.wk
 d_wk_92 ::

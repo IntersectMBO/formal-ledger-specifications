@@ -259,11 +259,11 @@ library
         MAlonzo.Code.Data.List.Relation.Binary.Pointwise
         MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Base
         MAlonzo.Code.Data.List.Relation.Binary.Pointwise.Properties
-        MAlonzo.Code.Data.List.Relation.Binary.Sublist.Ext
         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Heterogeneous
         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Heterogeneous.Core
         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Heterogeneous.Properties
         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Propositional
+        MAlonzo.Code.Data.List.Relation.Binary.Sublist.Propositional.Properties
         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Setoid
         MAlonzo.Code.Data.List.Relation.Binary.Sublist.Setoid.Properties
         MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional
