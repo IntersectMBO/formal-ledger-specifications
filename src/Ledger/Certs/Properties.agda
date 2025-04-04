@@ -312,5 +312,3 @@ module _  {Γ : CertEnv}
                                                    (cong  (_+ getCoin (CertEnv.wdrls Γ))
                                                           (trans (CERT-pov x) (sts-pov sts)))
 
--- TODO: Prove the following property.
--- range vDelegs ⊆ map (credVoter DRep) (dom DReps)
