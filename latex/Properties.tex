@@ -44,31 +44,29 @@ with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}
 
 \item \textit{Invariance Properties}
 
-        To state the next property, we need to recall that a ledger state (type \LState{}) is
-        a record with three fields,
+        Recall that a ledger state (type \LState{}) is a record with three fields,
         \begin{itemize}
           \item[] \ab{utxoSt} : \UTxOState{},
           \item[] \ab{govSt} : \GovState{},
           \item[] \ab{certState} : \CertState{}.
         \end{itemize}
-        The next property will prove the preservation of a certain connection between
-        the \ab{utxoSt} and \ab{govSt} fields of ledger states.
+        The next property asserts that the \AgdaDatatype{LEDGER} rule preserves a
+        certain connection between the \ab{utxoSt} and \ab{govSt} fields of ledger
+        states, which we now describe.
 
         Recall, a governance state (\GovState{}) is a list of pairs of type
         \GovActionID{}~×~\GovActionState{} and, associated with each
         \GovActionID{} is a deposit of type \GovActionDeposit{}.
 
         Recall that \UTxOState{} has a \ab{deposits}~:~\Deposits{} field, which is a map
-        from \DepositPurpose{} to \Coin{}, and \DepositPurpose{} is one of four kinds,
-        \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, and \GovActionDeposit{}.
+        from \DepositPurpose{} to \Coin{}, and each \DepositPurpose{} can either
+        \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, or \GovActionDeposit{}.
 
-        Now, given a ledger state \ab{s}, we will focus on those deposits in the
-        \UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The connection we will
-        consider is whether or not the set of \GovActionDeposit{}s of the
+        Given a ledger state \ab{s}, we focus on deposits in the
+        \UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The connection we
+        consider is whether the set of \GovActionDeposit{}s of the
         \UTxOState{} of \ab{s} is the same as the set of \GovActionDeposit{} of the \GovState{}
         of \ab{s}.
-
-        Finally, we are ready to state the property.
 
   \begin{property}[% ---------------------------------------------------------
                    % filterˢ isGADeposit (dom (UTxOState.deposits utxoSt)) ≡ᵉ fromList (dpMap govSt)
@@ -84,8 +82,8 @@ with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}
   and \ab{utxoSt'} be their respective \UTxOState{}s and let \ab{govSt}
   and \ab{govSt'} be their respective \GovState{}s.
 
-  If the set of governance action deposits of \ab{utxoSt} is the same as the set of
-  governance actions deposits of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
+  If the governance action deposits of \ab{utxoSt} are the same as those
+  of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
   \end{property}
 
   \begin{property}[% ---------------------------------------------------------
