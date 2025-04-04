@@ -325,6 +325,30 @@ rewardOnePool pparams rewardPot n N pool stakeDistr σ σa tot = rewards
 \label{fig:functions:rewardOnePool}
 \end{figure*}
 
+\Cref{fig:functions:poolStake} defines
+the function \AgdaFunction{poolStake}
+which filters the stake distribution to one stake pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaArgument{hk}: \AgdaDatatype{KeyHash} of the stake pool to be filtered by.
+    \item \AgdaArgument{delegs}:
+      Mapping from \AgdaDatatype{Credential}s to stake pool that they delegate to.
+  \item \AgdaArgument{stake}: Distribution of stake for all \AgdaDatatype{Credential}s.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+Delegations = Credential ⇀ KeyHash
+
+poolStake  : KeyHash → Delegations → Stake → Stake
+poolStake hk delegs stake = stake ∣ dom (delegs ∣^ ❴ hk ❵)
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function poolStake}
+\label{fig:functions:poolStake}
+\end{figure*}
+
 \subsection{Reward Update}
 \label{sec:reward-update}
 TODO: This section defines the \AgdaRecord{RewardUpdate} type,
