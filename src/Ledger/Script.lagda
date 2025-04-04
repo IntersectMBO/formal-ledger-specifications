@@ -82,7 +82,6 @@ private variable
   x : KeyHash
   a l r : Slot
 
-open import Data.List.Relation.Binary.Sublist.Ext
 open import Data.List.Relation.Binary.Sublist.Propositional as S
 import Data.Maybe.Relation.Unary.Any as M
 \end{code}

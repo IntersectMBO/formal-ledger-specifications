@@ -200,14 +200,13 @@ hsRule = phony "hs" $ do
               [ "src/Ledger/Conway/Foreign/HSLedger.agda" ]
 
   -- copy over the Agda-generated MAlonzo files to _hs
-  malonzofiles <- getDirectoryFiles _malonzo [ "//*.hs" ]
+  malonzofiles <- map ("MAlonzo" </>) <$> getDirectoryFiles _malonzo [ "//*.hs" ]
   forM_ malonzofiles $ \file -> do
-    copyFileChanged (_malonzo </> file) (hsDist </> malonzo </> file)
+    copyFileChanged (_build </> file) (hsDist </> "src" </> file)
 
   -- copy the .cabal file appending the Agda-generated Haskell modules
   let agdafile2hsmodule =
         (replicate 8 ' ' ++) -- prepend 8 spaces
-        . ("MAlonzo." ++)    -- prepend 'MAlonzo'
         . agdafile2module
       hsmodules =
         map agdafile2hsmodule

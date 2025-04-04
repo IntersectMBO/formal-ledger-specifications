@@ -8,7 +8,6 @@ UTxO transition system.
 {-# OPTIONS --safe #-}
 
 open import Algebra              using (CommutativeMonoid)
-open import Data.Integer.Ext     using (posPart; negPart)
 open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
