@@ -4,9 +4,9 @@ open import Ledger.Prelude hiding (ε) renaming (fromList to fromListˢ) public
 
 open Computational public
 
-open import Algebra.Morphism    using (module MonoidMorphisms) public
-
-open import Data.Nat.Properties using (+-0-commutativeMonoid; +-0-isCommutativeMonoid) public
+open import Algebra.Construct.DirectProduct using (commutativeMonoid)
+open import Algebra.Morphism    using (module MonoidMorphisms)
+open import Data.Nat.Properties using (+-0-commutativeMonoid) public
 
 open import Foreign.Convertible           public
 open import Foreign.Convertible.Deriving  public
@@ -80,13 +80,8 @@ module Implementation where
   toData _ = 0
 
   ExUnits      = ℕ × ℕ
-  ExUnit-CommutativeMonoid = CommutativeMonoid 0ℓ 0ℓ ExUnits ∋ (Conversion.fromBundle record
-    { Carrier = ExUnits
-    ; _≈_ = _≈ᵖ_
-    ; _∙_ = _∙ᵖ_
-    ; ε = zero , zero
-    ; isCommutativeMonoid = pairOpRespectsComm +-0-isCommutativeMonoid
-    }) where open import Algebra.PairOp ℕ zero _≡_ _+_
+  ExUnit-CommutativeMonoid =
+    Conversion.fromBundle (commutativeMonoid +-0-commutativeMonoid +-0-commutativeMonoid)
   _≥ᵉ_ : ExUnits → ExUnits → Type
   _≥ᵉ_ = _≡_
 

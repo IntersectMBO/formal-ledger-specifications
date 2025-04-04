@@ -8,7 +8,6 @@ UTxO transition system.
 {-# OPTIONS --safe #-}
 
 open import Algebra              using (CommutativeMonoid)
-open import Data.Integer.Ext     using (posPart; negPart)
 open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
@@ -372,7 +371,7 @@ depositsChange pp txb deposits =
 \end{AgdaMultiCode}
 \AgdaSpaceAroundCode{}
 \caption{Functions used in UTxO rules, continued}
-\label{fig:functions:utxo}
+\label{fig:functions:utxo1}
 \end{figure*}
 
 \begin{figure*}
@@ -461,7 +460,7 @@ module _ (let open UTxOState; open TxBody) where
 \label{fig:functions:utxo-conway}
 \end{figure*}
 
-As seen in \cref{fig:functions:utxo,fig:functions:utxo-conway},
+As seen in \cref{fig:functions:utxo-conway},
 we redefine \depositRefunds{} and \newDeposits{} via \depositsChange{},
 which computes the difference between the total deposits before and
 after their application. This simplifies their definitions and some

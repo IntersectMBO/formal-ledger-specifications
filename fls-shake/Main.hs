@@ -19,6 +19,9 @@ import Data.Typeable (Typeable)
 import Control.DeepSeq (NFData)
 import Data.Hashable (Hashable)
 import Data.Binary (Binary)
+import qualified Data.Text as Text
+import qualified Data.Text.Encoding as TE
+import qualified Data.ByteString as BS
 
 ------------------------------------------------------------------------------
 -- Main function
@@ -121,12 +124,12 @@ tex2pdf = do
     need [ maintexfile ]
 
     -- read the Agda inputs from the tex file
-    agdainputs <- getAgdaInputs <$> readFileLines maintexfile
+    agdainputs <- getAgdaInputs <$> readFileLinesUtf8 maintexfile
 
     let agdafiles  = map ((_latexPP </>) . (<.> "tex")) agdainputs
     let otherfiles = map (_latexIn </>)
                          [ "references.bib", "Notation.tex", "macros.sty", "preamble.tex"
-                         , "Diagrams/CardanoLedger.tex"
+                         , "definitions.tex", "Diagrams/CardanoLedger.tex"
                          , "ConwayBootstrap.tex", "ConwayBootstrapEnact.tex" ]
     fontfiles <- map (_latexIn </>) <$> getDirectoryFiles "latex" [ "fonts/*.ttf" ]
 
@@ -197,14 +200,13 @@ hsRule = phony "hs" $ do
               [ "src/Ledger/Conway/Foreign/HSLedger.agda" ]
 
   -- copy over the Agda-generated MAlonzo files to _hs
-  malonzofiles <- getDirectoryFiles _malonzo [ "//*.hs" ]
+  malonzofiles <- map ("MAlonzo" </>) <$> getDirectoryFiles _malonzo [ "//*.hs" ]
   forM_ malonzofiles $ \file -> do
-    copyFileChanged (_malonzo </> file) (hsDist </> malonzo </> file)
+    copyFileChanged (_build </> file) (hsDist </> "src" </> file)
 
   -- copy the .cabal file appending the Agda-generated Haskell modules
   let agdafile2hsmodule =
         (replicate 8 ' ' ++) -- prepend 8 spaces
-        . ("MAlonzo." ++)    -- prepend 'MAlonzo'
         . agdafile2module
       hsmodules =
         map agdafile2hsmodule
@@ -356,6 +358,13 @@ getAgdaInputs =
   in map init -- remove the trailing "}"
    . map (\l -> drop (length $ if prefix2 `isPrefixOf` l then prefix2 else prefix1) l) -- remove the initial "\i{"
    . filter (\l -> prefix1 `isPrefixOf` l || prefix2 `isPrefixOf` l) -- filter lines that start with "\I{"
+
+-- | UTF8 version of readFileLines
+readFileLinesUtf8 :: FilePath -> Action [String]
+readFileLinesUtf8 file = do
+  need [file]
+  text <- TE.decodeUtf8' <$> liftIO (BS.readFile file)
+  either (fail . show) (return . map Text.unpack . Text.lines) text
 
 -- | Transform an lagda file to a agda file.
 -- discard and copy are mutually recursive:

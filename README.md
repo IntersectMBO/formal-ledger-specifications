@@ -33,7 +33,7 @@ nix-build -A ledger.hsSrc     # extract the Haskell code of the Cardano ledger
 ## Conformance-testing example
 
 For an example on how to use the Agda-generated Haskell code for conformance
-testing see [`conformance-example`)(conformance-example)
+testing see [`conformance-example`](conformance-example)
 
 ## Contributions and Feedback
 

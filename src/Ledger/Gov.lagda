@@ -37,15 +37,16 @@ open import Ledger.Enact govStructure
 open import Ledger.Ratify txs hiding (vote)
 open import Ledger.Certs govStructure
 
-open import Data.List.Ext using (subpermutations; sublists)
-open import Data.List.Ext.Properties2
+open import Data.List.Subpermutations using (subpermutations; sublists)
+open import Data.List.Subpermutations.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.All using (all?; All)
 open import Data.List.Relation.Unary.Any using (any?; Any)
 open import Data.List.Relation.Unary.Unique.DecPropositional using (unique?)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
-open import Data.Relation.Nullary.Decidable.Ext using (map′⇔)
+open import Relation.Nullary.Decidable using () renaming (map to map-Dec)
+open import Function.Properties.Equivalence using () renaming (sym to sym-Equiv)
 open import Function.Related.Propositional using (↔⇒)
 
 open GovActionState
@@ -329,15 +330,15 @@ any?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (Any(λ l → Unique l �
 any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l connects u to v ?]) (subpermutations L)
 
 ∃?-connecting-subperm : ∀ {u} {v} → ∀ L → Dec (∃[ l ] l ∈ˡ subpermutations L × Unique l × l connects u to v)
-∃?-connecting-subperm L = from (map′⇔ (↔⇒ Any↔)) (any?-connecting-subperm L)
+∃?-connecting-subperm L = map-Dec (sym-Equiv (↔⇒ Any↔)) (any?-connecting-subperm L)
 
 ∃?-connecting-subset : ∀ {u} {v} → ∀ L → Dec (∃[ l ] l ⊆ˡ L × Unique l × l connects u to v)
-∃?-connecting-subset L = from (map′⇔ ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
+∃?-connecting-subset L = map-Dec (sym-Equiv ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
 
 enactable? : ∀ eState aidPairs aidNew×st → Dec (enactable eState aidPairs aidNew×st)
 enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as .gaType)
 ... | nothing = yes tt
-... | just aidOld = from (map′⇔ ∃-sublist-⇔) (∃?-connecting-subset aidPairs)
+... | just aidOld = map-Dec (sym-Equiv ∃-sublist-⇔) (∃?-connecting-subset aidPairs)
 
 allEnactable? : ∀ eState aid×states → Dec (allEnactable eState aid×states)
 allEnactable? eState aid×states =

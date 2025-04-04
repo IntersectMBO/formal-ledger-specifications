@@ -1,11 +1,11 @@
 {-# OPTIONS --safe #-}
 
-module Data.List.Ext.Properties2 where
+module Data.List.Subpermutations.Properties where
 
 open import Prelude hiding (lookup; map)
 
 open import Data.List using (List; [_]; []; _++_; head; tail; length; map; filter)
-open import Data.List.Ext using (insert; subpermutations; sublists)
+open import Data.List.Subpermutations using (insert; subpermutations; sublists)
 open import Data.List.Properties using (concat-++; map-++; ++-identityʳ; ++-assoc)
 open import Data.List.Membership.Propositional using (_∈_)
 open import Data.List.Membership.Propositional.Properties

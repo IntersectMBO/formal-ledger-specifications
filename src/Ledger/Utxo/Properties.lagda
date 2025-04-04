@@ -10,7 +10,6 @@ open import Data.Nat.Properties         hiding (_≟_)
 open import Data.Product                using (swap)
 open import Data.Sign                   using (Sign)
 open import Data.Integer as ℤ           using (ℤ)
-open import Data.Integer.Ext            using (posPart; negPart; ∸≡posPart⊖)
 import Data.Integer.Properties as ℤ
 open import Data.String.Base            renaming (_++_ to _+ˢ_) using ()
 open import Relation.Binary             using (IsEquivalence)

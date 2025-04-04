@@ -26,12 +26,10 @@ open import Ledger.Conway.Conformance.Utxow.Properties txs abs
 
 open import Data.Bool.Properties using (¬-not)
 open import Data.List.Base using (filter)
-open import Data.List.Ext using (∈ˡ-map-filter)
-open import Data.List.Ext.Properties using (_×-cong_)
+open import Data.List.Subpermutations using (∈ˡ-map-filter)
 open import Data.List.Properties using (++-identityʳ; map-++; ++-assoc; length-++)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
 open import Data.Product.Properties using (×-≡,≡←≡)
-open import Data.Product.Properties.Ext using (×-⇔-swap)
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-suc; +-comm)
 open import Relation.Binary using (IsEquivalence)
 open import Relation.Unary using (Decidable)

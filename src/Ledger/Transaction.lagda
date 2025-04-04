@@ -222,7 +222,7 @@ record TransactionStructure : Type₁ where
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (txscripts tx utxo)
+    where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions related to transactions}

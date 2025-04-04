@@ -8,7 +8,6 @@
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.List using (filter)
 open import Data.Integer using () renaming (+_ to pos)
-open import Data.Integer.Ext
 open import Data.Nat.GeneralisedArithmetic using (iterate)
 
 open import Agda.Builtin.FromNat
