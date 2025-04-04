@@ -92,11 +92,11 @@ cd formal-ledger-specifications
    ```
 
 **If you encounter any problems, please read the rest of these instructions and open
-a [New Issue][] if necessary**. 
+a [New Issue][] if necessary**.
 
 ---
 
-## Working on the ledger spec from inside a Nix shell 
+## Working on the ledger spec from inside a Nix shell
 
 For Nix users, the `nix-shell` command will provide Agda along with the required
 dependencies.
@@ -132,22 +132,22 @@ We use Nix to set up an environment with all dependencies installed correctly.
 While it is possible to work with this repository without using Nix
 (instructions for doing so are included [below][Setup without nix]) those wishing to
 make nontrivial contributions to this repository are advised to follow the Nix-based
-approach described here.  This doesn't require running NixOS, but does require
-the Nix package manager which can be installed by following the official 
-[Nix download instructions][]. 
+approach described here. This doesn't require running NixOS, but does require
+the Nix package manager which can be installed by following the official
+[Nix download instructions][].
 
 ### Agda Dependencies
 
 This project depends on the following libraries: [agda-sets][], [agda-stdlib][],
-[agda-stdlib-classes][], and [agda-stdlib-meta][].  At the time of this writing, the
-specific versions of these that we use are as follows: 
+[agda-stdlib-classes][], and [agda-stdlib-meta][]. At the time of this writing, the
+specific versions of these that we use are as follows:
 
    + [agda-sets f517d0d](https://github.com/input-output-hk/agda-sets/tree/f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6)
    + [agda-stdlib v2.2](https://github.com/agda/agda-stdlib/tree/v2.2-release)
    + [agda-stdlib-classes v2.2](https://github.com/agda/agda-stdlib-classes/releases/tag/v2.2)
    + [agda-stdlib-meta v2.2](https://github.com/agda/agda-stdlib-meta/releases/tag/v2.2)
 
-**Note**.  These versions may change.  The authoritative source for the commits/tags
+**Note**. These versions may change. The authoritative source for the commits/tags
 of the versions we currently use is the `default.nix` file (e.g. `v2.2` for `agda-stdlib-meta`).
 
 
@@ -155,7 +155,7 @@ of the versions we currently use is the `default.nix` file (e.g. `v2.2` for `agd
 
 To work simultaneously on the ledger and one of its dependencies, the easiest
 way to do this is to remove the library from the ledger's `.agda-lib` file and
-add its path to the `include:` section. 
+add its path to the `include:` section.
 
 When finished, push the changes to the library and update `default.nix` to point
 to your new commit.
@@ -201,7 +201,7 @@ To install a local version of `ledger-agda`,
     *  To ensure the commands described below use the `ledger-agda` version of Agda,
        invoke them like so: `AGDA=~/IOHK/ledger-agda COMMAND`.
 
-2.  Put the following in your [Emacs init file][] 
+2.  Put the following in your [Emacs init file][]
     (highlight and `M-x eval-region` to load it without restarting emacs):
 
     ```lisp
@@ -234,30 +234,30 @@ To install a local version of `ledger-agda`,
     (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
     ```
 
-    **Notes** 
+    **Notes**
 
     *  This assumes that your regular install of Agda is in your path with the name
-       `agda` and version `2.6.4`, otherwise edit  `my/agda-versions` to match your
-       existing Agda installation. 
+       `agda` and version `2.6.4`, otherwise edit `my/agda-versions` to match your
+       existing Agda installation.
 
-    *  Once you make these changes, the Emacs command `M-x my/toggle-ledger-agda` 
+    *  Once you make these changes, the Emacs command `M-x my/toggle-ledger-agda`
        (or `C-c C-x C-t`) will switch between your regular Agda and the IOHK version.
 
     *  There are other options as well, but this should work with all kinds of custom
        emacs setups or distributions (assuming there isn't already some other stuff
        going on with your Agda setup).
-   
+
 **If you encounter any problems, please read the rest of these instructions and open
-a [New Issue][] if necessary**. 
+a [New Issue][] if necessary**.
 
 ---
 
 ## Working on the artifacts
 
 The artifacts that `formal-ledger-specifications` provides are built using a
-custom system written in a Haskell DSL called [Shake](https://shakebuild.com/). 
-The file [`Shakefile.hs`](Shakefile.hs) contains the source code of the build
-system.  We refer to the build-system binary as `fls-shake`.
+custom system written in a Haskell DSL called [Shake](https://shakebuild.com/).
+The Haskell project [`fls-shake`](fls-shake) contains the source code of the build
+system. We refer to the build-system binary as `fls-shake`.
 
 Depending on whether you use Nix or not, the commands given in the rest of this
 instructions are to be run differently.
@@ -342,14 +342,14 @@ In addition, `fls-shake` has internal rules to generate
 +  **Agda-generated `tex` files** from literate Agda source code are stored in
    `_build/latex.gen`. This are shared between pdf artifacts.
 
-+  **Pdf-artifact specific files** are stored under `_build/target` (where e.g., 
++  **Pdf-artifact specific files** are stored under `_build/target` (where e.g.,
    the target is `cardano-ledger.pdf`, `_build/cardano-ledger.pdf`).
 
    The structure of `_build/target` is the following:
 
    +  `latex.in` for verbatim latex related files copied from the top level `latex`
       directory.
-   +  `latex.pp` for post processed `tex` files from Agda-generated `tex` 
+   +  `latex.pp` for post processed `tex` files from Agda-generated `tex`
       (e.g., applying [`agda2vec.py`](agda2vec.py)).
    +  `latex.out` for latex intermediate build files.
 
@@ -358,12 +358,12 @@ In addition, `fls-shake` has internal rules to generate
    The structure of `_build/html` is as follows:
 
    +  `html.in` contains the Agda source code.  Agda files are copied verbatim,
-      literate Agda files are `illiterated`. 
+      literate Agda files are `illiterated`.
    +  `html.out` contains the output html.
 
 
 **If you encounter any problems, please read the rest of these instructions
-(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**. 
+(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**.
 
 ---
 
@@ -415,12 +415,11 @@ and checkout the commits/tags found in `default.nix` (e.g. `v2.1.1` for `agda-st
 
 When making nontrivial changes to the Agda code or its documentation,
 it's advisable to use `fls-shake`, our build system (a `make` alternative that
-handles type-checking the Agda code, generating  html, recompiling pdfs, etc.). 
+handles type-checking the Agda code, generating  html, recompiling pdfs, etc.).
 
 The easiest way to build `fls-shake` is to simply type `nix-build -A fls-shake`.
 
-If that doesn't work, you can try to compile the [`Shakefile.hs`](Shakefile.hs) manually and
-build `fls-shake` from scratch.
+If that doesn't work, you can try to build `fls-shake` from scratch.
 
 ### Building `fls-shake` manually
 
@@ -437,58 +436,43 @@ For users not using Nix, compile `fls-shake` by taking the following steps:
     cabal --version
     ```
 
-2.  **Install** dependencies.
-
-    The following libraries are required:
-
-    + [`shake`](https://hackage.haskell.org/package/shake) – build system
-    + [`binary`](https://hackage.haskell.org/package/binary) – serialization
-    + [`deepseq`](https://hackage.haskell.org/package/deepseq) – deep evaluation
-    + [`hashable`](https://hackage.haskell.org/package/hashable) – hashing
-
-    Install them via Cabal:
+    Update Cabal package database.
 
     ```bash
     cabal update
-    cabal install shake binary deepseq hashable
     ```
 
-    This will install the libraries into your Cabal user environment.
+2.  **Compile** `fls-shake`.
 
-3.  **Compile** the `Shakefile.hs` script.
-
-    Assuming the dependencies were installed with `cabal install` in the last step, run
+    In the folder `fls-shake`, run
 
     ```bash
-    cabal exec -- ghc -o fls-shake Shakefile.hs -threaded
-    ```
-    Or use `ghc` with the `-package` flag, as follows:
-
-    ```bash
-    ghc -o fls-shake Shakefile.hs -threaded -package shake -package binary -package deepseq -package hashable
+    cabal build fls-shake
     ```
 
-4.  **Run** it.
+3.  **Run** it.
 
-    Once built, run `fls-shake` on one of the build targets 
+    Once built, run `fls-shake` on one of the build targets
     (e.g., `cardano-ledger.pdf`) as follows:
-    
+
     ```bash
-    cabal run fls-shake -- cardano-ledger.pdf
+    cabal run fls-shake -- -C '..' cardano-ledger.pdf
     ```
-    Alternatively, `./result/bin/fls-shake cardano-ledger.pdf`.
+
+    Note that we pass the option `-C '..'` so that `fls-shake` runs from
+    the repository's main directory.
 
     Here is a list of commands for the various targets that `fls-shake` can build:
-    
+
     ```bash
-    cabal run fls-shake -- cardano-ledger.pdf
-    cabal run fls-shake -- conway-ledger.pdf
-    cabal run fls-shake -- html
-    cabal run fls-shake -- hs
+    cabal run fls-shake -- -C '..' cardano-ledger.pdf
+    cabal run fls-shake -- -C '..' conway-ledger.pdf
+    cabal run fls-shake -- -C '..' html
+    cabal run fls-shake -- -C '..' hs
     ```
 
 **If you encounter any problems, please read the rest of these instructions
-(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**. 
+(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**.
 
 ---
 
@@ -541,7 +525,7 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
        need to manually install it.
 
        **Solution**
-       
+
        +  Install `latexmk`.
 
           Follow the [official instructions][latexmk].
@@ -553,7 +537,7 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
           ```
 
        +  Install `latex`.
-       
+
           Follow [the official instructions][latex].
 
           For example, on Ubuntu, `sudo apt install texlive-full` (or, for a minimal
@@ -567,7 +551,7 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
        If you have `latexmk` installed but it's still not found, you may need to make
        sure it's in your shell `PATH`.
-       
+
 
 +  **Problem**. After installing `fls-shake` as described above, the command 
 
@@ -580,10 +564,10 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
    ```bash
    commitBuffer: invalid argument (cannot encode character '\8474')
    ```
-   
+
    +  **Root Cause**.  Most likely Agda is trying to write a character (Ⅎ, U+2112)
       into a file or stdout using the wrong encoding — probably ASCII or Latin-1.
-   
+
    +  **Solution**: Ensure Agda runs in a UTF-8 locale.
 
       Option 1: Set `LANG/LC_ALL` manually when running
