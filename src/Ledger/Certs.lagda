@@ -7,6 +7,7 @@
 
 open import Ledger.Prelude renaming (filterˢ to filter)
 open import Ledger.Types.GovStructure
+open import Ledger.Types.Numeric.UnitInterval
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
 
@@ -37,15 +38,25 @@ instance
 \label{fig:certs:deposit-types}
 \end{figure*}
 
-\begin{figure*}[h!]
+\begin{figure*}
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
 record PoolParams : Type where
   field
-    rewardAddr : Credential
+    owners          : ℙ KeyHash
+    cost            : Coin
+    margin          : UnitInterval
+    pledge          : Coin
+    rewardAccount   : Credential
 \end{code}
 \end{NoConway}
+\end{AgdaMultiCode}
+\caption{Stake pool parameter definitions}
+\end{figure*}
+
+\begin{figure*}[h!]
+\begin{AgdaMultiCode}
 \begin{code}
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
