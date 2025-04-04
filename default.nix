@@ -84,23 +84,7 @@ let
 in rec
 {
 
-  fls-shake = stdenv.mkDerivation {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-    name = "fls-shake";
-    src = fs.toSource {
-      root = ./.;
-      fileset = ./Shakefile.hs;
-    };
-    nativeBuildInputs = [ (haskellPackages.ghcWithPackages (ps: with ps;
-                            ([ shake binary deepseq hashable text ]))) ];
-    buildPhase = ''
-      ghc -o fls-shake Shakefile.hs -threaded
-    '';
-    installPhase = ''
-      mkdir -p "$out/bin"
-      cp fls-shake "$out/bin/"
-    '';
-  };
+  fls-shake = haskellPackages.callCabal2nix "fls-shake" ./fls-shake { };
 
   agdaWithDeps = agda.withPackages { pkgs = deps; };
 
