@@ -13,7 +13,6 @@ open import Data.Rational.Literals using (number)
 import Data.Rational.Properties as ℚ
 import Data.Nat as ℕ renaming (_⊔_ to max)
 import Data.Integer as ℤ renaming (_⊔_ to max)
-open import Data.Integer.Ext using (posPart)
 import Data.Integer.Properties as ℤ
 open Number number renaming (fromNat to fromℕ)
 
