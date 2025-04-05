@@ -30,3 +30,11 @@ import Foreign.Convertible.DerivingTest
 import ScriptVerification.Examples
 import ScriptVerification.StructuredContracts
 import ScriptVerification.Lib
+
+-- ** Properties
+import Ledger.Utxo.Properties.MinSpend
+import Ledger.Utxo.Properties.UTXOpov
+import Ledger.Certs.Properties.CERTSpov
+import Ledger.Ledger.Properties.LEDGERpov
+-- import Ledger.Properties.LEDGERgovDepsMatch
+-- import Ledger.Properties.ProposalChangePP

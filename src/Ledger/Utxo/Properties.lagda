@@ -546,46 +546,6 @@ UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
 \caption{Computing the UTXO transition system}
 \end{figure*}
 
-\begin{property}[\textbf{Preserve Balance}]~\\
-\noindent
-For all \AgdaBound{Γ}~\(∈\)~\UTxOEnv{}, \AgdaBound{utxo}, \AgdaBound{utxo'}~\(∈\)~\UTxO{},
-\AgdaBound{fees}, \AgdaBound{fees'}~\(∈\)~\Coin{} and \AgdaBound{tx}~\(∈\)~\Tx{},
-
-if
-\begin{code}[hide]
-pov : let open Tx tx; open TxBody body in
-\end{code}
-\begin{code}
-  txid ∉ mapˢ proj₁ (dom utxo)
-\end{code}
-
-and
-\begin{code}[hide]
-  →
-\end{code}
-\begin{code}
-  Γ ⊢  ⟦ utxo   , fees   , deposits   , donations   ⟧ ⇀⦇ tx ,UTXO⦈
-       ⟦ utxo'  , fees'  , deposits'  , donations'  ⟧
-\end{code}
-
-then
-\begin{code}[hide]
-  →
-\end{code}
-\begin{code}
-  getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , isValid)
-  ≡ getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧
-\end{code}
-\begin{code}[hide]
-pov {deposits' = deposits'} h'
-    step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid))) =
-    DepositHelpers.pov-scripts step h' refl valid
-
-pov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid))) =
-  DepositHelpers.pov-no-scripts step h' invalid
-\end{code}
-
-\end{property}
 
 \begin{property}[\textbf{General Minimum Spending Condition}]~\\
 

@@ -105,46 +105,28 @@ validTx₁ tx = ∃[ s ] validTxIn₁ s tx
 ChainInvariant : ∀ {a} → (ChainState → Type a) → Type a
 ChainInvariant P = ∀ b s s' → _ ⊢ s ⇀⦇ b ,CHAIN⦈ s' → P s → P s'
 
-module _ (s : ChainState) where
-  open ChainState s; open NewEpochState newEpochState; open EpochState epochState
-  open LState ls
-  open EnactState es renaming (pparams to pparams')
-  open CertState certState; open DState dState
-  pparams = pparams' .proj₁
-  open PParams pparams
-  open Tx; open TxBody
+-- Transaction properties
 
-  -- Transaction properties
+-- PROPERTY (TO PROVE) --
+propose-ChangePP-hasGroup : {tx : Tx} → Type 
+propose-ChangePP-hasGroup {tx} = ∀ {p up} →
+  ∙ p ∈ Tx.body tx
+  ∙ p .GovProposal.action ≡ ⟦ ChangePParams , up ⟧ᵍᵃ
+    ────────────────────────────────
+    updateGroups up ≢ ∅
 
-  module _ {slot} {tx} (let txb = body tx) (valid : validTxIn₂ s slot tx)
-    (indexedSum-∪⁺-hom : ∀ {A V : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄ ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄
-      → (d₁ d₂ : A ⇀ V) → indexedSumᵛ' id (d₁ ∪⁺ d₂) ≡ indexedSumᵛ' id d₁ ◇ indexedSumᵛ' id d₂)
-    (indexedSum-⊆ : ∀ {A : Type} ⦃ _ : DecEq A ⦄ (d d' : A ⇀ ℕ) → d ˢ ⊆ d' ˢ
-      → indexedSumᵛ' id d ≤ indexedSumᵛ' id d') -- technically we could use an ordered monoid instead of ℕ
-    where
-    open import Ledger.Utxow txs abs
-    open import Ledger.Utxo.Properties txs abs
+-- Block properties
 
-    propose-minSpend : noRefundCert (txcerts txb)
-      → coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
-    propose-minSpend noRef = case valid of λ where
-      (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
-      (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
+module _ (s : ChainState) (open ChainState s)
+         {b} (let open Block b)
+  where
+  open NewEpochState newEpochState
+  open EpochState epochState
 
-    -- PROPERTY (TO PROVE) --
-    propose-ChangePP-hasGroup : Type 
-    propose-ChangePP-hasGroup = ∀ {p up} →
-      ∙ p ∈ txb
-      ∙ p .GovProposal.action ≡ ⟦ ChangePParams , up ⟧ᵍᵃ
-        ────────────────────────────────
-        updateGroups up ≢ ∅
+  isNewEpochBlock : Type
+  isNewEpochBlock = epoch slot ≡ sucᵉ lastEpoch
 
-  -- Block properties
-
-  module _ {b} (valid : validBlockIn s b) (let open Block b) where
-
-    isNewEpochBlock : Type
-    isNewEpochBlock = epoch slot ≡ sucᵉ lastEpoch
+  module _ (valid : validBlockIn s b) where 
 
     newChainState : ChainState
     newChainState = proj₁ valid
