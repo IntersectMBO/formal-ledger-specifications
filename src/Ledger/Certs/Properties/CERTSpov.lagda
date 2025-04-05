@@ -63,12 +63,12 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
 
 \begin{property}[%
-  \textbf{Preservation of Value: CERT rule};
-    \LedgerMod{Properties/CERTSpov.lagda}{\AgdaModule{Ledger.Properties.CERTSpov}};
-    \textbf{proved}%
-  ]\
+  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
+  \textbf{CERT rule preserves value};
+  \textbf{proved}%
+]\
 
-For all
+\noindent Assume
 \begin{AgdaMultiCode}
 \begin{code}[hide]
   CERT-pov :
@@ -79,20 +79,30 @@ For all
     {stᵖ stᵖ' : PState}
     {stᵍ stᵍ' : GState}
 \end{code}
-if
+\begin{code}[hide]
+    →
+\end{code}
+and
+\begin{code}
+    let s   = ⟦ stᵈ , stᵖ , stᵍ ⟧
+        s'  = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧
+\end{code}
+\begin{code}[hide]
+    in
+\end{code}
+
+\noindent If
+\begin{code}[inline]
+    Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
+\end{code}
 \begin{code}[hide]
     → 
 \end{code}
-\begin{code}
-    Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧
+, then
+\begin{code}[inline]
+      getCoin s ≡ getCoin s'
 \end{code}
-then
-\begin{code}[hide]
-    → 
-\end{code}
-\begin{code}
-      getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧
-\end{code}
+.
 \begin{code}[hide]
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
@@ -147,26 +157,34 @@ then
 \end{property}
 
 \begin{property}[%
-  \textbf{Preservation of Value: CERTBASE rule};
-    \LedgerMod{Properties/CERTSpov.lagda}{\AgdaModule{Ledger.Properties.CERTSpov}};
-    \textbf{proved}%
-  ]\
+  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
+  \textbf{CERTBASE rule preserves Value};
+  \textbf{proved}%
+]\
 \begin{AgdaMultiCode}
 \begin{code}[hide]
     CERTBASE-pov :
 \end{code}
-For all
-\begin{code}
+
+\noindent Assume
+\begin{code}[inline]
       {s s' : CertState}
+\end{code}
+.  If~
+\begin{code}[hide]
+        → 
+\end{code}
+\begin{code}[inline]
+      Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
 \end{code}
 \begin{code}[hide]
         → 
 \end{code}
+, then
 \begin{code}
-      ∙ Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
-        ────────────────────────────────
-        getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
+      getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 \end{code}
+.
 \begin{code}[hide]
     CERTBASE-pov  {s  = cs}
                   {s' = cs'}
@@ -220,27 +238,34 @@ For all
 \end{property}
 
 \begin{property}[%
-  \textbf{Preservation of Value: RTC for CERT};
-    \LedgerMod{Properties/CERTSpov.lagda}{\AgdaModule{Ledger.Properties.CERTSpov}};
-    \textbf{proved}%
+  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}};
+  \textbf{RTC for CERT rule preserves value};
+  \textbf{proved}%
   ]\
 
 \begin{AgdaMultiCode}
 \begin{code}[hide]
     sts-pov :
 \end{code}
-If
-\begin{code}
+
+\noindent Assume
+\begin{code}[inline]
       {s₁ sₙ : CertState}
 \end{code}
 \begin{code}[hide]
         → 
 \end{code}
-then
+.\\[4pt]
+If
+\begin{code}[inline]
+      ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
+\end{code}
+\begin{code}[hide]
+        → 
+\end{code}
+, then
 \begin{code}
-      ∙ ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
-        ────────────────────────────────
-        getCoin s₁ ≡ getCoin sₙ
+      getCoin s₁ ≡ getCoin sₙ
 \end{code}
 \begin{code}[hide]
     sts-pov (BS-base Id-nop) = refl
@@ -250,27 +275,33 @@ then
 \end{property}
 
 \begin{property}[%
-  \textbf{Preservation of Value: CERTS rule};
-    \LedgerMod{Properties/CERTSpov.lagda}{\AgdaModule{Ledger.Properties.CERTSpov}};
-    \textbf{proved}%
-  ]\
+  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
+  \textbf{CERTS rule preserves value};
+  \textbf{proved}%
+]\
 
 \begin{AgdaMultiCode}
 \begin{code}[hide]
     CERTS-pov : 
 \end{code}
-If
-\begin{code}
+
+\noindent Assume
+\begin{code}[inline]
       {s₁ sₙ : CertState}
 \end{code}
 \begin{code}[hide]
         → 
 \end{code}
-then
+.  If~
+\begin{code}[inline]
+      Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ 
+\end{code}
+\begin{code}[hide]
+        → 
+\end{code}
+, then
 \begin{code}
-      ∙ Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ 
-        ────────────────────────────────
-        getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
+      getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
 \end{code}
 \begin{code}[hide]
     CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts

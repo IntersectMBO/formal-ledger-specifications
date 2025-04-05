@@ -131,49 +131,43 @@ one of the two refund types (i.e., an element of \ab{l} is neither a \dereg{} no
 \deregdrep{}).
 
 \begin{property}[%
-  \textbf{General Min Spend Condition};
-  \LedgerMod{Properties/MinSpend.lagda}{\AgdaModule{Ledger.Properties.MinSpend}};
+  \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}}:
+  \textbf{general spend lower bound};
   \textbf{proved}%
 ]\
+
 \begin{AgdaMultiCode}
 \begin{code}[hide]
-  gmsc :
+  gmsc : let
 \end{code}
-\noindent
-\begin{code}
-    let pp = UTxOEnv.pparams Γ
-
+\noindent Let~
+\begin{code}[inline]
+    pp = UTxOEnv.pparams Γ
 \end{code}
-
-be the \pparams{} of the \UTxOEnv{} environment Γ,
+~be the protocol parameters of the UTxO environment Γ.
 \begin{code}[hide]
-        open Tx tx
-        open TxBody body
+    open Tx tx
+    open TxBody body
     in
 \end{code}
-and assume
-\begin{code}
 
+\noindent If~
+\begin{code}[inline]
     Γ ⊢  utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
-
 \end{code}
 \begin{code}[hide]
     →
 \end{code}
-and
-\begin{code}
-
+~and~
+\begin{code}[inline]
     noRefundCert txcerts
-
 \end{code}
 \begin{code}[hide]
     →
 \end{code}
-then,
+, then
 \begin{code}
-
       coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
-
 \end{code}
 \begin{code}[hide]
   gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
@@ -220,22 +214,23 @@ then,
 \end{AgdaMultiCode}
 \end{property}
 
-To state the next property, we define the following notation:
+To state the next property we define some more notation:
 for a given ledger state \ab{ls} and
 transaction \ab{tx}, denote by \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that
 there exists ledger state \ab{ls'} such that
 \ab{ls}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{ls'}.  
 
 \begin{property}[%
-  \textbf{Minimum Spending for Proposals};
-  \LedgerMod{Properties/MinSpend.lagda}{\AgdaModule{Ledger.Properties.MinSpend}};
+  \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}}:
+  \textbf{spend lower bound for proposals};
   \textbf{proved}%
 ]\
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 module _
 \end{code}
-Assume the following typing judgements
+
+\noindent Assume
 \begin{code}
   ( s : ChainState )
   ( indexedSum-∪⁺-hom :  {A V : Type}
@@ -262,39 +257,32 @@ Assume the following typing judgements
   propose-minSpend :
 \end{code}
 \begin{code}
-
     { slot   : Slot }
     { tx     : Tx }
     { valid  : validTxIn₂ s slot tx }
 
 \end{code}
-and
+and~
 \begin{code}[hide]
     (
 \end{code}
-\begin{code}
-
+\begin{code}[inline]
     let txb = Tx.body tx
-
 \end{code}
 \begin{code}[hide]
     ) 
     (open TxBody txb) → 
 \end{code}
-If, in addition,
-\begin{code}
-
+.  If
+\begin{code}[inline]
     noRefundCert txcerts
-
 \end{code}
 \begin{code}[hide]
     →
 \end{code}
-then,
+, then
 \begin{code}
-
       coin (consumed pp utxoSt txb) ≥ length txprop * govActionDeposit
-
 \end{code}
 \begin{code}[hide]
   propose-minSpend {valid = valid} noRef = case valid of λ where

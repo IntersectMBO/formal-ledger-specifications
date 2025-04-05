@@ -16,7 +16,7 @@ open import Ledger.Chain txs abs
 open import Ledger.Certs.Properties govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Utxo txs abs
-open import Ledger.Properties.UTXOpov txs abs
+open import Ledger.Utxo.Properties.UTXOpov txs abs
 open import Ledger.Utxow txs abs
 open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 
@@ -54,25 +54,31 @@ module _
   LEDGER-pov :
 \end{code}
 \begin{property}[%
-  \textbf{Preservation of Value: LEDGER rule};
-    \LedgerMod{Properties/LEDGERpov.lagda}{\AgdaModule{Ledger.Properties.LEDGERpov}};
-    \textbf{proved}%
-  ]\
+  \LedgerMod{Ledger/Properties/LEDGERpov.lagda}{\AgdaModule{LEDGERpov}}:
+  \textbf{LEDGER rule preserves value};
+  \textbf{proved}%
+]\
 
-Let
+\noindent Assume
 \begin{AgdaMultiCode}
-\begin{code}
+\begin{code}[inline]
     {s s' : LState}
 \end{code}
 \begin{code}[hide]
     → FreshTx tx s →
 \end{code}
-Then,
-\begin{code}
-    ∙ Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-      ────────────────────────────────
-      getCoin s ≡ getCoin s'
+.  If~
+\begin{code}[inline]
+    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
 \end{code}
+\begin{code}[hide]
+    →
+\end{code}
+, then 
+\begin{code}[inline]
+    getCoin s ≡ getCoin s'
+\end{code}
+.
 \begin{code}[hide]
   LEDGER-pov
     {s  = s}
@@ -97,7 +103,7 @@ Then,
       getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState')
         ≡˘⟨ +-assoc (getCoin utxoSt) (φ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
       getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState'
-        ≡⟨ cong (_+ getCoin certState') (UTXOpov (h , st)) ⟩
+        ≡⟨ cong (_+ getCoin certState') (UTXOpov h st) ⟩
       getCoin utxoSt' + getCoin certState'
         ∎
 
@@ -118,7 +124,7 @@ Then,
       getCoin ⟦ utxo , fees , deposits , donations ⟧ + 0
         ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , x)) invalid ⟩
       getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , isValid)
-        ≡⟨ UTXOpov (h , st) ⟩
+        ≡⟨ UTXOpov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning
 \end{code}
