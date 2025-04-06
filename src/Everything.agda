@@ -36,5 +36,7 @@ import Ledger.Utxo.Properties.MinSpend
 import Ledger.Utxo.Properties.UTXOpov
 import Ledger.Certs.Properties.CERTSpov
 import Ledger.Ledger.Properties.LEDGERpov
--- import Ledger.Properties.LEDGERgovDepsMatch
+import Ledger.Ledger.Properties.LEDGERgovDepsMatch
+import Ledger.Epoch.Properties.EPOCHgovDepsMatch
+import Ledger.Chain.Properties.CHAINgovDepsMatch
 -- import Ledger.Properties.ProposalChangePP

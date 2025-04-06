@@ -29,6 +29,7 @@ module _
 \begin{code}
   {tx : Tx}
 \end{code}  
+\nopagebreak
 \begin{code}[hide]
   (open Tx tx)(open TxBody body)
 \end{code}  
@@ -42,10 +43,11 @@ module _
 \begin{code}[hide]
   where
   UTXOpov :
+    let
 \end{code}  
-and
+and let
 \begin{code}
-    let  s   = ⟦ utxo , fees , deposits , donations ⟧
+         s   = ⟦ utxo , fees , deposits , donations ⟧
          s'  = ⟦ utxo'  , fees'  , deposits'  , donations' ⟧
 \end{code}  
 \begin{code}[hide]
@@ -79,4 +81,3 @@ and
 \end{code}
 \end{AgdaMultiCode}
 \end{property}
-

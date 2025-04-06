@@ -36,6 +36,7 @@
 \usepackage{unicode-math}
 \setsansfont{XITSMath-Regular.otf}
 \setmathfont{XITSMath-Regular.otf}
+\setmonofont{DejaVu Sans Mono} % or Fira Code, Ubuntu Mono, etc.
 
 \usepackage{macros}
 
@@ -97,10 +98,19 @@
 %%
 \usepackage{amsthm}
 \theoremstyle{definition}
-% \newtheorem*{property}{Property}
+
+% \newcounter{theproperty} \setcounter{theproperty}{1}
+% \newenvironment{property}[1][]{\bigskip\noindent%
+% \begin{samepage}%
+% {\textbf{Property \arabic{theproperty}. (#1)} \stepcounter{theproperty} \rm}%
+% }{\medskip\end{samepage}}
+
 \newcounter{theproperty} \setcounter{theproperty}{1}
-\newenvironment{property}[1][]{\medskip\noindent%
- {\textbf{Property \arabic{theproperty}. (#1)} \stepcounter{theproperty} \rm}{\medskip}}
+\newenvironment{property}[1][]{\bigskip\noindent%
+\begin{minipage}{\textwidth}%
+{\textbf{Property \arabic{theproperty}. (#1)} \stepcounter{theproperty} \rm}%
+}{\end{minipage}\medskip}
+
 
 \newenvironment{question}
   {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}

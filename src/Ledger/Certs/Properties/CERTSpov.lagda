@@ -64,7 +64,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 \begin{property}[%
   \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  \textbf{CERT rule preserves value};
+  CERT rule preserves value;
   \textbf{proved}%
 ]\
 
@@ -158,7 +158,7 @@ and
 
 \begin{property}[%
   \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  \textbf{CERTBASE rule preserves Value};
+  CERTBASE rule preserves value;
   \textbf{proved}%
 ]\
 \begin{AgdaMultiCode}
@@ -238,8 +238,8 @@ and
 \end{property}
 
 \begin{property}[%
-  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}};
-  \textbf{RTC for CERT rule preserves value};
+  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
+  RTC of CERT rule preserves value;
   \textbf{proved}%
   ]\
 
@@ -276,7 +276,7 @@ If
 
 \begin{property}[%
   \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  \textbf{CERTS rule preserves value};
+  CERTS rule preserves value;
   \textbf{proved}%
 ]\
 

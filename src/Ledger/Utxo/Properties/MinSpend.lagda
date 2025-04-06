@@ -56,14 +56,6 @@ module _ -- ASSUMPTION --
          (gc-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
   where
 
-  private variable
-    tx                    : Tx
-    Γ                     : UTxOEnv
-    utxoSt utxoSt'  : UTxOState
-    utxo'                 : UTxO
-    fees' donations'      : Coin
-    deposits'             : DepositPurpose ⇀ Coin
-
   ∪⁺singleton≡ : {deps : DepositPurpose ⇀ Coin} {(dp , c) : DepositPurpose × Coin}
                  → getCoin (deps ∪⁺ ❴ (dp , c) ❵ᵐ) ≡ getCoin deps + c
   ∪⁺singleton≡ {deps} {(dp , c)} = begin
@@ -138,22 +130,32 @@ one of the two refund types (i.e., an element of \ab{l} is neither a \dereg{} no
 
 \begin{AgdaMultiCode}
 \begin{code}[hide]
-  gmsc : let
+  gmsc : 
 \end{code}
-\noindent Let~
-\begin{code}[inline]
-    pp = UTxOEnv.pparams Γ
+\noindent Assume
+\begin{code}
+    { Γ        : UTxOEnv    }
+    { tx       : Tx         }
+    { utxoSt   : UTxOState  }
+    { utxoSt'  : UTxOState  }
 \end{code}
-~be the protocol parameters of the UTxO environment Γ.
 \begin{code}[hide]
-    open Tx tx
-    open TxBody body
-    in
+    → let
 \end{code}
-
-\noindent If~
+and let
 \begin{code}[inline]
-    Γ ⊢  utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
+      pp = UTxOEnv.pparams Γ
+\end{code}
+%~be the protocol parameters of the UTxO environment Γ.
+\begin{code}[hide]
+      open Tx tx
+      open TxBody body
+      in
+\end{code}
+.\\[6pt]
+If
+\begin{code}[inline]
+    Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
 \end{code}
 \begin{code}[hide]
     →
@@ -169,6 +171,8 @@ one of the two refund types (i.e., an element of \ab{l} is neither a \dereg{} no
 \begin{code}
       coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
 \end{code}
+.
+
 \begin{code}[hide]
   gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
@@ -214,66 +218,69 @@ one of the two refund types (i.e., an element of \ab{l} is neither a \dereg{} no
 \end{AgdaMultiCode}
 \end{property}
 
-To state the next property we define some more notation:
-for a given ledger state \ab{ls} and
-transaction \ab{tx}, denote by \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that
+To state the next property we define some more notation.
+Given a ledger state \ab{ls} and
+a transaction \ab{tx}, denote by \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that
 there exists ledger state \ab{ls'} such that
 \ab{ls}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{ls'}.  
+Also, assume the following additive property of
+the \AgdaFunction{∪⁺} operator holds:
+\begin{AgdaMultiCode}
+\begin{code}[hide]
+module _
+\end{code}
+\begin{code}
+    ( indexedSum-∪⁺-hom :  {A V : Type}
+                           ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄
+                           ⦃ _ : CommutativeMonoid 0ℓ 0ℓ V ⦄
+                           (d₁ d₂ : A ⇀ V)
+\end{code}
+\begin{code}[hide]
+       →
+\end{code}
+\begin{code}
+                           ────────────────────────────────
+                           ∑[ x ← d₁ ∪⁺ d₂ ] x ≡ ∑[ x ← d₁ ] x ◇ ∑[ x ← d₂ ] x )
+\end{code}
 
 \begin{property}[%
   \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}}:
   \textbf{spend lower bound for proposals};
   \textbf{proved}%
 ]\
-\begin{AgdaMultiCode}
-\begin{code}[hide]
-module _
-\end{code}
 
 \noindent Assume
 \begin{code}
-  ( s : ChainState )
-  ( indexedSum-∪⁺-hom :  {A V : Type}
-                         ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄
-                         ⦃ _ : CommutativeMonoid 0ℓ 0ℓ V ⦄
-                         (d₁ d₂ : A ⇀ V)
+    { cs     : ChainState }
 \end{code}
 \begin{code}[hide]
-     →
-\end{code}
-\begin{code}
-                         ────────────────────────────────
-                         ∑[ x ← d₁ ∪⁺ d₂ ] x ≡ ∑[ x ← d₁ ] x ◇ ∑[ x ← d₂ ] x )
-\end{code}
-\begin{code}[hide]
- where
-  open ChainState s; open NewEpochState newEpochState; open EpochState epochState
-  open LState ls; open EnactState es using (pparams)
-
-  pp = pparams .proj₁; open PParams pp
-
+  where
   open import Ledger.Utxow txs abs
-
   propose-minSpend :
 \end{code}
 \begin{code}
     { slot   : Slot }
     { tx     : Tx }
-    { valid  : validTxIn₂ s slot tx }
-
+    { valid  : validTxIn₂ cs slot tx }
 \end{code}
-and~
+and let
 \begin{code}[hide]
-    (
+    (let
 \end{code}
-\begin{code}[inline]
-    let txb = Tx.body tx
+\begin{code}
+         ne      = cs .ChainState.newEpochState
+         ep      = ne .NewEpochState.epochState 
+         ls      = ep .EpochState.ls
+         es      = ep .EpochState.es
+         pp      = es .EnactState.pparams .proj₁
+         utxoSt  = ls .LState.utxoSt
 \end{code}
 \begin{code}[hide]
-    ) 
-    (open TxBody txb) → 
+         open Tx tx
+         open TxBody body)
+    → 
 \end{code}
-.  If
+.\\[4pt]  If
 \begin{code}[inline]
     noRefundCert txcerts
 \end{code}
@@ -282,13 +289,13 @@ and~
 \end{code}
 , then
 \begin{code}
-      coin (consumed pp utxoSt txb) ≥ length txprop * govActionDeposit
+      coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
 \end{code}
 \begin{code}[hide]
-  propose-minSpend {valid = valid} noRef = case valid of λ where
+  propose-minSpend {slot} {tx} {valid} noRef = case valid of λ where
     (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
     (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
 
 \end{code}
-\end{AgdaMultiCode}
 \end{property}
+\end{AgdaMultiCode}

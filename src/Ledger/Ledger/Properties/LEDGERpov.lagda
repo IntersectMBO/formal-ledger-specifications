@@ -53,6 +53,7 @@ module _
 
   LEDGER-pov :
 \end{code}
+
 \begin{property}[%
   \LedgerMod{Ledger/Properties/LEDGERpov.lagda}{\AgdaModule{LEDGERpov}}:
   \textbf{LEDGER rule preserves value};
