@@ -178,3 +178,6 @@ then
       (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
       a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
+\end{code}
+\end{AgdaMultiCode}
+\end{property}
