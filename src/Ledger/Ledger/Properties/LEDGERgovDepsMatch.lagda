@@ -27,8 +27,42 @@ module _ (tx : Tx) (Γ : LEnv) (s : LState) where
   open SetoidProperties tx Γ s using (|ᵒ-GAs-pres; props-dpMap-votes-invar; utxo-govst-connex; noGACerts)
 
   -- GA Deposits Invariance Property for LEDGER STS ----------------------------------------------------
-  LEDGER-govDepsMatch : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                        → govDepsMatch s → govDepsMatch s'
+  LEDGER-govDepsMatch :
+\end{code}
+
+\begin{property}[%
+  \LedgerMod{Ledger/Properties/LEDGERgovDepsMatch.lagda}{\AgdaModule{LEDGERgovDepsMatch}}:
+  \AgdaFunction{govDepsMatch} is a \AgdaDatatype{LEDGER} invariant;
+  \textbf{proved}%
+]\
+
+\begin{AgdaMultiCode}
+Assume
+\begin{code}[inline]
+    {s' : LState}
+\end{code}
+\begin{code}[hide]
+    →
+\end{code}
+\begin{code}
+    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+\end{code}
+\begin{code}[hide]
+    →
+\end{code}
+\\[4pt]
+If
+\begin{code}[inline]
+    govDepsMatch s
+\end{code}
+\begin{code}[hide]
+    →
+\end{code}
+, then
+\begin{code}[inline]
+   govDepsMatch s'
+\end{code}
+\begin{code}[hide]
   LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
   LEDGER-govDepsMatch {s' = s'}
@@ -49,3 +83,5 @@ module _ (tx : Tx) (Γ : LEnv) (s : LState) where
 
   LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
 \end{code}
+\end{AgdaMultiCode}
+\end{property}
