@@ -110,3 +110,5 @@ then
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch {ratify-removed = rrm} eps₁→eps₂
 \end{code}
+\end{AgdaMultiCode}
+\end{property}
