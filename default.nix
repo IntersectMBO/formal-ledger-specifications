@@ -10,9 +10,9 @@ let
   locales = {
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
-    LOCALE_ARCHIVE = if pkgs.system == "x86_64-linux"
-                     then "${pkgs.glibcLocales}/lib/locale/locale-archive"
-                     else "";
+    LOCALE_ARCHIVE = pkgs.lib.optionalString
+      pkgs.stdenv.isLinux
+      "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
 
   agdaStdlib = agdaPackages.standard-library.overrideAttrs (oldAttrs: {

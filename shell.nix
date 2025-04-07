@@ -9,6 +9,9 @@ with pkgs;
 
 let
   specs = callPackage ./default.nix {};
+  LOCALE_ARCHIVE = pkgs.lib.optionalString
+    pkgs.stdenv.isLinux
+    "${pkgs.glibcLocales}/lib/locale/locale-archive";
 in {
   shell = mkShell {
     nativeBuildInputs = [
@@ -22,7 +25,7 @@ in {
     shellHook = ''
       export LANG=en_US.UTF-8
       export LC_ALL=en_US.UTF-8
-      export LOCALE_ARCHIVE=${pkgs.glibcLocales}/lib/locale/locale-archive
+      export LOCALE_ARCHIVE=${LOCALE_ARCHIVE}
     '';    
 
   };
@@ -38,7 +41,7 @@ in {
       shellHook = ''
         export LANG=en_US.UTF-8
         export LC_ALL=en_US.UTF-8
-        export LOCALE_ARCHIVE=${pkgs.glibcLocales}/lib/locale/locale-archive
+        export LOCALE_ARCHIVE=${LOCALE_ARCHIVE}
       '';    
     };
   };
