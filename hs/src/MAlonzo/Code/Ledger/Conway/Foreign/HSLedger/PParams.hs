@@ -39,9 +39,9 @@ data PoolThresholds = MkPoolThresholds {q1 :: MAlonzo.Code.Ledger.Conway.Foreign
   deriving (Show, Eq, Generic)
 data Acnt = MkAcnt {treasury :: Integer, reserves :: Integer}
   deriving (Show, Eq, Generic)
-data PParams = MkPParams {ppMaxBlockSize :: Integer, ppMaxTxSize :: Integer, ppMaxHeaderSize :: Integer, ppMaxTxExUnits :: (Integer, Integer), ppMaxBlockExUnits :: (Integer, Integer), ppMaxValSize :: Integer, ppMaxCollateralInputs :: Integer, ppPv :: (Integer, Integer), ppA :: Integer, ppB :: Integer, ppKeyDeposit :: Integer, ppPoolDeposit :: Integer, ppMonetaryExpansion :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.HsUnitInterval, ppTreasuryCut :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.HsUnitInterval, ppCoinsPerUTxOByte :: Integer, ppPrices :: (), ppMinFeeRefScriptCoinsPerByte :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, ppMaxRefScriptSizePerTx :: Integer, ppMaxRefScriptSizePerBlock :: Integer, ppRefScriptCostStride :: Integer, ppRefScriptCostMultiplier :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, ppMinUTxOValue :: Integer, ppEmax :: Integer, ppNopt :: Integer, ppA0 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, ppCollateralPercentage :: Integer, ppCostmdls :: (), ppPoolThresholds :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PoolThresholds, ppDrepThresholds :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.DrepThresholds, ppCcMinSize :: Integer, ppCcMaxTermLength :: Integer, ppGovActionLifetime :: Integer, ppGovActionDeposit :: Integer, ppDrepDeposit :: Integer, ppDrepActivity :: Integer}
+data PParams = MkPParams {ppMaxBlockSize :: Integer, ppMaxTxSize :: Integer, ppMaxHeaderSize :: Integer, ppMaxTxExUnits :: (Integer, Integer), ppMaxBlockExUnits :: (Integer, Integer), ppMaxValSize :: Integer, ppMaxCollateralInputs :: Integer, ppPv :: (Integer, Integer), ppA :: Integer, ppB :: Integer, ppKeyDeposit :: Integer, ppPoolDeposit :: Integer, ppMonetaryExpansion :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, ppTreasuryCut :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, ppCoinsPerUTxOByte :: Integer, ppPrices :: (), ppMinFeeRefScriptCoinsPerByte :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, ppMaxRefScriptSizePerTx :: Integer, ppMaxRefScriptSizePerBlock :: Integer, ppRefScriptCostStride :: Integer, ppRefScriptCostMultiplier :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, ppMinUTxOValue :: Integer, ppEmax :: Integer, ppNopt :: Integer, ppA0 :: MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational, ppCollateralPercentage :: Integer, ppCostmdls :: (), ppPoolThresholds :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PoolThresholds, ppDrepThresholds :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.DrepThresholds, ppCcMinSize :: Integer, ppCcMaxTermLength :: Integer, ppGovActionLifetime :: Integer, ppGovActionDeposit :: Integer, ppDrepDeposit :: Integer, ppDrepActivity :: Integer}
   deriving (Show, Eq, Generic)
-data PParamsUpdate = MkPParamsUpdate {ppuMaxBlockSize :: (Maybe Integer), ppuMaxTxSize :: (Maybe Integer), ppuMaxHeaderSize :: (Maybe Integer), ppuMaxValSize :: (Maybe Integer), ppuMaxCollateralInputs :: (Maybe Integer), ppuMaxTxExUnits :: (Maybe (Integer, Integer)), ppuMaxBlockExUnits :: (Maybe (Integer, Integer)), ppuPv :: (Maybe (Integer, Integer)), ppuA :: (Maybe Integer), ppuB :: (Maybe Integer), ppuKeyDeposit :: (Maybe Integer), ppuPoolDeposit :: (Maybe Integer), ppuMonetaryExpansion :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.HsUnitInterval), ppuTreasuryCut :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.HsUnitInterval), ppuCoinsPerUTxOByte :: (Maybe Integer), ppuPrices :: (Maybe ()), ppuMinFeeRefScriptCoinsPerByte :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational), ppuMaxRefScriptSizePerTx :: (Maybe Integer), ppuMaxRefScriptSizePerBlock :: (Maybe Integer), ppuRefScriptCostStride :: (Maybe Integer), ppuRefScriptCostMultiplier :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational), ppuMinUTxOValue :: (Maybe Integer), ppuA0 :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational), ppuEmax :: (Maybe Integer), ppuNopt :: (Maybe Integer), ppuCollateralPercentage :: (Maybe Integer), ppuCostmdls :: (Maybe ()), ppuDrepThresholds :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.DrepThresholds), ppuPoolThresholds :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PoolThresholds), ppuGovActionLifetime :: (Maybe Integer), ppuGovActionDeposit :: (Maybe Integer), ppuDrepDeposit :: (Maybe Integer), ppuDrepActivity :: (Maybe Integer), ppuCcMinSize :: (Maybe Integer), ppuCcMaxTermLength :: (Maybe Integer)}
+data PParamsUpdate = MkPParamsUpdate {ppuMaxBlockSize :: (Maybe Integer), ppuMaxTxSize :: (Maybe Integer), ppuMaxHeaderSize :: (Maybe Integer), ppuMaxValSize :: (Maybe Integer), ppuMaxCollateralInputs :: (Maybe Integer), ppuMaxTxExUnits :: (Maybe (Integer, Integer)), ppuMaxBlockExUnits :: (Maybe (Integer, Integer)), ppuPv :: (Maybe (Integer, Integer)), ppuA :: (Maybe Integer), ppuB :: (Maybe Integer), ppuKeyDeposit :: (Maybe Integer), ppuPoolDeposit :: (Maybe Integer), ppuMonetaryExpansion :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational), ppuTreasuryCut :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational), ppuCoinsPerUTxOByte :: (Maybe Integer), ppuPrices :: (Maybe ()), ppuMinFeeRefScriptCoinsPerByte :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational), ppuMaxRefScriptSizePerTx :: (Maybe Integer), ppuMaxRefScriptSizePerBlock :: (Maybe Integer), ppuRefScriptCostStride :: (Maybe Integer), ppuRefScriptCostMultiplier :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational), ppuMinUTxOValue :: (Maybe Integer), ppuA0 :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational), ppuEmax :: (Maybe Integer), ppuNopt :: (Maybe Integer), ppuCollateralPercentage :: (Maybe Integer), ppuCostmdls :: (Maybe ()), ppuDrepThresholds :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.DrepThresholds), ppuPoolThresholds :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PoolThresholds), ppuGovActionLifetime :: (Maybe Integer), ppuGovActionDeposit :: (Maybe Integer), ppuDrepDeposit :: (Maybe Integer), ppuDrepActivity :: (Maybe Integer), ppuCcMinSize :: (Maybe Integer), ppuCcMaxTermLength :: (Maybe Integer)}
   deriving (Show, Eq, Generic)
 -- Ledger.Conway.Foreign.HSLedger.PParams.HsTy-DrepThresholds
 d_HsTy'45'DrepThresholds_10 ::
@@ -870,12 +870,52 @@ d_Conv'45'PParams_24
                      (coe v9) (coe v10) (coe v11) (coe v12)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1874
-                        v13)
+                        (coe
+                           MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                           (coe
+                              (\ v36 ->
+                                 case coe v36 of
+                                   MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v37 v38
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C__'44'__12
+                                          (coe v37) (coe addInt (coe (1 :: Integer)) (coe v38))
+                                   _ -> MAlonzo.RTE.mazUnreachableError))
+                           (coe
+                              (\ v36 ->
+                                 case coe v36 of
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C__'44'__12 v37 v38
+                                     -> case coe v38 of
+                                          0 -> coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                          _ -> coe
+                                                 MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                 (coe v37) (coe v38)
+                                   _ -> MAlonzo.RTE.mazUnreachableError)))
+                        (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                           (coe v13)))
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1874
-                        v14)
+                        (coe
+                           MAlonzo.Code.Foreign.Convertible.C_Convertible'46'constructor_21
+                           (coe
+                              (\ v36 ->
+                                 case coe v36 of
+                                   MAlonzo.Code.Data.Rational.Base.C_mkℚ_24 v37 v38
+                                     -> coe
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C__'44'__12
+                                          (coe v37) (coe addInt (coe (1 :: Integer)) (coe v38))
+                                   _ -> MAlonzo.RTE.mazUnreachableError))
+                           (coe
+                              (\ v36 ->
+                                 case coe v36 of
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.C__'44'__12 v37 v38
+                                     -> case coe v38 of
+                                          0 -> coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+                                          _ -> coe
+                                                 MAlonzo.Code.Data.Rational.Base.du__'47'__156
+                                                 (coe v37) (coe v38)
+                                   _ -> MAlonzo.RTE.mazUnreachableError)))
+                        (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                           (coe v14)))
                      (coe v15) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -1377,8 +1417,7 @@ d_Conv'45'PParams_24
                                                             MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                             (coe v37) (coe v38)
                                               _ -> MAlonzo.RTE.mazUnreachableError)))
-                                   (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_getHsUnitInterval_1870
-                                      (coe v13))) in
+                                   v13) in
                       coe
                         (case coe v36 of
                            MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v37 -> coe v37
@@ -1415,8 +1454,7 @@ d_Conv'45'PParams_24
                                                             MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                             (coe v37) (coe v38)
                                               _ -> MAlonzo.RTE.mazUnreachableError)))
-                                   (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_getHsUnitInterval_1870
-                                      (coe v14))) in
+                                   v14) in
                       coe
                         (case coe v36 of
                            MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v37 -> coe v37
@@ -2501,7 +2539,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1874))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1868))
                         v13)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -2509,7 +2547,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1874))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1868))
                         v14)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -2802,7 +2840,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1874))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1868))
                         v13)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -2810,7 +2848,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1874))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_1868))
                         v14)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -3029,8 +3067,8 @@ check_MkPParams_10201 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.T_HsUnitInterval_1866 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.T_HsUnitInterval_1866 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Rational_10 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Rational_10 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Rational_10 ->
@@ -3082,11 +3120,9 @@ check_MkPParamsUpdate_116167 ::
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
-    ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.T_HsUnitInterval_1866 ->
+    () MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Rational_10 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
-    ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.T_HsUnitInterval_1866 ->
+    () MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_Rational_10 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () Integer ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10
     () MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
