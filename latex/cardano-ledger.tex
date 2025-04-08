@@ -38,13 +38,21 @@
 \input{Properties}
 
 \section{Formal Properties}
-\inputAgda{Ledger/Utxo/Properties/MinSpend}
+\subsection{Preservation of Value}
 \inputAgda{Ledger/Utxo/Properties/UTXOpov}
 \inputAgda{Ledger/Certs/Properties/CERTSpov}
 \inputAgda{Ledger/Ledger/Properties/LEDGERpov}
+
+\subsection{Invariance Properties}
 \inputAgda{Ledger/Ledger/Properties/LEDGERgovDepsMatch}
 \inputAgda{Ledger/Epoch/Properties/EPOCHgovDepsMatch}
 \inputAgda{Ledger/Chain/Properties/CHAINgovDepsMatch}
+
+\subsection{Minimum Spending Conditions}
+\inputAgda{Ledger/Utxo/Properties/MinSpend}
+
+\subsection{Other Miscellaneous Properties}
+\inputAgda{Ledger/GovernanceActions/Properties/ProposalChangePP}
 
 
 \clearpage

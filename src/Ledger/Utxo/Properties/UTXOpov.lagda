@@ -21,7 +21,21 @@ open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
   \textbf{proved}%
 ]\
 
-\noindent Assume
+\noindent
+Let
+
+  \(\begin{array}{rcl}
+    \ab{Γ} &∈& \UTxOEnv{},\\
+    \ab{utxo}, \ab{utxo'} &∈& \UTxO{},\\
+    \ab{fees}, \ab{fees'} &∈& \Coin{},\\
+    \ab{tx} &∈& \Tx{}.
+  \end{array}\)
+
+If \(\ab{txid}~∉~\ab{mapˢ}~\ab{proj₁}~(\ab{dom}~\ab{utxo})\), and\\[4pt]
+  if \(\ab{Γ}~\ab{⊢}~s~\ab{⇀⦇ tx ,UTXO⦈}~s'\), then\\[4pt]
+  \(\ab{getCoin}~\ab{s} + φ(\ab{getCoin}~\ab{txwdrls} , \ab{isValid}) ≡ \ab{getCoin}~\ab{s'}\).
+\\[6pt]
+Assume
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 module _

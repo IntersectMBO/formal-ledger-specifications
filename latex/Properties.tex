@@ -7,16 +7,6 @@ with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}
 
 \item \textit{Transaction Properties}
 
-  \begin{property}[% ---------------------------------------------------------------
-    \textbf{Updates have non-empty groups};
-    \LedgerMod{Properties.agda}{\AgdaModule{Ledger.Properties}};
-    \textbf{to prove}%
-  ]\
-
-  If \ab{p} is a goveranance proposal that proposes a parameter update \ab{up}, then\\[4pt]
-  \(\text{\AgdaField{updateGroups}}~\ab{up} ≢ ∅\).
-  \end{property}
-
 \item \textit{Block Properties}
 
   \begin{property}[% ---------------------------------------------------------
@@ -42,45 +32,6 @@ with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}
 
 \item \textit{Invariance Properties}
 
-        Recall that a ledger state (type \LState{}) is a record with three fields,
-        \begin{itemize}
-          \item[] \ab{utxoSt} : \UTxOState{},
-          \item[] \ab{govSt} : \GovState{},
-          \item[] \ab{certState} : \CertState{}.
-        \end{itemize}
-        The next property asserts that the \AgdaDatatype{LEDGER} rule preserves a
-        certain connection between the \ab{utxoSt} and \ab{govSt} fields of ledger
-        states, which we now describe.
-
-        Recall, a governance state (\GovState{}) is a list of pairs of type
-        \GovActionID{}~×~\GovActionState{} and, associated with each
-        \GovActionID{} is a deposit of type \GovActionDeposit{}.
-
-        Recall that \UTxOState{} has a \ab{deposits}~:~\Deposits{} field, which is a map
-        from \DepositPurpose{} to \Coin{}, and each \DepositPurpose{} can either
-        \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, or \GovActionDeposit{}.
-
-        Given a ledger state \ab{s}, we focus on deposits in the
-        \UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The connection we
-        consider is whether the set of \GovActionDeposit{}s of the
-        \UTxOState{} of \ab{s} is the same as the set of \GovActionDeposit{} of the \GovState{}
-        of \ab{s}.
-
-  \begin{property}[% ---------------------------------------------------------
-                   % filterˢ isGADeposit (dom (UTxOState.deposits utxoSt)) ≡ᵉ fromList (dpMap govSt)
-    \textbf{\AgdaFunction{govDepsMatch} is a \AgdaDatatype{LEDGER} invariant}
-    \LedgerMod{Ledger/Properties.agda}{\AgdaModule{Ledger.Ledger.Properties}};
-    \textbf{proved}%
-  ]
-
-  Suppose \ab{s}, \ab{s'} are ledger states such that
-  \ab{s} \AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}. Let \ab{utxoSt}
-  and \ab{utxoSt'} be their respective \UTxOState{}s and let \ab{govSt}
-  and \ab{govSt'} be their respective \GovState{}s.
-
-  If the governance action deposits of \ab{utxoSt} are the same as those
-  of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-  \end{property}
 
   \begin{property}[% ---------------------------------------------------------
     \texttt{dom-rwds$≡$credDeposits};
@@ -144,24 +95,5 @@ with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}
 
 \item \textit{Preservation Properties}
 
-  \begin{property}[% ---------------------------------------------------------
-    \textbf{Preserve Balance};
-    \LedgerMod{Utxo.Properties.agda}{\AgdaModule{Ledger.Utxo.Properties}};
-    \textbf{proved}%
-  ]\
-
-  Let
-
-  \(\begin{array}{rcl}
-    \ab{Γ} &∈& \UTxOEnv{},\\
-    \ab{utxo}, \ab{utxo'} &∈& \UTxO{},\\
-    \ab{fees}, \ab{fees'} &∈& \Coin{},\\
-    \ab{tx} &∈& \Tx{}.
-  \end{array}\)
-
-  If \(\ab{txid}~∉~\ab{mapˢ}~\ab{proj₁}~(\ab{dom}~\ab{utxo})\), and\\[4pt]
-  if \(\ab{Γ}~\ab{⊢}~s~\ab{⇀⦇ tx ,UTXO⦈}~s'\), then\\[4pt]
-  \(\ab{getCoin}~\ab{s} + φ(\ab{getCoin}~\ab{txwdrls} , \ab{isValid}) ≡ \ab{getCoin}~\ab{s'}\).
-  \end{property}
 
 \end{itemize}

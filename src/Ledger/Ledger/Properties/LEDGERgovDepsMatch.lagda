@@ -17,18 +17,13 @@ open import Ledger.Utxo txs abs
 open import Ledger.Certs govStructure using (DepositPurpose)
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
-module _ (tx : Tx) (Γ : LEnv) (s : LState) where
-  open Tx tx renaming (body to txb); open TxBody txb
-  open LEnv Γ renaming (pparams to pp)
-  open PParams pp using (govActionDeposit)
-  open LState s
-  open LEDGER-PROPS tx Γ s using (utxoDeps; updateGovStates; STS→GovSt≡)
+module _ where
   open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
-  open SetoidProperties tx Γ s using (|ᵒ-GAs-pres; props-dpMap-votes-invar; utxo-govst-connex; noGACerts)
 
   -- GA Deposits Invariance Property for LEDGER STS ----------------------------------------------------
   LEDGER-govDepsMatch :
 \end{code}
+
 
 \begin{property}[%
   \LedgerMod{Ledger/Properties/LEDGERgovDepsMatch.lagda}{\AgdaModule{LEDGERgovDepsMatch}}:
@@ -36,22 +31,61 @@ module _ (tx : Tx) (Γ : LEnv) (s : LState) where
   \textbf{proved}%
 ]\
 
+\noindent Recall that a ledger state (type \LState{}) is a record with three fields,
+\begin{itemize}
+  \item[] \ab{utxoSt} : \UTxOState{},
+  \item[] \ab{govSt} : \GovState{},
+  \item[] \ab{certState} : \CertState{}.
+\end{itemize}
+The next property asserts that the \AgdaDatatype{LEDGER} rule preserves a
+certain relation between the \ab{utxoSt} and \ab{govSt} fields of ledger
+states, which we now describe.
+Recall, a governance state (\GovState{}) is a list of pairs (of type
+\GovActionID{}~×~\GovActionState{}) and associated with each
+\GovActionID{} is a deposit of type \GovActionDeposit{}.
+Recall also that \UTxOState{} has a \ab{deposits} field (of type \Deposits{}),
+which is a map from \DepositPurpose{} to \Coin{}, and each \DepositPurpose{} is either
+a \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, or \GovActionDeposit{}.
+\\[6pt]
+Given a ledger state \ab{s}, we focus on deposits in the
+\UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The relation we
+consider is whether the set of \GovActionDeposit{}s of the
+\UTxOState{} of \ab{s} is the same as the set of \GovActionDeposit{}s of the
+\GovState{} of \ab{s}.  If this holds, then we write \AgdaFunction{govDepsMatch}~\ab{s}.
+\\[6pt]
+Now, suppose \ab{s}, \ab{s'} are ledger states such that
+\ab{s} \AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}.
+Let \ab{utxoSt} and \ab{utxoSt'} be their respective \UTxOState{}s and let \ab{govSt}
+and \ab{govSt'} be their respective \GovState{}s.
+\\[6pt]
+If the governance action deposits of \ab{utxoSt} are the same as those
+of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
+In other terms, if \AgdaFunction{govDepsMatch}~\ab{s}, then \AgdaFunction{govDepsMatch}~\ab{s'}. 
+\\[6pt]
+We now state this property more formally, using Agda syntax and notation.
+(The property is also formally proved in this module, but we omit the details;
+to see the complete proof, navigate to the
+\LedgerMod{Ledger/Properties/LEDGERgovDepsMatch.lagda}{\AgdaModule{LEDGERgovDepsMatch}})
+module in our GitHub repository.)
+\\[6pt]
 \begin{AgdaMultiCode}
 Assume
-\begin{code}[inline]
-    {s' : LState}
+\begin{code}
+    {tx    : Tx}       -- a transaction
+    {Γ     : LEnv}     -- a ledger environment
+    {s s'  : LState}   -- ledger states
 \end{code}
 \begin{code}[hide]
     →
 \end{code}
-\begin{code}
+and
+\begin{code}[inline]
     Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
 \end{code}
 \begin{code}[hide]
     →
 \end{code}
-\\[4pt]
-If
+.  If
 \begin{code}[inline]
     govDepsMatch s
 \end{code}
@@ -62,22 +96,30 @@ If
 \begin{code}[inline]
    govDepsMatch s'
 \end{code}
+.
 \begin{code}[hide]
   LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
-  LEDGER-govDepsMatch {s' = s'}
+  LEDGER-govDepsMatch {tx}{Γ}{s}{s'}
     utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ GOV-sts) aprioriMatch =
-    let open LState s' renaming (govSt to govSt'; certState to certState') in
+    let  open Tx tx; open TxBody body
+         open LEnv Γ renaming (pparams to pp)
+         open PParams pp using (govActionDeposit)
+         open LState s
+         open LState s' renaming (govSt to govSt'; certState to certState')
+         open LEDGER-PROPS tx Γ s using (utxoDeps; updateGovStates; STS→GovSt≡)
+         open SetoidProperties tx Γ s using (|ᵒ-GAs-pres; props-dpMap-votes-invar; utxo-govst-connex; noGACerts)
+    in
     begin
-      filterˢ isGADeposit (dom (updateDeposits pp txb utxoDeps))
+      filterˢ isGADeposit (dom (updateDeposits pp body utxoDeps))
         ≈⟨ noGACerts txcerts (updateProposalDeposits txprop txid govActionDeposit utxoDeps) ⟩
       filterˢ isGADeposit (dom (updateProposalDeposits txprop txid govActionDeposit utxoDeps))
         ≈⟨ utxo-govst-connex txprop aprioriMatch ⟩
       fromList (dpMap (updateGovStates (map inj₂ txprop) 0 govSt))
         ≈˘⟨ props-dpMap-votes-invar txvote txprop ⟩
-      fromList (dpMap (updateGovStates (txgov txb) 0 govSt ))
+      fromList (dpMap (updateGovStates (txgov body) 0 govSt ))
         ≈˘⟨ |ᵒ-GAs-pres 0 govSt certState' ⟩
-      fromList (dpMap (updateGovStates (txgov txb) 0 (rmOrphanDRepVotes certState' govSt)))
+      fromList (dpMap (updateGovStates (txgov body) 0 (rmOrphanDRepVotes certState' govSt)))
         ≡˘⟨ cong (fromList ∘ dpMap ) (STS→GovSt≡ utxosts tx-valid) ⟩
       fromList (dpMap govSt') ∎
 
