@@ -75,25 +75,25 @@ d_Language_200 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
 d_Language_200 = erased
 -- _.Script
-d_Script_276 ::
+d_Script_274 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Script_276 = erased
+d_Script_274 = erased
 -- _.ScriptHash
-d_ScriptHash_284 ::
+d_ScriptHash_282 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_ScriptHash_284 = erased
+d_ScriptHash_282 = erased
 -- _.Tx
-d_Tx_360 a0 = ()
+d_Tx_358 a0 = ()
 -- _.TxBody
-d_TxBody_362 a0 = ()
+d_TxBody_360 a0 = ()
 -- _.TxOut
-d_TxOut_368 ::
+d_TxOut_366 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_TxOut_368 = erased
+d_TxOut_366 = erased
 -- _.UTxO
-d_UTxO_374 ::
+d_UTxO_372 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_UTxO_374 = erased
+d_UTxO_372 = erased
 -- _.isBootstrapAddr
 d_isBootstrapAddr_468 a0 a1 = ()
 -- _.isBootstrapAddr?

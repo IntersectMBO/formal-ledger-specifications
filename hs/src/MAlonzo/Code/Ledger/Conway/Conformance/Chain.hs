@@ -73,11 +73,11 @@ d_DecEq'45'Credential_82 v0
          MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
          (coe MAlonzo.Code.Ledger.Transaction.d_crypto_1230 (coe v0)))
 -- _.Slot
-d_Slot_332 ::
+d_Slot_330 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Slot_332 = erased
+d_Slot_330 = erased
 -- _.Tx
-d_Tx_364 a0 = ()
+d_Tx_362 a0 = ()
 -- _.VDeleg
 d_VDeleg_384 a0 = ()
 -- _.epoch

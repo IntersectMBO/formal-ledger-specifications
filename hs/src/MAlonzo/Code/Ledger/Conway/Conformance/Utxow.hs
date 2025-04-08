@@ -50,7 +50,7 @@ d_Hashable'45'Script_182 v0
       (coe
          MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1796 (coe v0))
 -- _.Tx
-d_Tx_364 a0 = ()
+d_Tx_362 a0 = ()
 -- _.isSigned
 d_isSigned_496 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->

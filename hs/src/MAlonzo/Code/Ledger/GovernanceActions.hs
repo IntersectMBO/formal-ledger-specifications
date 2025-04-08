@@ -46,11 +46,11 @@ d_Epoch_104 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 -> ()
 d_Epoch_104 = erased
 -- _.RwdAddr
-d_RwdAddr_170 a0 a1 a2 a3 = ()
+d_RwdAddr_168 a0 a1 a2 a3 = ()
 -- _.ScriptHash
-d_ScriptHash_184 ::
+d_ScriptHash_182 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 -> ()
-d_ScriptHash_184 = erased
+d_ScriptHash_182 = erased
 -- _.RwdAddr.net
 d_net_644 :: MAlonzo.Code.Ledger.Address.T_RwdAddr_76 -> AgdaAny
 d_net_644 v0 = coe MAlonzo.Code.Ledger.Address.d_net_82 (coe v0)

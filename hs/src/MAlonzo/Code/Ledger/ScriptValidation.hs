@@ -99,43 +99,43 @@ d_PlutusScript_224 = erased
 -- _.PParams
 d_PParams_228 a0 = ()
 -- _.RdmrPtr
-d_RdmrPtr_252 ::
+d_RdmrPtr_250 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_RdmrPtr_252 = erased
+d_RdmrPtr_250 = erased
 -- _.Redeemer
-d_Redeemer_254 ::
+d_Redeemer_252 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Redeemer_254 = erased
+d_Redeemer_252 = erased
 -- _.RwdAddr
-d_RwdAddr_268 a0 = ()
+d_RwdAddr_266 a0 = ()
 -- _.Script
-d_Script_276 ::
+d_Script_274 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Script_276 = erased
+d_Script_274 = erased
 -- _.ScriptHash
-d_ScriptHash_284 ::
+d_ScriptHash_282 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_ScriptHash_284 = erased
+d_ScriptHash_282 = erased
 -- _.Slot
-d_Slot_328 ::
+d_Slot_326 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Slot_328 = erased
+d_Slot_326 = erased
 -- _.Tx
-d_Tx_360 a0 = ()
+d_Tx_358 a0 = ()
 -- _.TxBody
-d_TxBody_362 a0 = ()
+d_TxBody_360 a0 = ()
 -- _.TxIn
-d_TxIn_366 ::
+d_TxIn_364 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_TxIn_366 = erased
+d_TxIn_364 = erased
 -- _.TxOut
-d_TxOut_368 ::
+d_TxOut_366 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_TxOut_368 = erased
+d_TxOut_366 = erased
 -- _.UTxO
-d_UTxO_374 ::
+d_UTxO_372 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_UTxO_374 = erased
+d_UTxO_372 = erased
 -- _.Value
 d_Value_392 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()

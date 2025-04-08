@@ -81,17 +81,17 @@ d_GovVote_166 a0 = ()
 -- _.PParams
 d_PParams_228 a0 = ()
 -- _.ScriptHash
-d_ScriptHash_284 ::
+d_ScriptHash_282 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_ScriptHash_284 = erased
+d_ScriptHash_282 = erased
 -- _.Slot
-d_Slot_328 ::
+d_Slot_326 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Slot_328 = erased
+d_Slot_326 = erased
 -- _.Tx
-d_Tx_360 a0 = ()
+d_Tx_358 a0 = ()
 -- _.TxBody
-d_TxBody_362 a0 = ()
+d_TxBody_360 a0 = ()
 -- _.Voter
 d_Voter_396 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
@@ -751,7 +751,7 @@ du_To'45'LEnv_2214
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (328 :: Integer) (9543913931307211001 :: Integer) "_.Slot"
+                                 (326 :: Integer) (9543913931307211001 :: Integer) "_.Slot"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                (coe
@@ -827,7 +827,7 @@ du_To'45'LEnv_2214
                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                           (coe
                                              (MAlonzo.RTE.QName
-                                                (284 :: Integer) (9543913931307211001 :: Integer)
+                                                (282 :: Integer) (9543913931307211001 :: Integer)
                                                 "_.ScriptHash"
                                                 (MAlonzo.RTE.Fixity
                                                    MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))

@@ -182,29 +182,29 @@ d_NetworkId_210 v0
 -- _.PParams
 d_PParams_228 a0 = ()
 -- _.ScriptHash
-d_ScriptHash_284 ::
+d_ScriptHash_282 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_ScriptHash_284 = erased
+d_ScriptHash_282 = erased
 -- _.Slot
-d_Slot_328 ::
+d_Slot_326 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Slot_328 = erased
+d_Slot_326 = erased
 -- _.Tx
-d_Tx_360 a0 = ()
+d_Tx_358 a0 = ()
 -- _.TxBody
-d_TxBody_362 a0 = ()
+d_TxBody_360 a0 = ()
 -- _.TxOut
-d_TxOut_368 ::
+d_TxOut_366 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_TxOut_368 = erased
+d_TxOut_366 = erased
 -- _.TxOutʰ
-d_TxOut'688'_370 ::
+d_TxOut'688'_368 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_TxOut'688'_370 = erased
+d_TxOut'688'_368 = erased
 -- _.UTxO
-d_UTxO_374 ::
+d_UTxO_372 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_UTxO_374 = erased
+d_UTxO_372 = erased
 -- _.Value
 d_Value_392 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
@@ -1352,7 +1352,7 @@ du_To'45'UTxOEnv_2072
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (328 :: Integer) (5998337070880856472 :: Integer) "_.Slot"
+                                 (326 :: Integer) (5998337070880856472 :: Integer) "_.Slot"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                (coe
@@ -1472,7 +1472,7 @@ du_To'45'UTxOState_2074
                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                            (coe
                               (MAlonzo.RTE.QName
-                                 (374 :: Integer) (5998337070880856472 :: Integer) "_.UTxO"
+                                 (372 :: Integer) (5998337070880856472 :: Integer) "_.UTxO"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
                (coe

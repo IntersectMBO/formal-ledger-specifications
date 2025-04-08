@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.GovernanceActions.Properties.ProposalChangePP</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda">
+<a id="2" class="Symbol">{-#</a> <a id="6" class="Keyword">OPTIONS</a> <a id="14" class="Pragma">--safe</a> <a id="21" class="Symbol">#-}</a>
+
+<a id="26" class="Keyword">open</a> <a id="31" class="Keyword">import</a> <a id="38" href="Ledger.Abstract.html" class="Module">Ledger.Abstract</a>
+<a id="54" class="Keyword">open</a> <a id="59" class="Keyword">import</a> <a id="66" href="Ledger.Transaction.html" class="Module">Ledger.Transaction</a>
+
+<a id="86" class="Keyword">module</a> <a id="93" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html" class="Module">Ledger.GovernanceActions.Properties.ProposalChangePP</a>
+  <a id="148" class="Symbol">(</a><a id="149" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#149" class="Bound">txs</a> <a id="153" class="Symbol">:</a> <a id="155" class="Symbol">_)</a> <a id="158" class="Symbol">(</a><a id="159" class="Keyword">open</a> <a id="164" href="Ledger.Transaction.html#867" class="Module">TransactionStructure</a> <a id="185" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#149" class="Bound">txs</a><a id="188" class="Symbol">)</a>
+  <a id="192" class="Keyword">where</a>
+
+<a id="199" class="Keyword">open</a> <a id="204" class="Keyword">import</a> <a id="211" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+
+<a id="227" class="Keyword">instance</a>
+  <a id="238" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#238" class="Function">_</a> <a id="240" class="Symbol">:</a> <a id="242" href="Class.IsSet.html#375" class="Record">IsSet</a> <a id="248" href="Ledger.Transaction.html#2578" class="Record">TxBody</a> <a id="255" href="Ledger.GovernanceActions.html#2071" class="Record">GovProposal</a>
+  <a id="269" class="Symbol">_</a> <a id="271" class="Symbol">=</a> <a id="273" class="Keyword">record</a> <a id="280" class="Symbol">{</a> <a id="282" href="Class.IsSet.html#419" class="Field">toSet</a> <a id="288" class="Symbol">=</a> <a id="290" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="299" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="301" href="Ledger.Transaction.html#2910" class="Field">TxBody.txprop</a> <a id="315" class="Symbol">}</a>
+
+
+<a id="ProposalChangePPHasGroup"></a><a id="319" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#319" class="Function">ProposalChangePPHasGroup</a> <a id="344" class="Symbol">:</a>
+
+
+  <a id="350" class="Symbol">{</a><a id="351" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#351" class="Bound">tx</a>  <a id="355" class="Symbol">:</a> <a id="357" href="Ledger.Transaction.html#3532" class="Record">Tx</a><a id="359" class="Symbol">}</a>
+  <a id="363" class="Symbol">{</a><a id="364" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#364" class="Bound">p</a>   <a id="368" class="Symbol">:</a> <a id="370" href="Ledger.GovernanceActions.html#2071" class="Record">GovProposal</a><a id="381" class="Symbol">}</a>
+  <a id="385" class="Symbol">{</a><a id="386" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#386" class="Bound">up</a>  <a id="390" class="Symbol">:</a> <a id="392" href="Ledger.PParams.html#13417" class="Function">UpdateT</a><a id="399" class="Symbol">}</a>
+
+
+  <a id="405" class="Symbol">→</a>
+
+
+  <a id="411" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#364" class="Bound">p</a> <a id="413" href="Class.IsSet.html#458" class="Function Operator">∈</a> <a id="415" href="Ledger.Transaction.html#3564" class="Field">Tx.body</a> <a id="423" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#351" class="Bound">tx</a>
+
+
+  <a id="430" class="Symbol">→</a>
+
+
+  <a id="436" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#364" class="Bound">p</a> <a id="438" class="Symbol">.</a><a id="439" href="Ledger.GovernanceActions.html#2108" class="Field">GovProposal.action</a> <a id="458" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="460" href="Ledger.GovernanceActions.html#1403" class="InductiveConstructor Operator">⟦</a> <a id="462" href="Ledger.GovernanceActions.html#884" class="InductiveConstructor">ChangePParams</a> <a id="476" href="Ledger.GovernanceActions.html#1403" class="InductiveConstructor Operator">,</a> <a id="478" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#386" class="Bound">up</a> <a id="481" href="Ledger.GovernanceActions.html#1403" class="InductiveConstructor Operator">⟧ᵍᵃ</a>
+
+
+  <a id="489" class="Symbol">→</a> <a id="491" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+
+
+<a id="498" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#319" class="Function">ProposalChangePPHasGroup</a> <a id="523" class="Symbol">{</a><a id="524" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#524" class="Bound">tx</a><a id="526" class="Symbol">}{</a><a id="528" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#528" class="Bound">p</a><a id="529" class="Symbol">}{</a><a id="531" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#531" class="Bound">up</a><a id="533" class="Symbol">}</a> <a id="535" class="Symbol">_</a> <a id="537" class="Symbol">_</a> <a id="539" class="Symbol">=</a>
+
+
+   <a id="546" href="Ledger.PParams.html#13482" class="Function">updateGroups</a> <a id="559" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html#531" class="Bound">up</a> <a id="562" href="Relation.Binary.PropositionalEquality.Core.html#858" class="Function Operator">≢</a> <a id="564" href="Class.HasEmptySet.html#287" class="Field">∅</a>
+
+</pre></body></html>

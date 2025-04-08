@@ -114,15 +114,15 @@ d_Number'45'Epoch_222 v0
       (coe
          MAlonzo.Code.Ledger.Transaction.d_epochStructure_1514 (coe v0))
 -- _.RwdAddr
-d_RwdAddr_272 a0 = ()
+d_RwdAddr_270 a0 = ()
 -- _.TxOut
-d_TxOut_372 ::
+d_TxOut_370 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_TxOut_372 = erased
+d_TxOut_370 = erased
 -- _.UTxO
-d_UTxO_378 ::
+d_UTxO_376 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_UTxO_378 = erased
+d_UTxO_376 = erased
 -- _.VDeleg
 d_VDeleg_384 a0 = ()
 -- _.addEpoch

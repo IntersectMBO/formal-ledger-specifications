@@ -93,20 +93,20 @@ d_Epoch_104 ::
 d_Epoch_104 = erased
 -- _.PParams
 d_PParams_148 a0 = ()
--- _.UpdateT
-d_UpdateT_152 ::
-  MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 -> ()
-d_UpdateT_152 = erased
 -- _.ProtVer
-d_ProtVer_164 ::
+d_ProtVer_162 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 -> ()
-d_ProtVer_164 = erased
+d_ProtVer_162 = erased
 -- _.RwdAddr
-d_RwdAddr_170 a0 a1 a2 a3 = ()
+d_RwdAddr_168 a0 a1 a2 a3 = ()
 -- _.ScriptHash
-d_ScriptHash_184 ::
+d_ScriptHash_182 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 -> ()
-d_ScriptHash_184 = erased
+d_ScriptHash_182 = erased
+-- _.UpdateT
+d_UpdateT_244 ::
+  MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 -> ()
+d_UpdateT_244 = erased
 -- _.applyUpdate
 d_applyUpdate_260 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
