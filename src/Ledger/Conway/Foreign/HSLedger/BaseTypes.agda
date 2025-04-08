@@ -79,27 +79,14 @@ unquoteDecl = do
   hsTypeAlias Epoch
   hsTypeAlias ScriptHash
 
--- UnitInterval: Haskell type corresponding to 'UnitInterval'
-record HsUnitInterval : Type where
-  field getHsUnitInterval : F.Rational
-    -- I would like to use ℚ here, but F.Rational converts better.
-open HsUnitInterval
-
-{-# FOREIGN GHC
-  data HsUnitInterval = MkUnitInterval
-    { getHsUnitInterval :: Rational
-    }
-    deriving (Eq, Show)
-#-}
-{-# COMPILE GHC HsUnitInterval = data HsUnitInterval (MkUnitInterval) #-}
-
 instance
   HsTy-UnitInterval : HasHsType UnitInterval
-  HsTy-UnitInterval .HasHsType.HsType = HsUnitInterval
+  HsTy-UnitInterval .HasHsType.HsType = F.Rational
+    -- I would like to use ℚ here, but F.Rational converts better.
 
-  Conv-UnitInterval : Convertible UnitInterval HsUnitInterval
-  Conv-UnitInterval .to x = record { getHsUnitInterval = to (fromUnitInterval x) }
+  Conv-UnitInterval : Convertible UnitInterval F.Rational
+  Conv-UnitInterval .to x = to (fromUnitInterval x)
   Conv-UnitInterval .from x =
-    case toUnitInterval (from (getHsUnitInterval x)) of λ where
+    case toUnitInterval (from x) of λ where
       (just x) → x
       nothing → error "Formal Spec: rational outside of unit interval"
