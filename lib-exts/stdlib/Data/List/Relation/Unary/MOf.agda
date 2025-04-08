@@ -6,6 +6,10 @@ open import Function using (_$_; case_of_)
 
 open import Data.Empty using (⊥-elim)
 open import Data.List using (List; []; _∷_; length)
+open import Data.List.Relation.Binary.Sublist.Propositional
+  using (_⊆_; []; _∷_; _∷ʳ_)
+open import Data.List.Relation.Binary.Sublist.Propositional.Properties
+  using ([]⊆-universal)
 open import Data.List.Relation.Unary.All using (All; []; _∷_)
 open import Data.List.Relation.Binary.Sublist.Propositional.Properties
   using ([]⊆-universal)
