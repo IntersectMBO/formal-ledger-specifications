@@ -107,13 +107,6 @@ ChainInvariant P = ∀ b s s' → _ ⊢ s ⇀⦇ b ,CHAIN⦈ s' → P s → P s'
 
 -- Transaction properties
 
--- PROPERTY (TO PROVE) --
-propose-ChangePP-hasGroup : {tx : Tx} → Type 
-propose-ChangePP-hasGroup {tx} = ∀ {p up} →
-  ∙ p ∈ Tx.body tx
-  ∙ p .GovProposal.action ≡ ⟦ ChangePParams , up ⟧ᵍᵃ
-    ────────────────────────────────
-    updateGroups up ≢ ∅
 
 -- Block properties
 

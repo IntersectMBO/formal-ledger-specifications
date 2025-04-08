@@ -21,30 +21,51 @@ instance
   \textbf{to prove}%
 ]\
 
-If \ab{p} is a goveranance proposal to update a parameter, \ab{up}, then\\[4pt]
-\(\text{\AgdaField{updateGroups}}~\ab{up} ≢ ∅\).
-\\[6pt]
-More formally, assume
+\textit{Preliminary remarks}.
+\begin{itemize}
+  \item
+    This property concerns the function \updateGroups{}, which is a map from
+    \UpdateT{} to $ℙ$~\PParamGroup{}.
+  \item
+    The \PParamGroup{} data type is defined in the \LedgerModule{PParams} module;
+    an inhabitant of \PParamGroup{} belongs to one of five groups:
+    \NetworkGroup{}, \EconomicGroup{},  \TechnicalGroup{}, \GovernanceGroup{}, \SecurityGroup{}.
+  \item
+    The record type \PParamsDiff{}, defined in \LedgerModule{PParams}, has
+    three fields; the two that are relevant here are \UpdateT{} (a type) and \updateGroups{}.
+  \item
+    Previously, we had renamed \UpdateT{} to \PParamsUpdate{}, but we have since
+  abandoned such renamings in an effort reduce complexity and make the whole ledger
+  formalization simpler and easier to comprehend.
+\end{itemize}  
+
+\textit{Property}.
+\begin{itemize}
+  \item \textit{Informally}.
+    Suppose \ab{p} is a goveranance proposal (\GovProposal{}) whose \AgdaField{action}
+    (\GovAction{}) has \GovActionType{} \ChangePParams{} and \GovActionData{} \ab{up}.
+    Then the set \AgdaField{updateGroups}~\ab{up} is nonempty.
+  \item \textit{Formally}.
+    Assume
 \begin{code}[hide]
 ProposalChangePPHasGroup :
 \end{code}
 \begin{code}
   {tx  : Tx}
   {p   : GovProposal}
-  {up  : PParamsUpdate}
+  {up  : UpdateT}
 \end{code}
 \begin{code}[hide]
-  (let open Tx; txb = body tx)
   →
 \end{code}
 with
 \begin{code}[inline]
-  p ∈ txb
+  p ∈ Tx.body tx
 \end{code}
 \begin{code}[hide]
   →
 \end{code}
-and suppose
+ and suppose
 \begin{code}[inline]
   p .GovProposal.action ≡ ⟦ ChangePParams , up ⟧ᵍᵃ
 \end{code}
@@ -59,4 +80,6 @@ ProposalChangePPHasGroup {tx}{p}{up} _ _ =
    updateGroups up ≢ ∅
 \end{code}
 .
+\end{itemize}
+\textit{Proof}. TODO
 \end{property}

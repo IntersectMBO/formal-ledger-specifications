@@ -17,7 +17,7 @@ data GovAction' : Type where
   UpdateCommittee  : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction'
   NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction'
   TriggerHF        : ProtVer                                  →  GovAction'
-  ChangePParams    : PParamsUpdate                            →  GovAction'
+  ChangePParams    : UpdateT                                  →  GovAction'
   TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction'
   Info             :                                             GovAction'
 

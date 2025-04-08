@@ -31,45 +31,41 @@ module _ where
   \textbf{proved}%
 ]\
 
-\noindent Recall that a ledger state (type \LState{}) is a record with three fields,
+\textit{Preliminary remarks}.
 \begin{itemize}
-  \item[] \ab{utxoSt} : \UTxOState{},
-  \item[] \ab{govSt} : \GovState{},
-  \item[] \ab{certState} : \CertState{}.
+  \item
+    An inhabitant of the ledger state (\LState{}) type has three fields; the two 
+    relevant here are \ab{utxoSt} : \UTxOState{} and \ab{govSt} : \GovState{}.
+    The present property asserts that the \AgdaDatatype{LEDGER} rule preserves a
+    certain relation between the \ab{utxoSt} and \ab{govSt} fields.
+  \item
+    An inhabitant of the \GovState{} type is a list of pairs (of type
+    \GovActionID{}~×~\GovActionState{}).  Associated with each
+    \GovActionID{} is a deposit of type \GovActionDeposit{}.
+  \item
+    A \UTxOState{} has a \ab{deposits} field (of type \Deposits{}),
+    which is a map from \DepositPurpose{} to \Coin{}, and each \DepositPurpose{} is either
+    a \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, or \GovActionDeposit{}.
+  \item
+    Given a ledger state \ab{s}, we focus on deposits in the
+    \UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The relation we
+    consider is whether the set of \GovActionDeposit{}s of the
+    \UTxOState{} of \ab{s} is the same as the set of \GovActionDeposit{}s of the
+    \GovState{} of \ab{s}.  If this holds, then we write \AgdaFunction{govDepsMatch}~\ab{s}.
 \end{itemize}
-The next property asserts that the \AgdaDatatype{LEDGER} rule preserves a
-certain relation between the \ab{utxoSt} and \ab{govSt} fields of ledger
-states, which we now describe.
-Recall, a governance state (\GovState{}) is a list of pairs (of type
-\GovActionID{}~×~\GovActionState{}) and associated with each
-\GovActionID{} is a deposit of type \GovActionDeposit{}.
-Recall also that \UTxOState{} has a \ab{deposits} field (of type \Deposits{}),
-which is a map from \DepositPurpose{} to \Coin{}, and each \DepositPurpose{} is either
-a \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, or \GovActionDeposit{}.
-\\[6pt]
-Given a ledger state \ab{s}, we focus on deposits in the
-\UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The relation we
-consider is whether the set of \GovActionDeposit{}s of the
-\UTxOState{} of \ab{s} is the same as the set of \GovActionDeposit{}s of the
-\GovState{} of \ab{s}.  If this holds, then we write \AgdaFunction{govDepsMatch}~\ab{s}.
-\\[6pt]
-Now, suppose \ab{s}, \ab{s'} are ledger states such that
-\ab{s} \AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}.
-Let \ab{utxoSt} and \ab{utxoSt'} be their respective \UTxOState{}s and let \ab{govSt}
-and \ab{govSt'} be their respective \GovState{}s.
-\\[6pt]
-If the governance action deposits of \ab{utxoSt} are the same as those
-of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-In other terms, if \AgdaFunction{govDepsMatch}~\ab{s}, then \AgdaFunction{govDepsMatch}~\ab{s'}. 
-\\[6pt]
-We now state this property more formally, using Agda syntax and notation.
-(The property is also formally proved in this module, but we omit the details;
-to see the complete proof, navigate to the
-\LedgerMod{Ledger/Properties/LEDGERgovDepsMatch.lagda}{\AgdaModule{LEDGERgovDepsMatch}})
-module in our GitHub repository.)
-\\[6pt]
-\begin{AgdaMultiCode}
-Assume
+\textit{Property}.
+\begin{itemize}
+  \item \textit{Informally}. 
+    Suppose \ab{s}, \ab{s'} are ledger states such that
+    \ab{s} \AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}.
+    Let \ab{utxoSt} and \ab{utxoSt'} be their respective \UTxOState{}s and let \ab{govSt}
+    and \ab{govSt'} be their respective \GovState{}s.
+    If the governance action deposits of \ab{utxoSt} are the same as those
+    of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
+    In other terms, if \AgdaFunction{govDepsMatch}~\ab{s}, then \AgdaFunction{govDepsMatch}~\ab{s'}. 
+  \item \textit{Formally}.
+    \begin{AgdaMultiCode}
+    Assume
 \begin{code}
     {tx    : Tx}       -- a transaction
     {Γ     : LEnv}     -- a ledger environment
@@ -126,4 +122,7 @@ and
   LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
 \end{code}
 \end{AgdaMultiCode}
+\end{itemize}
+\textit{Proof}. See the \LedgerMod{Ledger/Properties/LEDGERgovDepsMatch.lagda}{\AgdaModule{LEDGERgovDepsMatch}}
+  module in our GitHub repository.
 \end{property}

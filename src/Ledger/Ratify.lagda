@@ -156,7 +156,7 @@ threshold pp ccThreshold =
         pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
         pparamThreshold SecurityGroup    = (─         , vote Q5   )
 
-        P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
+        P/Q5 : UpdateT → Maybe ℚ × Maybe ℚ
         P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
                  , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
 

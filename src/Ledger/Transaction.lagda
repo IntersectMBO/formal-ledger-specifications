@@ -128,7 +128,7 @@ record TransactionStructure : Type₁ where
   Wdrl     = RwdAddr ⇀ Coin
   RdmrPtr  = Tag × Ix
 
-  ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
+  ProposedPPUpdates  = KeyHash ⇀ UpdateT
   Update             = ProposedPPUpdates × Epoch
 \end{code}
 \end{NoConway}

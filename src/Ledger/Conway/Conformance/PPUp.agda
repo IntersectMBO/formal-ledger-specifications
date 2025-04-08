@@ -36,7 +36,7 @@ record PPUpdateEnv : Type where
 viablePParams : PParams → Type
 viablePParams pp = ⊤ -- TODO: block size check
 
-isViableUpdate : PParams → PParamsUpdate → Type
+isViableUpdate : PParams → UpdateT → Type
 isViableUpdate pp pup with applyUpdate pp pup
 ... | pp' = pvCanFollow (PParams.pv pp) (PParams.pv pp') × viablePParams pp'
 

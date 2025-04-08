@@ -28,7 +28,7 @@ updatePPUp pparams record { fpup = fpup }
 ... | false  = record { pup = ∅ᵐ    ; fpup = ∅ᵐ }
 ... | true   = record { pup = fpup  ; fpup = ∅ᵐ }
 
-votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate
+votedValue : ProposedPPUpdates → PParams → ℕ → Maybe UpdateT
 votedValue pup pparams quorum =
   case any? (λ u → lengthˢ (pup ∣^ fromList [ u ]) ≥? quorum) (range pup) of
     λ  where
@@ -38,9 +38,9 @@ votedValue pup pparams quorum =
 private variable
   Γ : NewPParamEnv
   s s' : NewPParamState
-  upd : PParamsUpdate
+  upd : UpdateT
 
-data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsUpdate → NewPParamState → Type where
+data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe UpdateT → NewPParamState → Type where
 
   NEWPP-Accept : ∀ {Γ} → let open NewPParamState s; newpp = applyUpdate pparams upd in
     viablePParams newpp

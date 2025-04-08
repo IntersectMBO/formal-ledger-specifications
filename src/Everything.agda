@@ -39,4 +39,5 @@ import Ledger.Ledger.Properties.LEDGERpov
 import Ledger.Ledger.Properties.LEDGERgovDepsMatch
 import Ledger.Epoch.Properties.EPOCHgovDepsMatch
 import Ledger.Chain.Properties.CHAINgovDepsMatch
+import Ledger.GovernanceActions.Properties.ProposalChangePP
 -- import Ledger.Properties.ProposalChangePP
