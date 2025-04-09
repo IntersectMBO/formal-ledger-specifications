@@ -151,6 +151,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\acceptConds}{\AgdaFunction{acceptConds}}
 \newcommand{\acceptedBy}{\AgdaFunction{acceptedBy}}
 \newcommand{\acceptedStakeRatio}{\AgdaFunction{acceptedStakeRatio}}
+\newcommand{\Acnt}{\AgdaRecord{Acnt}}
 \newcommand{\actionWellFormed}{\AgdaFunction{actionWellFormed}}
 \newcommand{\actionValid}{\AgdaFunction{actionValid}}
 \newcommand{\actualCCVote}{\AgdaFunction{actualCCVote}}
@@ -174,6 +175,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\ccMaxTermLength}{\AgdaField{ccMaxTermLength}}
 \newcommand{\ccMinSize}{\AgdaField{ccMinSize}}
 \newcommand{\CertState}{\AgdaRecord{CertState}}
+\newcommand{\ChainState}{\AgdaRecord{ChainState}}
 \newcommand{\ChangePParams}{\AgdaInductiveConstructor{ChangePParams}}
 \newcommand{\Coin}{\AgdaFunction{Coin}}
 \newcommand{\coinsPerUTxOByte}{\AgdaField{coinsPerUTxOByte}}
@@ -183,7 +185,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\coproduct}{\AgdaDatatype{⊎}}
 \newcommand{\corestriction}{\AgdaFunction{∣\textasciicircum{}}}
 \newcommand{\CredentialType}{\AgdaDatatype{Credential}}
-\newcommand{\CredentialDeposit}{\AgdaField{CredentialDeposit}}
+\newcommand{\CredentialDeposit}{\AgdaInductiveConstructor{CredentialDeposit}}
 \newcommand{\credsNeeded}{\AgdaFunction{credsNeeded}}
 \newcommand{\credVoter}{\AgdaInductiveConstructor{credVoter}}
 \newcommand{\curTreasury}{\AgdaField{curTreasury}}
@@ -204,7 +206,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\deregdrep}{\AgdaInductiveConstructor{deregdrep}}
 \newcommand{\DocHash}{\AgdaField{DocHash}}
 \newcommand{\DRep}{\AgdaInductiveConstructor{DRep}}
-\newcommand{\DRepDeposit}{\AgdaField{DRepDeposit}}
+\newcommand{\DRepDeposit}{\AgdaInductiveConstructor{DRepDeposit}}
 \newcommand{\drepActivity}{\AgdaField{drepActivity}}
 \newcommand{\drepDeposit}{\AgdaField{drepDeposit}}
 \newcommand{\DReps}{\AgdaInductiveConstructor{DRep}s}
@@ -213,6 +215,8 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 
 \newcommand{\EconomicGroup}{\AgdaInductiveConstructor{EconomicGroup}}
 \newcommand{\EnactEnv}{\AgdaRecord{EnactEnv}}
+\newcommand{\Epoch}{\AgdaDatatype{Epoch}}
+\newcommand{\EpochState}{\AgdaRecord{EpochState}}
 \newcommand{\EnactState}{\AgdaRecord{EnactState}}
 \newcommand{\expired}{\AgdaFunction{expired}}
 
@@ -224,7 +228,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\GovActionType}{\AgdaDatatype{GovActionType}}
 \newcommand{\GovActionData}{\AgdaFunction{GovActionData}}
 \newcommand{\govActionDeposit}{\AgdaField{govActionDeposit}}
-\newcommand{\GovActionDeposit}{\AgdaField{GovActionDeposit}}
+\newcommand{\GovActionDeposit}{\AgdaInductiveConstructor{GovActionDeposit}}
 \newcommand{\GovActionID}{\AgdaDatatype{GovActionID}}
 \newcommand{\govActionLifetime}{\AgdaField{govActionLifetime}}
 \newcommand{\govActionPriority}{\AgdaFunction{govActionPriority}}
@@ -232,6 +236,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\GOVCERTccreghot}{\AgdaInductiveConstructor{GOVCERT-ccreghot}}
 \newcommand{\GOVCERTderegdrep}{\AgdaInductiveConstructor{GOVCERT-deregdrep}}
 \newcommand{\GOVCERTregdrep}{\AgdaInductiveConstructor{GOVCERT-regdrep}}
+\newcommand{\govDepsMatch}{\AgdaFunction{govDepsMatch}}
 \newcommand{\GovEnv}{\AgdaRecord{GovEnv}}
 \newcommand{\GovernanceGroup}{\AgdaInductiveConstructor{GovernanceGroup}}
 \newcommand{\GovProposal}{\AgdaRecord{GovProposal}}
@@ -274,6 +279,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\NetworkGroup}{\AgdaInductiveConstructor{NetworkGroup}}
 \newcommand{\NewConstitution}{\AgdaInductiveConstructor{NewConstitution}}
 \newcommand{\newDeposits}{\AgdaFunction{newDeposits}}
+\newcommand{\NewEpochState}{\AgdaRecord{NewEpochState}}
 \newcommand{\no}{\AgdaInductiveConstructor{no}}
 \newcommand{\NoConfidence}{\AgdaInductiveConstructor{NoConfidence}}
 \newcommand{\noConfidenceRep}{\AgdaInductiveConstructor{noConfidenceRep}}
@@ -287,7 +293,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\Pfived}{\AgdaField{P5d}}
 \newcommand{\Pfour}{\AgdaField{P4}}
 \newcommand{\Pone}{\AgdaField{P1}}
-\newcommand{\PoolDeposit}{\AgdaField{PoolDeposit}}
+\newcommand{\PoolDeposit}{\AgdaInductiveConstructor{PoolDeposit}}
 \newcommand{\poolThresholds}{\AgdaField{poolThresholds}}
 \newcommand{\PowerSet}{\AgdaFunction{ℙ}}
 \newcommand{\PParamsDiff}{\AgdaRecord{PParamsDiff}}
@@ -315,11 +321,12 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\RATIFYAccept}{\AgdaInductiveConstructor{RATIFY-Accept}}
 \newcommand{\RATIFYContinue}{\AgdaInductiveConstructor{RATIFY-Continue}}
 \newcommand{\RATIFYReject}{\AgdaInductiveConstructor{RATIFY-Reject}}
+\newcommand{\RatifyState}{\AgdaRecord{RatifyState}}
 \newcommand{\refScriptCostStride}{\AgdaField{refScriptCostStride}}
 \newcommand{\refScriptCostMultiplier}{\AgdaField{refScriptCostMultiplier}}
 \newcommand{\returnAddr}{\AgdaField{returnAddr}}
+\newcommand{\RewardUpdate}{\AgdaRecord{RewardUpdate}}
 \newcommand{\roleVotes}{\AgdaFunction{roleVotes}}
-
 \newcommand{\RTC}{\AgdaFunction{ReflexiveTransitiveClosure}}
 \newcommand{\RTCI}{\AgdaOperator{\AgdaBound{\AgdaUnderscore{}⊢\AgdaUnderscore{}⇀⟦\AgdaUnderscore{}⟧*\AgdaUnderscore{}}}}
 \newcommand{\RTCB}{\AgdaOperator{\AgdaBound{\AgdaUnderscore{}⊢\AgdaUnderscore{}⇀⟦\AgdaUnderscore{}⟧\AgdaUnderscore{}}}}
@@ -330,6 +337,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 \newcommand{\scriptsCost}{\AgdaFunction{scriptsCost}}
 \newcommand{\scriptsNeeded}{\AgdaFunction{scriptsNeeded}}
 \newcommand{\SecurityGroup}{\AgdaInductiveConstructor{SecurityGroup}}
+\newcommand{\Snapshots}{\AgdaRecord{Snapshots}}
 \newcommand{\snd}{\AgdaField{proj₂}}
 \newcommand{\SPO}{\AgdaInductiveConstructor{SPO}}
 \newcommand{\SPOs}{\AgdaInductiveConstructor{SPOs}}

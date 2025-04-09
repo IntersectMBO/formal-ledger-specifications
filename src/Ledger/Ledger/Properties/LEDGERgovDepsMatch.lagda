@@ -19,11 +19,7 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 module _ where
   open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
-
-  -- GA Deposits Invariance Property for LEDGER STS ----------------------------------------------------
-  LEDGER-govDepsMatch :
 \end{code}
-
 
 \begin{property}[%
   \LedgerMod{Ledger/Properties/LEDGERgovDepsMatch.lagda}{\AgdaModule{LEDGERgovDepsMatch}}:
@@ -34,7 +30,7 @@ module _ where
 \textit{Preliminary remarks}.
 \begin{itemize}
   \item
-    An inhabitant of the ledger state (\LState{}) type has three fields; the two 
+    The ledger state (\LState{}) type has three fields; the two 
     relevant here are \ab{utxoSt} : \UTxOState{} and \ab{govSt} : \GovState{}.
     The present property asserts that the \AgdaDatatype{LEDGER} rule preserves a
     certain relation between the \ab{utxoSt} and \ab{govSt} fields.
@@ -65,34 +61,11 @@ module _ where
     In other terms, if \AgdaFunction{govDepsMatch}~\ab{s}, then \AgdaFunction{govDepsMatch}~\ab{s'}. 
   \item \textit{Formally}.
     \begin{AgdaMultiCode}
-    Assume
 \begin{code}
-    {tx    : Tx}       -- a transaction
-    {Γ     : LEnv}     -- a ledger environment
-    {s s'  : LState}   -- ledger states
+  LEDGER-govDepsMatch :  {tx : Tx} {Γ : LEnv} {s s' : LState}
+                         → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                         → govDepsMatch s → govDepsMatch s'
 \end{code}
-\begin{code}[hide]
-    →
-\end{code}
-and
-\begin{code}[inline]
-    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-\end{code}
-\begin{code}[hide]
-    →
-\end{code}
-.  If
-\begin{code}[inline]
-    govDepsMatch s
-\end{code}
-\begin{code}[hide]
-    →
-\end{code}
-, then
-\begin{code}[inline]
-   govDepsMatch s'
-\end{code}
-.
 \begin{code}[hide]
   LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
