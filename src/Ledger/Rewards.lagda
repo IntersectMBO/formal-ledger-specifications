@@ -349,6 +349,79 @@ poolStake hk delegs stake = stake ∣ dom (delegs ∣^ ❴ hk ❵)
 \label{fig:functions:poolStake}
 \end{figure*}
 
+\Cref{fig:functions:reward} defines
+the function \AgdaFunction{reward}
+which applies \AgdaFunction{rewardOnePool} to each registered stake pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaFunction{uncurryᵐ}: Helper function to rearrange a nested mapping.
+  \item \AgdaArgument{blocks}: Number of blocks produced by pools in the last epoch,
+    as a mapping from pool \AgdaDatatype{KeyHash} to number.
+  \item \AgdaArgument{poolParams}: Parameters of all known stake pools.
+  \item \AgdaArgument{stake}: Distribution of stake,
+    as mapping from \AgdaDatatype{Credential} to \Coin{}.
+    \item \AgdaArgument{delegs}:
+      Mapping from \AgdaDatatype{Credential}s to stake pool that they delegate to.
+  \item \AgdaArgument{total}: Total stake $=$ amount of Ada in circulation, for computing the relative stake.
+  \item \AgdaFunction{active}: Active stake $=$ amount of Ada that was used for selecting block producers.
+  \item \AgdaFunction{Σ\_/total}: Sum of stake divided by total stake.
+  \item \AgdaFunction{Σ\_/active}: Sum of stake divided by active stake.
+  \item \AgdaFunction{N}: Total number of blocks produced in the last epoch.
+  \item \AgdaFunction{pdata}: Data needed to compute rewards for each pool.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+BlocksMade = KeyHash ⇀ ℕ
+
+uncurryᵐ :
+\end{code}
+\begin{code}[hide]
+  ∀ {A B C : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ →
+\end{code}
+\begin{code}
+  A ⇀ (B ⇀ C) → (A × B) ⇀ C
+\end{code}
+\begin{code}[hide]
+uncurryᵐ {A} {B} {C} abc = mapFromPartialFun lookup' domain'
+  where
+    lookup' : (A × B) → Maybe C
+    lookup' (a , b) = lookupᵐ? abc a >>= (λ bc → lookupᵐ? bc b)
+
+    joinˢ : ∀ {X} → ℙ (ℙ X) → ℙ X
+    joinˢ = concatMapˢ id
+
+    domain' : ℙ (A × B)
+    domain' = joinˢ (range (mapWithKey (λ a bc → range (mapWithKey (λ b _ → (a , b)) bc)) abc))
+\end{code}
+\begin{code}
+
+reward : PParams → BlocksMade → Coin → (KeyHash ⇀ PoolParams)
+  → Stake → Delegations → Coin → (Credential ⇀ Coin)
+reward pp blocks rewardPot poolParams stake delegs total = rewards
+  where
+    active = ∑[ c ← stake ] c
+    Σ_/total = λ st → clamp ((∑[ c ← st ] c) /₀ total)
+    Σ_/active = λ st → clamp ((∑[ c ← st ] c) /₀ active)
+    N = ∑[ m ← blocks ] m
+    mkPoolData = λ hk p →
+      map (λ n → (n , p , poolStake hk delegs stake)) (lookupᵐ? blocks hk)
+    pdata = mapMaybeWithKeyᵐ mkPoolData poolParams
+
+    results  : (KeyHash × Credential) ⇀ Coin
+    results = uncurryᵐ (mapValues (λ { (n , p , s)
+      → rewardOnePool pp rewardPot n N p s (Σ s /total) (Σ s /active) total
+      }) pdata)
+    rewards  = aggregateBy
+      (mapˢ (λ {(kh , cred) → (kh , cred) , cred}) (dom results))
+      results
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function reward used for computing a Reward Update}
+\label{fig:functions:reward}
+\end{figure*}
+
 \subsection{Reward Update}
 \label{sec:reward-update}
 TODO: This section defines the \AgdaRecord{RewardUpdate} type,
