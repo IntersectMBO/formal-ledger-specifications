@@ -84,11 +84,12 @@ module EPOCH-PROPS {eps : EpochState} where
     \item \textit{Informally}.
       Assume the condition described above holds and suppose
       \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}.
-      Let \ab{utxoSt} and \ab{utxoSt'} be the \UTxOState{}s of the ledger states of \ab{eps} and \ab{eps'}, respectively.
+      Let \ab{epsLState'} be the ledger state of \ab{eps'}.
+      Let \ab{utxoSt} and \ab{utxoSt'} be the \UTxOState{}s of the \ab{epsLState} and \ab{epsLState'}, respectively.
       Let \ab{govSt} and \ab{govSt'} be the \GovState{}s of the respective ledger states.
       If the governance action deposits of \ab{utxoSt} are the same as those
       of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-      In other terms, \govDepsMatch{}~(\ab{eps}~.\AgdaField{ls}) implies \govDepsMatch{}~(\ab{eps'}~.\AgdaField{ls}).
+      In other terms, \govDepsMatch{}~\ab{epsLState} implies \govDepsMatch{}~\ab{epsLState'}.
     \item \textit{Formally}.
 \begin{code}
   EPOCH-govDepsMatch :  {ratify-removed :  map (GovActionDeposit ∘ proj₁) removed'
@@ -96,7 +97,7 @@ module EPOCH-PROPS {eps : EpochState} where
                         {eps' : EpochState}
                         {e : Epoch}
                         → tt ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-                        → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
+                        → govDepsMatch epsLState → govDepsMatch (eps' .ls)
 \end{code}
   \end{itemize}
   \textit{Proof}. See the

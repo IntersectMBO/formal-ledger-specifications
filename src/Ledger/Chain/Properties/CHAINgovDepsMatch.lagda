@@ -58,8 +58,9 @@ module _
     Suppose that the conditions described above hold and that \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'}.
     If the governance action deposits of \ab{utxoSt} are the same as those
     of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-    In other terms, if \AgdaFunction{govDepsMatch}~\ab{epsLState}, then
-    \AgdaFunction{govDepsMatch}~\AgdaFunction{ledgerStateOf}~(\AgdaFunction{updateChainState}~\ab{cs}~\ab{nes})).
+    In other terms,\\
+    \AgdaFunction{govDepsMatch}~\ab{csLState} implies
+    \AgdaFunction{govDepsMatch}~(\AgdaFunction{LStateOfCState}~\ab{cs'}).
   \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
@@ -87,12 +88,12 @@ module _
 
   CHAIN-govDepsMatch :
       {nes  : NewEpochState}
+      (let cs' = updateChainState cs nes)
       →  map (GovActionDeposit ∘ proj₁) removed'
          ⊆ map proj₁ (UTxOState.deposits (LState.utxoSt csLState) ˢ)
       →  totalRefScriptsSize csLState ts ≤ (PParams.maxRefScriptSizePerBlock pp)
-      →  tt ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
-      →  govDepsMatch csLState
-      →  govDepsMatch (LStateOfCState (updateChainState cs nes))
+      →  tt ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
+      →  govDepsMatch csLState → govDepsMatch (LStateOfCState cs')
 \end{code}
 \end{AgdaMultiCode}
 \end{itemize}
