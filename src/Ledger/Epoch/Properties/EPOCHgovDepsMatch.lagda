@@ -88,7 +88,7 @@ module EPOCH-PROPS {eps : EpochState} where
       Let \ab{govSt} and \ab{govSt'} be the \GovState{}s of the respective ledger states.
       If the governance action deposits of \ab{utxoSt} are the same as those
       of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-      In other terms, \{govDepsMatch}~(\ab{eps}~.\AgdaField{ls}) implies \govDepsMatch{}~(\ab{eps'}~.\AgdaField{ls}).
+      In other terms, \govDepsMatch{}~(\ab{eps}~.\AgdaField{ls}) implies \govDepsMatch{}~(\ab{eps'}~.\AgdaField{ls}).
     \item \textit{Formally}.
 \begin{code}
   EPOCH-govDepsMatch :  {ratify-removed :  map (GovActionDeposit ∘ proj₁) removed'
