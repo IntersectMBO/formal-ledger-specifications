@@ -105,41 +105,21 @@ validTx₁ tx = ∃[ s ] validTxIn₁ s tx
 ChainInvariant : ∀ {a} → (ChainState → Type a) → Type a
 ChainInvariant P = ∀ b s s' → _ ⊢ s ⇀⦇ b ,CHAIN⦈ s' → P s → P s'
 
-module _ (s : ChainState) where
-  open ChainState s; open NewEpochState newEpochState; open EpochState epochState
-  open LState ls
-  open EnactState es renaming (pparams to pparams')
-  open CertState certState; open DState dState
-  pparams = pparams' .proj₁
-  open PParams pparams
-  open Tx; open TxBody
+-- Transaction properties
 
-  -- Transaction properties
 
-  module _ {slot} {tx} (let txb = body tx) (valid : validTxIn₂ s slot tx)
-    (indexedSum-∪⁺-hom : ∀ {A V : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄ ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄
-      → (d₁ d₂ : A ⇀ V) → indexedSumᵛ' id (d₁ ∪⁺ d₂) ≡ indexedSumᵛ' id d₁ ◇ indexedSumᵛ' id d₂)
-    (indexedSum-⊆ : ∀ {A : Type} ⦃ _ : DecEq A ⦄ (d d' : A ⇀ ℕ) → d ˢ ⊆ d' ˢ
-      → indexedSumᵛ' id d ≤ indexedSumᵛ' id d') -- technically we could use an ordered monoid instead of ℕ
-    where
-    open import Ledger.Utxow txs abs
-    open import Ledger.Utxo.Properties txs abs
+-- Block properties
 
-    propose-minSpend : noRefundCert (txcerts txb)
-      → coin (consumed pparams utxoSt txb) ≥ length (txprop txb) * govActionDeposit
-    propose-minSpend noRef = case valid of λ where
-      (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
-      (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
+module _ (s : ChainState) (open ChainState s)
+         {b} (let open Block b)
+  where
+  open NewEpochState newEpochState
+  open EpochState epochState
 
-  --   propose-ChangePP-hasGroup : ∀ {up prop}
-  --     → prop ∈ txb → prop .GovProposal.action ≡ ChangePParams up → updateGroups up ≢ ∅
-  --   propose-ChangePP-hasGroup = {!!}
+  isNewEpochBlock : Type
+  isNewEpochBlock = epoch slot ≡ sucᵉ lastEpoch
 
-  -- Block properties
-
-  module _ {b} (valid : validBlockIn s b) (let open Block b) where
-    isNewEpochBlock : Type
-    isNewEpochBlock = epoch slot ≡ sucᵉ lastEpoch
+  module _ (valid : validBlockIn s b) where 
 
     newChainState : ChainState
     newChainState = proj₁ valid
@@ -147,36 +127,63 @@ module _ (s : ChainState) where
     getEnactState : ChainState → EnactState
     getEnactState = EpochState.es ∘ NewEpochState.epochState ∘ ChainState.newEpochState
 
-    -- enact-change⇒newEpoch : es ≢ getEnactState newChainState → isNewEpochBlock
-    -- enact-change⇒newEpoch = {!!}
 
-  -- Invariant properties
+    -- PROPERTY (TO PROVE) --
+    enact-change⇒newEpoch : Type
+    enact-change⇒newEpoch = es ≢ getEnactState newChainState → epoch slot ≡ sucᵉ lastEpoch
+    -- Let
+    --   * s   = a ChainState,
+    --   * nes = the NewEpochState of s,
+    --   * es  = the EpochState of nes (= the EpochState of s),
+    --   * le  = the lastEpoch of nes.
+    --
+    -- Suppose there exists a chain state s' with EpochState es' such that 
+    -- s ⇀⦇ b ,CHAIN⦈ s'.  Then the following implication holds:
+    -- if es ≢ es' then the epoch of the slot of b is sucᵉ le.
 
+
+-- Invariant properties
+
+module _ (s : ChainState) where
+  open ChainState s; open NewEpochState newEpochState; open EpochState epochState
+  open LState ls
+  
+  -- PROPERTY (TO PROVE) --
   action-deposits≡actions-prop : Type
   action-deposits≡actions-prop = filterˢ isGADeposit (dom (UTxOState.deposits utxoSt))
     ≡ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
 
+  -- PROPERTY (TO PROVE) --
+  open EnactState es renaming (pparams to pparams')
+  open CertState certState; open DState dState
   dom-rwds≡credDeposits : Type
   dom-rwds≡credDeposits = filterˢ isCredDeposit (dom (UTxOState.deposits utxoSt))
     ≡ mapˢ CredentialDeposit (dom rewards)
 
+  -- PROPERTY (TO PROVE) --
   pp-wellFormed : Type
-  pp-wellFormed = paramsWellFormed pparams
+  pp-wellFormed = paramsWellFormed (pparams' .proj₁)
 
--- action-deposits≡actions-inv : ChainInvariant action-deposits≡actions-prop
--- action-deposits≡actions-inv = {!!}
+-- PROPERTY (TO PROVE) --
+action-deposits≡actions-inv : Type
+action-deposits≡actions-inv = ChainInvariant action-deposits≡actions-prop
 
--- dom-rwds≡credDeposits-inv : ChainInvariant dom-rwds≡credDeposits
--- dom-rwds≡credDeposits-inv = {!!}
+-- PROPERTY (TO PROVE) --
+dom-rwds≡credDeposits-inv : Type
+dom-rwds≡credDeposits-inv = ChainInvariant dom-rwds≡credDeposits
 
--- pp-wellFormed-inv : ChainInvariant pp-wellFormed
--- pp-wellFormed-inv = {!!}
+-- PROPERTY (TO PROVE) --
+pp-wellFormed-inv : Type
+pp-wellFormed-inv = ChainInvariant pp-wellFormed
+
 
 -- Epoch boundary properties
 
--- module _ {Γ es e es'} (step : Γ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es') where
---   dom-rwds-const : dom (getRewards es) ≡ dom (getRewards es')
---   dom-rwds-const = {!!}
+module _ {Γ es e es'} (step : Γ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es') where
+  -- PROPERTY (TO PROVE) --
+  dom-rwds-const : Type
+  dom-rwds-const = dom (getRewards es) ≡ dom (getRewards es')
 
---   prop≡∅⇒activeDReps-const : getGovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
---   prop≡∅⇒activeDReps-const = {!!}
+  -- PROPERTY (TO PROVE) --
+  prop≡∅⇒activeDReps-const : Type
+  prop≡∅⇒activeDReps-const = getGovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'

@@ -100,86 +100,6 @@ instance
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
 Computational-LEDGERS = it
 
-instance
-  HasCoin-LState : HasCoin LState
-  HasCoin-LState .getCoin s = getCoin (LState.utxoSt s) + getCoin (LState.certState s)
-
--- ** Proof that LEDGER preserves values.
-
-FreshTx : Tx → LState → Type
-FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
-  where open Tx tx; open TxBody body; open UTxOState; open LState
-
-module _
-  (tx : Tx) (let open Tx tx; open TxBody body)
-  ( indexedSumᵛ'-∪  :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                       → disjoint (dom m) (dom m') → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
-  ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
-  ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                       → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-  ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
-                       → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-  ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                       → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-  where
-
-  private variable
-    Γ : LEnv
-    l : List Tx
-
-  pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
-
-  LEDGER-pov :  {s s' : LState} → FreshTx tx s → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                → getCoin s ≡ getCoin s'
-  LEDGER-pov
-    {s  = s}
-    {s' = s'}
-    h (LEDGER-V {utxoSt' = utxoSt''} ( valid , UTXOW⇒UTXO st@(UTXO-induction r) , h' , _ )) =
-    let
-      open LState s
-      open CertState certState
-      open LState s' renaming (utxoSt to utxoSt'; govSt to govSt'; certState to certState')
-      open CertState certState'
-      open ≡-Reasoning
-      open CERTSpov indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ r
-      -- certState  = ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ
-      -- certState' = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-      zeroMap    = constMap (mapˢ RwdAddr.stake (dom txwdrls)) 0
-    in
-    begin
-      getCoin utxoSt + getCoin certState
-        ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h') ⟩
-      getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
-        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , u))) valid ⟩
-      getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , isValid))
-        ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
-      getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState')
-        ≡˘⟨ +-assoc (getCoin utxoSt) (φ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
-      getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState'
-        ≡⟨ cong (_+ getCoin certState') (pov h st) ⟩
-      getCoin utxoSt' + getCoin certState'
-        ∎
-
-  LEDGER-pov  {s = s}
-              {s' = s'}
-              h (LEDGER-I {utxoSt' = utxoSt''} (invalid , UTXOW⇒UTXO st)) =
-    let
-        open LState s
-        open CertState certState
-        open LState s' renaming (utxoSt to utxoSt'; govSt to govSt'; certState to certState')
-        open UTxOState utxoSt
-        open UTxOState utxoSt' renaming (utxo to utxo'; fees to fees'
-                                        ; deposits to deposits'; donations to donations') in
-    cong (_+ rewardsBalance dState)
-    ( begin
-      getCoin ⟦ utxo , fees , deposits , donations ⟧
-        ≡˘⟨ +-identityʳ (getCoin ⟦ utxo , fees , deposits , donations ⟧) ⟩
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ + 0
-        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , x)) invalid ⟩
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , isValid) ≡⟨ pov h st ⟩
-      getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
-    where open ≡-Reasoning
-
 
 -- ** Proof that the set equality `govDepsMatch` (below) is a LEDGER invariant.
 
@@ -530,172 +450,150 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       ≈˘⟨ props-dpMap-votes-invar txvote txprop {k} {govSt} ⟩
     fromList (dpMap (updateGovStates (txgov txb) k govSt)) ∎
 
-  -- GA Deposits Invariance Property for LEDGER STS ----------------------------------------------------
-  LEDGER-govDepsMatch : ∀ {s' : LState} → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                        → govDepsMatch s → govDepsMatch s'
-  LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
-  LEDGER-govDepsMatch {s' = s'}
-    utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ GOV-sts) aprioriMatch =
-    let open LState s' renaming (govSt to govSt'; certState to certState') in
-    begin
-      filterˢ isGADeposit (dom (updateDeposits pp txb utxoDeps))
-        ≈⟨ noGACerts txcerts (updateProposalDeposits txprop txid govActionDeposit utxoDeps) ⟩
-      filterˢ isGADeposit (dom (updateProposalDeposits txprop txid govActionDeposit utxoDeps))
-        ≈⟨ utxo-govst-connex txprop aprioriMatch ⟩
-      fromList (dpMap (updateGovStates (map inj₂ txprop) 0 govSt))
-        ≈˘⟨ props-dpMap-votes-invar txvote txprop ⟩
-      fromList (dpMap (updateGovStates (txgov txb) 0 govSt ))
-        ≈˘⟨ |ᵒ-GAs-pres 0 govSt certState' ⟩
-      fromList (dpMap (updateGovStates (txgov txb) 0 (rmOrphanDRepVotes certState' govSt)))
-        ≡˘⟨ cong (fromList ∘ dpMap ) (STS→GovSt≡ utxosts tx-valid) ⟩
-      fromList (dpMap govSt') ∎
+-- module EPOCH-Body (eps : EpochState) where
+--   open EpochState eps hiding (es) public
+--   open RatifyState fut using (removed) renaming (es to esW) public
+--   open LState ls public
+--   open GovActionState public
+--   open UTxOState public
 
-  LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
+--   es       = record esW { withdrawals = ∅ }
+--   tmpGovSt = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
+--   orphans  = fromList $ getOrphans es tmpGovSt
+--   removed' = removed ∪ orphans
+--   removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
+--     mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+--   govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-module EPOCH-Body (eps : EpochState) where
-  open EpochState eps hiding (es) public
-  open RatifyState fut using (removed) renaming (es to esW) public
-  open LState ls public
-  open GovActionState public
-  open UTxOState public
+-- module EPOCH-PROPS {eps : EpochState} where
+--   open EPOCH-Body eps
 
-  es       = record esW { withdrawals = ∅ }
-  tmpGovSt = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
-  orphans  = fromList $ getOrphans es tmpGovSt
-  removed' = removed ∪ orphans
-  removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
-    mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
-  govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+--   -- GA Deposits Invariance Property for EPOCH STS -----------------------------------------------
+--   EPOCH-govDepsMatch :
+--     (ratify-removed : mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (UTxOState.deposits utxoSt ˢ))
+--     {eps' : EpochState} {e : Epoch}
+--     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+--     → govDepsMatch (EpochState.ls eps) → govDepsMatch (EpochState.ls eps')
 
-module EPOCH-PROPS {eps : EpochState} where
-  open EPOCH-Body eps
+--   EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
+--       ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
+--       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+--     where
 
-  -- GA Deposits Invariance Property for EPOCH STS -----------------------------------------------
-  EPOCH-govDepsMatch :
-    (ratify-removed : mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (UTxOState.deposits utxoSt ˢ))
-    {eps' : EpochState} {e : Epoch}
-    → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-    → govDepsMatch (EpochState.ls eps) → govDepsMatch (EpochState.ls eps')
+--     -- the combinator used in the EPOCH rule
+--     χ : ℙ DepositPurpose
+--     χ = mapˢ (proj₁ ∘ proj₂) removedGovActions
 
-  EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
-      ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
-      ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
-    where
+--     -- a simpler combinator that suffices here;
+--     χ' : ℙ DepositPurpose
+--     χ' = mapˢ (GovActionDeposit ∘ proj₁) removed'
+--     -- Below we prove χ and χ' are essentially equivalent.
 
-    -- the combinator used in the EPOCH rule
-    χ : ℙ DepositPurpose
-    χ = mapˢ (proj₁ ∘ proj₂) removedGovActions
+--     P : GovActionID × GovActionState → Type
+--     P = λ u → proj₁ u ∉ mapˢ proj₁ removed'
 
-    -- a simpler combinator that suffices here;
-    χ' : ℙ DepositPurpose
-    χ' = mapˢ (GovActionDeposit ∘ proj₁) removed'
-    -- Below we prove χ and χ' are essentially equivalent.
+--     P? : Decidable P
+--     P? = λ u → ¿ P u ¿
 
-    P : GovActionID × GovActionState → Type
-    P = λ u → proj₁ u ∉ mapˢ proj₁ removed'
+--     utxoDeps : Deposits
+--     utxoDeps = UTxOState.deposits utxoSt
 
-    P? : Decidable P
-    P? = λ u → ¿ P u ¿
+--     -- utxo deposits restricted to new form of set used in EPOCH rule
+--     utxoDeps' : Deposits
+--     utxoDeps' = utxoDeps ∣ χ' ᶜ
 
-    utxoDeps : Deposits
-    utxoDeps = UTxOState.deposits utxoSt
-
-    -- utxo deposits restricted to new form of set used in EPOCH rule
-    utxoDeps' : Deposits
-    utxoDeps' = utxoDeps ∣ χ' ᶜ
-
-    χ'≡χ : χ' ≡ᵉ χ
-    χ'≡χ = χ'⊆χ , χ⊆χ'
-      where
-      χ'⊆χ : χ' ⊆ χ
-      χ'⊆χ {a} x with from ∈-map x
-      ... | (gaid , gast) , refl , gaidgast∈rem with from ∈-map (ratify-removed x)
-      ... | (dp , c) , refl , dpc∈utxoDeps = let gadc = (GovActionDeposit gaid , c) in
-        to ∈-map ((returnAddr {txs} gast , gadc)
-                 , refl
-                 , to ∈-concatMapˢ ((gaid , gast)
-                                   , gaidgast∈rem
-                                   , to ∈-map (gadc , refl , res-singleton⁺ {m = utxoDeps} dpc∈utxoDeps)))
-      χ⊆χ' : χ ⊆ χ'
-      χ⊆χ' {a} x with from ∈-map x
-      ... | (rwa , dp , c) , refl , rwa-dp-c∈ with (from ∈-concatMapˢ rwa-dp-c∈)
-      ... | (gaid , gast) , gaid-gast-∈-removed , rwa-dp-c-∈-map with (from ∈-map rwa-dp-c-∈-map)
-      ... | (_ , _) , refl , q∈ =
-        to ∈-map ((gaid , gast)
-                 , proj₁ (×-≡,≡←≡ (proj₂ (res-singleton'' {m = utxoDeps} q∈)))
-                 , gaid-gast-∈-removed)
+--     χ'≡χ : χ' ≡ᵉ χ
+--     χ'≡χ = χ'⊆χ , χ⊆χ'
+--       where
+--       χ'⊆χ : χ' ⊆ χ
+--       χ'⊆χ {a} x with from ∈-map x
+--       ... | (gaid , gast) , refl , gaidgast∈rem with from ∈-map (ratify-removed x)
+--       ... | (dp , c) , refl , dpc∈utxoDeps = let gadc = (GovActionDeposit gaid , c) in
+--         to ∈-map ((returnAddr {txs} gast , gadc)
+--                  , refl
+--                  , to ∈-concatMapˢ ((gaid , gast)
+--                                    , gaidgast∈rem
+--                                    , to ∈-map (gadc , refl , res-singleton⁺ {m = utxoDeps} dpc∈utxoDeps)))
+--       χ⊆χ' : χ ⊆ χ'
+--       χ⊆χ' {a} x with from ∈-map x
+--       ... | (rwa , dp , c) , refl , rwa-dp-c∈ with (from ∈-concatMapˢ rwa-dp-c∈)
+--       ... | (gaid , gast) , gaid-gast-∈-removed , rwa-dp-c-∈-map with (from ∈-map rwa-dp-c-∈-map)
+--       ... | (_ , _) , refl , q∈ =
+--         to ∈-map ((gaid , gast)
+--                  , proj₁ (×-≡,≡←≡ (proj₂ (res-singleton'' {m = utxoDeps} q∈)))
+--                  , gaid-gast-∈-removed)
 
 
-    map-filter-decomp : ∀ a → (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)
-                               ⇔ (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filter P? govSt))
-    map-filter-decomp a = mk⇔ i (λ h → ii h , iii h)
-      where
-      i : ((a ∉ χ') × (a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt))
-          → a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)
-      i (a∉χ' , a∈) with Inverse.from (map-∈↔ (GovActionDeposit ∘ proj₁)) a∈
-      ... | b , b∈ , refl = Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁))
-                                       (b , ∈-filter⁺ P? b∈ (a∉χ' ∘ ∈-map⁺-∘) , refl)
+--     map-filter-decomp : ∀ a → (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)
+--                                ⇔ (a ∈ˡ map (GovActionDeposit ∘ proj₁)(filter P? govSt))
+--     map-filter-decomp a = mk⇔ i (λ h → ii h , iii h)
+--       where
+--       i : ((a ∉ χ') × (a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt))
+--           → a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)
+--       i (a∉χ' , a∈) with Inverse.from (map-∈↔ (GovActionDeposit ∘ proj₁)) a∈
+--       ... | b , b∈ , refl = Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁))
+--                                        (b , ∈-filter⁺ P? b∈ (a∉χ' ∘ ∈-map⁺-∘) , refl)
 
-      ii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt) → a ∉ χ'
-      ii a∈ a∈χ' with from (∈ˡ-map-filter {l = govSt} {P? = P?}) a∈
-      ... | _ , _ , refl , Pb with ∈-map⁻' a∈χ'
-      ... | q , refl , q∈rem = Pb (to ∈-map (q , refl , q∈rem))
+--       ii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt) → a ∉ χ'
+--       ii a∈ a∈χ' with from (∈ˡ-map-filter {l = govSt} {P? = P?}) a∈
+--       ... | _ , _ , refl , Pb with ∈-map⁻' a∈χ'
+--       ... | q , refl , q∈rem = Pb (to ∈-map (q , refl , q∈rem))
 
-      iii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)
-            → a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt
-      iii a∈ with from (∈ˡ-map-filter {l = govSt} {P? = P?}) a∈
-      ... | b , b∈ , refl , Pb = Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁)) (b , (b∈ , refl))
+--       iii : a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)
+--             → a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt
+--       iii a∈ with from (∈ˡ-map-filter {l = govSt} {P? = P?}) a∈
+--       ... | b , b∈ , refl , Pb = Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁)) (b , (b∈ , refl))
 
 
-    main-invariance-lemma :
-        filterˢ isGADeposit (dom utxoDeps) ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) govSt)
-        ---------------------------------------------------------------------------------------------------
-      → filterˢ isGADeposit (dom utxoDeps') ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) (filter P? govSt))
+--     main-invariance-lemma :
+--         filterˢ isGADeposit (dom utxoDeps) ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) govSt)
+--         ---------------------------------------------------------------------------------------------------
+--       → filterˢ isGADeposit (dom utxoDeps') ≡ᵉ' fromList (map (GovActionDeposit ∘ proj₁) (filter P? govSt))
 
-    main-invariance-lemma HYP a = let open R.EquationalReasoning in
-      a ∈ filterˢ isGADeposit (dom utxoDeps')                         ∼⟨ R.SK-sym ∈-filter ⟩
-      (isGADeposit a × a ∈ dom utxoDeps')                             ∼⟨ R.K-refl ×-cong ∈-resᶜ-dom ⟩
-      (isGADeposit a × a ∉ χ' × ∃[ q ] (a , q) ∈ utxoDeps)            ∼⟨ ×-⇔-swap ⟩
-      (a ∉ χ' × isGADeposit a × ∃[ q ] (a , q) ∈ utxoDeps)            ∼⟨ R.K-refl ×-cong (R.K-refl ×-cong dom∈)⟩
-      (a ∉ χ' × isGADeposit a × a ∈ dom utxoDeps)                     ∼⟨ R.K-refl ×-cong ∈-filter ⟩
-      (a ∉ χ' × a ∈ filterˢ isGADeposit (dom utxoDeps))               ∼⟨ R.K-refl ×-cong (HYP a) ⟩
-      (a ∉ χ' × a ∈ fromList (map (GovActionDeposit ∘ proj₁) govSt))  ∼⟨ R.K-refl ×-cong (R.SK-sym ∈-fromList)⟩
-      (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
-      a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
-      a ∈ fromList (map (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
+--     main-invariance-lemma HYP a = let open R.EquationalReasoning in
+--       a ∈ filterˢ isGADeposit (dom utxoDeps')                         ∼⟨ R.SK-sym ∈-filter ⟩
+--       (isGADeposit a × a ∈ dom utxoDeps')                             ∼⟨ R.K-refl ×-cong ∈-resᶜ-dom ⟩
+--       (isGADeposit a × a ∉ χ' × ∃[ q ] (a , q) ∈ utxoDeps)            ∼⟨ ×-⇔-swap ⟩
+--       (a ∉ χ' × isGADeposit a × ∃[ q ] (a , q) ∈ utxoDeps)            ∼⟨ R.K-refl ×-cong (R.K-refl ×-cong dom∈)⟩
+--       (a ∉ χ' × isGADeposit a × a ∈ dom utxoDeps)                     ∼⟨ R.K-refl ×-cong ∈-filter ⟩
+--       (a ∉ χ' × a ∈ filterˢ isGADeposit (dom utxoDeps))               ∼⟨ R.K-refl ×-cong (HYP a) ⟩
+--       (a ∉ χ' × a ∈ fromList (map (GovActionDeposit ∘ proj₁) govSt))  ∼⟨ R.K-refl ×-cong (R.SK-sym ∈-fromList)⟩
+--       (a ∉ χ' × a ∈ˡ map (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
+--       a ∈ˡ map (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
+--       a ∈ fromList (map (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
 
--- GA Deposits Invariance Property for CHAIN STS -----------------------------------------------
-module _ (b : Block) (cs : ChainState) where
-  open Block b; open ChainState cs
-  open NewEpochState newEpochState
-  open SetoidProperties using (LEDGER-govDepsMatch)
-  open EPOCH-Body epochState
-  open EnactState es using (pparams)
-  pp = pparams .proj₁
+-- -- GA Deposits Invariance Property for CHAIN STS -----------------------------------------------
+-- module _ (b : Block) (cs : ChainState) where
+--   open Block b; open ChainState cs
+--   open NewEpochState newEpochState
+--   open SetoidProperties using (LEDGER-govDepsMatch)
+--   open EPOCH-Body epochState
+--   open EnactState es using (pparams)
+--   pp = pparams .proj₁
 
-  updateChainState : ChainState → NewEpochState → ChainState
-  updateChainState s nes =
-    record s { newEpochState =
-      record nes { epochState =
-        record (NewEpochState.epochState (ChainState.newEpochState s))
-          { ls = EpochState.ls (NewEpochState.epochState nes) }
-      }
-    }
+--   updateChainState : ChainState → NewEpochState → ChainState
+--   updateChainState s nes =
+--     record s { newEpochState =
+--       record nes { epochState =
+--         record (NewEpochState.epochState (ChainState.newEpochState s))
+--           { ls = EpochState.ls (NewEpochState.epochState nes) }
+--       }
+--     }
 
-  CHAIN-govDepsMatch : {nes : NewEpochState}
-    → mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (UTxOState.deposits (LState.utxoSt ls) ˢ)
-    → totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
-    → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
-    → govDepsMatch ls → govDepsMatch (EpochState.ls (NewEpochState.epochState nes))
+--   CHAIN-govDepsMatch : {nes : NewEpochState}
+--     → mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (UTxOState.deposits (LState.utxoSt ls) ˢ)
+--     → totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
+--     → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
+--     → govDepsMatch ls → govDepsMatch (EpochState.ls (NewEpochState.epochState nes))
 
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
-    RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
-     ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
+--   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
+--     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
+--      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-Not-New _) ledgers) =
-    RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
+--   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-Not-New _) ledgers) =
+--     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
 
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
-    RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
-     ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
+--   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
+--     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
+--      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
