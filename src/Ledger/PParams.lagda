@@ -516,8 +516,7 @@ record PParamsDiff : Type₁ where
 \begin{code}[hide]
 record GovParams : Type₁ where
   field ppUpd : PParamsDiff
-  -- open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
-  open PParamsDiff ppUpd public
-  field ⦃ DecEq-UpdT ⦄ : DecEq UpdateT
---         ⦃ Show-UpdT ⦄ : Show UpdateT
+  open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
+  field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
+--         ⦃ Show-UpdT ⦄ : Show PParamsUpdate
 \end{code}

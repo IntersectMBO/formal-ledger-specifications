@@ -26,46 +26,30 @@ module _
 
 \begin{property}[%
   \LedgerMod{Chain/Properties/CHAINgovDepsMatch.lagda}{\AgdaModule{CHAINgovDepsMatch}}:
-  \AgdaFunction{govDepsMatch} is a chain invariant;
+  \AgdaFunction{govDepsMatch} is invariant of \CHAIN{} rule;
   \textbf{proved}%
-]\
+  ]\
 
-\textit{Preliminary remarks}.
-\begin{itemize}
-  \item A \ChainState{} has just one field, \ab{newEpochState}~:~\NewEpochState{}.
-  \item A \NewEpochState{} has three fields, \ab{lastEpoch}~:~\Epoch{},
-    \ab{epochState}~:~\EpochState{}, and \ab{ru}~:~\Maybe{}~\RewardUpdate{} (not relevant here).
-  \item An \EpochState{} has five fields, \ab{acnt}~:~\Acnt{},
-    \ab{ss}~:~\Snapshots{}, \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and
-    \ab{fut}~:~\RatifyState{} (not relevant here).
-    We focus on the \ab{ls} field, which is an \LState{}.
-  \item An inhabitant of the \LState{} type has three fields; the two 
-    relevant here are \ab{utxoSt}~:~\UTxOState{} and \ab{govSt}~:~\GovState{}.
-    The present property asserts that the \AgdaDatatype{CHAIN} rule preserves a
-    certain relation between the \ab{utxoSt} and \ab{govSt} fields.
-  \item The crucial point here is that the chain state will be updated.
-\end{itemize}
-\textit{Property}.
-\begin{itemize}
-  \item \textit{Informally}.
-    Fix a \ChainState{} \ab{cs} and let \ab{cs'} be the updated chain state,
-    \ab{cs'} = \AgdaFunction{updateChainState}~\ab{cs}~\ab{nes}.
-    Let \ab{csLStates} and \ab{csLStates'} be the respective ledger states of these
-    chain states, let
-    \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of \ab{csLStates}
-    and \ab{csLStates'} and let \ab{govSt} and \ab{govSt'} be their respective \GovState{}s.
-    \\[4pt]
-    Suppose that the conditions described above hold and that \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'}.
-    If the governance action deposits of \ab{utxoSt} are the same as those
-    of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-    In other terms,\\
-    \AgdaFunction{govDepsMatch}~\ab{csLState} implies
-    \AgdaFunction{govDepsMatch}~(\AgdaFunction{LStateOfCState}~\ab{cs'}).
-  \item \textit{Formally}.
+  \begin{itemize}
+    \item \textit{Informally}.
+      Fix a \ChainState{} \ab{cs} and let \ab{cs'} be the updated chain state,
+      \ab{cs'} = \AgdaFunction{updateChainState}~\ab{cs}~\ab{nes}.
+      Let \ab{csLStates} and \ab{csLStates'} be the respective ledger states of these
+      chain states, let
+      \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of \ab{csLStates}
+      and \ab{csLStates'} and let \ab{govSt} and \ab{govSt'} be their respective \GovState{}s.
+      \\[4pt]
+      Suppose that the conditions described above hold and that \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'}.
+      If the governance action deposits of \ab{utxoSt} are the same as those
+      of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
+      In other terms,\\
+      \AgdaFunction{govDepsMatch}~\ab{csLState} implies
+      \AgdaFunction{govDepsMatch}~(\AgdaFunction{LStateOfCState}~\ab{cs'}).
+    \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-    { b   : Block }
-    { cs  : ChainState}
+  { b   : Block }
+  { cs  : ChainState}
 \end{code}
 \begin{code}[hide]
   where
@@ -96,10 +80,11 @@ module _
       →  govDepsMatch csLState → govDepsMatch (LStateOfCState cs')
 \end{code}
 \end{AgdaMultiCode}
-\end{itemize}
-\textit{Proof}.  See the \LedgerMod{Chain/Properties/CHAINgovDepsMatch.lagda}{\AgdaModule{CHAINgovDepsMatch}}
-                 module in our GitHub repository.
+    \item \textit{Proof}.  See the
+      \LedgerMod{Chain/Properties/CHAINgovDepsMatch.lagda}{\AgdaModule{CHAINgovDepsMatch}}
+       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
+  -- Proof.
   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch {ratify-removed = rrm} eps₁→eps₂
@@ -111,4 +96,20 @@ module _
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch {ratify-removed = rrm} eps₁→eps₂
 \end{code}
+    \item \textit{Remarks}.
+      \begin{enumerate}
+        \item A \ChainState{} has just one field, \ab{newEpochState}~:~\NewEpochState{}.
+        \item A \NewEpochState{} has three fields, \ab{lastEpoch}~:~\Epoch{},
+          \ab{epochState}~:~\EpochState{}, and \ab{ru}~:~\Maybe{}~\RewardUpdate{} (not relevant here).
+        \item An \EpochState{} has five fields, \ab{acnt}~:~\Acnt{},
+          \ab{ss}~:~\Snapshots{}, \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and
+          \ab{fut}~:~\RatifyState{} (not relevant here).
+          We focus on the \ab{ls} field, which is an \LState{}.
+        \item An inhabitant of the \LState{} type has three fields; the two 
+          relevant here are \ab{utxoSt}~:~\UTxOState{} and \ab{govSt}~:~\GovState{}.
+          The present property asserts that the \AgdaDatatype{CHAIN} rule preserves a
+          certain relation between the \ab{utxoSt} and \ab{govSt} fields.
+        \item The crucial point here is that the chain state will be updated.
+      \end{enumerate}
+  \end{itemize}
 \end{property}

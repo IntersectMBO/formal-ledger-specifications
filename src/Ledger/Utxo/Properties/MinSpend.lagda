@@ -117,62 +117,44 @@ module _ -- ASSUMPTION --
   ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤updateCertDeps cs nrf
 \end{code}
 
-In the next two properties, if \ab{l} is a list of certificates (\DCert{}s), then
-\AgdaFunction{noRefundCert}~\ab{l} denotes the assertion that no element in \ab{l} is
-one of the two refund types (i.e., an element of \ab{l} is neither a \dereg{} nor a
-\deregdrep{}).
-
 \begin{property}[%
   \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}}:
-  \textbf{general spend lower bound};
+  general spend lower bound;
   \textbf{proved}%
-]\
+  ]\
+  \label{prop:minspend}
 
+  \begin{itemize}
+    \item \textit{Informally}.  
+      Let \ab{tx}~:~\Tx{} be a valid transaction and let \ab{utxoSt},
+      \ab{utxoSt'}~:~\UTxOState{} be two UTxO states such that
+      \ab{utxoSt}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{utxoSt'}.
+      Then the coin consumed by \ab{tx} is at least the sum of the governance action deposits
+      of the proposals in \ab{tx}.
+
+
+    \item \textit{Formally}.
 \begin{AgdaMultiCode}
-\begin{code}[hide]
-  gmsc : 
-\end{code}
-\noindent Assume
 \begin{code}
-    { Γ        : UTxOEnv    }
-    { tx       : Tx         }
-    { utxoSt   : UTxOState  }
-    { utxoSt'  : UTxOState  }
+  gmsc :  { Γ        : UTxOEnv    }
+          { tx       : Tx         }
+          { utxoSt   : UTxOState  }
+          { utxoSt'  : UTxOState  }
+          → (let pp = UTxOEnv.pparams Γ)
 \end{code}
 \begin{code}[hide]
-    → let
+          (open Tx tx)
+          (open TxBody body)
 \end{code}
-and let
-\begin{code}[inline]
-      pp = UTxOEnv.pparams Γ
-\end{code}
-%~be the protocol parameters of the UTxO environment Γ.
-\begin{code}[hide]
-      open Tx tx
-      open TxBody body
-      in
-\end{code}
-.\\[6pt]
-If
-\begin{code}[inline]
-    Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
-\end{code}
-\begin{code}[hide]
-    →
-\end{code}
-~and~
-\begin{code}[inline]
-    noRefundCert txcerts
-\end{code}
-\begin{code}[hide]
-    →
-\end{code}
-, then
 \begin{code}
-      coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
+          → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
+          → noRefundCert txcerts
+          → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
 \end{code}
-.
-
+\end{AgdaMultiCode}
+    \item \textit{Proof}. See the
+      \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}} module
+      in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
@@ -215,17 +197,31 @@ If
     balIn = balance (st ∣ txins)
     balOut = balance (outs txb)
 \end{code}
-\end{AgdaMultiCode}
-\end{property}
+  \item \textit{Remarks}.
+    \begin{enumerate}
+      \item For \ab{l} a list of \DCert{} certificates, let
+        \AgdaFunction{noRefundCert}~\ab{l} denote the assertion that no element in \ab{l} is
+        one of the two refund types (i.e., an element of \ab{l} is neither a \dereg{} nor a
+        \deregdrep{}).
+      \item Let \ab{pp} be the protocol parameters of the UTxO environment Γ.
+    \end{enumerate}
+  \end{itemize}
+\end{property}  
 
-To state the next property we define some more notation.
-Given a ledger state \ab{ls} and
-a transaction \ab{tx}, denote by \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that
-there exists ledger state \ab{ls'} such that
-\ab{ls}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{ls'}.  
-Also, assume the following additive property of
-the \AgdaFunction{∪⁺} operator holds:
-\begin{AgdaMultiCode}
+\begin{property}[%
+  \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}}:
+  spend lower bound for proposals;
+  \textbf{proved}%
+  ]\
+
+  \textit{Preliminary remarks}.
+  \begin{itemize}
+    \item Define \AgdaFunction{noRefundCert}~\ab{l} and \ab{pp} as in \cref{prop:minspend}.
+    \item Given a ledger state \ab{ls} and a transaction \ab{tx}, denote by
+      \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that there exists ledger state
+      \ab{ls'} such that \ab{ls}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{ls'}.  
+    \item Assume the following additive property of the \AgdaFunction{∪⁺} operator holds:
+  \begin{AgdaMultiCode}
 \begin{code}[hide]
 module _
 \end{code}
@@ -242,60 +238,52 @@ module _
                            ────────────────────────────────
                            ∑[ x ← d₁ ∪⁺ d₂ ] x ≡ ∑[ x ← d₁ ] x ◇ ∑[ x ← d₂ ] x )
 \end{code}
+  \end{AgdaMultiCode}
+  \end{itemize}
+  \textit{Property}.
+  \begin{itemize}
+    \item \textit{Informally}.
+      Let \ab{tx}~:~\Tx{} be a valid transaction and let \ab{cs}~:~\ChainState{} be a chain state.
+      If the condition \AgdaFunction{validTxIn₂}~\ab{tx} (described above) holds,
+      then the coin consumed by \ab{tx} is at least the sum of the governance action
+      deposits of the proposals in \ab{tx}.
 
-\begin{property}[%
-  \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}}:
-  \textbf{spend lower bound for proposals};
-  \textbf{proved}%
-]\
-
-\noindent Assume
-\begin{code}
-    { cs     : ChainState }
-\end{code}
+    \item \textit{Formally}.
+\begin{AgdaMultiCode}
 \begin{code}[hide]
   where
   open import Ledger.Utxow txs abs
-  propose-minSpend :
 \end{code}
 \begin{code}
+  propose-minSpend :
+    { cs     : ChainState }
     { slot   : Slot }
     { tx     : Tx }
     { valid  : validTxIn₂ cs slot tx }
+    ( let  ne      = cs .ChainState.newEpochState
+           ep      = ne .NewEpochState.epochState 
+           ls      = ep .EpochState.ls
+           es      = ep .EpochState.es
+           pp      = es .EnactState.pparams .proj₁
+           utxoSt  = ls .LState.utxoSt )
 \end{code}
-and let
 \begin{code}[hide]
-    (let
+    ( open Tx tx )
+    ( open TxBody body )
 \end{code}
 \begin{code}
-         ne      = cs .ChainState.newEpochState
-         ep      = ne .NewEpochState.epochState 
-         ls      = ep .EpochState.ls
-         es      = ep .EpochState.es
-         pp      = es .EnactState.pparams .proj₁
-         utxoSt  = ls .LState.utxoSt
+    → noRefundCert txcerts
+    → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
 \end{code}
+\end{AgdaMultiCode}
+  \end{itemize}
+\end{property}
+\textit{Proof}. See the
+  \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}} module
+  in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
-         open Tx tx
-         open TxBody body)
-    → 
-\end{code}
-.\\[4pt]  If
-\begin{code}[inline]
-    noRefundCert txcerts
-\end{code}
-\begin{code}[hide]
-    →
-\end{code}
-, then
-\begin{code}
-      coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
-\end{code}
-\begin{code}[hide]
-  propose-minSpend {slot} {tx} {valid} noRef = case valid of λ where
+  propose-minSpend {cs} {slot} {tx} {valid} noRef = case valid of λ where
     (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
     (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
 
 \end{code}
-\end{property}
-\end{AgdaMultiCode}

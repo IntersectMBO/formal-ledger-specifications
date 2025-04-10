@@ -13,85 +13,68 @@ module Ledger.Utxo.Properties.UTXOpov
 
 open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
+open UTxOState; open Tx; open TxBody
 \end{code}
 
 \begin{property}[%
   \LedgerMod{Utxo/Properties/UTXOpov.lagda}{\AgdaModule{UTXOpov}}:
-  \textbf{UTXO rule preserves value};
+  \UTXO{} rule preserves value;
   \textbf{proved}%
-]\
-
-\noindent
-Let
-
-  \(\begin{array}{rcl}
-    \ab{Γ} &∈& \UTxOEnv{},\\
-    \ab{utxo}, \ab{utxo'} &∈& \UTxO{},\\
-    \ab{fees}, \ab{fees'} &∈& \Coin{},\\
-    \ab{tx} &∈& \Tx{}.
-  \end{array}\)
-
-If \(\ab{txid}~∉~\ab{mapˢ}~\ab{proj₁}~(\ab{dom}~\ab{utxo})\), and\\[4pt]
-  if \(\ab{Γ}~\ab{⊢}~s~\ab{⇀⦇ tx ,UTXO⦈}~s'\), then\\[4pt]
-  \(\ab{getCoin}~\ab{s} + φ(\ab{getCoin}~\ab{txwdrls} , \ab{isValid}) ≡ \ab{getCoin}~\ab{s'}\).
-\\[6pt]
-Assume
-\begin{AgdaMultiCode}
-\begin{code}[hide]
-module _
-\end{code}  
+  ]\
+  \begin{itemize}
+    \item \textit{Informally}.
+      Let \ab{tx}~:~\Tx{} be a transaction, with withdrawals in the amount of
+      \ab{txwdrls}, and let \ab{s}, \ab{s'} be \UTxOState{}s.
+      Suppose the \AgdaField{txid} of \ab{tx} is not in the
+      (first projection of) the domain of the \UTxO{} map of \ab{s} and suppose
+      \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{s'}.  Then,
+      the value of \ab{s} plus the value of the withdrawals in \ab{tx} is equal to the
+      value of \ab{s'}.  In other terms,
+      \\[4pt]
+      \AgdaFunction{getCoin}~\ab{s}
+      + \AgdaFunction{φ}(\AgdaFunction{getCoin} \ab{txwdrls} , \ab{tx}~.\AgdaField{isValid})
+      $≡$ \AgdaFunction{getCoin} \ab{s'}.
+    \item \textit{Formally}.
 \begin{code}
-  {tx : Tx}
-\end{code}  
-\nopagebreak
+UTXOpov :  {Γ : UTxOEnv}
+           {tx : Tx}
+           {s s' : UTxOState}
+           → tx .body .txid ∉ mapˢ proj₁ (dom (s .utxo))
+           → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
+           → getCoin s + φ(getCoin (tx .body .txwdrls) , tx .isValid) ≡ getCoin s'
+\end{code}
+  \item \textit{Proof}. See the
+  \LedgerMod{Utxo/Properties/UTXOpov.lagda}{\AgdaModule{UTXOpov}} module
+  in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
-  (open Tx tx)(open TxBody body)
-\end{code}  
-\begin{code}
-  {utxo utxo' : UTxO}
-  {Γ : UTxOEnv}
-  {fees fees' donations donations' : Coin}
-  {deposits deposits' : DepositPurpose ⇀ Coin}
+-- Proof.
+UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
+  = DepositHelpers.pov-scripts step h' refl valid
 
-\end{code}  
-\begin{code}[hide]
-  where
-  UTXOpov :
-    let
-\end{code}  
-and let
-\begin{code}
-         s   = ⟦ utxo , fees , deposits , donations ⟧
-         s'  = ⟦ utxo'  , fees'  , deposits'  , donations' ⟧
-\end{code}  
-\begin{code}[hide]
-    in
-\end{code}  
-
-\noindent If
-\begin{code}[inline]
-    txid ∉ mapˢ proj₁ (dom utxo)
+UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid)))
+  = DepositHelpers.pov-no-scripts step h' invalid
 \end{code}
-\begin{code}[hide]
-      →
-\end{code}  
-~and
-\begin{code}[inline]
-    Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-\end{code}
-\begin{code}[hide]
-      →
-\end{code}  
-, then
-\begin{code}
-    getCoin s + φ(getCoin txwdrls , isValid) ≡ getCoin s'
-\end{code}
-\begin{code}[hide]
-  UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
-    = DepositHelpers.pov-scripts step h' refl valid
-
-  UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid)))
-    = DepositHelpers.pov-no-scripts step h' invalid
-\end{code}
-\end{AgdaMultiCode}
+  \item \textit{Remarks}.
+    \begin{enumerate}
+      \item The \ab{utxo}~:~\UTxO{} field of a \UTxOState{} is a map from \TxIn{} to \TxOut{}.
+      \item The domain type of \ab{utxo}, \TxIn{}, is a pair of type \TxId{} × \Ix{}.
+      \item The present property is an equation relating the coin balance of \ab{s} to
+        that of another \UTxOState{} \ab{s'} under the following hypotheses:
+        \begin{itemize}
+          \item the \AgdaField{txid} of the transaction \ab{tx} is not in the
+            (first projection of) the domain of the \UTxO{} map of \ab{s};
+          \item \ab{s} and \ab{s'} are relatedby the \UTXO{} rule; specifically,
+            \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{s'}.
+        \end{itemize}
+      \item The equation involves a function \ab{φ}~:~$ℕ$~×~\AgdaDatatype{Bool}~→~$ℕ$
+        defined as follows:\\[4pt]
+        \(
+          φ (n , b) = \left\{
+            \begin{array}{ll}
+              n & \text{if } b = \mbox{true}, \\
+              0 & \text{if } b = \mbox{false}.
+            \end{array}\right.
+        \)     
+    \end{enumerate}
+  \end{itemize}
 \end{property}

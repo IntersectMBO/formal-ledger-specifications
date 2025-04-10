@@ -53,37 +53,18 @@ module EPOCH-PROPS {eps : EpochState} where
 
 \begin{property}[%
   \LedgerMod{Epoch/Properties/EPOCHgovDepsMatch.lagda}{\AgdaModule{EPOCHgovDepsMatch}}:
-  \AgdaFunction{govDepsMatch} is an epoch invariant;
+  \AgdaFunction{govDepsMatch} is invariant of \EPOCH{} rule;
   \textbf{proved}%
   ]\
 
-  \textit{Preliminary remarks}.
-  \begin{itemize}
-    \item For the purpose of this property, we fix an epoch state
-    \ab{eps}~:~\EpochState{}. Recall, the \EpochState{} record type has five fields; the three 
-      relevant here are \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and \ab{fut}~:~\RatifyState{}.
-      For clarity, let us give the \LState{} of \ab{eps} the new name \ab{epsLState}, and let us rename the
-      \RatifyState{} of \ab{eps} from \ab{fut} to \ab{epsRState}.
-    \item As an inhabitant of \LState{}, \ab{epsLState} has three fields; the two
-      relevant here are \ab{utxoSt}~:~\UTxOState{} and \ab{govSt}~:~\GovState{}.
-    \item As an inhabitant of \RatifyState{}, \ab{epsRState} has three fields; the two
-      relevant here are \ab{es}~:~\EnactState{} and \ab{removed}~:~$ℙ$(\GovActionID{}~×~\GovActionState{}).
-    \item The present property asserts that (under a certain condition, described below),
-      the \AgdaDatatype{EPOCH} rule preserves a certain relation between
-      the \ab{utxoSt} and \ab{govSt} fields of \ab{epsLState}.
-    \item Let
-        $\mathcal{G}$ be the set \{\GovActionDeposit{}~\ab{id}\}, 
-        where \ab{id} ranges over \GovActionID{}s of elements in \ab{epsRState .removed}, 
-        the \ab{removed} field of the \RatifyState{} of \ab{eps}.
-        The condition under which the property holds is that $\mathcal{G}$ is a subset
-        of the set of (first projections of elements in) \ab{deposits utxoSt}, the deposits
-        of the \UTxOState{} of \ab{epsLState}.
-  \end{itemize}
-  \textit{Property}.
   \begin{itemize}
     \item \textit{Informally}.
-      Assume the condition described above holds and suppose
-      \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}.
+      Let $\mathcal{G}$ be the set \{\GovActionDeposit{}~\ab{id}\}, 
+      where \ab{id} ranges over \GovActionID{}s of elements in \ab{epsRState .removed}, 
+      the \ab{removed} field of the \RatifyState{} of \ab{eps}.
+      Assume that $\mathcal{G}$ is a subset of the set of (first projections of elements in)
+      \ab{deposits utxoSt}, the deposits of the \UTxOState{} of \ab{epsLState}.
+      Suppose \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}.
       Let \ab{epsLState'} be the ledger state of \ab{eps'}.
       Let \ab{utxoSt} and \ab{utxoSt'} be the \UTxOState{}s of the \ab{epsLState} and \ab{epsLState'}, respectively.
       Let \ab{govSt} and \ab{govSt'} be the \GovState{}s of the respective ledger states.
@@ -99,11 +80,11 @@ module EPOCH-PROPS {eps : EpochState} where
                         → tt ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
                         → govDepsMatch epsLState → govDepsMatch (eps' .ls)
 \end{code}
-  \end{itemize}
-  \textit{Proof}. See the
-    \LedgerMod{Epoch/Properties/EPOCHgovDepsMatch.lagda}{\AgdaModule{EPOCHgovDepsMatch}} module
-    in our GitHub repository.
+    \item \textit{Proof}. See the
+      \LedgerMod{Epoch/Properties/EPOCHgovDepsMatch.lagda}{\AgdaModule{EPOCHgovDepsMatch}} module
+      in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
+  -- Proof.
   EPOCH-govDepsMatch {ratify-removed} (EPOCH x _) =
       ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
@@ -190,4 +171,20 @@ module EPOCH-PROPS {eps : EpochState} where
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
 \end{code}
+  \item \textit{Remarks}.
+    \begin{enumerate}
+      \item For the purpose of this property, we fix an epoch state
+      \ab{eps}~:~\EpochState{}. Recall, the \EpochState{} record type has five fields; the three 
+        relevant here are \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and \ab{fut}~:~\RatifyState{}.
+        For clarity, let us give the \LState{} of \ab{eps} the new name \ab{epsLState}, and let us rename the
+        \RatifyState{} of \ab{eps} from \ab{fut} to \ab{epsRState}.
+      \item As an inhabitant of \LState{}, \ab{epsLState} has three fields; the two
+        relevant here are \ab{utxoSt}~:~\UTxOState{} and \ab{govSt}~:~\GovState{}.
+      \item As an inhabitant of \RatifyState{}, \ab{epsRState} has three fields; the two
+        relevant here are \ab{es}~:~\EnactState{} and \ab{removed}~:~$ℙ$(\GovActionID{}~×~\GovActionState{}).
+      \item The present property asserts that (under a certain condition, described below),
+        the \AgdaDatatype{EPOCH} rule preserves a certain relation between
+        the \ab{utxoSt} and \ab{govSt} fields of \ab{epsLState}.
+    \end{enumerate}
+  \end{itemize}
 \end{property}

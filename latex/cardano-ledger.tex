@@ -35,9 +35,11 @@
 \includeAgda{Ledger/Chain}
 
 \section{Properties}
-\input{Properties}
+This section presents the properties of the ledger that we have formally proved in
+Agda or plan to do so in the near future.  We include metadata indicating
+in which Agda module each property is formally stated and (possibly) proved, along
+with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}'' otherwise.
 
-\section{Formal Properties}
 \subsection{Preservation of Value}
 \inputAgda{Ledger/Utxo/Properties/UTXOpov}
 \inputAgda{Ledger/Certs/Properties/CERTSpov}
@@ -47,14 +49,18 @@
 \inputAgda{Ledger/Ledger/Properties/LEDGERgovDepsMatch}
 \inputAgda{Ledger/Epoch/Properties/EPOCHgovDepsMatch}
 \inputAgda{Ledger/Chain/Properties/CHAINgovDepsMatch}
+\inputAgda{Ledger/Chain/Properties/ActionDepsEqualActionsProp}
+\inputAgda{Ledger/Chain/Properties/DomRwdsEqualCredDeps}
+\inputAgda{Ledger/Chain/Properties/PParamsWellFormed}
 
 \subsection{Minimum Spending Conditions}
 \inputAgda{Ledger/Utxo/Properties/MinSpend}
 
 \subsection{Other Miscellaneous Properties}
 \inputAgda{Ledger/GovernanceActions/Properties/ProposalChangePP}
-
-
+\inputAgda{Ledger/Chain/Properties/CHAINepochStep}
+\inputAgda{Ledger/Utxo/Properties/CredDepsEqualDomRwds}
+\inputAgda{Ledger/PParams/Properties/PParamsWellFormed}
 \clearpage
 
 \addcontentsline{toc}{section}{References}

@@ -64,49 +64,32 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 \begin{property}[%
   \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  CERT rule preserves value;
+  \CERT{} rule preserves value;
   \textbf{proved}%
-]\
+  ]\
 
-\noindent Assume
-\begin{AgdaMultiCode}
-\begin{code}[hide]
-  CERT-pov :
-\end{code}
+  \begin{itemize}
+    \item \textit{Informally}.
+      Let \ab{s}, \ab{s'} be \CertState{}s such that
+      \ab{s}~\AgdaDatatype{⇀⦇}~\ab{dcert}~\AgdaDatatype{,CERT⦈}~\ab{s'}
+      for some \ab{dcert}~:~\DCert{}.
+      Then, the value of \ab{s} is equal to the value of \ab{s'}.  In other terms,
+      \AgdaFunction{getCoin}~\ab{s} $≡$ \AgdaFunction{getCoin} \ab{s'}.
+    \item \textit{Formally}.
 \begin{code}
-    {Γ : CertEnv}
-    {stᵈ stᵈ' : DState}
-    {stᵖ stᵖ' : PState}
-    {stᵍ stᵍ' : GState}
+  CERT-pov :  {Γ     : CertEnv}
+              {s s'  : CertState}
+              → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
+              → getCoin s ≡ getCoin s'
 \end{code}
+    \item \textit{Proof}. See the
+      \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}} module
+      in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
-    →
-\end{code}
-and
-\begin{code}
-    let s   = ⟦ stᵈ , stᵖ , stᵍ ⟧
-        s'  = ⟦ stᵈ' , stᵖ' , stᵍ' ⟧
-\end{code}
-\begin{code}[hide]
-    in
-\end{code}
-
-\noindent If
-\begin{code}[inline]
-    Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
-\end{code}
-\begin{code}[hide]
-    → 
-\end{code}
-, then
-\begin{code}[inline]
-      getCoin s ≡ getCoin s'
-\end{code}
-.
-\begin{code}[hide]
+  -- Proof.
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
-  CERT-pov {stᵖ = stᵖ} {stᵖ'} {stᵍ} {stᵍ'}
+  CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ}{⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
     (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
     getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ , stᵖ , stᵍ ⟧
       ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds
@@ -141,7 +124,6 @@ and
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
   module CERTSpov
-    {Γ : CertEnv}
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
     ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
     ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
@@ -150,44 +132,44 @@ and
                          → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
     ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-    ( constNetworkId  :  ∀[ a ∈ dom (CertEnv.wdrls Γ) ] RwdAddr.net a ≡ NetworkId )
+    ( constNetworkId  :  {Γ : CertEnv} → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] RwdAddr.net a ≡ NetworkId )
     where
 \end{code}
-\end{AgdaMultiCode}
+  \end{itemize}
 \end{property}
+
 
 \begin{property}[%
   \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  CERTBASE rule preserves value;
+  \CERTBASE{} rule preserves value;
   \textbf{proved}%
-]\
-\begin{AgdaMultiCode}
-\begin{code}[hide]
-    CERTBASE-pov :
-\end{code}
+  ]\
 
-\noindent Assume
-\begin{code}[inline]
-      {s s' : CertState}
-\end{code}
-.  If~
-\begin{code}[hide]
-        → 
-\end{code}
-\begin{code}[inline]
-      Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
-\end{code}
-\begin{code}[hide]
-        → 
-\end{code}
-, then
+  \begin{itemize}
+    \item \textit{Informally}.
+      Let \ab{Γ}~:~\CertEnv{} be a certificate environment, and let
+      \ab{s}, \ab{s'}~:~\CertState{} be certificate states such that
+      \ab{s}~\AgdaDatatype{⇀⦇}~\_~\AgdaDatatype{,CERTBASE⦈}~\ab{s'}.
+      Then, the value of \ab{s} is equal to the value of \ab{s'} plus the value of
+      the withdrawals in \ab{Γ}.  In other terms,
+      \\[4pt]
+      \AgdaFunction{getCoin}~\ab{s} $≡$ \AgdaFunction{getCoin}~\ab{s'}
+       + \AgdaFunction{getCoin}~(\ab{Γ} .\AgdaField{wdrls} ).
+    \item \textit{Formally}.
 \begin{code}
-      getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
+    CERTBASE-pov :  {Γ     : CertEnv}
+                    {s s'  : CertState}
+                    → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
+                    → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 \end{code}
-.
+    \item \textit{Proof}. See the
+      \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}} module
+      in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
-    CERTBASE-pov  {s  = cs}
-                  {s' = cs'}
+    -- Proof.
+    CERTBASE-pov  {Γ   = Γ}
+                  {s   = cs}
+                  {s'  = cs'}
                   (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
       let
         open DState (dState cs )
@@ -209,7 +191,7 @@ and
             ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_)
                ( getCoin-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
           getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrlsCC
-            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn wdrls constNetworkId)) ⟩
+            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn wdrls (constNetworkId {Γ = Γ}))) ⟩
           getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrls
             ≡˘⟨ cong (_+ getCoin wdrls)
                 ( begin
@@ -232,82 +214,70 @@ and
                     ∎ ) ⟩
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
             ∎
-
 \end{code}
-\end{AgdaMultiCode}
+  \end{itemize}
 \end{property}
+
 
 \begin{property}[%
   \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  RTC of CERT rule preserves value;
+  iteration of \CERT{} rule preserves value;
   \textbf{proved}%
   ]\
 
-\begin{AgdaMultiCode}
-\begin{code}[hide]
-    sts-pov :
-\end{code}
-
-\noindent Assume
-\begin{code}[inline]
-      {s₁ sₙ : CertState}
-\end{code}
-\begin{code}[hide]
-        → 
-\end{code}
-.\\[4pt]
-If
-\begin{code}[inline]
-      ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
-\end{code}
-\begin{code}[hide]
-        → 
-\end{code}
-, then
+  \begin{itemize}
+    \item \textit{Informally}.
+      Let \ab{l} be a list of \DCert{}s, and let \ab{s₁}, \ab{sₙ} be \CertState{}s such
+      that, starting with \ab{s₁} and successively applying the \CERT{} rule to
+      with \DCert{}s from the list \ab{l}, we obtain \ab{sₙ}.
+      Then, the value of \ab{s₁} is equal to the value of \ab{sₙ}.      
+    \item \textit{Formally}.
 \begin{code}
-      getCoin s₁ ≡ getCoin sₙ
+    sts-pov :  {Γ      : CertEnv}
+               {s₁ sₙ  : CertState}
+               → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
+               → getCoin s₁ ≡ getCoin sₙ
 \end{code}
+    \item \textit{Proof}. See the
+      \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}} module
+      in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
+    -- Proof.
     sts-pov (BS-base Id-nop) = refl
     sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
 \end{code}
-\end{AgdaMultiCode}
+  \end{itemize}
 \end{property}
+
 
 \begin{property}[%
   \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  CERTS rule preserves value;
+  \CERTS{} rule preserves value;
   \textbf{proved}%
-]\
+  ]\
 
-\begin{AgdaMultiCode}
-\begin{code}[hide]
-    CERTS-pov : 
-\end{code}
-
-\noindent Assume
-\begin{code}[inline]
-      {s₁ sₙ : CertState}
-\end{code}
-\begin{code}[hide]
-        → 
-\end{code}
-.  If~
-\begin{code}[inline]
-      Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ 
-\end{code}
-\begin{code}[hide]
-        → 
-\end{code}
-, then
+  \begin{itemize}
+    \item \textit{Informally}.
+      Let \ab{l} be a list of \DCert{}s, and let \ab{s₁}, \ab{sₙ} be \CertState{}s
+      such that \ab{s₁}~\AgdaDatatype{⇀⦇}~\ab{l}~\AgdaDatatype{,CERTS⦈}~\ab{sₙ}.
+      Then, the value of \ab{s₁} is equal to the value of \ab{sₙ} plus
+      the value of the withdrawals in \ab{Γ}.
+    \item \textit{Formally}.
 \begin{code}
-      getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
+    CERTS-pov :  {Γ      : CertEnv}
+                 {s₁ sₙ  : CertState}
+                 →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ 
+                 → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
 \end{code}
+    \item \textit{Proof}. See the
+      \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}} module
+      in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
+    -- Proof.
     CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts
-    CERTS-pov (RTC (bsts , BS-ind x sts)) = trans  (CERTBASE-pov bsts)
+    CERTS-pov {Γ = Γ} (RTC (bsts , BS-ind x sts)) = trans  (CERTBASE-pov bsts)
                                                    (cong  (_+ getCoin (CertEnv.wdrls Γ))
                                                           (trans (CERT-pov x) (sts-pov sts)))
 \end{code}
-\end{AgdaMultiCode}
+  \end{itemize}
 \end{property}

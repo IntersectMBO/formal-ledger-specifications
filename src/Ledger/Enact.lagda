@@ -96,7 +96,7 @@ open EnactState
 
 private variable
   s : EnactState
-  up : UpdateT
+  up : PParamsUpdate
   new : Credential ⇀ Epoch
   rem : ℙ Credential
   q : ℚ

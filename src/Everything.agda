@@ -40,4 +40,9 @@ import Ledger.Ledger.Properties.LEDGERgovDepsMatch
 import Ledger.Epoch.Properties.EPOCHgovDepsMatch
 import Ledger.Chain.Properties.CHAINgovDepsMatch
 import Ledger.GovernanceActions.Properties.ProposalChangePP
--- import Ledger.Properties.ProposalChangePP
+import Ledger.Chain.Properties.CHAINepochStep
+import Ledger.Utxo.Properties.CredDepsEqualDomRwds
+import Ledger.PParams.Properties.PParamsWellFormed
+import Ledger.Chain.Properties.ActionDepsEqualActionsProp
+import Ledger.Chain.Properties.DomRwdsEqualCredDeps
+import Ledger.Chain.Properties.PParamsWellFormed

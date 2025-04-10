@@ -57,7 +57,7 @@ GovActionData NoConfidence     = ⊤
 GovActionData UpdateCommittee  = (Credential ⇀ Epoch) × ℙ Credential × ℚ
 GovActionData NewConstitution  = DocHash × Maybe ScriptHash
 GovActionData TriggerHF        = ProtVer
-GovActionData ChangePParams    = UpdateT
+GovActionData ChangePParams    = PParamsUpdate
 GovActionData TreasuryWdrl     = RwdAddr ⇀ Coin
 GovActionData Info             = ⊤
 
@@ -209,10 +209,6 @@ instance
   unquoteDecl DecEq-VDeleg        = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 
   unquoteDecl To-GovVote = derive-To [ (quote GovVote     , To-GovVote) ]
-
-  -- Why doesn't this work? 
-  -- unquoteDecl To-GovAction = derive-To [ (quote GovAction     , To-GovAction) ]
-
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote and proposal types}

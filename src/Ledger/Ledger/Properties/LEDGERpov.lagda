@@ -45,42 +45,39 @@ module _
                        → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
   where
 
-  private variable
-    Γ : LEnv
-    l : List Tx
-
   pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
 
-  LEDGER-pov :
 \end{code}
 
 \begin{property}[%
   \LedgerMod{Ledger/Properties/LEDGERpov.lagda}{\AgdaModule{LEDGERpov}}:
-  \textbf{LEDGER rule preserves value};
+  \LEDGER{} rule preserves value;
   \textbf{proved}%
-]\
+  ]\
 
-\noindent Assume
-\begin{AgdaMultiCode}
-\begin{code}[inline]
-    {s s' : LState}
+  \begin{itemize}
+    \item \textit{Informally}.
+      Let \ab{tx}~:~\Tx{} be a transaction and let \ab{s}, \ab{s'}~:~\LState{} be
+      ledger states.
+      Suppose the \AgdaField{txid} of \ab{tx} is not in the
+      (first projection of) the domain of the \UTxO{} map of \ab{s} and suppose
+      \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}.  Then,
+      the value of \ab{s} is equal to the value of \ab{s'}.  In other terms,
+      \\[4pt]
+      \AgdaFunction{getCoin}~\ab{s} $≡$ \AgdaFunction{getCoin}~\ab{s'}.
+    \item \textit{Formally}.
+\begin{code}
+  LEDGER-pov :  {Γ     : LEnv}
+                {s s'  : LState}
+                → FreshTx tx s
+                → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+                → getCoin s ≡ getCoin s'
 \end{code}
+    \item \textit{Proof}. See the
+      \LedgerMod{Ledger/Properties/LEDGERpov.lagda}{\AgdaModule{LEDGERpov}} module
+      in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
-    → FreshTx tx s →
-\end{code}
-.  If~
-\begin{code}[inline]
-    Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-\end{code}
-\begin{code}[hide]
-    →
-\end{code}
-, then 
-\begin{code}[inline]
-    getCoin s ≡ getCoin s'
-\end{code}
-.
-\begin{code}[hide]
+  -- Proof.
   LEDGER-pov
     {s  = s}
     {s' = s'}
@@ -129,5 +126,5 @@ module _
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning
 \end{code}
-\end{AgdaMultiCode}
+  \end{itemize}
 \end{property}
