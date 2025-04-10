@@ -79,7 +79,7 @@ du_DecEq'45'Credential_60 v0 v1
       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142 (coe v0)
       (coe v1)
 -- _.Show-Credential
-d_Show'45'Credential_198 ::
+d_Show'45'Credential_200 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -88,17 +88,17 @@ d_Show'45'Credential_198 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential_198 ~v0 ~v1 ~v2 ~v3
-  = du_Show'45'Credential_198
-du_Show'45'Credential_198 ::
+d_Show'45'Credential_200 ~v0 ~v1 ~v2 ~v3
+  = du_Show'45'Credential_200
+du_Show'45'Credential_200 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'Credential_198 v0 v1 v2
+du_Show'45'Credential_200 v0 v1 v2
   = coe MAlonzo.Code.Ledger.Address.du_Show'45'Credential_206 v1 v2
 -- _.Show-Credential×Coin
-d_Show'45'Credential'215'Coin_200 ::
+d_Show'45'Credential'215'Coin_202 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -107,14 +107,14 @@ d_Show'45'Credential'215'Coin_200 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential'215'Coin_200 ~v0 ~v1 ~v2 ~v3
-  = du_Show'45'Credential'215'Coin_200
-du_Show'45'Credential'215'Coin_200 ::
+d_Show'45'Credential'215'Coin_202 ~v0 ~v1 ~v2 ~v3
+  = du_Show'45'Credential'215'Coin_202
+du_Show'45'Credential'215'Coin_202 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'Credential'215'Coin_200 v0 v1 v2
+du_Show'45'Credential'215'Coin_202 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Address.du_Show'45'Credential'215'Coin_210 v1
       v2

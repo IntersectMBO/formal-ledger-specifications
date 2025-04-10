@@ -48,9 +48,9 @@ d_GovVote_170 a0 = ()
 -- _.PParams
 d_PParams_232 a0 = ()
 -- _.ScriptHash
-d_ScriptHash_286 ::
+d_ScriptHash_288 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_ScriptHash_286 = erased
+d_ScriptHash_288 = erased
 -- _.GovProposal.action
 d_action_708 ::
   MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_758 ->
@@ -620,7 +620,7 @@ du_To'45'GovEnv_2202
                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                 (coe
                                                    (MAlonzo.RTE.QName
-                                                      (286 :: Integer)
+                                                      (288 :: Integer)
                                                       (14950884968918448145 :: Integer)
                                                       "_.ScriptHash"
                                                       (MAlonzo.RTE.Fixity

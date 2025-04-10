@@ -153,18 +153,18 @@ d_NetworkId_210 v0
 -- _.PParams
 d_PParams_228 a0 = ()
 -- _.RwdAddr
-d_RwdAddr_266 a0 = ()
+d_RwdAddr_268 a0 = ()
 -- _.ScriptHash
-d_ScriptHash_282 ::
+d_ScriptHash_284 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_ScriptHash_282 = erased
+d_ScriptHash_284 = erased
 -- _.To-GovVote
-d_To'45'GovVote_350 ::
+d_To'45'GovVote_352 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Class.To.T_To_8
-d_To'45'GovVote_350 ~v0 = du_To'45'GovVote_350
-du_To'45'GovVote_350 :: MAlonzo.Code.Class.To.T_To_8
-du_To'45'GovVote_350
+d_To'45'GovVote_352 ~v0 = du_To'45'GovVote_352
+du_To'45'GovVote_352 :: MAlonzo.Code.Class.To.T_To_8
+du_To'45'GovVote_352
   = coe MAlonzo.Code.Ledger.GovernanceActions.du_To'45'GovVote_814
 -- _.Voter
 d_Voter_396 ::
@@ -830,7 +830,7 @@ du_To'45'GovEnv_1952
                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                 (coe
                                                    (MAlonzo.RTE.QName
-                                                      (282 :: Integer)
+                                                      (284 :: Integer)
                                                       (8477195096920255996 :: Integer)
                                                       "_.ScriptHash"
                                                       (MAlonzo.RTE.Fixity

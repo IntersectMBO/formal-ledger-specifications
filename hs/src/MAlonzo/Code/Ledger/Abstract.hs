@@ -47,23 +47,23 @@ d_PlutusScript_224 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
 d_PlutusScript_224 = erased
 -- Ledger.Abstract._.Prices
-d_Prices_242 ::
+d_Prices_244 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Prices_242 = erased
+d_Prices_244 = erased
 -- Ledger.Abstract._.RwdAddr
-d_RwdAddr_266 a0 = ()
+d_RwdAddr_268 a0 = ()
 -- Ledger.Abstract._.Script
-d_Script_274 ::
+d_Script_276 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_Script_274 = erased
+d_Script_276 = erased
 -- Ledger.Abstract._.ScriptHash
-d_ScriptHash_282 ::
+d_ScriptHash_284 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_ScriptHash_282 = erased
+d_ScriptHash_284 = erased
 -- Ledger.Abstract._.TxIn
-d_TxIn_364 ::
+d_TxIn_366 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_TxIn_364 = erased
+d_TxIn_366 = erased
 -- Ledger.Abstract._.Value
 d_Value_392 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()

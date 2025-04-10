@@ -63,7 +63,7 @@ du_Dec'45'isVKey_68 ::
 du_Dec'45'isVKey_68
   = coe MAlonzo.Code.Ledger.Address.du_Dec'45'isVKey_144
 -- _.Tx
-d_Tx_364 a0 = ()
+d_Tx_366 a0 = ()
 -- _.Tx.body
 d_body_1412 ::
   MAlonzo.Code.Ledger.Transaction.T_Tx_2652 ->

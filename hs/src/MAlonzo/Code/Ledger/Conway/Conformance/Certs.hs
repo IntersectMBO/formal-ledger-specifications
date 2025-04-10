@@ -75,7 +75,7 @@ d_THash_126 = erased
 -- _.PParams
 d_PParams_152 a0 = ()
 -- _.RwdAddr
-d_RwdAddr_172 a0 a1 a2 a3 = ()
+d_RwdAddr_174 a0 a1 a2 a3 = ()
 -- _.addEpoch
 d_addEpoch_260 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->

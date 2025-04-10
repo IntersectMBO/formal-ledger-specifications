@@ -117,9 +117,9 @@ d_PParamGroup_226 a0 = ()
 -- _.PParams
 d_PParams_228 a0 = ()
 -- _.UpdateT
-d_UpdateT_378 ::
+d_UpdateT_232 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 -> ()
-d_UpdateT_378 = erased
+d_UpdateT_232 = erased
 -- _.VDeleg
 d_VDeleg_380 a0 = ()
 -- _.preoEpoch

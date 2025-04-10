@@ -68,7 +68,7 @@ d_NetworkId_214 v0
       (coe
          MAlonzo.Code.Ledger.Transaction.d_globalConstants_1206 (coe v0))
 -- _.Tx
-d_Tx_362 a0 = ()
+d_Tx_364 a0 = ()
 -- _.coin
 d_coin_420 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->

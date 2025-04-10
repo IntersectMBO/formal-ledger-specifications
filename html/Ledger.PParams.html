@@ -386,9 +386,8 @@
 
 <a id="13765" class="Keyword">record</a> <a id="GovParams"></a><a id="13772" href="Ledger.PParams.html#13772" class="Record">GovParams</a> <a id="13782" class="Symbol">:</a> <a id="13784" href="Agda.Primitive.html#388" class="Primitive">Type₁</a> <a id="13790" class="Keyword">where</a>
   <a id="13798" class="Keyword">field</a> <a id="GovParams.ppUpd"></a><a id="13804" href="Ledger.PParams.html#13804" class="Field">ppUpd</a> <a id="13810" class="Symbol">:</a> <a id="13812" href="Ledger.PParams.html#13377" class="Record">PParamsDiff</a>
-  <a id="13826" class="Comment">-- open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public</a>
-  <a id="13897" class="Keyword">open</a> <a id="13902" href="Ledger.PParams.html#13377" class="Module">PParamsDiff</a> <a id="13914" href="Ledger.PParams.html#13804" class="Field">ppUpd</a> <a id="13920" class="Keyword">public</a>
-  <a id="13929" class="Keyword">field</a> <a id="13935" class="Symbol">⦃</a> <a id="GovParams.DecEq-UpdT"></a><a id="13937" href="Ledger.PParams.html#13937" class="Field">DecEq-UpdT</a> <a id="13948" class="Symbol">⦄</a> <a id="13950" class="Symbol">:</a> <a id="13952" href="Class.DecEq.Core.html#117" class="Record">DecEq</a> <a id="13958" href="Ledger.PParams.html#13417" class="Function">UpdateT</a>
-<a id="13966" class="Comment">--         ⦃ Show-UpdT ⦄ : Show UpdateT</a>
+  <a id="13826" class="Keyword">open</a> <a id="13831" href="Ledger.PParams.html#13377" class="Module">PParamsDiff</a> <a id="13843" href="Ledger.PParams.html#13804" class="Field">ppUpd</a> <a id="13849" class="Keyword">renaming</a> <a id="13858" class="Symbol">(</a><a id="13859" href="Ledger.PParams.html#13417" class="Field">UpdateT</a> <a id="13867" class="Symbol">to</a> <a id="13870" class="Field">PParamsUpdate</a><a id="13883" class="Symbol">)</a> <a id="13885" class="Keyword">public</a>
+  <a id="13894" class="Keyword">field</a> <a id="13900" class="Symbol">⦃</a> <a id="GovParams.DecEq-UpdT"></a><a id="13902" href="Ledger.PParams.html#13902" class="Field">DecEq-UpdT</a> <a id="13913" class="Symbol">⦄</a> <a id="13915" class="Symbol">:</a> <a id="13917" href="Class.DecEq.Core.html#117" class="Record">DecEq</a> <a id="13923" href="Ledger.PParams.html#13870" class="Function">PParamsUpdate</a>
+<a id="13937" class="Comment">--         ⦃ Show-UpdT ⦄ : Show PParamsUpdate</a>
 
 </pre></body></html>
