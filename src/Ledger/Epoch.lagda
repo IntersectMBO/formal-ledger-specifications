@@ -8,13 +8,19 @@
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.Integer using () renaming (+_ to pos)
 open import Data.Nat.GeneralisedArithmetic using (iterate)
+open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_)
+open import Data.Rational.Literals using (number; fromℤ)
+import      Data.Rational as ℚ renaming (_⊓_ to min)
 
 open import Agda.Builtin.FromNat
 
-open import Ledger.Prelude hiding (iterate)
+open import Ledger.Prelude hiding (iterate; _/_; _*_)
 open Filter using (filter)
 open import Ledger.Abstract
 open import Ledger.Transaction
+open import Ledger.Types.Numeric.UnitInterval
+
+open Number number renaming (fromNat to fromℕ)
 
 module Ledger.Epoch
   (txs : _) (open TransactionStructure txs)
@@ -25,16 +31,9 @@ open import Ledger.Certs govStructure
 open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.Ledger txs abs
-open import Ledger.Prelude hiding (iterate)
 open import Ledger.Ratify txs
 open import Ledger.Rewards govStructure
 open import Ledger.Utxo txs abs
-
-open import Agda.Builtin.FromNat
-
-open import Data.Integer using () renaming (+_ to pos)
-open import Data.Nat.GeneralisedArithmetic using (iterate)
-open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 
 \end{code}
 \begin{figure*}[ht]
@@ -146,9 +145,86 @@ toRwdAddr x = record { net = NetworkId ; stake = x }
 getStakeCred : TxOut → Maybe Credential
 getStakeCred (a , _ , _ , _) = stakeCred a
 
-open RwdAddr using (stake)
 open GovActionState using (returnAddr)
 \end{code}
+\begin{NoConway}
+\Cref{fig:functions:createRUpd} defines
+the function \AgdaFunction{createRUpd}
+which creates a \AgdaRecord{RewardUpdate},
+i.e.\@ the net flow of Ada due to paying out rewards
+after an epoch.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaFunction{prevPp}: Previous protocol parameters,
+    which correspond to the parameters during the epoch for which we are creating rewards.
+  \item \AgdaFunction{ActiveSlotCoeff}:
+    Global constant, equal to the probability
+    that a party holding all the stake will be selected to be a leader for given slot.
+    Equals $1/20$ during the Shelley era on the Cardano Mainnet.
+  \item \AgdaFunction{Δr₁}: Ada taken out of the reserves for paying rewards,
+    as determined by the \AgdaField{monetaryExpansion} protocol parameter.
+  \item \AgdaFunction{rewardPot}: Total amount of coin available for rewards this epoch, as
+described in \textcite[\sectionname~6.4]{shelley-delegation-design}.
+  \item \AgdaFunction{feeSS}: The fee pot which, together with the reserves,
+    funds the \AgdaFunction{rewardPot}.
+    We use the fee pot that accumulated during the epoch
+    for which we now compute block production rewards.
+    Note that fees are not explicitly removed from any account:
+    the fees come from transactions paying them and are accounted for whenever transactions are processed.
+  \item \AgdaFunction{Δt₁}: The proportion of the reward pot that will move to the treasury,
+    as determined by the \AgdaField{treasuryCut} protocol parameter.
+    The remaining pot is called the \AgdaFunction{R},
+    just as in \textcite[\sectionname~6.5]{shelley-delegation-design}.
+  \item \AgdaFunction{pstakego}:
+    Stake distribution used for calculating the rewards.
+    This is the oldest stake distribution snapshot, labeled \AgdaField{go}.
+  \item \AgdaFunction{rs}: The rewards,
+    as calculated by the function \AgdaFunction{reward}.
+  \item \AgdaFunction{Δr₂}: The difference between the maximal amount of rewards
+    that could have been paid out if pools had been optimal,
+    and the actual rewards paid out.
+    This difference is returned to the reserves.
+  \item \AgdaFunction{÷₀}: Division operator that returns zero when the denominator is zero.
+\end{itemize}
+
+\begin{figure*}[h]
+\begin{AgdaMultiCode}
+\begin{code}
+
+createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
+createRUpd slotsPerEpoch b es total
+  = ⟦ Δt₁ , 0 - Δr₁ + Δr₂ , 0 - feeSS , rs ⟧
+  where
+    prevPp      = PParamsOf (es .EpochState.es)
+    reserves    = es .EpochState.acnt .Acnt.reserves
+    pstakego    = es .EpochState.ss .Snapshots.go
+    feeSS       = es .EpochState.ss .Snapshots.feeSS
+    stake       = pstakego .Snapshot.stake
+    delegs      = pstakego .Snapshot.delegations
+    poolParams  = ∅ᵐ -- FIXME: Add pool parameters to Snapshots
+
+    blocksMade = ∑[ m ← b ] m
+
+    rho = fromUnitInterval (prevPp .PParams.monetaryExpansion)
+    η = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
+    Δr₁ = floor (ℚ.min 1 η * rho * fromℕ reserves)
+
+    rewardPot = pos feeSS + Δr₁
+    tau = fromUnitInterval (prevPp .PParams.treasuryCut)
+    Δt₁ = floor (tau * fromℤ rewardPot)
+    R = posPart (rewardPot - Δt₁)
+    circulation = total - reserves
+
+    rs = reward prevPp b R poolParams stake delegs circulation
+    Δr₂ = R - ∑[ c ← rs ] c
+
+\end{code}
+\end{AgdaMultiCode}
+\caption{RewardUpdate Creation}
+\label{fig:functions:createRUpd}
+\end{figure*}
+\end{NoConway}
+
 \begin{NoConway}
 \begin{figure*}[h]
 {\small
@@ -194,6 +270,9 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
+\begin{code}[hide]
+open RwdAddr using (stake)
+\end{code}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
 stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
