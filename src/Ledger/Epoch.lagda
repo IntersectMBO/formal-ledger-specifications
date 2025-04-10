@@ -27,6 +27,7 @@ open import Ledger.Gov txs
 open import Ledger.Ledger txs abs
 open import Ledger.Prelude hiding (iterate)
 open import Ledger.Ratify txs
+open import Ledger.Rewards govStructure
 open import Ledger.Utxo txs abs
 
 open import Agda.Builtin.FromNat
@@ -36,24 +37,6 @@ open import Data.Nat.GeneralisedArithmetic using (iterate)
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 
 \end{code}
-\begin{NoConway}
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
-record RewardUpdate : Set where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ʳᵘ
-\end{code}
-\begin{code}
-  field
-    Δt Δr Δf : ℤ
-    rs : Credential ⇀ Coin
-\end{code}
-\end{AgdaMultiCode}
-\end{figure*}
-\end{NoConway}
-
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}

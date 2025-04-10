@@ -424,13 +424,44 @@ reward pp blocks rewardPot poolParams stake delegs total = rewards
 
 \subsection{Reward Update}
 \label{sec:reward-update}
-TODO: This section defines the \AgdaRecord{RewardUpdate} type,
+This section defines the \AgdaRecord{RewardUpdate} type,
 which records the net flow of Ada due to paying out rewards
 after an epoch.
-NOTE: The function \AgdaFunction{createRUpd} calculates the
+This type is defined in \Cref{fig:functions:RewardUpdate}.
+The update consists of four net flows:
+\begin{itemize}
+  \item \AgdaField{Δt}: The change to the treasury.
+    This will be a positive value.
+  \item \AgdaField{Δr}: The change to the reserves.
+    We typically expect this to be a negative value.
+  \item \AgdaField{Δf}: The change to the fee pot.
+    This will be a negative value.
+  \item \AgdaField{rs}: The map of new individual rewards,
+    to be added to the existing rewards.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+record RewardUpdate : Set where
+\end{code}
+\begin{code}[hide]
+  constructor ⟦_,_,_,_⟧ʳᵘ
+\end{code}
+\begin{code}
+  field
+    Δt Δr Δf : ℤ
+    rs : Credential ⇀ Coin
+\end{code}
+\end{AgdaMultiCode}
+\caption{RewardUpdate type}
+\label{fig:functions:RewardUpdate}
+\end{figure*}
+
+The function \AgdaFunction{createRUpd} calculates the
 \AgdaRecord{RewardUpdate},
-but requires the definition \AgdaRecord{EpochState},
-so we have to defer its definition to a later section.
+but requires the definition of the type \AgdaRecord{EpochState},
+so we have to defer the definition of this function to \cref{sec:epoch-boundary}.
 
 \subsection{Stake Distribution Snapshots}
 \label{sec:stake-dstribution-snapshots-}
