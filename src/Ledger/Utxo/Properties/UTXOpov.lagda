@@ -26,7 +26,7 @@ open UTxOState; open Tx; open TxBody
       Let \ab{tx}~:~\Tx{} be a transaction, with withdrawals in the amount of
       \ab{txwdrls}, and let \ab{s}, \ab{s'} be \UTxOState{}s.
       Suppose the \AgdaField{txid} of \ab{tx} is not in the
-      (first projection of) the domain of the \UTxO{} map of \ab{s} and suppose
+      the domain of the \UTxO{} map of \ab{s} and suppose
       \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{s'}.  Then,
       the value of \ab{s} plus the value of the withdrawals in \ab{tx} (if \ab{tx} is valid) is equal to the
       value of \ab{s'}.  In other terms,
