@@ -54,7 +54,7 @@ module _
 \end{code}
 
 \begin{theorem}[%
-  \LedgerMod{\LedgerPoV{}.lagda}{\AgdaModule{\LedgerPoV{}}}: \LEDGER{} rule preserves value%
+  \LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}: \LEDGER{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -76,7 +76,7 @@ module _
                 → getCoin s ≡ getCoin s'
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\LedgerPoV{}.lagda}{\AgdaModule{\LedgerPoV{}}}
+      \LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.

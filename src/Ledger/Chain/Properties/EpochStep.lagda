@@ -15,7 +15,7 @@ module Ledger.Chain.Properties.EpochStep
 \newcommand{\ChainPropEpoch}{Chain/Properties/EpochStep}
 
 \begin{claim}[%
-  \LedgerMod{\ChainPropEpoch{}.lagda}{\AgdaModule{\ChainPropEpoch{}}}:
+  \LedgerMod{\ChainPropEpoch.lagda}{\AgdaModule{\ChainPropEpoch{}}}:
   Chain state epoch step%
   ]\
 
@@ -41,7 +41,7 @@ module Ledger.Chain.Properties.EpochStep
 % \end{code}
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{\ChainPropEpoch{}.lagda}{\AgdaModule{\ChainPropEpoch{}}}
+      \LedgerMod{\ChainPropEpoch.lagda}{\AgdaModule{\ChainPropEpoch{}}}
       module of the \href{\repourl}{formal ledger GitHub repository}).
     \item \textit{Remarks}.
       \begin{enumerate}

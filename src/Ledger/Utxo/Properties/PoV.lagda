@@ -21,7 +21,7 @@ open UTxOState; open Tx; open TxBody
 \end{code}
 
 \begin{theorem}[%
-  \LedgerMod{\UtxoPoV{}.lagda}{\AgdaModule{\UtxoPoV{}}}:
+  \LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}}:
   \UTXO{} rule preserves value%
   ]\
   \begin{itemize}
@@ -47,7 +47,7 @@ UTXOpov :  {Γ : UTxOEnv}
            → getCoin s + φ(getCoin (tx .body .txwdrls) , tx .isValid) ≡ getCoin s'
 \end{code}
   \item \textit{Proof}. See the
-  \LedgerMod{\UtxoPoV{}.lagda}{\AgdaModule{\UtxoPoV{}}} module
+  \LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}} module
   in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
 -- Proof.

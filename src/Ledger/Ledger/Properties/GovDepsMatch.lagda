@@ -25,7 +25,7 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 \end{code}
 
 \begin{theorem}[%
-  \LedgerMod{\LedgerPropGov{}.lagda}{\AgdaModule{\LedgerPropGov{}}}:
+  \LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule%
   ]\
 
@@ -73,7 +73,7 @@ LEDGER-govDepsMatch {tx}{Γ}{s}{s'}
 LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
 \end{code}
   \item \textit{Proof}. See the
-    \LedgerMod{\LedgerPropGov{}.lagda}{\AgdaModule{\LedgerPropGov{}}}
+    \LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}
     module in the \href{\repourl}{formal ledger GitHub repository}.
 
   \item \textit{Remarks}.

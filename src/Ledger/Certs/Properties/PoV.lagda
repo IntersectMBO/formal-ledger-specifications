@@ -67,7 +67,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
 
 \begin{theorem}[%
-  \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}: \CERT{} rule preserves value%
+  \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}: \CERT{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -85,7 +85,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
               → getCoin s ≡ getCoin s'
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}
+      \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.
@@ -142,7 +142,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 
 \begin{theorem}[%
-  \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}: \CERTBASE{} rule preserves value%
+  \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}: \CERTBASE{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -163,7 +163,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                     → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}
+      \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.
@@ -220,7 +220,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 
 \begin{theorem}[%
-  \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}: iteration of \CERT{} rule preserves value%
+  \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}: iteration of \CERT{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -237,7 +237,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                → getCoin s₁ ≡ getCoin sₙ
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}
+      \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.
@@ -249,7 +249,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 
 \begin{theorem}[%
-  \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}:
+  \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}:
   \CERTS{} rule preserves value%
   ]\
 
@@ -267,7 +267,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                  → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}
+      \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.

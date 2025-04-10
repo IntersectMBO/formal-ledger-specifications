@@ -29,7 +29,7 @@ module _
 \end{code}
 
 \begin{theorem}[%
-  \LedgerMod{\ChainPropGov{}.lagda}{\AgdaModule{\ChainPropGov{}}}:
+  \LedgerMod{\ChainPropGov.lagda}{\AgdaModule{\ChainPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \CHAIN{} rule%
   ]\
 
@@ -84,7 +84,7 @@ module _
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}.  See the
-      \LedgerMod{\ChainPropGov{}.lagda}{\AgdaModule{\ChainPropGov{}}}
+      \LedgerMod{\ChainPropGov.lagda}{\AgdaModule{\ChainPropGov{}}}
        module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.

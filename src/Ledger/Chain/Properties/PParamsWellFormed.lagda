@@ -16,7 +16,7 @@ module Ledger.Chain.Properties.PParamsWellFormed
 
 
 \begin{claim}[%
-  \LedgerMod{\ChainPropWF{}.lagda}{\AgdaModule{\ChainPropWF{}}}:
+  \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}}:
   \PParams{} are well-formed%
   ]\
 
@@ -32,7 +32,7 @@ module Ledger.Chain.Properties.PParamsWellFormed
 % \end{code}
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{\ChainPropWF{}.lagda}{\AgdaModule{\ChainPropWF{}}} module
+      \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module
       of the \href{\repourl}{formal ledger GitHub repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
@@ -43,7 +43,7 @@ module Ledger.Chain.Properties.PParamsWellFormed
 
 
 \begin{claim}[%
-  \LedgerMod{\ChainPropWF{}.lagda}{\AgdaModule{\ChainPropWF{}}}:
+  \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}}:
   Well-formedness of \PParams{} is a \CHAIN{} invariant;
   \textbf{to prove}%
   ]\
@@ -60,7 +60,7 @@ module Ledger.Chain.Properties.PParamsWellFormed
 % \end{code}
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{\ChainPropWF{}.lagda}{\AgdaModule{\ChainPropWF{}}} module
+      \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module
       of the \href{\repourl}{formal ledger GitHub repository}).
     \item \textit{Remarks}.
       \begin{enumerate}

@@ -56,7 +56,7 @@ module EPOCH-PROPS {eps : EpochState} where
 \end{code}
 
 \begin{theorem}[%
-  \LedgerMod{\EpochPropGov{}.lagda}{\AgdaModule{\EpochPropGov{}}}:
+  \LedgerMod{\EpochPropGov.lagda}{\AgdaModule{\EpochPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \EPOCH{} rule%
   ]\
 
@@ -84,7 +84,7 @@ module EPOCH-PROPS {eps : EpochState} where
                         → govDepsMatch epsLState → govDepsMatch (eps' .ls)
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\EpochPropGov{}.lagda}{\AgdaModule{\EpochPropGov{}}}
+      \LedgerMod{\EpochPropGov.lagda}{\AgdaModule{\EpochPropGov{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.
