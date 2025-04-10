@@ -23,8 +23,8 @@ instance
 
   \begin{itemize}
     \item \textit{Informally}.
-      Suppose \ab{p} is a goveranance proposal (\GovProposal{}) whose \AgdaField{action}
-      (\GovAction{}) has \GovActionType{} \ChangePParams{} and \GovActionData{} \ab{up}.
+      Suppose \ab{p} is a governance proposal (\GovProposal{}) whose \AgdaField{action} :
+      \GovAction{} has \GovActionType{} \ChangePParams{} and \GovActionData{} \ab{up}.
       Then the set \AgdaField{updateGroups}~\ab{up} is nonempty.
     \item \textit{Formally}.
 \begin{code}
