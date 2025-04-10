@@ -12,10 +12,9 @@ module Ledger.Chain.Properties.DomRwdsEqualCredDeps
   where
 \end{code}
 
-\begin{property}[%
+\begin{claim}[%
   \LedgerMod{Ledger.Chain.Properties.DomRwdsEqualCredDeps.lagda}{\AgdaModule{DomRwdsEqualCredDeps}}:
-  Equality of rewards and credential depsoits is a \CHAIN{} invariant;
-  \textbf{to prove}%
+  Equality of rewards and credential depsoits is a \CHAIN{} invariant%
   ]\
 
   \begin{itemize}
@@ -37,4 +36,4 @@ module Ledger.Chain.Properties.DomRwdsEqualCredDeps
         \item TODO
       \end{enumerate}
   \end{itemize}
-\end{property}
+\end{claim}

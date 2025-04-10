@@ -28,10 +28,9 @@ open import Ledger.Certs govStructure
 module _
 \end{code}
 
-\begin{property}[%
+\begin{theorem}[%
   \LedgerMod{\ChainPropGov{}.lagda}{\AgdaModule{\ChainPropGov{}}}:
-  \AgdaFunction{govDepsMatch} is invariant of \CHAIN{} rule;
-  \textbf{proved}%
+  \AgdaFunction{govDepsMatch} is invariant of \CHAIN{} rule%
   ]\
 
   \begin{itemize}
@@ -116,4 +115,4 @@ module _
         \item The crucial point here is that the chain state will be updated.
       \end{enumerate}
   \end{itemize}
-\end{property}
+\end{theorem}

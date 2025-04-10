@@ -12,10 +12,9 @@ module Ledger.Chain.Properties.ActionDepsEqualActionsProp
   where
 \end{code}
 
-\begin{property}[%
+\begin{claim}[%
   \LedgerMod{Ledger.Chain.Properties.ActionDepsEqualActionsProp.lagda}{\AgdaModule{ActionDepsEqualActionsProp}}:
-  Equality of action deposits and action proposals is a \CHAIN{} invariant;
-  \textbf{to prove}%
+  Equality of action deposits and action proposals is a \CHAIN{} invariant%
   ]\
 
   \begin{itemize}
@@ -37,5 +36,5 @@ module Ledger.Chain.Properties.ActionDepsEqualActionsProp
         \item TODO
       \end{enumerate}
   \end{itemize}
-\end{property}
+\end{claim}
 

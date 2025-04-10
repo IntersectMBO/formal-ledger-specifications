@@ -55,10 +55,9 @@ module EPOCH-PROPS {eps : EpochState} where
   open EpochState
 \end{code}
 
-\begin{property}[%
+\begin{theorem}[%
   \LedgerMod{\EpochPropGov{}.lagda}{\AgdaModule{\EpochPropGov{}}}:
-  \AgdaFunction{govDepsMatch} is invariant of \EPOCH{} rule;
-  \textbf{proved}%
+  \AgdaFunction{govDepsMatch} is invariant of \EPOCH{} rule%
   ]\
 
   \begin{itemize}
@@ -191,4 +190,4 @@ module EPOCH-PROPS {eps : EpochState} where
         the \ab{utxoSt} and \ab{govSt} fields of \ab{epsLState}.
     \end{enumerate}
   \end{itemize}
-\end{property}
+\end{theorem}

@@ -7,7 +7,7 @@ open import Ledger.Types.GovStructure
 module Ledger.Certs.Properties.PoV (gs : _) (open GovStructure gs) where
 \end{code}
 % If the module name changes, change the following macro to match!
-\newcommand{\modulepath}{Certs/Properties/PoV}
+\newcommand{\CertsPoV}{Certs/Properties/PoV}
 
 \begin{code}[hide]
 open import Data.Maybe.Properties
@@ -66,9 +66,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
 \end{code}
 
-\begin{property}[%
-  \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}:
-  \CERT{} rule preserves value; \textbf{proved}%
+\begin{theorem}[%
+  \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}: \CERT{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -86,7 +85,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
               → getCoin s ≡ getCoin s'
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}
+      \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.
@@ -139,12 +138,11 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     where
 \end{code}
   \end{itemize}
-\end{property}
+\end{theorem}
 
 
-\begin{property}[%
-  \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}:
-  \CERTBASE{} rule preserves value; \textbf{proved}%
+\begin{theorem}[%
+  \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}: \CERTBASE{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -165,7 +163,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                     → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}
+      \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.
@@ -218,12 +216,11 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
             ∎
 \end{code}
   \end{itemize}
-\end{property}
+\end{theorem}
 
 
-\begin{property}[%
-  \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}:
-  iteration of \CERT{} rule preserves value; \textbf{proved}%
+\begin{theorem}[%
+  \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}: iteration of \CERT{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -240,7 +237,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                → getCoin s₁ ≡ getCoin sₙ
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}
+      \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.
@@ -248,12 +245,12 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
 \end{code}
   \end{itemize}
-\end{property}
+\end{theorem}
 
 
-\begin{property}[%
-  \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}:
-  \CERTS{} rule preserves value; \textbf{proved}%
+\begin{theorem}[%
+  \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}:
+  \CERTS{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -270,7 +267,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                  → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}
+      \LedgerMod{\CertsPoV{}.lagda}{\AgdaModule{\CertsPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.
@@ -280,4 +277,4 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                                                           (trans (CERT-pov x) (sts-pov sts)))
 \end{code}
   \end{itemize}
-\end{property}
+\end{theorem}

@@ -12,10 +12,9 @@ module Ledger.Utxo.Properties.CredDepsEqualDomRwds
   where
 \end{code}
 
-\begin{property}[%
+\begin{claim}[%
   \LedgerMod{Utxo/Properties/CredDepsEqualDomRwds.lagda}{\AgdaModule{CredDepsEqualDomRwds}}:
-  Credential deposits equal domain of rewards;
-  \textbf{to prove}%
+  Credential deposits equal domain of rewards%
   ]\
 
   \begin{itemize}
@@ -38,5 +37,5 @@ module Ledger.Utxo.Properties.CredDepsEqualDomRwds
         \item TODO
       \end{enumerate}
   \end{itemize}
-\end{property}
+\end{claim}
 

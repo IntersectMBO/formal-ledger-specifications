@@ -12,7 +12,7 @@ module Ledger.Ledger.Properties.PoV
   where
 \end{code}
 % If the module name changes, change the following macro to match!
-\newcommand{\thismod}{Ledger/Properties/PoV}
+\newcommand{\LedgerPoV}{Ledger/Properties/PoV}
 
 \begin{code}[hide]
 open import Axiom.Set.Properties th
@@ -53,10 +53,8 @@ module _
 
 \end{code}
 
-\begin{property}[%
-  \LedgerMod{\thismod{}.lagda}{\AgdaModule{\thismod{}}}:
-  \LEDGER{} rule preserves value;
-  \textbf{proved}%
+\begin{theorem}[%
+  \LedgerMod{\LedgerPoV{}.lagda}{\AgdaModule{\LedgerPoV{}}}: \LEDGER{} rule preserves value%
   ]\
 
   \begin{itemize}
@@ -78,7 +76,7 @@ module _
                 → getCoin s ≡ getCoin s'
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{\thismod{}.lagda}{\AgdaModule{\thismod{}}}
+      \LedgerMod{\LedgerPoV{}.lagda}{\AgdaModule{\LedgerPoV{}}}
       module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.
@@ -131,4 +129,4 @@ module _
     where open ≡-Reasoning
 \end{code}
   \end{itemize}
-\end{property}
+\end{theorem}

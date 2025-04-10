@@ -97,18 +97,25 @@
 \usepackage{amsthm}
 \theoremstyle{definition}
 
-% \newcounter{theproperty} \setcounter{theproperty}{1}
-% \newenvironment{property}[1][]{\bigskip\noindent%
-% \begin{samepage}%
-% {\textbf{Property \arabic{theproperty}. (#1)} \stepcounter{theproperty} \rm}%
-% }{\medskip\end{samepage}}
-
 \newcounter{theproperty} \setcounter{theproperty}{1}
 \newenvironment{property}[1][]{\bigskip\noindent%
 \begin{minipage}{\textwidth}%
 {\textbf{Property \arabic{theproperty}. (#1)} \stepcounter{theproperty} \rm}%
 }{\end{minipage}\medskip}
 
+%% Use claim for properties we have yet to prove.
+\newcounter{theclaim} \setcounter{theclaim}{1}
+\newenvironment{claim}[1][]{\bigskip\noindent%
+\begin{minipage}{\textwidth}%
+{\textbf{Claim \arabic{theclaim}. (#1)} \stepcounter{theclaim} \rm}%
+}{\end{minipage}\medskip}
+
+%% Use theorem for properties we have already proved.
+\newcounter{thetheorem} \setcounter{thetheorem}{1}
+\newenvironment{theorem}[1][]{\bigskip\noindent%
+\begin{minipage}{\textwidth}%
+{\textbf{Theorem \arabic{thetheorem}. (#1)} \stepcounter{thetheorem} \rm}%
+}{\end{minipage}\medskip}
 
 \newenvironment{question}
   {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}

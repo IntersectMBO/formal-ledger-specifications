@@ -121,12 +121,11 @@ module _ -- ASSUMPTION --
   ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤updateCertDeps cs nrf
 \end{code}
 
-\begin{property}[%
+\begin{theorem}[%
   \LedgerMod{\themodpath{}.lagda}{\AgdaModule{\themodpath{}}}:
-  general spend lower bound;
-  \textbf{proved}%
+  general spend lower bound%
   ]\
-  \label{prop:minspend}
+  \label{thm:minspend}
 
   \begin{itemize}
     \item \textit{Informally}.  
@@ -210,17 +209,16 @@ module _ -- ASSUMPTION --
       \item Let \ab{pp} be the protocol parameters of the UTxO environment Γ.
     \end{enumerate}
   \end{itemize}
-\end{property}  
+\end{theorem}
 
-\begin{property}[%
+\begin{theorem}[%
   \LedgerMod{\themodpath{}.lagda}{\AgdaModule{\themodpath{}}}:
-  spend lower bound for proposals;
-  \textbf{proved}%
+  spend lower bound for proposals%
   ]\
 
   \textit{Preliminary remarks}.
   \begin{itemize}
-    \item Define \AgdaFunction{noRefundCert}~\ab{l} and \ab{pp} as in \cref{prop:minspend}.
+    \item Define \AgdaFunction{noRefundCert}~\ab{l} and \ab{pp} as in \cref{thm:minspend}.
     \item Given a ledger state \ab{ls} and a transaction \ab{tx}, denote by
       \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that there exists ledger state
       \ab{ls'} such that \ab{ls}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{ls'}.  
@@ -280,14 +278,14 @@ module _
     → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
 \end{code}
 \end{AgdaMultiCode}
-  \end{itemize}
-\end{property}
-\textit{Proof}. See the
-  \LedgerMod{\themodpath{}.lagda}{\AgdaModule{\themodpath{}}} module
-  in the \href{\repourl}{formal ledger GitHub repository}.
+    \item \textit{Proof}. See the
+      \LedgerMod{\themodpath{}.lagda}{\AgdaModule{\themodpath{}}} module
+      in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   propose-minSpend {cs} {slot} {tx} {valid} noRef = case valid of λ where
     (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
     (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
 
 \end{code}
+  \end{itemize}
+\end{theorem}

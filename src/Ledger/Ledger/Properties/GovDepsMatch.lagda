@@ -24,10 +24,9 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 \end{code}
 
-\begin{property}[%
+\begin{theorem}[%
   \LedgerMod{\LedgerPropGov{}.lagda}{\AgdaModule{\LedgerPropGov{}}}:
-  \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule;
-  \textbf{proved}%
+  \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule%
   ]\
 
   \begin{itemize}
@@ -100,4 +99,4 @@ LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_
         \GovState{} of \ab{s}.  If this holds, then we write \AgdaFunction{govDepsMatch}~\ab{s}.
     \end{enumerate}
   \end{itemize}
-\end{property}
+\end{theorem}

@@ -12,7 +12,7 @@ module Ledger.Utxo.Properties.PoV
   where
 \end{code}
 % If the module name changes, change the following macro to match!
-\newcommand{\thismodpath}{Utxo/Properties/PoV}
+\newcommand{\UtxoPoV}{Utxo/Properties/PoV}
 
 \begin{code}[hide]
 open import Ledger.Utxo txs abs
@@ -20,10 +20,9 @@ open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 open UTxOState; open Tx; open TxBody
 \end{code}
 
-\begin{property}[%
-  \LedgerMod{\thismodpath{}.lagda}{\AgdaModule{\thismodpath{}}}:
-  \UTXO{} rule preserves value;
-  \textbf{proved}%
+\begin{theorem}[%
+  \LedgerMod{\UtxoPoV{}.lagda}{\AgdaModule{\UtxoPoV{}}}:
+  \UTXO{} rule preserves value%
   ]\
   \begin{itemize}
     \item \textit{Informally}.
@@ -48,7 +47,7 @@ UTXOpov :  {Γ : UTxOEnv}
            → getCoin s + φ(getCoin (tx .body .txwdrls) , tx .isValid) ≡ getCoin s'
 \end{code}
   \item \textit{Proof}. See the
-  \LedgerMod{\thismodpath{}.lagda}{\AgdaModule{\thismodpath{}}} module
+  \LedgerMod{\UtxoPoV{}.lagda}{\AgdaModule{\UtxoPoV{}}} module
   in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
 -- Proof.
@@ -81,4 +80,4 @@ UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Script
         \)     
     \end{enumerate}
   \end{itemize}
-\end{property}
+\end{theorem}

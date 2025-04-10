@@ -11,11 +11,13 @@ module Ledger.Chain.Properties.PParamsWellFormed
   (abs : AbstractFunctions txs)
   where
 \end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\ChainPropWF}{Chain/Properties/PParamsWellFormed}
 
-\begin{property}[%
-  \LedgerMod{Chain/Properties/PParamsWellFormed.lagda}{\AgdaModule{PParamsWellFormed}}:
-  \PParams{} are well-formed;
-  \textbf{to prove}%
+
+\begin{claim}[%
+  \LedgerMod{\ChainPropWF{}.lagda}{\AgdaModule{\ChainPropWF{}}}:
+  \PParams{} are well-formed%
   ]\
 
   \begin{itemize}
@@ -30,18 +32,18 @@ module Ledger.Chain.Properties.PParamsWellFormed
 % \end{code}
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{Chain/Properties/PParamsWellFormed.lagda}{\AgdaModule{PParamsWellFormed}} module
+      \LedgerMod{\ChainPropWF{}.lagda}{\AgdaModule{\ChainPropWF{}}} module
       of the \href{\repourl}{formal ledger GitHub repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
         \item TODO
       \end{enumerate}
   \end{itemize}
-\end{property}
+\end{claim}
 
 
-\begin{property}[%
-  \LedgerMod{Ledger.Chain.Properties.PParamsWellFormed.lagda}{\AgdaModule{PParamsWellFormed}}:
+\begin{claim}[%
+  \LedgerMod{\ChainPropWF{}.lagda}{\AgdaModule{\ChainPropWF{}}}:
   Well-formedness of \PParams{} is a \CHAIN{} invariant;
   \textbf{to prove}%
   ]\
@@ -58,11 +60,11 @@ module Ledger.Chain.Properties.PParamsWellFormed
 % \end{code}
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{Ledger.Chain.Properties.PParamsWellFormed.lagda}{\AgdaModule{PParamsWellFormed}} module
+      \LedgerMod{\ChainPropWF{}.lagda}{\AgdaModule{\ChainPropWF{}}} module
       of the \href{\repourl}{formal ledger GitHub repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
         \item TODO
       \end{enumerate}
   \end{itemize}
-\end{property}
+\end{claim}

@@ -14,10 +14,9 @@ module Ledger.Chain.Properties.EpochStep
 % If the module name changes, change the following macro to match!
 \newcommand{\ChainPropEpoch}{Chain/Properties/EpochStep}
 
-\begin{property}[%
+\begin{claim}[%
   \LedgerMod{\ChainPropEpoch{}.lagda}{\AgdaModule{\ChainPropEpoch{}}}:
-  Chain state epoch step;
-  \textbf{to prove}%
+  Chain state epoch step%
   ]\
 
   \begin{itemize}
@@ -49,4 +48,4 @@ module Ledger.Chain.Properties.EpochStep
         \item The \ab{utxo}~:~\UTxO field of a \UTxOState{} is a map from \TxIn{} to \TxOut{}.
       \end{enumerate}
   \end{itemize}
-\end{property}
+\end{claim}

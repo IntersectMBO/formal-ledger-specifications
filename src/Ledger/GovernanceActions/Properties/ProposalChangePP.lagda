@@ -15,26 +15,25 @@ instance
   _ = record { toSet = fromList ∘ TxBody.txprop }
 \end{code}
 
-\begin{property}[%
+\begin{claim}[%
   \LedgerMod{GovernanceActions/Properties/ProposalChangePP.lagda}{\AgdaModule{ProposalChangePP}}:
-  PParam updates have non-empty groups;
-  \textbf{to prove}%
+  PParam updates have non-empty groups%
   ]\
 
   \begin{itemize}
     \item \textit{Informally}.
       Suppose \ab{p} is a governance proposal (\GovProposal{}) whose \AgdaField{action} :
-      \GovAction{} has \GovActionType{} \ChangePParams{} and \GovActionData{} \ab{up}.
-      Then the set \AgdaField{updateGroups}~\ab{up} is nonempty.
+      \GovAction{} has \GovActionType{} \ChangePParams{} and \GovActionData{} \ab{pu}
+      (``parameter update'').  Then the set \AgdaField{updateGroups}~\ab{pu} is nonempty.
     \item \textit{Formally}.
 \begin{code}
 ProposalChangePPHasGroup :  {tx  : Tx}
                             {p   : GovProposal}
-                            {up  : PParamsUpdate}
+                            {pu  : PParamsUpdate}
                             → p ∈ Tx.body tx
-                            → p .GovProposal.action ≡ ⟦ ChangePParams , up ⟧ᵍᵃ
+                            → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
                             → Type
-ProposalChangePPHasGroup {tx}{p}{up} _ _ = updateGroups up ≢ ∅
+ProposalChangePPHasGroup {tx}{p}{pu} _ _ = updateGroups pu ≢ ∅
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{GovernanceActions/Properties/ProposalChangePP.lagda}{\AgdaModule{ProposalChangePP}} module
@@ -53,4 +52,4 @@ ProposalChangePPHasGroup {tx}{p}{up} _ _ = updateGroups up ≢ ∅
           three fields; the two that are relevant here are \PParamsUpdate{} (a type) and \updateGroups{}.
       \end{enumerate}
   \end{itemize}
-\end{property}
+\end{claim}
