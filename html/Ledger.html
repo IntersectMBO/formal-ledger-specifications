@@ -1,43 +1,65 @@
 <!DOCTYPE HTML>
 <html><head><meta charset="utf-8"><title>Ledger</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Keyword">module</a> <a id="8" href="Ledger.html" class="Module">Ledger</a> <a id="15" class="Keyword">where</a>
 
-<a id="22" class="Keyword">open</a> <a id="27" class="Keyword">import</a> <a id="34" href="Ledger.BaseTypes.html" class="Module">Ledger.BaseTypes</a>
-<a id="51" class="Keyword">open</a> <a id="56" class="Keyword">import</a> <a id="63" href="Ledger.Introduction.html" class="Module">Ledger.Introduction</a>
-<a id="83" class="Keyword">open</a> <a id="88" class="Keyword">import</a> <a id="95" href="Ledger.Crypto.html" class="Module">Ledger.Crypto</a>
-<a id="109" class="Keyword">open</a> <a id="114" class="Keyword">import</a> <a id="121" href="Ledger.Types.Epoch.html" class="Module">Ledger.Types.Epoch</a>
-<a id="140" class="Keyword">open</a> <a id="145" class="Keyword">import</a> <a id="152" href="Ledger.Address.html" class="Module">Ledger.Address</a>
-<a id="167" class="Keyword">open</a> <a id="172" class="Keyword">import</a> <a id="179" href="Ledger.Script.html" class="Module">Ledger.Script</a>
-<a id="193" class="Keyword">open</a> <a id="198" class="Keyword">import</a> <a id="205" href="Ledger.ScriptValidation.html" class="Module">Ledger.ScriptValidation</a>
-<a id="229" class="Keyword">open</a> <a id="234" class="Keyword">import</a> <a id="241" href="Ledger.PParams.html" class="Module">Ledger.PParams</a>
-<a id="256" class="Keyword">open</a> <a id="261" class="Keyword">import</a> <a id="268" href="Ledger.Fees.html" class="Module">Ledger.Fees</a>
+<a id="22" class="Keyword">open</a> <a id="27" class="Keyword">import</a> <a id="34" href="EssentialAgda.html" class="Module">EssentialAgda</a>
 
-<a id="281" class="Keyword">open</a> <a id="286" class="Keyword">import</a> <a id="293" href="Ledger.Types.GovStructure.html" class="Module">Ledger.Types.GovStructure</a>
-<a id="319" class="Keyword">open</a> <a id="324" class="Keyword">import</a> <a id="331" href="Ledger.GovernanceActions.html" class="Module">Ledger.GovernanceActions</a>
-<a id="356" class="Keyword">open</a> <a id="361" class="Keyword">import</a> <a id="368" href="Ledger.Certs.html" class="Module">Ledger.Certs</a>
+<a id="49" class="Keyword">open</a> <a id="54" class="Keyword">import</a> <a id="61" href="Ledger.BaseTypes.html" class="Module">Ledger.BaseTypes</a>
+<a id="78" class="Keyword">open</a> <a id="83" class="Keyword">import</a> <a id="90" href="Ledger.Introduction.html" class="Module">Ledger.Introduction</a>
+<a id="110" class="Keyword">open</a> <a id="115" class="Keyword">import</a> <a id="122" href="Ledger.Crypto.html" class="Module">Ledger.Crypto</a>
+<a id="136" class="Keyword">open</a> <a id="141" class="Keyword">import</a> <a id="148" href="Ledger.Types.Epoch.html" class="Module">Ledger.Types.Epoch</a>
+<a id="167" class="Keyword">open</a> <a id="172" class="Keyword">import</a> <a id="179" href="Ledger.Address.html" class="Module">Ledger.Address</a>
+<a id="194" class="Keyword">open</a> <a id="199" class="Keyword">import</a> <a id="206" href="Ledger.Script.html" class="Module">Ledger.Script</a>
+<a id="220" class="Keyword">open</a> <a id="225" class="Keyword">import</a> <a id="232" href="Ledger.ScriptValidation.html" class="Module">Ledger.ScriptValidation</a>
+<a id="256" class="Keyword">open</a> <a id="261" class="Keyword">import</a> <a id="268" href="Ledger.PParams.html" class="Module">Ledger.PParams</a>
+<a id="283" class="Keyword">open</a> <a id="288" class="Keyword">import</a> <a id="295" href="Ledger.Fees.html" class="Module">Ledger.Fees</a>
 
-<a id="382" class="Keyword">open</a> <a id="387" class="Keyword">import</a> <a id="394" href="Ledger.TokenAlgebra.html" class="Module">Ledger.TokenAlgebra</a>
-<a id="414" class="Keyword">open</a> <a id="419" class="Keyword">import</a> <a id="426" href="Ledger.TokenAlgebra.ValueSet.html" class="Module">Ledger.TokenAlgebra.ValueSet</a>
-<a id="455" class="Keyword">open</a> <a id="460" class="Keyword">import</a> <a id="467" href="Ledger.Transaction.html" class="Module">Ledger.Transaction</a>
+<a id="308" class="Keyword">open</a> <a id="313" class="Keyword">import</a> <a id="320" href="Ledger.Certs.html" class="Module">Ledger.Certs</a>
+<a id="333" class="Keyword">open</a> <a id="338" class="Keyword">import</a> <a id="345" href="Ledger.Certs.Properties.html" class="Module">Ledger.Certs.Properties</a>
+<a id="369" class="Keyword">open</a> <a id="374" class="Keyword">import</a> <a id="381" href="Ledger.Certs.Properties.PoV.html" class="Module">Ledger.Certs.Properties.PoV</a>
 
-<a id="487" class="Keyword">open</a> <a id="492" class="Keyword">import</a> <a id="499" href="Ledger.Utxo.html" class="Module">Ledger.Utxo</a>
-<a id="511" class="Keyword">open</a> <a id="516" class="Keyword">import</a> <a id="523" href="Ledger.Utxo.Properties.html" class="Module">Ledger.Utxo.Properties</a>
+<a id="410" class="Keyword">open</a> <a id="415" class="Keyword">import</a> <a id="422" href="Ledger.Chain.html" class="Module">Ledger.Chain</a>
+<a id="435" class="Keyword">open</a> <a id="440" class="Keyword">import</a> <a id="447" href="Ledger.Chain.Properties.html" class="Module">Ledger.Chain.Properties</a>
+<a id="471" class="Keyword">open</a> <a id="476" class="Keyword">import</a> <a id="483" href="Ledger.Chain.Properties.ActionDepsEqualActionsProp.html" class="Module">Ledger.Chain.Properties.ActionDepsEqualActionsProp</a>
+<a id="534" class="Keyword">open</a> <a id="539" class="Keyword">import</a> <a id="546" href="Ledger.Chain.Properties.DomRwdsEqualCredDeps.html" class="Module">Ledger.Chain.Properties.DomRwdsEqualCredDeps</a>
+<a id="591" class="Keyword">open</a> <a id="596" class="Keyword">import</a> <a id="603" href="Ledger.Chain.Properties.EpochStep.html" class="Module">Ledger.Chain.Properties.EpochStep</a>
+<a id="637" class="Keyword">open</a> <a id="642" class="Keyword">import</a> <a id="649" href="Ledger.Chain.Properties.GovDepsMatch.html" class="Module">Ledger.Chain.Properties.GovDepsMatch</a>
+<a id="686" class="Keyword">open</a> <a id="691" class="Keyword">import</a> <a id="698" href="Ledger.Chain.Properties.PParamsWellFormed.html" class="Module">Ledger.Chain.Properties.PParamsWellFormed</a>
 
-<a id="547" class="Keyword">open</a> <a id="552" class="Keyword">import</a> <a id="559" href="Ledger.Utxow.html" class="Module">Ledger.Utxow</a>
-<a id="572" class="Keyword">open</a> <a id="577" class="Keyword">import</a> <a id="584" href="Ledger.Utxow.Properties.html" class="Module">Ledger.Utxow.Properties</a>
+<a id="741" class="Keyword">open</a> <a id="746" class="Keyword">import</a> <a id="753" href="Ledger.Enact.html" class="Module">Ledger.Enact</a>
 
-<a id="609" class="Keyword">open</a> <a id="614" class="Keyword">import</a> <a id="621" href="Ledger.Ledger.html" class="Module">Ledger.Ledger</a>
-<a id="635" class="Keyword">open</a> <a id="640" class="Keyword">import</a> <a id="647" href="Ledger.Ledger.Properties.html" class="Module">Ledger.Ledger.Properties</a>
-<a id="672" class="Keyword">open</a> <a id="677" class="Keyword">import</a> <a id="684" href="Ledger.Ratify.Properties.html" class="Module">Ledger.Ratify.Properties</a>
-<a id="709" class="Keyword">open</a> <a id="714" class="Keyword">import</a> <a id="721" href="Ledger.Epoch.Properties.html" class="Module">Ledger.Epoch.Properties</a>
-<a id="745" class="Keyword">open</a> <a id="750" class="Keyword">import</a> <a id="757" href="Ledger.Chain.Properties.html" class="Module">Ledger.Chain.Properties</a>
+<a id="767" class="Keyword">open</a> <a id="772" class="Keyword">import</a> <a id="779" href="Ledger.Epoch.html" class="Module">Ledger.Epoch</a>
+<a id="792" class="Keyword">open</a> <a id="797" class="Keyword">import</a> <a id="804" href="Ledger.Epoch.Properties.html" class="Module">Ledger.Epoch.Properties</a>
+<a id="828" class="Keyword">open</a> <a id="833" class="Keyword">import</a> <a id="840" href="Ledger.Epoch.Properties.GovDepsMatch.html" class="Module">Ledger.Epoch.Properties.GovDepsMatch</a>
 
-<a id="782" class="Keyword">open</a> <a id="787" class="Keyword">import</a> <a id="794" href="Ledger.Gov.html" class="Module">Ledger.Gov</a>
-<a id="805" class="Keyword">open</a> <a id="810" class="Keyword">import</a> <a id="817" href="Ledger.Enact.html" class="Module">Ledger.Enact</a>
-<a id="830" class="Keyword">open</a> <a id="835" class="Keyword">import</a> <a id="842" href="Ledger.Ratify.html" class="Module">Ledger.Ratify</a>
-<a id="856" class="Keyword">open</a> <a id="861" class="Keyword">import</a> <a id="868" href="Ledger.Epoch.html" class="Module">Ledger.Epoch</a>
-<a id="881" class="Keyword">open</a> <a id="886" class="Keyword">import</a> <a id="893" href="Ledger.Chain.html" class="Module">Ledger.Chain</a>
+<a id="878" class="Keyword">open</a> <a id="883" class="Keyword">import</a> <a id="890" href="Ledger.Gov.html" class="Module">Ledger.Gov</a>
 
-<a id="907" class="Keyword">open</a> <a id="912" class="Keyword">import</a> <a id="919" href="Ledger.Properties.html" class="Module">Ledger.Properties</a>
+<a id="902" class="Keyword">open</a> <a id="907" class="Keyword">import</a> <a id="914" href="Ledger.GovernanceActions.html" class="Module">Ledger.GovernanceActions</a>
+<a id="939" class="Keyword">open</a> <a id="944" class="Keyword">import</a> <a id="951" href="Ledger.GovernanceActions.Properties.html" class="Module">Ledger.GovernanceActions.Properties</a>
+<a id="987" class="Keyword">open</a> <a id="992" class="Keyword">import</a> <a id="999" href="Ledger.GovernanceActions.Properties.ProposalChangePP.html" class="Module">Ledger.GovernanceActions.Properties.ProposalChangePP</a>
 
-<a id="938" class="Keyword">open</a> <a id="943" class="Keyword">import</a> <a id="950" href="EssentialAgda.html" class="Module">EssentialAgda</a>
+<a id="1053" class="Keyword">open</a> <a id="1058" class="Keyword">import</a> <a id="1065" href="Ledger.Ledger.html" class="Module">Ledger.Ledger</a>
+<a id="1079" class="Keyword">open</a> <a id="1084" class="Keyword">import</a> <a id="1091" href="Ledger.Ledger.Properties.html" class="Module">Ledger.Ledger.Properties</a>
+<a id="1116" class="Keyword">open</a> <a id="1121" class="Keyword">import</a> <a id="1128" href="Ledger.Ledger.Properties.GovDepsMatch.html" class="Module">Ledger.Ledger.Properties.GovDepsMatch</a>
+<a id="1166" class="Keyword">open</a> <a id="1171" class="Keyword">import</a> <a id="1178" href="Ledger.Ledger.Properties.PoV.html" class="Module">Ledger.Ledger.Properties.PoV</a>
+
+<a id="1208" class="Keyword">open</a> <a id="1213" class="Keyword">import</a> <a id="1220" href="Ledger.Properties.html" class="Module">Ledger.Properties</a>
+
+<a id="1239" class="Keyword">open</a> <a id="1244" class="Keyword">import</a> <a id="1251" href="Ledger.Ratify.html" class="Module">Ledger.Ratify</a>
+<a id="1265" class="Keyword">open</a> <a id="1270" class="Keyword">import</a> <a id="1277" href="Ledger.Ratify.Properties.html" class="Module">Ledger.Ratify.Properties</a>
+
+<a id="1303" class="Keyword">open</a> <a id="1308" class="Keyword">import</a> <a id="1315" href="Ledger.TokenAlgebra.html" class="Module">Ledger.TokenAlgebra</a>
+<a id="1335" class="Keyword">open</a> <a id="1340" class="Keyword">import</a> <a id="1347" href="Ledger.TokenAlgebra.ValueSet.html" class="Module">Ledger.TokenAlgebra.ValueSet</a>
+
+<a id="1377" class="Keyword">open</a> <a id="1382" class="Keyword">import</a> <a id="1389" href="Ledger.Transaction.html" class="Module">Ledger.Transaction</a>
+
+<a id="1409" class="Keyword">open</a> <a id="1414" class="Keyword">import</a> <a id="1421" href="Ledger.Types.GovStructure.html" class="Module">Ledger.Types.GovStructure</a>
+
+<a id="1448" class="Keyword">open</a> <a id="1453" class="Keyword">import</a> <a id="1460" href="Ledger.Utxo.html" class="Module">Ledger.Utxo</a>
+<a id="1472" class="Keyword">open</a> <a id="1477" class="Keyword">import</a> <a id="1484" href="Ledger.Utxo.Properties.html" class="Module">Ledger.Utxo.Properties</a>
+<a id="1507" class="Keyword">open</a> <a id="1512" class="Keyword">import</a> <a id="1519" href="Ledger.Utxo.Properties.CredDepsEqualDomRwds.html" class="Module">Ledger.Utxo.Properties.CredDepsEqualDomRwds</a>
+<a id="1563" class="Keyword">open</a> <a id="1568" class="Keyword">import</a> <a id="1575" href="Ledger.Utxo.Properties.MinSpend.html" class="Module">Ledger.Utxo.Properties.MinSpend</a>
+<a id="1607" class="Keyword">open</a> <a id="1612" class="Keyword">import</a> <a id="1619" href="Ledger.Utxo.Properties.PoV.html" class="Module">Ledger.Utxo.Properties.PoV</a>
+
+<a id="1647" class="Keyword">open</a> <a id="1652" class="Keyword">import</a> <a id="1659" href="Ledger.Utxow.html" class="Module">Ledger.Utxow</a>
+<a id="1672" class="Keyword">open</a> <a id="1677" class="Keyword">import</a> <a id="1684" href="Ledger.Utxow.Properties.html" class="Module">Ledger.Utxow.Properties</a>
 </pre></body></html>
