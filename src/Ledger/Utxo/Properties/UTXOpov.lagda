@@ -28,7 +28,7 @@ open UTxOState; open Tx; open TxBody
       Suppose the \AgdaField{txid} of \ab{tx} is not in the
       (first projection of) the domain of the \UTxO{} map of \ab{s} and suppose
       \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{s'}.  Then,
-      the value of \ab{s} plus the value of the withdrawals in \ab{tx} is equal to the
+      the value of \ab{s} plus the value of the withdrawals in \ab{tx} (if \ab{tx} is valid) is equal to the
       value of \ab{s'}.  In other terms,
       \\[4pt]
       \AgdaFunction{getCoin}~\ab{s}
