@@ -63,7 +63,7 @@ UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Script
         \begin{itemize}
           \item the \AgdaField{txid} of the transaction \ab{tx} is not in the
             (first projection of) the domain of the \UTxO{} map of \ab{s};
-          \item \ab{s} and \ab{s'} are relatedby the \UTXO{} rule; specifically,
+          \item \ab{s} and \ab{s'} are related by the \UTXO{} rule; specifically,
             \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{s'}.
         \end{itemize}
       \item The equation involves a function \ab{φ}~:~$ℕ$~×~\AgdaDatatype{Bool}~→~$ℕ$
