@@ -25,27 +25,10 @@ open import Ledger.Gov txs
 open import Ledger.Enact govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
+open import Ledger.Rewards govStructure
 open import Ledger.Utxo txs abs
 open import Ledger.Certs govStructure
 \end{code}
-\begin{NoConway}
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
-record RewardUpdate : Set where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ʳᵘ
-\end{code}
-\begin{code}
-  field
-    Δt Δr Δf : ℤ
-    rs : Credential ⇀ Coin
-\end{code}
-\end{AgdaMultiCode}
-\end{figure*}
-\end{NoConway}
-
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{NoConway}
