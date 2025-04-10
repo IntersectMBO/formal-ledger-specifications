@@ -40,9 +40,9 @@ open import Ledger.Certs govStructure
 \begin{code}
 record Snapshot : Set where
   field
-    stake        : Credential ⇀ Coin
-    delegations  : Credential ⇀ KeyHash
-    -- poolParameters : KeyHash ⇀ PoolParam
+    stake           : Credential ⇀ Coin
+    delegations     : Credential ⇀ KeyHash
+    poolParameters  : KeyHash ⇀ PoolParams
 
 record Snapshots : Set where
   field
@@ -149,7 +149,7 @@ createRUpd prevPp slotsPerEpoch b es total =
     feeSS    = es .EpochState.ss .Snapshots.feeSS
     stake = pstakego .Snapshot.stake
     delegs  = pstakego .Snapshot.delegations
-    poolParams = ∅ᵐ -- FIXME: Add pool parameters to Snapshots
+    poolParams = pstakego .Snapshot.poolParameters
 
     blocksMade = ∑[ m ← b ] m
 
@@ -221,8 +221,10 @@ open RwdAddr using (stake)
 \end{code}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
+stakeDistr utxo stᵈ pState =
+    ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs , poolParams ⟧
   where
+    poolParams = pState .PState.pools
     open DState stᵈ using (stakeDelegs; rewards)
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
     stakeRelation = m ∪ proj₁ rewards
