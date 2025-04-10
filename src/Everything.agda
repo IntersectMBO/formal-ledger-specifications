@@ -33,12 +33,12 @@ import ScriptVerification.Lib
 
 -- ** Properties
 import Ledger.Utxo.Properties.MinSpend
-import Ledger.Utxo.Properties.UTXOpov
-import Ledger.Certs.Properties.CERTSpov
-import Ledger.Ledger.Properties.LEDGERpov
-import Ledger.Ledger.Properties.LEDGERgovDepsMatch
-import Ledger.Epoch.Properties.EPOCHgovDepsMatch
-import Ledger.Chain.Properties.CHAINgovDepsMatch
+import Ledger.Utxo.Properties.PoV
+import Ledger.Certs.Properties.PoV
+import Ledger.Ledger.Properties.PoV
+mport Ledger.Ledger.Properties.GovDepsMatch
+import Ledger.Epoch.Properties.GovDepsMatch
+import Ledger.Chain.Properties.GovDepsMatch
 import Ledger.GovernanceActions.Properties.ProposalChangePP
 import Ledger.Chain.Properties.CHAINepochStep
 import Ledger.Utxo.Properties.CredDepsEqualDomRwds
