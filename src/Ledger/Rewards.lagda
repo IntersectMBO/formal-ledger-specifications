@@ -290,7 +290,7 @@ Relevant quantities are:
 \begin{AgdaMultiCode}
 \begin{code}[hide]
   -- division of natural numbers with completion by 0.
-abstract
+abstract private
   _/₀_ : ℕ → ℕ → ℚ
   x /₀ 0 = 0
   x /₀ y@(suc _) = ℤ.+ x ℚ./ y
