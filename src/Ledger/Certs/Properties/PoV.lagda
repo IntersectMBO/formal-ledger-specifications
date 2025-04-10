@@ -86,7 +86,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
-      module in the \href{\repourl}{formal ledger GitHub repository}.
+      module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
@@ -164,7 +164,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
-      module in the \href{\repourl}{formal ledger GitHub repository}.
+      module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
     -- Proof.
     CERTBASE-pov  {Γ   = Γ}
@@ -238,7 +238,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
-      module in the \href{\repourl}{formal ledger GitHub repository}.
+      module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
     -- Proof.
     sts-pov (BS-base Id-nop) = refl
@@ -268,7 +268,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
-      module in the \href{\repourl}{formal ledger GitHub repository}.
+      module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
     -- Proof.
     CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts

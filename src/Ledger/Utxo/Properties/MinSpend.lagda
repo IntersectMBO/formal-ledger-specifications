@@ -157,7 +157,7 @@ module _ -- ASSUMPTION --
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
       \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-      in the \href{\repourl}{formal ledger GitHub repository}.
+      in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
@@ -280,7 +280,7 @@ module _
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
       \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-      in the \href{\repourl}{formal ledger GitHub repository}.
+      in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   propose-minSpend {cs} {slot} {tx} {valid} noRef = case valid of λ where
     (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef

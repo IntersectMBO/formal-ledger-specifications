@@ -48,7 +48,7 @@ UTXOpov :  {Γ : UTxOEnv}
 \end{code}
   \item \textit{Proof}. See the
   \LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}} module
-  in the \href{\repourl}{formal ledger GitHub repository}.
+  in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
 -- Proof.
 UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))

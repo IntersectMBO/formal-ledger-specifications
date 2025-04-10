@@ -85,7 +85,7 @@ module EPOCH-PROPS {eps : EpochState} where
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\EpochPropGov.lagda}{\AgdaModule{\EpochPropGov{}}}
-      module in the \href{\repourl}{formal ledger GitHub repository}.
+      module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
   EPOCH-govDepsMatch {ratify-removed} (EPOCH x _) =

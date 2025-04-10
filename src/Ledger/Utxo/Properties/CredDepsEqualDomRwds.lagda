@@ -31,7 +31,7 @@ module Ledger.Utxo.Properties.CredDepsEqualDomRwds
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{Utxo/Properties/CredDepsEqualDomRwds.lagda}{\AgdaModule{CredDepsEqualDomRwds}} module
-      of the \href{\repourl}{formal ledger GitHub repository}).
+      of the \href{\repourl}{formal ledger repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
         \item TODO

@@ -33,7 +33,7 @@ module Ledger.Chain.Properties.PParamsWellFormed
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module
-      of the \href{\repourl}{formal ledger GitHub repository}).
+      of the \href{\repourl}{formal ledger repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
         \item TODO
@@ -61,7 +61,7 @@ module Ledger.Chain.Properties.PParamsWellFormed
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module
-      of the \href{\repourl}{formal ledger GitHub repository}).
+      of the \href{\repourl}{formal ledger repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
         \item TODO

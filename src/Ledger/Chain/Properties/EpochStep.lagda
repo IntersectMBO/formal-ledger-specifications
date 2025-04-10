@@ -42,7 +42,7 @@ module Ledger.Chain.Properties.EpochStep
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropEpoch.lagda}{\AgdaModule{\ChainPropEpoch{}}}
-      module of the \href{\repourl}{formal ledger GitHub repository}).
+      module of the \href{\repourl}{formal ledger repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
         \item The \ab{utxo}~:~\UTxO field of a \UTxOState{} is a map from \TxIn{} to \TxOut{}.

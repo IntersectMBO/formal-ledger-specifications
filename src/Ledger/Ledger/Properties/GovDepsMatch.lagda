@@ -74,7 +74,7 @@ LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_
 \end{code}
   \item \textit{Proof}. See the
     \LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}
-    module in the \href{\repourl}{formal ledger GitHub repository}.
+    module in the \href{\repourl}{formal ledger repository}.
 
   \item \textit{Remarks}.
     \begin{enumerate}

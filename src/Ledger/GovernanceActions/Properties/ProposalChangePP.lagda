@@ -37,7 +37,7 @@ ProposalChangePPHasGroup {tx}{p}{pu} _ _ = updateGroups pu ≢ ∅
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{GovernanceActions/Properties/ProposalChangePP.lagda}{\AgdaModule{ProposalChangePP}} module
-      of the \href{\repourl}{formal ledger GitHub repository}).
+      of the \href{\repourl}{formal ledger repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
         \item
