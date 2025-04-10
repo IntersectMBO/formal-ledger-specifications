@@ -5,11 +5,15 @@ open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract
 
-module Ledger.Ledger.Properties.LEDGERgovDepsMatch
+module Ledger.Ledger.Properties.GovDepsMatch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+\end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\LedgerPropGov}{Ledger/Properties/GovDepsMatch}
 
+\begin{code}[hide]
 open import Axiom.Set.Properties th
 open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
@@ -21,7 +25,7 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 \end{code}
 
 \begin{property}[%
-  \LedgerMod{Ledger/Properties/LEDGERgovDepsMatch.lagda}{\AgdaModule{LEDGERgovDepsMatch}}:
+  \LedgerMod{\LedgerPropGov{}.lagda}{\AgdaModule{\LedgerPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule;
   \textbf{proved}%
   ]\
@@ -70,7 +74,7 @@ LEDGER-govDepsMatch {tx}{Γ}{s}{s'}
 LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
 \end{code}
   \item \textit{Proof}. See the
-    \LedgerMod{Ledger/Properties/LEDGERgovDepsMatch.lagda}{\AgdaModule{LEDGERgovDepsMatch}}
+    \LedgerMod{\LedgerPropGov{}.lagda}{\AgdaModule{\LedgerPropGov{}}}
     module in the \href{\repourl}{formal ledger GitHub repository}.
 
   \item \textit{Remarks}.

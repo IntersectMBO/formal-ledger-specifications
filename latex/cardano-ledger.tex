@@ -41,14 +41,14 @@ in which Agda module each property is formally stated and (possibly) proved, alo
 with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}'' otherwise.
 
 \subsection{Preservation of Value}
-\inputAgda{Ledger/Utxo/Properties/UTXOpov}
-\inputAgda{Ledger/Certs/Properties/CERTSpov}
-\inputAgda{Ledger/Ledger/Properties/LEDGERpov}
+\inputAgda{Ledger/Utxo/Properties/PoV}
+\inputAgda{Ledger/Certs/Properties/PoV}
+\inputAgda{Ledger/Ledger/Properties/PoV}
 
 \subsection{Invariance Properties}
-\inputAgda{Ledger/Ledger/Properties/LEDGERgovDepsMatch}
-\inputAgda{Ledger/Epoch/Properties/EPOCHgovDepsMatch}
-\inputAgda{Ledger/Chain/Properties/CHAINgovDepsMatch}
+\inputAgda{Ledger/Ledger/Properties/GovDepsMatch}
+\inputAgda{Ledger/Epoch/Properties/GovDepsMatch}
+\inputAgda{Ledger/Chain/Properties/GovDepsMatch}
 \inputAgda{Ledger/Chain/Properties/ActionDepsEqualActionsProp}
 \inputAgda{Ledger/Chain/Properties/DomRwdsEqualCredDeps}
 \inputAgda{Ledger/Chain/Properties/PParamsWellFormed}
@@ -56,11 +56,10 @@ with the label ``\textbf{proved}'' if it has been proved and ``\textbf{to prove}
 \subsection{Minimum Spending Conditions}
 \inputAgda{Ledger/Utxo/Properties/MinSpend}
 
-\subsection{Other Miscellaneous Properties}
+\subsection{Miscellaneous Properties}
 \inputAgda{Ledger/GovernanceActions/Properties/ProposalChangePP}
-\inputAgda{Ledger/Chain/Properties/CHAINepochStep}
+\inputAgda{Ledger/Chain/Properties/EpochStep}
 \inputAgda{Ledger/Utxo/Properties/CredDepsEqualDomRwds}
-\inputAgda{Ledger/PParams/Properties/PParamsWellFormed}
 \clearpage
 
 \addcontentsline{toc}{section}{References}

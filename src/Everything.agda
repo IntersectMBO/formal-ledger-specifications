@@ -36,13 +36,12 @@ import Ledger.Utxo.Properties.MinSpend
 import Ledger.Utxo.Properties.PoV
 import Ledger.Certs.Properties.PoV
 import Ledger.Ledger.Properties.PoV
-mport Ledger.Ledger.Properties.GovDepsMatch
+import Ledger.Ledger.Properties.GovDepsMatch
 import Ledger.Epoch.Properties.GovDepsMatch
 import Ledger.Chain.Properties.GovDepsMatch
 import Ledger.GovernanceActions.Properties.ProposalChangePP
 import Ledger.Chain.Properties.EpochStep
 import Ledger.Utxo.Properties.CredDepsEqualDomRwds
-import Ledger.PParams.Properties.PParamsWellFormed
 import Ledger.Chain.Properties.ActionDepsEqualActionsProp
 import Ledger.Chain.Properties.DomRwdsEqualCredDeps
 import Ledger.Chain.Properties.PParamsWellFormed

@@ -6,17 +6,21 @@ open import Ledger.Transaction
 open import Ledger.Abstract
 import Ledger.Certs
 
-module Ledger.Ledger.Properties.LEDGERpov
+module Ledger.Ledger.Properties.PoV
   (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+\end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\thismod}{Ledger/Properties/PoV}
 
+\begin{code}[hide]
 open import Axiom.Set.Properties th
 open import Ledger.Chain txs abs
 open import Ledger.Certs.Properties govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Utxo txs abs
-open import Ledger.Utxo.Properties.UTXOpov txs abs
+open import Ledger.Utxo.Properties.PoV txs abs
 open import Ledger.Utxow txs abs
 open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 
@@ -50,7 +54,7 @@ module _
 \end{code}
 
 \begin{property}[%
-  \LedgerMod{Ledger/Properties/LEDGERpov.lagda}{\AgdaModule{LEDGERpov}}:
+  \LedgerMod{\thismod{}.lagda}{\AgdaModule{\thismod{}}}:
   \LEDGER{} rule preserves value;
   \textbf{proved}%
   ]\
@@ -74,8 +78,8 @@ module _
                 → getCoin s ≡ getCoin s'
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{Ledger/Properties/LEDGERpov.lagda}{\AgdaModule{LEDGERpov}} module
-      in the \href{\repourl}{formal ledger GitHub repository}.
+      \LedgerMod{\thismod{}.lagda}{\AgdaModule{\thismod{}}}
+      module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.
   LEDGER-pov

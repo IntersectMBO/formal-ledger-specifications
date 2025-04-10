@@ -10,7 +10,11 @@ module Ledger.Utxo.Properties.MinSpend
   (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+\end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\themodpath}{Utxo/Properties/MinSpend}
 
+\begin{code}[hide]
 open import Ledger.Chain txs abs
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
@@ -118,7 +122,7 @@ module _ -- ASSUMPTION --
 \end{code}
 
 \begin{property}[%
-  \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}}:
+  \LedgerMod{\themodpath{}.lagda}{\AgdaModule{\themodpath{}}}:
   general spend lower bound;
   \textbf{proved}%
   ]\
@@ -153,7 +157,7 @@ module _ -- ASSUMPTION --
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
-      \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}} module
+      \LedgerMod{\themodpath{}.lagda}{\AgdaModule{\themodpath{}}} module
       in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
@@ -209,7 +213,7 @@ module _ -- ASSUMPTION --
 \end{property}  
 
 \begin{property}[%
-  \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}}:
+  \LedgerMod{\themodpath{}.lagda}{\AgdaModule{\themodpath{}}}:
   spend lower bound for proposals;
   \textbf{proved}%
   ]\
@@ -279,7 +283,7 @@ module _
   \end{itemize}
 \end{property}
 \textit{Proof}. See the
-  \LedgerMod{Utxo/Properties/MinSpend.lagda}{\AgdaModule{MinSpend}} module
+  \LedgerMod{\themodpath{}.lagda}{\AgdaModule{\themodpath{}}} module
   in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   propose-minSpend {cs} {slot} {tx} {valid} noRef = case valid of λ where

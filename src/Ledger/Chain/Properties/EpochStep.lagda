@@ -6,14 +6,16 @@ open import Ledger.Abstract
 open import Ledger.Transaction
 import Ledger.Certs
 
-module Ledger.Chain.Properties.CHAINepochStep
+module Ledger.Chain.Properties.EpochStep
   (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
   (abs : AbstractFunctions txs)
   where
 \end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\ChainPropEpoch}{Chain/Properties/EpochStep}
 
 \begin{property}[%
-  \LedgerMod{Chain/Properties/CHAINepochStep.lagda}{\AgdaModule{CHAINepochStep}}:
+  \LedgerMod{\ChainPropEpoch{}.lagda}{\AgdaModule{\ChainPropEpoch{}}}:
   Chain state epoch step;
   \textbf{to prove}%
   ]\
@@ -40,8 +42,8 @@ module Ledger.Chain.Properties.CHAINepochStep
 % \end{code}
 % \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{Chain/Properties/CHAINepochStep.lagda}{\AgdaModule{CHAINepochStep}} module
-      of the \href{\repourl}{formal ledger GitHub repository}).
+      \LedgerMod{\ChainPropEpoch{}.lagda}{\AgdaModule{\ChainPropEpoch{}}}
+      module of the \href{\repourl}{formal ledger GitHub repository}).
     \item \textit{Remarks}.
       \begin{enumerate}
         \item The \ab{utxo}~:~\UTxO field of a \UTxOState{} is a map from \TxIn{} to \TxOut{}.

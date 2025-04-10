@@ -4,8 +4,12 @@
 open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
-module Ledger.Certs.Properties.CERTSpov (gs : _) (open GovStructure gs) where
+module Ledger.Certs.Properties.PoV (gs : _) (open GovStructure gs) where
+\end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\modulepath}{Certs/Properties/PoV}
 
+\begin{code}[hide]
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
 
@@ -63,9 +67,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
 
 \begin{property}[%
-  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  \CERT{} rule preserves value;
-  \textbf{proved}%
+  \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}:
+  \CERT{} rule preserves value; \textbf{proved}%
   ]\
 
   \begin{itemize}
@@ -83,8 +86,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
               → getCoin s ≡ getCoin s'
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}} module
-      in the \href{\repourl}{formal ledger GitHub repository}.
+      \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}
+      module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
@@ -140,9 +143,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 
 \begin{property}[%
-  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  \CERTBASE{} rule preserves value;
-  \textbf{proved}%
+  \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}:
+  \CERTBASE{} rule preserves value; \textbf{proved}%
   ]\
 
   \begin{itemize}
@@ -163,8 +165,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                     → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}} module
-      in the \href{\repourl}{formal ledger GitHub repository}.
+      \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}
+      module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.
     CERTBASE-pov  {Γ   = Γ}
@@ -220,9 +222,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 
 \begin{property}[%
-  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  iteration of \CERT{} rule preserves value;
-  \textbf{proved}%
+  \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}:
+  iteration of \CERT{} rule preserves value; \textbf{proved}%
   ]\
 
   \begin{itemize}
@@ -239,8 +240,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                → getCoin s₁ ≡ getCoin sₙ
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}} module
-      in the \href{\repourl}{formal ledger GitHub repository}.
+      \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}
+      module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.
     sts-pov (BS-base Id-nop) = refl
@@ -251,9 +252,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 
 \begin{property}[%
-  \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}}:
-  \CERTS{} rule preserves value;
-  \textbf{proved}%
+  \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}:
+  \CERTS{} rule preserves value; \textbf{proved}%
   ]\
 
   \begin{itemize}
@@ -270,8 +270,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                  → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{Certs/Properties/CERTSpov.lagda}{\AgdaModule{CERTSpov}} module
-      in the \href{\repourl}{formal ledger GitHub repository}.
+      \LedgerMod{\modulepath{}.lagda}{\AgdaModule{\modulepath{}}}
+      module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
     -- Proof.
     CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts

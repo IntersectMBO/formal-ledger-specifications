@@ -5,18 +5,22 @@ open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
 open import Ledger.Transaction
 open import Ledger.Abstract
 
-module Ledger.Chain.Properties.CHAINgovDepsMatch
+module Ledger.Chain.Properties.GovDepsMatch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+\end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\ChainPropGov}{Chain/Properties/GovDepsMatch}
 
+\begin{code}[hide]
 open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
-open import Ledger.Ledger.Properties.LEDGERgovDepsMatch txs abs
-open import Ledger.Epoch.Properties.EPOCHgovDepsMatch txs abs
+open import Ledger.Ledger.Properties.GovDepsMatch txs abs
+open import Ledger.Epoch.Properties.GovDepsMatch txs abs
 open import Ledger.Utxo txs abs
 open import Ledger.Certs govStructure
 
@@ -25,7 +29,7 @@ module _
 \end{code}
 
 \begin{property}[%
-  \LedgerMod{Chain/Properties/CHAINgovDepsMatch.lagda}{\AgdaModule{CHAINgovDepsMatch}}:
+  \LedgerMod{\ChainPropGov{}.lagda}{\AgdaModule{\ChainPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \CHAIN{} rule;
   \textbf{proved}%
   ]\
@@ -81,7 +85,7 @@ module _
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}.  See the
-      \LedgerMod{Chain/Properties/CHAINgovDepsMatch.lagda}{\AgdaModule{CHAINgovDepsMatch}}
+      \LedgerMod{\ChainPropGov{}.lagda}{\AgdaModule{\ChainPropGov{}}}
        module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.

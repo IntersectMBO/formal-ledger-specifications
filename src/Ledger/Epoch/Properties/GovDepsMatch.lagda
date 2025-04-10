@@ -5,11 +5,15 @@ open import Ledger.Prelude renaming (map to map'; mapˢ to map)
 open import Ledger.Transaction
 open import Ledger.Abstract
 
-module Ledger.Epoch.Properties.EPOCHgovDepsMatch
+module Ledger.Epoch.Properties.GovDepsMatch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+\end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\EpochPropGov}{Epoch/Properties/GovDepsMatch}
 
+\begin{code}[hide]
 open import Axiom.Set.Properties th
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
@@ -52,7 +56,7 @@ module EPOCH-PROPS {eps : EpochState} where
 \end{code}
 
 \begin{property}[%
-  \LedgerMod{Epoch/Properties/EPOCHgovDepsMatch.lagda}{\AgdaModule{EPOCHgovDepsMatch}}:
+  \LedgerMod{\EpochPropGov{}.lagda}{\AgdaModule{\EpochPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \EPOCH{} rule;
   \textbf{proved}%
   ]\
@@ -81,8 +85,8 @@ module EPOCH-PROPS {eps : EpochState} where
                         → govDepsMatch epsLState → govDepsMatch (eps' .ls)
 \end{code}
     \item \textit{Proof}. See the
-      \LedgerMod{Epoch/Properties/EPOCHgovDepsMatch.lagda}{\AgdaModule{EPOCHgovDepsMatch}} module
-      in the \href{\repourl}{formal ledger GitHub repository}.
+      \LedgerMod{\EpochPropGov{}.lagda}{\AgdaModule{\EpochPropGov{}}}
+      module in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
   -- Proof.
   EPOCH-govDepsMatch {ratify-removed} (EPOCH x _) =

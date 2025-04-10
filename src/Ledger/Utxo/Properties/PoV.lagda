@@ -6,18 +6,22 @@ open import Ledger.Abstract
 open import Ledger.Transaction
 import Ledger.Certs
 
-module Ledger.Utxo.Properties.UTXOpov
+module Ledger.Utxo.Properties.PoV
   (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
   (abs : AbstractFunctions txs)
   where
+\end{code}
+% If the module name changes, change the following macro to match!
+\newcommand{\thismodpath}{Utxo/Properties/PoV}
 
+\begin{code}[hide]
 open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 open UTxOState; open Tx; open TxBody
 \end{code}
 
 \begin{property}[%
-  \LedgerMod{Utxo/Properties/UTXOpov.lagda}{\AgdaModule{UTXOpov}}:
+  \LedgerMod{\thismodpath{}.lagda}{\AgdaModule{\thismodpath{}}}:
   \UTXO{} rule preserves value;
   \textbf{proved}%
   ]\
@@ -44,7 +48,7 @@ UTXOpov :  {Γ : UTxOEnv}
            → getCoin s + φ(getCoin (tx .body .txwdrls) , tx .isValid) ≡ getCoin s'
 \end{code}
   \item \textit{Proof}. See the
-  \LedgerMod{Utxo/Properties/UTXOpov.lagda}{\AgdaModule{UTXOpov}} module
+  \LedgerMod{\thismodpath{}.lagda}{\AgdaModule{\thismodpath{}}} module
   in the \href{\repourl}{formal ledger GitHub repository}.
 \begin{code}[hide]
 -- Proof.
