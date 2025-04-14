@@ -74,9 +74,11 @@ syntax ∃₂-syntax (λ x y → C) = ∃₂[ x , y ] C
 
 -- Instance for number literals, not enabled by default
 import Data.Nat.Literals as ℕ
+import Data.Integer.Literals as ℤ
 import Data.Rational.Literals as ℚ
 
 instance Number-ℕ = ℕ.number
+instance Number-ℤ = ℤ.number
 instance Number-ℚ = ℚ.number
 
 -- (Pseudo)equality (for Maybe)
