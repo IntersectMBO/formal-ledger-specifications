@@ -32,16 +32,17 @@ import ScriptVerification.StructuredContracts
 import ScriptVerification.Lib
 
 -- ** Properties
-import Ledger.Utxo.Properties.MinSpend
-import Ledger.Utxo.Properties.PoV
-import Ledger.Certs.Properties.PoV
-import Ledger.Ledger.Properties.PoV
-import Ledger.Ledger.Properties.GovDepsMatch
-import Ledger.Epoch.Properties.GovDepsMatch
-import Ledger.Chain.Properties.GovDepsMatch
-import Ledger.GovernanceActions.Properties.ProposalChangePP
-import Ledger.Chain.Properties.EpochStep
-import Ledger.Utxo.Properties.CredDepsEqualDomRwds
-import Ledger.Chain.Properties.ActionDepsEqualActionsProp
-import Ledger.Chain.Properties.DomRwdsEqualCredDeps
-import Ledger.Chain.Properties.PParamsWellFormed
+import Ledger.Properties
+-- import Ledger.Utxo.Properties.MinSpend
+-- import Ledger.Utxo.Properties.PoV
+-- import Ledger.Certs.Properties.PoV
+-- import Ledger.Ledger.Properties.PoV
+-- import Ledger.Ledger.Properties.GovDepsMatch
+-- import Ledger.Epoch.Properties.GovDepsMatch
+-- import Ledger.Chain.Properties.GovDepsMatch
+-- import Ledger.GovernanceActions.Properties.ProposalChangePP
+-- import Ledger.Chain.Properties.EpochStep
+-- import Ledger.Utxo.Properties.CredDepsEqualDomRwds
+-- import Ledger.Chain.Properties.ActionDepsEqualActionsProp
+-- import Ledger.Chain.Properties.DomRwdsEqualCredDeps
+-- import Ledger.Chain.Properties.PParamsWellFormed

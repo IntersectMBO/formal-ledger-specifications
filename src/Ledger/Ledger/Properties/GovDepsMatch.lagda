@@ -92,12 +92,6 @@ LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_
         A \UTxOState{} has a \ab{deposits} field (of type \Deposits{}),
         which is a map from \DepositPurpose{} to \Coin{}, and each \DepositPurpose{} is either
         a \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, or \GovActionDeposit{}.
-      \item
-        Given a ledger state \ab{s}, we focus on deposits in the
-        \UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The relation we
-        consider is whether the set of \GovActionDeposit{}s of the
-        \UTxOState{} of \ab{s} is the same as the set of \GovActionDeposit{}s of the
-        \GovState{} of \ab{s}.  If this holds, then we write \AgdaFunction{govDepsMatch}~\ab{s}.
     \end{enumerate}
   \end{itemize}
 \end{theorem}

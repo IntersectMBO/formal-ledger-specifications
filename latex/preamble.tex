@@ -81,6 +81,8 @@
 %% + To refer to multiple things at once, combine them all into one:
 %%   `\cref{eq2,eq1,eq3,eq5,thm2,def1}` produces:
 %%   "Eqs.~(1) to~(3) and~(5), Theorem~5, and Definition~1".
+\Crefname{thetheorem}{Theorem}{Theorems}
+\Crefname{theclaim}{Claim}{Claims}
 \Crefname{figure}{Fig.}{Figs.}
 \Crefname{equation}{Eq.}{Eqs.}
 \Crefname{tabular}{Tab.}{Tabs.}
@@ -106,15 +108,16 @@
 %% Use claim for properties we have yet to prove.
 \newcounter{theclaim} \setcounter{theclaim}{1}
 \newenvironment{claim}[1][]{\bigskip\noindent%
+\refstepcounter{theclaim}%  % Step the counter and make it referenceable
 \begin{minipage}{\textwidth}%
 {\textbf{Claim \arabic{theclaim}. (#1)} \stepcounter{theclaim} \rm}%
 }{\end{minipage}\medskip}
 
-%% Use theorem for properties we have already proved.
 \newcounter{thetheorem} \setcounter{thetheorem}{1}
 \newenvironment{theorem}[1][]{\bigskip\noindent%
+\refstepcounter{thetheorem}%  % Step the counter and make it referenceable
 \begin{minipage}{\textwidth}%
-{\textbf{Theorem \arabic{thetheorem}. (#1)} \stepcounter{thetheorem} \rm}%
+{\textbf{Theorem \arabic{thetheorem}. (#1)} \label{thm:\arabic{thetheorem}} \rm}% % Add a default label
 }{\end{minipage}\medskip}
 
 \newenvironment{question}

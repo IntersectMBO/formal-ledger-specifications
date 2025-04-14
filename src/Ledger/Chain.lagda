@@ -31,12 +31,6 @@ record ChainState : Type where
   field
     newEpochState  : NewEpochState
 
-EStateOfCState : ChainState → EpochState
-EStateOfCState = NewEpochState.epochState ∘ ChainState.newEpochState
-
-LStateOfCState : ChainState → LState
-LStateOfCState = EpochState.ls ∘ EStateOfCState 
-
 record Block : Type where
   field
     ts    : List Tx

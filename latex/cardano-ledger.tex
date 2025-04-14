@@ -31,11 +31,48 @@
 \includeAgda{Ledger/Ledger}
 \includeAgda{Ledger/Enact}
 \includeAgda{Ledger/Ratify}
-\includeAgda{Ledger/Rewards}
 \includeAgda{Ledger/Epoch}
 \includeAgda{Ledger/Chain}
-\includeAgda{Ledger/Properties}
 
+\section{Properties}
+This section presents the properties of the ledger that we have formally proved in
+Agda or plan to do so in the near future.  We indicate in which Agda module each
+property is formally stated and (possibly) proved. A ``Claim'' is a property that is
+not yet proved, while a ``Theorem'' is one for which we have a formal proof.
+
+\subsection{Preservation of Value}
+\inputAgda{Ledger/Utxo/Properties/PoV}
+\inputAgda{Ledger/Certs/Properties/PoV}
+\inputAgda{Ledger/Ledger/Properties/PoV}
+
+\subsection{Invariance Properties}
+\Crefrange{thm:LedgerGovDepsMatch}{thm:ChainGovDepsMatch} assert that
+a certain relation is an invariant of the \LEDGER{}, \EPOCH{}, and \CHAIN{} rules.
+Given a ledger state \ab{s}, we focus on deposits in the
+\UTxOState{} of \ab{s} that are \GovActionDeposit{}s and we compare that set of
+deposits with the \GovActionDeposit{}s of the \GovState{} of \ab{s}.
+When these two sets are the same, we write \AgdaFunction{govDepsMatch}~\ab{s} and say
+the \AgdaFunction{govDepsMatch} relation holds for \ab{s}.
+The assertion, ``the \AgdaFunction{govDepsMatch} relation is an invariant of the
+\LEDGER{} rule,'' means the following:  if \govDepsMatch{}~\ab{s} and
+\ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}, then
+\govDepsMatch{}~\ab{s'}.
+
+\inputAgda{Ledger/Ledger/Properties/GovDepsMatch}
+\inputAgda{Ledger/Epoch/Properties/GovDepsMatch}
+\inputAgda{Ledger/Chain/Properties/GovDepsMatch}
+
+\inputAgda{Ledger/Chain/Properties/ActionDepsEqualActionsProp}
+\inputAgda{Ledger/Chain/Properties/DomRwdsEqualCredDeps}
+\inputAgda{Ledger/Chain/Properties/PParamsWellFormed}
+
+\subsection{Minimum Spending Conditions}
+\inputAgda{Ledger/Utxo/Properties/MinSpend}
+
+\subsection{Miscellaneous Properties}
+\inputAgda{Ledger/GovernanceActions/Properties/ProposalChangePP}
+\inputAgda{Ledger/Chain/Properties/EpochStep}
+\inputAgda{Ledger/Utxo/Properties/CredDepsEqualDomRwds}
 \clearpage
 
 \addcontentsline{toc}{section}{References}
@@ -51,3 +88,6 @@
 \input{ConwayBootstrap}
 
 \end{document}
+
+
+

@@ -63,39 +63,34 @@ module EPOCH-PROPS {eps : EpochState} where
 
   \begin{itemize}
     \item \textit{Informally}.
-      The present property asserts that (under a certain condition, described below),
-      the \AgdaDatatype{EPOCH} rule preserves a certain relation between
-      the \ab{utxoSt} and \ab{govSt} fields of an \EpochState{}.
-      \\[6pt]
-      To make the statement of the property clear, we recall a few facts and
-      notation.
-      \begin{enumerate}
-        \item \EpochState{} has five fields; the three relevant here are
-          \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and \ab{fut}~:~\RatifyState{};
-        \item \LState{} has three fields; the two relevant here are \ab{utxoSt}~:~\UTxOState{}
-          and \ab{govSt}~:~\GovState{};
-        \item \RatifyState{} has three fields; the two relevant here are
-          \ab{es}~:~\EnactState{} and \ab{removed}~:~$ℙ$(\GovActionID{}~×~\GovActionState{}).
-        \item Let \ab{eps}, \ab{eps'}~:~\EpochState{} be two epoch states and let
-          \begin{itemize}
-            \item \ab{epsRState} be the \RatifyState{} of \ab{eps},
-            \item \AgdaField{epsLState} and \AgdaField{epsLState'} be the ledger states of \ab{eps} and \ab{eps'},
-            \item \ab{utxoSt} and \ab{utxoSt'} be the \UTxOState{}s of \AgdaField{epsLState}
-              and \AgdaField{epsLState'},
-            \item \ab{govSt} and \ab{govSt'} be the \GovState{}s of \AgdaField{epsLState}
-              and \AgdaField{epsLState'},
-            \item \AgdaFunction{removed'} be the union of \ab{epsRState .removed} and the orphaned 
-              governance actions in \ab{govSt}; i.e., those without a parent governance action.
-          \end{itemize}
-      \end{enumerate}
-          Let $\mathcal{G}$ be the set
-          $\{\mbox{\GovActionDeposit{}~\ab{id}} : \mbox{\ab{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
-          Assume $\mathcal{G}$ is a subset of the set of \ab{deposits utxoSt},
-          the deposits of the \UTxOState{} of \AgdaField{epsLState}. 
-          If \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'} and
-          if the governance action deposits of \ab{utxoSt} are the
-          same as those of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-          In other terms, \govDepsMatch{}~\AgdaField{epsLState} implies \govDepsMatch{}~\AgdaField{epsLState'}.
+      Let \ab{eps}, \ab{eps'}~:~\EpochState{} be two epoch states and let
+      \ab{e}~:~\Epoch{} be an epoch. Let \AgdaField{epsLState} and
+      \AgdaField{epsLState'} be the ledger states of \ab{eps} and \ab{eps'}.
+      If \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}, then
+      (under certain conditions) \govDepsMatch{}~\AgdaField{epsLState}
+      implies \govDepsMatch{}~\AgdaField{epsLState'}.
+    \\[6pt]
+    To understand the special condition under which this holds, first recall that
+    \begin{enumerate}
+      \item \EpochState{} has five fields; the three relevant here are
+        \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and \ab{fut}~:~\RatifyState{};
+      \item \LState{} has three fields; the two relevant here are \ab{utxoSt}~:~\UTxOState{}
+        and \ab{govSt}~:~\GovState{};
+      \item \RatifyState{} has three fields; the two relevant here are
+        \ab{es}~:~\EnactState{} and \ab{removed}~:~$ℙ$(\GovActionID{}~×~\GovActionState{}).
+    \end{enumerate}
+    Next, let \AgdaFunction{removed'} be the union of
+    \begin{itemize}
+      \item the governance actions in the \AgdaField{removed} field of the ratify
+    state of \ab{eps}, and
+      \item the orphaned governance actions in \ab{govSt}, the \GovState{} of the
+        \LState{} of \ab{eps}.
+    \end{itemize}
+    Finally, let $\mathcal{G}$ be the set
+    $\{\mbox{\GovActionDeposit{}~\ab{id}} : \mbox{\ab{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
+    We can now state the special hypothesis under which \govDepsMatch{} is an
+    invariant of the \EPOCH{} rule: $\mathcal{G}$ is a subset of the set of \ab{deposits utxoSt},
+    the deposits of the \UTxOState{} of \AgdaField{epsLState}. 
     \item \textit{Formally}.
 \begin{code}
   EPOCH-govDepsMatch :  {ratify-removed :  map (GovActionDeposit ∘ proj₁) removed'

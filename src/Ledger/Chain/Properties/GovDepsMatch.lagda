@@ -38,17 +38,16 @@ module _
     \item \textit{Informally}.
       Fix a \ChainState{} \ab{cs} and let \ab{cs'} be the updated chain state,
       \ab{cs'} = \AgdaFunction{updateChainState}~\ab{cs}~\ab{nes}.
-      Let \ab{csLStates} and \ab{csLStates'} be the respective ledger states of these
+      Let \ab{csLState} and \ab{csLState'} be the respective ledger states of these
       chain states, let
-      \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of \ab{csLStates}
-      and \ab{csLStates'} and let \ab{govSt} and \ab{govSt'} be their respective \GovState{}s.
+      \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of \ab{csLState}
+      and \ab{csLState'} and let \ab{govSt} and \ab{govSt'} be their respective \GovState{}s.
       \\[4pt]
       Suppose that the conditions described above hold and that \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'}.
       If the governance action deposits of \ab{utxoSt} are the same as those
       of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-      In other terms,\\
-      \AgdaFunction{govDepsMatch}~\ab{csLState} implies
-      \AgdaFunction{govDepsMatch}~(\AgdaFunction{LStateOfCState}~\ab{cs'}).
+      In other terms,
+      \AgdaFunction{govDepsMatch}~\ab{csLState} implies \AgdaFunction{govDepsMatch}~(\csLStates).
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
@@ -64,15 +63,11 @@ module _
   pp = pparams .proj₁
 \end{code}
 \begin{code}
-  updateNewEpochState : ChainState → NewEpochState → NewEpochState
-  updateNewEpochState s nes =
-    record { lastEpoch   = NewEpochState.lastEpoch nes
-           ; epochState  = record  (EStateOfCState s)
-                                   { ls = EpochState.ls (NewEpochState.epochState nes) }
-           ; ru          = NewEpochState.ru nes }
-
   updateChainState : ChainState → NewEpochState → ChainState
-  updateChainState s nes = record { newEpochState = updateNewEpochState s nes}
+  updateChainState s nes .newEpochState .NewEpochState.lastEpoch = NewEpochState.lastEpoch nes
+  updateChainState s nes .newEpochState .NewEpochState.epochState =
+    record (NewEpochState.epochState (ChainState.newEpochState s)) {ls = EpochState.ls (NewEpochState.epochState nes)}
+  updateChainState s nes .newEpochState .NewEpochState.ru = NewEpochState.ru nes
 
   CHAIN-govDepsMatch :
       {nes  : NewEpochState}
@@ -81,7 +76,7 @@ module _
          ⊆ map proj₁ (UTxOState.deposits (LState.utxoSt csLState) ˢ)
       →  totalRefScriptsSize csLState ts ≤ (PParams.maxRefScriptSizePerBlock pp)
       →  tt ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
-      →  govDepsMatch csLState → govDepsMatch (LStateOfCState cs')
+      →  govDepsMatch csLState → govDepsMatch (EpochState.ls (NewEpochState.epochState (ChainState.newEpochState cs')))
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}.  See the

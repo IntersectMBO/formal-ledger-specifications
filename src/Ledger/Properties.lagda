@@ -9,15 +9,6 @@ module Ledger.Properties
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-\end{code}
-
-\section{Properties}
-This section presents the properties of the ledger that we have formally proved in
-Agda or plan to do so in the near future.  We indicate in which Agda module each
-property is formally stated and (possibly) proved.  A ``Claim'' is a property that
-is not yet proved, while a ``Theorem'' is one for which we have a formal proof.
-
-\begin{code}[hide]
 open import Ledger.Chain txs abs
 open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
@@ -198,33 +189,3 @@ module _ {Γ es e es'} (step : Γ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es') where
   prop≡∅⇒activeDReps-const = getGovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
 \end{code}
 
-\subsection{Preservation of Value}
-\inputAgda{Ledger/Utxo/Properties/PoV}
-\inputAgda{Ledger/Certs/Properties/PoV}
-\inputAgda{Ledger/Ledger/Properties/PoV}
-
-
-\subsection{Invariance Properties}
-\cref{thm:LedgerGovDepsMatch,thm:EpochGovDepsMatch,thm:ChainGovDepsMatch} assert that
-a certain relation is invariant with respect to application of the \LEDGER{},
-\EPOCH{}, and \CHAIN{} rules.
-Given a ledger state \ab{s}, we focus on deposits in the
-\UTxOState{} of \ab{s} that are \GovActionDeposit{}s.  The relation we
-consider is equality of the \GovActionDeposit{}s of the \UTxOState{} of \ab{s} and
-the \GovActionDeposit{}s of the \GovState{} of \ab{s}.
-When these two sets are the same, we write \AgdaFunction{govDepsMatch}~\ab{s}.
-
-\inputAgda{Ledger/Ledger/Properties/GovDepsMatch}
-\inputAgda{Ledger/Epoch/Properties/GovDepsMatch}
-\inputAgda{Ledger/Chain/Properties/GovDepsMatch}
-\inputAgda{Ledger/Chain/Properties/ActionDepsEqualActionsProp}
-\inputAgda{Ledger/Chain/Properties/DomRwdsEqualCredDeps}
-\inputAgda{Ledger/Chain/Properties/PParamsWellFormed}
-
-\subsection{Minimum Spending Conditions}
-\inputAgda{Ledger/Utxo/Properties/MinSpend}
-
-\subsection{Miscellaneous Properties}
-\inputAgda{Ledger/GovernanceActions/Properties/ProposalChangePP}
-\inputAgda{Ledger/Chain/Properties/EpochStep}
-\inputAgda{Ledger/Utxo/Properties/CredDepsEqualDomRwds}
