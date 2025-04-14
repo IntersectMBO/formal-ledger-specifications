@@ -2946,7 +2946,7 @@ du_depositRefunds_2908 ::
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2550 -> Integer
 du_depositRefunds_2908 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Prelude.d_negPart_68
+      MAlonzo.Code.Prelude.d_negPart_70
       (coe
          du_depositsChange_2602 (coe v0) (coe v1) (coe v3)
          (coe d_deposits_2066 (coe v2)))
@@ -2966,7 +2966,7 @@ du_newDeposits_2916 ::
   MAlonzo.Code.Ledger.Transaction.T_TxBody_2550 -> Integer
 du_newDeposits_2916 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Prelude.d_posPart_56
+      MAlonzo.Code.Prelude.d_posPart_58
       (coe
          du_depositsChange_2602 (coe v0) (coe v1) (coe v3)
          (coe d_deposits_2066 (coe v2)))
@@ -3971,7 +3971,7 @@ d_UTXO'45'premises_3206 v0 v1 v2 v3 v4
                                                 (coe
                                                    MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_24
                                                    (coe
-                                                      MAlonzo.Code.Prelude.du_'126''63'_46
+                                                      MAlonzo.Code.Prelude.du_'126''63'_48
                                                       (coe
                                                          MAlonzo.Code.Ledger.Transaction.d_txNetworkId_2618
                                                          (coe
@@ -3990,7 +3990,7 @@ d_UTXO'45'premises_3206 v0 v1 v2 v3 v4
                                                             MAlonzo.Code.Ledger.Transaction.d_globalConstants_1206
                                                             (coe v0))))
                                                    (coe
-                                                      MAlonzo.Code.Prelude.du_'126''63'_46
+                                                      MAlonzo.Code.Prelude.du_'126''63'_48
                                                       (coe
                                                          MAlonzo.Code.Ledger.Transaction.d_curTreasury_2620
                                                          (coe

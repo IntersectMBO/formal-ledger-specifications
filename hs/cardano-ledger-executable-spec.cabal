@@ -221,6 +221,7 @@ library
         MAlonzo.Code.Data.Integer.Coprimality
         MAlonzo.Code.Data.Integer.Divisibility
         MAlonzo.Code.Data.Integer.GCD
+        MAlonzo.Code.Data.Integer.Literals
         MAlonzo.Code.Data.Integer.Properties
         MAlonzo.Code.Data.Integer.Properties.NatLemmas
         MAlonzo.Code.Data.Integer.Show
