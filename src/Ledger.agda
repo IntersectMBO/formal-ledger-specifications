@@ -46,6 +46,8 @@ open import Ledger.Properties
 open import Ledger.Ratify
 open import Ledger.Ratify.Properties
 
+open import Ledger.Rewards
+
 open import Ledger.TokenAlgebra
 open import Ledger.TokenAlgebra.ValueSet
 
@@ -61,3 +63,4 @@ open import Ledger.Utxo.Properties.PoV
 
 open import Ledger.Utxow
 open import Ledger.Utxow.Properties
+
