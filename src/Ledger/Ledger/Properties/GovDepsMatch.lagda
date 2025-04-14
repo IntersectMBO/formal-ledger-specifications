@@ -28,6 +28,7 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
   \LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule%
   ]\
+  \label{thm:LedgerGovDepsMatch}
 
   \begin{itemize}
     \item \textit{Informally}. 

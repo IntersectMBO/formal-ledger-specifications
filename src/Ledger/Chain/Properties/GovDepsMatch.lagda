@@ -32,6 +32,7 @@ module _
   \LedgerMod{\ChainPropGov.lagda}{\AgdaModule{\ChainPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \CHAIN{} rule%
   ]\
+  \label{thm:ChainGovDepsMatch}
 
   \begin{itemize}
     \item \textit{Informally}.

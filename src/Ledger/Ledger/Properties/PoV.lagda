@@ -28,10 +28,6 @@ open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc
 
 -- ** Proof that LEDGER preserves values.
 
-FreshTx : Tx → LState → Type
-FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
-  where open Tx tx; open TxBody body; open UTxOState; open LState
-
 instance
   HasCoin-LState : HasCoin LState
   HasCoin-LState .getCoin s = getCoin (LState.utxoSt s) + getCoin (LState.certState s)
@@ -62,19 +58,21 @@ module _
       Let \ab{tx}~:~\Tx{} be a transaction and let \ab{s}, \ab{s'}~:~\LState{} be
       ledger states.
       Suppose the \AgdaField{txid} of \ab{tx} is not in the
-      (first projection of) the domain of the \UTxO{} map of \ab{s} and suppose
+      domain of the \UTxO{} map of \ab{s} and suppose
       \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}.  Then,
       the value of \ab{s} is equal to the value of \ab{s'}.  In other terms,
       \\[4pt]
       \AgdaFunction{getCoin}~\ab{s} $≡$ \AgdaFunction{getCoin}~\ab{s'}.
     \item \textit{Formally}.
+\begin{AgdaMultiCode}
 \begin{code}
   LEDGER-pov :  {Γ     : LEnv}
                 {s s'  : LState}
-                → FreshTx tx s
+                → txid ∉ mapˢ proj₁ (dom (UTxOState.utxo (LState.utxoSt s)))
                 → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
                 → getCoin s ≡ getCoin s'
 \end{code}
+\end{AgdaMultiCode}
     \item \textit{Proof}. See the
       \LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}
       module in the \href{\repourl}{formal ledger repository}.

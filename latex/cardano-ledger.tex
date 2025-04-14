@@ -33,34 +33,8 @@
 \includeAgda{Ledger/Ratify}
 \includeAgda{Ledger/Epoch}
 \includeAgda{Ledger/Chain}
+\includeAgda{Ledger/Properties}
 
-\section{Properties}
-This section presents the properties of the ledger that we have formally proved in
-Agda or plan to do so in the near future.  We indicate
-in which Agda module each property is formally stated and (possibly) proved.
-A ``Claim'' is a property that is not yet proved, while a ``Theorem'' is one
-for which we have a formal proof.
-
-\subsection{Preservation of Value}
-\inputAgda{Ledger/Utxo/Properties/PoV}
-\inputAgda{Ledger/Certs/Properties/PoV}
-\inputAgda{Ledger/Ledger/Properties/PoV}
-
-\subsection{Invariance Properties}
-\inputAgda{Ledger/Ledger/Properties/GovDepsMatch}
-\inputAgda{Ledger/Epoch/Properties/GovDepsMatch}
-\inputAgda{Ledger/Chain/Properties/GovDepsMatch}
-\inputAgda{Ledger/Chain/Properties/ActionDepsEqualActionsProp}
-\inputAgda{Ledger/Chain/Properties/DomRwdsEqualCredDeps}
-\inputAgda{Ledger/Chain/Properties/PParamsWellFormed}
-
-\subsection{Minimum Spending Conditions}
-\inputAgda{Ledger/Utxo/Properties/MinSpend}
-
-\subsection{Miscellaneous Properties}
-\inputAgda{Ledger/GovernanceActions/Properties/ProposalChangePP}
-\inputAgda{Ledger/Chain/Properties/EpochStep}
-\inputAgda{Ledger/Utxo/Properties/CredDepsEqualDomRwds}
 \clearpage
 
 \addcontentsline{toc}{section}{References}
