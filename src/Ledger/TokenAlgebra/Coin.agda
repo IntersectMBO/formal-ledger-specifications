@@ -17,7 +17,6 @@ Coin-TokenAlgebra = λ where
   .inject                     → id
   .policies                   → λ _ → ∅
   .size                       → λ x → 1 -- there is only ada in this token algebra
-  ._≤ᵗ_                       → _≤_
   .AssetName                  → String
   .specialAsset               → "Ada"
   .property                   → λ _ → refl
