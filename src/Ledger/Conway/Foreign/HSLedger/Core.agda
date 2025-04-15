@@ -99,5 +99,5 @@ module Implementation where
   AuxiliaryData   = ℕ
   DocHash         = ℕ
   tokenAlgebra    = Coin-TokenAlgebra
-    where open import Ledger.TokenAlgebra.Coin
+    where open import Ledger.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)

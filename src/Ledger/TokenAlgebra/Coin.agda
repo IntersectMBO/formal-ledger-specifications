@@ -1,10 +1,12 @@
-module Ledger.TokenAlgebra.Coin where
-
+{-# OPTIONS --safe #-}
 open import Ledger.Prelude
+
+module Ledger.TokenAlgebra.Coin (X : Type) where
+
 open import Algebra.Morphism.Construct.Identity
   using (isMonoidHomomorphism)
 
-open import Ledger.TokenAlgebra ℕ
+open import Ledger.TokenAlgebra X
 
 open TokenAlgebra
 
