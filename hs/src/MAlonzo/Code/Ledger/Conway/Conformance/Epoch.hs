@@ -1542,7 +1542,7 @@ du_applyRUpd_2320 v0 v1 v2
                                                        (coe
                                                           MAlonzo.Code.Ledger.PParams.C_'10214'_'44'_'10215''7491'_154
                                                           (coe
-                                                             MAlonzo.Code.Prelude.d_posPart_56
+                                                             MAlonzo.Code.Prelude.d_posPart_58
                                                              (coe
                                                                 MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                 (coe
@@ -1552,7 +1552,7 @@ du_applyRUpd_2320 v0 v1 v2
                                                                    du_unregRU''_2370 (coe v0)
                                                                    (coe v6) (coe v26))))
                                                           (coe
-                                                             MAlonzo.Code.Prelude.d_posPart_56
+                                                             MAlonzo.Code.Prelude.d_posPart_58
                                                              (coe
                                                                 MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                 (coe v13) (coe v4))))
@@ -1563,7 +1563,7 @@ du_applyRUpd_2320 v0 v1 v2
                                                              MAlonzo.Code.Ledger.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2070
                                                              (coe v17)
                                                              (coe
-                                                                MAlonzo.Code.Prelude.d_posPart_56
+                                                                MAlonzo.Code.Prelude.d_posPart_58
                                                                 (coe
                                                                    MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                    (coe v18) (coe v5)))

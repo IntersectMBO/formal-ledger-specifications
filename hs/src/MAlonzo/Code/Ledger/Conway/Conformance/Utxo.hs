@@ -1247,7 +1247,7 @@ d_UTXO'45'premises_2400 v0 v1 v2 v3 v4
                                                 (coe
                                                    MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_24
                                                    (coe
-                                                      MAlonzo.Code.Prelude.du_'126''63'_46
+                                                      MAlonzo.Code.Prelude.du_'126''63'_48
                                                       (coe
                                                          MAlonzo.Code.Ledger.Transaction.d_txNetworkId_2618
                                                          (coe
@@ -1266,7 +1266,7 @@ d_UTXO'45'premises_2400 v0 v1 v2 v3 v4
                                                             MAlonzo.Code.Ledger.Transaction.d_globalConstants_1206
                                                             (coe v0))))
                                                    (coe
-                                                      MAlonzo.Code.Prelude.du_'126''63'_46
+                                                      MAlonzo.Code.Prelude.du_'126''63'_48
                                                       (coe
                                                          MAlonzo.Code.Ledger.Transaction.d_curTreasury_2620
                                                          (coe

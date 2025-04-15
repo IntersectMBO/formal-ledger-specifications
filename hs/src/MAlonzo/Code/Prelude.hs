@@ -24,6 +24,7 @@ import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Data.Integer.Base
+import qualified MAlonzo.Code.Data.Integer.Literals
 import qualified MAlonzo.Code.Data.Maybe.Relation.Binary.Connected
 import qualified MAlonzo.Code.Data.Nat.Literals
 import qualified MAlonzo.Code.Data.Rational.Literals
@@ -62,27 +63,31 @@ d_'8707''8322''45'syntax_24 = erased
 -- Prelude.Number-ℕ
 d_Number'45'ℕ_32 :: MAlonzo.Code.Agda.Builtin.FromNat.T_Number_10
 d_Number'45'ℕ_32 = coe MAlonzo.Code.Data.Nat.Literals.d_number_6
+-- Prelude.Number-ℤ
+d_Number'45'ℤ_34 :: MAlonzo.Code.Agda.Builtin.FromNat.T_Number_10
+d_Number'45'ℤ_34
+  = coe MAlonzo.Code.Data.Integer.Literals.d_number_6
 -- Prelude.Number-ℚ
-d_Number'45'ℚ_34 :: MAlonzo.Code.Agda.Builtin.FromNat.T_Number_10
-d_Number'45'ℚ_34
+d_Number'45'ℚ_36 :: MAlonzo.Code.Agda.Builtin.FromNat.T_Number_10
+d_Number'45'ℚ_36
   = coe MAlonzo.Code.Data.Rational.Literals.d_number_10
 -- Prelude._~_
-d__'126'__38 :: () -> Maybe AgdaAny -> Maybe AgdaAny -> ()
-d__'126'__38 = erased
+d__'126'__40 :: () -> Maybe AgdaAny -> Maybe AgdaAny -> ()
+d__'126'__40 = erased
 -- Prelude.~?
-d_'126''63'_46 ::
+d_'126''63'_48 ::
   () ->
   Maybe AgdaAny ->
   Maybe AgdaAny ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-d_'126''63'_46 ~v0 v1 v2 v3 = du_'126''63'_46 v1 v2 v3
-du_'126''63'_46 ::
+d_'126''63'_48 ~v0 v1 v2 v3 = du_'126''63'_48 v1 v2 v3
+du_'126''63'_48 ::
   Maybe AgdaAny ->
   Maybe AgdaAny ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
-du_'126''63'_46 v0 v1 v2
+du_'126''63'_48 v0 v1 v2
   = coe
       MAlonzo.Code.Class.Decidable.Core.C_'8263'__30
       (coe
@@ -90,8 +95,8 @@ du_'126''63'_46 v0 v1 v2
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v2)) (coe v0)
          (coe v1))
 -- Prelude.posPart
-d_posPart_56 :: Integer -> Integer
-d_posPart_56 v0
+d_posPart_58 :: Integer -> Integer
+d_posPart_58 v0
   = let v1 = MAlonzo.Code.Data.Integer.Base.d_sign_24 (coe v0) in
     coe
       (case coe v1 of
@@ -100,8 +105,8 @@ d_posPart_56 v0
            -> coe MAlonzo.Code.Data.Integer.Base.d_'8739'_'8739'_18 (coe v0)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Prelude.negPart
-d_negPart_68 :: Integer -> Integer
-d_negPart_68 v0
+d_negPart_70 :: Integer -> Integer
+d_negPart_70 v0
   = let v1 = MAlonzo.Code.Data.Integer.Base.d_sign_24 (coe v0) in
     coe
       (case coe v1 of
@@ -110,7 +115,7 @@ d_negPart_68 v0
          MAlonzo.Code.Data.Sign.Base.C_'43'_10 -> coe (0 :: Integer)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Prelude.∸≡posPart⊖
-d_'8760''8801'posPart'8854'_84 ::
+d_'8760''8801'posPart'8854'_86 ::
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_'8760''8801'posPart'8854'_84 = erased
+d_'8760''8801'posPart'8854'_86 = erased
