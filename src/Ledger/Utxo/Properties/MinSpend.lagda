@@ -129,12 +129,18 @@ module _ -- ASSUMPTION --
 
   \begin{itemize}
     \item \textit{Informally}.  
-      Let \ab{tx}~:~\Tx{} be a valid transaction and let \ab{utxoSt},
-      \ab{utxoSt'}~:~\UTxOState{} be two UTxO states such that
-      \ab{utxoSt}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{utxoSt'}.
-      Then the coin consumed by \ab{tx} is at least the sum of the governance action deposits
-      of the proposals in \ab{tx}.
-
+      Let \ab{tx}~:~\Tx{} be a valid transaction and let \AgdaFunction{txcerts} be its
+      list of \DCert{}s.
+      Denote by
+      \AgdaFunction{noRefundCert}~\AgdaFunction{txcerts} the assertion that no
+      element in \AgdaFunction{txcerts} is one of the two refund types
+      (i.e., an element of \ab{l} is neither a \dereg{} nor a \deregdrep{}).
+      \\[4pt]
+      Let \ab{utxoSt}, \ab{utxoSt'}~:~\UTxOState{} be two UTxO states.
+      If \ab{utxoSt}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{utxoSt'}
+      and if \AgdaFunction{noRefundCert}~\AgdaFunction{txcerts},
+      then the coin consumed by \ab{tx} is at least the sum of the governance action
+      deposits of the proposals in \ab{tx}.
 
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
@@ -143,16 +149,18 @@ module _ -- ASSUMPTION --
           { tx       : Tx         }
           { utxoSt   : UTxOState  }
           { utxoSt'  : UTxOState  }
-          → (let pp = UTxOEnv.pparams Γ)
+
+        (let pp = UTxOEnv.pparams Γ)
 \end{code}
 \begin{code}[hide]
-          (open Tx tx)
-          (open TxBody body)
+        (open Tx tx)
+        (open TxBody body)
 \end{code}
 \begin{code}
-          → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
-          → noRefundCert txcerts
-          → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
+
+        → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
+        → noRefundCert txcerts
+        → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
@@ -200,14 +208,6 @@ module _ -- ASSUMPTION --
     balIn = balance (st ∣ txins)
     balOut = balance (outs txb)
 \end{code}
-  \item \textit{Remarks}.
-    \begin{enumerate}
-      \item For \ab{l} a list of \DCert{} certificates, let
-        \AgdaFunction{noRefundCert}~\ab{l} denote the assertion that no element in \ab{l} is
-        one of the two refund types (i.e., an element of \ab{l} is neither a \dereg{} nor a
-        \deregdrep{}).
-      \item Let \ab{pp} be the protocol parameters of the UTxO environment Γ.
-    \end{enumerate}
   \end{itemize}
 \end{theorem}
 
@@ -216,8 +216,9 @@ module _ -- ASSUMPTION --
   spend lower bound for proposals%
   ]\
 
-  \textit{Preliminary remarks}.
   \begin{itemize}
+  \item \textit{Preliminary remarks}.
+  \begin{enumerate}
     \item Define \AgdaFunction{noRefundCert}~\ab{l} and \ab{pp} as in \cref{thm:minspend}.
     \item Given a ledger state \ab{ls} and a transaction \ab{tx}, denote by
       \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that there exists ledger state
@@ -241,48 +242,45 @@ module _
                            ∑[ x ← d₁ ∪⁺ d₂ ] x ≡ ∑[ x ← d₁ ] x ◇ ∑[ x ← d₂ ] x )
 \end{code}
   \end{AgdaMultiCode}
-  \end{itemize}
-  \textit{Property}.
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \ab{tx}~:~\Tx{} be a valid transaction and let \ab{cs}~:~\ChainState{} be a chain state.
-      If the condition \AgdaFunction{validTxIn₂}~\ab{tx} (described above) holds,
-      then the coin consumed by \ab{tx} is at least the sum of the governance action
-      deposits of the proposals in \ab{tx}.
+  \end{enumerate}
+  \item \textit{Informally}.
+    Let \ab{tx}~:~\Tx{} be a valid transaction and let \ab{cs}~:~\ChainState{} be a chain state.
+    If the condition \AgdaFunction{validTxIn₂}~\ab{tx} (described above) holds,
+    then the coin consumed by \ab{tx} is at least the sum of the governance action
+    deposits of the proposals in \ab{tx}.
 
-    \item \textit{Formally}.
+  \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}[hide]
   where
   open import Ledger.Utxow txs abs
+  open ChainState; open NewEpochState; open EpochState
+  open LState; open EnactState;  open PParams
 \end{code}
 \begin{code}
-  propose-minSpend :
-    { cs     : ChainState }
-    { slot   : Slot }
-    { tx     : Tx }
-    { valid  : validTxIn₂ cs slot tx }
-    ( let  ne      = cs .ChainState.newEpochState
-           ep      = ne .NewEpochState.epochState 
-           ls      = ep .EpochState.ls
-           es      = ep .EpochState.es
-           pp      = es .EnactState.pparams .proj₁
-           utxoSt  = ls .LState.utxoSt )
+  propose-minSpend :  { slot  : Slot }
+                      { tx    : Tx }
+                      { cs    : ChainState }
+
+      ( let  pp      = cs .newEpochState .epochState .es .pparams .proj₁
+             utxoSt  = cs .newEpochState .epochState .ls .utxoSt )
 \end{code}
 \begin{code}[hide]
-    ( open Tx tx )
-    ( open TxBody body )
+      ( open Tx tx )
+      ( open TxBody body )
 \end{code}
 \begin{code}
-    → noRefundCert txcerts
-    → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
+
+      → noRefundCert txcerts
+      → validTxIn₂ cs slot tx
+      → coin (consumed pp utxoSt body) ≥ length txprop * pp .govActionDeposit 
 \end{code}
 \end{AgdaMultiCode}
-    \item \textit{Proof}. See the
-      \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-      in the \href{\repourl}{formal ledger repository}.
+  \item \textit{Proof}. See the
+    \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
+    in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
-  propose-minSpend {cs} {slot} {tx} {valid} noRef = case valid of λ where
+  propose-minSpend noRef valid = case valid of λ where
     (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
     (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
 

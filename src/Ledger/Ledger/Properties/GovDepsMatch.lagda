@@ -36,7 +36,7 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
       \ab{s} \AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}.
       Let \ab{utxoSt} and \ab{utxoSt'} be their respective \UTxOState{}s and let \ab{govSt}
       and \ab{govSt'} be their respective \GovState{}s.
-      If the governance action deposits of \ab{utxoSt} are the same as those
+      If the governance action deposits of \ab{utxoSt} are equal those
       of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
       In other terms, if \AgdaFunction{govDepsMatch}~\ab{s}, then \AgdaFunction{govDepsMatch}~\ab{s'}. 
     \item \textit{Formally}.

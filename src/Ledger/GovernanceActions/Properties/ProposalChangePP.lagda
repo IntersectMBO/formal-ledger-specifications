@@ -22,18 +22,20 @@ instance
 
   \begin{itemize}
     \item \textit{Informally}.
-      Suppose \ab{p} is a governance proposal (\GovProposal{}) whose \AgdaField{action} :
-      \GovAction{} has \GovActionType{} \ChangePParams{} and \GovActionData{} \ab{pu}
-      (``parameter update'').  Then the set \AgdaField{updateGroups}~\ab{pu} is nonempty.
+      Let \ab{p}~:~\GovProposal{} be a governance proposal and suppose the \GovActionType{} 
+      of \ab{p}~\AgdaField{.action} is \ChangePParams{}.  If the data
+      field of \ab{p}---that is \ab{pu} = \ab{p}~\AgdaField{.action}~\AgdaField{.gaData}---is
+      denoted by \ab{pu} (``parameter update''), then the set
+      \AgdaField{updateGroups}~\ab{pu} is nonempty.
     \item \textit{Formally}.
 \begin{code}
 ProposalChangePPHasGroup :  {tx  : Tx}
                             {p   : GovProposal}
-                            {pu  : PParamsUpdate}
+                            (pu  : PParamsUpdate)
                             → p ∈ Tx.body tx
                             → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
                             → Type
-ProposalChangePPHasGroup {tx}{p}{pu} _ _ = updateGroups pu ≢ ∅
+ProposalChangePPHasGroup pu _ _ = updateGroups pu ≢ ∅
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{GovernanceActions/Properties/ProposalChangePP.lagda}{\AgdaModule{ProposalChangePP}} module

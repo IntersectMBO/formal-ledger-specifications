@@ -26,6 +26,18 @@ open import Ledger.Certs govStructure
 
 -- GA Deposits Invariance Property for CHAIN STS -----------------------------------------------
 module _
+  { b   : Block }
+  { nes : NewEpochState}
+  { cs  : ChainState}
+  where
+  open Block b; open ChainState cs
+  open NewEpochState newEpochState hiding (lastEpoch) renaming (epochState to csEpochState)
+  open NewEpochState nes renaming (epochState to nesEpochState; lastEpoch to nesLastEpoch; ru to nesRu)
+  open EpochState nesEpochState renaming (ls to nesLState) 
+  open EPOCH-Body csEpochState renaming (epsLState to csLState)
+  open EnactState ens using (pparams)
+  open LState
+  pp = pparams .proj₁
 \end{code}
 
 \begin{theorem}[%
@@ -36,49 +48,47 @@ module _
 
   \begin{itemize}
     \item \textit{Informally}.
-      Fix a \ChainState{} \ab{cs} and let \ab{cs'} be the updated chain state,
-      \ab{cs'} = \AgdaFunction{updateChainState}~\ab{cs}~\ab{nes}.
-      Let \ab{csLState} and \ab{csLState'} be the respective ledger states of these
-      chain states, let
-      \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of \ab{csLState}
-      and \ab{csLState'} and let \ab{govSt} and \ab{govSt'} be their respective \GovState{}s.
+      Fix a \Block{} \ab{b}, a \NewEpochState{} \ab{nes}, and a \ChainState{} \ab{cs}.
+      Let the \AgdaField{lastEpoch}, \AgdaField{ls}, and \AgdaField{ru}
+      fields of \ab{nes} be denoted by \AgdaFunction{nesLastEpoch}, \AgdaFunction{nesLState}, and
+      \AgdaFunction{nesRu}, respectively. Let \AgdaFunction{csLState} be the ledger state of \ab{cs}.
       \\[4pt]
-      Suppose that the conditions described above hold and that \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'}.
-      If the governance action deposits of \ab{utxoSt} are the same as those
-      of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
+      Recall, a \ChainState{} has just one field, a \NewEpochState{}.
+      Consider the chain state defined as follows:
+\begin{code}
+  cs' : ChainState
+  cs' .newEpochState = record { lastEpoch   = nesLastEpoch
+                              ; epochState  = record csEpochState {ls = nesLState}
+                              ; ru          = nesRu }
+\end{code}
+      That is \AgdaFunction{cs'} is essentially \ab{nes}, but the \EpochState{} \textit{field} is
+      set to the \AgdaField{epochState} of \ab{cs} with the exception of the
+      \LState{} \textit{field}, which is set to that of \ab{nes}.  Keep in mind that
+      the ledger state of \AgdaFunction{cs} is \AgdaFunction{nesLState}.
+      \\[4pt]
+      Let \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of the ledger
+      states of \ab{cs} and \AgdaFunction{cs'}, respectively, and let \ab{govSt} and \ab{govSt'}
+      be their respective \GovState{}s.
+      \\[4pt]
+      Assume the following conditions hold:
+      \begin{itemize}
+      \item the \ab{ratify-removed} hypothesis (described in \cref{thm:EpochGovDepsMatch});
+      \item the total reference script size of \ab{csLState} is not greater than the
+        maximum allowed size per block (as specified in \PParams{}),
+      \item \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaFunction{cs'}. 
+      \end{itemize}
+      Under these conditions, if the governance action deposits of \ab{utxoSt}
+      equal those of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
       In other terms,
-      \AgdaFunction{govDepsMatch}~\ab{csLState} implies \AgdaFunction{govDepsMatch}~(\csLStates).
+      \AgdaFunction{govDepsMatch}~\AgdaFunction{csLState} implies \AgdaFunction{govDepsMatch}~\AgdaFunction{nesState}.
     \item \textit{Formally}.
-\begin{AgdaMultiCode}
 \begin{code}
-  { b   : Block }
-  { cs  : ChainState}
-\end{code}
-\begin{code}[hide]
-  where
-  open Block b; open ChainState cs
-  open NewEpochState newEpochState
-  open EPOCH-Body epochState renaming (epsLState to csLState)
-  open EnactState ens using (pparams)
-  pp = pparams .proj₁
-\end{code}
-\begin{code}
-  updateChainState : ChainState → NewEpochState → ChainState
-  updateChainState s nes .newEpochState .NewEpochState.lastEpoch = NewEpochState.lastEpoch nes
-  updateChainState s nes .newEpochState .NewEpochState.epochState =
-    record (NewEpochState.epochState (ChainState.newEpochState s)) {ls = EpochState.ls (NewEpochState.epochState nes)}
-  updateChainState s nes .newEpochState .NewEpochState.ru = NewEpochState.ru nes
-
   CHAIN-govDepsMatch :
-      {nes  : NewEpochState}
-      (let cs' = updateChainState cs nes)
-      →  map (GovActionDeposit ∘ proj₁) removed'
-         ⊆ map proj₁ (UTxOState.deposits (LState.utxoSt csLState) ˢ)
-      →  totalRefScriptsSize csLState ts ≤ (PParams.maxRefScriptSizePerBlock pp)
-      →  tt ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
-      →  govDepsMatch csLState → govDepsMatch (EpochState.ls (NewEpochState.epochState (ChainState.newEpochState cs')))
+    map (GovActionDeposit ∘ proj₁) removed' ⊆ map proj₁ (csLState .utxoSt .deposits ˢ)
+    →  totalRefScriptsSize csLState ts ≤ (PParams.maxRefScriptSizePerBlock pp)
+    →  tt ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
+    →  govDepsMatch csLState → govDepsMatch nesLState
 \end{code}
-\end{AgdaMultiCode}
     \item \textit{Proof}.  See the
       \LedgerMod{\ChainPropGov.lagda}{\AgdaModule{\ChainPropGov{}}}
        module in the \href{\repourl}{formal ledger repository}.
@@ -95,20 +105,5 @@ module _
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch {ratify-removed = rrm} eps₁→eps₂
 \end{code}
-    \item \textit{Remarks}.
-      \begin{enumerate}
-        \item A \ChainState{} has just one field, \ab{newEpochState}~:~\NewEpochState{}.
-        \item A \NewEpochState{} has three fields, \ab{lastEpoch}~:~\Epoch{},
-          \ab{epochState}~:~\EpochState{}, and \ab{ru}~:~\Maybe{}~\RewardUpdate{} (not relevant here).
-        \item An \EpochState{} has five fields, \ab{acnt}~:~\Acnt{},
-          \ab{ss}~:~\Snapshots{}, \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and
-          \ab{fut}~:~\RatifyState{} (not relevant here).
-          We focus on the \ab{ls} field, which is an \LState{}.
-        \item An inhabitant of the \LState{} type has three fields; the two 
-          relevant here are \ab{utxoSt}~:~\UTxOState{} and \ab{govSt}~:~\GovState{}.
-          The present property asserts that the \AgdaDatatype{CHAIN} rule preserves a
-          certain relation between the \ab{utxoSt} and \ab{govSt} fields.
-        \item The crucial point here is that the chain state will be updated.
-      \end{enumerate}
   \end{itemize}
 \end{theorem}

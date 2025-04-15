@@ -67,10 +67,10 @@ module EPOCH-PROPS {eps : EpochState} where
       \ab{e}~:~\Epoch{} be an epoch. Let \AgdaField{epsLState} and
       \AgdaField{epsLState'} be the ledger states of \ab{eps} and \ab{eps'}.
       If \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}, then
-      (under certain conditions) \govDepsMatch{}~\AgdaField{epsLState}
+      (under a certain special condition) \govDepsMatch{}~\AgdaField{epsLState}
       implies \govDepsMatch{}~\AgdaField{epsLState'}.
     \\[6pt]
-    To understand the special condition under which this holds, first recall that
+    To understand the special condition under which we prove this property, first recall that
     \begin{enumerate}
       \item \EpochState{} has five fields; the three relevant here are
         \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and \ab{fut}~:~\RatifyState{};
@@ -79,17 +79,17 @@ module EPOCH-PROPS {eps : EpochState} where
       \item \RatifyState{} has three fields; the two relevant here are
         \ab{es}~:~\EnactState{} and \ab{removed}~:~$ℙ$(\GovActionID{}~×~\GovActionState{}).
     \end{enumerate}
-    Next, let \AgdaFunction{removed'} be the union of
+    Let \AgdaFunction{removed'} be the union of
     \begin{itemize}
       \item the governance actions in the \AgdaField{removed} field of the ratify
     state of \ab{eps}, and
       \item the orphaned governance actions in \ab{govSt}, the \GovState{} of the
         \LState{} of \ab{eps}.
     \end{itemize}
-    Finally, let $\mathcal{G}$ be the set
+    Let $\mathcal{G}$ be the set
     $\{\mbox{\GovActionDeposit{}~\ab{id}} : \mbox{\ab{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
-    We can now state the special hypothesis under which \govDepsMatch{} is an
-    invariant of the \EPOCH{} rule: $\mathcal{G}$ is a subset of the set of \ab{deposits utxoSt},
+    The special hypothesis under which \govDepsMatch{} is an invariant of the
+    \EPOCH{} rule is the following: $\mathcal{G}$ is a subset of the set of \ab{deposits utxoSt},
     the deposits of the \UTxOState{} of \AgdaField{epsLState}. 
     \item \textit{Formally}.
 \begin{code}
@@ -99,7 +99,7 @@ module EPOCH-PROPS {eps : EpochState} where
                         {e : Epoch}
 \end{code}
 \begin{code}[hide]
-                        (let epsLState' = eps' .ls)
+                        (open EpochState eps' renaming (ls to epsLState'))
 \end{code}
 \begin{code}
                         → tt ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
