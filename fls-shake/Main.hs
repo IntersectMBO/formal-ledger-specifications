@@ -12,7 +12,7 @@ Portability : POSIX
 module Main where
 
 import Development.Shake
-import Development.Shake.FilePath hiding (takeDirectory)
+import Development.Shake.FilePath
 import Control.Monad (when, forM_)
 import Data.List (sort, isPrefixOf)
 import Data.Typeable (Typeable)
@@ -74,22 +74,22 @@ lagda2tex =
 -- The result is placed in _build/PROJ/latex.pp
 tex2texPP :: Rules ()
 tex2texPP =
-  -- _build/conway-ledger/latex.pp/Ledger/Epoch.tex
+  -- _build/conway-ledger/latex.pp/Ledger/*.tex
   _build </> "*" </> latexPP <//> "*.tex" %> \out -> do
-    let texfile = _latexGen </> dropDirectory 3 out
-    need [ texfile ]
+    let texfile = dropDirectory 3 out
+    need [ _latexGen </> texfile ]
 
     -- agda2vec (used by Cardano and Conway)
     need [ "scripts/agda2vec.py" ]
     if texfile `elem` vertVecFiles
-      then cmd_ "./scripts/agda2vec.py" [texfile, out]
-      else copyFile' texfile out
+      then cmd_ "python ./scripts/agda2vec.py" [_latexGen </> texfile, out]
+      else copyFile' (_latexGen </> texfile) out
 
     -- hldiff (used by Conway)
-    let dir = takeDirectory 2 out
+    let dir = dropDirectory 1 out
     need [ "scripts/hldiff.py", "latex/hldiff_list.txt" ]
-    if dir == "conway" && texfile `elem` hlFiles
-      then cmd_ "./scripts/hldiff.py" [out, out, "latex/hldiff_list.tex"]
+    if "conway" `isPrefixOf` dir && texfile `elem` hlFiles
+      then cmd_ "python ./scripts/hldiff.py" [out, out, "latex/hldiff_list.txt"]
       else return ()
 
 -- | Generate a pdf file in PROJ/latex.out from a tex file
@@ -394,6 +394,5 @@ applyN 1 f = f
 applyN n f = f . applyN (n - 1) f
 
 -- | Nary versions of {drop,take}Directory1
-dropDirectory, takeDirectory :: Int -> FilePath -> FilePath
+dropDirectory :: Int -> FilePath -> FilePath
 dropDirectory = flip applyN dropDirectory1
-takeDirectory = flip applyN takeDirectory1
