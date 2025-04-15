@@ -176,7 +176,7 @@ We are now in a position to define the commutative monoid.
     ; inject                    = coin↪totalMap
     ; policies                  = policies
     ; size                      = size
-    ; property                  = compose-to-id
+    ; coin∘inject≗id            = compose-to-id
     ; coinIsMonoidHomomorphism  = CoinMonHom
     }
     where

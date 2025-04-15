@@ -19,5 +19,5 @@ Coin-TokenAlgebra = λ where
   .inject                     → id
   .policies                   → λ _ → ∅
   .size                       → λ x → 1 -- there is only ada in this token algebra
-  .property                   → λ _ → refl
+  .coin∘inject≗id             → λ _ → refl
   .coinIsMonoidHomomorphism   → isMonoidHomomorphism _ refl
