@@ -93,28 +93,11 @@ module Implementation where
   Language     = ⊤
   LangDepView  = ⊤
   Prices       = ⊤
-  open import Ledger.TokenAlgebra ℕ
-  coinTokenAlgebra : TokenAlgebra
-  coinTokenAlgebra = λ where
-    .Value                      → ℕ
-    .Value-CommutativeMonoid    → it
-      -- ^ Agda bug? Without this line, `coinIsMonoidHomomorphism` doesn't type check anymore
-    .coin                       → id
-    .inject                     → id
-    .policies                   → λ _ → ∅
-    .size                       → λ x → 1 -- there is only ada in this token algebra
-    ._≤ᵗ_                       → _≤_
-    .AssetName                  → String
-    .specialAsset               → "Ada"
-    .property                   → λ _ → refl
-    .coinIsMonoidHomomorphism   → Id.isMonoidHomomorphism _ refl
-   where open TokenAlgebra
-         open Algebra.Morphism.IsMonoidHomomorphism
-         open Algebra.Morphism.IsMagmaHomomorphism
-         import Algebra.Morphism.Construct.Identity as Id
 
   TxId            = ℕ
   Ix              = ℕ
   AuxiliaryData   = ℕ
   DocHash         = ℕ
-  tokenAlgebra    = coinTokenAlgebra
+  tokenAlgebra    = Coin-TokenAlgebra
+    where open import Ledger.TokenAlgebra.Coin
+            using (Coin-TokenAlgebra)
