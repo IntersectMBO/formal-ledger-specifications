@@ -51,8 +51,6 @@ record TokenAlgebra : Type₁ where
     inject                    : Coin → Value
     policies                  : Value → ℙ PolicyId
     size                      : Value → MemoryEstimate
-    AssetName                 : Set
-    specialAsset              : AssetName
     property                  : coin ∘ inject ≗ id -- FIXME: rename!
     coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 
