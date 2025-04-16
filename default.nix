@@ -172,8 +172,9 @@ in rec
     version = "0.1";
     src = addToAgdaSrc [ ./hs-src ];
     meta = { };
-    buildInputs = [ agdaWithDeps fls-shake hpack ];
+    buildInputs = [ agdaWithDeps fls-shake haskellPackages.hpack ];
     buildPhase = ''
+      export PATH=${pkgs.hpack}/bin/:$PATH
       fls-shake --trace hs
     '';
     installPhase = ''
