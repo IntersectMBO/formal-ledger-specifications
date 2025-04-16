@@ -15,7 +15,10 @@ open import Ledger.GovernanceActions
 open import Ledger.Certs
 
 open import Ledger.TokenAlgebra
+open import Ledger.TokenAlgebra.Coin
 open import Ledger.TokenAlgebra.ValueSet
+open import Ledger.TokenAlgebra.ValueVector
+
 open import Ledger.Transaction
 
 open import Ledger.Utxo

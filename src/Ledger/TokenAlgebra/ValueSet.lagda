@@ -72,8 +72,6 @@ module _
   ⦃ DecEq-PolicyId  : DecEq PolicyId ⦄
   ⦃ DecEq-AssetName : DecEq AssetName ⦄
   ⦃ DecEq-Tot : DecEq (AssetId ⇒ ℕ) ⦄
-  (Dec-lookup≤ : ∀ {u v : AssetId ⇒ ℕ}
-    → (∀ {a p q} → lookup u (a , p) ≤ lookup v (a , q)) ⁇)
 \end{code}
 \begin{code}[hide]
   where
@@ -178,12 +176,8 @@ We are now in a position to define the commutative monoid.
     ; inject                    = coin↪totalMap
     ; policies                  = policies
     ; size                      = size
-    ; _≤ᵗ_                      = leq
-    ; AssetName                 = AssetName
-    ; specialAsset              = specialAsset
-    ; property                  = compose-to-id
+    ; coin∘inject≗id            = compose-to-id
     ; coinIsMonoidHomomorphism  = CoinMonHom
-    ; Dec-≤ᵗ = λ {x}{y} → Dec-lookup≤ {x}{y}
     }
     where
 
@@ -200,9 +194,6 @@ We are now in a position to define the commutative monoid.
 
     policies : AssetId ⇒ Quantity → ℙ PolicyId
     policies tm = mapˢ proj₁ $ dom tm
-
-    leq : AssetId ⇒ Quantity → AssetId ⇒ Quantity → Type
-    leq u v = ∀ {a}{p}{q} → lookup u (a , p) ≤ lookup v (a , q)
 
     compose-to-id : totalMap↠coin ∘ coin↪totalMap ≗ id
     compose-to-id _ = lookup-update-id ι
