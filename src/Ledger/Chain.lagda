@@ -31,6 +31,12 @@ record ChainState : Type where
   field
     newEpochState  : NewEpochState
 
+getEnactState : ChainState → EnactState
+getEnactState = EpochState.es ∘ NewEpochState.epochState ∘ ChainState.newEpochState
+
+getLastEpoch : ChainState → Epoch
+getLastEpoch = NewEpochState.lastEpoch ∘ ChainState.newEpochState
+
 record Block : Type where
   field
     ts    : List Tx

@@ -145,29 +145,29 @@ module _ -- ASSUMPTION --
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-  gmsc :  { Γ        : UTxOEnv    }
-          { tx       : Tx         }
-          { utxoSt   : UTxOState  }
-          { utxoSt'  : UTxOState  }
+  utxoMinSpend :  { Γ        : UTxOEnv    }
+                  { tx       : Tx         }
+                  { utxoSt   : UTxOState  }
+                  { utxoSt'  : UTxOState  }
 
-        (let pp = UTxOEnv.pparams Γ)
+                  (let pp = UTxOEnv.pparams Γ)
 \end{code}
 \begin{code}[hide]
-        (open Tx tx)
-        (open TxBody body)
+                  (open Tx tx)
+                  (open TxBody body)
 \end{code}
 \begin{code}
 
-        → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
-        → noRefundCert txcerts
-        → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
+      → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
+      → noRefundCert txcerts
+      → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
       \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
       in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
-  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
+  utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
     length txprop * govActionDeposit
       ≡˘⟨ updatePropDeps≡ txprop ⟩
@@ -262,18 +262,18 @@ module _
                       { tx    : Tx }
                       { cs    : ChainState }
 
-      ( let  pp      = cs .newEpochState .epochState .es .pparams .proj₁
-             utxoSt  = cs .newEpochState .epochState .ls .utxoSt )
+    ( let  pp      = cs .newEpochState .epochState .es .pparams .proj₁
+           utxoSt  = cs .newEpochState .epochState .ls .utxoSt )
 \end{code}
 \begin{code}[hide]
-      ( open Tx tx )
-      ( open TxBody body )
+    ( open Tx tx )
+    ( open TxBody body )
 \end{code}
 \begin{code}
 
-      → noRefundCert txcerts
-      → validTxIn₂ cs slot tx
-      → coin (consumed pp utxoSt body) ≥ length txprop * pp .govActionDeposit 
+    → noRefundCert txcerts
+    → validTxIn₂ cs slot tx
+    → coin (consumed pp utxoSt body) ≥ length txprop * pp .govActionDeposit 
 \end{code}
 \end{AgdaMultiCode}
   \item \textit{Proof}. See the
@@ -281,8 +281,8 @@ module _
     in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   propose-minSpend noRef valid = case valid of λ where
-    (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → gmsc indexedSum-∪⁺-hom x noRef
-    (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → gmsc indexedSum-∪⁺-hom x noRef
+    (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → utxoMinSpend indexedSum-∪⁺-hom x noRef
+    (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → utxoMinSpend indexedSum-∪⁺-hom x noRef
 
 \end{code}
   \end{itemize}

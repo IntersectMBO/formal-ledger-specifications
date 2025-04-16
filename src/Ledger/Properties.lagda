@@ -105,43 +105,6 @@ validTx₁ tx = ∃[ s ] validTxIn₁ s tx
 ChainInvariant : ∀ {a} → (ChainState → Type a) → Type a
 ChainInvariant P = ∀ b s s' → _ ⊢ s ⇀⦇ b ,CHAIN⦈ s' → P s → P s'
 
--- Transaction properties
-
-
--- Block properties
-
-module _ (s : ChainState) (open ChainState s)
-         {b} (let open Block b)
-  where
-  open NewEpochState newEpochState
-  open EpochState epochState
-
-  isNewEpochBlock : Type
-  isNewEpochBlock = epoch slot ≡ sucᵉ lastEpoch
-
-  module _ (valid : validBlockIn s b) where 
-
-    newChainState : ChainState
-    newChainState = proj₁ valid
-
-    getEnactState : ChainState → EnactState
-    getEnactState = EpochState.es ∘ NewEpochState.epochState ∘ ChainState.newEpochState
-
-
-    -- PROPERTY (TO PROVE) --
-    enact-change⇒newEpoch : Type
-    enact-change⇒newEpoch = es ≢ getEnactState newChainState → epoch slot ≡ sucᵉ lastEpoch
-    -- Let
-    --   * s   = a ChainState,
-    --   * nes = the NewEpochState of s,
-    --   * es  = the EpochState of nes (= the EpochState of s),
-    --   * le  = the lastEpoch of nes.
-    --
-    -- Suppose there exists a chain state s' with EpochState es' such that 
-    -- s ⇀⦇ b ,CHAIN⦈ s'.  Then the following implication holds:
-    -- if es ≢ es' then the epoch of the slot of b is sucᵉ le.
-
-
 -- Invariant properties
 
 module _ (s : ChainState) where
