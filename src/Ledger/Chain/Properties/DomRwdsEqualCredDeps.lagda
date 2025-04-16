@@ -4,12 +4,19 @@
 open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
-import Ledger.Certs
 
 module Ledger.Chain.Properties.DomRwdsEqualCredDeps
-  (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
+  (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
+open import Ledger.Chain txs abs
+open import Ledger.Enact govStructure
+open import Ledger.Ledger txs abs
+open import Ledger.Properties txs abs
+open import Ledger.Utxo txs abs
+open import Ledger.Epoch txs abs
+open import Ledger.Certs govStructure
+
 \end{code}
 
 \begin{claim}[%
@@ -23,11 +30,22 @@ module Ledger.Chain.Properties.DomRwdsEqualCredDeps
   \begin{verbatim}
     ChainInvariant dom-rwds≡credDeposits
   \end{verbatim}
-% \begin{AgdaMultiCode}
-% \begin{code}
-% -- formal statement and proof go here
-% \end{code}
-% \end{AgdaMultiCode}
+\begin{code}
+module _ (s : ChainState) where
+  open ChainState s; open NewEpochState newEpochState; open EpochState epochState
+  open LState ls
+  
+  -- PROPERTY (TO PROVE) --
+  open EnactState es renaming (pparams to pparams')
+  open CertState certState; open DState dState
+  dom-rwds≡credDeposits : Type
+  dom-rwds≡credDeposits = filterˢ isCredDeposit (dom (UTxOState.deposits utxoSt))
+    ≡ mapˢ CredentialDeposit (dom rewards)
+
+-- PROPERTY (TO PROVE) --
+dom-rwds≡credDeposits-inv : Type
+dom-rwds≡credDeposits-inv = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ dom-rwds≡credDeposits
+\end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{Ledger.Chain.Properties.DomRwdsEqualCredDeps.lagda}{\AgdaModule{DomRwdsEqualCredDeps}} module
       of the \href{\repourl}{formal ledger repository}).

@@ -34,6 +34,9 @@ record ChainState : Type where
 getEnactState : ChainState → EnactState
 getEnactState = EpochState.es ∘ NewEpochState.epochState ∘ ChainState.newEpochState
 
+getPParams : ChainState → PParams
+getPParams = proj₁ ∘ EnactState.pparams ∘ getEnactState
+
 getLastEpoch : ChainState → Epoch
 getLastEpoch = NewEpochState.lastEpoch ∘ ChainState.newEpochState
 

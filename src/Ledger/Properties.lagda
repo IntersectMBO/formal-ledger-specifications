@@ -102,44 +102,6 @@ module _ (s : ChainState) (slot : Slot) where
 validTx₁ : Tx → Type
 validTx₁ tx = ∃[ s ] validTxIn₁ s tx
 
-ChainInvariant : ∀ {a} → (ChainState → Type a) → Type a
-ChainInvariant P = ∀ b s s' → _ ⊢ s ⇀⦇ b ,CHAIN⦈ s' → P s → P s'
-
--- Invariant properties
-
-module _ (s : ChainState) where
-  open ChainState s; open NewEpochState newEpochState; open EpochState epochState
-  open LState ls
-  
-  -- PROPERTY (TO PROVE) --
-  action-deposits≡actions-prop : Type
-  action-deposits≡actions-prop = filterˢ isGADeposit (dom (UTxOState.deposits utxoSt))
-    ≡ fromList (map (λ where (id , _) → GovActionDeposit id) govSt)
-
-  -- PROPERTY (TO PROVE) --
-  open EnactState es renaming (pparams to pparams')
-  open CertState certState; open DState dState
-  dom-rwds≡credDeposits : Type
-  dom-rwds≡credDeposits = filterˢ isCredDeposit (dom (UTxOState.deposits utxoSt))
-    ≡ mapˢ CredentialDeposit (dom rewards)
-
-  -- PROPERTY (TO PROVE) --
-  pp-wellFormed : Type
-  pp-wellFormed = paramsWellFormed (pparams' .proj₁)
-
--- PROPERTY (TO PROVE) --
-action-deposits≡actions-inv : Type
-action-deposits≡actions-inv = ChainInvariant action-deposits≡actions-prop
-
--- PROPERTY (TO PROVE) --
-dom-rwds≡credDeposits-inv : Type
-dom-rwds≡credDeposits-inv = ChainInvariant dom-rwds≡credDeposits
-
--- PROPERTY (TO PROVE) --
-pp-wellFormed-inv : Type
-pp-wellFormed-inv = ChainInvariant pp-wellFormed
-
-
 -- Epoch boundary properties
 
 module _ {Γ es e es'} (step : Γ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es') where

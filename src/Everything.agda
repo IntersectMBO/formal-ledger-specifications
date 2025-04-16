@@ -43,6 +43,5 @@ import Ledger.Chain.Properties.GovDepsMatch
 import Ledger.GovernanceActions.Properties.ProposalChangePP
 import Ledger.Chain.Properties.EpochStep
 import Ledger.Utxo.Properties.CredDepsEqualDomRwds
-import Ledger.Chain.Properties.ActionDepsEqualActionsProp
 import Ledger.Chain.Properties.DomRwdsEqualCredDeps
 import Ledger.Chain.Properties.PParamsWellFormed

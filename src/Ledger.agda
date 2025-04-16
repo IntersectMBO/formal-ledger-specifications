@@ -18,7 +18,6 @@ open import Ledger.Certs.Properties.PoV
 
 open import Ledger.Chain
 open import Ledger.Chain.Properties
-open import Ledger.Chain.Properties.ActionDepsEqualActionsProp
 open import Ledger.Chain.Properties.DomRwdsEqualCredDeps
 open import Ledger.Chain.Properties.EpochStep
 open import Ledger.Chain.Properties.GovDepsMatch
