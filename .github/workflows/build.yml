@@ -194,6 +194,6 @@ jobs:
         run: |
           cd cardano-ledger
           nix develop
-          ../formal-ledger-specifications/scripts/prepare-conf-test.sh . ../hs
+          # ../formal-ledger-specifications/scripts/prepare-conf-test.sh . ../hs
           cabal update
           cabal build cardano-ledger-conformance
