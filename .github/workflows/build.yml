@@ -189,7 +189,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: hs
-          path: hs
 
       - name: Build cardano-ledger
         run: |
