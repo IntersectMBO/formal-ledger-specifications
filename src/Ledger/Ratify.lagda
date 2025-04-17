@@ -390,12 +390,9 @@ abstract
   -- activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
   -- activeVotingStake cc dists votes =
   --   ∑[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
-
-  _/₀_ : ℕ → ℕ → ℚ
-  x /₀ 0 = 0ℚ
-  x /₀ y@(suc _) = ℤ.+ x ℚ./ y
 \end{code}
 \begin{code}
+
   getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
   getStakeDist CC    cc  sd  = constMap (filterˢ IsCC cc) 1
   getStakeDist DRep  _   sd  = filterKeys IsDRep  (sd .stakeDistr)

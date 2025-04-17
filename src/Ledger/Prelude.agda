@@ -32,6 +32,10 @@ open import Tactic.Premises public
 open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)
 
+import Data.Integer as ℤ
+import Data.Rational as ℚ
+open import Data.Rational using (ℚ)
+
 dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
 dec-de-morgan ⦃ ⁇ yes p ⦄ ¬pq = inj₂ λ q → ¬pq (p , q)
@@ -53,3 +57,9 @@ instance
 
 setToMap : ∀ {A B : Type} → ⦃ DecEq A ⦄ → ℙ (A × B) → A ⇀ B
 setToMap = fromListᵐ ∘ setToList
+
+-- division of natural numbers with completion by 0.
+abstract
+  _/₀_ : ℕ → ℕ → ℚ
+  x /₀ 0 = ℚ.0ℚ
+  x /₀ y@(suc _) = ℤ.+ x ℚ./ y
