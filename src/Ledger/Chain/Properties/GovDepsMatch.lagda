@@ -29,7 +29,7 @@ module _
   { cs  : ChainState}
   where
   open Block b; open ChainState cs
-  open NewEpochState nes renaming (epochState to nesEpochState; lastEpoch to nesLastEpoch; ru to nesRu)
+  open NewEpochState -- nes renaming (epochState to nesEpochState; lastEpoch to nesLastEpoch; ru to nesRu)
   open EPOCH-Body (getEpochState cs) renaming (epsLState to csLState)
   open EnactState ens using (pparams)
   pp = pparams .proj₁
@@ -45,18 +45,16 @@ module _
   \begin{itemize}
     \item \textit{Informally}.
       Fix a \Block{} \ab{b}, a \NewEpochState{} \ab{nes}, and a \ChainState{} \ab{cs}.
-      Let the \AgdaField{lastEpoch} and \AgdaField{ru}
-      fields of \ab{nes} be denoted by \AgdaFunction{nesLastEpoch}, and
-      \AgdaFunction{nesRu}, respectively. Let \AgdaFunction{csLState} be the ledger state of \ab{cs}.
+      Let \AgdaFunction{csLState} be the ledger state of \ab{cs}.
       \\[4pt]
       Recall, a \ChainState{} has just one field, a \NewEpochState{}.
       Consider the chain state defined as follows:
 \begin{code}
   cs' : ChainState
   cs' .newEpochState =
-    record { lastEpoch   = nesLastEpoch
+    record { lastEpoch   = nes .lastEpoch
            ; epochState  = record (getEpochState cs) {ls = getLState nes}
-           ; ru          = nesRu }
+           ; ru          = nes .ru }
 \end{code}
       That is \AgdaFunction{cs'} is essentially \ab{nes}, but the \EpochState{} field is
       set to the \AgdaField{epochState} of \ab{cs} with the exception of the

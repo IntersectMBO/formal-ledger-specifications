@@ -65,10 +65,8 @@ module _
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-  LEDGER-pov : {Γ : LEnv} {s s' : LState}
-    → txid ∉ mapˢ proj₁ (dom (getUTxO s))
-    → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-    → getCoin s ≡ getCoin s'
+  LEDGER-pov : {Γ : LEnv} {s s' : LState} → txid ∉ mapˢ proj₁ (dom (getUTxO s))
+    → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
