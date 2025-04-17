@@ -552,7 +552,7 @@ d_withdrawals_1578 v0
 d__'8866'_'8640''10631'_'44'GOVS'10632'__1584 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1760 ->
-  MAlonzo.Code.Ledger.Gov.T_GovEnv_1930 ->
+  MAlonzo.Code.Ledger.Gov.T_GovEnv_1928 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> ()
@@ -570,7 +570,7 @@ d_To'45'GovEnv_1604 ::
 d_To'45'GovEnv_1604 ~v0 ~v1 = du_To'45'GovEnv_1604
 du_To'45'GovEnv_1604 :: MAlonzo.Code.Class.To.T_To_8
 du_To'45'GovEnv_1604
-  = coe MAlonzo.Code.Ledger.Gov.du_To'45'GovEnv_1960
+  = coe MAlonzo.Code.Ledger.Gov.du_To'45'GovEnv_1958
 -- Ledger.Ledger._.To-UTxOEnv
 d_To'45'UTxOEnv_1726 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
