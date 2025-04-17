@@ -22,6 +22,7 @@ open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
+open import Ledger.Gov txs
 open import Ledger.Certs govStructure
 \end{code}
 \begin{figure*}[h]
@@ -31,15 +32,6 @@ record ChainState : Type where
   field
     newEpochState  : NewEpochState
 
-getEnactState : ChainState → EnactState
-getEnactState = EpochState.es ∘ NewEpochState.epochState ∘ ChainState.newEpochState
-
-getPParams : ChainState → PParams
-getPParams = proj₁ ∘ EnactState.pparams ∘ getEnactState
-
-getLastEpoch : ChainState → Epoch
-getLastEpoch = NewEpochState.lastEpoch ∘ ChainState.newEpochState
-
 record Block : Type where
   field
     ts    : List Tx
@@ -48,7 +40,45 @@ record Block : Type where
 \end{AgdaMultiCode}
 \caption{Definitions CHAIN transition system}
 \end{figure*}
+
 \begin{code}[hide]
+
+-- Accessors for various parts of a chain state.
+-- These are especially useful for simplifying statements of properties.
+
+Chain-EpochState : ChainState → EpochState
+Chain-EpochState = NewEpochState.epochState ∘ ChainState.newEpochState
+
+Chain-EnactState : ChainState → EnactState
+Chain-EnactState = EpochState.es ∘ Chain-EpochState
+
+Chain-LState : ChainState → LState
+Chain-LState = EpochState.ls ∘ Chain-EpochState
+
+Chain-UTxOState : ChainState → UTxOState
+Chain-UTxOState = LState.utxoSt ∘ Chain-LState
+
+Chain-GovState : ChainState → GovState
+Chain-GovState = LState.govSt ∘ Chain-LState
+
+Chain-CertState : ChainState → CertState
+Chain-CertState = LState.certState ∘ Chain-LState
+
+Chain-DState : ChainState → DState
+Chain-DState = CertState.dState ∘ Chain-CertState
+
+Chain-Deposits : ChainState → Deposits
+Chain-Deposits = UTxOState.deposits ∘ Chain-UTxOState
+
+Chain-Rewards : ChainState → Credential ⇀ Coin
+Chain-Rewards = DState.rewards ∘ Chain-DState
+
+Chain-PParams : ChainState → PParams
+Chain-PParams = proj₁ ∘ EnactState.pparams ∘ Chain-EnactState
+
+Chain-LastEpoch : ChainState → Epoch
+Chain-LastEpoch = NewEpochState.lastEpoch ∘ ChainState.newEpochState
+
 private variable
   s : ChainState
   b : Block

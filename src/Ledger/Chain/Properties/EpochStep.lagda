@@ -1,18 +1,18 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
-import Ledger.Certs
 
 module Ledger.Chain.Properties.EpochStep
-  (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
+  (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
 
 open import Ledger.Chain txs abs
+open import Ledger.Prelude
 open Block
+
 \end{code}
 % If the module name changes, change the following macro to match!
 \newcommand{\ChainPropEpoch}{Chain/Properties/EpochStep}
@@ -36,10 +36,10 @@ enact-change⇒newEpoch :
   {cs cs'  : ChainState} 
 
   → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
-  → getEnactState cs ≢ getEnactState cs'
-  → Type  -- (replace with `→ epoch (b .slot) ≡ sucᵉ (getLastEpoch cs)` and prove)
+  → Chain-EnactState cs ≢ Chain-EnactState cs'
+  → Type -- (replace with `→ epoch (b .slot) ≡ sucᵉ (getLastEpoch cs)` and prove it)
 
-enact-change⇒newEpoch {b} {cs} cs⇒cs' es≢es' = epoch (b .slot) ≡ sucᵉ (getLastEpoch cs) 
+enact-change⇒newEpoch {b} {cs} cs⇒cs' es≢es' = epoch (b .slot) ≡ sucᵉ (Chain-LastEpoch cs) 
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the

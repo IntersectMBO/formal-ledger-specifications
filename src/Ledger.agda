@@ -18,7 +18,7 @@ open import Ledger.Certs.Properties.PoV
 
 open import Ledger.Chain
 open import Ledger.Chain.Properties
-open import Ledger.Chain.Properties.DomRwdsEqualCredDeps
+open import Ledger.Chain.Properties.CredDepsEqualDomRwds
 open import Ledger.Chain.Properties.EpochStep
 open import Ledger.Chain.Properties.GovDepsMatch
 open import Ledger.Chain.Properties.PParamsWellFormed
@@ -27,7 +27,9 @@ open import Ledger.Enact
 
 open import Ledger.Epoch
 open import Ledger.Epoch.Properties
+open import Ledger.Epoch.Properties.ConstRwds
 open import Ledger.Epoch.Properties.GovDepsMatch
+open import Ledger.Epoch.Properties.NoPropSameDReps
 
 open import Ledger.Gov
 
@@ -56,7 +58,6 @@ open import Ledger.Types.GovStructure
 
 open import Ledger.Utxo
 open import Ledger.Utxo.Properties
-open import Ledger.Utxo.Properties.CredDepsEqualDomRwds
 open import Ledger.Utxo.Properties.MinSpend
 open import Ledger.Utxo.Properties.PoV
 

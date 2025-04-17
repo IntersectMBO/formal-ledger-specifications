@@ -1,7 +1,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -9,8 +8,9 @@ module Ledger.Chain.Properties.PParamsWellFormed
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
-open import Ledger.Chain txs abs
 
+open import Ledger.Chain txs abs
+open import Ledger.Prelude
 
 \end{code}
 % If the module name changes, change the following macro to match!
@@ -32,15 +32,11 @@ open import Ledger.Chain txs abs
     \item \textit{Formally}.  
 \begin{code}
 pp-wellFormed : ChainState → Type
-pp-wellFormed = paramsWellFormed ∘ getPParams
+pp-wellFormed = paramsWellFormed ∘ Chain-PParams
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module
       of the \href{\repourl}{formal ledger repository}).
-    \item \textit{Remarks}.
-      \begin{enumerate}
-        \item TODO
-      \end{enumerate}
   \end{itemize}
 \end{claim}
 
@@ -64,9 +60,5 @@ pp-wellFormed-invariant = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ pp-wellFormed
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module
       of the \href{\repourl}{formal ledger repository}).
-    \item \textit{Remarks}.
-      \begin{enumerate}
-        \item TODO
-      \end{enumerate}
   \end{itemize}
 \end{claim}

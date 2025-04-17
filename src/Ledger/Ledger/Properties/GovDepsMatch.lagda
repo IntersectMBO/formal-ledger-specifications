@@ -1,7 +1,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract
 
@@ -14,11 +13,13 @@ module Ledger.Ledger.Properties.GovDepsMatch
 \newcommand{\LedgerPropGov}{Ledger/Properties/GovDepsMatch}
 
 \begin{code}[hide]
-open import Axiom.Set.Properties th
+open import Ledger.Certs govStructure using (DepositPurpose)
 open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
+open import Ledger.Prelude
 open import Ledger.Utxo txs abs
-open import Ledger.Certs govStructure using (DepositPurpose)
+
+open import Axiom.Set.Properties th
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
@@ -41,14 +42,12 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
       In other terms, if \AgdaFunction{govDepsMatch}~\ab{s}, then \AgdaFunction{govDepsMatch}~\ab{s'}. 
     \item \textit{Formally}.
 \begin{code}
-LEDGER-govDepsMatch :  {tx : Tx} {Γ : LEnv} {s s' : LState}
-                       → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                       → govDepsMatch s → govDepsMatch s'
+LEDGER-govDepsMatch :  LedgerInvariant _⊢_⇀⦇_,LEDGER⦈_ govDepsMatch
 \end{code}
 \begin{code}[hide]
 LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
-LEDGER-govDepsMatch {tx}{Γ}{s}{s'}
+LEDGER-govDepsMatch {Γ}{s}{tx}{s'}
     utxosts@(LEDGER-V⋯ tx-valid (UTXOW-UTXOS (Scripts-Yes x)) _ GOV-sts) aprioriMatch =
     let  open Tx tx; open TxBody body
          open LEnv Γ renaming (pparams to pp)

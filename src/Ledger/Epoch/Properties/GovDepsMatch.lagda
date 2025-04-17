@@ -1,7 +1,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude renaming (map to map'; mapˢ to map)
 open import Ledger.Transaction
 open import Ledger.Abstract
 
@@ -14,13 +13,15 @@ module Ledger.Epoch.Properties.GovDepsMatch
 \newcommand{\EpochPropGov}{Epoch/Properties/GovDepsMatch}
 
 \begin{code}[hide]
-open import Axiom.Set.Properties th
+open import Ledger.Certs govStructure
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
-open import Ledger.Utxo txs abs
-open import Ledger.Certs govStructure
+open import Ledger.Prelude renaming (map to map'; mapˢ to map)
 open import Ledger.Ratify txs hiding (vote)
+open import Ledger.Utxo txs abs
+
+open import Axiom.Set.Properties th
 
 open import Data.List.Base using (filter)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
@@ -38,7 +39,7 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 module EPOCH-Body (eps : EpochState) where
   open EpochState eps hiding (es) renaming (ls to epsLState; fut to epsRState) public
-  open RatifyState renaming (es to ensRState) public -- -- fut using (removed) 
+  open RatifyState renaming (es to ensRState) public
   open LState epsLState public
   open GovActionState public
   open UTxOState public

@@ -1,13 +1,11 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Transaction
 open import Ledger.Abstract
-import Ledger.Certs
 
 module Ledger.Ledger.Properties.PoV
-  (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
+  (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 \end{code}
@@ -15,14 +13,17 @@ module Ledger.Ledger.Properties.PoV
 \newcommand{\LedgerPoV}{Ledger/Properties/PoV}
 
 \begin{code}[hide]
-open import Axiom.Set.Properties th
+open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
 open import Ledger.Certs.Properties govStructure
 open import Ledger.Ledger txs abs
+open import Ledger.Prelude
 open import Ledger.Utxo txs abs
+open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 open import Ledger.Utxo.Properties.PoV txs abs
 open import Ledger.Utxow txs abs
-open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
+
+open import Axiom.Set.Properties th
 
 open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc)
 

@@ -1,7 +1,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
 open import Ledger.Transaction
 open import Ledger.Abstract
 
@@ -14,30 +13,26 @@ module Ledger.Chain.Properties.GovDepsMatch
 \newcommand{\ChainPropGov}{Chain/Properties/GovDepsMatch}
 
 \begin{code}[hide]
+open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
-open import Ledger.Ledger txs abs
+open import Ledger.Epoch.Properties.GovDepsMatch txs abs
 open import Ledger.Ledger.Properties txs abs
 open import Ledger.Ledger.Properties.GovDepsMatch txs abs
-open import Ledger.Epoch.Properties.GovDepsMatch txs abs
-open import Ledger.Utxo txs abs
-open import Ledger.Certs govStructure
+open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
 
--- GA Deposits Invariance Property for CHAIN STS -----------------------------------------------
 module _
   { b   : Block }
   { nes : NewEpochState}
   { cs  : ChainState}
   where
   open Block b; open ChainState cs
-  open NewEpochState newEpochState hiding (lastEpoch) renaming (epochState to csEpochState)
   open NewEpochState nes renaming (epochState to nesEpochState; lastEpoch to nesLastEpoch; ru to nesRu)
-  open EpochState nesEpochState renaming (ls to nesLState) 
-  open EPOCH-Body csEpochState renaming (epsLState to csLState)
+  open EPOCH-Body (Chain-EpochState cs) renaming (epsLState to csLState)
   open EnactState ens using (pparams)
-  open LState
   pp = pparams .proj₁
+  open PParams pp using (maxRefScriptSizePerBlock)
 \end{code}
 
 \begin{theorem}[%
@@ -58,7 +53,7 @@ module _
 \begin{code}
   cs' : ChainState
   cs' .newEpochState = record { lastEpoch   = nesLastEpoch
-                              ; epochState  = record csEpochState {ls = nesLState}
+                              ; epochState  = record (Chain-EpochState cs) {ls = NewEpochState-LState nes}
                               ; ru          = nesRu }
 \end{code}
       That is \AgdaFunction{cs'} is essentially \ab{nes}, but the \EpochState{} \textit{field} is
@@ -84,10 +79,10 @@ module _
     \item \textit{Formally}.
 \begin{code}
   CHAIN-govDepsMatch :
-    map (GovActionDeposit ∘ proj₁) removed' ⊆ map proj₁ (csLState .utxoSt .deposits ˢ)
-    →  totalRefScriptsSize csLState ts ≤ (PParams.maxRefScriptSizePerBlock pp)
+    map (GovActionDeposit ∘ proj₁) removed' ⊆ map proj₁ (Chain-Deposits cs ˢ)
+    →  totalRefScriptsSize csLState ts ≤ maxRefScriptSizePerBlock
     →  tt ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
-    →  govDepsMatch csLState → govDepsMatch nesLState
+    →  govDepsMatch csLState → govDepsMatch (NewEpochState-LState nes)
 \end{code}
     \item \textit{Proof}.  See the
       \LedgerMod{\ChainPropGov.lagda}{\AgdaModule{\ChainPropGov{}}}

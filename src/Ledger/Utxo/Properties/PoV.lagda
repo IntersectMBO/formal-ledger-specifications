@@ -1,13 +1,11 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
-import Ledger.Certs
 
 module Ledger.Utxo.Properties.PoV
-  (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
+  (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
 \end{code}
@@ -15,6 +13,8 @@ module Ledger.Utxo.Properties.PoV
 \newcommand{\UtxoPoV}{Utxo/Properties/PoV}
 
 \begin{code}[hide]
+open import Ledger.Certs govStructure
+open import Ledger.Prelude
 open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 open UTxOState; open Tx; open TxBody

@@ -1,7 +1,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -9,13 +8,12 @@ module Ledger.Properties
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
-open import Ledger.Utxo txs abs
+open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
-open import Ledger.Enact govStructure
-open import Ledger.Certs govStructure
-open import Ledger.Gov txs
+open import Ledger.Prelude
 
 isCredDeposit : DepositPurpose → Type
 isCredDeposit (CredentialDeposit x) = ⊤
@@ -39,20 +37,11 @@ instance
   isGADeposit? {DRepDeposit x} = ⁇ (no λ ())
   isGADeposit? {GovActionDeposit x} = ⁇ (yes tt)
 
-getLState : NewEpochState → LState
-getLState = EpochState.ls ∘ NewEpochState.epochState
-
-getRewards : NewEpochState → Credential ⇀ Coin
-getRewards = DState.rewards ∘ CertState.dState ∘ LState.certState ∘ getLState
-
 allDReps : NewEpochState → Credential ⇀ Epoch
-allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ getLState
+allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ NewEpochState-LState
 
 activeDReps : Epoch → NewEpochState → ℙ Credential
 activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (allDReps s))
-
-getGovState : NewEpochState → GovState
-getGovState = LState.govSt ∘ getLState
 
 instance
   _ : IsSet Block Tx
@@ -102,15 +91,5 @@ module _ (s : ChainState) (slot : Slot) where
 validTx₁ : Tx → Type
 validTx₁ tx = ∃[ s ] validTxIn₁ s tx
 
--- Epoch boundary properties
-
-module _ {Γ es e es'} (step : Γ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es') where
-  -- PROPERTY (TO PROVE) --
-  dom-rwds-const : Type
-  dom-rwds-const = dom (getRewards es) ≡ dom (getRewards es')
-
-  -- PROPERTY (TO PROVE) --
-  prop≡∅⇒activeDReps-const : Type
-  prop≡∅⇒activeDReps-const = getGovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
 \end{code}
 

@@ -1,27 +1,28 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Types.GovStructure
 
 module Ledger.Certs.Properties.PoV (gs : _) (open GovStructure gs) where
+
 \end{code}
 % If the module name changes, change the following macro to match!
 \newcommand{\CertsPoV}{Certs/Properties/PoV}
 
 \begin{code}[hide]
-open import Data.Maybe.Properties
-open import Relation.Nullary.Decidable
+open import Ledger.Certs gs
+open import Ledger.GovernanceActions gs hiding (yes; no)
+open import Ledger.Prelude
 
-open import Tactic.ReduceDec
+open import Axiom.Set.Properties th
 
 open import Algebra using (CommutativeMonoid)
-open import Ledger.GovernanceActions gs hiding (yes; no)
-open import Ledger.Certs gs
-
+open import Data.Maybe.Properties
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)
-open import Axiom.Set.Properties th
 open import Relation.Binary using (IsEquivalence)
+open import Relation.Nullary.Decidable
+open import Tactic.ReduceDec
+
 open Computational ⦃...⦄
 
 open import Tactic.GenError using (genErrors)

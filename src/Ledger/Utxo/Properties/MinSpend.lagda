@@ -1,13 +1,11 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
 open import Ledger.Abstract
 open import Ledger.Transaction
-import Ledger.Certs
 
 module Ledger.Utxo.Properties.MinSpend
-  (txs : _) (open TransactionStructure txs) (open Ledger.Certs govStructure)
+  (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 \end{code}
@@ -15,12 +13,14 @@ module Ledger.Utxo.Properties.MinSpend
 \newcommand{\themodpath}{Utxo/Properties/MinSpend}
 
 \begin{code}[hide]
+open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
+open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
-open import Ledger.Enact govStructure
-open import Ledger.Utxo txs abs
+open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
 open import Ledger.Properties txs abs using (validTxIn₂)
+open import Ledger.Utxo txs abs
 
 open import Data.List.Relation.Unary.All  using (All)
 open import Data.Nat.Properties           hiding (_≟_)
