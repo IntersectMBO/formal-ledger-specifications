@@ -19,18 +19,15 @@ open import Ledger.Prelude
 
 \begin{claim}[%
   \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}}:
-  \NEWEPOCH{} transition leaves rewards unchanged%
+  \NEWEPOCH{} rule leaves rewards unchanged%
   ]\
 
   \begin{itemize}
     \item \textit{Informally}. TODO
     \item \textit{Formally}.  
 \begin{code}
-dom-rwds-const :
-  {e : Epoch}
-  (es es' : NewEpochState)
-  → _ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es'
-  → Type
+dom-rwds-const : {e : Epoch} (es es' : NewEpochState)
+  → _ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es' → Type
 
 dom-rwds-const es es' step =
   dom (NewEpochState-Rewards es) ≡ dom (NewEpochState-Rewards es')

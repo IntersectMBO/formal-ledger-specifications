@@ -30,7 +30,6 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
   \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule%
   ]\
   \label{thm:LedgerGovDepsMatch}
-
   \begin{itemize}
     \item \textit{Informally}. 
       Suppose \ab{s}, \ab{s'} are ledger states such that

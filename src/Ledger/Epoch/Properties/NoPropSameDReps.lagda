@@ -28,7 +28,8 @@ open import Ledger.Properties txs abs
     \item \textit{Formally}.  
 \begin{code}
 prop≡∅⇒activeDReps-const : Epoch → (es es' : NewEpochState) → Type
-prop≡∅⇒activeDReps-const e es es' = NewEpochState-GovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
+prop≡∅⇒activeDReps-const e es es' =
+  NewEpochState-GovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\EpochPropConstDReps.lagda}{\AgdaModule{\EpochPropConstDReps{}}} module

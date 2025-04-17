@@ -31,12 +31,8 @@ open Block
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-enact-change⇒newEpoch :
-  {b       : Block}
-  {cs cs'  : ChainState} 
-
-  → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
-  → Chain-EnactState cs ≢ Chain-EnactState cs'
+enact-change⇒newEpoch : {b : Block} {cs cs'  : ChainState} 
+  → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs' → Chain-EnactState cs ≢ Chain-EnactState cs'
   → Type
 
 enact-change⇒newEpoch {b} {cs} cs⇒cs' es≢es' =
