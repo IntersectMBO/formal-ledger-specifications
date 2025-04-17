@@ -76,21 +76,5 @@ LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_
     \LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}
     module in the \href{\repourl}{formal ledger repository}.
 
-  \item \textit{Remarks}.
-    \begin{enumerate}
-      \item
-        The ledger state (\LState{}) type has three fields; the two 
-        relevant here are \ab{utxoSt} : \UTxOState{} and \ab{govSt} : \GovState{}.
-        The present property asserts that the \LEDGER{} rule preserves a
-        certain relation between the \ab{utxoSt} and \ab{govSt} fields.
-      \item
-        An inhabitant of the \GovState{} type is a list of pairs (of type
-        \GovActionID{}~×~\GovActionState{}).  Associated with each
-        \GovActionID{} is a deposit of type \GovActionDeposit{}.
-      \item
-        A \UTxOState{} has a \ab{deposits} field (of type \Deposits{}),
-        which is a map from \DepositPurpose{} to \Coin{}, and each \DepositPurpose{} is either
-        a \CredentialDeposit{}, \PoolDeposit{}, \DRepDeposit{}, or \GovActionDeposit{}.
-    \end{enumerate}
   \end{itemize}
 \end{theorem}

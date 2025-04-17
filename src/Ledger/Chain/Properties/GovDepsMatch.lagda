@@ -57,9 +57,9 @@ module _
            ; epochState  = record (Chain-EpochState cs) {ls = NewEpochState-LState nes}
            ; ru          = nesRu }
 \end{code}
-      That is \AgdaFunction{cs'} is essentially \ab{nes}, but the \EpochState{} \textit{field} is
+      That is \AgdaFunction{cs'} is essentially \ab{nes}, but the \EpochState{} field is
       set to the \AgdaField{epochState} of \ab{cs} with the exception of the
-      \LState{} \textit{field}, which is set to that of \ab{nes}.
+      \LState{} field, which is set to that of \ab{nes}.
       \\[4pt]
       Let \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of the ledger
       states of \ab{cs} and \AgdaFunction{cs'}, respectively, and let \ab{govSt} and \ab{govSt'}
@@ -68,7 +68,7 @@ module _
       Assume the following conditions hold:
       \begin{itemize}
       \item the \ab{ratify-removed} hypothesis (described in \cref{thm:EpochGovDepsMatch});
-      \item the total reference script size of \ab{csLState} is not greater than the
+      \item the total reference script size of \AgdaFunction{csLState} is not greater than the
         maximum allowed size per block (as specified in \PParams{}),
       \item \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaFunction{cs'}. 
       \end{itemize}
