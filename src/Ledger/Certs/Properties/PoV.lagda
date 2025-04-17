@@ -76,14 +76,12 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
       Let \ab{s}, \ab{s'} be \CertState{}s such that
       \ab{s}~\AgdaDatatype{⇀⦇}~\ab{dcert}~\AgdaDatatype{,CERT⦈}~\ab{s'}
       for some \ab{dcert}~:~\DCert{}.
-      Then, the value of \ab{s} is equal to the value of \ab{s'}.  In other terms,
-      \AgdaFunction{getCoin}~\ab{s} $≡$ \AgdaFunction{getCoin} \ab{s'}.
+      Then, \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin} \ab{s'}.
     \item \textit{Formally}.
 \begin{code}
-  CERT-pov :  {Γ     : CertEnv}
-              {s s'  : CertState}
-              → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
-              → getCoin s ≡ getCoin s'
+  CERT-pov : {Γ : CertEnv} {s s'  : CertState}
+    → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
+    → getCoin s ≡ getCoin s'
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}

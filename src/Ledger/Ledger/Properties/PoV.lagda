@@ -22,6 +22,7 @@ open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 open import Ledger.Utxo.Properties.PoV txs abs
 open import Ledger.Utxow txs abs
+open import Ledger.Interface.HasUTxO txs
 
 open import Axiom.Set.Properties th
 
@@ -32,6 +33,9 @@ open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc
 instance
   HasCoin-LState : HasCoin LState
   HasCoin-LState .getCoin s = getCoin (LState.utxoSt s) + getCoin (LState.certState s)
+
+  HasUTxO-LState : HasUTxO LState
+  HasUTxO-LState .getUTxO = UTxOState.utxo ∘ LState.utxoSt
 
 module _
   (tx : Tx) (let open Tx tx; open TxBody body)
@@ -56,22 +60,18 @@ module _
 
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{tx}~:~\Tx{} be a transaction and let \ab{s}, \ab{s'}~:~\LState{} be
-      ledger states.
-      Suppose the \AgdaField{txid} of \ab{tx} is not in the
-      domain of the \UTxO{} map of \ab{s} and suppose
-      \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}.  Then,
-      the value of \ab{s} is equal to the value of \ab{s'}.  In other terms,
-      \\[4pt]
-      \AgdaFunction{getCoin}~\ab{s} $≡$ \AgdaFunction{getCoin}~\ab{s'}.
+    Let \ab{s}, \ab{s'}~:~\LState{} be ledger states and let \ab{tx}~:~\Tx{} be a
+    \textit{fresh} transaction, that is, a transaction that is not already part of the
+    \UTxOState{} of \ab{s}. If \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'},
+    then the coin values of \ab{s} and \ab{s'} are equal, that is,
+    \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin}~\ab{s'}.
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-  LEDGER-pov :  {Γ     : LEnv}
-                {s s'  : LState}
-                → txid ∉ mapˢ proj₁ (dom (UTxOState.utxo (LState.utxoSt s)))
-                → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
-                → getCoin s ≡ getCoin s'
+  LEDGER-pov : {Γ : LEnv} {s s' : LState}
+    → txid ∉ mapˢ proj₁ (dom (getUTxO s))
+    → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s'
+    → getCoin s ≡ getCoin s'
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
