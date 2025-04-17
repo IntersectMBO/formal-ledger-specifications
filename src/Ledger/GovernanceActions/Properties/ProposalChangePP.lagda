@@ -35,7 +35,7 @@ ProposalChangePPHasGroup :
   (pu  : PParamsUpdate)
   → p ∈ Tx.body tx
   → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
-  → Type -- replace with `updateGroups pu ≢ ∅` and prove it.
+  → Type
 ProposalChangePPHasGroup pu _ _ = updateGroups pu ≢ ∅
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the

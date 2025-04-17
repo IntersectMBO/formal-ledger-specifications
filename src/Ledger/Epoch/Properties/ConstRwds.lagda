@@ -30,8 +30,10 @@ dom-rwds-const :
   {e : Epoch}
   (es es' : NewEpochState)
   → _ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es'
-  → Type -- replace with `dom (NewEpochState-Rewards es) ≡ dom (NewEpochState-Rewards es')` and prove it.
-dom-rwds-const es es' step = dom (NewEpochState-Rewards es) ≡ dom (NewEpochState-Rewards es')
+  → Type
+
+dom-rwds-const es es' step =
+  dom (NewEpochState-Rewards es) ≡ dom (NewEpochState-Rewards es')
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}} module

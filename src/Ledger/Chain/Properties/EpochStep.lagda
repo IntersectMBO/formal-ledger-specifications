@@ -37,9 +37,10 @@ enact-change⇒newEpoch :
 
   → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
   → Chain-EnactState cs ≢ Chain-EnactState cs'
-  → Type -- (replace with `→ epoch (b .slot) ≡ sucᵉ (getLastEpoch cs)` and prove it)
+  → Type
 
-enact-change⇒newEpoch {b} {cs} cs⇒cs' es≢es' = epoch (b .slot) ≡ sucᵉ (Chain-LastEpoch cs) 
+enact-change⇒newEpoch {b} {cs} cs⇒cs' es≢es' =
+  epoch (b .slot) ≡ sucᵉ (Chain-LastEpoch cs) 
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
