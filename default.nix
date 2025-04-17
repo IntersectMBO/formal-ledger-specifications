@@ -174,8 +174,6 @@ in rec
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake hpack ];
     buildPhase = ''
-      PATH=${hpack}/bin/:$PATH
-      hpack --version
       fls-shake --trace hs
     '';
     installPhase = ''
