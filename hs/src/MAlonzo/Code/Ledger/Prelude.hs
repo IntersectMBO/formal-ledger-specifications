@@ -28,6 +28,8 @@ import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.Nat.Properties
+import qualified MAlonzo.Code.Data.Rational.Base
+import qualified MAlonzo.Code.Data.Rational.Properties
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Interface.HasSubset
 import qualified MAlonzo.Code.Ledger.Interface.HasCoin
@@ -161,3 +163,31 @@ du_setToMap_70 v0 v1
          (coe
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
       (coe v0) (coe v1)
+-- Ledger.Prelude._/₀_
+d__'47''8320'__72 ::
+  Integer -> Integer -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
+d__'47''8320'__72 v0 v1
+  = case coe v1 of
+      0 -> coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178
+      _ -> coe
+             MAlonzo.Code.Data.Rational.Base.du__'47'__156 (coe v0) (coe v1)
+-- Ledger.Prelude._÷₀_
+d__'247''8320'__80 ::
+  MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
+  MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
+  MAlonzo.Code.Data.Rational.Base.T_ℚ_6
+d__'247''8320'__80 v0 v1
+  = let v2
+          = MAlonzo.Code.Data.Rational.Properties.d__'8799'__2706
+              (coe v1) (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178) in
+    coe
+      (case coe v2 of
+         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v3 v4
+           -> if coe v3
+                then coe
+                       seq (coe v4) (coe MAlonzo.Code.Data.Rational.Base.d_0ℚ_178)
+                else coe
+                       seq (coe v4)
+                       (coe
+                          MAlonzo.Code.Data.Rational.Base.du__'247'__312 (coe v0) (coe v1))
+         _ -> MAlonzo.RTE.mazUnreachableError)
