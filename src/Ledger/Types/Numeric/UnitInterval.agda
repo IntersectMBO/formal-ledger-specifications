@@ -87,6 +87,14 @@ mkUnitInterval x {evidence} with isInUnitInterval x in eq
 ... | no  _ rewrite cong does eq = ⊥-elim evidence
 ... | yes p = x , [ p ]
 
+-- Clamp a rational number to the unit interval.
+-- Values below 0 or above 1 are set to 0 or 1, respectively.
+clamp : ℚ → UnitInterval
+clamp x with 0 ≤? x
+... | no  _ = mkUnitInterval 0
+... | yes 0≤x with x ≤? 1
+...     | no  _   = mkUnitInterval 1
+...     | yes x≤1 = (x , [ 0≤x , x≤1 ])
 
 -- UnitInterval Properties
 
