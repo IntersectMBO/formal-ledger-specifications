@@ -12,14 +12,15 @@
 
 <a id="220" class="Keyword">open</a> <a id="225" class="Keyword">import</a> <a id="232" href="Ledger.Chain.html" class="Module">Ledger.Chain</a> <a id="245" href="Ledger.Chain.Properties.PParamsWellFormed.html#138" class="Bound">txs</a> <a id="249" href="Ledger.Chain.Properties.PParamsWellFormed.html#182" class="Bound">abs</a>
 <a id="253" class="Keyword">open</a> <a id="258" class="Keyword">import</a> <a id="265" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="280" class="Keyword">open</a> <a id="285" class="Keyword">import</a> <a id="292" href="Ledger.Interface.HasLedgerField.html" class="Module">Ledger.Interface.HasLedgerField</a> <a id="324" href="Ledger.Chain.Properties.PParamsWellFormed.html#138" class="Bound">txs</a> <a id="328" href="Ledger.Chain.Properties.PParamsWellFormed.html#182" class="Bound">abs</a>
 
 
 
-<a id="pp-wellFormed"></a><a id="283" href="Ledger.Chain.Properties.PParamsWellFormed.html#283" class="Function">pp-wellFormed</a> <a id="297" class="Symbol">:</a> <a id="299" href="Ledger.Chain.html#578" class="Record">ChainState</a> <a id="310" class="Symbol">→</a> <a id="312" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="317" href="Ledger.Chain.Properties.PParamsWellFormed.html#283" class="Function">pp-wellFormed</a> <a id="331" class="Symbol">=</a> <a id="333" href="Ledger.PParams.html#3603" class="Function">paramsWellFormed</a> <a id="350" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="352" href="Ledger.Chain.html#1678" class="Function">Chain-PParams</a>
+<a id="pp-wellFormed"></a><a id="335" href="Ledger.Chain.Properties.PParamsWellFormed.html#335" class="Function">pp-wellFormed</a> <a id="349" class="Symbol">:</a> <a id="351" href="Ledger.Chain.html#579" class="Record">ChainState</a> <a id="362" class="Symbol">→</a> <a id="364" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="369" href="Ledger.Chain.Properties.PParamsWellFormed.html#335" class="Function">pp-wellFormed</a> <a id="383" class="Symbol">=</a> <a id="385" href="Ledger.PParams.html#3603" class="Function">paramsWellFormed</a> <a id="402" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="404" href="Ledger.Interface.HasLedgerField.html#1401" class="Field">getPParams</a>
 
 
-<a id="pp-wellFormed-invariant"></a><a id="368" href="Ledger.Chain.Properties.PParamsWellFormed.html#368" class="Function">pp-wellFormed-invariant</a> <a id="392" class="Symbol">:</a> <a id="394" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="399" href="Ledger.Chain.Properties.PParamsWellFormed.html#368" class="Function">pp-wellFormed-invariant</a> <a id="423" class="Symbol">=</a> <a id="425" href="Interface.STS.html#3874" class="Function">LedgerInvariant</a> <a id="441" href="Ledger.Chain.html#3829" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="456" href="Ledger.Chain.Properties.PParamsWellFormed.html#283" class="Function">pp-wellFormed</a>
+<a id="pp-wellFormed-invariant"></a><a id="417" href="Ledger.Chain.Properties.PParamsWellFormed.html#417" class="Function">pp-wellFormed-invariant</a> <a id="441" class="Symbol">:</a> <a id="443" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="448" href="Ledger.Chain.Properties.PParamsWellFormed.html#417" class="Function">pp-wellFormed-invariant</a> <a id="472" class="Symbol">=</a> <a id="474" href="Interface.STS.html#3874" class="Function">LedgerInvariant</a> <a id="490" href="Ledger.Chain.html#2664" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="505" href="Ledger.Chain.Properties.PParamsWellFormed.html#335" class="Function">pp-wellFormed</a>
 
 </pre></body></html>
