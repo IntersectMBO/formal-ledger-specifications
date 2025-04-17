@@ -85,6 +85,35 @@ large, but fixed number of stake pools that attract most of the stake.
 For more details about the design and rationale of the rewards and delegation
 system, see \textcite{shelley-delegation-design}.
 
+\subsection{Precision of Arithmetic Operations}
+\label{sec:precision-rewards}
+When computing rewards, all intermediate results are computed
+using rational numbers, \AgdaDatatype{ℚ},
+and converted to \Coin{} using the \AgdaFunction{floor} function
+at the very end of the computation.
+
+Note for implementors:
+Values in \AgdaDatatype{ℚ} can have arbitrarily large nominators and denominators.
+Please use an appropriate type that represents rational numbers
+as fractions of unbounded nominators and denominators.
+Types such as \AgdaFunction{Double}, \AgdaFunction{Float},
+\AgdaFunction{BigDecimal} (Java Platform),
+or \AgdaFunction{Fixed} (fixed-precision arithmetic)
+do \emph{not} faithfully represent the rational numbers, and
+are \emph{not} suitable for computing rewards according to this specification!
+
+We use the following arithmetic operations besides basic arithmetic:
+\begin{itemize}
+  \item \AgdaFunction{fromℕ}: Interpret a natural number as a rational number.
+  \item \AgdaFunction{floor}: Round a rational number to the next smaller integer.
+  \item \AgdaFunction{posPart}:
+    Convert an integer to a natural number by mapping all negative numbers to zero.
+  \item \AgdaFunction{÷}: Division of rational numbers.
+  \item \AgdaFunction{÷₀}: Division operator that returns zero when the denominator is zero.
+  \item \AgdaFunction{/}: Division operator that maps integer arguments to a rational number.
+  \item \AgdaFunction{/₀}: Like \AgdaFunction{÷₀}, but with integer arguments.
+\end{itemize}
+
 \subsection{Rewards Distribution Calculation}
 \label{sec:rewards-distribution-calculation}
 This section defines the amount of rewards that are paid out
