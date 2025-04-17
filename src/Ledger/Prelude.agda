@@ -63,3 +63,9 @@ abstract
   _/₀_ : ℕ → ℕ → ℚ
   x /₀ 0 = ℚ.0ℚ
   x /₀ y@(suc _) = ℤ.+ x ℚ./ y
+
+-- Division of rational numbers with completion by 0.
+_÷₀_ : ℚ → ℚ → ℚ
+_÷₀_ x y = case y ≟ ℚ.0ℚ of λ where
+  (yes _) → ℚ.0ℚ
+  (no y≢0) → let instance nonZero-y = ℚ.≢-nonZero y≢0 in x ℚ.÷ y
