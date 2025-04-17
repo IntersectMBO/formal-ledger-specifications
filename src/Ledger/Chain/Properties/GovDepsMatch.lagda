@@ -44,22 +44,22 @@ module _
   \begin{itemize}
     \item \textit{Informally}.
       Fix a \Block{} \ab{b}, a \NewEpochState{} \ab{nes}, and a \ChainState{} \ab{cs}.
-      Let the \AgdaField{lastEpoch}, \AgdaField{ls}, and \AgdaField{ru}
-      fields of \ab{nes} be denoted by \AgdaFunction{nesLastEpoch}, \AgdaFunction{nesLState}, and
+      Let the \AgdaField{lastEpoch} and \AgdaField{ru}
+      fields of \ab{nes} be denoted by \AgdaFunction{nesLastEpoch}, and
       \AgdaFunction{nesRu}, respectively. Let \AgdaFunction{csLState} be the ledger state of \ab{cs}.
       \\[4pt]
       Recall, a \ChainState{} has just one field, a \NewEpochState{}.
       Consider the chain state defined as follows:
 \begin{code}
   cs' : ChainState
-  cs' .newEpochState = record { lastEpoch   = nesLastEpoch
-                              ; epochState  = record (Chain-EpochState cs) {ls = NewEpochState-LState nes}
-                              ; ru          = nesRu }
+  cs' .newEpochState =
+    record { lastEpoch   = nesLastEpoch
+           ; epochState  = record (Chain-EpochState cs) {ls = NewEpochState-LState nes}
+           ; ru          = nesRu }
 \end{code}
       That is \AgdaFunction{cs'} is essentially \ab{nes}, but the \EpochState{} \textit{field} is
       set to the \AgdaField{epochState} of \ab{cs} with the exception of the
-      \LState{} \textit{field}, which is set to that of \ab{nes}.  Keep in mind that
-      the ledger state of \AgdaFunction{cs} is \AgdaFunction{nesLState}.
+      \LState{} \textit{field}, which is set to that of \ab{nes}.
       \\[4pt]
       Let \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of the ledger
       states of \ab{cs} and \AgdaFunction{cs'}, respectively, and let \ab{govSt} and \ab{govSt'}
