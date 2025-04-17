@@ -13,6 +13,7 @@ open import Ledger.Epoch txs abs
 open import Ledger.Epoch.Properties txs abs
 open import Ledger.Ledger.Properties txs abs
 open import Ledger.Prelude
+open import Ledger.Interface.HasLedgerField txs abs
 
 open Computational ⦃...⦄
 
@@ -30,7 +31,7 @@ instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
   Computational-CHAIN .computeProof Γ s record { ts = ts } = do
     nes , neStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
-    _ , lsStep ← computeProof _ (NewEpochState-LState nes) ts
+    _ , lsStep ← computeProof _ (getLState nes) ts
     case refScriptSize≤?Bound nes ts of λ where
       (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
       (yes p) → success (_ , CHAIN p neStep lsStep)

@@ -17,13 +17,14 @@ module Ledger.Chain
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Certs govStructure
 open import Ledger.Enact govStructure
+open import Ledger.Epoch txs abs
+open import Ledger.Gov txs
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
-open import Ledger.Epoch txs abs
-open import Ledger.Gov txs
-open import Ledger.Certs govStructure
+
 \end{code}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -42,43 +43,6 @@ record Block : Type where
 \end{figure*}
 
 \begin{code}[hide]
-
--- Accessors for various parts of a chain state.
--- These are especially useful for simplifying statements of properties.
-
-Chain-EpochState : ChainState → EpochState
-Chain-EpochState = NewEpochState.epochState ∘ ChainState.newEpochState
-
-Chain-EnactState : ChainState → EnactState
-Chain-EnactState = EpochState.es ∘ Chain-EpochState
-
-Chain-LState : ChainState → LState
-Chain-LState = EpochState.ls ∘ Chain-EpochState
-
-Chain-UTxOState : ChainState → UTxOState
-Chain-UTxOState = LState.utxoSt ∘ Chain-LState
-
-Chain-GovState : ChainState → GovState
-Chain-GovState = LState.govSt ∘ Chain-LState
-
-Chain-CertState : ChainState → CertState
-Chain-CertState = LState.certState ∘ Chain-LState
-
-Chain-DState : ChainState → DState
-Chain-DState = CertState.dState ∘ Chain-CertState
-
-Chain-Deposits : ChainState → Deposits
-Chain-Deposits = UTxOState.deposits ∘ Chain-UTxOState
-
-Chain-Rewards : ChainState → Credential ⇀ Coin
-Chain-Rewards = DState.rewards ∘ Chain-DState
-
-Chain-PParams : ChainState → PParams
-Chain-PParams = proj₁ ∘ EnactState.pparams ∘ Chain-EnactState
-
-Chain-LastEpoch : ChainState → Epoch
-Chain-LastEpoch = NewEpochState.lastEpoch ∘ ChainState.newEpochState
-
 private variable
   s : ChainState
   b : Block

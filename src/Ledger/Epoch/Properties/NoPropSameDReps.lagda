@@ -12,6 +12,7 @@ module Ledger.Epoch.Properties.NoPropSameDReps
 open import Ledger.Epoch txs abs
 open import Ledger.Prelude
 open import Ledger.Properties txs abs
+open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!
@@ -29,7 +30,7 @@ open import Ledger.Properties txs abs
 \begin{code}
 prop≡∅⇒activeDReps-const : Epoch → (es es' : NewEpochState) → Type
 prop≡∅⇒activeDReps-const e es es' =
-  NewEpochState-GovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
+  getGovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\EpochPropConstDReps.lagda}{\AgdaModule{\EpochPropConstDReps{}}} module

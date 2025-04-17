@@ -91,14 +91,6 @@ record NewEpochState : Type where
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]
-NewEpochState-LState : NewEpochState → LState
-NewEpochState-LState = EpochState.ls ∘ NewEpochState.epochState
-
-NewEpochState-GovState : NewEpochState → GovState
-NewEpochState-GovState = LState.govSt ∘ NewEpochState-LState
-
-NewEpochState-Rewards : NewEpochState → Credential ⇀ Coin
-NewEpochState-Rewards = DState.rewards ∘ CertState.dState ∘ LState.certState ∘ NewEpochState-LState
 
 instance
   unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState = derive-To

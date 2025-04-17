@@ -11,6 +11,7 @@ module Ledger.Epoch.Properties.ConstRwds
 
 open import Ledger.Epoch txs abs
 open import Ledger.Prelude
+open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!
@@ -30,7 +31,7 @@ dom-rwds-const : {e : Epoch} (es es' : NewEpochState)
   → _ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es' → Type
 
 dom-rwds-const es es' step =
-  dom (NewEpochState-Rewards es) ≡ dom (NewEpochState-Rewards es')
+  dom (getRewards es) ≡ dom (getRewards es')
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}} module

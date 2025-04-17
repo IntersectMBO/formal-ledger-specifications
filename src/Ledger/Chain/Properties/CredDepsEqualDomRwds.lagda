@@ -13,6 +13,7 @@ open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
 open import Ledger.Prelude
 open import Ledger.Properties txs abs
+open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!
@@ -28,8 +29,8 @@ open import Ledger.Properties txs abs
     \item \textit{Formally}.  
 \begin{code}
 dom-rwds≡credDeposits : ChainState → Type
-dom-rwds≡credDeposits cs = filterˢ isCredDeposit (dom (Chain-Deposits cs))
-  ≡ mapˢ CredentialDeposit (dom (Chain-Rewards cs))
+dom-rwds≡credDeposits cs =
+  filterˢ isCredDeposit (dom (getDeposits cs)) ≡ mapˢ CredentialDeposit (dom (getRewards cs))
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropCredDeps.lagda}{\AgdaModule{\ChainPropCredDeps{}}} module

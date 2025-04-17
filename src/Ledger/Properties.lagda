@@ -12,9 +12,9 @@ open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
+open import Ledger.Interface.HasLedgerField txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Prelude
-
 isCredDeposit : DepositPurpose → Type
 isCredDeposit (CredentialDeposit x) = ⊤
 isCredDeposit _ = ⊥
@@ -38,7 +38,7 @@ instance
   isGADeposit? {GovActionDeposit x} = ⁇ (yes tt)
 
 allDReps : NewEpochState → Credential ⇀ Epoch
-allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ NewEpochState-LState
+allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ getLState
 
 activeDReps : Epoch → NewEpochState → ℙ Credential
 activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (allDReps s))

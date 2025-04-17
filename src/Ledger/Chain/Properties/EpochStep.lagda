@@ -12,6 +12,7 @@ module Ledger.Chain.Properties.EpochStep
 open import Ledger.Chain txs abs
 open import Ledger.Prelude
 open Block
+open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!
@@ -32,11 +33,11 @@ open Block
 \begin{AgdaMultiCode}
 \begin{code}
 enact-change⇒newEpoch : {b : Block} {cs cs'  : ChainState} 
-  → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs' → Chain-EnactState cs ≢ Chain-EnactState cs'
+  → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs' → getEnactState cs ≢ getEnactState cs'
   → Type
 
 enact-change⇒newEpoch {b} {cs} cs⇒cs' es≢es' =
-  epoch (b .slot) ≡ sucᵉ (Chain-LastEpoch cs) 
+  epoch (b .slot) ≡ sucᵉ (getLastEpoch cs) 
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the

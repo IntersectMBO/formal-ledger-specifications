@@ -11,6 +11,7 @@ module Ledger.Chain.Properties.PParamsWellFormed
 
 open import Ledger.Chain txs abs
 open import Ledger.Prelude
+open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!
@@ -32,7 +33,7 @@ open import Ledger.Prelude
     \item \textit{Formally}.  
 \begin{code}
 pp-wellFormed : ChainState → Type
-pp-wellFormed = paramsWellFormed ∘ Chain-PParams
+pp-wellFormed = paramsWellFormed ∘ getPParams
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module

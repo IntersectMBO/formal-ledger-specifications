@@ -22,7 +22,7 @@ open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 open import Ledger.Utxo.Properties.PoV txs abs
 open import Ledger.Utxow txs abs
-open import Ledger.Interface.HasUTxO txs
+open import Ledger.Interface.HasLedgerField txs abs
 
 open import Axiom.Set.Properties th
 
@@ -33,9 +33,6 @@ open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc
 instance
   HasCoin-LState : HasCoin LState
   HasCoin-LState .getCoin s = getCoin (LState.utxoSt s) + getCoin (LState.certState s)
-
-  HasUTxO-LState : HasUTxO LState
-  HasUTxO-LState .getUTxO = UTxOState.utxo ∘ LState.utxoSt
 
 module _
   (tx : Tx) (let open Tx tx; open TxBody body)
