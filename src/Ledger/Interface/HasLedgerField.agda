@@ -173,6 +173,9 @@ instance
   HasField-DReps-NewEpochState : HasField (Credential ⇀ Epoch) NewEpochState 
   HasField-DReps-NewEpochState .getField = getField ∘ getCertState
 
+  HasField-EpochState-NewEpochState : HasField EpochState NewEpochState 
+  HasField-EpochState-NewEpochState .getField = NewEpochState.epochState
+
   HasDReps-NewEpochState : HasDReps NewEpochState 
   HasDReps-NewEpochState .getDReps = getField ∘ getCertState
 
@@ -185,8 +188,11 @@ instance
   HasField-LastEpoch-NewEpochState : HasField Epoch NewEpochState
   HasField-LastEpoch-NewEpochState .getField = NewEpochState.lastEpoch
 
+  HasField-NewEpochState-ChainState : HasField NewEpochState ChainState
+  HasField-NewEpochState-ChainState .getField = ChainState.newEpochState
+
   HasEpochState-ChainState : HasEpochState ChainState 
-  HasEpochState-ChainState .getEpochState = NewEpochState.epochState ∘ ChainState.newEpochState
+  HasEpochState-ChainState .getEpochState = getField ∘ getField
 
   HasEnactState-ChainState : HasEnactState ChainState 
   HasEnactState-ChainState .getEnactState = EpochState.es ∘ getEpochState
@@ -203,13 +209,13 @@ instance
   HasUTxOState-ChainState : HasUTxOState ChainState
   HasUTxOState-ChainState .getUTxOState = getField ∘ getLState
 
-  HasField-CertState-ChainState : HasField CertState ChainState
-  HasField-CertState-ChainState .getField = LState.certState ∘ getLState
+  HasCertState-ChainState : HasCertState ChainState
+  HasCertState-ChainState .getCertState = LState.certState ∘ getLState
 
   HasDeposits-ChainState : HasDeposits ChainState
   HasDeposits-ChainState .getDeposits = getField ∘ getUTxOState
 
   HasRewards-ChainState : HasRewards ChainState
-  HasRewards-ChainState .getRewards = getRewards ∘ getField
+  HasRewards-ChainState .getRewards = getRewards ∘ getCertState
 
 

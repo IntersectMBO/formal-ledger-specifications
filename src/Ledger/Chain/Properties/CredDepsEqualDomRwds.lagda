@@ -21,34 +21,31 @@ open import Ledger.Interface.HasLedgerField txs abs
 
 \begin{claim}[%
   \LedgerMod{\ChainPropCredDeps.lagda}{\AgdaModule{\ChainPropCredDeps{}}}:
-  Equality of credential depsoits%
-  ]\
-
-  \begin{itemize}
-    \item \textit{Informally}. TODO
-    \item \textit{Formally}.  
-\begin{code}
-dom-rwds≡credDeposits : ChainState → Type
-dom-rwds≡credDeposits cs =  filterˢ isCredDeposit (dom (getDeposits cs))
-                            ≡ mapˢ CredentialDeposit (dom (getRewards cs))
-\end{code}
-    \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{\ChainPropCredDeps.lagda}{\AgdaModule{\ChainPropCredDeps{}}} module
-      of the \href{\repourl}{formal ledger repository}).
-  \end{itemize}
-\end{claim}
-
-\begin{claim}[%
-  \LedgerMod{\ChainPropCredDeps.lagda}{\AgdaModule{\ChainPropCredDeps{}}}:
   Equality of credential depsoits is a \CHAIN{} invariant%
   ]\
 
   \begin{itemize}
-    \item \textit{Informally}. TODO
-    \item \textit{Formally}.  
+    \item \textit{Informally}.  This property concerns two quantities associated with
+    a given \ChainState{} \ab{cs}: the credential deposits of the \UTxOState{} of \ab{cs} and
+    the credential deposits of the rewards in the ledger state of \ab{cs}.
+    The predicate \AgdaFunction{credDeposits≡dom-rwds}~\ab{cs} asserts that these
+    quantities are equal for \ab{cs}.  Formally,
 \begin{code}
-dom-rwds≡credDeposits-inv : Type
-dom-rwds≡credDeposits-inv = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ dom-rwds≡credDeposits
+credDeposits≡dom-rwds : ChainState → Type
+credDeposits≡dom-rwds cs =  filterˢ isCredDeposit (dom (getDeposits cs))
+                            ≡ mapˢ CredentialDeposit (dom (getRewards cs))
+\end{code}
+    The property
+    \AgdaFunction{credDeposits≡dom-rwds-inv} asserts that
+    \AgdaFunction{credDeposits≡dom-rwds} is a chain invariant.  That is, if \ab{cs}
+    and \ab{cs'} are two \ChainState{}s such that
+    \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'},
+    then \AgdaFunction{credDeposits≡dom-rwds}~\ab{cs} only if
+    \AgdaFunction{credDeposits≡dom-rwds}~\ab{cs'}.
+    \item \textit{Formally}.
+\begin{code}    
+credDeposits≡dom-rwds-inv : Type
+credDeposits≡dom-rwds-inv = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ credDeposits≡dom-rwds
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropCredDeps.lagda}{\AgdaModule{\ChainPropCredDeps{}}} module
