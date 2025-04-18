@@ -15,6 +15,7 @@ module Ledger.Epoch.Properties.GovDepsMatch
 \begin{code}[hide]
 open import Ledger.Certs govStructure
 open import Ledger.Epoch txs abs
+open import Ledger.Interface.HasLedgerField txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
 open import Ledger.Prelude renaming (map to map'; mapˢ to map)
@@ -65,13 +66,15 @@ module EPOCH-PROPS {eps : EpochState} where
   \begin{itemize}
     \item \textit{Informally}.
       Let \ab{eps}, \ab{eps'}~:~\EpochState{} be two epoch states and let
-      \ab{e}~:~\Epoch{} be an epoch. Let \AgdaField{epsLState} and
-      \AgdaField{epsLState'} be the ledger states of \ab{eps} and \ab{eps'}.
+      \ab{e}~:~\Epoch{} be an epoch. 
       If \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}, then
-      (under a certain special condition) \govDepsMatch{}~\AgdaField{epsLState}
-      implies \govDepsMatch{}~\AgdaField{epsLState'}.
-    \\[6pt]
-    To understand the special condition under which we prove this property, first recall that
+      (under a certain special condition) \govDepsMatch{}~(\ab{eps}~\AgdaField{.ls})
+      implies \govDepsMatch{}~(\ab{eps'}~\AgdaField{.ls}). 
+    \\[4pt]
+    (Recall, \AgdaField{.ls}
+      denotes the ledger state associated with the epoch state.)
+    \\[4pt]
+    To understand the special condition under which the property holds, first recall that
     \begin{enumerate}
       \item \EpochState{} has five fields; the three relevant here are
         \ab{ls}~:~\LState{}, \ab{es}~:~\EnactState{}, and \ab{fut}~:~\RatifyState{};
@@ -85,26 +88,21 @@ module EPOCH-PROPS {eps : EpochState} where
       \item the governance actions in the \AgdaField{removed} field of the ratify
     state of \ab{eps}, and
       \item the orphaned governance actions in \ab{govSt}, the \GovState{} of the
-        \LState{} of \ab{eps}.
+        ledger state of \ab{eps}.
     \end{itemize}
     Let $\mathcal{G}$ be the set
     $\{\mbox{\GovActionDeposit{}~\ab{id}} : \mbox{\ab{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
     The special hypothesis under which \govDepsMatch{} is an invariant of the
     \EPOCH{} rule is the following: $\mathcal{G}$ is a subset of the set of \ab{deposits utxoSt},
-    the deposits of the \UTxOState{} of \AgdaField{epsLState}. 
+    the deposits of the UTxO state of the ledger state \ab{eps}~\AgdaField{.ls}.
     \item \textit{Formally}.
 \begin{code}
   EPOCH-govDepsMatch :  {ratify-removed :  map (GovActionDeposit ∘ proj₁) removed'
-                                           ⊆ map proj₁ (deposits utxoSt ˢ)}
+                                           ⊆ map proj₁ (getDeposits eps ˢ)}
                         {eps' : EpochState}
                         {e : Epoch}
-\end{code}
-\begin{code}[hide]
-                        (open EpochState eps' renaming (ls to epsLState'))
-\end{code}
-\begin{code}
                         → tt ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-                        → govDepsMatch epsLState → govDepsMatch epsLState'
+                        → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\EpochPropGov.lagda}{\AgdaModule{\EpochPropGov{}}}

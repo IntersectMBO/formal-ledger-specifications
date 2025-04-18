@@ -155,6 +155,12 @@ instance
   HasDeposits-LState : HasDeposits LState
   HasDeposits-LState .getDeposits = getField ∘ getField
 
+  HasField-LState-EpochState : HasField LState EpochState
+  HasField-LState-EpochState .getField = EpochState.ls
+
+  HasDeposits-EpochState : HasDeposits EpochState
+  HasDeposits-EpochState .getDeposits = getDeposits ∘ getField
+
   HasLState-NewEpochState : HasLState NewEpochState
   HasLState-NewEpochState .getLState = EpochState.ls ∘ NewEpochState.epochState
 
