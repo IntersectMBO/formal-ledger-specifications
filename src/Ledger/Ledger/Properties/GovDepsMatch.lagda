@@ -25,11 +25,9 @@ import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 \end{code}
 
-\begin{theorem}[%
-  \LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}:
-  \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule%
-  ]\
-  \label{thm:LedgerGovDepsMatch}
+\begin{lemma}[\LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}: \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule%
+  ]\label{lem:LedgerGovDepsMatch}
+  \nopagebreak
   \begin{itemize}
     \item \textit{Informally}. 
       Suppose \ab{s}, \ab{s'} are ledger states such that
@@ -76,4 +74,4 @@ LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_
     module in the \href{\repourl}{formal ledger repository}.
 
   \end{itemize}
-\end{theorem}
+\end{lemma}

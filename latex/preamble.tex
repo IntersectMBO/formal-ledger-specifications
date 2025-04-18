@@ -105,20 +105,24 @@
 {\textbf{Property \arabic{theproperty}. (#1)} \stepcounter{theproperty} \rm}%
 }{\end{minipage}\medskip}
 
-%% Use claim for properties we have yet to prove.
-\newcounter{theclaim} \setcounter{theclaim}{0}
-\newenvironment{claim}[1][]{\bigskip\noindent%
-\refstepcounter{theclaim}%  % Step the counter and make it referenceable
-\begin{minipage}{\textwidth}%
-{\textbf{Claim \arabic{theclaim}. (#1)} \stepcounter{theclaim} \rm}%
-}{\end{minipage}\medskip}
-
+%% Custom Theorem Environment (for properties we have formally proved)
 \newcounter{thetheorem} \setcounter{thetheorem}{0}
 \newenvironment{theorem}[1][]{\bigskip\noindent%
-\refstepcounter{thetheorem}%  % Step the counter and make it referenceable
-\begin{minipage}{\textwidth}%
-{\textbf{Theorem \arabic{thetheorem}. (#1)} \label{thm:\arabic{thetheorem}} \rm}% % Add a default label
-}{\end{minipage}\medskip}
+\refstepcounter{thetheorem}%
+{\textbf{Theorem \arabic{thetheorem}. (#1)} \label{thm:\arabic{thetheorem}} \rm}%
+\medskip}
+
+%% Custom Lemma Environment (for properties we have proved in support of a theorem)
+\newenvironment{lemma}[1][]{\bigskip\noindent%
+\refstepcounter{thetheorem}%
+{\textit{Lemma \arabic{thetheorem}. (#1)} \label{lem:\arabic{thetheorem}} \rm}%
+\medskip}
+
+%% Custom Claim Environment (for properties we have yet to prove)
+\newenvironment{claim}[1][]{\bigskip\noindent%
+\refstepcounter{thetheorem}%
+{\textit{Claim \arabic{thetheorem}. (#1)} \label{clm:\arabic{thetheorem}}  \rm}%
+\medskip}
 
 \newenvironment{question}
   {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}

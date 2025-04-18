@@ -44,19 +44,20 @@ not yet proved, while a ``Theorem'' is one for which we have a formal proof.
 \inputAgda{Ledger/Ledger/Properties/PoV}
 \inputAgda{Ledger/Utxo/Properties/PoV}
 \inputAgda{Ledger/Certs/Properties/PoV}
+\inputAgda{Ledger/Certs/Properties/PoVLemmas}
 
 \subsection{Invariance Properties}
 
-\Crefrange{thm:LedgerGovDepsMatch}{thm:ChainGovDepsMatch} assert that
-a certain relation is an invariant of the \LEDGER{}, \EPOCH{}, and \CHAIN{} rules.
+\Cref{thm:ChainGovDepsMatch} and 
+\cref{lem:LedgerGovDepsMatch,lem:EpochGovDepsMatch} assert that
+a certain relation is an invariant of the \CHAIN{}, \LEDGER{}, and \EPOCH{} rules, respectively.
 Given a ledger state \ab{s}, we focus on deposits in the
 \UTxOState{} of \ab{s} that are \GovActionDeposit{}s and we compare that set of
 deposits with the \GovActionDeposit{}s of the \GovState{} of \ab{s}.
 When these two sets are the same, we write \AgdaFunction{govDepsMatch}~\ab{s} and say
 the \AgdaFunction{govDepsMatch} relation holds for \ab{s}.
 Formally, the \AgdaFunction{govDepsMatch} predicate is defined as follows:
-
-\inputAgda{Ledger/Ledger/Properties} % <= inserted to display definition of `govDepsMatch`
+\inputAgda{Ledger/Ledger/Properties}
 
 The assertion, 
 ``the \AgdaFunction{govDepsMatch} relation is an invariant of the \LEDGER{} rule,''
@@ -64,9 +65,9 @@ means the following:  if \govDepsMatch{}~\ab{s} and
 \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}, then
 \govDepsMatch{}~\ab{s'}.
 
+\inputAgda{Ledger/Chain/Properties/GovDepsMatch}
 \inputAgda{Ledger/Ledger/Properties/GovDepsMatch}
 \inputAgda{Ledger/Epoch/Properties/GovDepsMatch}
-\inputAgda{Ledger/Chain/Properties/GovDepsMatch}
 \inputAgda{Ledger/Chain/Properties/CredDepsEqualDomRwds}
 \inputAgda{Ledger/Chain/Properties/PParamsWellFormed}
 

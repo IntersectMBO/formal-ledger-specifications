@@ -51,10 +51,8 @@ module _
 
 \end{code}
 
-\begin{theorem}[%
-  \LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}: \LEDGER{} rule preserves value%
-  ]\
-
+\begin{theorem}[\LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}: \LEDGER{} rule preserves value]
+  \label{thm:LEDGER-PoV}
   \begin{itemize}
     \item \textit{Informally}.
     Let \ab{s}, \ab{s'}~:~\LState{} be ledger states and let \ab{tx}~:~\Tx{} be a

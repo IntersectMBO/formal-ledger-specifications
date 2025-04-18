@@ -65,7 +65,7 @@ module _
       \\[4pt]
       Assume the following conditions hold:
       \begin{itemize}
-      \item the \ab{ratify-removed} hypothesis (described in \cref{thm:EpochGovDepsMatch});
+      \item the \ab{ratify-removed} hypothesis (described in \cref{lem:EpochGovDepsMatch});
       \item the total reference script size of \AgdaFunction{csLState} is not greater than the
         maximum allowed size per block (as specified in \PParams{}),
       \item \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaFunction{cs'}. 

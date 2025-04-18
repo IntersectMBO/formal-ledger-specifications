@@ -57,17 +57,17 @@ module EPOCH-PROPS {eps : EpochState} where
   open EpochState
 \end{code}
 
-\begin{theorem}[%
+\begin{lemma}[%
   \LedgerMod{\EpochPropGov.lagda}{\AgdaModule{\EpochPropGov{}}}:
   \AgdaFunction{govDepsMatch} is invariant of \EPOCH{} rule%
-  ]\
-  \label{thm:EpochGovDepsMatch}
+  ]
+  \label{lem:EpochGovDepsMatch}
 
   \begin{itemize}
     \item \textit{Informally}.
       Let \ab{eps}, \ab{eps'}~:~\EpochState{} be two epoch states and let
       \ab{e}~:~\Epoch{} be an epoch.  Recall, \ab{eps}~\AgdaField{.ls}~:~\LState{} is the
-      ledger state of \ab{eps}.  If Datatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}, then
+      ledger state of \ab{eps}.  If \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}, then
       (under a certain special condition) \govDepsMatch{}~(\ab{eps}~\AgdaField{.ls})
       implies \govDepsMatch{}~(\ab{eps'}~\AgdaField{.ls}). 
     \\[4pt]
@@ -184,4 +184,4 @@ module EPOCH-PROPS {eps : EpochState} where
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
 \end{code}
   \end{itemize}
-\end{theorem}
+\end{lemma}

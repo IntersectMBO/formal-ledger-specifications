@@ -20,10 +20,7 @@ open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 open UTxOState; open Tx; open TxBody
 \end{code}
 
-\begin{theorem}[%
-  \LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}}:
-  \UTXO{} rule preserves value%
-  ]\
+\begin{lemma}[\LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}}: \UTXO{} rule preserves value]
   \begin{itemize}
     \item \textit{Informally}.
     Let \ab{s} and \ab{s'} be \UTxOState{}s, let \ab{tx}~:~\Tx{} be
@@ -67,4 +64,4 @@ UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Script
   = DepositHelpers.pov-no-scripts step h' invalid
 \end{code}
   \end{itemize}
-\end{theorem}
+\end{lemma}
