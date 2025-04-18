@@ -60,7 +60,6 @@
                , shapes.misc
                }
 \usepackage[dvipsnames]{xcolor}
-\pgfplotsset{compat=1.18}
 \usepackage{caption}
 \def\AlonzoColor{Periwinkle}
 \def\BabbageColor{Tan}
@@ -109,17 +108,16 @@
 %% Use claim for properties we have yet to prove.
 \newcounter{theclaim} \setcounter{theclaim}{0}
 \newenvironment{claim}[1][]{\bigskip\noindent%
-%\refstepcounter{theclaim}%  % Step the counter and make it referenceable
+\refstepcounter{theclaim}%  % Step the counter and make it referenceable
 \begin{minipage}{\textwidth}%
-{\textbf{Claim \arabic{theclaim}. (#1)} \refstepcounter{theclaim} \rm}%
+{\textbf{Claim \arabic{theclaim}. (#1)} \stepcounter{theclaim} \rm}%
 }{\end{minipage}\medskip}
 
-\newcounter{thetheorem} \setcounter{thetheorem}{1}
+\newcounter{thetheorem} \setcounter{thetheorem}{0}
 \newenvironment{theorem}[1][]{\bigskip\noindent%
-% \refstepcounter{thetheorem}%  % Step the counter and make it referenceable
+\refstepcounter{thetheorem}%  % Step the counter and make it referenceable
 \begin{minipage}{\textwidth}%
-% {\textbf{Theorem \arabic{thetheorem}. (#1)} \label{thm:\arabic{thetheorem}} \rm}% % Add a default label
-{\textbf{Theorem \arabic{thetheorem}. (#1)} \refstepcounter{thetheorem}\label{thm:\arabic{thetheorem}} \rm}% % Add a default label
+{\textbf{Theorem \arabic{thetheorem}. (#1)} \label{thm:\arabic{thetheorem}} \rm}% % Add a default label
 }{\end{minipage}\medskip}
 
 \newenvironment{question}

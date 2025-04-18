@@ -146,11 +146,8 @@ module _ -- ASSUMPTION --
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-  utxoMinSpend :  { Γ        : UTxOEnv    }
-                  { tx       : Tx         }
-                  { utxoSt   : UTxOState  }
-                  { utxoSt'  : UTxOState  }
-
+  utxoMinSpend :  {Γ : UTxOEnv} {tx : Tx}
+                  {utxoSt utxoSt' : UTxOState}
 \end{code}
 \begin{code}[hide]
                   (open PParams (UTxOEnv.pparams Γ))
@@ -158,12 +155,10 @@ module _ -- ASSUMPTION --
                   (open TxBody body)
 \end{code}
 \begin{code}
-
-      → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
-      → noRefundCert txcerts
-      → coin (consumed _ utxoSt body) ≥ length txprop * govActionDeposit
+    → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
+    → noRefundCert txcerts
+    → coin (consumed _ utxoSt body) ≥ length txprop * govActionDeposit
 \end{code}
-\end{AgdaMultiCode}
     \item \textit{Proof}. See the
       \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
       in the \href{\repourl}{formal ledger repository}.
@@ -209,6 +204,7 @@ module _ -- ASSUMPTION --
     balIn = balance (st ∣ txins)
     balOut = balance (outs txb)
 \end{code}
+\end{AgdaMultiCode}
   \end{itemize}
 \end{theorem}
 
@@ -225,24 +221,20 @@ module _ -- ASSUMPTION --
       \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that there exists ledger state
       \ab{ls'} such that \ab{ls}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{ls'}.  
     \item Assume the following additive property of the \AgdaFunction{∪⁺} operator holds:
-  \begin{AgdaMultiCode}
 \begin{code}[hide]
 module _
-\end{code}
-\begin{code}
     ( indexedSum-∪⁺-hom :  {A V : Type}
                            ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄
                            ⦃ _ : CommutativeMonoid 0ℓ 0ℓ V ⦄
                            (d₁ d₂ : A ⇀ V)
-\end{code}
-\begin{code}[hide]
        →
 \end{code}
 \begin{code}
-                           ────────────────────────────────
-                           ∑[ x ← d₁ ∪⁺ d₂ ] x ≡ ∑[ x ← d₁ ] x ◇ ∑[ x ← d₂ ] x )
+                           ∑[ x ← d₁ ∪⁺ d₂ ] x ≡ ∑[ x ← d₁ ] x ◇ ∑[ x ← d₂ ] x
 \end{code}
-  \end{AgdaMultiCode}
+\begin{code}[hide]
+    )
+\end{code}
   \end{enumerate}
   \item \textit{Informally}.
     Let \ab{tx}~:~\Tx{} be a valid transaction and let \ab{cs}~:~\ChainState{} be a chain state.
@@ -251,32 +243,27 @@ module _
     deposits of the proposals in \ab{tx}.
 
   \item \textit{Formally}.
-\begin{AgdaMultiCode}
 \begin{code}[hide]
   where
   open import Ledger.Utxow txs abs
   open ChainState; open NewEpochState; open EpochState
   open LState; open EnactState;  open PParams
 \end{code}
+\begin{AgdaMultiCode}
 \begin{code}
-  propose-minSpend :  { slot  : Slot }
-                      { tx    : Tx }
-                      { cs    : ChainState }
-
-    ( let  pp      = getPParams cs
-           utxoSt  = getUTxOState cs )
+  propose-minSpend :  {slot : Slot} {tx : Tx} {cs : ChainState}
+                      ( let  pp      = getPParams cs
+                             utxoSt  = getUTxOState cs )
 \end{code}
 \begin{code}[hide]
     ( open Tx tx )
     ( open TxBody body )
 \end{code}
 \begin{code}
-
     → noRefundCert txcerts
     → validTxIn₂ cs slot tx
     → coin (consumed pp utxoSt body) ≥ length txprop * pp .govActionDeposit 
 \end{code}
-\end{AgdaMultiCode}
   \item \textit{Proof}. See the
     \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
     in the \href{\repourl}{formal ledger repository}.
@@ -286,5 +273,6 @@ module _
     (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → utxoMinSpend indexedSum-∪⁺-hom x noRef
 
 \end{code}
+\end{AgdaMultiCode}
   \end{itemize}
 \end{theorem}
