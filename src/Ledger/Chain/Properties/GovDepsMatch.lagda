@@ -44,11 +44,10 @@ module _
 
   \begin{itemize}
     \item \textit{Informally}.
-      Fix a \Block{} \ab{b}, a \NewEpochState{} \ab{nes}, and a \ChainState{} \ab{cs}.
+      Fix a \Block{} \ab{b}, a \ChainState{} \ab{cs}, and a \NewEpochState{} \ab{nes}.
       Let \AgdaFunction{csLState} be the ledger state of \ab{cs}.
-      \\[4pt]
-      Recall, a \ChainState{} has just one field, a \NewEpochState{}.
-      Consider the chain state defined as follows:
+      Recall, a \ChainState{} has just one field, \AgdaField{newEpochState}~:~\NewEpochState{}.
+      Consider the chain state \AgdaFunction{cs'} defined as follows:
 \begin{code}
   cs' : ChainState
   cs' .newEpochState =

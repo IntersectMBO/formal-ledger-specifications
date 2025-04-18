@@ -37,11 +37,8 @@ instance
   isGADeposit? {DRepDeposit x} = ⁇ (no λ ())
   isGADeposit? {GovActionDeposit x} = ⁇ (yes tt)
 
-allDReps : NewEpochState → Credential ⇀ Epoch
-allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ getLState
-
 activeDReps : Epoch → NewEpochState → ℙ Credential
-activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (allDReps s))
+activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (getDReps s))
 
 instance
   _ : IsSet Block Tx

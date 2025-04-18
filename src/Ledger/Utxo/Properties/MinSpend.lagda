@@ -17,6 +17,7 @@ open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
+open import Ledger.Interface.HasLedgerField txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
 open import Ledger.Properties txs abs using (validTxIn₂)
@@ -150,9 +151,9 @@ module _ -- ASSUMPTION --
                   { utxoSt   : UTxOState  }
                   { utxoSt'  : UTxOState  }
 
-                  (let pp = UTxOEnv.pparams Γ)
 \end{code}
 \begin{code}[hide]
+                  (open PParams (UTxOEnv.pparams Γ))
                   (open Tx tx)
                   (open TxBody body)
 \end{code}
@@ -160,7 +161,7 @@ module _ -- ASSUMPTION --
 
       → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
       → noRefundCert txcerts
-      → coin (consumed pp utxoSt body) ≥ length txprop * PParams.govActionDeposit pp
+      → coin (consumed _ utxoSt body) ≥ length txprop * govActionDeposit
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
@@ -262,8 +263,8 @@ module _
                       { tx    : Tx }
                       { cs    : ChainState }
 
-    ( let  pp      = cs .newEpochState .epochState .es .pparams .proj₁
-           utxoSt  = cs .newEpochState .epochState .ls .utxoSt )
+    ( let  pp      = getPParams cs
+           utxoSt  = getUTxOState cs )
 \end{code}
 \begin{code}[hide]
     ( open Tx tx )

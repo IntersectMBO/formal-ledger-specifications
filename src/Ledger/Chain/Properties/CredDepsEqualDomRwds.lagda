@@ -29,8 +29,8 @@ open import Ledger.Interface.HasLedgerField txs abs
     \item \textit{Formally}.  
 \begin{code}
 dom-rwds≡credDeposits : ChainState → Type
-dom-rwds≡credDeposits cs =
-  filterˢ isCredDeposit (dom (getDeposits cs)) ≡ mapˢ CredentialDeposit (dom (getRewards cs))
+dom-rwds≡credDeposits cs =  filterˢ isCredDeposit (dom (getDeposits cs))
+                            ≡ mapˢ CredentialDeposit (dom (getRewards cs))
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropCredDeps.lagda}{\AgdaModule{\ChainPropCredDeps{}}} module

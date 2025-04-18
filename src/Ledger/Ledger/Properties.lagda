@@ -1,3 +1,4 @@
+\begin{code}[hide]
 {-# OPTIONS --safe #-}
 
 open import Ledger.Transaction
@@ -12,6 +13,7 @@ module Ledger.Ledger.Properties
 open import Ledger.Certs.Properties govStructure
 open import Ledger.Gov txs
 open import Ledger.Gov.Properties txs
+open import Ledger.Interface.HasLedgerField txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Prelude
 open import Ledger.Utxo txs abs
@@ -99,13 +101,13 @@ isGADeposit dp = isGADepositᵇ dp ≡ true
   isGADepositᵇ : DepositPurpose → Bool
   isGADepositᵇ (GovActionDeposit _) = true
   isGADepositᵇ _                    = false
-
+\end{code}
+\begin{code}
 govDepsMatch : LState → Type
-govDepsMatch ledgerSt =
-  filterˢ isGADeposit (dom (UTxOState.deposits utxoSt)) ≡ᵉ fromList (dpMap govSt)
-  where
-    open LState ledgerSt
-
+govDepsMatch ls =
+  filterˢ isGADeposit (dom (getDeposits ls)) ≡ᵉ fromList (dpMap (getGovState ls))
+\end{code}
+\begin{code}[hide]
 module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
 pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 open Equivalence
@@ -434,3 +436,4 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       ≈˘⟨ props-dpMap-votes-invar txvote txprop {k} {govSt} ⟩
     fromList (dpMap (updateGovStates (txgov txb) k govSt)) ∎
 
+\end{code}
