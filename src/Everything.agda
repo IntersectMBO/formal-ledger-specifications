@@ -30,3 +30,19 @@ import Foreign.Convertible.DerivingTest
 import ScriptVerification.Examples
 import ScriptVerification.StructuredContracts
 import ScriptVerification.Lib
+
+-- ** Properties
+import Ledger.Properties
+import Ledger.Utxo.Properties.PoV
+import Ledger.Certs.Properties.PoV
+import Ledger.Ledger.Properties.PoV
+import Ledger.Ledger.Properties.GovDepsMatch
+import Ledger.Epoch.Properties.GovDepsMatch
+import Ledger.Chain.Properties.GovDepsMatch
+import Ledger.Chain.Properties.CredDepsEqualDomRwds
+import Ledger.Chain.Properties.PParamsWellFormed
+import Ledger.Utxo.Properties.MinSpend
+import Ledger.GovernanceActions.Properties.ChangePPGroup
+import Ledger.Chain.Properties.EpochStep
+import Ledger.Epoch.Properties.ConstRwds
+import Ledger.Epoch.Properties.NoPropSameDReps

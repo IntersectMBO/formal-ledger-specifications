@@ -5,14 +5,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
-open import Data.List using (filter)
-open import Data.Integer using () renaming (+_ to pos)
-open import Data.Nat.GeneralisedArithmetic using (iterate)
-
-open import Agda.Builtin.FromNat
-
-open import Ledger.Prelude hiding (iterate)
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -21,12 +13,21 @@ module Ledger.Epoch
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Gov txs
+open import Ledger.Certs govStructure
 open import Ledger.Enact govStructure
+open import Ledger.Gov txs
 open import Ledger.Ledger txs abs
+open import Ledger.Prelude hiding (iterate)
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
-open import Ledger.Certs govStructure
+
+open import Agda.Builtin.FromNat
+
+open import Data.Integer using () renaming (+_ to pos)
+open import Data.List using (filter)
+open import Data.Nat.GeneralisedArithmetic using (iterate)
+open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
+
 \end{code}
 \begin{NoConway}
 \begin{figure*}[ht]
@@ -90,6 +91,7 @@ record NewEpochState : Type where
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]
+
 instance
   unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState = derive-To
     (   (quote RewardUpdate   , To-RewardUpdate)

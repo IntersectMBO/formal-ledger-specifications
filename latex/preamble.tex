@@ -28,14 +28,13 @@
 
 \usepackage{fontspec}
 
-
-
 %%
 %% Math fonts, unicode symbols, and new theorem environments
 %%
 \usepackage{unicode-math}
 \setsansfont{XITSMath-Regular.otf}
 \setmathfont{XITSMath-Regular.otf}
+\setmonofont{DejaVu Sans Mono}[Scale=MatchLowercase]
 
 \usepackage{macros}
 
@@ -82,6 +81,9 @@
 %% + To refer to multiple things at once, combine them all into one:
 %%   `\cref{eq2,eq1,eq3,eq5,thm2,def1}` produces:
 %%   "Eqs.~(1) to~(3) and~(5), Theorem~5, and Definition~1".
+\Crefname{thetheorem}{Theorem}{Theorems}
+\Crefname{thelemma}{Lemma}{Lemmas}
+\Crefname{theclaim}{Claim}{Claims}
 \Crefname{figure}{Fig.}{Figs.}
 \Crefname{equation}{Eq.}{Eqs.}
 \Crefname{tabular}{Tab.}{Tabs.}
@@ -91,3 +93,41 @@
 %% The above help enforce consistency among citations that mention sections;
 %% for example, instead of \cite[Section~11.6]{shelley-ledger-spec}
 %%              use        \cite[\sectionname~11.6]{shelley-ledger-spec}
+
+%%
+%% Environments
+%%
+\usepackage{amsthm}
+\theoremstyle{definition}
+
+\newcounter{theproperty} \setcounter{theproperty}{1}
+\newenvironment{property}[1][]{\bigskip\noindent%
+\begin{minipage}{\textwidth}%
+{\textbf{Property \arabic{theproperty}. (#1)} \stepcounter{theproperty} \rm}%
+}{\end{minipage}\medskip}
+
+%% Custom Theorem Environment (for properties we have formally proved)
+\newcounter{thetheorem} \setcounter{thetheorem}{0}
+\newenvironment{theorem}[1][]{\bigskip\noindent%
+\refstepcounter{thetheorem}%
+{\textbf{Theorem \arabic{thetheorem}. (#1)} \label{thm:\arabic{thetheorem}} \rm}%
+\medskip}
+
+%% Custom Lemma Environment (for properties we have proved in support of a theorem)
+\newenvironment{lemma}[1][]{\bigskip\noindent%
+\refstepcounter{thetheorem}%
+{\textit{Lemma \arabic{thetheorem}. (#1)} \label{lem:\arabic{thetheorem}} \rm}%
+\medskip}
+
+%% Custom Claim Environment (for properties we have yet to prove)
+\newenvironment{claim}[1][]{\bigskip\noindent%
+\refstepcounter{thetheorem}%
+{\textit{Claim \arabic{thetheorem}. (#1)} \label{clm:\arabic{thetheorem}}  \rm}%
+\medskip}
+
+\newenvironment{question}
+  {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}
+  {\end{bclogo}}
+\newenvironment{note}
+  {\begin{bclogo}[logo=\bcattention, couleur=orange!10, arrondi=0.2]{ NOTE}}
+  {\end{bclogo}}

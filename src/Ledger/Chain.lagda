@@ -17,12 +17,14 @@ module Ledger.Chain
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Certs govStructure
 open import Ledger.Enact govStructure
+open import Ledger.Epoch txs abs
+open import Ledger.Gov txs
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
-open import Ledger.Epoch txs abs
-open import Ledger.Certs govStructure
+
 \end{code}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -39,6 +41,7 @@ record Block : Type where
 \end{AgdaMultiCode}
 \caption{Definitions CHAIN transition system}
 \end{figure*}
+
 \begin{code}[hide]
 private variable
   s : ChainState
