@@ -32,12 +32,11 @@ open import Ledger.Interface.HasLedgerField txs abs
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-enact-change⇒newEpoch : {b : Block} {cs cs'  : ChainState} 
+enact-change⇒newEpoch : (b : Block) {cs cs'  : ChainState} 
   → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs' → EnactStateOf cs ≢ EnactStateOf cs'
   → Type
 
-enact-change⇒newEpoch {b} {cs} cs⇒cs' es≢es' =
-  epoch (b .slot) ≡ sucᵉ (LastEpochOf cs) 
+enact-change⇒newEpoch b {cs} h es≢es' = epoch (b .slot) ≡ sucᵉ (LastEpochOf cs) 
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the

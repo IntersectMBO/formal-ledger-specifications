@@ -4,10 +4,15 @@
 open import Ledger.Abstract
 open import Ledger.Transaction
 
-module Ledger.GovernanceActions.Properties.ProposalChangePP
+module Ledger.GovernanceActions.Properties.ChangePPGroup
   (txs : _) (open TransactionStructure txs)
   where
+\end{code}
 
+% If the module name changes, change the following macro to match!
+\newcommand{\ChangePPGroup}{GovernanceActions/Properties/ChangePPGroup}
+
+\begin{code}[hide]
 open import Ledger.Prelude
 
 instance
@@ -16,7 +21,7 @@ instance
 \end{code}
 
 \begin{claim}[%
-  \LedgerMod{GovernanceActions/Properties/ProposalChangePP.lagda}{\AgdaModule{GovernanceActions/Properties/ProposalChangePP}}:
+  \LedgerMod{\ChangePPGroup.lagda}{\AgdaModule{\ChangePPGroup{}}}:
   PParam updates have non-empty groups%
   ]\
 
@@ -29,13 +34,13 @@ instance
       \AgdaField{updateGroups}~\ab{pu} is nonempty.
     \item \textit{Formally}.
 \begin{code}
-ProposalChangePPHasGroup : {tx : Tx} {p : GovProposal} (pu : PParamsUpdate)
+ChangePPHasGroup : {tx : Tx} {p : GovProposal} (pu : PParamsUpdate)
   → p ∈ Tx.body tx → p .GovProposal.action ≡ ⟦ ChangePParams , pu ⟧ᵍᵃ
   → Type
-ProposalChangePPHasGroup pu _ _ = updateGroups pu ≢ ∅
+ChangePPHasGroup pu _ _ = updateGroups pu ≢ ∅
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{GovernanceActions/Properties/ProposalChangePP.lagda}{\AgdaModule{GovernanceActions/Properties/ProposalChangePP}} module
+      \LedgerMod{\ChangePPGroup.lagda}{\AgdaModule{\ChangePPGroup{}}} module
       of the \href{\repourl}{formal ledger repository}).
   \end{itemize}
 \end{claim}

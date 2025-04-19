@@ -149,8 +149,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
       Then, the value of \ab{s} is equal to the value of \ab{s'} plus the value of
       the withdrawals in \ab{Γ}.  In other terms,
       \\[4pt]
-      \AgdaFunction{getCoin}~\ab{s} $≡$ \AgdaFunction{getCoin}~\ab{s'}
-       + \AgdaFunction{getCoin}~(\ab{Γ} .\AgdaField{wdrls} ).
+      \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin}~\ab{s'}
+       + \AgdaField{getCoin}~(\ab{Γ} .\AgdaField{wdrls} ).
     \item \textit{Formally}.
 \begin{code}
     CERTBASE-pov : {Γ : CertEnv} {s s' : CertState}

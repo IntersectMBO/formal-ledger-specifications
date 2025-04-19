@@ -30,8 +30,7 @@ open import Ledger.Interface.HasLedgerField txs abs
 dom-rwds-const : {e : Epoch} (es es' : NewEpochState)
   → _ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es' → Type
 
-dom-rwds-const es es' step =
-  dom (RewardsOf es) ≡ dom (RewardsOf es')
+dom-rwds-const es es' step = dom (RewardsOf es) ≡ dom (RewardsOf es')
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}} module

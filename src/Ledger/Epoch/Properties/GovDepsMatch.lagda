@@ -66,7 +66,7 @@ module EPOCH-PROPS {eps : EpochState} where
   \begin{itemize}
     \item \textit{Informally}.
       Let \ab{eps}, \ab{eps'}~:~\EpochState{} be two epoch states and let
-      \ab{e}~:~\Epoch{} be an epoch.  Recall, \ab{eps}~\AgdaField{.ls}~:~\LState{} is the
+      \ab{e}~:~\Epoch{} be an epoch.  Recall, \ab{eps}~\AgdaField{.ls} denotes the
       ledger state of \ab{eps}.  If \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}, then
       (under a certain special condition) \govDepsMatch{}~(\ab{eps}~\AgdaField{.ls})
       implies \govDepsMatch{}~(\ab{eps'}~\AgdaField{.ls}). 

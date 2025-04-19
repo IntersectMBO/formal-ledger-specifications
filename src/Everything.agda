@@ -42,7 +42,7 @@ import Ledger.Chain.Properties.GovDepsMatch
 import Ledger.Chain.Properties.CredDepsEqualDomRwds
 import Ledger.Chain.Properties.PParamsWellFormed
 import Ledger.Utxo.Properties.MinSpend
-import Ledger.GovernanceActions.Properties.ProposalChangePP
+import Ledger.GovernanceActions.Properties.ChangePPGroup
 import Ledger.Chain.Properties.EpochStep
 import Ledger.Epoch.Properties.ConstRwds
 import Ledger.Epoch.Properties.NoPropSameDReps

@@ -11,7 +11,7 @@ module Ledger.Chain.Properties.CredDepsEqualDomRwds
 
 open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
-open import Ledger.Prelude
+open import Ledger.Prelude hiding (map) renaming (mapˢ to map; filterˢ to filter)
 open import Ledger.Properties txs abs
 open import Ledger.Interface.HasLedgerField txs abs
 
@@ -32,8 +32,8 @@ open import Ledger.Interface.HasLedgerField txs abs
     quantities are equal for \ab{cs}.  Formally,
 \begin{code}
 credDeposits≡dom-rwds : ChainState → Type
-credDeposits≡dom-rwds cs =  filterˢ isCredDeposit (dom (DepositsOf cs))
-                            ≡ mapˢ CredentialDeposit (dom (RewardsOf cs))
+credDeposits≡dom-rwds cs =  filter isCredDeposit (dom (DepositsOf cs))
+                            ≡ map CredentialDeposit (dom (RewardsOf cs))
 \end{code}
     The property
     \AgdaFunction{credDeposits≡dom-rwds-inv} asserts that

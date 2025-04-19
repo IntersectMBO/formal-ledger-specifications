@@ -35,7 +35,7 @@ open import Ledger.Gov
 
 open import Ledger.GovernanceActions
 open import Ledger.GovernanceActions.Properties
-open import Ledger.GovernanceActions.Properties.ProposalChangePP
+open import Ledger.GovernanceActions.Properties.ChangePPGroup
 
 open import Ledger.Ledger
 open import Ledger.Ledger.Properties
