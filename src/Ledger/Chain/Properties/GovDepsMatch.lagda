@@ -65,7 +65,7 @@ module _
       \\[4pt]
       Assume the following conditions hold:
       \begin{itemize}
-      \item the hypothesis about \AgdaFunction{removed'} needed for and described in Lemma~\ref{lem:EpochGovDepsMatch},\\[4pt]
+      \item the hypothesis about \AgdaFunction{removed'} needed for and described in \cref{lem:EpochGovDepsMatch},\\[4pt]
       \AgdaFunction{map}~(\AgdaInductiveConstructor{GovActionDeposit}~$∘$~\AgdaField{proj₁})~\AgdaFunction{removed'}~\AgdaField{$⊆$}~
         \AgdaFunction{map}~\AgdaField{proj₁}~(\AgdaField{DepositsOf}~\ab{cs}~\AgdaFunction{ˢ});
       \item the total reference script size of \AgdaFunction{csLState} is not greater than the

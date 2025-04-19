@@ -31,7 +31,7 @@ open import Ledger.Prelude
 -- is now simply 
 --     allDReps = getField
 -- but 
---     allDReps = getDReps
+--     allDReps = DRepsOf
 -- also works and is clearer and probably preferable outside hidden code blocks.
 
 record HasField {a}{b} (A : Type a) (B : Type b) : Type (a ⊔ˡ b) where
