@@ -30,7 +30,7 @@ open import Ledger.Interface.HasLedgerField txs abs
     govActionDeposit, drepDeposit.  Formally,
 \begin{code}
 pp-wellFormed : ChainState → Type
-pp-wellFormed = paramsWellFormed ∘ getPParams
+pp-wellFormed = paramsWellFormed ∘ PParamsOf
 \end{code}
       This property asserts that \AgdaFunction{pp-wellFormed} is a chain invariant.
       That is, if \ab{cs} and \ab{cs'} are chain states such that

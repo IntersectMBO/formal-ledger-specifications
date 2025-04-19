@@ -38,52 +38,62 @@ record HasField {a}{b} (A : Type a) (B : Type b) : Type (a ⊔ˡ b) where
   field getField : B → A
 
 record HasDReps {a} (A : Type a) : Type a where
-  field getDReps : A → Credential ⇀ Epoch
+  field DRepsOf : A → Credential ⇀ Epoch
 
 record HasRewards {a} (A : Type a) : Type a where
-  field getRewards : A → Credential ⇀ Coin
+  field RewardsOf : A → Credential ⇀ Coin
 
 record HasCertState {a} (A : Type a) : Type a where
-  field getCertState : A → CertState
+  field CertStateOf : A → CertState
 
 record HasDeposits {a} (A : Type a) : Type a where
-  field getDeposits : A → Deposits
+  field DepositsOf : A → Deposits
 
 record HasDState {a} (A : Type a) : Type a where
-  field getDState : A → DState
+  field DStateOf : A → DState
 
 record HasGState {a} (A : Type a) : Type a where
-  field getGState : A → GState
+  field GStateOf : A → GState
 
 record HasPState {a} (A : Type a) : Type a where
-  field getPState : A → PState
+  field PStateOf : A → PState
 
 record HasEnactState {a} (A : Type a) : Type a where
-  field getEnactState : A → EnactState
+  field EnactStateOf : A → EnactState
 
 record HasEpochState {a} (A : Type a) : Type a where
-  field getEpochState : A → EpochState
+  field EpochStateOf : A → EpochState
 
 record HasGovState {a} (A : Type a) : Type a where
-  field getGovState : A → GovState
+  field GovStateOf : A → GovState
 
 record HasLastEpoch {a} (A : Type a) : Type a where
-  field getLastEpoch : A → Epoch
+  field LastEpochOf : A → Epoch
 
 record HasLState {a} (A : Type a) : Type a where
-  field getLState : A → LState
+  field LStateOf : A → LState
 
 record HasPParams {a} (A : Type a) : Type a where
-  field getPParams : A → PParams
+  field PParamsOf : A → PParams
 
 record HasRatifyState {a} (A : Type a) : Type a where
-    field getRatifyState : A → RatifyState
+  field RatifyStateOf : A → RatifyState
 
 record HasUTxO {a} (A : Type a) : Type a where
-  field getUTxO : A → UTxO
+  field UTxOOf : A → UTxO
 
 record HasUTxOState {a} (A : Type a) : Type a where
-  field getUTxOState : A → UTxOState
+  field UTxOStateOf : A → UTxOState
+
+record Hastxprop {a} (A : Type a) : Type a where
+  field txpropOf : A → List GovProposal
+
+record Hastxcerts {a} (A : Type a) : Type a where
+  field txcertsOf : A → List DCert
+
+record Hasbody {a} (A : Type a) : Type a where
+  field bodyOf : A → TxBody
+
 
 open HasField ⦃...⦄ public
 open HasCertState ⦃...⦄ public
@@ -101,8 +111,23 @@ open HasPParams ⦃...⦄ public
 open HasRewards ⦃...⦄ public
 open HasUTxO ⦃...⦄ public
 open HasUTxOState ⦃...⦄ public
+open Hastxprop ⦃...⦄ public
+open Hastxcerts ⦃...⦄ public
+open Hasbody ⦃...⦄ public
 
 instance 
+
+  Hasbody-Tx : Hasbody Tx
+  Hasbody-Tx .bodyOf = Tx.body
+
+  Hastxprop-Tx : Hastxprop Tx
+  Hastxprop-Tx .txpropOf = TxBody.txprop ∘ bodyOf
+
+  Hastxcerts-Tx : Hastxcerts Tx
+  Hastxcerts-Tx .txcertsOf = TxBody.txcerts ∘ bodyOf
+
+  HasPParams-UTxOEnv : HasPParams UTxOEnv
+  HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
 
   HasField-Rewards-DState : HasField (Credential ⇀ Coin) DState
   HasField-Rewards-DState .getField = DState.rewards
@@ -123,10 +148,10 @@ instance
   HasField-DReps-CertState .getField = GState.dreps ∘ getField
 
   HasRewards-CertState : HasRewards CertState
-  HasRewards-CertState .getRewards = getField ∘ getField
+  HasRewards-CertState .RewardsOf = getField ∘ getField
 
   HasDState-CertState : HasDState CertState
-  HasDState-CertState .getDState = CertState.dState
+  HasDState-CertState .DStateOf = CertState.dState
 
   HasField-UTxO-UTxOState : HasField UTxO UTxOState 
   HasField-UTxO-UTxOState .getField = UTxOState.utxo
@@ -135,55 +160,55 @@ instance
   HasField-Deposits-UTxOState .getField = UTxOState.deposits
 
   HasPParams-EnactState : HasPParams EnactState
-  HasPParams-EnactState .getPParams = proj₁ ∘ EnactState.pparams
+  HasPParams-EnactState .PParamsOf = proj₁ ∘ EnactState.pparams
 
   HasField-UTxOState-LState : HasField UTxOState LState
   HasField-UTxOState-LState .getField = LState.utxoSt
 
   HasGovState-LState : HasGovState LState
-  HasGovState-LState .getGovState = LState.govSt
+  HasGovState-LState .GovStateOf = LState.govSt
 
   HasCertState-LState : HasCertState LState
-  HasCertState-LState .getCertState = LState.certState
+  HasCertState-LState .CertStateOf = LState.certState
 
   HasField-CertState-LState : HasField CertState LState 
   HasField-CertState-LState .getField = LState.certState
 
   HasUTxO-LState : HasUTxO LState
-  HasUTxO-LState .getUTxO = UTxOState.utxo ∘ getField
+  HasUTxO-LState .UTxOOf = UTxOState.utxo ∘ getField
 
   HasDeposits-LState : HasDeposits LState
-  HasDeposits-LState .getDeposits = getField ∘ getField
+  HasDeposits-LState .DepositsOf = getField ∘ getField
 
   HasField-LState-EpochState : HasField LState EpochState
   HasField-LState-EpochState .getField = EpochState.ls
 
   HasDeposits-EpochState : HasDeposits EpochState
-  HasDeposits-EpochState .getDeposits = getDeposits ∘ getField
+  HasDeposits-EpochState .DepositsOf = DepositsOf ∘ getField
 
   HasLState-NewEpochState : HasLState NewEpochState
-  HasLState-NewEpochState .getLState = EpochState.ls ∘ NewEpochState.epochState
+  HasLState-NewEpochState .LStateOf = EpochState.ls ∘ NewEpochState.epochState
 
   HasGovState-NewEpochState : HasGovState NewEpochState
-  HasGovState-NewEpochState .getGovState = getGovState ∘ getLState
+  HasGovState-NewEpochState .GovStateOf = GovStateOf ∘ LStateOf
 
   HasCertState-NewEpochState : HasCertState NewEpochState
-  HasCertState-NewEpochState .getCertState = getCertState ∘ getLState
+  HasCertState-NewEpochState .CertStateOf = CertStateOf ∘ LStateOf
 
   HasField-DReps-NewEpochState : HasField (Credential ⇀ Epoch) NewEpochState 
-  HasField-DReps-NewEpochState .getField = getField ∘ getCertState
+  HasField-DReps-NewEpochState .getField = getField ∘ CertStateOf
 
   HasField-EpochState-NewEpochState : HasField EpochState NewEpochState 
   HasField-EpochState-NewEpochState .getField = NewEpochState.epochState
 
   HasDReps-NewEpochState : HasDReps NewEpochState 
-  HasDReps-NewEpochState .getDReps = getField ∘ getCertState
+  HasDReps-NewEpochState .DRepsOf = getField ∘ CertStateOf
 
   HasRewards-NewEpochState : HasRewards NewEpochState
-  HasRewards-NewEpochState .getRewards = getRewards ∘ getCertState
+  HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
 
   HasField-Rewards-NewEpochState : HasField (Credential ⇀ Coin) NewEpochState 
-  HasField-Rewards-NewEpochState .getField = DState.rewards ∘ getDState ∘ getCertState
+  HasField-Rewards-NewEpochState .getField = DState.rewards ∘ DStateOf ∘ CertStateOf
 
   HasField-LastEpoch-NewEpochState : HasField Epoch NewEpochState
   HasField-LastEpoch-NewEpochState .getField = NewEpochState.lastEpoch
@@ -192,30 +217,30 @@ instance
   HasField-NewEpochState-ChainState .getField = ChainState.newEpochState
 
   HasEpochState-ChainState : HasEpochState ChainState 
-  HasEpochState-ChainState .getEpochState = getField ∘ getField
+  HasEpochState-ChainState .EpochStateOf = getField ∘ getField
 
   HasEnactState-ChainState : HasEnactState ChainState 
-  HasEnactState-ChainState .getEnactState = EpochState.es ∘ getEpochState
-
-  HasPParams-ChainState : HasPParams ChainState
-  HasPParams-ChainState .getPParams = getPParams ∘ getEnactState
+  HasEnactState-ChainState .EnactStateOf = EpochState.es ∘ EpochStateOf
 
   HasLastEpoch-ChainState : HasLastEpoch ChainState
-  HasLastEpoch-ChainState .getLastEpoch = getField ∘ ChainState.newEpochState
+  HasLastEpoch-ChainState .LastEpochOf = getField ∘ ChainState.newEpochState
 
   HasLState-ChainState : HasLState ChainState
-  HasLState-ChainState .getLState = EpochState.ls ∘ getEpochState
+  HasLState-ChainState .LStateOf = EpochState.ls ∘ EpochStateOf
 
   HasUTxOState-ChainState : HasUTxOState ChainState
-  HasUTxOState-ChainState .getUTxOState = getField ∘ getLState
+  HasUTxOState-ChainState .UTxOStateOf = getField ∘ LStateOf
 
   HasCertState-ChainState : HasCertState ChainState
-  HasCertState-ChainState .getCertState = LState.certState ∘ getLState
+  HasCertState-ChainState .CertStateOf = CertStateOf ∘ LStateOf
 
   HasDeposits-ChainState : HasDeposits ChainState
-  HasDeposits-ChainState .getDeposits = getField ∘ getUTxOState
+  HasDeposits-ChainState .DepositsOf = getField ∘ UTxOStateOf
 
   HasRewards-ChainState : HasRewards ChainState
-  HasRewards-ChainState .getRewards = getRewards ∘ getCertState
+  HasRewards-ChainState .RewardsOf = RewardsOf ∘ CertStateOf
 
+  HasPParams-ChainState : HasPParams ChainState
+  HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf
 
+  

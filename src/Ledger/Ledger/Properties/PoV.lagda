@@ -63,7 +63,8 @@ module _
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-  LEDGER-pov : {Γ : LEnv} {s s' : LState} → txid ∉ mapˢ proj₁ (dom (getUTxO s))
+  LEDGER-pov : {Γ : LEnv} {s s' : LState}
+    → txid ∉ mapˢ proj₁ (dom (UTxOOf s))
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 \end{code}
 \end{AgdaMultiCode}

@@ -38,7 +38,7 @@ instance
   isGADeposit? {GovActionDeposit x} = ⁇ (yes tt)
 
 activeDReps : Epoch → NewEpochState → ℙ Credential
-activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (getDReps s))
+activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (DRepsOf s))
 
 instance
   _ : IsSet Block Tx

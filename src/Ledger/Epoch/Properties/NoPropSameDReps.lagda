@@ -30,7 +30,7 @@ open import Ledger.Interface.HasLedgerField txs abs
 \begin{code}
 prop≡∅⇒activeDReps-const : Epoch → (es es' : NewEpochState) → Type
 prop≡∅⇒activeDReps-const e es es' =
-  getGovState es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
+  GovStateOf es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\EpochPropConstDReps.lagda}{\AgdaModule{\EpochPropConstDReps{}}} module

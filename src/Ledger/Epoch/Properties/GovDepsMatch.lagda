@@ -85,19 +85,17 @@ module EPOCH-PROPS {eps : EpochState} where
     of (the governance state of) \ab{eps}.
     \item \textit{Formally}.
 \begin{code}
-  EPOCH-govDepsMatch :  {ratify-removed :  map (GovActionDeposit ∘ proj₁) removed'
-                                           ⊆ map proj₁ (getDeposits eps ˢ)}
-                        {eps' : EpochState}
-                        {e : Epoch}
-                        → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-                        → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
+  EPOCH-govDepsMatch :  {eps' : EpochState} {e : Epoch}
+    → map (GovActionDeposit ∘ proj₁) removed' ⊆ map proj₁ (DepositsOf eps ˢ)
+    → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+    → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\EpochPropGov.lagda}{\AgdaModule{\EpochPropGov{}}}
       module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
-  EPOCH-govDepsMatch {ratify-removed} (EPOCH x _) =
+  EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
       ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
     where

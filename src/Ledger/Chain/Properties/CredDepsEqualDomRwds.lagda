@@ -32,8 +32,8 @@ open import Ledger.Interface.HasLedgerField txs abs
     quantities are equal for \ab{cs}.  Formally,
 \begin{code}
 credDeposits≡dom-rwds : ChainState → Type
-credDeposits≡dom-rwds cs =  filterˢ isCredDeposit (dom (getDeposits cs))
-                            ≡ mapˢ CredentialDeposit (dom (getRewards cs))
+credDeposits≡dom-rwds cs =  filterˢ isCredDeposit (dom (DepositsOf cs))
+                            ≡ mapˢ CredentialDeposit (dom (RewardsOf cs))
 \end{code}
     The property
     \AgdaFunction{credDeposits≡dom-rwds-inv} asserts that

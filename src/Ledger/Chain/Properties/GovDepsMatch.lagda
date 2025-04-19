@@ -30,7 +30,7 @@ module _
   where
   open Block b; open ChainState cs
   open NewEpochState -- nes renaming (epochState to nesEpochState; lastEpoch to nesLastEpoch; ru to nesRu)
-  open EPOCH-Body (getEpochState cs) renaming (epsLState to csLState)
+  open EPOCH-Body (EpochStateOf cs) renaming (epsLState to csLState)
   open EnactState ens using (pparams)
   pp = pparams .proj₁
   open PParams pp using (maxRefScriptSizePerBlock)
@@ -52,7 +52,7 @@ module _
   cs' : ChainState
   cs' .newEpochState =
     record { lastEpoch   = nes .lastEpoch
-           ; epochState  = record (getEpochState cs) {ls = getLState nes}
+           ; epochState  = record (EpochStateOf cs) {ls = LStateOf nes}
            ; ru          = nes .ru }
 \end{code}
       That is \AgdaFunction{cs'} is essentially \ab{nes}, but the \EpochState{} field is
@@ -65,9 +65,11 @@ module _
       \\[4pt]
       Assume the following conditions hold:
       \begin{itemize}
-      \item the \ab{ratify-removed} hypothesis (described in \cref{lem:EpochGovDepsMatch});
+      \item the hypothesis about \AgdaFunction{removed'} needed for and described in Lemma~\ref{lem:EpochGovDepsMatch},\\[4pt]
+      \AgdaFunction{map}~(\AgdaInductiveConstructor{GovActionDeposit}~$∘$~\AgdaField{proj₁})~\AgdaFunction{removed'}~\AgdaField{$⊆$}~
+        \AgdaFunction{map}~\AgdaField{proj₁}~(\AgdaField{DepositsOf}~\ab{cs}~\AgdaFunction{ˢ});
       \item the total reference script size of \AgdaFunction{csLState} is not greater than the
-        maximum allowed size per block (as specified in \PParams{}),
+        maximum allowed size per block (as specified in \PParams{});
       \item \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaFunction{cs'}. 
       \end{itemize}
       Under these conditions, if the governance action deposits of \ab{utxoSt}
@@ -77,10 +79,10 @@ module _
     \item \textit{Formally}.
 \begin{code}
   CHAIN-govDepsMatch :
-    map (GovActionDeposit ∘ proj₁) removed' ⊆ map proj₁ (getDeposits cs ˢ)
+    map (GovActionDeposit ∘ proj₁) removed' ⊆ map proj₁ (DepositsOf cs ˢ)
     →  totalRefScriptsSize csLState ts ≤ maxRefScriptSizePerBlock
     →  tt ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
-    →  govDepsMatch csLState → govDepsMatch (getLState nes)
+    →  govDepsMatch csLState → govDepsMatch (LStateOf nes)
 \end{code}
     \item \textit{Proof}.  See the
       \LedgerMod{\ChainPropGov.lagda}{\AgdaModule{\ChainPropGov{}}}
@@ -89,14 +91,14 @@ module _
   -- Proof.
   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
-     ∘ EPOCH-PROPS.EPOCH-govDepsMatch {ratify-removed = rrm} eps₁→eps₂
+     ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 
   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-Not-New _) ledgers) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
 
   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
-     ∘ EPOCH-PROPS.EPOCH-govDepsMatch {ratify-removed = rrm} eps₁→eps₂
+     ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 \end{code}
   \end{itemize}
 \end{theorem}

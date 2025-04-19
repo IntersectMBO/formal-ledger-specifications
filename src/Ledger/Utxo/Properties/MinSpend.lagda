@@ -120,6 +120,7 @@ module _ -- ASSUMPTION --
   ≤updateCertDeps (retirepool _ _ ∷ cs)    (_ All.∷ nrf) = ≤updateCertDeps cs nrf
   ≤updateCertDeps (regdrep _ _ _ ∷ cs)     (_ All.∷ nrf) = ≤-trans ≤certDeps (≤updateCertDeps cs nrf)
   ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤updateCertDeps cs nrf
+
 \end{code}
 
 \begin{theorem}[%
@@ -146,18 +147,11 @@ module _ -- ASSUMPTION --
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-  utxoMinSpend :  {Γ : UTxOEnv} {tx : Tx}
-                  {utxoSt utxoSt' : UTxOState}
-\end{code}
-\begin{code}[hide]
-                  (open PParams (UTxOEnv.pparams Γ))
-                  (open Tx tx)
-                  (open TxBody body)
-\end{code}
-\begin{code}
+  utxoMinSpend : {Γ : UTxOEnv} {tx : Tx} {utxoSt utxoSt' : UTxOState}
     → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
-    → noRefundCert txcerts
-    → coin (consumed _ utxoSt body) ≥ length txprop * govActionDeposit
+    → noRefundCert (txcertsOf tx)
+    → coin (consumed _ utxoSt (bodyOf tx)) ≥ length (txpropOf tx) *
+      PParams.govActionDeposit (UTxOEnv.pparams Γ)
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
@@ -252,8 +246,8 @@ module _
 \begin{AgdaMultiCode}
 \begin{code}
   propose-minSpend :  {slot : Slot} {tx : Tx} {cs : ChainState}
-                      ( let  pp      = getPParams cs
-                             utxoSt  = getUTxOState cs )
+                      ( let  pp      = PParamsOf cs
+                             utxoSt  = UTxOStateOf cs )
 \end{code}
 \begin{code}[hide]
     ( open Tx tx )

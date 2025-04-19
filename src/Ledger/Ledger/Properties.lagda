@@ -105,7 +105,7 @@ isGADeposit dp = isGADepositᵇ dp ≡ true
 \begin{code}
 govDepsMatch : LState → Type
 govDepsMatch ls =
-  filterˢ isGADeposit (dom (getDeposits ls)) ≡ᵉ fromList (dpMap (getGovState ls))
+  filterˢ isGADeposit (dom (DepositsOf ls)) ≡ᵉ fromList (dpMap (GovStateOf ls))
 \end{code}
 \begin{code}[hide]
 module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
