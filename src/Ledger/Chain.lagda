@@ -18,7 +18,8 @@ module Ledger.Chain
   where
 
 open import Ledger.Enact govStructure
-open import Ledger.Interface.HasDowncast txs govStructure
+open import Ledger.Interface.HasDowncast
+open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs

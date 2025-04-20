@@ -131,6 +131,11 @@ record TransactionStructure : Type₁ where
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 \end{code}
+\begin{code}[hide]
+  record HasUTxO {a} (A : Type a) : Type a where
+    field UTxOOf : A → UTxO
+  open HasUTxO ⦃...⦄ public
+\end{code}
 \end{NoConway}
 \emph{Transaction types}
 \begin{AgdaMultiCode}

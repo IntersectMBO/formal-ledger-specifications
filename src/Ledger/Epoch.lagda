@@ -23,6 +23,7 @@ module Ledger.Epoch
 
 open import Ledger.Gov txs
 open import Ledger.Enact govStructure
+open import Ledger.Interface.HasDowncast
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
@@ -198,7 +199,7 @@ stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDel
   where
     open DState stᵈ using (stakeDelegs; rewards)
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ proj₁ rewards
+    stakeRelation = m ∪ rewards ↓
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
@@ -213,7 +214,7 @@ opaque
 \begin{code}
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy (proj₁ delegations) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
+    aggregateBy (delegations ↓) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}

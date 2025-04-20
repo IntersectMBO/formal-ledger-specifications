@@ -35,6 +35,8 @@ module Ledger.Utxo.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Interface.HasDowncast
+open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Certs govStructure
@@ -103,7 +105,7 @@ instance
                           in
                             ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
                             +ˢ "\n  consumed =\t\t" +ˢ showValue con
-                            +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (s .UTxOState.utxo ∣ txb .TxBody.txins))
+                            +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (UTxOOf s ∣ txb .TxBody.txins))
                             +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
                             +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
                             +ˢ "\n  produced =\t\t" +ˢ showValue prod
@@ -159,10 +161,10 @@ private
 
 opaque
   unfolding balance
-  balance-cong : proj₁ utxo ≡ᵉ proj₁ utxo' → balance utxo ≈ balance utxo'
+  balance-cong :  utxo ↓ ≡ᵉ utxo' ↓ → balance utxo ≈ balance utxo'
   balance-cong {utxo} {utxo'} eq = indexedSumᵐ-cong {M = Value} {x = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ} (map-≡ᵉ eq)
 
-  balance-cong-coin : proj₁ utxo ≡ᵉ proj₁ utxo' → cbalance utxo ≡ cbalance utxo'
+  balance-cong-coin : utxo ↓ ≡ᵉ utxo' ↓ → cbalance utxo ≡ cbalance utxo'
   balance-cong-coin {utxo} {utxo'} x =
     coinIsMonoidHomomorphism .⟦⟧-cong (balance-cong {utxo} {utxo'} x)
     where open MonoidMorphisms.IsMonoidHomomorphism

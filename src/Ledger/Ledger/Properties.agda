@@ -684,10 +684,10 @@ module _ (b : Block) (cs : ChainState) where
     }
 
   CHAIN-govDepsMatch : {nes : NewEpochState}
-    → mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (UTxOState.deposits (LState.utxoSt ls) ˢ)
+    → mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (DepositsOf ls ˢ)
     → totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
     → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
-    → govDepsMatch ls → govDepsMatch (EpochState.ls (NewEpochState.epochState nes))
+    → govDepsMatch ls → govDepsMatch (LStateOf nes)
 
   CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers

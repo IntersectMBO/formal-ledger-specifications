@@ -56,7 +56,6 @@ open HasEnactState ⦃...⦄ public
 
 instance
   HasPParams-EnactState : HasPParams EnactState
-  -- HasPParams-EnactState .PParamsOf = _↓ ∘ EnactState.pparams
   HasPParams-EnactState .PParamsOf = proj₁ ∘ EnactState.pparams
 
   unquoteDecl To-EnactEnv = derive-To
