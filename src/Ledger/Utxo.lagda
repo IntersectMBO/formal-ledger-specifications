@@ -589,7 +589,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
-    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
+    ∙ ∀[ a ∈ dom txwdrls ]          NetworkIdOf a ≡ NetworkId
     ∙ txNetworkId  ~ just NetworkId
     ∙ curTreasury  ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'

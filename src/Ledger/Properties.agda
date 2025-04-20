@@ -39,20 +39,8 @@ instance
   isGADeposit? {DRepDeposit x} = ⁇ (no λ ())
   isGADeposit? {GovActionDeposit x} = ⁇ (yes tt)
 
-getLState : NewEpochState → LState
-getLState = EpochState.ls ∘ NewEpochState.epochState
-
-getRewards : NewEpochState → Credential ⇀ Coin
-getRewards = DState.rewards ∘ CertState.dState ∘ LState.certState ∘ getLState
-
-allDReps : NewEpochState → Credential ⇀ Epoch
-allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ getLState
-
 activeDReps : Epoch → NewEpochState → ℙ Credential
-activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (allDReps s))
-
-getGovState : NewEpochState → GovState
-getGovState = LState.govSt ∘ getLState
+activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (DRepsOf s))
 
 instance
   _ : IsSet Block Tx
@@ -143,9 +131,6 @@ module _ (s : ChainState) where
 
     newChainState : ChainState
     newChainState = proj₁ valid
-
-    getEnactState : ChainState → EnactState
-    getEnactState = EpochState.es ∘ NewEpochState.epochState ∘ ChainState.newEpochState
 
     -- enact-change⇒newEpoch : es ≢ getEnactState newChainState → isNewEpochBlock
     -- enact-change⇒newEpoch = {!!}

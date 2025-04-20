@@ -408,7 +408,7 @@ actionValid rewardCreds p ppolicy epoch _ =
 actionWellFormed : GovAction → Type
 actionWellFormed ⟦ ChangePParams , x ⟧ᵍᵃ = ppdWellFormed x
 actionWellFormed ⟦ TreasuryWdrl  , x ⟧ᵍᵃ =
-  (∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
+  (∀[ a ∈ dom x ] NetworkIdOf a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
 actionWellFormed _                 = ⊤
 \end{code}
 \caption{Validity and wellformedness predicates}
@@ -494,8 +494,8 @@ data _⊢_⇀⦇_,GOV⦈_ where
     ∙ d ≡ pp .govActionDeposit
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s (a .gaType) prev
-    ∙ addr .RwdAddr.net ≡ NetworkId
-    ∙ addr .RwdAddr.stake ∈ rewardCreds
+    ∙ NetworkIdOf addr ≡ NetworkId
+    ∙ CredentialOf addr ∈ rewardCreds
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ addAction s (pp .govActionLifetime +ᵉ e)
                                                  (Γ .txid , k) addr a prev

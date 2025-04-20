@@ -11,9 +11,10 @@ open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure using (EnactState)
 open import Ledger.Epoch txs abs
 open import Ledger.Epoch.Properties txs abs
+open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
 open import Ledger.Prelude
-open import Ledger.Properties txs abs using (getLState)
+-- open import Ledger.Properties txs abs using (getLState)
 
 open Computational ⦃...⦄
 
@@ -31,7 +32,7 @@ instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
   Computational-CHAIN .computeProof Γ s record { ts = ts } = do
     nes , neStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
-    _ , lsStep ← computeProof _ (getLState nes) ts
+    _ , lsStep ← computeProof _ (LStateOf nes) ts
     case refScriptSize≤?Bound nes ts of λ where
       (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
       (yes p) → success (_ , CHAIN p neStep lsStep)
