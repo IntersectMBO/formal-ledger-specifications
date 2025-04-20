@@ -138,9 +138,6 @@ module _ (s : ChainState) where
     newChainState : ChainState
     newChainState = proj₁ valid
 
-    getEnactState : ChainState → EnactState
-    getEnactState = EpochState.es ∘ NewEpochState.epochState ∘ ChainState.newEpochState
-
     -- enact-change⇒newEpoch : es ≢ getEnactState newChainState → isNewEpochBlock
     -- enact-change⇒newEpoch = {!!}
 

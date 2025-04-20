@@ -46,6 +46,14 @@ record LEnv : Type where
     pparams     : PParams
     enactState  : EnactState
     treasury    : Coin
+\end{code}
+\begin{code}[hide]
+instance
+  HasPParams-LEnv : HasPParams LEnv
+  HasPParams-LEnv .PParamsOf = LEnv.pparams
+\end{code}
+\begin{code}
+
 
 record LState : Type where
 \end{code}
@@ -67,6 +75,9 @@ open HasLState ⦃...⦄ public
 instance
   HasUTxOState-LState : HasUTxOState LState
   HasUTxOState-LState .UTxOStateOf = LState.utxoSt
+
+  HasUTxO-LState : HasUTxO LState
+  HasUTxO-LState .UTxOOf = UTxOOf ∘ UTxOStateOf
 
   HasGovState-LState : HasGovState LState
   HasGovState-LState .GovStateOf = LState.govSt
