@@ -26,9 +26,23 @@ data DepositPurpose : Type where
   DRepDeposit        : Credential   → DepositPurpose
   GovActionDeposit   : GovActionID  → DepositPurpose
 
-Deposits = DepositPurpose ⇀ Coin
+Deposits  = DepositPurpose ⇀ Coin
+Rewards   = Credential ⇀ Coin
+DReps     = Credential ⇀ Epoch
 \end{code}
 \begin{code}[hide]
+record HasDeposits {a} (A : Type a) : Type a where
+  field DepositsOf : A → Deposits
+open HasDeposits ⦃...⦄ public
+
+record HasRewards {a} (A : Type a) : Type a where
+  field RewardsOf : A → Credential ⇀ Coin
+open HasRewards ⦃...⦄ public
+
+record HasDReps {a} (A : Type a) : Type a where
+  field DRepsOf : A → DReps
+open HasDReps ⦃...⦄ public
+
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
     ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
@@ -110,6 +124,15 @@ record DState : Type where
     stakeDelegs  : Credential ⇀ KeyHash
     rewards      : Credential ⇀ Coin
 \end{code}
+\begin{code}[hide]
+record HasDState {a} (A : Type a) : Type a where
+  field DStateOf : A → DState
+open HasDState ⦃...⦄ public
+
+instance
+  HasRewards-DState : HasRewards DState
+  HasRewards-DState .RewardsOf = DState.rewards
+\end{code}
 \begin{NoConway}
 \begin{code}
 
@@ -117,6 +140,11 @@ record PState : Type where
   field
     pools     : KeyHash ⇀ PoolParams
     retiring  : KeyHash ⇀ Epoch
+\end{code}
+\begin{code}[hide]
+record HasPState {a} (A : Type a) : Type a where
+  field PStateOf : A → PState
+open HasPState ⦃...⦄ public
 \end{code}
 \end{NoConway}
 \begin{code}
@@ -128,8 +156,19 @@ record GState : Type where
 \end{code}
 \begin{code}
   field
-    dreps      : Credential ⇀ Epoch
+    dreps      : DReps
     ccHotKeys  : Credential ⇀ Maybe Credential
+\end{code}
+\begin{code}[hide]
+record HasGState {a} (A : Type a) : Type a where
+  field GStateOf : A → GState
+open HasGState ⦃...⦄ public
+
+instance
+  HasDReps-GState : HasDReps GState
+  HasDReps-GState .DRepsOf = GState.dreps
+\end{code}
+\begin{code}
 
 record CertState : Type where
 \end{code}
@@ -141,6 +180,29 @@ record CertState : Type where
     dState : DState
     pState : PState
     gState : GState
+\end{code}
+\begin{code}[hide]
+record HasCertState {a} (A : Type a) : Type a where
+  field CertStateOf : A → CertState
+open HasCertState ⦃...⦄ public
+
+instance
+  HasDState-CertState : HasDState CertState
+  HasDState-CertState .DStateOf = CertState.dState
+
+  HasPState-CertState : HasPState CertState
+  HasPState-CertState .PStateOf = CertState.pState
+
+  HasGState-CertState : HasGState CertState
+  HasGState-CertState .GStateOf = CertState.gState
+
+  HasRewards-CertState : HasRewards CertState
+  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf 
+
+  HasDReps-CertState : HasDReps CertState
+  HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf
+\end{code}
+\begin{code}
 
 record DelegEnv : Type where
   field
@@ -175,8 +237,8 @@ instance
     ∷ [ (quote DelegEnv , To-DelegEnv) ])
 
 private variable
-  rwds rewards           : Credential ⇀ Coin
-  dReps                  : Credential ⇀ Epoch
+  rwds rewards           : Rewards
+  dReps                  : DReps
   sDelegs stakeDelegs    : Credential ⇀ KeyHash
   ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
   vDelegs voteDelegs     : Credential ⇀ VDeleg

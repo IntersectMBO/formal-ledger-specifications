@@ -222,7 +222,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   open DState dState
 
   -- initial utxo deposits
-  utxoDeps : DepositPurpose ⇀ Coin
+  utxoDeps : Deposits
   utxoDeps = UTxOState.deposits (LState.utxoSt s)
 
   -- GovState definitions and lemmas --
@@ -464,10 +464,10 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     filterˢ isGADeposit (dom (updateProposalDeposits (p ∷ ps) txid gad utxoDs))
       ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit ((dom (updateProposalDeposits ps txid gad utxoDs))
-      ∪ (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txid , length ps) , gad ❵))
+      ∪ (dom{X = Deposits} ❴ GovActionDeposit (txid , length ps) , gad ❵))
       ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom (updateProposalDeposits ps txid gad utxoDs)) ∪ filterˢ isGADeposit
-        (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txid , length ps) , gad ❵)
+        (dom{X = Deposits} ❴ GovActionDeposit (txid , length ps) , gad ❵)
       ≈⟨ ∪-cong (utxo-govst-connex ps x) (filter-pres-≡ᵉ dom-single≡single) ⟩
     fromList (dpMap (updateGovStates (map inj₂ ps) 0 gSt))
       ∪ filterˢ isGADeposit ❴ GovActionDeposit (txid , length ps) ❵

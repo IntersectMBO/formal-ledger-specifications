@@ -60,6 +60,23 @@ record LState : Type where
 
 \end{code}
 \begin{code}[hide]
+record HasLState {a} (A : Type a) : Type a where
+  field LStateOf : A → LState
+open HasLState ⦃...⦄ public
+
+instance
+  HasUTxOState-LState : HasUTxOState LState
+  HasUTxOState-LState .UTxOStateOf = LState.utxoSt
+
+  HasGovState-LState : HasGovState LState
+  HasGovState-LState .GovStateOf = LState.govSt
+
+  HasCertState-LState : HasCertState LState
+  HasCertState-LState .CertStateOf = LState.certState
+
+  HasDeposits-LState : HasDeposits LState
+  HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
+
 open CertState
 open DState
 

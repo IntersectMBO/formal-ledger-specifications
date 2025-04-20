@@ -164,6 +164,12 @@ record UTxOEnv : Type where
     treasury  : Coin
 
 \end{code}
+\begin{code}[hide]
+instance
+  HasPParams-UTxOEnv : HasPParams UTxOEnv
+  HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
+\end{code}
+
 \end{NoConway}
 \emph{UTxO states}
 \begin{code}
@@ -181,7 +187,14 @@ record UTxOState : Type where
 
 \end{code}
 \begin{code}[hide]
+record HasUTxOState {a} (A : Type a) : Type a where
+  field UTxOStateOf : A → UTxOState
+open HasUTxOState ⦃...⦄ public
+
 instance
+  HasDeposits-UTxOState : HasDeposits UTxOState
+  HasDeposits-UTxOState .DepositsOf = UTxOState.deposits
+
   unquoteDecl To-UTxOEnv To-UTxOState = derive-To
     ( (quote UTxOEnv   , To-UTxOEnv  ) ∷
     [ (quote UTxOState , To-UTxOState) ])

@@ -151,7 +151,7 @@ private variable
   Γ                                : UTxOEnv
   utxoState utxoState'             : UTxOState
   fees fees' donations donations'  : Coin
-  deposits deposits'               : DepositPurpose ⇀ Coin
+  deposits deposits'               : Deposits
 
 open MonoidMorphisms.IsMonoidHomomorphism
 private
@@ -282,7 +282,7 @@ posPart-negPart≡x {ℤ.negsuc n} = refl
 module DepositHelpers
   {utxo utxo' : UTxO}
   {fees fees' : Coin}
-  {deposits deposits' : DepositPurpose ⇀ Coin}
+  {deposits deposits' : Deposits}
   {donations donations' : Coin}
   {tx : Tx} (let open Tx tx renaming (body to txb); open TxBody txb)
   {Γ : UTxOEnv}
@@ -606,7 +606,7 @@ opaque
   fin∘list∷[] : {A : Type} {a : A} → proj₁ (finiteness ❴ a ❵) ≡ [ a ]
   fin∘list∷[] = refl
 
-coin∅ : getCoin{A = DepositPurpose ⇀ Coin} ∅ ≡ 0
+coin∅ : getCoin{A = Deposits} ∅ ≡ 0
 coin∅ = begin
   foldr (λ x → (proj₂ x) +_) 0 (deduplicate _≟_ (proj₁ (finiteness ∅)))
     ≡⟨ cong (λ u → (foldr (λ x → (proj₂ x) +_) 0 (deduplicate _≟_ u))) fin∘list[] ⟩
@@ -622,20 +622,20 @@ getCoin-singleton : ((dp , c) : DepositPurpose × Coin) → indexedSumᵛ' id �
 getCoin-singleton _ = indexedSum-singleton' {A = DepositPurpose × Coin} {f = proj₂} (finiteness _)
 
 module _ -- ASSUMPTION --
-         (gc-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
+         (gc-hom : (d₁ d₂ : Deposits) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
   where
-  ∪⁺singleton≡ : {deps : DepositPurpose ⇀ Coin} {(dp , c) : DepositPurpose × Coin}
+  ∪⁺singleton≡ : {deps : Deposits} {(dp , c) : DepositPurpose × Coin}
                  → getCoin (deps ∪⁺ ❴ (dp , c) ❵ᵐ) ≡ getCoin deps + c
   ∪⁺singleton≡ {deps} {(dp , c)} = begin
     getCoin (deps ∪⁺ ❴ (dp , c) ❵)
       ≡⟨ gc-hom deps ❴ (dp , c) ❵ ⟩
-    getCoin deps + getCoin{A = DepositPurpose ⇀ Coin} ❴ (dp , c) ❵
+    getCoin deps + getCoin{A = Deposits} ❴ (dp , c) ❵
       ≡⟨ cong (getCoin deps +_) (getCoin-singleton (dp , c)) ⟩
     getCoin deps + c
       ∎
     where open Prelude.≡-Reasoning
 
-  module _ {deposits : DepositPurpose ⇀ Coin} {txid : TxId} {gaDep : Coin} where
+  module _ {deposits : Deposits} {txid : TxId} {gaDep : Coin} where
 
     ≤updatePropDeps : (props : List GovProposal)
       → getCoin deposits ≤ getCoin (updateProposalDeposits props txid gaDep deposits)
@@ -661,7 +661,7 @@ module _ -- ASSUMPTION --
           ∎
         where open Prelude.≡-Reasoning
 
-  ≤certDeps  :  {d : DepositPurpose ⇀ Coin} {(dp , c) : DepositPurpose × Coin}
+  ≤certDeps  :  {d : Deposits} {(dp , c) : DepositPurpose × Coin}
              →  getCoin d ≤ getCoin (d ∪⁺ ❴ (dp , c) ❵)
 
   ≤certDeps {d} = begin
@@ -671,7 +671,7 @@ module _ -- ASSUMPTION --
     where open ≤-Reasoning
 
 
-  ≤updateCertDeps : (cs : List DCert) {pp : PParams} {deposits :  DepositPurpose ⇀ Coin}
+  ≤updateCertDeps : (cs : List DCert) {pp : PParams} {deposits : Deposits}
     → noRefundCert cs
     → getCoin deposits ≤ getCoin (updateCertDeposits pp cs deposits)
   ≤updateCertDeps [] nrf = ≤-reflexive refl

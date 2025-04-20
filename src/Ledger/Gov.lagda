@@ -54,11 +54,19 @@ open GovActionState
 
 \begin{figure*}
 \emph{Derived types}
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 GovState : Type
 \end{code}
 \begin{code}
 GovState = List (GovActionID × GovActionState)
+\end{code}
+\begin{code}[hide]
+record HasGovState {a} (A : Type a) : Type a where
+  field GovStateOf : A → GovState
+open HasGovState ⦃...⦄ public
+\end{code}
+\begin{code}
 
 record GovEnv : Type where
   field
@@ -70,6 +78,7 @@ record GovEnv : Type where
     certState   : CertState
     rewardCreds : ℙ Credential
 \end{code}
+\end{AgdaMultiCode}
 \caption{Types used in the GOV transition system}
 \label{defs:gov-derived-types}
 \end{figure*}

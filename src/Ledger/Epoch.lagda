@@ -77,8 +77,24 @@ record EpochState : Type where
     es         : EnactState
     fut        : RatifyState
 \end{code}
+\begin{code}[hide]
+record HasEpochState {a} (A : Type a) : Type a where
+  field EpochStateOf : A → EpochState
+open HasEpochState ⦃...⦄ public
+
+instance
+  HasLState-EpochState : HasLState EpochState
+  HasLState-EpochState .LStateOf = EpochState.ls
+
+  HasEnactState-EpochState : HasEnactState EpochState
+  HasEnactState-EpochState .EnactStateOf = EpochState.es
+
+  HasDeposits-EpochState : HasDeposits EpochState
+  HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
+\end{code}
 \begin{NoConway}
 \begin{code}
+
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
@@ -90,7 +106,29 @@ record NewEpochState : Type where
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]
+record HasNewEpochState {a} (A : Type a) : Type a where
+  field NewEpochStateOf : A → NewEpochState
+open HasNewEpochState ⦃...⦄ public
+
 instance
+  HasEpochState-NewEpochState : HasEpochState NewEpochState
+  HasEpochState-NewEpochState .EpochStateOf = NewEpochState.epochState
+
+  HasLState-NewEpochState : HasLState NewEpochState
+  HasLState-NewEpochState .LStateOf = LStateOf ∘ EpochStateOf
+
+  HasGovState-NewEpochState : HasGovState NewEpochState
+  HasGovState-NewEpochState .GovStateOf = GovStateOf ∘ LStateOf
+
+  HasCertState-NewEpochState : HasCertState NewEpochState
+  HasCertState-NewEpochState .CertStateOf = CertStateOf ∘ LStateOf
+
+  HasDReps-NewEpochState : HasDReps NewEpochState 
+  HasDReps-NewEpochState .DRepsOf = DRepsOf ∘ CertStateOf
+
+  HasRewards-NewEpochState : HasRewards NewEpochState
+  HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
+
   unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState = derive-To
     (   (quote RewardUpdate   , To-RewardUpdate)
     ∷   (quote Snapshot       , To-Snapshot)

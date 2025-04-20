@@ -45,7 +45,7 @@ getLState = EpochState.ls ∘ NewEpochState.epochState
 getRewards : NewEpochState → Credential ⇀ Coin
 getRewards = DState.rewards ∘ CertState.dState ∘ LState.certState ∘ getLState
 
-allDReps : NewEpochState → Credential ⇀ Epoch
+allDReps : NewEpochState → DReps
 allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ getLState
 
 activeDReps : Epoch → NewEpochState → ℙ Credential
