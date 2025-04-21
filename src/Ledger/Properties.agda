@@ -12,6 +12,7 @@ module Ledger.Properties
 open import Ledger.Chain txs abs
 open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
+open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Certs govStructure
@@ -82,7 +83,7 @@ module _ (s : ChainState) (slot : Slot) where
   open EpochState epochState; open EnactState es
 
   private
-    ledgerEnv = ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt ⟧
+    ledgerEnv = ⟦ slot , constitution ↓ , pparams ↓ , es , Acnt.treasury acnt ⟧
 
   validTxIn₂ : Tx → Type
   validTxIn₂ tx = ∃[ ls' ] ledgerEnv ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'
@@ -98,7 +99,7 @@ module _ (s : ChainState) where
   open LState ls
   open EnactState es renaming (pparams to pparams')
   open CertState certState; open DState dState
-  pparams = pparams' .proj₁
+  pparams = pparams' ↓
   open PParams pparams
   open Tx; open TxBody
 

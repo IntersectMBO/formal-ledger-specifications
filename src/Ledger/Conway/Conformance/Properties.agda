@@ -9,6 +9,7 @@ module Ledger.Conway.Conformance.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Conway.Conformance.Chain txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
@@ -110,7 +111,7 @@ module _ (s : ChainState) where
   open LState ls
   open EnactState es renaming (pparams to pparams')
   open CertState certState; open DState dState
-  pparams = pparams' .proj₁
+  pparams = pparams' ↓
   open PParams pparams
   open Tx; open TxBody
 

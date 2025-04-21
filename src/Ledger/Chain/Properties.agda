@@ -11,6 +11,7 @@ open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure using (EnactState)
 open import Ledger.Epoch txs abs
 open import Ledger.Epoch.Properties txs abs
+open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
 open import Ledger.Prelude
@@ -22,7 +23,7 @@ module _
   (nes : NewEpochState)
   (open EpochState (NewEpochState.epochState nes) using (ls) renaming (es to es'))
   (open EnactState es' using (pparams))
-  (open PParams (proj₁ pparams) using (maxRefScriptSizePerBlock))
+  (open PParams (pparams ↓) using (maxRefScriptSizePerBlock))
   (ts : List Tx)
   where
   refScriptSize≤?Bound : Dec (totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock)

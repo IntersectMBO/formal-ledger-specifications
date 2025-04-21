@@ -35,7 +35,6 @@ module Ledger.Utxo.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Interface.HasDowncast
 open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs

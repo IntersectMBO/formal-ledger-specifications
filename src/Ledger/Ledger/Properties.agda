@@ -107,7 +107,7 @@ instance
 -- ** Proof that LEDGER preserves values.
 
 FreshTx : Tx → LState → Type
-FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
+FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (UTxOOf ls))
   where open Tx tx; open TxBody body; open UTxOState; open LState
 
 module _

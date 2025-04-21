@@ -9,7 +9,7 @@ module Ledger.Interface.HasDowncast.Instance
   (gs : _) (open GovStructure gs using (DocHash))
   where
 
-open import Ledger.Interface.HasDowncast
+open import Ledger.Interface.HasDowncast public
 
 open import Prelude
 open import Ledger.Prelude
