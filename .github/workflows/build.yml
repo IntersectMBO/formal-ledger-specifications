@@ -177,13 +177,13 @@ jobs:
           sparse-checkout: |
             scripts/prepare-conf-test.sh
           sparse-checkout-cone-mode: false
-          path: formal-ledger-specifications
+          path: fls
 
       - name: Checkout cardano-ledger
         uses: actions/checkout@v4
         with:
           repository: IntersectMBO/cardano-ledger
-          path: cardano-ledger
+          path: cl
           fetch-depth: 0
 
       - name: Download hs artifact
@@ -193,5 +193,6 @@ jobs:
 
       - name: Build cardano-ledger
         run: |
-          cd cardano-ledger
-          nix develop --command "../formal-ledger-specifications/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
+          tree
+          # cd cl
+          # nix develop --command "../formal-ledger-specifications/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
