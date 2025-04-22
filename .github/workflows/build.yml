@@ -163,6 +163,7 @@ jobs:
 
   build-cardano-ledger:
     needs: [hs]
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     steps:
       - uses: cachix/install-nix-action@v31
