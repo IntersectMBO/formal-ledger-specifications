@@ -207,11 +207,11 @@ module _ {txb : _} (open TxBody txb) where opaque
     coin (balance (utxo ∣ txins) + mint + inject dRefs + inject sWdls)
       ≡⟨ ∙-homo-Coin _ _ ⟩
     coin (balance (utxo ∣ txins) + mint + inject dRefs) + coin (inject $ sWdls)
-      ≡⟨ cong (coin (balance (utxo ∣ txins) + mint + inject dRefs) +_) (property _) ⟩
+      ≡⟨ cong (coin (balance (utxo ∣ txins) + mint + inject dRefs) +_) (coin∘inject≗id _) ⟩
     coin (balance (utxo ∣ txins) + mint + inject dRefs) + sWdls
       ≡⟨ cong (_+ sWdls) (∙-homo-Coin _ _) ⟩
     coin (balance (utxo ∣ txins) + mint) + coin (inject $ dRefs) + sWdls
-      ≡⟨ cong (λ u → coin (balance (utxo ∣ txins) + mint) + u + sWdls) (property _) ⟩
+      ≡⟨ cong (λ u → coin (balance (utxo ∣ txins) + mint) + u + sWdls) (coin∘inject≗id _) ⟩
     coin (balance (utxo ∣ txins) + mint) + dRefs + sWdls
       ≡⟨ cong (λ u → u + dRefs + sWdls) (∙-homo-Coin _ _) ⟩
     cbalance (utxo ∣ txins) + coin mint + dRefs + sWdls
@@ -237,21 +237,21 @@ module _ {txb : _} (open TxBody txb) where opaque
           ≡⟨ ∙-homo-Coin _ _ ⟩
         coin (balance (outs txb) +ᵛ inject txfee)
           ℕ.+ coin (inject (newDeposits pp utxoState txb))
-          ≡⟨ cong! (property _) ⟩
+          ≡⟨ cong! (coin∘inject≗id _) ⟩
         coin (balance (outs txb) +ᵛ inject txfee)
           ℕ.+ newDeposits pp utxoState txb
           ≡⟨ cong! (∙-homo-Coin _ _) ⟩
         coin (balance (outs txb)) ℕ.+ coin (inject txfee)
           ℕ.+ newDeposits pp utxoState txb
           ≡⟨ cong (λ x → cbalance (outs txb) + x + newDeposits pp utxoState txb)
-                $ property txfee ⟩
+                $ coin∘inject≗id txfee ⟩
         cbalance (outs txb) + txfee + newDeposits pp utxoState txb
           ∎
       )⟩
     cbalance (outs txb) + txfee
       + newDeposits pp utxoState txb + coin (inject txdonation)
       ≡⟨ cong (cbalance (outs txb) + txfee + newDeposits pp utxoState txb +_)
-            $ property _ ⟩
+            $ coin∘inject≗id _ ⟩
     cbalance (outs txb) + txfee + newDeposits pp utxoState txb + txdonation
       ∎
 
