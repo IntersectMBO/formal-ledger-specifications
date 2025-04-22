@@ -188,8 +188,7 @@ record UTxOState : Type where
 
 \end{code}
 \begin{code}[hide]
-record HasUTxOState {a} (A : Type a) : Type a where
-  field UTxOStateOf : A → UTxOState
+record HasUTxOState {a} (A : Type a) : Type a where field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
 
 instance

@@ -79,8 +79,7 @@ record EpochState : Type where
     fut        : RatifyState
 \end{code}
 \begin{code}[hide]
-record HasEpochState {a} (A : Type a) : Type a where
-  field EpochStateOf : A → EpochState
+record HasEpochState {a} (A : Type a) : Type a where field EpochStateOf : A → EpochState
 open HasEpochState ⦃...⦄ public
 
 instance
@@ -107,8 +106,7 @@ record NewEpochState : Type where
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]
-record HasNewEpochState {a} (A : Type a) : Type a where
-  field NewEpochStateOf : A → NewEpochState
+record HasNewEpochState {a} (A : Type a) : Type a where field NewEpochStateOf : A → NewEpochState
 open HasNewEpochState ⦃...⦄ public
 
 instance

@@ -132,8 +132,7 @@ record TransactionStructure : Type₁ where
   Update             = ProposedPPUpdates × Epoch
 \end{code}
 \begin{code}[hide]
-  record HasUTxO {a} (A : Type a) : Type a where
-    field UTxOOf : A → UTxO
+  record HasUTxO {a} (A : Type a) : Type a where field UTxOOf : A → UTxO
   open HasUTxO ⦃...⦄ public
 \end{code}
 \end{NoConway}
@@ -164,10 +163,16 @@ record TransactionStructure : Type₁ where
       scriptIntHash  : Maybe ScriptHash
 \end{code}
 \begin{code}[hide]
-  record HasTxBody {a} (A : Type a) : Type a where
-    field TxBodyOf : A → TxBody
-  open HasTxBody ⦃...⦄ public
-
+  record HasTxBody  {a} (A : Type a) : Type a where field TxBodyOf  : A → TxBody
+  record Hastxfee   {a} (A : Type a) : Type a where field txfeeOf   : A → Coin
+  record Hastxcerts {a} (A : Type a) : Type a where field txcertsOf : A → List DCert
+  record Hastxprop  {a} (A : Type a) : Type a where field txpropOf  : A → List GovProposal
+  record Hastxwdrls {a} (A : Type a) : Type a where field txwdrlsOf : A → Wdrl
+  open HasTxBody  ⦃...⦄ public
+  open Hastxfee   ⦃...⦄ public
+  open Hastxcerts ⦃...⦄ public
+  open Hastxprop  ⦃...⦄ public
+  open Hastxwdrls ⦃...⦄ public
 \end{code}
 
 \begin{NoConway}
