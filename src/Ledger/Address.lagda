@@ -102,7 +102,6 @@ instance
 
   HasCredential-RwdAddr : HasCredential RwdAddr
   HasCredential-RwdAddr .CredentialOf = RwdAddr.stake
-
 \end{code}
 \begin{code}
 

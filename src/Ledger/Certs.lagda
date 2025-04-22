@@ -32,11 +32,11 @@ DReps     = Credential ⇀ Epoch
 \end{code}
 \begin{code}[hide]
 record HasDeposits {a} (A : Type a) : Type a where field DepositsOf : A → Deposits
-record HasRewards  {a} (A : Type a) : Type a where field RewardsOf : A → Rewards
-record HasDReps    {a} (A : Type a) : Type a where field DRepsOf : A → DReps
+record HasRewards  {a} (A : Type a) : Type a where field RewardsOf  : A → Rewards
+record HasDReps    {a} (A : Type a) : Type a where field DRepsOf    : A → DReps
 open HasDeposits ⦃...⦄ public
-open HasRewards ⦃...⦄ public
-open HasDReps ⦃...⦄ public
+open HasRewards  ⦃...⦄ public
+open HasDReps    ⦃...⦄ public
 
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
