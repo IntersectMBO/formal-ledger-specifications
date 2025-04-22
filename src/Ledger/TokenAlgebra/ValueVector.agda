@@ -1,3 +1,4 @@
+{-# OPTIONS --safe #-}
 open import Ledger.Prelude hiding (_∙_; ε)
 
 module Ledger.TokenAlgebra.ValueVector (PolicyId : Type) (n : ℕ) where

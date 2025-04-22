@@ -1,3 +1,4 @@
+{-# OPTIONS --safe --without-K #-}
 module Data.Vec.Instances.Ext where
 
 open import Level

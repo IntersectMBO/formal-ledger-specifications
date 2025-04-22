@@ -1,3 +1,4 @@
+{-# OPTIONS --safe --cubical-compatible #-}
 module Algebra.Morphism.Construct.DirectProduct.Ext where
 
 open import Algebra.Bundles
