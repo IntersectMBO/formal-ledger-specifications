@@ -15,7 +15,7 @@ module Ledger.ScriptValidation
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
-open import Ledger.Interface.HasDowncast
+open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Certs govStructure
 open import Tactic.Derive.Show
 

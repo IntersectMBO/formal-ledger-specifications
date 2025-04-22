@@ -15,6 +15,8 @@ open import Prelude
 open import Ledger.Prelude
 
 instance
+  HasDowncast-A⇀B-RelAB : ∀ {A}{B} → HasDowncast (A ⇀ B) (Rel A B)
+  HasDowncast-A⇀B-RelAB ._↓ = proj₁ 
 
   HasDowncast-HashProtected-PParams : HasDowncast (HashProtected PParams) PParams
   HasDowncast-HashProtected-PParams ._↓ = proj₁
