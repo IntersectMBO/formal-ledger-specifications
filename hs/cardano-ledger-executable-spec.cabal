@@ -509,6 +509,7 @@ library
         MAlonzo.Code.Ledger.Script
         MAlonzo.Code.Ledger.ScriptValidation
         MAlonzo.Code.Ledger.TokenAlgebra
+        MAlonzo.Code.Ledger.TokenAlgebra.Coin
         MAlonzo.Code.Ledger.Transaction
         MAlonzo.Code.Ledger.Types.Epoch
         MAlonzo.Code.Ledger.Types.GovStructure

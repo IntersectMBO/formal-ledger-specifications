@@ -40,409 +40,409 @@ import qualified MAlonzo.Code.Ledger.Transaction
 import qualified MAlonzo.Code.Ledger.Types.GovStructure
 
 -- _.PParams
-d_PParams_234 a0 = ()
+d_PParams_232 a0 = ()
 -- _.PParams.Emax
-d_Emax_926 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> AgdaAny
-d_Emax_926 v0 = coe MAlonzo.Code.Ledger.PParams.d_Emax_360 (coe v0)
+d_Emax_922 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> AgdaAny
+d_Emax_922 v0 = coe MAlonzo.Code.Ledger.PParams.d_Emax_360 (coe v0)
 -- _.PParams.a
-d_a_928 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_a_928 v0 = coe MAlonzo.Code.Ledger.PParams.d_a_332 (coe v0)
+d_a_924 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
+d_a_924 v0 = coe MAlonzo.Code.Ledger.PParams.d_a_332 (coe v0)
 -- _.PParams.a0
-d_a0_930 ::
+d_a0_926 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_a0_930 v0 = coe MAlonzo.Code.Ledger.PParams.d_a0_364 (coe v0)
+d_a0_926 v0 = coe MAlonzo.Code.Ledger.PParams.d_a0_364 (coe v0)
 -- _.PParams.b
-d_b_932 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_b_932 v0 = coe MAlonzo.Code.Ledger.PParams.d_b_334 (coe v0)
+d_b_928 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
+d_b_928 v0 = coe MAlonzo.Code.Ledger.PParams.d_b_334 (coe v0)
 -- _.PParams.ccMaxTermLength
-d_ccMaxTermLength_934 ::
+d_ccMaxTermLength_930 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_ccMaxTermLength_934 v0
+d_ccMaxTermLength_930 v0
   = coe MAlonzo.Code.Ledger.PParams.d_ccMaxTermLength_376 (coe v0)
 -- _.PParams.ccMinSize
-d_ccMinSize_936 ::
+d_ccMinSize_932 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_ccMinSize_936 v0
+d_ccMinSize_932 v0
   = coe MAlonzo.Code.Ledger.PParams.d_ccMinSize_374 (coe v0)
 -- _.PParams.coinsPerUTxOByte
-d_coinsPerUTxOByte_938 ::
+d_coinsPerUTxOByte_934 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_coinsPerUTxOByte_938 v0
+d_coinsPerUTxOByte_934 v0
   = coe MAlonzo.Code.Ledger.PParams.d_coinsPerUTxOByte_344 (coe v0)
 -- _.PParams.collateralPercentage
-d_collateralPercentage_940 ::
+d_collateralPercentage_936 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_collateralPercentage_940 v0
+d_collateralPercentage_936 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_collateralPercentage_366 (coe v0)
 -- _.PParams.costmdls
-d_costmdls_942 ::
+d_costmdls_938 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> AgdaAny
-d_costmdls_942 v0
+d_costmdls_938 v0
   = coe MAlonzo.Code.Ledger.PParams.d_costmdls_368 (coe v0)
 -- _.PParams.drepActivity
-d_drepActivity_944 ::
+d_drepActivity_940 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> AgdaAny
-d_drepActivity_944 v0
+d_drepActivity_940 v0
   = coe MAlonzo.Code.Ledger.PParams.d_drepActivity_384 (coe v0)
 -- _.PParams.drepDeposit
-d_drepDeposit_946 ::
+d_drepDeposit_942 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_drepDeposit_946 v0
+d_drepDeposit_942 v0
   = coe MAlonzo.Code.Ledger.PParams.d_drepDeposit_382 (coe v0)
 -- _.PParams.drepThresholds
-d_drepThresholds_948 ::
+d_drepThresholds_944 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Ledger.PParams.T_DrepThresholds_180
-d_drepThresholds_948 v0
+d_drepThresholds_944 v0
   = coe MAlonzo.Code.Ledger.PParams.d_drepThresholds_372 (coe v0)
 -- _.PParams.govActionDeposit
-d_govActionDeposit_950 ::
+d_govActionDeposit_946 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_govActionDeposit_950 v0
+d_govActionDeposit_946 v0
   = coe MAlonzo.Code.Ledger.PParams.d_govActionDeposit_380 (coe v0)
 -- _.PParams.govActionLifetime
-d_govActionLifetime_952 ::
+d_govActionLifetime_948 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_govActionLifetime_952 v0
+d_govActionLifetime_948 v0
   = coe MAlonzo.Code.Ledger.PParams.d_govActionLifetime_378 (coe v0)
 -- _.PParams.keyDeposit
-d_keyDeposit_954 ::
+d_keyDeposit_950 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_keyDeposit_954 v0
+d_keyDeposit_950 v0
   = coe MAlonzo.Code.Ledger.PParams.d_keyDeposit_336 (coe v0)
 -- _.PParams.maxBlockExUnits
-d_maxBlockExUnits_956 ::
+d_maxBlockExUnits_952 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> AgdaAny
-d_maxBlockExUnits_956 v0
+d_maxBlockExUnits_952 v0
   = coe MAlonzo.Code.Ledger.PParams.d_maxBlockExUnits_324 (coe v0)
 -- _.PParams.maxBlockSize
-d_maxBlockSize_958 ::
+d_maxBlockSize_954 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_maxBlockSize_958 v0
+d_maxBlockSize_954 v0
   = coe MAlonzo.Code.Ledger.PParams.d_maxBlockSize_316 (coe v0)
 -- _.PParams.maxCollateralInputs
-d_maxCollateralInputs_960 ::
+d_maxCollateralInputs_956 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_maxCollateralInputs_960 v0
+d_maxCollateralInputs_956 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_maxCollateralInputs_328 (coe v0)
 -- _.PParams.maxHeaderSize
-d_maxHeaderSize_962 ::
+d_maxHeaderSize_958 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_maxHeaderSize_962 v0
+d_maxHeaderSize_958 v0
   = coe MAlonzo.Code.Ledger.PParams.d_maxHeaderSize_320 (coe v0)
 -- _.PParams.maxRefScriptSizePerBlock
-d_maxRefScriptSizePerBlock_964 ::
+d_maxRefScriptSizePerBlock_960 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_maxRefScriptSizePerBlock_964 v0
+d_maxRefScriptSizePerBlock_960 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_maxRefScriptSizePerBlock_352 (coe v0)
 -- _.PParams.maxRefScriptSizePerTx
-d_maxRefScriptSizePerTx_966 ::
+d_maxRefScriptSizePerTx_962 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_maxRefScriptSizePerTx_966 v0
+d_maxRefScriptSizePerTx_962 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_maxRefScriptSizePerTx_350 (coe v0)
 -- _.PParams.maxTxExUnits
-d_maxTxExUnits_968 ::
+d_maxTxExUnits_964 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> AgdaAny
-d_maxTxExUnits_968 v0
+d_maxTxExUnits_964 v0
   = coe MAlonzo.Code.Ledger.PParams.d_maxTxExUnits_322 (coe v0)
 -- _.PParams.maxTxSize
-d_maxTxSize_970 ::
+d_maxTxSize_966 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_maxTxSize_970 v0
+d_maxTxSize_966 v0
   = coe MAlonzo.Code.Ledger.PParams.d_maxTxSize_318 (coe v0)
 -- _.PParams.maxValSize
-d_maxValSize_972 ::
+d_maxValSize_968 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_maxValSize_972 v0
+d_maxValSize_968 v0
   = coe MAlonzo.Code.Ledger.PParams.d_maxValSize_326 (coe v0)
 -- _.PParams.minFeeRefScriptCoinsPerByte
-d_minFeeRefScriptCoinsPerByte_974 ::
+d_minFeeRefScriptCoinsPerByte_970 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_minFeeRefScriptCoinsPerByte_974 v0
+d_minFeeRefScriptCoinsPerByte_970 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_minFeeRefScriptCoinsPerByte_348
       (coe v0)
 -- _.PParams.minUTxOValue
-d_minUTxOValue_976 ::
+d_minUTxOValue_972 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_minUTxOValue_976 v0
+d_minUTxOValue_972 v0
   = coe MAlonzo.Code.Ledger.PParams.d_minUTxOValue_358 (coe v0)
 -- _.PParams.monetaryExpansion
-d_monetaryExpansion_978 ::
+d_monetaryExpansion_974 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
-d_monetaryExpansion_978 v0
+d_monetaryExpansion_974 v0
   = coe MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_340 (coe v0)
 -- _.PParams.nopt
-d_nopt_980 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_nopt_980 v0 = coe MAlonzo.Code.Ledger.PParams.d_nopt_362 (coe v0)
+d_nopt_976 :: MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
+d_nopt_976 v0 = coe MAlonzo.Code.Ledger.PParams.d_nopt_362 (coe v0)
 -- _.PParams.poolDeposit
-d_poolDeposit_982 ::
+d_poolDeposit_978 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_poolDeposit_982 v0
+d_poolDeposit_978 v0
   = coe MAlonzo.Code.Ledger.PParams.d_poolDeposit_338 (coe v0)
 -- _.PParams.poolThresholds
-d_poolThresholds_984 ::
+d_poolThresholds_980 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Ledger.PParams.T_PoolThresholds_222
-d_poolThresholds_984 v0
+d_poolThresholds_980 v0
   = coe MAlonzo.Code.Ledger.PParams.d_poolThresholds_370 (coe v0)
 -- _.PParams.prices
-d_prices_986 ::
+d_prices_982 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> AgdaAny
-d_prices_986 v0
+d_prices_982 v0
   = coe MAlonzo.Code.Ledger.PParams.d_prices_346 (coe v0)
 -- _.PParams.pv
-d_pv_988 ::
+d_pv_984 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_pv_988 v0 = coe MAlonzo.Code.Ledger.PParams.d_pv_330 (coe v0)
+d_pv_984 v0 = coe MAlonzo.Code.Ledger.PParams.d_pv_330 (coe v0)
 -- _.PParams.refScriptCostMultiplier
-d_refScriptCostMultiplier_990 ::
+d_refScriptCostMultiplier_986 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_refScriptCostMultiplier_990 v0
+d_refScriptCostMultiplier_986 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_refScriptCostMultiplier_356 (coe v0)
 -- _.PParams.refScriptCostStride
-d_refScriptCostStride_992 ::
+d_refScriptCostStride_988 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 -> Integer
-d_refScriptCostStride_992 v0
+d_refScriptCostStride_988 v0
   = coe
       MAlonzo.Code.Ledger.PParams.d_refScriptCostStride_354 (coe v0)
 -- _.PParams.treasuryCut
-d_treasuryCut_994 ::
+d_treasuryCut_990 ::
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
-d_treasuryCut_994 v0
+d_treasuryCut_990 v0
   = coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_342 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._._⊢_⇀⦇_,CERTBASE⦈_
-d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1524 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1516 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._._⊢_⇀⦇_,CERTS⦈_
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1526 ::
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1518 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 -> ()
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1526 = erased
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1518 = erased
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._._⊢_⇀⦇_,CERT⦈_
-d__'8866'_'8640''10631'_'44'CERT'10632'__1528 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'CERT'10632'__1520 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._._⊢_⇀⦇_,DELEG⦈_
-d__'8866'_'8640''10631'_'44'DELEG'10632'__1530 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'DELEG'10632'__1522 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._._⊢_⇀⦇_,GOVCERT⦈_
-d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1532 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1524 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._._⊢_⇀⦇_,POOL⦈_
-d__'8866'_'8640''10631'_'44'POOL'10632'__1534 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'POOL'10632'__1526 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.CertState
-d_CertState_1546 a0 a1 = ()
+d_CertState_1538 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.DCert
-d_DCert_1550 a0 a1 = ()
+d_DCert_1542 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.DState
-d_DState_1560 a0 a1 = ()
+d_DState_1552 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.DepositPurpose
-d_DepositPurpose_1566 a0 a1 = ()
+d_DepositPurpose_1558 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.Deposits
-d_Deposits_1568 ::
+d_Deposits_1560 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 -> ()
-d_Deposits_1568 = erased
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 -> ()
+d_Deposits_1560 = erased
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.GState
-d_GState_1576 a0 a1 = ()
+d_GState_1568 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.CertState.dState
-d_dState_1682 ::
+d_dState_1674 ::
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Certs.T_DState_914
-d_dState_1682 v0
+d_dState_1674 v0
   = coe MAlonzo.Code.Ledger.Certs.d_dState_960 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.CertState.gState
-d_gState_1684 ::
+d_gState_1676 ::
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Certs.T_GState_940
-d_gState_1684 v0
+d_gState_1676 v0
   = coe MAlonzo.Code.Ledger.Certs.d_gState_964 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.CertState.pState
-d_pState_1686 ::
+d_pState_1678 ::
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Certs.T_PState_930
-d_pState_1686 v0
+d_pState_1678 v0
   = coe MAlonzo.Code.Ledger.Certs.d_pState_962 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.DState.rewards
-d_rewards_1708 ::
+d_rewards_1700 ::
   MAlonzo.Code.Ledger.Certs.T_DState_914 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rewards_1708 v0
+d_rewards_1700 v0
   = coe MAlonzo.Code.Ledger.Certs.d_rewards_926 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.DState.stakeDelegs
-d_stakeDelegs_1710 ::
+d_stakeDelegs_1702 ::
   MAlonzo.Code.Ledger.Certs.T_DState_914 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_stakeDelegs_1710 v0
+d_stakeDelegs_1702 v0
   = coe MAlonzo.Code.Ledger.Certs.d_stakeDelegs_924 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.DState.voteDelegs
-d_voteDelegs_1712 ::
+d_voteDelegs_1704 ::
   MAlonzo.Code.Ledger.Certs.T_DState_914 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_voteDelegs_1712 v0
+d_voteDelegs_1704 v0
   = coe MAlonzo.Code.Ledger.Certs.d_voteDelegs_922 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.GState.ccHotKeys
-d_ccHotKeys_1734 ::
+d_ccHotKeys_1726 ::
   MAlonzo.Code.Ledger.Certs.T_GState_940 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_ccHotKeys_1734 v0
+d_ccHotKeys_1726 v0
   = coe MAlonzo.Code.Ledger.Certs.d_ccHotKeys_948 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.L._.GState.dreps
-d_dreps_1736 ::
+d_dreps_1728 ::
   MAlonzo.Code.Ledger.Certs.T_GState_940 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_dreps_1736 v0
+d_dreps_1728 v0
   = coe MAlonzo.Code.Ledger.Certs.d_dreps_946 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._._⊢_⇀⦇_,CERTBASE⦈_
-d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1752 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1744 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._._⊢_⇀⦇_,CERTS⦈_
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1754 ::
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1746 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 -> ()
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1754 = erased
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1746 = erased
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._._⊢_⇀⦇_,CERT⦈_
-d__'8866'_'8640''10631'_'44'CERT'10632'__1756 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'CERT'10632'__1748 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._._⊢_⇀⦇_,DELEG⦈_
-d__'8866'_'8640''10631'_'44'DELEG'10632'__1758 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'DELEG'10632'__1750 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._._⊢_⇀⦇_,GOVCERT⦈_
-d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1760 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1752 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._._⊢_⇀⦇_,POOL⦈_
-d__'8866'_'8640''10631'_'44'POOL'10632'__1762 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'POOL'10632'__1754 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.CertState
-d_CertState_1782 a0 a1 = ()
+d_CertState_1774 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.DState
-d_DState_1802 a0 a1 = ()
+d_DState_1794 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.GState
-d_GState_1824 a0 a1 = ()
+d_GState_1816 a0 a1 = ()
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.updateCertDeposit
-d_updateCertDeposit_1884 ::
+d_updateCertDeposit_1876 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_updateCertDeposit_1884 v0 ~v1 = du_updateCertDeposit_1884 v0
-du_updateCertDeposit_1884 ::
+d_updateCertDeposit_1876 v0 ~v1 = du_updateCertDeposit_1876 v0
+du_updateCertDeposit_1876 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_updateCertDeposit_1884 v0
+du_updateCertDeposit_1876 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1146
-      (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0))
+      (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2326 (coe v0))
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.CertState.dState
-d_dState_1944 ::
+d_dState_1936 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1066
-d_dState_1944 v0
+d_dState_1936 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1110 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.CertState.gState
-d_gState_1946 ::
+d_gState_1938 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_GState_1086
-d_gState_1946 v0
+d_gState_1938 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1114 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.CertState.pState
-d_pState_1948 ::
+d_pState_1940 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Certs.T_PState_930
-d_pState_1948 v0
+d_pState_1940 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1112 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.DState.deposits
-d_deposits_1970 ::
+d_deposits_1962 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1066 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_deposits_1970 v0
+d_deposits_1962 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1082
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.DState.rewards
-d_rewards_1972 ::
+d_rewards_1964 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1066 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rewards_1972 v0
+d_rewards_1964 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1080
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.DState.stakeDelegs
-d_stakeDelegs_1974 ::
+d_stakeDelegs_1966 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1066 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_stakeDelegs_1974 v0
+d_stakeDelegs_1966 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1078
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.DState.voteDelegs
-d_voteDelegs_1976 ::
+d_voteDelegs_1968 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1066 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_voteDelegs_1976 v0
+d_voteDelegs_1968 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1076
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.GState.ccHotKeys
-d_ccHotKeys_1998 ::
+d_ccHotKeys_1990 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_GState_1086 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_ccHotKeys_1998 v0
+d_ccHotKeys_1990 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1096
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.GState.deposits
-d_deposits_2000 ::
+d_deposits_1992 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_GState_1086 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_deposits_2000 v0
+d_deposits_1992 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1098
       (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._.GState.dreps
-d_dreps_2002 ::
+d_dreps_1994 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_GState_1086 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_dreps_2002 v0
+d_dreps_1994 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1094 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.DStateToConf
-d_DStateToConf_2014 ::
+d_DStateToConf_2006 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_DStateToConf_2014 ~v0 ~v1 = du_DStateToConf_2014
-du_DStateToConf_2014 ::
+d_DStateToConf_2006 ~v0 ~v1 = du_DStateToConf_2006
+du_DStateToConf_2006 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_DStateToConf_2014
+du_DStateToConf_2006
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -1541,14 +1541,14 @@ du_DStateToConf_2014
                        (coe MAlonzo.Code.Ledger.Certs.d_rewards_926 (coe v1))
                        (coe v0))))))
 -- Ledger.Conway.Conformance.Equivalence.Certs.DStateFromConf
-d_DStateFromConf_2028 ::
+d_DStateFromConf_2020 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_DStateFromConf_2028 ~v0 ~v1 = du_DStateFromConf_2028
-du_DStateFromConf_2028 ::
+d_DStateFromConf_2020 ~v0 ~v1 = du_DStateFromConf_2020
+du_DStateFromConf_2020 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_DStateFromConf_2028
+du_DStateFromConf_2020
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -2613,14 +2613,14 @@ du_DStateFromConf_2028
                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1080
                        (coe v1))))))
 -- Ledger.Conway.Conformance.Equivalence.Certs.GStateToConf
-d_GStateToConf_2042 ::
+d_GStateToConf_2034 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_GStateToConf_2042 ~v0 ~v1 = du_GStateToConf_2042
-du_GStateToConf_2042 ::
+d_GStateToConf_2034 ~v0 ~v1 = du_GStateToConf_2034
+du_GStateToConf_2034 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_GStateToConf_2042
+du_GStateToConf_2034
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -3689,14 +3689,14 @@ du_GStateToConf_2042
                     (coe MAlonzo.Code.Ledger.Certs.d_ccHotKeys_948 (coe v1))
                     (coe v0)))))
 -- Ledger.Conway.Conformance.Equivalence.Certs.GStateFromConf
-d_GStateFromConf_2054 ::
+d_GStateFromConf_2046 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_GStateFromConf_2054 ~v0 ~v1 = du_GStateFromConf_2054
-du_GStateFromConf_2054 ::
+d_GStateFromConf_2046 ~v0 ~v1 = du_GStateFromConf_2046
+du_GStateFromConf_2046 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_GStateFromConf_2054
+du_GStateFromConf_2046
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -4727,197 +4727,197 @@ du_GStateFromConf_2054
                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1096
                     (coe v1)))))
 -- Ledger.Conway.Conformance.Equivalence.Certs.ValidDepsᵈ
-d_ValidDeps'7496'_2072 a0 a1 a2 a3 a4 = ()
-data T_ValidDeps'7496'_2072
-  = C_'91''93'_2078 | C_delegate_2090 T_ValidDeps'7496'_2072 |
-    C_dereg_2100 Integer
+d_ValidDeps'7496'_2064 a0 a1 a2 a3 a4 = ()
+data T_ValidDeps'7496'_2064
+  = C_'91''93'_2070 | C_delegate_2082 T_ValidDeps'7496'_2064 |
+    C_dereg_2092 Integer
                  MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
-                 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 T_ValidDeps'7496'_2072 |
-    C_regdrep_2110 T_ValidDeps'7496'_2072 |
-    C_deregdrep_2118 T_ValidDeps'7496'_2072 |
-    C_regpool_2126 T_ValidDeps'7496'_2072 |
-    C_retirepool_2134 T_ValidDeps'7496'_2072 |
-    C_ccreghot_2142 T_ValidDeps'7496'_2072 |
-    C_reg_2150 T_ValidDeps'7496'_2072
+                 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 T_ValidDeps'7496'_2064 |
+    C_regdrep_2102 T_ValidDeps'7496'_2064 |
+    C_deregdrep_2110 T_ValidDeps'7496'_2064 |
+    C_regpool_2118 T_ValidDeps'7496'_2064 |
+    C_retirepool_2126 T_ValidDeps'7496'_2064 |
+    C_ccreghot_2134 T_ValidDeps'7496'_2064 |
+    C_reg_2142 T_ValidDeps'7496'_2064
 -- Ledger.Conway.Conformance.Equivalence.Certs.ValidDepsᵍ
-d_ValidDeps'7501'_2156 a0 a1 a2 a3 a4 = ()
-data T_ValidDeps'7501'_2156
-  = C_'91''93'_2162 | C_regdrep_2172 T_ValidDeps'7501'_2156 |
-    C_deregdrep_2180 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
-                     T_ValidDeps'7501'_2156 |
-    C_delegate_2192 T_ValidDeps'7501'_2156 |
-    C_dereg_2200 T_ValidDeps'7501'_2156 |
-    C_regpool_2208 T_ValidDeps'7501'_2156 |
-    C_retirepool_2216 T_ValidDeps'7501'_2156 |
-    C_ccreghot_2224 T_ValidDeps'7501'_2156 |
-    C_reg_2232 T_ValidDeps'7501'_2156
+d_ValidDeps'7501'_2148 a0 a1 a2 a3 a4 = ()
+data T_ValidDeps'7501'_2148
+  = C_'91''93'_2154 | C_regdrep_2164 T_ValidDeps'7501'_2148 |
+    C_deregdrep_2172 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
+                     T_ValidDeps'7501'_2148 |
+    C_delegate_2184 T_ValidDeps'7501'_2148 |
+    C_dereg_2192 T_ValidDeps'7501'_2148 |
+    C_regpool_2200 T_ValidDeps'7501'_2148 |
+    C_retirepool_2208 T_ValidDeps'7501'_2148 |
+    C_ccreghot_2216 T_ValidDeps'7501'_2148 |
+    C_reg_2224 T_ValidDeps'7501'_2148
 -- Ledger.Conway.Conformance.Equivalence.Certs.CertDeps*
-d_CertDeps'42'_2238 a0 a1 a2 a3 = ()
-data T_CertDeps'42'_2238
-  = C_'10214'_'44'_'44'_'44'_'10215''42'_2260 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_CertDeps'42'_2230 a0 a1 a2 a3 = ()
+data T_CertDeps'42'_2230
+  = C_'10214'_'44'_'44'_'44'_'10215''42'_2252 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                               MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-                                              T_ValidDeps'7496'_2072 T_ValidDeps'7501'_2156
+                                              T_ValidDeps'7496'_2064 T_ValidDeps'7501'_2148
 -- Ledger.Conway.Conformance.Equivalence.Certs.CertDeps*.depsᵈ
-d_deps'7496'_2252 ::
-  T_CertDeps'42'_2238 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_deps'7496'_2252 v0
+d_deps'7496'_2244 ::
+  T_CertDeps'42'_2230 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_deps'7496'_2244 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'10215''42'_2260 v1 v2 v3 v4 -> coe v1
+      C_'10214'_'44'_'44'_'44'_'10215''42'_2252 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Certs.CertDeps*.depsᵍ
-d_deps'7501'_2254 ::
-  T_CertDeps'42'_2238 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_deps'7501'_2254 v0
+d_deps'7501'_2246 ::
+  T_CertDeps'42'_2230 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_deps'7501'_2246 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'10215''42'_2260 v1 v2 v3 v4 -> coe v2
+      C_'10214'_'44'_'44'_'44'_'10215''42'_2252 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Certs.CertDeps*.validᵈ
-d_valid'7496'_2256 :: T_CertDeps'42'_2238 -> T_ValidDeps'7496'_2072
-d_valid'7496'_2256 v0
+d_valid'7496'_2248 :: T_CertDeps'42'_2230 -> T_ValidDeps'7496'_2064
+d_valid'7496'_2248 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'10215''42'_2260 v1 v2 v3 v4 -> coe v3
+      C_'10214'_'44'_'44'_'44'_'10215''42'_2252 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Certs.CertDeps*.validᵍ
-d_valid'7501'_2258 :: T_CertDeps'42'_2238 -> T_ValidDeps'7501'_2156
-d_valid'7501'_2258 v0
+d_valid'7501'_2250 :: T_CertDeps'42'_2230 -> T_ValidDeps'7501'_2148
+d_valid'7501'_2250 v0
   = case coe v0 of
-      C_'10214'_'44'_'44'_'44'_'10215''42'_2260 v1 v2 v3 v4 -> coe v4
+      C_'10214'_'44'_'44'_'44'_'10215''42'_2252 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Certs.getCertDeps*
-d_getCertDeps'42'_2320 ::
-  T_CertDeps'42'_2238 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_getCertDeps'42'_2320 v0
+d_getCertDeps'42'_2312 ::
+  T_CertDeps'42'_2230 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d_getCertDeps'42'_2312 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-      (coe d_deps'7496'_2252 (coe v0)) (coe d_deps'7501'_2254 (coe v0))
+      (coe d_deps'7496'_2244 (coe v0)) (coe d_deps'7501'_2246 (coe v0))
 -- Ledger.Conway.Conformance.Equivalence.Certs.updateCertDeps
-d_updateCertDeps_2330 ::
+d_updateCertDeps_2322 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
-  T_CertDeps'42'_2238 -> T_CertDeps'42'_2238
-d_updateCertDeps_2330 v0 ~v1 v2 v3 ~v4 v5
-  = du_updateCertDeps_2330 v0 v2 v3 v5
-du_updateCertDeps_2330 ::
+  T_CertDeps'42'_2230 -> T_CertDeps'42'_2230
+d_updateCertDeps_2322 v0 ~v1 v2 v3 ~v4 v5
+  = du_updateCertDeps_2322 v0 v2 v3 v5
+du_updateCertDeps_2322 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
-  T_CertDeps'42'_2238 -> T_CertDeps'42'_2238
-du_updateCertDeps_2330 v0 v1 v2 v3
+  T_CertDeps'42'_2230 -> T_CertDeps'42'_2230
+du_updateCertDeps_2322 v0 v1 v2 v3
   = case coe v3 of
-      C_'10214'_'44'_'44'_'44'_'10215''42'_2260 v4 v5 v6 v7
+      C_'10214'_'44'_'44'_'44'_'10215''42'_2252 v4 v5 v6 v7
         -> case coe v6 of
-             C_delegate_2090 v13
+             C_delegate_2082 v13
                -> case coe v7 of
-                    C_delegate_2192 v19
+                    C_delegate_2184 v19
                       -> coe
-                           C_'10214'_'44'_'44'_'44'_'10215''42'_2260
+                           C_'10214'_'44'_'44'_'44'_'10215''42'_2252
                            (coe
                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1146
-                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0))
+                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2326 (coe v0))
                               (coe v1) (coe v2) (coe v4))
                            (coe v5) (coe v13) (coe v19)
                     _ -> MAlonzo.RTE.mazUnreachableError
-             C_dereg_2100 v10 v12 v13 v14
+             C_dereg_2092 v10 v12 v13 v14
                -> case coe v7 of
-                    C_dereg_2200 v18
+                    C_dereg_2192 v18
                       -> coe
-                           C_'10214'_'44'_'44'_'44'_'10215''42'_2260
+                           C_'10214'_'44'_'44'_'44'_'10215''42'_2252
                            (coe
                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1146
-                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0))
+                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2326 (coe v0))
                               (coe v1) (coe v2) (coe v4))
                            (coe v5) (coe v14) (coe v18)
                     _ -> MAlonzo.RTE.mazUnreachableError
-             C_regdrep_2110 v12
+             C_regdrep_2102 v12
                -> case coe v7 of
-                    C_regdrep_2172 v17
+                    C_regdrep_2164 v17
                       -> coe
-                           C_'10214'_'44'_'44'_'44'_'10215''42'_2260 (coe v4)
+                           C_'10214'_'44'_'44'_'44'_'10215''42'_2252 (coe v4)
                            (coe
                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1146
-                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0))
+                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2326 (coe v0))
                               (coe v1) (coe v2) (coe v5))
                            (coe v12) (coe v17)
                     _ -> MAlonzo.RTE.mazUnreachableError
-             C_deregdrep_2118 v11
+             C_deregdrep_2110 v11
                -> case coe v7 of
-                    C_deregdrep_2180 v15 v16
+                    C_deregdrep_2172 v15 v16
                       -> coe
-                           C_'10214'_'44'_'44'_'44'_'10215''42'_2260 (coe v4)
+                           C_'10214'_'44'_'44'_'44'_'10215''42'_2252 (coe v4)
                            (coe
                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1146
-                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0))
+                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2326 (coe v0))
                               (coe v1) (coe v2) (coe v5))
                            (coe v11) (coe v16)
                     _ -> MAlonzo.RTE.mazUnreachableError
-             C_regpool_2126 v11
+             C_regpool_2118 v11
                -> case coe v7 of
-                    C_regpool_2208 v15
+                    C_regpool_2200 v15
                       -> coe
-                           C_'10214'_'44'_'44'_'44'_'10215''42'_2260 (coe v4) (coe v5)
+                           C_'10214'_'44'_'44'_'44'_'10215''42'_2252 (coe v4) (coe v5)
                            (coe v11) (coe v15)
                     _ -> MAlonzo.RTE.mazUnreachableError
-             C_retirepool_2134 v11
+             C_retirepool_2126 v11
                -> case coe v7 of
-                    C_retirepool_2216 v15
+                    C_retirepool_2208 v15
                       -> coe
-                           C_'10214'_'44'_'44'_'44'_'10215''42'_2260 (coe v4) (coe v5)
+                           C_'10214'_'44'_'44'_'44'_'10215''42'_2252 (coe v4) (coe v5)
                            (coe v11) (coe v15)
                     _ -> MAlonzo.RTE.mazUnreachableError
-             C_ccreghot_2142 v11
+             C_ccreghot_2134 v11
                -> case coe v7 of
-                    C_ccreghot_2224 v15
+                    C_ccreghot_2216 v15
                       -> coe
-                           C_'10214'_'44'_'44'_'44'_'10215''42'_2260 (coe v4) (coe v5)
+                           C_'10214'_'44'_'44'_'44'_'10215''42'_2252 (coe v4) (coe v5)
                            (coe v11) (coe v15)
                     _ -> MAlonzo.RTE.mazUnreachableError
-             C_reg_2150 v11
+             C_reg_2142 v11
                -> case coe v7 of
-                    C_reg_2232 v15
+                    C_reg_2224 v15
                       -> coe
-                           C_'10214'_'44'_'44'_'44'_'10215''42'_2260
+                           C_'10214'_'44'_'44'_'44'_'10215''42'_2252
                            (coe
                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1146
-                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2342 (coe v0))
+                              (coe MAlonzo.Code.Ledger.Transaction.d_govStructure_2326 (coe v0))
                               (coe v1) (coe v2) (coe v4))
                            (coe v5) (coe v11) (coe v15)
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Certs.updateCertDeps*
-d_updateCertDeps'42'_2368 ::
+d_updateCertDeps'42'_2360 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
-  T_CertDeps'42'_2238 -> T_CertDeps'42'_2238
-d_updateCertDeps'42'_2368 v0 ~v1 v2 v3 v4
-  = du_updateCertDeps'42'_2368 v0 v2 v3 v4
-du_updateCertDeps'42'_2368 ::
+  T_CertDeps'42'_2230 -> T_CertDeps'42'_2230
+d_updateCertDeps'42'_2360 v0 ~v1 v2 v3 v4
+  = du_updateCertDeps'42'_2360 v0 v2 v3 v4
+du_updateCertDeps'42'_2360 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
-  T_CertDeps'42'_2238 -> T_CertDeps'42'_2238
-du_updateCertDeps'42'_2368 v0 v1 v2 v3
+  T_CertDeps'42'_2230 -> T_CertDeps'42'_2230
+du_updateCertDeps'42'_2360 v0 v1 v2 v3
   = case coe v2 of
       [] -> coe v3
       (:) v4 v5
         -> coe
-             du_updateCertDeps'42'_2368 (coe v0) (coe v1) (coe v5)
-             (coe du_updateCertDeps_2330 (coe v0) (coe v1) (coe v4) (coe v3))
+             du_updateCertDeps'42'_2360 (coe v0) (coe v1) (coe v5)
+             (coe du_updateCertDeps_2322 (coe v0) (coe v1) (coe v4) (coe v3))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Equivalence.Certs.CertStToConf
-d_CertStToConf_2378 ::
+d_CertStToConf_2370 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CertStToConf_2378 ~v0 ~v1 = du_CertStToConf_2378
-du_CertStToConf_2378 ::
+d_CertStToConf_2370 ~v0 ~v1 = du_CertStToConf_2370
+du_CertStToConf_2370 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CertStToConf_2378
+du_CertStToConf_2370
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -7386,14 +7386,14 @@ du_CertStToConf_2378
                                          (coe v2)))))))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.CertStFromConf
-d_CertStFromConf_2394 ::
+d_CertStFromConf_2386 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CertStFromConf_2394 ~v0 ~v1 = du_CertStFromConf_2394
-du_CertStFromConf_2394 ::
+d_CertStFromConf_2386 ~v0 ~v1 = du_CertStFromConf_2386
+du_CertStFromConf_2386 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CertStFromConf_2394
+du_CertStFromConf_2386
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -7519,7 +7519,7 @@ du_CertStFromConf_2394
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                  (coe
                     MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                    (coe du_DStateFromConf_2028)
+                    (coe du_DStateFromConf_2020)
                     (coe
                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1110
                        (coe v1)))
@@ -7530,22 +7530,22 @@ du_CertStFromConf_2394
                        (coe v1))
                     (coe
                        MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                       (coe du_GStateFromConf_2054)
+                       (coe du_GStateFromConf_2046)
                        (coe
                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1114
                           (coe v1)))))))
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTBASEToConf
-d_CERTBASEToConf_2416 ::
+d_CERTBASEToConf_2408 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CERTBASEToConf_2416 ~v0 ~v1 ~v2 ~v3 ~v4 = du_CERTBASEToConf_2416
-du_CERTBASEToConf_2416 ::
+d_CERTBASEToConf_2408 ~v0 ~v1 ~v2 ~v3 ~v4 = du_CERTBASEToConf_2408
+du_CERTBASEToConf_2408 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CERTBASEToConf_2416
+du_CERTBASEToConf_2408
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -7557,43 +7557,43 @@ du_CERTBASEToConf_2416
                      v13
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs._.pparams
-d_pparams_2438 ::
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+d_pparams_2430 ::
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_DelegEnv_968 ->
   MAlonzo.Code.Ledger.Certs.T_DState_914 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_DState_914 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pparams_2438 ~v0 v1 ~v2 ~v3 ~v4 ~v5 = du_pparams_2438 v1
-du_pparams_2438 ::
+d_pparams_2430 ~v0 v1 ~v2 ~v3 ~v4 ~v5 = du_pparams_2430 v1
+du_pparams_2430 ::
   MAlonzo.Code.Ledger.Certs.T_DelegEnv_968 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-du_pparams_2438 v0
+du_pparams_2430 v0
   = coe MAlonzo.Code.Ledger.Certs.d_pparams_976 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.DELEGToConf
-d_DELEGToConf_2444 ::
+d_DELEGToConf_2436 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_DelegEnv_968 ->
   MAlonzo.Code.Ledger.Certs.T_DState_914 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_DState_914 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_DELEGToConf_2444 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
-  = du_DELEGToConf_2444
-du_DELEGToConf_2444 ::
+d_DELEGToConf_2436 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
+  = du_DELEGToConf_2436
+du_DELEGToConf_2436 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_DELEGToConf_2444
+du_DELEGToConf_2436
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
          (\ v0 ->
             case coe v0 of
-              C_'10214'_'44'_'44'_'44'_'10215''42'_2260 v1 v2 v3 v4
+              C_'10214'_'44'_'44'_'44'_'10215''42'_2252 v1 v2 v3 v4
                 -> case coe v3 of
-                     C_delegate_2090 v10
+                     C_delegate_2082 v10
                        -> coe
                             seq (coe v4)
                             (coe
@@ -7604,7 +7604,7 @@ du_DELEGToConf_2444
                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1346
                                            v22
                                     _ -> MAlonzo.RTE.mazUnreachableError))
-                     C_dereg_2100 v7 v9 v10 v11
+                     C_dereg_2092 v7 v9 v10 v11
                        -> coe
                             seq (coe v4)
                             (coe
@@ -7620,14 +7620,14 @@ du_DELEGToConf_2444
                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                  (coe v9) (coe v10)))
                                     _ -> MAlonzo.RTE.mazUnreachableError))
-                     C_regdrep_2110 v9 -> coe (\ v10 -> MAlonzo.RTE.mazUnreachableError)
-                     C_deregdrep_2118 v8
+                     C_regdrep_2102 v9 -> coe (\ v10 -> MAlonzo.RTE.mazUnreachableError)
+                     C_deregdrep_2110 v8
                        -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
-                     C_regpool_2126 v8 -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
-                     C_retirepool_2134 v8
+                     C_regpool_2118 v8 -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
+                     C_retirepool_2126 v8
                        -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
-                     C_ccreghot_2142 v8 -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
-                     C_reg_2150 v8
+                     C_ccreghot_2134 v8 -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
+                     C_reg_2142 v8
                        -> coe
                             seq (coe v4)
                             (coe
@@ -7641,18 +7641,18 @@ du_DELEGToConf_2444
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.POOLToConf
-d_POOLToConf_2464 ::
+d_POOLToConf_2456 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Ledger.Certs.T_PState_930 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   MAlonzo.Code.Ledger.Certs.T_PState_930 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_POOLToConf_2464 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_POOLToConf_2464
-du_POOLToConf_2464 ::
+d_POOLToConf_2456 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_POOLToConf_2456
+du_POOLToConf_2456 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_POOLToConf_2464
+du_POOLToConf_2456
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -7666,46 +7666,46 @@ du_POOLToConf_2464
                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'retirepool_1272
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs._.pp
-d_pp_2480 ::
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+d_pp_2472 ::
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_GState_940 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_GState_940 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_2480 ~v0 v1 ~v2 ~v3 ~v4 ~v5 = du_pp_2480 v1
-du_pp_2480 ::
+d_pp_2472 ~v0 v1 ~v2 ~v3 ~v4 ~v5 = du_pp_2472 v1
+du_pp_2472 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-du_pp_2480 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v0)
+du_pp_2472 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.GOVCERTToConf
-d_GOVCERTToConf_2486 ::
+d_GOVCERTToConf_2478 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_GState_940 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_GState_940 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_GOVCERTToConf_2486 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
-  = du_GOVCERTToConf_2486
-du_GOVCERTToConf_2486 ::
+d_GOVCERTToConf_2478 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
+  = du_GOVCERTToConf_2478
+du_GOVCERTToConf_2478 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_GOVCERTToConf_2486
+du_GOVCERTToConf_2478
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
          (\ v0 ->
             case coe v0 of
-              C_'10214'_'44'_'44'_'44'_'10215''42'_2260 v1 v2 v3 v4
+              C_'10214'_'44'_'44'_'44'_'10215''42'_2252 v1 v2 v3 v4
                 -> case coe v3 of
-                     C_delegate_2090 v10
+                     C_delegate_2082 v10
                        -> coe (\ v11 -> MAlonzo.RTE.mazUnreachableError)
-                     C_dereg_2100 v7 v9 v10 v11
+                     C_dereg_2092 v7 v9 v10 v11
                        -> coe (\ v12 -> MAlonzo.RTE.mazUnreachableError)
-                     C_regdrep_2110 v9
+                     C_regdrep_2102 v9
                        -> coe
                             seq (coe v4)
                             (coe
@@ -7716,9 +7716,9 @@ du_GOVCERTToConf_2486
                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'regdrep_1500
                                            v21
                                     _ -> MAlonzo.RTE.mazUnreachableError))
-                     C_deregdrep_2118 v8
+                     C_deregdrep_2110 v8
                        -> case coe v4 of
-                            C_deregdrep_2180 v12 v13
+                            C_deregdrep_2172 v12 v13
                               -> coe
                                    (\ v14 ->
                                       case coe v14 of
@@ -7730,10 +7730,10 @@ du_GOVCERTToConf_2486
                                                   (coe v24) (coe v12))
                                         _ -> MAlonzo.RTE.mazUnreachableError)
                             _ -> MAlonzo.RTE.mazUnreachableError
-                     C_regpool_2126 v8 -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
-                     C_retirepool_2134 v8
+                     C_regpool_2118 v8 -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
+                     C_retirepool_2126 v8
                        -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
-                     C_ccreghot_2142 v8
+                     C_ccreghot_2134 v8
                        -> coe
                             seq (coe v4)
                             (coe
@@ -7744,47 +7744,47 @@ du_GOVCERTToConf_2486
                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'ccreghot_1504
                                            v19
                                     _ -> MAlonzo.RTE.mazUnreachableError))
-                     C_reg_2150 v8 -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
+                     C_reg_2142 v8 -> coe (\ v9 -> MAlonzo.RTE.mazUnreachableError)
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs._.pp
-d_pp_2508 ::
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+d_pp_2500 ::
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_2508 ~v0 v1 ~v2 ~v3 ~v4 ~v5 = du_pp_2508 v1
-du_pp_2508 ::
+d_pp_2500 ~v0 v1 ~v2 ~v3 ~v4 ~v5 = du_pp_2500 v1
+du_pp_2500 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-du_pp_2508 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v0)
+du_pp_2500 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTToConf
-d_CERTToConf_2514 ::
+d_CERTToConf_2506 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CERTToConf_2514 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 = du_CERTToConf_2514
-du_CERTToConf_2514 ::
+d_CERTToConf_2506 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 = du_CERTToConf_2506
+du_CERTToConf_2506 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CERTToConf_2514
+du_CERTToConf_2506
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
          (\ v0 ->
             case coe v0 of
-              C_'10214'_'44'_'44'_'44'_'10215''42'_2260 v1 v2 v3 v4
+              C_'10214'_'44'_'44'_'44'_'10215''42'_2252 v1 v2 v3 v4
                 -> case coe v3 of
-                     C_delegate_2090 v10
+                     C_delegate_2082 v10
                        -> case coe v4 of
-                            C_delegate_2192 v16
+                            C_delegate_2184 v16
                               -> coe
                                    (\ v17 ->
                                       case coe v17 of
@@ -7793,17 +7793,17 @@ du_CERTToConf_2514
                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1508
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                                  (coe du_DELEGToConf_2444)
+                                                  (coe du_DELEGToConf_2436)
                                                   (coe
-                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2260
-                                                     (coe v1) (coe v2) (coe C_delegate_2090 v10)
-                                                     (coe C_delegate_2192 v16))
+                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2252
+                                                     (coe v1) (coe v2) (coe C_delegate_2082 v10)
+                                                     (coe C_delegate_2184 v16))
                                                   v28)
                                         _ -> MAlonzo.RTE.mazUnreachableError)
                             _ -> MAlonzo.RTE.mazUnreachableError
-                     C_dereg_2100 v7 v9 v10 v11
+                     C_dereg_2092 v7 v9 v10 v11
                        -> case coe v4 of
-                            C_dereg_2200 v15
+                            C_dereg_2192 v15
                               -> coe
                                    (\ v16 ->
                                       case coe v16 of
@@ -7812,18 +7812,18 @@ du_CERTToConf_2514
                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1508
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                                  (coe du_DELEGToConf_2444)
+                                                  (coe du_DELEGToConf_2436)
                                                   (coe
-                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2260
+                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2252
                                                      (coe v1) (coe v2)
-                                                     (coe C_dereg_2100 v7 v9 v10 v11)
-                                                     (coe C_dereg_2200 v15))
+                                                     (coe C_dereg_2092 v7 v9 v10 v11)
+                                                     (coe C_dereg_2192 v15))
                                                   v27)
                                         _ -> MAlonzo.RTE.mazUnreachableError)
                             _ -> MAlonzo.RTE.mazUnreachableError
-                     C_regdrep_2110 v9
+                     C_regdrep_2102 v9
                        -> case coe v4 of
-                            C_regdrep_2172 v14
+                            C_regdrep_2164 v14
                               -> coe
                                    (\ v15 ->
                                       case coe v15 of
@@ -7832,17 +7832,17 @@ du_CERTToConf_2514
                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1512
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                                  (coe du_GOVCERTToConf_2486)
+                                                  (coe du_GOVCERTToConf_2478)
                                                   (coe
-                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2260
-                                                     (coe v1) (coe v2) (coe C_regdrep_2110 v9)
-                                                     (coe C_regdrep_2172 v14))
+                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2252
+                                                     (coe v1) (coe v2) (coe C_regdrep_2102 v9)
+                                                     (coe C_regdrep_2164 v14))
                                                   v22)
                                         _ -> MAlonzo.RTE.mazUnreachableError)
                             _ -> MAlonzo.RTE.mazUnreachableError
-                     C_deregdrep_2118 v8
+                     C_deregdrep_2110 v8
                        -> case coe v4 of
-                            C_deregdrep_2180 v12 v13
+                            C_deregdrep_2172 v12 v13
                               -> coe
                                    (\ v14 ->
                                       case coe v14 of
@@ -7851,15 +7851,15 @@ du_CERTToConf_2514
                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1512
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                                  (coe du_GOVCERTToConf_2486)
+                                                  (coe du_GOVCERTToConf_2478)
                                                   (coe
-                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2260
-                                                     (coe v1) (coe v2) (coe C_deregdrep_2118 v8)
-                                                     (coe C_deregdrep_2180 v12 v13))
+                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2252
+                                                     (coe v1) (coe v2) (coe C_deregdrep_2110 v8)
+                                                     (coe C_deregdrep_2172 v12 v13))
                                                   v21)
                                         _ -> MAlonzo.RTE.mazUnreachableError)
                             _ -> MAlonzo.RTE.mazUnreachableError
-                     C_regpool_2126 v8
+                     C_regpool_2118 v8
                        -> coe
                             seq (coe v4)
                             (coe
@@ -7870,9 +7870,9 @@ du_CERTToConf_2514
                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1510
                                            (coe
                                               MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                                              (coe du_POOLToConf_2464) (coe v20))
+                                              (coe du_POOLToConf_2456) (coe v20))
                                     _ -> MAlonzo.RTE.mazUnreachableError))
-                     C_retirepool_2134 v8
+                     C_retirepool_2126 v8
                        -> coe
                             seq (coe v4)
                             (coe
@@ -7883,11 +7883,11 @@ du_CERTToConf_2514
                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1510
                                            (coe
                                               MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                                              (coe du_POOLToConf_2464) (coe v20))
+                                              (coe du_POOLToConf_2456) (coe v20))
                                     _ -> MAlonzo.RTE.mazUnreachableError))
-                     C_ccreghot_2142 v8
+                     C_ccreghot_2134 v8
                        -> case coe v4 of
-                            C_ccreghot_2224 v12
+                            C_ccreghot_2216 v12
                               -> coe
                                    (\ v13 ->
                                       case coe v13 of
@@ -7896,17 +7896,17 @@ du_CERTToConf_2514
                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1512
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                                  (coe du_GOVCERTToConf_2486)
+                                                  (coe du_GOVCERTToConf_2478)
                                                   (coe
-                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2260
-                                                     (coe v1) (coe v2) (coe C_ccreghot_2142 v8)
-                                                     (coe C_ccreghot_2224 v12))
+                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2252
+                                                     (coe v1) (coe v2) (coe C_ccreghot_2134 v8)
+                                                     (coe C_ccreghot_2216 v12))
                                                   v20)
                                         _ -> MAlonzo.RTE.mazUnreachableError)
                             _ -> MAlonzo.RTE.mazUnreachableError
-                     C_reg_2150 v8
+                     C_reg_2142 v8
                        -> case coe v4 of
-                            C_reg_2232 v12
+                            C_reg_2224 v12
                               -> coe
                                    (\ v13 ->
                                       case coe v13 of
@@ -7915,46 +7915,46 @@ du_CERTToConf_2514
                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1508
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                                  (coe du_DELEGToConf_2444)
+                                                  (coe du_DELEGToConf_2436)
                                                   (coe
-                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2260
-                                                     (coe v1) (coe v2) (coe C_reg_2150 v8)
-                                                     (coe C_reg_2232 v12))
+                                                     C_'10214'_'44'_'44'_'44'_'10215''42'_2252
+                                                     (coe v1) (coe v2) (coe C_reg_2142 v8)
+                                                     (coe C_reg_2224 v12))
                                                   v24)
                                         _ -> MAlonzo.RTE.mazUnreachableError)
                             _ -> MAlonzo.RTE.mazUnreachableError
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs._.pp
-d_pp_2562 ::
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+d_pp_2554 ::
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_2562 ~v0 v1 ~v2 ~v3 ~v4 = du_pp_2562 v1
-du_pp_2562 ::
+d_pp_2554 ~v0 v1 ~v2 ~v3 ~v4 = du_pp_2554 v1
+du_pp_2554 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-du_pp_2562 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v0)
+du_pp_2554 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTS'ToConf
-d_CERTS''ToConf_2572 ::
+d_CERTS''ToConf_2564 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CERTS''ToConf_2572 v0 ~v1 v2 ~v3 v4 ~v5
-  = du_CERTS''ToConf_2572 v0 v2 v4
-du_CERTS''ToConf_2572 ::
+d_CERTS''ToConf_2564 v0 ~v1 v2 ~v3 v4 ~v5
+  = du_CERTS''ToConf_2564 v0 v2 v4
+du_CERTS''ToConf_2564 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CERTS''ToConf_2572 v0 v1 v2
+du_CERTS''ToConf_2564 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -9309,9 +9309,9 @@ du_CERTS''ToConf_2572 v0 v1 v2
                                                     MAlonzo.Code.Ledger.Certs.d_dState_960
                                                     (coe v8)))
                                               (coe
-                                                 d_deps'7496'_2252
+                                                 d_deps'7496'_2244
                                                  (coe
-                                                    du_updateCertDeps_2330 (coe v0)
+                                                    du_updateCertDeps_2322 (coe v0)
                                                     (coe
                                                        MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v1))
                                                     (coe v13) (coe v3)))))))
@@ -10465,55 +10465,55 @@ du_CERTS''ToConf_2572 v0 v1 v2
                                                     MAlonzo.Code.Ledger.Certs.d_gState_964
                                                     (coe v8)))
                                               (coe
-                                                 d_deps'7501'_2254
+                                                 d_deps'7501'_2246
                                                  (coe
-                                                    du_updateCertDeps_2330 (coe v0)
+                                                    du_updateCertDeps_2322 (coe v0)
                                                     (coe
                                                        MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v1))
                                                     (coe v13) (coe v3)))))))))
                             (coe
                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                               (coe du_CERTToConf_2514) v3 v11)
+                               (coe du_CERTToConf_2506) v3 v11)
                             (coe
                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                               (coe du_CERTS''ToConf_2572 (coe v0) (coe v1) (coe v14))
+                               (coe du_CERTS''ToConf_2564 (coe v0) (coe v1) (coe v14))
                                (coe
-                                  du_updateCertDeps_2330 (coe v0)
+                                  du_updateCertDeps_2322 (coe v0)
                                   (coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v1)) (coe v13)
                                   (coe v3))
                                v12)
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs._.pp
-d_pp_2596 ::
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+d_pp_2588 ::
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_2596 ~v0 v1 ~v2 ~v3 ~v4 = du_pp_2596 v1
-du_pp_2596 ::
+d_pp_2588 ~v0 v1 ~v2 ~v3 ~v4 = du_pp_2588 v1
+du_pp_2588 ::
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244
-du_pp_2596 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v0)
+du_pp_2588 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_906 (coe v0)
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTSToConf
-d_CERTSToConf_2606 ::
+d_CERTSToConf_2598 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Certs.T_CertState_952 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CERTSToConf_2606 v0 ~v1 v2 ~v3 v4 ~v5
-  = du_CERTSToConf_2606 v0 v2 v4
-du_CERTSToConf_2606 ::
+d_CERTSToConf_2598 v0 ~v1 v2 ~v3 v4 ~v5
+  = du_CERTSToConf_2598 v0 v2 v4
+du_CERTSToConf_2598 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CERTSToConf_2606 v0 v1 v2
+du_CERTSToConf_2598 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -11861,7 +11861,7 @@ du_CERTSToConf_2606 v0 v1 v2
                                                  (coe
                                                     MAlonzo.Code.Ledger.Certs.d_dState_960
                                                     (coe v7)))
-                                              (coe d_deps'7496'_2252 (coe v3))))))
+                                              (coe d_deps'7496'_2244 (coe v3))))))
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                      (coe MAlonzo.Code.Ledger.Certs.d_pState_962 (coe v7))
@@ -13011,36 +13011,36 @@ du_CERTSToConf_2606 v0 v1 v2
                                                  (coe
                                                     MAlonzo.Code.Ledger.Certs.d_gState_964
                                                     (coe v7)))
-                                              (coe d_deps'7501'_2254 (coe v3))))))))
+                                              (coe d_deps'7501'_2246 (coe v3))))))))
                             (coe
                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                (coe
                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                  (coe du_CERTBASEToConf_2416)
+                                  (coe du_CERTBASEToConf_2408)
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                     (coe d_deps'7496'_2252 (coe v3))
-                                     (coe d_deps'7501'_2254 (coe v3)))
+                                     (coe d_deps'7496'_2244 (coe v3))
+                                     (coe d_deps'7501'_2246 (coe v3)))
                                   v11)
                                (coe
                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.d_conv'8305'_34
-                                  (coe du_CERTS''ToConf_2572 (coe v0) (coe v1) (coe v2)) v3 v12))
+                                  (coe du_CERTS''ToConf_2564 (coe v0) (coe v1) (coe v2)) v3 v12))
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.DELEGFromConf
-d_DELEGFromConf_2622 ::
+d_DELEGFromConf_2614 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_DelegEnv_968 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1066 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_DState_1066 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_DELEGFromConf_2622 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-  = du_DELEGFromConf_2622
-du_DELEGFromConf_2622 ::
+d_DELEGFromConf_2614 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_DELEGFromConf_2614
+du_DELEGFromConf_2614 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_DELEGFromConf_2622
+du_DELEGFromConf_2614
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -13057,18 +13057,18 @@ du_DELEGFromConf_2622
                 -> coe MAlonzo.Code.Ledger.Certs.C_DELEG'45'reg_1096 v11
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.POOLFromConf
-d_POOLFromConf_2638 ::
+d_POOLFromConf_2630 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.PParams.T_PParams_244 ->
   MAlonzo.Code.Ledger.Certs.T_PState_930 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   MAlonzo.Code.Ledger.Certs.T_PState_930 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_POOLFromConf_2638 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_POOLFromConf_2638
-du_POOLFromConf_2638 ::
+d_POOLFromConf_2630 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_POOLFromConf_2630
+du_POOLFromConf_2630 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_POOLFromConf_2638
+du_POOLFromConf_2630
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -13080,19 +13080,19 @@ du_POOLFromConf_2638
                 -> coe MAlonzo.Code.Ledger.Certs.C_POOL'45'retirepool_1100
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.GOVCERTFromConf
-d_GOVCERTFromConf_2650 ::
+d_GOVCERTFromConf_2642 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_GState_1086 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_GState_1086 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_GOVCERTFromConf_2650 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
-  = du_GOVCERTFromConf_2650
-du_GOVCERTFromConf_2650 ::
+d_GOVCERTFromConf_2642 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
+  = du_GOVCERTFromConf_2642
+du_GOVCERTFromConf_2642 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_GOVCERTFromConf_2650
+du_GOVCERTFromConf_2642
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -13109,18 +13109,18 @@ du_GOVCERTFromConf_2650
                 -> coe MAlonzo.Code.Ledger.Certs.C_GOVCERT'45'ccreghot_1108 v12
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTFromConf
-d_CERTFromConf_2666 ::
+d_CERTFromConf_2658 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Certs.T_DCert_856 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CERTFromConf_2666 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_CERTFromConf_2666
-du_CERTFromConf_2666 ::
+d_CERTFromConf_2658 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_CERTFromConf_2658
+du_CERTFromConf_2658 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CERTFromConf_2666
+du_CERTFromConf_2658
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -13131,33 +13131,33 @@ du_CERTFromConf_2666
                      MAlonzo.Code.Ledger.Certs.C_CERT'45'deleg_1110
                      (coe
                         MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                        (coe du_DELEGFromConf_2622) (coe v12))
+                        (coe du_DELEGFromConf_2614) (coe v12))
               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1510 v12
                 -> coe
                      MAlonzo.Code.Ledger.Certs.C_CERT'45'pool_1112
                      (coe
                         MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                        (coe du_POOLFromConf_2638) (coe v12))
+                        (coe du_POOLFromConf_2630) (coe v12))
               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1512 v8
                 -> coe
                      MAlonzo.Code.Ledger.Certs.C_CERT'45'vdel_1114
                      (coe
                         MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                        (coe du_GOVCERTFromConf_2650) (coe v8))
+                        (coe du_GOVCERTFromConf_2642) (coe v8))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTBASEFromConf
-d_CERTBASEFromConf_2680 ::
+d_CERTBASEFromConf_2672 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CERTBASEFromConf_2680 ~v0 ~v1 ~v2 ~v3 ~v4
-  = du_CERTBASEFromConf_2680
-du_CERTBASEFromConf_2680 ::
+d_CERTBASEFromConf_2672 ~v0 ~v1 ~v2 ~v3 ~v4
+  = du_CERTBASEFromConf_2672
+du_CERTBASEFromConf_2672 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CERTBASEFromConf_2680
+du_CERTBASEFromConf_2672
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -13167,20 +13167,20 @@ du_CERTBASEFromConf_2680
                 -> coe MAlonzo.Code.Ledger.Certs.C_CERT'45'base_1124 v15
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTS'FromConf
-d_CERTS''FromConf_2692 ::
+d_CERTS''FromConf_2684 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CERTS''FromConf_2692 ~v0 ~v1 ~v2 ~v3 v4 ~v5
-  = du_CERTS''FromConf_2692 v4
-du_CERTS''FromConf_2692 ::
+d_CERTS''FromConf_2684 ~v0 ~v1 ~v2 ~v3 v4 ~v5
+  = du_CERTS''FromConf_2684 v4
+du_CERTS''FromConf_2684 ::
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CERTS''FromConf_2692 v0
+du_CERTS''FromConf_2684 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -13199,30 +13199,30 @@ du_CERTS''FromConf_2692 v0
                             MAlonzo.Code.Interface.STS.C_BS'45'ind_72
                             (coe
                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                               (coe du_CertStFromConf_2394) (coe v6))
+                               (coe du_CertStFromConf_2386) (coe v6))
                             (coe
                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                               (coe du_CERTFromConf_2666) (coe v9))
+                               (coe du_CERTFromConf_2658) (coe v9))
                             (coe
                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                               (coe du_CERTS''FromConf_2692 (coe v12)) (coe v10))
+                               (coe du_CERTS''FromConf_2684 (coe v12)) (coe v10))
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERTSFromConf
-d_CERTSFromConf_2706 ::
+d_CERTSFromConf_2698 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1752 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1744 ->
   MAlonzo.Code.Ledger.Certs.T_CertEnv_892 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1102 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-d_CERTSFromConf_2706 ~v0 ~v1 ~v2 ~v3 v4 ~v5
-  = du_CERTSFromConf_2706 v4
-du_CERTSFromConf_2706 ::
+d_CERTSFromConf_2698 ~v0 ~v1 ~v2 ~v3 v4 ~v5
+  = du_CERTSFromConf_2698 v4
+du_CERTSFromConf_2698 ::
   [MAlonzo.Code.Ledger.Certs.T_DCert_856] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.T__'8866'_'11078''8305'__16
-du_CERTSFromConf_2706 v0
+du_CERTSFromConf_2698 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.C__'8866'_'11078''8305'_'46'constructor_41
       (coe
@@ -13235,17 +13235,17 @@ du_CERTSFromConf_2706 v0
                             MAlonzo.Code.Interface.STS.C_RTC_126
                             (coe
                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                               (coe du_CertStFromConf_2394) (coe v5))
+                               (coe du_CertStFromConf_2386) (coe v5))
                             (coe
                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                (coe
                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                                  (coe du_CERTBASEFromConf_2680) (coe v9))
+                                  (coe du_CERTBASEFromConf_2672) (coe v9))
                                (coe
                                   MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_84
-                                  (coe du_CERTS''FromConf_2692 (coe v0)) (coe v10)))
+                                  (coe du_CERTS''FromConf_2684 (coe v0)) (coe v10)))
                      _ -> MAlonzo.RTE.mazUnreachableError
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Conformance.Equivalence.Certs.C._._⊢_⇀⦇_,GOVCERT⦈_
-d__'8866'_'8640''10631'_'44'GOVCERT'10632'__3043 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'GOVCERT'10632'__3039 a0 a1 a2 a3 a4 a5
   = ()
