@@ -22,7 +22,6 @@ open import Ledger.Utxo txs abs
 open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
 open import Ledger.Utxo.Properties.PoV txs abs
 open import Ledger.Utxow txs abs
-open import Ledger.Interface.HasLedgerField txs abs
 
 open import Axiom.Set.Properties th
 

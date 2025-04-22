@@ -31,16 +31,11 @@ Rewards   = Credential ⇀ Coin
 DReps     = Credential ⇀ Epoch
 \end{code}
 \begin{code}[hide]
-record HasDeposits {a} (A : Type a) : Type a where
-  field DepositsOf : A → Deposits
+record HasDeposits {a} (A : Type a) : Type a where field DepositsOf : A → Deposits
+record HasRewards  {a} (A : Type a) : Type a where field RewardsOf : A → Rewards
+record HasDReps    {a} (A : Type a) : Type a where field DRepsOf : A → DReps
 open HasDeposits ⦃...⦄ public
-
-record HasRewards {a} (A : Type a) : Type a where
-  field RewardsOf : A → Credential ⇀ Coin
 open HasRewards ⦃...⦄ public
-
-record HasDReps {a} (A : Type a) : Type a where
-  field DRepsOf : A → DReps
 open HasDReps ⦃...⦄ public
 
 instance
@@ -125,8 +120,7 @@ record DState : Type where
     rewards      : Credential ⇀ Coin
 \end{code}
 \begin{code}[hide]
-record HasDState {a} (A : Type a) : Type a where
-  field DStateOf : A → DState
+record HasDState {a} (A : Type a) : Type a where field DStateOf : A → DState
 open HasDState ⦃...⦄ public
 
 instance
@@ -142,8 +136,7 @@ record PState : Type where
     retiring  : KeyHash ⇀ Epoch
 \end{code}
 \begin{code}[hide]
-record HasPState {a} (A : Type a) : Type a where
-  field PStateOf : A → PState
+record HasPState {a} (A : Type a) : Type a where field PStateOf : A → PState
 open HasPState ⦃...⦄ public
 \end{code}
 \end{NoConway}
@@ -160,8 +153,7 @@ record GState : Type where
     ccHotKeys  : Credential ⇀ Maybe Credential
 \end{code}
 \begin{code}[hide]
-record HasGState {a} (A : Type a) : Type a where
-  field GStateOf : A → GState
+record HasGState {a} (A : Type a) : Type a where field GStateOf : A → GState
 open HasGState ⦃...⦄ public
 
 instance
@@ -182,8 +174,7 @@ record CertState : Type where
     gState : GState
 \end{code}
 \begin{code}[hide]
-record HasCertState {a} (A : Type a) : Type a where
-  field CertStateOf : A → CertState
+record HasCertState {a} (A : Type a) : Type a where field CertStateOf : A → CertState
 open HasCertState ⦃...⦄ public
 
 instance

@@ -10,10 +10,9 @@ module Ledger.Epoch.Properties.NoPropSameDReps
   where
 
 open import Ledger.Epoch txs abs
+open import Ledger.Gov txs
 open import Ledger.Prelude
 open import Ledger.Properties txs abs
-open import Ledger.Interface.HasLedgerField txs abs
-
 \end{code}
 % If the module name changes, change the following macro to match!
 \newcommand{\EpochPropConstDReps}{Epoch/Properties/NoPropSameDReps}

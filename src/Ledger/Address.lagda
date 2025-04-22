@@ -45,8 +45,7 @@ data Credential : Type where
   ScriptObj  : ScriptHash → Credential
 \end{code}
 \begin{code}[hide]
-record HasCredential {a} (A : Type a) : Type a where
-  field CredentialOf : A → Credential
+record HasCredential {a} (A : Type a) : Type a where field CredentialOf : A → Credential
 open HasCredential ⦃...⦄ public
 
 isKeyHashObj : Credential → Maybe KeyHash
@@ -88,8 +87,7 @@ record RwdAddr : Type where
 \begin{code}[hide]
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
 
-record HasNetworkId {a} (A : Type a) : Type a where
-  field NetworkIdOf : A → Network 
+record HasNetworkId {a} (A : Type a) : Type a where field NetworkIdOf : A → Network 
 open HasNetworkId ⦃...⦄ public
 
 instance 

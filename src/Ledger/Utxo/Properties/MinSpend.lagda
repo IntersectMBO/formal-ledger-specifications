@@ -17,7 +17,6 @@ open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
-open import Ledger.Interface.HasLedgerField txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All)
 open import Ledger.Properties txs abs using (validTxIn₂)
@@ -138,8 +137,8 @@ module _ -- ASSUMPTION --
       element in \AgdaFunction{txcerts} is one of the two refund types
       (i.e., an element of \ab{l} is neither a \dereg{} nor a \deregdrep{}).
       \\[4pt]
-      Let \ab{utxoSt}, \ab{utxoSt'}~:~\UTxOState{} be two UTxO states.
-      If \ab{utxoSt}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{utxoSt'}
+      Let \ab{s}, \ab{s'}~:~\UTxOState{} be two UTxO states.
+      If \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{s'}
       and if \AgdaFunction{noRefundCert}~\AgdaFunction{txcerts},
       then the coin consumed by \ab{tx} is at least the sum of the governance action
       deposits of the proposals in \ab{tx}.
@@ -147,24 +146,23 @@ module _ -- ASSUMPTION --
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-  utxoMinSpend : {Γ : UTxOEnv} {tx : Tx} {utxoSt utxoSt' : UTxOState}
-    → Γ ⊢ utxoSt ⇀⦇ tx ,UTXO⦈ utxoSt'
+  utxoMinSpend : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
+    → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
     → noRefundCert (txcertsOf tx)
-    → coin (consumed _ utxoSt (bodyOf tx)) ≥ length (txpropOf tx) *
-      PParams.govActionDeposit (UTxOEnv.pparams Γ)
+    → coin (consumed _ s (TxBodyOf tx)) ≥ length (txpropOf tx) * govActionDepositOf Γ
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
       in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
-  utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
+  utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
-    length txprop * govActionDeposit
+    length txprop * govActionDepositOf Γ
       ≡˘⟨ updatePropDeps≡ txprop ⟩
-    getCoin (updateProposalDeposits txprop txid govActionDeposit deps) ∸ getCoin deps
-      ≤⟨ ∸-monoˡ-≤ (getCoin deps) (≤updateCertDeps txcerts nrf) ⟩
-    getCoin (updateDeposits pp txb deps) - getCoin deps
-      ≡⟨ ∸≡posPart⊖ {getCoin (updateDeposits pp txb deps)} {getCoin deps} ⟩
+    getCoin (updateProposalDeposits txprop txid (govActionDepositOf Γ) deposits) ∸ getCoin deposits
+      ≤⟨ ∸-monoˡ-≤ (getCoin deposits) (≤updateCertDeps txcerts nrf) ⟩
+    getCoin (updateDeposits (PParamsOf Γ) txb deposits) - getCoin deposits
+      ≡⟨ ∸≡posPart⊖ {getCoin (updateDeposits (PParamsOf Γ) txb deposits)} {getCoin deposits} ⟩
     newDeps
       ≤⟨ m≤n+m newDeps (coin balOut + txfee + txdonation) ⟩
     coin balOut + txfee + txdonation + newDeps
@@ -184,18 +182,16 @@ module _ -- ASSUMPTION --
     coin (balIn + mint + inject refunds + inject wdrls) ∎
     where
     open ≤-Reasoning
-    pp : PParams
-    pp = UTxOEnv.pparams Γ; open PParams pp
     open Tx tx renaming (body to txb); open TxBody txb
-    open UTxOState utxoState renaming (utxo to st; fees to fs; deposits to deps; donations to dons)
+    open UTxOState utxoSt
 
     newDeps refunds wdrls : Coin
-    newDeps = newDeposits pp utxoState txb
-    refunds = depositRefunds pp utxoState txb
-    wdrls = getCoin txwdrls
+    newDeps = newDeposits (PParamsOf Γ) utxoSt txb
+    refunds = depositRefunds (PParamsOf Γ) utxoSt txb
+    wdrls = getCoin (txwdrlsOf tx)
 
     balIn balOut : Value
-    balIn = balance (st ∣ txins)
+    balIn = balance (utxo ∣ txins)
     balOut = balance (outs txb)
 \end{code}
 \end{AgdaMultiCode}

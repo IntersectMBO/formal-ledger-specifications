@@ -11,7 +11,6 @@ module Ledger.Chain.Properties.PParamsWellFormed
 
 open import Ledger.Chain txs abs
 open import Ledger.Prelude
-open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!

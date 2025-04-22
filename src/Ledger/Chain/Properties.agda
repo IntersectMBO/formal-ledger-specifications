@@ -12,6 +12,7 @@ open import Ledger.Enact govStructure using (EnactState)
 open import Ledger.Epoch txs abs
 open import Ledger.Epoch.Properties txs abs
 open import Ledger.Interface.HasDowncast.Instance txs govStructure
+open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
 open import Ledger.Prelude
 

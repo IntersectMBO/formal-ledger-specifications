@@ -12,7 +12,6 @@ open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
-open import Ledger.Interface.HasLedgerField txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Prelude
 isCredDeposit : DepositPurpose → Type

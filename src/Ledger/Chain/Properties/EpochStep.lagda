@@ -10,9 +10,10 @@ module Ledger.Chain.Properties.EpochStep
   where
 
 open import Ledger.Chain txs abs
+open import Ledger.Enact govStructure
+open import Ledger.Epoch txs abs
 open import Ledger.Prelude
 open Block
-open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!

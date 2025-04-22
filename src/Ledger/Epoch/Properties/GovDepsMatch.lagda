@@ -15,7 +15,6 @@ module Ledger.Epoch.Properties.GovDepsMatch
 \begin{code}[hide]
 open import Ledger.Certs govStructure
 open import Ledger.Epoch txs abs
-open import Ledger.Interface.HasLedgerField txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
 open import Ledger.Prelude renaming (map to map'; mapˢ to map)
@@ -45,7 +44,7 @@ module EPOCH-Body (eps : EpochState) where
   open GovActionState public
   open UTxOState public
 
-  ens       = record (epsRState .ensRState) { withdrawals = ∅ }
+  ens      = record (epsRState .ensRState) { withdrawals = ∅ }
   tmpGovSt = filter (λ x → ¿ proj₁ x ∉ map proj₁ (epsRState .removed) ¿) govSt
   orphans  = fromList $ getOrphans ens tmpGovSt
   removed' = (epsRState .removed) ∪ orphans

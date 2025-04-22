@@ -173,13 +173,16 @@ record PParams : Type where
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
 \begin{code}[hide]
-record HasPParams {a} (A : Type a) : Type a where
-  field PParamsOf : A → PParams
+record HasPParams          {a} (A : Type a) : Type a where field PParamsOf : A → PParams
+record HasccMaxTermLength  {a} (A : Type a) : Type a where field ccMaxTermLengthOf : A → ℕ
+record HasgovActionDeposit {a} (A : Type a) : Type a where field govActionDepositOf : A → Coin
 open HasPParams ⦃...⦄ public
-
-record HasccMaxTermLength {a} (A : Type a) : Type a where
-  field ccMaxTermLengthOf : A → ℕ
 open HasccMaxTermLength ⦃...⦄ public
+open HasgovActionDeposit ⦃...⦄ public
+
+instance
+  HasgovActionDeposit-PParams : HasgovActionDeposit PParams
+  HasgovActionDeposit-PParams .govActionDepositOf = PParams.govActionDeposit
 \end{code}
 \begin{figure*}
 \begin{AgdaMultiCode}

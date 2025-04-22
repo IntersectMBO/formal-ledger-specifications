@@ -18,10 +18,10 @@ open import Ledger.Chain txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
 open import Ledger.Epoch.Properties.GovDepsMatch txs abs
+open import Ledger.Ledger txs abs
 open import Ledger.Ledger.Properties txs abs
 open import Ledger.Ledger.Properties.GovDepsMatch txs abs
 open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
-open import Ledger.Interface.HasLedgerField txs abs
 
 module _
   { b   : Block }

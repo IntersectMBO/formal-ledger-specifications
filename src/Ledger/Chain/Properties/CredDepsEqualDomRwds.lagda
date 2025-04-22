@@ -13,7 +13,6 @@ open import Ledger.Certs govStructure
 open import Ledger.Chain txs abs
 open import Ledger.Prelude hiding (map) renaming (mapˢ to map; filterˢ to filter)
 open import Ledger.Properties txs abs
-open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!

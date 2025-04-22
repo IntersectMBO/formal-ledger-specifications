@@ -9,9 +9,9 @@ module Ledger.Epoch.Properties.ConstRwds
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Certs govStructure
 open import Ledger.Epoch txs abs
 open import Ledger.Prelude
-open import Ledger.Interface.HasLedgerField txs abs
 
 \end{code}
 % If the module name changes, change the following macro to match!

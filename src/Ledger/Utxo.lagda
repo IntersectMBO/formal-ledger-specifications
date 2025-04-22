@@ -169,6 +169,9 @@ record UTxOEnv : Type where
 instance
   HasPParams-UTxOEnv : HasPParams UTxOEnv
   HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
+
+  HasgovActionDeposit-UTxOEnv : HasgovActionDeposit UTxOEnv
+  HasgovActionDeposit-UTxOEnv .govActionDepositOf = govActionDepositOf ∘ PParamsOf
 \end{code}
 
 \end{NoConway}
@@ -188,8 +191,7 @@ record UTxOState : Type where
 
 \end{code}
 \begin{code}[hide]
-record HasUTxOState {a} (A : Type a) : Type a where
-  field UTxOStateOf : A → UTxOState
+record HasUTxOState {a} (A : Type a) : Type a where field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
 
 instance
