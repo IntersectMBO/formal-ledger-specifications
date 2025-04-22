@@ -48,9 +48,9 @@ open UTxOState; open Tx; open TxBody
     \item \textit{Formally}.
 \begin{code}
 UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
-  → tx .body .txid ∉ mapˢ proj₁ (dom (s .utxo))
+  → txidOf tx ∉ mapˢ proj₁ (dom (UTxOOf s))
   → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-  → getCoin s + φ(getCoin (tx .body .txwdrls) , tx .isValid) ≡ getCoin s'
+  → getCoin s + φ(getCoin (txwdrlsOf tx) , tx .isValid) ≡ getCoin s'
 \end{code}
   \item \textit{Proof}. See the
   \LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}} module

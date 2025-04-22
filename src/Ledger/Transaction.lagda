@@ -168,11 +168,14 @@ record TransactionStructure : Type₁ where
   record Hastxcerts {a} (A : Type a) : Type a where field txcertsOf : A → List DCert
   record Hastxprop  {a} (A : Type a) : Type a where field txpropOf  : A → List GovProposal
   record Hastxwdrls {a} (A : Type a) : Type a where field txwdrlsOf : A → Wdrl
+  record Hastxid    {a} (A : Type a) : Type a where field txidOf    : A → TxId
+  
   open HasTxBody  ⦃...⦄ public
   open Hastxfee   ⦃...⦄ public
   open Hastxcerts ⦃...⦄ public
   open Hastxprop  ⦃...⦄ public
   open Hastxwdrls ⦃...⦄ public
+  open Hastxid    ⦃...⦄ public
 \end{code}
 
 \begin{NoConway}
@@ -210,6 +213,9 @@ record TransactionStructure : Type₁ where
 
     Hastxwdrls-Tx : Hastxwdrls Tx
     Hastxwdrls-Tx .txwdrlsOf = TxBody.txwdrls ∘ TxBodyOf
+
+    Hastxid-Tx : Hastxid Tx
+    Hastxid-Tx .txidOf = TxBody.txid ∘ TxBodyOf
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
