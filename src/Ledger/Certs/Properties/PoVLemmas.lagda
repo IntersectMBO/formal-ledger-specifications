@@ -118,7 +118,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   CERT-pov (CERT-vdel x) = refl
 
   injOn : (wdls : RwdAddr ⇀ Coin)
-          → ∀[ a ∈ dom (wdls ˢ) ] RwdAddr.net a ≡ NetworkId
+          → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
           → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
@@ -154,7 +154,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     \item \textit{Formally}.
 \begin{code}
     CERTBASE-pov : {Γ : CertEnv} {s s' : CertState}
-      → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] RwdAddr.net a ≡ NetworkId
+      → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
       → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
       → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 \end{code}
