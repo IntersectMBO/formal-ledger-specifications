@@ -566,7 +566,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
-         ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ coin (getValueʰ txout)
+        inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
     ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]

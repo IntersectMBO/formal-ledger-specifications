@@ -51,12 +51,14 @@ record TokenAlgebra : Type₁ where
     inject                    : Coin → Value
     policies                  : Value → ℙ PolicyId
     size                      : Value → MemoryEstimate
+    _≤ᵗ_                      : Value → Value → Type
     coin∘inject≗id            : coin ∘ inject ≗ id
     coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 
 \end{code}
 \begin{code}[hide]
     ⦃ DecEq-Value ⦄ : DecEq Value
+    ⦃ Dec-≤ᵗ ⦄      : _≤ᵗ_ ⁇²
 
   instance
     addValue : HasAdd Value
