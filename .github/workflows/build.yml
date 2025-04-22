@@ -193,6 +193,5 @@ jobs:
 
       - name: Build cardano-ledger
         run: |
-          ls -la
-          # cd cl
-          # nix develop --command "../formal-ledger-specifications/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
+          cd cl
+          nix develop --command bash -c "../fls/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
