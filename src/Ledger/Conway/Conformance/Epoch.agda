@@ -18,6 +18,7 @@ module Ledger.Conway.Conformance.Epoch
 
 open import Ledger.Gov txs
 open import Ledger.Enact govStructure
+open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
@@ -101,7 +102,7 @@ stakeDistr : UTxO → DState → PState → Snapshot
 stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
   where
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ proj₁ rewards
+    stakeRelation = m ∪ rewards ↓
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
@@ -114,7 +115,7 @@ opaque
 
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy (proj₁ delegations) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
+    aggregateBy (delegations ↓) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 
 private variable
   nes nes' : NewEpochState

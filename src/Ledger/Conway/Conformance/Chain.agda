@@ -15,6 +15,7 @@ module Ledger.Conway.Conformance.Chain
 
 open import Ledger.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
+open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
@@ -96,7 +97,7 @@ data
         open EpochState epochState; open EnactState es
     in
        _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pparams .proj₁ , es , Acnt.treasury acnt
+    →  ⟦ slot , constitution ↓ , pparams ↓ , es , Acnt.treasury acnt
        ⟧ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈

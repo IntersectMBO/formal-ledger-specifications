@@ -45,6 +45,10 @@ data Credential : Type where
   ScriptObj  : ScriptHash → Credential
 \end{code}
 \begin{code}[hide]
+record HasCredential {a} (A : Type a) : Type a where
+  field CredentialOf : A → Credential
+open HasCredential ⦃...⦄ public
+
 isKeyHashObj : Credential → Maybe KeyHash
 isKeyHashObj (KeyHashObj h) = just h
 isKeyHashObj (ScriptObj _)  = nothing
@@ -83,6 +87,24 @@ record RwdAddr : Type where
 \end{code}
 \begin{code}[hide]
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
+
+record HasNetworkId {a} (A : Type a) : Type a where
+  field NetworkIdOf : A → Network 
+open HasNetworkId ⦃...⦄ public
+
+instance 
+  HasNetworkId-BaseAddr : HasNetworkId BaseAddr
+  HasNetworkId-BaseAddr .NetworkIdOf = BaseAddr.net
+
+  HasNetworkId-BootstrapAddr : HasNetworkId BootstrapAddr
+  HasNetworkId-BootstrapAddr .NetworkIdOf = BootstrapAddr.net
+
+  HasNetworkId-RwdAddr : HasNetworkId RwdAddr
+  HasNetworkId-RwdAddr .NetworkIdOf = RwdAddr.net
+
+  HasCredential-RwdAddr : HasCredential RwdAddr
+  HasCredential-RwdAddr .CredentialOf = RwdAddr.stake
+
 \end{code}
 \begin{code}
 
@@ -107,7 +129,7 @@ isScriptAddr  : Addr → Type
 
 isVKeyAddr       = isVKey ∘ payCred
 isScriptAddr     = isScript ∘ payCred
-isScriptRwdAddr  = isScript ∘ RwdAddr.stake
+isScriptRwdAddr  = isScript ∘ CredentialOf
 \end{code}
 \end{AgdaMultiCode}
 \caption{Definitions used in Addresses}

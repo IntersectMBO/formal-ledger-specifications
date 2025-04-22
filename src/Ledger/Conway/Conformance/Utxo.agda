@@ -19,6 +19,7 @@ module Ledger.Conway.Conformance.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Interface.HasDowncast
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Fees txs using (scriptsCost)
 open import Ledger.Conway.Conformance.Certs govStructure
@@ -94,14 +95,14 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+    ∙ ∀[ (_ , txout) ∈ txoutsʰ ↓ ]
         inject ((overhead + L.utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+    ∙ ∀[ (_ , txout) ∈ txoutsʰ ↓ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
-    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
+    ∙ ∀[ a ∈ dom txwdrls ]          NetworkIdOf a   ≡ NetworkId
     ∙ txNetworkId ~ just NetworkId
     ∙ curTreasury ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'

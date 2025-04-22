@@ -131,6 +131,11 @@ record TransactionStructure : Type₁ where
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 \end{code}
+\begin{code}[hide]
+  record HasUTxO {a} (A : Type a) : Type a where
+    field UTxOOf : A → UTxO
+  open HasUTxO ⦃...⦄ public
+\end{code}
 \end{NoConway}
 \emph{Transaction types}
 \begin{AgdaMultiCode}
@@ -158,6 +163,13 @@ record TransactionStructure : Type₁ where
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash
 \end{code}
+\begin{code}[hide]
+  record HasTxBody {a} (A : Type a) : Type a where
+    field TxBodyOf : A → TxBody
+  open HasTxBody ⦃...⦄ public
+
+\end{code}
+
 \begin{NoConway}
 \begin{code}
   record TxWitnesses : Type where
@@ -176,6 +188,12 @@ record TransactionStructure : Type₁ where
       wits     : TxWitnesses
       isValid  : Bool
       txAD     : Maybe AuxiliaryData
+\end{code}
+\begin{code}[hide]
+  instance
+    HasTxBody-Tx : HasTxBody Tx
+    HasTxBody-Tx .TxBodyOf = Tx.body
+
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}

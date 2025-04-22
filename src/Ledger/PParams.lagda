@@ -172,6 +172,15 @@ record PParams : Type where
 \caption{Protocol parameter definitions}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
+\begin{code}[hide]
+record HasPParams {a} (A : Type a) : Type a where
+  field PParamsOf : A → PParams
+open HasPParams ⦃...⦄ public
+
+record HasccMaxTermLength {a} (A : Type a) : Type a where
+  field ccMaxTermLengthOf : A → ℕ
+open HasccMaxTermLength ⦃...⦄ public
+\end{code}
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{code}

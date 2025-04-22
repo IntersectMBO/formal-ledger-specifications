@@ -10,13 +10,17 @@ module Ledger.Ledger.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+-- open import Ledger.Chain txs abs
+-- open import Ledger.Enact govStructure
+-- open import Ledger.Epoch txs abs
 open import Ledger.Certs.Properties govStructure
 open import Ledger.Gov txs
 open import Ledger.Gov.Properties txs
-open import Ledger.Interface.HasLedgerField txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Prelude
+open import Ledger.Ratify txs hiding (vote)
 open import Ledger.Utxo txs abs
+-- open import Ledger.Utxo.Properties txs abs
 open import Ledger.Utxow txs abs
 open import Ledger.Utxow.Properties txs abs
 
@@ -128,7 +132,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   open DState dState
 
   -- initial utxo deposits
-  utxoDeps : DepositPurpose ⇀ Coin
+  utxoDeps : Deposits
   utxoDeps = UTxOState.deposits (LState.utxoSt s)
 
   -- GovState definitions and lemmas --
@@ -370,10 +374,10 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     filterˢ isGADeposit (dom (updateProposalDeposits (p ∷ ps) txid gad utxoDs))
       ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit ((dom (updateProposalDeposits ps txid gad utxoDs))
-      ∪ (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txid , length ps) , gad ❵))
+      ∪ (dom{X = Deposits} ❴ GovActionDeposit (txid , length ps) , gad ❵))
       ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom (updateProposalDeposits ps txid gad utxoDs)) ∪ filterˢ isGADeposit
-        (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txid , length ps) , gad ❵)
+        (dom{X = Deposits} ❴ GovActionDeposit (txid , length ps) , gad ❵)
       ≈⟨ ∪-cong (utxo-govst-connex ps x) (filter-pres-≡ᵉ dom-single≡single) ⟩
     fromList (dpMap (updateGovStates (map inj₂ ps) 0 gSt))
       ∪ filterˢ isGADeposit ❴ GovActionDeposit (txid , length ps) ❵

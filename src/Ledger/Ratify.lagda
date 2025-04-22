@@ -206,6 +206,16 @@ record RatifyState : Type where
     es              : EnactState
     removed         : ℙ (GovActionID × GovActionState)
     delay           : Bool
+\end{code}
+\begin{code}[hide]
+record HasRatifyState {a} (A : Type a) : Type a where
+  field RatifyStateOf : A → RatifyState
+
+instance
+  HasEnactState-RatifyState : HasEnactState RatifyState
+  HasEnactState-RatifyState .EnactStateOf = RatifyState.es
+\end{code}
+\begin{code}
 
 CCData : Type
 CCData = Maybe ((Credential ⇀ Epoch) × ℚ)

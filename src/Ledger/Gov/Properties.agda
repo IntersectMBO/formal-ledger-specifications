@@ -124,8 +124,8 @@ instance
             × d ≡ govActionDeposit
             × validHFAction prop s enactState
             × hasParent' enactState s (a .gaType) prev
-            × addr .RwdAddr.net ≡ NetworkId
-            × addr .RwdAddr.stake ∈ rewardCreds ¿
+            × NetworkIdOf addr ≡ NetworkId
+            × CredentialOf addr ∈ rewardCreds ¿
             ,′ isUpdateCommittee a
 
         computeProof = case H of λ where
