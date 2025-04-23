@@ -181,7 +181,7 @@ Overlap? Info Info = yes refl
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
 insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
-  =  if (govActionPriority (action gaSt₀ .gaType)) ≤? (govActionPriority (action gaSt₁ .gaType))
+  =  if govActionPriority (action gaSt₀ .gaType) ≤ govActionPriority (action gaSt₁ .gaType)
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
@@ -254,7 +254,7 @@ This is useful for ordering lists of governance actions (see \AgdaFunction{inser
 in \cref{defs:gov-functions}).
 %
 Priority is also used to check if two actions \AgdaFunction{Overlap}: that is,
-they potentially modify the same piece of \AgdaDatatype{EnactState}.
+they would modify the same piece of \AgdaDatatype{EnactState}.
 
 \begin{figure*}
 \begin{AgdaMultiCode}

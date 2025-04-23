@@ -21,13 +21,11 @@ define the ENACT transition system.  \EnactEnv{} is the environment and
 \EnactState{} the state of ENACT, which enacts a governance action. All
 governance actions except \TreasuryWdrl{} and \Info{} modify \EnactState{}
 permanently, which of course can have further
-consequences.  \TreasuryWdrl{} accumulates withdrawal temporarily in \EnactState{},
-but this information is applied and discarded immediately in EPOCH.
+consequences.  \TreasuryWdrl{} accumulates withdrawal temporarily in the
+\withdrawals{} field of \EnactState{},
+but this information is applied and reset in EPOCH (see \cref{fig:epoch:sts}).
 Also, enacting these governance actions is the
-\emph{only} way of modifying \EnactState{}.  The \withdrawals{} field of
-\EnactState{} is special in that it is ephemeral---ENACT accumulates
-withdrawals there which are paid out at the next epoch boundary where
-this field will be reset.
+\emph{only} way of modifying \EnactState{}.
 
 Note that all other fields of \EnactState{} also contain a \GovActionID{}
 since they are \HashProtected{}.

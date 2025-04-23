@@ -25,6 +25,8 @@ are bundled with the protocol parameters; see
    the base fee or initial price per byte.
 \end{itemize}
 
+For background on this particular choice of fee calculation, see \cite{adr9}.
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 

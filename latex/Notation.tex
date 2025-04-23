@@ -3,17 +3,10 @@
 This section introduces some of the notation we use in this document and in our Agda formalization.
 
 \begin{description}
-\item[Propositions, sets and types.] In this document the abstract notions of ``set''
-and ``type'' are essentially the same, despite having different formal definitions
-in our Agda code. We represent sets as a special type, which we denote by
-\AgdaDatatype{Set}~\AgdaBound{A}, for \AgdaBound{A} an arbitrary type.
-(See \cref{sec:sets-maps} for details and~\textcite[Ch.~19]{NPS:1990-open} for
-background.)
+\item[Propositions, sets and types.] See \cref{sec:sets-maps}. Note that
 Agda denotes the primitive notion of type by \AgdaPrimitive{Set}.  To avoid confusion,
-throughout this document and in our Agda code we call this primitive \Type{},
-reserving the name \AgdaDatatype{Set} for our set type.
-All of our sets are finite, and when we need to convert
-a list \AgdaBound{l} to its set of elements, we write \fromList{}~\AgdaBound{l}.
+throughout this document and in our Agda code we call this primitive \Type{}
+and use \PowerSet{} for our set type.
 \item[Lists] We use the notation \AgdaBound{a}~\AgdaInductiveConstructor{∷}~\AgdaBound{as} for
   the list with \textit{head} \AgdaBound{a} and \textit{tail} \AgdaBound{as};
   \AgdaInductiveConstructor{[]} denotes the empty list, and
@@ -58,7 +51,7 @@ of the map \AgdaFunction{m}.
   \AgdaBound{f}~:~\AgdaBound{A}~⇀~\AgdaBound{B}.  If we happen to know that the function is
   \textit{total} (defined for all elements of \AgdaBound{A}), then we write
   \AgdaBound{f}~:~\AgdaBound{A}~→~\AgdaBound{B}.
-  The \mapPartial operation takes such a function \AgdaBound{f}
+  The \mapPartial{} operation takes such a function \AgdaBound{f}
   and a set \AgdaBound{S} of elements of \AgdaBound{A} and applies \AgdaBound{f} to the elements
   of \AgdaBound{S} at which it is defined; the result is the set
   \(\{\text{\AgdaBound{f}~\AgdaBound{x}} ∣ \text{\AgdaBound{x}}~∈~\text{\AgdaBound{S} and
@@ -86,7 +79,7 @@ presence of a trivial value, a trivially satisfied requirement, etc.
 \subsection{Superscripts and Other Special Notations}
 \label{sec:superscripts-other-special-notation}
 In the current version of this specification, superscript letters are
-heavily used for things such as disambiguations or type
+sometimes used for things such as disambiguations or type
 conversions. These are essentially meaningless, only present for
 technical reasons and can safely be ignored. However there are the
 two exceptions:
@@ -98,8 +91,3 @@ Also, non-letter superscripts do carry meaning.\footnote{At some point in the fu
   hope to be able to remove all those non-essential superscripts.  Since we prefer doing
   this by changing the Agda source code instead of via hiding them in this document, this
   is a non-trivial problem that will take some time to address.}
-
-Finally, there are some \AgdaFunction{?} and \AgdaFunction{¿} operations.
-These relate to decision procedures and can also safely be ignored.\footnote{We
-  plan on refactoring the code so that these special symbols will also disappear
-  from this document.}

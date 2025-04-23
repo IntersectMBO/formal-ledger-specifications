@@ -113,6 +113,8 @@ maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
 ─ : Maybe ℚ
 ─ = nothing
 ✓† = vote defer
+
+pattern ⟪_,_⟫ᵍᵃ x y = ⟦ x , y ⟧ᵍᵃ
 \end{code}
 \begin{code}
 threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
@@ -122,13 +124,13 @@ threshold pp ccThreshold =
   λ where
 \end{code}
 \begin{code}
-      ⟦ NoConfidence     , _ ⟧ᵍᵃ → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
-      ⟦ UpdateCommittee  , _ ⟧ᵍᵃ → ∣ ─   ∥ P/Q2a/b                 ∣
-      ⟦ NewConstitution  , _ ⟧ᵍᵃ → ∣ ✓   ∣ vote P3      ∣ ─        ∣
-      ⟦ TriggerHF        , _ ⟧ᵍᵃ → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
-      ⟦ ChangePParams    , x ⟧ᵍᵃ → ∣ ✓   ∥ P/Q5 x                  ∣
-      ⟦ TreasuryWdrl     , _ ⟧ᵍᵃ → ∣ ✓   ∣ vote P6      ∣ ─        ∣
-      ⟦ Info             , _ ⟧ᵍᵃ → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
+      ⟪ NoConfidence     , _ ⟫ᵍᵃ → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
+      ⟪ UpdateCommittee  , _ ⟫ᵍᵃ → ∣ ─   ∥ P/Q2a/b                 ∣
+      ⟪ NewConstitution  , _ ⟫ᵍᵃ → ∣ ✓   ∣ vote P3      ∣ ─        ∣
+      ⟪ TriggerHF        , _ ⟫ᵍᵃ → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
+      ⟪ ChangePParams    , x ⟫ᵍᵃ → ∣ ✓   ∥ P/Q5 x                  ∣
+      ⟪ TreasuryWdrl     , _ ⟫ᵍᵃ → ∣ ✓   ∣ vote P6      ∣ ─        ∣
+      ⟪ Info             , _ ⟫ᵍᵃ → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
         where
 \end{code}
 \begin{code}[hide]
@@ -276,14 +278,15 @@ actualVotes Γ pparams cc gaTy votes
 \begin{code}
 
   getCCHotCred : Credential × Epoch → Maybe Credential
-  getCCHotCred (c , e) = case ¿ currentEpoch ≤ e ¿ᵇ , lookupᵐ? ccHotKeys c of
+  getCCHotCred (c , e) = if currentEpoch > e then nothing
+    else case lookupᵐ? ccHotKeys c of
 \end{code}
 \begin{code}[hide]
       λ where
 \end{code}
 \begin{code}
-        (true , just (just c'))  → just c'
-        _                        → nothing -- expired, no hot key or resigned
+        (just (just c'))  → just c'
+        _                 → nothing -- no hot key or resigned
 
   SPODefaultVote : GovActionType → VDeleg → Vote
   SPODefaultVote gaT (credVoter SPO (KeyHashObj kh)) = case lookupᵐ? pools kh of
@@ -437,7 +440,7 @@ abstract
   expired : Epoch → GovActionState → Type
   expired current record { expiresIn = expiresIn } = expiresIn < current
 \end{code}
-\caption{Functions used in RATIFY rules, without delay}
+\caption{Functions relation to ratification}
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 
@@ -530,7 +533,7 @@ abstract
   expired? e st = ¿ expired e st ¿
 \end{code}
 \end{AgdaMultiCode}
-\caption{Functions related to ratification}
+\caption{Functions related to ratification, continued}
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
 
@@ -558,11 +561,26 @@ open RatifyEnv
 open GovActionState
 \end{code}
 \begin{figure*}[ht]
-\begin{AgdaSuppressSpace}
+\begin{AgdaMultiCode}
+\begin{code}[hide]
+data
+\end{code}
 \begin{code}
-data _⊢_⇀⦇_,RATIFY⦈_ :
-  RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type where
+  _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → GovActionID × GovActionState → RatifyState → Type
 
+_⊢_⇀⦇_,RATIFIES⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
+                   → RatifyState → Type
+\end{code}
+\end{AgdaMultiCode}
+\caption{Types of the RATIFY and RATIFIES transition systems}
+\end{figure*}
+
+\begin{figure*}[ht]
+\begin{AgdaSuppressSpace}
+\begin{code}[hide]
+data _⊢_⇀⦇_,RATIFY⦈_ where
+\end{code}
+\begin{code}
   RATIFY-Accept :
     let treasury       = Γ .treasury
         e              = Γ .currentEpoch
@@ -593,8 +611,6 @@ data _⊢_⇀⦇_,RATIFY⦈_ :
        ────────────────────────────────
        Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY⦈ ⟦ es , removed , d ⟧
 
-_⊢_⇀⦇_,RATIFIES⦈_  : RatifyEnv → RatifyState → List (GovActionID × GovActionState)
-                 → RatifyState → Type
 _⊢_⇀⦇_,RATIFIES⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,RATIFY⦈_}
 \end{code}
 \end{AgdaSuppressSpace}

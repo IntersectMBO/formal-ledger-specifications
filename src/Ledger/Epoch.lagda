@@ -5,6 +5,14 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
+open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
+open import Data.Integer using () renaming (+_ to pos)
+open import Data.Nat.GeneralisedArithmetic using (iterate)
+
+open import Agda.Builtin.FromNat
+
+open import Ledger.Prelude hiding (iterate)
+open Filter using (filter)
 open import Ledger.Abstract
 open import Ledger.Transaction
 
@@ -24,7 +32,6 @@ open import Ledger.Utxo txs abs
 open import Agda.Builtin.FromNat
 
 open import Data.Integer using () renaming (+_ to pos)
-open import Data.List using (filter)
 open import Data.Nat.GeneralisedArithmetic using (iterate)
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 
@@ -288,16 +295,16 @@ its results by carrying out each of the following tasks.
 \begin{code}[hide]
       open LState ls
       open CertState certState
-      open RatifyState fut renaming (es to esW)
+      open RatifyState fut hiding (es)
       open UTxOState
       open PState; open DState; open GState
       open Acnt; open EnactState; open GovActionState
 \end{code}
 \begin{code}
-
+      esW               = RatifyState.es fut
       es                = record esW { withdrawals = ∅ }
-      tmpGovSt          = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed ¿) govSt
-      orphans           = fromList $ getOrphans es tmpGovSt
+      tmpGovSt          = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
+      orphans           = fromList (getOrphans es tmpGovSt)
       removed'          = removed ∪ orphans
       removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
         mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
@@ -311,7 +318,7 @@ its results by carrying out each of the following tasks.
       refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
       unclaimed  = getCoin payout - getCoin refunds
 
-      govSt' = filter (λ x → ¿ proj₁ x ∉ mapˢ proj₁ removed' ¿) govSt
+      govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
 
       dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
 
