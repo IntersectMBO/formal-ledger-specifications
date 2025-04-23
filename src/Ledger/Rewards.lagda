@@ -85,6 +85,35 @@ large, but fixed number of stake pools that attract most of the stake.
 For more details about the design and rationale of the rewards and delegation
 system, see \textcite{shelley-delegation-design}.
 
+\subsection{Precision of Arithmetic Operations}
+\label{sec:precision-rewards}
+When computing rewards, all intermediate results are computed
+using rational numbers, \AgdaDatatype{ℚ},
+and converted to \Coin{} using the \AgdaFunction{floor} function
+at the very end of the computation.
+
+Note for implementors:
+Values in \AgdaDatatype{ℚ} can have arbitrarily large nominators and denominators.
+Please use an appropriate type that represents rational numbers
+as fractions of unbounded nominators and denominators.
+Types such as \AgdaFunction{Double}, \AgdaFunction{Float},
+\AgdaFunction{BigDecimal} (Java Platform),
+or \AgdaFunction{Fixed} (fixed-precision arithmetic)
+do \emph{not} faithfully represent the rational numbers, and
+are \emph{not} suitable for computing rewards according to this specification!
+
+We use the following arithmetic operations besides basic arithmetic:
+\begin{itemize}
+  \item \AgdaFunction{fromℕ}: Interpret a natural number as a rational number.
+  \item \AgdaFunction{floor}: Round a rational number to the next smaller integer.
+  \item \AgdaFunction{posPart}:
+    Convert an integer to a natural number by mapping all negative numbers to zero.
+  \item \AgdaFunction{÷}: Division of rational numbers.
+  \item \AgdaFunction{÷₀}: Division operator that returns zero when the denominator is zero.
+  \item \AgdaFunction{/}: Division operator that maps integer arguments to a rational number.
+  \item \AgdaFunction{/₀}: Like \AgdaFunction{÷₀}, but with integer arguments.
+\end{itemize}
+
 \subsection{Rewards Distribution Calculation}
 \label{sec:rewards-distribution-calculation}
 This section defines the amount of rewards that are paid out
@@ -158,6 +187,239 @@ maxPool pparams rewardPot stake pledge = rewardℕ
 \end{AgdaMultiCode}
 \caption{Function maxPool used for computing a Reward Update}
 \label{fig:functions:maxPool}
+\end{figure*}
+
+\Cref{fig:functions:mkApparentPerformance} defines
+the function \AgdaFunction{mkApparentPerformance}
+which computes the apparent performance of a stake pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaArgument{stake}: Relative active stake of the pool.
+  \item \AgdaArgument{poolBlocks}: Number of blocks that the pool added to the chain in the last epoch.
+  \item \AgdaArgument{totalBlocks}: Total number of blocks added in the last epoch.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+mkApparentPerformance : UnitInterval → ℕ → ℕ → ℚ
+mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ stake'
+  where
+    stake' = fromUnitInterval stake
+\end{code}
+\begin{code}[hide]
+    instance
+      nonZero-totalBlocks : ℕ.NonZero (ℕ.max 1 totalBlocks)
+      nonZero-totalBlocks = nonZero-max-1 totalBlocks
+\end{code}
+\begin{code}
+    ratioBlocks = (ℤ.+ poolBlocks) / (ℕ.max 1 totalBlocks)
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function mkApparentPerformance used for computing a Reward Update}
+\label{fig:functions:mkApparentPerformance}
+\end{figure*}
+
+\Cref{fig:functions:rewardOwners-rewardMember} defines
+the functions \AgdaFunction{rewardOwners} and \AgdaFunction{rewardMember}.
+Their purpose is to divide the reward for one pool
+between pool owners and individual delegators
+by taking into account a fixed pool cost, a relative pool margin,
+and the stake of each member.
+The rewards will be distributed as follows:
+\begin{itemize}
+  \item \AgdaArgument{rewardOwners}:
+    These funds will go to the \AgdaField{rewardAccount}
+    specified in the pool registration certificate.
+  \item \AgdaArgument{rewardMember}:
+    These funds will go to the reward accounts of the individual delegators.
+\end{itemize}
+Relevant quantities for the functions are:
+\begin{itemize}
+  \item \AgdaArgument{rewards}: Rewards paid out to this pool.
+  \item \AgdaArgument{pool}: Pool parameters, such as cost and margin.
+  \item \AgdaArgument{ownerStake}: Stake of the pool owners relative to the total amount of Ada.
+  \item \AgdaArgument{memberStake}: Stake of the pool member relative to the total amount of Ada.
+  \item \AgdaArgument{stake}: Stake of the whole pool relative to the total amount of Ada.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+rewardOwners : Coin → PoolParams → UnitInterval → UnitInterval → Coin
+rewardOwners rewards pool ownerStake stake = if rewards ≤ cost
+  then rewards
+  else cost + posPart (floor (
+        (fromℕ rewards - fromℕ cost) * (margin + (1 - margin) * ratioStake)))
+  where
+    ratioStake   = fromUnitInterval ownerStake ÷₀ fromUnitInterval stake
+    cost         = pool .PoolParams.cost
+    margin       = fromUnitInterval (pool .PoolParams.margin)
+\end{code}
+\end{AgdaMultiCode}
+\begin{AgdaMultiCode}
+\begin{code}
+rewardMember : Coin → PoolParams → UnitInterval → UnitInterval → Coin
+rewardMember rewards pool memberStake stake = if rewards ≤ cost
+  then 0
+  else posPart (floor (
+         (fromℕ rewards - fromℕ cost) * ((1 - margin) * ratioStake)))
+  where
+    ratioStake    = fromUnitInterval memberStake ÷₀ fromUnitInterval stake
+    cost          = pool .PoolParams.cost
+    margin        = fromUnitInterval (pool .PoolParams.margin)
+\end{code}
+\end{AgdaMultiCode}
+\caption{Functions rewardOwners and rewardMember}
+\label{fig:functions:rewardOwners-rewardMember}
+\end{figure*}
+
+\Cref{fig:functions:rewardOnePool} defines
+the function \AgdaFunction{rewardOnePool}
+which calculates the rewards given out to each member of a given pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaArgument{rewardPot}: Total rewards to be paid out for this epoch.
+  \item \AgdaArgument{n}: Number of blocks produced by the pool in the last epoch.
+  \item \AgdaArgument{N}: Expectation value of the number of blocks to be produced by the pool.
+  \item \AgdaArgument{stakeDistr}: Distribution of stake,
+    as mapping from \AgdaInductiveConstructor{Credential} to \Coin{}.
+  \item \AgdaArgument{σ}: Total relative stake controlled by the pool.
+  \item \AgdaArgument{σa}: Total active relative stake controlled by the pool, used for selecting block producers.
+  \item \AgdaArgument{tot}: Total amount of Ada in circulation, for computing the relative stake.
+  \item \AgdaFunction{mkRelativeStake}: Compute stake relative to the total amount in circulation.
+  \item \AgdaFunction{ownerStake}: Total amount of stake controlled by the stake pool operator and owners.
+  \item \AgdaFunction{maxP}: Maximum rewards the pool can claim if the pledge is met,
+    and zero otherwise.
+  \item \AgdaFunction{poolReward}: Actual rewards to be paid out to this pool.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+Stake = Credential ⇀ Coin
+
+rewardOnePool : PParams → Coin → ℕ → ℕ → PoolParams
+  → Stake → UnitInterval → UnitInterval → Coin → (Credential ⇀ Coin)
+rewardOnePool pparams rewardPot n N pool stakeDistr σ σa tot = rewards
+  where
+    mkRelativeStake = λ coin → clamp (coin /₀ tot)
+    owners = mapˢ KeyHashObj (pool .PoolParams.owners) 
+    ownerStake = ∑[ c ← stakeDistr ∣ owners ] c
+    pledge = pool .PoolParams.pledge
+    maxP = if pledge ≤ ownerStake
+      then maxPool pparams rewardPot σ (mkRelativeStake pledge)
+      else 0
+    apparentPerformance = mkApparentPerformance σa n N
+    poolReward = posPart (floor (apparentPerformance * fromℕ maxP))
+    memberRewards =
+      mapValues (λ coin → rewardMember poolReward pool (mkRelativeStake coin) σ)
+        (stakeDistr ∣ owners ᶜ)
+    ownersRewards  =
+      ❴ pool .PoolParams.rewardAccount
+      , rewardOwners poolReward pool (mkRelativeStake ownerStake) σ ❵ᵐ
+    rewards = memberRewards ∪⁺ ownersRewards
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function rewardOnePool used for computing a Reward Update}
+\label{fig:functions:rewardOnePool}
+\end{figure*}
+
+\Cref{fig:functions:poolStake} defines
+the function \AgdaFunction{poolStake}
+which filters the stake distribution to one stake pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaArgument{hk}: \AgdaDatatype{KeyHash} of the stake pool to be filtered by.
+    \item \AgdaArgument{delegs}:
+      Mapping from \AgdaDatatype{Credential}s to stake pool that they delegate to.
+  \item \AgdaArgument{stake}: Distribution of stake for all \AgdaDatatype{Credential}s.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+Delegations = Credential ⇀ KeyHash
+
+poolStake  : KeyHash → Delegations → Stake → Stake
+poolStake hk delegs stake = stake ∣ dom (delegs ∣^ ❴ hk ❵)
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function poolStake}
+\label{fig:functions:poolStake}
+\end{figure*}
+
+\Cref{fig:functions:reward} defines
+the function \AgdaFunction{reward}
+which applies \AgdaFunction{rewardOnePool} to each registered stake pool.
+Relevant quantities are:
+\begin{itemize}
+  \item \AgdaFunction{uncurryᵐ}: Helper function to rearrange a nested mapping.
+  \item \AgdaArgument{blocks}: Number of blocks produced by pools in the last epoch,
+    as a mapping from pool \AgdaDatatype{KeyHash} to number.
+  \item \AgdaArgument{poolParams}: Parameters of all known stake pools.
+  \item \AgdaArgument{stake}: Distribution of stake,
+    as mapping from \AgdaDatatype{Credential} to \Coin{}.
+    \item \AgdaArgument{delegs}:
+      Mapping from \AgdaDatatype{Credential}s to stake pool that they delegate to.
+  \item \AgdaArgument{total}: Total stake $=$ amount of Ada in circulation, for computing the relative stake.
+  \item \AgdaFunction{active}: Active stake $=$ amount of Ada that was used for selecting block producers.
+  \item \AgdaFunction{Σ\_/total}: Sum of stake divided by total stake.
+  \item \AgdaFunction{Σ\_/active}: Sum of stake divided by active stake.
+  \item \AgdaFunction{N}: Total number of blocks produced in the last epoch.
+  \item \AgdaFunction{pdata}: Data needed to compute rewards for each pool.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+BlocksMade = KeyHash ⇀ ℕ
+
+uncurryᵐ :
+\end{code}
+\begin{code}[hide]
+  ∀ {A B C : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq B ⦄ →
+\end{code}
+\begin{code}
+  A ⇀ (B ⇀ C) → (A × B) ⇀ C
+\end{code}
+\begin{code}[hide]
+uncurryᵐ {A} {B} {C} abc = mapFromPartialFun lookup' domain'
+  where
+    lookup' : (A × B) → Maybe C
+    lookup' (a , b) = lookupᵐ? abc a >>= (λ bc → lookupᵐ? bc b)
+
+    joinˢ : ∀ {X} → ℙ (ℙ X) → ℙ X
+    joinˢ = concatMapˢ id
+
+    domain' : ℙ (A × B)
+    domain' = joinˢ (range (mapWithKey (λ a bc → range (mapWithKey (λ b _ → (a , b)) bc)) abc))
+\end{code}
+\begin{code}
+
+reward : PParams → BlocksMade → Coin → (KeyHash ⇀ PoolParams)
+  → Stake → Delegations → Coin → (Credential ⇀ Coin)
+reward pp blocks rewardPot poolParams stake delegs total = rewards
+  where
+    active = ∑[ c ← stake ] c
+    Σ_/total = λ st → clamp ((∑[ c ← st ] c) /₀ total)
+    Σ_/active = λ st → clamp ((∑[ c ← st ] c) /₀ active)
+    N = ∑[ m ← blocks ] m
+    mkPoolData = λ hk p →
+      map (λ n → (n , p , poolStake hk delegs stake)) (lookupᵐ? blocks hk)
+    pdata = mapMaybeWithKeyᵐ mkPoolData poolParams
+
+    results  : (KeyHash × Credential) ⇀ Coin
+    results = uncurryᵐ (mapValues (λ (n , p , s)
+      → rewardOnePool pp rewardPot n N p s (Σ s /total) (Σ s /active) total)
+      pdata)
+    rewards  = aggregateBy
+      (mapˢ (λ (kh , cred) → (kh , cred) , cred) (dom results))
+      results
+\end{code}
+\end{AgdaMultiCode}
+\caption{Function reward used for computing a Reward Update}
+\label{fig:functions:reward}
 \end{figure*}
 
 \subsection{Reward Update}
