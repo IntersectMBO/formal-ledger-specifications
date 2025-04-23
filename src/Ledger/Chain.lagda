@@ -139,23 +139,21 @@ data
   CHAIN : {b : Block} {nes : NewEpochState} {cs : ChainState}
 \end{code}
 \begin{code}[hide]
-    (let open ChainState cs; open Block b; open NewEpochState nes
-         open EpochState epochState; open EnactState es renaming (pparams to pp)
-         open PParams ∣ pp ∣ using (maxRefScriptSizePerBlock))
+    → let open ChainState cs; open Block b; open NewEpochState nes
+          open EpochState epochState; open EnactState es renaming (pparams to pp)
+          open PParams ∣ pp ∣ using (maxRefScriptSizePerBlock) in
 \end{code}
 \begin{code}
-    ( let  cs'  = record cs  {  newEpochState
-                                = record nes  {  epochState
-                                                 = record epochState {ls = ls'}
-                                              }
-                             }
-           Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , treasuryOf nes ⟧
-    )
-    → totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
-    →  _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  Γ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
-    ────────────────────────────────
-    _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
+    let  cs'  = record cs {  newEpochState
+                             = record nes {  epochState
+                                             = record epochState {ls = ls'} } }
+         Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , treasuryOf nes ⟧
+    in
+    ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
+    ∙ _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    ∙ Γ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+      ────────────────────────────────
+      _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CHAIN transition system}

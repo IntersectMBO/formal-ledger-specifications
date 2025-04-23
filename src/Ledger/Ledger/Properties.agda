@@ -689,13 +689,11 @@ module _ (b : Block) (cs : ChainState) where
     → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
     → govDepsMatch ls → govDepsMatch (LStateOf nes)
 
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
+  CHAIN-govDepsMatch {nes} rrm rss (CHAIN (x , (NEWEPOCH-New (_ , eps₁→eps₂)) , ledgers)) =
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
-
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-Not-New _) ledgers) =
+  CHAIN-govDepsMatch {nes} rrm rss (CHAIN (x , (NEWEPOCH-Not-New _) , ledgers)) =
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
-
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
+  CHAIN-govDepsMatch {nes} rrm rss (CHAIN (x , (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) , ledgers)) =
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂

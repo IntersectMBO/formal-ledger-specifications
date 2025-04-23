@@ -36,9 +36,9 @@ instance
     _ , lsStep ← computeProof _ (LStateOf nes) ts
     case refScriptSize≤?Bound nes ts of λ where
       (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
-      (yes p) → success (_ , CHAIN p neStep lsStep)
+      (yes p) → success (_ , CHAIN (p , neStep , lsStep))
 
-  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} p neStep lsStep)
+  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} (p , neStep , lsStep))
     with recomputeProof neStep | completeness _ _ _ _ neStep
   ... | _         | refl
     with recomputeProof lsStep | completeness _ _ _ _ lsStep
