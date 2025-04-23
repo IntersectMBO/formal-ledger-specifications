@@ -410,11 +410,11 @@ reward pp blocks rewardPot poolParams stake delegs total = rewards
     pdata = mapMaybeWithKeyᵐ mkPoolData poolParams
 
     results  : (KeyHash × Credential) ⇀ Coin
-    results = uncurryᵐ (mapValues (λ { (n , p , s)
-      → rewardOnePool pp rewardPot n N p s (Σ s /total) (Σ s /active) total
-      }) pdata)
+    results = uncurryᵐ (mapValues (λ (n , p , s)
+      → rewardOnePool pp rewardPot n N p s (Σ s /total) (Σ s /active) total)
+      pdata)
     rewards  = aggregateBy
-      (mapˢ (λ {(kh , cred) → (kh , cred) , cred}) (dom results))
+      (mapˢ (λ (kh , cred) → (kh , cred) , cred) (dom results))
       results
 \end{code}
 \end{AgdaMultiCode}

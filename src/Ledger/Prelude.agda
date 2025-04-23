@@ -59,7 +59,7 @@ setToMap : ∀ {A B : Type} → ⦃ DecEq A ⦄ → ℙ (A × B) → A ⇀ B
 setToMap = fromListᵐ ∘ setToList
 
 -- division of natural numbers with completion by 0.
-abstract
+opaque
   _/₀_ : ℕ → ℕ → ℚ
   x /₀ 0 = ℚ.0ℚ
   x /₀ y@(suc _) = ℤ.+ x ℚ./ y
