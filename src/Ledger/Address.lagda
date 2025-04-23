@@ -45,7 +45,9 @@ data Credential : Type where
   ScriptObj  : ScriptHash → Credential
 \end{code}
 \begin{code}[hide]
-record HasCredential {a} (A : Type a) : Type a where field CredentialOf : A → Credential
+record HasCredential {a} (A : Type a) : Type a where 
+  field
+    CredentialOf : A → Credential
 open HasCredential ⦃...⦄ public
 
 isKeyHashObj : Credential → Maybe KeyHash
