@@ -9,7 +9,7 @@ import Data.Integer as ℤ
 open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 
-open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter)
+open import Ledger.Prelude hiding (_∧_; _⊔_; ∣_∣) renaming (filterᵐ to filter)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -249,8 +249,8 @@ easily.
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 instance
-  unquoteDecl To-RatifyState = derive-To
-    [ (quote RatifyState , To-RatifyState) ]
+  unquoteDecl HasCast-RatifyState = derive-HasCast
+    [ (quote RatifyState , HasCast-RatifyState) ]
 
 open StakeDistrs
 \end{code}

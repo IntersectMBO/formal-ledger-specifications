@@ -61,8 +61,8 @@ instance
   HasccMaxTermLength-EnactState : HasccMaxTermLength EnactState
   HasccMaxTermLength-EnactState .ccMaxTermLengthOf = PParams.ccMaxTermLength ∘ PParamsOf
 
-  unquoteDecl To-EnactEnv = derive-To
-    [ (quote EnactEnv , To-EnactEnv) ]
+  unquoteDecl HasCast-EnactEnv = derive-HasCast
+    [ (quote EnactEnv , HasCast-EnactEnv) ]
 
 open EnactState
 \end{code}

@@ -74,8 +74,8 @@ data pvCanFollow : ProtVer → ProtVer → Type where
 \end{NoConway}
 \begin{code}[hide]
 instance
-  unquoteDecl To-Acnt = derive-To
-    [ (quote Acnt , To-Acnt) ]
+  unquoteDecl HasCast-Acnt = derive-HasCast
+    [ (quote Acnt , HasCast-Acnt) ]
 \end{code}
 
 \begin{figure*}[ht]

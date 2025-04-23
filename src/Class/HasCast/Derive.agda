@@ -1,14 +1,8 @@
 {-# OPTIONS --safe #-}
-module Class.To where
+module Class.HasCast.Derive where
 
-record To (X : Set) (Y : Set) : Set where
-  field 
-    ⟦_⟧ : X → Y
-  infix 5 ⟦_⟧
+open import Class.HasCast.Base
 
-open To ⦃...⦄ public
-
--- Metaprogram to derive instances
 open import Data.List.NonEmpty as NE using (List⁺; _∷_)
 open import Data.List
 open import Meta.Init
@@ -63,25 +57,25 @@ getRecConstrName rn =
        (record′ c _) → return c
        _ → typeError [ strErr "Expected a record got something else" ]
 
--- Derive instance of To
-derive-To-single : Name -- name of the record type
+-- Derive instance of HasCast
+derive-HasCast-single : Name -- name of the record type
                  → Name -- name of the instance to be defined
                  → TC ⊤
-derive-To-single recTyName instName =
-  do (To-ctrName , _) ← getDefinition (quote To) >>= fromRecDef -- this will be superseeded by 'quote To.constructor' in Agda 2.8.0
+derive-HasCast-single recTyName instName =
+  do (HasCast-ctrName , _) ← getDefinition (quote HasCast) >>= fromRecDef -- this will be superseeded by 'quote HasCast.constructor' in Agda 2.8.0
      (ctrName , fTys@(fTy ∷ fTys')) ← getDefinition recTyName  >>= fromRecDef
        where (_ , []) → typeError [ strErr "Expecting a nonempty record type" ]
      arity            ← quoteTC (length fTys)
      bot              ← quoteTC ⊥
      let tyProd = NE.foldr₁ (λ ty tys → (quote _×_) ∙⟦ ty ∣ tys ⟧) (fTy ∷ fTys')
-     let defTm  = (quote To) ∙⟦ tyProd ∣ recTyName ∙ ⟧
-     let instTm = To-ctrName ◆⟦ quote uncurryₙ ∙⟦ arity ∣ ctrName ◆ ⟧ ⟧
+     let defTm  = (quote HasCast) ∙⟦ tyProd ∣ recTyName ∙ ⟧
+     let instTm = HasCast-ctrName ◆⟦ quote uncurryₙ ∙⟦ arity ∣ ctrName ◆ ⟧ ⟧
      declareDef (iArg instName) defTm
      defineFun instName [ ⟦⇒ instTm ⟧ ]
 
 module _ ⦃ _ : TCOptions ⦄ where
-  derive-To : List (Name × Name) → UnquoteDecl
-  derive-To rcs = initUnquoteWithGoal (quote To ∙) (traverse (uncurry derive-To-single) rcs >> return tt)
+  derive-HasCast : List (Name × Name) → UnquoteDecl
+  derive-HasCast rcs = initUnquoteWithGoal (quote HasCast ∙) (traverse (uncurry derive-HasCast-single) rcs >> return tt)
 
 -- Example usage
 private
@@ -92,13 +86,13 @@ private
     field x : Bool
           y : ℕ → ℕ
 
-  unquoteDecl To-R To-R' = derive-To ⦃ defaultTCOptions ⦄ ((quote R , To-R) ∷ (quote R' , To-R') ∷ [])
+  unquoteDecl HasCast-R HasCast-R' = derive-HasCast ⦃ defaultTCOptions ⦄ ((quote R , HasCast-R) ∷ (quote R' , HasCast-R') ∷ [])
 
   p : R
-  p = ⟦ true ⟧
+  p = cast true
 
   q : R'
-  q = ⟦ true , (λ x → x) ⟧
+  q = cast (true , (λ x → x))
 
   module _ (x : Set) where
     record R'' : Set where
@@ -106,4 +100,4 @@ private
             b c : Bool
 
     instance
-      unquoteDecl To-R'' = derive-To ⦃ defaultTCOptions ⦄ ((quote R'' , To-R'') ∷  [])
+      unquoteDecl HasCast-R'' = derive-HasCast ⦃ defaultTCOptions ⦄ ((quote R'' , HasCast-R'') ∷  [])

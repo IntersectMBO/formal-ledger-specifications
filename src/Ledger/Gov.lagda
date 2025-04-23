@@ -85,8 +85,8 @@ record GovEnv : Type where
 
 \begin{code}[hide]
 instance
-  unquoteDecl To-GovEnv = derive-To
-    [ (quote GovEnv , To-GovEnv) ]
+  unquoteDecl HasCast-GovEnv = derive-HasCast
+    [ (quote GovEnv , HasCast-GovEnv) ]
 
 private variable
   Γ : GovEnv

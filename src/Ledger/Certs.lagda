@@ -228,13 +228,13 @@ instance
 
 \begin{code}[hide]
 instance
-  unquoteDecl To-CertEnv To-DState To-PState To-GState To-CertState To-DelegEnv = derive-To
-    (   (quote CertEnv , To-CertEnv)
-    ∷   (quote DState , To-DState)
-    ∷   (quote PState , To-PState)
-    ∷   (quote GState , To-GState)
-    ∷   (quote CertState , To-CertState)
-    ∷ [ (quote DelegEnv , To-DelegEnv) ])
+  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv = derive-HasCast
+    (   (quote CertEnv , HasCast-CertEnv)
+    ∷   (quote DState , HasCast-DState)
+    ∷   (quote PState , HasCast-PState)
+    ∷   (quote GState , HasCast-GState)
+    ∷   (quote CertState , HasCast-CertState)
+    ∷ [ (quote DelegEnv , HasCast-DelegEnv) ])
 
 private variable
   rwds rewards           : Rewards

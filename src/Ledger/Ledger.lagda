@@ -92,8 +92,8 @@ open CertState
 open DState
 
 instance
-  unquoteDecl To-LEnv To-LState = derive-To
-    ((quote LEnv , To-LEnv) ∷ (quote LState , To-LState) ∷ [])
+  unquoteDecl HasCast-LEnv HasCast-LState = derive-HasCast
+    ((quote LEnv , HasCast-LEnv) ∷ (quote LState , HasCast-LState) ∷ [])
 \end{code}
 \begin{code}
 txgov : TxBody → List (GovVote ⊎ GovProposal)

@@ -19,7 +19,7 @@ open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 open import Ledger.Ledger txs abs public
-  using (LEnv; To-LEnv; allColdCreds; rmOrphanDRepVotes; txgov)
+  using (LEnv; HasCast-LEnv; allColdCreds; rmOrphanDRepVotes; txgov)
 
 open Tx
 
@@ -31,8 +31,8 @@ record LState : Type where
     certState  : CertState
 
 instance
-  unquoteDecl To-LState = derive-To
-    [ (quote LState , To-LState) ]
+  unquoteDecl HasCast-LState = derive-HasCast
+    [ (quote LState , HasCast-LState) ]
 
 private variable
   Γ : LEnv

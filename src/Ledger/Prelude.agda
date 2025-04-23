@@ -16,9 +16,9 @@ open import Prelude public
 open import Ledger.Prelude.Base public
 
 open import Class.HasAdd public
+open import Class.HasCast public
 open import Class.HasOrder public
 open import Class.ToBool public
-open import Class.To public
 open import Interface.ComputationalRelation public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
@@ -53,3 +53,14 @@ instance
 
 setToMap : ∀ {A B : Type} → ⦃ DecEq A ⦄ → ℙ (A × B) → A ⇀ B
 setToMap = fromListᵐ ∘ setToList
+
+⟦_⟧ : ∀ {A B : Type} ⦃ f : HasCast A B ⦄ → A → B
+⟦_⟧ ⦃ f = f ⦄ = f.cast
+  where module f = HasCast f
+
+∣_∣ : ∀ {A B : Type} ⦃ f : HasCast A B ⦄ → A → B
+∣_∣ ⦃ f = f ⦄ = f.cast
+  where module f = HasCast f
+
+infix 5 ⟦_⟧
+infix 6 ∣_∣

@@ -199,9 +199,9 @@ instance
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
-  unquoteDecl To-UTxOEnv To-UTxOState = derive-To
-    ( (quote UTxOEnv   , To-UTxOEnv  ) ∷
-    [ (quote UTxOState , To-UTxOState) ])
+  unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
+    ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
+    [ (quote UTxOState , HasCast-UTxOState) ])
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}

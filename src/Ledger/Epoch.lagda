@@ -136,12 +136,12 @@ instance
   HasRewards-NewEpochState : HasRewards NewEpochState
   HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
 
-  unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState = derive-To
-    (   (quote RewardUpdate   , To-RewardUpdate)
-    ∷   (quote Snapshot       , To-Snapshot)
-    ∷   (quote Snapshots      , To-Snapshots)
-    ∷   (quote EpochState     , To-EpochState)
-    ∷ [ (quote NewEpochState  , To-NewEpochState)])
+  unquoteDecl HasCast-RewardUpdate HasCast-Snapshot HasCast-Snapshots HasCast-EpochState HasCast-NewEpochState = derive-HasCast
+    (   (quote RewardUpdate   , HasCast-RewardUpdate)
+    ∷   (quote Snapshot       , HasCast-Snapshot)
+    ∷   (quote Snapshots      , HasCast-Snapshots)
+    ∷   (quote EpochState     , HasCast-EpochState)
+    ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
