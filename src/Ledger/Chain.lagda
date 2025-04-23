@@ -69,12 +69,6 @@ instance
   HasPParams-ChainState : HasPParams ChainState
   HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf
 
-private variable
-  s : ChainState
-  b : Block
-  ls' : LState
-  nes : NewEpochState
-
 instance _ = +-0-monoid
 
 -- TODO: do we still need this for anything?
@@ -124,6 +118,8 @@ totalRefScriptsSize : LState → List Tx → ℕ
 totalRefScriptsSize lst txs = sum $ map (refScriptsSize utxo) txs
   where open UTxOState (LState.utxoSt lst)
 
+private variable
+  ls' : LState 
 data
 \end{code}
 \begin{figure*}[h]
@@ -140,22 +136,26 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  CHAIN :
+  CHAIN : {b : Block} {nes : NewEpochState} {cs : ChainState}
 \end{code}
 \begin{code}[hide]
-    let open ChainState s; open Block b; open NewEpochState nes
-        open EpochState epochState; open EnactState es
-        pp = pparams ↓; open PParams pp using (maxRefScriptSizePerBlock)
-    in
+    (let open ChainState cs; open Block b; open NewEpochState nes
+         open EpochState epochState; open EnactState es renaming (pparams to pp)
+         open PParams ∣ pp ∣ using (maxRefScriptSizePerBlock))
 \end{code}
 \begin{code}
-    totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
-    →  _   ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution ↓ , pp , es , Acnt.treasury acnt ⟧ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+    ( let  cs'  = record cs  {  newEpochState
+                                = record nes  {  epochState
+                                                 = record epochState {ls = ls'}
+                                              }
+                             }
+           Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , treasuryOf nes ⟧
+    )
+    → totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
+    →  _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    →  Γ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
-    _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s {  newEpochState =
-                                   record nes {  epochState =
-                                                 record epochState { ls = ls'} } }
+    _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CHAIN transition system}

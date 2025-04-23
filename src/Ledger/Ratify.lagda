@@ -208,8 +208,10 @@ record RatifyState : Type where
     delay           : Bool
 \end{code}
 \begin{code}[hide]
-record HasRatifyState {a} (A : Type a) : Type a where field RatifyStateOf : A → RatifyState
+record HasRatifyState {a} (A : Type a) : Type a where
+  field RatifyStateOf : A → RatifyState
 open HasRatifyState ⦃...⦄ public
+
 instance
   HasEnactState-RatifyState : HasEnactState RatifyState
   HasEnactState-RatifyState .EnactStateOf = RatifyState.es

@@ -188,7 +188,8 @@ record UTxOState : Type where
 
 \end{code}
 \begin{code}[hide]
-record HasUTxOState {a} (A : Type a) : Type a where field UTxOStateOf : A → UTxOState
+record HasUTxOState {a} (A : Type a) : Type a where
+  field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
 
 instance
@@ -581,9 +582,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ feesOK pp tx utxo                      ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ ↓ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ ↓ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a

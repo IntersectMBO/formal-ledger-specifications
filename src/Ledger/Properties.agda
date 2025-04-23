@@ -83,7 +83,7 @@ module _ (s : ChainState) (slot : Slot) where
   open EpochState epochState; open EnactState es
 
   private
-    ledgerEnv = ⟦ slot , constitution ↓ , pparams ↓ , es , Acnt.treasury acnt ⟧
+    ledgerEnv = ⟦ slot , ∣ constitution ∣ , ∣ pparams ∣ , es , Acnt.treasury acnt ⟧
 
   validTxIn₂ : Tx → Type
   validTxIn₂ tx = ∃[ ls' ] ledgerEnv ⊢ ls ⇀⦇ tx ,LEDGER⦈ ls'
@@ -99,7 +99,7 @@ module _ (s : ChainState) where
   open LState ls
   open EnactState es renaming (pparams to pparams')
   open CertState certState; open DState dState
-  pparams = pparams' ↓
+  pparams = ∣ pparams' ∣
   open PParams pparams
   open Tx; open TxBody
 

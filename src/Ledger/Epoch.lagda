@@ -79,7 +79,8 @@ record EpochState : Type where
     fut        : RatifyState
 \end{code}
 \begin{code}[hide]
-record HasEpochState {a} (A : Type a) : Type a where field EpochStateOf : A → EpochState
+record HasEpochState {a} (A : Type a) : Type a where
+  field EpochStateOf : A → EpochState
 open HasEpochState ⦃...⦄ public
 
 instance
@@ -91,6 +92,9 @@ instance
 
   HasDeposits-EpochState : HasDeposits EpochState
   HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
+
+  Hastreasury-EpochState : Hastreasury EpochState
+  Hastreasury-EpochState .treasuryOf = Acnt.treasury ∘ EpochState.acnt
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -106,12 +110,16 @@ record NewEpochState : Type where
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]
-record HasNewEpochState {a} (A : Type a) : Type a where field NewEpochStateOf : A → NewEpochState
+record HasNewEpochState {a} (A : Type a) : Type a where
+  field NewEpochStateOf : A → NewEpochState
 open HasNewEpochState ⦃...⦄ public
 
 instance
   HasEpochState-NewEpochState : HasEpochState NewEpochState
   HasEpochState-NewEpochState .EpochStateOf = NewEpochState.epochState
+
+  Hastreasury-NewEpochState : Hastreasury NewEpochState
+  Hastreasury-NewEpochState .treasuryOf = treasuryOf ∘ EpochStateOf
 
   HasLState-NewEpochState : HasLState NewEpochState
   HasLState-NewEpochState .LStateOf = LStateOf ∘ EpochStateOf
@@ -197,7 +205,7 @@ stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDel
   where
     open DState stᵈ using (stakeDelegs; rewards)
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ rewards ↓
+    stakeRelation = m ∪ ∣ rewards ∣
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
@@ -212,7 +220,7 @@ opaque
 \begin{code}
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy (delegations ↓) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
+    aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}

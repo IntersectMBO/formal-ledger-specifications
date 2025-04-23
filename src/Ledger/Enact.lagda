@@ -50,7 +50,8 @@ record EnactState : Type where
     withdrawals   : RwdAddr ⇀ Coin
 \end{code}
 \begin{code}[hide]
-record HasEnactState {a} (A : Type a) : Type a where field EnactStateOf : A → EnactState
+record HasEnactState {a} (A : Type a) : Type a where
+  field EnactStateOf : A → EnactState
 open HasEnactState ⦃...⦄ public
 
 instance

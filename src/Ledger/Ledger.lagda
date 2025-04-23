@@ -68,7 +68,8 @@ record LState : Type where
 
 \end{code}
 \begin{code}[hide]
-record HasLState {a} (A : Type a) : Type a where field LStateOf : A → LState
+record HasLState {a} (A : Type a) : Type a where
+  field LStateOf : A → LState
 open HasLState ⦃...⦄ public
 
 instance

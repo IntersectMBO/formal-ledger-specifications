@@ -160,10 +160,10 @@ private
 
 opaque
   unfolding balance
-  balance-cong :  utxo ↓ ≡ᵉ utxo' ↓ → balance utxo ≈ balance utxo'
+  balance-cong :  ∣ utxo ∣ ≡ᵉ ∣ utxo' ∣ → balance utxo ≈ balance utxo'
   balance-cong {utxo} {utxo'} eq = indexedSumᵐ-cong {M = Value} {x = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ} (map-≡ᵉ eq)
 
-  balance-cong-coin : utxo ↓ ≡ᵉ utxo' ↓ → cbalance utxo ≡ cbalance utxo'
+  balance-cong-coin : ∣ utxo ∣ ≡ᵉ ∣ utxo' ∣ → cbalance utxo ≡ cbalance utxo'
   balance-cong-coin {utxo} {utxo'} x =
     coinIsMonoidHomomorphism .⟦⟧-cong (balance-cong {utxo} {utxo'} x)
     where open MonoidMorphisms.IsMonoidHomomorphism

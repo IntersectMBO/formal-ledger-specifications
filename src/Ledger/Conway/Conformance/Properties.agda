@@ -111,7 +111,7 @@ module _ (s : ChainState) where
   open LState ls
   open EnactState es renaming (pparams to pparams')
   open CertState certState; open DState dState
-  pparams = pparams' ↓
+  pparams = ∣ pparams' ∣
   open PParams pparams
   open Tx; open TxBody
 

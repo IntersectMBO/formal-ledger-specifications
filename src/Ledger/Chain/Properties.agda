@@ -23,7 +23,7 @@ module _
   (nes : NewEpochState)
   (open EpochState (NewEpochState.epochState nes) using (ls) renaming (es to es'))
   (open EnactState es' using (pparams))
-  (open PParams (pparams ↓) using (maxRefScriptSizePerBlock))
+  (open PParams ∣ pparams ∣ using (maxRefScriptSizePerBlock))
   (ts : List Tx)
   where
   refScriptSize≤?Bound : Dec (totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock)

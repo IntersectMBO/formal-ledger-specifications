@@ -97,7 +97,7 @@ data
         open EpochState epochState; open EnactState es
     in
        _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution ↓ , pparams ↓ , es , Acnt.treasury acnt
+    →  ⟦ slot , ∣ constitution ∣ , ∣ pparams ∣ , es , Acnt.treasury acnt
        ⟧ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
     ────────────────────────────────
     _ ⊢ s ⇀⦇ b ,CHAIN⦈
