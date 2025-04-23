@@ -19,6 +19,7 @@ in {
       specs.agdaWithDeps
       specs.latex
       python310
+      hpack
       pkgs.glibcLocales
     ];
 

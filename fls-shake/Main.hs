@@ -1,12 +1,3 @@
-{-|
-Module      : Main
-Description : Build system for formal ledger specifications
-Copyright   : IOHK
-License     : Apache-2.0
-Maintainer  : carlos.tome-cortinas@iohk.io
-Stability   : experimental
-Portability : POSIX
--}
 {-# LANGUAGE GeneralisedNewtypeDeriving #-}
 {-# LANGUAGE TypeFamilies               #-}
 module Main where
@@ -144,7 +135,7 @@ tex2pdf = do
     copyFileChanged agdasty (_latexIn </> "agda.sty")
 
     -- latexmk
-    command_ [ Cwd $ _proj
+    command_ [ Cwd _proj
              , AddEnv "TEXINPUTS" (concat [ latexIn, "//:", latexPP, "//:" ])
              , AddEnv "TTFONTS" (latexIn ++ "/fonts//:") ]
              "latexmk"
@@ -187,9 +178,9 @@ pdfRule = do
 -- recompilation everytime the target is wanted.
 hsRule :: Rules ()
 hsRule = phony "hs" $ do
-  -- read and copy the Haskell files in hs-src to _hs
-  hsfiles <- getDirectoryFiles "hs-src" [ "//*.hs" ]
-  forM_ hsfiles $ \file -> do
+  -- read and copy the files in hs-src to _hs
+  hssrcfiles <- getDirectoryFiles "hs-src" [ "//*" ]
+  forM_ hssrcfiles $ \file -> do
     copyFileChanged ("hs-src" </> file) (hsDist </> file)
 
   -- run Agda on the entrypoint and put the results in _build
@@ -204,16 +195,10 @@ hsRule = phony "hs" $ do
   forM_ malonzofiles $ \file -> do
     copyFileChanged (_build </> file) (hsDist </> "src" </> file)
 
-  -- copy the .cabal file appending the Agda-generated Haskell modules
-  let agdafile2hsmodule =
-        (replicate 8 ' ' ++) -- prepend 8 spaces
-        . agdafile2module
-      hsmodules =
-        map agdafile2hsmodule
-        . sort
-        $ malonzofiles
-  cabalfile <- readFileLines $ "hs-src" </> "cardano-ledger-executable-spec.cabal"
-  writeFileLines (hsDist </> "cardano-ledger-executable-spec.cabal") (cabalfile ++ hsmodules)
+  -- run hpack to generate the cabal file
+  command_ [ Cwd hsDist ]
+           "hpack"
+           []
 
 -- | Generate the index.html file
 -- For this:
