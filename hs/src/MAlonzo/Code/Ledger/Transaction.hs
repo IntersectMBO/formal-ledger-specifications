@@ -4143,7 +4143,7 @@ data T_TxBody_2534
                                   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 Integer AgdaAny
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-                                  [MAlonzo.Code.Ledger.Certs.T_DCert_856]
+                                  [MAlonzo.Code.Ledger.Certs.T_DCert_872]
                                   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
                                   [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_740]
                                   [MAlonzo.Code.Ledger.GovernanceActions.T_GovProposal_758] Integer
@@ -4198,7 +4198,7 @@ d_txvldt_2586 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Transaction.TransactionStructure.TxBody.txcerts
 d_txcerts_2588 ::
-  T_TxBody_2534 -> [MAlonzo.Code.Ledger.Certs.T_DCert_856]
+  T_TxBody_2534 -> [MAlonzo.Code.Ledger.Certs.T_DCert_872]
 d_txcerts_2588 v0
   = case coe v0 of
       C_TxBody'46'constructor_17713 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
@@ -4652,10 +4652,10 @@ du_txNetworkId_2720 v0
 d_txcerts_2722 ::
   T_Tx_2636 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  [MAlonzo.Code.Ledger.Certs.T_DCert_856]
+  [MAlonzo.Code.Ledger.Certs.T_DCert_872]
 d_txcerts_2722 v0 ~v1 = du_txcerts_2722 v0
 du_txcerts_2722 ::
-  T_Tx_2636 -> [MAlonzo.Code.Ledger.Certs.T_DCert_856]
+  T_Tx_2636 -> [MAlonzo.Code.Ledger.Certs.T_DCert_872]
 du_txcerts_2722 v0 = coe d_txcerts_2588 (coe d_body_2646 (coe v0))
 -- Ledger.Transaction.TransactionStructure._._.txdonation
 d_txdonation_2724 ::
