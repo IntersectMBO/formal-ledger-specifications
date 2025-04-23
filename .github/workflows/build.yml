@@ -160,3 +160,39 @@ jobs:
             github_token: ${{ secrets.GITHUB_TOKEN }}
             branch: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
             force: true
+
+  build-cardano-ledger:
+    needs: [hs]
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Checkout prepare-conf-test.sh
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            scripts/prepare-conf-test.sh
+          sparse-checkout-cone-mode: false
+          path: fls
+
+      - name: Checkout cardano-ledger
+        uses: actions/checkout@v4
+        with:
+          repository: IntersectMBO/cardano-ledger
+          path: cl
+          fetch-depth: 0
+
+      - name: Download hs artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hs
+
+      - name: Build cardano-ledger
+        run: |
+          cd cl
+          nix develop --command bash -c "../fls/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
