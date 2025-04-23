@@ -12,7 +12,6 @@ module Ledger.Properties
 open import Ledger.Chain txs abs
 open import Ledger.Utxo txs abs
 open import Ledger.Epoch txs abs
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Enact govStructure
 open import Ledger.Certs govStructure

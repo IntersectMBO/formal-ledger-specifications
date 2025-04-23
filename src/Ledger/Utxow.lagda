@@ -22,7 +22,6 @@ module Ledger.Utxow
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Certs govStructure

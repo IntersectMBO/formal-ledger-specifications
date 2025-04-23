@@ -18,7 +18,6 @@ module Ledger.Conway.Conformance.Epoch
 
 open import Ledger.Gov txs
 open import Ledger.Enact govStructure
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs

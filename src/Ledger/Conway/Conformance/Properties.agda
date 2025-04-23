@@ -9,7 +9,6 @@ module Ledger.Conway.Conformance.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Conway.Conformance.Chain txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
