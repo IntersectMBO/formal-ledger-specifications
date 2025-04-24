@@ -33,12 +33,13 @@ import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Decidable.Instances
 import qualified MAlonzo.Code.Class.HasAdd.Core
+import qualified MAlonzo.Code.Class.HasCast.Base
+import qualified MAlonzo.Code.Class.HasCast.Derive
 import qualified MAlonzo.Code.Class.HasSingleton
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Class.Semigroup.Core
 import qualified MAlonzo.Code.Class.Semigroup.Instances
 import qualified MAlonzo.Code.Class.Show.Core
-import qualified MAlonzo.Code.Class.To
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
@@ -62,24 +63,24 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- _.DecEq-Credential
-d_DecEq'45'Credential_60 ::
+d_DecEq'45'Credential_62 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'Credential_60 ~v0 ~v1 v2 v3
-  = du_DecEq'45'Credential_60 v2 v3
-du_DecEq'45'Credential_60 ::
+d_DecEq'45'Credential_62 ~v0 ~v1 v2 v3
+  = du_DecEq'45'Credential_62 v2 v3
+du_DecEq'45'Credential_62 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-du_DecEq'45'Credential_60 v0 v1
+du_DecEq'45'Credential_62 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142 (coe v0)
+      MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186 (coe v0)
       (coe v1)
 -- _.Show-Credential
-d_Show'45'Credential_200 ::
+d_Show'45'Credential_226 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -88,17 +89,17 @@ d_Show'45'Credential_200 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential_200 ~v0 ~v1 ~v2 ~v3
-  = du_Show'45'Credential_200
-du_Show'45'Credential_200 ::
+d_Show'45'Credential_226 ~v0 ~v1 ~v2 ~v3
+  = du_Show'45'Credential_226
+du_Show'45'Credential_226 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'Credential_200 v0 v1 v2
-  = coe MAlonzo.Code.Ledger.Address.du_Show'45'Credential_206 v1 v2
+du_Show'45'Credential_226 v0 v1 v2
+  = coe MAlonzo.Code.Ledger.Address.du_Show'45'Credential_250 v1 v2
 -- _.Show-Credential×Coin
-d_Show'45'Credential'215'Coin_202 ::
+d_Show'45'Credential'215'Coin_228 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -107,92 +108,92 @@ d_Show'45'Credential'215'Coin_202 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-d_Show'45'Credential'215'Coin_202 ~v0 ~v1 ~v2 ~v3
-  = du_Show'45'Credential'215'Coin_202
-du_Show'45'Credential'215'Coin_202 ::
+d_Show'45'Credential'215'Coin_228 ~v0 ~v1 ~v2 ~v3
+  = du_Show'45'Credential'215'Coin_228
+du_Show'45'Credential'215'Coin_228 ::
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
-du_Show'45'Credential'215'Coin_202 v0 v1 v2
+du_Show'45'Credential'215'Coin_228 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Address.du_Show'45'Credential'215'Coin_210 v1
+      MAlonzo.Code.Ledger.Address.du_Show'45'Credential'215'Coin_254 v1
       v2
 -- _.isKeyHash
-d_isKeyHash_292 ::
+d_isKeyHash_318 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   MAlonzo.Code.Ledger.Address.T_Credential_16 -> ()
-d_isKeyHash_292 = erased
+d_isKeyHash_318 = erased
 -- Ledger.Conway.Conformance.Certs.Properties._.DecEq-VDeleg
-d_DecEq'45'VDeleg_686 ::
+d_DecEq'45'VDeleg_734 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'VDeleg_686 v0
+d_DecEq'45'VDeleg_734 v0
   = coe
-      MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_812
+      MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_866
       (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._.GovRole
-d_GovRole_702 a0 = ()
+d_GovRole_750 a0 = ()
 -- Ledger.Conway.Conformance.Certs.Properties._.VDeleg
-d_VDeleg_726 a0 = ()
+d_VDeleg_778 a0 = ()
 -- Ledger.Conway.Conformance.Certs.Properties._._⊢_⇀⦇_,CERTBASE⦈_
-d__'8866'_'8640''10631'_'44'CERTBASE'10632'__840 a0 a1 a2 a3 a4
+d__'8866'_'8640''10631'_'44'CERTBASE'10632'__892 a0 a1 a2 a3 a4
   = ()
 -- Ledger.Conway.Conformance.Certs.Properties._._⊢_⇀⦇_,CERTS⦈_
-d__'8866'_'8640''10631'_'44'CERTS'10632'__842 ::
+d__'8866'_'8640''10631'_'44'CERTS'10632'__894 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
-  [MAlonzo.Code.Ledger.Certs.T_DCert_872] ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 -> ()
-d__'8866'_'8640''10631'_'44'CERTS'10632'__842 = erased
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
+  [MAlonzo.Code.Ledger.Certs.T_DCert_982] ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 -> ()
+d__'8866'_'8640''10631'_'44'CERTS'10632'__894 = erased
 -- Ledger.Conway.Conformance.Certs.Properties._._⊢_⇀⦇_,CERT⦈_
-d__'8866'_'8640''10631'_'44'CERT'10632'__844 a0 a1 a2 a3 a4 = ()
+d__'8866'_'8640''10631'_'44'CERT'10632'__896 a0 a1 a2 a3 a4 = ()
 -- Ledger.Conway.Conformance.Certs.Properties._._⊢_⇀⦇_,DELEG⦈_
-d__'8866'_'8640''10631'_'44'DELEG'10632'__846 a0 a1 a2 a3 a4 = ()
+d__'8866'_'8640''10631'_'44'DELEG'10632'__898 a0 a1 a2 a3 a4 = ()
 -- Ledger.Conway.Conformance.Certs.Properties._._⊢_⇀⦇_,GOVCERT⦈_
-d__'8866'_'8640''10631'_'44'GOVCERT'10632'__848 a0 a1 a2 a3 a4 = ()
+d__'8866'_'8640''10631'_'44'GOVCERT'10632'__900 a0 a1 a2 a3 a4 = ()
 -- Ledger.Conway.Conformance.Certs.Properties._._⊢_⇀⦇_,POOL⦈_
-d__'8866'_'8640''10631'_'44'POOL'10632'__850 a0 a1 a2 a3 a4 = ()
+d__'8866'_'8640''10631'_'44'POOL'10632'__902 a0 a1 a2 a3 a4 = ()
 -- Ledger.Conway.Conformance.Certs.Properties._.DecEq-DepositPurpose
-d_DecEq'45'DepositPurpose_892 ::
+d_DecEq'45'DepositPurpose_952 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
-d_DecEq'45'DepositPurpose_892 v0
+d_DecEq'45'DepositPurpose_952 v0
   = coe
-      MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848 (coe v0)
+      MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_958 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._.DepositPurpose
-d_DepositPurpose_896 a0 = ()
+d_DepositPurpose_956 a0 = ()
 -- Ledger.Conway.Conformance.Certs.Properties._.completeness
-d_completeness_1112 ::
+d_completeness_1238 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_1112 = erased
+d_completeness_1238 = erased
 -- Ledger.Conway.Conformance.Certs.Properties._.computeProof
-d_computeProof_1118 ::
+d_computeProof_1244 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_1118 v0
+d_computeProof_1244 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties.lookupDeposit
-d_lookupDeposit_1138 ::
+d_lookupDeposit_1264 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Certs.T_DepositPurpose_836 ->
+  MAlonzo.Code.Ledger.Certs.T_DepositPurpose_888 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_lookupDeposit_1138 v0 v1 v2
+d_lookupDeposit_1264 v0 v1 v2
   = coe
       MAlonzo.Code.Axiom.Set.d_any'63'_1618
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
@@ -203,14 +204,14 @@ d_lookupDeposit_1138 v0 v1 v2
            (coe
               MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
               (coe
-                 MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848 (coe v0))
+                 MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_958 (coe v0))
               (coe v2) (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))))
       (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_550 (coe v1))
 -- Ledger.Conway.Conformance.Certs.Properties.Computational-DELEG
-d_Computational'45'DELEG_1146 ::
+d_Computational'45'DELEG_1272 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'DELEG_1146 v0
+d_Computational'45'DELEG_1272 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v1 v2 v3 ->
@@ -220,7 +221,7 @@ d_Computational'45'DELEG_1146 v0
                    (coe ("Unexpected certificate in DELEG" :: Data.Text.Text)) in
          coe
            (case coe v3 of
-              MAlonzo.Code.Ledger.Certs.C_delegate_874 v5 v6 v7 v8
+              MAlonzo.Code.Ledger.Certs.C_delegate_984 v5 v6 v7 v8
                 -> let v9
                          = coe
                              MAlonzo.Code.Class.Decidable.Core.du_'191'_'191'_42
@@ -239,17 +240,17 @@ d_Computational'45'DELEG_1146 v0
                                                     (coe
                                                        MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                           (coe v0))) in
                                           coe
                                             (let v10
                                                    = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                           (coe v0)) in
                                              coe
                                                (coe
-                                                  MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                  MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                   (coe v9) (coe v10))))
                                          (coe v5)
                                          (coe
@@ -260,7 +261,7 @@ d_Computational'45'DELEG_1146 v0
                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                (coe v2))))
                                       (coe
                                          MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
@@ -269,8 +270,8 @@ d_Computational'45'DELEG_1146 v0
                                       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                       (coe v8)
                                       (coe
-                                         MAlonzo.Code.Ledger.PParams.d_keyDeposit_336
-                                         (coe MAlonzo.Code.Ledger.Certs.d_pparams_992 (coe v1)))))
+                                         MAlonzo.Code.Ledger.PParams.d_keyDeposit_354
+                                         (coe MAlonzo.Code.Ledger.Certs.d_pparams_1188 (coe v1)))))
                                 (coe
                                    MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_24
                                    (coe
@@ -284,17 +285,17 @@ d_Computational'45'DELEG_1146 v0
                                                     (coe
                                                        MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                           (coe v0))) in
                                           coe
                                             (let v10
                                                    = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                           (coe v0)) in
                                              coe
                                                (coe
-                                                  MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                  MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                   (coe v9) (coe v10))))
                                          (coe v5)
                                          (coe
@@ -305,7 +306,7 @@ d_Computational'45'DELEG_1146 v0
                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                (coe v2))))
                                       (coe
                                          MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
@@ -320,7 +321,7 @@ d_Computational'45'DELEG_1146 v0
                                          (coe
                                             MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                             (coe
-                                               MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_812
+                                               MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_866
                                                (coe v0)))
                                          (coe v6)
                                          (coe
@@ -338,11 +339,11 @@ d_Computational'45'DELEG_1146 v0
                                                   coe
                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                     (coe
-                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_680
+                                                       MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_728
                                                        (coe
-                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670)
+                                                          MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718)
                                                        (coe v9)))
-                                               (MAlonzo.Code.Ledger.Certs.d_delegatees_996
+                                               (MAlonzo.Code.Ledger.Certs.d_delegatees_1192
                                                   (coe v1)))
                                             (coe
                                                MAlonzo.Code.Axiom.Set.du_fromList_428
@@ -358,13 +359,13 @@ d_Computational'45'DELEG_1146 v0
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                         (coe
-                                                           MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_682))
+                                                           MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_730))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                            (coe
-                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_684))
+                                                              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_732))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                       (coe
@@ -378,7 +379,7 @@ d_Computational'45'DELEG_1146 v0
                                                (coe
                                                   MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                      (coe v0)))))
                                          (coe v7)
                                          (coe
@@ -401,7 +402,7 @@ d_Computational'45'DELEG_1146 v0
                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                   (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Certs.d_pools_994
+                                                     MAlonzo.Code.Ledger.Certs.d_pools_1190
                                                      (coe v1))))
                                             (coe
                                                MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_452
@@ -422,9 +423,9 @@ d_Computational'45'DELEG_1146 v0
                                              (coe
                                                 MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                 (coe
-                                                   MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'DState_1126)
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'DState_1252)
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (let v13
@@ -433,17 +434,17 @@ d_Computational'45'DELEG_1146 v0
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                (coe v0))) in
                                                                coe
                                                                  (let v14
                                                                         = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                (coe v0)) in
                                                                   coe
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                        (coe v13) (coe v14))) in
                                                        coe
                                                          (coe
@@ -458,7 +459,7 @@ d_Computational'45'DELEG_1146 v0
                                                                erased v13)
                                                             (coe v5) (coe v6)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                                                (coe v2))))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -468,17 +469,17 @@ d_Computational'45'DELEG_1146 v0
                                                                             (coe
                                                                                MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                  MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                   (coe v0))) in
                                                                   coe
                                                                     (let v14
                                                                            = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                  MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                   (coe v0)) in
                                                                      coe
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                          MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                           (coe v13) (coe v14))) in
                                                           coe
                                                             (coe
@@ -493,7 +494,7 @@ d_Computational'45'DELEG_1146 v0
                                                                   erased v13)
                                                                (coe v5) (coe v7)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1086
+                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1212
                                                                   (coe v2))))
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -503,17 +504,17 @@ d_Computational'45'DELEG_1146 v0
                                                                                (coe
                                                                                   MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                      (coe v0))) in
                                                                      coe
                                                                        (let v14
                                                                               = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                      (coe v0)) in
                                                                         coe
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                              (coe v13)
                                                                              (coe v14))) in
                                                              coe
@@ -528,7 +529,7 @@ d_Computational'45'DELEG_1146 v0
                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                                      erased v13)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                      (coe v2))
                                                                   (coe
                                                                      MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_310
@@ -543,17 +544,17 @@ d_Computational'45'DELEG_1146 v0
                                                                         (coe v5)
                                                                         (coe (0 :: Integer))))))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                                  MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                                   (coe v1))
                                                                (coe v3)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                   (coe v2)))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1354
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1480
                                                    v12))
                                       _ -> MAlonzo.RTE.mazUnreachableError
                                else coe
@@ -576,17 +577,17 @@ d_Computational'45'DELEG_1146 v0
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                               (coe v0))) in
                                                               coe
                                                                 (let v13
                                                                        = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                               (coe v0)) in
                                                                  coe
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                      MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                       (coe v12) (coe v13))))
                                                              (coe v5)
                                                              (coe
@@ -598,7 +599,7 @@ d_Computational'45'DELEG_1146 v0
                                                                 (coe
                                                                    MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                    (coe v2))))
                                                           (coe
                                                              MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
@@ -608,9 +609,9 @@ d_Computational'45'DELEG_1146 v0
                                                              MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                           (coe v8)
                                                           (coe
-                                                             MAlonzo.Code.Ledger.PParams.d_keyDeposit_336
+                                                             MAlonzo.Code.Ledger.PParams.d_keyDeposit_354
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                                MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                                 (coe v1)))))
                                                     erased in
                                           coe
@@ -635,17 +636,17 @@ d_Computational'45'DELEG_1146 v0
                                                                                (coe
                                                                                   MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                      (coe v0))) in
                                                                      coe
                                                                        (let v15
                                                                               = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                      (coe v0)) in
                                                                         coe
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                              (coe v14) (coe v15))))
                                                                     (coe v5)
                                                                     (coe
@@ -657,7 +658,7 @@ d_Computational'45'DELEG_1146 v0
                                                                        (coe
                                                                           MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                           (coe v2))))
                                                                  (coe
                                                                     MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
@@ -683,7 +684,7 @@ d_Computational'45'DELEG_1146 v0
                                                                            (coe
                                                                               MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_812
+                                                                                 MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_866
                                                                                  (coe v0)))
                                                                            (coe v6)
                                                                            (coe
@@ -701,11 +702,11 @@ d_Computational'45'DELEG_1146 v0
                                                                                     coe
                                                                                       MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                       (coe
-                                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_680
+                                                                                         MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_728
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670)
+                                                                                            MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718)
                                                                                          (coe v16)))
-                                                                                 (MAlonzo.Code.Ledger.Certs.d_delegatees_996
+                                                                                 (MAlonzo.Code.Ledger.Certs.d_delegatees_1192
                                                                                     (coe v1)))
                                                                               (coe
                                                                                  MAlonzo.Code.Axiom.Set.du_fromList_428
@@ -722,13 +723,13 @@ d_Computational'45'DELEG_1146 v0
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_682))
+                                                                                             MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_730))
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_684))
+                                                                                                MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_732))
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                                         erased in
@@ -748,14 +749,14 @@ d_Computational'45'DELEG_1146 v0
                                                          _ -> MAlonzo.RTE.mazUnreachableError)
                                                _ -> MAlonzo.RTE.mazUnreachableError)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
-              MAlonzo.Code.Ledger.Certs.C_dereg_876 v5 v6
+              MAlonzo.Code.Ledger.Certs.C_dereg_986 v5 v6
                 -> let v7
-                         = d_lookupDeposit_1138
+                         = d_lookupDeposit_1264
                              (coe v0)
                              (coe
-                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                 (coe v2))
-                             (coe MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_838 (coe v5)) in
+                             (coe MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_890 (coe v5)) in
                    coe
                      (case coe v7 of
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
@@ -783,19 +784,19 @@ d_Computational'45'DELEG_1146 v0
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                              (coe
                                                                                                 v0))) in
                                                                              coe
                                                                                (let v16
                                                                                       = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                              (coe
                                                                                                 v0)) in
                                                                                 coe
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                      (coe v15)
                                                                                      (coe v16))))
                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
@@ -806,7 +807,7 @@ d_Computational'45'DELEG_1146 v0
                                                                          (coe
                                                                             MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                (coe v2))))
                                                                       (coe
                                                                          MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_24
@@ -817,19 +818,19 @@ d_Computational'45'DELEG_1146 v0
                                                                             (coe
                                                                                MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
                                                                                () erased () erased
-                                                                               (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                                                               (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_958
                                                                                   (coe v0))
                                                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                             (coe
                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_838
+                                                                                  MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_890
                                                                                   (coe v5))
                                                                                (coe v14))
                                                                             (coe
                                                                                MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                   (coe v2))))
                                                                          (coe
                                                                             MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_26
@@ -863,9 +864,9 @@ d_Computational'45'DELEG_1146 v0
                                                                                    (coe
                                                                                       MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                       (coe
-                                                                                         MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'DState_1126)
+                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'DState_1252)
                                                                                          (coe
                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                             (let v19
@@ -874,19 +875,19 @@ d_Computational'45'DELEG_1146 v0
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                      (coe
                                                                                                                         v0))) in
                                                                                                      coe
                                                                                                        (let v20
                                                                                                               = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                      (coe
                                                                                                                         v0)) in
                                                                                                         coe
                                                                                                           (coe
-                                                                                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                              (coe
                                                                                                                 v19)
                                                                                                              (coe
@@ -904,7 +905,7 @@ d_Computational'45'DELEG_1146 v0
                                                                                                      erased
                                                                                                      v19)
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                                                                                      (coe
                                                                                                         v2))
                                                                                                   (coe
@@ -924,19 +925,19 @@ d_Computational'45'DELEG_1146 v0
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                         (coe
                                                                                                                            v0))) in
                                                                                                         coe
                                                                                                           (let v20
                                                                                                                  = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                         (coe
                                                                                                                            v0)) in
                                                                                                            coe
                                                                                                              (coe
-                                                                                                                MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                                                MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                                 (coe
                                                                                                                    v19)
                                                                                                                 (coe
@@ -954,7 +955,7 @@ d_Computational'45'DELEG_1146 v0
                                                                                                         erased
                                                                                                         v19)
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1086
+                                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1212
                                                                                                         (coe
                                                                                                            v2))
                                                                                                      (coe
@@ -974,19 +975,19 @@ d_Computational'45'DELEG_1146 v0
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                            (coe
                                                                                                                               v0))) in
                                                                                                            coe
                                                                                                              (let v20
                                                                                                                     = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                            (coe
                                                                                                                               v0)) in
                                                                                                               coe
                                                                                                                 (coe
-                                                                                                                   MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                                                   MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                                    (coe
                                                                                                                       v19)
                                                                                                                    (coe
@@ -1008,13 +1009,13 @@ d_Computational'45'DELEG_1146 v0
                                                                                                            (coe
                                                                                                               MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                                                  (coe
                                                                                                                     v2)))
                                                                                                            (coe
                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                                                  (coe
                                                                                                                     v2))))
                                                                                                         (coe
@@ -1027,11 +1028,11 @@ d_Computational'45'DELEG_1146 v0
                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
                                                                                                            v5)))
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                                                                      (coe
                                                                                                         v0)
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                                                                        MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                                                                         (coe
                                                                                                            v1))
                                                                                                      (coe
@@ -1041,17 +1042,17 @@ d_Computational'45'DELEG_1146 v0
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                                               (coe
                                                                                                                  v2)))
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                                               (coe
                                                                                                                  v2)))))))))
                                                                                       (coe
-                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'dereg_1356
+                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'dereg_1482
                                                                                          v14 v18))
                                                                             _ -> MAlonzo.RTE.mazUnreachableError
                                                                      else coe
@@ -1076,19 +1077,19 @@ d_Computational'45'DELEG_1146 v0
                                                                                                            (coe
                                                                                                               MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                  (coe
                                                                                                                     v0))) in
                                                                                                  coe
                                                                                                    (let v19
                                                                                                           = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                  (coe
                                                                                                                     v0)) in
                                                                                                     coe
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                                         MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                          (coe
                                                                                                             v18)
                                                                                                          (coe
@@ -1104,7 +1105,7 @@ d_Computational'45'DELEG_1146 v0
                                                                                              (coe
                                                                                                 MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                                    (coe
                                                                                                       v2))))
                                                                                           erased in
@@ -1129,14 +1130,14 @@ d_Computational'45'DELEG_1146 v0
                                                                                                           erased
                                                                                                           ()
                                                                                                           erased
-                                                                                                          (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                                                                                          (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_958
                                                                                                              (coe
                                                                                                                 v0))
                                                                                                           MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                                                        (coe
                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                           (coe
-                                                                                                             MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_838
+                                                                                                             MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_890
                                                                                                              (coe
                                                                                                                 v5))
                                                                                                           (coe
@@ -1144,7 +1145,7 @@ d_Computational'45'DELEG_1146 v0
                                                                                                        (coe
                                                                                                           MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                                           (coe
-                                                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                                              (coe
                                                                                                                 v2))))
                                                                                                     erased in
@@ -1176,7 +1177,7 @@ d_Computational'45'DELEG_1146 v0
                                              ::
                                              Data.Text.Text)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
-              MAlonzo.Code.Ledger.Certs.C_reg_888 v5 v6
+              MAlonzo.Code.Ledger.Certs.C_reg_998 v5 v6
                 -> let v7
                          = coe
                              MAlonzo.Code.Class.Decidable.Core.du_'191'_'191'_42
@@ -1193,17 +1194,17 @@ d_Computational'45'DELEG_1146 v0
                                                  (coe
                                                     MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                        (coe v0))) in
                                        coe
                                          (let v8
                                                 = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                        (coe v0)) in
                                           coe
                                             (coe
-                                               MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                               MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                (coe v7) (coe v8))))
                                       (coe v5)
                                       (coe
@@ -1214,7 +1215,7 @@ d_Computational'45'DELEG_1146 v0
                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                             (coe v2))))
                                    (coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
                                 (coe
@@ -1224,8 +1225,8 @@ d_Computational'45'DELEG_1146 v0
                                       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                       (coe v6)
                                       (coe
-                                         MAlonzo.Code.Ledger.PParams.d_keyDeposit_336
-                                         (coe MAlonzo.Code.Ledger.Certs.d_pparams_992 (coe v1))))
+                                         MAlonzo.Code.Ledger.PParams.d_keyDeposit_354
+                                         (coe MAlonzo.Code.Ledger.Certs.d_pparams_1188 (coe v1))))
                                    (coe
                                       MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
                                       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
@@ -1241,18 +1242,18 @@ d_Computational'45'DELEG_1146 v0
                                              (coe
                                                 MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                 (coe
-                                                   MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'DState_1126)
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'DState_1252)
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                                          (coe v2))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1086
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1212
                                                             (coe v2))
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -1262,17 +1263,17 @@ d_Computational'45'DELEG_1146 v0
                                                                                (coe
                                                                                   MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                      (coe v0))) in
                                                                      coe
                                                                        (let v12
                                                                               = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                      (coe v0)) in
                                                                         coe
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                              (coe v11)
                                                                              (coe v12))) in
                                                              coe
@@ -1287,7 +1288,7 @@ d_Computational'45'DELEG_1146 v0
                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                                      erased v11)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                      (coe v2))
                                                                   (coe
                                                                      MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_310
@@ -1302,17 +1303,17 @@ d_Computational'45'DELEG_1146 v0
                                                                         (coe v5)
                                                                         (coe (0 :: Integer))))))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                                (coe v0)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                                  MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                                   (coe v1))
                                                                (coe v3)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                   (coe v2)))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'reg_1430
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'reg_1556
                                                    v10))
                                       _ -> MAlonzo.RTE.mazUnreachableError
                                else coe
@@ -1333,17 +1334,17 @@ d_Computational'45'DELEG_1146 v0
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                            (coe v0))) in
                                                            coe
                                                              (let v11
                                                                     = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                            (coe v0)) in
                                                               coe
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                   MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                    (coe v10) (coe v11))))
                                                           (coe v5)
                                                           (coe
@@ -1355,7 +1356,7 @@ d_Computational'45'DELEG_1146 v0
                                                              (coe
                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                 (coe v2))))
                                                        (coe
                                                           MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
@@ -1376,10 +1377,10 @@ d_Computational'45'DELEG_1146 v0
                         _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> coe v4))
 -- Ledger.Conway.Conformance.Certs.Properties.Computational-POOL
-d_Computational'45'POOL_1348 ::
+d_Computational'45'POOL_1474 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'POOL_1348 v0
+d_Computational'45'POOL_1474 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v1 v2 v3 ->
@@ -1389,7 +1390,7 @@ d_Computational'45'POOL_1348 v0
                    (coe ("Unexpected certificate in POOL" :: Data.Text.Text)) in
          coe
            (case coe v3 of
-              MAlonzo.Code.Ledger.Certs.C_regpool_878 v5 v6
+              MAlonzo.Code.Ledger.Certs.C_regpool_988 v5 v6
                 -> let v7
                          = coe
                              MAlonzo.Code.Relation.Nullary.Decidable.Core.du_'172''63'_70
@@ -1401,7 +1402,7 @@ d_Computational'45'POOL_1348 v0
                                    (coe
                                       MAlonzo.Code.Ledger.Crypto.d_khs_200
                                       (coe
-                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                          (coe v0))))
                                 v5
                                 (coe
@@ -1411,7 +1412,7 @@ d_Computational'45'POOL_1348 v0
                                       (coe
                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                    (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
-                                   (coe MAlonzo.Code.Ledger.Certs.d_pools_952 (coe v2)))) in
+                                   (coe MAlonzo.Code.Ledger.Certs.d_pools_1082 (coe v2)))) in
                    coe
                      (case coe v7 of
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
@@ -1423,8 +1424,9 @@ d_Computational'45'POOL_1348 v0
                                          (coe
                                             MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                             (coe
-                                               MAlonzo.Code.Class.To.d_'10214'_'10215'_16
-                                               (coe MAlonzo.Code.Ledger.Certs.du_To'45'PState_1014)
+                                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                                               (coe
+                                                  MAlonzo.Code.Ledger.Certs.du_HasCast'45'PState_1210)
                                                (coe
                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                   (let v10
@@ -1432,7 +1434,7 @@ d_Computational'45'POOL_1348 v0
                                                              (coe
                                                                 MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                    (coe v0))) in
                                                    coe
                                                      (coe
@@ -1457,13 +1459,13 @@ d_Computational'45'POOL_1348 v0
                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                               (coe v5) (coe v6)))
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Certs.d_pools_952
+                                                           MAlonzo.Code.Ledger.Certs.d_pools_1082
                                                            (coe v2))))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Certs.d_retiring_954
+                                                     MAlonzo.Code.Ledger.Certs.d_retiring_1084
                                                      (coe v2))))
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'regpool_1278)))
+                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'regpool_1404)))
                                else coe
                                       seq (coe v9)
                                       (coe
@@ -1473,23 +1475,23 @@ d_Computational'45'POOL_1348 v0
                                              ::
                                              Data.Text.Text)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
-              MAlonzo.Code.Ledger.Certs.C_retirepool_880 v5 v6
+              MAlonzo.Code.Ledger.Certs.C_retirepool_990 v5 v6
                 -> coe
                      MAlonzo.Code.Interface.ComputationalRelation.C_success_42
                      (coe
                         MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                         (coe
-                           MAlonzo.Code.Class.To.d_'10214'_'10215'_16
-                           (coe MAlonzo.Code.Ledger.Certs.du_To'45'PState_1014)
+                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                           (coe MAlonzo.Code.Ledger.Certs.du_HasCast'45'PState_1210)
                            (coe
                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                              (coe MAlonzo.Code.Ledger.Certs.d_pools_952 (coe v2))
+                              (coe MAlonzo.Code.Ledger.Certs.d_pools_1082 (coe v2))
                               (let v7
                                      = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'THash_22
                                          (coe
                                             MAlonzo.Code.Ledger.Crypto.d_khs_200
                                             (coe
-                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                (coe v0))) in
                                coe
                                  (coe
@@ -1513,15 +1515,15 @@ d_Computational'45'POOL_1348 v0
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
                                           (coe v6)))
-                                    (coe MAlonzo.Code.Ledger.Certs.d_retiring_954 (coe v2))))))
+                                    (coe MAlonzo.Code.Ledger.Certs.d_retiring_1084 (coe v2))))))
                         (coe
-                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'retirepool_1280))
+                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_POOL'45'retirepool_1406))
               _ -> coe v4))
 -- Ledger.Conway.Conformance.Certs.Properties.Computational-GOVCERT
-d_Computational'45'GOVCERT_1374 ::
+d_Computational'45'GOVCERT_1500 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'GOVCERT_1374 v0
+d_Computational'45'GOVCERT_1500 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v1 v2 v3 ->
@@ -1531,7 +1533,7 @@ d_Computational'45'GOVCERT_1374 v0
                    (coe ("Unexpected certificate in GOVCERT" :: Data.Text.Text)) in
          coe
            (case coe v3 of
-              MAlonzo.Code.Ledger.Certs.C_regdrep_882 v5 v6 v7
+              MAlonzo.Code.Ledger.Certs.C_regdrep_992 v5 v6 v7
                 -> let v8
                          = coe
                              MAlonzo.Code.Class.Decidable.Core.du_'191'_'191'_42
@@ -1544,8 +1546,8 @@ d_Computational'45'GOVCERT_1374 v0
                                       (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                       (coe v6)
                                       (coe
-                                         MAlonzo.Code.Ledger.PParams.d_drepDeposit_382
-                                         (coe MAlonzo.Code.Ledger.Certs.d_pp_922 (coe v1))))
+                                         MAlonzo.Code.Ledger.PParams.d_drepDeposit_400
+                                         (coe MAlonzo.Code.Ledger.Certs.d_pp_1032 (coe v1))))
                                    (coe
                                       MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
                                       (coe
@@ -1557,17 +1559,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                     (coe
                                                        MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                           (coe v0))) in
                                           coe
                                             (let v9
                                                    = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                           (coe v0)) in
                                              coe
                                                (coe
-                                                  MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                  MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                   (coe v8) (coe v9))))
                                          (coe v5)
                                          (coe
@@ -1578,7 +1580,7 @@ d_Computational'45'GOVCERT_1374 v0
                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                                (coe v2))))
                                       (coe
                                          MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18)))
@@ -1597,17 +1599,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                  (coe
                                                     MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                        (coe v0))) in
                                        coe
                                          (let v9
                                                 = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                        (coe v0)) in
                                           coe
                                             (coe
-                                               MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                               MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                (coe v8) (coe v9))))
                                       (coe v5)
                                       (coe
@@ -1618,7 +1620,7 @@ d_Computational'45'GOVCERT_1374 v0
                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                             (coe v2)))))) in
                    coe
                      (case coe v8 of
@@ -1631,9 +1633,9 @@ d_Computational'45'GOVCERT_1374 v0
                                              (coe
                                                 MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                 (coe
-                                                   MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'GState_1128)
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'GState_1254)
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (let v12
@@ -1642,17 +1644,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                (coe v0))) in
                                                                coe
                                                                  (let v13
                                                                         = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                (coe v0)) in
                                                                   coe
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                        (coe v12) (coe v13))) in
                                                        coe
                                                          (coe
@@ -1680,34 +1682,34 @@ d_Computational'45'GOVCERT_1374 v0
                                                                      MAlonzo.Code.Class.HasAdd.Core.d__'43'__16
                                                                      (MAlonzo.Code.Ledger.Types.Epoch.d_addEpoch_246
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_epochStructure_588
+                                                                           MAlonzo.Code.Ledger.Types.GovStructure.d_epochStructure_612
                                                                            (coe v0)))
-                                                                     (MAlonzo.Code.Ledger.Certs.d_epoch_920
+                                                                     (MAlonzo.Code.Ledger.Certs.d_epoch_1030
                                                                         (coe v1))
-                                                                     (MAlonzo.Code.Ledger.PParams.d_drepActivity_384
+                                                                     (MAlonzo.Code.Ledger.PParams.d_drepActivity_402
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Certs.d_pp_922
+                                                                           MAlonzo.Code.Ledger.Certs.d_pp_1032
                                                                            (coe v1))))))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                                                (coe v2))))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1104
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1230
                                                             (coe v2))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                             (coe v0)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Certs.d_pp_922
+                                                               MAlonzo.Code.Ledger.Certs.d_pp_1032
                                                                (coe v1))
                                                             (coe v3)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1106
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1232
                                                                (coe v2))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'regdrep_1508
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'regdrep_1634
                                                    v11))
                                       _ -> MAlonzo.RTE.mazUnreachableError
                                else coe
@@ -1719,7 +1721,7 @@ d_Computational'45'GOVCERT_1374 v0
                                              ::
                                              Data.Text.Text)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
-              MAlonzo.Code.Ledger.Certs.C_deregdrep_884 v5 v6
+              MAlonzo.Code.Ledger.Certs.C_deregdrep_994 v5 v6
                 -> let v7
                          = coe
                              MAlonzo.Code.Class.Decidable.Core.du_'191'_'191'_42
@@ -1734,17 +1736,17 @@ d_Computational'45'GOVCERT_1374 v0
                                               (coe
                                                  MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                    MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                     (coe v0))) in
                                     coe
                                       (let v8
                                              = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                    MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                     (coe v0)) in
                                        coe
                                          (coe
-                                            MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                            MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                             (coe v7) (coe v8))))
                                    (coe v5)
                                    (coe
@@ -1755,7 +1757,7 @@ d_Computational'45'GOVCERT_1374 v0
                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                       (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                          (coe v2))))
                                 (coe
                                    MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
@@ -1764,17 +1766,17 @@ d_Computational'45'GOVCERT_1374 v0
                                    (coe
                                       MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased ()
                                       erased
-                                      (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                      (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_958
                                          (coe v0))
                                       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                    (coe
                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                      (coe MAlonzo.Code.Ledger.Certs.C_DRepDeposit_842 (coe v5))
+                                      (coe MAlonzo.Code.Ledger.Certs.C_DRepDeposit_894 (coe v5))
                                       (coe v6))
                                    (coe
                                       MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1106
+                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1232
                                          (coe v2))))) in
                    coe
                      (case coe v7 of
@@ -1787,9 +1789,9 @@ d_Computational'45'GOVCERT_1374 v0
                                              (coe
                                                 MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                 (coe
-                                                   MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'GState_1128)
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'GState_1254)
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (let v11
@@ -1798,17 +1800,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                (coe v0))) in
                                                                coe
                                                                  (let v12
                                                                         = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                               MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                (coe v0)) in
                                                                   coe
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                       MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                        (coe v11) (coe v12))) in
                                                        coe
                                                          (coe
@@ -1822,7 +1824,7 @@ d_Computational'45'GOVCERT_1374 v0
                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                                erased v11)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                                                (coe v2))
                                                             (coe
                                                                MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_310
@@ -1836,13 +1838,13 @@ d_Computational'45'GOVCERT_1374 v0
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1104
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1230
                                                             (coe v2))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                             (coe v0)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Certs.d_pp_922
+                                                               MAlonzo.Code.Ledger.Certs.d_pp_1032
                                                                (coe v1))
                                                             (coe v3)
                                                             (coe
@@ -1850,15 +1852,15 @@ d_Computational'45'GOVCERT_1374 v0
                                                                (coe
                                                                   MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1106
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1232
                                                                      (coe v2)))
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1106
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1232
                                                                      (coe v2))))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'deregdrep_1510
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'deregdrep_1636
                                                    v10))
                                       _ -> MAlonzo.RTE.mazUnreachableError
                                else coe
@@ -1877,17 +1879,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                         (coe v0))) in
                                                         coe
                                                           (let v11
                                                                  = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                         (coe v0)) in
                                                            coe
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                 (coe v10) (coe v11))))
                                                        (coe v5)
                                                        (coe
@@ -1899,7 +1901,7 @@ d_Computational'45'GOVCERT_1374 v0
                                                           (coe
                                                              MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                           (coe
-                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                                              (coe v2))))
                                                     erased in
                                           coe
@@ -1916,7 +1918,7 @@ d_Computational'45'GOVCERT_1374 v0
                                                        Data.Text.Text)
                                                _ -> MAlonzo.RTE.mazUnreachableError)))
                         _ -> MAlonzo.RTE.mazUnreachableError)
-              MAlonzo.Code.Ledger.Certs.C_ccreghot_886 v5 v6
+              MAlonzo.Code.Ledger.Certs.C_ccreghot_996 v5 v6
                 -> let v7
                          = coe
                              MAlonzo.Code.Class.Decidable.Core.du_'191'_'191'_42
@@ -1936,17 +1938,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                     (coe
                                                        MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                           (coe v0))) in
                                           coe
                                             (let v8
                                                    = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                        (coe
-                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                          MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                           (coe v0)) in
                                              coe
                                                (coe
-                                                  MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                  MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                   (coe v7) (coe v8))))
                                          (coe
                                             MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
@@ -1955,17 +1957,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                        (coe
                                                           MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                           (coe
-                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                              (coe v0))) in
                                              coe
                                                (let v8
                                                       = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                           (coe
-                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                              (coe v0)) in
                                                 coe
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                      (coe v7) (coe v8))))))
                                       (coe
                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5)
@@ -1973,7 +1975,7 @@ d_Computational'45'GOVCERT_1374 v0
                                       (coe
                                          MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1104
+                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1230
                                             (coe v2))))
                                    (coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
                                 (coe
@@ -1985,20 +1987,20 @@ d_Computational'45'GOVCERT_1374 v0
                                               (coe
                                                  MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                    MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                     (coe v0))) in
                                     coe
                                       (let v8
                                              = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                    MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                     (coe v0)) in
                                        coe
                                          (coe
-                                            MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                            MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                             (coe v7) (coe v8))))
                                    (coe v5)
-                                   (coe MAlonzo.Code.Ledger.Certs.d_coldCreds_928 (coe v1)))) in
+                                   (coe MAlonzo.Code.Ledger.Certs.d_coldCreds_1038 (coe v1)))) in
                    coe
                      (case coe v7 of
                         MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v8 v9
@@ -2010,13 +2012,13 @@ d_Computational'45'GOVCERT_1374 v0
                                              (coe
                                                 MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                 (coe
-                                                   MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'GState_1128)
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'GState_1254)
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                                          (coe v2))
                                                       (coe
                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2026,17 +2028,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                                             (coe
                                                                                MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                  MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                   (coe v0))) in
                                                                   coe
                                                                     (let v12
                                                                            = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                  MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                   (coe v0)) in
                                                                      coe
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                          MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                           (coe v11) (coe v12))) in
                                                           coe
                                                             (coe
@@ -2061,20 +2063,20 @@ d_Computational'45'GOVCERT_1374 v0
                                                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                      (coe v5) (coe v6)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1104
+                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1230
                                                                   (coe v2))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                             (coe v0)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Certs.d_pp_922
+                                                               MAlonzo.Code.Ledger.Certs.d_pp_1032
                                                                (coe v1))
                                                             (coe v3)
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1106
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1232
                                                                (coe v2))))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'ccreghot_1512
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_GOVCERT'45'ccreghot_1638
                                                    v10))
                                       _ -> MAlonzo.RTE.mazUnreachableError
                                else coe
@@ -2098,17 +2100,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                               (coe v0))) in
                                                               coe
                                                                 (let v11
                                                                        = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                               (coe v0)) in
                                                                  coe
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                      MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                       (coe v10) (coe v11))))
                                                              (coe
                                                                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
@@ -2117,17 +2119,17 @@ d_Computational'45'GOVCERT_1374 v0
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                  (coe v0))) in
                                                                  coe
                                                                    (let v11
                                                                           = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                  (coe v0)) in
                                                                     coe
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                         MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                          (coe v10) (coe v11))))))
                                                           (coe
                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2137,7 +2139,7 @@ d_Computational'45'GOVCERT_1374 v0
                                                           (coe
                                                              MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1104
+                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1230
                                                                 (coe v2))))
                                                        (coe
                                                           MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
@@ -2158,172 +2160,43 @@ d_Computational'45'GOVCERT_1374 v0
                         _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> coe v4))
 -- Ledger.Conway.Conformance.Certs.Properties.Computational-CERT
-d_Computational'45'CERT_1650 ::
+d_Computational'45'CERT_1776 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'CERT_1650 v0
+d_Computational'45'CERT_1776 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v1 v2 v3 ->
          let v4
                = coe
                    MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
-                   (d_Computational'45'POOL_1348 (coe v0))
-                   (MAlonzo.Code.Ledger.Certs.d_pp_922 (coe v1))
-                   (MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                   (d_Computational'45'POOL_1474 (coe v0))
+                   (MAlonzo.Code.Ledger.Certs.d_pp_1032 (coe v1))
+                   (MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                       (coe v2))
                    v3 in
          coe
            (let v5
                   = coe
                       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
-                      (d_Computational'45'GOVCERT_1374 (coe v0)) v1
-                      (MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                      (d_Computational'45'GOVCERT_1500 (coe v0)) v1
+                      (MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                          (coe v2))
                       v3 in
             coe
               (let v6
                      = coe
-                         MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
+                         MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                          (coe
-                            MAlonzo.Code.Data.List.Base.du_length_284
+                            MAlonzo.Code.Class.HasCast.Base.C_HasCast'46'constructor_29
                             (coe
-                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                               MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
                                (coe
-                                  MAlonzo.Code.Class.To.d_getCodPi_22
-                                  (coe
-                                     MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
-                                     (coe
-                                        MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                        (coe
-                                           MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                           (coe MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                           (coe
-                                              MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                              (coe
-                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                              (coe
-                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                        (coe
-                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                           (coe
-                                              (MAlonzo.RTE.QName
-                                                 (984 :: Integer) (4754670284972318150 :: Integer)
-                                                 "Ledger.Certs.DelegEnv"
-                                                 (MAlonzo.RTE.Fixity
-                                                    MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
-                                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-                                     (coe
-                                        MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122
-                                        (coe ("r" :: Data.Text.Text))
-                                        (coe
-                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                           (coe
-                                              (MAlonzo.RTE.QName
-                                                 (148 :: Integer) (4754670284972318150 :: Integer)
-                                                 "_.PParams"
-                                                 (MAlonzo.RTE.Fixity
-                                                    MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
-                                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-                               (coe
-                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                  (coe
-                                     MAlonzo.Code.Class.To.d_getCodPi_22
-                                     (coe
-                                        MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
-                                        (coe
-                                           MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                           (coe
-                                              MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                              (coe
-                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                              (coe
-                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                 (coe
-                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                 (coe
-                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                           (coe
-                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                              (coe
-                                                 (MAlonzo.RTE.QName
-                                                    (984 :: Integer)
-                                                    (4754670284972318150 :: Integer)
-                                                    "Ledger.Certs.DelegEnv"
-                                                    (MAlonzo.RTE.Fixity
-                                                       MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
-                                              (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-                                        (coe
-                                           MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122
-                                           (coe ("r" :: Data.Text.Text))
-                                           (coe
-                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                              (coe
-                                                 (MAlonzo.RTE.QName
-                                                    (180 :: Integer)
-                                                    (9254951203007797098 :: Integer)
-                                                    "abstract-set-theory.FiniteSetTheory._.Map"
-                                                    (MAlonzo.RTE.Fixity
-                                                       MAlonzo.RTE.RightAssoc
-                                                       (MAlonzo.RTE.Related (1.0 :: Double)))))
-                                              (coe
-                                                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                 (coe
-                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                    (coe
-                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                       (coe
-                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                                       (coe
-                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                          (coe
-                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                          (coe
-                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                    (coe
-                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                                       (coe
-                                                          (MAlonzo.RTE.QName
-                                                             (122 :: Integer)
-                                                             (4754670284972318150 :: Integer)
-                                                             "_.THash"
-                                                             (MAlonzo.RTE.Fixity
-                                                                MAlonzo.RTE.NonAssoc
-                                                                MAlonzo.RTE.Unrelated)))
-                                                       (coe
-                                                          MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-                                                 (coe
-                                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                    (coe
-                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                       (coe
-                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                          (coe
-                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                                          (coe
-                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                             (coe
-                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                             (coe
-                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                       (coe
-                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                                          (coe
-                                                             (MAlonzo.RTE.QName
-                                                                (850 :: Integer)
-                                                                (4754670284972318150 :: Integer)
-                                                                "Ledger.Certs.PoolParams"
-                                                                (MAlonzo.RTE.Fixity
-                                                                   MAlonzo.RTE.NonAssoc
-                                                                   MAlonzo.RTE.Unrelated)))
-                                                          (coe
-                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-                                                    (coe
-                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
+                                  MAlonzo.Code.Data.List.Base.du_length_284
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                      (coe
-                                        MAlonzo.Code.Class.To.d_getCodPi_22
+                                        MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
                                         (coe
                                            MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                                            (coe
@@ -2342,7 +2215,7 @@ d_Computational'45'CERT_1650 v0
                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                  (coe
                                                     (MAlonzo.RTE.QName
-                                                       (984 :: Integer)
+                                                       (1180 :: Integer)
                                                        (4754670284972318150 :: Integer)
                                                        "Ledger.Certs.DelegEnv"
                                                        (MAlonzo.RTE.Fixity
@@ -2357,231 +2230,180 @@ d_Computational'45'CERT_1650 v0
                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                  (coe
                                                     (MAlonzo.RTE.QName
-                                                       (126 :: Integer)
-                                                       (9254951203007797098 :: Integer)
-                                                       "abstract-set-theory.FiniteSetTheory._.Set"
+                                                       (172 :: Integer)
+                                                       (4754670284972318150 :: Integer) "_.PParams"
                                                        (MAlonzo.RTE.Fixity
                                                           MAlonzo.RTE.NonAssoc
                                                           MAlonzo.RTE.Unrelated)))
                                                  (coe
-                                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                    MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
+                                     (coe
+                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                        (coe
+                                           MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                                           (coe
+                                              MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
+                                              (coe
+                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                 (coe
+                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
                                                     (coe
-                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                    (coe
+                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
                                                        (coe
-                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                          (coe
-                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                                          (coe
-                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                             (coe
-                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                             (coe
-                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
                                                        (coe
-                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                 (coe
+                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                    (coe
+                                                       (MAlonzo.RTE.QName
+                                                          (1180 :: Integer)
+                                                          (4754670284972318150 :: Integer)
+                                                          "Ledger.Certs.DelegEnv"
+                                                          (MAlonzo.RTE.Fixity
+                                                             MAlonzo.RTE.NonAssoc
+                                                             MAlonzo.RTE.Unrelated)))
+                                                    (coe
+                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
+                                              (coe
+                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122
+                                                 (coe ("r" :: Data.Text.Text))
+                                                 (coe
+                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                    (coe
+                                                       (MAlonzo.RTE.QName
+                                                          (180 :: Integer)
+                                                          (9254951203007797098 :: Integer)
+                                                          "abstract-set-theory.FiniteSetTheory._.Map"
+                                                          (MAlonzo.RTE.Fixity
+                                                             MAlonzo.RTE.RightAssoc
+                                                             (MAlonzo.RTE.Related
+                                                                (1.0 :: Double)))))
+                                                    (coe
+                                                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                       (coe
+                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
                                                           (coe
-                                                             (MAlonzo.RTE.QName
-                                                                (26 :: Integer)
-                                                                (4754670284972318150 :: Integer)
-                                                                "_.Credential"
-                                                                (MAlonzo.RTE.Fixity
-                                                                   MAlonzo.RTE.NonAssoc
-                                                                   MAlonzo.RTE.Unrelated)))
+                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                             (coe
+                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                             (coe
+                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                (coe
+                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                (coe
+                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
                                                           (coe
-                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                              (coe
-                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                                (coe
-                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                                   (coe
-                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_instance'8242'_54)
-                                                                   (coe
-                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                                      (coe
-                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                                      (coe
-                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                                (coe
-                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                                                   (coe
-                                                                      (MAlonzo.RTE.QName
-                                                                         (276 :: Integer)
-                                                                         (5472012504010855638 ::
-                                                                            Integer)
-                                                                         "Ledger.Types.Epoch.GlobalConstants.DecEq-Netw"
-                                                                         (MAlonzo.RTE.Fixity
-                                                                            MAlonzo.RTE.NonAssoc
-                                                                            MAlonzo.RTE.Unrelated)))
-                                                                   (coe
-                                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                      (coe
-                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                                         (coe
-                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                                            (coe
-                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                                                            (coe
-                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                                               (coe
-                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                                               (coe
-                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                                         (coe
-                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                                                            (coe
-                                                                               (MAlonzo.RTE.QName
-                                                                                  (1062 :: Integer)
-                                                                                  (15457238204768998804 ::
-                                                                                     Integer)
-                                                                                  "Ledger.Types.GovStructure.GovStructure.globalConstants"
-                                                                                  (MAlonzo.RTE.Fixity
-                                                                                     MAlonzo.RTE.NonAssoc
-                                                                                     MAlonzo.RTE.Unrelated)))
-                                                                            (coe
-                                                                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                               (coe
-                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                                                        (coe
-                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                                                        (coe
-                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
-                                                                                     (coe
-                                                                                        (1 ::
-                                                                                           Integer))
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-                                                                               (coe
-                                                                                  MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                                                                      (coe
-                                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
+                                                                (MAlonzo.RTE.QName
+                                                                   (144 :: Integer)
+                                                                   (4754670284972318150 :: Integer)
+                                                                   "_.THash"
+                                                                   (MAlonzo.RTE.Fixity
+                                                                      MAlonzo.RTE.NonAssoc
+                                                                      MAlonzo.RTE.Unrelated)))
                                                              (coe
-                                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
+                                                       (coe
+                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                          (coe
+                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                             (coe
+                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
                                                                 (coe
-                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                                (coe
+                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
                                                                    (coe
-                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                                      (coe
-                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_instance'8242'_54)
-                                                                      (coe
-                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                                         (coe
-                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                                         (coe
-                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
                                                                    (coe
-                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                                                      (coe
-                                                                         (MAlonzo.RTE.QName
-                                                                            (22 :: Integer)
-                                                                            (11985168719538843093 ::
-                                                                               Integer)
-                                                                            "Ledger.Crypto.isHashableSet.DecEq-THash"
-                                                                            (MAlonzo.RTE.Fixity
-                                                                               MAlonzo.RTE.NonAssoc
-                                                                               MAlonzo.RTE.Unrelated)))
-                                                                      (coe
-                                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                         (coe
-                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                                            (coe
-                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                                               (coe
-                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_hidden_52)
-                                                                               (coe
-                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                                            (coe
-                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_unknown_216))
-                                                                         (coe
-                                                                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                            (coe
-                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                                               (coe
-                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                                               (coe
-                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                                                                  (coe
-                                                                                     (MAlonzo.RTE.QName
-                                                                                        (200 ::
-                                                                                           Integer)
-                                                                                        (11985168719538843093 ::
-                                                                                           Integer)
-                                                                                        "Ledger.Crypto.Crypto.khs"
-                                                                                        (MAlonzo.RTE.Fixity
-                                                                                           MAlonzo.RTE.NonAssoc
-                                                                                           MAlonzo.RTE.Unrelated)))
-                                                                                  (coe
-                                                                                     MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                                                        (coe
-                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                                                           (coe
-                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                                                                           (coe
-                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                                                              (coe
-                                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                                                              (coe
-                                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                                                        (coe
-                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
-                                                                                           (coe
-                                                                                              (MAlonzo.RTE.QName
-                                                                                                 (542 ::
-                                                                                                    Integer)
-                                                                                                 (15457238204768998804 ::
-                                                                                                    Integer)
-                                                                                                 "Ledger.Types.GovStructure.GovStructure.crypto"
-                                                                                                 (MAlonzo.RTE.Fixity
-                                                                                                    MAlonzo.RTE.NonAssoc
-                                                                                                    MAlonzo.RTE.Unrelated)))
-                                                                                           (coe
-                                                                                              MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                                              (coe
-                                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
-                                                                                                 (coe
-                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
-                                                                                                    (coe
-                                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
-                                                                                                    (coe
-                                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
-                                                                                                       (coe
-                                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
-                                                                                                       (coe
-                                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
-                                                                                                 (coe
-                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
-                                                                                                    (coe
-                                                                                                       (1 ::
-                                                                                                          Integer))
-                                                                                                    (coe
-                                                                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
-                                                                                              (coe
-                                                                                                 MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
-                                                                            (coe
-                                                                               MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
+                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                             (coe
+                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                                (coe
+                                                                   (MAlonzo.RTE.QName
+                                                                      (960 :: Integer)
+                                                                      (4754670284972318150 ::
+                                                                         Integer)
+                                                                      "Ledger.Certs.PoolParams"
+                                                                      (MAlonzo.RTE.Fixity
+                                                                         MAlonzo.RTE.NonAssoc
+                                                                         MAlonzo.RTE.Unrelated)))
+                                                                (coe
+                                                                   MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
+                                                          (coe
+                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
+                                        (coe
+                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                           (coe
+                                              MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                                              (coe
+                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
+                                                 (coe
+                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                    (coe
+                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                       (coe
+                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                       (coe
+                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                          (coe
+                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                          (coe
+                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                    (coe
+                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                       (coe
+                                                          (MAlonzo.RTE.QName
+                                                             (1180 :: Integer)
+                                                             (4754670284972318150 :: Integer)
+                                                             "Ledger.Certs.DelegEnv"
+                                                             (MAlonzo.RTE.Fixity
+                                                                MAlonzo.RTE.NonAssoc
+                                                                MAlonzo.RTE.Unrelated)))
+                                                       (coe
+                                                          MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
+                                                 (coe
+                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122
+                                                    (coe ("r" :: Data.Text.Text))
+                                                    (coe
+                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                       (coe
+                                                          (MAlonzo.RTE.QName
+                                                             (126 :: Integer)
+                                                             (9254951203007797098 :: Integer)
+                                                             "abstract-set-theory.FiniteSetTheory._.Set"
+                                                             (MAlonzo.RTE.Fixity
+                                                                MAlonzo.RTE.NonAssoc
+                                                                MAlonzo.RTE.Unrelated)))
+                                                       (coe
+                                                          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                          (coe
+                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                             (coe
+                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                (coe
+                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                                (coe
+                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                   (coe
+                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                   (coe
+                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                             (coe
+                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                                (coe
+                                                                   (MAlonzo.RTE.QName
+                                                                      (26 :: Integer)
+                                                                      (4754670284972318150 ::
+                                                                         Integer)
+                                                                      "_.Credential"
+                                                                      (MAlonzo.RTE.Fixity
+                                                                         MAlonzo.RTE.NonAssoc
+                                                                         MAlonzo.RTE.Unrelated)))
                                                                 (coe
                                                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                    (coe
@@ -2600,10 +2422,10 @@ d_Computational'45'CERT_1650 v0
                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                          (coe
                                                                             (MAlonzo.RTE.QName
-                                                                               (204 :: Integer)
-                                                                               (11985168719538843093 ::
+                                                                               (276 :: Integer)
+                                                                               (5472012504010855638 ::
                                                                                   Integer)
-                                                                               "Ledger.Crypto.Crypto.DecEq-ScriptHash"
+                                                                               "Ledger.Types.Epoch.GlobalConstants.DecEq-Netw"
                                                                                (MAlonzo.RTE.Fixity
                                                                                   MAlonzo.RTE.NonAssoc
                                                                                   MAlonzo.RTE.Unrelated)))
@@ -2625,11 +2447,11 @@ d_Computational'45'CERT_1650 v0
                                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                   (coe
                                                                                      (MAlonzo.RTE.QName
-                                                                                        (542 ::
+                                                                                        (1110 ::
                                                                                            Integer)
                                                                                         (15457238204768998804 ::
                                                                                            Integer)
-                                                                                        "Ledger.Types.GovStructure.GovStructure.crypto"
+                                                                                        "Ledger.Types.GovStructure.GovStructure.globalConstants"
                                                                                         (MAlonzo.RTE.Fixity
                                                                                            MAlonzo.RTE.NonAssoc
                                                                                            MAlonzo.RTE.Unrelated)))
@@ -2659,20 +2481,217 @@ d_Computational'45'CERT_1650 v0
                                                                             (coe
                                                                                MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
                                                                    (coe
-                                                                      MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
-                                                    (coe
-                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
-                                     (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
-                         (coe MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_18161)
+                                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                      (coe
+                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                         (coe
+                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                            (coe
+                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_instance'8242'_54)
+                                                                            (coe
+                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                               (coe
+                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                               (coe
+                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                         (coe
+                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                                            (coe
+                                                                               (MAlonzo.RTE.QName
+                                                                                  (22 :: Integer)
+                                                                                  (11985168719538843093 ::
+                                                                                     Integer)
+                                                                                  "Ledger.Crypto.isHashableSet.DecEq-THash"
+                                                                                  (MAlonzo.RTE.Fixity
+                                                                                     MAlonzo.RTE.NonAssoc
+                                                                                     MAlonzo.RTE.Unrelated)))
+                                                                            (coe
+                                                                               MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                               (coe
+                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                                     (coe
+                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_hidden_52)
+                                                                                     (coe
+                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_unknown_216))
+                                                                               (coe
+                                                                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                                     (coe
+                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                                     (coe
+                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                                                        (coe
+                                                                                           (MAlonzo.RTE.QName
+                                                                                              (200 ::
+                                                                                                 Integer)
+                                                                                              (11985168719538843093 ::
+                                                                                                 Integer)
+                                                                                              "Ledger.Crypto.Crypto.khs"
+                                                                                              (MAlonzo.RTE.Fixity
+                                                                                                 MAlonzo.RTE.NonAssoc
+                                                                                                 MAlonzo.RTE.Unrelated)))
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                                                    (coe
+                                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                                                    (coe
+                                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                                                                 (coe
+                                                                                                    (MAlonzo.RTE.QName
+                                                                                                       (566 ::
+                                                                                                          Integer)
+                                                                                                       (15457238204768998804 ::
+                                                                                                          Integer)
+                                                                                                       "Ledger.Types.GovStructure.GovStructure.crypto"
+                                                                                                       (MAlonzo.RTE.Fixity
+                                                                                                          MAlonzo.RTE.NonAssoc
+                                                                                                          MAlonzo.RTE.Unrelated)))
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                                    (coe
+                                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                                                       (coe
+                                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                                                             (coe
+                                                                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                                                       (coe
+                                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
+                                                                                                          (coe
+                                                                                                             (1 ::
+                                                                                                                Integer))
+                                                                                                          (coe
+                                                                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
+                                                                                                    (coe
+                                                                                                       MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
+                                                                      (coe
+                                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                         (coe
+                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                            (coe
+                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                               (coe
+                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_instance'8242'_54)
+                                                                               (coe
+                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                            (coe
+                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                                               (coe
+                                                                                  (MAlonzo.RTE.QName
+                                                                                     (204 ::
+                                                                                        Integer)
+                                                                                     (11985168719538843093 ::
+                                                                                        Integer)
+                                                                                     "Ledger.Crypto.Crypto.DecEq-ScriptHash"
+                                                                                     (MAlonzo.RTE.Fixity
+                                                                                        MAlonzo.RTE.NonAssoc
+                                                                                        MAlonzo.RTE.Unrelated)))
+                                                                               (coe
+                                                                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                                     (coe
+                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                                     (coe
+                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
+                                                                                        (coe
+                                                                                           (MAlonzo.RTE.QName
+                                                                                              (566 ::
+                                                                                                 Integer)
+                                                                                              (15457238204768998804 ::
+                                                                                                 Integer)
+                                                                                              "Ledger.Types.GovStructure.GovStructure.crypto"
+                                                                                              (MAlonzo.RTE.Fixity
+                                                                                                 MAlonzo.RTE.NonAssoc
+                                                                                                 MAlonzo.RTE.Unrelated)))
+                                                                                        (coe
+                                                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
+                                                                                                    (coe
+                                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
+                                                                                                    (coe
+                                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)))
+                                                                                              (coe
+                                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
+                                                                                                 (coe
+                                                                                                    (1 ::
+                                                                                                       Integer))
+                                                                                                 (coe
+                                                                                                    MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
+                                                                                           (coe
+                                                                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
+                                                                         (coe
+                                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
+                                                          (coe
+                                                             MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))
+                                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
+                               (coe MAlonzo.Code.Ledger.Certs.C_DelegEnv'46'constructor_20177)))
                          (coe
                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                            (coe MAlonzo.Code.Ledger.Certs.d_pp_922 (coe v1))
+                            (coe MAlonzo.Code.Ledger.Certs.d_pp_1032 (coe v1))
                             (coe
                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                (coe
-                                  MAlonzo.Code.Ledger.Certs.d_pools_952
+                                  MAlonzo.Code.Ledger.Certs.d_pools_1082
                                   (coe
-                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                      (coe v2)))
                                (coe
                                   MAlonzo.Code.Class.IsSet.du_dom_548
@@ -2682,17 +2701,17 @@ d_Computational'45'CERT_1650 v0
                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                   (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                   (coe
-                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                      (coe
-                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                         (coe v2)))))) in
                coe
                  (let v7
-                        = MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                        = MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                             (coe v2) in
                   coe
                     (case coe v3 of
-                       MAlonzo.Code.Ledger.Certs.C_delegate_874 v8 v9 v10 v11
+                       MAlonzo.Code.Ledger.Certs.C_delegate_984 v8 v9 v10 v11
                          -> let v12
                                   = coe
                                       MAlonzo.Code.Class.Decidable.Core.du_'191'_'191'_42
@@ -2711,17 +2730,17 @@ d_Computational'45'CERT_1650 v0
                                                              (coe
                                                                 MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                    (coe v0))) in
                                                    coe
                                                      (let v13
                                                             = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                    (coe v0)) in
                                                       coe
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                            (coe v12) (coe v13))))
                                                   (coe v8)
                                                   (coe
@@ -2733,7 +2752,7 @@ d_Computational'45'CERT_1650 v0
                                                      (coe
                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                         (coe v7))))
                                                (coe
                                                   MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
@@ -2743,9 +2762,9 @@ d_Computational'45'CERT_1650 v0
                                                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                (coe v11)
                                                (coe
-                                                  MAlonzo.Code.Ledger.PParams.d_keyDeposit_336
+                                                  MAlonzo.Code.Ledger.PParams.d_keyDeposit_354
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                     MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                      (coe v6)))))
                                          (coe
                                             MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_24
@@ -2760,17 +2779,17 @@ d_Computational'45'CERT_1650 v0
                                                              (coe
                                                                 MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                    (coe v0))) in
                                                    coe
                                                      (let v13
                                                             = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                    (coe v0)) in
                                                       coe
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                            (coe v12) (coe v13))))
                                                   (coe v8)
                                                   (coe
@@ -2782,7 +2801,7 @@ d_Computational'45'CERT_1650 v0
                                                      (coe
                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                         (coe v7))))
                                                (coe
                                                   MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
@@ -2798,7 +2817,7 @@ d_Computational'45'CERT_1650 v0
                                                   (coe
                                                      MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                                      (coe
-                                                        MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_812
+                                                        MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_866
                                                         (coe v0)))
                                                   (coe v9)
                                                   (coe
@@ -2816,11 +2835,11 @@ d_Computational'45'CERT_1650 v0
                                                            coe
                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                              (coe
-                                                                MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_680
+                                                                MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_728
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670)
+                                                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718)
                                                                 (coe v12)))
-                                                        (MAlonzo.Code.Ledger.Certs.d_delegatees_996
+                                                        (MAlonzo.Code.Ledger.Certs.d_delegatees_1192
                                                            (coe v6)))
                                                      (coe
                                                         MAlonzo.Code.Axiom.Set.du_fromList_428
@@ -2837,13 +2856,13 @@ d_Computational'45'CERT_1650 v0
                                                               (coe
                                                                  MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_682))
+                                                                    MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_730))
                                                               (coe
                                                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                  (coe
                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_684))
+                                                                       MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_732))
                                                                  (coe
                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                (coe
@@ -2857,7 +2876,7 @@ d_Computational'45'CERT_1650 v0
                                                         (coe
                                                            MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                               (coe v0)))))
                                                   (coe v10)
                                                   (coe
@@ -2882,7 +2901,7 @@ d_Computational'45'CERT_1650 v0
                                                            (coe
                                                               MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Certs.d_pools_994
+                                                              MAlonzo.Code.Ledger.Certs.d_pools_1190
                                                               (coe v6))))
                                                      (coe
                                                         MAlonzo.Code.Axiom.Set.du_'10100'_'10101'_452
@@ -2902,9 +2921,9 @@ d_Computational'45'CERT_1650 v0
                                                           = coe
                                                               MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                               (coe
-                                                                 MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'DState_1126)
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'DState_1252)
                                                                  (coe
                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                     (let v16
@@ -2913,19 +2932,19 @@ d_Computational'45'CERT_1650 v0
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                              (coe
                                                                                                 v0))) in
                                                                              coe
                                                                                (let v17
                                                                                       = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                              (coe
                                                                                                 v0)) in
                                                                                 coe
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                      (coe v16)
                                                                                      (coe v17))) in
                                                                      coe
@@ -2941,7 +2960,7 @@ d_Computational'45'CERT_1650 v0
                                                                              erased v16)
                                                                           (coe v8) (coe v9)
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                                                              (coe v7))))
                                                                     (coe
                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2951,19 +2970,19 @@ d_Computational'45'CERT_1650 v0
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                 (coe
                                                                                                    v0))) in
                                                                                 coe
                                                                                   (let v17
                                                                                          = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                 (coe
                                                                                                    v0)) in
                                                                                    coe
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                        MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                         (coe v16)
                                                                                         (coe
                                                                                            v17))) in
@@ -2980,7 +2999,7 @@ d_Computational'45'CERT_1650 v0
                                                                                 erased v16)
                                                                              (coe v8) (coe v10)
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1086
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1212
                                                                                 (coe v7))))
                                                                        (coe
                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -2990,19 +3009,19 @@ d_Computational'45'CERT_1650 v0
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                    (coe
                                                                                                       v0))) in
                                                                                    coe
                                                                                      (let v17
                                                                                             = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                    (coe
                                                                                                       v0)) in
                                                                                       coe
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                            (coe v16)
                                                                                            (coe
                                                                                               v17))) in
@@ -3018,7 +3037,7 @@ d_Computational'45'CERT_1650 v0
                                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                                                    erased v16)
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                    (coe v7))
                                                                                 (coe
                                                                                    MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_310
@@ -3035,17 +3054,17 @@ d_Computational'45'CERT_1650 v0
                                                                                          (0 ::
                                                                                             Integer))))))
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                                              (coe v0)
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                                                MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                                                 (coe v6))
                                                                              (coe v3)
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                 (coe v7)))))))
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1354
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'delegate_1480
                                                                  v15) in
                                                     coe
                                                       (case coe v16 of
@@ -3055,22 +3074,22 @@ d_Computational'45'CERT_1650 v0
                                                                 (coe
                                                                    MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                    (coe
-                                                                      MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                       (coe
                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                          (coe v17)
                                                                          (coe
                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                (coe v2))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                (coe v2)))))
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1516
+                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1642
                                                                       v18))
                                                          _ -> MAlonzo.RTE.mazUnreachableError)
                                                _ -> MAlonzo.RTE.mazUnreachableError
@@ -3095,19 +3114,19 @@ d_Computational'45'CERT_1650 v0
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                 (coe
                                                                                                    v0))) in
                                                                                 coe
                                                                                   (let v16
                                                                                          = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                 (coe
                                                                                                    v0)) in
                                                                                    coe
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                        MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                         (coe v15)
                                                                                         (coe v16))))
                                                                                (coe v8)
@@ -3120,7 +3139,7 @@ d_Computational'45'CERT_1650 v0
                                                                                   (coe
                                                                                      MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                      (coe v7))))
                                                                             (coe
                                                                                MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
@@ -3130,9 +3149,9 @@ d_Computational'45'CERT_1650 v0
                                                                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                             (coe v11)
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.PParams.d_keyDeposit_336
+                                                                               MAlonzo.Code.Ledger.PParams.d_keyDeposit_354
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                                                  MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                                                   (coe v6)))))
                                                                       erased in
                                                             coe
@@ -3157,19 +3176,19 @@ d_Computational'45'CERT_1650 v0
                                                                                                  (coe
                                                                                                     MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                        (coe
                                                                                                           v0))) in
                                                                                        coe
                                                                                          (let v18
                                                                                                 = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                        (coe
                                                                                                           v0)) in
                                                                                           coe
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                               MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                (coe
                                                                                                   v17)
                                                                                                (coe
@@ -3184,7 +3203,7 @@ d_Computational'45'CERT_1650 v0
                                                                                          (coe
                                                                                             MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                             (coe
                                                                                                v7))))
                                                                                    (coe
@@ -3214,7 +3233,7 @@ d_Computational'45'CERT_1650 v0
                                                                                              (coe
                                                                                                 MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45'Maybe_142
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_812
+                                                                                                   MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_866
                                                                                                    (coe
                                                                                                       v0)))
                                                                                              (coe
@@ -3234,12 +3253,12 @@ d_Computational'45'CERT_1650 v0
                                                                                                       coe
                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_680
+                                                                                                           MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_728
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670)
+                                                                                                              MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718)
                                                                                                            (coe
                                                                                                               v19)))
-                                                                                                   (MAlonzo.Code.Ledger.Certs.d_delegatees_996
+                                                                                                   (MAlonzo.Code.Ledger.Certs.d_delegatees_1192
                                                                                                       (coe
                                                                                                          v6)))
                                                                                                 (coe
@@ -3257,13 +3276,13 @@ d_Computational'45'CERT_1650 v0
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_682))
+                                                                                                               MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_730))
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_684))
+                                                                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_732))
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                                                           erased in
@@ -3292,22 +3311,22 @@ d_Computational'45'CERT_1650 v0
                                                                  (coe
                                                                     MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                     (coe
-                                                                       MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                        (coe
                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                           (coe v17)
                                                                           (coe
                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                 (coe v2))
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                 (coe v2)))))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1516
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1642
                                                                        v18))
                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                    MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v16
@@ -3320,22 +3339,22 @@ d_Computational'45'CERT_1650 v0
                                                                         (coe
                                                                            MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                            (coe
-                                                                              MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                     (coe v2))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe v18)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                        (coe v2)))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1518
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1644
                                                                               v19))
                                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                                           MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v17
@@ -3348,24 +3367,24 @@ d_Computational'45'CERT_1650 v0
                                                                                (coe
                                                                                   MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                   (coe
-                                                                                     MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                                      (coe
                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                            (coe v2))
                                                                                         (coe
                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                               (coe
                                                                                                  v2))
                                                                                            (coe
                                                                                               v19))))
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1520
+                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1646
                                                                                      v20))
                                                                         _ -> MAlonzo.RTE.mazUnreachableError
                                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v18
@@ -3402,15 +3421,15 @@ d_Computational'45'CERT_1650 v0
                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                    _ -> MAlonzo.RTE.mazUnreachableError))
                                  _ -> MAlonzo.RTE.mazUnreachableError)
-                       MAlonzo.Code.Ledger.Certs.C_dereg_876 v8 v9
+                       MAlonzo.Code.Ledger.Certs.C_dereg_986 v8 v9
                          -> let v10
-                                  = d_lookupDeposit_1138
+                                  = d_lookupDeposit_1264
                                       (coe v0)
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                          (coe v7))
                                       (coe
-                                         MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_838
+                                         MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_890
                                          (coe v8)) in
                             coe
                               (case coe v10 of
@@ -3440,19 +3459,19 @@ d_Computational'45'CERT_1650 v0
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                      MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                       (coe
                                                                                                          v0))) in
                                                                                       coe
                                                                                         (let v19
                                                                                                = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                      MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                       (coe
                                                                                                          v0)) in
                                                                                          coe
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                               (coe
                                                                                                  v18)
                                                                                               (coe
@@ -3467,7 +3486,7 @@ d_Computational'45'CERT_1650 v0
                                                                                   (coe
                                                                                      MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                         (coe v7))))
                                                                                (coe
                                                                                   MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_24
@@ -3479,19 +3498,19 @@ d_Computational'45'CERT_1650 v0
                                                                                         MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4
                                                                                         () erased ()
                                                                                         erased
-                                                                                        (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                                                                        (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_958
                                                                                            (coe v0))
                                                                                         MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                                      (coe
                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_838
+                                                                                           MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_890
                                                                                            (coe v8))
                                                                                         (coe v17))
                                                                                      (coe
                                                                                         MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                            (coe
                                                                                               v7))))
                                                                                   (coe
@@ -3526,9 +3545,9 @@ d_Computational'45'CERT_1650 v0
                                                                                                 = coe
                                                                                                     MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'DState_1126)
+                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'DState_1252)
                                                                                                        (coe
                                                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                           (let v22
@@ -3537,19 +3556,19 @@ d_Computational'45'CERT_1650 v0
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                                                 (coe
-                                                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                                    (coe
                                                                                                                                       v0))) in
                                                                                                                    coe
                                                                                                                      (let v23
                                                                                                                             = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                                                 (coe
-                                                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                                    (coe
                                                                                                                                       v0)) in
                                                                                                                       coe
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                                            (coe
                                                                                                                               v22)
                                                                                                                            (coe
@@ -3567,7 +3586,7 @@ d_Computational'45'CERT_1650 v0
                                                                                                                    erased
                                                                                                                    v22)
                                                                                                                 (coe
-                                                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                                                                                                    (coe
                                                                                                                       v7))
                                                                                                                 (coe
@@ -3587,19 +3606,19 @@ d_Computational'45'CERT_1650 v0
                                                                                                                                 (coe
                                                                                                                                    MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                                                    (coe
-                                                                                                                                      MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                                      MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                                       (coe
                                                                                                                                          v0))) in
                                                                                                                       coe
                                                                                                                         (let v23
                                                                                                                                = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                                                    (coe
-                                                                                                                                      MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                                      MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                                       (coe
                                                                                                                                          v0)) in
                                                                                                                          coe
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                                                              MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                                               (coe
                                                                                                                                  v22)
                                                                                                                               (coe
@@ -3617,7 +3636,7 @@ d_Computational'45'CERT_1650 v0
                                                                                                                       erased
                                                                                                                       v22)
                                                                                                                    (coe
-                                                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1086
+                                                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1212
                                                                                                                       (coe
                                                                                                                          v7))
                                                                                                                    (coe
@@ -3637,19 +3656,19 @@ d_Computational'45'CERT_1650 v0
                                                                                                                                    (coe
                                                                                                                                       MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                                                       (coe
-                                                                                                                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                                          (coe
                                                                                                                                             v0))) in
                                                                                                                          coe
                                                                                                                            (let v23
                                                                                                                                   = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                                                       (coe
-                                                                                                                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                                          (coe
                                                                                                                                             v0)) in
                                                                                                                             coe
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                                                                 MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                                                  (coe
                                                                                                                                     v22)
                                                                                                                                  (coe
@@ -3671,13 +3690,13 @@ d_Computational'45'CERT_1650 v0
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                                                                (coe
                                                                                                                                   v7)))
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                                                                (coe
                                                                                                                                   v7))))
                                                                                                                       (coe
@@ -3690,11 +3709,11 @@ d_Computational'45'CERT_1650 v0
                                                                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
                                                                                                                          v8)))
                                                                                                                 (coe
-                                                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                                                                                    (coe
                                                                                                                       v0)
                                                                                                                    (coe
-                                                                                                                      MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                                                                                      MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                                                                                       (coe
                                                                                                                          v6))
                                                                                                                    (coe
@@ -3704,17 +3723,17 @@ d_Computational'45'CERT_1650 v0
                                                                                                                       (coe
                                                                                                                          MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                                                          (coe
-                                                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                                                             (coe
                                                                                                                                v7)))
                                                                                                                       (coe
                                                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                                                          (coe
-                                                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                                                             (coe
                                                                                                                                v7)))))))))
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'dereg_1356
+                                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'dereg_1482
                                                                                                        v17
                                                                                                        v21) in
                                                                                           coe
@@ -3726,9 +3745,9 @@ d_Computational'45'CERT_1650 v0
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                (coe
@@ -3736,15 +3755,15 @@ d_Computational'45'CERT_1650 v0
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                                                      (coe
                                                                                                                         v2))
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                                                      (coe
                                                                                                                         v2)))))
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1516
+                                                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1642
                                                                                                             v24))
                                                                                                _ -> MAlonzo.RTE.mazUnreachableError)
                                                                                      _ -> MAlonzo.RTE.mazUnreachableError
@@ -3772,19 +3791,19 @@ d_Computational'45'CERT_1650 v0
                                                                                                                              (coe
                                                                                                                                 MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                                                 (coe
-                                                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                                    (coe
                                                                                                                                       v0))) in
                                                                                                                    coe
                                                                                                                      (let v22
                                                                                                                             = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                                                 (coe
-                                                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                                                    (coe
                                                                                                                                       v0)) in
                                                                                                                       coe
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                                                            (coe
                                                                                                                               v21)
                                                                                                                            (coe
@@ -3800,7 +3819,7 @@ d_Computational'45'CERT_1650 v0
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                                                      (coe
                                                                                                                         v7))))
                                                                                                             erased in
@@ -3826,14 +3845,14 @@ d_Computational'45'CERT_1650 v0
                                                                                                                             erased
                                                                                                                             ()
                                                                                                                             erased
-                                                                                                                            (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_848
+                                                                                                                            (MAlonzo.Code.Ledger.Certs.d_DecEq'45'DepositPurpose_958
                                                                                                                                (coe
                                                                                                                                   v0))
                                                                                                                             MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_838
+                                                                                                                               MAlonzo.Code.Ledger.Certs.C_CredentialDeposit_890
                                                                                                                                (coe
                                                                                                                                   v8))
                                                                                                                             (coe
@@ -3841,7 +3860,7 @@ d_Computational'45'CERT_1650 v0
                                                                                                                          (coe
                                                                                                                             MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                                                                                                             (coe
-                                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                                                                (coe
                                                                                                                                   v7))))
                                                                                                                       erased in
@@ -3872,9 +3891,9 @@ d_Computational'45'CERT_1650 v0
                                                                                                        (coe
                                                                                                           MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                                           (coe
-                                                                                                             MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                                              (coe
-                                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                                                              (coe
                                                                                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                 (coe
@@ -3882,15 +3901,15 @@ d_Computational'45'CERT_1650 v0
                                                                                                                 (coe
                                                                                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                    (coe
-                                                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                                                       (coe
                                                                                                                          v2))
                                                                                                                    (coe
-                                                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                                                       (coe
                                                                                                                          v2)))))
                                                                                                           (coe
-                                                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1516
+                                                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1642
                                                                                                              v24))
                                                                                                 _ -> MAlonzo.RTE.mazUnreachableError
                                                                                          MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v22
@@ -3905,13 +3924,13 @@ d_Computational'45'CERT_1650 v0
                                                                                                               (coe
                                                                                                                  MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                                                                     (coe
                                                                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                        (coe
-                                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                                                           (coe
                                                                                                                              v2))
                                                                                                                        (coe
@@ -3919,11 +3938,11 @@ d_Computational'45'CERT_1650 v0
                                                                                                                           (coe
                                                                                                                              v24)
                                                                                                                           (coe
-                                                                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                                                              (coe
                                                                                                                                 v2)))))
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1518
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1644
                                                                                                                     v25))
                                                                                                        _ -> MAlonzo.RTE.mazUnreachableError
                                                                                                 MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v23
@@ -3938,25 +3957,25 @@ d_Computational'45'CERT_1650 v0
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                                                           MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                                                                  (coe
                                                                                                                                     v2))
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                                                                     (coe
                                                                                                                                        v2))
                                                                                                                                  (coe
                                                                                                                                     v25))))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1520
+                                                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1646
                                                                                                                            v26))
                                                                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                                                                        MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v24
@@ -4015,22 +4034,22 @@ d_Computational'45'CERT_1650 v0
                                                                  (coe
                                                                     MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                     (coe
-                                                                       MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                        (coe
                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                           (coe v15)
                                                                           (coe
                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                 (coe v2))
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                 (coe v2)))))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1516
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1642
                                                                        v16))
                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                    MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v14
@@ -4043,22 +4062,22 @@ d_Computational'45'CERT_1650 v0
                                                                         (coe
                                                                            MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                            (coe
-                                                                              MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                     (coe v2))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe v16)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                        (coe v2)))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1518
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1644
                                                                               v17))
                                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                                           MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v15
@@ -4071,24 +4090,24 @@ d_Computational'45'CERT_1650 v0
                                                                                (coe
                                                                                   MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                   (coe
-                                                                                     MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                                      (coe
                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                            (coe v2))
                                                                                         (coe
                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                               (coe
                                                                                                  v2))
                                                                                            (coe
                                                                                               v17))))
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1520
+                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1646
                                                                                      v18))
                                                                         _ -> MAlonzo.RTE.mazUnreachableError
                                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v16
@@ -4125,7 +4144,7 @@ d_Computational'45'CERT_1650 v0
                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                    _ -> MAlonzo.RTE.mazUnreachableError))
                                  _ -> MAlonzo.RTE.mazUnreachableError)
-                       MAlonzo.Code.Ledger.Certs.C_reg_888 v8 v9
+                       MAlonzo.Code.Ledger.Certs.C_reg_998 v8 v9
                          -> let v10
                                   = coe
                                       MAlonzo.Code.Class.Decidable.Core.du_'191'_'191'_42
@@ -4142,17 +4161,17 @@ d_Computational'45'CERT_1650 v0
                                                           (coe
                                                              MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                 (coe v0))) in
                                                 coe
                                                   (let v11
                                                          = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                 (coe v0)) in
                                                    coe
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                        MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                         (coe v10) (coe v11))))
                                                (coe v8)
                                                (coe
@@ -4163,7 +4182,7 @@ d_Computational'45'CERT_1650 v0
                                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                   (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                      (coe v7))))
                                             (coe
                                                MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
@@ -4175,9 +4194,9 @@ d_Computational'45'CERT_1650 v0
                                                   MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                                                (coe v9)
                                                (coe
-                                                  MAlonzo.Code.Ledger.PParams.d_keyDeposit_336
+                                                  MAlonzo.Code.Ledger.PParams.d_keyDeposit_354
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                     MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                      (coe v6))))
                                             (coe
                                                MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
@@ -4194,18 +4213,18 @@ d_Computational'45'CERT_1650 v0
                                                           = coe
                                                               MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                               (coe
-                                                                 MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                 MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'DState_1126)
+                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'DState_1252)
                                                                  (coe
                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                                                        (coe v7))
                                                                     (coe
                                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1086
+                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1212
                                                                           (coe v7))
                                                                        (coe
                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -4215,19 +4234,19 @@ d_Computational'45'CERT_1650 v0
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                    (coe
                                                                                                       v0))) in
                                                                                    coe
                                                                                      (let v15
                                                                                             = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                                   MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                                    (coe
                                                                                                       v0)) in
                                                                                       coe
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                           MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                            (coe v14)
                                                                                            (coe
                                                                                               v15))) in
@@ -4243,7 +4262,7 @@ d_Computational'45'CERT_1650 v0
                                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                                                    erased v14)
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                    (coe v7))
                                                                                 (coe
                                                                                    MAlonzo.Code.Class.HasSingleton.d_'10100'_'10101'_310
@@ -4260,17 +4279,17 @@ d_Computational'45'CERT_1650 v0
                                                                                          (0 ::
                                                                                             Integer))))))
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1154
+                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_updateCertDeposit_1280
                                                                              (coe v0)
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Certs.d_pparams_992
+                                                                                MAlonzo.Code.Ledger.Certs.d_pparams_1188
                                                                                 (coe v6))
                                                                              (coe v3)
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                 (coe v7)))))))
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'reg_1430
+                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_DELEG'45'reg_1556
                                                                  v13) in
                                                     coe
                                                       (case coe v14 of
@@ -4280,22 +4299,22 @@ d_Computational'45'CERT_1650 v0
                                                                 (coe
                                                                    MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                    (coe
-                                                                      MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                      MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                       (coe
                                                                          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                          (coe v15)
                                                                          (coe
                                                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                (coe v2))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                (coe v2)))))
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1516
+                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1642
                                                                       v16))
                                                          _ -> MAlonzo.RTE.mazUnreachableError)
                                                _ -> MAlonzo.RTE.mazUnreachableError
@@ -4318,19 +4337,19 @@ d_Computational'45'CERT_1650 v0
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                              (coe
                                                                                                 v0))) in
                                                                              coe
                                                                                (let v14
                                                                                       = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                                              (coe
                                                                                                 v0)) in
                                                                                 coe
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                                      (coe v13)
                                                                                      (coe v14))))
                                                                             (coe v8)
@@ -4343,7 +4362,7 @@ d_Computational'45'CERT_1650 v0
                                                                                (coe
                                                                                   MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                   (coe v7))))
                                                                          (coe
                                                                             MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
@@ -4371,22 +4390,22 @@ d_Computational'45'CERT_1650 v0
                                                                  (coe
                                                                     MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                     (coe
-                                                                       MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                       MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                        (coe
                                                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                           (coe v15)
                                                                           (coe
                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                 (coe v2))
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                 (coe v2)))))
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1516
+                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'deleg_1642
                                                                        v16))
                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                    MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v14
@@ -4399,22 +4418,22 @@ d_Computational'45'CERT_1650 v0
                                                                         (coe
                                                                            MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                            (coe
-                                                                              MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                               (coe
                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                     (coe v2))
                                                                                  (coe
                                                                                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                     (coe v16)
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                        (coe v2)))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1518
+                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1644
                                                                               v17))
                                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                                           MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v15
@@ -4427,24 +4446,24 @@ d_Computational'45'CERT_1650 v0
                                                                                (coe
                                                                                   MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                                                   (coe
-                                                                                     MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                                                      (coe
                                                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                            (coe v2))
                                                                                         (coe
                                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                               (coe
                                                                                                  v2))
                                                                                            (coe
                                                                                               v17))))
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1520
+                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1646
                                                                                      v18))
                                                                         _ -> MAlonzo.RTE.mazUnreachableError
                                                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v16
@@ -4493,22 +4512,22 @@ d_Computational'45'CERT_1650 v0
                                                (coe
                                                   MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                   (coe
-                                                     MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                            (coe v2))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                            (coe v10)
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                              MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                               (coe v2)))))
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1518
+                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'pool_1644
                                                      v11))
                                         _ -> MAlonzo.RTE.mazUnreachableError
                                  MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v9
@@ -4521,22 +4540,22 @@ d_Computational'45'CERT_1650 v0
                                                       (coe
                                                          MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                                          (coe
-                                                            MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                                            MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                                             (coe
                                                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                   (coe v2))
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                      (coe v2))
                                                                   (coe v11))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1520
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'vdel_1646
                                                             v12))
                                                _ -> MAlonzo.RTE.mazUnreachableError
                                         MAlonzo.Code.Interface.ComputationalRelation.C_failure_44 v10
@@ -4566,111 +4585,111 @@ d_Computational'45'CERT_1650 v0
                                         _ -> MAlonzo.RTE.mazUnreachableError
                                  _ -> MAlonzo.RTE.mazUnreachableError))))))
 -- Ledger.Conway.Conformance.Certs.Properties.Computational-CERTBASE
-d_Computational'45'CERTBASE_1958 ::
+d_Computational'45'CERTBASE_2084 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'CERTBASE_1958 v0
+d_Computational'45'CERTBASE_2084 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (\ v1 v2 v3 -> coe du_goal_2094 (coe v0) (coe v1) (coe v2))
+      (\ v1 v2 v3 -> coe du_goal_2220 (coe v0) (coe v1) (coe v2))
 -- Ledger.Conway.Conformance.Certs.Properties._._.pp
-d_pp_1976 ::
+d_pp_2102 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  MAlonzo.Code.Ledger.PParams.T_PParams_244
-d_pp_1976 ~v0 v1 ~v2 ~v3 = du_pp_1976 v1
-du_pp_1976 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.PParams.T_PParams_244
-du_pp_1976 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_922 (coe v0)
+  MAlonzo.Code.Ledger.PParams.T_PParams_262
+d_pp_2102 ~v0 v1 ~v2 ~v3 = du_pp_2102 v1
+du_pp_2102 ::
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.PParams.T_PParams_262
+du_pp_2102 v0 = coe MAlonzo.Code.Ledger.Certs.d_pp_1032 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._._.votes
-d_votes_1978 ::
+d_votes_2104 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_740]
-d_votes_1978 ~v0 v1 ~v2 ~v3 = du_votes_1978 v1
-du_votes_1978 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_740]
-du_votes_1978 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_votes_924 (coe v0)
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_794]
+d_votes_2104 ~v0 v1 ~v2 ~v3 = du_votes_2104 v1
+du_votes_2104 ::
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  [MAlonzo.Code.Ledger.GovernanceActions.T_GovVote_794]
+du_votes_2104 v0
+  = coe MAlonzo.Code.Ledger.Certs.d_votes_1034 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._._.wdrls
-d_wdrls_1980 ::
+d_wdrls_2106 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_wdrls_1980 ~v0 v1 ~v2 ~v3 = du_wdrls_1980 v1
-du_wdrls_1980 ::
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
+d_wdrls_2106 ~v0 v1 ~v2 ~v3 = du_wdrls_2106 v1
+du_wdrls_2106 ::
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_wdrls_1980 v0
-  = coe MAlonzo.Code.Ledger.Certs.d_wdrls_926 (coe v0)
+du_wdrls_2106 v0
+  = coe MAlonzo.Code.Ledger.Certs.d_wdrls_1036 (coe v0)
 -- Ledger.Conway.Conformance.Certs.Properties._._.rewards
-d_rewards_2074 ::
+d_rewards_2200 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_rewards_2074 ~v0 ~v1 v2 ~v3 = du_rewards_2074 v2
-du_rewards_2074 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+d_rewards_2200 ~v0 ~v1 v2 ~v3 = du_rewards_2200 v2
+du_rewards_2200 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_rewards_2074 v0
+du_rewards_2200 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
          (coe v0))
 -- Ledger.Conway.Conformance.Certs.Properties._._.voteDelegs
-d_voteDelegs_2078 ::
+d_voteDelegs_2204 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_voteDelegs_2078 ~v0 ~v1 v2 ~v3 = du_voteDelegs_2078 v2
-du_voteDelegs_2078 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+d_voteDelegs_2204 ~v0 ~v1 v2 ~v3 = du_voteDelegs_2204 v2
+du_voteDelegs_2204 ::
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_voteDelegs_2078 v0
+du_voteDelegs_2204 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
       (coe
-         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
          (coe v0))
 -- Ledger.Conway.Conformance.Certs.Properties._.sep
-d_sep_2080 ::
+d_sep_2206 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_sep_2080 ~v0 ~v1 ~v2 ~v3 = du_sep_2080
-du_sep_2080 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_sep_2080 = coe (" | " :: Data.Text.Text)
+d_sep_2206 ~v0 ~v1 ~v2 ~v3 = du_sep_2206
+du_sep_2206 :: MAlonzo.Code.Agda.Builtin.String.T_String_6
+du_sep_2206 = coe (" | " :: Data.Text.Text)
 -- Ledger.Conway.Conformance.Certs.Properties._.genErr
-d_genErr_2084 ::
+d_genErr_2210 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_genErr_2084 v0 v1 v2 ~v3 ~v4 = du_genErr_2084 v0 v1 v2
-du_genErr_2084 ::
+d_genErr_2210 v0 v1 v2 ~v3 ~v4 = du_genErr_2210 v0 v1 v2
+du_genErr_2210 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_genErr_2084 v0 v1 v2
+du_genErr_2210 v0 v1 v2
   = let v3
           = coe
               MAlonzo.Code.Ledger.Prelude.du_dec'45'de'45'morgan_8
@@ -4695,17 +4714,17 @@ du_genErr_2084 v0 v1 v2
                                                (coe
                                                   MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                      (coe v0))) in
                                      coe
                                        (let v6
                                               = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                      (coe v0)) in
                                         coe
                                           (coe
-                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                             MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                              (coe v5) (coe v6))))
                                     (coe v4)
                                     (coe
@@ -4716,9 +4735,9 @@ du_genErr_2084 v0 v1 v2
                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                        (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                              (coe v2)))))))
                          v3))
                  (coe
@@ -4729,7 +4748,7 @@ du_genErr_2084 v0 v1 v2
                          (coe
                             MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                             (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16))
-                         (coe MAlonzo.Code.Ledger.Address.du_isKeyHashObj'7495'_26 (coe v3))
+                         (coe MAlonzo.Code.Ledger.Address.du_isKeyHashObj'7495'_44 (coe v3))
                          (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
                     (let v3
                            = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
@@ -4737,7 +4756,7 @@ du_genErr_2084 v0 v1 v2
                        (coe
                           MAlonzo.Code.Axiom.Set.du_map_398
                           (MAlonzo.Code.Axiom.Set.d_th_1470 (coe v3))
-                          (\ v4 -> MAlonzo.Code.Ledger.Address.d_stake_84 (coe v4))
+                          (\ v4 -> MAlonzo.Code.Ledger.Address.d_stake_102 (coe v4))
                           (coe
                              MAlonzo.Code.Class.IsSet.du_dom_548
                              (coe
@@ -4745,7 +4764,7 @@ du_genErr_2084 v0 v1 v2
                                 (coe
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                              (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
-                             (coe MAlonzo.Code.Ledger.Certs.d_wdrls_926 (coe v1)))))))
+                             (coe MAlonzo.Code.Ledger.Certs.d_wdrls_1036 (coe v1)))))))
               erased in
     coe
       (case coe v3 of
@@ -4765,7 +4784,7 @@ du_genErr_2084 v0 v1 v2
                                (" \172 ( filter\738 isKeyHash (map\738 RwdAddr.stake (dom wdrls)) \8838 dom voteDelegs ) "
                                 ::
                                 Data.Text.Text)
-                               (coe du_sep_2080))
+                               (coe du_sep_2206))
                             (" filter\738 isKeyHash (map\738 RwdAddr.stake (dom wdrls)): "
                              ::
                              Data.Text.Text))
@@ -4779,18 +4798,18 @@ du_genErr_2084 v0 v1 v2
                                   (coe
                                      MAlonzo.Code.Class.Show.Core.d_show_16
                                      (coe
-                                        MAlonzo.Code.Ledger.Address.du_Show'45'Credential_206
+                                        MAlonzo.Code.Ledger.Address.du_Show'45'Credential_250
                                         (coe
                                            MAlonzo.Code.Ledger.Crypto.d_Show'45'THash_24
                                            (coe
                                               MAlonzo.Code.Ledger.Crypto.d_khs_200
                                               (coe
-                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                  (coe v0))))
                                         (coe
                                            MAlonzo.Code.Ledger.Crypto.d_Show'45'ScriptHash_206
                                            (coe
-                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                               (coe v0)))))
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -4806,7 +4825,7 @@ du_genErr_2084 v0 v1 v2
                                                    (coe
                                                       MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Address.du_isKeyHashObj'7495'_26
+                                                   MAlonzo.Code.Ledger.Address.du_isKeyHashObj'7495'_44
                                                    (coe v5))
                                                 (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
                                            (coe
@@ -4815,7 +4834,7 @@ du_genErr_2084 v0 v1 v2
                                                  (coe
                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                               (\ v5 ->
-                                                 MAlonzo.Code.Ledger.Address.d_stake_84 (coe v5))
+                                                 MAlonzo.Code.Ledger.Address.d_stake_102 (coe v5))
                                               (coe
                                                  MAlonzo.Code.Class.IsSet.du_dom_548
                                                  (coe
@@ -4824,9 +4843,9 @@ du_genErr_2084 v0 v1 v2
                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                  (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                  (coe
-                                                    MAlonzo.Code.Ledger.Certs.d_wdrls_926
+                                                    MAlonzo.Code.Ledger.Certs.d_wdrls_1036
                                                     (coe v1)))))))))))
-                      (coe du_sep_2080))
+                      (coe du_sep_2206))
                    (" dom voteDelegs: " :: Data.Text.Text))
                 (coe
                    MAlonzo.Code.Data.String.Base.d_braces_48
@@ -4838,18 +4857,18 @@ du_genErr_2084 v0 v1 v2
                          (coe
                             MAlonzo.Code.Class.Show.Core.d_show_16
                             (coe
-                               MAlonzo.Code.Ledger.Address.du_Show'45'Credential_206
+                               MAlonzo.Code.Ledger.Address.du_Show'45'Credential_250
                                (coe
                                   MAlonzo.Code.Ledger.Crypto.d_Show'45'THash_24
                                   (coe
                                      MAlonzo.Code.Ledger.Crypto.d_khs_200
                                      (coe
-                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                         (coe v0))))
                                (coe
                                   MAlonzo.Code.Ledger.Crypto.d_Show'45'ScriptHash_206
                                   (coe
-                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                      (coe v0)))))
                          (coe
                             MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -4863,9 +4882,9 @@ du_genErr_2084 v0 v1 v2
                                         MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                   (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                   (coe
-                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                      (coe
-                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                         (coe v2)))))))))
          MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v4
            -> coe
@@ -4883,7 +4902,7 @@ du_genErr_2084 v0 v1 v2
                                ("\172 ( map\738 (Bifunctor.map\8321 Bifunctor-\215 (RwdAddr.stake)) (wdrls \738) \8838 proj\8321 rewards )"
                                 ::
                                 Data.Text.Text)
-                               (coe du_sep_2080))
+                               (coe du_sep_2206))
                             (" map\738 (Bifunctor.map\8321 Bifunctor-\215 (RwdAddr.stake)) (wdrls \738): "
                              ::
                              Data.Text.Text))
@@ -4897,18 +4916,18 @@ du_genErr_2084 v0 v1 v2
                                   (coe
                                      MAlonzo.Code.Class.Show.Core.d_show_16
                                      (coe
-                                        MAlonzo.Code.Ledger.Address.du_Show'45'Credential'215'Coin_210
+                                        MAlonzo.Code.Ledger.Address.du_Show'45'Credential'215'Coin_254
                                         (coe
                                            MAlonzo.Code.Ledger.Crypto.d_Show'45'THash_24
                                            (coe
                                               MAlonzo.Code.Ledger.Crypto.d_khs_200
                                               (coe
-                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                 MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                  (coe v0))))
                                         (coe
                                            MAlonzo.Code.Ledger.Crypto.d_Show'45'ScriptHash_206
                                            (coe
-                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                              MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                               (coe v0)))))
                                   (coe
                                      MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -4925,14 +4944,14 @@ du_genErr_2084 v0 v1 v2
                                                  MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_152)
                                               (coe
                                                  (\ v5 ->
-                                                    MAlonzo.Code.Ledger.Address.d_stake_84
+                                                    MAlonzo.Code.Ledger.Address.d_stake_102
                                                       (coe v5))))
                                            (coe
                                               MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                               (coe
-                                                 MAlonzo.Code.Ledger.Certs.d_wdrls_926
+                                                 MAlonzo.Code.Ledger.Certs.d_wdrls_1036
                                                  (coe v1))))))))))
-                      (coe du_sep_2080))
+                      (coe du_sep_2206))
                    (" proj\8321 rewards: " :: Data.Text.Text))
                 (coe
                    MAlonzo.Code.Data.String.Base.d_braces_48
@@ -4944,18 +4963,18 @@ du_genErr_2084 v0 v1 v2
                          (coe
                             MAlonzo.Code.Class.Show.Core.d_show_16
                             (coe
-                               MAlonzo.Code.Ledger.Address.du_Show'45'Credential'215'Coin_210
+                               MAlonzo.Code.Ledger.Address.du_Show'45'Credential'215'Coin_254
                                (coe
                                   MAlonzo.Code.Ledger.Crypto.d_Show'45'THash_24
                                   (coe
                                      MAlonzo.Code.Ledger.Crypto.d_khs_200
                                      (coe
-                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                        MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                         (coe v0))))
                                (coe
                                   MAlonzo.Code.Ledger.Crypto.d_Show'45'ScriptHash_206
                                   (coe
-                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                     MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                      (coe v0)))))
                          (coe
                             MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -4963,25 +4982,25 @@ du_genErr_2084 v0 v1 v2
                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_finiteness_1104
                                (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                   (coe
-                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                      (coe
-                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                         (coe v2)))))))))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Conformance.Certs.Properties._.goal
-d_goal_2094 ::
+d_goal_2220 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_goal_2094 v0 v1 v2 ~v3 = du_goal_2094 v0 v1 v2
-du_goal_2094 ::
+d_goal_2220 v0 v1 v2 ~v3 = du_goal_2220 v0 v1 v2
+du_goal_2220 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Ledger.Certs.T_CertEnv_908 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1110 ->
+  MAlonzo.Code.Ledger.Certs.T_CertEnv_1018 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1236 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-du_goal_2094 v0 v1 v2
+du_goal_2220 v0 v1 v2
   = let v3
           = coe
               MAlonzo.Code.Class.Decidable.Core.du_'191'_'191'_42
@@ -5002,17 +5021,17 @@ du_goal_2094 v0 v1 v2
                                        (coe
                                           MAlonzo.Code.Ledger.Crypto.d_khs_200
                                           (coe
-                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                              (coe v0))) in
                              coe
                                (let v5
                                       = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                           (coe
-                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                             MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                              (coe v0)) in
                                 coe
                                   (coe
-                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142 (coe v4)
+                                     MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186 (coe v4)
                                      (coe v5))))
                             (coe v3)
                             (coe
@@ -5023,9 +5042,9 @@ du_goal_2094 v0 v1 v2
                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                (coe
-                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                   (coe
-                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                      (coe v2))))))
                     (coe
                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1160
@@ -5035,14 +5054,14 @@ du_goal_2094 v0 v1 v2
                             (coe
                                MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16))
-                            (coe MAlonzo.Code.Ledger.Address.du_isKeyHashObj'7495'_26 (coe v3))
+                            (coe MAlonzo.Code.Ledger.Address.du_isKeyHashObj'7495'_44 (coe v3))
                             (coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
                        (coe
                           MAlonzo.Code.Axiom.Set.du_map_398
                           (MAlonzo.Code.Axiom.Set.d_th_1470
                              (coe
                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                          (\ v3 -> MAlonzo.Code.Ledger.Address.d_stake_84 (coe v3))
+                          (\ v3 -> MAlonzo.Code.Ledger.Address.d_stake_102 (coe v3))
                           (coe
                              MAlonzo.Code.Class.IsSet.du_dom_548
                              (coe
@@ -5050,7 +5069,7 @@ du_goal_2094 v0 v1 v2
                                 (coe
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                              (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
-                             (coe MAlonzo.Code.Ledger.Certs.d_wdrls_926 (coe v1))))))
+                             (coe MAlonzo.Code.Ledger.Certs.d_wdrls_1036 (coe v1))))))
                  (coe
                     MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
                     (coe
@@ -5068,26 +5087,26 @@ du_goal_2094 v0 v1 v2
                                           (coe
                                              MAlonzo.Code.Ledger.Crypto.d_khs_200
                                              (coe
-                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                 (coe v0))) in
                                 coe
                                   (let v5
                                          = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                              (coe
-                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                 (coe v0)) in
                                    coe
                                      (coe
-                                        MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                        MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                         (coe v4) (coe v5))))
                                MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22)
                             (coe v3)
                             (coe
                                MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                (coe
-                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                   (coe
-                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                      (coe v2))))))
                     (coe
                        MAlonzo.Code.Axiom.Set.du_map_398
@@ -5097,10 +5116,10 @@ du_goal_2094 v0 v1 v2
                        (coe
                           MAlonzo.Code.Class.Bifunctor.du_map'8321'_110
                           (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_152)
-                          (coe (\ v3 -> MAlonzo.Code.Ledger.Address.d_stake_84 (coe v3))))
+                          (coe (\ v3 -> MAlonzo.Code.Ledger.Address.d_stake_102 (coe v3))))
                        (coe
                           MAlonzo.Code.Axiom.Set.Map.du__'738'_550
-                          (coe MAlonzo.Code.Ledger.Certs.d_wdrls_926 (coe v1)))))) in
+                          (coe MAlonzo.Code.Ledger.Certs.d_wdrls_1036 (coe v1)))))) in
     coe
       (case coe v3 of
          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v4 v5
@@ -5112,19 +5131,19 @@ du_goal_2094 v0 v1 v2
                               (coe
                                  MAlonzo.Code.Data.Product.Base.du_'45''44'__92
                                  (coe
-                                    MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                    MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'CertState_1130)
+                                       MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1256)
                                     (coe
                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                        (coe
-                                          MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'DState_1126)
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'DState_1252)
                                           (coe
                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                              (let v7
-                                                    = MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_812
+                                                    = MAlonzo.Code.Ledger.GovernanceActions.d_DecEq'45'VDeleg_866
                                                         (coe v0) in
                                               coe
                                                 (coe
@@ -5138,9 +5157,9 @@ du_goal_2094 v0 v1 v2
                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                       erased v7)
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                          (coe v2)))
                                                    (let v8
                                                           = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
@@ -5158,9 +5177,9 @@ du_goal_2094 v0 v1 v2
                                                                (MAlonzo.Code.Axiom.Set.d_th_1470
                                                                   (coe v9))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_680
+                                                                  MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_728
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670))
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718))
                                                                (coe
                                                                   MAlonzo.Code.Class.IsSet.du_dom_548
                                                                   (coe
@@ -5170,9 +5189,9 @@ du_goal_2094 v0 v1 v2
                                                                   (coe
                                                                      MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                         (coe v2))))))
                                                          (let v9
                                                                 = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
@@ -5185,19 +5204,19 @@ du_goal_2094 v0 v1 v2
                                                                (coe
                                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_684)
+                                                                     MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_732)
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_682)
+                                                                        MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_730)
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))))
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1086
+                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1212
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                       (coe v2)))
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -5207,17 +5226,17 @@ du_goal_2094 v0 v1 v2
                                                                       (coe
                                                                          MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                            MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                             (coe v0))) in
                                                             coe
                                                               (let v8
                                                                      = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                            MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                             (coe v0)) in
                                                                coe
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                    MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                     (coe v7) (coe v8))) in
                                                     coe
                                                       (coe
@@ -5244,7 +5263,7 @@ du_goal_2094 v0 v1 v2
                                                                   (MAlonzo.Code.Axiom.Set.d_th_1470
                                                                      (coe v8))
                                                                   (\ v9 ->
-                                                                     MAlonzo.Code.Ledger.Address.d_stake_84
+                                                                     MAlonzo.Code.Ledger.Address.d_stake_102
                                                                        (coe v9))
                                                                   (coe
                                                                      MAlonzo.Code.Class.IsSet.du_dom_548
@@ -5255,28 +5274,28 @@ du_goal_2094 v0 v1 v2
                                                                      (coe
                                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Certs.d_wdrls_926
+                                                                        MAlonzo.Code.Ledger.Certs.d_wdrls_1036
                                                                         (coe v1)))))
                                                             (coe (0 :: Integer)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                (coe v2)))))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                          (coe v2)))))))
                                        (coe
                                           MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                              (coe v2))
                                           (coe
-                                             MAlonzo.Code.Class.To.d_'10214'_'10215'_16
+                                             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_To'45'GState_1128)
+                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'GState_1254)
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                 (let v7
@@ -5285,17 +5304,17 @@ du_goal_2094 v0 v1 v2
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                          (coe v0))) in
                                                          coe
                                                            (let v8
                                                                   = MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_542
+                                                                         MAlonzo.Code.Ledger.Types.GovStructure.d_crypto_566
                                                                          (coe v0)) in
                                                             coe
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_142
+                                                                 MAlonzo.Code.Ledger.Address.du_DecEq'45'Credential_186
                                                                  (coe v7) (coe v8))) in
                                                  coe
                                                    (coe
@@ -5313,76 +5332,76 @@ du_goal_2094 v0 v1 v2
                                                                  MAlonzo.Code.Class.HasAdd.Core.d__'43'__16
                                                                  (MAlonzo.Code.Ledger.Types.Epoch.d_addEpoch_246
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_epochStructure_588
+                                                                       MAlonzo.Code.Ledger.Types.GovStructure.d_epochStructure_612
                                                                        (coe v0)))
-                                                                 (MAlonzo.Code.Ledger.Certs.d_epoch_920
+                                                                 (MAlonzo.Code.Ledger.Certs.d_epoch_1030
                                                                     (coe v1))
                                                                  (let v8
                                                                         = coe
-                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_89399
+                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_mkGeneralizeTel_90253
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Certs.d_pp_922
+                                                                               MAlonzo.Code.Ledger.Certs.d_pp_1032
                                                                                (coe v1))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Certs.d_votes_924
+                                                                               MAlonzo.Code.Ledger.Certs.d_votes_1034
                                                                                (coe v1))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Certs.d_epoch_920
+                                                                               MAlonzo.Code.Ledger.Certs.d_epoch_1030
                                                                                (coe v1))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                   (coe v2)))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Certs.d_wdrls_926
+                                                                               MAlonzo.Code.Ledger.Certs.d_wdrls_1036
                                                                                (coe v1))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1084
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1210
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                   (coe v2)))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1088
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_rewards_1214
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                   (coe v2)))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Certs.d_coldCreds_928
+                                                                               MAlonzo.Code.Ledger.Certs.d_coldCreds_1038
                                                                                (coe v1))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1086
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_stakeDelegs_1212
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                   (coe v2)))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1090
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1216
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1118
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dState_1244
                                                                                   (coe v2)))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1120
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1246
                                                                                (coe v2))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1104
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1230
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                   (coe v2)))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1106
+                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1232
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                                                   (coe v2))) in
                                                                   coe
-                                                                    (MAlonzo.Code.Ledger.PParams.d_drepActivity_384
+                                                                    (MAlonzo.Code.Ledger.PParams.d_drepActivity_402
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_89371
+                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_'46'generalizedField'45'pp_90225
                                                                           (coe v8)))) in
                                                        coe (coe (\ v9 -> v8)))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1102
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1228
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                             (coe v2)))
                                                       (let v8
                                                              = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
@@ -5392,7 +5411,7 @@ du_goal_2094 v0 v1 v2
                                                             (MAlonzo.Code.Axiom.Set.d_th_1470
                                                                (coe v8))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.GovernanceActions.du_getDRepVote_816)
+                                                               MAlonzo.Code.Ledger.GovernanceActions.du_getDRepVote_870)
                                                             (let v9
                                                                    = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
                                                              coe
@@ -5402,39 +5421,39 @@ du_goal_2094 v0 v1 v2
                                                                      MAlonzo.Code.Axiom.Set.d_th_1470
                                                                      (coe v9))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Certs.d_votes_924
+                                                                     MAlonzo.Code.Ledger.Certs.d_votes_1034
                                                                      (coe v1))))))))
                                                 (coe
                                                    MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1104
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_ccHotKeys_1230
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                          (coe v2)))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1106
+                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_deposits_1232
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1122
+                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_gState_1248
                                                          (coe v2)))))))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'base_1604
+                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_CERT'45'base_1730
                                     v6))
                        _ -> MAlonzo.RTE.mazUnreachableError
                 else coe
                        seq (coe v5)
                        (coe
                           MAlonzo.Code.Interface.ComputationalRelation.C_failure_44
-                          (coe du_genErr_2084 (coe v0) (coe v1) (coe v2)))
+                          (coe du_genErr_2210 (coe v0) (coe v1) (coe v2)))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Conformance.Certs.Properties.Computational-CERTS
-d_Computational'45'CERTS_2138 ::
+d_Computational'45'CERTS_2264 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'CERTS_2138 v0
+d_Computational'45'CERTS_2264 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.du_Computational'45'ReflexiveTransitiveClosure'7495'''_1138
-      (coe d_Computational'45'CERTBASE_1958 (coe v0))
-      (coe d_Computational'45'CERT_1650 (coe v0))
+      (coe d_Computational'45'CERTBASE_2084 (coe v0))
+      (coe d_Computational'45'CERT_1776 (coe v0))
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_InjectError'45'Id_730)
       (coe

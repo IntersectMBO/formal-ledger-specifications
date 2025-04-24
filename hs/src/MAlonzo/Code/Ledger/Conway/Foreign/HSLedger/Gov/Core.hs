@@ -74,16 +74,16 @@ d_Conv'45'GovRole_26
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_CC_668 -> coe C_CC_19
-              MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670 -> coe C_DRep_21
-              MAlonzo.Code.Ledger.GovernanceActions.C_SPO_672 -> coe C_SPO_23
+              MAlonzo.Code.Ledger.GovernanceActions.C_CC_716 -> coe C_CC_19
+              MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718 -> coe C_DRep_21
+              MAlonzo.Code.Ledger.GovernanceActions.C_SPO_720 -> coe C_SPO_23
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_CC_19 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_668
-              C_DRep_21 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670
-              C_SPO_23 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_672
+              C_CC_19 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_716
+              C_DRep_21 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718
+              C_SPO_23 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_720
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.HsTy-Anchor
 d_HsTy'45'Anchor_28 ::
@@ -98,7 +98,7 @@ d_Conv'45'Anchor_30
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1881 v1 v2
+              MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2307 v1 v2
                 -> coe C_Anchor_145 (coe v1) (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
@@ -106,7 +106,7 @@ d_Conv'45'Anchor_30
             case coe v0 of
               C_Anchor_145 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_1881
+                     MAlonzo.Code.Ledger.GovernanceActions.C_Anchor'46'constructor_2307
                      (coe v1) (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.HsTy-VDeleg
@@ -122,7 +122,7 @@ d_Conv'45'VDeleg_34
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_680 v1 v2
+              MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_728 v1 v2
                 -> coe
                      C_CredVoter_691
                      (coe
@@ -132,16 +132,16 @@ d_Conv'45'VDeleg_34
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_668 -> coe C_CC_19
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670 -> coe C_DRep_21
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_672 -> coe C_SPO_23
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_716 -> coe C_CC_19
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718 -> coe C_DRep_21
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_720 -> coe C_SPO_23
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   C_CC_19 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_668
-                                   C_DRep_21 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670
-                                   C_SPO_23 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_672
+                                   C_CC_19 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_716
+                                   C_DRep_21 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718
+                                   C_SPO_23 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_720
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
                      (coe
@@ -169,9 +169,9 @@ d_Conv'45'VDeleg_34
                                      -> coe MAlonzo.Code.Ledger.Address.C_ScriptObj_20 (coe v4)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
-              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_682
+              MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_730
                 -> coe C_AbstainRep_853
-              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_684
+              MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_732
                 -> coe C_NoConfidenceRep_855
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
@@ -179,7 +179,7 @@ d_Conv'45'VDeleg_34
             case coe v0 of
               C_CredVoter_691 v1 v2
                 -> coe
-                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_680
+                     MAlonzo.Code.Ledger.GovernanceActions.C_credVoter_728
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -187,16 +187,16 @@ d_Conv'45'VDeleg_34
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_668 -> coe C_CC_19
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670 -> coe C_DRep_21
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_672 -> coe C_SPO_23
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_CC_716 -> coe C_CC_19
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718 -> coe C_DRep_21
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_SPO_720 -> coe C_SPO_23
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v3 ->
                                  case coe v3 of
-                                   C_CC_19 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_668
-                                   C_DRep_21 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_670
-                                   C_SPO_23 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_672
+                                   C_CC_19 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_CC_716
+                                   C_DRep_21 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_DRep_718
+                                   C_SPO_23 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_SPO_720
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v1)
                      (coe
@@ -225,9 +225,9 @@ d_Conv'45'VDeleg_34
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v2)
               C_AbstainRep_853
-                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_682
+                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstainRep_730
               C_NoConfidenceRep_855
-                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_684
+                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_noConfidenceRep_732
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.HsTy-Vote
 d_HsTy'45'Vote_36 ::
@@ -242,18 +242,18 @@ d_Conv'45'Vote_38
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_yes_734 -> coe C_Yes_1407
-              MAlonzo.Code.Ledger.GovernanceActions.C_no_736 -> coe C_No_1409
-              MAlonzo.Code.Ledger.GovernanceActions.C_abstain_738
+              MAlonzo.Code.Ledger.GovernanceActions.C_yes_788 -> coe C_Yes_1407
+              MAlonzo.Code.Ledger.GovernanceActions.C_no_790 -> coe C_No_1409
+              MAlonzo.Code.Ledger.GovernanceActions.C_abstain_792
                 -> coe C_Abstain_1411
               _ -> MAlonzo.RTE.mazUnreachableError))
       (coe
          (\ v0 ->
             case coe v0 of
-              C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_734
-              C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_736
+              C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_788
+              C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_790
               C_Abstain_1411
-                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_738
+                -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_792
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.HsTy-GovVote
 d_HsTy'45'GovVote_40 ::
@@ -268,7 +268,7 @@ d_Conv'45'GovVote_42
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_3351 v1 v2 v3 v4
+              MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_4295 v1 v2 v3 v4
                 -> coe
                      C_GovVote_1533
                      (coe
@@ -307,18 +307,18 @@ d_Conv'45'GovVote_42
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_yes_734 -> coe C_Yes_1407
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_no_736 -> coe C_No_1409
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_abstain_738
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_yes_788 -> coe C_Yes_1407
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_no_790 -> coe C_No_1409
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_abstain_792
                                      -> coe C_Abstain_1411
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_734
-                                   C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_736
+                                   C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_788
+                                   C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_790
                                    C_Abstain_1411
-                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_738
+                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_792
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v3)
                      (coe
@@ -334,7 +334,7 @@ d_Conv'45'GovVote_42
             case coe v0 of
               C_GovVote_1533 v1 v2 v3 v4
                 -> coe
-                     MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_3351
+                     MAlonzo.Code.Ledger.GovernanceActions.C_GovVote'46'constructor_4295
                      (coe
                         MAlonzo.Code.Data.Product.Base.du_map_128
                         (coe
@@ -369,18 +369,18 @@ d_Conv'45'GovVote_42
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_yes_734 -> coe C_Yes_1407
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_no_736 -> coe C_No_1409
-                                   MAlonzo.Code.Ledger.GovernanceActions.C_abstain_738
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_yes_788 -> coe C_Yes_1407
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_no_790 -> coe C_No_1409
+                                   MAlonzo.Code.Ledger.GovernanceActions.C_abstain_792
                                      -> coe C_Abstain_1411
                                    _ -> MAlonzo.RTE.mazUnreachableError))
                            (coe
                               (\ v5 ->
                                  case coe v5 of
-                                   C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_734
-                                   C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_736
+                                   C_Yes_1407 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_yes_788
+                                   C_No_1409 -> coe MAlonzo.Code.Ledger.GovernanceActions.C_no_790
                                    C_Abstain_1411
-                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_738
+                                     -> coe MAlonzo.Code.Ledger.GovernanceActions.C_abstain_792
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v3)
                      (coe

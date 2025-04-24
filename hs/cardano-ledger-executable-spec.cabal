@@ -133,6 +133,10 @@ library
       MAlonzo.Code.Class.HasAdd
       MAlonzo.Code.Class.HasAdd.Core
       MAlonzo.Code.Class.HasAdd.Instance
+      MAlonzo.Code.Class.HasCast
+      MAlonzo.Code.Class.HasCast.Base
+      MAlonzo.Code.Class.HasCast.Derive
+      MAlonzo.Code.Class.HasCast.Instances
       MAlonzo.Code.Class.HasEmptySet
       MAlonzo.Code.Class.HasOrder
       MAlonzo.Code.Class.HasOrder.Core
@@ -158,7 +162,6 @@ library
       MAlonzo.Code.Class.Show
       MAlonzo.Code.Class.Show.Core
       MAlonzo.Code.Class.Show.Instances
-      MAlonzo.Code.Class.To
       MAlonzo.Code.Class.ToBool
       MAlonzo.Code.Class.Traversable
       MAlonzo.Code.Class.Traversable.Core
