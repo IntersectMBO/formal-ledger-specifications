@@ -140,7 +140,7 @@ data
 \begin{AgdaSuppressSpace}
 \begin{code}
   CHAIN : {b : Block} {nes : NewEpochState} {cs : ChainState}
-  \end{code}
+\end{code}
 \begin{code}[hide]
     → let open ChainState cs; open Block b; open NewEpochState nes
           open EpochState epochState; open EnactState es renaming (pparams to pp)
