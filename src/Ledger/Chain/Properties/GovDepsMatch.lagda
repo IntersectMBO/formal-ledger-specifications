@@ -24,12 +24,12 @@ open import Ledger.Ledger.Properties.GovDepsMatch txs abs
 open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
 
 module _
-  { b   : Block }
-  { nes : NewEpochState}
-  { cs  : ChainState}
+  {b   : Block }
+  {nes : NewEpochState}
+  {cs  : ChainState}
   where
   open Block b; open ChainState cs
-  open NewEpochState -- nes renaming (epochState to nesEpochState; lastEpoch to nesLastEpoch; ru to nesRu)
+  open NewEpochState
   open EPOCH-Body (EpochStateOf cs) renaming (epsLState to csLState)
   open EnactState ens using (pparams)
   pp = pparams .proj₁

@@ -5,10 +5,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra
-open import Data.Nat.Properties using (+-0-monoid)
-
-open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
 open import Ledger.Abstract
 
@@ -21,10 +17,13 @@ open import Ledger.Certs govStructure
 open import Ledger.Enact govStructure
 open import Ledger.Epoch txs abs
 open import Ledger.Gov txs
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Ledger txs abs
+open import Ledger.Prelude; open Equivalence
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
+
+open import Algebra
+open import Data.Nat.Properties using (+-0-monoid)
 \end{code}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -72,12 +71,6 @@ instance
 
   HasPParams-ChainState : HasPParams ChainState
   HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf
-
--- private variable
- -- s : ChainState
-  -- b : Block
-  -- ls' : LState
- -- nes : NewEpochState
 
 instance _ = +-0-monoid
 
@@ -147,7 +140,7 @@ data
 \begin{AgdaSuppressSpace}
 \begin{code}
   CHAIN : {b : Block} {nes : NewEpochState} {cs : ChainState}
-\end{code}
+  \end{code}
 \begin{code}[hide]
     → let open ChainState cs; open Block b; open NewEpochState nes
           open EpochState epochState; open EnactState es renaming (pparams to pp)
