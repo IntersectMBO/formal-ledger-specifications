@@ -19,7 +19,6 @@ module Ledger.Conway.Conformance.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Fees txs using (scriptsCost)
 open import Ledger.Conway.Conformance.Certs govStructure
@@ -33,7 +32,7 @@ open PParams
 instance
   _ = +-0-monoid
 
-open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; To-UTxOState; updateDeposits
+open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; HasCast-UTxOState; updateDeposits
                     ; cbalance; balance; depositRefunds; consumed
                     ; produced; outs; newDeposits; refScriptsSize )
 
@@ -95,9 +94,9 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ ↓ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         inject ((overhead + L.utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ ↓ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a

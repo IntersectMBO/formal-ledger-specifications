@@ -16,7 +16,7 @@ usage() {
 
 main () {
   cardano_ledger_repo_dir="$1"
-  malonzo_code_dir="$2/haskell/Ledger"
+  malonzo_code_dir="$2"
 
   printf "Commenting out SRP from cabal.project...\n"
   sed -i                                        \

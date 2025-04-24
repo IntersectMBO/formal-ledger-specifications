@@ -9,7 +9,7 @@ import Data.Integer as ℤ
 open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 
-open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter)
+open import Ledger.Prelude hiding (_∧_; _⊔_; ∣_∣) renaming (filterᵐ to filter)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -208,8 +208,10 @@ record RatifyState : Type where
     delay           : Bool
 \end{code}
 \begin{code}[hide]
-record HasRatifyState {a} (A : Type a) : Type a where field RatifyStateOf : A → RatifyState
+record HasRatifyState {a} (A : Type a) : Type a where
+  field RatifyStateOf : A → RatifyState
 open HasRatifyState ⦃...⦄ public
+
 instance
   HasEnactState-RatifyState : HasEnactState RatifyState
   HasEnactState-RatifyState .EnactStateOf = RatifyState.es
@@ -247,8 +249,8 @@ easily.
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 instance
-  unquoteDecl To-RatifyState = derive-To
-    [ (quote RatifyState , To-RatifyState) ]
+  unquoteDecl HasCast-RatifyState = derive-HasCast
+    [ (quote RatifyState , HasCast-RatifyState) ]
 
 open StakeDistrs
 \end{code}
@@ -291,7 +293,7 @@ actualVotes Γ pparams cc gaTy votes
 \end{code}
 \begin{code}
         nothing → Vote.no
-        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAddr p) , gaTy of
+        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAccount p) , gaTy of
 \end{code}
 \begin{code}[hide]
                λ where
@@ -400,11 +402,12 @@ abstract
   -- activeVotingStake cc dists votes =
   --   ∑[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
 
-  _/₀_ : ℕ → ℕ → ℚ
-  x /₀ 0 = 0ℚ
-  x /₀ y@(suc _) = ℤ.+ x ℚ./ y
+--  _/₀_ : ℕ → ℕ → ℚ
+--  x /₀ 0 = 0ℚ
+--  x /₀ y@(suc _) = ℤ.+ x ℚ./ y
 \end{code}
 \begin{code}
+
   getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
   getStakeDist CC    cc  sd  = constMap (filterˢ IsCC cc) 1
   getStakeDist DRep  _   sd  = filterKeys IsDRep  (sd .stakeDistr)

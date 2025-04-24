@@ -18,7 +18,6 @@ module Ledger.Conway.Conformance.Epoch
 
 open import Ledger.Gov txs
 open import Ledger.Enact govStructure
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
@@ -57,12 +56,12 @@ record NewEpochState : Type where
     ru          : Maybe RewardUpdate
 
 instance
-  unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState = derive-To
-    (   (quote RewardUpdate   , To-RewardUpdate)
-    ∷   (quote Snapshot       , To-Snapshot)
-    ∷   (quote Snapshots      , To-Snapshots)
-    ∷   (quote EpochState     , To-EpochState)
-    ∷ [ (quote NewEpochState  , To-NewEpochState)])
+  unquoteDecl HasCast-RewardUpdate HasCast-Snapshot HasCast-Snapshots HasCast-EpochState HasCast-NewEpochState = derive-HasCast
+    (   (quote RewardUpdate   , HasCast-RewardUpdate)
+    ∷   (quote Snapshot       , HasCast-Snapshot)
+    ∷   (quote Snapshots      , HasCast-Snapshots)
+    ∷   (quote EpochState     , HasCast-EpochState)
+    ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
@@ -102,7 +101,7 @@ stakeDistr : UTxO → DState → PState → Snapshot
 stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
   where
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ rewards ↓
+    stakeRelation = m ∪ ∣ rewards ∣
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
@@ -115,7 +114,7 @@ opaque
 
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy (delegations ↓) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
+    aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 
 private variable
   nes nes' : NewEpochState

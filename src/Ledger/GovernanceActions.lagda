@@ -171,6 +171,15 @@ HashProtected A = A × GovActionID
 \label{fig:needshash-and-hashprotected-types}
 \end{figure*}
 
+\begin{code}[hide]
+instance
+  HasCast-HashProtected : ∀ {A : Type} → HasCast (HashProtected A) A
+  HasCast-HashProtected .cast = proj₁
+
+  HasCast-HashProtected-MaybeScriptHash : HasCast (HashProtected (DocHash × Maybe ScriptHash)) (Maybe ScriptHash)
+  HasCast-HashProtected-MaybeScriptHash .cast = proj₂ ∘ proj₁
+\end{code}
+
 \begin{figure*}[htb]
 \begin{AgdaMultiCode}
 \begin{code}
@@ -208,7 +217,7 @@ instance
   unquoteDecl DecEq-Vote          = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg        = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 
-  unquoteDecl To-GovVote = derive-To [ (quote GovVote     , To-GovVote) ]
+  unquoteDecl HasCast-GovVote = derive-HasCast [ (quote GovVote , HasCast-GovVote) ]
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote and proposal types}

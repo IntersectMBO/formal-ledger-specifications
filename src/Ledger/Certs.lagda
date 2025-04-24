@@ -7,6 +7,7 @@
 
 open import Ledger.Prelude renaming (filterˢ to filter)
 open import Ledger.Types.GovStructure
+open import Ledger.Types.Numeric.UnitInterval
 
 module Ledger.Certs (gs : _) (open GovStructure gs) where
 
@@ -31,11 +32,16 @@ Rewards   = Credential ⇀ Coin
 DReps     = Credential ⇀ Epoch
 \end{code}
 \begin{code}[hide]
-record HasDeposits {a} (A : Type a) : Type a where field DepositsOf : A → Deposits
-record HasRewards  {a} (A : Type a) : Type a where field RewardsOf  : A → Rewards
-record HasDReps    {a} (A : Type a) : Type a where field DRepsOf    : A → DReps
+record HasDeposits {a} (A : Type a) : Type a where
+  field DepositsOf : A → Deposits
 open HasDeposits ⦃...⦄ public
+
+record HasRewards {a} (A : Type a) : Type a where
+  field RewardsOf : A → Rewards
 open HasRewards  ⦃...⦄ public
+
+record HasDReps {a} (A : Type a) : Type a where
+  field DRepsOf : A → DReps
 open HasDReps    ⦃...⦄ public
 
 instance
@@ -46,15 +52,25 @@ instance
 \label{fig:certs:deposit-types}
 \end{figure*}
 
-\begin{figure*}[h!]
+\begin{figure*}
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
 record PoolParams : Type where
   field
-    rewardAddr : Credential
+    owners          : ℙ KeyHash
+    cost            : Coin
+    margin          : UnitInterval
+    pledge          : Coin
+    rewardAccount   : Credential
 \end{code}
 \end{NoConway}
+\end{AgdaMultiCode}
+\caption{Stake pool parameter definitions}
+\end{figure*}
+
+\begin{figure*}[h!]
+\begin{AgdaMultiCode}
 \begin{code}
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
@@ -120,7 +136,8 @@ record DState : Type where
     rewards      : Credential ⇀ Coin
 \end{code}
 \begin{code}[hide]
-record HasDState {a} (A : Type a) : Type a where field DStateOf : A → DState
+record HasDState {a} (A : Type a) : Type a where
+  field DStateOf : A → DState
 open HasDState ⦃...⦄ public
 
 instance
@@ -136,7 +153,8 @@ record PState : Type where
     retiring  : KeyHash ⇀ Epoch
 \end{code}
 \begin{code}[hide]
-record HasPState {a} (A : Type a) : Type a where field PStateOf : A → PState
+record HasPState {a} (A : Type a) : Type a where
+  field PStateOf : A → PState
 open HasPState ⦃...⦄ public
 \end{code}
 \end{NoConway}
@@ -153,7 +171,8 @@ record GState : Type where
     ccHotKeys  : Credential ⇀ Maybe Credential
 \end{code}
 \begin{code}[hide]
-record HasGState {a} (A : Type a) : Type a where field GStateOf : A → GState
+record HasGState {a} (A : Type a) : Type a where
+  field GStateOf : A → GState
 open HasGState ⦃...⦄ public
 
 instance
@@ -174,7 +193,8 @@ record CertState : Type where
     gState : GState
 \end{code}
 \begin{code}[hide]
-record HasCertState {a} (A : Type a) : Type a where field CertStateOf : A → CertState
+record HasCertState {a} (A : Type a) : Type a where
+  field CertStateOf : A → CertState
 open HasCertState ⦃...⦄ public
 
 instance
@@ -219,13 +239,13 @@ instance
 
 \begin{code}[hide]
 instance
-  unquoteDecl To-CertEnv To-DState To-PState To-GState To-CertState To-DelegEnv = derive-To
-    (   (quote CertEnv , To-CertEnv)
-    ∷   (quote DState , To-DState)
-    ∷   (quote PState , To-PState)
-    ∷   (quote GState , To-GState)
-    ∷   (quote CertState , To-CertState)
-    ∷ [ (quote DelegEnv , To-DelegEnv) ])
+  unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv = derive-HasCast
+    (   (quote CertEnv , HasCast-CertEnv)
+    ∷   (quote DState , HasCast-DState)
+    ∷   (quote PState , HasCast-PState)
+    ∷   (quote GState , HasCast-GState)
+    ∷   (quote CertState , HasCast-CertState)
+    ∷ [ (quote DelegEnv , HasCast-DelegEnv) ])
 
 private variable
   rwds rewards           : Rewards

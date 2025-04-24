@@ -15,7 +15,6 @@ module Ledger.ScriptValidation
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Certs govStructure
 open import Tactic.Derive.Show
 
@@ -142,7 +141,7 @@ private
   scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
   scriptsNeeded utxo txb
     = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) txins
-    ∪ mapPartial (λ x → rwdScripts x) (dom $ txwdrls ↓)
+    ∪ mapPartial (λ x → rwdScripts x) (dom ∣ txwdrls ∣)
     ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
     where open TxBody txb

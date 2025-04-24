@@ -16,9 +16,9 @@ open import Prelude public
 open import Ledger.Prelude.Base public
 
 open import Class.HasAdd public
+open import Class.HasCast public
 open import Class.HasOrder public
 open import Class.ToBool public
-open import Class.To public
 open import Interface.ComputationalRelation public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
@@ -31,6 +31,10 @@ open import Tactic.Premises public
 
 open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)
+
+import Data.Integer as ℤ
+import Data.Rational as ℚ
+open import Data.Rational using (ℚ)
 
 dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
@@ -53,3 +57,26 @@ instance
 
 setToMap : ∀ {A B : Type} → ⦃ DecEq A ⦄ → ℙ (A × B) → A ⇀ B
 setToMap = fromListᵐ ∘ setToList
+
+-- division of natural numbers with completion by 0.
+opaque
+  _/₀_ : ℕ → ℕ → ℚ
+  x /₀ 0 = ℚ.0ℚ
+  x /₀ y@(suc _) = ℤ.+ x ℚ./ y
+
+-- Division of rational numbers with completion by 0.
+_÷₀_ : ℚ → ℚ → ℚ
+_÷₀_ x y = case y ≟ ℚ.0ℚ of λ where
+  (yes _) → ℚ.0ℚ
+  (no y≢0) → let instance nonZero-y = ℚ.≢-nonZero y≢0 in x ℚ.÷ y
+
+⟦_⟧ : ∀ {A B : Type} ⦃ f : HasCast A B ⦄ → A → B
+⟦_⟧ ⦃ f = f ⦄ = f.cast
+  where module f = HasCast f
+
+∣_∣ : ∀ {A B : Type} ⦃ f : HasCast A B ⦄ → A → B
+∣_∣ ⦃ f = f ⦄ = f.cast
+  where module f = HasCast f
+
+infix 5 ⟦_⟧
+infix 6 ∣_∣

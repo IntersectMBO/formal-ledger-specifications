@@ -19,8 +19,8 @@ record NewPParamState : Type where
     ppup     : PPUpdateState
 
 instance
-  unquoteDecl To-NewPParamState = derive-To
-    [ (quote NewPParamState , To-NewPParamState) ]
+  unquoteDecl HasCast-NewPParamState = derive-HasCast
+    [ (quote NewPParamState , HasCast-NewPParamState) ]
 
 updatePPUp : PParams → PPUpdateState → PPUpdateState
 updatePPUp pparams record { fpup = fpup }

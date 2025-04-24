@@ -26,7 +26,6 @@ module Ledger.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Fees txs using (scriptsCost)
 open import Ledger.Certs govStructure
@@ -191,7 +190,8 @@ record UTxOState : Type where
 
 \end{code}
 \begin{code}[hide]
-record HasUTxOState {a} (A : Type a) : Type a where field UTxOStateOf : A → UTxOState
+record HasUTxOState {a} (A : Type a) : Type a where
+  field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
 
 instance
@@ -201,9 +201,9 @@ instance
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
-  unquoteDecl To-UTxOEnv To-UTxOState = derive-To
-    ( (quote UTxOEnv   , To-UTxOEnv  ) ∷
-    [ (quote UTxOState , To-UTxOState) ])
+  unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
+    ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
+    [ (quote UTxOState , HasCast-UTxOState) ])
 \end{code}
 \begin{NoConway}
 \emph{UTxO transitions}
@@ -584,9 +584,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ feesOK pp tx utxo                      ∙ consumed pp s txb ≡ produced pp s txb
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ ↓ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ ↓ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a

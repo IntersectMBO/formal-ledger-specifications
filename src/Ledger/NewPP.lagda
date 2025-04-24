@@ -45,8 +45,8 @@ votedValue pup pparams quorum =
 \end{figure*}
 \begin{code}[hide]
 instance
-  unquoteDecl To-NewPParamState = derive-To
-    [ (quote NewPParamState , To-NewPParamState) ]
+  unquoteDecl HasCast-NewPParamState = derive-HasCast
+    [ (quote NewPParamState , HasCast-NewPParamState) ]
 
 private variable
   Γ : NewPParamEnv

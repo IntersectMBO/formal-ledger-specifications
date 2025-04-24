@@ -132,7 +132,8 @@ record TransactionStructure : Type₁ where
   Update             = ProposedPPUpdates × Epoch
 \end{code}
 \begin{code}[hide]
-  record HasUTxO {a} (A : Type a) : Type a where field UTxOOf : A → UTxO
+  record HasUTxO {a} (A : Type a) : Type a where
+    field UTxOOf : A → UTxO
   open HasUTxO ⦃...⦄ public
 \end{code}
 \end{NoConway}
@@ -163,18 +164,28 @@ record TransactionStructure : Type₁ where
       scriptIntHash  : Maybe ScriptHash
 \end{code}
 \begin{code}[hide]
-  record HasTxBody  {a} (A : Type a) : Type a where field TxBodyOf  : A → TxBody
-  record Hastxfee   {a} (A : Type a) : Type a where field txfeeOf   : A → Coin
-  record Hastxcerts {a} (A : Type a) : Type a where field txcertsOf : A → List DCert
-  record Hastxprop  {a} (A : Type a) : Type a where field txpropOf  : A → List GovProposal
-  record Hastxwdrls {a} (A : Type a) : Type a where field txwdrlsOf : A → Wdrl
-  record Hastxid    {a} (A : Type a) : Type a where field txidOf    : A → TxId
-  
+  record HasTxBody {a} (A : Type a) : Type a where
+    field TxBodyOf : A → TxBody
   open HasTxBody  ⦃...⦄ public
+
+  record Hastxfee {a} (A : Type a) : Type a where
+    field txfeeOf : A → Coin
   open Hastxfee   ⦃...⦄ public
+
+  record Hastxcerts {a} (A : Type a) : Type a where
+    field txcertsOf : A → List DCert
   open Hastxcerts ⦃...⦄ public
+
+  record Hastxprop {a} (A : Type a) : Type a where
+    field txpropOf  : A → List GovProposal
   open Hastxprop  ⦃...⦄ public
+
+  record Hastxwdrls {a} (A : Type a) : Type a where
+    field txwdrlsOf : A → Wdrl
   open Hastxwdrls ⦃...⦄ public
+
+  record Hastxid    {a} (A : Type a) : Type a where 
+    field txidOf    : A → TxId
   open Hastxid    ⦃...⦄ public
 \end{code}
 

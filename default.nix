@@ -172,7 +172,7 @@ in rec
     version = "0.1";
     src = addToAgdaSrc [ ./hs-src ];
     meta = { };
-    buildInputs = [ agdaWithDeps fls-shake ];
+    buildInputs = [ agdaWithDeps fls-shake hpack ];
     buildPhase = ''
       fls-shake --trace hs
     '';

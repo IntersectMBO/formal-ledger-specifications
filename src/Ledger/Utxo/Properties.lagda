@@ -35,7 +35,6 @@ module Ledger.Utxo.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Interface.HasDowncast.Instance txs govStructure
 open import Ledger.Utxo txs abs
 open import Ledger.ScriptValidation txs abs
 open import Ledger.Certs govStructure
@@ -160,10 +159,10 @@ private
 
 opaque
   unfolding balance
-  balance-cong :  utxo ↓ ≡ᵉ utxo' ↓ → balance utxo ≈ balance utxo'
+  balance-cong :  ∣ utxo ∣ ≡ᵉ ∣ utxo' ∣ → balance utxo ≈ balance utxo'
   balance-cong {utxo} {utxo'} eq = indexedSumᵐ-cong {M = Value} {x = (mapValues txOutHash utxo) ᶠᵐ} {(mapValues txOutHash utxo') ᶠᵐ} (map-≡ᵉ eq)
 
-  balance-cong-coin : utxo ↓ ≡ᵉ utxo' ↓ → cbalance utxo ≡ cbalance utxo'
+  balance-cong-coin : ∣ utxo ∣ ≡ᵉ ∣ utxo' ∣ → cbalance utxo ≡ cbalance utxo'
   balance-cong-coin {utxo} {utxo'} x =
     coinIsMonoidHomomorphism .⟦⟧-cong (balance-cong {utxo} {utxo'} x)
     where open MonoidMorphisms.IsMonoidHomomorphism
@@ -208,11 +207,13 @@ module _ {txb : _} (open TxBody txb) where opaque
     coin (balance (utxo ∣ txins) + mint + inject dRefs + inject sWdls)
       ≡⟨ ∙-homo-Coin _ _ ⟩
     coin (balance (utxo ∣ txins) + mint + inject dRefs) + coin (inject $ sWdls)
-      ≡⟨ cong (coin (balance (utxo ∣ txins) + mint + inject dRefs) +_) (property _) ⟩
+ --     ≡⟨ cong (coin (balance (utxo ∣ txins) + mint + inject dRefs) +_) (property _) ⟩
+      ≡⟨ cong (coin (balance (utxo ∣ txins) + mint + inject dRefs) +_) (coin∘inject≗id _) ⟩
     coin (balance (utxo ∣ txins) + mint + inject dRefs) + sWdls
       ≡⟨ cong (_+ sWdls) (∙-homo-Coin _ _) ⟩
     coin (balance (utxo ∣ txins) + mint) + coin (inject $ dRefs) + sWdls
-      ≡⟨ cong (λ u → coin (balance (utxo ∣ txins) + mint) + u + sWdls) (property _) ⟩
+--      ≡⟨ cong (λ u → coin (balance (utxo ∣ txins) + mint) + u + sWdls) (property _) ⟩
+      ≡⟨ cong (λ u → coin (balance (utxo ∣ txins) + mint) + u + sWdls) (coin∘inject≗id _) ⟩
     coin (balance (utxo ∣ txins) + mint) + dRefs + sWdls
       ≡⟨ cong (λ u → u + dRefs + sWdls) (∙-homo-Coin _ _) ⟩
     cbalance (utxo ∣ txins) + coin mint + dRefs + sWdls
@@ -238,21 +239,24 @@ module _ {txb : _} (open TxBody txb) where opaque
           ≡⟨ ∙-homo-Coin _ _ ⟩
         coin (balance (outs txb) +ᵛ inject txfee)
           ℕ.+ coin (inject (newDeposits pp utxoState txb))
-          ≡⟨ cong! (property _) ⟩
+--          ≡⟨ cong! (property _) ⟩
+          ≡⟨ cong! (coin∘inject≗id _) ⟩
         coin (balance (outs txb) +ᵛ inject txfee)
           ℕ.+ newDeposits pp utxoState txb
           ≡⟨ cong! (∙-homo-Coin _ _) ⟩
         coin (balance (outs txb)) ℕ.+ coin (inject txfee)
           ℕ.+ newDeposits pp utxoState txb
           ≡⟨ cong (λ x → cbalance (outs txb) + x + newDeposits pp utxoState txb)
-                $ property txfee ⟩
+--                $ property txfee ⟩
+                $ coin∘inject≗id txfee ⟩
         cbalance (outs txb) + txfee + newDeposits pp utxoState txb
           ∎
       )⟩
     cbalance (outs txb) + txfee
       + newDeposits pp utxoState txb + coin (inject txdonation)
       ≡⟨ cong (cbalance (outs txb) + txfee + newDeposits pp utxoState txb +_)
-            $ property _ ⟩
+--            $ property _ ⟩
+            $ coin∘inject≗id _ ⟩
     cbalance (outs txb) + txfee + newDeposits pp utxoState txb + txdonation
       ∎
 

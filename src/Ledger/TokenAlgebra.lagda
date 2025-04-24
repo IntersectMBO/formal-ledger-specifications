@@ -52,9 +52,7 @@ record TokenAlgebra : Type₁ where
     policies                  : Value → ℙ PolicyId
     size                      : Value → MemoryEstimate
     _≤ᵗ_                      : Value → Value → Type
-    AssetName                 : Set
-    specialAsset              : AssetName
-    property                  : coin ∘ inject ≗ id -- FIXME: rename!
+    coin∘inject≗id            : coin ∘ inject ≗ id
     coinIsMonoidHomomorphism  : IsMonoidHomomorphism coin
 
 \end{code}
@@ -69,7 +67,7 @@ record TokenAlgebra : Type₁ where
   coin-inject-lemma : ∀ {val} {c} → coin (val + inject c) ≡ coin val + c
   coin-inject-lemma {val} {c} = begin
     coin (val + inject c)         ≡⟨ homo coinIsMonoidHomomorphism val (inject c) ⟩
-    coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (property c) ⟩
+    coin val + (coin ∘ inject) c  ≡⟨ cong (coin val +_) (coin∘inject≗id c) ⟩
     coin val + c                  ∎
     where
     open ≡-Reasoning
