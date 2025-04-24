@@ -28,7 +28,7 @@ are bundled with the protocol parameters; see
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_%_; _*_; ≤-trans)
+open import Ledger.Prelude hiding (_%_; _*_; ≤-trans; ∣_∣)
 open import Ledger.Abstract
 open import Ledger.Transaction
 

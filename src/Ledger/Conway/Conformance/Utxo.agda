@@ -32,7 +32,7 @@ open PParams
 instance
   _ = +-0-monoid
 
-open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; To-UTxOState; updateDeposits
+open L public using (UTxOEnv; UTxOState; ⟦_,_,_,_⟧ᵘ; HasCast-UTxOState; updateDeposits
                     ; cbalance; balance; depositRefunds; consumed
                     ; produced; outs; newDeposits; refScriptsSize )
 
@@ -94,14 +94,14 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         inject ((overhead + L.utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ txoutsʰ .proj₁ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
-    ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
+    ∙ ∀[ a ∈ dom txwdrls ]          NetworkIdOf a   ≡ NetworkId
     ∙ txNetworkId ~ just NetworkId
     ∙ curTreasury ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'

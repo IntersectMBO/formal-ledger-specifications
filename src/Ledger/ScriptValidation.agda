@@ -141,7 +141,7 @@ private
   scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
   scriptsNeeded utxo txb
     = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) txins
-    ∪ mapPartial (λ x → rwdScripts x) (dom $ txwdrls .proj₁)
+    ∪ mapPartial (λ x → rwdScripts x) (dom ∣ txwdrls ∣)
     ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
     where open TxBody txb

@@ -9,7 +9,7 @@ import Data.Integer as ℤ
 open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 
-open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter)
+open import Ledger.Prelude hiding (_∧_; _⊔_; ∣_∣) renaming (filterᵐ to filter)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -206,6 +206,17 @@ record RatifyState : Type where
     es              : EnactState
     removed         : ℙ (GovActionID × GovActionState)
     delay           : Bool
+\end{code}
+\begin{code}[hide]
+record HasRatifyState {a} (A : Type a) : Type a where
+  field RatifyStateOf : A → RatifyState
+open HasRatifyState ⦃...⦄ public
+
+instance
+  HasEnactState-RatifyState : HasEnactState RatifyState
+  HasEnactState-RatifyState .EnactStateOf = RatifyState.es
+\end{code}
+\begin{code}
 
 CCData : Type
 CCData = Maybe ((Credential ⇀ Epoch) × ℚ)
@@ -238,8 +249,8 @@ easily.
 \begin{AgdaMultiCode}
 \begin{code}[hide]
 instance
-  unquoteDecl To-RatifyState = derive-To
-    [ (quote RatifyState , To-RatifyState) ]
+  unquoteDecl HasCast-RatifyState = derive-HasCast
+    [ (quote RatifyState , HasCast-RatifyState) ]
 
 open StakeDistrs
 \end{code}

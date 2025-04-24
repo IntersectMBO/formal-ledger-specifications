@@ -16,9 +16,9 @@ open import Prelude public
 open import Ledger.Prelude.Base public
 
 open import Class.HasAdd public
+open import Class.HasCast public
 open import Class.HasOrder public
 open import Class.ToBool public
-open import Class.To public
 open import Interface.ComputationalRelation public
 open import Interface.HasSubtract public
 open import Interface.HasSubtract.Instance public
@@ -69,3 +69,14 @@ _÷₀_ : ℚ → ℚ → ℚ
 _÷₀_ x y = case y ≟ ℚ.0ℚ of λ where
   (yes _) → ℚ.0ℚ
   (no y≢0) → let instance nonZero-y = ℚ.≢-nonZero y≢0 in x ℚ.÷ y
+
+⟦_⟧ : ∀ {A B : Type} ⦃ f : HasCast A B ⦄ → A → B
+⟦_⟧ ⦃ f = f ⦄ = f.cast
+  where module f = HasCast f
+
+∣_∣ : ∀ {A B : Type} ⦃ f : HasCast A B ⦄ → A → B
+∣_∣ ⦃ f = f ⦄ = f.cast
+  where module f = HasCast f
+
+infix 5 ⟦_⟧
+infix 6 ∣_∣

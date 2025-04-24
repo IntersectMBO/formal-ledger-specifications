@@ -52,6 +52,10 @@ record Acnt : Type where
   field
     treasury reserves : Coin
 
+record Hastreasury {a} (A : Type a) : Type a where
+  field treasuryOf : A → Coin
+open Hastreasury ⦃...⦄ public
+
 ProtVer : Type
 ProtVer = ℕ × ℕ
 
@@ -70,8 +74,8 @@ data pvCanFollow : ProtVer → ProtVer → Type where
 \end{NoConway}
 \begin{code}[hide]
 instance
-  unquoteDecl To-Acnt = derive-To
-    [ (quote Acnt , To-Acnt) ]
+  unquoteDecl HasCast-Acnt = derive-HasCast
+    [ (quote Acnt , HasCast-Acnt) ]
 \end{code}
 
 \begin{figure*}[ht]
@@ -172,6 +176,15 @@ record PParams : Type where
 \caption{Protocol parameter definitions}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
+\begin{code}[hide]
+record HasPParams {a} (A : Type a) : Type a where
+  field PParamsOf : A → PParams
+open HasPParams ⦃...⦄ public
+
+record HasccMaxTermLength {a} (A : Type a) : Type a where
+  field ccMaxTermLengthOf : A → ℕ
+open HasccMaxTermLength ⦃...⦄ public
+\end{code}
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{code}

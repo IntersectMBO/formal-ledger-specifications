@@ -234,7 +234,7 @@ module _  {Γ : CertEnv}
   CERT-pov (CERT-vdel x) = refl
 
   injOn : (wdls : RwdAddr ⇀ Coin)
-          → ∀[ a ∈ dom (wdls ˢ) ] RwdAddr.net a ≡ NetworkId
+          → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
           → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
@@ -248,7 +248,7 @@ module _  {Γ : CertEnv}
                          → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
     ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-    ( constNetworkId  :  ∀[ a ∈ dom (CertEnv.wdrls Γ) ] RwdAddr.net a ≡ NetworkId )
+    ( constNetworkId  :  ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId )
     where
 
     CERTBASE-pov :  {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'

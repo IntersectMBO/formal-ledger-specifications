@@ -77,8 +77,27 @@ record EpochState : Type where
     es         : EnactState
     fut        : RatifyState
 \end{code}
+\begin{code}[hide]
+record HasEpochState {a} (A : Type a) : Type a where
+  field EpochStateOf : A → EpochState
+open HasEpochState ⦃...⦄ public
+
+instance
+  HasLState-EpochState : HasLState EpochState
+  HasLState-EpochState .LStateOf = EpochState.ls
+
+  HasEnactState-EpochState : HasEnactState EpochState
+  HasEnactState-EpochState .EnactStateOf = EpochState.es
+
+  HasDeposits-EpochState : HasDeposits EpochState
+  HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
+
+  Hastreasury-EpochState : Hastreasury EpochState
+  Hastreasury-EpochState .treasuryOf = Acnt.treasury ∘ EpochState.acnt
+\end{code}
 \begin{NoConway}
 \begin{code}
+
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
@@ -90,13 +109,38 @@ record NewEpochState : Type where
 \caption{Definitions for the EPOCH and NEWEPOCH transition systems}
 \end{figure*}
 \begin{code}[hide]
+record HasNewEpochState {a} (A : Type a) : Type a where
+  field NewEpochStateOf : A → NewEpochState
+open HasNewEpochState ⦃...⦄ public
+
 instance
-  unquoteDecl To-RewardUpdate To-Snapshot To-Snapshots To-EpochState To-NewEpochState = derive-To
-    (   (quote RewardUpdate   , To-RewardUpdate)
-    ∷   (quote Snapshot       , To-Snapshot)
-    ∷   (quote Snapshots      , To-Snapshots)
-    ∷   (quote EpochState     , To-EpochState)
-    ∷ [ (quote NewEpochState  , To-NewEpochState)])
+  HasEpochState-NewEpochState : HasEpochState NewEpochState
+  HasEpochState-NewEpochState .EpochStateOf = NewEpochState.epochState
+
+  Hastreasury-NewEpochState : Hastreasury NewEpochState
+  Hastreasury-NewEpochState .treasuryOf = treasuryOf ∘ EpochStateOf
+
+  HasLState-NewEpochState : HasLState NewEpochState
+  HasLState-NewEpochState .LStateOf = LStateOf ∘ EpochStateOf
+
+  HasGovState-NewEpochState : HasGovState NewEpochState
+  HasGovState-NewEpochState .GovStateOf = GovStateOf ∘ LStateOf
+
+  HasCertState-NewEpochState : HasCertState NewEpochState
+  HasCertState-NewEpochState .CertStateOf = CertStateOf ∘ LStateOf
+
+  HasDReps-NewEpochState : HasDReps NewEpochState 
+  HasDReps-NewEpochState .DRepsOf = DRepsOf ∘ CertStateOf
+
+  HasRewards-NewEpochState : HasRewards NewEpochState
+  HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
+
+  unquoteDecl HasCast-RewardUpdate HasCast-Snapshot HasCast-Snapshots HasCast-EpochState HasCast-NewEpochState = derive-HasCast
+    (   (quote RewardUpdate   , HasCast-RewardUpdate)
+    ∷   (quote Snapshot       , HasCast-Snapshot)
+    ∷   (quote Snapshots      , HasCast-Snapshots)
+    ∷   (quote EpochState     , HasCast-EpochState)
+    ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
@@ -160,7 +204,7 @@ stakeDistr utxo stᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDel
   where
     open DState stᵈ using (stakeDelegs; rewards)
     m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ proj₁ rewards
+    stakeRelation = m ∪ ∣ rewards ∣
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
@@ -175,7 +219,7 @@ opaque
 \begin{code}
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy (proj₁ delegations) (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
+    aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}

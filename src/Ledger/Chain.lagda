@@ -40,11 +40,33 @@ record Block : Type where
 \caption{Definitions CHAIN transition system}
 \end{figure*}
 \begin{code}[hide]
-private variable
-  s : ChainState
-  b : Block
-  ls' : LState
-  nes : NewEpochState
+instance
+  HasNewEpochState-ChainState : HasNewEpochState ChainState
+  HasNewEpochState-ChainState .NewEpochStateOf = ChainState.newEpochState
+
+  HasEpochState-ChainState : HasEpochState ChainState 
+  HasEpochState-ChainState .EpochStateOf = EpochStateOf ∘ NewEpochStateOf
+
+  HasEnactState-ChainState : HasEnactState ChainState 
+  HasEnactState-ChainState .EnactStateOf = EnactStateOf ∘ EpochStateOf
+
+  HasLState-ChainState : HasLState ChainState
+  HasLState-ChainState .LStateOf = LStateOf ∘ EpochStateOf
+
+  HasUTxOState-ChainState : HasUTxOState ChainState
+  HasUTxOState-ChainState .UTxOStateOf = UTxOStateOf ∘ LStateOf
+
+  HasCertState-ChainState : HasCertState ChainState
+  HasCertState-ChainState .CertStateOf = CertStateOf ∘ LStateOf
+
+  HasDeposits-ChainState : HasDeposits ChainState
+  HasDeposits-ChainState .DepositsOf = DepositsOf ∘ UTxOStateOf
+
+  HasRewards-ChainState : HasRewards ChainState
+  HasRewards-ChainState .RewardsOf = RewardsOf ∘ CertStateOf
+
+  HasPParams-ChainState : HasPParams ChainState
+  HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf
 
 instance _ = +-0-monoid
 
@@ -95,6 +117,8 @@ totalRefScriptsSize : LState → List Tx → ℕ
 totalRefScriptsSize lst txs = sum $ map (refScriptsSize utxo) txs
   where open UTxOState (LState.utxoSt lst)
 
+private variable
+  ls' : LState 
 data
 \end{code}
 \begin{figure*}[h]
@@ -111,22 +135,24 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  CHAIN :
+  CHAIN : {b : Block} {nes : NewEpochState} {cs : ChainState}
 \end{code}
 \begin{code}[hide]
-    let open ChainState s; open Block b; open NewEpochState nes
-        open EpochState epochState; open EnactState es
-        pp = pparams .proj₁; open PParams pp using (maxRefScriptSizePerBlock)
-    in
+    → let open ChainState cs; open Block b; open NewEpochState nes
+          open EpochState epochState; open EnactState es renaming (pparams to pp)
+          open PParams ∣ pp ∣ using (maxRefScriptSizePerBlock) in
 \end{code}
 \begin{code}
-    totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
-    →  _   ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
-    →  ⟦ slot , constitution .proj₁ .proj₂ , pp , es , Acnt.treasury acnt ⟧ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
-    ────────────────────────────────
-    _ ⊢ s ⇀⦇ b ,CHAIN⦈ record s {  newEpochState =
-                                   record nes {  epochState =
-                                                 record epochState { ls = ls'} } }
+    let  cs'  = record cs {  newEpochState
+                             = record nes {  epochState
+                                             = record epochState {ls = ls'} } }
+         Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , treasuryOf nes ⟧
+    in
+    ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
+    ∙ _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    ∙ Γ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+      ────────────────────────────────
+      _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CHAIN transition system}

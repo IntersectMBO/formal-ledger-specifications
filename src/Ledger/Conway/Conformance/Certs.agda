@@ -13,7 +13,7 @@ open import Tactic.Derive.DecEq
 open import Ledger.GovernanceActions gs
 private module Certs = Ledger.Certs gs
 open Certs public
-  hiding (DState; GState; CertState; To-DState; To-GState; To-CertState;
+  hiding (DState; GState; CertState; HasCast-DState; HasCast-GState; HasCast-CertState;
           _⊢_⇀⦇_,POOL⦈_; _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
           _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,CERTBASE⦈_; _⊢_⇀⦇_,CERTS⦈_; ⟦_,_,_⟧ᵈ)
 open RwdAddr
@@ -41,10 +41,10 @@ record CertState : Type where
     gState : GState
 
 instance
-  unquoteDecl To-DState To-GState To-CertState = derive-To
-    (   (quote DState , To-DState)
-    ∷   (quote GState , To-GState)
-    ∷ [ (quote CertState , To-CertState) ])
+  unquoteDecl HasCast-DState HasCast-GState HasCast-CertState = derive-HasCast
+    (   (quote DState , HasCast-DState)
+    ∷   (quote GState , HasCast-GState)
+    ∷ [ (quote CertState , HasCast-CertState) ])
 
 certDeposit : DCert → PParams → Deposits
 certDeposit (delegate c _ _ v) _   = ❴ CredentialDeposit c , v ❵

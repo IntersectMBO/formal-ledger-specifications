@@ -107,7 +107,7 @@ instance
 -- ** Proof that LEDGER preserves values.
 
 FreshTx : Tx → LState → Type
-FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (ls .utxoSt .utxo))
+FreshTx tx ls = txid ∉ mapˢ proj₁ (dom (UTxOOf ls))
   where open Tx tx; open TxBody body; open UTxOState; open LState
 
 module _
@@ -222,7 +222,7 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   open DState dState
 
   -- initial utxo deposits
-  utxoDeps : DepositPurpose ⇀ Coin
+  utxoDeps : Deposits
   utxoDeps = UTxOState.deposits (LState.utxoSt s)
 
   -- GovState definitions and lemmas --
@@ -464,10 +464,10 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     filterˢ isGADeposit (dom (updateProposalDeposits (p ∷ ps) txid gad utxoDs))
       ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit ((dom (updateProposalDeposits ps txid gad utxoDs))
-      ∪ (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txid , length ps) , gad ❵))
+      ∪ (dom{X = Deposits} ❴ GovActionDeposit (txid , length ps) , gad ❵))
       ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom (updateProposalDeposits ps txid gad utxoDs)) ∪ filterˢ isGADeposit
-        (dom{X = DepositPurpose ⇀ Coin} ❴ GovActionDeposit (txid , length ps) , gad ❵)
+        (dom{X = Deposits} ❴ GovActionDeposit (txid , length ps) , gad ❵)
       ≈⟨ ∪-cong (utxo-govst-connex ps x) (filter-pres-≡ᵉ dom-single≡single) ⟩
     fromList (dpMap (updateGovStates (map inj₂ ps) 0 gSt))
       ∪ filterˢ isGADeposit ❴ GovActionDeposit (txid , length ps) ❵
@@ -684,18 +684,16 @@ module _ (b : Block) (cs : ChainState) where
     }
 
   CHAIN-govDepsMatch : {nes : NewEpochState}
-    → mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (UTxOState.deposits (LState.utxoSt ls) ˢ)
+    → mapˢ (GovActionDeposit ∘ proj₁) removed' ⊆ mapˢ proj₁ (DepositsOf ls ˢ)
     → totalRefScriptsSize ls ts ≤ (PParams.maxRefScriptSizePerBlock pp)
     → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ (updateChainState cs nes)
-    → govDepsMatch ls → govDepsMatch (EpochState.ls (NewEpochState.epochState nes))
+    → govDepsMatch ls → govDepsMatch (LStateOf nes)
 
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
+  CHAIN-govDepsMatch {nes} rrm rss (CHAIN (x , (NEWEPOCH-New (_ , eps₁→eps₂)) , ledgers)) =
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
-
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-Not-New _) ledgers) =
+  CHAIN-govDepsMatch {nes} rrm rss (CHAIN (x , (NEWEPOCH-Not-New _) , ledgers)) =
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
-
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
+  CHAIN-govDepsMatch {nes} rrm rss (CHAIN (x , (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) , ledgers)) =
     RTC-preserves-inv (λ {c} {s} {sig} → LEDGER-govDepsMatch sig c s) ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂

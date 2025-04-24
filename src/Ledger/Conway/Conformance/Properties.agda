@@ -45,7 +45,7 @@ getLState = EpochState.ls ∘ NewEpochState.epochState
 getRewards : NewEpochState → Credential ⇀ Coin
 getRewards = DState.rewards ∘ CertState.dState ∘ LState.certState ∘ getLState
 
-allDReps : NewEpochState → Credential ⇀ Epoch
+allDReps : NewEpochState → DReps
 allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ getLState
 
 activeDReps : Epoch → NewEpochState → ℙ Credential
@@ -110,7 +110,7 @@ module _ (s : ChainState) where
   open LState ls
   open EnactState es renaming (pparams to pparams')
   open CertState certState; open DState dState
-  pparams = pparams' .proj₁
+  pparams = ∣ pparams' ∣
   open PParams pparams
   open Tx; open TxBody
 
@@ -137,9 +137,6 @@ module _ (s : ChainState) where
 
     newChainState : ChainState
     newChainState = proj₁ valid
-
-    getEnactState : ChainState → EnactState
-    getEnactState = EpochState.es ∘ NewEpochState.epochState ∘ ChainState.newEpochState
 
     -- enact-change⇒newEpoch : es ≢ getEnactState newChainState → isNewEpochBlock
     -- enact-change⇒newEpoch = {!!}

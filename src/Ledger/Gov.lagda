@@ -54,11 +54,19 @@ open GovActionState
 
 \begin{figure*}
 \emph{Derived types}
+\begin{AgdaMultiCode}
 \begin{code}[hide]
 GovState : Type
 \end{code}
 \begin{code}
 GovState = List (GovActionID × GovActionState)
+\end{code}
+\begin{code}[hide]
+record HasGovState {a} (A : Type a) : Type a where
+  field GovStateOf : A → GovState
+open HasGovState ⦃...⦄ public
+\end{code}
+\begin{code}
 
 record GovEnv : Type where
   field
@@ -70,14 +78,15 @@ record GovEnv : Type where
     certState   : CertState
     rewardCreds : ℙ Credential
 \end{code}
+\end{AgdaMultiCode}
 \caption{Types used in the GOV transition system}
 \label{defs:gov-derived-types}
 \end{figure*}
 
 \begin{code}[hide]
 instance
-  unquoteDecl To-GovEnv = derive-To
-    [ (quote GovEnv , To-GovEnv) ]
+  unquoteDecl HasCast-GovEnv = derive-HasCast
+    [ (quote GovEnv , HasCast-GovEnv) ]
 
 private variable
   Γ : GovEnv
@@ -399,7 +408,7 @@ actionValid rewardCreds p ppolicy epoch _ =
 actionWellFormed : GovAction → Type
 actionWellFormed ⟦ ChangePParams , x ⟧ᵍᵃ = ppdWellFormed x
 actionWellFormed ⟦ TreasuryWdrl  , x ⟧ᵍᵃ =
-  (∀[ a ∈ dom x ] RwdAddr.net a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
+  (∀[ a ∈ dom x ] NetworkIdOf a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
 actionWellFormed _                 = ⊤
 \end{code}
 \caption{Validity and wellformedness predicates}
@@ -485,8 +494,8 @@ data _⊢_⇀⦇_,GOV⦈_ where
     ∙ d ≡ pp .govActionDeposit
     ∙ validHFAction prop s enactState
     ∙ hasParent enactState s (a .gaType) prev
-    ∙ addr .RwdAddr.net ≡ NetworkId
-    ∙ addr .RwdAddr.stake ∈ rewardCreds
+    ∙ NetworkIdOf addr ≡ NetworkId
+    ∙ CredentialOf addr ∈ rewardCreds
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ addAction s (pp .govActionLifetime +ᵉ e)
                                                  (Γ .txid , k) addr a prev

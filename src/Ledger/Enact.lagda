@@ -50,9 +50,19 @@ record EnactState : Type where
     withdrawals   : RwdAddr ⇀ Coin
 \end{code}
 \begin{code}[hide]
+record HasEnactState {a} (A : Type a) : Type a where
+  field EnactStateOf : A → EnactState
+open HasEnactState ⦃...⦄ public
+
 instance
-  unquoteDecl To-EnactEnv = derive-To
-    [ (quote EnactEnv , To-EnactEnv) ]
+  HasPParams-EnactState : HasPParams EnactState
+  HasPParams-EnactState .PParamsOf = proj₁ ∘ EnactState.pparams
+
+  HasccMaxTermLength-EnactState : HasccMaxTermLength EnactState
+  HasccMaxTermLength-EnactState .ccMaxTermLengthOf = PParams.ccMaxTermLength ∘ PParamsOf
+
+  unquoteDecl HasCast-EnactEnv = derive-HasCast
+    [ (quote EnactEnv , HasCast-EnactEnv) ]
 
 open EnactState
 \end{code}
@@ -134,7 +144,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ NoConfidence , _ ⟧ᵍᵃ ,ENACT⦈ record s { cc = nothing , gid }
 
   Enact-UpdComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
-                      maxTerm  = s .pparams .proj₁ .ccMaxTermLength +ᵉ e
+                      maxTerm  = ccMaxTermLengthOf s +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
@@ -159,7 +169,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
   Enact-PParams :
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ ChangePParams , up ⟧ᵍᵃ ,ENACT⦈
-      record s { pparams = applyUpdate (s .pparams .proj₁) up , gid }
+      record s { pparams = applyUpdate (PParamsOf s) up , gid }
 
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
     ∑[ x ← newWdrls ] x ≤ t
