@@ -113,8 +113,6 @@ maxThreshold x = foldl comb nothing (proj₁ $ finiteness x)
 ─ : Maybe ℚ
 ─ = nothing
 ✓† = vote defer
-
-pattern ⟪_,_⟫ᵍᵃ x y = ⟦ x , y ⟧ᵍᵃ
 \end{code}
 \begin{code}
 threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
