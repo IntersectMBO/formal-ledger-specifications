@@ -38,7 +38,7 @@ getCodPi (pi a b) = adjustTerm 1 (unAbs b)
     adjustArgs n (x ∷ xs) = adjustArg n x ∷ adjustArgs n xs
 getCodPi ty = ty
 
--- Map a nonempty record def. to
+-- Map a nonempty record definition to
 -- 1. its constructor
 -- 2. the type of its fields
 -- 3. the number of fields
@@ -59,8 +59,8 @@ getRecConstrName rn =
 
 -- Derive instance of HasCast
 derive-HasCast-single : Name -- name of the record type
-                 → Name -- name of the instance to be defined
-                 → TC ⊤
+                      → Name -- name of the instance to be defined
+                      → TC ⊤
 derive-HasCast-single recTyName instName =
   do (HasCast-ctrName , _) ← getDefinition (quote HasCast) >>= fromRecDef -- this will be superseeded by 'quote HasCast.constructor' in Agda 2.8.0
      (ctrName , fTys@(fTy ∷ fTys')) ← getDefinition recTyName  >>= fromRecDef
