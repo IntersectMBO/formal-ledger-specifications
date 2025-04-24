@@ -15,6 +15,7 @@ import Ledger.Gov
 import Ledger.Gov.Properties
 import Ledger.GovernanceActions
 import Ledger.GovernanceActions.Properties
+import Ledger.Introduction
 import Ledger.Ledger
 import Ledger.Ledger.Properties
 import Ledger.PParams
@@ -35,6 +36,9 @@ import Ledger.Utxo
 import Ledger.Utxo.Properties
 import Ledger.Utxow
 import Ledger.Utxow.Properties
+
+-- ** Agda
+import EssentialAgda
 
 -- ** Conformance test reconciliation
 import Ledger.Conway.Conformance.Certs
