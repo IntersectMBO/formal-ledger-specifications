@@ -78,6 +78,11 @@ open GovAction public
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
+\begin{code}[hide]
+instance
+  HasCast-GovAction-Sigma : HasCast GovAction (Σ GovActionType GovActionData)
+  HasCast-GovAction-Sigma .cast x = x .gaType , x .gaData
+\end{code}
 \Cref{defs:governance} defines several data types used to represent
 governance actions. The type \DocHash{} is abstract but in the
 implementation it will be instantiated with a 32-bit hash type (like

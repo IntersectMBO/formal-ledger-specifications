@@ -9,7 +9,7 @@ import Data.Integer as ℤ
 open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 
-open import Ledger.Prelude hiding (_∧_; _⊔_; ∣_∣) renaming (filterᵐ to filter)
+open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter; ∣_∣ to _↓)
 open import Ledger.Transaction hiding (Vote)
 
 module Ledger.Ratify (txs : _) (open TransactionStructure txs) where
@@ -118,49 +118,50 @@ pattern ⟪_,_⟫ᵍᵃ x y = ⟦ x , y ⟧ᵍᵃ
 \end{code}
 \begin{code}
 threshold : PParams → Maybe ℚ → GovAction → GovRole → Maybe ℚ
-threshold pp ccThreshold =
+threshold pp ccThreshold ga =
+  case  ga ↓ of
 \end{code}
 \begin{code}[hide]
-  λ where
+        λ where
 \end{code}
 \begin{code}
-      ⟪ NoConfidence     , _ ⟫ᵍᵃ → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
-      ⟪ UpdateCommittee  , _ ⟫ᵍᵃ → ∣ ─   ∥ P/Q2a/b                 ∣
-      ⟪ NewConstitution  , _ ⟫ᵍᵃ → ∣ ✓   ∣ vote P3      ∣ ─        ∣
-      ⟪ TriggerHF        , _ ⟫ᵍᵃ → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
-      ⟪ ChangePParams    , x ⟫ᵍᵃ → ∣ ✓   ∥ P/Q5 x                  ∣
-      ⟪ TreasuryWdrl     , _ ⟫ᵍᵃ → ∣ ✓   ∣ vote P6      ∣ ─        ∣
-      ⟪ Info             , _ ⟫ᵍᵃ → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
-        where
+        (NoConfidence     , _) → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
+        (UpdateCommittee  , _) → ∣ ─   ∥ P/Q2a/b                 ∣
+        (NewConstitution  , _) → ∣ ✓   ∣ vote P3      ∣ ─        ∣
+        (TriggerHF        , _) → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
+        (ChangePParams    , x) → ∣ ✓   ∥ P/Q5 x                  ∣
+        (TreasuryWdrl     , _) → ∣ ✓   ∣ vote P6      ∣ ─        ∣
+        (Info             , _) → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
+          where
 \end{code}
 \begin{code}[hide]
-        open PParams pp
-        open DrepThresholds drepThresholds
-        open PoolThresholds poolThresholds
+          open PParams pp
+          open DrepThresholds drepThresholds
+          open PoolThresholds poolThresholds
 
-        ✓ = maybe just ✓† ccThreshold
+          ✓ = maybe just ✓† ccThreshold
 \end{code}
 \begin{code}
-        P/Q2a/b : Maybe ℚ × Maybe ℚ
-        P/Q2a/b =  case ccThreshold of
+          P/Q2a/b : Maybe ℚ × Maybe ℚ
+          P/Q2a/b =  case ccThreshold of
 \end{code}
 \begin{code}[hide]
-          λ where
+            λ where
 \end{code}
 \begin{code}
-                   (just _)  → (vote P2a , vote Q2a)
-                   nothing   → (vote P2b , vote Q2b)
+                     (just _)  → (vote P2a , vote Q2a)
+                     nothing   → (vote P2b , vote Q2b)
 
-        pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
-        pparamThreshold NetworkGroup     = (vote P5a  , ─         )
-        pparamThreshold EconomicGroup    = (vote P5b  , ─         )
-        pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
-        pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
-        pparamThreshold SecurityGroup    = (─         , vote Q5   )
+          pparamThreshold : PParamGroup → Maybe ℚ × Maybe ℚ
+          pparamThreshold NetworkGroup     = (vote P5a  , ─         )
+          pparamThreshold EconomicGroup    = (vote P5b  , ─         )
+          pparamThreshold TechnicalGroup   = (vote P5c  , ─         )
+          pparamThreshold GovernanceGroup  = (vote P5d  , ─         )
+          pparamThreshold SecurityGroup    = (─         , vote Q5   )
 
-        P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
-        P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
-                 , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
+          P/Q5 : PParamsUpdate → Maybe ℚ × Maybe ℚ
+          P/Q5 ppu = maxThreshold (mapˢ (proj₁ ∘ pparamThreshold) (updateGroups ppu))
+                   , maxThreshold (mapˢ (proj₂ ∘ pparamThreshold) (updateGroups ppu))
 
 canVote : PParams → GovAction → GovRole → Type
 canVote pp a r = Is-just (threshold pp nothing a r)
