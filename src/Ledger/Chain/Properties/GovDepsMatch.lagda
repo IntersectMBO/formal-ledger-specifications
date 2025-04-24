@@ -89,14 +89,14 @@ module _
        module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-New (_ , eps₁→eps₂)) ledgers) =
+  CHAIN-govDepsMatch rrm rss (CHAIN (x , NEWEPOCH-New (_ , eps₁→eps₂) , ledgers)) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-Not-New _) ledgers) =
+  CHAIN-govDepsMatch rrm rss (CHAIN (x , NEWEPOCH-Not-New _ , ledgers)) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
 
-  CHAIN-govDepsMatch rrm rss (CHAIN x (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂)) ledgers) =
+  CHAIN-govDepsMatch rrm rss (CHAIN (x , NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂) , ledgers)) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 \end{code}
