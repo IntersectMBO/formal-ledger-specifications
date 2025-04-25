@@ -151,7 +151,14 @@ record HasDState {a} (A : Type a) : Type a where
   field DStateOf : A → DState
 open HasDState ⦃...⦄ public
 
+record HasVDelegs {a} (A : Type a) : Type a where
+  field voteDelegsOf : A → Credential ⇀ VDeleg
+open HasVDelegs ⦃...⦄ public
+
 instance
+  HasVDelegs-DState : HasVDelegs DState
+  HasVDelegs-DState .voteDelegsOf = DState.voteDelegs
+
   HasRewards-DState : HasRewards DState
   HasRewards-DState .RewardsOf = DState.rewards
 \end{code}
