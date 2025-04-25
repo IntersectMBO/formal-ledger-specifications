@@ -19,7 +19,7 @@ open import Ledger.Certs.Properties govStructure
 open import Ledger.Ledger txs abs
 open import Ledger.Prelude
 open import Ledger.Utxo txs abs
-open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
+open import Ledger.Utxo.Properties txs abs using (χ; module DepositHelpers)
 open import Ledger.Utxo.Properties.PoV txs abs
 open import Ledger.Utxow txs abs
 
@@ -89,12 +89,12 @@ module _
       getCoin utxoSt + getCoin certState
         ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h') ⟩
       getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
-        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , u))) valid ⟩
-      getCoin utxoSt + (getCoin certState' + φ (getCoin txwdrls , isValid))
+        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + χ (getCoin txwdrls , u))) valid ⟩
+      getCoin utxoSt + (getCoin certState' + χ (getCoin txwdrls , isValid))
         ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
-      getCoin utxoSt + (φ (getCoin txwdrls , isValid) + getCoin certState')
-        ≡˘⟨ +-assoc (getCoin utxoSt) (φ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
-      getCoin utxoSt + φ (getCoin txwdrls , isValid) + getCoin certState'
+      getCoin utxoSt + (χ (getCoin txwdrls , isValid) + getCoin certState')
+        ≡˘⟨ +-assoc (getCoin utxoSt) (χ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
+      getCoin utxoSt + χ (getCoin txwdrls , isValid) + getCoin certState'
         ≡⟨ cong (_+ getCoin certState') (UTXOpov h st) ⟩
       getCoin utxoSt' + getCoin certState'
         ∎
@@ -114,8 +114,8 @@ module _
       getCoin ⟦ utxo , fees , deposits , donations ⟧
         ≡˘⟨ +-identityʳ (getCoin ⟦ utxo , fees , deposits , donations ⟧) ⟩
       getCoin ⟦ utxo , fees , deposits , donations ⟧ + 0
-        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , x)) invalid ⟩
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ + φ(getCoin txwdrls , isValid)
+        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + χ(getCoin txwdrls , x)) invalid ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + χ(getCoin txwdrls , isValid)
         ≡⟨ UTXOpov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning

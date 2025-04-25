@@ -65,12 +65,22 @@ module _
       \\[4pt]
       Assume the following conditions hold:
       \begin{itemize}
-      \item the hypothesis about \AgdaFunction{removed'} needed for and described in \cref{lem:EpochGovDepsMatch},\\[4pt]
-      \AgdaFunction{map}~(\AgdaInductiveConstructor{GovActionDeposit}~$∘$~\AgdaField{proj₁})~\AgdaFunction{removed'}~\AgdaField{$⊆$}~
-        \AgdaFunction{map}~\AgdaField{proj₁}~(\AgdaField{DepositsOf}~\ab{cs}~\AgdaFunction{ˢ});
-      \item the total reference script size of \AgdaFunction{csLState} is not greater than the
-        maximum allowed size per block (as specified in \PParams{});
-      \item \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaFunction{cs'}. 
+        \item let \AgdaFunction{removed'}~:~\AgdaFunction{ℙ}(\AgdaDatatype{GovActionID}~×~\AgdaDatatype{GovActionState})
+          be the union of
+          \begin{itemize}
+            \item the governance actions in the \AgdaField{removed} field of the ratify
+              state of \ab{eps}, and
+            \item the orphaned governance actions in the \GovState{} of \ab{eps}.
+          \end{itemize}
+          Let $\mathcal{G}$ be the set
+          $\{\mbox{\GovActionDeposit{}~\ab{id}} : \mbox{\ab{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
+          $\mathcal{G}$ is a subset of the set of deposits of the chain state \ab{cs};
+          that is,\\[4pt]
+          \AgdaFunction{map}~(\AgdaInductiveConstructor{GovActionDeposit}~$∘$~\AgdaField{proj₁})~\AgdaFunction{removed'}~\AgdaField{$⊆$}~
+          \AgdaFunction{dom}~(\AgdaField{DepositsOf}~\ab{cs});
+        \item the total reference script size of \AgdaFunction{csLState} is not greater than the
+          maximum allowed size per block (as specified in \PParams{});
+        \item \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaFunction{cs'}. 
       \end{itemize}
       Under these conditions, if the governance action deposits of \ab{utxoSt}
       equal those of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
@@ -79,9 +89,9 @@ module _
     \item \textit{Formally}.
 \begin{code}
   CHAIN-govDepsMatch :
-    map (GovActionDeposit ∘ proj₁) removed' ⊆ map proj₁ (DepositsOf cs ˢ)
+    map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (DepositsOf cs)
     →  totalRefScriptsSize csLState ts ≤ maxRefScriptSizePerBlock
-    →  tt ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
+    →  _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
     →  govDepsMatch csLState → govDepsMatch (LStateOf nes)
 \end{code}
     \item \textit{Proof}.  See the

@@ -123,6 +123,17 @@ record CertEnv : Type where
     votes     : List GovVote
     wdrls     : RwdAddr ⇀ Coin
     coldCreds : ℙ Credential
+\end{code}
+\begin{code}[hide]
+record HasWdrls {a} (A : Type a) : Type a where
+  field wdrlsOf : A → RwdAddr ⇀ Coin
+open HasWdrls ⦃...⦄ public
+
+instance
+  HasWdrls-CertEnv : HasWdrls CertEnv
+  HasWdrls-CertEnv .wdrlsOf = CertEnv.wdrls
+\end{code}
+\begin{code}
 
 record DState : Type where
 \end{code}

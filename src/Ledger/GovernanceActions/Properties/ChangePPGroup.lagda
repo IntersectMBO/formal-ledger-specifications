@@ -23,8 +23,7 @@ instance
 \begin{claim}[%
   \LedgerMod{\ChangePPGroup.lagda}{\AgdaModule{\ChangePPGroup{}}}:
   PParam updates have non-empty groups%
-  ]\
-
+  ]
   \begin{itemize}
     \item \textit{Informally}.
       Let \ab{p}~:~\GovProposal{} be a governance proposal and suppose the \GovActionType{} 

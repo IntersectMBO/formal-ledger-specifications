@@ -188,7 +188,7 @@ module _ -- ASSUMPTION --
     newDeps refunds wdrls : Coin
     newDeps = newDeposits (PParamsOf Γ) utxoSt txb
     refunds = depositRefunds (PParamsOf Γ) utxoSt txb
-    wdrls = getCoin (txwdrlsOf tx)
+    wdrls = getCoin (wdrlsOf tx)
 
     balIn balOut : Value
     balIn = balance (utxo ∣ txins)

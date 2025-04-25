@@ -21,12 +21,14 @@ open import Ledger.Properties txs abs
 \begin{claim}[%
   \LedgerMod{\ChainPropCredDeps.lagda}{\AgdaModule{\ChainPropCredDeps{}}}:
   Equality of credential depsoits is a \CHAIN{} invariant%
-  ]\
-
+  ]
   \begin{itemize}
     \item \textit{Informally}.  This property concerns two quantities associated with
-    a given \ChainState{} \ab{cs}: the credential deposits of the \UTxOState{} of \ab{cs} and
-    the credential deposits of the rewards in the ledger state of \ab{cs}.
+    a given \ChainState{} \ab{cs},
+    \begin{itemize}
+      \item the credential deposits of the \UTxOState{} of \ab{cs} and
+      \item the credential deposits of the rewards in the ledger state of \ab{cs}.
+    \end{itemize}
     The predicate \AgdaFunction{credDeposits≡dom-rwds}~\ab{cs} asserts that these
     quantities are equal for \ab{cs}.  Formally,
 \begin{code}

@@ -67,7 +67,7 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
     CERTS-pov :  {Γ : CertEnv} {s₁ sₙ  : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
       →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ 
-      → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
+      → getCoin s₁ ≡ getCoin sₙ + getCoin (wdrlsOf Γ)
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}

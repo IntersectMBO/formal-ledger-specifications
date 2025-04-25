@@ -21,10 +21,12 @@ open import Ledger.Prelude
 \begin{claim}[%
   \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}}:
   \NEWEPOCH{} rule leaves rewards unchanged%
-  ]\
-
+  ]
   \begin{itemize}
-    \item \textit{Informally}. TODO
+    \item \textit{Informally}. Rewards are left unchanged by the \NEWEPOCH{}
+      rule.  That is, if \ab{es} and \ab{es'} are two \NewEpochState{}s such that
+      \ab{es}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,NEWEPOCH⦈}~\ab{es'}, then the
+      rewards of \ab{es} and \ab{es'} are equal.
     \item \textit{Formally}.  
 \begin{code}
 dom-rwds-const : {e : Epoch} (es es' : NewEpochState)

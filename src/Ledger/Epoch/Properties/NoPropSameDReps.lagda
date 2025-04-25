@@ -21,10 +21,12 @@ open import Ledger.Properties txs abs
 \begin{claim}[%
   \LedgerMod{\EpochPropConstDReps.lagda}{\AgdaModule{\EpochPropConstDReps{}}}:
   DReps unchanged if no gov proposals%
-  ]\
-
+  ]
   \begin{itemize}
-    \item \textit{Informally}. TODO
+    \item \textit{Informally}. 
+      If there are no governance proposals in the \GovState{} of \ab{es}, then the
+      \AgdaField{activeDReps} of \ab{es} in \Epoch{} \ab{e} are the same as the
+      \AgdaField{activeDReps} of \ab{es'} in the next epoch. 
     \item \textit{Formally}.  
 \begin{code}
 prop≡∅⇒activeDReps-const : Epoch → (es es' : NewEpochState) → Type

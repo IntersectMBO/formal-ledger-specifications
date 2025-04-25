@@ -47,6 +47,7 @@ module EPOCH-Body (eps : EpochState) where
   ens      = record (epsRState .ensRState) { withdrawals = ∅ }
   tmpGovSt = filter (λ x → ¿ proj₁ x ∉ map proj₁ (epsRState .removed) ¿) govSt
   orphans  = fromList $ getOrphans ens tmpGovSt
+  removed' : ℙ (GovActionID × GovActionState)
   removed' = (epsRState .removed) ∪ orphans
   removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
     map (returnAddr gaSt ,_) ((deposits utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
@@ -70,22 +71,17 @@ module EPOCH-PROPS {eps : EpochState} where
       (under a certain special condition) \govDepsMatch{}~(\ab{eps}~\AgdaField{.ls})
       implies \govDepsMatch{}~(\ab{eps'}~\AgdaField{.ls}). 
     \\[4pt]
-    To understand the special condition under which the property holds,
-    let \AgdaFunction{removed'} be the union of
-    \begin{itemize}
-      \item the governance actions in the \AgdaField{removed} field of the ratify
-    state of \ab{eps}, and
-      \item the orphaned governance actions in the \GovState{} of \ab{eps}.
-    \end{itemize}
+    The special condition under which the property holds is the same as the one in \cref{thm:ChainGovDepsMatch}:
+    let \AgdaFunction{removed'} be the union of the governance actions in the \AgdaField{removed} field of the ratify
+    state of \ab{eps} and the orphaned governance actions in the \GovState{} of \ab{eps}.
     Let $\mathcal{G}$ be the set
     $\{\mbox{\GovActionDeposit{}~\ab{id}} : \mbox{\ab{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
-    The special hypothesis under which \govDepsMatch{} is an invariant of the
-    \EPOCH{} rule is the following: $\mathcal{G}$ is a subset of the set of deposits
+    Assume: $\mathcal{G}$ is a subset of the set of deposits
     of (the governance state of) \ab{eps}.
     \item \textit{Formally}.
 \begin{code}
   EPOCH-govDepsMatch :  {eps' : EpochState} {e : Epoch}
-    → map (GovActionDeposit ∘ proj₁) removed' ⊆ map proj₁ (DepositsOf eps ˢ)
+    → map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (DepositsOf eps)
     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
 \end{code}

@@ -16,7 +16,7 @@ module Ledger.Utxo.Properties.PoV
 open import Ledger.Certs govStructure
 open import Ledger.Prelude
 open import Ledger.Utxo txs abs
-open import Ledger.Utxo.Properties txs abs using (φ; module DepositHelpers)
+open import Ledger.Utxo.Properties txs abs using (χ; module DepositHelpers)
 open UTxOState; open Tx; open TxBody
 \end{code}
 
@@ -32,25 +32,18 @@ open UTxOState; open Tx; open TxBody
     We can express this more formally as follows:
     \\[4pt]
     \AgdaField{getCoin}~\ab{s}
-    + \AgdaFunction{φ}(\AgdaField{getCoin} \ab{txwdrls} , \ab{tx}~.\AgdaField{isValid})
+    + \AgdaFunction{χ}(\AgdaField{getCoin} \ab{txwdrls} , \ab{tx}~.\AgdaField{isValid})
     $≡$ \AgdaField{getCoin} \ab{s'},
     \\[4pt]
-    where \AgdaFunction{φ}~:~$ℕ$~×~\AgdaDatatype{Bool}~→~$ℕ$ is the function that returns
+    where \AgdaFunction{χ}~:~$ℕ$~×~\AgdaDatatype{Bool}~→~$ℕ$ is the function that returns
     the first argument when the second argument is true, and returns zero when the second
-    argument is false. That is,
-        \[
-          \mbox{\AgdaFunction{φ}} (n , b) = \left\{
-            \begin{array}{ll}
-              n & \text{if } b = \mbox{true}, \\
-              0 & \text{if } b = \mbox{false}.
-            \end{array}\right.
-        \]     
+    argument is false.
     \item \textit{Formally}.
 \begin{code}
 UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
   → txidOf tx ∉ mapˢ proj₁ (dom (UTxOOf s))
   → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-  → getCoin s + φ(getCoin (txwdrlsOf tx) , tx .isValid) ≡ getCoin s'
+  → getCoin s + χ(getCoin (wdrlsOf tx) , tx .isValid) ≡ getCoin s'
 \end{code}
   \item \textit{Proof}. See the
   \LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}} module
