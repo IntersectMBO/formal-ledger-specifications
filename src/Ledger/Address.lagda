@@ -66,6 +66,7 @@ isScriptObj (ScriptObj h)  = just h
 
 data isVKey : Credential → Type where
   VKeyisVKey : (kh : KeyHash) → isVKey (KeyHashObj kh)
+
 data isScript : Credential → Type where
   SHisScript : (sh : ScriptHash) → isScript (ScriptObj sh)
 \end{code}

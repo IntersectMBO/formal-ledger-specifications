@@ -1,5 +1,7 @@
 ## Ignore build products
 _build/
+dist
+latex/.auctex-auto
 
 ## Ignore shake folder
 .shake/
@@ -25,3 +27,7 @@ result*
 
 ## macOS
 .DS_Store
+
+## git-merge conflict resolution artifacts
+*.agda.orig
+*.lagda.orig

@@ -36,20 +36,72 @@
 \includeAgda{Ledger/Chain}
 
 \section{Properties}
-\includeAgda{Ledger/Utxo/Properties}
+This section presents the properties of the ledger that we have formally proved in
+Agda or plan to do so in the near future.  We indicate in which Agda module each
+property is formally stated and (possibly) proved. A ``Claim'' is a property that is
+not yet proved, while a ``Theorem'' is one for which we have a formal proof.
+
+\subsection{Preservation of Value}
+\inputAgda{Ledger/Ledger/Properties/PoV}
+\inputAgda{Ledger/Utxo/Properties/PoV}
+\inputAgda{Ledger/Certs/Properties/PoV}
+\inputAgda{Ledger/Certs/Properties/PoVLemmas}
+
+\subsection{Invariance Properties}
+To say that a predicate \ab{P} is an \textit{invariant} of a transition rule
+means the following: if the transition rule relates states \ab{s} and \ab{s'} and if
+\ab{P} holds at state~\ab{s}, then \ab{P} holds at state \ab{s'}.
+
+\inputAgda{Ledger/Chain/Properties/CredDepsEqualDomRwds}
+\inputAgda{Ledger/Chain/Properties/PParamsWellFormed}
+
+\subsubsection{Governance Action Deposits Match}
+\Cref{thm:ChainGovDepsMatch,lem:LedgerGovDepsMatch,lem:EpochGovDepsMatch} assert that
+a certain predicate is an invariant of the \CHAIN{}, \LEDGER{}, and \EPOCH{} rules, respectively.
+Given a ledger state \ab{s}, we focus on deposits in the
+\UTxOState{} of \ab{s} that are \GovActionDeposit{}s and we compare that set of
+deposits with the \GovActionDeposit{}s of the \GovState{} of \ab{s}.
+When these two sets are the same, we write \AgdaFunction{govDepsMatch}~\ab{s} and say
+the \AgdaFunction{govDepsMatch} relation holds for \ab{s}.
+Formally, the \AgdaFunction{govDepsMatch} predicate is defined as follows:
+\inputAgda{Ledger/Ledger/Properties}
+
+The assertion,
+``the \AgdaFunction{govDepsMatch} relation is an invariant of the \LEDGER{} rule,''
+means the following:  if \govDepsMatch{}~\ab{s} and
+\ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}, then
+\govDepsMatch{}~\ab{s'}.
+
+\inputAgda{Ledger/Chain/Properties/GovDepsMatch}
+\inputAgda{Ledger/Ledger/Properties/GovDepsMatch}
+\inputAgda{Ledger/Epoch/Properties/GovDepsMatch}
+
+\subsection{Minimum Spending Conditions}
+\inputAgda{Ledger/Utxo/Properties/MinSpend}
+
+\subsection{Miscellaneous Properties}
+\inputAgda{Ledger/GovernanceActions/Properties/ChangePPGroup}
+\inputAgda{Ledger/Chain/Properties/EpochStep}
+\inputAgda{Ledger/Epoch/Properties/ConstRwds}
+\inputAgda{Ledger/Epoch/Properties/NoPropSameDReps}
+\inputAgda{Ledger/Certs/Properties/VoteDelegsVDeleg}
 
 \clearpage
 
 \addcontentsline{toc}{section}{References}
+
 \printbibliography
 
 \clearpage
 
 \appendix
 
-\input{definitions}
+\input{Definitions}
 \inputAgda{EssentialAgda}
 \input{ConwayBootstrapEnact}
 \input{ConwayBootstrap}
 
 \end{document}
+
+
+
