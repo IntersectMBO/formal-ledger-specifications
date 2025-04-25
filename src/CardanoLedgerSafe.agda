@@ -8,6 +8,7 @@ import Ledger.Certs
 import Ledger.Certs.Properties
 import Ledger.Certs.Properties.PoV
 import Ledger.Certs.Properties.PoVLemmas
+import Ledger.Certs.Properties.VDelegsInRegDReps
 import Ledger.Chain
 import Ledger.Chain.Properties
 import Ledger.Chain.Properties.CredDepsEqualDomRwds
