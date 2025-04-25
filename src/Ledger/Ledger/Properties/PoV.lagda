@@ -25,7 +25,7 @@ open import Ledger.Utxow txs abs
 
 open import Axiom.Set.Properties th
 
-open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc)
+open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc; *-identityʳ; *-zeroʳ)
 
 -- ** Proof that LEDGER preserves values.
 
@@ -89,12 +89,14 @@ module _
       getCoin utxoSt + getCoin certState
         ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h') ⟩
       getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
-        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + χ (getCoin txwdrls , u))) valid ⟩
-      getCoin utxoSt + (getCoin certState' + χ (getCoin txwdrls , isValid))
+        ≡˘⟨ cong (λ x → getCoin utxoSt + (getCoin certState' + x )) (*-identityʳ (getCoin txwdrls)) ⟩  -- cong (λ u → getCoin utxoSt + (getCoin certState' + getCoin txwdrls * χ u)) valid ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txwdrls * 1)
+        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + getCoin txwdrls * χ u)) valid ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txwdrls * χ isValid)
         ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
-      getCoin utxoSt + (χ (getCoin txwdrls , isValid) + getCoin certState')
-        ≡˘⟨ +-assoc (getCoin utxoSt) (χ (getCoin txwdrls , isValid)) (getCoin certState') ⟩
-      getCoin utxoSt + χ (getCoin txwdrls , isValid) + getCoin certState'
+      getCoin utxoSt + (getCoin txwdrls * χ isValid + getCoin certState')
+        ≡˘⟨ +-assoc (getCoin utxoSt) (getCoin txwdrls * χ isValid) (getCoin certState') ⟩
+      getCoin utxoSt + getCoin txwdrls * χ isValid + getCoin certState'
         ≡⟨ cong (_+ getCoin certState') (UTXOpov h st) ⟩
       getCoin utxoSt' + getCoin certState'
         ∎
@@ -114,8 +116,10 @@ module _
       getCoin ⟦ utxo , fees , deposits , donations ⟧
         ≡˘⟨ +-identityʳ (getCoin ⟦ utxo , fees , deposits , donations ⟧) ⟩
       getCoin ⟦ utxo , fees , deposits , donations ⟧ + 0
-        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + χ(getCoin txwdrls , x)) invalid ⟩
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ + χ(getCoin txwdrls , isValid)
+        ≡˘⟨ cong (getCoin ⟦ utxo , fees , deposits , donations ⟧ +_) (*-zeroʳ (getCoin txwdrls)) ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txwdrls * 0
+        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txwdrls * χ x) invalid ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txwdrls * χ isValid
         ≡⟨ UTXOpov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning
