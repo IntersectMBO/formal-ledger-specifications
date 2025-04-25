@@ -29,21 +29,18 @@ open UTxOState; open Tx; open TxBody
     If \ab{tx} is valid, then the coin value of \ab{s'} is equal to the sum of the
     coin values of \ab{s} and \ab{txwdrls}.  If \ab{tx} is not valid, then the coin
     values of \ab{s} and \ab{s'} are equal.  
-    We can express this more formally as follows:
-    \\[4pt]
-    \AgdaField{getCoin}~\ab{s}
-    + \AgdaFunction{χ}(\AgdaField{getCoin} \ab{txwdrls} , \ab{tx}~.\AgdaField{isValid})
-    $≡$ \AgdaField{getCoin} \ab{s'},
-    \\[4pt]
-    where \AgdaFunction{χ}~:~$ℕ$~×~\AgdaDatatype{Bool}~→~$ℕ$ is the function that returns
-    the first argument when the second argument is true, and returns zero when the second
-    argument is false.
+    We can express this concisely as follows:
+    \[\mbox{\AgdaField{getCoin}~\ab{s}} + \mbox{\AgdaField{getCoin}~\ab{txwdrls}}
+      · \mbox{\AgdaFunction{χ}} (\mbox{\ab{tx}~.\AgdaField{isValid}})
+      ≡ \mbox{\AgdaField{getCoin} \ab{s'}},\]
+    where $χ~:~\AgdaDatatype{Bool}~→~{0, 1}$ is the \textit{characteristic function},
+    which returns 0 for false and 1 for true.
     \item \textit{Formally}.
 \begin{code}
 UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
   → txidOf tx ∉ mapˢ proj₁ (dom (UTxOOf s))
   → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-  → getCoin s + χ(getCoin (wdrlsOf tx) , tx .isValid) ≡ getCoin s'
+  → getCoin s + getCoin (wdrlsOf tx) * χ (tx .isValid) ≡ getCoin s'
 \end{code}
   \item \textit{Proof}. See the
   \LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}} module

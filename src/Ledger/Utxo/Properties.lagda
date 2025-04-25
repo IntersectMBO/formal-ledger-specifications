@@ -280,9 +280,9 @@ posPart-negPart≡x : {x : ℤ} → posPart x - negPart x ≡ x
 posPart-negPart≡x {ℤ.+_ n}     = refl
 posPart-negPart≡x {ℤ.negsuc n} = refl
 
-χ : ℕ × Bool → ℕ
-χ (n , true) = n
-χ (n , false) = 0
+χ : Bool → ℕ
+χ false  = 0
+χ true   = 1
 
 module DepositHelpers
   {utxo utxo' : UTxO}
@@ -469,11 +469,13 @@ module DepositHelpers
            where
 
     pov-scripts-worker :  isValid ≡ true
-                          →  balanceUtxo + fees + getCoin deposits + donations + χ(wdls , isValid)
+                          →  balanceUtxo + fees + getCoin deposits + donations + wdls * χ(isValid)
                              ≡ balanceUtxo' + (fees + txfee) + getCoin deposits' + (donations + txdonation)
     pov-scripts-worker valid = begin
-      balanceUtxo + fees + getCoin deposits + donations + χ(wdls , isValid)
-        ≡⟨ cong (λ x → balanceUtxo + fees + getCoin deposits + donations + χ(wdls , x)) valid ⟩
+      balanceUtxo + fees + dep + donations + wdls * χ(isValid)
+        ≡⟨ cong (λ x → balanceUtxo + fees + dep + donations + wdls * χ x) valid ⟩
+      balanceUtxo + fees + dep + donations + wdls * 1
+        ≡⟨ cong (balanceUtxo + fees + dep + donations +_) (*-identityʳ wdls) ⟩
       balanceUtxo + fees + dep + donations + wdls
         ≡⟨ +-assoc (balanceUtxo + fees + dep) donations wdls ⟩
       balanceUtxo + fees + dep + (donations + wdls)
@@ -517,16 +519,17 @@ module DepositHelpers
 
   pov-scripts :  deposits' ≡ updateDeposits pp txb deposits
                  →  isValid ≡ true
-                 →  cbalance utxo + fees + dep + donations + χ(wdls , isValid)
+                 →  cbalance utxo + fees + dep + donations + wdls * χ(isValid)
                     ≡  cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)
                        + (fees + txfee) + getCoin deposits' + (donations + txdonation)
   pov-scripts h valid = pov-scripts-worker (cbalance utxo) (cbalance ((utxo ∣ txins ᶜ) ∪ˡ outs txb)) utxo-ref-prop h valid
 
   pov-no-scripts :  isValid ≡ false
-                    →  cbalance utxo + fees + dep + donations + χ(wdls , isValid)
+                    →  cbalance utxo + fees + dep + donations + wdls * χ(isValid)
                        ≡ cbalance (utxo ∣ collateral ᶜ) + (fees + cbalance (utxo ∣ collateral)) + dep + donations
   pov-no-scripts invalid = begin
-    cbalance utxo + fees + dep + donations + χ(wdls , isValid) ≡⟨ cong (λ x → cbalance utxo + fees + dep + donations + χ(wdls , x)) invalid ⟩
+    cbalance utxo + fees + dep + donations + wdls * χ(isValid) ≡⟨ cong (λ x → cbalance utxo + fees + dep + donations + wdls * χ x) invalid ⟩
+    cbalance utxo + fees + dep + donations + wdls * 0 ≡⟨ cong (cbalance utxo + fees + dep + donations +_ ) (*-zeroʳ wdls) ⟩
     cbalance utxo + fees + dep + donations + 0 ≡⟨ +-identityʳ _ ⟩
     cbalance utxo + fees + dep + donations ≡⟨ cong (λ x → x + dep + donations) $ begin
       cbalance utxo ℕ.+ fees ≡⟨ cong (_+ fees) (split-balance collateral) ⟩

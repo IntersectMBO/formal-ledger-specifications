@@ -91,18 +91,18 @@ module EPOCH-PROPS {eps : EpochState} where
 \begin{code}[hide]
   -- Proof.
   EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
-      ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym χ'≡χ))
+      ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
     where
 
     -- the combinator used in the EPOCH rule
-    χ : ℙ DepositPurpose
-    χ = map (proj₁ ∘ proj₂) removedGovActions
+    ΔΠ : ℙ DepositPurpose
+    ΔΠ = map (proj₁ ∘ proj₂) removedGovActions
 
     -- a simpler combinator that suffices here;
-    χ' : ℙ DepositPurpose
-    χ' = map (GovActionDeposit ∘ proj₁) removed'
-    -- Below we prove χ and χ' are essentially equivalent.
+    ΔΠ' : ℙ DepositPurpose
+    ΔΠ' = map (GovActionDeposit ∘ proj₁) removed'
+    -- Below we prove ΔΠ and ΔΠ' are essentially equivalent.
 
     P : GovActionID × GovActionState → Type
     P = λ u → proj₁ u ∉ map proj₁ removed'
@@ -115,13 +115,13 @@ module EPOCH-PROPS {eps : EpochState} where
 
     -- utxo deposits restricted to new form of set used in EPOCH rule
     utxoDeps' : Deposits
-    utxoDeps' = utxoDeps ∣ χ' ᶜ
+    utxoDeps' = utxoDeps ∣ ΔΠ' ᶜ
 
-    χ'≡χ : χ' ≡ᵉ χ
-    χ'≡χ = χ'⊆χ , χ⊆χ'
+    ΔΠ'≡ΔΠ : ΔΠ' ≡ᵉ ΔΠ
+    ΔΠ'≡ΔΠ = ΔΠ'⊆ΔΠ , ΔΠ⊆ΔΠ'
       where
-      χ'⊆χ : χ' ⊆ χ
-      χ'⊆χ {a} x with from ∈-map x
+      ΔΠ'⊆ΔΠ : ΔΠ' ⊆ ΔΠ
+      ΔΠ'⊆ΔΠ {a} x with from ∈-map x
       ... | (gaid , gast) , refl , gaidgast∈rem with from ∈-map (ratify-removed x)
       ... | (dp , c) , refl , dpc∈utxoDeps = let gadc = (GovActionDeposit gaid , c) in
         to ∈-map ((returnAddr {txs} gast , gadc)
@@ -129,8 +129,8 @@ module EPOCH-PROPS {eps : EpochState} where
                  , to ∈-concatMapˢ ((gaid , gast)
                                    , gaidgast∈rem
                                    , to ∈-map (gadc , refl , res-singleton⁺ {m = utxoDeps} dpc∈utxoDeps)))
-      χ⊆χ' : χ ⊆ χ'
-      χ⊆χ' {a} x with from ∈-map x
+      ΔΠ⊆ΔΠ' : ΔΠ ⊆ ΔΠ'
+      ΔΠ⊆ΔΠ' {a} x with from ∈-map x
       ... | (rwa , dp , c) , refl , rwa-dp-c∈ with (from ∈-concatMapˢ rwa-dp-c∈)
       ... | (gaid , gast) , gaid-gast-∈-removed , rwa-dp-c-∈-map with (from ∈-map rwa-dp-c-∈-map)
       ... | (_ , _) , refl , q∈ =
@@ -138,19 +138,19 @@ module EPOCH-PROPS {eps : EpochState} where
                  , proj₁ (×-≡,≡←≡ (proj₂ (res-singleton'' {m = utxoDeps} q∈)))
                  , gaid-gast-∈-removed)
 
-    map-filter-decomp : ∀ a → (a ∉ χ' × a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt)
+    map-filter-decomp : ∀ a → (a ∉ ΔΠ' × a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt)
                                ⇔ (a ∈ˡ map' (GovActionDeposit ∘ proj₁)(filter P? govSt))
     map-filter-decomp a = mk⇔ i (λ h → ii h , iii h)
       where
-      i : ((a ∉ χ') × (a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt))
+      i : ((a ∉ ΔΠ') × (a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt))
           → a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)
-      i (a∉χ' , a∈) with Inverse.from (map-∈↔ (GovActionDeposit ∘ proj₁)) a∈
+      i (a∉ΔΠ' , a∈) with Inverse.from (map-∈↔ (GovActionDeposit ∘ proj₁)) a∈
       ... | b , b∈ , refl = Inverse.to (map-∈↔ (GovActionDeposit ∘ proj₁))
-                                       (b , ∈-filter⁺ P? b∈ (a∉χ' ∘ ∈-map⁺-∘) , refl)
+                                       (b , ∈-filter⁺ P? b∈ (a∉ΔΠ' ∘ ∈-map⁺-∘) , refl)
 
-      ii : a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt) → a ∉ χ'
-      ii a∈ a∈χ' with from (∈ˡ-map-filter {l = govSt} {P? = P?}) a∈
-      ... | _ , _ , refl , Pb with ∈-map⁻' a∈χ'
+      ii : a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt) → a ∉ ΔΠ'
+      ii a∈ a∈ΔΠ' with from (∈ˡ-map-filter {l = govSt} {P? = P?}) a∈
+      ... | _ , _ , refl , Pb with ∈-map⁻' a∈ΔΠ'
       ... | q , refl , q∈rem = Pb (to ∈-map (q , refl , q∈rem))
 
       iii : a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)
@@ -167,12 +167,12 @@ module EPOCH-PROPS {eps : EpochState} where
     main-invariance-lemma HYP a = let open R.EquationalReasoning in
       a ∈ filterˢ isGADeposit (dom utxoDeps')                          ∼⟨ R.SK-sym ∈-filter ⟩
       (isGADeposit a × a ∈ dom utxoDeps')                              ∼⟨ R.K-refl ×-cong ∈-resᶜ-dom ⟩
-      (isGADeposit a × a ∉ χ' × ∃[ q ] (a , q) ∈ utxoDeps)             ∼⟨ ×-⇔-swap ⟩
-      (a ∉ χ' × isGADeposit a × ∃[ q ] (a , q) ∈ utxoDeps)             ∼⟨ R.K-refl ×-cong (R.K-refl ×-cong dom∈)⟩
-      (a ∉ χ' × isGADeposit a × a ∈ dom utxoDeps)                      ∼⟨ R.K-refl ×-cong ∈-filter ⟩
-      (a ∉ χ' × a ∈ filterˢ isGADeposit (dom utxoDeps))                ∼⟨ R.K-refl ×-cong (HYP a) ⟩
-      (a ∉ χ' × a ∈ fromList (map' (GovActionDeposit ∘ proj₁) govSt))  ∼⟨ R.K-refl ×-cong (R.SK-sym ∈-fromList)⟩
-      (a ∉ χ' × a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
+      (isGADeposit a × a ∉ ΔΠ' × ∃[ q ] (a , q) ∈ utxoDeps)             ∼⟨ ×-⇔-swap ⟩
+      (a ∉ ΔΠ' × isGADeposit a × ∃[ q ] (a , q) ∈ utxoDeps)             ∼⟨ R.K-refl ×-cong (R.K-refl ×-cong dom∈)⟩
+      (a ∉ ΔΠ' × isGADeposit a × a ∈ dom utxoDeps)                      ∼⟨ R.K-refl ×-cong ∈-filter ⟩
+      (a ∉ ΔΠ' × a ∈ filterˢ isGADeposit (dom utxoDeps))                ∼⟨ R.K-refl ×-cong (HYP a) ⟩
+      (a ∉ ΔΠ' × a ∈ fromList (map' (GovActionDeposit ∘ proj₁) govSt))  ∼⟨ R.K-refl ×-cong (R.SK-sym ∈-fromList)⟩
+      (a ∉ ΔΠ' × a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
 \end{code}

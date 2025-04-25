@@ -25,18 +25,18 @@ open import Ledger.GovernanceActions gs
       interest to us here is \credVoter{}, which takes two arguments,
       a \GovRole{} and a \Credential{}.
 
-      Now suppose we have a collection 𝒞 of credentials---for instance, 
-      given \ab{d}~:~\DState{}, take 𝒞 to be the domain of the
-      \voteDelegs{} field of \ab{d}.  We could obtain a collection of \VDeleg{}s
-      by applying \credVoter{}~\DRep{} to 𝒞. 
+      Now suppose we have a collection \ab{C} of credentials---for instance, 
+      given \ab{d}~:~\DState{}, take \ab{C} to be the domain of the
+      \voteDelegs{} field of \ab{d}.  We could then obtain a set of \VDeleg{}s
+      by applying \credVoter{}~\DRep{} to each element of \ab{C}. 
 
-      The present property asserts that the set of \VDelegs{}s that results from the
+      The present property asserts that the set of \VDeleg{}s that results from the
       application of \credVoter{}~\DRep{} to the domain of the \voteDelegs{} of
       \ab{d} contains the range of the \voteDelegs{} of \ab{d}.
     \item \textit{Formally}.
 \begin{code}
-VDelegsInRegDReps :  {d : DState} → Type
-VDelegsInRegDReps {d = d} = range (voteDelegsOf d) ⊆ mapˢ (credVoter DRep) (dom (voteDelegsOf d))
+VDelegsInRegDReps :  DState → Type
+VDelegsInRegDReps d = range (voteDelegsOf d) ⊆ mapˢ (credVoter DRep) (dom (voteDelegsOf d))
 \end{code}
     \item \textit{Proof}. To appear in the
       \LedgerMod{\CertsVDelegs.lagda}{\AgdaModule{\CertsVDelegs{}}}
