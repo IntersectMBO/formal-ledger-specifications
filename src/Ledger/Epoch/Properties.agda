@@ -16,6 +16,7 @@ open import Ledger.Epoch txs abs
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
 open import Ledger.Ratify.Properties txs
+open import Ledger.Rewards txs abs
 
 open import Data.List using (filter)
 import Relation.Binary.PropositionalEquality as PE

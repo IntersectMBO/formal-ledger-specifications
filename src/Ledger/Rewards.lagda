@@ -5,30 +5,45 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Agda.Builtin.FromNat
-
+import      Data.Nat as ℕ renaming (_⊔_ to max)
+import      Data.Integer as ℤ renaming (_⊔_ to max)
+import      Data.Integer.Properties as ℤ
 open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_)
-import Data.Rational as ℚ renaming (_⊓_ to min; _⊔_ to max)
-open import Data.Rational.Literals using (number)
-import Data.Rational.Properties as ℚ
-import Data.Nat as ℕ renaming (_⊔_ to max)
-import Data.Integer as ℤ renaming (_⊔_ to max)
-import Data.Integer.Properties as ℤ
-open Number number renaming (fromNat to fromℕ)
+import      Data.Rational as ℚ renaming (_⊓_ to min; _⊔_ to max)
+open import Data.Rational.Literals using (number; fromℤ)
+import      Data.Rational.Properties as ℚ
 
-open import Ledger.Prelude hiding (_/_; _*_; _-_)
-open import Ledger.Types.GovStructure
+open import Ledger.Abstract
+open import Ledger.Transaction
 open import Ledger.Types.Numeric.UnitInterval
 
+open import Agda.Builtin.FromNat
+open        Number number renaming (fromNat to fromℕ)
+
 module Ledger.Rewards
-  (gs : _) (open GovStructure gs)
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
-open import Ledger.Certs gs
+open import Ledger.Certs govStructure
+open import Ledger.Ledger txs abs
+open import Ledger.Prelude hiding (_/_; _*_; _-_)
+open import Ledger.Utxo txs abs
+
 \end{code}
 This section defines how rewards for stake pools and their delegators
 are calculated and paid out.
+This calculation has two main aspects:
+\begin{itemize}
+  \item The \emph{amount} of rewards to be paid out.
+    This is defined in
+    \cref{sec:rewards-amount}.
+  \item The \emph{time} when rewards are paid out.
+    This is defined in
+    \cref{sec:rewards-time}.
+\end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Rewards Motivation}
 \label{sec:rewards-motivation}
 In order to operate, any blockchain needs to attract parties that are
@@ -85,7 +100,12 @@ large, but fixed number of stake pools that attract most of the stake.
 For more details about the design and rationale of the rewards and delegation
 system, see \textcite{shelley-delegation-design}.
 
-\subsection{Precision of Arithmetic Operations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Amount of Rewards to be Paid Out}
+\label{sec:rewards-amount}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Precision of Arithmetic Operations}
 \label{sec:precision-rewards}
 When computing rewards, all intermediate results are computed
 using rational numbers, \AgdaDatatype{ℚ},
@@ -114,7 +134,8 @@ We use the following arithmetic operations besides basic arithmetic:
   \item \AgdaFunction{/₀}: Like \AgdaFunction{÷₀}, but with integer arguments.
 \end{itemize}
 
-\subsection{Rewards Distribution Calculation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Rewards Distribution Calculation}
 \label{sec:rewards-distribution-calculation}
 This section defines the amount of rewards that are paid out
 to stake pools and their delegators.
@@ -422,7 +443,8 @@ reward pp blocks rewardPot poolParams stake delegs total = rewards
 \label{fig:functions:reward}
 \end{figure*}
 
-\subsection{Reward Update}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Reward Update}
 \label{sec:reward-update}
 This section defines the \AgdaRecord{RewardUpdate} type,
 which records the net flow of Ada due to paying out rewards
@@ -523,7 +545,144 @@ after they have passed through the \AgdaFunction{rewardPot}.
   \label{fig:rewardPot}
 \end{figure}
 
-\subsection{Stake Distribution Snapshots}
-\label{sec:stake-dstribution-snapshots-}
-TODO: This section defines the SNAP transition rule
-for the stake distribution snapshots.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Stake Distribution Calculation}
+\label{sec:stake-distribution-calculation}
+
+This section defines the calculation of the stake distribution
+for the purpose of calculating rewards.
+
+\Cref{fig:defs:Snapshot} defines the type \AgdaField{Snapshot}
+that represents a stake distribution snapshot.
+Such a snapshot contains the essential data needed to compute rewards:
+\begin{itemize}
+  \item \AgdaField{stake}  A stake distribution,
+  that is a mapping from credentials to coin.
+  \item \AgdaField{delegations}: A delegation map,
+  that is a mapping from credentials to the stake pools that they delegate to.
+  \item \AgdaField{poolParameters}:
+  A mapping that stores the pool parameters of each stake pool.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{code}
+record Snapshot : Set where
+  field
+    stake           : Credential ⇀ Coin
+    delegations     : Credential ⇀ KeyHash
+    poolParameters  : KeyHash ⇀ PoolParams
+
+\end{code}
+\caption{Definitions of the Snapshot type}
+\label{fig:defs:Snapshot}
+\end{figure*}
+\begin{code}[hide]
+instance
+  unquoteDecl HasCast-Snapshot =
+    derive-HasCast [ (quote Snapshot , HasCast-Snapshot) ]
+\end{code}
+
+\Cref{fig:functions:stakeDistr} defines the calculation of
+the stake distribution from the data contained in a ledger state.
+Here,
+\begin{itemize}
+  \item \AgdaFunction{aggregate₊} takes a relation \ab{R ⊂ A × V},
+    where \ab{V} is any monoid with operation \ab{+},
+    and returns a mapping \ab{A ⇀ B} such that any item \ab{a ∈ A}
+    is mapped to the sum (using the operation \ab{+})
+    of all \ab{b ∈ B} such that \ab{(a , b) ∈ R}.
+  \item \AgdaFunction{m}
+    is the stake relation computed from the UTxO set.    
+  \item \AgdaFunction{stakeRelation}
+    is the total stake relation obtained
+    by combining the stake from the UTxO set
+    with the stake from the reward accounts.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaSuppressSpace}
+\begin{code}[hide]
+private
+  getStakeCred : TxOut → Maybe Credential
+  getStakeCred (a , _ , _ , _) = stakeCred a
+\end{code}
+\begin{code}
+stakeDistr : UTxO → DState → PState → Snapshot
+stakeDistr utxo stᵈ pState =
+    ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs , poolParams ⟧
+  where
+    poolParams = pState .PState.pools
+    open DState stᵈ using (stakeDelegs; rewards)
+    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
+    stakeRelation = m ∪ ∣ rewards ∣
+\end{code}
+\end{AgdaSuppressSpace}
+\caption{Functions for computing stake distributions}
+\label{fig:functions:stakeDistr}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Timing when Rewards are Paid Out}
+\label{sec:rewards-time}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Stake Distribution Snapshots}
+\label{sec:stake-distribution-snapshots}
+This section defines the SNAP transition rule for stake distribution snapshots.
+
+\Cref{fig:defs:Snapshots} defines the type
+\AgdaField{Snapshots} that contains the data that needs
+to be saved at the end of an epoch. This data is:
+\begin{itemize}
+  \item \AgdaField{mark}, \AgdaField{set}, \AgdaField{go}:
+  Three stake distribution snapshots as explained in Section~TODO.
+  \item \AgdaField{feeSS}:
+  stores the fees which are added to the reward pot during the next reward update
+calculation, which is then subtracted from the fee pot on the epoch boundary.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{code}
+record Snapshots : Set where
+  field
+    mark set go  : Snapshot
+    feeSS        : Coin
+
+\end{code}
+\caption{Definitions for the SNAP transition system}
+\label{fig:defs:Snapshots}
+\end{figure*}
+\begin{code}[hide]
+instance
+  unquoteDecl HasCast-Snapshots =
+    derive-HasCast [ (quote Snapshots , HasCast-Snapshots) ]
+\end{code}
+
+\Cref{fig:snap:sts} defines the snapshot transition rule.
+This transition has no preconditions and results in the following state change:
+\begin{itemize}
+  \item The oldest snapshot is replaced with the penultimate one.
+  \item The penultimate snapshot is replaced with the newest one.
+  \item The newest snapshot is replaced with one just calculated.
+  \item The current fees pot is stored in \AgdaField{feeSS}.
+  Note that this value will not change during the
+  epoch, unlike the \AgdaField{fees} value in the UTxO state.
+\end{itemize}
+
+\begin{code}[hide]
+private variable
+  lstate : LState
+  mark set go : Snapshot
+  feeSS : Coin
+\end{code}
+\begin{figure*}[h]
+\begin{code}
+data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
+  SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
+             stake = stakeDistr utxo dState pState
+    in
+    lstate ⊢ ⟦ mark , set , go , feeSS ⟧ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧
+\end{code}
+\caption{SNAP transition system}
+\label{fig:snap:sts}
+\end{figure*}

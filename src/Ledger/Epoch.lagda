@@ -32,28 +32,14 @@ open import Ledger.Enact govStructure
 open import Ledger.Gov txs
 open import Ledger.Ledger txs abs
 open import Ledger.Ratify txs
-open import Ledger.Rewards govStructure
+open import Ledger.Rewards txs abs
 open import Ledger.Utxo txs abs
 
 \end{code}
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
-\begin{NoConway}
 \begin{code}
-record Snapshot : Set where
-  field
-    stake           : Credential ⇀ Coin
-    delegations     : Credential ⇀ KeyHash
-    poolParameters  : KeyHash ⇀ PoolParams
 
-record Snapshots : Set where
-  field
-    mark set go  : Snapshot
-    feeSS        : Coin
-
-\end{code}
-\end{NoConway}
-\begin{code}
 record EpochState : Type where
 \end{code}
 \begin{code}[hide]
@@ -66,6 +52,7 @@ record EpochState : Type where
     ls         : LState
     es         : EnactState
     fut        : RatifyState
+
 \end{code}
 \begin{code}[hide]
 record HasEpochState {a} (A : Type a) : Type a where
@@ -130,10 +117,8 @@ instance
   HasRewards-NewEpochState : HasRewards NewEpochState
   HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
 
-  unquoteDecl HasCast-RewardUpdate HasCast-Snapshot HasCast-Snapshots HasCast-EpochState HasCast-NewEpochState = derive-HasCast
+  unquoteDecl HasCast-RewardUpdate HasCast-EpochState HasCast-NewEpochState = derive-HasCast
     (   (quote RewardUpdate   , HasCast-RewardUpdate)
-    ∷   (quote Snapshot       , HasCast-Snapshot)
-    ∷   (quote Snapshots      , HasCast-Snapshots)
     ∷   (quote EpochState     , HasCast-EpochState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
@@ -274,15 +259,6 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 open RwdAddr using (stake)
 \end{code}
 \begin{code}
-stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo stᵈ pState =
-    ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs , poolParams ⟧
-  where
-    poolParams = pState .PState.pools
-    open DState stᵈ using (stakeDelegs; rewards)
-    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ ∣ rewards ∣
-
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
   (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
@@ -323,12 +299,6 @@ private variable
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
-  SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
-             stake = stakeDistr utxo dState pState
-    in
-    lstate ⊢ ⟦ mark , set , go , feeSS ⟧ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧
-
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 \end{code}
 \end{figure*}
