@@ -5,10 +5,6 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra
-open import Data.Nat.Properties using (+-0-monoid)
-
-open import Ledger.Prelude; open Equivalence
 open import Ledger.Transaction
 open import Ledger.Abstract
 
@@ -17,12 +13,17 @@ module Ledger.Chain
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Certs govStructure
 open import Ledger.Enact govStructure
+open import Ledger.Epoch txs abs
+open import Ledger.Gov txs
 open import Ledger.Ledger txs abs
+open import Ledger.Prelude; open Equivalence
 open import Ledger.Ratify txs
 open import Ledger.Utxo txs abs
-open import Ledger.Epoch txs abs
-open import Ledger.Certs govStructure
+
+open import Algebra
+open import Data.Nat.Properties using (+-0-monoid)
 \end{code}
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
@@ -43,6 +44,9 @@ record Block : Type where
 instance
   HasNewEpochState-ChainState : HasNewEpochState ChainState
   HasNewEpochState-ChainState .NewEpochStateOf = ChainState.newEpochState
+
+  HasLastEpoch-ChainState : HasLastEpoch ChainState
+  HasLastEpoch-ChainState .LastEpochOf = LastEpochOf ∘ NewEpochStateOf
 
   HasEpochState-ChainState : HasEpochState ChainState 
   HasEpochState-ChainState .EpochStateOf = EpochStateOf ∘ NewEpochStateOf

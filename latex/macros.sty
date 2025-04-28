@@ -7,17 +7,6 @@
 \RequirePackage{fontspec}
 
 %%
-%% Environments
-%%
-\newtheorem{property}{Property}[section]
-\newenvironment{question}
-  {\begin{bclogo}[logo=\bcquestion, couleur=orange!10, arrondi=0.2]{ QUESTION}}
-  {\end{bclogo}}
-\newenvironment{note}
-  {\begin{bclogo}[logo=\bcattention, couleur=orange!10, arrondi=0.2]{ NOTE}}
-  {\end{bclogo}}
-
-%%
 %% Typesetting defined terms consistently.
 %%
 \newcommand{\defn}[1]{\textit{#1}}   %  defined terms are typeset in italics
@@ -119,7 +108,7 @@
 %%
 %% Agda macros
 %%
-\newcommand{\AgdaVersion}{v2.7.0}  % <= Change this when updating Agda version!
+\newcommand{\AgdaVersion}{v2.7.0.1}  % <= Change this when updating Agda version!
 
 \newcommand\agdaFont{StrippedJuliaMono}
 \newcommand\agdaFontOptions{
@@ -128,16 +117,22 @@ UprightFont=*-Regular,
 BoldFont=*-Bold,
 ItalicFont=*-RegularItalic,
 BoldItalicFont=*-BoldItalic,
-%% Scale=MatchLowercase
-Scale=0.80
-%% Scale=MatchUppercase
+Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 }
 
+\NewDocumentCommand\LedgerMod{mm}{%
+% first arg  : subdirectory of Ledger (if necessary), including /, and
+%              filename of the module, including .agda or .lagda suffix;
+% second arg : what text should appear in the pdf, including formatting;
+% usage      : \LedgerMod{Utxo.agda}{\texttt{UTXO}}
+%              \LedgerMod{Utxo/Properties.agda}{\AgdaModule{Ledger.Utxo.Properties}}
+  \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1}{#2}%
+}
 \NewDocumentCommand\LedgerModule{m}{% usage: \LedgerModule{Utxo}
-\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\AgdaModule{Ledger.#1}}%
+  \LedgerMod{#1.lagda}{\AgdaModule{Ledger.#1}}%
 }
 \NewDocumentCommand\LedgerModText{mm}{% usage: \LedgerModText{Utxo}{UTXO}
-\href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1.lagda}{\texttt{#2}}%
+  \LedgerMod{#1.lagda}{\texttt{#2}}%
 }
 
 \newfontfamily{\AgdaSerifFont}{\agdaFont}[\agdaFontOptions]
@@ -149,12 +144,14 @@ Scale=0.80
 \renewcommand{\AgdaCommentFontStyle}[1]{{\AgdaTypewriterFont{}#1}}
 \renewcommand{\AgdaBoundFontStyle}[1]{{\emph{\AgdaTypewriterFont{}#1}}}
 
+\newcommand{\ab}[1]{\AgdaBound{#1}}
 \newcommand{\abstain}{\AgdaInductiveConstructor{abstain}}
 \newcommand{\abstainRep}{\AgdaInductiveConstructor{abstainRep}}
 \newcommand{\accepted}{\AgdaFunction{accepted}}
 \newcommand{\acceptConds}{\AgdaFunction{acceptConds}}
 \newcommand{\acceptedBy}{\AgdaFunction{acceptedBy}}
 \newcommand{\acceptedStakeRatio}{\AgdaFunction{acceptedStakeRatio}}
+\newcommand{\Acnt}{\AgdaRecord{Acnt}}
 \newcommand{\actionWellFormed}{\AgdaFunction{actionWellFormed}}
 \newcommand{\actionValid}{\AgdaFunction{actionValid}}
 \newcommand{\actualCCVote}{\AgdaFunction{actualCCVote}}
@@ -171,12 +168,20 @@ Scale=0.80
 \newcommand{\applyRUpd}{\AgdaFunction{applyRUpd}}
 
 \newcommand{\BaseAddr}{\AgdaRecord{BaseAddr}}
+\newcommand{\Block}{\AgdaRecord{Block}}
 
 \newcommand{\canVote}{\AgdaFunction{canVote}}
 \newcommand{\CC}{\AgdaInductiveConstructor{CC}}
 \newcommand{\CCData}{\AgdaFunction{CCData}}
 \newcommand{\ccMaxTermLength}{\AgdaField{ccMaxTermLength}}
 \newcommand{\ccMinSize}{\AgdaField{ccMinSize}}
+\newcommand{\CERT}{\AgdaOperator{\AgdaDatatype{CERT}}}
+\newcommand{\CERTBASE}{\AgdaOperator{\AgdaDatatype{CERTBASE}}}
+\newcommand{\CertEnv}{\AgdaRecord{CertEnv}}
+\newcommand{\CERTS}{\AgdaOperator{\AgdaDatatype{CERTS}}}
+\newcommand{\CertState}{\AgdaRecord{CertState}}
+\newcommand{\CHAIN}{\AgdaOperator{\AgdaDatatype{CHAIN}}}
+\newcommand{\ChainState}{\AgdaRecord{ChainState}}
 \newcommand{\ChangePParams}{\AgdaInductiveConstructor{ChangePParams}}
 \newcommand{\Coin}{\AgdaFunction{Coin}}
 \newcommand{\coinsPerUTxOByte}{\AgdaField{coinsPerUTxOByte}}
@@ -186,12 +191,15 @@ Scale=0.80
 \newcommand{\coproduct}{\AgdaDatatype{⊎}}
 \newcommand{\corestriction}{\AgdaFunction{∣\textasciicircum{}}}
 \newcommand{\CredentialType}{\AgdaDatatype{Credential}}
+\newcommand{\Credential}{\AgdaDatatype{Credential}}
+\newcommand{\CredentialDeposit}{\AgdaInductiveConstructor{CredentialDeposit}}
 \newcommand{\credsNeeded}{\AgdaFunction{credsNeeded}}
 \newcommand{\credVoter}{\AgdaInductiveConstructor{credVoter}}
 \newcommand{\curTreasury}{\AgdaField{curTreasury}}
 
 \newcommand{\Data}{\AgdaFunction{Data}}
 \newcommand{\DataHash}{\AgdaFunction{DataHash}}
+\newcommand{\DCert}{\AgdaDatatype{DCert}}
 \newcommand{\delayed}{\AgdaFunction{delayed}}
 \newcommand{\delayingAction}{\AgdaFunction{delayingAction}}
 \newcommand{\delegate}{\AgdaInductiveConstructor{delegate}}
@@ -201,16 +209,22 @@ Scale=0.80
 \newcommand{\depositRefunds}{\AgdaFunction{depositRefunds}}
 \newcommand{\deposits}{\AgdaField{deposits}}
 \newcommand{\Deposits}{\AgdaDatatype{Deposits}}
+\newcommand{\dereg}{\AgdaInductiveConstructor{dereg}}
+\newcommand{\deregdrep}{\AgdaInductiveConstructor{deregdrep}}
 \newcommand{\DocHash}{\AgdaField{DocHash}}
 \newcommand{\DRep}{\AgdaInductiveConstructor{DRep}}
+\newcommand{\DRepDeposit}{\AgdaInductiveConstructor{DRepDeposit}}
 \newcommand{\drepActivity}{\AgdaField{drepActivity}}
 \newcommand{\drepDeposit}{\AgdaField{drepDeposit}}
-\newcommand{\DReps}{\AgdaInductiveConstructor{DRep}s}
+\newcommand{\DReps}{\DRep{}s}
 \newcommand{\drepThresholds}{\AgdaField{drepThresholds}}
 \newcommand{\DState}{\AgdaDatatype{DState}}
 
 \newcommand{\EconomicGroup}{\AgdaInductiveConstructor{EconomicGroup}}
 \newcommand{\EnactEnv}{\AgdaRecord{EnactEnv}}
+\newcommand{\EPOCH}{\AgdaOperator{\AgdaDatatype{EPOCH}}}
+\newcommand{\Epoch}{\AgdaDatatype{Epoch}}
+\newcommand{\EpochState}{\AgdaRecord{EpochState}}
 \newcommand{\EnactState}{\AgdaRecord{EnactState}}
 \newcommand{\expired}{\AgdaFunction{expired}}
 
@@ -219,7 +233,10 @@ Scale=0.80
 
 \newcommand{\getStakeDist}{\AgdaFunction{getStakeDist}}
 \newcommand{\GovAction}{\AgdaDatatype{GovAction}}
+\newcommand{\GovActionType}{\AgdaDatatype{GovActionType}}
+\newcommand{\GovActionData}{\AgdaFunction{GovActionData}}
 \newcommand{\govActionDeposit}{\AgdaField{govActionDeposit}}
+\newcommand{\GovActionDeposit}{\AgdaInductiveConstructor{GovActionDeposit}}
 \newcommand{\GovActionID}{\AgdaDatatype{GovActionID}}
 \newcommand{\govActionLifetime}{\AgdaField{govActionLifetime}}
 \newcommand{\govActionPriority}{\AgdaFunction{govActionPriority}}
@@ -227,6 +244,7 @@ Scale=0.80
 \newcommand{\GOVCERTccreghot}{\AgdaInductiveConstructor{GOVCERT-ccreghot}}
 \newcommand{\GOVCERTderegdrep}{\AgdaInductiveConstructor{GOVCERT-deregdrep}}
 \newcommand{\GOVCERTregdrep}{\AgdaInductiveConstructor{GOVCERT-regdrep}}
+\newcommand{\govDepsMatch}{\AgdaFunction{govDepsMatch}}
 \newcommand{\GovEnv}{\AgdaRecord{GovEnv}}
 \newcommand{\GovernanceGroup}{\AgdaInductiveConstructor{GovernanceGroup}}
 \newcommand{\GovProposal}{\AgdaRecord{GovProposal}}
@@ -235,6 +253,7 @@ Scale=0.80
 \newcommand{\GovState}{\AgdaFunction{GovState}}
 \newcommand{\GOVVote}{\AgdaInductiveConstructor{GOV-Vote}}
 \newcommand{\GovVote}{\AgdaRecord{GovVote}}
+\newcommand{\GState}{\AgdaDatatype{GState}}
 
 \newcommand{\HashProtected}{\AgdaFunction{HashProtected}}
 
@@ -247,8 +266,11 @@ Scale=0.80
 \newcommand{\isInl}{\AgdaFunction{isInj₁}}
 \newcommand{\isInr}{\AgdaFunction{isInj₂}}
 \newcommand{\isRegistered}{\AgdaFunction{isRegistered}}
+\newcommand{\Ix}{\AgdaDatatype{Ix}}
 
+\newcommand{\LEDGER}{\AgdaOperator{\AgdaDatatype{LEDGER}}}
 \newcommand{\List}{\AgdaDatatype{List}}
+\newcommand{\LState}{\AgdaRecord{LState}}
 
 \newcommand{\mapPartial}{\AgdaFunction{mapPartial}}
 \newcommand{\maxBlockSize}{\AgdaField{maxBlockSize}}
@@ -268,6 +290,8 @@ Scale=0.80
 \newcommand{\NetworkGroup}{\AgdaInductiveConstructor{NetworkGroup}}
 \newcommand{\NewConstitution}{\AgdaInductiveConstructor{NewConstitution}}
 \newcommand{\newDeposits}{\AgdaFunction{newDeposits}}
+\newcommand{\NEWEPOCH}{\AgdaOperator{\AgdaDatatype{NEWEPOCH}}}
+\newcommand{\NewEpochState}{\AgdaRecord{NewEpochState}}
 \newcommand{\no}{\AgdaInductiveConstructor{no}}
 \newcommand{\NoConfidence}{\AgdaInductiveConstructor{NoConfidence}}
 \newcommand{\noConfidenceRep}{\AgdaInductiveConstructor{noConfidenceRep}}
@@ -281,13 +305,19 @@ Scale=0.80
 \newcommand{\Pfived}{\AgdaField{P5d}}
 \newcommand{\Pfour}{\AgdaField{P4}}
 \newcommand{\Pone}{\AgdaField{P1}}
+\newcommand{\PoolDeposit}{\AgdaInductiveConstructor{PoolDeposit}}
 \newcommand{\poolThresholds}{\AgdaField{poolThresholds}}
 \newcommand{\PowerSet}{\AgdaFunction{ℙ}}
+\newcommand{\PParamsDiff}{\AgdaRecord{PParamsDiff}}
+\newcommand{\PParamGroup}{\AgdaDatatype{PParamGroup}}
 \newcommand{\PParams}{\AgdaRecord{PParams}}
+\newcommand{\pparams}{\AgdaField{pparams}}
+\newcommand{\PParamsUpdate}{\AgdaField{PParamsUpdate}}
 \newcommand{\pparamThreshold}{\AgdaFunction{pparamThreshold}}
 \newcommand{\prevAction}{\AgdaField{prevAction}}
 \newcommand{\ProtVer}{\AgdaFunction{ProtVer}}
 \newcommand{\Psix}{\AgdaField{P6}}
+\newcommand{\PState}{\AgdaDatatype{PState}}
 \newcommand{\Pthree}{\AgdaField{P3}}
 \newcommand{\Ptwoa}{\AgdaField{P2a}}
 \newcommand{\Ptwob}{\AgdaField{P2b}}
@@ -304,11 +334,12 @@ Scale=0.80
 \newcommand{\RATIFYAccept}{\AgdaInductiveConstructor{RATIFY-Accept}}
 \newcommand{\RATIFYContinue}{\AgdaInductiveConstructor{RATIFY-Continue}}
 \newcommand{\RATIFYReject}{\AgdaInductiveConstructor{RATIFY-Reject}}
+\newcommand{\RatifyState}{\AgdaRecord{RatifyState}}
 \newcommand{\refScriptCostStride}{\AgdaField{refScriptCostStride}}
 \newcommand{\refScriptCostMultiplier}{\AgdaField{refScriptCostMultiplier}}
 \newcommand{\returnAddr}{\AgdaField{returnAddr}}
+\newcommand{\RewardUpdate}{\AgdaRecord{RewardUpdate}}
 \newcommand{\roleVotes}{\AgdaFunction{roleVotes}}
-
 \newcommand{\RTC}{\AgdaFunction{ReflexiveTransitiveClosure}}
 \newcommand{\RTCI}{\AgdaOperator{\AgdaBound{\AgdaUnderscore{}⊢\AgdaUnderscore{}⇀⟦\AgdaUnderscore{}⟧*\AgdaUnderscore{}}}}
 \newcommand{\RTCB}{\AgdaOperator{\AgdaBound{\AgdaUnderscore{}⊢\AgdaUnderscore{}⇀⟦\AgdaUnderscore{}⟧\AgdaUnderscore{}}}}
@@ -319,6 +350,7 @@ Scale=0.80
 \newcommand{\scriptsCost}{\AgdaFunction{scriptsCost}}
 \newcommand{\scriptsNeeded}{\AgdaFunction{scriptsNeeded}}
 \newcommand{\SecurityGroup}{\AgdaInductiveConstructor{SecurityGroup}}
+\newcommand{\Snapshots}{\AgdaRecord{Snapshots}}
 \newcommand{\snd}{\AgdaField{proj₂}}
 \newcommand{\SPO}{\AgdaInductiveConstructor{SPO}}
 \newcommand{\SPOs}{\AgdaInductiveConstructor{SPOs}}
@@ -331,6 +363,7 @@ Scale=0.80
 \newcommand{\TreasuryWdrl}{\AgdaInductiveConstructor{TreasuryWdrl}}
 \newcommand{\TriggerHF}{\AgdaInductiveConstructor{TriggerHF}}
 \newcommand{\Tx}{\AgdaRecord{Tx}}
+\newcommand{\TxIn}{\AgdaFunction{TxIn}}
 \newcommand{\txdatsHashes}{\AgdaBound{txdatsHashes}}
 \newcommand{\txdonation}{\AgdaField{txdonation}}
 \newcommand{\TxId}{\AgdaDatatype{TxId}}
@@ -346,8 +379,11 @@ Scale=0.80
 \newcommand{\updateCertDeposits}{\AgdaFunction{updateCertDeposits}}
 \newcommand{\UpdateCommittee}{\AgdaInductiveConstructor{UpdateCommittee}}
 \newcommand{\updateDeposits}{\AgdaFunction{updateDeposits}}
+\newcommand{\updateGroups}{\AgdaFunction{updateGroups}}
 \newcommand{\updateProposalDeposits}{\AgdaFunction{updateProposalDeposits}}
+\newcommand{\UpdateT}{\AgdaField{UpdateT}}
 \newcommand{\UTxO}{\AgdaFunction{UTxO}}
+\newcommand{\UTXO}{\AgdaOperator{\AgdaDatatype{UTXO}}}
 \newcommand{\UTxOEnv}{\AgdaRecord{UTxOEnv}}
 \newcommand{\UTxOState}{\AgdaRecord{UTxOState}}
 
@@ -356,7 +392,7 @@ Scale=0.80
 \newcommand{\VDeleg}{\AgdaDatatype{VDeleg}}
 \newcommand{\verifyPrev}{\AgdaFunction{verifyPrev}}
 \newcommand{\Vote}{\AgdaDatatype{Vote}}
-
+\newcommand{\voteDelegs}{\AgdaField{voteDelegs}}
 \newcommand{\withdrawals}{\AgdaField{withdrawals}}
 \newcommand{\witsVKeyNeeded}{\AgdaFunction{witsVKeyNeeded}}
 

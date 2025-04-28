@@ -81,7 +81,7 @@ impossible to avoid.  Some are explained in
 \cref{sec:notation,sec:appendix-agda-essentials},
 but there is no guarantee that those sections are complete.  If the meaning of an
 expression is confusing or unclear, please \href{\repourl/issues}{open an issue} in
-\href{\repourl}{the formal ledger GitHub repository} with the `notation' label.
+the \href{\repourl}{formal ledger repository} with the `notation' label.
 
 \subsection{Separation of Concerns}
 The \emph{Cardano Node} consists of three pieces,

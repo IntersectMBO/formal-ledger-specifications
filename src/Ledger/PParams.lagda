@@ -180,10 +180,17 @@ record PParams : Type where
 record HasPParams {a} (A : Type a) : Type a where
   field PParamsOf : A → PParams
 open HasPParams ⦃...⦄ public
+record HasgovActionDeposit {a} (A : Type a) : Type a where
+  field govActionDepositOf : A → Coin
+open HasgovActionDeposit ⦃...⦄ public
 
 record HasccMaxTermLength {a} (A : Type a) : Type a where
   field ccMaxTermLengthOf : A → ℕ
 open HasccMaxTermLength ⦃...⦄ public
+
+instance
+  HasgovActionDeposit-PParams : HasgovActionDeposit PParams
+  HasgovActionDeposit-PParams .govActionDepositOf = PParams.govActionDeposit
 \end{code}
 \begin{figure*}
 \begin{AgdaMultiCode}

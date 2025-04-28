@@ -168,6 +168,9 @@ record UTxOEnv : Type where
 instance
   HasPParams-UTxOEnv : HasPParams UTxOEnv
   HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
+
+  HasgovActionDeposit-UTxOEnv : HasgovActionDeposit UTxOEnv
+  HasgovActionDeposit-UTxOEnv .govActionDepositOf = govActionDepositOf ∘ PParamsOf
 \end{code}
 
 \end{NoConway}

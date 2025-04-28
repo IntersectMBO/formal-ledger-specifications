@@ -117,7 +117,7 @@ record TransactionStructure : Type₁ where
   module GovernanceActions = Ledger.GovernanceActions govStructure
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
-  open import Ledger.Certs govStructure using (DCert)
+  open import Ledger.Certs govStructure
 \end{code}
 \begin{NoConway}
 \emph{Derived types}
@@ -180,9 +180,9 @@ record TransactionStructure : Type₁ where
     field txpropOf  : A → List GovProposal
   open Hastxprop  ⦃...⦄ public
 
-  record Hastxwdrls {a} (A : Type a) : Type a where
-    field txwdrlsOf : A → Wdrl
-  open Hastxwdrls ⦃...⦄ public
+  record Hastxid    {a} (A : Type a) : Type a where 
+    field txidOf    : A → TxId
+  open Hastxid    ⦃...⦄ public
 \end{code}
 
 \begin{NoConway}
@@ -209,6 +209,23 @@ record TransactionStructure : Type₁ where
     HasTxBody-Tx : HasTxBody Tx
     HasTxBody-Tx .TxBodyOf = Tx.body
 
+    Hastxfee-Tx : Hastxfee Tx
+    Hastxfee-Tx .txfeeOf = TxBody.txfee ∘ TxBodyOf
+    
+    Hastxcerts-Tx : Hastxcerts Tx
+    Hastxcerts-Tx .txcertsOf = TxBody.txcerts ∘ TxBodyOf
+
+    Hastxprop-Tx : Hastxprop Tx
+    Hastxprop-Tx .txpropOf = TxBody.txprop ∘ TxBodyOf
+
+    HasWdrls-TxBody : HasWdrls TxBody
+    HasWdrls-TxBody .wdrlsOf = TxBody.txwdrls
+
+    HasWdrls-Tx : HasWdrls Tx
+    HasWdrls-Tx .wdrlsOf = wdrlsOf ∘ TxBodyOf
+
+    Hastxid-Tx : Hastxid Tx
+    Hastxid-Tx .txidOf = TxBody.txid ∘ TxBodyOf
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}

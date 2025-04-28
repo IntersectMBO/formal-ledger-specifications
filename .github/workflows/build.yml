@@ -161,6 +161,14 @@ jobs:
             branch: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
             force: true
 
+      - name: Delete -artifacts branch on push to master
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          git push origin --delete "${ARTIFACTS_BRANCH}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ARTIFACTS_BRANCH: ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
+
   build-cardano-ledger:
     needs: [hs]
     if: ${{ github.event_name == 'push' }}
