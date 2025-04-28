@@ -92,6 +92,7 @@ in rec
     inherit (texlive)
       scheme-small
       xits
+      dejavu
       collection-latexextra
       collection-latexrecommended
       collection-mathscience
