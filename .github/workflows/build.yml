@@ -162,7 +162,9 @@ jobs:
             force: true
 
       - name: Delete -artifacts branch on push to master
-        if: ${{ github.event_name == 'push' }}
+        # if: ${{ github.event_name == 'push' }}
+        if: steps.set-artifacts-branch.outputs.artifacts_branch != 'master-artifacts' && github.event_name == 'push'
+        # Or we could just rely on the pr_closed.yml workflow for PR branch cleanup and remove this delete step entirely.
         run: |
           git push origin --delete "${ARTIFACTS_BRANCH}"
         env:
