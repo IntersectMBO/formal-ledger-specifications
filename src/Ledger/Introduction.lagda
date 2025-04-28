@@ -375,6 +375,6 @@ Thus, such a relation is a function of type
 or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}.
 
 These relations are typically required to be decidable, which means
-that there is a function returning a boolean value that computes
-whether the predicate holds or not. This means that it is generally
-safe to think of predicates simply returning a boolean value instead.
+that there is a boolean-valued function that computes whether the
+predicate holds or not. This means that it is generally safe to think
+of predicates simply returning a boolean value instead.
