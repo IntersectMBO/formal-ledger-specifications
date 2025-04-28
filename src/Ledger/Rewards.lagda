@@ -564,7 +564,7 @@ Such a snapshot contains the essential data needed to compute rewards:
   A mapping that stores the pool parameters of each stake pool.
 \end{itemize}
 
-\begin{figure*}[ht]
+\begin{figure*}[!h]
 \begin{code}
 record Snapshot : Set where
   field
@@ -599,7 +599,7 @@ Here,
     with the stake from the reward accounts.
 \end{itemize}
 
-\begin{figure*}[ht]
+\begin{figure*}[!h]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
 private
@@ -626,6 +626,215 @@ stakeDistr utxo stᵈ pState =
 \label{sec:rewards-time}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Timeline of the Rewards Calculation}
+\label{sec:rewards-timeline}
+
+As described in \cref{sec:rewards-motivation},
+the probability of producing a block depends on the stake delegated
+to the block producer.
+However, the stake distribution changes over time,
+as funds are transferred between parties.
+This raises the question:
+What is the point in time from which we take the stake distribution?
+Right at the moment of producing a block? Some time in the past?
+How do we deal with the fact that the blockchain is only \emph{eventually consistent},
+i.e.\ blocks can be rolled back before a stable consensus on the chain is formed?
+
+On Cardano, the answer to these questions is to group time into \emph{epochs}.
+An epoch is long enough such that at the beginning of a new epoch,
+the beginning of the previous epoch has become stable.
+An epoch is also long enough for human users to react to parameter changes,
+such as stake pool costs or performance.
+But an epoch is also short enough so that changes to
+the stake distribution will be reflected in block production
+within a reasonable timeframe.
+
+The rewards for the blocks produced during a given epoch $e_i$
+involve the two epochs surrounding it.
+In particular, the stake distribution will come from the previous epoch
+and the rewards will be calculated in the following epoch.
+At each epoch boundary, one snapshot of the stake distribution is taken;
+changes to the stake distribution within an epoch are not considered
+until the next snapshot is taken.
+More concretely:
+\begin{enumerate}[label=(\Alph*)]%for small alpha-characters within brackets.
+  \item A stake distribution snapshot is taken at the begining of epoch $e_{i-1}$.
+  \item The randomness for leader election is fixed during epoch $e_{i-1}$
+  \item Epoch $e_{i}$ begins, blocks are produced using the snapshot taken at (A).
+  \item Epoch $e_{i}$ ends.
+    A snapshot is taken of the stake pool performance during epoch $e_{i}$.
+    A snapshot is also taken of the fee pot.
+  \item The snapshots from (D) are stable and the reward calculation can begin.
+  \item The reward calculation is finished and an update to the ledger state
+    is ready to be applied.
+  \item Rewards are given out.
+\end{enumerate}
+
+\usetikzlibrary{decorations.pathreplacing}
+\begin{tikzpicture}
+% axis
+\draw[latex-latex] (0,0) -- (11,0) ;
+
+% epoch braces
+\draw [decorate,decoration={brace,amplitude=10pt} ,yshift=5pt] (1.03,0) -- (3.97,0)
+  node [midway, above, yshift=9pt]{$e_{i-1}$};
+\draw [decorate,decoration={brace,amplitude=10pt} ,yshift=5pt] (4.03,0) -- (6.97,0)
+  node [midway, above, yshift=9pt]{$e_{i}$};
+\draw [decorate,decoration={brace,amplitude=10pt} ,yshift=5pt] (7.03,0) -- (9.97,0)
+  node [midway, above, yshift=9pt]{$e_{i+1}$};
+
+% epoch boundaries
+\foreach \x in  {1,4,7,10}
+  \draw[shift={(\x,0)}] (0pt,0pt) -- (0pt,-3pt);
+
+\node at (1,-0.5) {A};
+\node at (3,-0.5) {B};
+\node at (4,-0.5) {C};
+\node at (7,-0.5) {D};
+\node at (8,-0.5) {E};
+\node at (9,-0.5) {F};
+\node at (10,-0.5) {G};
+
+\end{tikzpicture}
+
+In order to specify this logic,
+we store the last three snapshots of the stake distributions.
+The mnemonic ``mark, set, go'' will be used to keep
+track of the snapshots, where the label ``mark'' refers to the most recent snapshot,
+and ``go'' refers to the snapshot that is ready to be used in the reward calculation.
+
+In the above diagram, the snapshot taken at (A) is labeled ``mark'' during epoch $e_{i-1}$,
+``set'' during epoch $e_i$ and ``go'' during epoch $e_{i+1}$. At (G) the snapshot
+taken at (A) is no longer needed and will be discarded.
+
+In other words, blocks will be produced using the snapshot labeled ``set'',
+whereas rewards are computed from the snapshot labeled ``go''.
+
+\begin{note}
+  Between time D and E we are concerned with chain growth and stability.
+  Therefore this duration can be stated as 2k blocks (to state it in slots requires details about
+  the particular version of the Ouroboros protocol). The duration between F and G is also 2k blocks.
+  Between E and F a single honest block is enough to ensure a random nonce.
+\end{note}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Example Illustration of the Reward Cycle}
+\label{sec:illustration-reward-cycle}
+
+For better understanding, here an example
+of the logic described in the previous section:
+
+\definecolor{epochColor}{rgb} {1.00,0.50,0.00}
+\definecolor{aliceColor}{rgb} {0.65,0.00,0.00}
+\definecolor{bobColor}{rgb} {0.00,0.50,0.00}
+\definecolor{bob2Color}{rgb} {0.00,0.95,0.00}
+\definecolor{snapshot1}{rgb} {0.00,0.00,0.90}
+\definecolor{snapshot2}{rgb} {0.00,0.60,0.90}
+
+\begin{tikzpicture}
+
+  % Axis
+  \draw [thick] (-0.2,0) -- (13,0);
+  \draw (0,-.2) -- (0, .2);
+  \draw (3,-.2) -- (3, .2);
+  \draw (6,-.2) -- (6, .2);
+  \draw (9,-.2) -- (9, .2);
+  \draw (12,-.2) -- (12, .2);
+  \node[align=center, below, color=epochColor] at (1.5,0.5)
+    {$e_1$};
+  \node[align=center, below, color=epochColor] at (4.5,0.5)
+    {$e_2$};
+  \node[align=center, below, color=epochColor] at (7.5,0.5)
+    {$e_3$};
+  \node[align=center, below, color=epochColor] at (10.5,0.5)
+    {$e_4$};
+
+  % Alice
+  % Alice's circle
+  \draw [aliceColor, fill] (0,3) circle [radius=0.5];
+  \node [white] at (0,3) {Alice};
+  % Alice's delegation line
+  \draw [->,thick, aliceColor] (0.4,2.65) to (2,0.05);
+  \node [aliceColor] at (2.2,2) {delegate to Bob};
+
+  % Bob
+  % Bob's circle
+  \draw [bobColor, fill] (0,-3) circle [radius=0.5];
+  \node [white] at (0,-3) {Bob};
+  % Bob's registration line
+  \draw [->,thick, bobColor] (0.2,-2.50) to (1,-0.05);
+  \node [align=left, below, bobColor] at (-0.5,-0.5) {initial pool \\ registration};
+  % Bob's re-registration line
+  \draw [->,thick, bob2Color] (0.45,-2.65) to (2.90,-0.05);
+  \node [bob2Color] at (2,-2.8) {re-registration};
+  % Bob's cached parameter change
+  \draw [->,thick, bob2Color] (2.9,-0.2) to [out=280, in=180] (3,-2)
+     to [out=0, in=290] (3.1,-0.2);
+
+  % Alice time to re-delegate
+  \draw [decorate, decoration = {brace, mirror, amplitude=10pt}, aliceColor, thick]
+    (3.2,-0.2) to (5.9,-0.2);
+  \node [align=center, below, aliceColor] at (5.1,-0.5)
+    {Alice's opportunity \\ to re-delegate \\ before Bob's new \\ parameters};
+
+  % Bob's blocks
+  % epoch e3
+  \draw [fill=bobColor,bobColor] (6.3,-.1) rectangle (6.5,-.3);
+  \draw [fill=bobColor,bobColor] (6.7,-.1) rectangle (6.9,-.3);
+  \draw [fill=bobColor,bobColor] (7.4,-.1) rectangle (7.6,-.3);
+  \draw [fill=bobColor,bobColor] (8.4,-.1) rectangle (8.6,-.3);
+  \draw [decorate, decoration = {brace, mirror, amplitude=10pt}, bobColor, thick]
+    (6.2, -0.4) to (8.9,-0.4);
+  \draw [->,thick, bobColor] (7.6, -0.8) to [out=315,in=200] (8.4, -1.2)
+     to [] (9.6, -0.9);
+
+  % epoch e4
+  \draw [fill=bob2Color,bob2Color] (9.9,-.1) rectangle (10.1,-.3);
+  \draw [fill=bob2Color,bob2Color] (10.4,-.1) rectangle (10.6,-.3);
+  \draw [fill=bob2Color,bob2Color] (10.8,-.1) rectangle (11.0,-.3);
+  \draw [decorate, decoration = {brace, mirror, amplitude=10pt}, bob2Color, thick]
+    (9.7, -0.4) to (11.2,-0.4);
+  \draw [->,thick, bob2Color] (10.6, -0.8) to [out=315,in=200] (11.4, -1.2)
+     to [] (12.6, -0.9);
+
+  % Snapshots
+  \draw [->,thick, snapshot1] (3,0.3) to [out=90,in=150] (9,0.5)
+     to [out=330,in=180] (10,-1) to [out=0,in=-135] (12,0) ;
+   \node [snapshot1] at (2.7,1.2) {mark};
+   \node [snapshot1] at (6,1.9) {set};
+   \node [snapshot1] at (9,0.9) {go};
+
+  \draw [->,thick, snapshot2] (6,0.3) to [out=90,in=150] (12,0.5)
+     to [out=330,in=180] (13,-1);
+   \node [snapshot2] at (5.7,1.2) {mark};
+   \node [snapshot2] at (9,1.9) {set};
+   \node [snapshot2] at (12,0.9) {go};
+\end{tikzpicture}
+
+Bob registers his stake pool in epoch $e_1$.
+Alice delegates to Bob's stake pool in epoch $e_1$.
+Just before the end of epoch $e_1$, Bob submits a stake pool re-registration,
+changing his pool parameters. The change in parameters is not immediate,
+as shown by the curved arrow around the epoch boundary.
+
+A snapshot is taken on the $e_1$/$e_2$ boundary. It is labeled ``mark'' initially.
+This snapshot includes Alice's delegation to Bob's pool, and Bob's pool parameters
+and listed in the initial pool registration certificate.
+
+If Alice changes her delegation choice any time during epoch $e_2$,
+she will never be effected by Bob's change of parameters.
+
+A new snapshot is taken on the $e_2$/$e_3$ boundary.
+The previous (darker blue) snapshot is now labeled ``set'', and the new one labeled ``mark''.
+The ``set'' snapshot is used for leader election in epoch $e_3$.
+
+On the $e_3$/$e_4$ boundary, the darker blue snapshot is labeled ``go'' and
+the lighter blue snapshot is labeled ``set''.
+Bob's stake pool performance during epoch $e_3$ (he produced 4 blocks)
+will be used with the darker blue snapshot for the rewards which will
+be handed out at the beginning of epoch $e_5$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Stake Distribution Snapshots}
 \label{sec:stake-distribution-snapshots}
 This section defines the SNAP transition rule for stake distribution snapshots.
@@ -635,7 +844,7 @@ This section defines the SNAP transition rule for stake distribution snapshots.
 to be saved at the end of an epoch. This data is:
 \begin{itemize}
   \item \AgdaField{mark}, \AgdaField{set}, \AgdaField{go}:
-  Three stake distribution snapshots as explained in Section~TODO.
+  Three stake distribution snapshots as explained in \cref{sec:rewards-timeline}.
   \item \AgdaField{feeSS}:
   stores the fees which are added to the reward pot during the next reward update
 calculation, which is then subtracted from the fee pot on the epoch boundary.
