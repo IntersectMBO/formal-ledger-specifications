@@ -439,7 +439,7 @@ abstract
   expired : Epoch → GovActionState → Type
   expired current record { expiresIn = expiresIn } = expiresIn < current
 \end{code}
-\caption{Functions relation to ratification}
+\caption{Functions related to ratification}
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 

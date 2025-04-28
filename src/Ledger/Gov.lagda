@@ -258,7 +258,7 @@ The function \govActionPriority{} assigns a priority to the various types of gov
 This is useful for ordering lists of governance actions (see \AgdaFunction{insertGovAction}
 in \cref{defs:gov-functions}).
 %
-Priority is also used to check if two actions \AgdaFunction{Overlap}: that is,
+Priority is also used to check if two actions \AgdaFunction{Overlap}; that is,
 they would modify the same piece of \AgdaDatatype{EnactState}.
 
 \begin{figure*}
