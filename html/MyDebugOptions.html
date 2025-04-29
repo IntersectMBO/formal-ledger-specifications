@@ -1,0 +1,14 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>MyDebugOptions</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--safe</a> <a id="20" class="Pragma">--without-K</a> <a id="32" class="Symbol">#-}</a>
+<a id="36" class="Keyword">module</a> <a id="43" href="MyDebugOptions.html" class="Module">MyDebugOptions</a> <a id="58" class="Keyword">where</a>
+
+<a id="65" class="Keyword">open</a> <a id="70" class="Keyword">import</a> <a id="77" href="PreludeMeta.html" class="Module">PreludeMeta</a>
+
+<a id="90" class="Keyword">instance</a>
+  <a id="defaultDebugOptionsI"></a><a id="101" href="MyDebugOptions.html#101" class="Function">defaultDebugOptionsI</a> <a id="122" class="Symbol">:</a> <a id="124" href="Reflection.Debug.html#2387" class="Record">DebugOptions</a>
+  <a id="139" href="MyDebugOptions.html#101" class="Function">defaultDebugOptionsI</a> <a id="160" class="Symbol">=</a> <a id="162" class="Keyword">record</a> <a id="169" href="Reflection.Debug.html#2542" class="Function">defaultDebugOptions</a>
+    <a id="193" class="Symbol">{</a> <a id="195" href="Reflection.Debug.html#2452" class="Field">selection</a> <a id="205" class="Symbol">=</a> <a id="207" href="Reflection.Debug.html#1442" class="InductiveConstructor">All</a>
+    <a id="215" class="Symbol">;</a> <a id="217" href="Reflection.Debug.html#2483" class="Field">filter</a> <a id="224" class="Symbol">=</a> <a id="226" href="Algebra.Lattice.Bundles.html#5876" class="Function">Filter.⊥</a> <a id="235" class="Symbol">}</a>
+
+<a id="238" class="Keyword">open</a> <a id="243" class="Keyword">import</a> <a id="250" href="Tactic.Defaults.html" class="Module">Tactic.Defaults</a> <a id="266" class="Keyword">public</a>
+</pre></body></html>
