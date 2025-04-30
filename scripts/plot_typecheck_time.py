@@ -1,5 +1,5 @@
-# Generate a .csv file that integrates the typecheking times
-# that are stored in the branch master-artifacts
+# Generate a html file that plots typecheking times that stored in the
+# branch master-artifacts
 import subprocess
 import pandas as pd
 from io import StringIO
@@ -45,7 +45,6 @@ for commit in commits:
 
     df = pd.merge(df, time_df, on='module', how='outer')
 
-# print(df.to_csv(None, header=True, index=False, float_format='%.0f'))
 data = df.to_json(None, index=False, orient="split")
 
 html = f"""
