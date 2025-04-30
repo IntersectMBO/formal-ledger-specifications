@@ -26,6 +26,7 @@
     - [Building `fls-shake` manually](#building-fls-shake-manually)
   - [Updating nixpkgs](#updating-nixpkgs)
   - [Troubleshooting](#troubleshooting)
+  - [Miscellanea](#miscellanea)
   - [Maintainers](#maintainers)
 
 <!-- markdown-toc end -->
@@ -587,6 +588,25 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 
 ---
 
+## Miscellanea
+
+### Plotting typechecking times
+
+The script `scripts/plot_typecheck_time.py` can be used to generate an `html`
+file that plots the typechecking times as recorded in the `master-artifacts`
+branch.
+
+The script uses `python` and `pandas`, and the generated `html` uses `chart.js`
+for plotting.
+
+Frome the git repository, run,
+```bash
+python scripts/plot_typecheck_time.py > index.html
+```
+and open `index.html` in your browser.
+
+---
+
 ## Maintainers
 
 This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamdemeo][].
@@ -649,3 +669,4 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [Updating nixpkgs]: #updating-nixpkgs
 [Troubleshooting]: #troubleshooting
 [Maintainers]: #maintainers
+[Miscellanea]: #miscellanea
