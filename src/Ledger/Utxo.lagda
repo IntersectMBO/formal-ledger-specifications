@@ -129,7 +129,7 @@ have been provided by the treasury. Since changes to protocol
 parameters were (and still are) known publicly and guaranteed before
 they are enacted, this comes at zero risk for an attacker. This means
 the deposit amounts could realistically never be increased. This issue
-is gone with the new design.
+is gone with the new design. See also \cite{adr3}.
 
 Similar to \ScriptPurpose{}, \DepositPurpose{} carries the information
 what the deposit is being made for.  The deposits are stored in the
@@ -241,7 +241,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \begin{code}
 
   refScriptsSize : UTxO → Tx → ℕ
-  refScriptsSize utxo tx = sum $ map scriptSize (refScripts tx utxo)
+  refScriptsSize utxo tx = sum (map scriptSize (refScripts tx utxo))
 
   minfee : PParams → UTxO → Tx → Coin
   minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
@@ -513,13 +513,7 @@ private variable
 
 open UTxOEnv
 
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
-\end{code}
-\begin{code}[hide]
-data _⊢_⇀⦇_,UTXOS⦈_ where
+data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
 \end{code}
 \begin{AgdaMultiCode}
 \begin{code}
@@ -607,5 +601,5 @@ unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \caption{UTXO inference rules}
 \label{fig:rules:utxo-shelley}
 \end{figure*}
-\Cref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together
-(The symbol~\AgdaDatatype{≡?} is explained in \cref{sec:notation}).
+\Cref{fig:rules:utxo-shelley} ties all the pieces of the UTXO rule together.
+The symbol~\AgdaDatatype{≡?} is explained in \cref{sec:notation}.

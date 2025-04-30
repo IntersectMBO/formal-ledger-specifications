@@ -181,7 +181,7 @@ Overlap? Info Info = yes refl
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
 insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
-  =  if (govActionPriority (action gaSt₀ .gaType)) ≤? (govActionPriority (action gaSt₁ .gaType))
+  =  if govActionPriority (action gaSt₀ .gaType) ≤ govActionPriority (action gaSt₁ .gaType)
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
@@ -206,12 +206,17 @@ opaque
             { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
 
   isRegistered : GovEnv → Voter → Type
-  isRegistered Γ (r , c) = case r of λ where
-    CC    → just c ∈ range (gState .ccHotKeys)
-    DRep  → c ∈ dom (gState .dreps)
-    SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
-      where
-        open CertState (GovEnv.certState Γ) using (gState; pState)
+  isRegistered Γ (r , c) = case r of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+      CC    → just c ∈ range (gState .ccHotKeys)
+      DRep  → c ∈ dom (gState .dreps)
+      SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
+        where
+          open CertState (GovEnv.certState Γ) using (gState; pState)
 
   validHFAction : GovProposal → GovState → EnactState → Type
   validHFAction (record { action = ⟦ TriggerHF , v ⟧ᵍᵃ ; prevAction = prev }) s e =
@@ -253,8 +258,8 @@ The function \govActionPriority{} assigns a priority to the various types of gov
 This is useful for ordering lists of governance actions (see \AgdaFunction{insertGovAction}
 in \cref{defs:gov-functions}).
 %
-Priority is also used to check if two actions \AgdaFunction{Overlap}: that is,
-they potentially modify the same piece of \AgdaDatatype{EnactState}.
+Priority is also used to check if two actions \AgdaFunction{Overlap}; that is,
+they would modify the same piece of \AgdaDatatype{EnactState}.
 
 \begin{figure*}
 \begin{AgdaMultiCode}
