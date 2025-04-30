@@ -19,6 +19,7 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Equality
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
+import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Axiom.Set.Map
 import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
@@ -28,6 +29,7 @@ import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.HasCast.Base
 import qualified MAlonzo.Code.Data.Irrelevant
+import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Rational.Properties
@@ -212,3 +214,20 @@ du_'8739'_'8739'_116 ::
   MAlonzo.Code.Class.HasCast.Base.T_HasCast_14 -> AgdaAny -> AgdaAny
 du_'8739'_'8739'_116 v0
   = coe MAlonzo.Code.Class.HasCast.Base.d_cast_26 (coe v0)
+-- Ledger.Prelude.Filter.filter
+d_filter_138 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny -> ()) ->
+  (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
+  [AgdaAny] -> [AgdaAny]
+d_filter_138 ~v0 ~v1 ~v2 ~v3 v4 = du_filter_138 v4
+du_filter_138 ::
+  (AgdaAny -> MAlonzo.Code.Class.Decidable.Core.T__'8263'_10) ->
+  [AgdaAny] -> [AgdaAny]
+du_filter_138 v0
+  = coe
+      MAlonzo.Code.Data.List.Base.du_filter_664
+      (coe
+         MAlonzo.Code.Class.Decidable.Core.du_'191'_'191''185'_116 (coe v0))
