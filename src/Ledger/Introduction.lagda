@@ -27,9 +27,6 @@ This is the specification of the Conway era of the Cardano ledger. As
 with previous specifications, this document is an incremental
 specification, so everything that isn't defined here refers to the
 most recent definition from an older specification.
-
-Note: As of now, this specification is still a draft. Some details and
-explanations may be missing or wrong.
 \end{Conway}
 
 \begin{NoConway}
@@ -90,7 +87,7 @@ The \emph{Cardano Node} consists of three pieces,
   \item a \textit{consensus layer} establishing a common order of valid blocks, and
   \item a \textit{ledger layer} which determines whether a sequence of blocks is valid.
 \end{itemize}
-Because of this separation, the ledger gets to be a state machine,
+Because of this separation, the ledger can be modeled as a state machine,
 \[
   s \xrightarrow[X]{b} s'.
 \]
@@ -238,7 +235,7 @@ In the remainder of the text, the closure operation is called \RTC{}.
 \begin{figure*}[htb]
 \caption{Reflexive transitive closure}
 \begin{AgdaMultiCode}
-\begin{code}
+\begin{code}[hide]
 module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
 
 \end{code}
@@ -332,6 +329,9 @@ distinguish such maps from standard Agda functions which use \AgdaSymbol{→}.
 The figure below also gives notation for the powerset operation, \PowerSet{},
 used to form a type of sets with elements in a given type,
 as well as the subset relation and the equality relation for sets.
+
+When we need to convert a list \AgdaBound{l} to its set of elements,
+we write \fromList{}~\AgdaBound{l}.
 \begin{figure*}[h]
 \begin{code}[hide]
 open Theory th using (_∈_) renaming (Set to ℙ)
@@ -373,3 +373,8 @@ asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \Ag
 Thus, such a relation is a function of type
 \AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}
 or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}.
+
+These relations are typically required to be decidable, which means
+that there is a boolean-valued function that computes whether the
+predicate holds or not. This means that it is generally safe to think
+of predicates simply returning a boolean value instead.

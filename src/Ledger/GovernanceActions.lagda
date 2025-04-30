@@ -62,17 +62,27 @@ GovActionData TreasuryWdrl     = RwdAddr ⇀ Coin
 GovActionData Info             = ⊤
 
 record GovAction : Type where
+\end{code}
+\begin{code}[hide]
   constructor ⟦_,_⟧ᵍᵃ
+\end{code}
+\begin{code}
   field
     gaType : GovActionType
     gaData : GovActionData gaType
-
+\end{code}
+\begin{code}[hide]
 open GovAction public
 \end{code}
 \end{AgdaMultiCode}
 \caption{Governance actions}
 \label{defs:governance}
 \end{figure*}
+\begin{code}[hide]
+instance
+  HasCast-GovAction-Sigma : HasCast GovAction (Σ GovActionType GovActionData)
+  HasCast-GovAction-Sigma .cast x = x .gaType , x .gaData
+\end{code}
 \Cref{defs:governance} defines several data types used to represent
 governance actions. The type \DocHash{} is abstract but in the
 implementation it will be instantiated with a 32-bit hash type (like
@@ -246,10 +256,10 @@ optional \Anchor{} can be provided to give context about why a vote was
 cast in a certain manner.
 
 To propose a governance action, a \GovProposal{} needs to be
-submitted. Beside the proposed action, it requires:
+submitted. Beside the proposed action, it contains:
 \begin{itemize}
-\item potentially a pointer to the previous action (see \cref{sec:hash-protection}),
-\item potentially a pointer to the proposal policy (if one is required),
+\item a pointer to the previous action if required (see \cref{sec:hash-protection}),
+\item a pointer to the proposal policy if one is required,
 \item a deposit, which will be returned to \returnAddr{}, and
 \item an \Anchor{}, providing further information about the proposal.
 \end{itemize}

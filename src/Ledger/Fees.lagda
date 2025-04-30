@@ -25,6 +25,8 @@ are bundled with the protocol parameters; see
    the base fee or initial price per byte.
 \end{itemize}
 
+For background on this particular choice of fee calculation, see \cite{adr9}.
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -85,14 +87,19 @@ scriptsCost pp scriptSize
       (acc rs)
 \end{code}
 \begin{code}
-        = case n ≤? refScriptCostStride of λ where
-            (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
-            (no  p)  → scriptsCostAux (acl + (fromℕ refScriptCostStride * curTierPrice))
-                                      (refScriptCostMultiplier * curTierPrice)
-                                      (n - refScriptCostStride)
+        = case  n ≤? refScriptCostStride of
 \end{code}
 \begin{code}[hide]
-                                     (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (s≤s z≤n)))
+                λ where
+\end{code}
+\begin{code}
+                (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
+                (no  p)  → scriptsCostAux (acl + (fromℕ refScriptCostStride * curTierPrice))
+                                          (refScriptCostMultiplier * curTierPrice)
+                                          (n - refScriptCostStride)
+\end{code}
+\begin{code}[hide]
+                                          (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (s≤s z≤n)))
 \end{code}
 \begin{code}[hide]
       where

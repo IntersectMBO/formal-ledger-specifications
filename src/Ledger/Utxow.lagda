@@ -166,7 +166,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
          witsKeyHashes                       = mapˢ hash (dom vkSigs)
          witsScriptHashes                    = mapˢ hash scripts
          inputHashes                         = getInputHashes tx utxo
-         refScriptHashes                     = fromList $ map hash (refScripts tx utxo)
+         refScriptHashes                     = fromList (map hash (refScripts tx utxo))
          neededHashes                        = scriptsNeeded utxo txb
          txdatsHashes                        = dom txdats
          allOutHashes                        = getDataHashes (range txouts)
@@ -201,8 +201,8 @@ unquoteDecl UTXOW-inductive-premises =
 
 \subsection{Plutus script context}
 \hrefCIP{0069}
-unifies the arguments given to all types of Plutus scripts currently available
-(spending, certifying, rewarding, minting, voting, proposing).
+unifies the arguments given to all types of Plutus scripts currently available:
+spending, certifying, rewarding, minting, voting, proposing.
 
 The formal specification permits running spending scripts in the absence datums
 in the Conway era.  However, since the interface with Plutus is kept abstract

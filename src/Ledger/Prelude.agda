@@ -14,6 +14,7 @@ module Ledger.Prelude where
 open import Prelude public
 
 open import Ledger.Prelude.Base public
+import Data.List
 
 open import Class.HasAdd public
 open import Class.HasCast public
@@ -80,3 +81,7 @@ _÷₀_ x y = case y ≟ ℚ.0ℚ of λ where
 
 infix 5 ⟦_⟧
 infix 6 ∣_∣
+
+module Filter where
+  filter : ∀ {a} {p} {A : Type a} → (P : Pred A p) → ⦃ P ⁇¹ ⦄ → List A → List A
+  filter P = Data.List.filter ¿ P ¿¹
