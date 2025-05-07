@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "agda-compat": {
+    "agda-compat-src": {
       "flake": false,
       "locked": {
         "lastModified": 1726161230,
@@ -53,7 +53,7 @@
     },
     "root": {
       "inputs": {
-        "agda-compat": "agda-compat",
+        "agda-compat-src": "agda-compat-src",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs"
       }
