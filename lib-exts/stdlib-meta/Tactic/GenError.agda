@@ -64,7 +64,13 @@ module _ ⦃ _ : TCOptions ⦄ where
     genErrors = initTac ∘ (genErrors' 100)
 
 private
-  open import MyDebugOptions
+  open import Tactic.Defaults
+  instance
+    defaultDebugOptionsI : DebugOptions
+    defaultDebugOptionsI = record defaultDebugOptions
+      { selection = All
+      ; filter = Filter.⊥ }
+
   module Test where
     test₁ : {A B : Set} → A → B → String
     test₁ a b = genError
