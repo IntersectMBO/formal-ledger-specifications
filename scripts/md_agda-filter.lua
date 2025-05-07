@@ -1,4 +1,4 @@
--- agda-filter.lua (Version 9 - Simplified for Post-Processing, Commented)
+-- md_agda-filter.lua (Version 9 - Simplified for Post-Processing, Commented)
 -- Purpose: Pandoc Lua filter to process specific elements in the AST generated
 --          by Pandoc's LaTeX reader from the output of preprocess.py.
 -- Actions:

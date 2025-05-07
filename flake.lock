@@ -1,5 +1,22 @@
 {
   "nodes": {
+    "agda-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1726161230,
+        "narHash": "sha256-IupM/HJk1vpHTRWOakYDDliKn+RLzPjNzGlLTlF0CbY=",
+        "owner": "agda",
+        "repo": "agda",
+        "rev": "a6fc20c27ae953149b53a8997ba4a1c8b17d628a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "agda",
+        "ref": "v2.7.0.1",
+        "repo": "agda",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -36,6 +53,7 @@
     },
     "root": {
       "inputs": {
+        "agda-compat": "agda-compat",
         "flake-utils": "flake-utils",
         "nixpkgs": "nixpkgs"
       }
