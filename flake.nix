@@ -41,6 +41,7 @@
         devShells = {
           default = shellEnv.shell;
           ci = shellEnv.run.shell;
+          markdown = shellEnv.markdownDocsShell;
         };
 
         # Hydra jobs (if applicable)
