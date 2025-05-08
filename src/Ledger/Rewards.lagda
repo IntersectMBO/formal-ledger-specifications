@@ -424,13 +424,104 @@ reward pp blocks rewardPot poolParams stake delegs total = rewards
 
 \subsection{Reward Update}
 \label{sec:reward-update}
-TODO: This section defines the \AgdaRecord{RewardUpdate} type,
+This section defines the \AgdaRecord{RewardUpdate} type,
 which records the net flow of Ada due to paying out rewards
 after an epoch.
-NOTE: The function \AgdaFunction{createRUpd} calculates the
+This type is defined in \Cref{fig:functions:RewardUpdate}.
+The update consists of four net flows:
+\begin{itemize}
+  \item \AgdaField{Δt}: The change to the treasury.
+    This will be a positive value.
+  \item \AgdaField{Δr}: The change to the reserves.
+    We typically expect this to be a negative value.
+  \item \AgdaField{Δf}: The change to the fee pot.
+    This will be a negative value.
+  \item \AgdaField{rs}: The map of new individual rewards,
+    to be added to the existing rewards.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+record RewardUpdate : Set where
+\end{code}
+\begin{code}[hide]
+  constructor ⟦_,_,_,_⟧ʳᵘ
+\end{code}
+\begin{code}
+  field
+    Δt Δr Δf : ℤ
+    rs : Credential ⇀ Coin
+\end{code}
+\end{AgdaMultiCode}
+\caption{RewardUpdate type}
+\label{fig:functions:RewardUpdate}
+\end{figure*}
+
+The function \AgdaFunction{createRUpd} calculates the
 \AgdaRecord{RewardUpdate},
-but requires the definition \AgdaRecord{EpochState},
-so we have to defer its definition to a later section.
+but requires the definition of the type \AgdaRecord{EpochState},
+so we have to defer the definition of this function to \cref{sec:epoch-boundary}.
+
+\Cref{fig:rewardPot} captures the potential movement of funds
+in the entire system
+that can happen during one transition step as described in this document.
+Exception: Withdrawals from the ``Treasury'' are not shown in this diagram,
+they can move funds into ``Reward accounts''.
+Value is moved between accounting pots,
+but the total amount of value in the system remains constant.
+In particular, the red subgraph
+represents the inputs and outputs to the \AgdaFunction{rewardPot},
+a temporary variable used during the reward update calculation
+in the function \AgdaFunction{createRUpd}.
+Each red arrow corresponds to one field of the \AgdaRecord{RewardUpdate}
+data type.
+The blue arrows represent the movement of funds
+after they have passed through the \AgdaFunction{rewardPot}.
+
+\begin{figure}[htb]
+  \begin{center}
+    \begin{tikzpicture}
+      [ x=30mm, y=30mm
+      , direct/.style={black, draw}
+      , implied/.style={blue, draw}
+      , toTotPot/.style={red, draw}
+      ]
+    \node (C) at (3,2.5) {\LARGE Circulation};
+    \node (R) at (5, 1) {\LARGE Reserves};
+    \node (D) at (1, 2) {\LARGE Deposits};
+    \node (FR) at (1,1) {\LARGE Fees};
+    \node (RA) at (5, 2) {\LARGE Reward accounts};
+    \node (T) at (3,0.5) {\LARGE Treasury};
+
+    \draw[->, direct, ultra thick]
+    (C) edge (D)
+    (C) edge (FR)
+
+    (D) edge (C)
+
+    (RA) edge (C);
+
+    \draw[->, implied, ultra thick]
+    (FR) edge (T)
+    (FR) edge (RA)
+
+    (R) edge (T)
+    (R) edge (RA);
+
+    \node (TP) at (3, 1.15) {\LARGE rewardPot};
+
+    \draw[->, toTotPot, ultra thick]
+    (FR) edge node[below] {$-\Delta f$} (TP)
+    (R)  edge node[below] {$-\Delta r$} (TP)
+
+    (TP) edge node[below] {\textit{rs}} (RA)
+    (TP) edge node[right] {$\Delta t$} (T);
+    \end{tikzpicture}
+  \end{center}
+  \caption{Preservation of funds and rewards}
+  \label{fig:rewardPot}
+\end{figure}
 
 \subsection{Stake Distribution Snapshots}
 \label{sec:stake-dstribution-snapshots-}

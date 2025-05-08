@@ -7,7 +7,9 @@ module ScriptVerification.LedgerImplementation
   where
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
+import      Data.Integer as ℤ
 open import Data.Rational using (0ℚ; ½)
+import      Data.Rational as ℚ
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
@@ -33,6 +35,7 @@ instance
 module Implementation where
   Network          = ℕ
   SlotsPerEpochᶜ   = 100
+  ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20
   StabilityWindowᶜ = 10
   Quorum           = 1
   NetworkId        = 0
