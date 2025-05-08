@@ -183,4 +183,15 @@
       <a id="5562" class="Symbol">(</a><a id="5563" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="5568" class="Symbol">(λ</a> <a id="5571" class="Symbol">(</a><a id="5572" href="Ledger.Rewards.html#5572" class="Bound">kh</a> <a id="5575" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5577" href="Ledger.Rewards.html#5577" class="Bound">cred</a><a id="5581" class="Symbol">)</a> <a id="5583" class="Symbol">→</a> <a id="5585" class="Symbol">(</a><a id="5586" href="Ledger.Rewards.html#5572" class="Bound">kh</a> <a id="5589" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5591" href="Ledger.Rewards.html#5577" class="Bound">cred</a><a id="5595" class="Symbol">)</a> <a id="5597" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="5599" href="Ledger.Rewards.html#5577" class="Bound">cred</a><a id="5603" class="Symbol">)</a> <a id="5605" class="Symbol">(</a><a id="5606" href="Class.IsSet.html#916" class="Function">dom</a> <a id="5610" href="Ledger.Rewards.html#5349" class="Function">results</a><a id="5617" class="Symbol">))</a>
       <a id="5626" href="Ledger.Rewards.html#5349" class="Function">results</a>
 
+
+<a id="5636" class="Keyword">record</a> <a id="RewardUpdate"></a><a id="5643" href="Ledger.Rewards.html#5643" class="Record">RewardUpdate</a> <a id="5656" class="Symbol">:</a> <a id="5658" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="5662" class="Keyword">where</a>
+
+
+  <a id="5672" class="Keyword">constructor</a> <a id="⟦_,_,_,_⟧ʳᵘ"></a><a id="5684" href="Ledger.Rewards.html#5684" class="InductiveConstructor Operator">⟦_,_,_,_⟧ʳᵘ</a>
+
+
+  <a id="5700" class="Keyword">field</a>
+    <a id="RewardUpdate.Δt"></a><a id="5710" href="Ledger.Rewards.html#5710" class="Field">Δt</a> <a id="RewardUpdate.Δr"></a><a id="5713" href="Ledger.Rewards.html#5713" class="Field">Δr</a> <a id="RewardUpdate.Δf"></a><a id="5716" href="Ledger.Rewards.html#5716" class="Field">Δf</a> <a id="5719" class="Symbol">:</a> <a id="5721" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a>
+    <a id="RewardUpdate.rs"></a><a id="5727" href="Ledger.Rewards.html#5727" class="Field">rs</a> <a id="5730" class="Symbol">:</a> <a id="5732" href="Ledger.Address.html#273" class="Datatype">Credential</a> <a id="5743" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="5745" href="Ledger.Prelude.Base.html#81" class="Function">Coin</a>
+
 </pre></body></html>
