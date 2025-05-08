@@ -33,12 +33,12 @@ in {
       # (could add pkgs.lua here but Lua is usually bundled with pandoc)
 
       # Python is needed for the pipeline scripts
-      pkgs.python310
+      pkgs.python311
 
       # mkdocs plus theme and extensions
       pkgs.mkdocs
-      pkgs.python310Packages.mkdocs-material    # material theme
-      pkgs.python310Packages.pymdown-extensions # tabbed, attr_list, etc.
+      pkgs.python311Packages.mkdocs-material    # material theme
+      pkgs.python311Packages.pymdown-extensions # tabbed, attr_list, etc.
 
       # tools for the master build script
       pkgs.findutils      # for 'find' command
@@ -52,6 +52,7 @@ in {
       echo "----------------------------------------------------"
       echo "Entered Agda Markdown Documentation Development Shell!"
       echo "Using Agda: $(agda --version || echo 'agda command failed')" # Check the version!
+      echo "Using Python: $(python --version || echo 'python command failed')" # Check Python version
       echo "----------------------------------------------------"
     '';
   };
