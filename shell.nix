@@ -39,6 +39,7 @@ in {
       pkgs.mkdocs
       pkgs.python311Packages.mkdocs-material    # material theme
       pkgs.python311Packages.pymdown-extensions # tabbed, attr_list, etc.
+      pkgs.python311Packages.pyyaml
 
       # tools for the master build script
       pkgs.findutils      # for 'find' command
