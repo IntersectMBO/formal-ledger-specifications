@@ -29,6 +29,7 @@ open import Interface.Hashable public
 open import Ledger.Interface.HasCoin public
 open import MyDebugOptions public
 open import Tactic.Premises public
+  hiding (_∙_; ∃⁇)
 
 open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)

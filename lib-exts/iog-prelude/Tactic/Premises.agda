@@ -2,20 +2,56 @@
 -- {-# OPTIONS -v tactic.premises:100 #-}
 module Tactic.Premises where
 
-open import Prelude hiding (Type)
-open import PreludeMeta
-open import Meta.Prelude using (enumerate)
+open import Prelude.Init
+  hiding (Type; pred)
+  renaming (_∈_ to _∈ˡ_)
+open import Prelude.InferenceRules
+  hiding (_∙_)
+  renaming (_────────────────────────────────_ to infix -500 _────────────────────────────────_
+           ;_───────────────────────────────────────_ to infix -500 _───────────────────────────────────────_
+           ;────────────────────────────────_ to infix -501 ────────────────────────────────_ 
+           ;───────────────────────────────────────_ to infix -501 ───────────────────────────────────────_)
 
-import Data.List as L
-open import Data.Fin using (toℕ)
+infixr -100 _∙_
+_∙_ : Set → Set → Set
+A ∙ B = A × B
 
 open import Class.Show
 open import Class.Foldable
+open import Class.Decidable
+open import Class.DecEq.Instances
+open import Class.Monad
+open import Class.Functor
+open import Class.Semigroup
 
-open import Interface.STS
+open import Meta.Init
+  renaming (TC to TCI)
+  hiding (Monad-TC; MonadError-TC; toℕ)
+open import Agda.Builtin.Reflection
+  using (withReduceDefs)
+open import Reflection
+  using (TC; Name; Meta; extendContext; withNormalisation)
+open import Reflection.Utils
+  hiding (mkRecord)
+open import Reflection.Debug
+open import Reflection.Utils.Debug
+  hiding (error)
+open import Class.MonadTC
+  hiding (extendContext)
+open MonadTC ⦃...⦄
+open import Class.MonadError
+  using (MonadError; MonadError-TC)
+open MonadError ⦃...⦄
+  using (error; catch)
+instance
+  iTC  = MonadTC-TC
+open import Meta.Prelude
 
 open Debug ("tactic.premises", 100)
 open import Reflection.Ext
+
+∃⁇ : ∀ {ℓ} → Set (sucˡ ℓ)
+∃⁇ {ℓ} = Σ (Set ℓ) _⁇
 
 {-
 ** Extracting the hypotheses of an STS rule.
@@ -61,7 +97,7 @@ genPremises f n = do
   print $ "*** Generating premises for constructor:" <+> show n <+> "***"
   ty ← reduceRuleSyntax =<< getType n             -- (1)
   let is , hs = breakImplicits $ viewTy ty .proj₁ -- (2)
-  hs ← map unbundleHypotheses                     -- (3)
+  hs ← fmap unbundleHypotheses                     -- (3)
      $ extendContextTel (absTelescope is)
      $ mapM reduceRuleSyntax hs -- reducing again to work around Agda issue #6951
   dhs ← filterM (isDecidable? is) hs              -- (4)
@@ -82,12 +118,12 @@ genPremises f n = do
   -- (1) unfold syntactic sugar from Interface.STS
   reduceRuleSyntax : Type → TC Type
   reduceRuleSyntax ty = do
-    let whitelist = Interface.STS._∙_
-                 `∷ Interface.STS.∙_
-                 `∷ Interface.STS._────────────────────────────────_
-                 `∷ Interface.STS.────────────────────────────────_
-                 `∷ Interface.STS._───────────────────────────────────────_
-                 `∷ Interface.STS.───────────────────────────────────────_
+    let whitelist = _∙_
+                 `∷ ∙_
+                 `∷ _────────────────────────────────_
+                 `∷ ────────────────────────────────_
+                 `∷ _───────────────────────────────────────_
+                 `∷ ───────────────────────────────────────_
                  -- ^ include all syntactic sugar for inference rules here
                  `∷ []
     withReduceDefs (true , whitelist) $ normalise ty

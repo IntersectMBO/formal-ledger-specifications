@@ -34,7 +34,7 @@ open import Tactic.ClauseBuilder
 open import Tactic.ReduceDec
 open import Tactic.Defaults
 
-open import Interface.ComputationalRelation
+open import Class.Computational
 
 open MonadTC ⦃...⦄
 open MonadError ⦃...⦄ using (error; catch)
