@@ -1,6 +1,12 @@
--- md_agda-filter.lua (Version 9 - Simplified for Post-Processing, Commented)
+-- md_agda-filter.lua
 -- Purpose: Pandoc Lua filter to process specific elements in the AST generated
 --          by Pandoc's LaTeX reader from the output of preprocess.py.
+-- Usage: This script is part of a four stage pipeline and is meant to be used in conjunction with
+--        `generate_macros.py`, `md_preprocess.py`, `md_postprocess.py`, and pandoc.  For example,
+--          $ python md_generate_macros_json.py macros.sty preprocess_macros.json
+--          $ python md_preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
+--          $ pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
+--          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
 -- Actions:
 -- 1. Handles inline code elements (`Code`) potentially containing `@@AgdaTerm@@` markers,
 --    converting them into Code elements with appropriate CSS classes.
@@ -10,12 +16,6 @@
 -- NOTE: This filter *does not* handle code block placeholders (@@CODEBLOCK_ID_n@@)
 --       or admonition markers (@@ADMONITION_START/END@@). They are intended
 --       to pass through Pandoc unchanged (likely as Str in Para) for post-processing.
---
--- USAGE:
---   python preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
---   pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
---   python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
---
 
 --- Checks if a Lua list (table) contains an item.
 -- @param list The list (table) to check. Can be nil.

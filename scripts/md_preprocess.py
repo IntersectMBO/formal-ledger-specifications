@@ -1,5 +1,14 @@
 # md_preprocess.py
 # Purpose: Prepares a LaTeX-based literate Agda file (.lagda) for Pandoc processing.
+# Usage: This script is part of a four stage pipeline and is meant to be used in conjunction with
+#        `generate_macros.py`, `md_agda-filter.lua`, `md_postprocess.py`, and pandoc.  For example,
+#          $ python md_generate_macros_json.py macros.sty preprocess_macros.json
+#          $ python md_preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
+#          $ pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
+#          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
+# Output:
+# - Prints processed LaTeX content (with placeholders) to stdout.
+# - Writes code block data to a specified JSON file.
 # Actions:
 # 1. Replaces Agda code blocks (\begin{code} / \begin{code}[hide]) with unique placeholders (@@CODEBLOCK_ID_n@@).
 # 2. Stores the verbatim content of each code block, along with its hidden status, in a JSON file.
@@ -10,9 +19,6 @@
 # 7. Removes \begin{AgdaMultiCode}/\end{AgdaMultiCode} environment wrappers.
 # 8. Removes \begin{NoConway}/\end{NoConway} environment wrappers (content flows).
 # 9. Replaces \begin{Conway}/\end{Conway} environment wrappers with admonition markers (@@ADMONITION_START/END@@).
-# Output:
-# - Prints processed LaTeX content (with placeholders) to stdout.
-# - Writes code block data to a specified JSON file.
 
 import re
 import json
