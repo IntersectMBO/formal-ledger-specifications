@@ -47,32 +47,32 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- Ledger.Conway.Conformance.Utxow.Properties._._⊢_⇀⦇_,UTXOW⦈_
-d__'8866'_'8640''10631'_'44'UTXOW'10632'__1646 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'UTXOW'10632'__1650 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Utxow.Properties.Computational-UTXOW
-d_Computational'45'UTXOW_1742 ::
+d_Computational'45'UTXOW_1746 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1978 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1982 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'UTXOW_1742 v0 v1
+d_Computational'45'UTXOW_1746 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_1782 (coe v0) (coe v1))
+      (d_computeProof_1786 (coe v0) (coe v1))
 -- Ledger.Conway.Conformance.Utxow.Properties._.Go.computeProof
-d_computeProof_1782 ::
+d_computeProof_1786 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1978 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_2264 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_2282 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_3172 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1982 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_2268 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_2286 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_3180 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_1782 v0 v1 v2 v3 v4
+d_computeProof_1786 v0 v1 v2 v3 v4
   = let v5
           = MAlonzo.Code.Class.Decidable.Core.d_dec_16
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (coe
-                    MAlonzo.Code.Ledger.Conway.Conformance.Utxow.du_UTXOW'45'inductive'45'premises_2550
+                    MAlonzo.Code.Ledger.Conway.Conformance.Utxow.du_UTXOW'45'inductive'45'premises_2554
                     (coe v0) (coe v4) (coe v3))) in
     coe
       (case coe v5 of
@@ -106,7 +106,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                   (coe
                                                                                      (\ v23 v24 ->
                                                                                         coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2524
+                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2528
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                              (coe
@@ -141,7 +141,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                                                      v22)
                                                                                                                   (coe
                                                                                                                      v24))))))))))))
-                                                                               (MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_computeProof_2614
+                                                                               (MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_computeProof_2618
                                                                                   (coe v0) (coe v1)
                                                                                   (coe v2) (coe v3)
                                                                                   (coe v4))
@@ -170,24 +170,24 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                 MAlonzo.Code.Ledger.Crypto.d_Dec'45'isSigned_116
                                                 (MAlonzo.Code.Ledger.Crypto.d_pkk_172
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                      MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                       (coe v0)))
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v8))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Transaction.d_txidBytes_2440
+                                                   MAlonzo.Code.Ledger.Transaction.d_txidBytes_2448
                                                    v0
-                                                   (MAlonzo.Code.Ledger.Transaction.d_txid_3054
+                                                   (MAlonzo.Code.Ledger.Transaction.d_txid_3062
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Transaction.d_body_3182
+                                                         MAlonzo.Code.Ledger.Transaction.d_body_3190
                                                          (coe v4))))
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                    (coe v8))))
                                         (coe
                                            MAlonzo.Code.Axiom.Set.Map.du__'738'_550
                                            (coe
-                                              MAlonzo.Code.Ledger.Transaction.d_vkSigs_3162
+                                              MAlonzo.Code.Ledger.Transaction.d_vkSigs_3170
                                               (coe
-                                                 MAlonzo.Code.Ledger.Transaction.d_wits_3184
+                                                 MAlonzo.Code.Ledger.Transaction.d_wits_3192
                                                  (coe v4)))))
                                      erased in
                            coe
@@ -216,7 +216,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                              (coe
                                                                 MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                                   MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                                    (coe v0)))
                                                              (coe
                                                                 MAlonzo.Code.Interface.Hashable.d_hash_16
@@ -224,21 +224,21 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Script.d_p1s_426
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                         MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                          (coe v0))))
                                                                 v10)
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2550
+                                                                MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2554
                                                                 v0
-                                                                (MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                (MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                    (coe v3))
-                                                                (MAlonzo.Code.Ledger.Transaction.d_body_3182
+                                                                (MAlonzo.Code.Ledger.Transaction.d_body_3190
                                                                    (coe v4))))
                                                           (coe
                                                              MAlonzo.Code.Ledger.Script.d_Dec'45'validP1Script_108
                                                              (MAlonzo.Code.Ledger.Script.d_p1s_426
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                   MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                    (coe v0)))
                                                              (coe
                                                                 MAlonzo.Code.Axiom.Set.du_map_398
@@ -251,7 +251,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                       (coe
                                                                          MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                                            MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                                             (coe v0)))))
                                                                 (coe
                                                                    MAlonzo.Code.Class.IsSet.du_dom_548
@@ -262,13 +262,13 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                    (coe
                                                                       MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Transaction.d_vkSigs_3162
+                                                                      MAlonzo.Code.Ledger.Transaction.d_vkSigs_3170
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Transaction.d_wits_3184
+                                                                         MAlonzo.Code.Ledger.Transaction.d_wits_3192
                                                                          (coe v4)))))
-                                                             (MAlonzo.Code.Ledger.Transaction.d_txvldt_3032
+                                                             (MAlonzo.Code.Ledger.Transaction.d_txvldt_3040
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Transaction.d_body_3182
+                                                                   MAlonzo.Code.Ledger.Transaction.d_body_3190
                                                                    (coe v4)))
                                                              v10)))
                                                   (coe
@@ -277,10 +277,10 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                         (coe
                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                      (coe MAlonzo.Code.Data.Sum.du_isInj'8321'_24)
-                                                     (MAlonzo.Code.Ledger.Transaction.d_txscripts_3296
+                                                     (MAlonzo.Code.Ledger.Transaction.d_txscripts_3304
                                                         (coe v0) (coe v4)
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                           MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                            (coe v3)))))
                                                erased in
                                      coe
@@ -309,7 +309,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                                             MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                                              (coe v0))))
                                                                     (coe v12)
                                                                     (coe
@@ -323,7 +323,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                              (coe
                                                                                 MAlonzo.Code.Ledger.Crypto.d_khs_200
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                                                   MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                                                    (coe v0)))))
                                                                        (coe
                                                                           MAlonzo.Code.Class.IsSet.du_dom_548
@@ -334,16 +334,16 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                           (coe
                                                                              MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Transaction.d_vkSigs_3162
+                                                                             MAlonzo.Code.Ledger.Transaction.d_vkSigs_3170
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Transaction.d_wits_3184
+                                                                                MAlonzo.Code.Ledger.Transaction.d_wits_3192
                                                                                 (coe v4)))))))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Utxow.du_witsVKeyNeeded_2548
+                                                               MAlonzo.Code.Ledger.Utxow.du_witsVKeyNeeded_2552
                                                                v0
-                                                               (MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                               (MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                   (coe v3))
-                                                               (MAlonzo.Code.Ledger.Transaction.d_body_3182
+                                                               (MAlonzo.Code.Ledger.Transaction.d_body_3190
                                                                   (coe v4))))
                                                          erased in
                                                coe
@@ -372,7 +372,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                                                        (coe v0)))
                                                                                  (coe v14)
                                                                                  (coe
@@ -384,12 +384,12 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Script.du_Hashable'45'Script_522
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                                             MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                                              (coe
                                                                                                 v0))))
-                                                                                    (MAlonzo.Code.Ledger.Transaction.d_scripts_3164
+                                                                                    (MAlonzo.Code.Ledger.Transaction.d_scripts_3172
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Transaction.d_wits_3184
+                                                                                          MAlonzo.Code.Ledger.Transaction.d_wits_3192
                                                                                           (coe
                                                                                              v4))))))
                                                                          (coe
@@ -404,14 +404,14 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                erased
                                                                                (MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                                                     MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                                                      (coe v0))))
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2550
+                                                                               MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2554
                                                                                v0
-                                                                               (MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                               (MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                   (coe v3))
-                                                                               (MAlonzo.Code.Ledger.Transaction.d_body_3182
+                                                                               (MAlonzo.Code.Ledger.Transaction.d_body_3190
                                                                                   (coe v4)))
                                                                             (coe
                                                                                MAlonzo.Code.Axiom.Set.du_fromList_428
@@ -430,14 +430,14 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                      (coe
                                                                                         MAlonzo.Code.Ledger.Script.du_Hashable'45'Script_522
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                                           MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                                            (coe
                                                                                               v0))))
-                                                                                  (MAlonzo.Code.Ledger.Transaction.d_refScripts_3244
+                                                                                  (MAlonzo.Code.Ledger.Transaction.d_refScripts_3252
                                                                                      (coe v0)
                                                                                      (coe v4)
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                                        MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                         (coe
                                                                                            v3)))))))
                                                                       (coe
@@ -453,7 +453,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                                                       MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                                                        (coe v0)))
                                                                                  (coe v14)
                                                                                  (coe
@@ -468,15 +468,15 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                        erased
                                                                                        (MAlonzo.Code.Ledger.Crypto.d_DecEq'45'ScriptHash_204
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Transaction.d_crypto_1280
+                                                                                             MAlonzo.Code.Ledger.Transaction.d_crypto_1288
                                                                                              (coe
                                                                                                 v0))))
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2550
+                                                                                       MAlonzo.Code.Ledger.Utxow.du_scriptsNeeded_2554
                                                                                        v0
-                                                                                       (MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                                       (MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                           (coe v3))
-                                                                                       (MAlonzo.Code.Ledger.Transaction.d_body_3182
+                                                                                       (MAlonzo.Code.Ledger.Transaction.d_body_3190
                                                                                           (coe v4)))
                                                                                     (coe
                                                                                        MAlonzo.Code.Axiom.Set.du_fromList_428
@@ -495,16 +495,16 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Script.du_Hashable'45'Script_522
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                                                   MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                                                    (coe
                                                                                                       v0))))
-                                                                                          (MAlonzo.Code.Ledger.Transaction.d_refScripts_3244
+                                                                                          (MAlonzo.Code.Ledger.Transaction.d_refScripts_3252
                                                                                              (coe
                                                                                                 v0)
                                                                                              (coe
                                                                                                 v4)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                                                MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                                 (coe
                                                                                                    v3))))))))
                                                                          (coe
@@ -516,11 +516,11 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                (coe
                                                                                   MAlonzo.Code.Ledger.Script.du_Hashable'45'Script_522
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                                     MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                                      (coe v0))))
-                                                                            (MAlonzo.Code.Ledger.Transaction.d_scripts_3164
+                                                                            (MAlonzo.Code.Ledger.Transaction.d_scripts_3172
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Transaction.d_wits_3184
+                                                                                  MAlonzo.Code.Ledger.Transaction.d_wits_3192
                                                                                   (coe v4))))))
                                                                    erased in
                                                          coe
@@ -553,7 +553,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                                  (coe
                                                                                                     MAlonzo.Code.Ledger.Script.d_ps_448
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                                                       MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                                                        (coe
                                                                                                           v0))))))
                                                                                         (coe v16)
@@ -566,16 +566,16 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                            (coe
                                                                                               MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Transaction.d_txdats_3166
+                                                                                              MAlonzo.Code.Ledger.Transaction.d_txdats_3174
                                                                                               (coe
-                                                                                                 MAlonzo.Code.Ledger.Transaction.d_wits_3184
+                                                                                                 MAlonzo.Code.Ledger.Transaction.d_wits_3192
                                                                                                  (coe
                                                                                                     v4))))))
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Utxo.du_getInputHashes_2190
+                                                                                   MAlonzo.Code.Ledger.Utxo.du_getInputHashes_2194
                                                                                    (coe v0) (coe v4)
                                                                                    (coe
-                                                                                      MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                                      MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                       (coe v3))))
                                                                              erased in
                                                                    coe
@@ -608,7 +608,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                                            (coe
                                                                                                               MAlonzo.Code.Ledger.Script.d_ps_448
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                                                                 MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                                                                  (coe
                                                                                                                     v0))))))
                                                                                                   (coe
@@ -620,13 +620,13 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                                         (coe
                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Ledger.Utxo.du_getInputHashes_2190
+                                                                                                        MAlonzo.Code.Ledger.Utxo.du_getInputHashes_2194
                                                                                                         (coe
                                                                                                            v0)
                                                                                                         (coe
                                                                                                            v4)
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                                                           MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                                            (coe
                                                                                                               v3)))
                                                                                                      (coe
@@ -636,7 +636,7 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                                            (coe
                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Utxo.du_getDataHashes_2186
+                                                                                                           MAlonzo.Code.Ledger.Utxo.du_getDataHashes_2190
                                                                                                            (coe
                                                                                                               MAlonzo.Code.Class.IsSet.du_range_550
                                                                                                               (coe
@@ -646,13 +646,13 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                                               (coe
                                                                                                                  MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Transaction.d_txouts_3026
+                                                                                                                 MAlonzo.Code.Ledger.Transaction.d_txouts_3034
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Ledger.Transaction.d_body_3182
+                                                                                                                    MAlonzo.Code.Ledger.Transaction.d_body_3190
                                                                                                                     (coe
                                                                                                                        v4)))))
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Utxo.du_getDataHashes_2186
+                                                                                                           MAlonzo.Code.Ledger.Utxo.du_getDataHashes_2190
                                                                                                            (coe
                                                                                                               MAlonzo.Code.Class.IsSet.du_range_550
                                                                                                               (coe
@@ -677,20 +677,20 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                                                        erased
                                                                                                                        MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                        erased
-                                                                                                                       (MAlonzo.Code.Ledger.Transaction.d_DecEq'45'TxId_1240
+                                                                                                                       (MAlonzo.Code.Ledger.Transaction.d_DecEq'45'TxId_1244
                                                                                                                           (coe
                                                                                                                              v0))
-                                                                                                                       (MAlonzo.Code.Ledger.Transaction.d_DecEq'45'Ix_1238
+                                                                                                                       (MAlonzo.Code.Ledger.Transaction.d_DecEq'45'Ix_1242
                                                                                                                           (coe
                                                                                                                              v0))))
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                                                                    MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                                                     (coe
                                                                                                                        v3))
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Ledger.Transaction.d_refInputs_3024
+                                                                                                                    MAlonzo.Code.Ledger.Transaction.d_refInputs_3032
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Ledger.Transaction.d_body_3182
+                                                                                                                       MAlonzo.Code.Ledger.Transaction.d_body_3190
                                                                                                                        (coe
                                                                                                                           v4))))))))))
                                                                                           (coe
@@ -702,9 +702,9 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                              (coe
                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Transaction.d_txdats_3166
+                                                                                                MAlonzo.Code.Ledger.Transaction.d_txdats_3174
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Transaction.d_wits_3184
+                                                                                                   MAlonzo.Code.Ledger.Transaction.d_wits_3192
                                                                                                    (coe
                                                                                                       v4)))))
                                                                                        erased in
@@ -734,29 +734,29 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Script.d_ps_448
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1866
+                                                                                                                     MAlonzo.Code.Ledger.Transaction.d_scriptStructure_1874
                                                                                                                      (coe
                                                                                                                         v0))))
                                                                                                             (coe
                                                                                                                v20)
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Utxow.du_allowedLanguages_2412
+                                                                                                               MAlonzo.Code.Ledger.Utxow.du_allowedLanguages_2416
                                                                                                                (coe
                                                                                                                   v0)
                                                                                                                (coe
                                                                                                                   v4)
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                                                                  MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                                                   (coe
                                                                                                                      v3)))))
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Utxow.du_languages_2396
+                                                                                                       MAlonzo.Code.Ledger.Utxow.du_languages_2400
                                                                                                        (coe
                                                                                                           v0)
                                                                                                        (coe
                                                                                                           v4)
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Utxo.d_utxo_2292
+                                                                                                          MAlonzo.Code.Ledger.Utxo.d_utxo_2296
                                                                                                           (coe
                                                                                                              v3))))
                                                                                                  erased in
@@ -782,13 +782,13 @@ d_computeProof_1782 v0 v1 v2 v3 v4
                                 _ -> MAlonzo.RTE.mazUnreachableError)))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Conformance.Utxow.Properties._.Go.completeness
-d_completeness_1806 ::
+d_completeness_1810 ::
   MAlonzo.Code.Ledger.Transaction.T_TransactionStructure_20 ->
-  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1978 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_2264 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_2282 ->
-  MAlonzo.Code.Ledger.Transaction.T_Tx_3172 ->
-  MAlonzo.Code.Ledger.Utxo.T_UTxOState_2282 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2416 ->
+  MAlonzo.Code.Ledger.Abstract.T_AbstractFunctions_1982 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOEnv_2268 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_2286 ->
+  MAlonzo.Code.Ledger.Transaction.T_Tx_3180 ->
+  MAlonzo.Code.Ledger.Utxo.T_UTxOState_2286 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2420 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_1806 = erased
+d_completeness_1810 = erased
