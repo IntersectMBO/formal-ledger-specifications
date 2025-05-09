@@ -35,7 +35,6 @@ import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.HasAdd.Core
-import qualified MAlonzo.Code.Class.HasCast.Base
 import qualified MAlonzo.Code.Class.HasOrder.Core
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Class.Monoid.Core
@@ -47,7 +46,6 @@ import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
-import qualified MAlonzo.Code.Data.List.Relation.Unary.MOf
 import qualified MAlonzo.Code.Data.Maybe.Base
 import qualified MAlonzo.Code.Data.Maybe.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Base
@@ -75,6 +73,8 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.DecEq
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
+import qualified MAlonzo.Code.Qstdlib.Data.List.Relation.Unary.MOf
 
 -- Ledger.Transaction.Tag
 d_Tag_4 = ()
@@ -2693,10 +2693,10 @@ d_GovParams_1982 a0 = ()
 -- Ledger.Transaction.TransactionStructure._.HasCast-Acnt
 d_HasCast'45'Acnt_1986 ::
   T_TransactionStructure_20 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'Acnt_1986 ~v0 = du_HasCast'45'Acnt_1986
 du_HasCast'45'Acnt_1986 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'Acnt_1986
   = coe MAlonzo.Code.Ledger.PParams.du_HasCast'45'Acnt_184
 -- Ledger.Transaction.TransactionStructure._.HasPParams
@@ -4098,43 +4098,45 @@ d_GovVote_2484 a0 = ()
 -- Ledger.Transaction.TransactionStructure.GovernanceActions.HasCast-GovAction-Sigma
 d_HasCast'45'GovAction'45'Sigma_2486 ::
   T_TransactionStructure_20 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'GovAction'45'Sigma_2486 ~v0
   = du_HasCast'45'GovAction'45'Sigma_2486
 du_HasCast'45'GovAction'45'Sigma_2486 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovAction'45'Sigma_2486
   = coe
       MAlonzo.Code.Ledger.GovernanceActions.du_HasCast'45'GovAction'45'Sigma_788
 -- Ledger.Transaction.TransactionStructure.GovernanceActions.HasCast-GovVote
 d_HasCast'45'GovVote_2488 ::
   T_TransactionStructure_20 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'GovVote_2488 ~v0 = du_HasCast'45'GovVote_2488
 du_HasCast'45'GovVote_2488 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovVote_2488
   = coe
       MAlonzo.Code.Ledger.GovernanceActions.du_HasCast'45'GovVote_886
 -- Ledger.Transaction.TransactionStructure.GovernanceActions.HasCast-HashProtected
 d_HasCast'45'HashProtected_2490 ::
   T_TransactionStructure_20 ->
-  () -> MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  () ->
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'HashProtected_2490 ~v0
   = du_HasCast'45'HashProtected_2490
 du_HasCast'45'HashProtected_2490 ::
-  () -> MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  () ->
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'HashProtected_2490 v0
   = coe
       MAlonzo.Code.Ledger.GovernanceActions.du_HasCast'45'HashProtected_800
 -- Ledger.Transaction.TransactionStructure.GovernanceActions.HasCast-HashProtected-MaybeScriptHash
 d_HasCast'45'HashProtected'45'MaybeScriptHash_2492 ::
   T_TransactionStructure_20 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'HashProtected'45'MaybeScriptHash_2492 ~v0
   = du_HasCast'45'HashProtected'45'MaybeScriptHash_2492
 du_HasCast'45'HashProtected'45'MaybeScriptHash_2492 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'HashProtected'45'MaybeScriptHash_2492
   = coe
       MAlonzo.Code.Ledger.GovernanceActions.du_HasCast'45'HashProtected'45'MaybeScriptHash_802

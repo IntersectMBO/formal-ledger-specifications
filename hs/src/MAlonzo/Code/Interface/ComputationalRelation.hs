@@ -1120,7 +1120,7 @@ du_Computational'45'Id_738
            C_success_42
            (coe
               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v1)
-              (coe MAlonzo.Code.Interface.STS.C_Id'45'nop_108)))
+              (coe MAlonzo.Code.Interface.STS.C_Id'45'nop_78)))
 -- Interface.ComputationalRelation._._.Computational-ReflexiveTransitiveClosureᵇ
 d_Computational'45'ReflexiveTransitiveClosure'7495'_774 ::
   () ->
@@ -1158,7 +1158,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7495'_774 v0 v1 v2
                   (coe
                      MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
                      (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_72)
-                     (\ v7 v8 -> coe MAlonzo.Code.Interface.STS.C_BS'45'base_70 v8))
+                     (\ v7 v8 -> coe MAlonzo.Code.Interface.STS.C_BS'45'base_40 v8))
                   (coe
                      d_computeProof_272 v0 v4 v5
                      (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
@@ -1187,7 +1187,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7495'_774 v0 v1 v2
                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                        (coe v15)
                                                        (coe
-                                                          MAlonzo.Code.Interface.STS.C_BS'45'ind_72
+                                                          MAlonzo.Code.Interface.STS.C_BS'45'ind_42
                                                           v11 v12 v16))
                                              _ -> MAlonzo.RTE.mazUnreachableError
                                       C_failure_44 v14
@@ -1243,7 +1243,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7522''7495'''_946 v0
                   (coe
                      MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
                      (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_72)
-                     (coe (\ v7 -> coe MAlonzo.Code.Interface.STS.C_BS'45'base_90)))
+                     (coe (\ v7 -> coe MAlonzo.Code.Interface.STS.C_BS'45'base_60)))
                   (coe
                      d_computeProof_272 v0
                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4)) v5
@@ -1282,7 +1282,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7522''7495'''_946 v0
                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                        (coe v15)
                                                        (coe
-                                                          MAlonzo.Code.Interface.STS.C_BS'45'ind_92
+                                                          MAlonzo.Code.Interface.STS.C_BS'45'ind_62
                                                           v11 v12 v16))
                                              _ -> MAlonzo.RTE.mazUnreachableError
                                       C_failure_44 v14 -> coe v13
@@ -1388,7 +1388,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7495'''_1138 v0 v1
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                 (coe v13)
                                                 (coe
-                                                   MAlonzo.Code.Interface.STS.C_RTC_126 v9
+                                                   MAlonzo.Code.Interface.STS.C_RTC_96 v9
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                       (coe v10) (coe v14))))
