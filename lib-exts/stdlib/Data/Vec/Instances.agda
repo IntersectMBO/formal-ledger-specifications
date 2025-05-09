@@ -1,5 +1,5 @@
 {-# OPTIONS --safe --without-K #-}
-module Data.Vec.Instances.Ext where
+module stdlib.Data.Vec.Instances where
 
 open import Level
 open import Algebra

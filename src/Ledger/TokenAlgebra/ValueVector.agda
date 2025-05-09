@@ -10,7 +10,7 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid)
 import Data.Product.Relation.Binary.Pointwise.NonDependent as Product
 open import Data.Vec as Vec
   hiding (fromList)
-import Data.Vec.Instances.Ext as Vec
+import stdlib.Data.Vec.Instances as Vec
 import Data.Vec.Relation.Binary.Pointwise.Inductive as Vec
 
 open import Ledger.TokenAlgebra PolicyId
