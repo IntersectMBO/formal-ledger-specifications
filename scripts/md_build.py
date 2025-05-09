@@ -152,6 +152,60 @@ def run_command(command_args, cwd=None, capture_output=False, text=True, check=T
         raise # Re-raise exception after logging
 
 
+def build_nested_nav(file_paths, mkdocs_docs_dir_path):
+    nav_tree = {}
+    processed_paths = set() # To handle potential duplicates if any
+
+    # Ensure "index.md" is handled if it exists, making it "Home"
+    # The script already attempts to copy an index.md.
+    # We'll ensure it's the first item in the nav if present.
+    home_item = None
+    if (mkdocs_docs_dir_path / "index.md").exists():
+        home_item = {'Home': 'index.md'}
+        processed_paths.add('index.md')
+
+    # Sort paths for consistent nav order, excluding index.md if already handled
+    sorted_file_paths = sorted(p for p in file_paths if p != 'index.md')
+
+    for file_path_str in sorted_file_paths:
+        if file_path_str in processed_paths:
+            continue
+        processed_paths.add(file_path_str)
+
+        path_obj = Path(file_path_str)
+        parts = list(path_obj.parent.parts)  # e.g., ["Ledger", "Certs", "Properties"]
+        filename_stem = path_obj.stem        # e.g., "PoV"
+
+        current_level = nav_tree
+        for part_name in parts:
+            # Use original part name for keys to maintain case, then format for title
+            title_part = part_name.replace('_', ' ').replace('-', ' ').capitalize()
+            if title_part not in current_level:
+                current_level[title_part] = {}
+            current_level = current_level[title_part]
+
+        file_title = filename_stem.replace('_', ' ').replace('-', ' ').capitalize()
+        current_level[file_title] = file_path_str
+
+    # Convert the dict tree to MkDocs nav list format
+    def format_nav_level(level_dict_items):
+        nav_list_segment = []
+        # Sort items by title for consistent order
+        for title, content in sorted(level_dict_items, key=lambda item: item[0]):
+            if isinstance(content, dict):
+                nav_list_segment.append({title: format_nav_level(list(content.items()))})
+            else:
+                nav_list_segment.append({title: content})
+        return nav_list_segment
+
+    final_nav_list = []
+    if home_item:
+        final_nav_list.append(home_item)
+
+    final_nav_list.extend(format_nav_level(list(nav_tree.items())))
+    return final_nav_list
+
+
 # --- Main Build Logic ---
 def main(run_agda_html=False): # Add flag argument
     """Orchestrates the documentation build pipeline up to preparing source for Shake/Agda."""
@@ -315,47 +369,76 @@ depend: {" ".join(agda_lib_dependencies)}
         # Note: Agda might be smarter if run on just the top-level modules,
         # but processing each ensures all are attempted.
         for lagda_md_in_snapshot in processed_lagda_md_files_in_snapshot:
-             relative_path = lagda_md_in_snapshot.relative_to(AGDA_SNAPSHOT_SRC_DIR)
-             # Agda output path relative to AGDA_HTML_OUTPUT_DIR
-             agda_html_processed_md = AGDA_HTML_OUTPUT_DIR / relative_path.with_suffix(".md")
-             mkdocs_target_md = MKDOCS_DOCS_DIR / relative_path.with_suffix(".md") # Final target in MkDocs dir
+            relative_path_in_snapshot = lagda_md_in_snapshot.relative_to(AGDA_SNAPSHOT_SRC_DIR)
 
-             logging.info(f"  Processing {relative_path} with Agda...")
-             try:
+            # 1. Determine the target path and name in the MkDocs docs directory (e.g., "Ledger/File.md")
+            target_filename_in_mkdocs = relative_path_in_snapshot.name.replace(".lagda.md", ".md")
+            target_path_relative_to_mkdocs_docs = relative_path_in_snapshot.parent / target_filename_in_mkdocs
+            mkdocs_target_md_path = MKDOCS_DOCS_DIR / target_path_relative_to_mkdocs_docs
+            # ^^^^^^^^^^^^^^^^^^^ = the full path to the final .md file in the mkdocs source
+
+            # 2. Determine the Agda module name and the expected output filename from Agda
+            # e.g., from "Ledger/File.lagda.md" -> module "Ledger.File"
+            module_name_base_path_str = str(relative_path_in_snapshot.parent / relative_path_in_snapshot.name.replace(".lagda.md", ""))
+            module_name = module_name_base_path_str.replace(os.sep, ".")
+            # Remove leading dot if the file was top-level (e.g. "MyModule.lagda.md" -> ".MyModule" -> "MyModule")
+            if module_name.startswith(".") and len(module_name) > 1:
+                module_name = module_name[1:]
+
+            agda_output_filename = module_name + ".md"
+            agda_html_source_file = AGDA_HTML_OUTPUT_DIR / agda_output_filename
+            # agda_html_source_file is like "_build/docs/agda_html_output/Ledger.File.md"
+
+             # Agda output path relative to AGDA_HTML_OUTPUT_DIR
+             # agda_html_processed_md = AGDA_HTML_OUTPUT_DIR / relative_path.with_suffix(".md")
+
+
+            logging.info(f"  Preparing to run Agda for module {module_name} (source: {relative_path_in_snapshot})")
+            try:
                 # Run Agda with the snapshot directory as CWD, using the generated .agda-lib
                 run_command([
                     "agda", "--html", "--html-highlight=code",
                     f"--html-dir={AGDA_HTML_OUTPUT_DIR.resolve()}", # Output dir
-                     # Include path relative to CWD (snapshot root) is "."
+                    # Include path relative to CWD (snapshot root) is "."
                     "-i", ".",
                     str(lagda_md_in_snapshot.resolve()) # Input file
                 ], cwd=AGDA_SNAPSHOT_SRC_DIR.resolve()) # CWD is snapshot root
 
-                # Copy Agda's output to final MkDocs docs folder
-                mkdocs_target_md.parent.mkdir(parents=True, exist_ok=True)
-                if agda_html_processed_md.exists():
-                    shutil.copy2(agda_html_processed_md, mkdocs_target_md)
-                    final_md_files_for_mkdocs.append(str(relative_path.with_suffix(".md")))
+                # Check for and copy Agda's output to final MkDocs docs folder
+                mkdocs_target_md_path.parent.mkdir(parents=True, exist_ok=True)
+                if agda_html_source_file.exists():
+                    logging.info(f"  Copying Agda output {agda_html_source_file.name} to {mkdocs_target_md_path}")
+                    shutil.copy2(agda_html_source_file, mkdocs_target_md_path)
+                    final_md_files_for_mkdocs.append(str(target_path_relative_to_mkdocs_docs))
                 else:
-                    logging.warning(f"Agda HTML output not found: {agda_html_processed_md}")
+                    logging.warning(f"Agda HTML output not found: {agda_html_source_file} (expected for module {module_name})")
+                    logging.info(f"  Fallback: Copying pre-Agda file {lagda_md_in_snapshot.name} to {mkdocs_target_md_path} (renamed)")
+                    # Copy the non-Agda-processed .lagda.md from the snapshot, but rename it to .md for MkDocs
+                    shutil.copy2(lagda_md_in_snapshot, mkdocs_target_md_path)
+                    final_md_files_for_mkdocs.append(str(target_path_relative_to_mkdocs_docs))
 
-             except Exception as e:
-                 logging.error(f"Agda --html failed for {relative_path}: {e}", exc_info=True)
-                 logging.warning("Skipping Agda step for this file. Copying intermediate .lagda.md instead.")
-                 # Copy the non-Agda-processed .lagda.md as fallback
-                 mkdocs_target_md.parent.mkdir(parents=True, exist_ok=True)
-                 shutil.copy2(lagda_md_in_snapshot, mkdocs_target_md)
-                 final_md_files_for_mkdocs.append(str(relative_path.with_suffix(".md")))
+            except Exception as e:
+                logging.error(f"Agda --html failed for {relative_path}: {e}", exc_info=True)
+                logging.warning("Skipping Agda step for this file. Copying intermediate .lagda.md instead.")
+                # Copy the non-Agda-processed .lagda.md as fallback
+                mkdocs_target_md.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(lagda_md_in_snapshot, mkdocs_target_md)
+                final_md_files_for_mkdocs.append(str(relative_path.with_suffix(".md")))
     else:
         # If not running Agda step, copy the .lagda.md files directly
         logging.info("\nSkipping agda --html step.")
         logging.info("Copying final *.lagda.md files to MkDocs source...")
         for lagda_md_in_final_dir in FINAL_LAGDA_MD_DIR.rglob("*.lagda.md"):
-            relative_path = lagda_md_in_final_dir.relative_to(FINAL_LAGDA_MD_DIR)
-            mkdocs_target_md = MKDOCS_DOCS_DIR / relative_path.with_suffix(".md") # Save as .md
+            relative_path = lagda_md_in_final_dir.relative_to(FINAL_LAGDA_MD_DIR)  # e.g. Module/File.lagda.md
+
+            target_filename_no_agda = relative_path.name.replace(".lagda.md", ".md")
+            target_relative_path_for_mkdocs_no_agda = relative_path.parent / target_filename_no_agda
+            mkdocs_target_md = MKDOCS_DOCS_DIR / target_relative_path_for_mkdocs_no_agda
+
             mkdocs_target_md.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(lagda_md_in_final_dir, mkdocs_target_md)
-            final_md_files_for_mkdocs.append(str(relative_path.with_suffix(".md")))
+            final_md_files_for_mkdocs.append(str(target_relative_path_for_mkdocs_no_agda)) # Use the corrected relative path
+            # final_md_files_for_mkdocs.append(str(relative_path.with_suffix(".md")))
 
 
     # --- Assemble Interim/Final MkDocs Site Source ---
@@ -432,14 +515,7 @@ depend: {" ".join(agda_lib_dependencies)}
 
 
     # Build nav structure from the collected paths and titles
-    nav_list = []
-    if 'index.md' in mkdocs_nav_structure: nav_list.append({'Home': 'index.md'})
-    # Sort by path for consistent order
-    for path in sorted(mkdocs_nav_structure.keys()):
-        if path != 'index.md':
-            nav_list.append({mkdocs_nav_structure[path]: path}) # Format as { Title: path.md }
-
-    mkdocs_config['nav'] = nav_list
+    mkdocs_config['nav'] = build_nested_nav(final_md_files_for_mkdocs, MKDOCS_DOCS_DIR)
 
     # Write mkdocs.yml
     try:
