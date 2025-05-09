@@ -1,9 +1,9 @@
-# md_preprocess.py
+# preprocess.py
 # Purpose: Prepares a LaTeX-based literate Agda file (.lagda) for Pandoc processing.
 # Usage: This script is part of a four stage pipeline and is meant to be used in conjunction with
-#        `generate_macros.py`, `md_agda-filter.lua`, `md_postprocess.py`, and pandoc.  For example,
-#          $ python md_generate_macros_json.py macros.sty preprocess_macros.json
-#          $ python md_preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
+#        `generate_macros.py`, `agda-filter.lua`, `postprocess.py`, and pandoc.  For example,
+#          $ python generate_macros_json.py macros.sty preprocess_macros.json
+#          $ python preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
 #          $ pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
 #          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
 # Output:

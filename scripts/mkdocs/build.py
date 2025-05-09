@@ -1,4 +1,4 @@
-# md_build.py
+# build.py
 # Purpose: Prepares source files for MkDocs/Shake build.
 # 1. Generates macro JSON from .sty file.
 # 2. Creates a snapshot of the Agda 'src/' directory.
@@ -28,52 +28,57 @@ try:
 except ImportError:
     HAS_YAML = False
 
-# --- Configuration (Paths from previous agreement) ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent # Assumes md_build.py is in PROJECT_ROOT/scripts/
-SRC_DIR = PROJECT_ROOT / "src"                      # Agda source (Input)
-DOCS_DIR = PROJECT_ROOT / "docs"                    # Static doc assets source
-SCRIPTS_DIR = PROJECT_ROOT / "scripts"              # Location of this script and helpers
-MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty" # Path to LaTeX macros
-DOCS_TEMPLATE_DIR = DOCS_DIR / "templates"          # Source for index.md, mkdocs_template.yml
+# --- Configuration ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
+SRC_DIR = PROJECT_ROOT / "src"                               # Agda source (input)
+STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                  # static mkdocs assets
+SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"            # location of this script and helpers
+MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"          # path to LaTeX macros
+DOCS_TEMPLATE_DIR = STATIC_MKDOCS_DIR / "templates"                   # source for index.md, mkdocs_template.yml
+BUILD_DIR = PROJECT_ROOT / "_build"                          # top-level build dir
 
-BUILD_DIR = PROJECT_ROOT / "_build"                 # Top-level build dir
-# Put generated macros json in build dir
-PREPROCESS_MACROS_JSON = BUILD_DIR / "preprocess_macros.json" # Generated JSON path
+BUILD_MKDOCS_DIR = BUILD_DIR / "mkdocs"                      # root for mkdocs build intermediate products
 
-BUILD_DOCS_DIR = BUILD_DIR / "docs"                 # Root for docs build intermediates
-TEMP_DIR = BUILD_DOCS_DIR / "lagda_temp"            # Intermediate preprocessed LaTeX
-CODE_BLOCKS_DIR = BUILD_DOCS_DIR / "code_blocks_json"# Intermediate code block JSONs
-INTERMEDIATE_MD_DIR = BUILD_DOCS_DIR / "md_intermediate" # Intermediate Pandoc output MD
-FINAL_LAGDA_MD_DIR = BUILD_DOCS_DIR / "final_lagda_md" # Final .lagda.md (input to agda)
-# --- NEW: Directory for Agda source snapshot ---
-AGDA_SNAPSHOT_SRC_DIR = BUILD_DOCS_DIR / "agda_snapshot_src" # For Shake/Agda context
-AGDA_HTML_OUTPUT_DIR = BUILD_DOCS_DIR / "agda_html_output" # Agda --html output
+MACROS_JSON = BUILD_MKDOCS_DIR / "macros.json"               # macro JSONs: output of generate_macros_json.py
+                                                             #              input to preprocess.py
+TEMP_DIR = BUILD_MKDOCS_DIR / "lagda_temp"                   # intermediate latex: output of preprocess.py
+                                                             #                     input to pandoc+lua
+CODE_BLOCKS_DIR = BUILD_MKDOCS_DIR / "code_blocks_json"      # code block JSONs: output of preprocess.py
+                                                             #                   input to postprocess.py
+INTERMEDIATE_MD_DIR = BUILD_MKDOCS_DIR / "md_intermediate"   # intermediate `.lagda.md`: output of pandoc+lua
+                                                             #                           intput to postprocess.py
+FINAL_LAGDA_MD_DIR = BUILD_MKDOCS_DIR / "final_lagda_md"     # final `.lagda.md`: output of postprocess.py
+                                                             #                    input to `agda --html`
+
+# --- Directories for Agda source snapshot and html output ---
+AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src" # for Shake/Agda context
+AGDA_HTML_OUTPUT_DIR = BUILD_MKDOCS_DIR / "agda_html_output"   # for `agda --html` output
 
 # Optional: Still assemble an interim MkDocs site for preview
-MKDOCS_SRC_DIR = BUILD_DOCS_DIR / "mkdocs_src"
+MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "mkdocs_src"
 MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
 MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
 MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
 
 # Script paths
-GENERATE_MACROS_PY = SCRIPTS_DIR / "md_generate_macros_json.py"
-PREPROCESS_PY = SCRIPTS_DIR / "md_preprocess.py"
-POSTPROCESS_PY = SCRIPTS_DIR / "md_postprocess.py"
-LUA_FILTER = SCRIPTS_DIR / "md_agda-filter.lua"
+GENERATE_MACROS_PY = SCRIPTS_DIR / "generate_macros_json.py"
+PREPROCESS_PY = SCRIPTS_DIR / "preprocess.py"
+POSTPROCESS_PY = SCRIPTS_DIR / "postprocess.py"
+LUA_FILTER = SCRIPTS_DIR / "agda-filter.lua"
 
 # Static asset source paths
-CUSTOM_CSS_SOURCE = SCRIPTS_DIR / "css" / "custom.css" # Assumes CSS lives near scripts
-CUSTOM_JS_SOURCE = SCRIPTS_DIR / "js" / "custom.js"   # Assumes JS lives near scripts
+CUSTOM_CSS_SOURCE = STATIC_MKDOCS_DIR / "css" / "custom.css" # Assumes CSS lives near scripts
+CUSTOM_JS_SOURCE = STATIC_MKDOCS_DIR / "js" / "custom.js"   # Assumes JS lives near scripts
 INDEX_MD_TEMPLATE = DOCS_TEMPLATE_DIR / "index.md"
 MKDOCS_YML_TEMPLATE = DOCS_TEMPLATE_DIR / "mkdocs_template.yml" # Optional template
 
 # --- Logging Setup ---
-LOG_FILE = BUILD_DOCS_DIR / "build.log"
+LOG_FILE = BUILD_MKDOCS_DIR / "build.log"
 
 # *** REVISED Logging Setup ***
 def setup_logging():
     """Configures logging to file (DEBUG) and console (INFO) without basicConfig."""
-    BUILD_DOCS_DIR.mkdir(parents=True, exist_ok=True)
+    BUILD_MKDOCS_DIR.mkdir(parents=True, exist_ok=True)
     log_formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
     # Get root logger
@@ -270,13 +275,13 @@ def main(run_agda_html=False): # Add flag argument
 
     # 2. Generate preprocess_macros.json
     if GENERATE_MACROS_PY.exists() and MACROS_STY_PATH.exists():
-        logging.info(f"Generating {PREPROCESS_MACROS_JSON.name} from {MACROS_STY_PATH.name}...")
-        run_command(["python", GENERATE_MACROS_PY, MACROS_STY_PATH, PREPROCESS_MACROS_JSON])
-    elif not PREPROCESS_MACROS_JSON.exists():
-        logging.error(f"{PREPROCESS_MACROS_JSON.name} not found and cannot be generated.")
+        logging.info(f"Generating {MACROS_JSON.name} from {MACROS_STY_PATH.name}...")
+        run_command(["python", GENERATE_MACROS_PY, MACROS_STY_PATH, MACROS_JSON])
+    elif not MACROS_JSON.exists():
+        logging.error(f"{MACROS_JSON.name} not found and cannot be generated.")
         sys.exit(1)
     else:
-        logging.info(f"Using existing {PREPROCESS_MACROS_JSON.name}")
+        logging.info(f"Using existing {MACROS_JSON.name}")
 
     # *** 3. Create Agda Source Snapshot (Copy ALL from src/) ***
     logging.info(f"Creating Agda source snapshot in {AGDA_SNAPSHOT_SRC_DIR.relative_to(PROJECT_ROOT)}...")
@@ -351,10 +356,10 @@ depend: {" ".join(agda_lib_dependencies)}
         # --- Execute Pipeline Steps (up to Postprocess) ---
         try:
             # A: Preprocess
-            logging.info(f"  Running md_preprocess.py...")
+            logging.info(f"  Running preprocess.py...")
             run_command([
                 "python", PREPROCESS_PY,
-                lagda_file_abs_path, PREPROCESS_MACROS_JSON, current_code_blocks
+                lagda_file_abs_path, MACROS_JSON, current_code_blocks
             ], stdout_file=current_temp_lagda)
 
             # B: Pandoc + Lua
@@ -367,7 +372,7 @@ depend: {" ".join(agda_lib_dependencies)}
             ])
 
             # C: Postprocess
-            logging.info(f"  Running md_postprocess.py...")
+            logging.info(f"  Running postprocess.py...")
             run_command([
                 "python", POSTPROCESS_PY,
                 current_intermediate_md, current_code_blocks, current_final_lagda_md
@@ -478,8 +483,6 @@ depend: {" ".join(agda_lib_dependencies)}
             mkdocs_target_md.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(lagda_md_in_final_dir, mkdocs_target_md)
             final_md_files_for_mkdocs.append(str(target_relative_path_for_mkdocs_no_agda)) # Use the corrected relative path
-            # final_md_files_for_mkdocs.append(str(relative_path.with_suffix(".md")))
-
 
     # --- Assemble Interim/Final MkDocs Site Source ---
     logging.info("\nAssembling MkDocs source directory...")
