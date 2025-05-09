@@ -4,7 +4,7 @@ open import Ledger.Prelude hiding (_∙_; ε)
 module Ledger.TokenAlgebra.ValueVector (PolicyId : Type) (n : ℕ) where
 
 import Algebra as Alg
-open import Algebra.Morphism.Construct.DirectProduct.Ext
+open import stdlib.Algebra.Morphism.Construct.DirectProduct
 open import Algebra.Construct.DirectProduct
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 import Data.Product.Relation.Binary.Pointwise.NonDependent as Product

@@ -1,5 +1,5 @@
 {-# OPTIONS --safe --cubical-compatible #-}
-module Algebra.Morphism.Construct.DirectProduct.Ext where
+module stdlib.Algebra.Morphism.Construct.DirectProduct where
 
 open import Algebra.Bundles
 open import Algebra.Morphism.Bundles

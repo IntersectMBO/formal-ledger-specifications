@@ -212,10 +212,8 @@ htmlIndex =
     -- declare dependencies on all agda files
     lagdafiles   <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.lagda" ]
     agdafiles    <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.agda"  ]
-    agdalibfiles <- map ("lib-exts" </>) <$> getDirectoryFiles "lib-exts" [ "//*.agda"  ]
     need . map (_htmlPP </>) $ map (`replaceExtension` "agda") lagdafiles
                                ++ agdafiles
-                               ++ agdalibfiles
 
         -- agda-lib file
     let agdaprojectfile =
@@ -229,14 +227,10 @@ htmlIndex =
           , ""
           , "include:"
           , "  " ++ htmlPP </> "src"
-          , "  " ++ htmlPP </> "lib-exts/stdlib"
-          , "  " ++ htmlPP </> "lib-exts/stdlib-classes"
-          , "  " ++ htmlPP </> "lib-exts/stdlib-meta"
-          , "  " ++ htmlPP </> "lib-exts/iog-prelude"
+          , "  " ++ htmlPP </> "lib-exts"
           , "  ./"
           ]
         agdamodules = sort . map agdafile2module $ map (dropDirectory 1) (agdafiles ++ lagdafiles)
-                                                 ++ map (dropDirectory 2) agdalibfiles
         -- index file
         indexfile =
           [ "module index where"
