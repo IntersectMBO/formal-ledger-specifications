@@ -1,5 +1,5 @@
 {-# OPTIONS --safe --cubical-compatible #-}
-module Class.HasCast.Base where
+module stdlib-classes.Class.HasCast.Base where
 
 open import Level using (_⊔_)
 

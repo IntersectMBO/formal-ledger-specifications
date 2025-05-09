@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
-module Class.HasCast.Derive where
+module stdlib-classes.Class.HasCast.Derive where
 
-open import Class.HasCast.Base
+open import stdlib-classes.Class.HasCast.Base
 
 open import Data.List.NonEmpty as NE using (List⁺; _∷_)
 open import Data.List

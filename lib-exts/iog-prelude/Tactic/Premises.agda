@@ -1,21 +1,12 @@
 {-# OPTIONS --safe #-}
 -- {-# OPTIONS -v tactic.premises:100 #-}
-module Tactic.Premises where
+module iog-prelude.Tactic.Premises where
 
-open import Prelude.Init
+open import iog-prelude.Prelude.Init
   hiding (Type; pred)
   renaming (_∈_ to _∈ˡ_)
-open import Prelude.InferenceRules
-  hiding (_∙_)
-  renaming (_────────────────────────────────_ to infix -500 _────────────────────────────────_
-           ;_───────────────────────────────────────_ to infix -500 _───────────────────────────────────────_
-           ;────────────────────────────────_ to infix -501 ────────────────────────────────_ 
-           ;───────────────────────────────────────_ to infix -501 ───────────────────────────────────────_)
 
-infixr -100 _∙_
-_∙_ : Set → Set → Set
-A ∙ B = A × B
-
+open import iog-prelude.Prelude.InferenceRules
 open import Class.Show
 open import Class.Foldable
 open import Class.Decidable
@@ -48,10 +39,7 @@ instance
 open import Meta.Prelude
 
 open Debug ("tactic.premises", 100)
-open import Reflection.Ext
-
-∃⁇ : ∀ {ℓ} → Set (sucˡ ℓ)
-∃⁇ {ℓ} = Σ (Set ℓ) _⁇
+open import stdlib-meta.Reflection
 
 {-
 ** Extracting the hypotheses of an STS rule.

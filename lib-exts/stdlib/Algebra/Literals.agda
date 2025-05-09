@@ -1,6 +1,6 @@
 {-# OPTIONS --without-K --safe #-}
 
-module Algebra.Literals where
+module stdlib.Algebra.Literals where
 
 open import Algebra
 

@@ -1,5 +1,5 @@
 {-# OPTIONS --safe --cubical-compatible #-}
-module Data.List.Subpermutations where
+module stdlib.Data.List.Subpermutations where
 
 open import Agda.Primitive using () renaming (Set to Type)
 

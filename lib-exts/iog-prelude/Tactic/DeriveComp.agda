@@ -1,6 +1,6 @@
 {-# OPTIONS -v allTactics:100 #-}
 {-# OPTIONS --safe #-}
-module Tactic.DeriveComp where
+module iog-prelude.Tactic.DeriveComp where
 
 open import Prelude.Init hiding (Type; mapMaybe)
 open import Data.Bool using (true; false)
@@ -18,7 +18,7 @@ open import Function using (mk⇔)
 open import Meta.Init
 open import Meta.Prelude using (zipWithIndex)
 open import Reflection.AST.DeBruijn using (weaken)
-open import Reflection.Ext using (extendContextTel′)
+open import stdlib-meta.Reflection using (extendContextTel′)
 open import Reflection.Utils hiding (mkRecord)
 open import Reflection.Utils.TCI
 open import Reflection.Tactic

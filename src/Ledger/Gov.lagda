@@ -37,8 +37,8 @@ open import Ledger.Enact govStructure
 open import Ledger.Ratify txs hiding (vote)
 open import Ledger.Certs govStructure
 
-open import Data.List.Subpermutations using (subpermutations; sublists)
-open import Data.List.Subpermutations.Properties
+open import stdlib.Data.List.Subpermutations using (subpermutations; sublists)
+open import stdlib.Data.List.Subpermutations.Properties
 open import Data.List.Membership.Propositional.Properties using (Any↔; ∈-filter⁻; ∈-filter⁺)
 open import Data.List.Relation.Binary.Subset.Propositional using () renaming (_⊆_ to _⊆ˡ_)
 open import Data.List.Relation.Unary.All using (all?; All)

@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
-module Class.HasCast where
+module stdlib-classes.Class.HasCast where
 
-open import Class.HasCast.Base public
-open import Class.HasCast.Instances public
-open import Class.HasCast.Derive public
+open import stdlib-classes.Class.HasCast.Base public
+open import stdlib-classes.Class.HasCast.Instances public
+open import stdlib-classes.Class.HasCast.Derive public

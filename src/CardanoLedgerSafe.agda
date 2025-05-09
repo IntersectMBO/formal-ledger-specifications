@@ -86,4 +86,4 @@ import Ledger.Conway.Conformance.PPUp
 import Ledger.Conway.Conformance.PPUp.Properties
 
 -- ** Not currently used
-import Tactic.DeriveComp
+import iog-prelude.Tactic.DeriveComp

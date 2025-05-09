@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-module Tactic.MonoidSolver.NonNormalising where
+module stdlib-meta.Tactic.MonoidSolver.NonNormalising where
 
 open import Data.List    using ([]; _∷_)
 open import Data.Product using (_,_)

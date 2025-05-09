@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Data.List.Relation.Unary.MOf where
+module stdlib.Data.List.Relation.Unary.MOf where
 
 open import Level using (Level; _⊔_) renaming (suc to lsuc)
 open import Function using (_$_; case_of_)

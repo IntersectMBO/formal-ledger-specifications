@@ -12,12 +12,15 @@
 module Ledger.Prelude where
 
 open import Prelude public
+  hiding (∃⁇)
+open import iog-prelude.Prelude.Init public
+  using (∃⁇)
 
 open import Ledger.Prelude.Base public
 import Data.List
 
 open import Class.HasAdd public
-open import Class.HasCast public
+open import stdlib-classes.Class.HasCast public
 open import Class.HasOrder public
 open import Class.ToBool public
 open import Interface.ComputationalRelation public
@@ -28,8 +31,7 @@ open import Interface.HasSubset.Instance public
 open import Interface.Hashable public
 open import Ledger.Interface.HasCoin public
 open import MyDebugOptions public
-open import Tactic.Premises public
-  hiding (_∙_; ∃⁇)
+open import iog-prelude.Tactic.Premises public
 
 open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)

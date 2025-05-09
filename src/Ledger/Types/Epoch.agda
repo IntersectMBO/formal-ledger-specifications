@@ -8,6 +8,8 @@ open import Agda.Builtin.FromNat
 open import Algebra using (Semiring)
 open import Relation.Binary
 open import Data.Nat.Properties using (+-*-semiring)
+open import Data.Rational using (ℚ)
+import      Data.Rational as ℚ
 
 additionVia : ∀{A : Set} → (A → A) → ℕ → A → A
 additionVia sucFun zero r = r
@@ -71,7 +73,8 @@ record EpochStructure : Type₁ where
 
 record GlobalConstants : Type₁ where
   field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network; ⦃ Show-Network ⦄ : Show Network
-         SlotsPerEpochᶜ : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
+         SlotsPerEpochᶜ   : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
+         ActiveSlotCoeff  : ℚ; ⦃ NonZero-ActiveSlotCoeff ⦄ : ℚ.NonZero ActiveSlotCoeff
          StabilityWindowᶜ : ℕ
          Quorum : ℕ
          NetworkId : Network

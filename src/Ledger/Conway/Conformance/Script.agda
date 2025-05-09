@@ -6,7 +6,7 @@ open import Data.List.Relation.Unary.All using (All; []; _∷_; all?; uncons)
 open import Data.List.Relation.Unary.Any
 open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 
-open import Data.List.Relation.Unary.MOf
+open import stdlib.Data.List.Relation.Unary.MOf
 
 open import Tactic.Derive.DecEq
 open import Tactic.Inline

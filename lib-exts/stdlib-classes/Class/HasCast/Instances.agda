@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
-module Class.HasCast.Instances where
+module stdlib-classes.Class.HasCast.Instances where
 
-open import Class.HasCast.Base
+open import stdlib-classes.Class.HasCast.Base
 
 open import abstract-set-theory.FiniteSetTheory
 open import Data.Product using (proj₁)

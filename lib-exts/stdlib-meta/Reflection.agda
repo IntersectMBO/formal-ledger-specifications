@@ -1,5 +1,5 @@
 {-# OPTIONS --safe --without-K #-}
-module Reflection.Ext where
+module stdlib-meta.Reflection where
 
 open import Data.Bool using (if_then_else_)
 open import Data.Nat using (_≤ᵇ_)

@@ -1,6 +1,6 @@
 {-# OPTIONS --safe --without-K #-}
 
-module Data.List.Subpermutations.Properties where
+module stdlib.Data.List.Subpermutations.Properties where
 
 open import Function using (_∘_; Equivalence; _⇔_; mk⇔; case_of_; _∋_)
 open import Data.Empty using (⊥-elim)
@@ -18,7 +18,7 @@ open import Data.List.Relation.Unary.All using (all?; All; lookup) renaming (tai
 open import Data.List.Relation.Unary.Any using (Any; here; there)
 open import Data.List.Relation.Unary.Unique.Propositional using (Unique)
 open import Data.List.Relation.Unary.Unique.Propositional.Properties using (drop⁺)
-open import Data.List.Subpermutations using (insert; subpermutations; sublists)
+open import stdlib.Data.List.Subpermutations using (insert; subpermutations; sublists)
 open import Data.Nat using (ℕ; _⊔_; _≤_; z≤n)
 open import Data.Nat.Properties using (_≤?_; ⊔-identityʳ; ≤-reflexive; ≤-trans; m≤n⊔m; m≤m⊔n; _≟_)
 open import Data.Product using (_×_; _,_; proj₁; proj₂; ∃-syntax)
