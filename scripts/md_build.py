@@ -154,47 +154,86 @@ def run_command(command_args, cwd=None, capture_output=False, text=True, check=T
 
 def build_nested_nav(file_paths, mkdocs_docs_dir_path):
     nav_tree = {}
-    processed_paths = set() # To handle potential duplicates if any
+    processed_paths = set()
 
-    # Ensure "index.md" is handled if it exists, making it "Home"
-    # The script already attempts to copy an index.md.
-    # We'll ensure it's the first item in the nav if present.
     home_item = None
-    if (mkdocs_docs_dir_path / "index.md").exists():
-        home_item = {'Home': 'index.md'}
-        processed_paths.add('index.md')
+    # Ensure index.md is handled as 'Home' and is first
+    # Check if index.md is in the list of files to be added to nav or exists in docs dir
+    # Convert mkdocs_docs_dir_path to Path if it's a string
+    mkdocs_docs_dir = Path(mkdocs_docs_dir_path)
+    potential_index_path_str = "index.md" # Relative path string
 
-    # Sort paths for consistent nav order, excluding index.md if already handled
-    sorted_file_paths = sorted(p for p in file_paths if p != 'index.md')
+    if potential_index_path_str in file_paths or (mkdocs_docs_dir / potential_index_path_str).exists():
+        home_item = {'Home': potential_index_path_str}
+        processed_paths.add(potential_index_path_str)
+
+    sorted_file_paths = sorted(p for p in file_paths if p not in processed_paths)
 
     for file_path_str in sorted_file_paths:
-        if file_path_str in processed_paths:
+        if file_path_str in processed_paths: # Should ideally not happen with unique file_paths
             continue
         processed_paths.add(file_path_str)
 
         path_obj = Path(file_path_str)
-        parts = list(path_obj.parent.parts)  # e.g., ["Ledger", "Certs", "Properties"]
-        filename_stem = path_obj.stem        # e.g., "PoV"
+        parts = list(path_obj.parent.parts)  # Directory components, e.g., ["Ledger", "Certs"]
+        filename_stem = path_obj.stem        # File name without suffix, e.g., "PoV"
 
-        current_level = nav_tree
+        current_level_dict = nav_tree  # Start at the root of the nav structure
+
+        # Traverse/create directory levels
         for part_name in parts:
-            # Use original part name for keys to maintain case, then format for title
             title_part = part_name.replace('_', ' ').replace('-', ' ').capitalize()
-            if title_part not in current_level:
-                current_level[title_part] = {}
-            current_level = current_level[title_part]
 
+            # Get the next level in the nav structure
+            next_level_node = current_level_dict.get(title_part)
+
+            if isinstance(next_level_node, dict):
+                # Already a dictionary (a section), so just move into it
+                current_level_dict = next_level_node
+            elif next_level_node is None:
+                # This part of the path doesn't exist yet, create it as a new section (dictionary)
+                current_level_dict[title_part] = {}
+                current_level_dict = current_level_dict[title_part]
+            else:
+                # Conflict: This part_name was previously a file link (string), now needs to be a section.
+                # Promote it to a section. The original file link might be overshadowed.
+                logging.warning(
+                    f"Navigation structure conflict: Promoting entry '{title_part}' "
+                    f"(which was a file: '{next_level_node}') to a directory section "
+                    f"to accommodate nested path: '{file_path_str}'. The original file link for '{title_part}' will be lost "
+                    "from the nav unless it was intended as an index page for this new section."
+                )
+                current_level_dict[title_part] = {} # Overwrite with a new dictionary
+                current_level_dict = current_level_dict[title_part]
+
+        # Now, current_level_dict is the dictionary representing the file's immediate parent directory.
+        # Add the file itself to this level.
         file_title = filename_stem.replace('_', ' ').replace('-', ' ').capitalize()
-        current_level[file_title] = file_path_str
 
-    # Convert the dict tree to MkDocs nav list format
-    def format_nav_level(level_dict_items):
+        if file_title in current_level_dict and isinstance(current_level_dict[file_title], dict):
+            # Conflict: A directory/section already exists with the same name as this file.
+            # This could happen if you have `Ledger/Transaction.md` and also `Ledger/Transaction/SubAction.md`.
+            # "Transaction" would be a section. How to represent `Ledger/Transaction.md` itself?
+            # MkDocs often uses `Ledger/Transaction/index.md` for the section's main page.
+            logging.warning(
+                f"Navigation conflict: Cannot add file '{file_title}' from path '{file_path_str}'. "
+                f"A directory/section with the same title '{file_title}' already exists at this level. "
+                "Consider naming the file 'index.md' if it's meant to be the overview page for this section, "
+                "or place its content into the directory's index.md."
+            )
+            # Option: Store it under a special key, e.g., current_level_dict[file_title]["_self_"] = file_path_str
+            # For now, we'll skip adding this conflicting file entry to avoid overwriting the section.
+        else:
+            current_level_dict[file_title] = file_path_str
+
+    # Convert the dict tree to MkDocs nav list format (recursive helper)
+    def format_nav_level_to_list(level_dict_items):
         nav_list_segment = []
         # Sort items by title for consistent order
         for title, content in sorted(level_dict_items, key=lambda item: item[0]):
-            if isinstance(content, dict):
-                nav_list_segment.append({title: format_nav_level(list(content.items()))})
-            else:
+            if isinstance(content, dict): # It's a subsection
+                nav_list_segment.append({title: format_nav_level_to_list(list(content.items()))})
+            else: # It's a file path (string)
                 nav_list_segment.append({title: content})
         return nav_list_segment
 
@@ -202,8 +241,9 @@ def build_nested_nav(file_paths, mkdocs_docs_dir_path):
     if home_item:
         final_nav_list.append(home_item)
 
-    final_nav_list.extend(format_nav_level(list(nav_tree.items())))
+    final_nav_list.extend(format_nav_level_to_list(list(nav_tree.items())))
     return final_nav_list
+
 
 
 # --- Main Build Logic ---
