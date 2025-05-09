@@ -27,7 +27,6 @@ import qualified MAlonzo.Code.Class.CommutativeMonoid.Instances
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
-import qualified MAlonzo.Code.Class.HasCast.Base
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
@@ -39,6 +38,7 @@ import qualified MAlonzo.Code.Ledger.Interface.HasCoin
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 -- Ledger.Prelude.dec-de-morgan
 d_dec'45'de'45'morgan_8 ::
@@ -198,22 +198,30 @@ d__'247''8320'__80 v0 v1
 d_'10214'_'10215'_98 ::
   () ->
   () ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14 -> AgdaAny -> AgdaAny
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16 ->
+  AgdaAny -> AgdaAny
 d_'10214'_'10215'_98 ~v0 ~v1 v2 = du_'10214'_'10215'_98 v2
 du_'10214'_'10215'_98 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14 -> AgdaAny -> AgdaAny
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16 ->
+  AgdaAny -> AgdaAny
 du_'10214'_'10215'_98 v0
-  = coe MAlonzo.Code.Class.HasCast.Base.d_cast_26 (coe v0)
+  = coe
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.d_cast_28
+      (coe v0)
 -- Ledger.Prelude.∣_∣
 d_'8739'_'8739'_116 ::
   () ->
   () ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14 -> AgdaAny -> AgdaAny
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16 ->
+  AgdaAny -> AgdaAny
 d_'8739'_'8739'_116 ~v0 ~v1 v2 = du_'8739'_'8739'_116 v2
 du_'8739'_'8739'_116 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14 -> AgdaAny -> AgdaAny
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16 ->
+  AgdaAny -> AgdaAny
 du_'8739'_'8739'_116 v0
-  = coe MAlonzo.Code.Class.HasCast.Base.d_cast_26 (coe v0)
+  = coe
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.d_cast_28
+      (coe v0)
 -- Ledger.Prelude.Filter.filter
 d_filter_138 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

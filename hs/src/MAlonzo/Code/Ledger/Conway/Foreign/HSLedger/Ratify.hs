@@ -25,7 +25,6 @@ import qualified MAlonzo.Code.Agda.Builtin.String
 import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Class.DecEq.Instances
-import qualified MAlonzo.Code.Class.HasCast.Base
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
@@ -63,6 +62,7 @@ import qualified MAlonzo.Code.Ledger.Transaction
 import qualified MAlonzo.Code.Ledger.Types.Epoch
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 import GHC.Generics (Generic)
 data StakeDistrs = StakeDistrs {stakeDistr :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.VDeleg Integer)}
@@ -85,7 +85,7 @@ d_EnactStateOf_32 v0
   = coe MAlonzo.Code.Ledger.Enact.d_EnactStateOf_952 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.HasCast-EnactEnv
 d_HasCast'45'EnactEnv_34 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'EnactEnv_34
   = coe MAlonzo.Code.Ledger.Enact.du_HasCast'45'EnactEnv_962
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.HasEnactState
@@ -183,7 +183,7 @@ d_CCData_96 :: ()
 d_CCData_96 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.HasCast-RatifyState
 d_HasCast'45'RatifyState_98 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'RatifyState_98
   = coe MAlonzo.Code.Ledger.Ratify.du_HasCast'45'RatifyState_2330
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.HasEnactState-RatifyState
@@ -506,7 +506,7 @@ d_RATIFIES'45'complete_218 ::
   MAlonzo.Code.Ledger.Ratify.T_RatifyState_2278 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Ledger.Ratify.T_RatifyState_2278 ->
-  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__68 ->
+  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__38 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_RATIFIES'45'complete_218 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.RATIFIES-complete'
@@ -515,7 +515,7 @@ d_RATIFIES'45'complete''_220 ::
   MAlonzo.Code.Ledger.Ratify.T_RatifyState_2278 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Ledger.Ratify.T_RatifyState_2278 ->
-  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__68 ->
+  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__38 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_RATIFIES'45'complete''_220 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.RATIFIES-total

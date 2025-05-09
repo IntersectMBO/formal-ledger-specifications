@@ -26,7 +26,6 @@ import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.HasAdd.Core
-import qualified MAlonzo.Code.Class.HasCast.Base
 import qualified MAlonzo.Code.Class.HasOrder.Core
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Class.Show.Instances
@@ -45,6 +44,7 @@ import qualified MAlonzo.Code.Ledger.PParams
 import qualified MAlonzo.Code.Ledger.Script
 import qualified MAlonzo.Code.Ledger.Types.Epoch
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 -- Ledger.Types.GovStructure.GovStructure
 d_GovStructure_6 = ()
@@ -731,10 +731,11 @@ d_DrepThresholds_768 a0 = ()
 d_GovParams_772 a0 = ()
 -- Ledger.Types.GovStructure.GovStructure._.HasCast-Acnt
 d_HasCast'45'Acnt_776 ::
-  T_GovStructure_6 -> MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  T_GovStructure_6 ->
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'Acnt_776 ~v0 = du_HasCast'45'Acnt_776
 du_HasCast'45'Acnt_776 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'Acnt_776
   = coe MAlonzo.Code.Ledger.PParams.du_HasCast'45'Acnt_184
 -- Ledger.Types.GovStructure.GovStructure._.HasPParams

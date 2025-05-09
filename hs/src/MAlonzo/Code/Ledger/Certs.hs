@@ -29,8 +29,6 @@ import qualified MAlonzo.Code.Class.CommutativeMonoid.Core
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.HasAdd.Core
-import qualified MAlonzo.Code.Class.HasCast.Base
-import qualified MAlonzo.Code.Class.HasCast.Derive
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
@@ -52,6 +50,8 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.DecEq
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
 
 -- _.Credential
 d_Credential_28 a0 a1 a2 a3 = ()
@@ -1123,13 +1123,13 @@ d_HasCoin'45'CertState_1260 v0
 -- Ledger.Certs.HasCast-CertEnv
 d_HasCast'45'CertEnv_1262 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'CertEnv_1262 ~v0 = du_HasCast'45'CertEnv_1262
 du_HasCast'45'CertEnv_1262 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'CertEnv_1262
   = coe
-      MAlonzo.Code.Class.HasCast.Base.C_HasCast'46'constructor_29
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
       (coe
          MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
          (coe
@@ -1137,7 +1137,7 @@ du_HasCast'45'CertEnv_1262
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
-                  MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                   (coe
                      MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                      (coe
@@ -1170,7 +1170,7 @@ du_HasCast'45'CertEnv_1262
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
-                     MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                      (coe
                         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                         (coe
@@ -1205,7 +1205,7 @@ du_HasCast'45'CertEnv_1262
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
-                        MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                        MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                         (coe
                            MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                            (coe
@@ -1285,7 +1285,7 @@ du_HasCast'45'CertEnv_1262
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                         (coe
-                           MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                           MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                            (coe
                               MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                               (coe
@@ -1632,7 +1632,7 @@ du_HasCast'45'CertEnv_1262
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                            (coe
-                              MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                              MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                               (coe
                                  MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                                  (coe
@@ -1961,13 +1961,13 @@ du_HasCast'45'CertEnv_1262
 -- Ledger.Certs.HasCast-DState
 d_HasCast'45'DState_1264 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'DState_1264 ~v0 = du_HasCast'45'DState_1264
 du_HasCast'45'DState_1264 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'DState_1264
   = coe
-      MAlonzo.Code.Class.HasCast.Base.C_HasCast'46'constructor_29
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
       (coe
          MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
          (coe
@@ -1975,7 +1975,7 @@ du_HasCast'45'DState_1264
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
-                  MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                   (coe
                      MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                      (coe
@@ -2306,7 +2306,7 @@ du_HasCast'45'DState_1264
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
-                     MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                      (coe
                         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                         (coe
@@ -2646,7 +2646,7 @@ du_HasCast'45'DState_1264
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
-                        MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                        MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                         (coe
                            MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                            (coe
@@ -2990,13 +2990,13 @@ du_HasCast'45'DState_1264
 -- Ledger.Certs.HasCast-PState
 d_HasCast'45'PState_1266 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'PState_1266 ~v0 = du_HasCast'45'PState_1266
 du_HasCast'45'PState_1266 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'PState_1266
   = coe
-      MAlonzo.Code.Class.HasCast.Base.C_HasCast'46'constructor_29
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
       (coe
          MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
          (coe
@@ -3004,7 +3004,7 @@ du_HasCast'45'PState_1266
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
-                  MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                   (coe
                      MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                      (coe
@@ -3081,7 +3081,7 @@ du_HasCast'45'PState_1266
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
-                     MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                      (coe
                         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                         (coe
@@ -3163,13 +3163,13 @@ du_HasCast'45'PState_1266
 -- Ledger.Certs.HasCast-GState
 d_HasCast'45'GState_1268 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'GState_1268 ~v0 = du_HasCast'45'GState_1268
 du_HasCast'45'GState_1268 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GState_1268
   = coe
-      MAlonzo.Code.Class.HasCast.Base.C_HasCast'46'constructor_29
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
       (coe
          MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
          (coe
@@ -3177,7 +3177,7 @@ du_HasCast'45'GState_1268
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
-                  MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                   (coe
                      MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                      (coe
@@ -3211,7 +3211,7 @@ du_HasCast'45'GState_1268
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
-                     MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                      (coe
                         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                         (coe
@@ -3874,13 +3874,13 @@ du_HasCast'45'GState_1268
 -- Ledger.Certs.HasCast-CertState
 d_HasCast'45'CertState_1270 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'CertState_1270 ~v0 = du_HasCast'45'CertState_1270
 du_HasCast'45'CertState_1270 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'CertState_1270
   = coe
-      MAlonzo.Code.Class.HasCast.Base.C_HasCast'46'constructor_29
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
       (coe
          MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
          (coe
@@ -3888,7 +3888,7 @@ du_HasCast'45'CertState_1270
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
-                  MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                   (coe
                      MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                      (coe
@@ -3922,7 +3922,7 @@ du_HasCast'45'CertState_1270
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
-                     MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                      (coe
                         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                         (coe
@@ -3958,7 +3958,7 @@ du_HasCast'45'CertState_1270
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
-                        MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                        MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                         (coe
                            MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                            (coe
@@ -3996,13 +3996,13 @@ du_HasCast'45'CertState_1270
 -- Ledger.Certs.HasCast-DelegEnv
 d_HasCast'45'DelegEnv_1272 ::
   MAlonzo.Code.Ledger.Types.GovStructure.T_GovStructure_6 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'DelegEnv_1272 ~v0 = du_HasCast'45'DelegEnv_1272
 du_HasCast'45'DelegEnv_1272 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'DelegEnv_1272
   = coe
-      MAlonzo.Code.Class.HasCast.Base.C_HasCast'46'constructor_29
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
       (coe
          MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
          (coe
@@ -4010,7 +4010,7 @@ du_HasCast'45'DelegEnv_1272
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
-                  MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                   (coe
                      MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                      (coe
@@ -4043,7 +4043,7 @@ du_HasCast'45'DelegEnv_1272
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
-                     MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                      (coe
                         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                         (coe
@@ -4123,7 +4123,7 @@ du_HasCast'45'DelegEnv_1272
                   (coe
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
-                        MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                        MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                         (coe
                            MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                            (coe

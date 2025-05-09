@@ -21,7 +21,6 @@ import qualified MAlonzo.Code.Agda.Builtin.Maybe
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.String
 import qualified MAlonzo.Code.Agda.Primitive
-import qualified MAlonzo.Code.Class.HasCast.Base
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Product.Base
@@ -47,6 +46,7 @@ import qualified MAlonzo.Code.Ledger.GovernanceActions.Properties
 import qualified MAlonzo.Code.Ledger.PParams
 import qualified MAlonzo.Code.Ledger.Transaction
 import qualified MAlonzo.Code.Ledger.Types.Epoch
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 import GHC.Generics (Generic)
 data EnactState = MkEnactState {esCc :: ((Maybe ((MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential Integer), MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.Rational)), (Integer, Integer)), esConstitution :: ((Integer, (Maybe Integer)), (Integer, Integer)), esPv :: ((Integer, Integer), (Integer, Integer)), esPparams :: (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.PParams, (Integer, Integer)), esWithdrawals :: (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr Integer)}
@@ -67,7 +67,7 @@ d_EnactStateOf_32 v0
   = coe MAlonzo.Code.Ledger.Enact.d_EnactStateOf_952 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Enact._.HasCast-EnactEnv
 d_HasCast'45'EnactEnv_34 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'EnactEnv_34
   = coe MAlonzo.Code.Ledger.Enact.du_HasCast'45'EnactEnv_962
 -- Ledger.Conway.Foreign.HSLedger.Enact._.HasEnactState

@@ -30,8 +30,6 @@ import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Class.Decidable.Core
 import qualified MAlonzo.Code.Class.Decidable.Instances
-import qualified MAlonzo.Code.Class.HasCast.Base
-import qualified MAlonzo.Code.Class.HasCast.Derive
 import qualified MAlonzo.Code.Class.HasEmptySet
 import qualified MAlonzo.Code.Class.HasSingleton
 import qualified MAlonzo.Code.Class.Show.Core
@@ -65,6 +63,8 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.DecEq
 import qualified MAlonzo.Code.Tactic.Derive.Show
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
 
 -- Ledger.PParams.Acnt
 d_Acnt_144 a0 a1 a2 = ()
@@ -122,13 +122,13 @@ d_HasCast'45'Acnt_184 ::
   MAlonzo.Code.Ledger.Crypto.T_Crypto_134 ->
   MAlonzo.Code.Ledger.Types.Epoch.T_EpochStructure_20 ->
   MAlonzo.Code.Ledger.Script.T_ScriptStructure_400 ->
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'Acnt_184 ~v0 ~v1 ~v2 = du_HasCast'45'Acnt_184
 du_HasCast'45'Acnt_184 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'Acnt_184
   = coe
-      MAlonzo.Code.Class.HasCast.Base.C_HasCast'46'constructor_29
+      MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
       (coe
          MAlonzo.Code.Data.Product.Nary.NonDependent.du_uncurry'8345'_150
          (coe
@@ -136,7 +136,7 @@ du_HasCast'45'Acnt_184
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
-                  MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                   (coe
                      MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                      (coe
@@ -170,7 +170,7 @@ du_HasCast'45'Acnt_184
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
-                     MAlonzo.Code.Class.HasCast.Derive.d_getCodPi_6
+                     MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive.d_getCodPi_8
                      (coe
                         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202
                         (coe

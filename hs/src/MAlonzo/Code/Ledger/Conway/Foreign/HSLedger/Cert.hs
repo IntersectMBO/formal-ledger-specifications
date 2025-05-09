@@ -25,7 +25,6 @@ import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Axiom.Set.Map
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
-import qualified MAlonzo.Code.Class.HasCast.Base
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Refinement.Base
@@ -51,6 +50,7 @@ import qualified MAlonzo.Code.Ledger.PParams
 import qualified MAlonzo.Code.Ledger.Transaction
 import qualified MAlonzo.Code.Ledger.Types.GovStructure
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
+import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 
 import GHC.Generics (Generic)
 data CertState = MkCertState {dState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.DState, pState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.PState, gState :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.GState}
@@ -178,35 +178,35 @@ d_GovCertEnv_106 :: ()
 d_GovCertEnv_106 = erased
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasCast-CertEnv
 d_HasCast'45'CertEnv_108 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'CertEnv_108
   = coe MAlonzo.Code.Ledger.Certs.du_HasCast'45'CertEnv_1262
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasCast-CertState
 d_HasCast'45'CertState_110 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'CertState_110
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'CertState_1292
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasCast-DState
 d_HasCast'45'DState_112 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'DState_112
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'DState_1288
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasCast-DelegEnv
 d_HasCast'45'DelegEnv_114 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'DelegEnv_114
   = coe MAlonzo.Code.Ledger.Certs.du_HasCast'45'DelegEnv_1272
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasCast-GState
 d_HasCast'45'GState_116 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'GState_116
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.du_HasCast'45'GState_1290
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasCast-PState
 d_HasCast'45'PState_118 ::
-  MAlonzo.Code.Class.HasCast.Base.T_HasCast_14
+  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'PState_118
   = coe MAlonzo.Code.Ledger.Certs.du_HasCast'45'PState_1266
 -- Ledger.Conway.Foreign.HSLedger.Cert._.HasCertState
