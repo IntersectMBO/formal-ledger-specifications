@@ -31,6 +31,7 @@ open import Interface.HasSubset.Instance public
 open import Interface.Hashable public
 open import Ledger.Interface.HasCoin public
 open import Tactic.Defaults public
+open import MyDebugOptions public
 open import iog-prelude.Tactic.Premises public
 
 open import abstract-set-theory.FiniteSetTheory public

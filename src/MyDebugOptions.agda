@@ -8,5 +8,3 @@ instance
   defaultDebugOptionsI = record defaultDebugOptions
     { selection = All
     ; filter = Filter.⊥ }
-
-open import Tactic.Defaults public
