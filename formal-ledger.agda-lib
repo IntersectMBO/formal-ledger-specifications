@@ -4,4 +4,7 @@ depend:
   standard-library-classes
   standard-library-meta
   abstract-set-theory
-include: src
+  iog-prelude
+include:
+  src
+  lib-exts

@@ -25,7 +25,7 @@ open import Data.Maybe.Properties
 open import Relation.Binary using (IsEquivalence)
 
 open import Tactic.Defaults
-open import Tactic.GenError
+open import stdlib-meta.Tactic.GenError
 
 open Equivalence
 open GovActionState

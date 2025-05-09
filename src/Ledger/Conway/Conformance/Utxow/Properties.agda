@@ -16,7 +16,7 @@ open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxo.Properties txs abs
 
-open import Tactic.GenError using (genErrors)
+open import stdlib-meta.Tactic.GenError using (genErrors)
 
 instance
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String

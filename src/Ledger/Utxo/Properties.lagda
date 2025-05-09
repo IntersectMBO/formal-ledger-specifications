@@ -22,8 +22,8 @@ open import Prelude; open Equivalence
 open import Tactic.Cong                 using (cong!)
 open import Tactic.Defaults
 open import Tactic.EquationalReasoning  using (module ≡-Reasoning)
-open import Tactic.GenError
-open import Tactic.MonoidSolver.NonNormalising using (solve-macro)
+open import stdlib-meta.Tactic.GenError
+open import stdlib-meta.Tactic.MonoidSolver.NonNormalising using (solve-macro)
 
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
 open import Ledger.Abstract

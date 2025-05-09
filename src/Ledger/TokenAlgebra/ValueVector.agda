@@ -4,13 +4,13 @@ open import Ledger.Prelude hiding (_∙_; ε)
 module Ledger.TokenAlgebra.ValueVector (PolicyId : Type) (n : ℕ) where
 
 import Algebra as Alg
-open import Algebra.Morphism.Construct.DirectProduct.Ext
+open import stdlib.Algebra.Morphism.Construct.DirectProduct
 open import Algebra.Construct.DirectProduct
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 import Data.Product.Relation.Binary.Pointwise.NonDependent as Product
 open import Data.Vec as Vec
   hiding (fromList)
-import Data.Vec.Instances.Ext as Vec
+import stdlib.Data.Vec.Instances as Vec
 import Data.Vec.Relation.Binary.Pointwise.Inductive as Vec
 
 open import Ledger.TokenAlgebra PolicyId

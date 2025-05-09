@@ -4,7 +4,7 @@
 {-# OPTIONS --safe #-}
 
 open import Agda.Builtin.FromNat
-open import Algebra; open import Algebra.Literals
+open import Algebra; open import stdlib.Algebra.Literals
 import Data.Product.Properties as ×
 import Data.Nat as ℕ; import Data.Nat.Properties as ℕ
 

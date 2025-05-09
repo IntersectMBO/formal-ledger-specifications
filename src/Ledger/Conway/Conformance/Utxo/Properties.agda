@@ -16,7 +16,7 @@ open import Ledger.ScriptValidation txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Prelude
-open import Tactic.GenError
+open import stdlib-meta.Tactic.GenError
 
 private
   module L where

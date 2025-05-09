@@ -25,7 +25,7 @@ open import Axiom.Set.Properties th
 
 open import Data.List.Base using (filter)
 open import Data.List.Membership.Propositional.Properties using (∈-filter⁺; map-∈↔)
-open import Data.List.Subpermutations using (∈ˡ-map-filter)
+open import stdlib.Data.List.Subpermutations using (∈ˡ-map-filter)
 open import Data.Product.Function.NonDependent.Propositional using (_×-cong_)
 open import Data.Product.Properties using (×-≡,≡←≡)
 open import Data.Product.Properties.Ext using (×-⇔-swap)
