@@ -15,18 +15,40 @@ theme:
     - navigation.tabs
     - navigation.sections
     - toc.integrate # Integrate table of contents into left sidebar
-  palette: # Optional: color scheme
-    primary: indigo
-    accent: indigo
+    - content.tooltips
+    - navigation.footer
+  # palette: # Optional: color scheme
+  #   primary: indigo
+  #   accent: indigo
+
+  palette:
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: black
+      accent: red
+
+    # Light Mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: blue
+      accent: deep orange
+
   # Font configuration (optional)
-  # font:
+  font:
+    text: Cambria
+    code: Source Code Pro
   #   text: Roboto
   #   code: Roboto Mono # Or perhaps StrippedJuliaMono if available via CSS?
+
 
 # Navigation structure
 nav:
   - Home: index.md
-  - Transaction: Transaction.md
 
 # Markdown extensions
 markdown_extensions:
@@ -41,9 +63,9 @@ markdown_extensions:
   - attr_list                 # inline attributes like `code`{.class}
   - pymdownx.tabbed:
       alternate_style: true
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  # - pymdownx.emoji:
+  #     emoji_index: !!python/name:material.extensions.emoji.twemoji
+  #     emoji_generator: !!python/name:material.extensions.emoji.to_svg
 
   # - pymdownx.highlight:       # Alternative/additional highlighting options
   #     use_pygments: true

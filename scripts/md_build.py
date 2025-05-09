@@ -70,31 +70,36 @@ MKDOCS_YML_TEMPLATE = DOCS_TEMPLATE_DIR / "mkdocs_template.yml" # Optional templ
 # --- Logging Setup ---
 LOG_FILE = BUILD_DOCS_DIR / "build.log"
 
+# *** REVISED Logging Setup ***
 def setup_logging():
-    """Configures logging to file (DEBUG) and console (INFO)."""
-    BUILD_DOCS_DIR.mkdir(parents=True, exist_ok=True) # Ensure log dir exists
-    # Configure root logger
+    """Configures logging to file (DEBUG) and console (INFO) without basicConfig."""
+    BUILD_DOCS_DIR.mkdir(parents=True, exist_ok=True)
     log_formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    root_logger = logging.getLogger()
-    # Prevent adding handlers multiple times if function called again
-    if root_logger.hasHandlers():
-        # This might be too aggressive if other modules also configure root logger
-        # A better approach might be to get a specific logger: logger = logging.getLogger("md_build")
-        root_logger.handlers.clear()
 
-    root_logger.setLevel(logging.DEBUG) # Capture all levels
+    # Get root logger
+    logger = logging.getLogger()
+    logger.setLevel(logging.DEBUG) # Set lowest level for logger itself
 
-    # File handler
-    file_handler = logging.FileHandler(LOG_FILE, mode='w', encoding='utf-8')
-    file_handler.setFormatter(log_formatter)
-    file_handler.setLevel(logging.DEBUG)
-    root_logger.addHandler(file_handler)
+    # Clear existing handlers (important if this function could be called multiple times)
+    if logger.hasHandlers():
+        logger.handlers.clear()
 
-    # Console handler
+    # File handler (DEBUG level)
+    try:
+        file_handler = logging.FileHandler(LOG_FILE, mode='w', encoding='utf-8')
+        file_handler.setFormatter(log_formatter)
+        file_handler.setLevel(logging.DEBUG)
+        logger.addHandler(file_handler)
+    except Exception as e:
+        print(f"Error setting up file logging to {LOG_FILE}: {e}", file=sys.stderr)
+
+
+    # Console handler (INFO level)
     console_handler = logging.StreamHandler(sys.stderr)
     console_handler.setFormatter(log_formatter)
     console_handler.setLevel(logging.INFO) # Only show INFO and above on console
-    root_logger.addHandler(console_handler)
+    logger.addHandler(console_handler)
+
     logging.info("Logging setup complete. Log file: %s", LOG_FILE)
 
 # --- Helper to run commands ---
@@ -411,7 +416,7 @@ depend: {" ".join(agda_lib_dependencies)}
     # Load template if available
     if MKDOCS_YML_TEMPLATE.exists() and HAS_YAML:
         try:
-            with open(MKDOCS_YML_TEMPLATE, 'r', encoding='utf-8') as f: mkdocs_config = yaml.safe_load(f) or {}
+            with open(MKDOCS_YML_TEMPLATE, 'r', encoding='utf-8') as f: mkdocs_config = yaml.full_load(f) or {}
             for key, value in default_cfg.items(): # Merge defaults for missing keys
                  if key == 'extra_css' or key == 'extra_javascript' or key == 'markdown_extensions':
                       # Append defaults if not present in template list

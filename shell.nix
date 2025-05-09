@@ -12,15 +12,39 @@ let
   LOCALE_ARCHIVE =
     pkgs.lib.optionalString pkgs.stdenv.isLinux "${pkgs.glibcLocales}/lib/locale/locale-archive";
 
+  # Python environment with packages needed for markdown migration and mkdocs site build
+  pythonEnv = pkgs.python311.withPackages (ps: [ps.pip
+                                                ps.mkdocs
+                                                ps.mkdocs-material
+                                                ps.pymdown-extensions
+                                                ps.pyyaml # for mkdocs.yml generation
+                                               ]
+  );
+
 in {
   shell = mkShell {
-    nativeBuildInputs = [ specs.fls-shake specs.agdaWithDeps specs.latex python310 hpack pkgs.glibcLocales ];
+    nativeBuildInputs = [
+      specs.fls-shake
+      specs.agdaWithDeps
+      specs.latex
+      python311
+      hpack
+      pkgs.glibcLocales
+    ];
     shellHook = '' export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LOCALE_ARCHIVE=${LOCALE_ARCHIVE}; '';
   };
 
   run = {
     shell = mkShell {
-      nativeBuildInputs = [ specs.fls-shake specs.agdaWithDeps specs.latex python310 hpack pkgs.glibcLocales ];
+      nativeBuildInputs = [
+        specs.fls-shake
+        specs.agdaWithDeps
+        specs.latex
+        python311
+        cabal-install
+        hpack
+        pkgs.glibcLocales
+      ];
       shellHook = '' export LANG=en_US.UTF-8; export LC_ALL=en_US.UTF-8; export LOCALE_ARCHIVE=${LOCALE_ARCHIVE}; '';
     };
   };
@@ -32,14 +56,7 @@ in {
       pkgs.pandoc         # for tex to md conversion
       # (could add pkgs.lua here but Lua is usually bundled with pandoc)
 
-      # Python is needed for the pipeline scripts
-      pkgs.python311
-
-      # mkdocs plus theme and extensions
-      pkgs.mkdocs
-      pkgs.python311Packages.mkdocs-material    # material theme
-      pkgs.python311Packages.pymdown-extensions # tabbed, attr_list, etc.
-      pkgs.python311Packages.pyyaml
+      pythonEnv  # use the combined Python environment defined above for pipeline scripts
 
       # tools for the master build script
       pkgs.findutils      # for 'find' command
