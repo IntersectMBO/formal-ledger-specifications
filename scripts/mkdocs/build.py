@@ -1,17 +1,25 @@
 # build.py
-# Purpose: Prepares source files for MkDocs/Shake build.
-# 1. Generates macro JSON from .sty file.
-# 2. Creates a snapshot of the Agda 'src/' directory.
-# 3. For each .lagda file found in 'src/':
-#    a. Runs preprocess -> pandoc+lua -> postprocess pipeline.
-#    b. Replaces the original .lagda file in the snapshot with the generated .lagda.md.
-# 4. (Optional) Assembles a basic MkDocs site source using the generated .lagda.md
-#    for previewing the Markdown conversion (without final Agda HTML highlighting).
+#
+# Purpose: Prepare source files for MkDocs/Shake build.
+#
+# 1. Generate macro JSON from .sty file.
+# 2. Create snapshot of the Agda 'src/' directory.
+# 3. Convert each `.agda` file to a literate `.lagda.md` file.
+# 4. For each `.lagda` file found in 'src/':
+#    a. Run preprocess -> pandoc+lua -> postprocess pipeline.
+#    b. Replace original `.lagda` file in the snapshot with the generated `.lagda.md`.
+# 5. Assemble a basic mkdocs site.
+# 6. (Optional) If `--run-agda` flag passed, then run `agda --html` on
+#    each `.lagda.md` file to produce `.md` files for mkdocs site.
+#
+# Usage: from the main project directory,
+#        `python ./scripts/mkdocs/build.py [--run-agda]`
+#
 # Output:
-# - _build/preprocess_macros.json
-# - _build/docs/agda_snapshot_src/ (Main output for Shake)
-# - _build/docs/mkdocs_src/ (Optional, for preview)
-# - _build/docs/build.log (Log file)
+# - _build/mkdocs/macros.json
+# - _build/mkdocs/agda_snapshot_src/ (Main output for Shake)
+# - _build/mkdocs/mkdocs_src/
+# - _build/mkdocs/build.log (Log file)
 
 import os
 import sys
@@ -256,10 +264,11 @@ def main(run_agda_html=False): # Add flag argument
     """Orchestrates the documentation build pipeline up to preparing source for Shake/Agda."""
     setup_logging() # Initialize logging
 
-    # 1. Setup Directories
+    # 1. Setup directories.
     logging.info("Setting up build directories...")
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
-    # Create build subdirectories
+
+    # create build subdirectories
     TEMP_DIR.mkdir(parents=True, exist_ok=True)
     CODE_BLOCKS_DIR.mkdir(parents=True, exist_ok=True)
     INTERMEDIATE_MD_DIR.mkdir(parents=True, exist_ok=True)
@@ -268,12 +277,12 @@ def main(run_agda_html=False): # Add flag argument
     if run_agda_html: # Only create Agda HTML output dir if needed
         AGDA_HTML_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Create optional interim MkDocs source structure
+    # Create interim mkdocs source structure
     MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)
     MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)
     MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # 2. Generate preprocess_macros.json
+    # 2. Generate macros.json
     if GENERATE_MACROS_PY.exists() and MACROS_STY_PATH.exists():
         logging.info(f"Generating {MACROS_JSON.name} from {MACROS_STY_PATH.name}...")
         run_command(["python", GENERATE_MACROS_PY, MACROS_STY_PATH, MACROS_JSON])
@@ -283,7 +292,7 @@ def main(run_agda_html=False): # Add flag argument
     else:
         logging.info(f"Using existing {MACROS_JSON.name}")
 
-    # *** 3. Create Agda Source Snapshot (Copy ALL from src/) ***
+    # 3. Create Agda Source Snapshot (copy ALL from src/)
     logging.info(f"Creating Agda source snapshot in {AGDA_SNAPSHOT_SRC_DIR.relative_to(PROJECT_ROOT)}...")
     try:
         shutil.copytree(SRC_DIR, AGDA_SNAPSHOT_SRC_DIR, dirs_exist_ok=True)
@@ -293,8 +302,7 @@ def main(run_agda_html=False): # Add flag argument
         sys.exit(1)
 
 
-    # *** 4. Generate snapshot .agda-lib file ***
-    # TODO: Customize the 'depend:' list based on our actual project dependencies
+    # 4. Generate snapshot .agda-lib file
     # These should match the libraries provided by `specs.deps` in our default.nix
     agda_lib_dependencies = [
         "standard-library",
@@ -314,7 +322,6 @@ depend: {" ".join(agda_lib_dependencies)}
         logging.info(f"Generated {snapshot_lib_file.name} in snapshot directory.")
     except Exception as e:
         logging.error(f"Failed to write {snapshot_lib_file.name}: {e}")
-        # Decide if this is fatal - Agda will likely fail without it
         sys.exit(1)
 
     mkdocs_nav_structure = {} # Collect nav info for interim MkDocs site
@@ -378,7 +385,7 @@ depend: {" ".join(agda_lib_dependencies)}
                 current_intermediate_md, current_code_blocks, current_final_lagda_md
             ])
 
-            # *** D: Remove original .lagda from snapshot and Copy generated .lagda.md into snapshot ***
+            # D: Remove original .lagda from snapshot and Copy generated .lagda.md into snapshot
             if snapshot_original_lagda.is_file():
                  logging.info(f"  Removing original {snapshot_original_lagda.name} from snapshot...")
                  snapshot_original_lagda.unlink()

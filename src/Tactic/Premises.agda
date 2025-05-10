@@ -21,40 +21,39 @@ open import Reflection.Ext
 ** Extracting the hypotheses of an STS rule.
 
 Constructors should be formulated in the STS syntax for inference rules, i.e.
-```
-  rule : ∀ <IMPLICIT_ARGUMENTS + LET_EXPRESSIONS>
-    ∙ <HYPOTHESIS#1>
-    ∙ <HYPOTHESIS#2>
-    ⋮
-    ∙ <HYPOTHESIS#n-1>
-    ∙ <HYPOTHESIS#n>
-      ────────────────────────────────
-      <CONCLUSION>
-```
+
+    rule : ∀ <IMPLICIT_ARGUMENTS + LET_EXPRESSIONS>
+      ∙ <HYPOTHESIS#1>
+      ∙ <HYPOTHESIS#2>
+      ⋮
+      ∙ <HYPOTHESIS#n-1>
+      ∙ <HYPOTHESIS#n>
+        ────────────────────────────────
+        <CONCLUSION>
+
 This meta-program then generates the type of the (decidable) hypotheses of the rule,
 as well as a proof that it is in fact decidable, i.e.
-```
-rule-premises : ∀ ⋯ → Set
-rule-premises ⋯ =
-  ∙ <HYPOTHESIS#1>
-  ∙ <HYPOTHESIS#3>
-  ⋮
-  ∙ <HYPOTHESIS#n-1>
 
-rule-premises? : ∀ ⋯ → Dec (rule-premises ⋯)
-rule-premises? = it
-```
+    rule-premises : ∀ ⋯ → Set
+    rule-premises ⋯ =
+      ∙ <HYPOTHESIS#1>
+      ∙ <HYPOTHESIS#3>
+      ⋮
+      ∙ <HYPOTHESIS#n-1>
+
+    rule-premises? : ∀ ⋯ → Dec (rule-premises ⋯)
+    rule-premises? = it
+
 where ⋯ stands for the subset of implicit arguments that are relevant for the
 selected subset of decidable hypotheses.
 
 To be precise, we generate both definitions above under a single name, as well as
 wrapping the decidability proof in the _⁇ typeclass from `Class.Decidable`, i.e.
-```
-unquoteDecl rule-premises = genPremises rule-premises (quote rule)
--- rule-premises        : ∀ ⋯ → ∃ _⁇
--- rule-premises .proj₁ : ∀ ⋯ → Set
--- rule-premises .proj₂ : ∀ ⋯ → (rule-premises .proj₁ ⋯) ⁇
-```
+
+    unquoteDecl rule-premises = genPremises rule-premises (quote rule)
+    -- rule-premises        : ∀ ⋯ → ∃ _⁇
+    -- rule-premises .proj₁ : ∀ ⋯ → Set
+    -- rule-premises .proj₂ : ∀ ⋯ → (rule-premises .proj₁ ⋯) ⁇
 -}
 genPremises : Name → Name → TC ⊤
 genPremises f n = do
