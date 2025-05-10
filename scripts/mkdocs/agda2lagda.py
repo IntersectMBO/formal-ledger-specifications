@@ -7,7 +7,7 @@ import os # For os.getcwd() if making it standalone runnable
 # (assumes agda2lagda.py is in PROJECT_ROOT/scripts/mkdocs/)
 PROJECT_ROOT_FOR_LOGGING = pathlib.Path(__file__).resolve().parent.parent.parent
 
-def convert_agda_to_literate_markdown(root_dir_str, project_root_for_logging=None):
+def convert_agda_to_lagda_md(root_dir_str, project_root_for_logging=None):
     """
     Traverse subdirectories of given directory, convert non-literate
     Agda files (.agda) to literate Agda in Markdown style (.lagda.md),
@@ -106,7 +106,7 @@ if __name__ == '__main__':
         confirm = input(f"This will convert .agda to .lagda.md and DELETE originals in '{pathlib.Path(target_directory).resolve()}'.\n"
                         "Are you sure? (yes/no): ").lower()
         if confirm == 'yes':
-            success = convert_agda_to_literate_markdown(target_directory)
+            success = convert_agda_to_lagda_md(target_directory)
             if success:
                 logging.info("Standalone conversion completed successfully.")
             else:

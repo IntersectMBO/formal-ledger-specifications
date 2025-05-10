@@ -13,8 +13,9 @@
 #    each `.lagda.md` file to produce `.md` files for mkdocs site.
 #
 # Usage: from the main project directory,
-#        `python ./scripts/mkdocs/build.py [--run-agda]`
-#
+#            `python ./scripts/mkdocs/build.py [--run-agda]`
+#        or, better yet,
+#            `python -m scripts.mkdocs.build [--run-agda]`
 # Output:
 # - _build/mkdocs/macros.json
 # - _build/mkdocs/agda_snapshot_src/ (Main output for Shake)
@@ -35,6 +36,13 @@ try:
     HAS_YAML = True
 except ImportError:
     HAS_YAML = False
+
+# Attempt to import agda2lagda script
+try:
+    from agda2lagda import convert_agda_to_lagda_md
+except ImportError as e:
+    print(f"FATAL: Could not import 'convert_agda_to_lagda_md' from 'agda2lagda.py'. Ensure it's in {SCRIPTS_DIR}.", file=sys.stderr)
+    sys.exit(1)
 
 # --- Configuration ---
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
@@ -257,15 +265,8 @@ def build_nested_nav(file_paths, mkdocs_docs_dir_path):
     final_nav_list.extend(format_nav_level_to_list(list(nav_tree.items())))
     return final_nav_list
 
-
-
-# --- Main Build Logic ---
-def main(run_agda_html=False): # Add flag argument
-    """Orchestrates the documentation build pipeline up to preparing source for Shake/Agda."""
-    setup_logging() # Initialize logging
-
-    # 1. Setup directories.
-    logging.info("Setting up build directories...")
+def setup_directories(run_agda_html):
+    """Sets up the necessary directories for the build process."""
     shutil.rmtree(BUILD_DIR, ignore_errors=True)
 
     # create build subdirectories
@@ -281,6 +282,16 @@ def main(run_agda_html=False): # Add flag argument
     MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)
     MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)
     MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)
+
+
+# --- Main Build Logic ---
+def main(run_agda_html=False): # Add flag argument
+    """Orchestrates the documentation build pipeline up to preparing source for Shake/Agda."""
+    setup_logging() # Initialize logging
+
+    # 1. Setup directories.
+    logging.info("Setting up build directories...")
+    setup_directories(run_agda_html)
 
     # 2. Generate macros.json
     if GENERATE_MACROS_PY.exists() and MACROS_STY_PATH.exists():
@@ -301,8 +312,17 @@ def main(run_agda_html=False): # Add flag argument
         logging.error(f"Failed to copy source tree: {e}", exc_info=True)
         sys.exit(1)
 
+    # 4. Convert .agda to .lagda.md in the snapshot
+    logging.info("Converting .agda files to .lagda.md in the snapshot directory...")
+    conversion_success = convert_agda_to_lagda_md(
+        str(AGDA_SNAPSHOT_SRC_DIR),
+        project_root_for_logging=PROJECT_ROOT
+    )
+    if not conversion_success:
+        logging.error("Failed during .agda to .lagda.md conversion. Exiting.")
+        sys.exit(1)
 
-    # 4. Generate snapshot .agda-lib file
+    # 5. Generate snapshot .agda-lib file
     # These should match the libraries provided by `specs.deps` in our default.nix
     agda_lib_dependencies = [
         "standard-library",
