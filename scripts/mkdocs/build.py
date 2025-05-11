@@ -653,7 +653,8 @@ depend: {" ".join(agda_lib_dependencies)}
             "pymdownx.snippets",
             "pymdownx.details",
             "pymdownx.tabbed",
-            {"pymdownx.emoji": {"emoji_index": "pymdownx.emoji.gemoji", "emoji_generator": "pymdownx.emoji.to_png"}},
+            # {"pymdownx.emoji": {"emoji_index": "pymdownx.emoji.gemoji", "emoji_generator": "pymdownx.emoji.to_png"}},
+            {"pymdownx.emoji": {}},
         ]}
 
     # Conditionally add Agda.css if it was copied
