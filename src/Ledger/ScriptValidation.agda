@@ -67,7 +67,7 @@ record TxInfo : Type where
         vkKey   : ℙ KeyHash
         txdats  : DataHash ⇀ Datum
         txid    : TxId
-        otherInfos : List TxInfo
+        subTxInfos : List TxInfo
 
 txInfo' : Language → ScriptPurpose
                   → PParams
@@ -82,7 +82,7 @@ txInfo' l sp pp utxo txb wits = record
   ; fee = inject txfee
   ; mint = mint
   ; vkKey = reqSigHash
-  ; otherInfos = []
+  ; subTxInfos = []
   } where open TxBody txb
 
 mkInfos : Language → ScriptPurpose
@@ -107,7 +107,7 @@ txInfo l sp pp utxo tx = record
   ; fee = inject txfee
   ; mint = mint
   ; vkKey = reqSigHash
-  ; otherInfos = mkInfos l sp pp utxo tx
+  ; subTxInfos = mkInfos l sp pp utxo tx
   } where open Tx tx; open TxBody body
 
 data DelegateOrDeReg : DCert → Type where instance
