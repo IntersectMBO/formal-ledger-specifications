@@ -17,7 +17,8 @@ let
                                                 ps.mkdocs
                                                 ps.mkdocs-material
                                                 ps.pymdown-extensions
-                                                ps.pyyaml # for mkdocs.yml generation
+                                                ps.pyyaml             # for mkdocs.yml generation
+                                                ps.beautifulsoup4     # for link rewriting (.html -> .md)
                                                ]
   );
 

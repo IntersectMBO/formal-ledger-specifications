@@ -66,6 +66,86 @@ local function create_attrs(classes, kv_pairs)
    end
 end
 
+--- Processes our specific LaTeX commands like \label, \Cref, \caption.
+-- @param latex_text The string content of a RawInline('tex') element.
+-- @return A Pandoc element (or list of elements) if a command is matched and transformed, otherwise nil.
+local function transform_latex_commands(latex_text)
+  -- Handle \label{target}
+  -- Creates an HTML anchor: <a id="sanitized_target_id"></a>
+  local label_target = latex_text:match('^\\label%s*{(.-)}$')
+  if label_target then
+    -- Sanitize the label_target to be a valid HTML ID
+    -- This replaces common problematic characters with underscores.
+    local sanitized_id = label_target:gsub("[^%w%-_%.%:]", "_")
+    return pandoc.RawInline('html', '<a id="' .. sanitized_id .. '"></a>')
+  end
+
+  -- Handle \Cref{target1,target2,...}
+  -- Creates Markdown links, e.g., [Figure fig:my-figure](#fig:my-figure)
+  local cref_targets_str = latex_text:match('^\\Cref%s*{(.-)}$')
+  if cref_targets_str then
+    local inlines_for_cref = {}
+    local targets_original = {} -- Store original target names for display text
+    local targets_sanitized = {} -- Store sanitized target names for href
+
+    for target in cref_targets_str:gmatch("([^,]+)") do
+      local original_t = target:match("^%s*(.-)%s*$") -- Trim whitespace
+      table.insert(targets_original, original_t)
+      table.insert(targets_sanitized, original_t:gsub("[^%w%-_%.%:]", "_")) -- Sanitize for href
+    end
+
+    for i, original_target in ipairs(targets_original) do
+      local sanitized_href_target = targets_sanitized[i]
+      local link_text_elements = {} -- A list of Pandoc inline elements for the link text
+
+      -- Determine prefix based on original label structure (e.g., "fig:", "sec:")
+      if original_target:match('^fig:') then table.insert(link_text_elements, pandoc.Str("Figure"))
+      elseif original_target:match('^sec:') then table.insert(link_text_elements, pandoc.Str("Section"))
+      elseif original_target:match('^tbl:') then table.insert(link_text_elements, pandoc.Str("Table"))
+      elseif original_target:match('^eq:') then table.insert(link_text_elements, pandoc.Str("Equation"))
+      else table.insert(link_text_elements, pandoc.Str("Ref.")) -- Default prefix
+      end
+      table.insert(link_text_elements, pandoc.Space())
+      table.insert(link_text_elements, pandoc.Str(original_target)) -- Display the original label text
+
+      -- Create the Pandoc Link element
+      table.insert(inlines_for_cref, pandoc.Link(link_text_elements, '#' .. sanitized_href_target))
+
+      -- Add separator (comma and space) if it's not the last target
+      if i < #targets_original then
+        table.insert(inlines_for_cref, pandoc.Str(','))
+        table.insert(inlines_for_cref, pandoc.Space())
+      end
+    end
+
+    -- If there's only one link, return it directly. Otherwise, wrap multiple links in a Span.
+    if #inlines_for_cref == 1 then
+      return inlines_for_cref[1]
+    elseif #inlines_for_cref > 1 then
+      return pandoc.Span(inlines_for_cref)
+    else
+      return nil -- Should not happen if cref_targets_str matched and had content
+    end
+  end
+
+  -- Handle \caption{text}
+  -- Transforms into a Span with class "caption-text" for styling.
+  -- Example: <span class="caption-text"><strong>Caption:</strong> The caption text</span>
+  local caption_text_content = latex_text:match('^\\caption%s*{(.*)}$') -- Using (.*) as captions are usually simple
+  if caption_text_content then
+    local caption_inlines = {
+      pandoc.Strong(pandoc.Str("Caption:")), -- Makes "Caption:" bold
+      pandoc.Space(),
+      pandoc.Str(caption_text_content)
+    }
+    local attrs = create_attrs({"caption-text"}, {}) -- Uses your create_attrs helper
+    return pandoc.Span(caption_inlines, attrs)
+  end
+
+  return nil -- Indicates that this function did not handle the latex_text
+end
+
+
 --- Processes Div elements in the Pandoc AST.
 -- The main purpose now is to ensure that inline elements (Code, RawInline)
 -- *within* any Div get processed by their respective handlers.
@@ -82,11 +162,17 @@ end
 
 --- Processes RawInline elements.
 -- Expected input from preprocess.py: \HighlightPlaceholder{...}
+-- This function will now also delegate to transform_latex_commands.
 -- @param inline The RawInline element.
 -- @return table The modified element (Span) or the original RawInline.
 function RawInline(inline)
   -- Check if it's a raw 'latex' element and the format field exists
   if inline.format and inline.format:match 'latex' then
+    -- First, try to process specific LaTeX commands (\label, \Cref, \caption)
+    local transformed_latex_command = transform_latex_commands(inline.text)
+    if transformed_latex_command then
+      return transformed_latex_command -- Return the transformed element
+    end
     -- Check specifically for our HighlightPlaceholder marker
     -- Use non-greedy match (.*?) for the content within braces {}
     local highlight_match = inline.text:match '\\HighlightPlaceholder{(.*)}'
