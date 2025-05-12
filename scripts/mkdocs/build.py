@@ -1,54 +1,83 @@
 # build.py
 #
-# :PURPOSE:
-# Translate a collection of latex-based literate (and illiterate) Agda files to
-# a collection of markdown-based literate Agda and build mkdocs site to serve
-# the resulting collection on a website.
+# PURPOSE:
+# Converts a repository of Agda source files (plain .agda and LaTeX-based
+# literate .lagda) into Markdown-based literate Agda files. It then builds the
+# source structure for an MkDocs website to serve these files as hyperlinked
+# project documentation.
 #
-# :PROCESS:
-# 1.  Generate macro JSON from .sty file.
-# 2.  Create snapshot of the Agda 'src/' directory.
-# 3.  Convert each `.agda` file to a literate `.lagda.md` file.
-# 4.  For each `.lagda` file found in 'src/':
-#     a.  Run preprocess -> pandoc+lua -> postprocess pipeline.
-#     b.  Replace original `.lagda` file in the snapshot with the generated `.lagda.md`.
-# 5.  Assemble a basic mkdocs site.
-# 6.  (Optional) If `--run-agda` flag passed, then run `agda --html` on
-#     each `.lagda.md` file to produce `.md` files for mkdocs site.
+# PROCESS OVERVIEW:
+# 1.  Initial Setup:
+#     - Cleans and creates necessary subdirectories within `_build/mkdocs/`.
+#     - Generates `_build/mkdocs/macros.json` from `latex/macros.sty` for
+#       LaTeX-to-Markdown conversion steps.
+# 2.  Agda Source Snapshot Preparation (`_build/mkdocs/agda_snapshot_src/`):
+#     a. Copies the entire `src/` directory (containing original Agda sources)
+#        to the `agda_snapshot_src/` directory.
+#     b. Converts any plain `.agda` files within this snapshot to `.lagda.md`
+#        (Markdown-based literate Agda) format.
+#     c. For each original LaTeX-based `.lagda` file from `src/`:
+#        i.  Runs a multi-stage pipeline (custom Python preprocessing ->
+#            Pandoc with Lua filter -> custom Python postprocessing) to
+#            convert it into a Markdown-based `.lagda.md` file.
+#        ii. This processed `.lagda.md` replaces its corresponding original
+#            file in the `agda_snapshot_src/` directory.
+#     d. Result: `agda_snapshot_src/` now contains all project modules as
+#        `.lagda.md` files, maintaining the original `src/` directory structure.
+#        This directory is the input for the Agda HTML generation step.
+# 3.  Agda HTML Generation & Site Content Preparation (`_build/mkdocs/mkdocs_src/docs/`):
+#     a. If the `--run-agda` flag is passed:
+#        i.  `agda --html --html-highlight=code` is run on each `.lagda.md`
+#            file within `agda_snapshot_src/`.
+#        ii. Agda outputs processed files into `_build/mkdocs/agda_html_output/`.
+#            Output filenames are flat, dot-separated module names ending in
+#            `.md` (e.g., `Ledger.Transaction.md`).
+#        iii.These Agda-generated `.md` files (containing HTML-highlighted code
+#            and Markdown prose) are copied to `_build/mkdocs/mkdocs_src/docs/`,
+#            maintaining their flat names.
+#        iv. Internal `href` links within these files (which Agda generates with
+#            `.html` extensions) are rewritten to use `.md` extensions to match
+#            the actual filenames in the `docs/` directory.
+#     b. If `--run-agda` is NOT passed (or if Agda processing fails for a file):
+#        i.  The corresponding `.lagda.md` file from `agda_snapshot_src/` is
+#            copied to `_build/mkdocs/mkdocs_src/docs/`.
+#        ii. It's renamed to the flat `ModuleName.md` format (e.g.,
+#            `Ledger.Transaction.md`).
+# 4.  MkDocs Site Assembly (`_build/mkdocs/mkdocs_src/`):
+#     a. Static assets (CSS, JS, images, `index.md` template if needed) are
+#        copied to `_build/mkdocs/mkdocs_src/docs/`.
+#     b. `mkdocs.yml` is generated in `_build/mkdocs/mkdocs_src/`. The site
+#        navigation (`nav` section) is built by parsing the flat `ModuleName.md`
+#        filenames into a hierarchical structure.
+# 5.  Cleanup:
+#     a. Intermediate artifact directories and files created within `_build/mkdocs/`
+#        during the build (e.g., `lagda_temp/`, `agda_html_output/`, `macros.json`)
+#        are removed.
 #
-# :Notes/Changes/Updates:
-# 1.  `unique_literate_md_files_in_snapshot` is now the single source of
-#     truth for files to be processed by Agda or copied if Agda is skipped.
-#     It's built from `.lagda.md` files found in the snapshot (either converted
-#     from `.agda` or resulting from our LaTeX `.lagda` pipeline).
-# 2.  Flat Filename Derivation: The logic to derive `module_name_flat`
-#     (e.g., "Ledger.Transaction") from the snapshot path (e.g., "Ledger/Transaction.lagda.md") is revised.
-# 3.  Agda Output: `agda_actual_output_filename` is correctly set to `module_name_flat + ".md"`,
-#     matching Agda behavior.
-# 4.  Target Paths: `final_mkdocs_flat_filename` and `mkdocs_target_full_path` use this flat
-#     name directly under `MKDOCS_DOCS_DIR`.
-# 5.  Link Rewriting Call: `rewrite_internal_link_extensions` is called to fix `.html` to `.md` in `hrefs`.
-# 6.  Fallback Logic: If Agda fails or doesn't produce the expected output file, the original
-#     `.lagda.md` from the snapshot is copied and renamed to the target flat `.md` filename.
-# 7.  `else` block (no `run_agda_html`): This part is also updated to use the flat naming convention
-#     when copying files from the snapshot.
-# 8.  `final_md_files_for_mkdocs_nav`: now consistently collects the flat filenames
-#     (e.g., "Ledger.Transaction.md") for navigation builder.
-# 9.  Navigation: `build_nav_from_flat_files` is called with list of flat filenames.
-# 10. `index.md` Handling in Assets: Improved logic for handling main `index.md` file,
-#     ensuring it's created or copied if not generated through Agda processing, and included
-#     in nav list.
-# 11. YAML Merge Logic: slightly refined YAML merge logic for `mkdocs.yml` to be more robust.
-# 12. Logging: Add more `logging.debug` statements for better traceability of filename transforms.
+# USAGE:
+# From the main project directory (e.g., `formal-ledger-specifications/`):
+#   python ./scripts/mkdocs/build.py [--run-agda]
+#   (or, using Python's module execution: python -m scripts.mkdocs.build [--run-agda])
 #
-# :USAGE:
-# From the main project directory,
-#            `python ./scripts/mkdocs/build.py [--run-agda]`
-# :OUTPUT:
-# - _build/mkdocs/macros.json         (LaTeX macros in JSON format)
-# - _build/mkdocs/agda_snapshot_src/  (main output for shake)
-# - _build/mkdocs/mkdocs_src/         (mkdocs site source)
-# - _build/mkdocs/build.log           (log file)
+# KEY OUTPUTS (within `_build/mkdocs/`):
+# - agda_snapshot_src/: Contains all project Agda sources as processed `.lagda.md`
+#                       files, structured as in the original `src/` directory. This
+#                       serves as the primary input for the `agda --html` step.
+# - mkdocs_src/:        Contains the complete source for the MkDocs site:
+#                       - `docs/`: Final `.md` documentation pages (using flat,
+#                         dot-separated names like `Ledger.Transaction.md`), CSS, JS.
+#                       - `mkdocs.yml`: The MkDocs configuration file with site
+#                         structure and navigation.
+#                       This directory is ready for `mkdocs build` or `mkdocs serve`.
+# - build.log:          Detailed log file of the build script's execution.
+#
+# INTERMEDIATE ARTIFACTS (created and then cleaned up by this script):
+# - macros.json
+# - lagda_temp/
+# - code_blocks_json/
+# - md_intermediate/
+# - final_lagda_md/ (staging for processed LaTeX-based .lagda files)
+# - agda_html_output/ (raw output from `agda --html` command)
 
 import os
 import sys
@@ -200,25 +229,82 @@ def run_command(command_args, cwd=None, capture_output=False, text=True, check=T
 
 
 def setup_directories(run_agda_html):
-    """Sets up the necessary directories for the build process."""
-    shutil.rmtree(BUILD_DIR, ignore_errors=True)
+    """
+    Cleans the main MkDocs build artifacts directory and recreates essential
+    subdirectories for the current build run.
+    """
+    # Only remove and recreate the specific mkdocs build directory.
+    # Avoid deleting unrelated artifacts in _build/ (e.g., from shake/CI)!
+    if BUILD_MKDOCS_DIR.exists(): # BUILD_MKDOCS_DIR is _build/mkdocs/
+        logging.info(f"Cleaning up existing MkDocs build directory: {BUILD_MKDOCS_DIR}")
+        shutil.rmtree(BUILD_MKDOCS_DIR)
+    else:
+        logging.info(f"MkDocs build directory does not exist, will create: {BUILD_MKDOCS_DIR}")
 
-    # create build subdirectories
-    TEMP_DIR.mkdir(parents=True, exist_ok=True)
-    CODE_BLOCKS_DIR.mkdir(parents=True, exist_ok=True)
-    INTERMEDIATE_MD_DIR.mkdir(parents=True, exist_ok=True)
-    FINAL_LAGDA_MD_DIR.mkdir(parents=True, exist_ok=True)
-    AGDA_SNAPSHOT_SRC_DIR.mkdir(parents=True, exist_ok=True) # Create snapshot dir
-    if run_agda_html: # Only create Agda HTML output dir if needed
-        AGDA_HTML_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    logging.info(f"Creating fresh MkDocs build directories under: {BUILD_MKDOCS_DIR}")
 
-    # Create interim mkdocs source structure
-    MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)
-    MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)
-    MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)
+    # Create directories for intermediate build products and final staging.
+    # (subdirectories of BUILD_MKDOCS_DIR)
+    TEMP_DIR.mkdir(parents=True, exist_ok=True)              # for .lagda.temp files
+    CODE_BLOCKS_DIR.mkdir(parents=True, exist_ok=True)       # for code_blocks.json
+    INTERMEDIATE_MD_DIR.mkdir(parents=True, exist_ok=True)   # for .md.intermediate files
+    FINAL_LAGDA_MD_DIR.mkdir(parents=True, exist_ok=True)    # staging for processed LaTeX .lagda files before snapshot update
+    AGDA_SNAPSHOT_SRC_DIR.mkdir(parents=True, exist_ok=True) # for Agda source snapshot
 
+    if run_agda_html:
+        AGDA_HTML_OUTPUT_DIR.mkdir(parents=True, exist_ok=True) # for raw Agda html output
 
-# Helper class for managing paths within the .lagda processing loop
+    # Create final mkdocs site source structure (where content is copied to).
+    MKDOCS_SRC_DIR.mkdir(parents=True, exist_ok=True)        # root for mkdocs.yml and docs/
+    MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)       # for final .md pages and assets
+    MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)        # for CSS assets
+    MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)         # for JS assets
+
+def cleanup_intermediate_mkdocs_artifacts():
+    """
+    Removes intermediate artifact directories and files generated within
+    _build/mkdocs/ during the build process, keeping only the final outputs
+    (like agda_snapshot_src/ and mkdocs_src/).
+    """
+    logging.info("Cleaning up intermediate MkDocs build artifacts from _build/mkdocs/...")
+
+    # directories to remove (subdirectories of BUILD_MKDOCS_DIR)
+    intermediate_dirs = [
+        TEMP_DIR,
+        CODE_BLOCKS_DIR,
+        INTERMEDIATE_MD_DIR,
+        FINAL_LAGDA_MD_DIR,
+        AGDA_HTML_OUTPUT_DIR # safe to try removing even if not created (no --run-agda)
+    ]
+
+    # files to remove (direct children of BUILD_MKDOCS_DIR)
+    intermediate_files = [
+        MACROS_JSON # generated from .sty (considered intermediate for this script's run)
+    ]
+
+    for artifact_dir in intermediate_dirs:
+        if artifact_dir.exists():
+            try:
+                shutil.rmtree(artifact_dir)
+                logging.info(f"  Successfully removed intermediate directory: {artifact_dir.relative_to(BUILD_MKDOCS_DIR)}")
+            except OSError as e: # catch more specific error for rmtree
+                logging.warning(f"  Warning: Could not remove intermediate directory {artifact_dir}: {e}")
+        else:
+            logging.debug(f"  Intermediate directory not found (already clean or not created): {artifact_dir.relative_to(BUILD_MKDOCS_DIR)}")
+
+    for artifact_file in intermediate_files:
+        if artifact_file.exists():
+            try:
+                artifact_file.unlink()
+                logging.info(f"  Successfully removed intermediate file: {artifact_file.relative_to(BUILD_MKDOCS_DIR)}")
+            except OSError as e: # catch more specific error for unlink
+                logging.warning(f"  Warning: Could not remove intermediate file {artifact_file}: {e}")
+        else:
+            logging.debug(f"  Intermediate file not found (already clean or not created): {artifact_file.relative_to(BUILD_MKDOCS_DIR)}")
+
+    logging.info("Intermediate artifact cleanup complete.")
+
+# Helper class for managing paths within .lagda processing loop.
 class LagdaProcessingPaths:
     """
     Manage set of file paths for processing a single .lagda file.
@@ -773,31 +859,42 @@ def main(run_agda_html=False):
     except Exception as e:
         logging.error(f"Error writing mkdocs.yml: {e}", exc_info=True)
 
-    logging.info(f"\nBuild script finished.")
+    logging.info(f"\nBuild script finished successfully!")
     if not run_agda_html:
-         logging.info(f"Primary output for Shake/Agda (if used): {AGDA_SNAPSHOT_SRC_DIR.relative_to(PROJECT_ROOT)}")
+         logging.info(f"Primary input for Shake/Agda (if used): {AGDA_SNAPSHOT_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Final source for MkDocs build/serve: {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Full log saved to: {LOG_FILE.relative_to(PROJECT_ROOT)}")
     logging.info(f"To serve the site locally (from project root): mkdocs serve --config-file \"{mkdocs_yml_path}\"")
     # Or if CWD is PROJECT_ROOT: mkdocs serve -f "{mkdocs_yml_path.relative_to(PROJECT_ROOT)}"
 
+    # Call cleanup for intermediate artifacts now that the build has succeeded
+    cleanup_intermediate_mkdocs_artifacts()
+
 if __name__ == "__main__":
-    # Add command line argument parsing
     parser = argparse.ArgumentParser(description="Build mkdocs site source from literate Agda files.")
     parser.add_argument(
         '--run-agda',
         action='store_true',
-        help="Run the 'agda --html' step after postprocessing."
+        help="Run the 'agda --html --html-highlight=code' step on processed .lagda.md files."
     )
     args = parser.parse_args()
 
-    # Setup logging as early as possible
-    setup_logging()
+    # Ensure the main MkDocs build directory (and thus log file's parent dir) exists
+    # BEFORE setting up logging, as setup_logging() will try to open LOG_FILE.
+    # BUILD_MKDOCS_DIR is defined globally.
+    BUILD_MKDOCS_DIR.mkdir(parents=True, exist_ok=True)
+    setup_logging() # now safe to set up logging
 
     try:
         main(run_agda_html=args.run_agda)
+    except SystemExit as e: # catch sys.exit() specifically if used for early exits
+        logging.error(f"Build process exited prematurely with code {e.code}.")
+        # We may want to cleanup here; for now, cleanup is only on successful main completion.
     except Exception as e:
-        logging.exception("Build failed due to an unhandled error.") # log exception traceback
-        sys.exit(1)
+        logging.exception("CRITICAL ERROR: Build failed due to an unhandled exception.")
+        # no cleanup here; preserve intermediate files for debugging error.
+        sys.exit(1) # ensure non-zero exit code for CI
     finally:
-        logging.shutdown() # Ensure logs are flushed
+        # executes whether main() succeeds or fails (unless sys.exit called)
+        logging.info("Build script execution finished. Shutting down logging.")
+        logging.shutdown()
