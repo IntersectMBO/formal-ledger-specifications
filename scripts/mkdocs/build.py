@@ -123,7 +123,6 @@ FINAL_LAGDA_MD_DIR = BUILD_MKDOCS_DIR / "final_lagda_md"     # final `.lagda.md`
 
 # --- Directories for Agda source snapshot and html output ---
 AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src" # for shake/agda context
-AGDA_HTML_OUTPUT_DIR = BUILD_MKDOCS_DIR / "agda_html_output"   # for `agda --html` output
 
 # Optional: Still assemble an interim mkdocs site for preview
 MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "mkdocs_src"
@@ -251,9 +250,6 @@ def setup_directories(run_agda_html):
     FINAL_LAGDA_MD_DIR.mkdir(parents=True, exist_ok=True)    # staging for processed LaTeX .lagda files before snapshot update
     AGDA_SNAPSHOT_SRC_DIR.mkdir(parents=True, exist_ok=True) # for Agda source snapshot
 
-    if run_agda_html:
-        AGDA_HTML_OUTPUT_DIR.mkdir(parents=True, exist_ok=True) # for raw Agda html output
-
     # Create final mkdocs site source structure (where content is copied to).
     MKDOCS_SRC_DIR.mkdir(parents=True, exist_ok=True)        # root for mkdocs.yml and docs/
     MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)       # for final .md pages and assets
@@ -262,9 +258,9 @@ def setup_directories(run_agda_html):
 
 def cleanup_intermediate_mkdocs_artifacts():
     """
-    Removes intermediate artifact directories and files generated within
+    Remove intermediate artifact directories and files generated within
     _build/mkdocs/ during the build process, keeping only the final outputs
-    (like agda_snapshot_src/ and mkdocs_src/).
+    (like agda_snapshot_src/ and mkdocs_src/ and, for now, agda_html_output/).
     """
     logging.info("Cleaning up intermediate MkDocs build artifacts from _build/mkdocs/...")
 
@@ -273,8 +269,7 @@ def cleanup_intermediate_mkdocs_artifacts():
         TEMP_DIR,
         CODE_BLOCKS_DIR,
         INTERMEDIATE_MD_DIR,
-        FINAL_LAGDA_MD_DIR,
-        AGDA_HTML_OUTPUT_DIR # safe to try removing even if not created (no --run-agda)
+        FINAL_LAGDA_MD_DIR
     ]
 
     # files to remove (direct children of BUILD_MKDOCS_DIR)
@@ -647,97 +642,95 @@ def main(run_agda_html=False):
     final_md_files_for_mkdocs_nav = [] # List of flat filenames (e.g., "Module.File.md") for MkDocs nav
 
     if run_agda_html:
-        logging.info(f"\nRunning Agda --html using the main 'CardanoLedger.lagda.md' file...")
-        AGDA_HTML_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        logging.info(f"\nRunning Agda --html, outputting directly to MkDocs docs directory using 'CardanoLedger.lagda.md'...")
 
-        # Master Agda file's path within the snapshot.
-        # Assumes CardanoLedger.lagda (from src) becomes CardanoLedger.lagda.md in snapshot.
-        master_agda_file_snapshot_rel_path_str = "CardanoLedger.lagda.md"
+        # Ensure MKDOCS_DOCS_DIR is clean or ready.
+        # setup_directories should have handled cleaning BUILD_MKDOCS_DIR,
+        # so MKDOCS_DOCS_DIR will be fresh.
+        # MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True) # Already done by setup_directories
+
+        master_agda_file_snapshot_rel_path_str = "CardanoLedger.lagda.md" # master file
         master_agda_file_abs_path_in_snapshot = AGDA_SNAPSHOT_SRC_DIR / master_agda_file_snapshot_rel_path_str
 
         if not master_agda_file_abs_path_in_snapshot.exists():
-            logging.error(f"Master Agda file '{master_agda_file_snapshot_rel_path_str}' not found in snapshot directory: {AGDA_SNAPSHOT_SRC_DIR}")
-            logging.warning("Skipping Agda --html step due to missing master file.")
-
-            # Fallback: copy .lagda.md from snapshot with flat names.
-            logging.warning("Falling back to copying .lagda.md files from snapshot.")
-            for lagda_md_file_in_snapshot in unique_literate_md_files_in_snapshot: # ensure list is populated
+            logging.error(f"Master Agda file '{master_agda_file_snapshot_rel_path_str}' not found in snapshot: {AGDA_SNAPSHOT_SRC_DIR}")
+            logging.warning("Skipping Agda --html step. Falling back to copying snapshot files.")
+            # fallback logic (using copy_snapshot_file_with_flat_name)
+            for lagda_md_file_in_snapshot in unique_literate_md_files_in_snapshot:
                 copied_flat_name = copy_snapshot_file_with_flat_name(
                     lagda_md_file_in_snapshot, AGDA_SNAPSHOT_SRC_DIR, MKDOCS_DOCS_DIR
                 )
                 if copied_flat_name and copied_flat_name not in final_md_files_for_mkdocs_nav:
                     final_md_files_for_mkdocs_nav.append(copied_flat_name)
         else:
-            logging.info(f"Found master Agda file: {master_agda_file_snapshot_rel_path_str}")
+            logging.info(f"Found master Agda file for HTML generation: {master_agda_file_snapshot_rel_path_str}")
             try:
-                # Run Agda --html on just the master file
-                logging.info(f"Running Agda --html on: {master_agda_file_snapshot_rel_path_str}")
+                # Run Agda --html, outputting directly into MKDOCS_DOCS_DIR
+                logging.info(f"Running Agda --html on '{master_agda_file_snapshot_rel_path_str}', outputting to {MKDOCS_DOCS_DIR.resolve()}")
                 run_command([
                     "agda", "--html", "--html-highlight=code",
-                    f"--html-dir={AGDA_HTML_OUTPUT_DIR.resolve()}",
-                    "-i", ".", # Include path relative to CWD (AGDA_SNAPSHOT_SRC_DIR)
-                    master_agda_file_snapshot_rel_path_str # master file relative to CWD
-                ], cwd=AGDA_SNAPSHOT_SRC_DIR.resolve())    # CWD is crucial
-                logging.info(f"Agda --html command completed.")
+                    f"--html-dir={MKDOCS_DOCS_DIR.resolve()}", # output md/html directly to final docs dir
+                    "-i", ".", # include path relative to CWD
+                    master_agda_file_snapshot_rel_path_str
+                ], cwd=AGDA_SNAPSHOT_SRC_DIR.resolve())
+                logging.info(f"Agda --html command completed. Files generated in {MKDOCS_DOCS_DIR}.")
 
-                # Process ALL generated .md files from AGDA_HTML_OUTPUT_DIR
-                logging.info(f"Processing Agda-generated files from {AGDA_HTML_OUTPUT_DIR}...")
-                agda_output_files_found = list(AGDA_HTML_OUTPUT_DIR.glob("*.md"))
-                logging.info(f"Found {len(agda_output_files_found)} '.md' files in {AGDA_HTML_OUTPUT_DIR}.")
+                # Process .md files IN PLACE within MKDOCS_DOCS_DIR for link rewriting.
+                # Identify which files Agda generated or touched by globbing MKDOCS_DOCS_DIR for *.md.
+                logging.info(f"Rewriting internal links in Agda-generated files within {MKDOCS_DOCS_DIR}...")
 
-                if not agda_output_files_found and unique_literate_md_files_in_snapshot:
-                     logging.warning(f"Agda ran but produced no '.md' files in {AGDA_HTML_OUTPUT_DIR}!")
-
-                for agda_generated_file_path in agda_output_files_found:
-                    # agda_generated_file_path is an absolute path to a file like
-                    # .../_build/mkdocs/agda_html_output/Ledger.Transaction.md
-                    flat_filename = agda_generated_file_path.name # e.g., "Ledger.Transaction.md"
-
-                    mkdocs_target_file_abs_path = MKDOCS_DOCS_DIR / flat_filename
-
+                # Collect files for navigation; these are the flat names Agda created.
+                # Only add files that actually exist after Agda runs.
+                processed_by_agda_count = 0
+                for md_file_path_in_docs in MKDOCS_DOCS_DIR.glob("*.md"):
+                    flat_filename = md_file_path_in_docs.name # e.g., "Ledger.Transaction.md"
+                    logging.debug(f"  Found Agda-generated file for link rewriting: {flat_filename}")
                     try:
-                        logging.info(f"  Processing for MkDocs: {flat_filename} -> {mkdocs_target_file_abs_path.relative_to(PROJECT_ROOT)}")
-                        with open(agda_generated_file_path, 'r', encoding='utf-8') as f_agda_src:
-                            agda_content = f_agda_src.read()
+                        with open(md_file_path_in_docs, 'r', encoding='utf-8') as f_md_src:
+                            original_content = f_md_src.read()
 
-                        # Rewrite internal links from ".html" to ".md"
                         modified_content = rewrite_internal_link_extensions(
-                            agda_content, from_ext=".html", to_ext=".md"
+                            original_content, from_ext=".html", to_ext=".md"
                         )
 
-                        mkdocs_target_file_abs_path.parent.mkdir(parents=True, exist_ok=True)
-                        with open(mkdocs_target_file_abs_path, 'w', encoding='utf-8') as f_final_md:
-                            f_final_md.write(modified_content)
+                        # write back to same file if content changed
+                        if modified_content != original_content:
+                            with open(md_file_path_in_docs, 'w', encoding='utf-8') as f_md_target:
+                                f_md_target.write(modified_content)
+                            logging.info(f"    Rewrote links in {flat_filename}")
+                        else:
+                            logging.debug(f"    No link extensions needed rewriting in {flat_filename}")
 
                         if flat_filename not in final_md_files_for_mkdocs_nav:
-                             final_md_files_for_mkdocs_nav.append(flat_filename)
+                            final_md_files_for_mkdocs_nav.append(flat_filename)
+                        processed_by_agda_count +=1
 
-                    except Exception as e_file:
-                         logging.error(f"  ERROR processing Agda-generated file {flat_filename}: {e_file}", exc_info=True)
-                         # Fallback for this specific file: copy raw Agda output? or skip?
-                         try:
-                             logging.warning(f"  Fallback: Copying raw Agda output for {flat_filename} due to processing error.")
-                             shutil.copy2(agda_generated_file_path, mkdocs_target_file_abs_path)
-                             if flat_filename not in final_md_files_for_mkdocs_nav:
-                                 final_md_files_for_mkdocs_nav.append(flat_filename)
-                         except Exception as e_copy:
-                             logging.error(f"  Fallback copy failed for {flat_filename}: {e_copy}")
+                    except Exception as e_rewrite:
+                        logging.error(f"  ERROR rewriting links in {flat_filename}: {e_rewrite}", exc_info=True)
+                        # File is already in MKDOCS_DOCS_DIR; it might have incorrect links.
+                        # Decide if we want to remove it or leave it as is; for now, left as Agda generated it.
+                        if flat_filename not in final_md_files_for_mkdocs_nav:
+                             final_md_files_for_mkdocs_nav.append(flat_filename) # still add for nav, it exists
+
+                logging.info(f"Link rewriting finished. Processed {processed_by_agda_count} files found in {MKDOCS_DOCS_DIR}.")
+                if processed_by_agda_count == 0 and unique_literate_md_files_in_snapshot:
+                    logging.warning(f"Agda ran but no '.md' files were found or processed in {MKDOCS_DOCS_DIR}. This might indicate an issue.")
 
             except Exception as e_agda:
                 logging.error(f"The main Agda --html command failed: {e_agda}", exc_info=True)
-                logging.warning("Skipping processing of Agda HTML output due to master command failure.")
-                # Fallback: Copy .lagda.md from snapshot with flat names
-                logging.warning("Falling back to copying all .lagda.md files from snapshot with flat names.")
+                logging.warning("Skipping link rewriting. Falling back to copying snapshot files.")
+                # Fallback logic (unchanged, using copy_snapshot_file_with_flat_name)
                 for lagda_md_file_in_snapshot in unique_literate_md_files_in_snapshot:
                     copied_flat_name = copy_snapshot_file_with_flat_name(
                         lagda_md_file_in_snapshot, AGDA_SNAPSHOT_SRC_DIR, MKDOCS_DOCS_DIR
-                    ) # assumes unique_literate_md_files_in_snapshot populated
+                    )
                     if copied_flat_name and copied_flat_name not in final_md_files_for_mkdocs_nav:
                         final_md_files_for_mkdocs_nav.append(copied_flat_name)
-
-    else: # Not running agda --html
+    else:
+        # Fallback if not running Agda; ensure it uses copy_snapshot_file_with_flat_name.
         logging.info("\nSkipping agda --html step. Copying .lagda.md files from snapshot with flat names...")
-        if not unique_literate_md_files_in_snapshot: # ensure list correctly populated
+        # ... (your existing else block using copy_snapshot_file_with_flat_name) ...
+        if not unique_literate_md_files_in_snapshot:
             logging.warning("No processed literate files in snapshot to copy to MkDocs.")
         for lagda_md_file_in_snapshot in unique_literate_md_files_in_snapshot:
             copied_flat_name = copy_snapshot_file_with_flat_name(
@@ -745,7 +738,6 @@ def main(run_agda_html=False):
             )
             if copied_flat_name and copied_flat_name not in final_md_files_for_mkdocs_nav:
                 final_md_files_for_mkdocs_nav.append(copied_flat_name)
-
 
     # --- Assemble interim/final mkdocs site source ---
     logging.info("\nAssembling mkdocs source directory...")
@@ -808,7 +800,8 @@ def main(run_agda_html=False):
     mkdocs_config = {} # start with empty and merge from template/defaults
     default_theme_name = "material"
     default_cfg = {
-        "site_name": "Agda Ledger Formalization", # placeholder
+        "site_name": "Cardano Ledger Formal Specification",
+        "use_directory_urls": False,
         "theme": {"name": default_theme_name, "features": ["navigation.expand"]},
         "extra_css": [],
         "extra_javascript": [],
@@ -817,8 +810,10 @@ def main(run_agda_html=False):
             "attr_list", "md_in_html",
             {"toc": {"permalink": True, "slugify": "markdown.extensions.toc.slugify_unicode"}},
             {"pymdownx.highlight": {"anchor_linenums": True, "use_pygments": True}},
-            "pymdownx.inlinehilite", "pymdownx.snippets", "pymdaonx.tabbed",
-            {"pymdownx.emoji": {"emoji_index": "pymdownx.emoji.gemoji", "emoji_generator": "pymdownx.emoji.to_svg"}},
+            "pymdownx.inlinehilite", "pymdownx.snippets", "pymdownx.tabbed",
+            # using simpler emoji support for now
+            # {"pymdownx.emoji": {"emoji_index": "pymdownx.emoji.gemoji", "emoji_generator": "pymdownx.emoji.to_svg"}},
+            "pymdownx.emoji",
         ]
     }
 
@@ -900,7 +895,7 @@ def main(run_agda_html=False):
     # Or if CWD is PROJECT_ROOT: mkdocs serve -f "{mkdocs_yml_path.relative_to(PROJECT_ROOT)}"
 
     # Call cleanup for intermediate artifacts now that the build has succeeded
-    cleanup_intermediate_mkdocs_artifacts()
+    #cleanup_intermediate_mkdocs_artifacts()
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build mkdocs site source from literate Agda files.")
