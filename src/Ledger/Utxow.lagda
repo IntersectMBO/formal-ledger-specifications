@@ -80,16 +80,18 @@ languages bs tx utxo = mapPartial getLanguage (getBatchScripts bs tx utxo)
 getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isKeyHashObj
 
-usesV4Features : BatchData → Bool 
-usesV4Features OldTransaction = false 
-usesV4Features _ = true
+noBodies : Tx → Bool
+noBodies tx with (tx .Tx.body .TxBody.subTxBodies) 
+... | [] = true 
+... | _ = false
+
 
 -- TODO check this
-allowedLanguages : BatchData → Tx → UTxO → ℙ Language
-allowedLanguages bd tx utxo =
+allowedLanguages : Tx → UTxO → ℙ Language
+allowedLanguages tx utxo =
   if (∃[ o ∈ os ] isBootstrapAddr (proj₁ o))
     then ∅
-  else if (usesV4Features bd ≡ true ) 
+  else if (noBodies tx ≡ true ) 
     then fromList (PlutusV4 ∷ [])
   else if UsesV3Features txb
     then fromList (PlutusV3 ∷ PlutusV4 ∷ [])
@@ -104,17 +106,10 @@ allowedLanguages bd tx utxo =
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isScriptObj
 
-noSubsInSubs : Bool → Tx → Bool
-noSubsInSubs isT tx with (isT , tx .Tx.subTxs) 
-... | (true , _) = true
-... | (false , []) = true 
-... | (false , _) = false
-
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  mapˢ (λ (ix , o) → (SpendOut  ix , payCred (proj₁ o))) ((spendOuts) ˢ)
   ∪  mapˢ (λ x        → (BatchObs x , ScriptObj x)) requireBatchObservers
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
@@ -170,11 +165,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
-        bd                = Γ .UTxOEnv.batchData
-        bs                = Γ .UTxOEnv.batchScripts
         witsKeyHashes     = mapˢ hash (dom vkSigs)
-        witsScriptHashes  = mapˢ hash (scripts ∪ (Γ .UTxOEnv.batchScripts))
-        spentHashes       = getSpentHashes bs tx utxo
+        witsScriptHashes  = mapˢ hash scripts 
+        spentHashes       = getSpentHashes scripts tx utxo
         refScriptHashes   = mapˢ hash (refScripts tx utxo)
         neededHashes      = scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
@@ -182,17 +175,17 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 
     in
     -- TODO can we share reference scripts?? how?
+    -- TODO script integrity hash will be difficult!
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ mapPartial isInj₁ (getBatchScripts bs tx utxo) ] validP1Script witsKeyHashes txvldt s
+    ∙  ∀[ s ∈ mapPartial isInj₁ scripts ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
     ∙  neededHashes ＼ refScriptHashes ⊆ witsScriptHashes  -- TODO this is relaxed because extra scripts are in batchScripts! is this ok?
     ∙  spentHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ spentHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
-    ∙  languages bs tx utxo ⊆ ∅ -- allowedLanguages bd tx utxo <- TODO this is supposed to be in the check instead of ∅ but Computational does not work with it
+    ∙  languages scripts tx utxo ⊆ allowedLanguages tx utxo 
     ∙  txADhash ≡ map hash txAD
     -- NEW 
-    ∙  requireBatchObservers ⊆ Γ .UTxOEnv.bObs --3
-    ∙  noSubsInSubs (Γ .UTxOEnv.isTop) tx ≡ true
+    ∙  requireBatchObservers ⊆ witsScriptHashes --3
 
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
@@ -202,9 +195,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \label{fig:rules:utxow}
 \end{figure*}
 \begin{code}[hide]
-pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p9 p10 h
-      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p9 , p10 , h)
-pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ _ x
+pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ p9 h
+      = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , p9 , h)
+pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)

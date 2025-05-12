@@ -47,19 +47,6 @@ record LEnv : Type where
     enactState  : EnactState
     treasury    : Coin
 
-record SwapEnv : Type where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_,_,_⟧ˢᵉ
-  field
-\end{code}
-\begin{code}
-    lenv        : LEnv
-    bdat        : BatchData
-    reqObs      : ℙ ScriptHash
-    bScripts      : ℙ Script
-    valP        : Bool
-
 record LState : Type where
 \end{code}
 \begin{code}[hide]
@@ -92,7 +79,6 @@ govSt |ᵒ certState = L.map (map₂ (removeOrphanDRepVotes certState)) govSt
 \begin{code}[hide]
 private variable
   Γ : LEnv
-  Γ' : SwapEnv
   s s' s'' : LState
   u u' : UTxOState
   govSt govSt' : GovState
@@ -103,19 +89,19 @@ private variable
 
 
 \begin{code}
-txToExUnits : Tx → ExUnits 
-txToExUnits tx = (∑[ (_ , eu) ← (tx .wits .txrdmrs) ]  eu)
+txToExUnits : (RdmrPtr  ⇀ Redeemer × ExUnits) → ExUnits 
+txToExUnits rdmrs = (∑[ (_ , eu) ← rdmrs ]  eu)
   where open Tx; open TxWitnesses
 
 -- sum up all units across all transactions TODO this is wrong!
-totExUnits : List Tx → ExUnits
-totExUnits lstx = ∑[ au ← fromListᵐ (map (λ tx → ((tx .body .TxBody.txid) , txToExUnits tx)) lstx)] au
-  where open Tx; open TxWitnesses
+totExUnits : Tx → ExUnits
+totExUnits tx = ∑[ au ← (mapValues txToExUnits (subTxRdmrs ∪ˡ (singletonᵐ txid txrdmrs)) ) ] au
+ where open Tx tx; open TxWitnesses wits ; open TxBody body
 
 
 minfee : PParams → UTxO → Tx → Coin
 minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
-                     + txscriptfee (pp .prices) (totExUnits (tx ∷ (tx .subTxs)))
+                     + txscriptfee (pp .prices) (totExUnits tx)
                      + scriptsCost pp (refScriptsSize utxo tx)
   -- + pp .minFeeRefScriptCoinsPerByte 
   -- *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
@@ -133,7 +119,7 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee ∧ (not (≟-∅ᵇ (txrd
     open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
-    totalFee            = (tx .Tx.body .TxBody.txfee) + sum (map (λ p → p .Tx.body .TxBody.txfee) (tx .Tx.subTxs))
+    totalFee            = (tx .Tx.body .TxBody.txfee) + sum (map (λ p → p .TxBody.txfee) (tx .Tx.body .TxBody.subTxBodies))
 \end{code}
 
 \begin{figure*}
@@ -142,50 +128,9 @@ module _ (let open UTxOState) where
 \end{code}
 \begin{code}
 
-  deleteFirst : TxOut → List TxOut → List TxOut
-  deleteFirst _ [] = [] 
-  deleteFirst a (b ∷ bc) with ((txOutHash a) ≟ (txOutHash b))
-  ... | yes _   = bc 
-  ... | no _  = b ∷ deleteFirst a bc
-
-  -- do two lists have the same elements?
-  compareLists : List TxOut → List TxOut → Set 
-  compareLists [] [] = true ≡ true
-  compareLists (_ ∷ l) [] = false ≡ true
-  compareLists [] (_ ∷ l) = false ≡ true
-  compareLists (a ∷ l1) (b ∷ l2) = (a ∈ fromList (b ∷ l2) ) × (compareLists l1 (deleteFirst a (b ∷ l2) ))
-
-  -- check ins in top-level tx correspond to spendOuts in the UTxO set
-  -- could do this instead by forcing explicit indexing, ie spendOuts : TxIn - TxOut
-  chkCorInsOuts : List TxBody → UTxO → Set 
-  chkCorInsOuts tbl uu = compareLists (foldr (_++_) [] (map (λ p → (map proj₂ (setToList (proj₁ (p .TxBody.spendOuts))))) tbl))  (map proj₂ (setToList (proj₁ uu))) 
-
-  -- no regular inputs in any transaction are in corInputs of the top-level
-  chkCorIns : List TxBody → ℙ TxIn → Set
-  chkCorIns txbods cins = foldr (λ t l → (t .TxBody.txins ∩ cins ≢ ∅) × l) (true ≡ true) txbods
-
-  -- all corInputs and inputs are the UTxO
+   -- all corInputs and inputs are the UTxO
   chkInsInUTxO : List TxBody → ℙ TxIn → Set
-  chkInsInUTxO txbods uins = foldr (λ t l → (t .TxBody.txins ∪ t .TxBody.corInputs ⊆ uins) × l) (true ≡ true) txbods
-
-  singleInvalid : BatchData → List Tx → Bool
-  singleInvalid SingularTransaction (tx ∷ []) with (tx .Tx.isValid)
-  ... | true = false 
-  ... | false = true 
-  singleInvalid _ _ = false
-
-  -- if tx is balanced, and all new features are empty, this is true
-  noNewFeatures : Bool → TxBody → Bool
-  noNewFeatures isBalanced txb with ((((isBalanced , setToList (txb .TxBody.requireBatchObservers)) , setToList (proj₁ (txb .TxBody.spendOuts))) , setToList (txb .TxBody.corInputs  )) , setToList (txb .TxBody.subTxIds ))
-  ... | ((((true , []) , [] ) , []) , []) = true 
-  ... | _ = false 
-
-  mkBatchData : Bool → List Tx → BatchData
-  mkBatchData  _ [] = SingularTransaction -- should not happen
-  mkBatchData isBalanced (tx ∷ []) with (noNewFeatures isBalanced (tx .Tx.body)) 
-  ... | false = SingularTransaction 
-  ... | true  = OldTransaction 
-  mkBatchData _ (tx ∷ txs) = BatchParent (tx .Tx.body .TxBody.txid) (foldr (λ p q → q ∧ (p .Tx.isValid)) true (tx ∷ txs))
+  chkInsInUTxO txbods uins = foldr (λ t l → (t .TxBody.txins ⊆ uins) × l) (true ≡ true) txbods
 
   -- fold over all transaction bodies 
   -- add corInputs to total balance
@@ -195,8 +140,7 @@ module _ (let open UTxOState) where
     balance (st .utxo ∣ txb .txins)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
-    +  inject (getCoin (txb .txwdrls))
-    +  balance (st .utxo ∣ txb .corInputs)) +_) (inject 0) txbls
+    +  inject (getCoin (txb .txwdrls))) +_) (inject 0) txbls
 
   -- fold over all transaction bodies 
   produced : PParams → UTxOState → List TxBody → Value
@@ -205,33 +149,30 @@ module _ (let open UTxOState) where
     +  inject (txb .txfee)
     +  inject (newDeposits pp st txb)
     +  inject (txb .txdonation)) +_) (inject 0) txbls
+  
+noSubsInSubs : List TxBody → Bool
+noSubsInSubs l = foldr (λ a b → (emp (a .TxBody.subTxBodies)) ∧ b) true l
+  where 
+  emp : List TxBody → Bool
+  emp [] = true 
+  emp (t ∷ k) = false
 
-  getIDs : List Tx → ℙ TxId 
-  getIDs ls = foldr (λ t → (singleton (t .Tx.body .TxBody.txid) ∪_ )) ∅ ls
+noColsInSubs : List TxBody → Bool
+noColsInSubs l = foldr (λ a b → (emp (setToList (a .TxBody.collateral))) ∧ b) true l
+  where 
+  emp : List TxIn → Bool
+  emp [] = true 
+  emp (t ∷ k) = false
 
-  getValidPath : BatchData → List Tx → Bool
-  getValidPath (BatchParent _ batchValid) _ = batchValid
-  getValidPath SingularTransaction (tx ∷ l) = tx .Tx.isValid
-  getValidPath OldTransaction (tx ∷ l) = tx .Tx.isValid
-  getValidPath _ _ = false
+lookupOrNothingᵐ : ∀ {A B} → ⦃ _ : DecEq A ⦄ → A ⇀ B → A → B → B 
+lookupOrNothingᵐ mp k default with lookupᵐ? mp k
+... | nothing = default 
+... | just a = a
 
-  getIsTop : BatchData → Tx → Bool
-  getIsTop (BatchParent tid batchValid) tx = (tid ≡ᵇ (tx .Tx.body .TxBody.txid)) 
-  getIsTop _ _ = false
-
-  invOrNotBalanced : BatchData → List Tx → Bool → Set
-  invOrNotBalanced bd txs isBalanced = (singleInvalid bd txs ≡ false) → (isBalanced ≡ true)
-
-  mkSwapEnv : LEnv → Tx → UTxOState → SwapEnv
-  mkSwapEnv l tx u = ⟦ l , bd ,  tx .Tx.body .TxBody.requireBatchObservers , allScripts , vp ⟧ˢᵉ
-    where 
-      txs'               = tx ∷ (tx .Tx.subTxs)
-      txBods            = (map (λ p → p .Tx.body)  (tx .Tx.subTxs))
-      allScripts        = foldr (λ t l → (t .Tx.wits .TxWitnesses.scripts) ∪ l) ∅ txs' 
-      pp                = l .LEnv.pparams
-      isBalanced        = consumed pp u ((tx .Tx.body) ∷ txBods) ≡ᵇ produced pp u ((tx .Tx.body) ∷ txBods) 
-      bd                = mkBatchData isBalanced txs' 
-      vp                = getValidPath bd txs'
+-- TODO txdats should be only the relevant ones!
+mkTx : Tx → TxBody → Tx 
+mkTx tx txb = record { body = txb ; wits = record { vkSigs = lookupOrNothingᵐ subTxSigs txid ∅ᵐ ; subTxSigs = ∅ᵐ ; scripts = scripts ; txdats = txdats ; txrdmrs = lookupOrNothingᵐ subTxRdmrs txid ∅ᵐ ; subTxRdmrs = ∅ᵐ } ; isValid = isValid ; txAD = lookupOrNothingᵐ subTxADs txid nothing ; subTxADs = ∅ᵐ }
+ where open Tx tx; open TxWitnesses wits ; open TxBody body
 
 \end{code}
 \caption{Functions used in UTxO rules, continued}
@@ -251,7 +192,7 @@ open UTxOState
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,SWAP⦈_ : SwapEnv → LState → Tx → LState → Type
+  _⊢_⇀⦇_,SWAP⦈_ : LEnv → LState → Tx → LState → Type
 \end{code}
 \begin{code}[hide]
   where
@@ -261,21 +202,21 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  SWAP-V : let open Tx tx renaming (body to txb); open TxBody txb; open SwapEnv Γ' ; open LEnv lenv  
+  SWAP-V : let open Tx tx renaming (body to txb); open TxBody txb; open LEnv Γ
     in
-    ∙  valP ≡ true
+    ∙  isValid ≡ true
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
     ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
-    ∙  record { LEnv lenv ; batchData = bdat ; bObs = reqObs ; batchScripts = bScripts ; validPath = true ; isTop = getIsTop bdat tx } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+    ∙  record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
        ────────────────────────────────
-       Γ' ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , govSt' , certState' ⟧ˡ
+       Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , govSt' , certState' ⟧ˡ
 
-  SWAP-I : let open SwapEnv Γ' 
+  SWAP-I : let open Tx tx renaming (body to txb); open TxBody txb; open LEnv Γ 
     in
-    ∙ (valP ≡ false)
-    ∙ record { LEnv lenv ; batchData = bdat ; bObs = reqObs ; batchScripts = bScripts ; validPath = false ; isTop = getIsTop bdat tx } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+    ∙ (isValid ≡ false)
+    ∙ record { LEnv Γ }  ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
       ────────────────────────────────
-       Γ' ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , govSt , certState ⟧ˡ
+       Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , govSt , certState ⟧ˡ
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{SWAP transition system}
@@ -289,7 +230,7 @@ pattern SWAP-I⋯ y z     = SWAP-I (y , z)
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-_⊢_⇀⦇_,SWAPS⦈_ : SwapEnv → LState → List Tx → LState → Type
+_⊢_⇀⦇_,SWAPS⦈_ : LEnv → LState → List Tx → LState → Type
 _⊢_⇀⦇_,SWAPS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,SWAP⦈_
 \end{code}
 \caption{LEDGERS transition system}
@@ -318,23 +259,17 @@ data
 \begin{code}
   LEDGER-Ind : 
     let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
-        txBods            = (map (λ p → p .Tx.body)  subTxs)
-        txs               = tx ∷ subTxs 
-        isBalanced        = consumed pp u (body ∷ txBods) ≡ᵇ produced pp u (body ∷ txBods) 
-        bd                = mkBatchData isBalanced txs 
-        allScripts        = foldr (λ t l → (t .Tx.wits .TxWitnesses.scripts) ∪ l) ∅ txs 
+        txs            = tx ∷ (map (mkTx tx) subTxBodies)
+        isBalanced        = consumed pp u (body ∷ subTxBodies) ≡ᵇ produced pp u (body ∷ subTxBodies) 
 
     in
     ∙ (feesOK pp tx utx ≡ true)         --1       
-    ∙ (chkCorIns (body ∷ txBods) (body .TxBody.corInputs )) -- 2
-    ∙ (chkCorInsOuts (body ∷ txBods) (utx ∣ corInputs)) -- 3
-    ∙ (chkInsInUTxO (body ∷ txBods) (dom utx)) -- 4
-    ∙ (invOrNotBalanced bd txs isBalanced)    -- 5
+    ∙ (chkInsInUTxO (body ∷ subTxBodies) (dom utx)) -- 4
     ∙ (txsize ≤ maxTxSize)  --6
     ∙ (maxTxExUnits ≡ maxTxExUnits) -- TODO actually supposed to be : ≥ᵉ totExUnits txs maxTxExUnits   --7 
-    ∙ (getIDs subTxs ≡ subTxIds) -- TODO can we put subTxs directly in body? --8
-    ∙ (lengthˢ subTxIds ≡ length subTxs) -- no repeated transactions --9
-    ∙ (⟦ Γ , bd , body .TxBody.requireBatchObservers , allScripts , getValidPath bd txs ⟧ˢᵉ) ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , govSt' , certState' ⟧ˡ
+    ∙ Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , govSt' , certState' ⟧ˡ
+    ∙  noSubsInSubs subTxBodies ≡ true 
+    ∙  noColsInSubs subTxBodies ≡ true 
        ────────────────────────────────
        Γ ⊢  ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , govSt' , certState' ⟧ˡ
 \end{code}

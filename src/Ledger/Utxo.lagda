@@ -46,7 +46,7 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 isTwoPhaseScriptAddress : ℙ Script → Tx → UTxO → Addr → Bool
 isTwoPhaseScriptAddress bs tx utxo a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) bs tx utxo
+    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
                  then (λ {s} → isP2Script s)
                  else false)
   else
@@ -62,7 +62,7 @@ opaque
   getSpentHashes : ℙ Script → Tx → UTxO → ℙ DataHash
   getSpentHashes bs tx utxo = getDataHashes
     (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress bs tx utxo a ≡ true)
-            (range (utxo ∣ txins)) ∪ (range spendOuts)) 
+            (range (utxo ∣ txins)) )
     where open Tx; open TxBody (tx .body)
 \end{code}
 \caption{Functions supporting UTxO rules}
@@ -146,18 +146,13 @@ the new deposits logic in older eras and then replaying the chain.
 record UTxOEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_,_,_,_,_,_⟧ᵘᵉ
+  constructor ⟦_,_,_⟧ᵘᵉ
   field
 \end{code}
 \begin{code}
     slot      : Slot
     pparams   : PParams
     treasury  : Coin
-    bObs      : ℙ ScriptHash
-    batchData : BatchData
-    validPath : Bool
-    isTop     : Bool
-    batchScripts : ℙ Script
 \end{code}
 \end{NoConway}
 \emph{UTxO states}
@@ -433,15 +428,13 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          bd = Γ .UTxOEnv.batchData
-          bs = Γ .UTxOEnv.batchScripts
-          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ ValidCertDeposits pp deposits txcerts
-        ∙ evalScripts tx sLst ≡ isValid
-        ∙ validPath ≡ true
+        ∙ evalScripts tx sLst ≡ true
+        ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ (txins ∪ (corInputs)) ᶜ) ∪ˡ (outs txb)
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
                               , updateDeposits pp txb deposits
                               , donations + txdonation
@@ -452,30 +445,12 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          bd = Γ .UTxOEnv.batchData
-          bs = Γ .UTxOEnv.batchScripts
-          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
+          sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ isValid
-        ∙ validPath ≡ false
-        ∙ isTop ≡ false
+        ∙ evalScripts tx sLst ≡ false
+        ∙ isValid ≡ false
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
-
-  Scripts-No-TopLevel :
-    ∀ {Γ} {s} {tx}
-    → let open Tx tx renaming (body to txb); open TxBody txb
-          open UTxOEnv Γ renaming (pparams to pp)
-          open UTxOState s
-          bd = Γ .UTxOEnv.batchData
-          bs = Γ .UTxOEnv.batchScripts
-          sLst = collectPhaseTwoScriptInputs bs bd pp tx utxo
-      in
-        ∙ evalScripts tx sLst ≡ isValid
-        ∙ validPath ≡ false
-        ∙ isTop ≡ true
-          ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ
 \end{code}
 \caption{UTXOS rule}
 \label{fig:utxos-conway}
@@ -484,7 +459,6 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
 \begin{code}[hide]
 unquoteDecl Scripts-Yes-premises = genPremises Scripts-Yes-premises (quote Scripts-Yes)
 unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scripts-No)
-unquoteDecl Scripts-No-Top-premises  = genPremises Scripts-No-Top-premises  (quote Scripts-No-TopLevel)
 
 private variable
   Γ : UTxOEnv
@@ -529,9 +503,6 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ ∀[ a ∈ dom txwdrls ]          a .RwdAddr.net  ≡ NetworkId
     ∙ txNetworkId ≡? NetworkId
     ∙ curTreasury ≡? treasury
-
-    -- NEW
-    ∙ (isTop ≡ false → txb .TxBody.corInputs ≡ ∅)
 
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────

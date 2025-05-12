@@ -28,7 +28,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where
-  Spend Mint Cert Rewrd Vote Propose SpendOut BatchObs : Tag
+  Spend Mint Cert Rewrd Vote Propose BatchObs : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Type₁ where
@@ -131,6 +131,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   record TxBody : Type where
 \end{code}
 \begin{code}[hide]
+    inductive 
     field
 \end{code}
 \begin{code}
@@ -160,12 +161,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       -- TODO do we need these in this specificaiton??
       -- txdatsB   : DataHash ⇀ Datum 
       -- txrdmrsB  : RdmrPtr  ⇀ Redeemer × ExUnits
-      -- outputs being spent for which inputs are provided by top-level tx
-      spendOuts      : Ix ⇀ TxOut
-      -- inputs corresponding to spentOuts
-      corInputs      : ℙ TxIn
       -- fixes the attached subTxs
-      subTxIds       : ℙ TxId
+      subTxBodies       : List TxBody
+
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -176,17 +174,14 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \end{code}
 \begin{code}
       vkSigs   : VKey ⇀ Sig
+      subTxSigs : TxId ⇀ (VKey ⇀ Sig)
       scripts  : ℙ Script
       txdats   : DataHash ⇀ Datum
       txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
+      subTxRdmrs : TxId ⇀ (RdmrPtr  ⇀ Redeemer × ExUnits)
 
     scriptsP1 : ℙ P1Script
     scriptsP1 = mapPartial isInj₁ scripts
-
-  data BatchData : Type where
-    SingularTransaction : BatchData 
-    OldTransaction : BatchData
-    BatchParent : TxId → Bool → BatchData -- meaning batch valid, txid is the top-level tx
 
   record Tx : Type where
 \end{code}
@@ -200,8 +195,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       wits     : TxWitnesses
       isValid  : Bool
       txAD     : Maybe AuxiliaryData
-      -- NEW
-      subTxs   : List Tx
+      subTxADs : TxId ⇀ (Maybe AuxiliaryData)
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -243,13 +237,13 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   getBatchScripts bs tx utxo = bs ∪ refScripts tx utxo
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → ℙ Script → Tx → UTxO → Maybe Script
-  lookupScriptHash sh bs tx utxo =
+  lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
+  lookupScriptHash sh tx utxo =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (getBatchScripts bs tx utxo)
+    where m = setToHashMap (getBatchScripts (tx .Tx.wits .TxWitnesses.scripts) tx utxo)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions related to transactions}
