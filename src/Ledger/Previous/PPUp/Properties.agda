@@ -4,9 +4,9 @@ open import Ledger.Prelude hiding (_*_)
 open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
 open import Ledger.Transaction
 
-module Ledger.PPUp.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.Previous.PPUp.Properties (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.PPUp txs
+open import Ledger.Previous.PPUp txs
 
 private
   -- Ring literals

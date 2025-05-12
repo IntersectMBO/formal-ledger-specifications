@@ -5,10 +5,10 @@ open import Relation.Nullary.Decidable
 open import Ledger.Prelude
 open import Ledger.Transaction
 
-module Ledger.Conway.Conformance.NewPP.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.Previous.Conformance.NewPP.Properties (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.Conway.Conformance.PPUp txs
-open import Ledger.Conway.Conformance.NewPP txs
+open import Ledger.Previous.Conformance.PPUp txs
+open import Ledger.Previous.Conformance.NewPP txs
 
 instance
   Computational-NEWPP : Computational _⊢_⇀⦇_,NEWPP⦈_ String

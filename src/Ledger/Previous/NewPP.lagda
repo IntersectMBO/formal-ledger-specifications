@@ -8,9 +8,9 @@ open import Relation.Nullary.Decidable
 open import Ledger.Prelude
 open import Ledger.Transaction
 
-module Ledger.NewPP (txs : _) (open TransactionStructure txs) where
+module Ledger.Previous.NewPP (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.PPUp txs
+open import Ledger.Previous.PPUp txs
 
 record NewPParamEnv : Type where
 --  field

@@ -75,15 +75,5 @@ import Ledger.Conway.Conformance.Utxow
 import Ledger.Conway.Conformance.Utxow.Properties
 import Ledger.Conway.Conformance.Script
 
--- ** Deprecated in Conway, but keep it around for eventual earlier eras
-import Ledger.NewPP
-import Ledger.NewPP.Properties
-import Ledger.PPUp
-import Ledger.PPUp.Properties
-import Ledger.Conway.Conformance.NewPP
-import Ledger.Conway.Conformance.NewPP.Properties
-import Ledger.Conway.Conformance.PPUp
-import Ledger.Conway.Conformance.PPUp.Properties
-
 -- ** Not currently used
 import iog-prelude.Tactic.DeriveComp

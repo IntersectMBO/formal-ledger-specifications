@@ -1,6 +1,4 @@
-\section{Update Proposal Mechanism}
 
-\begin{code}[hide]
 {-# OPTIONS --safe #-}
 
 open import Agda.Builtin.FromNat
@@ -11,44 +9,37 @@ import Data.Nat as ℕ; import Data.Nat.Properties as ℕ
 open import Ledger.Prelude hiding (_*_)
 open import Ledger.Transaction
 
-module Ledger.PPUp (txs : _) (open TransactionStructure txs) where
+module Ledger.Previous.Conformance.PPUp (txs : _) (open TransactionStructure txs) where
 
 open Semiring Slotʳ using (_*_)
 open Semiring-Lit Slotʳ
 
 private variable m n : ℕ
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
+
 GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
 record PPUpdateState : Type where
+
   field
+
     pup   : ProposedPPUpdates
     fpup  : ProposedPPUpdates
 
 record PPUpdateEnv : Type where
+
   field
+
     slot       : Slot
     pparams    : PParams
     genDelegs  : GenesisDelegation
-\end{code}
-\end{AgdaMultiCode}
-\caption{PPUP types}
-\end{figure*}
-\begin{figure*}[h]
-\begin{code}
+
 viablePParams : PParams → Type
 viablePParams pp = ⊤ -- TODO: block size check
 
 isViableUpdate : PParams → PParamsUpdate → Type
 isViableUpdate pp pup with applyUpdate pp pup
 ... | pp' = pvCanFollow (PParams.pv pp) (PParams.pv pp') × viablePParams pp'
-\end{code}
-\caption{Definitions for PPUP}
-\end{figure*}
-\begin{code}[hide]
+
 private variable
   Γ : PPUpdateEnv
   s : PPUpdateState
@@ -65,9 +56,7 @@ instance
   ... | yes refl | yes p    = ⊥-elim $ ℕ.m+1+n≢m m $ ×.×-≡,≡←≡ p .proj₁
 
 data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → PPUpdateState → Type where
-\end{code}
-\begin{figure*}[h]
-\begin{code}
+
   PPUpdateEmpty : Γ ⊢ s ⇀⦇ nothing ,PPUP⦈ s
 
   PPUpdateCurrent : let open PPUpdateEnv Γ in
@@ -87,6 +76,4 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
         record { pup = pupˢ ; fpup = pup ∪ˡ fpupˢ }
-\end{code}
-\caption{PPUP inference rules}
-\end{figure*}
+
