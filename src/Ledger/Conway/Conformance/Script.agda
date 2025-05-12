@@ -12,17 +12,17 @@ open import Tactic.Derive.DecEq
 open import Tactic.Inline
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
-open import Ledger.Crypto
-open import Ledger.Types.Epoch
+open import Ledger.Conway.Crypto
+open import Ledger.Conway.Types.Epoch
 
-import Ledger.Script
+import Ledger.Conway.Script
 
 module Ledger.Conway.Conformance.Script
   (crypto : _) (open Crypto crypto)
   (es     : _) (open EpochStructure es)
   where
 
-open Ledger.Script crypto es
+open Ledger.Conway.Script crypto es
 
 record HSTimelock : Type where
   field

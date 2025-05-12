@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Abstract using (AbstractFunctions)
-open import Ledger.Transaction using (TransactionStructure)
+open import Ledger.Conway.Abstract using (AbstractFunctions)
+open import Ledger.Conway.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Utxo.Properties
   (txs : _) (open TransactionStructure txs)
@@ -12,7 +12,7 @@ open import Data.Nat.Properties hiding (_≟_)
 open import Data.String.Base renaming (_++_ to _+ˢ_) using ()
 open import Interface.ComputationalRelation
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
-open import Ledger.ScriptValidation txs abs
+open import Ledger.Conway.ScriptValidation txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Prelude
@@ -20,7 +20,7 @@ open import stdlib-meta.Tactic.GenError
 
 private
   module L where
-    open import Ledger.Utxo txs abs public
+    open import Ledger.Conway.Utxo txs abs public
 
 open Equivalence
 
