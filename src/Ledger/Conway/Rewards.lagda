@@ -5,30 +5,45 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Agda.Builtin.FromNat
-
+import      Data.Nat as ℕ renaming (_⊔_ to max)
+import      Data.Integer as ℤ renaming (_⊔_ to max)
+import      Data.Integer.Properties as ℤ
 open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_)
-import Data.Rational as ℚ renaming (_⊓_ to min; _⊔_ to max)
-open import Data.Rational.Literals using (number)
-import Data.Rational.Properties as ℚ
-import Data.Nat as ℕ renaming (_⊔_ to max)
-import Data.Integer as ℤ renaming (_⊔_ to max)
-import Data.Integer.Properties as ℤ
-open Number number renaming (fromNat to fromℕ)
+import      Data.Rational as ℚ renaming (_⊓_ to min; _⊔_ to max)
+open import Data.Rational.Literals using (number; fromℤ)
+import      Data.Rational.Properties as ℚ
 
-open import Ledger.Prelude hiding (_/_; _*_; _-_)
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Abstract
+open import Ledger.Conway.Transaction
 open import Ledger.Conway.Types.Numeric.UnitInterval
 
-module Ledger.Conway.Rewards
-  (gs : _) (open GovStructure gs)
+open import Agda.Builtin.FromNat
+open        Number number renaming (fromNat to fromℕ)
+
+module Ledger.Rewards
+  (txs : _) (open TransactionStructure txs)
+  (abs : AbstractFunctions txs)
   where
 
-open import Ledger.Conway.Certs gs
+open import Ledger.Conway.Certs govStructure
+open import Ledger.Conway.Ledger txs abs
+open import Ledger.Prelude hiding (_/_; _*_; _-_)
+open import Ledger.Conway.Utxo txs abs
+
 \end{code}
 This section defines how rewards for stake pools and their delegators
 are calculated and paid out.
+This calculation has two main aspects:
+\begin{itemize}
+  \item The \emph{amount} of rewards to be paid out.
+    This is defined in
+    \cref{sec:rewards-amount}.
+  \item The \emph{time} when rewards are paid out.
+    This is defined in
+    \cref{sec:rewards-time}.
+\end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Rewards Motivation}
 \label{sec:rewards-motivation}
 In order to operate, any blockchain needs to attract parties that are
@@ -85,7 +100,12 @@ large, but fixed number of stake pools that attract most of the stake.
 For more details about the design and rationale of the rewards and delegation
 system, see \textcite{shelley-delegation-design}.
 
-\subsection{Precision of Arithmetic Operations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Amount of Rewards to be Paid Out}
+\label{sec:rewards-amount}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Precision of Arithmetic Operations}
 \label{sec:precision-rewards}
 When computing rewards, all intermediate results are computed
 using rational numbers, \AgdaDatatype{ℚ},
@@ -114,7 +134,8 @@ We use the following arithmetic operations besides basic arithmetic:
   \item \AgdaFunction{/₀}: Like \AgdaFunction{÷₀}, but with integer arguments.
 \end{itemize}
 
-\subsection{Rewards Distribution Calculation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Rewards Distribution Calculation}
 \label{sec:rewards-distribution-calculation}
 This section defines the amount of rewards that are paid out
 to stake pools and their delegators.
@@ -422,7 +443,8 @@ reward pp blocks rewardPot poolParams stake delegs total = rewards
 \label{fig:functions:reward}
 \end{figure*}
 
-\subsection{Reward Update}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Reward Update}
 \label{sec:reward-update}
 This section defines the \AgdaRecord{RewardUpdate} type,
 which records the net flow of Ada due to paying out rewards
@@ -523,7 +545,353 @@ after they have passed through the \AgdaFunction{rewardPot}.
   \label{fig:rewardPot}
 \end{figure}
 
-\subsection{Stake Distribution Snapshots}
-\label{sec:stake-dstribution-snapshots-}
-TODO: This section defines the SNAP transition rule
-for the stake distribution snapshots.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Stake Distribution Calculation}
+\label{sec:stake-distribution-calculation}
+
+This section defines the calculation of the stake distribution
+for the purpose of calculating rewards.
+
+\Cref{fig:defs:Snapshot} defines the type \AgdaField{Snapshot}
+that represents a stake distribution snapshot.
+Such a snapshot contains the essential data needed to compute rewards:
+\begin{itemize}
+  \item \AgdaField{stake}  A stake distribution,
+  that is a mapping from credentials to coin.
+  \item \AgdaField{delegations}: A delegation map,
+  that is a mapping from credentials to the stake pools that they delegate to.
+  \item \AgdaField{poolParameters}:
+  A mapping that stores the pool parameters of each stake pool.
+\end{itemize}
+
+\begin{figure*}[!h]
+\begin{code}
+record Snapshot : Set where
+  field
+    stake           : Credential ⇀ Coin
+    delegations     : Credential ⇀ KeyHash
+    poolParameters  : KeyHash ⇀ PoolParams
+
+\end{code}
+\caption{Definitions of the Snapshot type}
+\label{fig:defs:Snapshot}
+\end{figure*}
+\begin{code}[hide]
+instance
+  unquoteDecl HasCast-Snapshot =
+    derive-HasCast [ (quote Snapshot , HasCast-Snapshot) ]
+\end{code}
+
+\Cref{fig:functions:stakeDistr} defines the calculation of
+the stake distribution from the data contained in a ledger state.
+Here,
+\begin{itemize}
+  \item \AgdaFunction{aggregate₊} takes a relation \ab{R ⊂ A × V},
+    where \ab{V} is any monoid with operation \ab{+},
+    and returns a mapping \ab{A ⇀ B} such that any item \ab{a ∈ A}
+    is mapped to the sum (using the operation \ab{+})
+    of all \ab{b ∈ B} such that \ab{(a , b) ∈ R}.
+  \item \AgdaFunction{m}
+    is the stake relation computed from the UTxO set.    
+  \item \AgdaFunction{stakeRelation}
+    is the total stake relation obtained
+    by combining the stake from the UTxO set
+    with the stake from the reward accounts.
+\end{itemize}
+
+\begin{figure*}[!h]
+\begin{AgdaSuppressSpace}
+\begin{code}[hide]
+private
+  getStakeCred : TxOut → Maybe Credential
+  getStakeCred (a , _ , _ , _) = stakeCred a
+\end{code}
+\begin{code}
+stakeDistr : UTxO → DState → PState → Snapshot
+stakeDistr utxo stᵈ pState =
+    ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs , poolParams ⟧
+  where
+    poolParams = pState .PState.pools
+    open DState stᵈ using (stakeDelegs; rewards)
+    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
+    stakeRelation = m ∪ ∣ rewards ∣
+\end{code}
+\end{AgdaSuppressSpace}
+\caption{Functions for computing stake distributions}
+\label{fig:functions:stakeDistr}
+\end{figure*}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Timing when Rewards are Paid Out}
+\label{sec:rewards-time}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Timeline of the Rewards Calculation}
+\label{sec:rewards-timeline}
+
+As described in \cref{sec:rewards-motivation},
+the probability of producing a block depends on the stake delegated
+to the block producer.
+However, the stake distribution changes over time,
+as funds are transferred between parties.
+This raises the question:
+What is the point in time from which we take the stake distribution?
+Right at the moment of producing a block? Some time in the past?
+How do we deal with the fact that the blockchain is only \emph{eventually consistent},
+i.e.\ blocks can be rolled back before a stable consensus on the chain is formed?
+
+On Cardano, the answer to these questions is to group time into \emph{epochs}.
+An epoch is long enough such that at the beginning of a new epoch,
+the beginning of the previous epoch has become stable.
+An epoch is also long enough for human users to react to parameter changes,
+such as stake pool costs or performance.
+But an epoch is also short enough so that changes to
+the stake distribution will be reflected in block production
+within a reasonable timeframe.
+
+The rewards for the blocks produced during a given epoch $e_i$
+involve the two epochs surrounding it.
+In particular, the stake distribution will come from the previous epoch
+and the rewards will be calculated in the following epoch.
+At each epoch boundary, one snapshot of the stake distribution is taken;
+changes to the stake distribution within an epoch are not considered
+until the next snapshot is taken.
+More concretely:
+\begin{enumerate}[label=(\Alph*)]%for small alpha-characters within brackets.
+  \item A stake distribution snapshot is taken at the begining of epoch $e_{i-1}$.
+  \item The randomness for leader election is fixed during epoch $e_{i-1}$
+  \item Epoch $e_{i}$ begins, blocks are produced using the snapshot taken at (A).
+  \item Epoch $e_{i}$ ends.
+    A snapshot is taken of the stake pool performance during epoch $e_{i}$.
+    A snapshot is also taken of the fee pot.
+  \item The snapshots from (D) are stable and the reward calculation can begin.
+  \item The reward calculation is finished and an update to the ledger state
+    is ready to be applied.
+  \item Rewards are given out.
+\end{enumerate}
+
+\usetikzlibrary{decorations.pathreplacing}
+\begin{tikzpicture}
+% axis
+\draw[latex-latex] (0,0) -- (11,0) ;
+
+% epoch braces
+\draw [decorate,decoration={brace,amplitude=10pt} ,yshift=5pt] (1.03,0) -- (3.97,0)
+  node [midway, above, yshift=9pt]{$e_{i-1}$};
+\draw [decorate,decoration={brace,amplitude=10pt} ,yshift=5pt] (4.03,0) -- (6.97,0)
+  node [midway, above, yshift=9pt]{$e_{i}$};
+\draw [decorate,decoration={brace,amplitude=10pt} ,yshift=5pt] (7.03,0) -- (9.97,0)
+  node [midway, above, yshift=9pt]{$e_{i+1}$};
+
+% epoch boundaries
+\foreach \x in  {1,4,7,10}
+  \draw[shift={(\x,0)}] (0pt,0pt) -- (0pt,-3pt);
+
+\node at (1,-0.5) {A};
+\node at (3,-0.5) {B};
+\node at (4,-0.5) {C};
+\node at (7,-0.5) {D};
+\node at (8,-0.5) {E};
+\node at (9,-0.5) {F};
+\node at (10,-0.5) {G};
+
+\end{tikzpicture}
+
+In order to specify this logic,
+we store the last three snapshots of the stake distributions.
+The mnemonic ``mark, set, go'' will be used to keep
+track of the snapshots, where the label ``mark'' refers to the most recent snapshot,
+and ``go'' refers to the snapshot that is ready to be used in the reward calculation.
+
+In the above diagram, the snapshot taken at (A) is labeled ``mark'' during epoch $e_{i-1}$,
+``set'' during epoch $e_i$ and ``go'' during epoch $e_{i+1}$. At (G) the snapshot
+taken at (A) is no longer needed and will be discarded.
+
+In other words, blocks will be produced using the snapshot labeled ``set'',
+whereas rewards are computed from the snapshot labeled ``go''.
+
+\begin{note}
+  Between time D and E we are concerned with chain growth and stability.
+  Therefore this duration can be stated as 2k blocks (to state it in slots requires details about
+  the particular version of the Ouroboros protocol). The duration between F and G is also 2k blocks.
+  Between E and F a single honest block is enough to ensure a random nonce.
+\end{note}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Example Illustration of the Reward Cycle}
+\label{sec:illustration-reward-cycle}
+
+For better understanding, here an example
+of the logic described in the previous section:
+
+\definecolor{epochColor}{rgb} {1.00,0.50,0.00}
+\definecolor{aliceColor}{rgb} {0.65,0.00,0.00}
+\definecolor{bobColor}{rgb} {0.00,0.50,0.00}
+\definecolor{bob2Color}{rgb} {0.00,0.95,0.00}
+\definecolor{snapshot1}{rgb} {0.00,0.00,0.90}
+\definecolor{snapshot2}{rgb} {0.00,0.60,0.90}
+
+\begin{tikzpicture}
+
+  % Axis
+  \draw [thick] (-0.2,0) -- (13,0);
+  \draw (0,-.2) -- (0, .2);
+  \draw (3,-.2) -- (3, .2);
+  \draw (6,-.2) -- (6, .2);
+  \draw (9,-.2) -- (9, .2);
+  \draw (12,-.2) -- (12, .2);
+  \node[align=center, below, color=epochColor] at (1.5,0.5)
+    {$e_1$};
+  \node[align=center, below, color=epochColor] at (4.5,0.5)
+    {$e_2$};
+  \node[align=center, below, color=epochColor] at (7.5,0.5)
+    {$e_3$};
+  \node[align=center, below, color=epochColor] at (10.5,0.5)
+    {$e_4$};
+
+  % Alice
+  % Alice's circle
+  \draw [aliceColor, fill] (0,3) circle [radius=0.5];
+  \node [white] at (0,3) {Alice};
+  % Alice's delegation line
+  \draw [->,thick, aliceColor] (0.4,2.65) to (2,0.05);
+  \node [aliceColor] at (2.2,2) {delegate to Bob};
+
+  % Bob
+  % Bob's circle
+  \draw [bobColor, fill] (0,-3) circle [radius=0.5];
+  \node [white] at (0,-3) {Bob};
+  % Bob's registration line
+  \draw [->,thick, bobColor] (0.2,-2.50) to (1,-0.05);
+  \node [align=left, below, bobColor] at (-0.5,-0.5) {initial pool \\ registration};
+  % Bob's re-registration line
+  \draw [->,thick, bob2Color] (0.45,-2.65) to (2.90,-0.05);
+  \node [bob2Color] at (2,-2.8) {re-registration};
+  % Bob's cached parameter change
+  \draw [->,thick, bob2Color] (2.9,-0.2) to [out=280, in=180] (3,-2)
+     to [out=0, in=290] (3.1,-0.2);
+
+  % Alice time to re-delegate
+  \draw [decorate, decoration = {brace, mirror, amplitude=10pt}, aliceColor, thick]
+    (3.2,-0.2) to (5.9,-0.2);
+  \node [align=center, below, aliceColor] at (5.1,-0.5)
+    {Alice's opportunity \\ to re-delegate \\ before Bob's new \\ parameters};
+
+  % Bob's blocks
+  % epoch e3
+  \draw [fill=bobColor,bobColor] (6.3,-.1) rectangle (6.5,-.3);
+  \draw [fill=bobColor,bobColor] (6.7,-.1) rectangle (6.9,-.3);
+  \draw [fill=bobColor,bobColor] (7.4,-.1) rectangle (7.6,-.3);
+  \draw [fill=bobColor,bobColor] (8.4,-.1) rectangle (8.6,-.3);
+  \draw [decorate, decoration = {brace, mirror, amplitude=10pt}, bobColor, thick]
+    (6.2, -0.4) to (8.9,-0.4);
+  \draw [->,thick, bobColor] (7.6, -0.8) to [out=315,in=200] (8.4, -1.2)
+     to [] (9.6, -0.9);
+
+  % epoch e4
+  \draw [fill=bob2Color,bob2Color] (9.9,-.1) rectangle (10.1,-.3);
+  \draw [fill=bob2Color,bob2Color] (10.4,-.1) rectangle (10.6,-.3);
+  \draw [fill=bob2Color,bob2Color] (10.8,-.1) rectangle (11.0,-.3);
+  \draw [decorate, decoration = {brace, mirror, amplitude=10pt}, bob2Color, thick]
+    (9.7, -0.4) to (11.2,-0.4);
+  \draw [->,thick, bob2Color] (10.6, -0.8) to [out=315,in=200] (11.4, -1.2)
+     to [] (12.6, -0.9);
+
+  % Snapshots
+  \draw [->,thick, snapshot1] (3,0.3) to [out=90,in=150] (9,0.5)
+     to [out=330,in=180] (10,-1) to [out=0,in=-135] (12,0) ;
+   \node [snapshot1] at (2.7,1.2) {mark};
+   \node [snapshot1] at (6,1.9) {set};
+   \node [snapshot1] at (9,0.9) {go};
+
+  \draw [->,thick, snapshot2] (6,0.3) to [out=90,in=150] (12,0.5)
+     to [out=330,in=180] (13,-1);
+   \node [snapshot2] at (5.7,1.2) {mark};
+   \node [snapshot2] at (9,1.9) {set};
+   \node [snapshot2] at (12,0.9) {go};
+\end{tikzpicture}
+
+Bob registers his stake pool in epoch $e_1$.
+Alice delegates to Bob's stake pool in epoch $e_1$.
+Just before the end of epoch $e_1$, Bob submits a stake pool re-registration,
+changing his pool parameters. The change in parameters is not immediate,
+as shown by the curved arrow around the epoch boundary.
+
+A snapshot is taken on the $e_1$/$e_2$ boundary. It is labeled ``mark'' initially.
+This snapshot includes Alice's delegation to Bob's pool, and Bob's pool parameters
+and listed in the initial pool registration certificate.
+
+If Alice changes her delegation choice any time during epoch $e_2$,
+she will never be effected by Bob's change of parameters.
+
+A new snapshot is taken on the $e_2$/$e_3$ boundary.
+The previous (darker blue) snapshot is now labeled ``set'', and the new one labeled ``mark''.
+The ``set'' snapshot is used for leader election in epoch $e_3$.
+
+On the $e_3$/$e_4$ boundary, the darker blue snapshot is labeled ``go'' and
+the lighter blue snapshot is labeled ``set''.
+Bob's stake pool performance during epoch $e_3$ (he produced 4 blocks)
+will be used with the darker blue snapshot for the rewards which will
+be handed out at the beginning of epoch $e_5$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Stake Distribution Snapshots}
+\label{sec:stake-distribution-snapshots}
+This section defines the SNAP transition rule for stake distribution snapshots.
+
+\Cref{fig:defs:Snapshots} defines the type
+\AgdaField{Snapshots} that contains the data that needs
+to be saved at the end of an epoch. This data is:
+\begin{itemize}
+  \item \AgdaField{mark}, \AgdaField{set}, \AgdaField{go}:
+  Three stake distribution snapshots as explained in \cref{sec:rewards-timeline}.
+  \item \AgdaField{feeSS}:
+  stores the fees which are added to the reward pot during the next reward update
+calculation, which is then subtracted from the fee pot on the epoch boundary.
+\end{itemize}
+
+\begin{figure*}[ht]
+\begin{code}
+record Snapshots : Set where
+  field
+    mark set go  : Snapshot
+    feeSS        : Coin
+
+\end{code}
+\caption{Definitions for the SNAP transition system}
+\label{fig:defs:Snapshots}
+\end{figure*}
+\begin{code}[hide]
+instance
+  unquoteDecl HasCast-Snapshots =
+    derive-HasCast [ (quote Snapshots , HasCast-Snapshots) ]
+\end{code}
+
+\Cref{fig:snap:sts} defines the snapshot transition rule.
+This transition has no preconditions and results in the following state change:
+\begin{itemize}
+  \item The oldest snapshot is replaced with the penultimate one.
+  \item The penultimate snapshot is replaced with the newest one.
+  \item The newest snapshot is replaced with one just calculated.
+  \item The current fees pot is stored in \AgdaField{feeSS}.
+  Note that this value will not change during the
+  epoch, unlike the \AgdaField{fees} value in the UTxO state.
+\end{itemize}
+
+\begin{code}[hide]
+private variable
+  lstate : LState
+  mark set go : Snapshot
+  feeSS : Coin
+\end{code}
+\begin{figure*}[h]
+\begin{code}
+data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
+  SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
+             stake = stakeDistr utxo dState pState
+    in
+    lstate ⊢ ⟦ mark , set , go , feeSS ⟧ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧
+\end{code}
+\caption{SNAP transition system}
+\label{fig:snap:sts}
+\end{figure*}
