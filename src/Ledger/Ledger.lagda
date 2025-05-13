@@ -264,12 +264,12 @@ data
 
     in
     ∙ (feesOK pp tx utx ≡ true)         --1   
-    ∙ isBalanced ≡ true
-    ∙ (chkInsInUTxO (body ∷ bods) (dom utx)) -- 4
-    ∙ (txsize ≤ maxTxSize)  --6
-    ∙ (maxTxExUnits ≡ maxTxExUnits) -- TODO actually supposed to be : ≥ᵉ totExUnits subTxs maxTxExUnits   --7 
-    ∙  noSubsInSubs bods ≡ true 
-    ∙  noColsInSubs bods ≡ true 
+    ∙ isBalanced ≡ true --2
+    ∙ (chkInsInUTxO (body ∷ bods) (dom utx)) -- 3
+    ∙ (txsize ≤ maxTxSize)  --4
+    ∙ (maxTxExUnits ≡ maxTxExUnits) -- TODO actually supposed to be : ≥ᵉ totExUnits subTxs maxTxExUnits   --5
+    ∙  noSubsInSubs bods ≡ true --6
+    ∙  noColsInSubs bods ≡ true --7
     ∙ Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ txsWithScripts ,SWAPS⦈ ⟦ u' , govSt' , certState' ⟧ˡ
        ────────────────────────────────
        Γ ⊢  ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , govSt' , certState' ⟧ˡ
