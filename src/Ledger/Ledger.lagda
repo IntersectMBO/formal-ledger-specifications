@@ -259,17 +259,18 @@ data
     let open UTxOState u renaming (utxo to utx); open Tx' tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
         bods           = map (λ t → t .Tx'.body) subTxs
         allScripts        = foldr (λ t l → (t .Tx'.wits .TxWitnesses.scripts) ∪ l) ∅ (tx ∷ subTxs)
-        txsWithScripts            = map (adjustTx allScripts isValid) (tx ∷ subTxs)
+        txsWithScripts  = map (adjustTx allScripts isValid) (tx ∷ subTxs)
         isBalanced        = consumed pp u (body ∷ bods) ≡ᵇ produced pp u (body ∷ bods) 
 
     in
-    ∙ (feesOK pp tx utx ≡ true)         --1       
+    ∙ (feesOK pp tx utx ≡ true)         --1   
+    ∙ isBalanced ≡ true
     ∙ (chkInsInUTxO (body ∷ bods) (dom utx)) -- 4
     ∙ (txsize ≤ maxTxSize)  --6
     ∙ (maxTxExUnits ≡ maxTxExUnits) -- TODO actually supposed to be : ≥ᵉ totExUnits subTxs maxTxExUnits   --7 
-    ∙ Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ subTxs ,SWAPS⦈ ⟦ u' , govSt' , certState' ⟧ˡ
     ∙  noSubsInSubs bods ≡ true 
     ∙  noColsInSubs bods ≡ true 
+    ∙ Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ txsWithScripts ,SWAPS⦈ ⟦ u' , govSt' , certState' ⟧ˡ
        ────────────────────────────────
        Γ ⊢  ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , govSt' , certState' ⟧ˡ
 \end{code}

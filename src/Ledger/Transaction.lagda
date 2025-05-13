@@ -172,11 +172,6 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       scriptIntHash  : Maybe ScriptHash -- TODO is this actually checked somewhere?
       -- NEW
       requireBatchObservers : ℙ ScriptHash
-      -- option to put datums and redeemers inside the transaction
-      -- TODO do we need these in this specificaiton??
-      -- txdatsB   : DataHash ⇀ Datum 
-      -- txrdmrsB  : RdmrPtr  ⇀ Redeemer × ExUnits
-      -- fixes the attached subTxs
       subTxs       : List (Tx' TxBody)
 
   Tx = Tx' TxBody 
