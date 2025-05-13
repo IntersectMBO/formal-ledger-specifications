@@ -20,7 +20,7 @@ open import Ledger.Conway.Types.Numeric.UnitInterval
 open import Agda.Builtin.FromNat
 open        Number number renaming (fromNat to fromℕ)
 
-module Ledger.Rewards
+module Ledger.Conway.Rewards
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where

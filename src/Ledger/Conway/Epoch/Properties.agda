@@ -16,6 +16,7 @@ open import Ledger.Conway.Epoch txs abs
 open import Ledger.Conway.Ledger txs abs
 open import Ledger.Conway.Ratify txs
 open import Ledger.Conway.Ratify.Properties txs
+open import Ledger.Conway.Rewards txs abs
 
 open import Data.List using (filter)
 import Relation.Binary.PropositionalEquality as PE

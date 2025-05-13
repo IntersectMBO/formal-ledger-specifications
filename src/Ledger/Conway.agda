@@ -1,6 +1,6 @@
-module CardanoLedger where
+module Ledger.Conway where
 
-import CardanoLedgerSafe
+import Ledger.ConwaySafe
 
 import Ledger.Conway.Foreign.HSLedger
 

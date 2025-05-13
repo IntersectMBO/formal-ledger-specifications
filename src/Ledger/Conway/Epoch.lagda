@@ -32,7 +32,7 @@ open import Ledger.Conway.Enact govStructure
 open import Ledger.Conway.Gov txs
 open import Ledger.Conway.Ledger txs abs
 open import Ledger.Conway.Ratify txs
-open import Ledger.Conway.Rewards govStructure
+open import Ledger.Conway.Rewards txs abs
 open import Ledger.Conway.Utxo txs abs
 
 \end{code}
