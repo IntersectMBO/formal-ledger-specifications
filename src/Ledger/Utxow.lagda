@@ -81,7 +81,7 @@ getVKeys : ℙ Credential → ℙ KeyHash
 getVKeys = mapPartial isKeyHashObj
 
 noBodies : Tx → Bool
-noBodies tx with (tx .Tx.body .TxBody.subTxBodies) 
+noBodies tx with (tx .Tx'.body .TxBody.subTxs) 
 ... | [] = true 
 ... | _ = false
 
@@ -100,7 +100,7 @@ allowedLanguages tx utxo =
   else
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ PlutusV4 ∷ [])
   where
-    txb = tx .Tx.body; open TxBody txb
+    txb = tx .Tx'.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
 
 getScripts : ℙ Credential → ℙ ScriptHash
@@ -110,7 +110,7 @@ getScripts = mapPartial isScriptObj
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  mapˢ (λ x        → (BatchObs x , ScriptObj x)) requireBatchObservers
+  ∪  mapˢ (λ x        → (BatchObservers x , ScriptObj x)) requireBatchObservers
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
@@ -163,7 +163,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
-    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+    let open Tx' tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts 

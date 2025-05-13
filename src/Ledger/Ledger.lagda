@@ -89,23 +89,24 @@ private variable
 
 
 \begin{code}
-txToExUnits : (RdmrPtr  ⇀ Redeemer × ExUnits) → ExUnits 
-txToExUnits rdmrs = (∑[ (_ , eu) ← rdmrs ]  eu)
-  where open Tx; open TxWitnesses
+txToExUnits : Tx → ExUnits 
+txToExUnits tx = (∑[ (_ , eu) ← (tx .wits .txrdmrs) ]  eu)
+  where open Tx' ; open TxWitnesses
 
 -- sum up all units across all transactions TODO this is wrong!
-totExUnits : Tx → ExUnits
-totExUnits tx = ∑[ au ← (mapValues txToExUnits (subTxRdmrs ∪ˡ (singletonᵐ txid txrdmrs)) ) ] au
- where open Tx tx; open TxWitnesses wits ; open TxBody body
+totExUnits : List Tx → ExUnits
+totExUnits lstx = ∑[ au ← fromListᵐ (map (λ tx → ((tx .body .TxBody.txid) , txToExUnits tx)) lstx)] au
+  where open Tx' ; open TxWitnesses
+
 
 
 minfee : PParams → UTxO → Tx → Coin
 minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
-                     + txscriptfee (pp .prices) (totExUnits tx)
+                     + txscriptfee (pp .prices) (totExUnits (tx ∷ (tx .body .subTxs)))
                      + scriptsCost pp (refScriptsSize utxo tx)
   -- + pp .minFeeRefScriptCoinsPerByte 
   -- *↓ ∑[ x ← mapValues scriptSize (setToHashMap (refScripts tx utxo)) ] x
-  where open PParams; open Tx ; open TxBody 
+  where open PParams; open Tx' ; open TxBody 
 
 -- totalFee is computed instead of using top-level fee
 feesOK : PParams → Tx → UTxO → Bool
@@ -116,10 +117,10 @@ feesOK pp tx utxo = minfee pp utxo tx ≤ᵇ totalFee ∧ (not (≟-∅ᵇ (txrd
                       ∧ not (≟-∅ᵇ collateral)
                       )
   where
-    open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
+    open Tx' tx; open TxBody body; open TxWitnesses wits; open PParams pp
     collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
     bal              = balance  (utxo ∣ collateral)
-    totalFee            = (tx .Tx.body .TxBody.txfee) + sum (map (λ p → p .TxBody.txfee) (tx .Tx.body .TxBody.subTxBodies))
+    totalFee            = (tx .Tx'.body .TxBody.txfee) + sum (map (λ p → p .Tx'.body .TxBody.txfee) (tx .Tx'.body .TxBody.subTxs))
 \end{code}
 
 \begin{figure*}
@@ -151,9 +152,9 @@ module _ (let open UTxOState) where
     +  inject (txb .txdonation)) +_) (inject 0) txbls
   
 noSubsInSubs : List TxBody → Bool
-noSubsInSubs l = foldr (λ a b → (emp (a .TxBody.subTxBodies)) ∧ b) true l
+noSubsInSubs l = foldr (λ a b → (emp (a .TxBody.subTxs)) ∧ b) true l
   where 
-  emp : List TxBody → Bool
+  emp : List Tx → Bool
   emp [] = true 
   emp (t ∷ k) = false
 
@@ -169,17 +170,14 @@ lookupOrNothingᵐ mp k default with lookupᵐ? mp k
 ... | nothing = default 
 ... | just a = a
 
--- TODO txdats should be only the relevant ones!
-mkTx : Tx → TxBody → Tx 
-mkTx tx txb = record { body = txb ; wits = record { vkSigs = lookupOrNothingᵐ subTxSigs txid ∅ᵐ ; subTxSigs = ∅ᵐ ; scripts = scripts ; txdats = txdats ; txrdmrs = lookupOrNothingᵐ subTxRdmrs txid ∅ᵐ ; subTxRdmrs = ∅ᵐ } ; isValid = isValid ; txAD = lookupOrNothingᵐ subTxADs txid nothing ; subTxADs = ∅ᵐ }
- where open Tx tx; open TxWitnesses wits ; open TxBody body
-
+adjustTx : ℙ Script → Bool → Tx → Tx 
+adjustTx scs isv tx = record { body = body ; wits = record { TxWitnesses wits ; scripts = scs} ; isValid = isv ; txAD = txAD }
+  where
+    open Tx' tx ; open TxWitnesses 
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
 \end{figure*}
-
-
 
 \begin{NoConway} 
 \begin{figure*}[h]
@@ -202,7 +200,7 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  SWAP-V : let open Tx tx renaming (body to txb); open TxBody txb; open LEnv Γ
+  SWAP-V : let open Tx' tx renaming (body to txb); open TxBody txb; open LEnv Γ
     in
     ∙  isValid ≡ true
     ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
@@ -211,7 +209,7 @@ data
        ────────────────────────────────
        Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , govSt' , certState' ⟧ˡ
 
-  SWAP-I : let open Tx tx renaming (body to txb); open TxBody txb; open LEnv Γ 
+  SWAP-I : let open Tx' tx renaming (body to txb); open TxBody txb; open LEnv Γ 
     in
     ∙ (isValid ≡ false)
     ∙ record { LEnv Γ }  ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
@@ -258,18 +256,20 @@ data
 \begin{AgdaSuppressSpace}
 \begin{code}
   LEDGER-Ind : 
-    let open UTxOState u renaming (utxo to utx); open Tx tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
-        txs            = tx ∷ (map (mkTx tx) subTxBodies)
-        isBalanced        = consumed pp u (body ∷ subTxBodies) ≡ᵇ produced pp u (body ∷ subTxBodies) 
+    let open UTxOState u renaming (utxo to utx); open Tx' tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
+        bods           = map (λ t → t .Tx'.body) subTxs
+        allScripts        = foldr (λ t l → (t .Tx'.wits .TxWitnesses.scripts) ∪ l) ∅ (tx ∷ subTxs)
+        txsWithScripts            = map (adjustTx allScripts isValid) (tx ∷ subTxs)
+        isBalanced        = consumed pp u (body ∷ bods) ≡ᵇ produced pp u (body ∷ bods) 
 
     in
     ∙ (feesOK pp tx utx ≡ true)         --1       
-    ∙ (chkInsInUTxO (body ∷ subTxBodies) (dom utx)) -- 4
+    ∙ (chkInsInUTxO (body ∷ bods) (dom utx)) -- 4
     ∙ (txsize ≤ maxTxSize)  --6
-    ∙ (maxTxExUnits ≡ maxTxExUnits) -- TODO actually supposed to be : ≥ᵉ totExUnits txs maxTxExUnits   --7 
-    ∙ Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ txs ,SWAPS⦈ ⟦ u' , govSt' , certState' ⟧ˡ
-    ∙  noSubsInSubs subTxBodies ≡ true 
-    ∙  noColsInSubs subTxBodies ≡ true 
+    ∙ (maxTxExUnits ≡ maxTxExUnits) -- TODO actually supposed to be : ≥ᵉ totExUnits subTxs maxTxExUnits   --7 
+    ∙ Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ subTxs ,SWAPS⦈ ⟦ u' , govSt' , certState' ⟧ˡ
+    ∙  noSubsInSubs bods ≡ true 
+    ∙  noColsInSubs bods ≡ true 
        ────────────────────────────────
        Γ ⊢  ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , govSt' , certState' ⟧ˡ
 \end{code}

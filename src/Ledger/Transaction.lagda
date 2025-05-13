@@ -28,7 +28,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where
-  Spend Mint Cert Rewrd Vote Propose BatchObs : Tag
+  Spend Mint Cert Rewrd Vote Propose BatchObservers : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Type₁ where
@@ -128,13 +128,28 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \end{NoConway}
 \emph{Transaction types}
 \begin{code}
+  record TxWitnesses : Type where
+    field
+      vkSigs   : VKey ⇀ Sig
+      scripts  : ℙ Script
+      txdats   : DataHash ⇀ Datum
+      txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
+
+    scriptsP1 : ℙ P1Script
+    scriptsP1 = mapPartial isInj₁ scripts
+
+  record Tx' (Body : Set): Type where
+    inductive
+    constructor tree
+    field
+      body     : Body
+      wits     : TxWitnesses
+      isValid  : Bool
+      txAD     : Maybe AuxiliaryData
+      
   record TxBody : Type where
-\end{code}
-\begin{code}[hide]
     inductive 
     field
-\end{code}
-\begin{code}
       txins          : ℙ TxIn
       refInputs      : ℙ TxIn
       txouts         : Ix ⇀ TxOut
@@ -162,40 +177,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       -- txdatsB   : DataHash ⇀ Datum 
       -- txrdmrsB  : RdmrPtr  ⇀ Redeemer × ExUnits
       -- fixes the attached subTxs
-      subTxBodies       : List TxBody
+      subTxs       : List (Tx' TxBody)
 
-\end{code}
-\begin{NoConway}
-\begin{code}
-  record TxWitnesses : Type where
-\end{code}
-\begin{code}[hide]
-    field
-\end{code}
-\begin{code}
-      vkSigs   : VKey ⇀ Sig
-      subTxSigs : TxId ⇀ (VKey ⇀ Sig)
-      scripts  : ℙ Script
-      txdats   : DataHash ⇀ Datum
-      txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
-      subTxRdmrs : TxId ⇀ (RdmrPtr  ⇀ Redeemer × ExUnits)
-
-    scriptsP1 : ℙ P1Script
-    scriptsP1 = mapPartial isInj₁ scripts
-
-  record Tx : Type where
-\end{code}
-\begin{code}[hide]
-    inductive
-    constructor tree
-    field
-\end{code}
-\begin{code}
-      body     : TxBody
-      wits     : TxWitnesses
-      isValid  : Bool
-      txAD     : Maybe AuxiliaryData
-      subTxADs : TxId ⇀ (Maybe AuxiliaryData)
+  Tx = Tx' TxBody 
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -231,11 +215,11 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   refScripts : Tx → UTxO → ℙ Script
   refScripts tx utxo =
     mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
-    where open Tx; open TxBody (tx .body)
+    where open Tx'; open TxBody (tx .body)
 
   getBatchScripts : ℙ Script → Tx → UTxO → ℙ Script
   getBatchScripts bs tx utxo = bs ∪ refScripts tx utxo
-    where open Tx; open TxWitnesses
+    where open Tx'; open TxWitnesses
 
   lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
   lookupScriptHash sh tx utxo =
@@ -243,7 +227,7 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (getBatchScripts (tx .Tx.wits .TxWitnesses.scripts) tx utxo)
+    where m = setToHashMap (getBatchScripts (tx .Tx'.wits .TxWitnesses.scripts) tx utxo)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions related to transactions}

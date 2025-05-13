@@ -63,7 +63,7 @@ opaque
   getSpentHashes bs tx utxo = getDataHashes
     (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress bs tx utxo a ≡ true)
             (range (utxo ∣ txins)) )
-    where open Tx; open TxBody (tx .body)
+    where open Tx'; open TxBody (tx .body)
 \end{code}
 \caption{Functions supporting UTxO rules}
 \label{fig:supportfunctions:utxo}
@@ -186,7 +186,7 @@ data
 
 \begin{figure*}[htbp]
 \begin{code}[hide]
-module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
+module _ (let open Tx'; open TxBody; open TxWitnesses) where opaque
 \end{code}
 \begin{AgdaMultiCode}
 \begin{NoConway}
@@ -425,7 +425,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
 \begin{code}
   Scripts-Yes :
     ∀ {Γ} {s} {tx}
-    → let open Tx tx renaming (body to txb); open TxBody txb
+    → let open Tx' tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
@@ -442,7 +442,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
 
   Scripts-No :
     ∀ {Γ} {s} {tx}
-    → let open Tx tx renaming (body to txb); open TxBody txb
+    → let open Tx' tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
           sLst = collectPhaseTwoScriptInputs pp tx utxo
@@ -482,7 +482,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \begin{figure*}[h]
 \begin{code}
   UTXO-inductive :
-    let open Tx tx renaming (body to txb); open TxBody txb
+    let open Tx' tx renaming (body to txb); open TxBody txb
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)

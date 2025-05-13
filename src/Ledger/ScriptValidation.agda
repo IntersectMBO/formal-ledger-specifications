@@ -27,7 +27,7 @@ data ScriptPurpose : Type where
   Spend    : TxIn         → ScriptPurpose
   Vote     : Voter        → ScriptPurpose
   Propose  : GovProposal  → ScriptPurpose
-  BatchObs : ScriptHash   → ScriptPurpose
+  BatchObservers : ScriptHash   → ScriptPurpose
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
@@ -37,15 +37,15 @@ rdptr txb = λ where
   (Spend h)    → M.map (Spend   ,_) $ indexOfTxIn     h txins
   (Vote h)     → M.map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txvote)
   (Propose h)  → M.map (Propose ,_) $ indexOfProposal h txprop
-  (BatchObs h)  → M.map (BatchObs ,_) $ indexOfBatchObs h requireBatchObservers
+  (BatchObservers h)  → M.map (BatchObservers ,_) $ indexOfBatchObservers h requireBatchObservers
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x) nothing (rdptr body sp)
-  where open Tx tx; open TxWitnesses wits
+  where open Tx' tx; open TxWitnesses wits
 
 getDatum : Tx → UTxO → ScriptPurpose → List Datum
-getDatum tx utxo (Spend txin) = let open Tx tx; open TxWitnesses wits in
+getDatum tx utxo (Spend txin) = let open Tx' tx; open TxWitnesses wits in
   maybe
     (λ { (_ , _ , just (inj₂ h), _)  → maybe [_] [] (lookupᵐ? txdats h)
        ; (_ , _ , just (inj₁ d), _)  → [ d ]
@@ -77,7 +77,7 @@ txInfo' : Language → ScriptPurpose
                   → TxInfo
 txInfo' l sp pp utxo txb wits = record
   { TxBody txb
-  ; TxWitnesses wits -- TODO this is wrong, we should show only some wits, but which ones? All relevant redeemers at least
+  ; TxWitnesses wits 
   ; realizedInputs = utxo ∣ txins
   ; fee = inject txfee
   ; mint = mint
@@ -90,8 +90,8 @@ mkInfos : Language → ScriptPurpose
                   → UTxO
                   → Tx
                   → List TxInfo
-mkInfos l (BatchObs s) pp utxo tx = map (λ txb → (txInfo' l (BatchObs s) pp utxo txb wits)) subTxBodies
-  where open Tx tx; open TxBody body
+mkInfos l (BatchObservers s) pp utxo tx = map (λ t → (txInfo' l (BatchObservers s) pp utxo (t .Tx'.body) (t .Tx'.wits))) subTxs
+  where open Tx' tx; open TxBody body
 mkInfos l _ pp utxo _ = []                 
 
 
@@ -108,7 +108,7 @@ txInfo l sp pp utxo tx = record
   ; mint = mint
   ; vkKey = reqSigHash
   ; subTxInfos = mkInfos l sp pp utxo tx
-  } where open Tx tx; open TxBody body
+  } where open Tx' tx; open TxBody body
 
 data DelegateOrDeReg : DCert → Type where instance
   delegate  : ∀ {x y z w} → DelegateOrDeReg (delegate x y z w)
@@ -172,8 +172,8 @@ private
     ∪ mapPartial (λ x → rwdScripts x) (dom $ txwdrls .proj₁)
     ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
-    ∪ mapˢ (λ x → BatchObs x , x) (tx .Tx.body .TxBody.requireBatchObservers)
-    where open Tx tx ; open TxBody body
+    ∪ mapˢ (λ x → BatchObservers x , x) (tx .Tx'.body .TxBody.requireBatchObservers)
+    where open Tx' tx ; open TxBody body
     
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
@@ -209,7 +209,7 @@ opaque
     $ scriptsNeeded utxo tx
 
 open TxBody
-open Tx
+open Tx'
 
 ⟦_⟧,_,_,_ : P2Script → CostModel → ExUnits → List Data → Bool
 ⟦ s ⟧, cm , eu , d = runPLCScript cm s eu d
