@@ -84,6 +84,25 @@ def replace_code_placeholder(match, code_blocks):
         # replacement_str = f'\n!!! note\n\n    ```agda\n{indented_code_content}    ```\n' # Note final ``` is indented
         # return replacement_str
 
+# New replacement functions for handling figure labels and captions.
+def replace_figure_label_placeholder(match):
+    label_id = match.group(1).strip()
+    # sanitize label_id for HTML id attribute (basic: replace colon, etc.)
+    # consistent with how Lua filter was planned to sanitize.
+    sanitized_id = label_id.replace(":", "-").replace(" ", "_").lower() # example sanitization
+    return f'<a id="{sanitized_id}"></a>'
+
+def replace_figure_caption_placeholder(match, code_blocks_dict, processed_code_blocks):
+    # 'text' here is the raw captured group from the regex.
+    # It might contain further @@PLACEHOLDERS@@ if captions were complex.
+    # For now, assume simple text.
+    caption_text_raw = match.group(1).strip()
+    # Unescape "@ @" back to "@@" if we did that in preprocess.py
+    caption_text = caption_text_raw.replace("@ @", "@@")
+
+    return f'<p class="caption"><strong>Caption:</strong> {caption_text}</p>'
+
+
 # Function to process Conway admonition markers and indent content
 def process_conway_admonitions(content):
     """
@@ -162,9 +181,26 @@ if __name__ == "__main__":
         print(f"Replacing code block placeholders...", file=sys.stderr)
         content_with_code = re.sub(r'@@CODEBLOCK_ID_\d+@@', lambda m: replace_code_placeholder(m, code_blocks), intermediate_content)
 
-        # Step 2: Process Conway admonition markers (@@ADMONITION_...@@) and indent content
+        # Step 2: Replace figure label placeholders
+        content_with_labels = re.sub(
+            r"@@FIGURE_LABEL@@id=(.*?)@@",
+            replace_figure_label_placeholder,
+            content_with_code # Start from content where code blocks are already inserted
+        )
+
+        # Step 3: Replace figure caption placeholders
+        # The lambda here is to pass necessary dicts if caption replacement becomes complex
+        # and needs to e.g. re-invoke code block replacement within captions; not strictly needed
+        # for simple version, but good for extensibility.
+        content_with_captions = re.sub(
+            r"@@FIGURE_CAPTION@@text=(.*?)@@",
+            lambda m: replace_figure_caption_placeholder(m, code_blocks, {}), # pass empty dicts if not used
+            content_with_labels
+        )
+
+        # Step 4: Process Conway admonition markers (@@ADMONITION_...@@) and indent content
         print(f"Processing Conway admonitions...", file=sys.stderr)
-        final_content = process_conway_admonitions(content_with_code)
+        final_content = process_conway_admonitions(content_with_captions)
 
         # Write the fully processed final Markdown file
         print(f"Writing final output to {output_lagda_md_file}", file=sys.stderr)

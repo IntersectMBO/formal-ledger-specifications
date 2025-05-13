@@ -1,24 +1,52 @@
 # preprocess.py
-# Purpose: Prepares a LaTeX-based literate Agda file (.lagda) for Pandoc processing.
-# Usage: This script is part of a four stage pipeline and is meant to be used in conjunction with
+
+# PURPOSE: Prepares a LaTeX-based literate Agda file (.lagda) for Pandoc processing.
+#
+# USAGE: This script is part of a four stage pipeline and is meant to be used in conjunction with
 #        `generate_macros.py`, `agda-filter.lua`, `postprocess.py`, and pandoc.  For example,
 #          $ python generate_macros_json.py macros.sty preprocess_macros.json
 #          $ python preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
 #          $ pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
 #          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
-# Output:
+# OUTPUT:
 # - Prints processed LaTeX content (with placeholders) to stdout.
 # - Writes code block data to a specified JSON file.
 # Actions:
-# 1. Replaces Agda code blocks (\begin{code} / \begin{code}[hide]) with unique placeholders (@@CODEBLOCK_ID_n@@).
-# 2. Stores the verbatim content of each code block, along with its hidden status, in a JSON file.
-# 3. Inlines \modulenote macros into LaTeX \href commands.
-# 4. Replaces specific Agda term macros (from macros.json) with \texttt{@@AgdaTerm@@...} markers.
-# 5. Replaces \hldiff macros with \HighlightPlaceholder markers.
-# 6. Removes \begin{figure*}/\end{figure*} environment wrappers.
-# 7. Removes \begin{AgdaMultiCode}/\end{AgdaMultiCode} environment wrappers.
-# 8. Removes \begin{NoConway}/\end{NoConway} environment wrappers (content flows).
-# 9. Replaces \begin{Conway}/\end{Conway} environment wrappers with admonition markers (@@ADMONITION_START/END@@).
+# 1.  Replaces Agda code blocks (\begin{code} / \begin{code}[hide]) with unique placeholders (@@CODEBLOCK_ID_n@@).
+# 2.  Stores the verbatim content of each code block, along with its hidden status, in a JSON file.
+# 3.  Inlines \modulenote macros into LaTeX \href commands.
+# 4.  Replaces specific Agda term macros (from macros.json) with \texttt{@@AgdaTerm@@...} markers.
+# 5.  Replaces \hldiff macros with \HighlightPlaceholder markers.
+# 6.  Removes \begin{figure*}/\end{figure*} environment wrappers.
+# 7.  Removes \begin{AgdaMultiCode}/\end{AgdaMultiCode} environment wrappers.
+# 8.  Removes \begin{NoConway}/\end{NoConway} environment wrappers (content flows).
+# 9.  Replaces \begin{Conway}/\end{Conway} environment wrappers with admonition markers (@@ADMONITION_START/END@@).
+#
+# NOTES:  New strategy to handle labels and refs when processing `figure*` environments.
+#         (such labels and refs were lost in initial versions of the pipeline)
+# 1.  Extract caption text and label name.
+# 2.  Replace `\caption{...}` with `@@FIGURE_CAPTION@@text=Your Caption Text@@`.
+# 3.  Replace `\label{...}` with `@@FIGURE_LABEL@@id=your_label_id@@`.
+# 4.  Then remove the `\begin{figure*}` and `\end{figure*}` wrappers.
+# 5.  The output in `.lagda.temp` would look like:
+#     ```
+#     ...
+#     @@FIGURE_CAPTION@@text=ENACT transition system@@
+#     @@FIGURE_LABEL@@id=fig:sts:enact@@
+#     @@CODEBLOCK_ID_5@@
+#     @@CODEBLOCK_ID_9@@
+#     @@CODEBLOCK_ID_10@@
+#     ...
+#     ```
+# 6.  Finally, in `agda-filter.lua` or `postprocess.py`:
+#     +  If in Lua: The filter would look for `Str` nodes containing these `@@...@@` markers.
+#     +  For `@@FIGURE_LABEL@@id=...@@`: Create the `RawInline('html', '<a id="sanitized_id"></a>')`.
+#     +  For `@@FIGURE_CAPTION@@text=...@@`: Create a `Para` block with the formatted caption.
+#     +  If in `postprocess.py`: This Python script already handles `@@CODEBLOCK_ID_...@@`.
+#        It could similarly use regex to find `@@FIGURE_CAPTION@@` and `@@FIGURE_LABEL@@` in the
+#        `.md.intermediate` file and replace them with appropriate HTML/Markdown for anchors and
+#        captions. This might be simpler as `postprocess.py` is already doing text replacements.
+
 
 import re
 import json
@@ -128,11 +156,11 @@ def expand_hldiff(match):
 # --- Main Processing Function ---
 def preprocess_lagda(content):
     """
-    Applies all preprocessing replacements to the input LaTeX content.
+    Applies all preprocessing replacements to input LaTeX content.
     Args:
-        content (str): The original content of the .lagda file.
+        content (str): original content of .lagda file.
     Returns:
-        str: The processed LaTeX content with placeholders.
+        str: processed LaTeX content with placeholders.
     """
     global macro_data # Ensure loaded macro data is accessible
 
@@ -164,9 +192,55 @@ def preprocess_lagda(content):
     # Use non-greedy match for content and DOTALL flag for potential multiline content
     content = re.sub(r'\\hldiff\{(.*?)\}', expand_hldiff, content, flags=re.DOTALL)
 
-    # 5. Remove figure* environment wrappers (matching start/end lines)
-    content = re.sub(r'^\s*\\begin\{figure\*}(\[[^\]]*\])?\s*?\n', '', content, flags=re.MULTILINE)
-    content = re.sub(r'^\s*\\end\{figure\*\}\s*?\n?', '', content, flags=re.MULTILINE)
+    # New step: Process figure environments to extract caption/label into placeholders
+    # This should run BEFORE stripping the figure environment lines themselves,
+    # or be part of a combined figure processing step.
+
+    def figure_content_processor(match):
+        # match.group(1) would be the content inside the figure environment
+        inner_content = match.group(1)
+
+        # Placeholder for caption text and label id
+        caption_placeholder = ""
+        label_placeholder = ""
+
+        # Extract caption
+        caption_search = re.search(r"\\caption\{(.*?)\}", inner_content, flags=re.DOTALL)
+        if caption_search:
+            caption_text = caption_search.group(1).strip().replace("\n", " ") # Basic cleanup
+            # Escape our @@ sequence if user caption contains it, or choose a more unique marker
+            caption_text_escaped_for_placeholder = caption_text.replace("@@", "@ @")
+            caption_placeholder = f"\n@@FIGURE_CAPTION@@text={caption_text_escaped_for_placeholder}@@\n"
+            inner_content = inner_content.replace(caption_search.group(0), "") # Remove original caption
+
+        # Extract label
+        label_search = re.search(r"\\label\{(.*?)\}", inner_content)
+        if label_search:
+            label_id = label_search.group(1).strip()
+            label_placeholder = f"\n@@FIGURE_LABEL@@id={label_id}@@\n"
+            inner_content = inner_content.replace(label_search.group(0), "") # Remove original label
+
+        # The order might matter: often label is defined, then caption refers to it,
+        # or anchor for label comes before caption. For display, usually caption then content.
+        # Let's output: LABEL_PLACEHOLDER (for anchor) then CAPTION_PLACEHOLDER then content
+        # The actual visual placement of caption vs content is handled by postprocess.py
+        return label_placeholder + caption_placeholder + inner_content
+
+    # Temporarily disable the old figure stripper:
+    # # 5. Remove figure* environment wrappers (matching start/end lines)
+    # content = re.sub(r'^\s*\\begin\{figure\*}(\[[^\]]*\])?\s*?\n', '', content, flags=re.MULTILINE)
+    # content = re.sub(r'^\s*\\end\{figure\*\}\s*?\n?', '', content, flags=re.MULTILINE)
+
+    # New regex to find figure content, process it, then remove wrappers.
+    # This is a simplified regex; real LaTeX figure parsing is more complex.
+    # It assumes \begin and \end are on their own lines.
+    content = re.sub(
+        r"^\s*\\begin\{figure\*\}(?:\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\*\}\s*$",
+        figure_content_processor,
+        content,
+        flags=re.DOTALL | re.MULTILINE
+    )
+    # Add similar for non-starred 'figure' if you use that.
 
     # 6. Remove AgdaMultiCode environment wrappers (matching start/end lines)
     content = re.sub(r'^\s*\\begin\{AgdaMultiCode\}\s*?\n', '', content, flags=re.MULTILINE)

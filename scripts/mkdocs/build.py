@@ -72,12 +72,12 @@
 # - build.log:          Detailed log file of the build script's execution.
 #
 # INTERMEDIATE ARTIFACTS (created and then cleaned up by this script):
-# - macros.json
-# - lagda_temp/
-# - code_blocks_json/
-# - md_intermediate/
-# - final_lagda_md/ (staging for processed LaTeX-based .lagda files)
-# - agda_html_output/ (raw output from `agda --html` command)
+# - macros.json        (output of generate_macros_json.py)
+# - lagda_temp/        (output of preprocess.py; input to pandoc+lua)
+# - code_blocks_json/  (output of preprocess.py; input to postprocess.py)
+# - md_intermediate/   (output of pandoc+lua; input to postprocess.py)
+# - final_lagda_md/    (staging for processed LaTeX-based .lagda files)
+# - mkdocs_src/docs/   (output of `agda --html` command)
 
 import os
 import sys
