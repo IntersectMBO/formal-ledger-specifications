@@ -7,10 +7,13 @@
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.Integer using () renaming (+_ to pos)
+import      Data.Integer as ℤ
 open import Data.Nat.GeneralisedArithmetic using (iterate)
 open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_)
 open import Data.Rational.Literals using (number; fromℤ)
 import      Data.Rational as ℚ renaming (_⊓_ to min)
+
+open import Data.Integer.Tactic.RingSolver
 
 open import Agda.Builtin.FromNat
 
@@ -117,9 +120,8 @@ instance
   HasRewards-NewEpochState : HasRewards NewEpochState
   HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
 
-  unquoteDecl HasCast-RewardUpdate HasCast-EpochState HasCast-NewEpochState = derive-HasCast
-    (   (quote RewardUpdate   , HasCast-RewardUpdate)
-    ∷   (quote EpochState     , HasCast-EpochState)
+  unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
+    ( (quote EpochState     , HasCast-EpochState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
 instance _ = +-0-monoid; _ = +-0-commutativeMonoid
@@ -177,8 +179,13 @@ described in \textcite[\sectionname~6.4]{shelley-delegation-design}.
 \begin{code}
 
 createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
-createRUpd slotsPerEpoch b es total
-  = ⟦ Δt₁ , 0 - Δr₁ + Δr₂ , 0 - feeSS , rs ⟧
+createRUpd slotsPerEpoch b es total = record {
+\end{code}
+\begin{code}[hide]
+  flowConservation = flowConservation;
+\end{code}
+\begin{code}
+    Δt = Δt₁; Δr = 0 - Δr₁ + Δr₂; Δf = 0 - pos feeSS; rs = rs }
   where
     prevPp      = PParamsOf (es .EpochState.es)
     reserves    = es .EpochState.acnt .Acnt.reserves
@@ -197,12 +204,20 @@ createRUpd slotsPerEpoch b es total
     rewardPot = pos feeSS + Δr₁
     tau = fromUnitInterval (prevPp .PParams.treasuryCut)
     Δt₁ = floor (tau * fromℤ rewardPot)
-    R = posPart (rewardPot - Δt₁)
+    R = rewardPot - Δt₁
     circulation = total - reserves
 
-    rs = reward prevPp b R poolParams stake delegs circulation
-    Δr₂ = R - ∑[ c ← rs ] c
+    rs = reward prevPp b (posPart R) poolParams stake delegs circulation
+    Δr₂ = R - pos (∑[ c ← rs ] c)
 
+\end{code}
+\begin{code}[hide]
+    -- TODO: Overloading of + and - seems to interfere with
+    -- the ring solver.
+    lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
+      → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
+    lemmaFlow = solve-∀
+    flowConservation = lemmaFlow Δt₁ Δr₁ (pos feeSS) (pos (∑[ c ← rs ] c))
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate Creation}
@@ -215,7 +230,7 @@ createRUpd slotsPerEpoch b es total
 {\small
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
+applyRUpd rewardUpdate
   ⟦ ⟦ treasury , reserves ⟧ᵃ
   , ss
   , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
@@ -233,6 +248,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , es
   , fut ⟧
   where
+    open RewardUpdate rewardUpdate using (Δt; Δr; Δf; rs)
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
@@ -419,3 +435,4 @@ data
 \caption{NEWEPOCH transition system}
 \end{figure*}
 \end{NoConway}
+ 
