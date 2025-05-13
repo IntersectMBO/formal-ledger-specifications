@@ -181,7 +181,8 @@ if __name__ == "__main__":
         print(f"Replacing code block placeholders...", file=sys.stderr)
         content_with_code = re.sub(r'@@CODEBLOCK_ID_\d+@@', lambda m: replace_code_placeholder(m, code_blocks), intermediate_content)
 
-        # Step 2: Replace figure label placeholders
+        # Step 2: Replace figure label placeholders (@@FIGURE_LABEL@@id=...@@)
+        print(f"Replacing figure label placeholders...", file=sys.stderr)
         content_with_labels = re.sub(
             r"@@FIGURE_LABEL@@id=(.*?)@@",
             replace_figure_label_placeholder,
@@ -192,6 +193,7 @@ if __name__ == "__main__":
         # The lambda here is to pass necessary dicts if caption replacement becomes complex
         # and needs to e.g. re-invoke code block replacement within captions; not strictly needed
         # for simple version, but good for extensibility.
+        print(f"Replacing figure caption placeholders...", file=sys.stderr)
         content_with_captions = re.sub(
             r"@@FIGURE_CAPTION@@text=(.*?)@@",
             lambda m: replace_figure_caption_placeholder(m, code_blocks, {}), # pass empty dicts if not used

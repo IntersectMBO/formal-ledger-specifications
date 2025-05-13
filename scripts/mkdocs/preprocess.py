@@ -240,7 +240,7 @@ def preprocess_lagda(content):
         content,
         flags=re.DOTALL | re.MULTILINE
     )
-    # Add similar for non-starred 'figure' if you use that.
+    # TODO: handle non-starred figure environments
 
     # 6. Remove AgdaMultiCode environment wrappers (matching start/end lines)
     content = re.sub(r'^\s*\\begin\{AgdaMultiCode\}\s*?\n', '', content, flags=re.MULTILINE)
@@ -291,7 +291,6 @@ if __name__ == "__main__":
         # Output the processed LaTeX (with placeholders) to standard output
         sys.stdout.write(processed_content)
         print(f"Processed LaTeX content written to stdout.", file=sys.stderr)
-
 
         # Save the captured code blocks dictionary to the specified JSON file
         print(f"Saving code blocks data to {output_code_blocks_file}", file=sys.stderr)
