@@ -240,7 +240,7 @@ d_Conv'45'PoolParams_62
                                                  MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                  (coe v7) (coe v8)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
-                        (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                        (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                            (coe v3)))
                      (coe v4)
                      (coe
@@ -290,7 +290,7 @@ d_Conv'45'PoolParams_62
                            (MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.d_elems_38 (coe v1))))
                      (coe v2)
                      (let v6
-                            = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                            = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                                 (coe
                                    MAlonzo.Code.Foreign.Convertible.d_from_20
                                    (coe
@@ -617,7 +617,7 @@ d_Conv'45'DelegEnv_70
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v5) (coe v6)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                               (coe
                                  MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_358 (coe v1))))
                         (coe
@@ -642,7 +642,7 @@ d_Conv'45'DelegEnv_70
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v5) (coe v6)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                               (coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_360 (coe v1))))
                         (coe MAlonzo.Code.Ledger.PParams.d_coinsPerUTxOByte_362 (coe v1))
                         (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
@@ -1218,7 +1218,7 @@ d_Conv'45'DelegEnv_70
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                                       (coe v41) (coe v42)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
-                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                                                 (coe v17)))
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -1246,7 +1246,7 @@ d_Conv'45'DelegEnv_70
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                                       (coe v41) (coe v42)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
-                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                                                 (coe v18)))
                                           (coe v19) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                           (coe
@@ -1806,7 +1806,7 @@ d_Conv'45'DelegEnv_70
                                                 v12))
                                           (coe v13) (coe v14) (coe v15) (coe v16)
                                           (let v40
-                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                                                      (coe
                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
                                                         (coe
@@ -1848,7 +1848,7 @@ d_Conv'45'DelegEnv_70
                                                         Data.Text.Text)
                                                 _ -> MAlonzo.RTE.mazUnreachableError))
                                           (let v40
-                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                                                      (coe
                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
                                                         (coe
@@ -3135,7 +3135,7 @@ d_Conv'45'CertEnv_78
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v7) (coe v8)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                               (coe
                                  MAlonzo.Code.Ledger.PParams.d_monetaryExpansion_358 (coe v2))))
                         (coe
@@ -3160,7 +3160,7 @@ d_Conv'45'CertEnv_78
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v7) (coe v8)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                               (coe MAlonzo.Code.Ledger.PParams.d_treasuryCut_360 (coe v2))))
                         (coe MAlonzo.Code.Ledger.PParams.d_coinsPerUTxOByte_362 (coe v2))
                         (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
@@ -3745,7 +3745,7 @@ d_Conv'45'CertEnv_78
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                                       (coe v43) (coe v44)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
-                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                                                 (coe v19)))
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -3773,7 +3773,7 @@ d_Conv'45'CertEnv_78
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                                       (coe v43) (coe v44)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
-                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                                                 (coe v20)))
                                           (coe v21) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                                           (coe
@@ -4333,7 +4333,7 @@ d_Conv'45'CertEnv_78
                                                 v14))
                                           (coe v15) (coe v16) (coe v17) (coe v18)
                                           (let v42
-                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                                                      (coe
                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
                                                         (coe
@@ -4375,7 +4375,7 @@ d_Conv'45'CertEnv_78
                                                         Data.Text.Text)
                                                 _ -> MAlonzo.RTE.mazUnreachableError))
                                           (let v42
-                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                                                      (coe
                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
                                                         (coe
@@ -5865,7 +5865,7 @@ d_Conv'45'DCert_86
                                                     MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                     (coe v4) (coe v5)
                                       _ -> MAlonzo.RTE.mazUnreachableError)))
-                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                           (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                               (coe MAlonzo.Code.Ledger.Certs.d_margin_992 (coe v2))))
                         (coe MAlonzo.Code.Ledger.Certs.d_pledge_994 (coe v2))
                         (coe
@@ -6156,7 +6156,7 @@ d_Conv'45'DCert_86
                                                                       MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                                       (coe v10) (coe v11)
                                                         _ -> MAlonzo.RTE.mazUnreachableError)))
-                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                                             (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                                                 (coe v6)))
                                           (coe v7)
                                           (coe
@@ -6211,7 +6211,7 @@ d_Conv'45'DCert_86
                                                    (coe v4))))
                                           (coe v5)
                                           (let v9
-                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                                                 = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                                                      (coe
                                                         MAlonzo.Code.Foreign.Convertible.d_from_20
                                                         (coe

@@ -890,7 +890,7 @@ d_Conv'45'PParams_24
                                                  MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                  (coe v37) (coe v38)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
-                        (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                        (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                            (coe v13)))
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -914,7 +914,7 @@ d_Conv'45'PParams_24
                                                  MAlonzo.Code.Data.Rational.Base.du__'47'__156
                                                  (coe v37) (coe v38)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
-                        (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+                        (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                            (coe v14)))
                      (coe v15) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)
                      (coe
@@ -1392,7 +1392,7 @@ d_Conv'45'PParams_24
                            (coe MAlonzo.Code.Foreign.Haskell.Coerce.C_TrustMe_40) v8))
                      (coe v9) (coe v10) (coe v11) (coe v12)
                      (let v36
-                            = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                            = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                                 (coe
                                    MAlonzo.Code.Foreign.Convertible.d_from_20
                                    (coe
@@ -1429,7 +1429,7 @@ d_Conv'45'PParams_24
                                    Data.Text.Text)
                            _ -> MAlonzo.RTE.mazUnreachableError))
                      (let v36
-                            = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                            = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                                 (coe
                                    MAlonzo.Code.Foreign.Convertible.d_from_20
                                    (coe

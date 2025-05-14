@@ -5741,12 +5741,12 @@ d_Conv'45'UnitInterval_2098
                                        MAlonzo.Code.Data.Rational.Base.du__'47'__156 (coe v2)
                                        (coe v3)
                          _ -> MAlonzo.RTE.mazUnreachableError)))
-              (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_90
+              (MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_fromUnitInterval_120
                  (coe v0))))
       (coe
          (\ v0 ->
             let v1
-                  = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_92
+                  = MAlonzo.Code.Ledger.Types.Numeric.UnitInterval.d_toUnitInterval_122
                       (coe
                          MAlonzo.Code.Foreign.Convertible.d_from_20
                          (coe
