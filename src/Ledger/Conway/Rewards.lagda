@@ -168,7 +168,7 @@ nonZero-1/n n {{prf}} =
 
 nonZero-1+max0-x : ∀ (x : ℚ) → ℚ.NonZero (1 + ℚ.max 0 x)
 nonZero-1+max0-x x =
-  ℚ.>-nonZero (ℚ.+-mono-<-≤ (ℚ.positive⁻¹ 1) (ℚ.p≤p⊔q 0 x))
+  ℚ.>-nonZero (ℚ.+-mono-<-≤ (ℚ.positive⁻¹ 1 {{_}}) (ℚ.p≤p⊔q 0 x))
 
 private instance
   nonNegative : ∀ {i} → ℤ.NonNegative (ℤ.max 0 i)
@@ -465,7 +465,8 @@ The update consists of four net flows:
 We require these net flows to satisfy certain constraints that
 are also stored in the \AgdaRecord{RewardUpdate} data type.
 Specifically, \AgdaField{flowConservation} states that
-all four net flows add up to zero.
+all four net flows add up to zero,
+and we state the directions of \AgdaField{Δt} and \AgdaField{Δf}.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
@@ -476,6 +477,9 @@ record RewardUpdate : Set where
     rs : Credential ⇀ Coin
 
     flowConservation : Δt + Δr + Δf + pos (∑[ c ← rs ] c) ≡ 0
+    Δt-positive : 0 ≤ Δt
+    Δf-negative : Δf ≤ 0
+
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate type}

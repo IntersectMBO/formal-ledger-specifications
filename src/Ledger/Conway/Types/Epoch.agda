@@ -10,6 +10,7 @@ open import Relation.Binary
 open import Data.Nat.Properties using (+-*-semiring)
 open import Data.Rational using (ℚ)
 import      Data.Rational as ℚ
+import      Data.Rational.Properties as ℚ
 
 additionVia : ∀{A : Set} → (A → A) → ℕ → A → A
 additionVia sucFun zero r = r
@@ -74,10 +75,14 @@ record EpochStructure : Type₁ where
 record GlobalConstants : Type₁ where
   field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network; ⦃ Show-Network ⦄ : Show Network
          SlotsPerEpochᶜ   : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
-         ActiveSlotCoeff  : ℚ; ⦃ NonZero-ActiveSlotCoeff ⦄ : ℚ.NonZero ActiveSlotCoeff
+         ActiveSlotCoeff  : ℚ; ⦃ Positive-ActiveSlotCoeff ⦄ : ℚ.Positive ActiveSlotCoeff
          StabilityWindowᶜ : ℕ
          Quorum : ℕ
          NetworkId : Network
+
+  instance
+    NonZero-ActiveSlotCoeff : ℚ.NonZero ActiveSlotCoeff
+    NonZero-ActiveSlotCoeff = ℚ.>-nonZero (ℚ.positive⁻¹ ActiveSlotCoeff)
 
   ℕ+ᵉ≡+ᵉ' : ∀ {a b} → additionVia suc a b ≡ a + b
   ℕ+ᵉ≡+ᵉ' {zero} {b} = refl
