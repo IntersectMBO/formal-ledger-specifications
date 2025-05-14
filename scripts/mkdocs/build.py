@@ -433,6 +433,7 @@ def build_nav_from_flat_files(flat_file_paths_str_list):
         section_path_parts = name_parts[:-1] # e.g., ["Ledger"] or ["External", "Lib"]
 
         current_level_dict = nav_tree
+
         for section_name_raw in section_path_parts:
             section_title_str = section_name_raw.replace('_', ' ').replace('-', ' ').capitalize()
 
@@ -629,6 +630,7 @@ def main(run_agda_html=False):
                 processed_latex_files_info.append({
                     "original_path": lagda_file_abs_path,
                     "temp_path": paths.temp_lagda,
+                    "code_blocks_json_path": paths.code_blocks_json, # <<< ADD THIS LINE
                     "intermediate_md_path": paths.intermediate_md, # For Pandoc output
                     "snapshot_target_path": AGDA_SNAPSHOT_SRC_DIR / relative_path.with_suffix(".lagda.md"), # Final .lagda.md in snapshot
                     "final_flat_md_filename": final_flat_md_filename,
@@ -698,19 +700,16 @@ def main(run_agda_html=False):
         labels_map_json_path = None # No map file generated
 
     # --- STAGE 3: Run Pandoc and postprocess.py for original LaTeX .lagda files ---
-    # This list will contain Path objects to all .lagda.md files in AGDA_SNAPSHOT_SRC_DIR
-    # that are ready for the (optional) `agda --html` step.
-    # It includes those converted from .agda (added earlier) and those from this LaTeX pipeline.
+    # This list will contain path objects to all .lagda.md files in AGDA_SNAPSHOT_SRC_DIR
+    # that are ready for the optional `agda --html` step; it includes those converted from
+    # .agda, added earlier, and those from this LaTeX pipeline.
     candidate_literate_md_files_in_snapshot = []
-    # Re-populate with files converted from .agda first (if not already done or if list was local)
-    # Assuming this list is being built up globally or passed around.
-    # For simplicity, let's assume it's initialized here. If it's built earlier, append to it.
     for lagda_md_file in AGDA_SNAPSHOT_SRC_DIR.rglob("*.lagda.md"):
         if lagda_md_file not in candidate_literate_md_files_in_snapshot:
              candidate_literate_md_files_in_snapshot.append(lagda_md_file)
 
 
-    if processed_latex_files_info:
+    if processed_latex_files_info: # This list drives the processing of original LaTeX files
         logging.info("\n--- Running Pandoc & postprocess.py for original LaTeX .lagda files ---")
         for file_info in processed_latex_files_info:
             relative_path = file_info["relative_path_original"]
@@ -718,8 +717,14 @@ def main(run_agda_html=False):
 
             temp_lagda_path = file_info["temp_path"]
             intermediate_md_path = file_info["intermediate_md_path"]
-            # This is the .lagda.md that will go into the snapshot
+            current_file_code_blocks_json = file_info["code_blocks_json_path"]
+
+            # .lagda.md file that will go into snapshot:
             snapshot_target_lagda_md_path = file_info["snapshot_target_path"]
+
+            # Determine correct code_blocks.json path for current file; derived from original
+            # relative path of the .lagda file.
+            #current_code_blocks_json_path = CODE_BLOCKS_DIR / relative_path.with_suffix(".codeblocks.json")
 
             try:
                 # B: Pandoc + Lua (.lagda.temp -> .md.intermediate)
@@ -731,47 +736,62 @@ def main(run_agda_html=False):
                 ])
 
                 # C: Postprocess (.md.intermediate -> final .lagda.md for snapshot)
-                #    Pass the path to labels_map.json
+                #    pass path to labels_map.json
+
+                # calculate correct code_blocks_json path for current file
+                current_file_code_blocks_json = CODE_BLOCKS_DIR / relative_path.with_suffix(".codeblocks.json")
+
                 postprocess_args = [
                     "python", str(POSTPROCESS_PY),
-                    str(intermediate_md_path),
-                    str(paths.code_blocks_json), # Assuming 'paths' from LagdaProcessingPaths still relevant or get code_blocks_json path another way
-                                                 # This paths.code_blocks_json might need to be file_info["code_blocks_json_path"]
-                                                 # Let's assume LagdaProcessingPaths is re-instantiated or info is carried
+                    str(intermediate_md_path),           # sys.argv[1] in postprocess.py
+                    str(current_file_code_blocks_json),  # sys.argv[2] in postprocess.py
                 ]
-                current_code_blocks_json = (CODE_BLOCKS_DIR / relative_path.with_suffix(".codeblocks.json")) # Reconstruct
-                postprocess_args.append(str(current_code_blocks_json))
 
+                # Add labels_map.json path
                 if labels_map_json_path and labels_map_json_path.exists():
-                    postprocess_args.append(str(labels_map_json_path))
+                    postprocess_args.append(str(labels_map_json_path))  # sys.argv[3] in postprocess.py
                 else:
-                    # Create a dummy empty JSON file if map doesn't exist, so postprocess.py doesn't fail on file open
+                    # Create/use dummy empty JSON file if map doesn't exist.
                     dummy_map_path = BUILD_MKDOCS_DIR / "dummy_labels_map.json"
-                    with open(dummy_map_path, 'w') as f_dummy: json.dump({}, f_dummy)
+                    if not dummy_map_path.exists(): # Create only if needed
+                        with open(dummy_map_path, 'w', encoding='utf-8') as f_dummy:
+                            json.dump({}, f_dummy)
                     postprocess_args.append(str(dummy_map_path))
-                    logging.warning("labels_map.json not found or failed to save. Using dummy empty map for postprocessing.")
+                    logging.warning(f"labels_map.json not found or failed to save at expected path '{labels_map_json_path}'. Using dummy empty map for postprocessing {relative_path}.")
 
-                postprocess_args.append(str(snapshot_target_lagda_md_path)) # Output path
+                # Add output file path
+                postprocess_args.append(str(snapshot_target_lagda_md_path))  # sys.argv[4] in postprocess.py
 
-                run_command(postprocess_args)
+                logging.debug(f"  Running postprocess with args: {postprocess_args}")
+                run_command(postprocess_args) # generates snapshot_target_lagda_md_path
 
-                # Update Snapshot: Remove original .lagda (if it was copied directly)
-                # and ensure the processed .lagda.md is the one in the snapshot.
-                # The previous logic for this involved copying from FINAL_LAGDA_MD_DIR.
-                # Now, snapshot_target_lagda_md_path IS the target.
-                snapshot_original_latex_lagda = AGDA_SNAPSHOT_SRC_DIR / relative_path
-                if snapshot_original_latex_lagda.exists() and snapshot_original_latex_lagda.is_file():
-                    logging.debug(f"  Original .lagda {snapshot_original_latex_lagda.name} was in snapshot, postprocess directly created .lagda.md, so no removal needed here if names differ.")
-                    # If postprocess.py wrote to a different temp location before this, a copy would be needed.
-                    # But here, postprocess.py writes directly to snapshot_target_lagda_md_path.
-
+                # Check if the .lagda.md was successfully created by postprocess.py
                 if snapshot_target_lagda_md_path.exists():
+                    # Add the newly created .lagda.md to the list for Agda processing
                     if snapshot_target_lagda_md_path not in candidate_literate_md_files_in_snapshot:
                         candidate_literate_md_files_in_snapshot.append(snapshot_target_lagda_md_path)
-                    logging.info(f"  Processed {relative_path} into snapshot as {snapshot_target_lagda_md_path.name}")
-                else:
-                    logging.error(f"  Postprocessed file {snapshot_target_lagda_md_path.name} not found for {relative_path}!")
+                    logging.info(f"  Successfully generated {snapshot_target_lagda_md_path.relative_to(AGDA_SNAPSHOT_SRC_DIR)} from {relative_path}")
 
+                    # Now, remove the original .lagda file (e.g., Ledger/Address.lagda)
+                    # from the snapshot directory to prevent ambiguity.
+                    # 'relative_path' is like 'Ledger/Address.lagda'
+                    snapshot_original_latex_lagda = AGDA_SNAPSHOT_SRC_DIR / relative_path
+
+                    if snapshot_original_latex_lagda.exists() and snapshot_original_latex_lagda.is_file():
+                        try:
+                            snapshot_original_latex_lagda.unlink()
+                            logging.info(f"  Successfully removed original .lagda file from snapshot: {snapshot_original_latex_lagda.relative_to(AGDA_SNAPSHOT_SRC_DIR)}")
+                        except OSError as e:
+                            logging.error(f"  Failed to remove original .lagda file {snapshot_original_latex_lagda.relative_to(AGDA_SNAPSHOT_SRC_DIR)} from snapshot: {e}")
+                    elif snapshot_original_latex_lagda.exists():
+                        # e.g., a directory; should ideally not happen if SRC_DIR structured correctly.
+                        logging.warning(f"  Original .lagda path {snapshot_original_latex_lagda.relative_to(AGDA_SNAPSHOT_SRC_DIR)} exists in snapshot but is not a file. Not removing.")
+                    else:
+                        # might happen if original file wasn't .lagda or was already removed by another process (unlikely).
+                        logging.debug(f"  Original .lagda file {snapshot_original_latex_lagda.relative_to(AGDA_SNAPSHOT_SRC_DIR)} not found in snapshot for removal.")
+
+                else: # snapshot_target_lagda_md_path does not exist
+                    logging.error(f"  Postprocessed file {snapshot_target_lagda_md_path.name} (target: {snapshot_target_lagda_md_path.relative_to(AGDA_SNAPSHOT_SRC_DIR)}) not found for {relative_path}! Original .lagda file will not be removed.")
 
             except Exception as e:
                 logging.error(f"Error during Pandoc/Postprocess for {relative_path}: {e}", exc_info=True)

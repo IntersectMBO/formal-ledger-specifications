@@ -41,332 +41,280 @@
 #     3.  replace `@@CROSS_REF@@...@@` to create links *to* targets.
 #     4.  process admonitions.
 #
+# postprocess.py
 import re
 import json
 import sys
-import io # Used for robust line processing
+import io
 import logging # For warnings about unresolved labels
 
-# --- slugify function (should be identical to the one in build.py) ---
-# (Or consider putting it in a shared utility .py file if used in multiple places)
-import re as re_for_slugify_post # Use an alias
+# --- Add slugify function (should be identical to the one in build.py) ---
+import re as re_for_slugify_post # Use an alias for this script's re usage
 
-def slugify_post(text_to_slug):
+def slugify_post(text_to_slug): # Renamed to avoid conflict if this script is imported elsewhere
     """
     Generates a slug from text, aiming for consistency with Python-Markdown's default.
     """
-    if not text_to_slug: return "section"
+    if not text_to_slug: return "section" # Default slug for empty text
     text_to_slug = str(text_to_slug)
     slug = text_to_slug.lower()
-    slug = re_for_slugify_post.sub(r'[^\w\s-]', '', slug)
-    slug = re_for_slugify_post.sub(r'[-\s]+', '-', slug)
-    slug = slug.strip('-')
-    return slug if slug else "section"
+    slug = re_for_slugify_post.sub(r'[^\w\s-]', '', slug) # Keep alphanumeric, whitespace, hyphens
+    slug = re_for_slugify_post.sub(r'[-\s]+', '-', slug)  # Replace whitespace/multiple hyphens with one
+    slug = slug.strip('-') # Remove leading/trailing hyphens
+    return slug if slug else "section" # Ensure non-empty slug
 
 # --- Global variable to store the loaded labels map ---
-LABEL_TARGETS_MAP = {}
+LABEL_TARGETS_MAP = {} # Populated from labels_map.json
 
-# Helper function to indent a block of text consistently
+# --- Existing Helper Functions ---
 def indent_block(text, prefix="    "):
     """
-    Indents each non-blank line of the input text string. Also indents lines
-    that contain only whitespace (to preserve relative spacing).
-    Args:
-        text (str): The text block to indent (potentially multi-line).
-        prefix (str): The string to prepend to each applicable line.
-    Returns:
-        str: The indented text block.
+    Indents each non-blank line of the input text string.
     """
     lines = text.split('\n')
     indented_lines = [(prefix + line if line.strip() else line) for line in lines]
     return "\n".join(indented_lines)
 
-# Code block replacer function used by re.sub
 def replace_code_placeholder(match, code_blocks):
     """
     Callback function for re.sub to replace code placeholder IDs (@@CODEBLOCK_ID_n@@).
-    Retrieves code from the code_blocks dict and formats it either
-    as a visible code block (!!! note admonition) or a hidden one (??? note admonition).
-    Args:
-        match (re.Match): The regex match object for the placeholder ID.
-        code_blocks (dict): The dictionary loaded from code_blocks.json.
-    Returns:
-        str: The formatted Markdown string for the code block/admonition.
     """
-    placeholder_id = match.group(0) # The full placeholder string, e.g., "@@CODEBLOCK_ID_1@@"
+    placeholder_id = match.group(0)
     block_data = code_blocks.get(placeholder_id)
 
-    # Safety check if ID not found in the JSON data
     if not block_data:
-        print(f"Warning: Code block data not found for {placeholder_id}", file=sys.stderr)
-        return placeholder_id # Return the placeholder itself if data is missing
+        logging.warning(f"Code block data not found for {placeholder_id}")
+        return placeholder_id
 
-    # Get the verbatim code content and hidden status
     content = block_data.get("content", "")
     is_hidden = block_data.get("hidden", False)
 
-    # Ensure content ends with a newline (important before closing fence)
-    # Use rstrip() to remove only trailing whitespace before check/add
     content_rstrip = content.rstrip()
     if content and not content_rstrip.endswith('\n'):
        content = content_rstrip + '\n'
+    elif content.strip():
+       content = content_rstrip + '\n'
     else:
-       # If original content was empty or only whitespace, keep it empty maybe?
-       # Or just use the rstrip version if it wasn't empty
-       if content.strip(): # If there was non-whitespace content
-           content = content_rstrip + '\n'
-       else: # Handle case where content was purely whitespace/empty
-           content = '\n' # Ensure at least a newline
+       content = '\n'
 
     if is_hidden:
         return f'\n<div class="agda-hidden-source">\n\n```agda\n{content}```\n\n</div>\n'
-        # title = "Supporting source code"
-        # # Indent the code content itself by 4 spaces for nesting under ```agda
-        # indented_code_content = indent_block(content, prefix="    ")
-        # # Format as COLLAPSED admonition containing the code block (indented again)
-        # replacement_str = f'\n??? note "{title}"\n\n    ```agda\n{indented_code_content}    ```\n' # Note final ``` is indented
-        # return replacement_str
-    else: # Visible code block
+    else:
         return f"\n```agda\n{content}```\n"
-        # Indent the code content itself by 4 spaces
-        # indented_code_content = indent_block(content, prefix="    ")
-        # Format as EXPANDED admonition (!!! note) containing the code block
-        # replacement_str = f'\n!!! note\n\n    ```agda\n{indented_code_content}    ```\n' # Note final ``` is indented
-        # return replacement_str
-
 
 # --- New Placeholder Replacement Functions ---
 def replace_figure_block_to_subsection_placeholder(match):
-    # original_label_escaped = match.group(1) # Original LaTeX label (label=...)
-    caption_text_escaped = match.group(2)   # Caption text (caption=...)
+    # Group 1: original_label_escaped (from label=...) (not directly used for HTML output here,
+    #          but useful for debugging or other attributes).
+    # Group 2: caption_text_escaped (from caption=...)
+    # original_label_raw = match.group(1)
+    caption_text_raw = match.group(2)
 
-    # Unescape "@@" if you escaped it in preprocess.py (e.g., .replace("@ @", "@@"))
-    caption_text = caption_text_escaped.replace("@ @", "@@")
+    # Unescape "@@" if escaped in preprocess.py (e.g., .replace("@ @", "@@"))
+    caption_text = caption_text_raw.replace("@ @", "@@")
 
-    # Create a Markdown H3 subsection heading.
-    # MkDocs (Python-Markdown with 'toc' extension) will auto-generate an ID for this.
-    # This auto-generated ID should match the 'anchor' value stored in LABEL_TARGETS_MAP
-    # (which was created by slugifying this same caption_text in build.py).
-    # Add extra newlines for proper Markdown parsing.
+    # Create md H3 subsection heading.
+    # mkdocs (python-markdown with 'toc' extension) will auto-generate id.
+    # Placeholder itself should be on its own line in intermediate file.
+    # Add extra newlines before and after heading ensures proper md parsing.
     return f"\n### {caption_text}\n\n"
 
-def replace_unlabelled_figure_caption_placeholder(match): # If you implemented this in preprocess.py
-    caption_text_escaped = match.group(1)
-    caption_text = caption_text_escaped.replace("@ @", "@@")
-    # Maybe use H4 for these, or some other distinguishing feature
-    return f"\n#### {caption_text} (Illustration)\n\n"
+def replace_unlabelled_figure_caption_placeholder(match):
+    caption_text_raw = match.group(1)
+    caption_text = caption_text_raw.replace("@ @", "@@")
+    return f"\n#### {caption_text}\n\n" # using H4 for these
 
 def replace_cross_ref_placeholder(match):
-    global LABEL_TARGETS_MAP # Use the loaded map
+    # global LABEL_TARGETS_MAP
+    # # (No 'global LABEL_TARGETS_MAP' here if defined at module level; if this
+    # # function were to *write* to module-level LABEL_TARGETS_MAP, then global
+    # # would be needed, but we only read.)
 
-    command_name = match.group(1).strip()       # "Cref" or "cref"
-    targets_str_escaped = match.group(2).strip() # Raw comma-separated original LaTeX labels
+    command_name = match.group(1).strip()       # Cref or cref
+    targets_str_raw = match.group(2).strip()    # raw comma-separated original latex labels
 
-    targets_str = targets_str_escaped.replace("@ @", "@@") # Unescape
-    original_latex_labels = [t.strip() for t in targets_str.split(',')]
+    targets_str = targets_str_raw.replace("@ @", "@@") # unescape "@@"
+    original_latex_labels = [t.strip() for t in targets_str.split(',') if t.strip()] # ensure no empty targets
 
     output_link_parts = []
     for i, original_latex_label_id in enumerate(original_latex_labels):
+        # if not original_latex_label_id: # skip if a target is empty (e.g., due to trailing comma)
+        #     continue
         target_info = LABEL_TARGETS_MAP.get(original_latex_label_id)
-
         link_display_text = ""
-
         if target_info:
-            # Use stored caption text for a more descriptive link
-            linked_caption_text = target_info.get("caption_text", original_latex_label_id) # Fallback to label if caption somehow missing
-            target_file = target_info["file"]
-            target_anchor_slug_with_hash = target_info["anchor"] # This should already include '#'
+            # use stored caption text for more descriptive link
+            linked_caption_text = target_info.get("caption_text", original_latex_label_id)
+            target_file = target_info.get("file", "")
+            target_anchor_slug_with_hash = target_info.get("anchor", "") # should include '#'
+            # determine "Figure", "Section" prefix for display text
+            prefix = "Ref." # default prefix
+            if original_latex_label_id.startswith("fig:"): prefix = "Figure"
+            elif original_latex_label_id.startswith("sec:"): prefix = "Section"
+            elif original_latex_label_id.startswith("tbl:"): prefix = "Table"
+            elif original_latex_label_id.startswith("eq:"): prefix = "Equation"
+            # could add more cases here if/as needed
 
-            # Determine "Figure", "Section" prefix for display text
-            prefix = "Ref." # Default prefix
-            if original_latex_label_id.startswith("fig:"):
-                prefix = "Figure"
-            elif original_latex_label_id.startswith("sec:"):
-                prefix = "Section"
-            elif original_latex_label_id.startswith("tbl:"): # Example for tables
-                prefix = "Table"
-            elif original_latex_label_id.startswith("eq:"):  # Example for equations
-                prefix = "Equation"
-
-            # Capitalize prefix if command was "Cref"
-            if command_name == "Cref":
-                prefix = prefix.capitalize()
-            else: # for "cref", use lowercase (common style)
-                prefix = prefix.lower()
+            # Commenting since we should capitalize all prefixes:
+            # # capitalize prefix if command was "Cref"
+            # # if command_name == "Cref": prefix = prefix.capitalize()
+            # # else: prefix = prefix.lower() # for "cref"
 
             link_display_text = f"{prefix} '{linked_caption_text}'"
-            output_link_parts.append(f"[{link_display_text}]({target_file}{target_anchor_slug_with_hash})")
-        else:
-            # Label not found in the map - this reference is broken or to an unmapped label
-            logging.warning( # Requires logging to be configured in postprocess.py if you want this
-                f"Cross-reference target '{original_latex_label_id}' not found in label map. "
-                f"Generating placeholder text for command '{command_name}'."
-            )
-            # Create a simple placeholder or a broken local link
-            placeholder_text = f"{command_name} to '{original_latex_label_id}' (unresolved)"
-            output_link_parts.append(f"*{placeholder_text}*") # Italicize unresolved references
+            if target_file and target_anchor_slug_with_hash:
+                output_link_parts.append(f"[{link_display_text}]({target_file}{target_anchor_slug_with_hash})")
+            else: # should not happen if map well-formed
+                logging.warning(f"Cross-reference target '{original_latex_label_id}' found in map but missing file/anchor. Fallback text.")
+                output_link_parts.append(f"*{link_display_text} (link generation error)*")
 
-        # Add separators like " and " or ", " for \Cref with multiple arguments
+        else:
+            # Label not found in map; ref is broken or to unmapped label
+            logging.warning(
+                f"Cross-reference target '{original_latex_label_id}' NOT FOUND in label map. "
+                f"Generating placeholder text for '{command_name}'."
+            )
+            # Create a simple placeholder or a "broken" local link attempt
+            # For display text, try to make something reasonable
+            default_prefix_for_unresolved = command_name.capitalize() if command_name == "Cref" else command_name
+            unresolved_display_text = f"{default_prefix_for_unresolved} '{original_latex_label_id}'"
+            output_link_parts.append(f"*{unresolved_display_text} (unresolved reference)*")
+
+        # Add separators " and ", ", " for \Cref with multiple arguments
         if command_name == "Cref" and i < len(original_latex_labels) - 1:
-            # Simplified separator logic; cleveref is more complex
             if len(original_latex_labels) > 1 and i == len(original_latex_labels) - 2:
                  output_link_parts.append(" and ")
-            elif i < len(original_latex_labels) -1 :
+            elif i < len(original_latex_labels) -1 : # avoid trailing comma if only two items
                  output_link_parts.append(", ")
 
     return "".join(output_link_parts)
 
-
-
-
-# Function to process Conway admonition markers and indent content
+# --- Function to process Conway admonition markers (Keep existing) ---
 def process_conway_admonitions(content):
-    """
-    Finds Conway admonition markers (@@ADMONITION_START/END@@),
-    converts the start marker to MkDocs admonition syntax (??? note),
-    removes the end marker, and indents all content lines between the markers.
-    Args:
-        content (str): The Markdown content (string) after code blocks have been inserted.
-    Returns:
-        str: The processed Markdown content with admonitions formatted.
-    """
+    # ... (your existing function from the uploaded postprocess.py) ...
     output_lines = []
-    is_indenting_admonition = False # State flag: are we inside a Conway admonition?
-    indent_prefix = "    " # Standard 4 spaces for admonition content
-
-    # Regex to find the START marker at the beginning of a line (after optional whitespace)
-    # Captures Title (Group 1). Matches literal \| escaped by Pandoc.
+    is_indenting_admonition = False
+    indent_prefix = "    "
     admonition_start_pattern = re.compile(r'^\s*@@ADMONITION_START\\\|(.*?)\s*@@\s*$')
-    # Regex to find the END marker (must be alone on line after optional whitespace)
     admonition_end_pattern = re.compile(r'^\s*@@ADMONITION_END@@\s*$')
-
-    # print("\nDEBUG: Starting process_conway_admonitions...", file=sys.stderr)
     for i, line in enumerate(content.splitlines()):
         line_stripped = line.strip()
-
-        # Use repr() for debugging if needed again
-        # print(f"DEBUG: Line {i+1} (stripped): {repr(line_stripped)}", file=sys.stderr)
-
         start_match = admonition_start_pattern.match(line_stripped)
         end_match = admonition_end_pattern.match(line_stripped)
-
         if start_match:
-            # Found the start marker
             title = start_match.group(1).strip() if start_match.group(1) else "Conway specifics"
-            # print(f"DEBUG: Found START marker on line {i+1}. Title='{title}'", file=sys.stderr) # DEBUG
             output_lines.append(f'\n??? note "{title}"\n')
             is_indenting_admonition = True
         elif end_match and is_indenting_admonition:
-             # print(f"DEBUG: Found END marker on line {i+1}.", file=sys.stderr) # DEBUG
              is_indenting_admonition = False
         elif is_indenting_admonition:
-            # Indent content lines (same as before)
-            if line.strip() or line.isspace():
+            if line.strip() or line.isspace(): # Indent non-blank lines and lines with only whitespace
                  output_lines.append(indent_prefix + line)
-            else:
+            else: # Keep blank lines as they are (don't indent them)
                  output_lines.append(line)
         else:
             output_lines.append(line)
-
-    # print("DEBUG: Finished process_conway_admonitions.", file=sys.stderr) # DEBUG
-    return "\n".join(output_lines) + "\n"
-
+    return "\n".join(output_lines) + "\n" # Ensure trailing newline
 
 # --- Script Entry Point ---
 if __name__ == "__main__":
-    # Expects 4 arguments: intermediate MD file, code blocks JSON file, labels_map.json, final MD output file
+    # Expects 4 arguments now: md_intermediate, code_blocks_json, labels_map_json, output_lagda_md
     if len(sys.argv) != 5:
         print(f"Usage: python {sys.argv[0]} <input_md_intermediate> <input_code_blocks_json> <labels_map.json> <output_lagda_md>")
         sys.exit(1)
 
     input_md_file = sys.argv[1]
     input_code_blocks_file = sys.argv[2]
-    labels_map_file = sys.argv[3]
-    output_lagda_md_file = sys.argv[4] # was sys.argv[3]
+    labels_map_file = sys.argv[3]       # new arg for labels map
+    output_lagda_md_file = sys.argv[4]  # output file
 
-    # basic logging for warnings
-    logging.basicConfig(level=logging.WARNING, format='%(levelname)s (postprocess.py): %(message)s')
+    # Configure basic logging for warnings from this script (e.g., unresolved labels)
+    # Log to stderr so it's visible during build.py execution.
+    logging.basicConfig(stream=sys.stderr, level=logging.WARNING, format='%(levelname)s (postprocess.py): %(message)s')
 
-    global LABEL_TARGETS_MAP # allow mods of global map
+    # Load LABEL_TARGETS_MAP at the start of __main__
+    # # global LABEL_TARGETS_MAP # Allow modification by loading the map
 
     try:
-        # load code block data from JSON
-        print(f"Loading code blocks from {input_code_blocks_file}", file=sys.stderr)
+        print(f"Loading labels map from {labels_map_file}", file=sys.stderr) # use print for this initial feedback
+        with open(labels_map_file, 'r', encoding='utf-8') as f_labels:
+            # assign directly to module-level global variable
+            #LABEL_TARGETS_MAP.update(json.load(f_labels)) # update or
+            LABEL_TARGETS_MAP = json.load(f_labels)        # direct assignment
+        print(f"Loaded {len(LABEL_TARGETS_MAP)} label mappings.", file=sys.stderr)
+    except FileNotFoundError:
+        logging.warning(f"Labels map file '{labels_map_file}' not found. Cross-references will be unresolved.")
+        LABEL_TARGETS_MAP = {} # ensure it's an empty dict if file not found
+    except json.JSONDecodeError as e:
+        logging.error(f"Failed to parse JSON from labels map file {labels_map_file}: {e}. Cross-references may fail.")
+        LABEL_TARGETS_MAP = {} # ensure it's an empty dict on error
+
+    try:
+        # Load code block data from JSON
+        logging.info(f"Loading code blocks from {input_code_blocks_file}")
+        # print(f"Loading code blocks from {input_code_blocks_file}", file=sys.stderr)
         with open(input_code_blocks_file, 'r', encoding='utf-8') as f_code:
             code_blocks = json.load(f_code)
-        print(f"Loaded {len(code_blocks)} code blocks.", file=sys.stderr)
+        logging.info(f"Loaded {len(code_blocks)} code blocks.")
+        # print(f"Loaded {len(code_blocks)} code blocks.", file=sys.stderr)
 
-        # load labels map from JSON
-        print(f"Loading labels map from {labels_map_file}", file=sys.stderr)
-        try:
-            with open(labels_map_file, 'r', encoding='utf-8') as f_labels:
-                LABEL_TARGETS_MAP = json.load(f_labels)
-            print(f"Loaded {len(LABEL_TARGETS_MAP)} label mappings.", file=sys.stderr)
-        except FileNotFoundError:
-            print(f"Warning: Labels map file '{labels_map_file}' not found. Cross-references may not work.", file=sys.stderr)
-            LABEL_TARGETS_MAP = {} # use empty map
-        except json.JSONDecodeError as e:
-            print(f"Error: Failed to parse JSON from labels map file {labels_map_file}: {e}", file=sys.stderr)
-            LABEL_TARGETS_MAP = {} # use empty map on error
-
-
-        # read intermediate markdown file generated by pandoc+lua
-        print(f"Reading intermediate MD from {input_md_file}", file=sys.stderr)
+        # Load labels map from JSON
+        logging.info(f"Reading intermediate MD from {input_md_file}")
+        # print(f"Loading labels map from {labels_map_file}", file=sys.stderr)
         with open(input_md_file, 'r', encoding='utf-8') as f_md:
             intermediate_content = f_md.read()
-        print(f"Read {len(intermediate_content)} chars from intermediate file.", file=sys.stderr)
 
-        # --- REPLACEMENT ORDER ---
-        # 1. Replace code block placeholders (@@CODEBLOCK_ID_n@@)
-        print(f"Replacing code block placeholders...", file=sys.stderr)
-        content_with_code = re.sub(
+        content_processed = re.sub(
             r'@@CODEBLOCK_ID_\d+@@',
             lambda m: replace_code_placeholder(m, code_blocks),
             intermediate_content
         )
+        logging.info(f"Replaced code block placeholders.")
 
-        # 2. Replace @@FIGURE_BLOCK_TO_SUBSECTION@@ (creates md headings)
-        print(f"Converting figure blocks to subsections...", file=sys.stderr)
-        content_after_figure_subsections = re.sub(
+        content_processed = re.sub(
             r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@",
             replace_figure_block_to_subsection_placeholder,
-            content_with_code,
-            flags=re.DOTALL # DOTALL in case caption or label had newlines
+            content_processed,
+            flags=re.DOTALL
         )
+        logging.info(f"Converted figure blocks to subsections.")
 
-        # 2b. Replace @@UNLABELLED_FIGURE_CAPTION@@ (do we use them?)
-        content_after_unlabelled_captions = re.sub(
-            r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@",
+        content_processed = re.sub(
+            r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@", # If you use this
             replace_unlabelled_figure_caption_placeholder,
-            content_after_figure_subsections,
+            content_processed,
             flags=re.DOTALL
         )
 
-        # 3. Replace @@CROSS_REF@@ placeholders (creates md links)
-        print(f"Replacing cross-reference placeholders...", file=sys.stderr)
-        content_with_cross_refs = re.sub(
+        content_processed = re.sub(
             r"@@CROSS_REF@@command=(Cref|cref)@@targets=(.*?)@@",
             replace_cross_ref_placeholder,
-            content_after_unlabelled_captions,
-            flags=re.DOTALL # DOTALL for targets string containing newlines (unlikely)
+            content_processed,
+            flags=re.DOTALL
         )
+        logging.info(f"Replaced cross-reference placeholders.")
 
-        # 4. Process Conway admonition markers (@@ADMONITION_...@@)
-        print(f"Processing Conway admonitions...", file=sys.stderr)
-        final_content = process_conway_admonitions(content_with_cross_refs)
+        final_content = process_conway_admonitions(content_processed)
+        logging.info(f"Processed Conway admonitions.")
 
-        # Write fully processed final md file
-        print(f"Writing final output to {output_lagda_md_file}", file=sys.stderr)
+        logging.info(f"Writing final output to {output_lagda_md_file}")
         with open(output_lagda_md_file, 'w', encoding='utf-8') as f_out:
             f_out.write(final_content)
 
-        print(f"Successfully generated {output_lagda_md_file}")
+        print(f"Successfully generated {output_lagda_md_file}") # To stdout for build.py
 
     except FileNotFoundError as e:
-        # This will catch if input_md_file or input_code_blocks_file missing
-        print(f"Error: Input file not found: {e.filename}", file=sys.stderr)
+        logging.error(f"Input file not found: {e.filename}")
         sys.exit(1)
-    # JSONDecodeError for code_blocks handled separately from labels_map inside try block
+    except json.JSONDecodeError as e_json:
+        # This will primarily catch errors from code_blocks.json now
+        logging.error(f"Failed to parse JSON from code_blocks file {input_code_blocks_file}: {e_json}")
+        sys.exit(1)
     except Exception as e:
-        print(f"An unexpected error occurred in postprocess.py: {e}", file=sys.stderr)
+        logging.error(f"An unexpected error occurred in postprocess.py: {e}", exc_info=True)
         sys.exit(1)
+
+# The main change is moving `LABEL_TARGETS_MAP = {}` to the module level (top of
+# the script) and then populating it within the `if __name__ == "__main__":` block
+# using `LABEL_TARGETS_MAP.update(json.load(f_labels))` or direct assignment
+# `LABEL_TARGETS_MAP = json.load(f_labels)`. The functions like
+# `replace_cross_ref_placeholder` can then access it directly as a global variable.
