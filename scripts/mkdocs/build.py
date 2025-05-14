@@ -83,6 +83,7 @@ import os
 import sys
 import subprocess
 import json
+import re
 import shutil
 from pathlib import Path
 import logging
@@ -98,6 +99,27 @@ except ImportError:
     print(f"FATAL: Could not import 'convert_agda_to_lagda_md'. Ensure 'agda2lagda.py' is in {SCRIPTS_DIR}.", file=sys.stderr)
     sys.exit(1)
 from bs4 import BeautifulSoup # for link rewriting (.html -> .md)
+
+# Add this near the top of build.py, after imports
+import re as re_for_slugify # Use an alias if 're' is used differently elsewhere
+
+def slugify(text_to_slug):
+    """
+    Generates a slug from text, similar to Python-Markdown's default.
+    """
+    if not text_to_slug: # handle empty string case
+        return "section" # default slug for empty text
+    text_to_slug = str(text_to_slug) # ensure text is string
+    slug = text_to_slug.lower()
+
+    # Remove unwanted characters (anything not a letter, number, underscore, or hyphen)
+    # (keep spaces; they'll be replaced by hyphens)
+    slug = re_for_slugify.sub(r'[^\w\s-]', '', slug)
+    slug = re_for_slugify.sub(r'[-\s]+', '-', slug)  # replace whitespace and hyphen sequences with single hyphen
+    slug = slug.strip('-')                           # remove leading/trailing hyphens
+    if not slug:         # if all chars stripped
+        return "section" # default slug if original text yields empty slug
+    return slug
 
 # --- Configuration ---
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
@@ -535,7 +557,7 @@ def main(run_agda_html=False):
         logging.error(f"Failed to copy source tree from {SRC_DIR} to {AGDA_SNAPSHOT_SRC_DIR}: {e}", exc_info=True)
         sys.exit(1)
 
-    # 4. Convert .agda to .lagda.md in the snapshot
+    # 4a. Convert .agda to .lagda.md in the snapshot
     logging.info("Converting .agda files to .lagda.md in the snapshot directory...")
     # Ensure agda2lagda module is correctly imported for this to work
     if 'convert_agda_to_lagda_md' not in globals():
@@ -549,7 +571,7 @@ def main(run_agda_html=False):
             logging.error("Failed during .agda to .lagda.md conversion. Exiting.")
             sys.exit(1)
 
-    # 5. Generate snapshot .agda-lib file
+    # 4b. Generate snapshot .agda-lib file
     agda_lib_dependencies = [ # From your script, ensure these are current
         "standard-library", "standard-library-classes", "standard-library-meta", "abstract-set-theory"
     ]
@@ -565,76 +587,200 @@ def main(run_agda_html=False):
 
     # 6. Process original .lagda files (LaTeX-based) through pipeline
     logging.info(f"Searching for original .lagda (LaTeX-based) files in {SRC_DIR.relative_to(PROJECT_ROOT)}...")
-    original_latex_lagda_files = sorted(list(SRC_DIR.rglob("*.lagda"))) # Assuming these are the LaTeX ones
+    original_latex_lagda_files = sorted(list(SRC_DIR.rglob("*.lagda"))) # the LaTeX-based literate Agda files
     logging.info(f"Found {len(original_latex_lagda_files)} original .lagda (LaTeX-based) files to process.")
 
-    # list for storing Path objects to .lagda.md files in AGDA_SNAPSHOT_SRC_DIR that are
-    # ready for the (optional) `agda --html` step; includes those converted from .agda and
-    # those processed from original .lagda.
-    candidate_literate_md_files_in_snapshot = []
+    # --- STAGE 1: Run preprocess.py on all original LaTeX .lagda files ---
+    # We'll collect info needed for later stages.
+    processed_latex_files_info = [] # List to store tuples: (original_abs_path, temp_file_path, final_flat_md_name)
 
-    # Add files converted from .agda (they are already .lagda.md in snapshot)
-    for lagda_md_file in AGDA_SNAPSHOT_SRC_DIR.rglob("*.lagda.md"):
-        candidate_literate_md_files_in_snapshot.append(lagda_md_file)
+    if original_latex_lagda_files:
+        logging.info("\n--- Running preprocess.py for all original LaTeX .lagda files ---")
+        for lagda_file_abs_path in original_latex_lagda_files:
+            relative_path = lagda_file_abs_path.relative_to(SRC_DIR) # e.g., Module/File.lagda
+            logging.info(f"Preprocessing: {relative_path}")
 
-    # Process original LaTeX .lagda files
-    for lagda_file_abs_path in original_latex_lagda_files:
-        relative_path = lagda_file_abs_path.relative_to(SRC_DIR) # e.g., Module/File.lagda
-        logging.info(f"\nProcessing original LaTeX .lagda: {relative_path}")
+            paths = LagdaProcessingPaths(relative_path) # Manages intermediate file paths
+            paths.ensure_parent_dirs_exist()
 
-        paths = LagdaProcessingPaths(relative_path) # Manages intermediate file paths
-        paths.ensure_parent_dirs_exist()
+            try:
+                run_command([
+                    "python", str(PREPROCESS_PY),
+                    str(lagda_file_abs_path),
+                    str(MACROS_JSON),
+                    str(paths.code_blocks_json) # Output for code blocks
+                ], stdout_file=str(paths.temp_lagda)) # Output .lagda.temp
 
+                # Determine the final flat MD filename for this file
+                module_name_parts = list(relative_path.parent.parts)
+                file_stem = relative_path.name
+                # Remove .lagda to get the base for module name parts
+                if file_stem.endswith(".lagda"): file_stem = file_stem[:-len(".lagda")]
+
+                is_index_file_stem = file_stem.lower() == "index"
+                if not module_name_parts and is_index_file_stem: module_name_flat = "index"
+                elif not module_name_parts: module_name_flat = file_stem
+                else:
+                    if not is_index_file_stem: module_name_parts.append(file_stem)
+                    module_name_flat = ".".join(part for part in module_name_parts if part)
+
+                final_flat_md_filename = module_name_flat + ".md"
+
+                processed_latex_files_info.append({
+                    "original_path": lagda_file_abs_path,
+                    "temp_path": paths.temp_lagda,
+                    "intermediate_md_path": paths.intermediate_md, # For Pandoc output
+                    "snapshot_target_path": AGDA_SNAPSHOT_SRC_DIR / relative_path.with_suffix(".lagda.md"), # Final .lagda.md in snapshot
+                    "final_flat_md_filename": final_flat_md_filename,
+                    "relative_path_original": relative_path # For LagdaProcessingPaths if needed again
+                })
+
+            except Exception as e:
+                logging.error(f"Error during preprocess.py for {relative_path}: {e}", exc_info=True)
+                # Decide if you want to halt or continue with other files
+    else:
+        logging.info("No original LaTeX .lagda files found to preprocess.")
+
+    # --- STAGE 2: Build Global Label Map from .lagda.temp files ---
+    global_labels_to_targets_map = {}
+    if processed_latex_files_info:
+        logging.info("\n--- Building global label map from processed .lagda.temp files ---")
+        for file_info in processed_latex_files_info:
+            temp_file_path = file_info["temp_path"]
+            final_flat_filename_for_map = file_info["final_flat_md_filename"]
+
+            if temp_file_path.exists():
+                with open(temp_file_path, 'r', encoding='utf-8') as f_temp:
+                    temp_content = f_temp.read()
+
+                # Find all @@FIGURE_BLOCK_TO_SUBSECTION@@label=L@@caption=C@@ placeholders
+                for match in re.finditer(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", temp_content, flags=re.DOTALL):
+                    original_label_id_escaped = match.group(1)
+                    caption_text_escaped = match.group(2)
+
+                    # Unescape "@@" if it was escaped in preprocess.py
+                    original_label_id = original_label_id_escaped.replace("@ @", "@@")
+                    caption_text = caption_text_escaped.replace("@ @", "@@")
+
+                    target_anchor_slug = slugify(caption_text) # Use the defined slugify function
+
+                    if original_label_id in global_labels_to_targets_map:
+                        # Log a warning if a label is redefined
+                        existing_entry = global_labels_to_targets_map[original_label_id]
+                        if existing_entry["file"] != final_flat_filename_for_map or existing_entry["anchor"] != f"#{target_anchor_slug}":
+                            logging.warning(
+                                f"Label '{original_label_id}' (caption: '{caption_text}') in '{final_flat_filename_for_map}' "
+                                f"redefines existing entry from '{existing_entry['file']}' pointing to '{existing_entry['anchor']}'."
+                            )
+
+                    global_labels_to_targets_map[original_label_id] = {
+                        "file": final_flat_filename_for_map,
+                        "anchor": f"#{target_anchor_slug}", # Anchor includes '#'
+                        "caption_text": caption_text      # Store original caption for link text
+                    }
+                    logging.debug(f"Mapped LaTeX label '{original_label_id}' to target: file='{final_flat_filename_for_map}', anchor='{target_anchor_slug}'")
+            else:
+                logging.warning(f"Expected .lagda.temp file not found for label mapping: {temp_file_path}")
+
+        # Save the map to labels_map.json
+        labels_map_json_path = BUILD_MKDOCS_DIR / "labels_map.json"
         try:
-            # A: Preprocess (LaTeX .lagda -> .lagda.temp)
-            run_command([
-                "python", str(PREPROCESS_PY),
-                str(lagda_file_abs_path),
-                str(MACROS_JSON),
-                str(paths.code_blocks_json)
-            ], stdout_file=str(paths.temp_lagda))
-
-            # B: Pandoc + Lua (.lagda.temp -> .md.intermediate)
-            run_command([
-                "pandoc", str(paths.temp_lagda),
-                "-f", "latex", "-t", "gfm+attributes", # Or your preferred Markdown
-                "--lua-filter", str(LUA_FILTER),
-                "-o", str(paths.intermediate_md)
-            ])
-
-            # C: Postprocess (.md.intermediate -> final .lagda.md for snapshot)
-            # Output of postprocess is the .lagda.md we want in snapshot.
-            # Third argument to postprocess.py is *output file name*.
-            # paths.final_lagda_md is set to .../relative_path.with_suffix(".lagda.md")
-            run_command([
-                "python", str(POSTPROCESS_PY),
-                str(paths.intermediate_md),
-                str(paths.code_blocks_json),
-                str(paths.final_lagda_md) # This is the output .lagda.md
-            ])
-
-            # D: Update Snapshot: Replace original .lagda with processed .lagda.md
-            snapshot_original_latex_lagda = AGDA_SNAPSHOT_SRC_DIR / relative_path # Path to original .lagda in snapshot
-            snapshot_target_literate_md = AGDA_SNAPSHOT_SRC_DIR / relative_path.with_suffix(".lagda.md") # Target .lagda.md in snapshot
-
-            if snapshot_original_latex_lagda.is_file():
-                logging.info(f"  Removing original {snapshot_original_latex_lagda.name} from snapshot.")
-                snapshot_original_latex_lagda.unlink()
-
-            logging.info(f"  Copying processed {paths.final_lagda_md.name} to snapshot as {snapshot_target_literate_md.name}.")
-            shutil.copy2(paths.final_lagda_md, snapshot_target_literate_md)
-
-            if snapshot_target_literate_md not in candidate_literate_md_files_in_snapshot:
-                candidate_literate_md_files_in_snapshot.append(snapshot_target_literate_md)
-
+            with open(labels_map_json_path, 'w', encoding='utf-8') as f_map:
+                json.dump(global_labels_to_targets_map, f_map, indent=2)
+            logging.info(f"Global label-to-target map saved to {labels_map_json_path}")
         except Exception as e:
-            logging.error(f"Error processing file {relative_path}: {e}", exc_info=True)
-            logging.warning(f"Skipping further processing for {relative_path.name}.")
-            continue
+            logging.error(f"Failed to save labels_map.json: {e}", exc_info=True)
+            # This is critical; postprocessing might fail or produce wrong links.
+            # Consider exiting or using an empty map for postprocessing.
+            labels_map_json_path = None # Indicate failure to save/use
+    else:
+        logging.info("No processed files to build label map from. Skipping map generation.")
+        labels_map_json_path = None # No map file generated
+
+    # --- STAGE 3: Run Pandoc and postprocess.py for original LaTeX .lagda files ---
+    # This list will contain Path objects to all .lagda.md files in AGDA_SNAPSHOT_SRC_DIR
+    # that are ready for the (optional) `agda --html` step.
+    # It includes those converted from .agda (added earlier) and those from this LaTeX pipeline.
+    candidate_literate_md_files_in_snapshot = []
+    # Re-populate with files converted from .agda first (if not already done or if list was local)
+    # Assuming this list is being built up globally or passed around.
+    # For simplicity, let's assume it's initialized here. If it's built earlier, append to it.
+    for lagda_md_file in AGDA_SNAPSHOT_SRC_DIR.rglob("*.lagda.md"):
+        if lagda_md_file not in candidate_literate_md_files_in_snapshot:
+             candidate_literate_md_files_in_snapshot.append(lagda_md_file)
+
+
+    if processed_latex_files_info:
+        logging.info("\n--- Running Pandoc & postprocess.py for original LaTeX .lagda files ---")
+        for file_info in processed_latex_files_info:
+            relative_path = file_info["relative_path_original"]
+            logging.info(f"Pandoc/Postprocessing: {relative_path}")
+
+            temp_lagda_path = file_info["temp_path"]
+            intermediate_md_path = file_info["intermediate_md_path"]
+            # This is the .lagda.md that will go into the snapshot
+            snapshot_target_lagda_md_path = file_info["snapshot_target_path"]
+
+            try:
+                # B: Pandoc + Lua (.lagda.temp -> .md.intermediate)
+                run_command([
+                    "pandoc", str(temp_lagda_path),
+                    "-f", "latex", "-t", "gfm+attributes", # Or your preferred Markdown flavor
+                    "--lua-filter", str(LUA_FILTER),
+                    "-o", str(intermediate_md_path)
+                ])
+
+                # C: Postprocess (.md.intermediate -> final .lagda.md for snapshot)
+                #    Pass the path to labels_map.json
+                postprocess_args = [
+                    "python", str(POSTPROCESS_PY),
+                    str(intermediate_md_path),
+                    str(paths.code_blocks_json), # Assuming 'paths' from LagdaProcessingPaths still relevant or get code_blocks_json path another way
+                                                 # This paths.code_blocks_json might need to be file_info["code_blocks_json_path"]
+                                                 # Let's assume LagdaProcessingPaths is re-instantiated or info is carried
+                ]
+                current_code_blocks_json = (CODE_BLOCKS_DIR / relative_path.with_suffix(".codeblocks.json")) # Reconstruct
+                postprocess_args.append(str(current_code_blocks_json))
+
+                if labels_map_json_path and labels_map_json_path.exists():
+                    postprocess_args.append(str(labels_map_json_path))
+                else:
+                    # Create a dummy empty JSON file if map doesn't exist, so postprocess.py doesn't fail on file open
+                    dummy_map_path = BUILD_MKDOCS_DIR / "dummy_labels_map.json"
+                    with open(dummy_map_path, 'w') as f_dummy: json.dump({}, f_dummy)
+                    postprocess_args.append(str(dummy_map_path))
+                    logging.warning("labels_map.json not found or failed to save. Using dummy empty map for postprocessing.")
+
+                postprocess_args.append(str(snapshot_target_lagda_md_path)) # Output path
+
+                run_command(postprocess_args)
+
+                # Update Snapshot: Remove original .lagda (if it was copied directly)
+                # and ensure the processed .lagda.md is the one in the snapshot.
+                # The previous logic for this involved copying from FINAL_LAGDA_MD_DIR.
+                # Now, snapshot_target_lagda_md_path IS the target.
+                snapshot_original_latex_lagda = AGDA_SNAPSHOT_SRC_DIR / relative_path
+                if snapshot_original_latex_lagda.exists() and snapshot_original_latex_lagda.is_file():
+                    logging.debug(f"  Original .lagda {snapshot_original_latex_lagda.name} was in snapshot, postprocess directly created .lagda.md, so no removal needed here if names differ.")
+                    # If postprocess.py wrote to a different temp location before this, a copy would be needed.
+                    # But here, postprocess.py writes directly to snapshot_target_lagda_md_path.
+
+                if snapshot_target_lagda_md_path.exists():
+                    if snapshot_target_lagda_md_path not in candidate_literate_md_files_in_snapshot:
+                        candidate_literate_md_files_in_snapshot.append(snapshot_target_lagda_md_path)
+                    logging.info(f"  Processed {relative_path} into snapshot as {snapshot_target_lagda_md_path.name}")
+                else:
+                    logging.error(f"  Postprocessed file {snapshot_target_lagda_md_path.name} not found for {relative_path}!")
+
+
+            except Exception as e:
+                logging.error(f"Error during Pandoc/Postprocess for {relative_path}: {e}", exc_info=True)
+                continue # Skip to next file
 
     # Ensure the list of candidates is unique and sorted for deterministic builds
     unique_literate_md_files_in_snapshot = sorted(list(set(candidate_literate_md_files_in_snapshot)))
     logging.info(f"\nTotal unique literate .md files in snapshot for Agda processing: {len(unique_literate_md_files_in_snapshot)}")
+
     for f in unique_literate_md_files_in_snapshot:
         logging.debug(f"  Candidate for Agda: {f.relative_to(AGDA_SNAPSHOT_SRC_DIR)}")
 

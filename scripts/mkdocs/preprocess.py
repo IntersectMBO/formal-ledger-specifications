@@ -22,30 +22,19 @@
 # 8.  Removes \begin{NoConway}/\end{NoConway} environment wrappers (content flows).
 # 9.  Replaces \begin{Conway}/\end{Conway} environment wrappers with admonition markers (@@ADMONITION_START/END@@).
 #
-# NOTES:  New strategy to handle labels and refs when processing `figure*` environments.
-#         (such labels and refs were lost in initial versions of the pipeline)
-# 1.  Extract caption text and label name.
-# 2.  Replace `\caption{...}` with `@@FIGURE_CAPTION@@text=Your Caption Text@@`.
-# 3.  Replace `\label{...}` with `@@FIGURE_LABEL@@id=your_label_id@@`.
-# 4.  Then remove the `\begin{figure*}` and `\end{figure*}` wrappers.
-# 5.  The output in `.lagda.temp` would look like:
-#     ```
-#     ...
-#     @@FIGURE_CAPTION@@text=ENACT transition system@@
-#     @@FIGURE_LABEL@@id=fig:sts:enact@@
-#     @@CODEBLOCK_ID_5@@
-#     @@CODEBLOCK_ID_9@@
-#     @@CODEBLOCK_ID_10@@
-#     ...
-#     ```
-# 6.  Finally, in `agda-filter.lua` or `postprocess.py`:
-#     +  If in Lua: The filter would look for `Str` nodes containing these `@@...@@` markers.
-#     +  For `@@FIGURE_LABEL@@id=...@@`: Create the `RawInline('html', '<a id="sanitized_id"></a>')`.
-#     +  For `@@FIGURE_CAPTION@@text=...@@`: Create a `Para` block with the formatted caption.
-#     +  If in `postprocess.py`: This Python script already handles `@@CODEBLOCK_ID_...@@`.
-#        It could similarly use regex to find `@@FIGURE_CAPTION@@` and `@@FIGURE_LABEL@@` in the
-#        `.md.intermediate` file and replace them with appropriate HTML/Markdown for anchors and
-#        captions. This might be simpler as `postprocess.py` is already doing text replacements.
+# NOTES:
+# +  New strategy to handle labels and refs when processing `figure*` environments
+#    (such labels and refs were lost in initial versions of the pipeline):
+#    Instead of just stripping `\begin{figure*}` and `\end{figure*}` wrappers, we will
+#    1.  Extract `\caption{...}` text and `\label{...}` name.
+#    3.  Remove LaTeX `figure*`, `caption`, and `label` commands.
+#    4.  Insert placeholder `@@FIGURE_BLOCK_TO_SUBSECTION@@label=original_label_name@@caption=Caption Text@@`.
+#        Content that was in figure (now `@@CODEBLOCK_ID_n@@` placeholders) will appear below placeholder.
+#    5.  If figure has caption but no label, use placeholder `@@UNLABELLED_FIGURE_CAPTION@@caption=Caption Text@@`.
+#
+# +  New strategy to handle cross-refs:
+#    1.  Identify LaTeX `\Cref{...}` and `\cref{...}` commands.
+#    2.  Convert them into placeholder `@@CROSS_REF@@command=Cref@@targets=target1,target2,...@@`.
 
 
 import re
@@ -153,6 +142,86 @@ def expand_hldiff(match):
     # Using a simple placeholder command that Pandoc's LaTeX reader should pass through
     return f"\\HighlightPlaceholder{{{content}}}"
 
+# --- New Helper Function for Figures ---
+def process_figure_environment(match):
+    """
+    Processes the content of a LaTeX figure* environment.
+    Extracts caption and label, removes them and the figure wrappers,
+    and returns a placeholder string followed by the remaining content.
+    The @@CODEBLOCK_ID_n@@ placeholders are assumed to be already within the content.
+    Details
+    *  designed to be used with `re.sub`
+    *  takes regex match object for a `figure*` environment
+    *  searches for `\caption{...}` and `\label{...}` within figure
+    *  extracts caption text and label ID
+    *  removes original `\caption` and `\label` commands from figure content
+    *  removes `\begin{AgdaMultiCode}` and `\end{AgdaMultiCode}` from figure content
+    *  returns string beginning `\n@@FIGURE_BLOCK_TO_SUBSECTION@@label=...@@caption=...@@\n`
+       (or `@@UNLABELLED_FIGURE_CAPTION@@...`) followed by rest of figure content.
+    """
+    # Group 1: Optional attributes of figure* environment (e.g., [ht]) - currently unused by replacer
+    # Group 2: The actual content within the figure* environment
+    figure_inner_content = match.group(2)
+
+    caption_text = "Untitled Section" # Default caption if none found
+    original_label_id = "" # Original LaTeX label
+
+    # Using a more robust way to find and remove caption and label
+    # Process caption first, then label, to handle cases where label might be part of caption or vice-versa
+
+    # Extract caption
+    caption_match = re.search(r"\\caption\{(.*?)\}", figure_inner_content, flags=re.DOTALL)
+    if caption_match:
+        # Replace \n with space for single-line caption text in placeholder
+        # Escape "@@" in user's caption text to avoid breaking our placeholder format
+        cap_text_raw = caption_match.group(1).strip().replace("\n", " ")
+        caption_text = cap_text_raw.replace("@@", "@ @")
+        figure_inner_content = figure_inner_content.replace(caption_match.group(0), "", 1) # Remove first match
+
+    # Extract label
+    label_match = re.search(r"\\label\{(.*?)\}", figure_inner_content)
+    if label_match:
+        original_label_id_raw = label_match.group(1).strip()
+        original_label_id = original_label_id_raw.replace("@@", "@ @") # Escape @@
+        figure_inner_content = figure_inner_content.replace(label_match.group(0), "", 1) # Remove first match
+
+    # Remove AgdaMultiCode wrappers if they are typically inside figures
+    # This step is based on the assumption that AgdaMultiCode inside figures
+    # should just have its content flow out.
+    figure_inner_content = re.sub(r"\\begin\{AgdaMultiCode\}\s*", "", figure_inner_content, flags=re.DOTALL)
+    figure_inner_content = re.sub(r"\s*\\end\{AgdaMultiCode\}", "", figure_inner_content, flags=re.DOTALL)
+
+    figure_inner_content = figure_inner_content.strip() # Remaining content (e.g., @@CODEBLOCK_ID_n@@)
+
+    # Create the placeholder
+    if original_label_id:
+        # Ensured newlines for better separation in the .temp file, aiding debug
+        placeholder = f"\n@@FIGURE_BLOCK_TO_SUBSECTION@@label={original_label_id}@@caption={caption_text}@@\n"
+    else:
+        placeholder = f"\n@@UNLABELLED_FIGURE_CAPTION@@caption={caption_text}@@\n"
+
+    return placeholder + figure_inner_content
+
+# --- New Helper Function for \Cref and \cref ---
+def replace_cref_commands(match):
+    """
+    Replaces \Cref{targets} or \cref{targets} with a placeholder.
+    Details
+    *  designed to be used with `re.sub`
+    *  matches `\Cref{...}` or `\cref{...}`
+    *  extracts command name (`Cref` or `cref`) and raw target string (e.g., `fig:epoch:sts,fig:another`)
+    *  replaces LaTeX command with placeholder `@@CROSS_REF@@command=CmdName@@targets=TargetsString@@`
+    *  `targets` part contains raw comma-separated list of targets
+    *  `postprocess.py` handles splitting these and looking them up
+    """
+    command_name = match.group(1) # "Cref" or "cref"
+    targets_str_raw = match.group(2) # Raw content between braces
+
+    # Escape "@@" in the targets string to avoid breaking our placeholder format
+    targets_str_escaped = targets_str_raw.replace("@@", "@ @")
+
+    return f"@@CROSS_REF@@command={command_name}@@targets={targets_str_escaped}@@"
+
 # --- Main Processing Function ---
 def preprocess_lagda(content):
     """
@@ -192,61 +261,44 @@ def preprocess_lagda(content):
     # Use non-greedy match for content and DOTALL flag for potential multiline content
     content = re.sub(r'\\hldiff\{(.*?)\}', expand_hldiff, content, flags=re.DOTALL)
 
-    # New step: Process figure environments to extract caption/label into placeholders
-    # This should run BEFORE stripping the figure environment lines themselves,
-    # or be part of a combined figure processing step.
-
-    def figure_content_processor(match):
-        # match.group(1) would be the content inside the figure environment
-        inner_content = match.group(1)
-
-        # Placeholder for caption text and label id
-        caption_placeholder = ""
-        label_placeholder = ""
-
-        # Extract caption
-        caption_search = re.search(r"\\caption\{(.*?)\}", inner_content, flags=re.DOTALL)
-        if caption_search:
-            caption_text = caption_search.group(1).strip().replace("\n", " ") # Basic cleanup
-            # Escape our @@ sequence if user caption contains it, or choose a more unique marker
-            caption_text_escaped_for_placeholder = caption_text.replace("@@", "@ @")
-            caption_placeholder = f"\n@@FIGURE_CAPTION@@text={caption_text_escaped_for_placeholder}@@\n"
-            inner_content = inner_content.replace(caption_search.group(0), "") # Remove original caption
-
-        # Extract label
-        label_search = re.search(r"\\label\{(.*?)\}", inner_content)
-        if label_search:
-            label_id = label_search.group(1).strip()
-            label_placeholder = f"\n@@FIGURE_LABEL@@id={label_id}@@\n"
-            inner_content = inner_content.replace(label_search.group(0), "") # Remove original label
-
-        # The order might matter: often label is defined, then caption refers to it,
-        # or anchor for label comes before caption. For display, usually caption then content.
-        # Let's output: LABEL_PLACEHOLDER (for anchor) then CAPTION_PLACEHOLDER then content
-        # The actual visual placement of caption vs content is handled by postprocess.py
-        return label_placeholder + caption_placeholder + inner_content
-
-    # Temporarily disable the old figure stripper:
-    # # 5. Remove figure* environment wrappers (matching start/end lines)
-    # content = re.sub(r'^\s*\\begin\{figure\*}(\[[^\]]*\])?\s*?\n', '', content, flags=re.MULTILINE)
-    # content = re.sub(r'^\s*\\end\{figure\*\}\s*?\n?', '', content, flags=re.MULTILINE)
-
-    # New regex to find figure content, process it, then remove wrappers.
-    # This is a simplified regex; real LaTeX figure parsing is more complex.
-    # It assumes \begin and \end are on their own lines.
+    # 5. Process figure* environments to extract caption/label into placeholders
+    #    This replaces the old simple stripping of \begin{figure*} and \end{figure*}
+    #    The regex captures the content between \begin{figure*}[optional_attrs] and \end{figure*}
+    #    It assumes \begin and \end are on lines by themselves, possibly with attributes for \begin.
+    #    More Details
+    #    * Match `\begin{figure*}` at the start of a line (with optional attributes).
+    #    * Capture all content `(.*?)` until `\end{figure*}` on its own line.
+    #    * Use `re.DOTALL` so `.` matches newlines, and `re.MULTILINE` for `^` and `$`.
     content = re.sub(
-        r"^\s*\\begin\{figure\*\}(?:\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\*\}\s*$",
-        figure_content_processor,
+        r"^\s*\\begin\{figure\*\}(\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\*\}\s*$",
+        #r"^\s*\\begin\{figure\*\}(?:\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\*\}\s*$",
+        process_figure_environment,
         content,
-        flags=re.DOTALL | re.MULTILINE
+        flags=re.DOTALL | re.MULTILINE  # DOTALL for (.*?), MULTILINE for ^$
     )
-    # TODO: handle non-starred figure environments
+    # TODO: If we have non-starred fig environments, we should handle them separately; e.g.,
+    # content = re.sub(
+    #     r"^\s*\\begin\{figure\}(\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\}\s*$",
+    #     process_figure_environment,
+    #     content,
+    #     flags=re.DOTALL | re.MULTILINE
+    # )
 
-    # 6. Remove AgdaMultiCode environment wrappers (matching start/end lines)
+    # 6. Replace \Cref and \cref commands with placeholders.
+    #    Regex handles optional whitespace around braces and captures comma-separated targets.
+    #    Non-greedy (.*?) captures only up to first closing brace.
+    #    (`flags=re.DOTALL` handles `\Cref` arguments that span lines)
+    content = re.sub(r"\\(Cref|cref)\s*\{(.*?)\}", replace_cref_commands, content, flags=re.DOTALL)
+
+    # 7. Remove AgdaMultiCode environment wrappers
+    #    If AgdaMultiCode *always* inside figure*, then process_figure_environment
+    #    strips them from figure's content.  If AgdaMultiCode can be standalone, separate stripping
+    #    still needed. To be safe, let's assume it can be standalone. AFTER figure processing,
+    #    run the following in case process_figure_environment doesn't strip them fully.
     content = re.sub(r'^\s*\\begin\{AgdaMultiCode\}\s*?\n', '', content, flags=re.MULTILINE)
     content = re.sub(r'^\s*\\end\{AgdaMultiCode\}\s*?\n?', '', content, flags=re.MULTILINE)
 
-    # 7. Handle Conway/NoConway environments
+    # 8. Handle Conway/NoConway environments
     # Remove NoConway wrappers entirely
     content = re.sub(r'^\s*\\begin\{NoConway\}\s*?\n', '', content, flags=re.MULTILINE)
     content = re.sub(r'^\s*\\end\{NoConway\}\s*?\n?', '', content, flags=re.MULTILINE)
