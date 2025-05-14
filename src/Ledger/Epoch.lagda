@@ -3,17 +3,20 @@
 \modulenote{\LedgerModule{Epoch}}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+{-# OPTIONS --irrelevant-projections #-} -- todo: make safe
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.Integer using () renaming (+_ to pos)
 import      Data.Integer as ℤ
 open import Data.Nat.GeneralisedArithmetic using (iterate)
 open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_)
-open import Data.Rational.Literals using (number; fromℤ)
 import      Data.Rational as ℚ renaming (_⊓_ to min)
+open import Data.Rational.Literals using (number; fromℤ)
+import      Data.Rational.Properties as ℚ
+open import stdlib.Data.Rational.Properties as ℚ
+open import Data.Irrelevant using (Irrelevant; irrelevant)
 
-open import Data.Integer.Tactic.RingSolver
+open import Data.Integer.Tactic.RingSolver as ℤ using (solve-∀)
 
 open import Agda.Builtin.FromNat
 
@@ -183,6 +186,7 @@ createRUpd slotsPerEpoch b es total = record {
 \end{code}
 \begin{code}[hide]
   flowConservation = flowConservation;
+  -- Δt-positive = lemma-Δt₁;
 \end{code}
 \begin{code}
     Δt = Δt₁; Δr = 0 - Δr₁ + Δr₂; Δf = 0 - pos feeSS; rs = rs }
@@ -203,7 +207,7 @@ createRUpd slotsPerEpoch b es total = record {
 
     rewardPot = pos feeSS + Δr₁
     tau = fromUnitInterval (prevPp .PParams.treasuryCut)
-    Δt₁ = floor (tau * fromℤ rewardPot)
+    Δt₁ = floor (fromℤ rewardPot * tau)
     R = rewardPot - Δt₁
     circulation = total - reserves
 
@@ -212,12 +216,32 @@ createRUpd slotsPerEpoch b es total = record {
 
 \end{code}
 \begin{code}[hide]
-    -- TODO: Overloading of + and - seems to interfere with
+    -- Proofs
+    -- Note: Overloading of + and - seems to interfere with
     -- the ring solver.
     lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
       → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
-    lemmaFlow = solve-∀
+    lemmaFlow = ℤ.solve-∀
     flowConservation = lemmaFlow Δt₁ Δr₁ (pos feeSS) (pos (∑[ c ← rs ] c))
+
+    open ℚ.≤-Reasoning
+
+    lemma-min1η : 0 ≤ ℚ.min 1 η
+    lemma-min1η = {!   !}
+
+    . lemma-Δr₁ : 0 ≤ Δr₁
+    lemma-Δr₁ = ℚ.0≤⇒0≤floor _
+      (ℚ.*-0≤-2⇒0≤ (ℚ.min 1 η * rho) (fromℕ reserves)
+        (irrelevant (UnitInterval-*-0≤ (ℚ.min 1 η) (prevPp .PParams.monetaryExpansion) lemma-min1η))
+        (fromℕ-0≤ reserves))
+
+    lemma-rewardPot : 0 ≤ rewardPot
+    lemma-rewardPot = {!   !}
+
+    . lemma-Δt₁ : 0 ≤ Δt₁
+    lemma-Δt₁ = ℚ.0≤⇒0≤floor _
+      (irrelevant (UnitInterval-*-0≤ (fromℤ rewardPot) (prevPp .PParams.treasuryCut)
+        (fromℤ-0≤ rewardPot lemma-rewardPot)))
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate Creation}

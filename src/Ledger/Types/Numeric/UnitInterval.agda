@@ -4,18 +4,17 @@
 module Ledger.Types.Numeric.UnitInterval where
 
 open import Prelude
-  hiding ([_,_]; [_]; _*_)
+  hiding ([_,_]; [_]; _*_; Irrelevant)
 
 open import Agda.Builtin.FromNat
 open import Class.Show using (Show; show)
-open import Data.Irrelevant using ([_])
-import Data.Rational as ℚ
+open import Data.Irrelevant using ([_]; Irrelevant)
+import      Data.Rational as ℚ
 open import Data.Rational.Properties
-import Data.Rational.Show as ℚshow
+import      Data.Rational.Show as ℚshow
 open import Data.Rational using (ℚ; _≤_; _≤?_; _*_)
 open import Data.Refinement using (Refinement-syntax; value; _,_)
 
-open import Tactic.EquationalReasoning using (module ≡-Reasoning)
 open ≤-Reasoning
 
 -- inUnitInterval predicate
@@ -35,8 +34,8 @@ inUnitInterval-*-≤y x y (0≤x , x≤1) 0≤y =
     y      ∎
 
 -- Left multiplication by unit interval element preserves non-negativity.
-inUnitInterval-*-0≤ : ∀ (x y : ℚ) → inUnitInterval x → 0 ≤ y → 0 ≤ x * y
-inUnitInterval-*-0≤ x y (0≤x , x≤1) 0≤y =
+inUnitInterval-*-0≤ : ∀ (x y : ℚ) → inUnitInterval y → 0 ≤ x → 0 ≤ x * y
+inUnitInterval-*-0≤ x y (0≤y , _) 0≤x =
   begin
     0      ≡⟨ sym (*-zeroʳ x) ⟩
     x * 0  ≤⟨ *-monoˡ-≤-nonNeg x ⦃ ℚ.nonNegative 0≤x ⦄ 0≤y ⟩
@@ -51,12 +50,14 @@ inUnitInterval-*-≤1 x y (0≤x , x≤1) y≤1 =
     x      ≤⟨ x≤1 ⟩
     1      ∎
 
+{-
 -- The product of two numbers from the unit interval is also in the unit interval.
 inUnitInterval-* : ∀ (x y : ℚ)
-  → inUnitInterval x → inUnitInterval y → inUnitInterval (x * y)
+  → inUnitInterval x → inUnitInterval y → inUnitInterval (y )
 inUnitInterval-* x y ux (0≤y , y≤1) =
-  inUnitInterval-*-0≤ x y ux 0≤y
+  inUnitInterval-*-0≤ y x ux 0≤y
   , inUnitInterval-*-≤1 x y ux y≤1
+-}
 
 -- UnitInterval: rational number in the unit interval [0, 1].
 UnitInterval : Type
@@ -97,6 +98,12 @@ clamp x with 0 ≤? x
 ...     | yes x≤1 = (x , [ 0≤x , x≤1 ])
 
 -- UnitInterval Properties
+
+-- Left multiplication by unit interval element preserves non-negativity.
+UnitInterval-*-0≤
+  : ∀ (x : ℚ) (y : UnitInterval) → 0 ≤ x → Irrelevant (0 ≤ x * value y)
+UnitInterval-*-0≤ x (y , [ prf ]) 0≤x =
+  [ inUnitInterval-*-0≤ x y prf 0≤x ]
 
 -- to/from is the identity
 prop-toUnitInterval-fromUnitInterval : ∀ (x : UnitInterval)

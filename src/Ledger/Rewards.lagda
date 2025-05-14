@@ -472,6 +472,7 @@ record RewardUpdate : Set where
     rs : Credential ⇀ Coin
 
     flowConservation : Δt + Δr + Δf + pos (∑[ c ← rs ] c) ≡ 0
+    Δt-positive : 0 ≤ Δt
 \end{code}
 \begin{code}[hide]
 --unquoteDecl HasCast-RewardUpdate = derive-HasCast
