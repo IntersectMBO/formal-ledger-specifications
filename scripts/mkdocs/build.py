@@ -76,7 +76,6 @@
 # - lagda_temp/        (output of preprocess.py; input to pandoc+lua)
 # - code_blocks_json/  (output of preprocess.py; input to postprocess.py)
 # - md_intermediate/   (output of pandoc+lua; input to postprocess.py)
-# - final_lagda_md/    (staging for processed LaTeX-based .lagda files)
 # - mkdocs_src/docs/   (output of `agda --html` command)
 
 import os
@@ -87,7 +86,7 @@ import re
 import shutil
 from pathlib import Path
 import logging
-import argparse               # for optional --run-agda flag
+import argparse
 try:
     import yaml
     HAS_YAML = True
@@ -122,31 +121,27 @@ def slugify(text_to_slug):
     return slug
 
 # --- Configuration ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
-SRC_DIR = PROJECT_ROOT / "src"                               # Agda source (input)
-STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                  # static mkdocs assets
-SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"            # location of this script and helpers
-MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"          # path to LaTeX macros
-DOCS_TEMPLATE_DIR = STATIC_MKDOCS_DIR / "templates"                   # source for index.md, mkdocs_template.yml
-BUILD_DIR = PROJECT_ROOT / "_build"                          # top-level build dir
-
-BUILD_MKDOCS_DIR = BUILD_DIR / "mkdocs"                      # root for mkdocs build intermediate products
-
-MACROS_JSON = BUILD_MKDOCS_DIR / "macros.json"               # macro JSONs: output of generate_macros_json.py
-                                                             #              input to preprocess.py
-TEMP_DIR = BUILD_MKDOCS_DIR / "lagda_temp"                   # intermediate latex: output of preprocess.py
-                                                             #                     input to pandoc+lua
-CODE_BLOCKS_DIR = BUILD_MKDOCS_DIR / "code_blocks_json"      # code block JSONs: output of preprocess.py
-                                                             #                   input to postprocess.py
-INTERMEDIATE_MD_DIR = BUILD_MKDOCS_DIR / "md_intermediate"   # intermediate `.lagda.md`: output of pandoc+lua
-                                                             #                           intput to postprocess.py
-FINAL_LAGDA_MD_DIR = BUILD_MKDOCS_DIR / "final_lagda_md"     # final `.lagda.md`: output of postprocess.py
-                                                             #                    input to `agda --html`
-
-# --- Directories for Agda source snapshot and html output ---
-AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src" # for shake/agda context
-
-# Optional: Still assemble an interim mkdocs site for preview
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent   # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
+SRC_DIR = PROJECT_ROOT / "src"                                 # Agda source (input)
+STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                    # static mkdocs assets
+SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"              # location of this script and helpers
+MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"            # path to LaTeX macros
+DOCS_TEMPLATE_DIR = STATIC_MKDOCS_DIR / "templates"            # source for index.md, mkdocs_template.yml
+BUILD_DIR = PROJECT_ROOT / "_build"                            # top-level build dir
+BUILD_MKDOCS_DIR = BUILD_DIR / "mkdocs"                        # root for mkdocs build intermediate products
+MACROS_JSON = BUILD_MKDOCS_DIR / "macros.json"                 # macro JSONs: output of generate_macros_json.py
+                                                               #              input to preprocess.py
+TEMP_DIR = BUILD_MKDOCS_DIR / "lagda_temp"                     # intermediate latex: output of preprocess.py
+                                                               #                     input to pandoc+lua
+CODE_BLOCKS_DIR = BUILD_MKDOCS_DIR / "code_blocks_json"        # code block JSONs: output of preprocess.py
+                                                               #                   input to postprocess.py
+INTERMEDIATE_MD_DIR = BUILD_MKDOCS_DIR / "md_intermediate"     # intermediate `.lagda.md`: output of pandoc+lua
+                                                               #                           intput to postprocess.py
+AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src" # **final markdown-based literate Agda source code**
+                                                               #     output of pandoc+lua
+                                                               #     input to `agda --html`
+                                                               #     input to shake, if shake to handle Agda html generation)
+# Directories for mkdocs site generation
 MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "mkdocs_src"
 MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
 MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
@@ -275,7 +270,6 @@ def setup_directories(run_agda_html):
     TEMP_DIR.mkdir(parents=True, exist_ok=True)              # for .lagda.temp files
     CODE_BLOCKS_DIR.mkdir(parents=True, exist_ok=True)       # for code_blocks.json
     INTERMEDIATE_MD_DIR.mkdir(parents=True, exist_ok=True)   # for .md.intermediate files
-    FINAL_LAGDA_MD_DIR.mkdir(parents=True, exist_ok=True)    # staging for processed LaTeX .lagda files before snapshot update
     AGDA_SNAPSHOT_SRC_DIR.mkdir(parents=True, exist_ok=True) # for Agda source snapshot
 
     # Create final mkdocs site source structure (where content is copied to).
@@ -302,7 +296,6 @@ def cleanup_intermediate_mkdocs_artifacts():
         TEMP_DIR,
         CODE_BLOCKS_DIR,
         INTERMEDIATE_MD_DIR,
-        FINAL_LAGDA_MD_DIR
     ]
 
     # files to remove (direct children of BUILD_MKDOCS_DIR)
@@ -345,7 +338,6 @@ class LagdaProcessingPaths:
         self.temp_lagda = TEMP_DIR / self.relative.with_suffix(".lagda.temp")
         self.code_blocks_json = CODE_BLOCKS_DIR / self.relative.with_suffix(".codeblocks.json")
         self.intermediate_md = INTERMEDIATE_MD_DIR / self.relative.with_suffix(".md.intermediate")
-        self.final_lagda_md = FINAL_LAGDA_MD_DIR / self.relative.with_suffix(".lagda.md")
 
         # snapshot related paths
         self.snapshot_original_lagda = AGDA_SNAPSHOT_SRC_DIR / self.relative # Original .lagda in snapshot
@@ -365,7 +357,6 @@ class LagdaProcessingPaths:
             self.temp_lagda.parent,
             self.code_blocks_json.parent,
             self.intermediate_md.parent,
-            self.final_lagda_md.parent,
             self.snapshot_target_lagda_md.parent, # parent of target in snapshot
             self.mkdocs_interim_md.parent,
         }
