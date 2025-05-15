@@ -6,6 +6,7 @@
 {-# OPTIONS --safe #-}
 
 import      Data.Nat as ℕ renaming (_⊔_ to max)
+open import Data.Integer using () renaming (+_ to pos)
 import      Data.Integer as ℤ renaming (_⊔_ to max)
 import      Data.Integer.Properties as ℤ
 open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_)
@@ -466,14 +467,16 @@ The update consists of four net flows:
 \begin{AgdaMultiCode}
 \begin{code}
 record RewardUpdate : Set where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ʳᵘ
-\end{code}
-\begin{code}
   field
     Δt Δr Δf : ℤ
     rs : Credential ⇀ Coin
+
+    flowConservation : Δt + Δr + Δf + pos (∑[ c ← rs ] c) ≡ 0
+    Δt-positive : 0 ≤ Δt
+\end{code}
+\begin{code}[hide]
+--unquoteDecl HasCast-RewardUpdate = derive-HasCast
+--    ( (quote RewardUpdate   , HasCast-RewardUpdate) ∷ [])
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate type}
