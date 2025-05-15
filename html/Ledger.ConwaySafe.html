@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.ConwaySafe</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--safe</a> <a id="20" class="Symbol">#-}</a>
+<a id="24" class="Keyword">module</a> <a id="31" href="Ledger.ConwaySafe.html" class="Module">Ledger.ConwaySafe</a> <a id="49" class="Keyword">where</a>
+
+<a id="56" class="Comment">-- ** Cardano ledger in the Coway era</a>
+<a id="94" class="Keyword">import</a> <a id="101" href="Ledger.Conway.Address.html" class="Module">Ledger.Conway.Address</a>
+<a id="123" class="Keyword">import</a> <a id="130" href="Ledger.Conway.BaseTypes.html" class="Module">Ledger.Conway.BaseTypes</a>
+<a id="154" class="Keyword">import</a> <a id="161" href="Ledger.Conway.Certs.html" class="Module">Ledger.Conway.Certs</a>
+<a id="181" class="Keyword">import</a> <a id="188" href="Ledger.Conway.Certs.Properties.html" class="Module">Ledger.Conway.Certs.Properties</a>
+<a id="219" class="Keyword">import</a> <a id="226" href="Ledger.Conway.Certs.Properties.PoV.html" class="Module">Ledger.Conway.Certs.Properties.PoV</a>
+<a id="261" class="Keyword">import</a> <a id="268" href="Ledger.Conway.Certs.Properties.PoVLemmas.html" class="Module">Ledger.Conway.Certs.Properties.PoVLemmas</a>
+<a id="309" class="Keyword">import</a> <a id="316" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html" class="Module">Ledger.Conway.Certs.Properties.VoteDelegsVDeleg</a>
+<a id="364" class="Keyword">import</a> <a id="371" href="Ledger.Conway.Chain.html" class="Module">Ledger.Conway.Chain</a>
+<a id="391" class="Keyword">import</a> <a id="398" href="Ledger.Conway.Chain.Properties.html" class="Module">Ledger.Conway.Chain.Properties</a>
+<a id="429" class="Keyword">import</a> <a id="436" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html" class="Module">Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds</a>
+<a id="488" class="Keyword">import</a> <a id="495" href="Ledger.Conway.Chain.Properties.EpochStep.html" class="Module">Ledger.Conway.Chain.Properties.EpochStep</a>
+<a id="536" class="Keyword">import</a> <a id="543" href="Ledger.Conway.Chain.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Chain.Properties.GovDepsMatch</a>
+<a id="587" class="Keyword">import</a> <a id="594" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html" class="Module">Ledger.Conway.Chain.Properties.PParamsWellFormed</a>
+<a id="643" class="Keyword">import</a> <a id="650" href="Ledger.Conway.Crypto.html" class="Module">Ledger.Conway.Crypto</a>
+<a id="671" class="Keyword">import</a> <a id="678" href="Ledger.Conway.Enact.html" class="Module">Ledger.Conway.Enact</a>
+<a id="698" class="Keyword">import</a> <a id="705" href="Ledger.Conway.Epoch.html" class="Module">Ledger.Conway.Epoch</a>
+<a id="725" class="Keyword">import</a> <a id="732" href="Ledger.Conway.Epoch.Properties.html" class="Module">Ledger.Conway.Epoch.Properties</a>
+<a id="763" class="Keyword">import</a> <a id="770" href="Ledger.Conway.Epoch.Properties.ConstRwds.html" class="Module">Ledger.Conway.Epoch.Properties.ConstRwds</a>
+<a id="811" class="Keyword">import</a> <a id="818" href="Ledger.Conway.Epoch.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Epoch.Properties.GovDepsMatch</a>
+<a id="862" class="Keyword">import</a> <a id="869" href="Ledger.Conway.Epoch.Properties.NoPropSameDReps.html" class="Module">Ledger.Conway.Epoch.Properties.NoPropSameDReps</a>
+<a id="916" class="Keyword">import</a> <a id="923" href="Ledger.Conway.Fees.html" class="Module">Ledger.Conway.Fees</a>
+<a id="942" class="Keyword">import</a> <a id="949" href="Ledger.Conway.Gov.html" class="Module">Ledger.Conway.Gov</a>
+<a id="967" class="Keyword">import</a> <a id="974" href="Ledger.Conway.Gov.Properties.html" class="Module">Ledger.Conway.Gov.Properties</a>
+<a id="1003" class="Keyword">import</a> <a id="1010" href="Ledger.Conway.GovernanceActions.html" class="Module">Ledger.Conway.GovernanceActions</a>
+<a id="1042" class="Keyword">import</a> <a id="1049" href="Ledger.Conway.GovernanceActions.Properties.html" class="Module">Ledger.Conway.GovernanceActions.Properties</a>
+<a id="1092" class="Keyword">import</a> <a id="1099" href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.html" class="Module">Ledger.Conway.GovernanceActions.Properties.ChangePPGroup</a>
+<a id="1156" class="Keyword">import</a> <a id="1163" href="Ledger.Introduction.html" class="Module">Ledger.Introduction</a>
+<a id="1183" class="Keyword">import</a> <a id="1190" href="Ledger.Conway.Ledger.html" class="Module">Ledger.Conway.Ledger</a>
+<a id="1211" class="Keyword">import</a> <a id="1218" href="Ledger.Conway.Ledger.Properties.html" class="Module">Ledger.Conway.Ledger.Properties</a>
+<a id="1250" class="Keyword">import</a> <a id="1257" href="Ledger.Conway.Ledger.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Ledger.Properties.GovDepsMatch</a>
+<a id="1302" class="Keyword">import</a> <a id="1309" href="Ledger.Conway.Ledger.Properties.PoV.html" class="Module">Ledger.Conway.Ledger.Properties.PoV</a>
+<a id="1345" class="Keyword">import</a> <a id="1352" href="Ledger.Conway.PParams.html" class="Module">Ledger.Conway.PParams</a>
+<a id="1374" class="Keyword">import</a> <a id="1381" href="Ledger.Conway.Properties.html" class="Module">Ledger.Conway.Properties</a>
+<a id="1406" class="Keyword">import</a> <a id="1413" href="Ledger.Conway.Ratify.html" class="Module">Ledger.Conway.Ratify</a>
+<a id="1434" class="Keyword">import</a> <a id="1441" href="Ledger.Conway.Ratify.Properties.html" class="Module">Ledger.Conway.Ratify.Properties</a>
+<a id="1473" class="Keyword">import</a> <a id="1480" href="Ledger.Conway.Rewards.html" class="Module">Ledger.Conway.Rewards</a>
+<a id="1502" class="Keyword">import</a> <a id="1509" href="Ledger.Conway.Script.html" class="Module">Ledger.Conway.Script</a>
+<a id="1530" class="Keyword">import</a> <a id="1537" href="Ledger.Conway.ScriptValidation.html" class="Module">Ledger.Conway.ScriptValidation</a>
+<a id="1568" class="Keyword">import</a> <a id="1575" href="Ledger.Conway.TokenAlgebra.html" class="Module">Ledger.Conway.TokenAlgebra</a>
+<a id="1602" class="Keyword">import</a> <a id="1609" href="Ledger.Conway.TokenAlgebra.Coin.html" class="Module">Ledger.Conway.TokenAlgebra.Coin</a>
+<a id="1641" class="Keyword">import</a> <a id="1648" href="Ledger.Conway.TokenAlgebra.ValueSet.html" class="Module">Ledger.Conway.TokenAlgebra.ValueSet</a>
+<a id="1684" class="Keyword">import</a> <a id="1691" href="Ledger.Conway.TokenAlgebra.ValueVector.html" class="Module">Ledger.Conway.TokenAlgebra.ValueVector</a>
+<a id="1730" class="Keyword">import</a> <a id="1737" href="Ledger.Conway.Transaction.html" class="Module">Ledger.Conway.Transaction</a>
+<a id="1763" class="Keyword">import</a> <a id="1770" href="Ledger.Conway.Types.Epoch.html" class="Module">Ledger.Conway.Types.Epoch</a>
+<a id="1796" class="Keyword">import</a> <a id="1803" href="Ledger.Conway.Types.GovStructure.html" class="Module">Ledger.Conway.Types.GovStructure</a>
+<a id="1836" class="Keyword">import</a> <a id="1843" href="Ledger.Conway.Utxo.html" class="Module">Ledger.Conway.Utxo</a>
+<a id="1862" class="Keyword">import</a> <a id="1869" href="Ledger.Conway.Utxo.Properties.html" class="Module">Ledger.Conway.Utxo.Properties</a>
+<a id="1899" class="Keyword">import</a> <a id="1906" href="Ledger.Conway.Utxo.Properties.MinSpend.html" class="Module">Ledger.Conway.Utxo.Properties.MinSpend</a>
+<a id="1945" class="Keyword">import</a> <a id="1952" href="Ledger.Conway.Utxo.Properties.PoV.html" class="Module">Ledger.Conway.Utxo.Properties.PoV</a>
+<a id="1986" class="Keyword">import</a> <a id="1993" href="Ledger.Conway.Utxow.html" class="Module">Ledger.Conway.Utxow</a>
+<a id="2013" class="Keyword">import</a> <a id="2020" href="Ledger.Conway.Utxow.Properties.html" class="Module">Ledger.Conway.Utxow.Properties</a>
+
+<a id="2052" class="Comment">-- ** Agda</a>
+<a id="2063" class="Keyword">import</a> <a id="2070" href="EssentialAgda.html" class="Module">EssentialAgda</a>
+
+<a id="2085" class="Comment">-- ** Conformance test reconciliation</a>
+<a id="2123" class="Keyword">import</a> <a id="2130" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a>
+<a id="2162" class="Keyword">import</a> <a id="2169" href="Ledger.Conway.Conformance.Certs.Properties.html" class="Module">Ledger.Conway.Conformance.Certs.Properties</a>
+<a id="2212" class="Keyword">import</a> <a id="2219" href="Ledger.Conway.Conformance.Chain.html" class="Module">Ledger.Conway.Conformance.Chain</a>
+<a id="2251" class="Keyword">import</a> <a id="2258" href="Ledger.Conway.Conformance.Chain.Properties.html" class="Module">Ledger.Conway.Conformance.Chain.Properties</a>
+<a id="2301" class="Keyword">import</a> <a id="2308" href="Ledger.Conway.Conformance.Equivalence.html" class="Module">Ledger.Conway.Conformance.Equivalence</a>
+<a id="2346" class="Keyword">import</a> <a id="2353" href="Ledger.Conway.Conformance.Epoch.html" class="Module">Ledger.Conway.Conformance.Epoch</a>
+<a id="2385" class="Keyword">import</a> <a id="2392" href="Ledger.Conway.Conformance.Epoch.Properties.html" class="Module">Ledger.Conway.Conformance.Epoch.Properties</a>
+<a id="2435" class="Keyword">import</a> <a id="2442" href="Ledger.Conway.Conformance.Gov.html" class="Module">Ledger.Conway.Conformance.Gov</a>
+<a id="2472" class="Keyword">import</a> <a id="2479" href="Ledger.Conway.Conformance.Ledger.html" class="Module">Ledger.Conway.Conformance.Ledger</a>
+<a id="2512" class="Keyword">import</a> <a id="2519" href="Ledger.Conway.Conformance.Ledger.Properties.html" class="Module">Ledger.Conway.Conformance.Ledger.Properties</a>
+<a id="2563" class="Keyword">import</a> <a id="2570" href="Ledger.Conway.Conformance.Properties.html" class="Module">Ledger.Conway.Conformance.Properties</a>
+<a id="2607" class="Keyword">import</a> <a id="2614" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a>
+<a id="2645" class="Keyword">import</a> <a id="2652" href="Ledger.Conway.Conformance.Utxo.Properties.html" class="Module">Ledger.Conway.Conformance.Utxo.Properties</a>
+<a id="2694" class="Keyword">import</a> <a id="2701" href="Ledger.Conway.Conformance.Utxow.html" class="Module">Ledger.Conway.Conformance.Utxow</a>
+<a id="2733" class="Keyword">import</a> <a id="2740" href="Ledger.Conway.Conformance.Utxow.Properties.html" class="Module">Ledger.Conway.Conformance.Utxow.Properties</a>
+<a id="2783" class="Keyword">import</a> <a id="2790" href="Ledger.Conway.Conformance.Script.html" class="Module">Ledger.Conway.Conformance.Script</a>
+
+<a id="2824" class="Comment">-- -- ** Not currently used</a>
+<a id="2852" class="Keyword">import</a> <a id="2859" href="iog-prelude.Tactic.DeriveComp.html" class="Module">iog-prelude.Tactic.DeriveComp</a>
+</pre></body></html>
