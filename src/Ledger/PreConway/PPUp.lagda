@@ -9,9 +9,9 @@ import Data.Product.Properties as ×
 import Data.Nat as ℕ; import Data.Nat.Properties as ℕ
 
 open import Ledger.Prelude hiding (_*_)
-open import Ledger.Transaction
+open import Ledger.Conway.Transaction
 
-module Ledger.Previous.PPUp (txs : _) (open TransactionStructure txs) where
+module Ledger.PreConway.PPUp (txs : _) (open TransactionStructure txs) where
 
 open Semiring Slotʳ using (_*_)
 open Semiring-Lit Slotʳ

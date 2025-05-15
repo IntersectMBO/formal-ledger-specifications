@@ -3,12 +3,12 @@
 open import Relation.Nullary.Decidable
 
 open import Ledger.Prelude
-open import Ledger.Transaction
+open import Ledger.Conway.Transaction
 
-module Ledger.Previous.NewPP.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.PreConway.NewPP.Properties (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.Previous.PPUp txs
-open import Ledger.Previous.NewPP txs
+open import Ledger.PreConway.PPUp txs
+open import Ledger.PreConway.NewPP txs
 
 instance
   Computational-NEWPP : Computational _⊢_⇀⦇_,NEWPP⦈_ String

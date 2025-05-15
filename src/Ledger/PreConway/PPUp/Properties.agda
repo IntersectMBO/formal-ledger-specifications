@@ -2,11 +2,11 @@
 
 open import Ledger.Prelude hiding (_*_)
 open Computational ⦃...⦄; open HasDecPartialOrder ⦃...⦄
-open import Ledger.Transaction
+open import Ledger.Conway.Transaction
 
-module Ledger.Previous.PPUp.Properties (txs : _) (open TransactionStructure txs) where
+module Ledger.PreConway.PPUp.Properties (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.Previous.PPUp txs
+open import Ledger.PreConway.PPUp txs
 
 private
   -- Ring literals

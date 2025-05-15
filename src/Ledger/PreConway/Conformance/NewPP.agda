@@ -1,27 +1,26 @@
-\section{Protocol Parameters Update}
 
-\begin{code}[hide]
 {-# OPTIONS --safe #-}
 
 open import Relation.Nullary.Decidable
 
 open import Ledger.Prelude
-open import Ledger.Transaction
+open import Ledger.Conway.Transaction
 
-module Ledger.Previous.NewPP (txs : _) (open TransactionStructure txs) where
+module Ledger.PreConway.Conformance.NewPP (txs : _) (open TransactionStructure txs) where
 
-open import Ledger.Previous.PPUp txs
+open import Ledger.PreConway.Conformance.PPUp txs
 
 record NewPParamEnv : Type where
 --  field
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
+
 record NewPParamState : Type where
   field
     pparams  : PParams
     ppup     : PPUpdateState
+
+instance
+  unquoteDecl HasCast-NewPParamState = derive-HasCast
+    [ (quote NewPParamState , HasCast-NewPParamState) ]
 
 updatePPUp : PParams → PPUpdateState → PPUpdateState
 updatePPUp pparams record { fpup = fpup }
@@ -32,21 +31,9 @@ updatePPUp pparams record { fpup = fpup }
 votedValue : ProposedPPUpdates → PParams → ℕ → Maybe PParamsUpdate
 votedValue pup pparams quorum =
   case any? (λ u → lengthˢ (pup ∣^ fromList [ u ]) ≥? quorum) (range pup) of
-\end{code}
-\begin{code}[hide]
     λ  where
-\end{code}
-\begin{code}
        (no  _)        → nothing
        (yes (u , _))  → just u
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types and functions for the NEWPP transition system}
-\end{figure*}
-\begin{code}[hide]
-instance
-  unquoteDecl HasCast-NewPParamState = derive-HasCast
-    [ (quote NewPParamState , HasCast-NewPParamState) ]
 
 private variable
   Γ : NewPParamEnv
@@ -54,9 +41,7 @@ private variable
   upd : PParamsUpdate
 
 data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsUpdate → NewPParamState → Type where
-\end{code}
-\begin{figure*}[h]
-\begin{code}
+
   NEWPP-Accept : ∀ {Γ} → let open NewPParamState s; newpp = applyUpdate pparams upd in
     viablePParams newpp
     ────────────────────────────────
@@ -64,6 +49,4 @@ data _⊢_⇀⦇_,NEWPP⦈_ : NewPParamEnv → NewPParamState → Maybe PParamsU
 
   NEWPP-Reject : ∀ {Γ} →
     Γ ⊢ s ⇀⦇ nothing ,NEWPP⦈ s
-\end{code}
-\caption{NEWPP transition system}
-\end{figure*}
+
