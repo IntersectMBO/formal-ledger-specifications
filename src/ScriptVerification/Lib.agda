@@ -6,13 +6,13 @@ module ScriptVerification.Lib (A D : Type)
   where
 
 open import ScriptVerification.LedgerImplementation A D scriptImp
-open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Transaction
+open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
-open import Ledger.Types.Epoch
-open import Ledger.Types.Numeric using (mkUnitInterval)
+open import Ledger.Conway.Types.Epoch
+open import Ledger.Conway.Types.Numeric using (mkUnitInterval)
 open EpochStructure SVEpochStructure
 open import Data.Integer using (ℤ; +_)
 open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)

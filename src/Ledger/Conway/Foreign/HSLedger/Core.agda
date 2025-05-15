@@ -15,10 +15,10 @@ open import Foreign.Convertible.Deriving  public
 open import Foreign.HaskellTypes          public
 open import Foreign.HaskellTypes.Deriving public
 
-open import Ledger.Crypto
-open import Ledger.Types.Epoch
+open import Ledger.Conway.Crypto
+open import Ledger.Conway.Types.Epoch
 
-open import Ledger.Transaction renaming (Vote to VoteTag) public
+open import Ledger.Conway.Transaction renaming (Vote to VoteTag) public
 
 open import Ledger.Conway.Foreign.Util public
 
@@ -102,5 +102,5 @@ module Implementation where
   AuxiliaryData   = ℕ
   DocHash         = ℕ
   tokenAlgebra    = Coin-TokenAlgebra
-    where open import Ledger.TokenAlgebra.Coin ScriptHash
+    where open import Ledger.Conway.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)

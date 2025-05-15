@@ -128,7 +128,7 @@ in rec
     meta = { };
     buildInputs = deps;
     buildPhase = ''
-      agda --profile=modules src/CardanoLedger.agda | tee typecheck.log
+      agda --profile=modules src/Ledger.agda | tee typecheck.log
     '';
     doCheck = true;
     checkPhase = ''

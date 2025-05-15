@@ -2,22 +2,22 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
-open import Ledger.Crypto
-open import Ledger.Abstract
-open import Ledger.Transaction
+open import Ledger.Conway.Crypto
+open import Ledger.Conway.Abstract
+open import Ledger.Conway.Transaction
 
 module Ledger.Conway.Conformance.Utxow
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.ScriptValidation txs abs
-open import Ledger.Certs govStructure
+open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Certs govStructure
 
 private
   module L where
-    open import Ledger.Utxow txs abs public
-    open import Ledger.Utxo txs abs public
+    open import Ledger.Conway.Utxow txs abs public
+    open import Ledger.Conway.Utxo txs abs public
 
 open L using (scriptsNeeded; witsVKeyNeeded) public
 

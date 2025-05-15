@@ -15,25 +15,25 @@
 
 \includeAgda{Ledger/Introduction}
 \include{Notation}
-\includeAgda{Ledger/Crypto}
-\includeAgda{Ledger/BaseTypes}
-\includeAgda{Ledger/TokenAlgebra}
-\includeAgda{Ledger/Address}
-\includeAgda{Ledger/Script}
-\includeAgda{Ledger/PParams}
-\includeAgda{Ledger/Fees}
-\includeAgda{Ledger/GovernanceActions}
-\includeAgda{Ledger/Transaction}
-\includeAgda{Ledger/Utxo}
-\includeAgda{Ledger/Utxow}
-\includeAgda{Ledger/Gov}
-\includeAgda{Ledger/Certs}
-\includeAgda{Ledger/Ledger}
-\includeAgda{Ledger/Enact}
-\includeAgda{Ledger/Ratify}
-\includeAgda{Ledger/Rewards}
-\includeAgda{Ledger/Epoch}
-\includeAgda{Ledger/Chain}
+\includeAgda{Ledger/Conway/Crypto}
+\includeAgda{Ledger/Conway/BaseTypes}
+\includeAgda{Ledger/Conway/TokenAlgebra}
+\includeAgda{Ledger/Conway/Address}
+\includeAgda{Ledger/Conway/Script}
+\includeAgda{Ledger/Conway/PParams}
+\includeAgda{Ledger/Conway/Fees}
+\includeAgda{Ledger/Conway/GovernanceActions}
+\includeAgda{Ledger/Conway/Transaction}
+\includeAgda{Ledger/Conway/Utxo}
+\includeAgda{Ledger/Conway/Utxow}
+\includeAgda{Ledger/Conway/Gov}
+\includeAgda{Ledger/Conway/Certs}
+\includeAgda{Ledger/Conway/Ledger}
+\includeAgda{Ledger/Conway/Enact}
+\includeAgda{Ledger/Conway/Ratify}
+\includeAgda{Ledger/Conway/Rewards}
+\includeAgda{Ledger/Conway/Epoch}
+\includeAgda{Ledger/Conway/Chain}
 
 \section{Properties}
 This section presents the properties of the ledger that we have formally proved in
@@ -42,18 +42,18 @@ property is formally stated and (possibly) proved. A ``Claim'' is a property tha
 not yet proved, while a ``Theorem'' is one for which we have a formal proof.
 
 \subsection{Preservation of Value}
-\inputAgda{Ledger/Ledger/Properties/PoV}
-\inputAgda{Ledger/Utxo/Properties/PoV}
-\inputAgda{Ledger/Certs/Properties/PoV}
-\inputAgda{Ledger/Certs/Properties/PoVLemmas}
+\inputAgda{Ledger/Conway/Ledger/Properties/PoV}
+\inputAgda{Ledger/Conway/Utxo/Properties/PoV}
+\inputAgda{Ledger/Conway/Certs/Properties/PoV}
+\inputAgda{Ledger/Conway/Certs/Properties/PoVLemmas}
 
 \subsection{Invariance Properties}
 To say that a predicate \ab{P} is an \textit{invariant} of a transition rule
 means the following: if the transition rule relates states \ab{s} and \ab{s'} and if
 \ab{P} holds at state~\ab{s}, then \ab{P} holds at state \ab{s'}.
 
-\inputAgda{Ledger/Chain/Properties/CredDepsEqualDomRwds}
-\inputAgda{Ledger/Chain/Properties/PParamsWellFormed}
+\inputAgda{Ledger/Conway/Chain/Properties/CredDepsEqualDomRwds}
+\inputAgda{Ledger/Conway/Chain/Properties/PParamsWellFormed}
 
 \subsubsection{Governance Action Deposits Match}
 \Cref{thm:ChainGovDepsMatch,lem:LedgerGovDepsMatch,lem:EpochGovDepsMatch} assert that
@@ -64,7 +64,7 @@ deposits with the \GovActionDeposit{}s of the \GovState{} of \ab{s}.
 When these two sets are the same, we write \AgdaFunction{govDepsMatch}~\ab{s} and say
 the \AgdaFunction{govDepsMatch} relation holds for \ab{s}.
 Formally, the \AgdaFunction{govDepsMatch} predicate is defined as follows:
-\inputAgda{Ledger/Ledger/Properties}
+\inputAgda{Ledger/Conway/Ledger/Properties}
 
 The assertion,
 ``the \AgdaFunction{govDepsMatch} relation is an invariant of the \LEDGER{} rule,''
@@ -72,19 +72,19 @@ means the following:  if \govDepsMatch{}~\ab{s} and
 \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}, then
 \govDepsMatch{}~\ab{s'}.
 
-\inputAgda{Ledger/Chain/Properties/GovDepsMatch}
-\inputAgda{Ledger/Ledger/Properties/GovDepsMatch}
-\inputAgda{Ledger/Epoch/Properties/GovDepsMatch}
+\inputAgda{Ledger/Conway/Chain/Properties/GovDepsMatch}
+\inputAgda{Ledger/Conway/Ledger/Properties/GovDepsMatch}
+\inputAgda{Ledger/Conway/Epoch/Properties/GovDepsMatch}
 
 \subsection{Minimum Spending Conditions}
-\inputAgda{Ledger/Utxo/Properties/MinSpend}
+\inputAgda{Ledger/Conway/Utxo/Properties/MinSpend}
 
 \subsection{Miscellaneous Properties}
-\inputAgda{Ledger/GovernanceActions/Properties/ChangePPGroup}
-\inputAgda{Ledger/Chain/Properties/EpochStep}
-\inputAgda{Ledger/Epoch/Properties/ConstRwds}
-\inputAgda{Ledger/Epoch/Properties/NoPropSameDReps}
-\inputAgda{Ledger/Certs/Properties/VoteDelegsVDeleg}
+\inputAgda{Ledger/Conway/GovernanceActions/Properties/ChangePPGroup}
+\inputAgda{Ledger/Conway/Chain/Properties/EpochStep}
+\inputAgda{Ledger/Conway/Epoch/Properties/ConstRwds}
+\inputAgda{Ledger/Conway/Epoch/Properties/NoPropSameDReps}
+\inputAgda{Ledger/Conway/Certs/Properties/VoteDelegsVDeleg}
 
 \clearpage
 

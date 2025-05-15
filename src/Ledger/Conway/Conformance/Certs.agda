@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Types.GovStructure
-import Ledger.Certs
+open import Ledger.Conway.Types.GovStructure
+import Ledger.Conway.Certs
 
 module Ledger.Conway.Conformance.Certs
   (gs : _) (open GovStructure gs)
@@ -10,8 +10,8 @@ module Ledger.Conway.Conformance.Certs
 
 open import Tactic.Derive.DecEq
 
-open import Ledger.GovernanceActions gs
-private module Certs = Ledger.Certs gs
+open import Ledger.Conway.GovernanceActions gs
+private module Certs = Ledger.Conway.Certs gs
 open Certs public
   hiding (DState; GState; CertState; HasCast-DState; HasCast-GState; HasCast-CertState;
           _⊢_⇀⦇_,POOL⦈_; _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;

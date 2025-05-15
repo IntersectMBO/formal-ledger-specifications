@@ -128,8 +128,11 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
 %              \LedgerMod{Utxo/Properties.agda}{\AgdaModule{Ledger.Utxo.Properties}}
   \href{https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/#1}{#2}%
 }
-\NewDocumentCommand\LedgerModule{m}{% usage: \LedgerModule{Utxo}
+\NewDocumentCommand\LedgerModule{m}{% usage: \LedgerModule{Introduction}
   \LedgerMod{#1.lagda}{\AgdaModule{Ledger.#1}}%
+}
+\NewDocumentCommand\ConwayModule{m}{% usage: \ConwayModule{Utxo}
+  \LedgerMod{Conway/#1.lagda}{\AgdaModule{Ledger.Conway.#1}}%
 }
 \NewDocumentCommand\LedgerModText{mm}{% usage: \LedgerModText{Utxo}{UTXO}
   \LedgerMod{#1.lagda}{\texttt{#2}}%

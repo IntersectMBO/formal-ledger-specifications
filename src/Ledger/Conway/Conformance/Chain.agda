@@ -5,17 +5,17 @@ open import Algebra
 open import Data.Nat.Properties using (+-0-monoid)
 
 open import Ledger.Prelude; open Equivalence
-open import Ledger.Transaction
-open import Ledger.Abstract
+open import Ledger.Conway.Transaction
+open import Ledger.Conway.Abstract
 
 module Ledger.Conway.Conformance.Chain
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Enact govStructure
+open import Ledger.Conway.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Ratify txs
+open import Ledger.Conway.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
