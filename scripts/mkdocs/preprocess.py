@@ -145,65 +145,76 @@ def expand_hldiff(match):
 # --- New Helper Function for Figures ---
 def process_figure_environment(match):
     """
-    Processes the content of a LaTeX figure* environment.
-    Extracts caption and label, removes them and the figure wrappers,
-    and returns a placeholder string followed by the remaining content.
-    The @@CODEBLOCK_ID_n@@ placeholders are assumed to be already within the content.
+    Processes the content of a LaTeX figure* environment. Extract caption and label, remove
+    them and figure wrappers, return placeholder string followed by remaining content.
+    @@CODEBLOCK_ID_n@@ placeholders assumed to be already in content.
     Details
     *  designed to be used with `re.sub`
-    *  takes regex match object for a `figure*` environment
+    *  takes regex match object for `figure*` environment
     *  searches for `\caption{...}` and `\label{...}` within figure
     *  extracts caption text and label ID
     *  removes original `\caption` and `\label` commands from figure content
     *  removes `\begin{AgdaMultiCode}` and `\end{AgdaMultiCode}` from figure content
     *  returns string beginning `\n@@FIGURE_BLOCK_TO_SUBSECTION@@label=...@@caption=...@@\n`
-       (or `@@UNLABELLED_FIGURE_CAPTION@@...`) followed by rest of figure content.
+       or `@@UNLABELLED_FIGURE_CAPTION@@...` followed by rest of figure content.
     """
     # Group 1: Optional attributes of figure* environment (e.g., [ht]) - currently unused by replacer
     # Group 2: The actual content within the figure* environment
     figure_inner_content = match.group(2)
+    print(f"DEBUG PREPROCESS (FIGURE_ENV): Matched figure environment. Raw figure_inner_content for caption search is:\n>>>\n{figure_inner_content}\n<<<", file=sys.stderr)
 
-    caption_text = "Untitled Section" # Default caption if none found
-    original_label_id = "" # Original LaTeX label
+    caption_text = "Untitled Section" # default caption
+    original_label_id = ""            # default latex label
 
-    # Using a more robust way to find and remove caption and label
-    # Process caption first, then label, to handle cases where label might be part of caption or vice-versa
-
-    # Extract caption
-    # Add flags=re.DOTALL to make (.*?) match across newlines within the caption content.
+    # extract caption
     caption_match = re.search(r"\\caption\{(.*?)\}", figure_inner_content, flags=re.DOTALL)
+                                                                         # flags=re.DOTALL make (.*?) match
+                                                                         # across newlines in caption content
     if caption_match:
-        cap_text_raw = caption_match.group(1).strip() # get raw caption content
+        raw_captured_caption_text = caption_match.group(1)
+        print(f"DEBUG PREPROCESS: Raw captured caption: {repr(raw_captured_caption_text)}", file=sys.stderr)
 
-        # replace newline types (\r\n, \n, \r) with whitespace char.
-        cap_text_single_line = cap_text_raw.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+        stripped_caption_text = raw_captured_caption_text.strip()
+        print(f"DEBUG PREPROCESS: Stripped caption: {repr(stripped_caption_text)}", file=sys.stderr)
 
-        # Sqash multiple consecutive spaces into single space.
-        cap_text_squeezed = re.sub(r'\s+', ' ', cap_text_single_line).strip()
+        # replace various newline types with single space
+        single_line_caption = stripped_caption_text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+        print(f"DEBUG PREPROCESS: After newline replace: {repr(single_line_caption)}", file=sys.stderr)
 
-        # Escape "@@" in caption text to avoid breaking placeholder format.
-        caption_text = cap_text_squeezed.replace("@@", "@ @")
+        # squash multiple spaces arising from replacements into single space
+        squashed_caption_text = re.sub(r'\s+', ' ', single_line_caption).strip()
+        print(f"DEBUG PREPROCESS: After space squash: {repr(squashed_caption_text)}", file=sys.stderr)
 
+        # escape "@@" in caption text for placeholder format;
+        caption_text = squashed_caption_text.replace("@@", "@ @")
+        print(f"DEBUG PREPROCESS: Final for placeholder attribute: {repr(caption_text)}", file=sys.stderr)
+
+        # remove original \caption command from figure content
         figure_inner_content = figure_inner_content.replace(caption_match.group(0), "", 1)
+    else:
+        # --- START NEW DEBUG PRINT ---
+        print(f"DEBUG PREPROCESS (FIGURE_ENV): NO CAPTION MATCH FOUND in the above figure_inner_content.", file=sys.stderr)
+        # --- END NEW DEBUG PRINT ---
 
-    # Extract label
+    # extract label
     label_match = re.search(r"\\label\{(.*?)\}", figure_inner_content)
     if label_match:
         original_label_id_raw = label_match.group(1).strip()
-        original_label_id = original_label_id_raw.replace("@@", "@ @") # Escape @@
-        figure_inner_content = figure_inner_content.replace(label_match.group(0), "", 1) # Remove first match
+        original_label_id = original_label_id_raw.replace("@@", "@ @") # escape @@
+        figure_inner_content = figure_inner_content.replace(label_match.group(0), "", 1)
+    else:
+        # --- START NEW DEBUG PRINT ---
+        print(f"DEBUG PREPROCESS (FIGURE_ENV): NO LABEL MATCH FOUND in figure_inner_content (after potential caption removal).", file=sys.stderr)
+        # --- END NEW DEBUG PRINT ---
 
-    # Remove AgdaMultiCode wrappers if they are typically inside figures
-    # This step is based on the assumption that AgdaMultiCode inside figures
-    # should just have its content flow out.
+    # remove AgdaMultiCode wrappers typically inside figures
     figure_inner_content = re.sub(r"\\begin\{AgdaMultiCode\}\s*", "", figure_inner_content, flags=re.DOTALL)
     figure_inner_content = re.sub(r"\s*\\end\{AgdaMultiCode\}", "", figure_inner_content, flags=re.DOTALL)
 
-    figure_inner_content = figure_inner_content.strip() # Remaining content (e.g., @@CODEBLOCK_ID_n@@)
+    figure_inner_content = figure_inner_content.strip()
 
-    # Create the placeholder
+    # create placeholder using processed 'caption_text'
     if original_label_id:
-        # Ensured newlines for better separation in the .temp file, aiding debug
         placeholder = f"\n@@FIGURE_BLOCK_TO_SUBSECTION@@label={original_label_id}@@caption={caption_text}@@\n"
     else:
         placeholder = f"\n@@UNLABELLED_FIGURE_CAPTION@@caption={caption_text}@@\n"

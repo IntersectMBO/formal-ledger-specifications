@@ -104,14 +104,24 @@ def replace_code_placeholder(match, code_blocks):
 
 # --- New Placeholder Replacement Functions ---
 def replace_figure_block_to_subsection_placeholder(match):
-    # Group 1: original_label_escaped (from label=...) (not directly used for HTML output here,
-    #          but useful for debugging or other attributes).
+    # Group 1: original_label_escaped (from label=...) (not directly used for HTML
+    #          output here, but useful for debugging or other attributes).
+    original_label_raw_potentially_escaped = match.group(1)
+
     # Group 2: caption_text_escaped (from caption=...)
-    # original_label_raw = match.group(1)
     caption_text_raw = match.group(2)
 
     # Unescape "@@" if escaped in preprocess.py (e.g., .replace("@ @", "@@"))
     caption_text = caption_text_raw.replace("@ @", "@@")
+
+    # remove newlines Pandoc may have introduced within caption attribute value
+    caption_text_single_line = caption_text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+
+    # squash multiple spaces
+    caption_text_squashed = re.sub(r'\s+', ' ', caption_text_single_line).strip()
+
+    return f"\n### {caption_text_squashed}\n\n" # using H3 for these
+
 
     # Create md H3 subsection heading.
     # mkdocs (python-markdown with 'toc' extension) will auto-generate id.
@@ -122,7 +132,12 @@ def replace_figure_block_to_subsection_placeholder(match):
 def replace_unlabelled_figure_caption_placeholder(match):
     caption_text_raw = match.group(1)
     caption_text = caption_text_raw.replace("@ @", "@@")
-    return f"\n#### {caption_text}\n\n" # using H4 for these
+    # remove newlines Pandoc may have introduced within caption attribute value
+    caption_text_single_line = caption_text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+    # squash multiple spaces
+    caption_text_squashed = re.sub(r'\s+', ' ', caption_text_single_line).strip()
+
+    return f"\n#### {caption_text_squashed}\n\n" # use H4 for these?
 
 def replace_cross_ref_placeholder(match):
     # global LABEL_TARGETS_MAP
@@ -274,15 +289,15 @@ if __name__ == "__main__":
             r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@",
             replace_figure_block_to_subsection_placeholder,
             content_processed,
-            flags=re.DOTALL
+            flags=re.DOTALL  # ensures regex can span lines if placeholder split by Pandoc
         )
         logging.info(f"Converted figure blocks to subsections.")
 
         content_processed = re.sub(
-            r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@", # If you use this
+            r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@",
             replace_unlabelled_figure_caption_placeholder,
             content_processed,
-            flags=re.DOTALL
+            flags=re.DOTALL  # ensures regex can span lines if placeholder split by Pandoc
         )
 
         content_processed = re.sub(

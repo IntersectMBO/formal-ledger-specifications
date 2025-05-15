@@ -170,33 +170,39 @@ LOG_FILE = BUILD_MKDOCS_DIR / "build.log"
 # *** REVISED Logging Setup ***
 def setup_logging():
     """Configures logging to file (DEBUG) and console (INFO) without basicConfig."""
-    BUILD_MKDOCS_DIR.mkdir(parents=True, exist_ok=True)
+    # BUILD_MKDOCS_DIR.mkdir(parents=True, exist_ok=True) # This line is already in __main__, before calling setup_logging()
     log_formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
-    # Get root logger
+    # get root logger
     logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG) # Set lowest level for logger itself
+    logger.setLevel(logging.DEBUG) # set lowest level for logger itself
 
-    # Clear existing handlers (important if this function could be called multiple times)
+    # clear existing handlers (important if this function could be called multiple times)
     if logger.hasHandlers():
         logger.handlers.clear()
 
-    # File handler (DEBUG level)
+    # file handler (DEBUG level)
     try:
+        # ensure directory for LOG_FILE exists just before opening
+        LOG_FILE.parent.mkdir(parents=True, exist_ok=True) # for extra safety
         file_handler = logging.FileHandler(LOG_FILE, mode='w', encoding='utf-8')
         file_handler.setFormatter(log_formatter)
         file_handler.setLevel(logging.DEBUG)
         logger.addHandler(file_handler)
     except Exception as e:
-        print(f"Error setting up file logging to {LOG_FILE}: {e}", file=sys.stderr)
-
+        # If this fails, we need to know why. Print to stderr.
+        print(f"CRITICAL LOGGING ERROR: Failed to set up file logging to {LOG_FILE}: {e}", file=sys.stderr)
+        # Optionally, re-raise or exit if file logging is critical
+        # For now, let it continue so console logging might still work.
 
     # Console handler (INFO level)
     console_handler = logging.StreamHandler(sys.stderr)
     console_handler.setFormatter(log_formatter)
-    console_handler.setLevel(logging.INFO) # Only show INFO and above on console
+    console_handler.setLevel(logging.DEBUG)  # (set to DEBUG for now; change to INFO later)
     logger.addHandler(console_handler)
 
+    # This message might not make it to file if file_handler failed,
+    # but will go to console if console_handler working.
     logging.info("Logging setup complete. Log file: %s", LOG_FILE)
 
 # --- Helper to run commands ---
@@ -277,6 +283,11 @@ def setup_directories(run_agda_html):
     MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)       # for final .md pages and assets
     MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)        # for CSS assets
     MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)         # for JS assets
+
+    # Ensure main mkdocs build directory (and log file's parent dir) exists
+    # before setting up logging, as setup_logging() will try to open LOG_FILE.
+    BUILD_MKDOCS_DIR.mkdir(parents=True, exist_ok=True) # BUILD_MKDOCS_DIR defined globally
+
 
 def cleanup_intermediate_mkdocs_artifacts():
     """
@@ -536,9 +547,10 @@ def main(run_agda_html=False):
 
     logging.info("Starting MkDocs build process...")
 
-    # 1. Setup directories.
-    logging.info("Setting up build directories...")
+    # 1. Setup directories and logging.
+    logging.info("Setting up build directories and logging...")
     setup_directories(run_agda_html)
+    setup_logging()
 
     # 2. Generate macros.json
     if GENERATE_MACROS_PY.exists() and MACROS_STY_PATH.exists():
@@ -1071,12 +1083,6 @@ if __name__ == "__main__":
         help="Run the 'agda --html --html-highlight=code' step on processed .lagda.md files."
     )
     args = parser.parse_args()
-
-    # Ensure the main MkDocs build directory (and thus log file's parent dir) exists
-    # BEFORE setting up logging, as setup_logging() will try to open LOG_FILE.
-    # BUILD_MKDOCS_DIR is defined globally.
-    BUILD_MKDOCS_DIR.mkdir(parents=True, exist_ok=True)
-    setup_logging() # now safe to set up logging
 
     try:
         main(run_agda_html=args.run_agda)
