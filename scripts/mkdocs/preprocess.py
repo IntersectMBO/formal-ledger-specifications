@@ -170,13 +170,21 @@ def process_figure_environment(match):
     # Process caption first, then label, to handle cases where label might be part of caption or vice-versa
 
     # Extract caption
+    # Add flags=re.DOTALL to make (.*?) match across newlines within the caption content.
     caption_match = re.search(r"\\caption\{(.*?)\}", figure_inner_content, flags=re.DOTALL)
     if caption_match:
-        # Replace \n with space for single-line caption text in placeholder
-        # Escape "@@" in user's caption text to avoid breaking our placeholder format
-        cap_text_raw = caption_match.group(1).strip().replace("\n", " ")
-        caption_text = cap_text_raw.replace("@@", "@ @")
-        figure_inner_content = figure_inner_content.replace(caption_match.group(0), "", 1) # Remove first match
+        cap_text_raw = caption_match.group(1).strip() # get raw caption content
+
+        # replace newline types (\r\n, \n, \r) with whitespace char.
+        cap_text_single_line = cap_text_raw.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
+
+        # Sqash multiple consecutive spaces into single space.
+        cap_text_squeezed = re.sub(r'\s+', ' ', cap_text_single_line).strip()
+
+        # Escape "@@" in caption text to avoid breaking placeholder format.
+        caption_text = cap_text_squeezed.replace("@@", "@ @")
+
+        figure_inner_content = figure_inner_content.replace(caption_match.group(0), "", 1)
 
     # Extract label
     label_match = re.search(r"\\label\{(.*?)\}", figure_inner_content)
