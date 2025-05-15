@@ -84,6 +84,9 @@ private variable
   govSt govSt' : GovState
   certState certState' : CertState
   tx : Tx
+  aslot : Slot
+  ppr : PParams
+  txb : TxBody
 \end{code}
 
 
@@ -93,7 +96,6 @@ txToExUnits : Tx → ExUnits
 txToExUnits tx = (∑[ (_ , eu) ← (tx .wits .txrdmrs) ]  eu)
   where open Tx' ; open TxWitnesses
 
--- sum up all units across all transactions TODO this is wrong!
 totExUnits : List Tx → ExUnits
 totExUnits lstx = ∑[ au ← fromListᵐ (map (λ tx → ((tx .body .TxBody.txid) , txToExUnits tx)) lstx)] au
   where open Tx' ; open TxWitnesses
@@ -179,65 +181,39 @@ adjustTx scs isv tx = record { body = body ; wits = record { TxWitnesses wits ; 
 \label{fig:functions:utxo-conway}
 \end{figure*}
 
-\begin{NoConway} 
-\begin{figure*}[h]
 \begin{code}[hide]
-open RwdAddr
-open DState
-open CertState
-open UTxOState
+record CertEnv' : Type where
+  constructor ⟦_,_⟧ᶜᶜ
+  field
+    epoch     : Epoch
+    pp        : PParams
 
 data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,SWAP⦈_ : LEnv → LState → Tx → LState → Type
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\caption{The type of the SWAP transition system}
-\end{figure*}
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
-  SWAP-V : let open Tx' tx renaming (body to txb); open TxBody txb; open LEnv Γ
-    in
-    ∙  isValid ≡ true
-    ∙  ⟦ epoch slot , pparams , txvote , txwdrls ⟧ᶜ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙  ⟦ txid , epoch slot , pparams , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ txgov txb ,GOV⦈ govSt'
-    ∙  record { LEnv Γ } ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
-       ────────────────────────────────
-       Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , govSt' , certState' ⟧ˡ
+  _⊢_⇀⦇_,CERTS'⦈_     : CertEnv' → CertState → TxBody → CertState → Type
 
-  SWAP-I : let open Tx' tx renaming (body to txb); open TxBody txb; open LEnv Γ 
-    in
-    ∙ (isValid ≡ false)
-    ∙ record { LEnv Γ }  ⊢ u ⇀⦇ tx ,UTXOW⦈ u'
+data _⊢_⇀⦇_,CERTS'⦈_ where
+  CERTS'-r :
+    ∙ ⟦ epoch aslot , ppr , (txb .TxBody.txvote) , (txb .TxBody.txwdrls) ⟧ᶜ ⊢ certState ⇀⦇ (txb .TxBody.txcerts) ,CERTS⦈ certState'
       ────────────────────────────────
-       Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,SWAP⦈ ⟦ u' , govSt , certState ⟧ˡ
+      ⟦ epoch aslot , ppr ⟧ᶜᶜ ⊢ certState ⇀⦇ txb ,CERTS'⦈ certState'
 \end{code}
-\end{AgdaSuppressSpace}
-\caption{SWAP transition system}
-\end{figure*}
-\begin{code}[hide]
-pattern SWAP-V⋯ w x y z = SWAP-V (w , x , y , z)
-pattern SWAP-I⋯ y z     = SWAP-I (y , z)
-\end{code}
-
 
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
-_⊢_⇀⦇_,SWAPS⦈_ : LEnv → LState → List Tx → LState → Type
-_⊢_⇀⦇_,SWAPS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,SWAP⦈_
+_⊢_⇀⦇_,ALLCERTS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,CERTS'⦈_
 \end{code}
-\caption{LEDGERS transition system}
+\caption{ALLGOV transition system}
 \end{figure*}
 \end{NoConway}
 
-
+\begin{NoConway} 
 \begin{figure*}[h]
-\begin{code}[hide]
+\begin{code}
+open RwdAddr
+open DState
+open CertState
+open UTxOState
 
 data
 \end{code}
@@ -255,7 +231,9 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  LEDGER-Ind : 
+-- NOTE that rules 1-7 , as well as calling ALLUTXOW and ALLUTXOS are the same in isValid ≡ true AND isValid ≡ false cases
+-- probably there is a nicer way to do this
+  LEDGER-I : 
     let open UTxOState u renaming (utxo to utx); open Tx' tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
         bods           = map (λ t → t .Tx'.body) subTxs
         allScripts        = foldr (λ t l → (t .Tx'.wits .TxWitnesses.scripts) ∪ l) ∅ (tx ∷ subTxs)
@@ -263,14 +241,41 @@ data
         isBalanced        = consumed pp u (body ∷ bods) ≡ᵇ produced pp u (body ∷ bods) 
 
     in
+    ∙ (isValid ≡ true)
     ∙ (feesOK pp tx utx ≡ true)         --1   
     ∙ isBalanced ≡ true --2
-    ∙ (chkInsInUTxO (body ∷ bods) (dom utx)) -- 3
+    ∙ (chkInsInUTxO (body ∷ bods) (dom utx)) -- 3 --? TODO discuss in CIP
     ∙ (txsize ≤ maxTxSize)  --4
     ∙ (maxTxExUnits ≡ maxTxExUnits) -- TODO actually supposed to be : ≥ᵉ totExUnits subTxs maxTxExUnits   --5
-    ∙  noSubsInSubs bods ≡ true --6
-    ∙  noColsInSubs bods ≡ true --7
-    ∙ Γ ⊢ ⟦ u , govSt , certState ⟧ˡ ⇀⦇ txsWithScripts ,SWAPS⦈ ⟦ u' , govSt' , certState' ⟧ˡ
+    ∙ (noSubsInSubs bods ≡ true) --6
+    ∙ (noColsInSubs bods ≡ true) --7 -- TODO no collateral returns either (this is implied)
+    ∙ (⟦ epoch slot , pp ⟧ᶜᶜ ⊢ certState ⇀⦇ (body ∷ bods) ,ALLCERTS⦈ certState')
+    ∙ (⟦ txid , epoch slot , pp , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ (map txgov (body ∷ bods)) ,ALLGOV⦈ govSt')
+
+    ∙ record { LEnv Γ }  ⊢ u ⇀⦇ txsWithScripts ,ALLUTXOW⦈ u'
+    ∙ record { LEnv Γ }  ⊢ u ⇀⦇ txsWithScripts ,ALLUTXOS⦈ u'
+       ────────────────────────────────
+       Γ ⊢  ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , govSt' , certState' ⟧ˡ
+
+  LEDGER-V : 
+    let open UTxOState u renaming (utxo to utx); open Tx' tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
+        bods           = map (λ t → t .Tx'.body) subTxs
+        allScripts        = foldr (λ t l → (t .Tx'.wits .TxWitnesses.scripts) ∪ l) ∅ (tx ∷ subTxs)
+        txsWithScripts  = map (adjustTx allScripts isValid) (tx ∷ subTxs)
+        isBalanced        = consumed pp u (body ∷ bods) ≡ᵇ produced pp u (body ∷ bods) 
+
+    in
+    ∙ (isValid ≡ false)
+    ∙ (feesOK pp tx utx ≡ true)         --1   
+    ∙ isBalanced ≡ true --2
+    ∙ (chkInsInUTxO (body ∷ bods) (dom utx)) -- 3 --? TODO discuss in CIP
+    ∙ (txsize ≤ maxTxSize)  --4
+    ∙ (maxTxExUnits ≡ maxTxExUnits) -- TODO actually supposed to be : ≥ᵉ totExUnits subTxs maxTxExUnits   --5
+    ∙ (noSubsInSubs bods ≡ true) --6
+    ∙ (noColsInSubs bods ≡ true) --7 -- TODO no returns either
+
+    ∙ (record { LEnv Γ }  ⊢ u ⇀⦇ txsWithScripts ,ALLUTXOW⦈ u')
+    ∙ (record { LEnv Γ }  ⊢ u ⇀⦇ txsWithScripts ,ALLUTXOS⦈ u')
        ────────────────────────────────
        Γ ⊢  ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , govSt' , certState' ⟧ˡ
 \end{code}
@@ -278,10 +283,6 @@ data
 \end{AgdaSuppressSpace}
 \caption{LEDGER transition system}
 \end{figure*}
-\begin{code}[hide]
-pattern LEDGER-Ind⋯  p1  p2 p3  p4 p5  p6 p7 p8 p9 p10 = LEDGER-Ind (p1  , p2 , p3  , p4 , p5  , p6 , p7 , p8 , p9 , p10)
-unquoteDecl LEDGER-premises = genPremises LEDGER-premises (quote LEDGER-Ind)
-\end{code}
 
 \begin{NoConway}
 \begin{figure*}[h]
@@ -292,4 +293,5 @@ _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,LEDGER⦈_
 \caption{LEDGERS transition system}
 \end{figure*}
 \end{NoConway}
+
  

@@ -27,7 +27,8 @@ data ScriptPurpose : Type where
   Spend    : TxIn         → ScriptPurpose
   Vote     : Voter        → ScriptPurpose
   Propose  : GovProposal  → ScriptPurpose
-  BatchObservers : ScriptHash   → ScriptPurpose
+  Observers : ScriptHash  → ScriptPurpose
+  TopLevelObservers : (ScriptHash × TxId)   → ScriptPurpose
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
@@ -37,7 +38,8 @@ rdptr txb = λ where
   (Spend h)    → M.map (Spend   ,_) $ indexOfTxIn     h txins
   (Vote h)     → M.map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txvote)
   (Propose h)  → M.map (Propose ,_) $ indexOfProposal h txprop
-  (BatchObservers h)  → M.map (BatchObservers ,_) $ indexOfBatchObservers h requireBatchObservers
+  (Observers h)  → M.map (Observers ,_) $ indexOfObservers h requiredObservers
+  (TopLevelObservers h)  → M.map (TopLevelObservers ,_) $ indexOfTopLevelObservers (proj₁ h) (dom requiredTopLevelObservers)
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
@@ -90,7 +92,7 @@ mkInfos : Language → ScriptPurpose
                   → UTxO
                   → Tx
                   → List TxInfo
-mkInfos l (BatchObservers s) pp utxo tx = map (λ t → (txInfo' l (BatchObservers s) pp utxo (t .Tx'.body) (t .Tx'.wits))) subTxs
+mkInfos l (TopLevelObservers s) pp utxo tx = map (λ t → (txInfo' l (TopLevelObservers s) pp utxo (t .Tx'.body) (t .Tx'.wits))) subTxs
   where open Tx' tx; open TxBody body
 mkInfos l _ pp utxo _ = []                 
 
@@ -166,13 +168,17 @@ certScripts c@(deregdrep (KeyHashObj x) _)     | yes p = nothing
 certScripts c@(deregdrep (ScriptObj  y) _)     | yes p = just (Cert c , y)
 
 private
+  mkTopScripts : TxId → (ScriptHash ⇀ Data) → ℙ (ScriptPurpose × ScriptHash)
+  mkTopScripts txid scs = mapˢ (λ x → (TopLevelObservers (proj₁ x , txid) , (proj₁ x))) (proj₁ scs)
+
   scriptsNeeded : UTxO → Tx → ℙ (ScriptPurpose × ScriptHash)
   scriptsNeeded utxo tx
     = mapPartial (λ x → spendScripts x (scriptOutsWithHash utxo)) txins
     ∪ mapPartial (λ x → rwdScripts x) (dom $ txwdrls .proj₁)
     ∪ mapPartial (λ x → certScripts x) (fromList txcerts)
     ∪ mapˢ (λ x → Mint x , x) (policies mint)
-    ∪ mapˢ (λ x → BatchObservers x , x) (tx .Tx'.body .TxBody.requireBatchObservers)
+    ∪ mapˢ (λ x → Observers x , x) (tx .Tx'.body .TxBody.requiredObservers)
+    ∪ foldr (λ a b → mkTopScripts (a .Tx'.body .TxBody.txid) (a .Tx'.body .TxBody.requiredTopLevelObservers) ∪ b) ∅ subTxs  
     where open Tx' tx ; open TxBody body
     
 valContext : TxInfo → ScriptPurpose → Data
@@ -182,6 +188,10 @@ valContext txinfo sp = toData (txinfo , sp)
 -- need to update costmodels to add the language map in order to check
 -- (Language ↦ CostModel) ∈ costmdls ↦ (Language ↦ CostModel)
 
+-- returns the data associated with the top level observer script
+getTopData : ScriptPurpose → Tx → List Data
+getTopData (TopLevelObservers (s , _)) tx = map proj₂ (setToList (proj₁ ((tx .Tx'.body .TxBody.requiredTopLevelObservers) ∣ (singleton s))))
+getTopData _ _ = []
 
 opaque
 
@@ -194,7 +204,7 @@ opaque
     with isInj₂ s | indexedRdmrs tx sp
   ... | just p2s | just (rdmr , eu)
       = just (s ,
-          ( (getDatum tx utxo sp ++ rdmr ∷ valContext (txInfo (language p2s) sp pp utxo tx) sp ∷ [])
+          ( (getDatum tx utxo sp ++ (getTopData sp tx) ++ rdmr ∷ valContext (txInfo (language p2s) sp pp utxo tx) sp ∷ [])
           , eu
           , PParams.costmdls pp)
         )
@@ -219,3 +229,4 @@ evalScripts tx [] = true
 evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) =
   ¿ validP1Script (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
 evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ
+ 

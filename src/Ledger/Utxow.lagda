@@ -85,13 +85,17 @@ noBodies tx with (tx .Tx'.body .TxBody.subTxs)
 ... | [] = true 
 ... | _ = false
 
+noObservers : Tx → Bool
+noObservers tx with (setToList (tx .Tx'.body .TxBody.requiredObservers)) 
+... | [] = true 
+... | _ = false
 
 -- TODO check this
 allowedLanguages : Tx → UTxO → ℙ Language
 allowedLanguages tx utxo =
   if (∃[ o ∈ os ] isBootstrapAddr (proj₁ o))
     then ∅
-  else if (noBodies tx ≡ true ) 
+  else if (noBodies tx ≡ true × noObservers tx ≡ true) 
     then fromList (PlutusV4 ∷ [])
   else if UsesV3Features txb
     then fromList (PlutusV3 ∷ PlutusV4 ∷ [])
@@ -106,11 +110,14 @@ allowedLanguages tx utxo =
 getScripts : ℙ Credential → ℙ ScriptHash
 getScripts = mapPartial isScriptObj
 
+mkTopObservers : TxId → (ScriptHash ⇀ Data) → ℙ (ScriptPurpose × Credential)
+mkTopObservers txid scs = mapˢ (λ x → (TopLevelObservers (proj₁ x , txid) , ScriptObj (proj₁ x))) (proj₁ scs)
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
   =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txins) ˢ)
-  ∪  mapˢ (λ x        → (BatchObservers x , ScriptObj x)) requireBatchObservers
+  ∪  foldr (λ a b → mkTopObservers (a .body .TxBody.txid) (a .body .TxBody.requiredTopLevelObservers) ∪ b) ∅ subTxs 
+  ∪  mapˢ (λ x        → (Observers x , ScriptObj x)) requiredObservers
   ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom (txwdrls .proj₁))
   ∪  mapˢ (λ c        → (Cert   c , cwitness c)) (fromList txcerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
@@ -125,7 +132,7 @@ credsNeeded utxo txb
                               nothing    → nothing) (fromList txprop)
 \end{code}
 \begin{code}[hide]
-  where open TxBody txb; open GovVote; open RwdAddr; open GovProposal
+  where open TxBody txb; open GovVote; open RwdAddr; open GovProposal ; open Tx'
 \end{code}
 \begin{code}
 
@@ -185,7 +192,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  languages scripts tx utxo ⊆ allowedLanguages tx utxo 
     ∙  txADhash ≡ map hash txAD
     -- NEW 
-    ∙  requireBatchObservers ⊆ witsScriptHashes --3
+    ∙  dom requiredTopLevelObservers ⊆ witsScriptHashes --3
+    ∙  requiredObservers ⊆ witsScriptHashes --3
 
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
@@ -202,4 +210,17 @@ pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ _ x
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
 \end{code}
+\end{NoConway}
+
+\begin{NoConway}
+\begin{figure*}[h]
+\begin{code}
+_⊢_⇀⦇_,ALLUTXOW⦈_ : UTxOEnv → UTxOState → List Tx → UTxOState → Type
+_⊢_⇀⦇_,ALLUTXOW⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,UTXOW⦈_
+
+_⊢_⇀⦇_,ALLUTXOS⦈_ : UTxOEnv → UTxOState → List Tx → UTxOState → Type
+_⊢_⇀⦇_,ALLUTXOS⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,UTXOS⦈_
+\end{code}
+\caption{LEDGERS transition system}
+\end{figure*}
 \end{NoConway}

@@ -450,7 +450,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
         ∙ evalScripts tx sLst ≡ false
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ 
 \end{code}
 \caption{UTXOS rule}
 \label{fig:utxos-conway}
@@ -504,7 +504,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     ∙ txNetworkId ≡? NetworkId
     ∙ curTreasury ≡? treasury
 
-    ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
+    -- DO not call UTXOS here
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 \end{code}

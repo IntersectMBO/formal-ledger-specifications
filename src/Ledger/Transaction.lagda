@@ -28,7 +28,7 @@ open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where
-  Spend Mint Cert Rewrd Vote Propose BatchObservers : Tag
+  Spend Mint Cert Rewrd Vote Propose Observers TopLevelObservers : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
 record TransactionStructure : Type₁ where
@@ -171,8 +171,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
       reqSigHash     : ℙ KeyHash
       scriptIntHash  : Maybe ScriptHash -- TODO is this actually checked somewhere?
       -- NEW
-      requireBatchObservers : ℙ ScriptHash
-      subTxs       : List (Tx' TxBody)
+      requiredObservers : ℙ ScriptHash
+      requiredTopLevelObservers : ScriptHash ⇀ Data -- only in sub-txs
+      subTxs       : List (Tx' TxBody) -- only in top-level
 
   Tx = Tx' TxBody 
 \end{code}

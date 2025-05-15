@@ -214,7 +214,8 @@ module ExternalStructures (externalFunctions : ExternalFunctions) where
         ; indexOfPolicyId = λ _ _ → nothing
         ; indexOfVote     = λ _ _ → nothing
         ; indexOfProposal = λ _ _ → nothing
-        ; indexOfBatchObservers = λ _ _ → nothing
+        ; indexOfObservers = λ _ _ → nothing
+        ; indexOfTopLevelObservers = λ _ _ → nothing
         }
       ; runPLCScript = λ _ _ _ _ → false
       ; scriptSize = λ _ → 0

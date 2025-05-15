@@ -380,3 +380,12 @@ and some conditions depending on the type of the action:
   epoch are allowed, and candidates cannot be added and removed at the same time;
 \item and we check the validity of hard-fork actions via \validHFAction.
 \end{itemize}
+
+\begin{NoConway}
+\begin{figure*}[h]
+\begin{code}
+_⊢_⇀⦇_,ALLGOV⦈_ = ReflexiveTransitiveClosure _⊢_⇀⦇_,GOV⦈_
+\end{code}
+\caption{ALLGOV transition system}
+\end{figure*}
+\end{NoConway}
