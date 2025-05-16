@@ -1,0 +1,72 @@
+# mkdocs.yml
+
+# Project information
+site_name: Formal Ledger Specification
+site_url: https://intersectmbo.github.io/formal-ledger-specifications/
+site_description: Formal ledger specification and documentation.
+site_author: Formal Methods Ledger Team
+repo_url: https://github.com/IntersectMBO/formal-ledger-specifications
+
+# Theme configuration (using mkdocs-material)
+theme:
+  name: material
+  # Optional features - see mkdocs-material docs for many more
+  features:
+    # - navigation.tabs
+    - navigation.sections
+    - toc.integrate # Integrate table of contents into left sidebar
+    - content.tooltips
+    - navigation.footer
+  # palette: # Optional: color scheme
+  #   primary: indigo
+  #   accent: indigo
+
+  palette:
+    # Dark Mode
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark mode
+      primary: black
+      accent: red
+
+    # Light Mode
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light mode
+      primary: blue
+      accent: deep orange
+
+  # Font configuration (optional)
+  font:
+    text: Cambria
+    code: Source Code Pro
+  #   text: Roboto
+  #   code: Roboto Mono # Or perhaps StrippedJuliaMono if available via CSS?
+
+
+# Navigation structure
+nav:
+  - Home: index.md
+
+# Markdown extensions
+markdown_extensions:
+  - admonition                # call-out boxes like !!! note
+  - pymdownx.details
+  - toc:                      # table of contents generation
+      permalink: true         # anchor links to headers
+  - pymdownx.superfences:     # syntax highlighting in code blocks
+      custom_fences:
+        - name: mermaid       # mermaid diagrams
+          class: mermaid
+  - attr_list                 # inline attributes like `code`{.class}
+  - pymdownx.tabbed
+  - pymdownx.emoji
+
+extra_css:
+  - css/custom.css
+  - css/Agda.css
+
+extra_javascript:
+  - js/custom.js

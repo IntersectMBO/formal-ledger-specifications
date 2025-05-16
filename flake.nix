@@ -7,7 +7,7 @@
   description = "Formal Ledger Specification (with flake integration)";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/0da3c44a9460a26d2025ec3ed2ec60a895eb1114";
+    nixpkgs.url = "github:NixOS/nixpkgs/6c5963357f3c1c840201eda129a99d455074db04";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -15,17 +15,17 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
-          inherit system;
-          overlays = [];
+           inherit system;
+           overlays = [];
         };
 
-        # Load shell environment from shell.nix
+        # --- load shell environment from shell.nix ---
         shellEnv = import ./shell.nix { inherit pkgs; };
 
-        # Load package from default.nix
+        # --- load package from default.nix ---
         defaultPackage = import ./default.nix { inherit pkgs; };
 
-        # Optionally expose additional components
+        # --- expose additional components ---
         fls-shake = defaultPackage.fls-shake or defaultPackage;
       in {
 
@@ -33,24 +33,17 @@
         packages.default = fls-shake;
 
         # Make it runnable
-        apps.default = flake-utils.lib.mkApp {
-          drv = fls-shake;
-        };
+        apps.default = flake-utils.lib.mkApp { drv = fls-shake; };
 
         # Dev shell imports same environment as shell.nix
         devShells = {
           default = shellEnv.shell;
           ci = shellEnv.run.shell;
+          markdown = shellEnv.markdownDocsShell;
         };
 
-        # Hydra jobs (if applicable)
-        hydraJobs = {
-          inherit (self.packages.${system}) default;
-        };
-
-        # Preserve formalLedger attribute
-        formalLedger = {
-          inherit fls-shake;
-        };
+        legacyPackages.${system}.default = self.devShells.${system}.default;
+        hydraJobs = { inherit (self.packages.${system}) default; };
+        formalLedger = { inherit fls-shake; };
       });
 }
