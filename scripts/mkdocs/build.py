@@ -98,6 +98,7 @@ except ImportError:
     print(f"FATAL: Could not import 'convert_agda_to_lagda_md'. Ensure 'agda2lagda.py' is in {SCRIPTS_DIR}.", file=sys.stderr)
     sys.exit(1)
 from bs4 import BeautifulSoup # for link rewriting (.html -> .md)
+from urllib.parse import urlparse, urlunparse, unquote # For more robust URL handling
 
 # Add this near the top of build.py, after imports
 import re as re_for_slugify # Use an alias if 're' is used differently elsewhere
@@ -159,6 +160,9 @@ CUSTOM_JS_SOURCE = STATIC_MKDOCS_DIR / "js" / "custom.js"   # Assumes JS lives n
 INDEX_MD_TEMPLATE = DOCS_TEMPLATE_DIR / "index.md"
 MKDOCS_YML_TEMPLATE = DOCS_TEMPLATE_DIR / "mkdocs_template.yml" # Optional template
 
+# Web site base path (might be derivable from mkdocs_config['site_url']; for github pages it's "/repository-name/")
+MKDOCS_SITE_BASE_PATH = "/formal-ledger-specifications/"
+
 # --- Logging Setup ---
 LOG_FILE = BUILD_MKDOCS_DIR / "build.log"
 
@@ -193,7 +197,7 @@ def setup_logging():
     # Console handler (INFO level)
     console_handler = logging.StreamHandler(sys.stderr)
     console_handler.setFormatter(log_formatter)
-    console_handler.setLevel(logging.DEBUG)  # (set to DEBUG for now; change to INFO later)
+    console_handler.setLevel(logging.INFO)  # set this to DEBUG for troubleshooting
     logger.addHandler(console_handler)
 
     # This message might not make it to file if file_handler failed,
@@ -363,9 +367,10 @@ class LagdaProcessingPaths:
         for parent_dir in parents_to_create:
             parent_dir.mkdir(parents=True, exist_ok=True)
 
+# no longer using `rewrite_internal_link_extensions` (could remove it eventually)
 def rewrite_internal_link_extensions(html_content, from_ext=".html", to_ext=".md"):
     """
-    Rewrites hrefs in HTML content from one extension to another for relative links.
+    Rewrite hrefs in HTML content from one extension to another for relative links.
     e.g., from ".html" to ".md".
     """
     soup = BeautifulSoup(html_content, 'html.parser')
@@ -393,6 +398,66 @@ def rewrite_internal_link_extensions(html_content, from_ext=".html", to_ext=".md
     # Only return new content if modifications were made, to avoid re-parsing if not needed.
     # However, always returning str(soup) is safer and handles all cases.
     return str(soup)
+
+def rewrite_internal_links_for_directory_urls(html_content):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    modified = False
+    for a_tag in soup.find_all('a', href=True):
+        original_href = a_tag['href']
+        href = original_href
+
+        # Parse href to handle existing components correctly
+        parsed_href = urlparse(href)
+
+        # Skip:
+        # 1. Links with a scheme (http, https, mailto, etc.)
+        # 2. Links that are just fragments (starting with #)
+        # 3. Links that are already absolute paths (starting with /)
+        #    (unless we want to prepend a base path to these too, but Agda usually doesn't generate them)
+        if parsed_href.scheme or parsed_href.netloc or href.startswith('#') or href.startswith('/'):
+            # If it starts with '/', it's already an absolute path.
+            # If our MKDOCS_SITE_BASE_PATH is not just '/', we might need to ensure
+            # it's not already prepended or handle it; for now, assume Agda doesn't make root-absolute paths.
+            logging.debug(f"Skipping rewrite for link (absolute, fragment, or scheme): '{original_href}'")
+            continue
+
+        # We want relative links, specifically those Agda generates ending in .html
+        if parsed_href.path.endswith(".html"):
+            path_part = parsed_href.path
+            fragment_part = parsed_href.fragment
+
+            # Remove ".html" and add trailing slash for directory URL
+            # e.g., "Ledger.Transaction.html" -> "Ledger.Transaction/"
+            module_dir_path = path_part[:-len(".html")] + "/"
+
+            # Prepend site's base path to make it "absolute" from web server root;
+            # ("Ledger.Transaction/" -> "/formal-ledger-specifications/Ledger.Transaction/")
+            # Handles potential double slashes if MKDOCS_SITE_BASE_PATH has trailing /
+            # and module_dir_path starts with / (which it shouldn't from Agda).
+            new_path = MKDOCS_SITE_BASE_PATH.rstrip('/') + '/' + module_dir_path.lstrip('/')
+
+            # Reconstruct the URL with the new path and original fragment
+            new_href_components = list(parsed_href) # scheme, netloc, path, params, query, fragment
+            new_href_components[2] = new_path # index 2 is the path
+            # The fragment (parsed_href.fragment) is already correct, urlunparse will add it back with #
+
+            new_href = urlunparse(new_href_components)
+
+            # Original logic for just fragment if path becomes empty (shouldn't happen here)
+            # if not new_path.strip('/'): # If the path part becomes empty (e.g. index.html -> /)
+            #     new_href = "#" + fragment_part if fragment_part else "/"
+            # else:
+            #     new_href = new_path
+            #     if fragment_part:
+            #         new_href += "#" + fragment_part
+
+            a_tag['href'] = new_href
+            modified = True
+            logging.debug(f"Link for directory URL rewritten: '{original_href}' to '{new_href}'")
+
+    return str(soup) if modified else html_content
+
+
 
 def build_nav_from_flat_files(flat_file_paths_str_list):
     """
@@ -858,9 +923,10 @@ def main(run_agda_html=False):
                         with open(md_file_path_in_docs, 'r', encoding='utf-8') as f_md_src:
                             original_content = f_md_src.read()
 
-                        modified_content = rewrite_internal_link_extensions(
-                            original_content, from_ext=".html", to_ext=".md"
-                        )
+                        # modified_content = rewrite_internal_link_extensions(original_content, from_ext=".html", to_ext=".md")
+                        # do not use ^^^^ ...instead use vvvv for directory (not html/md) urls ("ModuleName/" not "ModuleName.html")
+                        modified_content = rewrite_internal_links_for_directory_urls(original_content)
+                        # ...`use_directory_urls: true` in mkdocs.yml is set via `"use_directory_urls": True` below;
 
                         # write back to same file if content changed
                         if modified_content != original_content:
@@ -970,7 +1036,7 @@ def main(run_agda_html=False):
     default_theme_name = "material"
     default_cfg = {
         "site_name": "Cardano Ledger Formal Specification",
-        "use_directory_urls": False,
+        "use_directory_urls": True,
         "theme": {"name": default_theme_name, "features": ["navigation.expand"]},
         "extra_css": [],
         "extra_javascript": [],
