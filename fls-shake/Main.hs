@@ -210,10 +210,12 @@ htmlIndex =
   htmlDist </> "index.html" %> \out -> do
 
     -- declare dependencies on all agda files
-    lagdafiles <- getDirectoryFiles "src" [ "//*.lagda" ]
-    agdafiles  <- getDirectoryFiles "src" [ "//*.agda"  ]
+    lagdafiles   <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.lagda" ]
+    agdafiles    <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.agda"  ]
+    agdalibfiles <- map ("lib-exts" </>) <$> getDirectoryFiles "lib-exts" [ "//*.agda"  ]
     need . map (_htmlPP </>) $ map (`replaceExtension` "agda") lagdafiles
                                ++ agdafiles
+                               ++ agdalibfiles
 
         -- agda-lib file
     let agdaprojectfile =
@@ -223,11 +225,14 @@ htmlIndex =
           , "  standard-library-classes"
           , "  standard-library-meta"
           , "  abstract-set-theory"
+          , "  iog-prelude"
+          , ""
           , "include:"
-          , "  " ++ htmlPP
+          , "  " ++ htmlPP </> "src"
+          , "  " ++ htmlPP </> "lib-exts"
           , "  ./"
           ]
-        agdamodules = sort . map agdafile2module $ agdafiles ++ lagdafiles
+        agdamodules = sort . map agdafile2module $ map (dropDirectory 1) (agdafiles ++ lagdafiles)
         -- index file
         indexfile =
           [ "module index where"
@@ -244,14 +249,21 @@ htmlIndex =
              , "--html-dir=" ++ "../../" ++ htmlDist
              , "index.agda" ]
 
--- | Preprocess Agda files to generate the html.
+-- | Copy Agda files in lib-exts/ to generate the html.
+agdalibexts2htmlPP :: Rules ()
+agdalibexts2htmlPP =
+  _htmlPP </> "lib-exts" <//> "*.agda" %> \out -> do
+    let srcfile = dropDirectory 3 out
+    copyFileChanged srcfile out
+
+-- | Preprocess Agda files in src/ to generate the html.
 -- An input file is either:
 -- - an agda file, in which case we copy it verbatim
 -- - a lagda file, in which case we "illiterate" its contents
-agda2htmlPP :: Rules ()
-agda2htmlPP =
-  _htmlPP <//> "*.agda" %> \out -> do
-    let srcfile = "src" </> dropDirectory 3 out
+agdasrc2htmlPP :: Rules ()
+agdasrc2htmlPP =
+  _htmlPP </> "src" <//> "*.agda" %> \out -> do
+    let srcfile = dropDirectory 3 out
     isagdafile <- doesFileExist srcfile
     if isagdafile
       then copyFileChanged srcfile out
@@ -266,7 +278,8 @@ htmlRule :: Rules ()
 htmlRule = do
   -- Auxiliary rules
   htmlIndex
-  agda2htmlPP
+  agdasrc2htmlPP
+  agdalibexts2htmlPP
 
   -- Top level target
   phony "html" $ do

@@ -27,7 +27,6 @@ import Ledger.TokenAlgebra
 import Ledger.Address
 
 open import Tactic.Derive.DecEq
-open import MyDebugOptions
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where

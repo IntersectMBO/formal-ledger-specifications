@@ -19,7 +19,7 @@ open import Axiom.Set.Properties th
 open import Relation.Binary using (IsEquivalence)
 open Computational ⦃...⦄
 
-open import Tactic.GenError using (genErrors)
+open import stdlib-meta.Tactic.GenError using (genErrors)
 
 open CertState
 

@@ -7,6 +7,8 @@ open Computational public
 open import Algebra.Construct.DirectProduct using (commutativeMonoid)
 open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid) public
+import      Data.Integer as ℤ
+import      Data.Rational as ℚ
 
 open import Foreign.Convertible           public
 open import Foreign.Convertible.Deriving  public
@@ -61,6 +63,7 @@ unquoteDecl Show-HSVKey = derive-Show
 module Implementation where
   Network          = ℕ
   SlotsPerEpochᶜ   = 4320 -- TODO pass this externally instead of hardcoding
+  ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20  
   StabilityWindowᶜ = 10
   Quorum           = 1
   NetworkId        = 0 -- Testnet

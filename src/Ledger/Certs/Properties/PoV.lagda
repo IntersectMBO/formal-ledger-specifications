@@ -26,7 +26,7 @@ open import Tactic.ReduceDec
 
 open Computational ⦃...⦄
 
-open import Tactic.GenError using (genErrors)
+open import stdlib-meta.Tactic.GenError using (genErrors)
 
 open CertState
 

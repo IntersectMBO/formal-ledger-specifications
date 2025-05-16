@@ -12,7 +12,7 @@ private
   -- Ring literals
   open import Agda.Builtin.FromNat
   open import Algebra; open Semiring Slotʳ using (_*_)
-  open import Algebra.Literals; open Semiring-Lit Slotʳ
+  open import stdlib.Algebra.Literals; open Semiring-Lit Slotʳ
 
   Current-Property : PPUpdateEnv → Update → Type
   Current-Property Γ (pup , e) = let open PPUpdateEnv Γ in
