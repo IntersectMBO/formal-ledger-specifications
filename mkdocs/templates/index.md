@@ -1,8 +1,6 @@
-# Welcome to the Cardano Formal Ledger Specification
+# The Cardano Formal Ledger Specification
 
-## Project layout
+🚧 work in progress 🚧
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+A good place to start is the [Introduction](Ledger.Introduction.md).
+

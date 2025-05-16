@@ -12,7 +12,7 @@ theme:
   name: material
   # Optional features - see mkdocs-material docs for many more
   features:
-    - navigation.tabs
+    # - navigation.tabs
     - navigation.sections
     - toc.integrate # Integrate table of contents into left sidebar
     - content.tooltips
@@ -63,9 +63,6 @@ markdown_extensions:
   - attr_list                 # inline attributes like `code`{.class}
   - pymdownx.tabbed
   - pymdownx.emoji
-  # - pymdownx.highlight:       # Alternative/additional highlighting options
-  #     use_pygments: true
-  #     noclasses: true         # set to true with material theme for JS highlighting
 
 extra_css:
   - css/custom.css

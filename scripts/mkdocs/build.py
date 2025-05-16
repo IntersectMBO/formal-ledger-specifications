@@ -29,15 +29,9 @@
 #     a. If the `--run-agda` flag is passed:
 #        i.  `agda --html --html-highlight=code` is run on the `CardanoLedger.lagda.md`
 #            file within `agda_snapshot_src/`.
-#        ii. Agda outputs processed files into `_build/mkdocs/agda_html_output/`.
+#        ii. Agda outputs processed files into `_build/mkdocs/mkdocs_src/docs/`.
 #            Output filenames are flat, dot-separated module names ending in
 #            `.md` (e.g., `Ledger.Transaction.md`).
-#        iii.These Agda-generated `.md` files (containing HTML-highlighted code
-#            and Markdown prose) are copied to `_build/mkdocs/mkdocs_src/docs/`,
-#            maintaining their flat names.
-#        iv. Internal `href` links within these files (which Agda generates with
-#            `.html` extensions) are rewritten to use `.md` extensions to match
-#            the actual filenames in the `docs/` directory.
 #     b. If `--run-agda` is NOT passed (or if Agda processing fails for a file):
 #        i.  The corresponding `.lagda.md` file from `agda_snapshot_src/` is
 #            copied to `_build/mkdocs/mkdocs_src/docs/`.
@@ -367,96 +361,6 @@ class LagdaProcessingPaths:
         for parent_dir in parents_to_create:
             parent_dir.mkdir(parents=True, exist_ok=True)
 
-# no longer using `rewrite_internal_link_extensions` (could remove it eventually)
-def rewrite_internal_link_extensions(html_content, from_ext=".html", to_ext=".md"):
-    """
-    Rewrite hrefs in HTML content from one extension to another for relative links.
-    e.g., from ".html" to ".md".
-    """
-    soup = BeautifulSoup(html_content, 'html.parser')
-    modified = False
-    for a_tag in soup.find_all('a', href=True):
-        href = a_tag['href']
-
-        # skip absolute urls, anchor-only links, or other protocols
-        if href.startswith(('#', 'http://', 'https://', 'mailto:', 'ftp:', 'file:')):
-            continue
-
-        href_file_part = href
-        href_anchor_part = ""
-        if '#' in href:
-            href_file_part, href_anchor_part = href.split('#', 1)
-            href_anchor_part = '#' + href_anchor_part
-
-        # check if file part of href ends with 'from_ext'
-        if href_file_part.endswith(from_ext):
-            new_href_file_part = href_file_part[:-len(from_ext)] + to_ext
-            a_tag['href'] = new_href_file_part + href_anchor_part
-            modified = True
-            # logging.debug(f"Link extension rewritten: '{href}' to '{a_tag['href']}'")
-
-    # Only return new content if modifications were made, to avoid re-parsing if not needed.
-    # However, always returning str(soup) is safer and handles all cases.
-    return str(soup)
-
-def rewrite_internal_links_for_directory_urls(html_content):
-    soup = BeautifulSoup(html_content, 'html.parser')
-    modified = False
-    for a_tag in soup.find_all('a', href=True):
-        original_href = a_tag['href']
-        href = original_href
-
-        # Parse href to handle existing components correctly
-        parsed_href = urlparse(href)
-
-        # Skip:
-        # 1. Links with a scheme (http, https, mailto, etc.)
-        # 2. Links that are just fragments (starting with #)
-        # 3. Links that are already absolute paths (starting with /)
-        #    (unless we want to prepend a base path to these too, but Agda usually doesn't generate them)
-        if parsed_href.scheme or parsed_href.netloc or href.startswith('#') or href.startswith('/'):
-            # If it starts with '/', it's already an absolute path.
-            # If our MKDOCS_SITE_BASE_PATH is not just '/', we might need to ensure
-            # it's not already prepended or handle it; for now, assume Agda doesn't make root-absolute paths.
-            logging.debug(f"Skipping rewrite for link (absolute, fragment, or scheme): '{original_href}'")
-            continue
-
-        # We want relative links, specifically those Agda generates ending in .html
-        if parsed_href.path.endswith(".html"):
-            path_part = parsed_href.path
-            fragment_part = parsed_href.fragment
-
-            # Remove ".html" and add trailing slash for directory URL
-            # e.g., "Ledger.Transaction.html" -> "Ledger.Transaction/"
-            module_dir_path = path_part[:-len(".html")] + "/"
-
-            # Prepend site's base path to make it "absolute" from web server root;
-            # ("Ledger.Transaction/" -> "/formal-ledger-specifications/Ledger.Transaction/")
-            # Handles potential double slashes if MKDOCS_SITE_BASE_PATH has trailing /
-            # and module_dir_path starts with / (which it shouldn't from Agda).
-            new_path = MKDOCS_SITE_BASE_PATH.rstrip('/') + '/' + module_dir_path.lstrip('/')
-
-            # Reconstruct the URL with the new path and original fragment
-            new_href_components = list(parsed_href) # scheme, netloc, path, params, query, fragment
-            new_href_components[2] = new_path # index 2 is the path
-            # The fragment (parsed_href.fragment) is already correct, urlunparse will add it back with #
-
-            new_href = urlunparse(new_href_components)
-
-            # Original logic for just fragment if path becomes empty (shouldn't happen here)
-            # if not new_path.strip('/'): # If the path part becomes empty (e.g. index.html -> /)
-            #     new_href = "#" + fragment_part if fragment_part else "/"
-            # else:
-            #     new_href = new_path
-            #     if fragment_part:
-            #         new_href += "#" + fragment_part
-
-            a_tag['href'] = new_href
-            modified = True
-            logging.debug(f"Link for directory URL rewritten: '{original_href}' to '{new_href}'")
-
-    return str(soup) if modified else html_content
-
 
 
 def build_nav_from_flat_files(flat_file_paths_str_list):
@@ -496,14 +400,15 @@ def build_nav_from_flat_files(flat_file_paths_str_list):
         name_parts = file_stem_flat.split('.')
 
         # The last part is the page title, preceding parts form the section path.
-        page_title_str = name_parts[-1].replace('_', ' ').replace('-', ' ').capitalize()
+        page_title_str = name_parts[-1] # .replace('_', ' ').replace('-', ' ').capitalize()
+                                        # ^^^^^^^^ don't do this! (use raw module names)
         section_path_parts = name_parts[:-1] # e.g., ["Ledger"] or ["External", "Lib"]
 
         current_level_dict = nav_tree
 
         for section_name_raw in section_path_parts:
-            section_title_str = section_name_raw.replace('_', ' ').replace('-', ' ').capitalize()
-
+            section_title_str = section_name_raw #.replace('_', ' ').replace('-', ' ').capitalize()
+                                                 # ^^^^^^^^ don't do this! (use raw module names)
             if section_title_str not in current_level_dict:
                 current_level_dict[section_title_str] = {}
             elif not isinstance(current_level_dict[section_title_str], dict):
@@ -532,8 +437,9 @@ def build_nav_from_flat_files(flat_file_paths_str_list):
             if not isinstance(current_level_dict[page_title_str], dict):
                  current_level_dict[page_title_str] = filename_str
             else:
-                 # Attempt to add with a modified name if it's a section conflict
-                 current_level_dict[f"{page_title_str} (Page)"] = filename_str
+                # Attempt to add with a modified name if it's a section conflict
+                current_level_dict[f"{page_title_str}/"] = current_level_dict[page_title_str]
+                current_level_dict[page_title_str] = filename_str
         else:
             current_level_dict[page_title_str] = filename_str
 
@@ -902,60 +808,49 @@ def main(run_agda_html=False):
                 # Run Agda --html, outputting directly into MKDOCS_DOCS_DIR
                 logging.info(f"Running Agda --html on '{master_agda_file_snapshot_rel_path_str}', outputting to {MKDOCS_DOCS_DIR.resolve()}")
                 run_command([
-                    "agda", "--html", "--html-highlight=code",
+                    "agda", "--html", "--html-highlight=auto",
                     f"--html-dir={MKDOCS_DOCS_DIR.resolve()}", # output md/html directly to final docs dir
                     "-i", ".", # include path relative to CWD
                     master_agda_file_snapshot_rel_path_str
                 ], cwd=AGDA_SNAPSHOT_SRC_DIR.resolve())
                 logging.info(f"Agda --html command completed. Files generated in {MKDOCS_DOCS_DIR}.")
 
-                # Process .md files IN PLACE within MKDOCS_DOCS_DIR for link rewriting.
-                # Identify which files Agda generated or touched by globbing MKDOCS_DOCS_DIR for *.md.
-                logging.info(f"Rewriting internal links in Agda-generated files within {MKDOCS_DOCS_DIR}...")
+                # DEPRECATED: Process .md files IN PLACE within MKDOCS_DOCS_DIR for link rewriting.
+                #             Identify which files Agda generated or touched by globbing MKDOCS_DOCS_DIR for *.md.
+                #             logging.info(f"Rewriting internal links in Agda-generated files within {MKDOCS_DOCS_DIR}...")
+                # BECAUSE: Agda-generated files will link to .html.
+                #          With use_directory_urls: false, MkDocs serves .md files as .html files.
+                #          So, no link extension rewriting is needed for Agda's output.
+                #          We just need to collect the filenames for navigation.
 
                 # Collect files for navigation; these are the flat names Agda created.
+                logging.info(f"Collecting Agda-generated files from {MKDOCS_DOCS_DIR} for navigation...")
                 # Only add files that actually exist after Agda runs.
                 processed_by_agda_count = 0
-                for md_file_path_in_docs in MKDOCS_DOCS_DIR.glob("*.md"):
-                    flat_filename = md_file_path_in_docs.name # e.g., "Ledger.Transaction.md"
-                    logging.debug(f"  Found Agda-generated file for link rewriting: {flat_filename}")
-                    try:
-                        with open(md_file_path_in_docs, 'r', encoding='utf-8') as f_md_src:
-                            original_content = f_md_src.read()
+                for generated_file_path in MKDOCS_DOCS_DIR.glob("*.md"):
 
-                        # modified_content = rewrite_internal_link_extensions(original_content, from_ext=".html", to_ext=".md")
-                        # do not use ^^^^ ...instead use vvvv for directory (not html/md) urls ("ModuleName/" not "ModuleName.html")
-                        modified_content = rewrite_internal_links_for_directory_urls(original_content)
-                        # ...`use_directory_urls: true` in mkdocs.yml is set via `"use_directory_urls": True` below;
+                    # Consider only .md and .html files for navigation if Agda produces others
+                    if generated_file_path.suffix not in ['.md', '.html']:
+                        continue
 
-                        # write back to same file if content changed
-                        if modified_content != original_content:
-                            with open(md_file_path_in_docs, 'w', encoding='utf-8') as f_md_target:
-                                f_md_target.write(modified_content)
-                            logging.info(f"    Rewrote links in {flat_filename}")
-                        else:
-                            logging.debug(f"    No link extensions needed rewriting in {flat_filename}")
+                    flat_filename = generated_file_path.name # e.g., "Ledger.Transaction.md"
+                    logging.debug(f"  Found Agda-generated file for nav: {flat_filename}")
 
-                        if flat_filename not in final_md_files_for_mkdocs_nav:
-                            final_md_files_for_mkdocs_nav.append(flat_filename)
-                        processed_by_agda_count +=1
+                    if flat_filename not in final_md_files_for_mkdocs_nav:
+                        final_md_files_for_mkdocs_nav.append(flat_filename)
+                    processed_by_agda_count +=1
 
-                    except Exception as e_rewrite:
-                        logging.error(f"  ERROR rewriting links in {flat_filename}: {e_rewrite}", exc_info=True)
-                        # File is already in MKDOCS_DOCS_DIR; it might have incorrect links.
-                        # Decide if we want to remove it or leave it as is; for now, left as Agda generated it.
-                        if flat_filename not in final_md_files_for_mkdocs_nav:
-                             final_md_files_for_mkdocs_nav.append(flat_filename) # still add for nav, it exists
-
-                logging.info(f"Link rewriting finished. Processed {processed_by_agda_count} files found in {MKDOCS_DOCS_DIR}.")
+                logging.info(f"File collection finished. Found {processed_by_agda_count} Agda-related .md/.html files in {MKDOCS_DOCS_DIR}.")
                 if processed_by_agda_count == 0 and unique_literate_md_files_in_snapshot:
-                    logging.warning(f"Agda ran but no '.md' files were found or processed in {MKDOCS_DOCS_DIR}. This might indicate an issue.")
+                    logging.warning(f"Agda ran but no '.md' or '.html' files were found or collected in {MKDOCS_DOCS_DIR}. This might indicate an issue with Agda's output.")
 
             except Exception as e_agda:
                 logging.error(f"The main Agda --html command failed: {e_agda}", exc_info=True)
-                logging.warning("Skipping link rewriting. Falling back to copying snapshot files.")
-                # Fallback logic (unchanged, using copy_snapshot_file_with_flat_name)
+                logging.warning("Agda --html failed. Falling back to copying snapshot files (these will not have Agda HTML highlighting).")
+                final_md_files_for_mkdocs_nav.clear()
                 for lagda_md_file_in_snapshot in unique_literate_md_files_in_snapshot:
+                    # fallback copies processed .lagda.md files, which will be served as .html by mkdocs.
+                    # Links within them (e.g., from \Cref) should ideally point to OtherModule.html.
                     copied_flat_name = copy_snapshot_file_with_flat_name(
                         lagda_md_file_in_snapshot, AGDA_SNAPSHOT_SRC_DIR, MKDOCS_DOCS_DIR
                     )
@@ -1036,7 +931,7 @@ def main(run_agda_html=False):
     default_theme_name = "material"
     default_cfg = {
         "site_name": "Cardano Ledger Formal Specification",
-        "use_directory_urls": True,
+        "use_directory_urls": False, # no longer using directory urls ∵ incompatible with Agda-generated html
         "theme": {"name": default_theme_name, "features": ["navigation.expand"]},
         "extra_css": [],
         "extra_javascript": [],

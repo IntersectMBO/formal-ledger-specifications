@@ -11,7 +11,7 @@
 # 2. Replaces admonition markers (@@ADMONITION_START/END@@) with MkDocs admonition syntax (??? note)
 #    and indents the content within the admonition block.
 # 3. Replaces figure block placeholders (@@FIGURE_BLOCK_TO_SUBSECTION@@) with Markdown H3 headings.
-# 4. Replaces unlabelled figure caption placeholders (@@UNLABELLED_FIGURE_CAPTION@@) with Markdown H4 headings.
+# 4. Replaces unlabelled figure caption placeholders (@@UNLABELLED_FIGURE_CAPTION@@) with Markdown H3 headings.
 # 5. Replaces cross-reference placeholders (@@CROSS_REF@@) with Markdown links to the target files.
 # # Notes/updates:
 # 1.  `slugify_post` function (should be identical to `slugify` in `build.py`).
@@ -137,7 +137,7 @@ def replace_unlabelled_figure_caption_placeholder(match):
     # squash multiple spaces
     caption_text_squashed = re.sub(r'\s+', ' ', caption_text_single_line).strip()
 
-    return f"\n#### {caption_text_squashed}\n\n" # use H4 for these?
+    return f"\n### {caption_text_squashed}\n\n"
 
 def replace_cross_ref_placeholder(match):
     # global LABEL_TARGETS_MAP
@@ -297,7 +297,7 @@ if __name__ == "__main__":
             r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@",
             replace_unlabelled_figure_caption_placeholder,
             content_processed,
-            flags=re.DOTALL  # ensures regex can span lines if placeholder split by Pandoc
+            flags=re.DOTALL  # ensure regex can span lines if placeholder split by pandoc
         )
 
         content_processed = re.sub(
@@ -315,7 +315,7 @@ if __name__ == "__main__":
         with open(output_lagda_md_file, 'w', encoding='utf-8') as f_out:
             f_out.write(final_content)
 
-        print(f"Successfully generated {output_lagda_md_file}") # To stdout for build.py
+        print(f"Successfully generated {output_lagda_md_file}") # to stdout for build.py
 
     except FileNotFoundError as e:
         logging.error(f"Input file not found: {e.filename}")
@@ -327,9 +327,3 @@ if __name__ == "__main__":
     except Exception as e:
         logging.error(f"An unexpected error occurred in postprocess.py: {e}", exc_info=True)
         sys.exit(1)
-
-# The main change is moving `LABEL_TARGETS_MAP = {}` to the module level (top of
-# the script) and then populating it within the `if __name__ == "__main__":` block
-# using `LABEL_TARGETS_MAP.update(json.load(f_labels))` or direct assignment
-# `LABEL_TARGETS_MAP = json.load(f_labels)`. The functions like
-# `replace_cross_ref_placeholder` can then access it directly as a global variable.
