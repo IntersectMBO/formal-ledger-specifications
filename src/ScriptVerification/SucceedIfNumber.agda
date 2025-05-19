@@ -10,13 +10,13 @@ scriptImp = record { serialise = id ;
 
 open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
 open import ScriptVerification.Lib ℕ ℕ scriptImp
-open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.ScriptValidation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import stdlib-classes.Class.HasCast
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Transaction
+open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
-open import Ledger.Types.Epoch
+open import Ledger.Conway.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
 open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
