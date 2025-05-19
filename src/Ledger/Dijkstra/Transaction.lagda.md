@@ -1,4 +1,4 @@
-```
+```agda
 {-# OPTIONS --safe #-}
 module Ledger.Dijkstra.Transaction where
 
