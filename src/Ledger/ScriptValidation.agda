@@ -190,7 +190,13 @@ valContext txinfo sp = toData (txinfo , sp)
 
 -- returns the data associated with the top level observer script
 getTopData : ScriptPurpose → Tx → List Data
-getTopData (TopLevelObservers (s , _)) tx = map proj₂ (setToList (proj₁ ((tx .Tx'.body .TxBody.requiredTopLevelObservers) ∣ (singleton s))))
+getTopData (TopLevelObservers (s , txid)) tx = foldr (λ t b → map proj₂ (setToList (proj₁ ((tx .Tx'.body .TxBody.requiredTopLevelObservers) ∣ (singleton s)))) ++ b) [] (getTx (tx .Tx'.body .TxBody.subTxs))
+  where 
+  getTx : List Tx → List Tx
+  getTx (t ∷ r) with (t .Tx'.body .TxBody.txid ≟ txid)
+  ... | yes _ = t ∷ []
+  ... | no _ = getTx r
+  getTx [] = []
 getTopData _ _ = []
 
 opaque
