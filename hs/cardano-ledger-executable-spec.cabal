@@ -432,9 +432,9 @@ library
       MAlonzo.Code.Interface.HasSubtract.Instance
       MAlonzo.Code.Interface.STS
       MAlonzo.Code.IO.Primitive.Core
-      MAlonzo.Code.Ledger.Abstract
-      MAlonzo.Code.Ledger.Address
-      MAlonzo.Code.Ledger.Certs
+      MAlonzo.Code.Ledger.Conway.Abstract
+      MAlonzo.Code.Ledger.Conway.Address
+      MAlonzo.Code.Ledger.Conway.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Chain
@@ -451,6 +451,9 @@ library
       MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties
       MAlonzo.Code.Ledger.Conway.Conformance.Utxow
       MAlonzo.Code.Ledger.Conway.Conformance.Utxow.Properties
+      MAlonzo.Code.Ledger.Conway.Crypto
+      MAlonzo.Code.Ledger.Conway.Enact
+      MAlonzo.Code.Ledger.Conway.Fees
       MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address
@@ -473,31 +476,28 @@ library
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo
       MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
       MAlonzo.Code.Ledger.Conway.Foreign.Util
-      MAlonzo.Code.Ledger.Crypto
-      MAlonzo.Code.Ledger.Enact
-      MAlonzo.Code.Ledger.Fees
-      MAlonzo.Code.Ledger.Gov
-      MAlonzo.Code.Ledger.Gov.Properties
-      MAlonzo.Code.Ledger.GovernanceActions
-      MAlonzo.Code.Ledger.GovernanceActions.Properties
+      MAlonzo.Code.Ledger.Conway.Gov
+      MAlonzo.Code.Ledger.Conway.Gov.Properties
+      MAlonzo.Code.Ledger.Conway.GovernanceActions
+      MAlonzo.Code.Ledger.Conway.GovernanceActions.Properties
+      MAlonzo.Code.Ledger.Conway.Ledger
+      MAlonzo.Code.Ledger.Conway.PParams
+      MAlonzo.Code.Ledger.Conway.Ratify
+      MAlonzo.Code.Ledger.Conway.Ratify.Properties
+      MAlonzo.Code.Ledger.Conway.Script
+      MAlonzo.Code.Ledger.Conway.ScriptValidation
+      MAlonzo.Code.Ledger.Conway.TokenAlgebra
+      MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin
+      MAlonzo.Code.Ledger.Conway.Transaction
+      MAlonzo.Code.Ledger.Conway.Types.Epoch
+      MAlonzo.Code.Ledger.Conway.Types.GovStructure
+      MAlonzo.Code.Ledger.Conway.Types.Numeric
+      MAlonzo.Code.Ledger.Conway.Types.Numeric.UnitInterval
+      MAlonzo.Code.Ledger.Conway.Utxo
+      MAlonzo.Code.Ledger.Conway.Utxow
       MAlonzo.Code.Ledger.Interface.HasCoin
-      MAlonzo.Code.Ledger.Ledger
-      MAlonzo.Code.Ledger.PParams
       MAlonzo.Code.Ledger.Prelude
       MAlonzo.Code.Ledger.Prelude.Base
-      MAlonzo.Code.Ledger.Ratify
-      MAlonzo.Code.Ledger.Ratify.Properties
-      MAlonzo.Code.Ledger.Script
-      MAlonzo.Code.Ledger.ScriptValidation
-      MAlonzo.Code.Ledger.TokenAlgebra
-      MAlonzo.Code.Ledger.TokenAlgebra.Coin
-      MAlonzo.Code.Ledger.Transaction
-      MAlonzo.Code.Ledger.Types.Epoch
-      MAlonzo.Code.Ledger.Types.GovStructure
-      MAlonzo.Code.Ledger.Types.Numeric
-      MAlonzo.Code.Ledger.Types.Numeric.UnitInterval
-      MAlonzo.Code.Ledger.Utxo
-      MAlonzo.Code.Ledger.Utxow
       MAlonzo.Code.Level
       MAlonzo.Code.Meta.Init
       MAlonzo.Code.Meta.Prelude

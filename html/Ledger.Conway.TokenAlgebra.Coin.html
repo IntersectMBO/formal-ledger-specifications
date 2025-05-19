@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Conway.TokenAlgebra.Coin</title><link rel="stylesheet" href="Agda.css"></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--safe</a> <a id="20" class="Symbol">#-}</a>
+<a id="24" class="Keyword">open</a> <a id="29" class="Keyword">import</a> <a id="36" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+
+<a id="52" class="Keyword">module</a> <a id="59" href="Ledger.Conway.TokenAlgebra.Coin.html" class="Module">Ledger.Conway.TokenAlgebra.Coin</a> <a id="91" class="Symbol">(</a><a id="92" href="Ledger.Conway.TokenAlgebra.Coin.html#92" class="Bound">X</a> <a id="94" class="Symbol">:</a> <a id="96" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="100" class="Symbol">)</a> <a id="102" class="Keyword">where</a>
+
+<a id="109" class="Keyword">open</a> <a id="114" class="Keyword">import</a> <a id="121" href="Algebra.Morphism.Construct.Identity.html" class="Module">Algebra.Morphism.Construct.Identity</a>
+  <a id="159" class="Keyword">using</a> <a id="165" class="Symbol">(</a><a id="166" href="Algebra.Morphism.Construct.Identity.html#1946" class="Function">isMonoidHomomorphism</a><a id="186" class="Symbol">)</a>
+
+<a id="189" class="Keyword">open</a> <a id="194" class="Keyword">import</a> <a id="201" href="Ledger.Conway.TokenAlgebra.html" class="Module">Ledger.Conway.TokenAlgebra</a> <a id="228" href="Ledger.Conway.TokenAlgebra.Coin.html#92" class="Bound">X</a>
+
+<a id="231" class="Keyword">open</a> <a id="236" href="Ledger.Conway.TokenAlgebra.html#460" class="Module">TokenAlgebra</a>
+
+<a id="Coin-TokenAlgebra"></a><a id="250" href="Ledger.Conway.TokenAlgebra.Coin.html#250" class="Function">Coin-TokenAlgebra</a> <a id="268" class="Symbol">:</a> <a id="270" href="Ledger.Conway.TokenAlgebra.html#460" class="Record">TokenAlgebra</a>
+<a id="283" href="Ledger.Conway.TokenAlgebra.Coin.html#250" class="Function">Coin-TokenAlgebra</a> <a id="301" class="Symbol">=</a> <a id="303" class="Symbol">λ</a> <a id="305" class="Keyword">where</a>
+  <a id="313" class="Symbol">.</a><a id="314" href="Ledger.Conway.TokenAlgebra.html#499" class="Field">Value</a>                      <a id="341" class="Symbol">→</a> <a id="343" href="Ledger.Prelude.Base.html#81" class="Function">Coin</a>
+  <a id="350" class="Symbol">.</a><a id="351" href="Ledger.Conway.TokenAlgebra.html#517" class="Field">Value-CommutativeMonoid</a>    <a id="378" class="Symbol">→</a> <a id="380" href="Function.Base.html#4736" class="Function">it</a>
+    <a id="387" class="Comment">-- ^ Agda bug? Without this line, `coinIsMonoidHomomorphism` doesn&#39;t type check anymore</a>
+  <a id="477" class="Symbol">.</a><a id="478" href="Ledger.Conway.TokenAlgebra.html#819" class="Field">coin</a>                       <a id="505" class="Symbol">→</a> <a id="507" href="Function.Base.html#704" class="Function">id</a>
+  <a id="512" class="Symbol">.</a><a id="513" href="Ledger.Conway.TokenAlgebra.html#864" class="Field">inject</a>                     <a id="540" class="Symbol">→</a> <a id="542" href="Function.Base.html#704" class="Function">id</a>
+  <a id="547" class="Symbol">.</a><a id="548" href="Ledger.Conway.TokenAlgebra.html#909" class="Field">policies</a>                   <a id="575" class="Symbol">→</a> <a id="577" class="Symbol">λ</a> <a id="579" href="Ledger.Conway.TokenAlgebra.Coin.html#579" class="Bound">_</a> <a id="581" class="Symbol">→</a> <a id="583" href="Class.HasEmptySet.html#287" class="Field">∅</a>
+  <a id="587" class="Symbol">.</a><a id="588" href="Ledger.Conway.TokenAlgebra.html#960" class="Field">size</a>                       <a id="615" class="Symbol">→</a> <a id="617" class="Symbol">λ</a> <a id="619" href="Ledger.Conway.TokenAlgebra.Coin.html#619" class="Bound">x</a> <a id="621" class="Symbol">→</a> <a id="623" class="Number">1</a> <a id="625" class="Comment">-- there is only ada in this token algebra</a>
+  <a id="670" class="Symbol">.</a><a id="671" href="Ledger.Conway.TokenAlgebra.html#1015" class="Field Operator">_≤ᵗ_</a>                       <a id="698" class="Symbol">→</a> <a id="700" href="Class.HasOrder.Core.html#608" class="Field Operator">_≤_</a>
+  <a id="706" class="Symbol">.</a><a id="707" href="Ledger.Conway.TokenAlgebra.html#1068" class="Field">coin∘inject≗id</a>             <a id="734" class="Symbol">→</a> <a id="736" class="Symbol">λ</a> <a id="738" href="Ledger.Conway.TokenAlgebra.Coin.html#738" class="Bound">_</a> <a id="740" class="Symbol">→</a> <a id="742" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+  <a id="749" class="Symbol">.</a><a id="750" href="Ledger.Conway.TokenAlgebra.html#1119" class="Field">coinIsMonoidHomomorphism</a>   <a id="777" class="Symbol">→</a> <a id="779" href="Algebra.Morphism.Construct.Identity.html#1946" class="Function">isMonoidHomomorphism</a> <a id="800" class="Symbol">_</a> <a id="802" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+</pre></body></html>
