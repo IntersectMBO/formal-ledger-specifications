@@ -1,0 +1,17 @@
+```
+{-# OPTIONS --safe #-}
+open import Ledger.Dijkstra.Crypto
+  using (Crypto)
+open import Ledger.Dijkstra.Script
+  using (ScriptStructure)
+open import Ledger.Dijkstra.Types.Epoch
+  using (EpochStructure)
+
+module Ledger.Dijkstra.PParams
+  (crypto : Crypto )
+  (es     : EpochStructure)
+  (ss     : ScriptStructure crypto es)
+  where
+
+open import Ledger.Conway.PParams crypto es ss public
+```
