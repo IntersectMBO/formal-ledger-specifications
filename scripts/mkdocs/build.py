@@ -118,6 +118,7 @@ def slugify(text_to_slug):
 # --- Configuration ---
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent   # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
 SRC_DIR = PROJECT_ROOT / "src"                                 # Agda source (input)
+LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                       # Agda source (input)
 STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                    # static mkdocs assets
 SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"              # location of this script and helpers
 MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"            # path to LaTeX macros
@@ -136,6 +137,8 @@ AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src" # **final markdow
                                                                #     output of pandoc+lua
                                                                #     input to `agda --html`
                                                                #     input to shake, if shake to handle Agda html generation)
+AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_lib_exts" # **final markdown-based literate Agda source code**
+
 # Directories for mkdocs site generation
 MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "mkdocs_src"
 MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
@@ -269,6 +272,7 @@ def setup_directories(run_agda_html):
     CODE_BLOCKS_DIR.mkdir(parents=True, exist_ok=True)       # for code_blocks.json
     INTERMEDIATE_MD_DIR.mkdir(parents=True, exist_ok=True)   # for .md.intermediate files
     AGDA_SNAPSHOT_SRC_DIR.mkdir(parents=True, exist_ok=True) # for Agda source snapshot
+    AGDA_SNAPSHOT_LIB_EXTS_DIR.mkdir(parents=True, exist_ok=True) # for Agda source snapshot
 
     # Create final mkdocs site source structure (where content is copied to).
     MKDOCS_SRC_DIR.mkdir(parents=True, exist_ok=True)        # root for mkdocs.yml and docs/
@@ -532,8 +536,15 @@ def main(run_agda_html=False):
         logging.error(f"Failed to copy source tree from {SRC_DIR} to {AGDA_SNAPSHOT_SRC_DIR}: {e}", exc_info=True)
         sys.exit(1)
 
+    logging.info(f"Creating Agda source snapshot in {AGDA_SNAPSHOT_LIB_EXTS_DIR.relative_to(PROJECT_ROOT)}...")
+    try:
+        shutil.copytree(LIB_EXTS_DIR, AGDA_SNAPSHOT_LIB_EXTS_DIR, dirs_exist_ok=True)
+    except Exception as e:
+        logging.error(f"Failed to copy source tree from {LIB_EXTS_DIR} to {AGDA_SNAPSHOT_LIB_EXTS_DIR}: {e}", exc_info=True)
+        sys.exit(1)
+
     # 4a. Convert .agda to .lagda.md in the snapshot
-    logging.info("Converting .agda files to .lagda.md in the snapshot directory...")
+    logging.info("Converting .agda files to .lagda.md in the src snapshot directory...")
     # Ensure agda2lagda module is correctly imported for this to work
     if 'convert_agda_to_lagda_md' not in globals():
         logging.error("agda2lagda.convert_agda_to_lagda_md not available. Skipping .agda conversion.")
@@ -547,10 +558,11 @@ def main(run_agda_html=False):
             sys.exit(1)
 
     # 4b. Generate snapshot .agda-lib file
-    agda_lib_dependencies = [ # From your script, ensure these are current
-        "standard-library", "standard-library-classes", "standard-library-meta", "abstract-set-theory"
+    agda_lib_depend = [
+        "standard-library", "standard-library-classes", "standard-library-meta", "abstract-set-theory", "iog-prelude"
     ]
-    agda_lib_content = f"name: snapshot-build\ninclude: .\ndepend: {' '.join(agda_lib_dependencies)}\n"
+    agda_lib_include = [".", f"{AGDA_SNAPSHOT_LIB_EXTS_DIR}"]
+    agda_lib_content = f"name: snapshot-build\ndepend: {' '.join(agda_lib_depend)}\ninclude: {' '.join(agda_lib_include)}"
     snapshot_lib_file = AGDA_SNAPSHOT_SRC_DIR / f"{AGDA_SNAPSHOT_SRC_DIR.name}.agda-lib"
     try:
         with open(snapshot_lib_file, "w", encoding="utf-8") as f:
