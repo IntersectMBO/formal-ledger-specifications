@@ -37,8 +37,8 @@ private
     txLvl : TxLvl
 
 data Tag : TxLvl → Type where
-  Spend Mint Cert Rewrd Vote Propose Observe : Tag txLvl
-  SubObserve : Tag TxLvlSub
+  Spend Mint Cert Rewrd Vote Propose Guard : Tag txLvl
+  SubGuard : Tag TxLvlSub
 
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
@@ -134,9 +134,9 @@ record TransactionStructure : Type₁ where
       scriptIntHash  : Maybe ScriptHash
 
       -- new in Dijkstra
-      txsubtxs             : InTopLvl txLvl (List (Tx TxLvlSub))
-      txreqObservers       : ℙ Credential -- replaces reqSigHash : ℙ KeyHash
-      txreqTopLvlObservers : InSubLvl txLvl (P2Script ⇀ Datum)
+      txsubtxs          : InTopLvl txLvl (List (Tx TxLvlSub))
+      txreqGuards       : ℙ Credential -- replaces reqSigHash : ℙ KeyHash
+      txreqTopLvlGuards : InSubLvl txLvl (P2Script ⇀ Datum)
 
   record TxWitnesses txLvl where
     inductive
