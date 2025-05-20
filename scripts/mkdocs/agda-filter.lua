@@ -6,7 +6,7 @@
 --          $ python generate_macros_json.py macros.sty preprocess_macros.json
 --          $ python preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
 --          $ pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
---          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
+--          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json labels_map.json Transaction.lagda.md
 -- Actions:
 -- 1. Handles inline code elements (`Code`) potentially containing `@@AgdaTerm@@` markers,
 --    converting them into Code elements with appropriate CSS classes.
@@ -16,20 +16,6 @@
 -- NOTE: This filter *does not* handle code block placeholders (@@CODEBLOCK_ID_n@@)
 --       or admonition markers (@@ADMONITION_START/END@@). They are intended
 --       to pass through Pandoc unchanged (likely as Str in Para) for post-processing.
-
---- Checks if a Lua list (table) contains an item.
--- @param list The list (table) to check. Can be nil.
--- @param item The item to search for.
--- @return boolean True if item is found, false otherwise.
-local function list_contains(list, item)
-  if not list then return false end -- Handle nil table case
-  for _, value in ipairs(list) do
-    if value == item then
-      return true
-    end
-  end
-  return false
-end
 
 --- Parses key=value pairs from the AgdaTerm marker string.
 -- Example input: "basename=Acnt@@class=AgdaRecord"
@@ -206,22 +192,20 @@ function Code(inline)
 
      -- Check if we successfully got required args: basename and class
      if args.basename and args['class'] then
-         -- Create the CSS class name (e.g., "agdafield") by lowercasing
-         -- old version:
-         --   local css_class = "agda-" .. args['class']:lower()
+         -- create CSS class name (e.g., "agdafield") by lowercasing
          local css_class = args['class']:lower()
-         -- Create the Pandoc attributes structure
+         -- create pandoc attrs structure
          local attrs = create_attrs({css_class})
-         -- Return a *new* Code element with the correct basename as text and the attributes
-         -- This effectively replaces the marker Code element with the final styled one.
+         -- return new Code element with correct basename as text and attributes
+         -- (effectively replaces marker Code element with final styled one)
          return pandoc.Code(args.basename, attrs)
      else
-        -- If parsing the payload failed, print a warning to stderr
+        -- if parsing payload failed, print warning to stderr
         print("Warning: Could not parse AgdaTerm marker payload: " .. (payload or "nil"))
-        -- Return the original Code element containing the marker for debugging purposes
+        -- return original Code element containing marker for debugging purposes
         return inline
      end
   end
-  -- If it's not a Code element containing our marker, return it unchanged
+  -- if not Code element containing our marker, return it unchanged
   return inline
 end

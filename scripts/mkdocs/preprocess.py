@@ -7,34 +7,36 @@
 #          $ python generate_macros_json.py macros.sty preprocess_macros.json
 #          $ python preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
 #          $ pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
-#          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
+#          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json labels_map.json Transaction.lagda.md
+#
 # OUTPUT:
-# - Prints processed LaTeX content (with placeholders) to stdout.
-# - Writes code block data to a specified JSON file.
+# - .lagda.temp file containing processed LaTeX content (with placeholders) of input file;
+# - .json file containing all the code blocks of input file.
+#
 # Actions:
-# 1.  Replaces Agda code blocks (\begin{code} / \begin{code}[hide]) with unique placeholders (@@CODEBLOCK_ID_n@@).
-# 2.  Stores the verbatim content of each code block, along with its hidden status, in a JSON file.
-# 3.  Inlines \modulenote macros into LaTeX \href commands.
-# 4.  Replaces specific Agda term macros (from macros.json) with \texttt{@@AgdaTerm@@...} markers.
-# 5.  Replaces \hldiff macros with \HighlightPlaceholder markers.
-# 6.  Removes \begin{figure*}/\end{figure*} environment wrappers.
-# 7.  Removes \begin{AgdaMultiCode}/\end{AgdaMultiCode} environment wrappers.
-# 8.  Removes \begin{NoConway}/\end{NoConway} environment wrappers (content flows).
-# 9.  Replaces \begin{Conway}/\end{Conway} environment wrappers with admonition markers (@@ADMONITION_START/END@@).
+# 1.  Replace Agda code blocks (\begin{code} / \begin{code}[hide]) with unique placeholders (@@CODEBLOCK_ID_n@@).
+# 2.  Store verbatim content of each code block, along with its hidden status, in a JSON file.
+# 3.  Inline \modulenote macros into LaTeX \href commands.
+# 4.  Replace specific Agda term macros (from macros.json) with \texttt{@@AgdaTerm@@...} markers.
+# 5.  Replace \hldiff macros with \HighlightPlaceholder markers.
+# 6.  Remove \begin{figure*}/\end{figure*} environment wrappers.
+# 7.  Remove \begin{AgdaMultiCode}/\end{AgdaMultiCode} environment wrappers.
+# 8.  Remove \begin{NoConway}/\end{NoConway} environment wrappers (content flows).
+# 9.  Replace \begin{Conway}/\end{Conway} environment wrappers with admonition markers (@@ADMONITION_START/END@@).
 #
 # NOTES:
 # +  New strategy to handle labels and refs when processing `figure*` environments
 #    (such labels and refs were lost in initial versions of the pipeline):
-#    Instead of just stripping `\begin{figure*}` and `\end{figure*}` wrappers, we will
-#    1.  Extract `\caption{...}` text and `\label{...}` name.
-#    3.  Remove LaTeX `figure*`, `caption`, and `label` commands.
-#    4.  Insert placeholder `@@FIGURE_BLOCK_TO_SUBSECTION@@label=original_label_name@@caption=Caption Text@@`.
-#        Content that was in figure (now `@@CODEBLOCK_ID_n@@` placeholders) will appear below placeholder.
-#    5.  If figure has caption but no label, use placeholder `@@UNLABELLED_FIGURE_CAPTION@@caption=Caption Text@@`.
+#    Instead of just stripping `\begin{figure*}` and `\end{figure*}` wrappers, we
+#    1.  extract `\caption{...}` text and `\label{...}` name;
+#    3.  remove LaTeX `figure*`, `caption`, and `label` commands;
+#    4.  insert placeholder `@@FIGURE_BLOCK_TO_SUBSECTION@@label=original_label_name@@caption=Caption Text@@`;
+#        content that was in figure (now `@@CODEBLOCK_ID_n@@` placeholders) will appear below placeholder;
+#    5.  use placeholder `@@UNLABELLED_FIGURE_CAPTION@@caption=Caption Text@@` if figure has caption but no label.
 #
 # +  New strategy to handle cross-refs:
-#    1.  Identify LaTeX `\Cref{...}` and `\cref{...}` commands.
-#    2.  Convert them into placeholder `@@CROSS_REF@@command=Cref@@targets=target1,target2,...@@`.
+#    1.  identify LaTeX `\Cref{...}` and `\cref{...}` commands;
+#    2.  convert them into placeholder `@@CROSS_REF@@command=Cref@@targets=target1,target2,...@@`.
 
 
 import re
@@ -126,7 +128,7 @@ def expand_agda_term_placeholder(match):
         return f"\\texttt{{@@AgdaTerm@@basename={basename}@@class={agda_class}@@}}"
     else:
         # If macro definition wasn't found in JSON, return the original text
-        print(f"Debug: Macro {macro_name} not found in JSON, keeping original.", file=sys.stderr)
+        print(f"WARNING: Macro {macro_name} not found in JSON, keeping original.", file=sys.stderr)
         return match.group(0)
 
 def expand_hldiff(match):
@@ -161,40 +163,26 @@ def process_figure_environment(match):
     # Group 1: Optional attributes of figure* environment (e.g., [ht]) - currently unused by replacer
     # Group 2: The actual content within the figure* environment
     figure_inner_content = match.group(2)
-    print(f"DEBUG PREPROCESS (FIGURE_ENV): Matched figure environment. Raw figure_inner_content for caption search is:\n>>>\n{figure_inner_content}\n<<<", file=sys.stderr)
 
     caption_text = "Untitled Section" # default caption
     original_label_id = ""            # default latex label
 
-    # extract caption
+    # extract caption (flags=re.DOTALL makes (.*?) match across newlines in caption content)
     caption_match = re.search(r"\\caption\{(.*?)\}", figure_inner_content, flags=re.DOTALL)
-                                                                         # flags=re.DOTALL make (.*?) match
-                                                                         # across newlines in caption content
+                                                                         #
     if caption_match:
         raw_captured_caption_text = caption_match.group(1)
-        print(f"DEBUG PREPROCESS: Raw captured caption: {repr(raw_captured_caption_text)}", file=sys.stderr)
-
         stripped_caption_text = raw_captured_caption_text.strip()
-        print(f"DEBUG PREPROCESS: Stripped caption: {repr(stripped_caption_text)}", file=sys.stderr)
-
         # replace various newline types with single space
         single_line_caption = stripped_caption_text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
-        print(f"DEBUG PREPROCESS: After newline replace: {repr(single_line_caption)}", file=sys.stderr)
-
         # squash multiple spaces arising from replacements into single space
         squashed_caption_text = re.sub(r'\s+', ' ', single_line_caption).strip()
-        print(f"DEBUG PREPROCESS: After space squash: {repr(squashed_caption_text)}", file=sys.stderr)
-
         # escape "@@" in caption text for placeholder format;
         caption_text = squashed_caption_text.replace("@@", "@ @")
-        print(f"DEBUG PREPROCESS: Final for placeholder attribute: {repr(caption_text)}", file=sys.stderr)
-
         # remove original \caption command from figure content
         figure_inner_content = figure_inner_content.replace(caption_match.group(0), "", 1)
     else:
-        # --- START NEW DEBUG PRINT ---
-        print(f"DEBUG PREPROCESS (FIGURE_ENV): NO CAPTION MATCH FOUND in the above figure_inner_content.", file=sys.stderr)
-        # --- END NEW DEBUG PRINT ---
+        print(f"WARNING (FIGURE_ENV): NO CAPTION MATCH FOUND in the above figure_inner_content.", file=sys.stderr)
 
     # extract label
     label_match = re.search(r"\\label\{(.*?)\}", figure_inner_content)
@@ -203,9 +191,7 @@ def process_figure_environment(match):
         original_label_id = original_label_id_raw.replace("@@", "@ @") # escape @@
         figure_inner_content = figure_inner_content.replace(label_match.group(0), "", 1)
     else:
-        # --- START NEW DEBUG PRINT ---
-        print(f"DEBUG PREPROCESS (FIGURE_ENV): NO LABEL MATCH FOUND in figure_inner_content (after potential caption removal).", file=sys.stderr)
-        # --- END NEW DEBUG PRINT ---
+        print(f"WARNING: NO LABEL MATCH FOUND in figure_inner_content (after potential caption removal).", file=sys.stderr)
 
     # remove AgdaMultiCode wrappers typically inside figures
     figure_inner_content = re.sub(r"\\begin\{AgdaMultiCode\}\s*", "", figure_inner_content, flags=re.DOTALL)
@@ -295,7 +281,8 @@ def preprocess_lagda(content):
         content,
         flags=re.DOTALL | re.MULTILINE  # DOTALL for (.*?), MULTILINE for ^$
     )
-    # TODO: If we have non-starred fig environments, we should handle them separately; e.g.,
+    # Do not handle non-starred fig environments (e.g. in Introduction.lagda);
+    # hopefully pandoc can handle those.
     # content = re.sub(
     #     r"^\s*\\begin\{figure\}(\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\}\s*$",
     #     process_figure_environment,

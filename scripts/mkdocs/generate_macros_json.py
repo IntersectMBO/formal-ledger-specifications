@@ -5,7 +5,8 @@
 #          $ python generate_macros_json.py macros.sty preprocess_macros.json
 #          $ python preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
 #          $ pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
-#          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
+#          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json
+#          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json labels_map.json Transaction.lagda.md
 import re
 import json
 import sys
@@ -23,8 +24,6 @@ def generate_macros_json(sty_content):
     for match in pattern.finditer(sty_content):
         macro_name = match.group(1)
         agda_class = match.group(2)
-        # basename = match.group(3) # Optional: use content if needed, but macro_name is likely better text
-
         agda_terms_dict[macro_name] = {
             "basename": macro_name,  # Use the macro name itself as the text content
             "agda_class": agda_class # Store the captured Agda semantic class

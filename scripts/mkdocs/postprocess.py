@@ -5,7 +5,7 @@
 #          $ python generate_macros_json.py macros.sty preprocess_macros.json
 #          $ python preprocess.py Transaction.lagda preprocess_macros.json code_blocks.json > Transaction.lagda.temp
 #          $ pandoc Transaction.lagda.temp -f latex -t gfm+attributes --lua-filter agda-filter.lua -o Transaction.lagda.intermediate
-#          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json Transaction.lagda
+#          $ python postprocess.py Transaction.lagda.intermediate code_blocks.json labels_map.json Transaction.lagda.md
 # Actions:
 # 1. Replaces code block placeholders (@@CODEBLOCK_ID_n@@) with actual verbatim code.
 # 2. Replaces admonition markers (@@ADMONITION_START/END@@) with MkDocs admonition syntax (??? note)
@@ -122,17 +122,13 @@ def replace_figure_block_to_subsection_placeholder(match):
 
     return f"\n### {caption_text_squashed}\n\n" # using H3 for these
 
-
-    # Create md H3 subsection heading.
-    # mkdocs (python-markdown with 'toc' extension) will auto-generate id.
-    # Placeholder itself should be on its own line in intermediate file.
-    # Add extra newlines before and after heading ensures proper md parsing.
-    return f"\n### {caption_text}\n\n"
+    # create md H3 subsection heading
+    return f"\n### {caption_text}\n\n" # newlines around heading for proper md parsing
 
 def replace_unlabelled_figure_caption_placeholder(match):
     caption_text_raw = match.group(1)
     caption_text = caption_text_raw.replace("@ @", "@@")
-    # remove newlines Pandoc may have introduced within caption attribute value
+    # remove newlines pandoc may have introduced within caption attribute value
     caption_text_single_line = caption_text.replace("\r\n", " ").replace("\n", " ").replace("\r", " ")
     # squash multiple spaces
     caption_text_squashed = re.sub(r'\s+', ' ', caption_text_single_line).strip()
@@ -140,11 +136,6 @@ def replace_unlabelled_figure_caption_placeholder(match):
     return f"\n### {caption_text_squashed}\n\n"
 
 def replace_cross_ref_placeholder(match):
-    # global LABEL_TARGETS_MAP
-    # # (No 'global LABEL_TARGETS_MAP' here if defined at module level; if this
-    # # function were to *write* to module-level LABEL_TARGETS_MAP, then global
-    # # would be needed, but we only read.)
-
     command_name = match.group(1).strip()       # Cref or cref
     targets_str_raw = match.group(2).strip()    # raw comma-separated original latex labels
 

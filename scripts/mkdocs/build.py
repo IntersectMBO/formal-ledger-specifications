@@ -27,7 +27,7 @@
 #        This directory is the input for the Agda HTML generation step.
 # 3.  Agda HTML Generation & Site Content Preparation (`_build/mkdocs/mkdocs_src/docs/`):
 #     a. If the `--run-agda` flag is passed:
-#        i.  `agda --html --html-highlight=code` is run on the `CardanoLedger.lagda.md`
+#        i.  `agda --html --html-highlight=auto` is run on the `CardanoLedger.lagda.md`
 #            file within `agda_snapshot_src/`.
 #        ii. Agda outputs processed files into `_build/mkdocs/mkdocs_src/docs/`.
 #            Output filenames are flat, dot-separated module names ending in
@@ -60,6 +60,7 @@
 # - mkdocs_src/:        Contains the complete source for the MkDocs site:
 #                       - `docs/`: Final `.md` documentation pages (using flat,
 #                         dot-separated names like `Ledger.Transaction.md`), CSS, JS.
+#                         (output of `agda --html` command goes here)
 #                       - `mkdocs.yml`: The MkDocs configuration file with site
 #                         structure and navigation.
 #                       This directory is ready for `mkdocs build` or `mkdocs serve`.
@@ -70,7 +71,6 @@
 # - lagda_temp/        (output of preprocess.py; input to pandoc+lua)
 # - code_blocks_json/  (output of preprocess.py; input to postprocess.py)
 # - md_intermediate/   (output of pandoc+lua; input to postprocess.py)
-# - mkdocs_src/docs/   (output of `agda --html` command)
 
 import os
 import sys
@@ -79,6 +79,7 @@ import json
 import re
 import shutil
 from pathlib import Path
+from typing import List, Dict, Optional, Any, TypedDict
 import logging
 import argparse
 try:
@@ -91,29 +92,59 @@ try:
 except ImportError:
     print(f"FATAL: Could not import 'convert_agda_to_lagda_md'. Ensure 'agda2lagda.py' is in {SCRIPTS_DIR}.", file=sys.stderr)
     sys.exit(1)
-from bs4 import BeautifulSoup # for link rewriting (.html -> .md)
-from urllib.parse import urlparse, urlunparse, unquote # For more robust URL handling
 
-# Add this near the top of build.py, after imports
-import re as re_for_slugify # Use an alias if 're' is used differently elsewhere
+# --- Custom Type Definitions ---
+class ProcessedFileInfo(TypedDict):
+    original_path: Path
+    temp_path: Path
+    code_blocks_json_path: Path
+    intermediate_md_path: Path
+    snapshot_target_path: Path
+    final_flat_md_filename: str
+    relative_path_original: Path
 
-def slugify(text_to_slug):
+class LabelTargetInfo(TypedDict):
+    file: str
+    anchor: str
+    caption_text: str
+
+# Helper class for managing paths within .lagda processing loop.
+class LagdaProcessingPaths:
     """
-    Generates a slug from text, similar to Python-Markdown's default.
+    Manage set of file paths for processing a single .lagda file.
+    All paths constructed based on `relative_path` from source directory.
     """
-    if not text_to_slug: # handle empty string case
-        return "section" # default slug for empty text
-    text_to_slug = str(text_to_slug) # ensure text is string
-    slug = text_to_slug.lower()
+    def __init__(self, relative_path: Path):
+        self.relative = relative_path # e.g., Path("Module/File.lagda")
 
-    # Remove unwanted characters (anything not a letter, number, underscore, or hyphen)
-    # (keep spaces; they'll be replaced by hyphens)
-    slug = re_for_slugify.sub(r'[^\w\s-]', '', slug)
-    slug = re_for_slugify.sub(r'[-\s]+', '-', slug)  # replace whitespace and hyphen sequences with single hyphen
-    slug = slug.strip('-')                           # remove leading/trailing hyphens
-    if not slug:         # if all chars stripped
-        return "section" # default slug if original text yields empty slug
-    return slug
+        # intermediate file paths based on global directories
+        self.temp_lagda = TEMP_DIR / self.relative.with_suffix(".lagda.temp")
+        self.code_blocks_json = CODE_BLOCKS_DIR / self.relative.with_suffix(".codeblocks.json")
+        self.intermediate_md = INTERMEDIATE_MD_DIR / self.relative.with_suffix(".md.intermediate")
+
+        # snapshot related paths
+        self.snapshot_original_lagda = AGDA_SNAPSHOT_SRC_DIR / self.relative # Original .lagda in snapshot
+        # target for processed .lagda.md in the snapshot
+        self.snapshot_target_lagda_md = AGDA_SNAPSHOT_SRC_DIR / self.relative.with_suffix(".lagda.md")
+
+        # path for .md file in mkdocs docs directory (before Agda html processing)
+        # typically .lagda.md -> .md
+        self.mkdocs_interim_md = MKDOCS_DOCS_DIR / self.relative.with_suffix(".md")
+
+    def ensure_parent_dirs_exist(self) -> None:
+        """Create all needed parent directories for output files of this specific relative_path."""
+        # Collect all unique parent directories that need to exist for this file's outputs
+        # Note: base directories (TEMP_DIR, etc.) are created by setup_directories(); this is for
+        #       subdirectories *within* those base output directories.
+        parents_to_create = {
+            self.temp_lagda.parent,
+            self.code_blocks_json.parent,
+            self.intermediate_md.parent,
+            self.snapshot_target_lagda_md.parent, # parent of target in snapshot
+            self.mkdocs_interim_md.parent,
+        }
+        for parent_dir in parents_to_create:
+            parent_dir.mkdir(parents=True, exist_ok=True)
 
 # --- Configuration ---
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent   # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
@@ -133,11 +164,11 @@ CODE_BLOCKS_DIR = BUILD_MKDOCS_DIR / "code_blocks_json"        # code block JSON
                                                                #                   input to postprocess.py
 INTERMEDIATE_MD_DIR = BUILD_MKDOCS_DIR / "md_intermediate"     # intermediate `.lagda.md`: output of pandoc+lua
                                                                #                           intput to postprocess.py
-AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src" # **final markdown-based literate Agda source code**
-                                                               #     output of pandoc+lua
-                                                               #     input to `agda --html`
-                                                               #     input to shake, if shake to handle Agda html generation)
-AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_lib_exts" # **final markdown-based literate Agda source code**
+AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src" # markdown-based literate Agda source code
+                                                               #   output of postprocess.py
+                                                               #   input to `agda --html`
+                                                               #   input to shake (if `agda --html` relegated to shake)
+AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_lib_exts" # copy of Agda library extensions
 
 # Directories for mkdocs site generation
 MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "mkdocs_src"
@@ -157,16 +188,12 @@ CUSTOM_JS_SOURCE = STATIC_MKDOCS_DIR / "js" / "custom.js"   # Assumes JS lives n
 INDEX_MD_TEMPLATE = DOCS_TEMPLATE_DIR / "index.md"
 MKDOCS_YML_TEMPLATE = DOCS_TEMPLATE_DIR / "mkdocs_template.yml" # Optional template
 
-# Web site base path (might be derivable from mkdocs_config['site_url']; for github pages it's "/repository-name/")
-MKDOCS_SITE_BASE_PATH = "/formal-ledger-specifications/"
-
 # --- Logging Setup ---
 LOG_FILE = BUILD_MKDOCS_DIR / "build.log"
 
 # *** REVISED Logging Setup ***
-def setup_logging():
+def setup_logging() -> None:
     """Configures logging to file (DEBUG) and console (INFO) without basicConfig."""
-    # BUILD_MKDOCS_DIR.mkdir(parents=True, exist_ok=True) # This line is already in __main__, before calling setup_logging()
     log_formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
     # get root logger
@@ -201,57 +228,7 @@ def setup_logging():
     # but will go to console if console_handler working.
     logging.info("Logging setup complete. Log file: %s", LOG_FILE)
 
-# --- Helper to run commands ---
-def run_command(command_args, cwd=None, capture_output=False, text=True, check=True, stdout_file=None):
-    """Runs a shell command, logs output/errors, optionally redirects stdout."""
-    command_args_str = [str(arg) for arg in command_args]
-    logging.info(f"Running: {' '.join(command_args_str)}")
-
-    stdout_target = None
-    stdout_content = None
-    stderr_content = None
-
-    if stdout_file:
-        # Ensure parent directory exists for stdout_file
-        Path(stdout_file).parent.mkdir(parents=True, exist_ok=True)
-        stdout_target = open(stdout_file, "w", encoding="utf-8")
-    elif capture_output:
-        stdout_target = subprocess.PIPE
-
-    try:
-        process = subprocess.run(command_args_str, cwd=cwd,
-                                 stdout=stdout_target,
-                                 stderr=subprocess.PIPE, # Always capture stderr
-                                 text=text, check=False, # Check manually after logging stderr
-                                 encoding='utf-8')
-        if stdout_file:
-            stdout_target.close() # Ensure file is written and closed
-
-        # Capture outputs if needed
-        stdout_content = process.stdout
-        stderr_content = process.stderr
-
-        # Log stderr output as debug info, even on success
-        if stderr_content:
-             logging.debug(f"Stderr output for {' '.join(command_args_str)}:\n{stderr_content}")
-
-        # Check return code if requested
-        if check and process.returncode != 0:
-            logging.error(f"Command failed with exit code {process.returncode}: {' '.join(command_args_str)}")
-            # Log captured stdout only if it wasn't redirected and was captured
-            if stdout_content and not stdout_file and capture_output: logging.error(f"Stdout:\n{stdout_content}")
-            # Log captured stderr again for error context
-            if stderr_content: logging.error(f"Stderr:\n{stderr_content}")
-            raise subprocess.CalledProcessError(process.returncode, command_args_str,
-                                                output=stdout_content, stderr=stderr_content)
-        return process # Return completed process object
-
-    except Exception as e:
-        logging.error(f"Failed to run command {' '.join(command_args_str)}: {e}")
-        raise # Re-raise exception after logging
-
-
-def setup_directories(run_agda_html):
+def setup_directories() -> None:
     """
     Cleans the main MkDocs build artifacts directory and recreates essential
     subdirectories for the current build run.
@@ -280,12 +257,8 @@ def setup_directories(run_agda_html):
     MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)        # for CSS assets
     MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)         # for JS assets
 
-    # Ensure main mkdocs build directory (and log file's parent dir) exists
-    # before setting up logging, as setup_logging() will try to open LOG_FILE.
-    BUILD_MKDOCS_DIR.mkdir(parents=True, exist_ok=True) # BUILD_MKDOCS_DIR defined globally
 
-
-def cleanup_intermediate_mkdocs_artifacts():
+def cleanup_intermediate_mkdocs_artifacts() -> None:
     """
     Remove intermediate artifact directories and files generated within
     _build/mkdocs/ during the build process, keeping only the final outputs
@@ -327,47 +300,26 @@ def cleanup_intermediate_mkdocs_artifacts():
 
     logging.info("Intermediate artifact cleanup complete.")
 
-# Helper class for managing paths within .lagda processing loop.
-class LagdaProcessingPaths:
+# --- Helper for changing header phrases to link labels (slugs) ---
+def slugify(text_to_slug: Optional[str]) -> str:
     """
-    Manage set of file paths for processing a single .lagda file.
-    All paths constructed based on `relative_path` from source directory.
+    Generates a slug from text, similar to Python-Markdown's default.
     """
-    def __init__(self, relative_path: Path):
-        self.relative = relative_path # e.g., Path("Module/File.lagda")
+    if not text_to_slug: # handle empty string case
+        return "section" # default slug for empty text
+    text_to_slug = str(text_to_slug) # ensure text is string
+    slug = text_to_slug.lower()
 
-        # intermediate file paths based on global directories
-        self.temp_lagda = TEMP_DIR / self.relative.with_suffix(".lagda.temp")
-        self.code_blocks_json = CODE_BLOCKS_DIR / self.relative.with_suffix(".codeblocks.json")
-        self.intermediate_md = INTERMEDIATE_MD_DIR / self.relative.with_suffix(".md.intermediate")
-
-        # snapshot related paths
-        self.snapshot_original_lagda = AGDA_SNAPSHOT_SRC_DIR / self.relative # Original .lagda in snapshot
-        # target for processed .lagda.md in the snapshot
-        self.snapshot_target_lagda_md = AGDA_SNAPSHOT_SRC_DIR / self.relative.with_suffix(".lagda.md")
-
-        # path for .md file in mkdocs docs directory (before Agda html processing)
-        # typically .lagda.md -> .md
-        self.mkdocs_interim_md = MKDOCS_DOCS_DIR / self.relative.with_suffix(".md")
-
-    def ensure_parent_dirs_exist(self):
-        """Create all needed parent directories for output files of this specific relative_path."""
-        # Collect all unique parent directories that need to exist for this file's outputs
-        # Note: base directories (TEMP_DIR, etc.) are created by setup_directories(); this is for
-        #       subdirectories *within* those base output directories.
-        parents_to_create = {
-            self.temp_lagda.parent,
-            self.code_blocks_json.parent,
-            self.intermediate_md.parent,
-            self.snapshot_target_lagda_md.parent, # parent of target in snapshot
-            self.mkdocs_interim_md.parent,
-        }
-        for parent_dir in parents_to_create:
-            parent_dir.mkdir(parents=True, exist_ok=True)
+    # Remove unwanted characters
+    slug = re.sub(r'[^\w\s-]', '', slug) # remove anything not a letter, number, underscore, or hyphen
+    slug = re.sub(r'[-\s]+', '-', slug)  # replace whitespace and hyphen sequences with single hyphen
+    slug = slug.strip('-')               # remove leading/trailing hyphens
+    if not slug:         # if all chars stripped
+        return "section" # default slug if original text yields empty slug
+    return slug
 
 
-
-def build_nav_from_flat_files(flat_file_paths_str_list):
+def build_nav_from_flat_files(flat_file_paths_str_list) -> List[Dict[str, Any]]:
     """
     Builds a mkdocs navigation structure from a list of flat file path strings
     (e.g., ["Ledger.Transaction.md", "Ledger.Prelude.md", "index.md"]).
@@ -505,17 +457,70 @@ def copy_snapshot_file_with_flat_name(
         return None
 
 
+# --- Helper to run commands ---
+def run_command(command_args: List[str],
+                cwd: Optional[Path] = None,
+                capture_output: bool = False,
+                text: bool = False,
+                check: bool = False,
+                stdout_file: Optional[Path] = None) -> subprocess.CompletedProcess:
+    """Runs a shell command, logs output/errors, optionally redirects stdout."""
+    command_args_str = [str(arg) for arg in command_args]
+    logging.info(f"Running: {' '.join(command_args_str)}")
+
+    stdout_target = None
+    stdout_content = None
+    stderr_content = None
+
+    if stdout_file:
+        # Ensure parent directory exists for stdout_file
+        Path(stdout_file).parent.mkdir(parents=True, exist_ok=True)
+        stdout_target = open(stdout_file, "w", encoding="utf-8")
+    elif capture_output:
+        stdout_target = subprocess.PIPE
+
+    try:
+        process = subprocess.run(command_args_str, cwd=cwd,
+                                 stdout=stdout_target,
+                                 stderr=subprocess.PIPE, # Always capture stderr
+                                 text=text, check=False, # Check manually after logging stderr
+                                 encoding='utf-8')
+        if stdout_file:
+            stdout_target.close() # Ensure file is written and closed
+
+        # Capture outputs if needed
+        stdout_content = process.stdout
+        stderr_content = process.stderr
+
+        # Log stderr output as debug info, even on success
+        if stderr_content:
+             logging.debug(f"Stderr output for {' '.join(command_args_str)}:\n{stderr_content}")
+
+        # Check return code if requested
+        if check and process.returncode != 0:
+            logging.error(f"Command failed with exit code {process.returncode}: {' '.join(command_args_str)}")
+            # Log captured stdout only if it wasn't redirected and was captured
+            if stdout_content and not stdout_file and capture_output: logging.error(f"Stdout:\n{stdout_content}")
+            # Log captured stderr again for error context
+            if stderr_content: logging.error(f"Stderr:\n{stderr_content}")
+            raise subprocess.CalledProcessError(process.returncode, command_args_str,
+                                                output=stdout_content, stderr=stderr_content)
+        return process # Return completed process object
+
+    except Exception as e:
+        logging.error(f"Failed to run command {' '.join(command_args_str)}: {e}")
+        raise # Re-raise exception after logging
+
+
+
 # --- Main Pipeline Logic ---
 def main(run_agda_html=False):
     """Orchestrates the documentation build pipeline."""
-    # Logging is set up by the __main__ block calling setup_logging() once.
-    # No need to call it inside main() if main() isn't the direct script entry point for logging.
-
     logging.info("Starting MkDocs build process...")
 
     # 1. Setup directories and logging.
     logging.info("Setting up build directories and logging...")
-    setup_directories(run_agda_html)
+    setup_directories()
     setup_logging()
 
     # 2. Generate macros.json
@@ -616,7 +621,7 @@ def main(run_agda_html=False):
                 processed_latex_files_info.append({
                     "original_path": lagda_file_abs_path,
                     "temp_path": paths.temp_lagda,
-                    "code_blocks_json_path": paths.code_blocks_json, # <<< ADD THIS LINE
+                    "code_blocks_json_path": paths.code_blocks_json,
                     "intermediate_md_path": paths.intermediate_md, # For Pandoc output
                     "snapshot_target_path": AGDA_SNAPSHOT_SRC_DIR / relative_path.with_suffix(".lagda.md"), # Final .lagda.md in snapshot
                     "final_flat_md_filename": final_flat_md_filename,
@@ -708,10 +713,6 @@ def main(run_agda_html=False):
             # .lagda.md file that will go into snapshot:
             snapshot_target_lagda_md_path = file_info["snapshot_target_path"]
 
-            # Determine correct code_blocks.json path for current file; derived from original
-            # relative path of the .lagda file.
-            #current_code_blocks_json_path = CODE_BLOCKS_DIR / relative_path.with_suffix(".codeblocks.json")
-
             try:
                 # B: Pandoc + Lua (.lagda.temp -> .md.intermediate)
                 run_command([
@@ -723,10 +724,6 @@ def main(run_agda_html=False):
 
                 # C: Postprocess (.md.intermediate -> final .lagda.md for snapshot)
                 #    pass path to labels_map.json
-
-                # calculate correct code_blocks_json path for current file
-                current_file_code_blocks_json = CODE_BLOCKS_DIR / relative_path.with_suffix(".codeblocks.json")
-
                 postprocess_args = [
                     "python", str(POSTPROCESS_PY),
                     str(intermediate_md_path),           # sys.argv[1] in postprocess.py
@@ -871,7 +868,6 @@ def main(run_agda_html=False):
     else:
         # Fallback if not running Agda; ensure it uses copy_snapshot_file_with_flat_name.
         logging.info("\nSkipping agda --html step. Copying .lagda.md files from snapshot with flat names...")
-        # ... (your existing else block using copy_snapshot_file_with_flat_name) ...
         if not unique_literate_md_files_in_snapshot:
             logging.warning("No processed literate files in snapshot to copy to MkDocs.")
         for lagda_md_file_in_snapshot in unique_literate_md_files_in_snapshot:
@@ -991,6 +987,9 @@ def main(run_agda_html=False):
                     is_present = False
                     # Basic check for presence (doesn't handle dicts perfectly but ok for common case)
                     for item_t in template_list:
+                        # while the following works for common MkDocs extension formats, it could
+                        # be fragile; let's keep an eye on it if issues with extension merging arise;
+                        # a more robust approach might explicitly map extension names.
                         if isinstance(item_d, dict) and isinstance(item_t, dict) and list(item_d.keys())[0] == list(item_t.keys())[0]:
                             is_present = True; break
                         elif item_d == item_t:
@@ -1037,7 +1036,7 @@ def main(run_agda_html=False):
     # Or if CWD is PROJECT_ROOT: mkdocs serve -f "{mkdocs_yml_path.relative_to(PROJECT_ROOT)}"
 
     # Call cleanup for intermediate artifacts now that the build has succeeded
-    #cleanup_intermediate_mkdocs_artifacts()
+    cleanup_intermediate_mkdocs_artifacts()  # << comment out if artifacts needed for debugging
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build mkdocs site source from literate Agda files.")
