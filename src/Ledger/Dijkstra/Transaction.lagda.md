@@ -1,3 +1,5 @@
+# Transaction
+
 ```agda
 {-# OPTIONS --safe #-}
 module Ledger.Dijkstra.Transaction where
@@ -18,30 +20,68 @@ import Ledger.Dijkstra.Address
 
 open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
+```
 
-data TxLvl : Type where
-  TxLvlTop TxLvlSub : TxLvl 
+A transaction in Dijkstra is very similar to a transaction in Conway
+except that now it may include:
 
-InTopLvl : TxLvl → Type → Type
-InTopLvl TxLvlTop X = X
-InTopLvl TxLvlSub _ = ⊤
+- other (sub)transactions as part of its body (TODO: cite CIP)
+- _guard_ scripts (TODO: cite CIP)
 
-InSubLvl : TxLvl → Type → Type
-InSubLvl TxLvlSub X = X
-InSubLvl TxLvlTop _ = ⊤
+Before continuing, we remark that transactions cannot be arbitrarily
+nested. That is, a transaction (henceforth refered as top-level
+transaction) can include subtransactions, but these cannot include
+other subtransactions.
 
-unquoteDecl DecEq-TxLvl = derive-DecEq ((quote TxLvl , DecEq-TxLvl) ∷ [])
+## Transaction levels
+
+To differentiate between the two types of transactions (i.e. top-level
+and sub), we define the type of transaction level:
+
+```agda
+data TxLevel : Type where
+  TxLevelTop TxLevelSub : TxLevel
+```
+
+This type will be used, among other purposes, to provide a concise
+definition of the types of top-level and sub transactions in (TODO:
+add forward reference).
+
+To that end, we define two auxiliary functions that will aid in
+specifying which record fields of a transaction body are present at
+each `TxLevel`{.agdatype}:
+
+```agda
+InTopLevel : TxLevel → Type → Type
+InTopLevel TxLevelTop X = X
+InTopLevel TxLevelSub _ = ⊤
+
+InSubLevel : TxLevel → Type → Type
+InSubLevel TxLevelSub X = X
+InSubLevel TxLevelTop _ = ⊤
+```
+
+These functions discriminate on an argument of type
+`TxLevel`{.agdatype} and either act as the identity function on types
+or as the constant function that returns the unit type.
+
+```agda
+unquoteDecl DecEq-TxLevel = derive-DecEq ((quote TxLevel , DecEq-TxLevel) ∷ [])
 
 private
   variable
-    txLvl : TxLvl
+    txLevel : TxLevel
 
-data Tag : TxLvl → Type where
-  Spend Mint Cert Rewrd Vote Propose Observe : Tag txLvl
-  SubObserve : Tag TxLvlSub
+data Tag : TxLevel → Type where
+  Spend Mint Cert Rewrd Vote Propose Guard : Tag txLevel
+  SubGuard : Tag TxLevelSub
 
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
+```
 
+## Transactions
+
+```agda
 record TransactionStructure : Type₁ where
   field
     Ix TxId AuxiliaryData : Type
@@ -55,7 +95,7 @@ record TransactionStructure : Type₁ where
   open GlobalConstants globalConstants public
 
   field crypto : _
-  open Crypto crypto public
+  open CryptoStructure crypto public
   open Ledger.Dijkstra.TokenAlgebra ScriptHash public
   open Ledger.Dijkstra.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
@@ -79,7 +119,7 @@ record TransactionStructure : Type₁ where
   govStructure = record
     -- TODO: figure out what to do with the hash
     { TxId = TxId; DocHash = ADHash
-    ; crypto = crypto
+    ; cryptoStructure = crypto
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams
@@ -96,8 +136,8 @@ record TransactionStructure : Type₁ where
   UTxO     = TxIn ⇀ TxOut
   Wdrl     = RwdAddr ⇀ Coin
 
-  RdmrPtr : TxLvl → Type
-  RdmrPtr txLvl  = Tag txLvl × Ix
+  RdmrPtr : TxLevel → Type
+  RdmrPtr txLevel  = Tag txLevel × Ix
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
@@ -105,60 +145,86 @@ record TransactionStructure : Type₁ where
   record HasUTxO {a} (A : Type a) : Type a where
     field UTxOOf : A → UTxO
   open HasUTxO ⦃...⦄ public
+```
 
-  record TxBody (txLvl : TxLvl) : Type
-  record TxWitnesses (txLvl : TxLvl) : Type
-  record Tx (txLvl : TxLvl) : Type
+The type of transactions is defined as three mutually recursive
+records parameterised by a value of type `TxLevel`{.agdatype}.
 
-  record TxBody txLvl where
-    inductive
-    field
-      txins          : ℙ TxIn
-      refInputs      : ℙ TxIn
-      txouts         : Ix ⇀ TxOut
-      txfee          : InTopLvl txLvl Coin -- only in top-level tx
-      mint           : Value
-      txvldt         : Maybe Slot × Maybe Slot
-      txcerts        : List DCert
-      txwdrls        : Wdrl
-      txvote         : List GovVote
-      txprop         : List GovProposal
-      txdonation     : Coin
-      txup           : Maybe Update
-      txADhash       : Maybe ADHash
-      txNetworkId    : Maybe Network
-      curTreasury    : Maybe Coin
-      txsize         : ℕ
-      txid           : TxId
-      collateral     : InTopLvl txLvl (ℙ TxIn) -- only in top-level tx
-      scriptIntHash  : Maybe ScriptHash
+The fields that depend on the transaction level use the auxiliary functions
+`InTopLevel` and `InSubLevel` defined in (TODO: add back ref)
 
-      -- new in Dijkstra
-      txsubtxs             : InTopLvl txLvl (List (Tx TxLvlSub))
-      txreqObservers       : ℙ Credential -- replaces reqSigHash : ℙ KeyHash
-      txreqTopLvlObservers : InSubLvl txLvl (P2Script ⇀ Datum)
+```agda
+  mutual
+    record Tx (txLevel : TxLevel) : Type where
+      inductive
+      field
+        body     : TxBody txLevel
+        wits     : TxWitnesses txLevel
+        isValid  : InTopLevel txLevel Bool
+        txAD     : Maybe AuxiliaryData
 
-  record TxWitnesses txLvl where
-    inductive
-    field
-      vkSigs   : VKey ⇀ Sig
-      scripts  : ℙ Script
-      txdats   : DataHash ⇀ Datum
-      txrdmrs  : RdmrPtr txLvl ⇀ Redeemer × ExUnits
+    record TxBody (txLevel : TxLevel) : Type where
+      inductive
+      field
+        txins          : ℙ TxIn
+        refInputs      : ℙ TxIn
+        txouts         : Ix ⇀ TxOut
+        txfee          : InTopLevel txLevel Coin -- only in top-level tx
+        mint           : Value
+        txvldt         : Maybe Slot × Maybe Slot
+        txcerts        : List DCert
+        txwdrls        : Wdrl
+        txvote         : List GovVote
+        txprop         : List GovProposal
+        txdonation     : Coin
+        txup           : Maybe Update
+        txADhash       : Maybe ADHash
+        txNetworkId    : Maybe Network
+        curTreasury    : Maybe Coin
+        txsize         : ℕ
+        txid           : TxId
+        collateral     : InTopLevel txLevel (ℙ TxIn) -- only in top-level tx
+        scriptIntHash  : Maybe ScriptHash
 
-    scriptsP1 : ℙ P1Script
-    scriptsP1 = mapPartial isInj₁ scripts
+        -- new in Dijkstra
+        txsubtxs            : InTopLevel txLevel (List (Tx TxLevelSub)) -- only in top-level tx
+        txreqGuards         : ℙ Credential -- replaces reqSigHash : ℙ KeyHash
+        txreqTopLevelGuards : InSubLevel txLevel (ScriptHash ⇀ Datum) -- only in sub-level tx
 
-  record Tx txLvl where
-    inductive
-    field
-      body     : TxBody txLvl
-      wits     : TxWitnesses txLvl
-      isValid  : InTopLvl txLvl Bool
-      txAD     : Maybe AuxiliaryData
+    record TxWitnesses (txLevel : TxLevel) : Type where
+      inductive
+      field
+        vkSigs   : VKey ⇀ Sig
+        scripts  : ℙ Script
+        txdats   : DataHash ⇀ Datum
+        txrdmrs  : RdmrPtr txLevel ⇀ Redeemer × ExUnits
 
-  record HasTxBody {txLvl} {a} (A : Type a) : Type a where
-    field TxBodyOf : A → TxBody txLvl
+      scriptsP1 : ℙ P1Script
+      scriptsP1 = mapPartial isInj₁ scripts
+```
+
+Using these types, we define the types of top-level and sub
+transaction as:
+
+```agda
+  TopLevelTx : Type
+  TopLevelTx = Tx TxLevelTop
+
+  SubLevelTx : Type
+  SubLevelTx = Tx TxLevelSub
+```
+
+In addition, we define the type of transactions in which its level
+could be either of them:
+
+```agda
+  AnyLevelTx : Type
+  AnyLevelTx = TopLevelTx ⊎ SubLevelTx
+```
+
+```agda
+  record HasTxBody {txLevel} {a} (A : Type a) : Type a where
+    field TxBodyOf : A → TxBody txLevel
   open HasTxBody  ⦃...⦄ public
 
   record Hastxfee {a} (A : Type a) : Type a where
@@ -178,10 +244,10 @@ record TransactionStructure : Type₁ where
   open Hastxid    ⦃...⦄ public
 
   -- instance
-  --   HasTxBody-Tx : HasTxBody (Tx txLvl)
+  --   HasTxBody-Tx : HasTxBody (Tx txLevel)
   --   HasTxBody-Tx .TxBodyOf = Tx.body
 
-  --   Hastxfee-Tx : Hastxfee (Tx txLvl)
+  --   Hastxfee-Tx : Hastxfee (Tx txLevel)
   --   Hastxfee-Tx .txfeeOf = TxBody.txfee ∘ TxBodyOf
     
   --   Hastxcerts-Tx : Hastxcerts Tx
@@ -219,16 +285,16 @@ record TransactionStructure : Type₁ where
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  refScripts : Tx txLvl → UTxO → List Script
+  refScripts : Tx txLevel → UTxO → List Script
   refScripts tx utxo =
     mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) $ setToList (range (utxo ∣ (txins ∪ refInputs)))
     where open Tx; open TxBody (tx .body)
 
-  txscripts : Tx txLvl → UTxO → ℙ Script
+  txscripts : Tx txLevel → UTxO → ℙ Script
   txscripts tx utxo = scripts (tx .wits) ∪ fromList (refScripts tx utxo)
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx txLvl → UTxO → Maybe Script
+  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
   lookupScriptHash sh tx utxo =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
@@ -236,12 +302,12 @@ record TransactionStructure : Type₁ where
       nothing
     where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
 
-  isP2Script : Script → Type
-  isP2Script = T ∘ is-just ∘ isInj₂
+  -- isP2Script : Script → Type
+  -- isP2Script = T ∘ is-just ∘ isInj₂
 
-  isP2Script? : ∀ {s} → isP2Script s ⁇
-  isP2Script? {inj₁ x} .dec = no λ ()
-  isP2Script? {inj₂ y} .dec = yes tt
+  -- isP2Script? : ∀ {s} → isP2Script s ⁇
+  -- isP2Script? {inj₁ x} .dec = no λ ()
+  -- isP2Script? {inj₂ y} .dec = yes tt
 
   instance
     HasCoin-TxOut : HasCoin TxOut
