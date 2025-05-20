@@ -3,8 +3,8 @@
 -- to the rules under Ledger.
 
 open import Ledger.Prelude
-open import Ledger.Abstract
-open import Ledger.Transaction using (TransactionStructure)
+open import Ledger.Conway.Abstract
+open import Ledger.Conway.Transaction using (TransactionStructure)
 
 open import Data.Unit using (⊤)
 open import Data.Product using (_×_; _,_) renaming (map to ⟨_,_⟩)
@@ -20,11 +20,11 @@ module Ledger.Conway.Conformance.Equivalence
   where
 
 module L where
-  open import Ledger.Ledger txs abs public
-  open import Ledger.Utxo txs abs public
-  open import Ledger.Utxow txs abs public
-  open import Ledger.Gov txs public
-  open import Ledger.Certs govStructure public
+  open import Ledger.Conway.Ledger txs abs public
+  open import Ledger.Conway.Utxo txs abs public
+  open import Ledger.Conway.Utxow txs abs public
+  open import Ledger.Conway.Gov txs public
+  open import Ledger.Conway.Certs govStructure public
 
 module C where
   open import Ledger.Conway.Conformance.Ledger txs abs public

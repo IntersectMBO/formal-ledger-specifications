@@ -6,8 +6,8 @@ open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
-open import Ledger.Types.GovStructure
-open import Ledger.GovernanceActions govStructure using (Vote) public
+open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.GovernanceActions govStructure using (Vote) public
 
 DocHash = GovStructure.DocHash govStructure 
 
