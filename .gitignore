@@ -31,3 +31,6 @@ result*
 ## git-merge conflict resolution artifacts
 *.agda.orig
 *.lagda.orig
+
+## Python
+scripts/mkdocs/__pycache__/

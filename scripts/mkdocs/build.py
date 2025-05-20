@@ -27,7 +27,7 @@
 #        This directory is the input for the Agda HTML generation step.
 # 3.  Agda HTML Generation & Site Content Preparation (`_build/mkdocs/mkdocs_src/docs/`):
 #     a. If the `--run-agda` flag is passed:
-#        i.  `agda --html --html-highlight=auto` is run on the `CardanoLedger.lagda.md`
+#        i.  `agda --html --html-highlight=auto` is run on the `Ledger.lagda.md`
 #            file within `agda_snapshot_src/`.
 #        ii. Agda outputs processed files into `_build/mkdocs/mkdocs_src/docs/`.
 #            Output filenames are flat, dot-separated module names ending in
@@ -149,6 +149,7 @@ class LagdaProcessingPaths:
 # --- Configuration ---
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent   # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
 SRC_DIR = PROJECT_ROOT / "src"                                 # Agda source (input)
+MDSRC_DIR = PROJECT_ROOT / "mdsrc"                             # Manually refined Markdown sources
 LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                       # Agda source (input)
 STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                    # static mkdocs assets
 SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"              # location of this script and helpers
@@ -771,7 +772,7 @@ def publish_to_mkdocs_docs(
     candidate_literate_md_files: List[Path], # All .lagda.md files in snapshot
     agda_snapshot_src_dir: Path,
     mkdocs_docs_dir: Path,
-    master_agda_file_name: str = "CardanoLedger.lagda.md" # Default master file
+    master_agda_file_name: str = "Ledger.lagda.md" # Default master file
 ) -> List[str]:
     """
     Runs Agda --html if requested, or copies snapshot files to mkdocs_docs_dir.
@@ -992,7 +993,7 @@ def main(run_agda_html=False):
     # 2. Get path to or generate macros.json.
     macros_json_path = macros_path(MACROS_JSON, GENERATE_MACROS_PY, MACROS_STY_PATH)
 
-    # 3. Create Agda Source Snapshot
+    # 3. Create Agda source snapshot
     create_agda_snapshots(SRC_DIR, AGDA_SNAPSHOT_SRC_DIR, LIB_EXTS_DIR, AGDA_SNAPSHOT_LIB_EXTS_DIR)
 
     # 4a. Convert .agda to .lagda.md in snapshot
@@ -1004,44 +1005,105 @@ def main(run_agda_html=False):
     ]
     generate_agda_lib_file(AGDA_SNAPSHOT_SRC_DIR, AGDA_SNAPSHOT_LIB_EXTS_DIR, agda_lib_deps)
 
-    # 5. Process original LaTeX .lagda files
-    original_latex_lagda_files: List[Path] = sorted(list(SRC_DIR.rglob("*.lagda")))
+    # 5. Process original LaTeX .lagda files:
+    #    First, identify which .lagda files have pre-refined versions in MDSRC_DIR.
+    logging.info(f"\n--- Stage 5: Processing original LaTeX .lagda files from {SRC_DIR.relative_to(PROJECT_ROOT)} ---")
+    original_latex_lagda_files_from_src: List[Path] = sorted(list(SRC_DIR.rglob("*.lagda")))
 
-    # --- A: Run preprocess.py on all original LaTeX .lagda files ---
-    processed_info_for_latex: List[ProcessedFileInfo] = run_latex_preprocessing_stage(
-        original_latex_lagda_files, SRC_DIR, macros_json_path, TEMP_DIR, CODE_BLOCKS_DIR
+    latex_files_requiring_conversion: List[Path] = [] # Files that need the full LaTeX->MD pipeline
+
+    if original_latex_lagda_files_from_src:
+        logging.info(f"Found {len(original_latex_lagda_files_from_src)} original .lagda files. "
+                     f"Checking against {MDSRC_DIR.name} for pre-refined versions...")
+        for lagda_file_in_src in original_latex_lagda_files_from_src:
+            relative_path = lagda_file_in_src.relative_to(SRC_DIR) # e.g., Module/File.lagda
+
+            refined_md_in_mdsrc_path = MDSRC_DIR / relative_path.with_suffix(".lagda.md")
+            snapshot_target_for_mdsrc = AGDA_SNAPSHOT_SRC_DIR / relative_path.with_suffix(".lagda.md")
+
+            if refined_md_in_mdsrc_path.exists() and refined_md_in_mdsrc_path.is_file():
+                logging.info(f"  Found pre-refined file in {MDSRC_DIR.name} for '{relative_path}'. "
+                             f"Copying to snapshot: {snapshot_target_for_mdsrc.relative_to(PROJECT_ROOT)}")
+                try:
+                    snapshot_target_for_mdsrc.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(refined_md_in_mdsrc_path, snapshot_target_for_mdsrc)
+
+                    # remove original .lagda from snapshot
+                    original_lagda_in_snapshot = AGDA_SNAPSHOT_SRC_DIR / relative_path
+                    if original_lagda_in_snapshot.exists() and original_lagda_in_snapshot.is_file():
+                        original_lagda_in_snapshot.unlink()
+                        logging.info(f"    Removed corresponding original .lagda "
+                                     f"'{original_lagda_in_snapshot.name}' from snapshot.")
+                except Exception as e:
+                    logging.error(f"  Failed to copy pre-refined file '{refined_md_in_mdsrc_path.name}' "
+                                  f"to snapshot: {e}", exc_info=True)
+                    # If copy fails, maybe add lagda_file_in_src to latex_files_requiring_conversion as fallback.
+            else:
+                # pre-refined file does not exist, queue original .lagda for conversion
+                logging.info(f"  No pre-refined file for '{relative_path}' in {MDSRC_DIR.name}. "
+                             f"Queuing original for conversion.")
+                latex_files_requiring_conversion.append(lagda_file_in_src)
+    else:
+        logging.info("No original .lagda files found in src/.")
+
+    # --- Stage 5a: run preprocess.py on files requiring conversion ---
+    # `run_latex_preprocessing_stage` now takes filtered list; operates on fewer files than before.
+    processed_info_for_latex: List[ProcessedFileInfo]
+    if latex_files_requiring_conversion:
+        processed_info_for_latex = run_latex_preprocessing_stage(
+            latex_files_requiring_conversion, # pass the filtered list
+            SRC_DIR,
+            macros_json_path,                 # path object returned by macros_path()
+            TEMP_DIR,
+            CODE_BLOCKS_DIR
+        )
+    else:
+        processed_info_for_latex = []
+        logging.info(f"\nNo LaTeX files require the conversion pipeline (either all found in {MDSRC_DIR.name} or none existed).")
+
+    # --- Stage 5b: build global label map (only from files that went through preprocess.py) ---
+    # Uses `processed_info_for_latex` so we only consider files that went through preprocessing stage.
+    labels_map_file: Optional[Path] = build_global_label_map(
+        processed_info_for_latex,
+        BUILD_MKDOCS_DIR
     )
-    # --- B: Build Global Label Map from .lagda.temp files ---
-    labels_map_file: Optional[Path] = build_global_label_map(processed_info_for_latex, BUILD_MKDOCS_DIR)
 
-    # --- C: Run pandoc+lua and postprocess.py ---
+    # --- Stage 5c: Run pandoc+lua and postprocess.py (on files that went through preprocess.py) ---
     run_latex_conversion_stage(
-        processed_info_for_latex, labels_map_file, LUA_FILTER, POSTPROCESS_PY,
-        BUILD_MKDOCS_DIR, AGDA_SNAPSHOT_SRC_DIR
-    ) # modifies files in AGDA_SNAPSHOT_SRC_DIR
+        processed_info_for_latex,
+        labels_map_file,
+        LUA_FILTER,
+        POSTPROCESS_PY,
+        BUILD_MKDOCS_DIR,
+        AGDA_SNAPSHOT_SRC_DIR
+    )
 
-    # 6. Collect all .lagda.md files from snapshot (from plain agda conversion and LaTeX conversion)
+    # 6. Collect all .lagda.md files from snapshot.
+    #    a) .lagda.md files converted from plain .agda files.
+    #    b) .lagda.md files copied from MDSRC_DIR.
+    #    c) .lagda.md files generated by the LaTeX conversion pipeline.
     all_snapshot_lagda_md_files: List[Path] = collect_all_literate_md_in_snapshot(AGDA_SNAPSHOT_SRC_DIR)
 
     # 7. Agda HTML Generation / Copy to MkDocs docs
-    #    (MKDOCS_DOCS_DIR needs to be created if not already by setup_directories)
-    MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True) # Ensure it exists before passing
+    #    This stage uses `all_snapshot_lagda_md_files` which includes all sources.
+    MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)
     nav_files_in_docs: List[str] = publish_to_mkdocs_docs(
-        run_agda_html, all_snapshot_lagda_md_files, AGDA_SNAPSHOT_SRC_DIR, MKDOCS_DOCS_DIR
+        run_agda_html,
+        all_snapshot_lagda_md_files,
+        AGDA_SNAPSHOT_SRC_DIR,
+        MKDOCS_DOCS_DIR
     )
 
     # 8. Assemble MkDocs static assets (CSS, JS, index.md)
-    #    (MKDOCS_CSS_DIR, MKDOCS_JS_DIR need to exist)
-    MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)
-    MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)
+    MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)   # MKDOCS_CSS_DIR needs to exist
+    MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)    # MKDOCS_JS_DIR needs to exist
     final_nav_list: List[str] = deploy_static_mkdocs_assets(
         MKDOCS_DOCS_DIR, MKDOCS_CSS_DIR, MKDOCS_JS_DIR, run_agda_html,
         nav_files_in_docs, CUSTOM_CSS_SOURCE, CUSTOM_JS_SOURCE, INDEX_MD_TEMPLATE, PROJECT_ROOT
     )
 
     # 9. Generate mkdocs.yml
-    #    (MKDOCS_SRC_DIR needs to exist)
-    MKDOCS_SRC_DIR.mkdir(parents=True, exist_ok=True)
+    MKDOCS_SRC_DIR.mkdir(parents=True, exist_ok=True)   # MKDOCS_SRC_DIR needs to exist
     mkdocs_yml_final_path = generate_mkdocs_config(
         MKDOCS_SRC_DIR, final_nav_list, MKDOCS_YML_TEMPLATE, HAS_YAML,
         custom_css_name=CUSTOM_CSS_SOURCE.name if CUSTOM_CSS_SOURCE.exists() else None,
