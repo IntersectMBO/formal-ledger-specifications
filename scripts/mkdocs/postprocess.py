@@ -166,7 +166,7 @@ def replace_cross_ref_placeholder(match):
             # # if command_name == "Cref": prefix = prefix.capitalize()
             # # else: prefix = prefix.lower() # for "cref"
 
-            link_display_text = f"{prefix} '{linked_caption_text}'"
+            link_display_text = f"{prefix + ' ' if prefix else ''}'{linked_caption_text}'"
             if target_file and target_anchor_slug_with_hash:
                 output_link_parts.append(f"[{link_display_text}]({target_file}{target_anchor_slug_with_hash})")
             else: # should not happen if map well-formed
