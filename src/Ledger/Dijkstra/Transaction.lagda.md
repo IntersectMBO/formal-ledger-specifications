@@ -19,26 +19,26 @@ import Ledger.Dijkstra.Address
 open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
-data TxLvl : Type where
-  TxLvlTop TxLvlSub : TxLvl 
+data TxLevel : Type where
+  TxLevelTop TxLevelSub : TxLevel
 
-InTopLvl : TxLvl → Type → Type
-InTopLvl TxLvlTop X = X
-InTopLvl TxLvlSub _ = ⊤
+InTopLevel : TxLevel → Type → Type
+InTopLevel TxLevelTop X = X
+InTopLevel TxLevelSub _ = ⊤
 
-InSubLvl : TxLvl → Type → Type
-InSubLvl TxLvlSub X = X
-InSubLvl TxLvlTop _ = ⊤
+InSubLevel : TxLevel → Type → Type
+InSubLevel TxLevelSub X = X
+InSubLevel TxLevelTop _ = ⊤
 
-unquoteDecl DecEq-TxLvl = derive-DecEq ((quote TxLvl , DecEq-TxLvl) ∷ [])
+unquoteDecl DecEq-TxLevel = derive-DecEq ((quote TxLevel , DecEq-TxLevel) ∷ [])
 
 private
   variable
-    txLvl : TxLvl
+    txLevel : TxLevel
 
-data Tag : TxLvl → Type where
-  Spend Mint Cert Rewrd Vote Propose Guard : Tag txLvl
-  SubGuard : Tag TxLvlSub
+data Tag : TxLevel → Type where
+  Spend Mint Cert Rewrd Vote Propose Guard : Tag txLevel
+  SubGuard : Tag TxLevelSub
 
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 
@@ -96,8 +96,8 @@ record TransactionStructure : Type₁ where
   UTxO     = TxIn ⇀ TxOut
   Wdrl     = RwdAddr ⇀ Coin
 
-  RdmrPtr : TxLvl → Type
-  RdmrPtr txLvl  = Tag txLvl × Ix
+  RdmrPtr : TxLevel → Type
+  RdmrPtr txLevel  = Tag txLevel × Ix
 
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
@@ -106,59 +106,61 @@ record TransactionStructure : Type₁ where
     field UTxOOf : A → UTxO
   open HasUTxO ⦃...⦄ public
 
-  record TxBody (txLvl : TxLvl) : Type
-  record TxWitnesses (txLvl : TxLvl) : Type
-  record Tx (txLvl : TxLvl) : Type
+  mutual
+    record TxBody (txLevel : TxLevel) : Type where
+      inductive
+      field
+        txins          : ℙ TxIn
+        refInputs      : ℙ TxIn
+        txouts         : Ix ⇀ TxOut
+        txfee          : InTopLevel txLevel Coin -- only in top-level tx
+        mint           : Value
+        txvldt         : Maybe Slot × Maybe Slot
+        txcerts        : List DCert
+        txwdrls        : Wdrl
+        txvote         : List GovVote
+        txprop         : List GovProposal
+        txdonation     : Coin
+        txup           : Maybe Update
+        txADhash       : Maybe ADHash
+        txNetworkId    : Maybe Network
+        curTreasury    : Maybe Coin
+        txsize         : ℕ
+        txid           : TxId
+        collateral     : InTopLevel txLevel (ℙ TxIn) -- only in top-level tx
+        scriptIntHash  : Maybe ScriptHash
 
-  record TxBody txLvl where
-    inductive
-    field
-      txins          : ℙ TxIn
-      refInputs      : ℙ TxIn
-      txouts         : Ix ⇀ TxOut
-      txfee          : InTopLvl txLvl Coin -- only in top-level tx
-      mint           : Value
-      txvldt         : Maybe Slot × Maybe Slot
-      txcerts        : List DCert
-      txwdrls        : Wdrl
-      txvote         : List GovVote
-      txprop         : List GovProposal
-      txdonation     : Coin
-      txup           : Maybe Update
-      txADhash       : Maybe ADHash
-      txNetworkId    : Maybe Network
-      curTreasury    : Maybe Coin
-      txsize         : ℕ
-      txid           : TxId
-      collateral     : InTopLvl txLvl (ℙ TxIn) -- only in top-level tx
-      scriptIntHash  : Maybe ScriptHash
+        -- new in Dijkstra
+        txsubtxs            : InTopLevel txLevel (List (Tx TxLevelSub))
+        txreqGuards         : ℙ Credential -- replaces reqSigHash : ℙ KeyHash
+        txreqTopLevelGuards : InSubLevel txLevel (ScriptHash ⇀ Datum)
 
-      -- new in Dijkstra
-      txsubtxs          : InTopLvl txLvl (List (Tx TxLvlSub))
-      txreqGuards       : ℙ Credential -- replaces reqSigHash : ℙ KeyHash
-      txreqTopLvlGuards : InSubLvl txLvl (P2Script ⇀ Datum)
+    record TxWitnesses (txLevel : TxLevel) : Type where
+      inductive
+      field
+        vkSigs   : VKey ⇀ Sig
+        scripts  : ℙ Script
+        txdats   : DataHash ⇀ Datum
+        txrdmrs  : RdmrPtr txLevel ⇀ Redeemer × ExUnits
 
-  record TxWitnesses txLvl where
-    inductive
-    field
-      vkSigs   : VKey ⇀ Sig
-      scripts  : ℙ Script
-      txdats   : DataHash ⇀ Datum
-      txrdmrs  : RdmrPtr txLvl ⇀ Redeemer × ExUnits
+      scriptsP1 : ℙ P1Script
+      scriptsP1 = mapPartial isInj₁ scripts
 
-    scriptsP1 : ℙ P1Script
-    scriptsP1 = mapPartial isInj₁ scripts
+    record Tx (txLevel : TxLevel) : Type where
+      inductive
+      field
+        body     : TxBody txLevel
+        wits     : TxWitnesses txLevel
+        isValid  : InTopLevel txLevel Bool
+        txAD     : Maybe AuxiliaryData
 
-  record Tx txLvl where
-    inductive
-    field
-      body     : TxBody txLvl
-      wits     : TxWitnesses txLvl
-      isValid  : InTopLvl txLvl Bool
-      txAD     : Maybe AuxiliaryData
+  AnyLevelTx TopLevelTx SubLevelTx : Type
+  AnyLevelTx = ∃ Tx
+  TopLevelTx = Tx TxLevelTop
+  SubLevelTx = Tx TxLevelSub
 
-  record HasTxBody {txLvl} {a} (A : Type a) : Type a where
-    field TxBodyOf : A → TxBody txLvl
+  record HasTxBody {txLevel} {a} (A : Type a) : Type a where
+    field TxBodyOf : A → TxBody txLevel
   open HasTxBody  ⦃...⦄ public
 
   record Hastxfee {a} (A : Type a) : Type a where
@@ -178,10 +180,10 @@ record TransactionStructure : Type₁ where
   open Hastxid    ⦃...⦄ public
 
   -- instance
-  --   HasTxBody-Tx : HasTxBody (Tx txLvl)
+  --   HasTxBody-Tx : HasTxBody (Tx txLevel)
   --   HasTxBody-Tx .TxBodyOf = Tx.body
 
-  --   Hastxfee-Tx : Hastxfee (Tx txLvl)
+  --   Hastxfee-Tx : Hastxfee (Tx txLevel)
   --   Hastxfee-Tx .txfeeOf = TxBody.txfee ∘ TxBodyOf
     
   --   Hastxcerts-Tx : Hastxcerts Tx
@@ -219,16 +221,16 @@ record TransactionStructure : Type₁ where
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  refScripts : Tx txLvl → UTxO → List Script
+  refScripts : Tx txLevel → UTxO → List Script
   refScripts tx utxo =
     mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) $ setToList (range (utxo ∣ (txins ∪ refInputs)))
     where open Tx; open TxBody (tx .body)
 
-  txscripts : Tx txLvl → UTxO → ℙ Script
+  txscripts : Tx txLevel → UTxO → ℙ Script
   txscripts tx utxo = scripts (tx .wits) ∪ fromList (refScripts tx utxo)
     where open Tx; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx txLvl → UTxO → Maybe Script
+  lookupScriptHash : ScriptHash → Tx txLevel → UTxO → Maybe Script
   lookupScriptHash sh tx utxo =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
