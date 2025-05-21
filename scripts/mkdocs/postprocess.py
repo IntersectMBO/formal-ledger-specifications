@@ -155,7 +155,7 @@ def replace_cross_ref_placeholder(match):
             target_anchor_slug_with_hash = target_info.get("anchor", "") # should include '#'
             # determine "Figure", "Section" prefix for display text
             prefix = "Ref." # default prefix
-            if original_latex_label_id.startswith("fig:"): prefix = "Figure"
+            if original_latex_label_id.startswith("fig:"): prefix = ""
             elif original_latex_label_id.startswith("sec:"): prefix = "Section"
             elif original_latex_label_id.startswith("tbl:"): prefix = "Table"
             elif original_latex_label_id.startswith("eq:"): prefix = "Equation"

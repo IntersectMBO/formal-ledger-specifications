@@ -108,6 +108,54 @@ class LabelTargetInfo(TypedDict):
     anchor: str
     caption_text: str
 
+
+# --- Configuration ---
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent      # assume build.py is in PROJECT_ROOT/scripts/mkdocs
+SRC_DIR = PROJECT_ROOT / "src"                                    # original .lagda source
+MDSRC_DIR = PROJECT_ROOT / "mdsrc"                                # hand-tweaked .lagda.md source
+LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                          # original .agda lib source
+STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                       # static mkdocs assets
+SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"                 # this script and helpers
+MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"               # LaTeX macros
+STATIC_MKDOCS_SRC_DIR = STATIC_MKDOCS_DIR / "mkdocs_src"          # static content to inhabit mkdocs_src
+NAV_YML_TEMPLATE_PATH = STATIC_MKDOCS_DIR / "nav.yml"             # path to mkdocs navigation template
+BUILD_DIR = PROJECT_ROOT / "_build"                               # top-level build dir
+BUILD_MKDOCS_DIR = BUILD_DIR / "mkdocs"                           # root for mkdocs build intermediate products
+MACROS_JSON = BUILD_MKDOCS_DIR / "macros.json"                    # macro JSONs               output of generate_macros_json.py
+                                                                  #                           input to preprocess.py
+TEMP_DIR = BUILD_MKDOCS_DIR / "lagda_temp"                        # intermediate latex        output of preprocess.py
+                                                                  #                           input to pandoc+lua
+CODE_BLOCKS_DIR = BUILD_MKDOCS_DIR / "code_blocks_json"           # code block JSONs          output of preprocess.py
+                                                                  #                           input to postprocess.py
+INTERMEDIATE_MD_DIR = BUILD_MKDOCS_DIR / "md_intermediate"        # intermediate `.lagda.md`  output of pandoc+lua
+                                                                  #                           intput to postprocess.py
+AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src"    # markdown-based literate Agda source code
+                                                                  #                           output of postprocess.py
+                                                                  #                           input to `agda --html`
+                                                                  #                           input to shake (if `agda --html` relegated to shake)
+AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_lib_exts" # copy of Agda library extensions
+
+# Directories for mkdocs site generation
+MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "mkdocs_src"
+MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
+MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
+MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
+
+# Script paths
+GENERATE_MACROS_PY = SCRIPTS_DIR / "generate_macros_json.py"
+PREPROCESS_PY = SCRIPTS_DIR / "preprocess.py"
+POSTPROCESS_PY = SCRIPTS_DIR / "postprocess.py"
+LUA_FILTER = SCRIPTS_DIR / "agda-filter.lua"
+
+# Static asset source paths
+CUSTOM_CSS_SOURCE = STATIC_MKDOCS_DIR / "css" / "custom.css" # Assumes CSS lives near scripts
+CUSTOM_JS_SOURCE = STATIC_MKDOCS_DIR / "js" / "custom.js"   # Assumes JS lives near scripts
+INDEX_MD_TEMPLATE = STATIC_MKDOCS_SRC_DIR / "docs" / "index.md"
+
+# --- Logging Setup ---
+LOG_FILE = BUILD_MKDOCS_DIR / "build.log"
+
+
 # Helper class for managing paths within .lagda processing loop.
 class LagdaProcessingPaths:
     """
@@ -146,53 +194,7 @@ class LagdaProcessingPaths:
         for parent_dir in parents_to_create:
             parent_dir.mkdir(parents=True, exist_ok=True)
 
-# --- Configuration ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent   # Assumes build.py is in PROJECT_ROOT/scripts/mkdocs
-SRC_DIR = PROJECT_ROOT / "src"                                 # Agda source (input)
-MDSRC_DIR = PROJECT_ROOT / "mdsrc"                             # Manually refined Markdown sources
-LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                       # Agda source (input)
-STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                    # static mkdocs assets
-SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"              # location of this script and helpers
-MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"            # path to LaTeX macros
-DOCS_TEMPLATE_DIR = STATIC_MKDOCS_DIR / "templates"            # source for index.md, mkdocs_template.yml
-BUILD_DIR = PROJECT_ROOT / "_build"                            # top-level build dir
-BUILD_MKDOCS_DIR = BUILD_DIR / "mkdocs"                        # root for mkdocs build intermediate products
-MACROS_JSON = BUILD_MKDOCS_DIR / "macros.json"                 # macro JSONs: output of generate_macros_json.py
-                                                               #              input to preprocess.py
-TEMP_DIR = BUILD_MKDOCS_DIR / "lagda_temp"                     # intermediate latex: output of preprocess.py
-                                                               #                     input to pandoc+lua
-CODE_BLOCKS_DIR = BUILD_MKDOCS_DIR / "code_blocks_json"        # code block JSONs: output of preprocess.py
-                                                               #                   input to postprocess.py
-INTERMEDIATE_MD_DIR = BUILD_MKDOCS_DIR / "md_intermediate"     # intermediate `.lagda.md`: output of pandoc+lua
-                                                               #                           intput to postprocess.py
-AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src" # markdown-based literate Agda source code
-                                                               #   output of postprocess.py
-                                                               #   input to `agda --html`
-                                                               #   input to shake (if `agda --html` relegated to shake)
-AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_lib_exts" # copy of Agda library extensions
-
-# Directories for mkdocs site generation
-MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "mkdocs_src"
-MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
-MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
-MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
-
-# Script paths
-GENERATE_MACROS_PY = SCRIPTS_DIR / "generate_macros_json.py"
-PREPROCESS_PY = SCRIPTS_DIR / "preprocess.py"
-POSTPROCESS_PY = SCRIPTS_DIR / "postprocess.py"
-LUA_FILTER = SCRIPTS_DIR / "agda-filter.lua"
-
-# Static asset source paths
-CUSTOM_CSS_SOURCE = STATIC_MKDOCS_DIR / "css" / "custom.css" # Assumes CSS lives near scripts
-CUSTOM_JS_SOURCE = STATIC_MKDOCS_DIR / "js" / "custom.js"   # Assumes JS lives near scripts
-INDEX_MD_TEMPLATE = DOCS_TEMPLATE_DIR / "index.md"
-MKDOCS_YML_TEMPLATE = DOCS_TEMPLATE_DIR / "mkdocs_template.yml" # Optional template
-
-# --- Logging Setup ---
-LOG_FILE = BUILD_MKDOCS_DIR / "build.log"
-
-# *** REVISED Logging Setup ***
+# Logging Setup
 def setup_logging() -> None:
     """Configures logging to file (DEBUG) and console (INFO) without basicConfig."""
     log_formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
@@ -480,7 +482,7 @@ def build_nav_from_flat_files(flat_file_paths_str_list) -> List[Dict[str, Any]]:
 def copy_snapshot_file_with_flat_name(
     lagda_md_file_in_snapshot: Path,
     snapshot_root_dir: Path,
-    target_docs_dir: Path
+    target_docs_dir: Path   # <<< MKDOCS_DOCS_DIR
 ) -> str | None:
     """
     Calculates the flat MD filename for a snapshot file, copies the snapshot
@@ -505,6 +507,12 @@ def copy_snapshot_file_with_flat_name(
 
         final_flat_filename = module_name_flat + ".md"
         mkdocs_target_full_path = target_docs_dir / final_flat_filename
+
+        # check for overwrite
+        if mkdocs_target_full_path.exists():
+            logging.warning(f"  Overwrite: Generated file '{mkdocs_target_full_path.name}' "
+                            f"is overwriting an existing file (likely from static template) "
+                            f"at '{mkdocs_target_full_path.relative_to(PROJECT_ROOT)}'.")
 
         mkdocs_target_full_path.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(lagda_md_file_in_snapshot, mkdocs_target_full_path)
@@ -878,6 +886,10 @@ def deploy_static_mkdocs_assets(
 
     for src, dest in assets_to_copy.items():
         try:
+            if dest.exists() and dest.is_file(): # avoid warning for dirs
+                # potentially being overwritten by a *different* version from assets
+                logging.warning(f"  Overwrite: Asset '{src.name}' being copied to '{dest.relative_to(PROJECT_ROOT)}' "
+                                f"is overwriting an existing file.")
             logging.info(f"  Copying asset {src.name} to {dest.relative_to(project_root)}")
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest)
@@ -890,94 +902,102 @@ def deploy_static_mkdocs_assets(
     )
 
 def generate_mkdocs_config(
-    mkdocs_src_dir: Path,
-    nav_file_paths: List[str],
-    mkdocs_yml_template_path: Path,
+    mkdocs_yml_target_path: Path, # This is MKDOCS_SRC_DIR / "mkdocs.yml"
+    nav_files_from_docs_dir: List[str], # Flat list of .md files in docs/, used if nav.yml is not
+    nav_yml_template_file: Path, # Path to nav.yml
     has_yaml_library: bool,
-    # Default config could be loaded from a file or defined as a const dict
-    default_theme_name: str = "material", # Example of passing a specific default
-    custom_css_name: Optional[str] = None, # Name of custom.css if copied
-    custom_js_name: Optional[str] = None   # Name of custom.js if copied
+    # Dynamically determined extras that should always be added/ensured
+    dynamic_extra_css: List[str],
+    dynamic_extra_javascript: List[str]
 ) -> Path:
-    """Generates the mkdocs.yml configuration file."""
-    logging.info("Generating final mkdocs.yml...")
-    mkdocs_yml_path = mkdocs_src_dir / "mkdocs.yml"
+    logging.info(f"Updating/Finalizing {mkdocs_yml_target_path.name}...")
 
-    # Base default config
-    default_cfg = {
-        "site_name": "Cardano Ledger Formal Specification", # Consider making this configurable
-        "use_directory_urls": False,
-        "theme": {"name": default_theme_name, "features": ["navigation.expand"]}, # Default theme
-        "extra_css": [],
-        "extra_javascript": [],
-        "markdown_extensions": [
-            "admonition", "pymdownx.details", "pymdownx.superfences", "attr_list", "md_in_html",
-            {"toc": {"permalink": True}}, # slugify_unicode is default in recent versions
-            {"pymdownx.highlight": {"anchor_linenums": True, "use_pygments": True}},
-            "pymdownx.inlinehilite", "pymdownx.snippets", "pymdownx.tabbed", "pymdownx.emoji",
-        ]
-    }
-    # Dynamically add Agda.css if present (assuming publish_to_mkdocs_docs handled its presence)
-    if (MKDOCS_CSS_DIR / "Agda.css").exists(): default_cfg["extra_css"].append("css/Agda.css")
-    if custom_css_name and (MKDOCS_CSS_DIR / custom_css_name).exists(): default_cfg["extra_css"].append(f"css/{custom_css_name}")
-    if custom_js_name and (MKDOCS_JS_DIR / custom_js_name).exists(): default_cfg["extra_javascript"].append(f"js/{custom_js_name}")
+    mkdocs_config: Dict[str, Any] = {}
 
-
-    mkdocs_config = {}
-    if mkdocs_yml_template_path.exists() and has_yaml_library:
+    if mkdocs_yml_target_path.exists() and has_yaml_library:
         try:
-            with open(mkdocs_yml_template_path, 'r', encoding='utf-8') as f_tpl:
-                mkdocs_config = yaml.safe_load(f_tpl) or {}
-            logging.info(f"Loaded mkdocs.yml template from {mkdocs_yml_template_path.name}")
-            # Smart merge (simplified: template deep-updates default)
-            # For lists like extra_css, you might want to concatenate unique items
-            # This requires a more careful merge than just a simple update
-            # For now, let's assume template values for complex keys override defaults,
-            # and for others, defaults fill in.
-            temp_config = default_cfg.copy()
-            # A proper deep merge would be better here if template structure is complex
-            # For example:
-            # temp_config.update(mkdocs_config) # Simple override, loses default list items
-            # mkdocs_config = temp_config
-            # For this example, let's do a more targeted merge:
-            for key, value in default_cfg.items():
-                if key not in mkdocs_config:
-                    mkdocs_config[key] = value
-                elif isinstance(value, dict) and isinstance(mkdocs_config.get(key), dict):
-                    # Merge dicts (template takes precedence)
-                    merged_dict = value.copy()
-                    merged_dict.update(mkdocs_config[key])
-                    mkdocs_config[key] = merged_dict
-                elif isinstance(value, list) and isinstance(mkdocs_config.get(key), list):
-                    # Concatenate and unique lists (template items first)
-                    mkdocs_config[key] = list(dict.fromkeys(mkdocs_config[key] + value))
-
-
+            with open(mkdocs_yml_target_path, 'r', encoding='utf-8') as f_yml:
+                mkdocs_config = yaml.safe_load(f_yml) or {}
+            logging.info(f"  Loaded existing {mkdocs_yml_target_path.name} as base configuration.")
         except Exception as e:
-            logging.warning(f"Failed loading/merging template {mkdocs_yml_template_path.name}: {e}. Using base defaults.", exc_info=True)
-            mkdocs_config = default_cfg.copy()
-    else:
-        if not has_yaml_library and mkdocs_yml_template_path.exists():
-            logging.warning(f"MkDocs YML template found but PyYAML not installed. Using defaults.")
-        mkdocs_config = default_cfg.copy()
+            logging.error(f"  Error loading existing {mkdocs_yml_target_path.name}: {e}. "
+                          "Proceeding with minimal defaults and dynamic additions.", exc_info=True)
+            mkdocs_config = {} # Reset to ensure defaults are applied
+    elif not mkdocs_yml_target_path.exists():
+        logging.warning(f"  Base {mkdocs_yml_target_path.name} not found (template dir likely "
+                        "missing/empty or copy failed). Creating minimal config.")
 
-    # Build navigation structure
-    mkdocs_config['nav'] = build_nav_from_flat_files(nav_file_paths) # build_nav_from_flat_files is an existing helper
+    # Ensure essential keys exist if loaded config is very minimal or missing
+    # These are sensible defaults if the base mkdocs.yml was missing or too sparse.
+    mkdocs_config.setdefault("site_name", "Project Documentation")
+    mkdocs_config.setdefault("theme", {"name": "material"})
+    mkdocs_config.setdefault("use_directory_urls", False)
 
-    # Write final mkdocs.yml
+    current_extra_css = mkdocs_config.get("extra_css", [])
+    if not isinstance(current_extra_css, list): current_extra_css = []
+    for css_file in dynamic_extra_css:
+        if css_file not in current_extra_css:
+            current_extra_css.append(css_file)
+    mkdocs_config["extra_css"] = current_extra_css
+
+    current_extra_js = mkdocs_config.get("extra_javascript", [])
+    if not isinstance(current_extra_js, list): current_extra_js = []
+    for js_file in dynamic_extra_javascript:
+        if js_file not in current_extra_js:
+            current_extra_js.append(js_file)
+    mkdocs_config["extra_javascript"] = current_extra_js
+
+    # Default markdown extensions if none are specified in the template
+    mkdocs_config.setdefault("markdown_extensions", [
+        "admonition", "pymdownx.details", "pymdownx.superfences", "attr_list", "md_in_html",
+        {"toc": {"permalink": True}},
+        {"pymdownx.highlight": {"anchor_linenums": True, "use_pygments": True}},
+        "pymdownx.emoji",
+    ])
+
+    # --- Navigation Handling ---
+    nav_structure_for_yaml: Optional[List[Dict[str, Any]]] = None
+    if nav_yml_template_file.exists() and has_yaml_library:
+        logging.info(f"  Attempting to load navigation structure from {nav_yml_template_file.name}.")
+        try:
+            with open(nav_yml_template_file, 'r', encoding='utf-8') as f_nav:
+                nav_data = yaml.safe_load(f_nav)
+            if isinstance(nav_data, list): # Basic validation: nav should be a list
+                nav_structure_for_yaml = nav_data
+                logging.info(f"  Successfully loaded navigation from {nav_yml_template_file.name}.")
+            elif nav_data is not None: # It loaded something, but not a list
+                logging.warning(f"  Content of {nav_yml_template_file.name} is not a valid list structure for 'nav'. "
+                                "Falling back to generated navigation.")
+            # If nav_data is None (empty file), it will also fall through.
+        except Exception as e:
+            logging.warning(f"  Error loading or parsing {nav_yml_template_file.name}: {e}. "
+                            "Falling back to generated navigation.", exc_info=True)
+    elif nav_yml_template_file.exists() and not has_yaml_library:
+        logging.warning(f"  Navigation template {nav_yml_template_file.name} found but PyYAML not installed. "
+                        "Generating navigation.")
+
+    if nav_structure_for_yaml is None: # If nav.yml not used or failed to load
+        logging.info("  Generating navigation from processed files in docs/ directory.")
+        nav_structure_for_yaml = build_nav_from_flat_files(nav_files_from_docs_dir)
+
+    mkdocs_config['nav'] = nav_structure_for_yaml
+    logging.info("  Set 'nav' section in configuration.")
+
+    # Write the updated/generated mkdocs.yml
     try:
+        mkdocs_yml_target_path.parent.mkdir(parents=True, exist_ok=True) # Ensure target dir exists
         if has_yaml_library:
-            with open(mkdocs_yml_path, "w", encoding="utf-8") as f_yml:
+            with open(mkdocs_yml_target_path, "w", encoding="utf-8") as f_yml:
                 yaml.dump(mkdocs_config, f_yml, sort_keys=False, default_flow_style=False, allow_unicode=True, width=1000)
-        else: # Fallback to JSON if PyYAML not available
-            with open(mkdocs_yml_path, "w", encoding="utf-8") as f_json:
-                json.dump(mkdocs_config, f_json, indent=2)
-            logging.warning(f"Generated mkdocs.yml as JSON (PyYAML not installed).")
-        logging.info(f"Generated mkdocs.yml at {mkdocs_yml_path.name}")
+        else: # Fallback to JSON
+            with open(mkdocs_yml_target_path, "w", encoding="utf-8") as f_yml_json:
+                json.dump(mkdocs_config, f_yml_json, indent=2)
+            logging.warning(f"  Generated {mkdocs_yml_target_path.name} as JSON (PyYAML not installed).")
+        logging.info(f"  Successfully wrote final configuration to {mkdocs_yml_target_path.name}.")
     except Exception as e:
-        logging.error(f"Error writing mkdocs.yml: {e}", exc_info=True)
-        # sys.exit(1) or raise
-    return mkdocs_yml_path
+        logging.error(f"  Error writing {mkdocs_yml_target_path.name}: {e}", exc_info=True)
+
+    return mkdocs_yml_target_path
 
 # --- Main Pipeline Logic ---
 def main(run_agda_html=False):
@@ -989,6 +1009,30 @@ def main(run_agda_html=False):
     logging.info("Setting up build directories and logging...")
     setup_directories()
     setup_logging()
+
+    # We now populate MKDOCS_SRC_DIR from static template content
+    logging.info(f"Initializing {MKDOCS_SRC_DIR.name} from template source: "
+                 f"{STATIC_MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)}")
+    if STATIC_MKDOCS_SRC_DIR.exists():
+        try:
+            # Copytree will copy all contents from STATIC_MKDOCS_SRC_DIR into MKDOCS_SRC_DIR
+            shutil.copytree(STATIC_MKDOCS_SRC_DIR, MKDOCS_SRC_DIR, dirs_exist_ok=True)
+            logging.info(f"  Successfully copied base structure to {MKDOCS_SRC_DIR.name}.")
+        except Exception as e:
+            logging.error(f"  Failed to copy static template from {STATIC_MKDOCS_SRC_DIR.name} "
+                          f"to {MKDOCS_SRC_DIR.name}: {e}", exc_info=True)
+            # Decide if this is a fatal error. If mkdocs.yml is expected from here, it might be.
+            # For now, we'll let it proceed, and later stages might fail if expected files are missing.
+    else:
+        logging.warning(f"  Static template directory {STATIC_MKDOCS_SRC_DIR.name} not found. "
+                        f"{MKDOCS_SRC_DIR.name} may be missing essential base files like mkdocs.yml.")
+        # Ensure essential subdirectories like docs/ are created if the template didn't provide them
+        MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)
+        MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True) # Typically docs/css
+        MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)  # Typically docs/js
+
+    # path to mkdocs.yml that was potentially copied or needs to be created/updated
+    mkdocs_yml_in_build_path = MKDOCS_SRC_DIR / "mkdocs.yml"
 
     # 2. Get path to or generate macros.json.
     macros_json_path = macros_path(MACROS_JSON, GENERATE_MACROS_PY, MACROS_STY_PATH)
@@ -1102,12 +1146,24 @@ def main(run_agda_html=False):
         nav_files_in_docs, CUSTOM_CSS_SOURCE, CUSTOM_JS_SOURCE, INDEX_MD_TEMPLATE, PROJECT_ROOT
     )
 
-    # 9. Generate mkdocs.yml
-    MKDOCS_SRC_DIR.mkdir(parents=True, exist_ok=True)   # MKDOCS_SRC_DIR needs to exist
+    dynamic_css_list_for_config = []
+    if (MKDOCS_CSS_DIR / "Agda.css").exists():
+        dynamic_css_list_for_config.append("css/Agda.css")
+    # CUSTOM_CSS_SOURCE is Path object for original custom.css
+    if CUSTOM_CSS_SOURCE.exists() and (MKDOCS_CSS_DIR / CUSTOM_CSS_SOURCE.name).exists():
+        dynamic_css_list_for_config.append(f"css/{CUSTOM_CSS_SOURCE.name}")
+
+    dynamic_js_list_for_config = []
+    if CUSTOM_JS_SOURCE.exists() and (MKDOCS_JS_DIR / CUSTOM_JS_SOURCE.name).exists():
+        dynamic_js_list_for_config.append(f"js/{CUSTOM_JS_SOURCE.name}")
+
     mkdocs_yml_final_path = generate_mkdocs_config(
-        MKDOCS_SRC_DIR, final_nav_list, MKDOCS_YML_TEMPLATE, HAS_YAML,
-        custom_css_name=CUSTOM_CSS_SOURCE.name if CUSTOM_CSS_SOURCE.exists() else None,
-        custom_js_name=CUSTOM_JS_SOURCE.name if CUSTOM_JS_SOURCE.exists() else None
+        mkdocs_yml_in_build_path,    # Path to the mkdocs.yml to be updated/created
+        final_nav_list,              # List of actual .md files in docs/ for fallback nav generation
+        NAV_YML_TEMPLATE_PATH,       # Path to the nav.yml template
+        HAS_YAML,
+        dynamic_extra_css=dynamic_css_list_for_config,
+        dynamic_extra_javascript=dynamic_js_list_for_config
     )
 
     # 10. Final messages and cleanup
