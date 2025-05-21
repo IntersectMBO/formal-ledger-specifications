@@ -174,7 +174,7 @@ following components:
 
 For example, the UTXOW transition rule defined in
 [UTXOW inference rules](Ledger.Conway.Utxow.md#utxow-inference-rules) of
-*cref 'sec:witnessing' (unresolved reference)* checks that, among
+the [Utxow module](Ledger.Conway.Utxow.md#sec:witnessing) checks that, among
 other things, a given transaction is signed by the appropriate parties.
 
 The transition rules can be composed in the sense that they may require
