@@ -31,12 +31,12 @@ main = shakeArgs shakeOptions $ do
 -- | List of files to be pp with hldiff.py
 -- in the Conway specification
 hlFiles :: [FilePath]
-hlFiles = map (("Ledger" </>) . (<.> "tex"))
+hlFiles = map (("Ledger/Conway" </>) . (<.> "tex"))
   [ "Transaction", "Utxo" ]
 
 -- | List of files to be postprocessed with agda2vec.py
 vertVecFiles :: [FilePath]
-vertVecFiles = map (("Ledger" </>) . (<.> "tex"))
+vertVecFiles = map (("Ledger/Conway" </>) . (<.> "tex"))
   [ "Certs", "Chain", "Enact", "Epoch"
   , "Ratify", "Ledger", "NewPP", "Utxo"] -- "Utxo/Properties"
 
