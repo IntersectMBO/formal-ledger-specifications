@@ -26,12 +26,12 @@
 # 2.  **Static Site Content (Standard Markdown `.md` files, `mkdocs.yml` base):**
 #     - **Location:** Place your base `mkdocs.yml` and static Markdown files (plus
 #       any other static assets like images) in (subdirectories of)
-#       `PROJECT_ROOT/mkdocs/templates/mkdocs_src/`. For example, static pages
-#       go into `PROJECT_ROOT/mkdocs/templates/mkdocs_src/docs/`.
+#       `PROJECT_ROOT/mkdocs/src/`. For example, static pages
+#       go into `PROJECT_ROOT/mkdocs/src/docs/`.
 #     - **Behavior:** These files and directories should be committed to your
 #       repository. At the start of the build, the *entire content* of
-#       `PROJECT_ROOT/mkdocs/templates/mkdocs_src/` is copied to serve as the
-#       initial structure for `_build/mkdocs/mkdocs_src/`. Generated files
+#       `PROJECT_ROOT/mkdocs/src/` is copied to serve as the
+#       initial structure for `_build/mkdocs/src/`. Generated files
 #       (e.g., from Agda) will be added to this structure. If a generated
 #       file has the same path and name as a file from this static template,
 #       the generated version will overwrite the static one, and a warning
@@ -41,10 +41,10 @@
 #
 # 3.  **Custom MkDocs Navigation (`nav.yml`):**
 #     - **Location:** Create a YAML file named `nav.yml` at
-#       `PROJECT_ROOT/mkdocs/templates/nav.yml`.
+#       `PROJECT_ROOT/mkdocs/nav.yml`.
 #     - **Behavior:** This file should be committed to your repository. If it exists
 #       and is valid YAML, its content will be used for the `nav:` section of
-#       the `_build/mkdocs/mkdocs_src/mkdocs.yml` file. This overrides any
+#       the `_build/mkdocs/src/mkdocs.yml` file. This overrides any
 #       navigation structure that would otherwise be automatically generated
 #       by the build script based on file names.
 #     - **Use Case:** Provides complete, explicit control over the site's
@@ -53,9 +53,9 @@
 # PROCESS OVERVIEW:
 # 1.  Initial Site Structure Setup:
 #     a. Cleans and recreates necessary subdirectories within `_build/mkdocs/`.
-#     b. The entire contents of `PROJECT_ROOT/mkdocs/templates/mkdocs_src/`
+#     b. The entire contents of `PROJECT_ROOT/mkdocs/src/`
 #        (which should include a base `mkdocs.yml` and any static `docs/` content)
-#        is copied to `_build/mkdocs/mkdocs_src/` to form the initial site structure.
+#        is copied to `_build/mkdocs/src/` to form the initial site structure.
 #     c. Generates `_build/mkdocs/macros.json` from `latex/macros.sty` for use
 #        in LaTeX-to-Markdown conversion steps.
 #
@@ -80,35 +80,35 @@
 #        LaTeX pipeline), maintaining the original `src/` directory structure.
 #        This directory is the primary input for any Agda HTML generation.
 #
-# 3.  Site Content Generation & Population (`_build/mkdocs/mkdocs_src/docs/`):
+# 3.  Site Content Generation & Population (`_build/mkdocs/src/docs/`):
 #     (This step adds Agda-derived content to the `docs/` directory, which may
 #     already contain static files from Step 1.b.)
 #     a. If the `--run-agda` flag is passed:
 #        i.  `agda --html` is run on the main `.lagda.md` file within
 #            `agda_snapshot_src/`.
 #        ii. Agda outputs its `.md` (and potentially other) files directly into
-#            `_build/mkdocs/mkdocs_src/docs/`. Output filenames are typically
+#            `_build/mkdocs/src/docs/`. Output filenames are typically
 #            flat, dot-separated module names (e.g., `Ledger.Transaction.md`).
 #            *A warning is logged if Agda overwrites a file from the static template.*
 #     b. If `--run-agda` is NOT passed (or if Agda processing fails):
 #        i.  Each `.lagda.md` file from `agda_snapshot_src/` is copied to
-#            `_build/mkdocs/mkdocs_src/docs/`.
+#            `_build/mkdocs/src/docs/`.
 #        ii. Files are renamed to the flat `ModuleName.md` format during this copy.
 #            *A warning is logged if this copy overwrites a file from the static template.*
 #
-# 4.  MkDocs Site Finalization (`_build/mkdocs/mkdocs_src/`):
+# 4.  MkDocs Site Finalization (`_build/mkdocs/src/`):
 #     a. Other static assets needed by the site (e.g., `Agda.css` if Agda HTML
 #        was run, custom project CSS/JS) are copied into the appropriate
-#        subdirectories of `_build/mkdocs/mkdocs_src/docs/`.
+#        subdirectories of `_build/mkdocs/src/docs/`.
 #        *A warning is logged if these assets overwrite files from the static template.*
 #     b. The `mkdocs.yml` file (initially copied from
-#        `PROJECT_ROOT/mkdocs/templates/mkdocs_src/mkdocs.yml`) is updated:
+#        `PROJECT_ROOT/mkdocs/src/mkdocs.yml`) is updated:
 #        i.  Dynamically required `extra_css` and `extra_javascript` (like
 #            `Agda.css`) are added if not already present.
-#        ii. If `PROJECT_ROOT/mkdocs/templates/nav.yml` exists and is valid,
+#        ii. If `PROJECT_ROOT/mkdocs/nav.yml` exists and is valid,
 #            its content is used for the `nav:` section of `mkdocs.yml`.
 #        iii.Otherwise, the `nav:` section is automatically generated by parsing
-#            the `.md` filenames in `_build/mkdocs/mkdocs_src/docs/` into a
+#            the `.md` filenames in `_build/mkdocs/src/docs/` into a
 #            hierarchical structure.
 #
 # 5.  Cleanup:
@@ -184,7 +184,7 @@ LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                          # original .ag
 STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                       # static mkdocs assets
 SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"                 # this script and helpers
 MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"               # LaTeX macros
-STATIC_MKDOCS_SRC_DIR = STATIC_MKDOCS_DIR / "mkdocs_src"          # static content to inhabit mkdocs_src
+STATIC_MKDOCS_SRC_DIR = STATIC_MKDOCS_DIR / "src"                 # static content to inhabit mkdocs_src
 NAV_YML_TEMPLATE_PATH = STATIC_MKDOCS_DIR / "nav.yml"             # path to mkdocs navigation template
 BUILD_DIR = PROJECT_ROOT / "_build"                               # top-level build dir
 BUILD_MKDOCS_DIR = BUILD_DIR / "mkdocs"                           # root for mkdocs build intermediate products
@@ -203,7 +203,7 @@ AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src"    # markdown-bas
 AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_lib_exts" # copy of Agda library extensions
 
 # Directories for mkdocs site generation
-MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "mkdocs_src"
+MKDOCS_SRC_DIR = BUILD_MKDOCS_DIR / "src"
 MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
 MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
 MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
