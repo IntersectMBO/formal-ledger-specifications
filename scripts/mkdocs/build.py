@@ -121,17 +121,16 @@
 #   (or, using Python's module execution: python -m scripts.mkdocs.build [--run-agda])
 #
 # KEY OUTPUTS (within `_build/mkdocs/`):
-# - agda_snapshot_src/: Contains all project Agda sources as processed `.lagda.md`
-#                       files, structured as in the original `src/` directory. This
-#                       serves as the primary input for the `agda --html` step.
-# - mkdocs_src/:        Contains the complete source for the MkDocs site:
-#                       - `docs/`: Final `.md` documentation pages (using flat,
-#                         dot-separated names like `Ledger.Transaction.md`), CSS, JS.
-#                         (output of `agda --html` command goes here)
-#                       - `mkdocs.yml`: The MkDocs configuration file with site
-#                         structure and navigation.
-#                       This directory is ready for `mkdocs build` or `mkdocs serve`.
-# - build.log:          Detailed log file of the build script's execution.
+# -  agda_snapshot_src/: all project Agda sources as processed `.lagda.md`
+#    files, structured as in the original `src/` directory. This serves as the
+#    primary input for the `agda --html` step.
+# -  src/: complete source for MkDocs site.
+#    -  `docs/`: final `.md` documentation pages (using flat,
+#       dot-separated names like `Ledger.Transaction.md`), CSS, JS.
+#       (output of `agda --html` command goes here)
+#    -  `mkdocs.yml`: MkDocs configuration file with site structure and navigation.
+#    (This directory is ready for `mkdocs build` or `mkdocs serve`.)
+# - build.log: detailed log file of the build script's execution.
 #
 # INTERMEDIATE ARTIFACTS (created and then cleaned up by this script):
 # - macros.json        (output of generate_macros_json.py)
@@ -181,11 +180,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent      # assume build
 SRC_DIR = PROJECT_ROOT / "src"                                    # original .lagda source
 MDSRC_DIR = PROJECT_ROOT / "mdsrc"                                # hand-tweaked .lagda.md source
 LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                          # original .agda lib source
-STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                       # static mkdocs assets
 SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"                 # this script and helpers
 MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"               # LaTeX macros
-STATIC_MKDOCS_SRC_DIR = STATIC_MKDOCS_DIR / "src"                 # static content to inhabit mkdocs_src
-NAV_YML_TEMPLATE_PATH = STATIC_MKDOCS_DIR / "nav.yml"             # path to mkdocs navigation template
 BUILD_DIR = PROJECT_ROOT / "_build"                               # top-level build dir
 BUILD_MKDOCS_DIR = BUILD_DIR / "mkdocs"                           # root for mkdocs build intermediate products
 MACROS_JSON = BUILD_MKDOCS_DIR / "macros.json"                    # macro JSONs:  output of generate_macros_json.py
@@ -215,8 +211,14 @@ POSTPROCESS_PY = SCRIPTS_DIR / "postprocess.py"
 LUA_FILTER = SCRIPTS_DIR / "agda-filter.lua"
 
 # Static asset source paths
-CUSTOM_CSS_SOURCE = STATIC_MKDOCS_DIR / "css" / "custom.css"
-CUSTOM_JS_SOURCE = STATIC_MKDOCS_DIR / "js" / "custom.js"
+STATIC_MKDOCS_DIR = PROJECT_ROOT / "mkdocs"                       # static mkdocs assets
+NAV_YML_TEMPLATE_PATH = STATIC_MKDOCS_DIR / "nav.yml"             # path to mkdocs navigation template
+STATIC_MKDOCS_SRC_DIR = STATIC_MKDOCS_DIR / "src"                 # static content to inhabit mkdocs_src
+STATIC_MKDOCS_DOCS_DIR = STATIC_MKDOCS_SRC_DIR / "docs"
+STATIC_MKDOCS_CSS_DIR = STATIC_MKDOCS_DOCS_DIR / "css"
+STATIC_MKDOCS_JS_DIR = STATIC_MKDOCS_DOCS_DIR / "js"
+CUSTOM_CSS_SOURCE = STATIC_MKDOCS_CSS_DIR / "custom.css"
+CUSTOM_JS_SOURCE = STATIC_MKDOCS_JS_DIR / "js" / "custom.js"
 INDEX_MD_TEMPLATE = STATIC_MKDOCS_SRC_DIR / "docs" / "index.md"
 
 # --- Logging Setup ---
