@@ -18,7 +18,6 @@ let
                                                 ps.mkdocs-material
                                                 ps.pymdown-extensions
                                                 ps.pyyaml             # for mkdocs.yml generation
-                                                ps.beautifulsoup4     # for link rewriting (.html -> .md)
                                                ]
   );
 
@@ -55,14 +54,8 @@ in {
     nativeBuildInputs = [
       specs.agdaWithDeps  # Agda 2.7.0.1 + pinned libs from default.nix
       pkgs.pandoc         # for tex to md conversion
-      # (could add pkgs.lua here but Lua is usually bundled with pandoc)
-
-      pythonEnv  # use the combined Python environment defined above for pipeline scripts
-
-      # tools for the master build script
-      pkgs.findutils      # for 'find' command
+      pythonEnv           # use the combined Python environment defined above for pipeline scripts
       pkgs.coreutils      # for 'mkdir', 'cp', 'rm', 'basename', 'dirname'
-      # pkgs.gawk         # If needed for text processing in shell script
     ];
     shellHook = ''
       export LANG=en_US.UTF-8
