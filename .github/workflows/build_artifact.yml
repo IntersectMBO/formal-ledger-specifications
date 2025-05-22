@@ -23,7 +23,10 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build the target ${{ inputs.target }}
         run: |
-          nix-shell --run 'fls-shake --trace -j8 ${{ inputs.target }}'
+          # replacing old `nix-shell` command,
+          #   nix-shell --run 'fls-shake --trace -j8 ${{ inputs.target }}'
+          # with `nix develop` (flake) version:
+          nix develop .#default --command fls-shake --trace -j8 ${{ inputs.target }}
       - name: Upload ${{ inputs.target }} artifact
         uses: actions/upload-artifact@v4
         with:
