@@ -63,6 +63,10 @@ markdown_extensions:
   - attr_list                 # inline attributes like `code`{.class}
   - pymdownx.tabbed
   - pymdownx.emoji
+  - pymdownx.snippets
+  - pymdownx.snippets:
+      auto_append:
+        - includes/links.md
 
 extra_css:
   - css/custom.css
