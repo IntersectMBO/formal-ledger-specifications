@@ -1,6 +1,9 @@
-\section{Introduction}
-\label{sec:introduction}
-\begin{code}[hide]
+# Introduction {#sec:introduction}
+
+
+<div class="agda-hidden-source">
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Axiom.Set using (Theory)
@@ -20,92 +23,91 @@ private variable
   s s' s'' : S
   b sig : Sig
   sigs : List Sig
-\end{code}
+```
 
-\begin{Conway}
-This is the specification of the Conway era of the Cardano ledger. As
-with previous specifications, this document is an incremental
-specification, so everything that isn't defined here refers to the
-most recent definition from an older specification.
-\end{Conway}
+</div>
 
-\begin{NoConway}
-This is the work-in-progress specification of the Cardano ledger.
-The Agda source code with which we formalize the ledger specification and which
-generates this pdf document is open source and resides at the following
-\begin{center}
-repository: \url{\repourl}
-\end{center}
+??? note "Conway specifics"
 
-The current status of each individual era is described in Table \ref{fig:eras-progress}.
+    This is the specification of the Conway era of the Cardano ledger. As
+    with previous specifications, this document is an incremental
+    specification, so everything that isn’t defined here refers to the most
+    recent definition from an older specification.
 
-\begin{longtable}[h!]{|l l l l|}
-\hline
-Era  & Figures & Prose & Cleanup \\
-\hline
-\endhead
-Shelley~\cite{shelley-ledger-spec} & Partial & Partial & Not started \\
-Shelley-MA~\cite{shelley-ma-ledger-spec} & Partial & Partial & Not started \\
-Alonzo~\cite{alonzo-ledger-spec} & Partial & Partial & Not started \\
-Babbage~\cite{babbage-ledger-spec} & Not started & Not started & Not started \\
-Conway~\cite{cip1694} & Complete & Partial & Partial \\
-\hline
-\caption{Specification progress}
-\label{fig:eras-progress}
-\end{longtable}
+This is the work-in-progress specification of the Cardano ledger. The
+Agda source code with which we formalize the ledger specification and
+which generates this pdf document is open source and resides at the
+following
 
-\subsection{Overview}
-\label{sec:overview}
-This document describes, in a precise and executable way, the behavior of the Cardano ledger
-that can be updated in response to a series of events.  Because of the precise nature
-of the document, it can be dense and difficult to read at times, and it can be
-helpful to have a high-level understanding of what it is trying to describe, which we
-present below.  Keep in mind that this section focuses on intuition, using
-terms (set in \textit{italics}) which may be unfamiliar to some readers, but rest assured that
-later sections of the document will make the intuition and italicized terms precise.
-\end{NoConway}
+**Repository url**: <https://github.com/IntersectMBO/formal-ledger-specifications>
 
+The current status of each individual era is described in [Table 1](#fig:eras-progress).
 
-\subsection{A Note on Agda}
-This specification is written using the
-\hrefAgdaWiki[Agda programming language and proof assistant]~\parencite{agda2024}.
-We have made a considerable effort to ensure
-that this document is readable by people unfamiliar with Agda (or other proof
-assistants, functional programming languages, etc.).  However, by the
-nature of working in a formal language we have to play by its rules,
-meaning that some instances of uncommon notation are very difficult or
-impossible to avoid.  Some are explained in
-\cref{sec:notation,sec:appendix-agda-essentials},
-but there is no guarantee that those sections are complete.  If the meaning of an
-expression is confusing or unclear, please \href{\repourl/issues}{open an issue} in
-the \href{\repourl}{formal ledger repository} with the `notation' label.
+<a id="fig:eras-progress">
 
-\subsection{Separation of Concerns}
-The \emph{Cardano Node} consists of three pieces,
-\begin{itemize}
-  \item a \textit{networking layer} responsible for sending messages across the internet,
-  \item a \textit{consensus layer} establishing a common order of valid blocks, and
-  \item a \textit{ledger layer} which determines whether a sequence of blocks is valid.
-\end{itemize}
-Because of this separation, the ledger can be modeled as a state machine,
-\[
-  s \xrightarrow[X]{b} s'.
-\]
-More generally, we will consider state machines with an environment,
-\[
-  Γ ⊢ s \xrightarrow[X]{b} s'.
-\]
-These are modelled as 4-ary relations between the environment \(Γ\), an
-initial state \(s\), a signal \(b\) and a final state \(s'\). The ledger consists of
-roughly 25 (depending on the version) such relations that depend on each
-other, forming a directed graph that is almost a tree.
-\begin{NoConway}
-(See \cref{fig:latest-sts-diagram}.)
-\end{NoConway}
-% TODO: Uncomment the next line and replace XXXX with ref to cardano-ledger.pdf.
-% \begin{Conway}(See \cite{XXXX}.\end{Conway}
-Thus each such relation represents the transition rule of the state machine; \(X\) is
-simply a placeholder for the name of the transition rule.
+**Table 1**. Specification Progress
+
+| Era         | Figures     | Prose       | Cleanup     |
+|:------------|:------------|:------------|:------------|
+| Shelley     | Partial     | Partial     | Not started |
+| Shelley-MA  | Partial     | Partial     | Not started |
+| Alonzo      | Partial     | Partial     | Not started |
+| Babbage     | Not started | Not started | Not started |
+| Conway      | Complete    | Partial     | Partial     |
+
+</a>
+
+## Overview {#sec:overview}
+
+This document describes, in a precise and executable way, the behavior
+of the Cardano ledger that can be updated in response to a series of
+events. Because of the precise nature of the document, it can be dense
+and difficult to read at times, and it can be helpful to have a
+high-level understanding of what it is trying to describe, which we
+present below. Keep in mind that this section focuses on intuition,
+using terms (set in *italics*) which may be unfamiliar to some readers,
+but rest assured that later sections of the document will make the
+intuition and italicized terms precise.
+
+## A Note on Agda
+
+This specification is written using the  . We have made a considerable
+effort to ensure that this document is readable by people unfamiliar
+with Agda (or other proof assistants, functional programming languages,
+etc.). However, by the nature of working in a formal language we have to
+play by its rules, meaning that some instances of uncommon notation are
+very difficult or impossible to avoid. Some are explained in
+the [Notation][] and [Agda Essentials][] sections,
+but there is no guarantee that those sections are complete. If the
+meaning of an expression is confusing or unclear, please 
+[open an issue][issues] in the [formal ledger repository][repourl] with
+the "notation" label.
+
+## Separation of Concerns
+
+The *Cardano Node* consists of three pieces,
+
+- a *networking layer* responsible for sending messages across the
+  internet,
+
+- a *consensus layer* establishing a common order of valid blocks, and
+
+- a *ledger layer* which determines whether a sequence of blocks is
+  valid.
+
+Because of this separation, the ledger can be modeled as a state
+machine, 
+\\[s \xrightarrow[X]{b} s'.\\]
+More generally, we will consider
+state machines with an environment, 
+\\[Γ ⊢ s \xrightarrow[X]{b} s'.\\]
+These are modelled as 4-ary relations between the environment $Γ$, an
+initial state $s$, a signal $b$ and a final state $s'$. The ledger
+consists of roughly 25 (depending on the version) such relations that
+depend on each other, forming a directed graph that is almost a tree.
+[STS diagram](#fig:latest-sts-diagram). Thus
+each such relation represents the transition rule of the state machine;
+$X$ is simply a placeholder for the name of the transition rule.
 
 \begin{NoConway}
 \subsection{Ledger State Transition Rules}
