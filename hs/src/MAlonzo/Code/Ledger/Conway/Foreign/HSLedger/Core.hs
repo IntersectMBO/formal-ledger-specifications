@@ -35,9 +35,9 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.Hashable
-import qualified MAlonzo.Code.Ledger.Crypto
-import qualified MAlonzo.Code.Ledger.TokenAlgebra
-import qualified MAlonzo.Code.Ledger.TokenAlgebra.Coin
+import qualified MAlonzo.Code.Ledger.Conway.Crypto
+import qualified MAlonzo.Code.Ledger.Conway.TokenAlgebra
+import qualified MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.DecEq
@@ -128,10 +128,10 @@ d_Hashable'45'HSVKey_28
       (coe (\ v0 -> d_hvkStoredHash_22 (coe v0)))
 -- Ledger.Conway.Foreign.HSLedger.Core.isHashableSet-HSVKey
 d_isHashableSet'45'HSVKey_32 ::
-  MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
+  MAlonzo.Code.Ledger.Conway.Crypto.T_isHashableSet_8
 d_isHashableSet'45'HSVKey_32
   = coe
-      MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
+      MAlonzo.Code.Ledger.Conway.Crypto.C_mkIsHashableSet_32
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
          (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
@@ -150,10 +150,10 @@ d_Hashable'45'ℕ_34
       (coe (\ v0 -> v0))
 -- Ledger.Conway.Foreign.HSLedger.Core.isHashableSet-ℕ
 d_isHashableSet'45'ℕ_38 ::
-  MAlonzo.Code.Ledger.Crypto.T_isHashableSet_6
+  MAlonzo.Code.Ledger.Conway.Crypto.T_isHashableSet_8
 d_isHashableSet'45'ℕ_38
   = coe
-      MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
+      MAlonzo.Code.Ledger.Conway.Crypto.C_mkIsHashableSet_32
       (coe
          MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
          (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
@@ -244,12 +244,13 @@ d_ScriptHash_72 = erased
 d_Data_74 :: ()
 d_Data_74 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.Dataʰ
-d_Data'688'_76 :: MAlonzo.Code.Ledger.Crypto.T_HashableSet_32
+d_Data'688'_76 ::
+  MAlonzo.Code.Ledger.Conway.Crypto.T_HashableSet_34
 d_Data'688'_76
   = coe
-      MAlonzo.Code.Ledger.Crypto.C_mkHashableSet_54
+      MAlonzo.Code.Ledger.Conway.Crypto.C_mkHashableSet_56
       (coe
-         MAlonzo.Code.Ledger.Crypto.C_mkIsHashableSet_30
+         MAlonzo.Code.Ledger.Conway.Crypto.C_mkIsHashableSet_32
          (coe
             MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
             (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
@@ -324,7 +325,7 @@ d_DocHash_104 :: ()
 d_DocHash_104 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.tokenAlgebra
 d_tokenAlgebra_106 ::
-  MAlonzo.Code.Ledger.TokenAlgebra.T_TokenAlgebra_8
+  MAlonzo.Code.Ledger.Conway.TokenAlgebra.T_TokenAlgebra_10
 d_tokenAlgebra_106
   = coe
-      MAlonzo.Code.Ledger.TokenAlgebra.Coin.du_Coin'45'TokenAlgebra_120
+      MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin.du_Coin'45'TokenAlgebra_122
