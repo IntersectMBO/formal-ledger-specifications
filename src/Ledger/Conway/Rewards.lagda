@@ -6,6 +6,7 @@
 {-# OPTIONS --safe #-}
 
 import      Data.Nat as ℕ renaming (_⊔_ to max)
+open import Data.Integer using () renaming (+_ to pos)
 import      Data.Integer as ℤ renaming (_⊔_ to max)
 import      Data.Integer.Properties as ℤ
 open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_)
@@ -167,7 +168,7 @@ nonZero-1/n n {{prf}} =
 
 nonZero-1+max0-x : ∀ (x : ℚ) → ℚ.NonZero (1 + ℚ.max 0 x)
 nonZero-1+max0-x x =
-  ℚ.>-nonZero (ℚ.+-mono-<-≤ (ℚ.positive⁻¹ 1) (ℚ.p≤p⊔q 0 x))
+  ℚ.>-nonZero (ℚ.+-mono-<-≤ (ℚ.positive⁻¹ 1 {{_}}) (ℚ.p≤p⊔q 0 x))
 
 private instance
   nonNegative : ∀ {i} → ℤ.NonNegative (ℤ.max 0 i)
@@ -461,19 +462,28 @@ The update consists of four net flows:
   \item \AgdaField{rs}: The map of new individual rewards,
     to be added to the existing rewards.
 \end{itemize}
+We require these net flows to satisfy certain constraints that
+are also stored in the \AgdaRecord{RewardUpdate} data type.
+Specifically, \AgdaField{flowConservation} states that
+all four net flows add up to zero,
+and we state the directions of \AgdaField{Δt} and \AgdaField{Δf}.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record RewardUpdate : Set where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ʳᵘ
-\end{code}
-\begin{code}
   field
     Δt Δr Δf : ℤ
     rs : Credential ⇀ Coin
+
+    flowConservation : Δt + Δr + Δf + pos (∑[ c ← rs ] c) ≡ 0
+    Δt-positive : 0 ≤ Δt
+    Δf-negative : Δf ≤ 0
+
+\end{code}
+\begin{code}[hide]
+--unquoteDecl HasCast-RewardUpdate = derive-HasCast
+--    ( (quote RewardUpdate   , HasCast-RewardUpdate) ∷ [])
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate type}
