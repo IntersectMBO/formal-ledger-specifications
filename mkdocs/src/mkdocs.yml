@@ -44,33 +44,46 @@ theme:
     code: Source Code Pro
   #   text: Roboto
   #   code: Roboto Mono # Or perhaps StrippedJuliaMono if available via CSS?
+extra:
+  math:
+    enable: true # This tells the Material theme to load KaTeX
 
 
 # Navigation structure
 nav:
   - Home: index.md
 
-# Markdown extensions
-markdown_extensions:
-  - admonition                # call-out boxes like !!! note
-  - pymdownx.details
-  - toc:                      # table of contents generation
-      permalink: true         # anchor links to headers
-  - pymdownx.superfences:     # syntax highlighting in code blocks
-      custom_fences:
-        - name: mermaid       # mermaid diagrams
-          class: mermaid
-  - attr_list                 # inline attributes like `code`{.class}
-  - pymdownx.tabbed
-  - pymdownx.emoji
-  - pymdownx.snippets
-  - pymdownx.snippets:
-      auto_append:
-        - includes/links.md
-
 extra_css:
+  # - https://unpkg.com/katex@0.16.10/dist/katex.min.css
   - css/custom.css
   - css/Agda.css
 
 extra_javascript:
+  # - https://unpkg.com/katex@0.16.10/dist/katex.min.js         # Core KaTeX library
+  # - https://unpkg.com/katex@0.16.10/dist/contrib/auto-render.min.js # Auto-rendering script
   - js/custom.js
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true       # This is important for KaTeX with auto-render
+  - admonition
+  - pymdownx.details
+  - toc:
+      permalink: "#"
+  # - toc:
+  #     permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+  - attr_list
+  - pymdownx.emoji
+  - pymdownx.snippets:
+      check_paths: true  # <-- Add this for debugging
+      auto_append:
+        - includes/links.md
+
+watch:
+  - includes
+
+use_directory_urls: false

@@ -1,3 +1,5 @@
+[Notation]: Notation.md
+[Agda Essentials]: EssentialAgda.md
 [CHAIN]: Ledger.Conway.Chain.md#chain-transition-system
 [NEWEPOCH]: Ledger.Conway.Epoch.md#newepoch-transition-system
 [EPOCH]: Ledger.Conway.Epoch.md#epoch-transition-system

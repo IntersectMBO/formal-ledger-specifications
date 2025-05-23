@@ -96,13 +96,16 @@ The *Cardano Node* consists of three pieces,
   valid.
 
 Because of this separation, the ledger can be modeled as a state
-machine, $$s \xrightarrow[X]{b} s'.$$ More generally, we will consider
-state machines with an environment, $$Γ ⊢ s \xrightarrow[X]{b} s'.$$
+machine, 
+\\[s \xrightarrow[X]{b} s'.\\]
+More generally, we will consider
+state machines with an environment, 
+\\[Γ ⊢ s \xrightarrow[X]{b} s'.\\]
 These are modelled as 4-ary relations between the environment $Γ$, an
 initial state $s$, a signal $b$ and a final state $s'$. The ledger
 consists of roughly 25 (depending on the version) such relations that
 depend on each other, forming a directed graph that is almost a tree.
-(See *cref 'fig:latest-sts-diagram' (unresolved reference)*.) Thus
+[STS diagram](#fig:latest-sts-diagram). Thus
 each such relation represents the transition rule of the state machine;
 $X$ is simply a placeholder for the name of the transition rule.
 
