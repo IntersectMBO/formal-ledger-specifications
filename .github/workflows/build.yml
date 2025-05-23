@@ -68,10 +68,12 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build MkDocs site
+      - name: Generate and Build MkDocs site
         run: |
-          # !!! change to mkdocs src directory first !!!
-          nix develop .#markdown --command "cd _build/mkdocs/src && mkdocs build --site-dir ../../../site"
+          # 1. Explicitly use bash -c to run a sequence of commands.
+          # 2. Run the python build script to generate the mkdocs source files.
+          # 3. cd into the generated directory and run mkdocs build.
+          nix develop .#markdown --command bash -c "python ./scripts/mkdocs/build.py --run-agda && cd _build/mkdocs/src && mkdocs build --site-dir ../../../site"
           # --site-dir places output in root for upload step
       - name: Upload MkDocs site artifact
         uses: actions/upload-artifact@v4
