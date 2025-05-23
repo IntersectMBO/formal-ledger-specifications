@@ -11,17 +11,16 @@
 # (Guidance for users and contributors on manual overrides and custom configurations)
 #
 # 1.  **Persistent, Manually-Refined Literate Agda Files (`.lagda.md`):**
-#     - **Location:** Place these files in (subdirectories of) `PROJECT_ROOT/mdsrc/`.
-#       (e.g., `mdsrc/Module/File.lagda.md`)
-#     - **Behavior:** These files should be committed to your repository. During the
+#     - **Location:** Place these files in (subdirectories of) `PROJECT_ROOT/src/`.
+#       Move the corresponding `.lagda` file to `PROJECT_ROOT/src_legacy/`; e.g.,
+#       old latex Agda file: `src/Module/File.lagda` -> `src_legacy/Module/File.lagda`
+#       new markdown Agda file: `src/Module/File.lagda.md`
+#     - **Behavior:** These files should be committed to our repository. During the
 #       build, they will be copied into the `_build/mkdocs/agda_snapshot_src/`
-#       directory. If a file in `mdsrc/` corresponds to an original Agda source
-#       file (e.g., `src/Module/File.lagda`), this manually refined version
-#       will *override* (take precedence over) the version that would
-#       otherwise be generated from the original Agda source.
-#     - **Use Case:** Ideal for applying extensive manual edits, corrections, or
-#       custom Markdown content to literate Agda files that should persist
-#       across builds.
+#       directory. If a file in `src/` already has an `.lagad.md` extension, this
+#       script will not generate a new version of it.
+#     - **Use Case:** applying extensive manual edits, corrections, or custom
+#       Markdown content to literate Agda files that should persist across builds.
 #
 # 2.  **Static Site Content (Standard Markdown `.md` files, `mkdocs.yml` base):**
 #     - **Location:** Place your base `mkdocs.yml` and static Markdown files (plus
@@ -65,20 +64,16 @@
 #     b. Converts any plain `.agda` files within this snapshot to `.lagda.md` format
 #        and updates them in place.
 #     c. For each original LaTeX-based `.lagda` file from `src/`:
-#        i.  Checks if a corresponding manually refined `.lagda.md` version
-#            exists in `PROJECT_ROOT/mdsrc/`.
-#        ii. If found, this refined version is copied to `agda_snapshot_src/`,
-#            replacing the original `.lagda` file from the initial snapshot copy.
-#            The standard LaTeX-to-Markdown pipeline is *skipped* for this file.
-#        iii.If not found in `mdsrc/`, the original `.lagda` file undergoes a
-#            multi-stage pipeline (custom Python preprocessing -> Pandoc with Lua
-#            filter -> custom Python postprocessing) to convert it into a
-#            Markdown-based `.lagda.md` file. This processed file replaces its
-#            corresponding original in `agda_snapshot_src/`.
+#        execute the multi-stage pipeline
+#        (Python preprocessing -> Pandoc+Lua -> Python postprocessing)
+#        to convert it into a Markdown-based `.lagda.md` file.
+#        This processed file replaces its corresponding original in
+#        `agda_snapshot_src/`.
 #     d. Result: `agda_snapshot_src/` now contains all project modules as
-#        `.lagda.md` files (derived from `.agda`, `mdsrc/` overrides, or the
-#        LaTeX pipeline), maintaining the original `src/` directory structure.
-#        This directory is the primary input for any Agda HTML generation.
+#        `.lagda.md` files (derived from `.agda` or `.lagda` and the
+#        LaTeX pipeline or files that were already `.lagda.md` files to begin with,
+#        which will remain unaltered), maintaining the original `src/` directory
+#        structure. This directory is the primary input for any Agda HTML generation.
 #
 # 3.  Site Content Generation & Population (`_build/mkdocs/src/docs/`):
 #     (This step adds Agda-derived content to the `docs/` directory, which may
@@ -178,7 +173,6 @@ class LabelTargetInfo(TypedDict):
 # --- Configuration ---
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent      # assume build.py is in PROJECT_ROOT/scripts/mkdocs
 SRC_DIR = PROJECT_ROOT / "src"                                    # original .lagda source
-MDSRC_DIR = PROJECT_ROOT / "mdsrc"                                # hand-tweaked .lagda.md source
 LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                          # original .agda lib source
 SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"                 # this script and helpers
 MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"               # LaTeX macros
@@ -196,6 +190,12 @@ AGDA_SNAPSHOT_SRC_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_src"    # markdown-bas
                                                                   #   output of postprocess.py
                                                                   #   input to `agda --html`
                                                                   #   input to shake (if `agda --html` relegated to shake)
+# AGDA_SNAPSHOT_SRC_DIR now contains whatever was in src/:
+# - some modules as pre-existing .lagda.md files
+# - some modules as .agda files
+# - some modules as .lagda (LaTeX) files
+# Crucially, for any given module, only ONE of these types will exist.
+
 AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MKDOCS_DIR / "agda_snapshot_lib_exts" # copy of Agda library extensions
 
 # Directories for mkdocs site generation
@@ -629,7 +629,6 @@ def create_agda_snapshots(
 
 def convert_agda_to_lagda(snapshot_src_dir: Path, project_root_for_logging: Path) -> None:
     """Converts .agda files to .lagda.md within the snapshot directory."""
-    logging.info("Converting .agda files to .lagda.md in the src snapshot directory...")
     if 'convert_agda_to_lagda_md' not in globals():
         logging.error("agda2lagda.convert_agda_to_lagda_md not available. Skipping .agda conversion.")
         return # Or raise an error if critical
@@ -1109,81 +1108,106 @@ def main(run_agda_html=False):
     # 3. Create Agda source snapshot
     create_agda_snapshots(SRC_DIR, AGDA_SNAPSHOT_SRC_DIR, LIB_EXTS_DIR, AGDA_SNAPSHOT_LIB_EXTS_DIR)
 
-    # 4a. Convert .agda to .lagda.md in snapshot
+    # 4. Convert .agda to .lagda.md in src snapshot only
+    logging.info(f"\n--- Stage 4: Converting .agda files in snapshot to .lagda.md ---")
     convert_agda_to_lagda(AGDA_SNAPSHOT_SRC_DIR, PROJECT_ROOT)
 
-    # 4b. Generate snapshot .agda-lib file
+    # Clean up .agda files from src snapshot after they've been converted
+    logging.info("  Cleaning up processed .agda files from snapshot...")
+    for agda_file_in_snapshot in list(AGDA_SNAPSHOT_SRC_DIR.rglob("*.agda")):
+        corresponding_lagda_md = agda_file_in_snapshot.with_suffix(".lagda.md")
+        if corresponding_lagda_md.exists(): # If conversion produced a .lagda.md
+            logging.debug(f"    Removing '{agda_file_in_snapshot.name}' as its .lagda.md now exists.")
+            agda_file_in_snapshot.unlink(missing_ok=True) # missing_ok in case it was already handled
+
+    # 5. Generate snapshot .agda-lib file
+    logging.info(f"\n--- Stage 5: Generating snapshot .agda-lib file ---")
     agda_lib_deps = [
         "standard-library", "standard-library-classes", "standard-library-meta", "abstract-set-theory", "iog-prelude"
     ]
     generate_agda_lib_file(AGDA_SNAPSHOT_SRC_DIR, AGDA_SNAPSHOT_LIB_EXTS_DIR, agda_lib_deps)
 
-    # 5. Process original LaTeX .lagda files:
-    #    First, identify which .lagda files have pre-refined versions in MDSRC_DIR.
-    logging.info(f"\n--- Stage 5: Processing original LaTeX .lagda files from {SRC_DIR.relative_to(PROJECT_ROOT)} ---")
-    original_latex_lagda_files_from_src: List[Path] = sorted(list(SRC_DIR.rglob("*.lagda")))
+    # 6. Process LaTeX-based literate .lagda files in src snapshot:
+    #    Identify .lagda (LaTeX) files still in the snapshot. These are the ones that
+    #    were not .lagda.md or .agda files in the original src/.
+    latex_files_in_snapshot_to_process: List[Path] = sorted(list(AGDA_SNAPSHOT_SRC_DIR.rglob("*.lagda")))
 
-    latex_files_requiring_conversion: List[Path] = [] # Files that need the full LaTeX->MD pipeline
+    processed_info_for_latex_pipeline: List[ProcessedFileInfo] = [] # For files going through the full LaTeX pipeline
 
-    if original_latex_lagda_files_from_src:
-        logging.info(f"Found {len(original_latex_lagda_files_from_src)} original .lagda files. "
-                     f"Checking against {MDSRC_DIR.name} for pre-refined versions...")
-        for lagda_file_in_src in original_latex_lagda_files_from_src:
-            relative_path = lagda_file_in_src.relative_to(SRC_DIR) # e.g., Module/File.lagda
+    if latex_files_in_snapshot_to_process:
+        logging.info(f"\n--- Stage 6: Preparing {len(latex_files_in_snapshot_to_process)} "
+                     "LaTeX .lagda files from snapshot for conversion pipeline ---")
 
-            refined_md_in_mdsrc_path = MDSRC_DIR / relative_path.with_suffix(".lagda.md")
-            snapshot_target_for_mdsrc = AGDA_SNAPSHOT_SRC_DIR / relative_path.with_suffix(".lagda.md")
+        for lagda_tex_file_in_snapshot in latex_files_in_snapshot_to_process:
+            # This file is already in the snapshot and needs the full pipeline.
+            # The relative path for LagdaProcessingPaths etc. is relative to AGDA_SNAPSHOT_SRC_DIR.
+            current_relative_path = lagda_tex_file_in_snapshot.relative_to(AGDA_SNAPSHOT_SRC_DIR)
+            paths = LagdaProcessingPaths(current_relative_path)
 
-            if refined_md_in_mdsrc_path.exists() and refined_md_in_mdsrc_path.is_file():
-                logging.info(f"  Found pre-refined file in {MDSRC_DIR.name} for '{relative_path}'. "
-                             f"Copying to snapshot: {snapshot_target_for_mdsrc.relative_to(PROJECT_ROOT)}")
-                try:
-                    snapshot_target_for_mdsrc.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy2(refined_md_in_mdsrc_path, snapshot_target_for_mdsrc)
+            # Calculate final_flat_md_filename (as you had it)
+            module_name_parts = list(current_relative_path.parent.parts)
+            file_stem_for_flat_name = current_relative_path.stem # e.g., "File" from "Module/File.lagda"
 
-                    # remove original .lagda from snapshot
-                    original_lagda_in_snapshot = AGDA_SNAPSHOT_SRC_DIR / relative_path
-                    if original_lagda_in_snapshot.exists() and original_lagda_in_snapshot.is_file():
-                        original_lagda_in_snapshot.unlink()
-                        logging.info(f"    Removed corresponding original .lagda "
-                                     f"'{original_lagda_in_snapshot.name}' from snapshot.")
-                except Exception as e:
-                    logging.error(f"  Failed to copy pre-refined file '{refined_md_in_mdsrc_path.name}' "
-                                  f"to snapshot: {e}", exc_info=True)
-                    # If copy fails, maybe add lagda_file_in_src to latex_files_requiring_conversion as fallback.
+            is_index_file_stem = file_stem_for_flat_name.lower() == "index"
+            if not module_name_parts and is_index_file_stem: module_name_flat = "index"
+            elif not module_name_parts: module_name_flat = file_stem_for_flat_name
             else:
-                # pre-refined file does not exist, queue original .lagda for conversion
-                logging.info(f"  No pre-refined file for '{relative_path}' in {MDSRC_DIR.name}. "
-                             f"Queuing original for conversion.")
-                latex_files_requiring_conversion.append(lagda_file_in_src)
-    else:
-        logging.info("No original .lagda files found in src/.")
+                current_module_path_parts = list(module_name_parts)
+                if not is_index_file_stem: current_module_path_parts.append(file_stem_for_flat_name)
+                module_name_flat = ".".join(part for part in current_module_path_parts if part)
+            final_flat_md_filename = module_name_flat + ".md"
 
-    # --- Stage 5a: run preprocess.py on files requiring conversion ---
-    # `run_latex_preprocessing_stage` now takes filtered list; operates on fewer files than before.
-    processed_info_for_latex: List[ProcessedFileInfo]
-    if latex_files_requiring_conversion:
-        processed_info_for_latex = run_latex_preprocessing_stage(
-            latex_files_requiring_conversion, # pass the filtered list
-            SRC_DIR,
-            macros_json_path,                 # path object returned by macros_path()
-            TEMP_DIR,
-            CODE_BLOCKS_DIR
-        )
+            file_info: ProcessedFileInfo = {
+                "original_path": lagda_tex_file_in_snapshot, # Input for preprocess.py is the .lagda file in the snapshot
+                "temp_path": paths.temp_lagda,
+                "code_blocks_json_path": paths.code_blocks_json,
+                "intermediate_md_path": paths.intermediate_md,
+                "snapshot_target_path": paths.snapshot_target_lagda_md, # Output .lagda.md in snapshot
+                "final_flat_md_filename": final_flat_md_filename,
+                "relative_path_original": current_relative_path # For postprocess to find original .lagda for deletion
+            }
+            processed_info_for_latex_pipeline.append(file_info)
     else:
-        processed_info_for_latex = []
-        logging.info(f"\nNo LaTeX files require the conversion pipeline (either all found in {MDSRC_DIR.name} or none existed).")
+        logging.info(f"\n--- Stage 6: No LaTeX .lagda files found in snapshot requiring conversion pipeline ---")
 
-    # --- Stage 5b: build global label map (only from files that went through preprocess.py) ---
-    # Uses `processed_info_for_latex` so we only consider files that went through preprocessing stage.
+
+    # --- Stage 6a: Run preprocess.py on the identified LaTeX .lagda files ---
+    # The `run_latex_preprocessing_stage` function from your modular build.py needs to be
+    # adapted to take this `processed_info_for_latex_pipeline`. Its core loop would iterate this list,
+    # run `preprocess.py` using `file_info["original_path"]` as input, and use other paths from `file_info`.
+    # For simplicity, I'll show the loop here if `run_latex_preprocessing_stage` isn't adapted yet.
+
+    successfully_preprocessed_info: List[ProcessedFileInfo] = []
+    if processed_info_for_latex_pipeline:
+        logging.info(f"\n--- Preprocessing {len(processed_info_for_latex_pipeline)} LaTeX files from snapshot ---")
+        for file_info in processed_info_for_latex_pipeline:
+            LagdaProcessingPaths(file_info['relative_path_original']).ensure_parent_dirs_exist()
+            logging.info(f"  Preprocessing: {file_info['relative_path_original']}")
+            try:
+                run_command([
+                    "python", str(PREPROCESS_PY),
+                    str(file_info["original_path"]), # This is the .lagda file in the snapshot
+                    str(macros_json_path), # Path to macros.json from macros_path()
+                    str(file_info["code_blocks_json_path"])
+                ], stdout_file=str(file_info["temp_path"]))
+                successfully_preprocessed_info.append(file_info) # Add if preprocess succeeded
+            except Exception as e:
+                logging.error(f"  Error during preprocess.py for {file_info['relative_path_original']}: {e}", exc_info=True)
+    # `successfully_preprocessed_info` is now the list for the next stages.
+
+    # --- Stage 6b: Build Global Label Map ---
     labels_map_file: Optional[Path] = build_global_label_map(
-        processed_info_for_latex,
+        successfully_preprocessed_info, # Use only successfully preprocessed files
         BUILD_MKDOCS_DIR
     )
 
-    # --- Stage 5c: Run pandoc+lua and postprocess.py (on files that went through preprocess.py) ---
+    # --- Stage 6c: Run pandoc+lua and postprocess.py ---
+    # This uses `successfully_preprocessed_info`. `run_latex_conversion_stage` should
+    # use `file_info["original_path"]` (the .lagda file in snapshot) and convert it,
+    # placing the output at `file_info["snapshot_target_path"]`.
+    # It should also delete file_info["original_path"] (the .lagda file) from snapshot.
     run_latex_conversion_stage(
-        processed_info_for_latex,
+        successfully_preprocessed_info,
         labels_map_file,
         LUA_FILTER,
         POSTPROCESS_PY,
@@ -1191,13 +1215,14 @@ def main(run_agda_html=False):
         AGDA_SNAPSHOT_SRC_DIR
     )
 
-    # 6. Collect all .lagda.md files from snapshot.
-    #    a) .lagda.md files converted from plain .agda files.
-    #    b) .lagda.md files copied from MDSRC_DIR.
-    #    c) .lagda.md files generated by the LaTeX conversion pipeline.
+    # 7. Collect all .lagda.md files from snapshot.
+    # - .lagda.md files originally in src/ and copied/preserved.
+    # - .lagda.md files converted from .agda files in src/.
+    # - .lagda.md files converted from .lagda files in src/.
+    # AGDA_SNAPSHOT_SRC_DIR should now only contain .lagda.md files and supporting files (like .agda-lib).
     all_snapshot_lagda_md_files: List[Path] = collect_all_literate_md_in_snapshot(AGDA_SNAPSHOT_SRC_DIR)
 
-    # 7. Agda HTML Generation / Copy to MkDocs docs
+    # 8. Agda HTML Generation / Copy to MkDocs docs
     #    This stage uses `all_snapshot_lagda_md_files` which includes all sources.
     MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)
     nav_files_in_docs: List[str] = publish_to_mkdocs_docs(
@@ -1207,7 +1232,7 @@ def main(run_agda_html=False):
         MKDOCS_DOCS_DIR
     )
 
-    # 8. Assemble MkDocs static assets (CSS, JS, index.md)
+    # 9. Assemble MkDocs static assets (CSS, JS, index.md)
     MKDOCS_CSS_DIR.mkdir(parents=True, exist_ok=True)   # MKDOCS_CSS_DIR needs to exist
     MKDOCS_JS_DIR.mkdir(parents=True, exist_ok=True)    # MKDOCS_JS_DIR needs to exist
     final_nav_list: List[str] = deploy_static_mkdocs_assets(
@@ -1240,7 +1265,7 @@ def main(run_agda_html=False):
     logging.info(f"Primary input for Shake/Agda (if used): {AGDA_SNAPSHOT_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Final source for MkDocs build/serve: {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Full log saved to: {LOG_FILE.relative_to(PROJECT_ROOT)}")
-    logging.info(f"To serve the site locally (from project root): mkdocs serve --config-file \"{mkdocs_yml_final_path}\"")
+    logging.info(f"To serve the site locally, CWD to {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)} and run \"mkdocs serve\"")
 
     # Call cleanup for intermediate artifacts now that the build has succeeded
     cleanup_intermediate_mkdocs_artifacts()  # << comment out if artifacts needed for debugging
