@@ -159,13 +159,9 @@ example, the UTXOW rule mentioned above requires the UTXO rule, which
 checks that the inputs to the transaction exist, that the transaction is
 balanced, and several other conditions.
 
-<figure id="fig:latest-sts-diagram">
+<a id="fig:latest-sts-diagram">
 
-![STS Diagram](img/STS-diagram.png "STS Diagram")
-
-</figure>
-
-??? note "**Figure caption**"
+!!! note "**Figure: STS Diagram**"
 
     State transition rules of the ledger specification,
     presented as a directed graph; each node represents a transition rule;
@@ -175,6 +171,10 @@ balanced, and several other conditions.
     part of the source state, the environment or the event ( rules added in
     Conway;  rules modified in Conway; dotted ellipses represent rules that
     are not yet formalized in Agda).
+
+    ![STS Diagram](img/STS-diagram.png "STS Diagram")
+
+</a>
 
 A brief description of each transition rule is provided below, with a
 link to an Agda module and reference to a section where the rule is
