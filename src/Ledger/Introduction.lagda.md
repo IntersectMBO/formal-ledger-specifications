@@ -39,11 +39,13 @@ Agda source code with which we formalize the ledger specification and
 which generates this pdf document is open source and resides at the
 following
 
-**Repository url**: [https://github.com/IntersectMBO/formal-ledger-specifications][repourl]
+**Repository url**: <https://github.com/IntersectMBO/formal-ledger-specifications>
 
 The current status of each individual era is described in [Table 1](#fig:eras-progress).
 
 <a id="fig:eras-progress">
+
+**Table 1**. Specification Progress
 
 | Era         | Figures     | Prose       | Cleanup     |
 |:------------|:------------|:------------|:------------|
@@ -52,9 +54,7 @@ The current status of each individual era is described in [Table 1](#fig:eras-pr
 | Alonzo      | Partial     | Partial     | Not started |
 | Babbage     | Not started | Not started | Not started |
 | Conway      | Complete    | Partial     | Partial     |
-|             |             |             |             |
 
-**Table 1**. Specification Progress
 </a>
 
 ## Overview {#sec:overview}
