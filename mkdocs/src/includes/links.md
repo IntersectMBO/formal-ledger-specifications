@@ -1,8 +1,12 @@
 [Agda documentation]: https://agda.readthedocs.io/en/
 [Agda Essentials]: EssentialAgda.md
 [Agda Wiki]: https://wiki.portal.chalmers.se/agda/pmwiki.php
+[Auxiliary DELEG transition system]: Ledger.Conway.Certs.md#auxiliary-deleg-transition-system
+[Auxiliary GOVCERT transition system]: Ledger.Conway.Certs.md#auxiliary-govcert-transition-system
+[Auxiliary POOL transition system]: Ledger.Conway.Certs.md#auxiliary-pool-transition-system
 [CERT]: Ledger.Conway.Certs.md#certs-rules
 [CERTS]: Ledger.Conway.Certs.md#certs-rules
+[CERTS rules]: Ledger.Conway.Certs.md#certs-rules
 [CHAIN]: Ledger.Conway.Chain.md#chain-transition-system
 [DELEG]: Ledger.Conway.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Enact.md#enact-transition-system
