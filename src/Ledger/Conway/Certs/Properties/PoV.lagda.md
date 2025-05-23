@@ -1,15 +1,23 @@
-\begin{code}[hide]
+
+<div class="agda-hidden-source">
+
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Types.GovStructure
 
 module Ledger.Conway.Certs.Properties.PoV (gs : _) (open GovStructure gs) where
+```
 
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\CertsPoV}{Conway/Certs/Properties/PoV}
+</div>
 
-\begin{code}[hide]
+
+
+<div class="agda-hidden-source">
+
+```agda
+
 open import Ledger.Conway.Certs gs
 open import Ledger.Conway.Certs.Properties.PoVLemmas gs
 open import Ledger.Conway.GovernanceActions gs hiding (yes; no)
@@ -49,36 +57,40 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
     ( ≡ᵉ-getCoinˢ'     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
-    open CERTSpov indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'     
-\end{code}
+    open CERTSpov indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'
+```
 
-\begin{theorem}[%
-  \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}:
-  \CERTS{} rule preserves value%
-  ]\label{thm:CERTS-PoV}
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \ab{l} be a list of \DCert{}s, and let \ab{s₁}, \ab{sₙ} be \CertState{}s
-      such that \ab{s₁}~\AgdaDatatype{⇀⦇}~\ab{l}~\AgdaDatatype{,CERTS⦈}~\ab{sₙ}.
-      Then, the value of \ab{s₁} is equal to the value of \ab{sₙ} plus
-      the value of the withdrawals in \ab{Γ}.
-    \item \textit{Formally}.
-\begin{code}
+</div>
+
+
+<span id="thm:CERTS-PoV" label="thm:CERTS-PoV"></span>
+
+- *Informally*. Let be a list of `DCert`{.agdadatatype}s, and let , be
+  `CertState`{.agdarecord}s such that     . Then, the value of is equal
+  to the value of plus the value of the withdrawals in .
+
+- *Formally*. 
+```agda
+
     CERTS-pov :  {Γ : CertEnv} {s₁ sₙ  : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
       →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ 
       → getCoin s₁ ≡ getCoin sₙ + getCoin (wdrlsOf Γ)
-\end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
-      module in the \href{\repourl}{formal ledger repository}.
-\begin{code}[hide]
+```
+
+
+- *Proof*. (click "Show more Agda" to see the formal proof)
+  
+<div class="agda-hidden-source">
+
+```agda
+
     -- Proof.
     CERTS-pov validNetId (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov validNetId bsts
     CERTS-pov {Γ = Γ} validNetId (RTC (bsts , BS-ind x sts)) =
       trans  (CERTBASE-pov validNetId bsts)
              (cong  (_+ getCoin (CertEnv.wdrls Γ))
              (trans (CERT-pov indexedSumᵛ'-∪' x) (sts-pov sts)))
-\end{code}
-  \end{itemize}
-\end{theorem}
+```
+
+</div>
