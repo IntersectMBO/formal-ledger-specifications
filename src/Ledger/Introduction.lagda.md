@@ -270,81 +270,91 @@ module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
       Γ ⊢ s ⇀⟦ sig ∷ sigs ⟧* s''
 ```
 
-\subsection{Computational}
+## Computational
 
 Since all such state machines need to be evaluated by the nodes and all
 nodes should compute the same states, the relations specified by them
 should be computable by functions. This can be captured by the
-definition in \cref{fig:computational} which is parametrized
-over the state transition relation.
+definition in [Computational relations](Ledger.Introduction.md#computational-relations)
+which is parametrized over the state transition relation.
 
-\begin{figure*}[htb]
-\begin{AgdaMultiCode}
-\begin{code}
+
+### Computational relations
+
+ 
+```agda
+
 record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Type where
   field
     compute     : C → S → Sig → Maybe S
     ≡-just⇔STS  : compute Γ s b ≡ just s' ⇔ Γ ⊢ s ⇀⦇ b ,X⦈ s'
 
   nothing⇒∀¬STS : compute Γ s b ≡ nothing → ∀ s' → ¬ Γ ⊢ s ⇀⦇ b ,X⦈ s'
-\end{code}
-\end{AgdaMultiCode}
-\caption{Computational relations}
-\label{fig:computational}
-\end{figure*}
-\begin{code}[hide]
+```
+ 
+<div class="agda-hidden-source">
+
+```agda
+
   nothing⇒∀¬STS comp≡nothing s' h rewrite ≡-just⇔STS .Equivalence.from h =
     case comp≡nothing of λ ()
-\end{code}
+```
 
-Unpacking this, we have a \compute{} function that computes a final
-state from a given environment, state and signal. The second piece is
-correctness: \compute{} succeeds with some final state if and only if
-that final state is in relation to the inputs.
+</div>
+
+
+Unpacking this, we have a `compute`{.agdafield} function that computes a
+final state from a given environment, state and signal. The second piece
+is correctness: `compute`{.agdafield} succeeds with some final state if
+and only if that final state is in relation to the inputs.
 
 This has two further implications:
 
-\begin{itemize}
-\item Since \compute{} is a function, the state transition relation is necessarily
-a (partial) function; i.e., there is at most one possible final state for each
-input data.  Otherwise, we could prove that \compute{} could evaluates to
-two different states on the same inputs, which is impossible since it
-is a function.
-\item The actual definition of \compute{} is irrelevant---any two
-implementations of \compute{} have to produce the same result on any
-input. This is because we can simply chain the equivalences for two
-different \compute{} functions together.
-\end{itemize}
+- Since `compute`{.agdafield} is a function, the state transition
+  relation is necessarily a (partial) function; i.e., there is at most
+  one possible final state for each input data. Otherwise, we could
+  prove that `compute`{.agdafield} could evaluates to two different
+  states on the same inputs, which is impossible since it is a function.
 
-What this all means in the end is that if we give a \Computational{}
-instance for every relation defined in the ledger, we also have an
-executable version of the rules which is guaranteed to be
-correct. This is indeed something we have done, and the same source
-code that generates this document also generates a Haskell library
-that lets anyone run this code.
+- The actual definition of `compute`{.agdafield} is irrelevant—any two
+  implementations of `compute`{.agdafield} have to produce the same
+  result on any input. This is because we can simply chain the
+  equivalences for two different `compute`{.agdafield} functions
+  together.
 
-\subsection{Sets \& Maps}
-\label{sec:sets-maps}
-The ledger heavily uses set theory. For various reasons it was
-necessary to implement our own set theory (there will be a paper on this
-some time in the future). Crucially, the set theory is completely
-abstract (in a technical sense---Agda has an abstract keyword) meaning
-that implementation details of the set theory are
-irrelevant. Additionally, all sets in this specification are finite.
+What this all means in the end is that if we give a
+`Computational`{.agdarecord} instance for every relation defined in the
+ledger, we also have an executable version of the rules which is
+guaranteed to be correct. This is indeed something we have done, and the
+same source code that generates this document also generates a Haskell
+library that lets anyone run this code.
+
+## Sets & Maps {#sec:sets-maps}
+
+The ledger heavily uses set theory. For various reasons it was necessary
+to implement our own set theory (there will be a paper on this some time
+in the future). Crucially, the set theory is completely abstract (in a
+technical sense—Agda has an abstract keyword) meaning that
+implementation details of the set theory are irrelevant. Additionally,
+all sets in this specification are finite.
 
 We use this set theory to define maps as seen below, which are used in
-many places. We usually think of maps as partial functions
-(i.e., functions not necessarily defined everywhere---equivalently, "left-unique"
-relations) and we use the harpoon arrow \AgdaFunction{⇀} to
-distinguish such maps from standard Agda functions which use \AgdaSymbol{→}.
-The figure below also gives notation for the powerset operation, \PowerSet{},
-used to form a type of sets with elements in a given type,
-as well as the subset relation and the equality relation for sets.
+many places. We usually think of maps as partial functions (i.e.,
+functions not necessarily defined everywhere—equivalently, "left-unique"
+relations) and we use the harpoon arrow to distinguish such maps from
+standard Agda functions which use . The code below also gives notation
+for the powerset operation, `PowerSet`{.agdafunction}, used to form a
+type of sets with elements in a given type, as well as the subset
+relation and the equality relation for sets.
 
-When we need to convert a list \AgdaBound{l} to its set of elements,
-we write \fromList{}~\AgdaBound{l}.
-\begin{figure*}[h]
-\begin{code}[hide]
+When we need to convert a list to its set of elements, we write
+`fromList`{.agdafunction} .
+
+
+<div class="agda-hidden-source">
+
+```agda
+
 open Theory th using (_∈_) renaming (Set to ℙ)
 private variable
   a c : Level
@@ -352,8 +362,12 @@ private variable
 Σ-syntax' : (A : Type a) → (A → Type c) → Type _
 Σ-syntax' = Σ
 syntax Σ-syntax' A (λ x → B) = x ∈ A ﹐ B
-\end{code}
-\begin{code}
+```
+
+</div>
+ 
+```agda
+
 _⊆_ : {A : Type} → ℙ A → ℙ A → Type
 X ⊆ Y = ∀ {x} → x ∈ X → x ∈ Y
 
@@ -368,24 +382,25 @@ left-unique R = ∀ {a b b'} → (a , b) ∈ R → (a , b') ∈ R → b ≡ b'
 
 _⇀_ : Type → Type → Type
 A ⇀ B = r ∈ Rel A B ﹐ left-unique r
-\end{code}
-\end{figure*}
+```
 
-\subsection{Propositions as Types, Properties and Relations}
-\label{sec:prop-as-types}
-In type theory we represent propositions as types and proofs of a proposition as
-elements of the corresponding type.
-A unary predicate is a function that takes each \AgdaBound{x} (of some type \AgdaBound{A}) and
-returns a proposition \AgdaFunction{P}(\AgdaBound{x}). Thus, a predicate is a function of type
-\AgdaBound{A}~\AgdaSymbol{→}~\Type{}.
-A \textit{binary relation} \AgdaFunction{R} between \AgdaBound{A} and \AgdaBound{B} is a
-function that takes a pair of values \AgdaBound{x} and \AgdaBound{y} and returns a proposition
-asserting that the relation \AgdaFunction{R} holds between \AgdaBound{x} and \AgdaBound{y}.
-Thus, such a relation is a function of type
-\AgdaBound{A}~\AgdaFunction{×}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}
-or \AgdaBound{A}~\AgdaSymbol{→}~\AgdaBound{B}~\AgdaSymbol{→}~\Type{}.
 
+## Propositions as Types, Properties and Relations {#sec:prop-as-types}
+
+In type theory we represent propositions as types and proofs of a
+proposition as elements of the corresponding type. A unary predicate is
+a function that takes each `x`{.agdabound} (of some type `A`{.agdabound})
+and returns a proposition `P`{.agdafunction}(`x`{.agdabound}).
+Thus, a predicate is a function of type `A`{.agdabound} → `Type`{.agdaprimitive}.
+A *binary relation* `R`{.agdafunction} between `A`{.agdabound} and `B`{.agdabound} is 
+a function that takes a pair of values `x`{.agdabound} and `y`{.agdabound} and 
+returns a proposition asserting that the relation `R`{.agdafunction} holds between 
+`x`{.agdabound} and `y`{.agdabound}. Thus, such a relation is a function of type
+`A`{.agdabound} `×`{.agdafunction} `B`{.agdabound} → `Type`{.agdaprimitive} or
+`A`{.agdabound} → `B`{.agdabound} → `Type`{.agdaprimitive}.
 These relations are typically required to be decidable, which means
 that there is a boolean-valued function that computes whether the
 predicate holds or not. This means that it is generally safe to think
 of predicates simply returning a boolean value instead.
+
+
