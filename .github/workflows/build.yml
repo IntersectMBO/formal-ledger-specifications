@@ -83,7 +83,8 @@ jobs:
 
   # !!! MODIFIED PDF JOBS !!!
   # We now inline build steps and check out 'legacy-latex' branch to ensure PDF is
-  # built from correct LaTeX source files.
+  # built from correct LaTeX source files; also, checkout logic is updated to prevent
+  # deletion of flake.nix.
 
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
@@ -91,15 +92,24 @@ jobs:
     steps:
       - name: Checkout repo with build scripts (e.g., master-markdown)
         uses: actions/checkout@v4
-      - name: Replace src with legacy LaTeX sources
+
+      - name: Checkout legacy 'src' directory
         uses: actions/checkout@v4
         with:
-          # check out legacy-latex branch
+          # Check out the legacy-latex branch
           ref: 'legacy-latex'
-          # only get 'src' directory
+          # Check it out into a temporary subdirectory
+          path: 'legacy-temp'
+          # Only get the 'src' directory from that branch
           sparse-checkout: |
             src
           sparse-checkout-cone-mode: false
+
+      - name: Replace src with legacy version
+        run: |
+          rm -rf ./src
+          mv ./legacy-temp/src ./src
+
       - name: Download agda _build artifact
         uses: actions/download-artifact@v4
         with:
@@ -127,15 +137,24 @@ jobs:
     steps:
       - name: Checkout repo with build scripts (e.g., master-markdown)
         uses: actions/checkout@v4
-      - name: Replace src with legacy LaTeX sources
+
+      - name: Checkout legacy 'src' directory
         uses: actions/checkout@v4
         with:
-          # check out legacy-latex branch
+          # Check out the legacy-latex branch
           ref: 'legacy-latex'
-          # only get 'src' directory
+          # Check it out into a temporary subdirectory
+          path: 'legacy-temp'
+          # Only get the 'src' directory from that branch
           sparse-checkout: |
             src
           sparse-checkout-cone-mode: false
+
+      - name: Replace src with legacy version
+        run: |
+          rm -rf ./src
+          mv ./legacy-temp/src ./src
+
       - name: Download agda _build artifact
         uses: actions/download-artifact@v4
         with:
