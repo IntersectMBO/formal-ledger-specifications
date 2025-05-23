@@ -161,7 +161,7 @@ balanced, and several other conditions.
 
 <figure id="fig:latest-sts-diagram">
 
-TODO: insert figure
+![STS Diagram](img/STS-diagram.png "STS Diagram")
 
 </figure>
 

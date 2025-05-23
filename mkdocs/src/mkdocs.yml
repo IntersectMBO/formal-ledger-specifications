@@ -17,18 +17,14 @@ theme:
     - toc.integrate # Integrate table of contents into left sidebar
     - content.tooltips
     - navigation.footer
-  # palette: # Optional: color scheme
-  #   primary: indigo
-  #   accent: indigo
-
   palette:
     # Dark Mode
     - scheme: slate
       toggle:
         icon: material/weather-sunny
         name: Dark mode
-      primary: black
-      accent: red
+      primary: black # indigo
+      accent: red    # indigo
 
     # Light Mode
     - scheme: default
@@ -38,40 +34,26 @@ theme:
       primary: blue
       accent: deep orange
 
-  # Font configuration (optional)
+  # Font configuration
   font:
     text: Cambria
     code: Source Code Pro
-  #   text: Roboto
-  #   code: Roboto Mono # Or perhaps StrippedJuliaMono if available via CSS?
-extra:
-  math:
-    enable: true # This tells the Material theme to load KaTeX
-
-
-# Navigation structure
-nav:
-  - Home: index.md
 
 extra_css:
-  # - https://unpkg.com/katex@0.16.10/dist/katex.min.css
   - css/custom.css
   - css/Agda.css
 
 extra_javascript:
-  # - https://unpkg.com/katex@0.16.10/dist/katex.min.js         # Core KaTeX library
-  # - https://unpkg.com/katex@0.16.10/dist/contrib/auto-render.min.js # Auto-rendering script
   - js/custom.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
 
 markdown_extensions:
   - pymdownx.arithmatex:
-      generic: true       # This is important for KaTeX with auto-render
+      generic: true
   - admonition
   - pymdownx.details
   - toc:
       permalink: "#"
-  # - toc:
-  #     permalink: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -79,7 +61,7 @@ markdown_extensions:
   - attr_list
   - pymdownx.emoji
   - pymdownx.snippets:
-      check_paths: true  # <-- Add this for debugging
+      check_paths: true  # for debugging
       auto_append:
         - includes/links.md
 
@@ -87,3 +69,7 @@ watch:
   - includes
 
 use_directory_urls: false
+
+# Navigation structure
+nav:
+  - Home: index.md
