@@ -1240,7 +1240,7 @@ def main(run_agda_html=False):
     logging.info(f"Primary input for Shake/Agda (if used): {AGDA_SNAPSHOT_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Final source for MkDocs build/serve: {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Full log saved to: {LOG_FILE.relative_to(PROJECT_ROOT)}")
-    logging.info(f"To serve the site locally (from project root): mkdocs serve --config-file \"{mkdocs_yml_final_path}\"")
+    logging.info(f"To serve the site locally, CWD to {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)} and run \"mkdocs serve\"")
 
     # Call cleanup for intermediate artifacts now that the build has succeeded
     cleanup_intermediate_mkdocs_artifacts()  # << comment out if artifacts needed for debugging
