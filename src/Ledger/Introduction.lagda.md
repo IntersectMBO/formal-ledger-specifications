@@ -109,145 +109,157 @@ depend on each other, forming a directed graph that is almost a tree.
 each such relation represents the transition rule of the state machine;
 $X$ is simply a placeholder for the name of the transition rule.
 
-\begin{NoConway}
-\subsection{Ledger State Transition Rules}
-\label{sec:ledger-state-transition-rules}
-By a \textit{ledger} we mean a structure that contains information about
-how funds in the system are distributed accross accounts---that is, account
+## Ledger State Transition Rules {#sec:ledger-state-transition-rules}
+
+By a *ledger* we mean a structure that contains information about how
+funds in the system are distributed accross accounts—that is, account
 balances, how such balances should be adjusted when transactions and
-proposals are processed, the ADA currently held in the treasury reserve, a
-list of \textit{stake pools} operating the network, and so on.
+proposals are processed, the ADA currently held in the treasury reserve,
+a list of *stake pools* operating the network, and so on.
 
-The ledger can be updated in response to certain events, such as receiving a new
-transaction, time passing and crossing an \textit{epoch boundary}, enacting a
-\textit{governance proposal}, to name a few.  This document defines, as part of the
-behaior of the ledger, a set of rules that determine which events are valid and
-exactly how the state of the ledger should be updated in response to those events.
-The primary aim of this document is to provide a precise description of this
-system---the ledger state, valid events and the rules for processing them.
+The ledger can be updated in response to certain events, such as
+receiving a new transaction, time passing and crossing an *epoch
+boundary*, enacting a *governance proposal*, to name a few. This
+document defines, as part of the behaior of the ledger, a set of rules
+that determine which events are valid and exactly how the state of the
+ledger should be updated in response to those events. The primary aim of
+this document is to provide a precise description of this system—the
+ledger state, valid events and the rules for processing them.
 
-We will model this via a number of \textit{state transition systems} (STS) which
-from now on we refer to as ``transition rules'' or just ``rules.''
-These rules describe the different behaviors that determine how the whole system
-evolves and, taken together, they comprise a full description of the ledger protocol.
-Each transition rule consists of the following components:
-\begin{itemize}
-  \item an \textit{environment} consisting of data, read from the ledger state
-        or the outside world, which should be considered constant for the
-        purposes of the rule;
-  \item an \textit{initial state}, consisting of the subset of the full ledger
-        state that is relevant to the rule and which the rule can update;
-  \item a \textit{signal} or \textit{event}, with associated data, that the
-        rule can receive or observe;
-  \item a set of \textit{preconditions} that must be met in order for the transition
-        to be valid;
-  \item a new state that results from the transition rule.
-\end{itemize}
-For example, the UTXOW transition rule defined in \cref{fig:rules:utxow} of
-\cref{sec:witnessing} checks that, among other things, a given transaction is signed
-by the appropriate parties.
+We will model this via a number of *state transition systems* (STS)
+which from now on we refer to as “transition rules” or just “rules.”
+These rules describe the different behaviors that determine how the
+whole system evolves and, taken together, they comprise a full
+description of the ledger protocol. Each transition rule consists of the
+following components:
 
-The transition rules can be composed in the sense that they may require other
-transition rules to hold as part of their preconditions.  For example, the UTXOW rule
-mentioned above requires the UTXO rule, which checks that the inputs to the
-transaction exist, that the transaction is balanced, and several other conditions.
+- an *environment* consisting of data, read from the ledger state or the
+  outside world, which should be considered constant for the purposes of
+  the rule;
 
-\begin{figure}[h!]
-  \centering
-  \input{Diagrams/CardanoLedger}
-  \caption{State transition rules of the ledger specification, presented as a
-  directed graph; each node represents a transition rule; an arrow from rule A to
-  rule B indicates that B appears among the premises of A; a dotted arrow represents
-  a dependency in the sense that the output of the target node is an input to the
-  source node, either as part of the source state, the environment or the event
-    (\legendbox{\ConwayColor}~rules added in Conway;
-     \legendbox{\BabbageColor}~rules modified in Conway; dotted ellipses represent rules
-  that are not yet formalized in Agda).
-  }
-  \label{fig:latest-sts-diagram}
-\end{figure}
+- an *initial state*, consisting of the subset of the full ledger state
+  that is relevant to the rule and which the rule can update;
 
-A brief description of each transition rule is provided below, with a link to
-an Agda module and reference to a section where the rule is formally defined.
+- a *signal* or *event*, with associated data, that the rule can receive
+  or observe;
 
-\begin{itemize}
-\item
-  \LedgerModText{Chain}{CHAIN} is the top level transition in response to a new
-  block that applies the NEWEPOCH transition when crossing an epoch boundary, and the
-  LEDGERS transition on the list of transactions in the body (\cref{sec:blockchain-layer}).
-\item
-  \LedgerModText{Epoch}{NEWEPOCH} computes the new state as of the start of a new
-  epoch; includes the previous EPOCH transition (\cref{sec:epoch-boundary}).
-\item
-  \LedgerModText{Epoch}{EPOCH} computes the new state as of the end of an epoch;
-  includes the ENACT, RATIFY, and SNAP transition rules (\cref{sec:epoch-boundary}).
-\item
-  \LedgerModText{Ratify}{RATIFY} decides whether a pending governance action has
-  reached the thresholds it needs to be ratified (\cref{sec:ratification}).
-\item
-  \LedgerModText{Enact}{ENACT} applies the result of a previously ratified
-  governance action, such as triggering a hard fork or updating the protocol
-  parameters (\cref{sec:enactment}).
-\item
-  \LedgerModText{Epoch}{SNAP} computes new stake distribution snapshots (\cref{sec:epoch-boundary}).
-\item
-  \LedgerModText{Ledger}{LEDGERS} applies LEDGER repeatedly as needed, for each
-  transaction in a list of transactions (\cref{sec:ledger}).
-\item
-  \LedgerModText{Ledger}{LEDGER} is the full state update in response to a
-  single transaction; it includes the UTXOW, GOV, and CERTS rules (\cref{sec:ledger}).
-\item
-  \LedgerModText{Certs}{CERTS} applies CERT repeatedly for each certificate in
-  the transaction (\cref{sec:certificates}).
-\item
-  \LedgerModText{Certs}{CERT} combines DELEG, POOL, GOVCERT transition rules,
-  as well as some additional rules shared by all three (\cref{sec:certificates}).
-\item
-  \LedgerModText{Certs}{DELEG} handles registering stake addresses and delegating
-  to a stake pool (\cref{sec:certificates}).
-\item
-  \LedgerModText{Certs}{GOVCERT} handles registering and delegating to DReps (\cref{sec:certificates}).
-\item
-  \LedgerModText{Certs}{POOL} handles registering and retiring stake pools (\cref{sec:certificates}).
-\item
-  \LedgerModText{Gov}{GOV} handles voting and submitting governance proposals (\cref{sec:governance}).
-\item
-  \LedgerModText{Utxow}{UTXOW} checks that a transaction is witnessed correctly
-  with the appropriate signatures, datums, and scripts; includes the UTXO transition
-  rule (\cref{sec:witnessing}).
-\item
-  \LedgerModText{Utxo}{UTXO} checks core invariants for an individual transaction
-  to be valid, such as the transaction being balanced, fees being paid, etc; include
-  the UTXOS transition rule (\cref{sec:utxo}).
-\item
-  \LedgerModText{Utxo}{UTXOS} checks that any relevant scripts needed by the
-  transaction evaluate to true (\cref{sec:utxo}).
-\end{itemize}
-\end{NoConway}
+- a set of *preconditions* that must be met in order for the transition
+  to be valid;
 
-\subsection{Reflexive-transitive Closure}
+- a new state that results from the transition rule.
 
-Some state transition rules need to be applied as many times as possible to arrive at
-a final state.  Since we use this pattern multiple times, we define a closure
-operation which takes a transition rule and applies it as many times as possible.
+For example, the UTXOW transition rule defined in
+[UTXOW inference rules](Ledger.Conway.Utxow.md#utxow-inference-rules) of
+the [Utxow module](Ledger.Conway.Utxow.md#sec:witnessing) checks that, among
+other things, a given transaction is signed by the appropriate parties.
 
-The closure \RTCI{} of a relation \RTCB{} is defined in \cref{fig:rt-closure}.
-In the remainder of the text, the closure operation is called \RTC{}.
+The transition rules can be composed in the sense that they may require
+other transition rules to hold as part of their preconditions. For
+example, the UTXOW rule mentioned above requires the UTXO rule, which
+checks that the inputs to the transaction exist, that the transaction is
+balanced, and several other conditions.
 
-\begin{figure*}[htb]
-\caption{Reflexive transitive closure}
-\begin{AgdaMultiCode}
-\begin{code}[hide]
+<a id="fig:latest-sts-diagram">
+
+!!! note "**Figure: STS Diagram**"
+
+    State transition rules of the ledger specification,
+    presented as a directed graph; each node represents a transition rule;
+    an arrow from rule A to rule B indicates that B appears among the
+    premises of A; a dotted arrow represents a dependency in the sense that
+    the output of the target node is an input to the source node, either as
+    part of the source state, the environment or the event ( rules added in
+    Conway;  rules modified in Conway; dotted ellipses represent rules that
+    are not yet formalized in Agda).
+
+    ![STS Diagram](img/STS-diagram.png "STS Diagram")
+
+</a>
+
+A brief description of each transition rule is provided below, with a
+link to an Agda module and reference to a section where the rule is
+formally defined.
+
+- [CHAIN][] is the top level transition in response to a new block that applies
+  the NEWEPOCH transition when crossing an epoch boundary, and the
+  LEDGERS transition on the list of transactions in the body.
+
+- [NEWEPOCH][] computes the new state as of the start of a new epoch; includes the
+  previous EPOCH transition.
+
+- [EPOCH][] computes the new state as of the end of an epoch; includes the ENACT,
+  RATIFY, and SNAP transition rules.
+
+- [RATIFY][] decides whether a pending governance action has reached the thresholds
+  it needs to be ratified.
+
+- [ENACT][] applies the result of a previously ratified governance action, such as
+  triggering a hard fork or updating the protocol parameters.
+
+
+- [SNAP][] computes new stake distribution snapshots.
+
+- [LEDGERS][] applies LEDGER repeatedly as needed, for each transaction in a list of
+  transactions.
+
+- [LEDGER][] is the full state update in response to a single transaction; it
+  includes the UTXOW, GOV, and CERTS rules.
+
+- [CERTS][] applies CERT repeatedly for each certificate in the transaction.
+
+- [CERT][] combines DELEG, POOL, GOVCERT transition rules, as well as some
+  additional rules shared by all three.
+
+- [DELEG][] handles registering stake addresses and delegating to a stake pool.
+
+- [GOVCERT][] handles registering and delegating to DReps.
+
+- [POOL][] handles registering and retiring stake pools.
+
+- [GOV][] handles voting and submitting governance proposals.
+
+- [UTXOW][] checks that a transaction is witnessed correctly with the appropriate
+  signatures, datums, and scripts; includes the UTXO transition rule.
+
+- [UTXO][] checks core invariants for an individual transaction to be valid, such
+  as the transaction being balanced, fees being paid, etc; include the
+  UTXOS transition rule.
+
+- [UTXOS][] checks that any relevant scripts needed by the transaction evaluate to true.
+
+## Reflexive-transitive Closure
+
+Some state transition rules need to be applied as many times as possible
+to arrive at a final state. Since we use this pattern multiple times, we
+define a closure operation which takes a transition rule and applies it
+as many times as possible.
+
+The closure `RTCI`{.agdaoperator} of a relation `RTCB`{.agdaoperator} is
+defined in [Reflexive transitive closure](Ledger.Introduction.md#reflexive-transitive-closure). In the
+remainder of the text, the closure operation is called
+`RTC`{.agdafunction}.
+
+
+### Reflexive transitive closure
+
+ 
+<div class="agda-hidden-source">
+
+```agda
+
 module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
+```
 
-\end{code}
-\emph{Closure type}
-\begin{code}
+</div>
+ *Closure type*
+
+```agda
+
   data _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type where
+```
+ *Closure rules* 
+```agda
 
-\end{code}
-\emph{Closure rules}
-\begin{code}
     RTC-base :
       Γ ⊢ s ⇀⟦ [] ⟧* s
 
@@ -256,10 +268,7 @@ module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
       ∙ Γ ⊢ s' ⇀⟦ sigs ⟧* s''
       ───────────────────────────────────────
       Γ ⊢ s ⇀⟦ sig ∷ sigs ⟧* s''
-\end{code}
-\end{AgdaMultiCode}
-\label{fig:rt-closure}
-\end{figure*}
+```
 
 \subsection{Computational}
 
