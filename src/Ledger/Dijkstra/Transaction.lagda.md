@@ -18,10 +18,29 @@ import Ledger.Dijkstra.Address
 
 open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
+```
 
+The _Dijkstra era_ introduces the concept of Nested Transactions
+(TODO: cite CIP). A transaction in Dijkstra is very similar to a
+transaction in Conway except that now it may include several
+transactions as part of its body.
+
+Before continuing, we remark that transactions cannot be arbitrarily
+nested. That is, a transaction may include other transactions but
+these cannot include other transactions themselves.
+
+To differentiate between the two types of transactions, we define the
+concept of transaction level:
+
+```agda
 data TxLevel : Type where
   TxLevelTop TxLevelSub : TxLevel
+```
 
+which will be used when defining transactions in (TODO: add forward
+ref).
+
+```agda
 InTopLevel : TxLevel → Type → Type
 InTopLevel TxLevelTop X = X
 InTopLevel TxLevelSub _ = ⊤
@@ -29,6 +48,7 @@ InTopLevel TxLevelSub _ = ⊤
 InSubLevel : TxLevel → Type → Type
 InSubLevel TxLevelSub X = X
 InSubLevel TxLevelTop _ = ⊤
+```
 
 unquoteDecl DecEq-TxLevel = derive-DecEq ((quote TxLevel , DecEq-TxLevel) ∷ [])
 
@@ -131,9 +151,9 @@ record TransactionStructure : Type₁ where
         scriptIntHash  : Maybe ScriptHash
 
         -- new in Dijkstra
-        txsubtxs            : InTopLevel txLevel (List (Tx TxLevelSub))
+        txsubtxs            : InTopLevel txLevel (List (Tx TxLevelSub)) -- only in top-level tx
         txreqGuards         : ℙ Credential -- replaces reqSigHash : ℙ KeyHash
-        txreqTopLevelGuards : InSubLevel txLevel (ScriptHash ⇀ Datum)
+        txreqTopLevelGuards : InSubLevel txLevel (ScriptHash ⇀ Datum) -- only in sub-level tx
 
     record TxWitnesses (txLevel : TxLevel) : Type where
       inductive
