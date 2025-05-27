@@ -37,8 +37,11 @@ data TxLevel : Type where
   TxLevelTop TxLevelSub : TxLevel
 ```
 
-which will be used when defining transactions in (TODO: add forward
-ref).
+This type will be used, among other purposes, to provide a concise
+definition of the types of top-level and sub transactions in (TODO:
+add forward reference).
+
+To that end, we define two auxiliary functions:
 
 ```agda
 InTopLevel : TxLevel → Type → Type
@@ -48,7 +51,13 @@ InTopLevel TxLevelSub _ = ⊤
 InSubLevel : TxLevel → Type → Type
 InSubLevel TxLevelSub X = X
 InSubLevel TxLevelTop _ = ⊤
+```
 
+These functions discriminate on an argument of type
+`TxLevel`{.agdatype} and either act as the identity function on types
+or as the constant function that returns the unit type.
+
+```agda
 unquoteDecl DecEq-TxLevel = derive-DecEq ((quote TxLevel , DecEq-TxLevel) ∷ [])
 
 private
