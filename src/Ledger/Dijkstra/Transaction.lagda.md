@@ -1,3 +1,5 @@
+# Transaction
+
 ```agda
 {-# OPTIONS --safe #-}
 module Ledger.Dijkstra.Transaction where
@@ -28,6 +30,8 @@ transactions as part of its body.
 Before continuing, we remark that transactions cannot be arbitrarily
 nested. That is, a transaction may include other transactions but
 these cannot include other transactions themselves.
+
+## Transaction levels
 
 To differentiate between the two types of transactions, we define the
 concept of transaction level:
