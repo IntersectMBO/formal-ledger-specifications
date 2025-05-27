@@ -77,7 +77,11 @@ data Tag : TxLevel → Type where
   SubGuard : Tag TxLevelSub
 
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
+```
 
+## Transactions
+
+```agda
 record TransactionStructure : Type₁ where
   field
     Ix TxId AuxiliaryData : Type
@@ -141,8 +145,24 @@ record TransactionStructure : Type₁ where
   record HasUTxO {a} (A : Type a) : Type a where
     field UTxOOf : A → UTxO
   open HasUTxO ⦃...⦄ public
+```
 
+The type of transactions is defined as three mutually recursive
+records parameterised by a value of type `TxLevel`{.agdatype}.
+
+The fields that depend on the transaction level use the auxiliary functions
+`InTopLevel` and `InSubLevel` defined in (TODO: add back ref)
+
+```agda
   mutual
+    record Tx (txLevel : TxLevel) : Type where
+      inductive
+      field
+        body     : TxBody txLevel
+        wits     : TxWitnesses txLevel
+        isValid  : InTopLevel txLevel Bool
+        txAD     : Maybe AuxiliaryData
+
     record TxBody (txLevel : TxLevel) : Type where
       inductive
       field
@@ -181,20 +201,28 @@ record TransactionStructure : Type₁ where
 
       scriptsP1 : ℙ P1Script
       scriptsP1 = mapPartial isInj₁ scripts
+```
 
-    record Tx (txLevel : TxLevel) : Type where
-      inductive
-      field
-        body     : TxBody txLevel
-        wits     : TxWitnesses txLevel
-        isValid  : InTopLevel txLevel Bool
-        txAD     : Maybe AuxiliaryData
+Using these types, we define the types of top-level and sub
+transaction as:
 
-  AnyLevelTx TopLevelTx SubLevelTx : Type
-  AnyLevelTx = ∃ Tx
+```agda
+  TopLevelTx : Type
   TopLevelTx = Tx TxLevelTop
-  SubLevelTx = Tx TxLevelSub
 
+  SubLevelTx : Type
+  SubLevelTx = Tx TxLevelSub
+```
+
+In addition, we define the type of transactions in which its level
+could be either of them:
+
+```agda
+  AnyLevelTx : Type
+  AnyLevelTx = TopLevelTx ⊎ SubLevelTx
+```
+
+```agda
   record HasTxBody {txLevel} {a} (A : Type a) : Type a where
     field TxBodyOf : A → TxBody txLevel
   open HasTxBody  ⦃...⦄ public
