@@ -48,7 +48,6 @@ InTopLevel TxLevelSub _ = ⊤
 InSubLevel : TxLevel → Type → Type
 InSubLevel TxLevelSub X = X
 InSubLevel TxLevelTop _ = ⊤
-```
 
 unquoteDecl DecEq-TxLevel = derive-DecEq ((quote TxLevel , DecEq-TxLevel) ∷ [])
 
