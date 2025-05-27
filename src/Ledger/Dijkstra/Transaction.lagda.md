@@ -22,19 +22,21 @@ open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
 ```
 
-The _Dijkstra era_ introduces the concept of Nested Transactions
-(TODO: cite CIP). A transaction in Dijkstra is very similar to a
-transaction in Conway except that now it may include several
-transactions as part of its body.
+A transaction in Dijkstra is very similar to a transaction in Conway
+except that now it may include:
+
+- other (sub)transactions as part of its body (TODO: cite CIP)
+- _guard_ scripts (TODO: cite CIP)
 
 Before continuing, we remark that transactions cannot be arbitrarily
-nested. That is, a transaction may include other transactions but
-these cannot include other transactions themselves.
+nested. That is, a transaction (henceforth refered as top-level
+transaction) can include subtransactions, but these cannot include
+other subtransactions.
 
 ## Transaction levels
 
-To differentiate between the two types of transactions, we define the
-concept of transaction level:
+To differentiate between the two types of transactions (i.e. top-level
+and sub), we define the type of transaction level:
 
 ```agda
 data TxLevel : Type where
@@ -45,7 +47,9 @@ This type will be used, among other purposes, to provide a concise
 definition of the types of top-level and sub transactions in (TODO:
 add forward reference).
 
-To that end, we define two auxiliary functions:
+To that end, we define two auxiliary functions that will aid in
+specifying which record fields of a transaction body are present at
+each `TxLevel`{.agdatype}:
 
 ```agda
 InTopLevel : TxLevel → Type → Type
