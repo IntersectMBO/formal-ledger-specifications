@@ -101,6 +101,8 @@ in rec
 
   fls-shake = haskellPackages.callCabal2nix "fls-shake" ./fls-shake { };
 
+  agda = import ./agda-fls/nix/default.nix { inherit pkgs; };
+
   agdaWithDeps = agda.withPackages { pkgs = deps; };
 
   latex = texlive.combine {

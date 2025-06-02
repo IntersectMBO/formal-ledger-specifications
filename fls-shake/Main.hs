@@ -245,8 +245,8 @@ htmlIndex =
     -- run agda to generate the html
     command_ [ Cwd _html ]
              "agda"
-             [ "--html"
-             , "--html-dir=" ++ "../../" ++ htmlDist
+             [ "--fls"
+             , "--fls-html-dir=" ++ "../../" ++ htmlDist
              , "index.agda" ]
 
 -- | Copy Agda files in lib-exts/ to generate the html.
