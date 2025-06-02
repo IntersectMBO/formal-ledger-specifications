@@ -1,0 +1,18 @@
+[book]
+title = "Formal Ledger Specification"
+authors = ["IOHK, Formal Methods Team"]
+language = "en"
+multilingual = false
+src = "src" # This is the default source directory
+
+[output.html]
+# HTML specific options (can be left default for now)
+# e.g., theme = "my-theme-dir" if you add custom themes
+
+[output.pdf]
+# This is the section that enables PDF output via the backend you got working.
+# If you used mdbook-pdf with chromium, it might be empty or have specific options.
+# If we end up using a custom script (like our mdbook-to-pdf.sh), this is where
+# the 'command' key would go. For now, let's assume it's configured as per your
+# successful test.
+output-file = "cardano-ledger-mdbook.pdf"
