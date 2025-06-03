@@ -211,7 +211,7 @@ htmlIndex =
     -- declare dependencies on all agda files
     lagdafiles   <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.lagda" ]
     agdafiles    <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.agda"  ]
-    agdalibfiles <- map ("lib-exts" </>) <$> getDirectoryFiles "lib-exts" [ "//*.agda"  ]
+    agdalibfiles <- map ("src-lib-exts" </>) <$> getDirectoryFiles "src-lib-exts" [ "//*.agda"  ]
     need . map (_htmlPP </>) $ map (`replaceExtension` "agda") lagdafiles
                                ++ agdafiles
                                ++ agdalibfiles
@@ -228,7 +228,7 @@ htmlIndex =
           , ""
           , "include:"
           , "  " ++ htmlPP </> "src"
-          , "  " ++ htmlPP </> "lib-exts"
+          , "  " ++ htmlPP </> "src-lib-exts"
           , "  ./"
           ]
         agdamodules = sort . map agdafile2module $ map (dropDirectory 1) (agdafiles ++ lagdafiles)
@@ -248,10 +248,10 @@ htmlIndex =
              , "--fls-html-dir=" ++ "../../" ++ htmlDist
              , "index.agda" ]
 
--- | Copy Agda files in lib-exts/ to generate the html.
+-- | Copy Agda files in src-lib-exts/ to generate the html.
 agdalibexts2htmlPP :: Rules ()
 agdalibexts2htmlPP =
-  _htmlPP </> "lib-exts" <//> "*.agda" %> \out -> do
+  _htmlPP </> "src-lib-exts" <//> "*.agda" %> \out -> do
     let srcfile = dropDirectory 3 out
     copyFileChanged srcfile out
 

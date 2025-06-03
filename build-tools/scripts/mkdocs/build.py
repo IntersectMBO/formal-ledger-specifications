@@ -179,7 +179,7 @@ class LabelTargetInfo(TypedDict):
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent      # assume build.py is in PROJECT_ROOT/scripts/mkdocs
 SRC_DIR = PROJECT_ROOT / "src"                                    # original .lagda source
 MDSRC_DIR = PROJECT_ROOT / "mdsrc"                                # hand-tweaked .lagda.md source
-LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                          # original .agda lib source
+LIB_EXTS_DIR = PROJECT_ROOT / "src-lib-exts"                          # original .agda lib source
 SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"                 # this script and helpers
 MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"               # LaTeX macros
 BUILD_DIR = PROJECT_ROOT / "_build"                               # top-level build dir
@@ -619,11 +619,11 @@ def create_agda_snapshots(
     original_lib_exts_dir: Path,
     snapshot_lib_exts_target_dir: Path
 ) -> None:
-    """Copies Agda source and lib-exts to their snapshot directories."""
+    """Copies Agda source and src-lib-exts to their snapshot directories."""
     logging.info(f"Creating Agda source snapshot in {snapshot_src_target_dir.relative_to(PROJECT_ROOT)}...")
     shutil.copytree(original_src_dir, snapshot_src_target_dir, dirs_exist_ok=True)
 
-    logging.info(f"Creating Agda lib-exts snapshot in {snapshot_lib_exts_target_dir.relative_to(PROJECT_ROOT)}...")
+    logging.info(f"Creating Agda src-lib-exts snapshot in {snapshot_lib_exts_target_dir.relative_to(PROJECT_ROOT)}...")
     shutil.copytree(original_lib_exts_dir, snapshot_lib_exts_target_dir, dirs_exist_ok=True)
 
 

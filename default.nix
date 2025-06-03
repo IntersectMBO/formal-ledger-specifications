@@ -93,7 +93,7 @@ let
   fs = pkgs.lib.fileset;
   addToAgdaSrc = other: fs.toSource {
     root = ./.;
-    fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ./lib-exts ] ++ other);
+    fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ./src-lib-exts ] ++ other);
   };
 
 in rec
