@@ -56,7 +56,7 @@ import Text.Blaze.Html.Renderer.Text ( renderHtml )
   -- The imported operator (!) attaches an Attribute to an Html value
   -- The defined operator (!!) attaches a list of such Attributes
 
-import Paths_agda_fls
+import Paths_fls_agda
 
 import Agda.Interaction.Highlighting.Precise hiding (toList)
 

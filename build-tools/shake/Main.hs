@@ -45,8 +45,8 @@ copyIn :: Rules ()
 copyIn =
   _build </> "*" </> latexIn <//> "*" %> \out -> do
     let file = dropDirectory 3 out
-    need [ "latex" </> file ]
-    copyFile' ("latex" </> file) out
+    need [ "build-tools/static/latex" </> file ]
+    copyFile' ("build-tools/static/latex" </> file) out
 
 -- | Generate tex from a lagda file.
 -- Takes the lagda file from src/ and puts the generated file in
@@ -71,17 +71,16 @@ tex2texPP =
     need [ _latexGen </> texfile ]
 
     -- agda2vec (used by Cardano and Conway)
-    need [ "scripts/agda2vec.py" ]
+    need [ "build-tools/scripts/agda2vec.py" ]
     if texfile `elem` vertVecFiles
-      then cmd_ "python ./scripts/agda2vec.py" [_latexGen </> texfile, out]
+      then cmd_ "python ./build-tools/scripts/agda2vec.py" [_latexGen </> texfile, out]
       else copyFile' (_latexGen </> texfile) out
 
     -- hldiff (used by Conway)
     let dir = dropDirectory 1 out
-    need [ "scripts/hldiff.py", "latex/hldiff_list.txt" ]
-    if "conway" `isPrefixOf` dir && texfile `elem` hlFiles
-      then cmd_ "python ./scripts/hldiff.py" [out, out, "latex/hldiff_list.txt"]
-      else return ()
+    need [ "build-tools/scripts/hldiff.py", "build-tools/static/latex/hldiff_list.txt" ]
+    when ("conway" `isPrefixOf` dir && texfile `elem` hlFiles) $
+      cmd_ "python ./build-tools/scripts/hldiff.py" [out, out, "build-tools/static/latex/hldiff_list.txt"]
 
 -- | Generate a pdf file in PROJ/latex.out from a tex file
 --
@@ -179,9 +178,9 @@ pdfRule = do
 hsRule :: Rules ()
 hsRule = phony "hs" $ do
   -- read and copy the files in hs-src to _hs
-  hssrcfiles <- getDirectoryFiles "hs-src" [ "//*" ]
+  hssrcfiles <- getDirectoryFiles "build-tools/static/hs-src" [ "//*" ]
   forM_ hssrcfiles $ \file -> do
-    copyFileChanged ("hs-src" </> file) (hsDist </> file)
+    copyFileChanged ("build-tools/static/hs-src" </> file) (hsDist </> file)
 
   -- run Agda on the entrypoint and put the results in _build
   cmd_ "agda" [ "-c"

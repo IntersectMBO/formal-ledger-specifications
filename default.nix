@@ -1,4 +1,4 @@
-{ sources ? import ./nix/sources.nix
+{ sources ? import ./build-tools/nix/sources.nix
 , pkgs ? import sources.nixpkgs {
     overlays = [ ];
     config = { };
@@ -99,9 +99,9 @@ let
 in rec
 {
 
-  fls-shake = haskellPackages.callCabal2nix "fls-shake" ./fls-shake { };
+  fls-shake = haskellPackages.callCabal2nix "fls-shake" ./build-tools/shake { };
 
-  agda = import ./agda-fls/nix/default.nix { inherit pkgs; };
+  agda = import ./build-tools/agda/default.nix { inherit pkgs; };
 
   agdaWithDeps = agda.withPackages { pkgs = deps; };
 
@@ -126,7 +126,7 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "formal-ledger";
     version = "0.1";
-    src = addToAgdaSrc [ ./scripts/checkTypeChecked.sh ];
+    src = addToAgdaSrc [ ./build-tools/scripts/checkTypeChecked.sh ];
     meta = { };
     buildInputs = deps;
     buildPhase = ''
@@ -134,7 +134,7 @@ in rec
     '';
     doCheck = true;
     checkPhase = ''
-      sh scripts/checkTypeChecked.sh
+      sh build-tools/scripts/checkTypeChecked.sh
     '';
     installPhase = ''
       mkdir "$out"
@@ -147,7 +147,9 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = pname;
     version = version;
-    src = addToAgdaSrc [ ./latex ./scripts/agda2vec.py ./scripts/hldiff.py ];
+    src = addToAgdaSrc [ ./build-tools/static/latex
+                         ./build-tools/scripts/agda2vec.py
+                         ./build-tools/scripts/hldiff.py ];
     meta = { };
     buildInputs = [ agdaWithDeps latex python310 fls-shake ];
     buildPhase = ''
@@ -188,7 +190,7 @@ in rec
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "hs-src";
     version = "0.1";
-    src = addToAgdaSrc [ ./hs-src ];
+    src = addToAgdaSrc [ ./build-tools/static/hs-src ];
     meta = { };
     buildInputs = [ agdaWithDeps fls-shake hpack ];
     buildPhase = ''
