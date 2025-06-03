@@ -1,4 +1,4 @@
-{ sources ? import ./nix/sources.nix
+{ sources ? import ./build-tools/nix/sources.nix
 , pkgs ? import sources.nixpkgs {
     overlays = [ ];
     config = { };
