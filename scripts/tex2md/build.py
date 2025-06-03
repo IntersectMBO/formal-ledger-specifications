@@ -1016,46 +1016,60 @@ def populate_agda_docs_staging(
 def copy_staging_to_site_docs(
     agda_docs_staging_dir: Path, # e.g., _build/agda-docs/
     target_site_docs_dir: Path,  # e.g., _build/mkdocs/src/docs/ or _build/mdbook/src/
-    site_name: str               # "MkDocs" or "mdbook" for logging purposes
-) -> List[str]: # Returns a list of flat .md filenames (basenames) copied
+    site_name: str               # "MkDocs" or "mdbook" for logging
+) -> List[str]: # Returns a list of flat .md filenames (basenames) found at the top level of target
     """
-    Copies all .md files from the agda_docs_staging_dir to the target_site_docs_dir.
-    Returns a list of the basenames of the files copied.
+    Copies the ENTIRE contents of agda_docs_staging_dir to target_site_docs_dir.
+    Ensures the target directory is clean or that dirs_exist_ok handles overwrites.
+    Returns a list of the basenames of .md files found at the top level of target_site_docs_dir.
     """
     logging.info(
         f"\n--- Populating {site_name} site docs from "
         f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} "
         f"to {target_site_docs_dir.relative_to(PROJECT_ROOT)} ---"
     )
-    target_site_docs_dir.mkdir(parents=True, exist_ok=True) # Ensure target exists
-    copied_filenames: List[str] = []
 
-    # Check if agda_docs_staging_dir has any .md files
-    md_files_in_staging = list(agda_docs_staging_dir.glob("*.md"))
-    if not md_files_in_staging:
-        logging.warning(f"No .md files found in {agda_docs_staging_dir} to copy for {site_name}.")
-        return copied_filenames
+    if not agda_docs_staging_dir.exists() or not any(agda_docs_staging_dir.iterdir()):
+        logging.warning(f"Staging directory {agda_docs_staging_dir} is empty or does not exist. "
+                        f"No files to copy for {site_name}.")
+        target_site_docs_dir.mkdir(parents=True, exist_ok=True) # Ensure target dir exists
+        return []
 
-    for md_file_in_staging in md_files_in_staging:
-        target_file = target_site_docs_dir / md_file_in_staging.name # Use the same flat name
-        if target_file.exists():
-            logging.warning(
-                f"  Overwrite: For {site_name}, '{md_file_in_staging.name}' is overwriting "
-                f"an existing file at '{target_file.relative_to(PROJECT_ROOT)}' "
-                "(likely from a static template copy in main())."
-            )
-        try:
-            shutil.copy2(md_file_in_staging, target_file)
-            logging.debug(f"  Copied for {site_name}: {md_file_in_staging.name} -> {target_file.name}")
-            copied_filenames.append(md_file_in_staging.name)
-        except Exception as e:
-            logging.error(
-                f"  Failed to copy {md_file_in_staging.name} to {target_file.name} for {site_name}: {e}",
-                exc_info=True
-            )
+    # Ensure the target_site_docs_dir exists and is empty or ready for overwrite
+    if target_site_docs_dir.exists():
+        logging.debug(f"Target directory {target_site_docs_dir} exists. Overwriting content.")
+        # shutil.rmtree(target_site_docs_dir)
+        # Option 1: Clean wipe. (Be careful if static files were copied here first.)
+        # target_site_docs_dir.mkdir(parents=True, exist_ok=True)
+    else:
+        target_site_docs_dir.mkdir(parents=True, exist_ok=True)
 
-    logging.info(f"Copied {len(copied_filenames)} files to {site_name} docs directory.")
-    return sorted(list(set(copied_filenames)))
+    # Option 2 (Preferred if target_site_docs_dir might have other static content):
+    # Copy contents, overwriting existing files.
+    # For shutil.copytree, target must not exist or be empty if dirs_exist_ok=False (default)
+    # With dirs_exist_ok=True (Python 3.8+), it works like `cp -rT SOURCEDIR TARGETDIR`
+    try:
+        shutil.copytree(agda_docs_staging_dir, target_site_docs_dir, dirs_exist_ok=True)
+        logging.info(f"Successfully copied all contents from {agda_docs_staging_dir.name} "
+                     f"to {target_site_docs_dir.name} for {site_name}.")
+    except Exception as e:
+        logging.error(
+            f"  Failed to copy directory {agda_docs_staging_dir.name} "
+            f"to {target_site_docs_dir.name} for {site_name}: {e}",
+            exc_info=True
+        )
+        return [] # Return empty list on failure
+
+    # Collect .md file names from the target directory for navigation purposes
+    # We only collect from the top level of target_site_docs_dir as Agda flattens modules.
+    copied_md_filenames: List[str] = []
+    for item in target_site_docs_dir.iterdir():
+        if item.is_file() and item.suffix == ".md":
+            copied_md_filenames.append(item.name)
+
+    logging.info(f"Found {len(copied_md_filenames)} .md files in {target_site_docs_dir.name} for {site_name} navigation.")
+    return sorted(list(set(copied_md_filenames)))
+
 
 def deploy_static_mkdocs_assets(
     mkdocs_docs_dir: Path,
@@ -1591,14 +1605,14 @@ def main(run_agda_html_flag=False):
     logging.info(f"To serve the site locally, CWD to {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)} and run \"mkdocs serve\"")
 
     # Call cleanup for intermediate artifacts now that the build has succeeded
-    cleanup_intermediate_artifacts()  # << comment out if artifacts needed for debugging
+    #cleanup_intermediate_artifacts()  # << comment out if artifacts needed for debugging
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build mkdocs site source from literate Agda files.")
     parser.add_argument(
         '--run-agda',
         action='store_true',
-        help="Run the 'agda --html --html-highlight=code' step on processed .lagda.md files."
+        help="Run the 'agda --html --html-highlight=auto' step on processed .lagda.md files."
     )
     args = parser.parse_args()
 
