@@ -121,7 +121,7 @@ tex2pdf = do
                          [ "references.bib", "Notation.tex", "macros.sty", "preamble.tex"
                          , "Definitions.tex", "Diagrams/CardanoLedger.tex"
                          , "ConwayBootstrap.tex", "ConwayBootstrapEnact.tex" ]
-    fontfiles <- map (_latexIn </>) <$> getDirectoryFiles "latex" [ "fonts/*.ttf" ]
+    fontfiles <- map (_latexIn </>) <$> getDirectoryFiles "build-tools/static/latex" [ "fonts/*.ttf" ]
 
     -- declare the dependencies
     need $ fontfiles ++ otherfiles ++ agdafiles
