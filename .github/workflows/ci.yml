@@ -1,4 +1,4 @@
-name: Build and upload artifacts
+name: CI
 on:
   push:
     branches:
