@@ -150,8 +150,8 @@
 # - _build/lagda_temp/        (output of preprocess.py; input to pandoc+lua)
 # - _build/code_blocks_json/  (output of preprocess.py; input to postprocess.py)
 # - _build/md_intermediate/   (output of pandoc+lua; input to postprocess.py)
-# - _build/agda-docs/         (output of `agda --html`)
-
+# - _build/agda-docs/         (output of `agda --html` if --run-agda flag used,
+#                             otherwise output of postprocess.py )
 import os
 import sys
 import subprocess
@@ -215,7 +215,8 @@ AGDA_SNAPSHOT_SRC_DIR = BUILD_DIR / "agda_snapshot_src"           # markdown-bas
 # - some modules as .lagda (LaTeX) files
 # Crucially, for any given module, only ONE of these types will exist.
 AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_DIR / "agda_snapshot_lib_exts" # copy of Agda library extensions
-AGDA_DOCS_STAGING_DIR = BUILD_DIR / "agda-docs"                   # output of `agda --html` command
+AGDA_DOCS_STAGING_DIR = BUILD_DIR / "agda-docs"                   # output of `agda --html` command if --run-agda flag used,
+                                                                  # otherwise output of postprocess.py
 
 # Script paths
 GENERATE_MACROS_PY = SCRIPTS_DIR / "generate_macros_json.py"
@@ -404,7 +405,8 @@ def cleanup_intermediate_artifacts() -> None:
     intermediate_dirs = [
         TEMP_DIR,
         CODE_BLOCKS_DIR,
-        INTERMEDIATE_MD_DIR
+        INTERMEDIATE_MD_DIR,
+        AGDA_DOCS_STAGING_DIR
     ]
 
     # files to remove
@@ -1329,10 +1331,10 @@ def generate_basic_summary_md(
 
 
 # --- Main Pipeline Logic ---
-def main(run_agda_html=False):
+def main(run_agda_html_flag=False):
     """Orchestrates the documentation build pipeline."""
     logging.info("Starting MkDocs build process...")
-    logging.info(f"Run Agda --html flag: {run_agda_html}")
+    logging.info(f"Run Agda --html flag: {run_agda_html_flag}")
 
     # 1. Setup directories and logging.
     logging.info("Setting up build directories and logging...")
@@ -1564,7 +1566,7 @@ def main(run_agda_html=False):
     logging.info(f"To serve the site locally, CWD to {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)} and run \"mkdocs serve\"")
 
     # Call cleanup for intermediate artifacts now that the build has succeeded
-    # cleanup_intermediate_mkdocs_artifacts()  # << comment out if artifacts needed for debugging
+    cleanup_intermediate_artifacts()  # << comment out if artifacts needed for debugging
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build mkdocs site source from literate Agda files.")
@@ -1576,7 +1578,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     try:
-        main(run_agda_html=args.run_agda)
+        main(run_agda_html_flag=args.run_agda)
     except SystemExit as e: # catch sys.exit() specifically if used for early exits
         logging.error(f"Build process exited prematurely with code {e.code}.")
         # We may want to cleanup here; for now, cleanup is only on successful main completion.
