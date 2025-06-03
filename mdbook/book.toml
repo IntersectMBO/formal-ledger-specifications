@@ -11,8 +11,8 @@ src = "src" # default source directory
 # e.g., theme = "my-theme-dir" if you add custom themes
 # Add custom CSS and JS files here
 # Paths are relative to the book's src directory (i.e., _build/mdbook/src/)
-additional-css = ["css/Agda.css", "css/custom.css"] # Order might matter if custom.css overrides Agda.css
-additional-js = ["js/custom.js"]
+additional-css = ["src/css/Agda.css", "src/css/custom.css"] # Order might matter if custom.css overrides Agda.css
+additional-js = ["src/js/custom.js"]
 # We can add more files to these arrays if needed.
 
 [output.pdf]
