@@ -162,6 +162,7 @@ from pathlib import Path
 from typing import List, Dict, Optional, Any, TypedDict
 import logging
 import argparse
+
 try:
     import yaml
     HAS_YAML = True
@@ -190,14 +191,12 @@ class LabelTargetInfo(TypedDict):
 
 
 # --- Configuration ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent      # assume build.py is in PROJECT_ROOT/scripts/mkdocs
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent      # assume build.py is in PROJECT_ROOT/scripts/tex2md
 SRC_DIR = PROJECT_ROOT / "src"                                    # original .lagda source
 LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                          # original .agda lib source
 SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "tex2md"                 # this script and helpers
 MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"               # LaTeX macros
 BUILD_DIR = PROJECT_ROOT / "_build"                               # top-level build dir
-MKDOCS_BUILD_DIR = BUILD_DIR / "mkdocs"                           # root for generated mkdocs content
-MDBOOK_BUILD_DIR = BUILD_DIR / "mdbook"                           # root for generated mdbook content
 MACROS_JSON = BUILD_DIR / "macros.json"                           # macro JSONs:  output of generate_macros_json.py
                                                                   #               input to preprocess.py
 TEMP_DIR = BUILD_DIR / "lagda_temp"                               # intermediate latex:  output of preprocess.py
@@ -226,12 +225,15 @@ LUA_FILTER = SCRIPTS_DIR / "agda-filter.lua"
 
 
 # Directories for mkdocs site generation
+# - generated:
+MKDOCS_BUILD_DIR = BUILD_DIR / "mkdocs"
 MKDOCS_SRC_DIR = MKDOCS_BUILD_DIR / "src"
 MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
 MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
 MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
-MKDOCS_STATIC_DIR = PROJECT_ROOT / "mkdocs"                       # static mkdocs assets
-MKDOCS_STATIC_NAV_YML = MKDOCS_STATIC_DIR / "nav.yml"             # path to mkdocs navigation template
+# - static:
+MKDOCS_STATIC_DIR = PROJECT_ROOT / "mkdocs"
+MKDOCS_STATIC_NAV_YML = MKDOCS_STATIC_DIR / "nav.yml" #  mkdocs navigation template
 MKDOCS_STATIC_SRC_DIR = MKDOCS_STATIC_DIR / "src"
 MKDOCS_STATIC_DOCS_DIR = MKDOCS_STATIC_SRC_DIR / "docs"
 MKDOCS_STATIC_CSS_DIR = MKDOCS_STATIC_DOCS_DIR / "css"
@@ -241,20 +243,22 @@ MKDOCS_STATIC_CUSTOM_JS_SOURCE = MKDOCS_STATIC_JS_DIR / "js" / "custom.js"
 MKDOCS_STATIC_INDEX = MKDOCS_STATIC_SRC_DIR / "docs" / "index.md"
 
 # Directories for mkdocs site generation
+# - generated:
+MDBOOK_BUILD_DIR = BUILD_DIR / "mdbook"
 MDBOOK_SRC_DIR = MDBOOK_BUILD_DIR
 MDBOOK_DOCS_DIR = MDBOOK_SRC_DIR / "src"
 MDBOOK_CSS_DIR = MDBOOK_DOCS_DIR / "css"
 MDBOOK_JS_DIR = MDBOOK_DOCS_DIR / "js"
-MDBOOK_STATIC_DIR = PROJECT_ROOT / "mdbook"                       # static mdbook assets
-MDBOOK_STATIC_SRC_DIR = MDBOOK_STATIC_DIR
-MDBOOK_STATIC_DOCS_DIR = MDBOOK_STATIC_SRC_DIR / "src"
-MDBOOK_STATIC_NAV_YML = MDBOOK_STATIC_DOCS_DIR / "SUMMARY.md"      # path to mdbook navigation template
+# - static:
+MDBOOK_STATIC_DIR = PROJECT_ROOT / "mdbook"
+MDBOOK_BOOK_TOML_TEMPLATE = MDBOOK_STATIC_DIR / "book.toml"
+MDBOOK_STATIC_DOCS_DIR = MDBOOK_STATIC_DIR / "src"
+MDBOOK_SUMMARY_MD_TEMPLATE = MDBOOK_STATIC_DOCS_DIR / "SUMMARY.md"
 MDBOOK_STATIC_CSS_DIR = MDBOOK_STATIC_DOCS_DIR / "css"
 MDBOOK_STATIC_JS_DIR = MDBOOK_STATIC_DOCS_DIR / "js"
 MDBOOK_STATIC_CUSTOM_CSS_SOURCE = MDBOOK_STATIC_CSS_DIR / "custom.css"
 MDBOOK_STATIC_CUSTOM_JS_SOURCE = MDBOOK_STATIC_JS_DIR / "js" / "custom.js"
-MDBOOK_STATIC_INDEX = MDBOOK_STATIC_SRC_DIR / "index.md"
-
+MDBOOK_STATIC_INDEX = MDBOOK_STATIC_DOCS_DIR / "index.md"
 
 # --- Logging Setup ---
 LOG_FILE = BUILD_DIR / "build.log"
@@ -904,11 +908,11 @@ def collect_all_literate_md_in_snapshot(snapshot_src_dir: Path) -> List[Path]:
 
 def populate_agda_docs_staging(
     run_agda_html_flag: bool,
-    all_snapshot_lagda_md_files: List[Path], # From collect_all_literate_md_in_snapshot
+    all_snapshot_lagda_md_files: List[Path], # from collect_all_literate_md_in_snapshot
     agda_snapshot_src_dir: Path,             # e.g., _build/agda_snapshot_src
     agda_docs_staging_dir: Path,             # e.g., _build/agda-docs
-    master_agda_file_name: str = "Ledger.lagda.md" # Default master Agda file for --html
-) -> List[Path]: # Returns a list of Path objects for the .md files in agda_docs_staging_dir
+    master_agda_file_name: str = "Ledger.lagda.md" # default master Agda file for --html
+) -> List[Path]: # Return list of Path objects for .md files in agda_docs_staging_dir
     """
     Populates the _build/agda-docs/ staging directory.
     If run_agda_html_flag is True, runs `agda --html`.
@@ -917,9 +921,9 @@ def populate_agda_docs_staging(
     """
     logging.info(
         f"\n--- Populating Agda docs staging directory: "
-        f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} ---" # Assuming PROJECT_ROOT is global
+        f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} ---" # assuming PROJECT_ROOT is global
     )
-    agda_docs_staging_dir.mkdir(parents=True, exist_ok=True) # Ensure it exists
+    agda_docs_staging_dir.mkdir(parents=True, exist_ok=True) # ensure it exists
 
     final_md_files_in_staging: List[Path] = []
     effective_run_agda_html = run_agda_html_flag
@@ -1219,6 +1223,111 @@ def generate_mkdocs_config(
 
     return mkdocs_yml_target_path
 
+def generate_mdbook_config(
+    mdbook_toml_build_path: Path,      # Target: _build/mdbook/book.toml
+    mdbook_summary_build_path: Path,   # Target: _build/mdbook/src/SUMMARY.md
+    book_toml_template_source: Path,   # Source: PROJECT_ROOT/mdbook/book.toml
+    summary_md_template_source: Path,  # Source: PROJECT_ROOT/mdbook/src/SUMMARY.md
+    actual_content_files_in_build_src: List[str] # Basenames of .md files in _build/mdbook/src/
+):
+    """
+    Ensures book.toml is in place and generates/copies SUMMARY.md for mdbook.
+    """
+    logging.info(f"\n--- Finalizing mdbook configuration ---")
+
+    # --- 1. Handle book.toml ---
+    logging.info(f"  Ensuring {mdbook_toml_build_path.name} is in place at "
+                 f"'{mdbook_toml_build_path.relative_to(PROJECT_ROOT)}'...")
+    if book_toml_template_source.exists():
+        try:
+            mdbook_toml_build_path.parent.mkdir(parents=True, exist_ok=True) # ensure _build/mdbook/ exists
+            shutil.copy2(book_toml_template_source, mdbook_toml_build_path)
+            logging.info(f"    Copied template '{book_toml_template_source.relative_to(PROJECT_ROOT)}' "
+                         f"to '{mdbook_toml_build_path.relative_to(PROJECT_ROOT)}'.")
+        except Exception as e:
+            logging.error(f"    Failed to copy {book_toml_template_source.name}: {e}", exc_info=True)
+    else:
+        logging.warning(
+            f"    Template book.toml '{book_toml_template_source}' not found. "
+            f"'{mdbook_toml_build_path.name}' may be missing. Consider creating a default one "
+            f"at {book_toml_template_source} or ensure it's created by an earlier step."
+        )
+    # Note: we could add logic here to dynamically modify mdbook_toml_build_path if needed,
+    # e.g., adding [output.html.additional-css] if we have custom CSS files copied
+    # into _build/mdbook/src/css/. For example:
+    # if (MDBOOK_DOCS_DIR / "css" / "custom.css").exists():
+    #     # Logic to load, update, and save TOML (e.g., using the `toml` library)
+    #     logging.info("    (Placeholder: Logic to add custom.css to book.toml if needed)")
+
+    # --- 2. Handle SUMMARY.md ---
+    logging.info(f"  Processing {mdbook_summary_build_path.name} at "
+                 f"'{mdbook_summary_build_path.relative_to(PROJECT_ROOT)}'...")
+    mdbook_summary_build_path.parent.mkdir(parents=True, exist_ok=True) # ensure _build/mdbook/src/ exists
+
+    if summary_md_template_source.exists():
+        # Strategy 1: if static SUMMARY.md template exists in PROJECT_ROOT/mdbook/src/SUMMARY.md, use it!
+        # (aligns with "Key Feature #3" for mdbook: user-provided SUMMARY.md is authoritative)
+        try:
+            shutil.copy2(summary_md_template_source, mdbook_summary_build_path)
+            logging.info(
+                f"    Copied user-provided SUMMARY.md from '{summary_md_template_source.relative_to(PROJECT_ROOT)}' "
+                f"to '{mdbook_summary_build_path.relative_to(PROJECT_ROOT)}'."
+            )
+            # If user-provided SUMMARY.md already correctly lists all flat-named files (e.g., Ledger.Foo.md),
+            # no further generation needed.  If it contains placeholders like {{CHAPTER_LIST}}, we read it,
+            # generate chapter list, replace placeholder, and write it back.
+            # For now, we'll assume a direct copy if exists.
+        except Exception as e:
+            logging.error(f"    Failed to copy user-provided {summary_md_template_source.name}: {e}", exc_info=True)
+            # If copy fails, we might fall back to generating a basic one.
+            # For robustness, let's fall back if the target still doesn't exist.
+            if not mdbook_summary_build_path.exists():
+                 generate_basic_summary_md(mdbook_summary_build_path, actual_content_files_in_build_src)
+
+    else:
+        # Strategy 2: If no static template, generate basic SUMMARY.md from actual_content_files
+        logging.info(
+            f"    User-provided SUMMARY.md template '{summary_md_template_source}' not found. "
+            "Generating a basic SUMMARY.md from content files."
+        )
+        generate_basic_summary_md(mdbook_summary_build_path, actual_content_files_in_build_src)
+
+def generate_basic_summary_md(
+    mdbook_summary_build_path: Path,
+    actual_content_files_in_build_src: List[str]
+):
+    """Helper function to generate a basic SUMMARY.md from a flat list of files."""
+    summary_content = "# Summary\n\n"
+    # Sort files, trying to put "Introduction.md" or "index.md" first.
+    # This simple sort helps, but a more sophisticated one would be needed for a better ordering.
+
+    def sort_key(filename):
+        lower_name = filename.lower()
+        if lower_name == "introduction.md" or lower_name == "index.md":
+            return (0, filename) # prioritize these...
+        return (1, filename)     # ...then sort alphabetically
+
+    sorted_content_files = sorted(actual_content_files_in_build_src, key=sort_key)
+
+    # Create a flat list. To infer hierarchy from "Ledger.Foo.md", we would need a helper
+    # similar to our `build_nav_from_flat_files, but outputting mdbook SUMMARY.md syntax.
+    # For now, a flat list:
+    for md_filename in sorted_content_files:
+        # Create a title from the filename (e.g., "Ledger.Foo" -> "Ledger Foo")
+        # You might want more sophisticated title generation.
+        title_parts = Path(md_filename).stem.split('.')
+        title = " ".join(part.capitalize() for part in title_parts)
+        summary_content += f"- [{title}](./{md_filename})\n"
+
+    try:
+        with open(mdbook_summary_build_path, 'w', encoding='utf-8') as f_summary:
+            f_summary.write(summary_content)
+        logging.info(f"    Generated basic '{mdbook_summary_build_path.name}'.")
+    except Exception as e:
+        logging.error(f"    Failed to write generated {mdbook_summary_build_path.name}: {e}", exc_info=True)
+
+
+
 # --- Main Pipeline Logic ---
 def main(run_agda_html=False):
     """Orchestrates the documentation build pipeline."""
@@ -1399,7 +1508,7 @@ def main(run_agda_html=False):
         MKDOCS_DOCS_DIR, MKDOCS_CSS_DIR, MKDOCS_JS_DIR, run_agda_html_flag, # pass original flag
         nav_files_in_docs, # (now comes from copy_staging_to_site_docs)
         MKDOCS_STATIC_CUSTOM_CSS_SOURCE, # Path object for custom.css
-        MKDOCS_STATIC_CUSTOM_JS_SOURCE,  # Path object for custom.js
+        MKDOCS_STATIC_CUSTOM_JS_SOURCE,  # SOURCE: Path object for custom.js
         MKDOCS_STATIC_INDEX,
         PROJECT_ROOT
     )
@@ -1432,17 +1541,19 @@ def main(run_agda_html=False):
     )
 
     # Deploy static assets specifically for mdbook (if any beyond what's in MDBOOK_STATIC_DOCS_DIR)
-    # This might involve a new function `deploy_static_mdbook_assets` if you have mdbook-specific
-    # assets to copy or CSS/JS to register in book.toml programmatically.
-    # For now, we'll assume static files for mdbook (like index.md, custom CSS) are copied
-    # during main() Stage 1c (initial site structure setup for mdbook).
+    # For example, copy custom CSS/JS from MDBOOK_STATIC_CSS_DIR to MDBOOK_CSS_DIR (_build/mdbook/src/css)
+    # if MDBOOK_STATIC_CUSTOM_CSS_SOURCE.exists():
+    #     MDBOOK_CSS_DIR.mkdir(parents=True, exist_ok=True)
+    #     shutil.copy2(MDBOOK_STATIC_CUSTOM_CSS_SOURCE, MDBOOK_CSS_DIR / MDBOOK_STATIC_CUSTOM_CSS_SOURCE.name)
+    # (similar for JS)
 
-    # Generate final SUMMARY.md and update book.toml for mdbook
-    generate_mdbook_config( # You'll implement this function next
-        MDBOOK_BUILD_DIR / "book.toml", # Path to _build/mdbook/book.toml (copied in main stage 1c)
-        MDBOOK_DOCS_DIR / "SUMMARY.md", # Path to _build/mdbook/src/SUMMARY.md
-        mdbook_final_content_files,     # Flat list of .md files in _build/mdbook/src/
-        MDBOOK_STATIC_NAV_YML           # Path to PROJECT_ROOT/mdbook/src/SUMMARY.md (template)
+    # Generate final SUMMARY.md and ensure book.toml for mdbook is in place
+    generate_mdbook_config(
+        MDBOOK_BUILD_DIR / "book.toml",  # Target: _build/mdbook/book.toml
+        MDBOOK_DOCS_DIR / "SUMMARY.md",  # Target: _build/mdbook/src/SUMMARY.md
+        MDBOOK_BOOK_TOML_TEMPLATE,       # Source: PROJECT_ROOT/mdbook/book.toml
+        MDBOOK_SUMMARY_MD_TEMPLATE,      # Source: PROJECT_ROOT/mdbook/src/SUMMARY.md (using your var name)
+        mdbook_final_content_files       # List of .md basenames in _build/mdbook/src/
     )
 
     # 11. Final messages and cleanup
