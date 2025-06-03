@@ -1341,7 +1341,7 @@ def main(run_agda_html_flag=False):
     setup_directories()
     setup_logging()
 
-    # We now populate MKDOCS_SRC_DIR from static template content
+    # 1b. populate MKDOCS_SRC_DIR from static template content
     logging.info(f"Initializing {MKDOCS_SRC_DIR.name} from template source: "
                  f"{MKDOCS_STATIC_SRC_DIR.relative_to(PROJECT_ROOT)}")
     if MKDOCS_STATIC_SRC_DIR.exists():
@@ -1364,6 +1364,31 @@ def main(run_agda_html_flag=False):
 
     # path to mkdocs.yml that was potentially copied or needs to be created/updated
     mkdocs_yml_in_build_path = MKDOCS_SRC_DIR / "mkdocs.yml"
+
+    # 1c. Copy ENTIRE static mdbook structure
+    logging.info(f"Initializing {MDBOOK_BUILD_DIR.name} from static source: {MDBOOK_STATIC_DIR.relative_to(PROJECT_ROOT)}")
+    if MDBOOK_STATIC_DIR.exists(): # MDBOOK_STATIC_DIR is PROJECT_ROOT/mdbook/
+        try:
+            # copy the entire static mdbook project structure.
+            shutil.copytree(MDBOOK_STATIC_DIR, MDBOOK_BUILD_DIR, dirs_exist_ok=True)
+            logging.info(f"  Successfully copied entire static mdbook structure to {MDBOOK_BUILD_DIR.name}.")
+            # This will copy:
+            # PROJECT_ROOT/mdbook/book.toml -> _build/mdbook/book.toml
+            # PROJECT_ROOT/mdbook/src/* (index.md, SUMMARY.md, css/, js/) -> _build/mdbook/src/*
+        except Exception as e:
+            logging.error(f"  Failed to copy static template from {MDBOOK_STATIC_DIR.name} "
+                          f"to {MDBOOK_BUILD_DIR.name}: {e}", exc_info=True)
+    else:
+        logging.warning(
+            f"  Static mdbook template directory {MDBOOK_STATIC_DIR.name} not found. "
+            f"{MDBOOK_BUILD_DIR.name} may be missing essential files like book.toml and SUMMARY.md.")
+        # If static dir missing, we must ensure the core build dirs for mdbook still exist
+        # for subsequent steps (like populating with Agda files).
+        MDBOOK_DOCS_DIR.mkdir(parents=True, exist_ok=True) # _build/mdbook/src/
+        # MDBOOK_CSS_DIR and MDBOOK_JS_DIR would be _build/mdbook/src/css and _build/mdbook/src/js
+
+    mdbook_summary_in_build_path = MDBOOK_DOCS_DIR / "SUMMARY.md" # Path for generate_mdbook_config
+
 
     # 2. Get path to or generate macros.json.
     macros_json_path = macros_path(MACROS_JSON, GENERATE_MACROS_PY, MACROS_STY_PATH)
@@ -1552,7 +1577,7 @@ def main(run_agda_html_flag=False):
     # Generate final SUMMARY.md and ensure book.toml for mdbook is in place
     generate_mdbook_config(
         MDBOOK_BUILD_DIR / "book.toml",  # Target: _build/mdbook/book.toml
-        MDBOOK_DOCS_DIR / "SUMMARY.md",  # Target: _build/mdbook/src/SUMMARY.md
+        mdbook_summary_in_build_path,    # Target: _build/mdbook/src/SUMMARY.md
         MDBOOK_BOOK_TOML_TEMPLATE,       # Source: PROJECT_ROOT/mdbook/book.toml
         MDBOOK_SUMMARY_MD_TEMPLATE,      # Source: PROJECT_ROOT/mdbook/src/SUMMARY.md (using your var name)
         mdbook_final_content_files       # List of .md basenames in _build/mdbook/src/

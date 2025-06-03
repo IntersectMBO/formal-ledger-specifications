@@ -1,18 +1,22 @@
 [book]
 title = "Formal Ledger Specification"
 authors = ["IOHK, Formal Methods Team"]
+description = "The formal specification of the Cardano Ledger."
 language = "en"
 multilingual = false
-src = "src" # This is the default source directory
+src = "src" # default source directory
 
 [output.html]
 # HTML specific options (can be left default for now)
 # e.g., theme = "my-theme-dir" if you add custom themes
+# Add custom CSS and JS files here
+# Paths are relative to the book's src directory (i.e., _build/mdbook/src/)
+additional-css = ["css/Agda.css", "css/custom.css"] # Order might matter if custom.css overrides Agda.css
+additional-js = ["js/custom.js"]
+# We can add more files to these arrays if needed.
 
 [output.pdf]
-# This is the section that enables PDF output via the backend you got working.
-# If you used mdbook-pdf with chromium, it might be empty or have specific options.
+# This section enables PDF output via the mdbook-pdf backend.
 # If we end up using a custom script (like our mdbook-to-pdf.sh), this is where
-# the 'command' key would go. For now, let's assume it's configured as per your
-# successful test.
+# the 'command' key would go.
 output-file = "cardano-ledger-mdbook.pdf"
