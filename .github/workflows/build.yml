@@ -43,24 +43,28 @@ jobs:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/build_artifact.yml
     with:
+      nix-attr: hsSrc
       target: hs
 
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/build_artifact.yml
     with:
+      nix-attr: ledger.docs
       target: cardano-ledger.pdf
 
   conway-ledger-pdf:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/build_artifact.yml
     with:
+      nix-attr: ledger.conway
       target: conway-ledger.pdf
 
   html:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/build_artifact.yml
     with:
+      nix-attr: html
       target: html
 
   upload-artifacts:

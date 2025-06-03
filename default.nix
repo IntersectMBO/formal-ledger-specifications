@@ -206,9 +206,28 @@ in rec
     '';
   };
 
+  mkDocsShell = mkShell {
+    packages = [
+      agdaWithDeps # Agda 2.7.0.1 + pinned libs
+      pandoc # for tex to md conversion
+      (python311.withPackages (ps: with ps; [ pip
+                                             mkdocs
+                                             mkdocs-material
+                                             pymdown-extensions
+                                             pyyaml # for mkdocs.yml generation
+                                           ]))
+      coreutils # for 'mkdir', 'cp', 'rm', 'basename', 'dirname'
+    ];
+    shellHook = ''
+      echo "----------------------------------------------------"
+      echo "Entered Agda Markdown Documentation Development Shell!"
+      echo "Using Agda: $(agda --version || echo 'agda command failed')" # Check the version!
+      echo "Using Python: $(python --version || echo 'python command failed')" # Check Python version
+      echo "----------------------------------------------------"
+    '';
+  };
+
   ledger = {
-    html   = html;
-    hsSrc  = hsSrc;
     docs   = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
     conway = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "conway"; };
   };

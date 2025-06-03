@@ -1,0 +1,30 @@
+cabal-version:       2.2
+name:                fls-agda
+version:             1.1
+author:              Carlos Tomé Cortiñas
+category:            Language, Compiler
+build-type:          Simple
+synopsis:            Custom backend for formal-ledger-specifications
+
+extra-doc-files:    README.md
+data-files: data/Agda.css
+            data/AgdaKaTeX.js
+
+executable fls-agda
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  other-modules:       Paths_fls_agda
+  autogen-modules:     Paths_fls_agda
+  build-depends:       base >= 4.10 && < 4.22,
+                       Agda == 2.7.0.1,
+                       deepseq >= 1.4.4 && < 1.6,
+                       blaze-html,
+                       containers,
+                       directory,
+                       uri-encode,
+                       text,
+                       filepath,
+                       split,
+                       transformers,
+                       mtl,
+

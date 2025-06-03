@@ -4,6 +4,9 @@ on:
       target:
         required: true
         type: string
+      nix-attr:
+        required: true
+        type: string
 
 jobs:
   build:
@@ -21,13 +24,10 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build the target ${{ inputs.target }}
+      - name: Build artifact
         run: |
-          # replacing old `nix-shell` command,
-          #   nix-shell --run 'fls-shake --trace -j8 ${{ inputs.target }}'
-          # with `nix develop` (flake) version:
-          nix develop .#default --command fls-shake --trace -j8 ${{ inputs.target }}
-      - name: Upload ${{ inputs.target }} artifact
+          nix-shell -A ${{ inputs.nix-attr }} --run 'fls-shake --trace -j8 ${{ inputs.target }}'
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.target }}
