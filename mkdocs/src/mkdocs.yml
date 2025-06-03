@@ -74,3 +74,4 @@ extra_css:
 
 extra_javascript:
   - js/custom.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js

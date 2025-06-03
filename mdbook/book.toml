@@ -10,8 +10,9 @@ src = "src" # default source directory
 # HTML specific options (can be left default for now)
 # e.g., theme = "my-theme-dir" if you add custom themes
 # Add custom CSS and JS files here
-# Paths are relative to the book's src directory (i.e., _build/mdbook/src/)
-additional-css = ["src/css/Agda.css", "src/css/custom.css"] # Order might matter if custom.css overrides Agda.css
+# Paths are relative to the book's src directory (i.e., _build/mdbook/)
+additional-css = ["src/css/custom.css", "src/css/mdbook-admonish.css", "src/css/Agda.css"]
+# (order might matter if custom.css overrides Agda.css)
 additional-js = ["src/js/custom.js"]
 # We can add more files to these arrays if needed.
 
@@ -20,3 +21,9 @@ additional-js = ["src/js/custom.js"]
 # If we end up using a custom script (like our mdbook-to-pdf.sh), this is where
 # the 'command' key would go.
 output-file = "cardano-ledger-mdbook.pdf"
+
+[preprocessor]
+
+[preprocessor.admonish]
+command = "mdbook-admonish"
+assets_version = "3.0.3" # do not edit: managed by `mdbook-admonish install`
