@@ -231,7 +231,8 @@ htmlIndex =
           , "  " ++ htmlPP </> "src-lib-exts"
           , "  ./"
           ]
-        agdamodules = sort . map agdafile2module $ map (dropDirectory 1) (agdafiles ++ lagdafiles)
+        agdamodules = sort . map (agdafile2module . dropDirectory 1)
+                    $ agdafiles ++ lagdafiles
         -- index file
         indexfile =
           [ "module index where"

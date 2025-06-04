@@ -97,13 +97,7 @@ let
     fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ./src-lib-exts ] ++ other);
   };
 
-in rec
-{
-
-  fls-shake = haskellPackages.callCabal2nix "fls-shake" ./build-tools/shake { };
-
   agda = import ./build-tools/agda/default.nix { inherit nixpkgs; };
-
   agdaWithDeps = agda.withPackages { pkgs = deps; };
 
   latex = texlive.combine {
@@ -123,26 +117,15 @@ in rec
       environ;
   };
 
-  formalLedger = agdaPackages.mkDerivation {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-    pname = "formal-ledger";
-    version = "0.1";
-    src = addToAgdaSrc [ ./build-tools/scripts/checkTypeChecked.sh ];
-    meta = { };
-    buildInputs = deps;
-    buildPhase = ''
-      agda --profile=modules src/Ledger.agda | tee typecheck.log
-    '';
-    doCheck = true;
-    checkPhase = ''
-      sh build-tools/scripts/checkTypeChecked.sh
-    '';
-    installPhase = ''
-      mkdir "$out"
-      awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
-      cp -r _build "$out"
-    '';
-  };
+  fls-shake =
+    ((import ./build-tools/shake/nix/fls-shake.nix { }).fls-shake).overrideAttrs
+      (newAttrs: oldAttrs: {
+        nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ makeWrapper ];
+        postFixup = ''
+          wrapProgram $out/bin/fls-shake \
+            --prefix PATH : ${lib.makeBinPath [ agdaWithDeps python311 hpack latex ]}
+        '';
+      });
 
   mkDocsDerivation = { pname, version, project }: stdenv.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
@@ -152,7 +135,7 @@ in rec
                          ./build-tools/scripts/agda2vec.py
                          ./build-tools/scripts/hldiff.py ];
     meta = { };
-    buildInputs = [ agdaWithDeps latex python310 fls-shake ];
+    buildInputs = [ fls-shake ];
     buildPhase = ''
       export XDG_CACHE_HOME="$(mktemp -d)"
       fls-shake --trace "${project}-ledger.pdf"
@@ -166,71 +149,91 @@ in rec
       test -f "$out/${project}-ledger.pdf"
     '';
   };
+in
+  {
+    inherit agdaWithDeps fls-shake;
 
-  html = stdenv.mkDerivation {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-    pname = "html";
-    version = "0.1";
-    src = addToAgdaSrc [];
-    meta = { };
-    buildInputs = [ agdaWithDeps fls-shake ];
-    buildPhase = ''
-      fls-shake --trace html
-    '';
-    installPhase = ''
-      mkdir "$out"
-      cp -r dist/html "$out"
-    '';
-    doInstallCheck = true;
-    installCheckPhase = ''
-      test -f "$out/html/index.html"
-    '';
-  };
+    formalLedger = agdaPackages.mkDerivation {
+      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+      pname = "formal-ledger";
+      version = "0.1";
+      src = addToAgdaSrc [ ./build-tools/scripts/checkTypeChecked.sh ];
+      meta = { };
+      buildInputs = deps;
+      buildPhase = ''
+        agda --profile=modules src/Ledger.agda | tee typecheck.log
+      '';
+      doCheck = true;
+      checkPhase = ''
+        sh build-tools/scripts/checkTypeChecked.sh
+      '';
+      installPhase = ''
+        mkdir "$out"
+        awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
+        cp -r _build "$out"
+      '';
+    };
 
-  hsSrc = stdenv.mkDerivation {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-    pname = "hs-src";
-    version = "0.1";
-    src = addToAgdaSrc [ ./build-tools/static/hs-src ];
-    meta = { };
-    buildInputs = [ agdaWithDeps fls-shake hpack ];
-    buildPhase = ''
-      fls-shake --trace hs
-    '';
-    installPhase = ''
-      mkdir "$out"
-      cp -r dist/hs "$out"
-    '';
-    doInstallCheck = true;
-    installCheckPhase = ''
-      test -f "$out/hs/cardano-ledger-executable-spec.cabal"
-    '';
-  };
+    html = stdenv.mkDerivation {
+      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+      pname = "html";
+      version = "0.1";
+      src = addToAgdaSrc [];
+      meta = { };
+      buildInputs = [ fls-shake ];
+      buildPhase = ''
+        fls-shake --trace html
+      '';
+      installPhase = ''
+        mkdir "$out"
+        cp -r dist/html "$out"
+      '';
+      doInstallCheck = true;
+      installCheckPhase = ''
+        test -f "$out/html/index.html"
+      '';
+    };
 
-  mkDocsShell = mkShell {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-    packages = [
-      agdaWithDeps # Agda 2.7.0.1 + pinned libs
-      pandoc # for tex to md conversion
-      (python311.withPackages (ps: with ps; [ pip
-                                             mkdocs
-                                             mkdocs-material
-                                             pymdown-extensions
-                                             pyyaml # for mkdocs.yml generation
-                                           ]))
-      coreutils # for 'mkdir', 'cp', 'rm', 'basename', 'dirname'
-    ];
-    shellHook = ''
-      echo "----------------------------------------------------"
-      echo "Entered Agda Markdown Documentation Development Shell!"
-      echo "Using Agda: $(agda --version || echo 'agda command failed')" # Check the version!
-      echo "Using Python: $(python --version || echo 'python command failed')" # Check Python version
-      echo "----------------------------------------------------"
-    '';
-  };
+    hs-src = stdenv.mkDerivation {
+      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+      pname = "hs-src";
+      version = "0.1";
+      src = addToAgdaSrc [ ./build-tools/static/hs-src ];
+      meta = { };
+      buildInputs = [ fls-shake ];
+      buildPhase = ''
+        fls-shake --trace hs
+      '';
+      installPhase = ''
+        mkdir "$out"
+        cp -r dist/hs "$out"
+      '';
+      doInstallCheck = true;
+      installCheckPhase = ''
+        test -f "$out/hs/cardano-ledger-executable-spec.cabal"
+      '';
+    };
 
-  ledger = {
-    docs   = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
-    conway = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "conway"; };
-  };
-}
+    devShell = mkShell {
+      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+      packages = [
+        agdaWithDeps # Agda 2.7.0.1 + pinned libs
+        latex
+        fls-shake
+        hpack
+        pandoc # for tex to md conversion
+        (python311.withPackages (ps: with ps; [ pip
+                                               mkdocs
+                                               mkdocs-material
+                                               pymdown-extensions
+                                               pyyaml # for mkdocs.yml generation
+                                             ]))
+        coreutils # for 'mkdir', 'cp', 'rm', 'basename', 'dirname'
+      ];
+    };
+
+    docs.conway = {
+      fullspec = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
+      diffspec = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "conway";  };
+    };
+  }
