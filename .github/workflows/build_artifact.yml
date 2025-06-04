@@ -4,9 +4,6 @@ on:
       target:
         required: true
         type: string
-      nix-attr:
-        required: true
-        type: string
 
 jobs:
   build:
@@ -26,7 +23,7 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build artifact
         run: |
-          nix-shell -A ${{ inputs.nix-attr }} --run 'fls-shake --trace -j8 ${{ inputs.target }}'
+          nix-shell -A fls-shake --run 'fls-shake --trace -j8 ${{ inputs.target }}'
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
