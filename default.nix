@@ -151,7 +151,7 @@ let
   };
 in
   {
-    inherit agdaWithDeps fls-shake;
+    inherit agda agdaWithDeps fls-shake;
 
     formalLedger = agdaPackages.mkDerivation {
       inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
