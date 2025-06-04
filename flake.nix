@@ -16,6 +16,6 @@
           packageSet = import ./default.nix { inherit nixpkgs; };
         in {
           packages = packageSet;
-          hydraJobs = { inherit (packageSet) formalLedger fls-shake agda; };
+          hydraJobs = packageSet;
       });
 }

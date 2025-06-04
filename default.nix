@@ -214,26 +214,33 @@ in
       '';
     };
 
-    devShell = mkShell {
-      inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
-      packages = [
-        agdaWithDeps # Agda 2.7.0.1 + pinned libs
-        latex
-        fls-shake
-        hpack
-        pandoc # for tex to md conversion
-        (python311.withPackages (ps: with ps; [ pip
-                                               mkdocs
-                                               mkdocs-material
-                                               pymdown-extensions
-                                               pyyaml # for mkdocs.yml generation
-                                             ]))
-        coreutils # for 'mkdir', 'cp', 'rm', 'basename', 'dirname'
-      ];
-    };
-
     docs.conway = {
       fullspec = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
       diffspec = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "conway";  };
     };
+
+    devShells = {
+      ci = mkShell {
+        inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+        packages = [
+          fls-shake
+        ];
+      };
+
+      mkDocs = mkShell {
+        inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+        packages = [
+          agdaWithDeps # Agda 2.7.0.1 + pinned libs
+          pandoc # for tex to md conversion
+          (python311.withPackages (ps: with ps; [ pip
+                                                 mkdocs
+                                                 mkdocs-material
+                                                 pymdown-extensions
+                                                 pyyaml # for mkdocs.yml generation
+                                               ]))
+          coreutils # for 'mkdir', 'cp', 'rm', 'basename', 'dirname'
+        ];
+      };
+    };
+
   }
