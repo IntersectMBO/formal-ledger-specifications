@@ -194,7 +194,7 @@ in
       '';
     };
 
-    hs-src = stdenv.mkDerivation {
+    hsSrc = stdenv.mkDerivation {
       inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
       pname = "hs-src";
       version = "0.1";
