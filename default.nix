@@ -1,29 +1,30 @@
 { sources ? import ./build-tools/nix/sources.nix
-, pkgs ? import sources.nixpkgs {
+, nixpkgs ? import sources.nixpkgs {
     overlays = [ ];
     config = { };
   }
 }:
 
-with pkgs;
+with nixpkgs;
 let
   locales = {
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
-    LOCALE_ARCHIVE = pkgs.lib.optionalString
-      pkgs.stdenv.isLinux
-      "${pkgs.glibcLocales}/lib/locale/locale-archive";
+    LOCALE_ARCHIVE = lib.optionalString
+      stdenv.isLinux
+      "${glibcLocales}/lib/locale/locale-archive";
   };
 
-  agdaStdlib = agdaPackages.standard-library.overrideAttrs (oldAttrs: {
-                 version = "2.2";
-                 src = fetchFromGitHub {
-                   repo = "agda-stdlib";
-                   owner = "agda";
-                   rev = "v2.2";
-                   hash = "sha256-/Fy5EOSbVNXt6Jq0yKSnlNPW4SYfn+eCTAYFnMZrbR0=";
-                 };
-               });
+  agdaStdlib = agdaPackages.standard-library.overrideAttrs
+    (oldAttrs: {
+       version = "2.2";
+       src = fetchFromGitHub {
+         repo = "agda-stdlib";
+         owner = "agda";
+         rev = "v2.2";
+         hash = "sha256-/Fy5EOSbVNXt6Jq0yKSnlNPW4SYfn+eCTAYFnMZrbR0=";
+       };
+    });
 
   agdaStdlibClasses = agdaPackages.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
@@ -73,11 +74,11 @@ let
     buildInputs = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta ];
   };
 
-  iogAgdaPrelude = pkgs.agdaPackages.mkDerivation {
+  iogAgdaPrelude = agdaPackages.mkDerivation {
     pname = "iog-prelude";
     version = "+";
     meta = { };
-    src = pkgs.fetchFromGitHub {
+    src = fetchFromGitHub {
       repo = "iog-agda-prelude";
       owner = "input-output-hk";
       rev = "20e4ab42fd6a980233053c8c3b1b8b2ab42946c9";
@@ -90,7 +91,7 @@ let
 
   deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets iogAgdaPrelude ];
 
-  fs = pkgs.lib.fileset;
+  fs = lib.fileset;
   addToAgdaSrc = other: fs.toSource {
     root = ./.;
     fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ./src-lib-exts ] ++ other);
@@ -101,7 +102,7 @@ in rec
 
   fls-shake = haskellPackages.callCabal2nix "fls-shake" ./build-tools/shake { };
 
-  agda = import ./build-tools/agda/default.nix { inherit pkgs; };
+  agda = import ./build-tools/agda/default.nix { inherit nixpkgs; };
 
   agdaWithDeps = agda.withPackages { pkgs = deps; };
 

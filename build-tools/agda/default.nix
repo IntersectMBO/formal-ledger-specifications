@@ -1,5 +1,5 @@
 { sources ? import ../nix/sources.nix
-, pkgs ? import sources.nixpkgs {
+, nixpkgs ? import sources.nixpkgs {
     overlays = [ ];
     config = { };
   }
@@ -42,12 +42,12 @@ let
       fls-agda = withPackages [];
     };
 
-  fls-agda = pkgs.lib.makeScope pkgs.newScope (
+  fls-agda = nixpkgs.lib.makeScope nixpkgs.newScope (
     self:
-    pkgs.callPackage AgdaPkg {
-      fls-agda = pkgs.haskellPackages.callCabal2nix "fls-agda" ./. { };
+    nixpkgs.callPackage AgdaPkg {
+      fls-agda = nixpkgs.haskellPackages.callCabal2nix "fls-agda" ./. { };
       inherit self;
-      inherit (pkgs.haskellPackages) ghcWithPackages;
+      inherit (nixpkgs.haskellPackages) ghcWithPackages;
     }
   );
 in
