@@ -1,4 +1,16 @@
 {
+    "agda-sets": {
+        "branch": "master",
+        "description": "An abstract set theory library that can be instantiated in various ways",
+        "homepage": "https://input-output-hk.github.io/agda-sets/",
+        "owner": "input-output-hk",
+        "repo": "agda-sets",
+        "rev": "f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6",
+        "sha256": "1f8gfpqfz18m74k4zm8jy3x1kpxzhqrs8d1kh21xbx39s8s47irs",
+        "type": "tarball",
+        "url": "https://github.com/input-output-hk/agda-sets/archive/f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
     "agda-stdlib": {
         "branch": "master",
         "description": "The Agda standard library",
@@ -9,6 +21,42 @@
         "sha256": "07bddg39q1869j1fg7qz4vhxdlwllyjcid4sx3nxam4vwh8bjp7w",
         "type": "tarball",
         "url": "https://github.com/agda/agda-stdlib/archive/v2.2.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "agda-stdlib-classes": {
+        "branch": "master",
+        "description": "Extension of Agda's standard library to accommodate a more typeclass-friendly interface.",
+        "homepage": "https://agda.github.io/agda-stdlib-classes/",
+        "owner": "agda",
+        "repo": "agda-stdlib-classes",
+        "rev": "aa62ce6348d39c554ef89487079871d5590e155e",
+        "sha256": "1bqw3yhypijg92a63jprkkl9s8y90893rrn7nr27a02yww239y13",
+        "type": "tarball",
+        "url": "https://github.com/agda/agda-stdlib-classes/archive/aa62ce6348d39c554ef89487079871d5590e155e.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "agda-stdlib-meta": {
+        "branch": "master",
+        "description": "Meta-programming utilities for Agda.",
+        "homepage": "https://agda.github.io/agda-stdlib-meta/",
+        "owner": "agda",
+        "repo": "agda-stdlib-meta",
+        "rev": "5ff853375180ef69f243ce72f2d3f6294bdb6aff",
+        "sha256": "1c6m2ivkjjwjshsc8spf02jws0lag756p6m1zcps380k6nf89lh8",
+        "type": "tarball",
+        "url": "https://github.com/agda/agda-stdlib-meta/archive/5ff853375180ef69f243ce72f2d3f6294bdb6aff.tar.gz",
+        "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
+    },
+    "iog-agda-prelude": {
+        "branch": "main",
+        "description": "Supplementary types and functions for the Agda prelude",
+        "homepage": "",
+        "owner": "input-output-hk",
+        "repo": "iog-agda-prelude",
+        "rev": "20e4ab42fd6a980233053c8c3b1b8b2ab42946c9",
+        "sha256": "1i72khb7vzg5dp6dvlq6l2qz2vb32cspqnyvgnbhfcxrh9rg3xry",
+        "type": "tarball",
+        "url": "https://github.com/input-output-hk/iog-agda-prelude/archive/20e4ab42fd6a980233053c8c3b1b8b2ab42946c9.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
