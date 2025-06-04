@@ -1,5 +1,5 @@
 {
-  description = "Formal Ledger Specification (flake integration)";
+  description = "Formal Ledger Specifications (flake integration)";
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
@@ -16,6 +16,6 @@
           packageSet = import ./default.nix { inherit nixpkgs; };
         in {
           packages = packageSet;
-          hydraJobs = packageSet;
+          hydraJobs = { inherit (packageSet) formalLedger; };
       });
 }
