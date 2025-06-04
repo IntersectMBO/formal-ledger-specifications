@@ -502,7 +502,7 @@ code fileType = mconcat .
     where
       containsCode = any ((/= Just Background) . aspect . trd) tokens
 
-      formatCode = Html5.pre ! Attr.class_ "Agda" $ mconcat $ backgroundOrAgdaToHtml <$> tokens
+      formatCode = Html5.pre ! Attr.class_ "Agda" $ mconcat $ mkCustomHtml tokens
       formatNonCode = mconcat $ backgroundOrAgdaToHtml <$> tokens
 
   -- Put anchors that enable referencing that token.

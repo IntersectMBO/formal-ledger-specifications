@@ -18,12 +18,7 @@ let
   agdaStdlib = agdaPackages.standard-library.overrideAttrs
     (oldAttrs: {
        version = "2.2";
-       src = fetchFromGitHub {
-         repo = "agda-stdlib";
-         owner = "agda";
-         rev = "v2.2";
-         hash = "sha256-/Fy5EOSbVNXt6Jq0yKSnlNPW4SYfn+eCTAYFnMZrbR0=";
-       };
+       src = sources.agda-stdlib;
     });
 
   agdaStdlibClasses = agdaPackages.mkDerivation {
