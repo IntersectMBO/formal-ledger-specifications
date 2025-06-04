@@ -207,6 +207,7 @@ in rec
   };
 
   mkDocsShell = mkShell {
+    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     packages = [
       agdaWithDeps # Agda 2.7.0.1 + pinned libs
       pandoc # for tex to md conversion
