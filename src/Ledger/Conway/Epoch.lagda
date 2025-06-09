@@ -76,6 +76,12 @@ instance
 
   Hastreasury-EpochState : Hastreasury EpochState
   Hastreasury-EpochState .treasuryOf = Acnt.treasury ∘ EpochState.acnt
+
+  Hasreserves-EpochState : Hasreserves EpochState
+  Hasreserves-EpochState .reservesOf = Acnt.reserves ∘ EpochState.acnt
+
+  HasPParams-EpochState : HasPParams EpochState
+  HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -125,10 +131,6 @@ instance
   unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
     ( (quote EpochState     , HasCast-EpochState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
-
--- instance _ = +-0-monoid; _ = +-0-commutativeMonoid
--- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
--- It seems we don't need these anymore.
 
 toRwdAddr : Credential → RwdAddr
 toRwdAddr x = record { net = NetworkId ; stake = x }
@@ -182,38 +184,38 @@ described in \textcite[\sectionname~6.4]{shelley-delegation-design}.
 \begin{AgdaMultiCode}
 \begin{code}
 createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
-createRUpd slotsPerEpoch b es total = record {
+createRUpd slotsPerEpoch b es total =
+  record  { Δt = Δt₁
+          ; Δr = 0 - Δr₁ + Δr₂
+          ; Δf = 0 - pos feeSS
+          ; rs = rs
 \end{code}
 \begin{code}[hide]
-  flowConservation = flowConservation;
-  Δt-positive = Δt-nonneg;
-  Δf-negative = Δf-nonpos;
+          ; flowConservation = flowConservation
+          ; Δt-nonnegative = Δt-nonneg
+          ; Δf-nonpositive = Δf-nonpos
 \end{code}
 \begin{code}
-    Δt = Δt₁; Δr = 0 - Δr₁ + Δr₂; Δf = 0 - pos feeSS; rs = rs }
+          }
   where
-    prevPp      = PParamsOf (es .EpochState.es)
-    reserves    = es .EpochState.acnt .Acnt.reserves
-    pstakego    = es .EpochState.ss .Snapshots.go
-    feeSS       = es .EpochState.ss .Snapshots.feeSS
-    stake       = pstakego .Snapshot.stake
-    delegs      = pstakego .Snapshot.delegations
-    poolParams  = pstakego .Snapshot.poolParameters
-
-    blocksMade = ∑[ m ← b ] m
-
-    rho = fromUnitInterval (prevPp .PParams.monetaryExpansion)
-    η = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
-    Δr₁ = floor (1 ⊓ η * rho * fromℕ reserves)
-
-    rewardPot = pos feeSS + Δr₁
-    tau = fromUnitInterval (prevPp .PParams.treasuryCut)
-    Δt₁ = floor (fromℤ rewardPot * tau)
-    R = rewardPot - Δt₁
-    circulation = total - reserves
-
-    rs = reward prevPp b (posPart R) poolParams stake delegs circulation
-    Δr₂ = R - pos (∑[ c ← rs ] c)
+    prevPp       = PParamsOf es
+    reserves     = reservesOf es
+    pstakego     = es .EpochState.ss .Snapshots.go
+    feeSS        = es .EpochState.ss .Snapshots.feeSS
+    stake        = pstakego .Snapshot.stake
+    delegs       = pstakego .Snapshot.delegations
+    poolParams   = pstakego .Snapshot.poolParameters
+    blocksMade   = ∑[ m ← b ] m
+    ρ            = fromUnitInterval (prevPp .PParams.monetaryExpansion)
+    η            = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
+    Δr₁          = floor (1 ⊓ η * ρ * fromℕ reserves)
+    rewardPot    = pos feeSS + Δr₁
+    τ            = fromUnitInterval (prevPp .PParams.treasuryCut)
+    Δt₁          = floor (fromℤ rewardPot * τ)
+    R            = rewardPot - Δt₁
+    circulation  = total - reserves
+    rs           = reward prevPp b (posPart R) poolParams stake delegs circulation
+    Δr₂          = R - pos (∑[ c ← rs ] c)
 
 \end{code}
 \begin{code}[hide]
@@ -241,7 +243,7 @@ createRUpd slotsPerEpoch b es total = record {
 
     Δr₁-nonneg : 0 ≤ Δr₁
     Δr₁-nonneg = 0≤⇒0≤floor _
-      (*-0≤⇒0≤ (1 ⊓ η * rho) (fromℕ reserves)
+      (*-0≤⇒0≤ (1 ⊓ η * ρ) (fromℕ reserves)
         (UnitInterval-*-0≤ (1 ⊓ η) (prevPp .PParams.monetaryExpansion) min1η-nonneg)
         (fromℕ-0≤ reserves))
 
