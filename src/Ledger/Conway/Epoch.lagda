@@ -5,16 +5,21 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid)
 open import Data.Integer using () renaming (+_ to pos)
+import      Data.Integer as ℤ
+open import Data.Integer.Properties using (module ≤-Reasoning; +-mono-≤; neg-mono-≤; +-identityˡ)
+                                    renaming (nonNegative⁻¹ to nonNegative⁻¹ℤ)
 open import Data.Nat.GeneralisedArithmetic using (iterate)
-open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_)
+open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _⊓_; _≟_; ≢-nonZero)
 open import Data.Rational.Literals using (number; fromℤ)
-import      Data.Rational as ℚ renaming (_⊓_ to min)
+open import Data.Rational.Properties using (nonNegative⁻¹; pos⇒nonNeg; ⊓-glb)
+open import stdlib.Data.Rational.Properties using (0≤⇒0≤floor; ÷-0≤⇒0≤; fromℕ-0≤; *-0≤⇒0≤; fromℤ-0≤)
+
+open import Data.Integer.Tactic.RingSolver using (solve-∀)
 
 open import Agda.Builtin.FromNat
 
-open import Ledger.Prelude hiding (iterate; _/_; _*_)
+open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
 open Filter using (filter)
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
@@ -71,6 +76,12 @@ instance
 
   Hastreasury-EpochState : Hastreasury EpochState
   Hastreasury-EpochState .treasuryOf = Acnt.treasury ∘ EpochState.acnt
+
+  Hasreserves-EpochState : Hasreserves EpochState
+  Hasreserves-EpochState .reservesOf = Acnt.reserves ∘ EpochState.acnt
+
+  HasPParams-EpochState : HasPParams EpochState
+  HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -117,12 +128,9 @@ instance
   HasRewards-NewEpochState : HasRewards NewEpochState
   HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
 
-  unquoteDecl HasCast-RewardUpdate HasCast-EpochState HasCast-NewEpochState = derive-HasCast
-    (   (quote RewardUpdate   , HasCast-RewardUpdate)
-    ∷   (quote EpochState     , HasCast-EpochState)
+  unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
+    ( (quote EpochState     , HasCast-EpochState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
-
-instance _ = +-0-monoid; _ = +-0-commutativeMonoid
 
 toRwdAddr : Credential → RwdAddr
 toRwdAddr x = record { net = NetworkId ; stake = x }
@@ -175,34 +183,84 @@ described in \textcite[\sectionname~6.4]{shelley-delegation-design}.
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
-
 createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
-createRUpd slotsPerEpoch b es total
-  = ⟦ Δt₁ , 0 - Δr₁ + Δr₂ , 0 - feeSS , rs ⟧
+createRUpd slotsPerEpoch b es total =
+  record  { Δt = Δt₁
+          ; Δr = 0 - Δr₁ + Δr₂
+          ; Δf = 0 - pos feeSS
+          ; rs = rs
+\end{code}
+\begin{code}[hide]
+          ; flowConservation = flowConservation
+          ; Δt-nonnegative = Δt-nonneg
+          ; Δf-nonpositive = Δf-nonpos
+\end{code}
+\begin{code}
+          }
   where
-    prevPp      = PParamsOf (es .EpochState.es)
-    reserves    = es .EpochState.acnt .Acnt.reserves
-    pstakego    = es .EpochState.ss .Snapshots.go
-    feeSS       = es .EpochState.ss .Snapshots.feeSS
-    stake       = pstakego .Snapshot.stake
-    delegs      = pstakego .Snapshot.delegations
-    poolParams  = pstakego .Snapshot.poolParameters
+    prevPp       = PParamsOf es
+    reserves     = reservesOf es
+    pstakego     = es .EpochState.ss .Snapshots.go
+    feeSS        = es .EpochState.ss .Snapshots.feeSS
+    stake        = pstakego .Snapshot.stake
+    delegs       = pstakego .Snapshot.delegations
+    poolParams   = pstakego .Snapshot.poolParameters
+    blocksMade   = ∑[ m ← b ] m
+    ρ            = fromUnitInterval (prevPp .PParams.monetaryExpansion)
+    η            = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
+    Δr₁          = floor (1 ⊓ η * ρ * fromℕ reserves)
+    rewardPot    = pos feeSS + Δr₁
+    τ            = fromUnitInterval (prevPp .PParams.treasuryCut)
+    Δt₁          = floor (fromℤ rewardPot * τ)
+    R            = rewardPot - Δt₁
+    circulation  = total - reserves
+    rs           = reward prevPp b (posPart R) poolParams stake delegs circulation
+    Δr₂          = R - pos (∑[ c ← rs ] c)
 
-    blocksMade = ∑[ m ← b ] m
+\end{code}
+\begin{code}[hide]
+    -- Proofs
+    -- Note: Overloading of + and - seems to interfere with
+    -- the ring solver.
+    lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
+      → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
+    lemmaFlow = solve-∀
+    flowConservation = lemmaFlow Δt₁ Δr₁ (pos feeSS) (pos (∑[ c ← rs ] c))
 
-    rho = fromUnitInterval (prevPp .PParams.monetaryExpansion)
-    η = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
-    Δr₁ = floor (ℚ.min 1 η * rho * fromℕ reserves)
+    ÷₀-0≤⇒0≤ : ∀ (x y : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ (x ÷₀ y)
+    ÷₀-0≤⇒0≤ x y 0≤x 0≤y with y ≟ 0
+    ... | (yes y≡0) = nonNegative⁻¹ 0
+    ... | (no y≢0)  = ÷-0≤⇒0≤ x y {{≢-nonZero y≢0}} 0≤x 0≤y
 
-    rewardPot = pos feeSS + Δr₁
-    tau = fromUnitInterval (prevPp .PParams.treasuryCut)
-    Δt₁ = floor (tau * fromℤ rewardPot)
-    R = posPart (rewardPot - Δt₁)
-    circulation = total - reserves
+    η-nonneg : 0 ≤ η
+    η-nonneg = ÷₀-0≤⇒0≤ _ _ (fromℕ-0≤ blocksMade)
+      (*-0≤⇒0≤ _ _
+        (fromℕ-0≤ slotsPerEpoch)
+        (nonNegative⁻¹ ActiveSlotCoeff {{pos⇒nonNeg ActiveSlotCoeff}}))
 
-    rs = reward prevPp b R poolParams stake delegs circulation
-    Δr₂ = R - ∑[ c ← rs ] c
+    min1η-nonneg : 0 ≤ 1 ⊓ η
+    min1η-nonneg = ⊓-glb (nonNegative⁻¹ 1) η-nonneg
 
+    Δr₁-nonneg : 0 ≤ Δr₁
+    Δr₁-nonneg = 0≤⇒0≤floor _
+      (*-0≤⇒0≤ (1 ⊓ η * ρ) (fromℕ reserves)
+        (UnitInterval-*-0≤ (1 ⊓ η) (prevPp .PParams.monetaryExpansion) min1η-nonneg)
+        (fromℕ-0≤ reserves))
+
+    rewardPot-nonneg : 0 ≤ rewardPot
+    rewardPot-nonneg = +-mono-≤ (nonNegative⁻¹ℤ (pos feeSS)) Δr₁-nonneg
+
+    Δt-nonneg : 0 ≤ Δt₁
+    Δt-nonneg = 0≤⇒0≤floor _
+      (UnitInterval-*-0≤ (fromℤ rewardPot) (prevPp .PParams.treasuryCut)
+        (fromℤ-0≤ rewardPot rewardPot-nonneg))
+
+    Δf-nonpos : (0 - pos feeSS) ≤ 0
+    Δf-nonpos = begin
+        0 - pos feeSS ≡⟨ +-identityˡ _ ⟩
+        ℤ.- pos feeSS ≤⟨ neg-mono-≤ (ℤ.+≤+ z≤n) ⟩
+        0             ∎
+      where open ≤-Reasoning
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate Creation}
@@ -215,7 +273,7 @@ createRUpd slotsPerEpoch b es total
 {\small
 \begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
+applyRUpd rewardUpdate
   ⟦ ⟦ treasury , reserves ⟧ᵃ
   , ss
   , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
@@ -233,6 +291,7 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
   , es
   , fut ⟧
   where
+    open RewardUpdate rewardUpdate using (Δt; Δr; Δf; rs)
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x

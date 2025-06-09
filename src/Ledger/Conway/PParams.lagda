@@ -56,6 +56,10 @@ record Hastreasury {a} (A : Type a) : Type a where
   field treasuryOf : A → Coin
 open Hastreasury ⦃...⦄ public
 
+record Hasreserves {a} (A : Type a) : Type a where
+  field reservesOf : A → Coin
+open Hasreserves ⦃...⦄ public
+
 ProtVer : Type
 ProtVer = ℕ × ℕ
 
