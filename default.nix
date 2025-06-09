@@ -15,13 +15,26 @@ let
       "${glibcLocales}/lib/locale/locale-archive";
   };
 
-  agdaStdlib = agdaPackages.standard-library.overrideAttrs
-    (oldAttrs: {
-       version = "2.2";
-       src = sources.agda-stdlib;
-    });
+  our-agda = callPackage ./build-tools/nix/agda {
+    inherit nixpkgs;
+    Agda = import ./build-tools/agda/nix/fls-agda.nix { inherit nixpkgs; };
+  };
 
-  agdaStdlibClasses = agdaPackages.mkDerivation {
+  agda-stdlib = our-agda.mkDerivation {
+    pname = "standard-library";
+    version = "2.2";
+    src = sources.agda-stdlib;
+    nativeBuildInputs = [ (haskellPackages.ghcWithPackages (self: [ self.filemanip ])) ];
+    meta = { };
+    preConfigure = ''
+      runhaskell GenerateEverything.hs --include-deprecated
+      # We will only build/consider Everything.agda, in particular we don't want Everything*.agda
+      # do be copied to the store.
+      rm EverythingSafe.agda
+    '';
+  };
+
+  agda-stdlib-classes = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-classes";
     version = "2.2.+";
@@ -29,10 +42,10 @@ let
     meta = { };
     libraryFile = "agda-stdlib-classes.agda-lib";
     everythingFile = "standard-library-classes.agda";
-    buildInputs = [ agdaStdlib ];
+    buildInputs = [ agda-stdlib ];
   };
 
-  agdaStdlibMeta = agdaPackages.mkDerivation {
+  agda-stdlib-meta = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-meta";
     version = "2.2.+";
@@ -40,40 +53,46 @@ let
     meta = { };
     libraryFile = "agda-stdlib-meta.agda-lib";
     everythingFile = "standard-library-meta.agda";
-    buildInputs = [ agdaStdlib agdaStdlibClasses ];
+    buildInputs = [ agda-stdlib agda-stdlib-classes ];
   };
 
-  agdaSets = agdaPackages.mkDerivation {
+  agda-sets = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-sets";
-    version = "";
+    version = "+";
     src = sources.agda-sets;
     meta = { };
     libraryFile = "abstract-set-theory.agda-lib";
     everythingFile = "src/abstract-set-theory.agda";
-    buildInputs = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta ];
+    buildInputs = [ agda-stdlib agda-stdlib-classes agda-stdlib-meta ];
   };
 
-  iogAgdaPrelude = agdaPackages.mkDerivation {
+  iog-agda-prelude = our-agda.mkDerivation {
     pname = "iog-prelude";
     version = "+";
     meta = { };
     src = sources.iog-agda-prelude;
     libraryFile = "iog-prelude.agda-lib";
     everythingFile = "src/Everything.agda";
-    buildInputs = [ agdaStdlib agdaStdlibClasses ];
+    buildInputs = [ agda-stdlib agda-stdlib-classes ];
   };
 
-  deps = [ agdaStdlib agdaStdlibClasses agdaStdlibMeta agdaSets iogAgdaPrelude ];
+  agda-package-set = [ agda-stdlib
+                       agda-stdlib-classes
+                       agda-stdlib-meta
+                       agda-sets
+                       iog-agda-prelude
+                     ];
+
+  agdaWithPackages = our-agda.withPackages agda-package-set;
 
   fs = lib.fileset;
+
   addToAgdaSrc = other: fs.toSource {
     root = ./.;
     fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ./src-lib-exts ] ++ other);
   };
 
-  agda = import ./build-tools/agda/default.nix { inherit nixpkgs; };
-  agdaWithDeps = agda.withPackages { pkgs = deps; };
 
   latex = texlive.combine {
     inherit (texlive)
@@ -98,7 +117,7 @@ let
         nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ makeWrapper ];
         postFixup = ''
           wrapProgram $out/bin/fls-shake \
-            --prefix PATH : ${lib.makeBinPath [ agdaWithDeps python311 hpack latex ]}
+            --prefix PATH : ${lib.makeBinPath [ agdaWithPackages python311 hpack latex ]}
         '';
       });
 
@@ -126,15 +145,15 @@ let
   };
 in
   {
-    inherit agda agdaWithDeps fls-shake;
+    inherit agdaWithPackages fls-shake;
 
-    formalLedger = agdaPackages.mkDerivation {
+    formalLedger = our-agda.mkDerivation {
       inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
       pname = "formal-ledger";
       version = "0.1";
       src = addToAgdaSrc [ ./build-tools/scripts/checkTypeChecked.sh ];
       meta = { };
-      buildInputs = deps;
+      buildInputs = agda-package-set;
       buildPhase = ''
         agda --profile=modules src/Ledger.agda | tee typecheck.log
       '';
@@ -205,7 +224,7 @@ in
       mkDocs = mkShell {
         inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
         packages = [
-          agdaWithDeps # Agda 2.7.0.1 + pinned libs
+          agdaWithPackages # Agda 2.7.0.1 + pinned libs
           pandoc # for tex to md conversion
           (python311.withPackages (ps: with ps; [ pip
                                                  mkdocs

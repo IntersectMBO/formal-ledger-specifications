@@ -3,15 +3,12 @@
 }:
 with nixpkgs;
 let
-  fls-agda = lib.makeScope newScope (
-    self:
-    callPackage (import ./nix/lib.nix) {
-      agda = (import ./nix/fls-agda.nix { inherit nixpkgs; }).fls-agda;
-      inherit self;
-      inherit (haskellPackages) ghcWithPackages;
-    }
-  );
+  fls-agda = callPackage ../nix/build-support/agda {
+    inherit (haskellPackages) ghcWithPackages;
+    Agda = import ./nix/fls-agda.nix { inherit nixpkgs; };
+  };
 in
   {
-    inherit (fls-agda) withPackages agda;
+    inherit (fls-agda) withPackages;
+    agda = fls-agda.withPackages [];
   }

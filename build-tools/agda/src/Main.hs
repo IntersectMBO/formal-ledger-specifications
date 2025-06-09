@@ -12,35 +12,25 @@ module Main where
 
 import Prelude hiding ((!!), concatMap)
 
-import Control.DeepSeq
-
-import Data.Map (Map)
-
-import GHC.Generics (Generic)
-
-import Agda.Interaction.Options
-    ( ArgDescr(ReqArg, NoArg)
-    , OptDescr(..)
-    , Flag
-    )
-import Agda.Compiler.Backend (Backend,Backend_boot(..), Backend',Backend'_boot(..), Recompile(..), MonadDebug, Definition, ReadTCState, reportS )
-import Agda.Compiler.Common (curIF)
-
-import Control.Monad
+import Control.Monad (guard)
 import Control.Monad.Trans ( MonadIO(..), lift )
 import Control.Monad.Trans.Reader ( ReaderT(runReaderT), ask )
+import Control.DeepSeq (NFData)
 
 import Data.Foldable (toList, concatMap)
-import Data.Maybe
+import Data.Maybe (isJust, fromMaybe)
+import Data.Map (Map)
 import qualified Data.IntMap as IntMap
 import Data.List.Split (splitWhen)
 import Data.Text.Lazy (Text)
 import qualified Data.Text.Lazy as T
 
+import GHC.Generics (Generic)
+
 import qualified Network.URI.Encode
 
-import System.FilePath
-import System.Directory
+import System.FilePath ((</>), (<.>))
+import System.Directory (createDirectoryIfMissing, copyFile)
 
 import Text.Blaze.Html5
     ( preEscapedToHtml
@@ -56,26 +46,30 @@ import Text.Blaze.Html.Renderer.Text ( renderHtml )
   -- The imported operator (!) attaches an Attribute to an Html value
   -- The defined operator (!!) attaches a list of such Attributes
 
-import Paths_fls_agda
-
+import Agda.Interaction.Options
+    ( ArgDescr(ReqArg, NoArg)
+    , OptDescr(..)
+    , Flag
+    )
 import Agda.Interaction.Highlighting.Precise hiding (toList)
-
-import Agda.Syntax.Common
+import Agda.Compiler.Backend
+  ( Backend,Backend_boot(..), Backend',Backend'_boot(..)
+  , Recompile(..), MonadDebug, Definition, ReadTCState, reportS )
+import Agda.Compiler.Common (curIF)
+import Agda.Main ( runAgda )
+import Agda.Syntax.Common (IsMain, FileType(..), Induction(..))
+import Agda.Syntax.Common.Pretty (parens, pretty, render, (<+>))
 import Agda.Syntax.TopLevelModuleName
-
 import qualified Agda.TypeChecking.Monad as TCM
   ( Interface(..)
   )
-
-import Agda.Utils.Function
+import Agda.Utils.Function (applyUnless, applyWhen, on)
 import Agda.Utils.List1 (String1, pattern (:|))
 import qualified Agda.Utils.List1   as List1
 import qualified Agda.Utils.IO.UTF8 as UTF8
-import Agda.Syntax.Common.Pretty
+import Agda.Utils.Impossible (__IMPOSSIBLE__)
 
-import Agda.Utils.Impossible
-
-import Agda.Main ( runAgda )
+import Paths_fls_agda (getDataFileName)
 
 main = runAgda [Backend flsBackend']
 
