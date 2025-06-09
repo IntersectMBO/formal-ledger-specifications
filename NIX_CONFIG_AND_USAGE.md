@@ -53,31 +53,25 @@ We use **niv** to manage external dependencies, which provides:
 
 ### Core Packages
 
-#### `agdaWithPackages`
++  `agdaWithPackages`: pre-configured Agda environment with all required libraries installed and properly configured.
 
-Pre-configured Agda environment with all required libraries installed and properly configured.
+   ```bash
+   nix-build -A agdaWithPackages
+   ./result/bin/agda --version
+   ```
 
-```bash
-nix-build -A agdaWithPackages
-./result/bin/agda --version
-```
++  `formalLedger`: main Agda project that type-checks the formal ledger specification.
 
-#### `formalLedger`
+   ```bash
+   nix-build -A formalLedger
+   ```
 
-Main Agda project that type-checks the formal ledger specification.
++  `fls-shake`: custom Shake-based build system for generating various outputs from Agda sources.
 
-```bash
-nix-build -A formalLedger
-```
-
-#### `fls-shake`
-
-Custom Shake-based build system for generating various outputs from Agda sources.
-
-```bash
-nix-build -A fls-shake
-./result/bin/fls-shake --help
-```
+   ```bash
+   nix-build -A fls-shake
+   ./result/bin/fls-shake --help
+   ```
 
 ### Generated Outputs
 
@@ -111,28 +105,47 @@ nix-build -A fls-shake
 
 ### Development Environments
 
-+  `devShells.ci` is a minimal environment for CI/CD builds.
++  `devShells.ci`: minimal environment for CI/CD builds.
+
+   **Includes**
+
+   + `fls-shake` build system
+
+   **Commands**
 
    ```bash
    nix-shell -A devShells.ci
+   fls-shake --help  # Available for building outputs
    ```
 
-+  `devShells.mkDocs` is a full development environment with documentation tools.
++  `devShells.mkDocs`: development environment focused on Agda development and documentation.
+
+   **Includes**
+
+   + `agdaWithPackages` (Agda 2.7.0.1 + all libraries)
+   + `pandoc` for document conversion
+   + `python311` with MkDocs, Material theme, and extensions
+   + `coreutils` for basic shell utilities
+
+   **Commands**
 
    ```bash
    nix-shell -A devShells.mkDocs
+   agda --version     # Available for Agda development
+   mkdocs --version   # Available for documentation
+   # Note: fls-shake is NOT available in this shell
    ```
-
----
 
 ## Usage Instructions
 
 ### Building Everything
 
-To build all derivations:
-
 ```bash
+# Build all derivations
 nix-build
+
+# Check it completed successfully
+ls -la result*
 ```
 
 ### Building Specific Targets
@@ -162,32 +175,58 @@ nix build
 # Enter development shell
 nix develop
 
-# Build specific package
+# Build a specific package
 nix build .#formalLedger
 nix build .#html
 ```
 
 ### Development Workflow
 
-1.  **Enter development environment:**
-    ```bash
-    nix-shell -A devShells.mkDocs
-    ```
+#### Agda Development with Documentation Tools
 
-2.  **Work on Agda files** in `src/` directory
+```bash
+# Enter development environment with Agda + documentation tools
+nix-shell -A devShells.mkDocs
 
-3.  **Test type-checking:**
-    ```bash
-    agda src/Ledger.agda
-    ```
+# Work on Agda files in src/ directory
+agda src/Ledger.agda
+```
 
-4.  **Generate outputs:**
-    ```bash
-    fls-shake html          # Generate HTML docs
-    fls-shake hs            # Generate Haskell code
-    fls-shake cardano-ledger.pdf  # Generate PDF
-    ```
+#### Build System and Output Generation
 
+```bash
+# Enter CI environment (includes fls-shake)
+nix-shell -A devShells.ci
+
+# Generate outputs using fls-shake
+fls-shake html                    # Generate HTML docs
+fls-shake hs                      # Generate Haskell code  
+fls-shake cardano-ledger.pdf      # Generate PDF
+```
+
+#### Alternative: Build Outputs with Nix
+
+```bash
+# Build specific outputs without entering shell
+nix-build -A html                     # Generate HTML docs
+nix-build -A hsSrc                    # Generate Haskell code
+nix-build -A docs.conway.fullspec     # Generate full PDF spec
+nix-build -A docs.conway.diffspec     # Generate Conway diff PDF
+
+# Results available in ./result/
+```
+
+#### Combined Workflow
+
+```bash
+# Option 1: Build fls-shake once, then use it
+nix-build -A fls-shake
+./result/bin/fls-shake cardano-ledger.pdf
+
+# Option 2: Use different shells for different tasks
+nix-shell -A devShells.mkDocs         # For Agda development
+nix-shell -A devShells.ci             # For build system tasks
+```
 
 ### Updating Dependencies
 
@@ -238,20 +277,25 @@ niv add owner/repo -v tag-or-branch
 
 ### Common Issues
 
-1. **Build failures due to locale issues:**
+1.  **`fls-shake: command not found` in mkDocs shell**
 
-   + The configuration sets proper UTF-8 locales automatically
-   + If issues persist, ensure your system has UTF-8 locales available
+    - The `fls-shake` tool is only available in the `ci` shell, not `mkDocs`
+    - Use `nix-shell -A devShells.ci` or build it separately with `nix-build -A fls-shake`
 
-2. **Agda library conflicts:**
-   
-   + All libraries are pre-configured with correct versions
-   + Avoid installing Agda libraries system-wide when using this setup
+2.  **Build failures due to locale issues**
 
-3. **Memory issues during builds:**
+    - The configuration sets proper UTF-8 locales automatically
+    - If issues persist, ensure your system has UTF-8 locales available
 
-   + Agda compilation can be memory-intensive
-   + Consider increasing available memory for large projects
+3.  **Agda library conflicts**
+
+    - All libraries are pre-configured with correct versions
+    - Avoid installing Agda libraries system-wide when using this setup
+
+4.  **Memory issues during builds**
+
+    - Agda compilation can be memory-intensive
+    - Consider increasing available memory for large projects
 
 ### Getting Help
 
