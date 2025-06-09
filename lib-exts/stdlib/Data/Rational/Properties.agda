@@ -65,8 +65,8 @@ fromℕ-0≤ : ∀ (n : ℕ) → 0 ≤ fromℕ n
 fromℕ-0≤ n = fromℤ-0≤ (ℤ.+ n) (+≤+ z≤n)
 
 -- The product of 2 non-negative numbers is non-negative.
-*-0≤-2⇒0≤ : ∀ (x y : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ (x * y) 
-*-0≤-2⇒0≤ x y 0≤x 0≤y =
+*-0≤⇒0≤ : ∀ (x y : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ (x * y) 
+*-0≤⇒0≤ x y 0≤x 0≤y =
   begin
     0      ≡⟨ sym (*-zeroʳ x) ⟩
     x * 0  ≤⟨ *-monoˡ-≤-nonNeg x ⦃ nonNegative 0≤x ⦄ 0≤y ⟩
@@ -76,15 +76,15 @@ fromℕ-0≤ n = fromℤ-0≤ (ℤ.+ n) (+≤+ z≤n)
 -- The product of 3 non-negative numbers is non-negative.
 *-0≤-3⇒0≤ : ∀ (x y z : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ z → 0 ≤ (x * y * z) 
 *-0≤-3⇒0≤ x y z 0≤x 0≤y 0≤z =
-  *-0≤-2⇒0≤ (x * y) z (*-0≤-2⇒0≤ x y 0≤x 0≤y) 0≤z
+  *-0≤⇒0≤ (x * y) z (*-0≤⇒0≤ x y 0≤x 0≤y) 0≤z
 
 -- Division by a non-negative number 
-lemma-÷ : ∀ (x y : ℚ) → .{{_ : NonZero y}} → 0 ≤ x → 0 ≤ y → 0 ≤ x ÷ y 
-lemma-÷ x y 0≤x 0≤y = nonNegative⁻¹ (x ÷ y)
+÷-0≤⇒0≤ : ∀ (x y : ℚ) → .{{_ : NonZero y}} → 0 ≤ x → 0 ≤ y → 0 ≤ x ÷ y 
+÷-0≤⇒0≤ x y 0≤x 0≤y = nonNegative⁻¹ (x ÷ y)
   where
     instance
       lemma-1/y : Positive (1/ y)
-      lemma-1/y = 1/pos⇒pos y ⦃ nonNeg∧nonZero⇒pos y ⦃ nonNegative 0≤y ⦄ ⦄
+      lemma-1/y = 1/pos⇒pos y {{nonNeg∧nonZero⇒pos y {{nonNegative 0≤y}}}}
 
       lemma-x÷y : NonNegative (x * 1/ y)
-      lemma-x÷y = nonNeg*nonNeg⇒nonNeg x ⦃ nonNegative 0≤x ⦄ (1/ y) ⦃ pos⇒nonNeg (1/ y) ⦄
+      lemma-x÷y = nonNeg*nonNeg⇒nonNeg x {{nonNegative 0≤x}} (1/ y) {{pos⇒nonNeg (1/ y)}}
