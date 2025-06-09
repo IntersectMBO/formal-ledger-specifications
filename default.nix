@@ -112,7 +112,7 @@ let
   };
 
   fls-shake =
-    ((import ./build-tools/shake/nix/fls-shake.nix { }).fls-shake).overrideAttrs
+    (import ./build-tools/shake/nix/fls-shake.nix { }).overrideAttrs
       (newAttrs: oldAttrs: {
         nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ makeWrapper ];
         postFixup = ''
@@ -225,6 +225,7 @@ in
         inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
         packages = [
           agdaWithPackages # Agda 2.7.0.1 + pinned libs
+          fls-shake
           pandoc # for tex to md conversion
           (python311.withPackages (ps: with ps; [ pip
                                                  mkdocs
