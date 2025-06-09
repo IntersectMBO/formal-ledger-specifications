@@ -9,13 +9,11 @@ open import Prelude
 open import Agda.Builtin.FromNat
 open import Class.Show using (Show; show)
 open import Data.Irrelevant using ([_])
-import Data.Rational as ℚ
+open import Data.Rational using (ℚ; _≤_; _≤?_; _*_; nonNegative)
 open import Data.Rational.Properties
-import Data.Rational.Show as ℚshow
-open import Data.Rational using (ℚ; _≤_; _≤?_; _*_)
+open import Data.Rational.Show using () renaming (show to ℚshow)
 open import Data.Refinement using (Refinement-syntax; value; _,_)
 
-open import Tactic.EquationalReasoning using (module ≡-Reasoning)
 open ≤-Reasoning
 
 -- inUnitInterval predicate
@@ -30,33 +28,26 @@ isInUnitInterval x = (0 ≤? x) ×-dec (x ≤? 1)
 inUnitInterval-*-≤y : ∀ (x y : ℚ) → inUnitInterval x → 0 ≤ y → x * y ≤ y
 inUnitInterval-*-≤y x y (0≤x , x≤1) 0≤y =
   begin
-    x * y  ≤⟨ *-monoʳ-≤-nonNeg y ⦃ ℚ.nonNegative 0≤y ⦄ x≤1 ⟩
+    x * y  ≤⟨ *-monoʳ-≤-nonNeg y ⦃ nonNegative 0≤y ⦄ x≤1 ⟩
     1 * y  ≡⟨ *-identityˡ _ ⟩
     y      ∎
 
 -- Left multiplication by unit interval element preserves non-negativity.
-inUnitInterval-*-0≤ : ∀ (x y : ℚ) → inUnitInterval x → 0 ≤ y → 0 ≤ x * y
-inUnitInterval-*-0≤ x y (0≤x , x≤1) 0≤y =
+inUnitInterval-*-0≤ : ∀ (x y : ℚ) → inUnitInterval y → 0 ≤ x → 0 ≤ x * y
+inUnitInterval-*-0≤ x y (0≤y , _) 0≤x =
   begin
     0      ≡⟨ sym (*-zeroʳ x) ⟩
-    x * 0  ≤⟨ *-monoˡ-≤-nonNeg x ⦃ ℚ.nonNegative 0≤x ⦄ 0≤y ⟩
+    x * 0  ≤⟨ *-monoˡ-≤-nonNeg x ⦃ nonNegative 0≤x ⦄ 0≤y ⟩
     x * y  ∎
 
 -- Left multiplication by unit interval element preserves being upper boundeded by 1.
 inUnitInterval-*-≤1 : ∀ (x y : ℚ) → inUnitInterval x → y ≤ 1 → x * y ≤ 1
 inUnitInterval-*-≤1 x y (0≤x , x≤1) y≤1 =
   begin
-    x * y  ≤⟨ *-monoˡ-≤-nonNeg x ⦃ ℚ.nonNegative 0≤x ⦄ y≤1 ⟩
+    x * y  ≤⟨ *-monoˡ-≤-nonNeg x ⦃ nonNegative 0≤x ⦄ y≤1 ⟩
     x * 1  ≡⟨ *-identityʳ _ ⟩
     x      ≤⟨ x≤1 ⟩
     1      ∎
-
--- The product of two numbers from the unit interval is also in the unit interval.
-inUnitInterval-* : ∀ (x y : ℚ)
-  → inUnitInterval x → inUnitInterval y → inUnitInterval (x * y)
-inUnitInterval-* x y ux (0≤y , y≤1) =
-  inUnitInterval-*-0≤ x y ux 0≤y
-  , inUnitInterval-*-≤1 x y ux y≤1
 
 -- UnitInterval: rational number in the unit interval [0, 1].
 UnitInterval : Type
@@ -64,7 +55,7 @@ UnitInterval = [ x ∈ ℚ ∣ inUnitInterval x ]
 
 instance
   Show-UnitInterval : Show UnitInterval
-  Show-UnitInterval .show = ℚshow.show ∘ value
+  Show-UnitInterval .show = ℚshow ∘ value
 
 -- In the cardano-ledger codebase:
 --  unboundRational
@@ -98,10 +89,22 @@ clamp x with 0 ≤? x
 
 -- UnitInterval Properties
 
+-- The predicate for 'UnitInterval' also holds in a proof-relevant context.
+fromUnitInterval-inUnitInterval
+  : ∀ (x : UnitInterval) → inUnitInterval (fromUnitInterval x)
+fromUnitInterval-inUnitInterval (x , [ p0 ]) with isInUnitInterval x
+... | no ¬p = ⊥-elim-irr (¬p p0)
+... | yes p = p
+
+-- Left multiplication by unit interval element preserves non-negativity.
+UnitInterval-*-0≤
+  : ∀ (x : ℚ) (y : UnitInterval) → 0 ≤ x → 0 ≤ x * fromUnitInterval y
+UnitInterval-*-0≤ x y 0≤x =
+  inUnitInterval-*-0≤ x (value y) (fromUnitInterval-inUnitInterval y) 0≤x
+
 -- to/from is the identity
 prop-toUnitInterval-fromUnitInterval : ∀ (x : UnitInterval)
   → toUnitInterval (fromUnitInterval x) ≡ just x
-
 prop-toUnitInterval-fromUnitInterval (x , [ p0 ]) with isInUnitInterval x
 ... | no ¬p = ⊥-elim-irr (¬p p0)
 ... | yes p = refl

@@ -5,14 +5,11 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-import      Data.Nat as ℕ renaming (_⊔_ to max)
-import      Data.Integer as ℤ renaming (_⊔_ to max)
-import      Data.Integer.Properties as ℤ
-open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_)
-import      Data.Rational as ℚ renaming (_⊓_ to min; _⊔_ to max)
+open import Data.Integer using () renaming (+_ to pos)
+open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _-_; >-nonZero; _⊓_)
+                          renaming (_⊔_ to _⊔ℚ_; NonZero to NonZeroℚ)
 open import Data.Rational.Literals using (number; fromℤ)
-import      Data.Rational.Properties as ℚ
-
+open import Data.Rational.Properties using (pos⇒nonZero; positive⁻¹; +-mono-<-≤; normalize-pos; p≤p⊔q)
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Types.Numeric.UnitInterval
@@ -27,7 +24,7 @@ module Ledger.Conway.Rewards
 
 open import Ledger.Conway.Certs govStructure
 open import Ledger.Conway.Ledger txs abs
-open import Ledger.Prelude hiding (_/_; _*_; _-_)
+open import Ledger.Prelude hiding (_/_; _*_; _-_; >-nonZero; _⊓_)
 open import Ledger.Conway.Utxo txs abs
 
 \end{code}
@@ -157,51 +154,47 @@ Relevant quantities are:
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
-nonZero-max-1 : ∀ (n : ℕ) → ℕ.NonZero (ℕ.max 1 n)
-nonZero-max-1 zero = ℕ.nonZero
-nonZero-max-1 (suc n) = ℕ.nonZero
+nonZero-max-1 : ∀ (n : ℕ) → NonZero (1 ⊔ n)
+nonZero-max-1 zero = nonZero
+nonZero-max-1 (suc n) = nonZero
 
-nonZero-1/n : ∀ (n : ℕ) → .{{_ : ℕ.NonZero n}} → ℚ.NonZero (1 / n)
+nonZero-1/n : ∀ (n : ℕ) → .{{_ : NonZero n}} → NonZeroℚ (1 / n)
 nonZero-1/n n {{prf}} =
-  ℚ.pos⇒nonZero (1 / n) {{ℚ.normalize-pos 1 n {{prf}} {{_}} }}
+  pos⇒nonZero (1 / n) {{normalize-pos 1 n {{prf}} {{_}} }}
 
-nonZero-1+max0-x : ∀ (x : ℚ) → ℚ.NonZero (1 + ℚ.max 0 x)
+nonZero-1+max0-x : ∀ (x : ℚ) → NonZeroℚ (1 + (0 ⊔ℚ x))
 nonZero-1+max0-x x =
-  ℚ.>-nonZero (ℚ.+-mono-<-≤ (ℚ.positive⁻¹ 1) (ℚ.p≤p⊔q 0 x))
-
-private instance
-  nonNegative : ∀ {i} → ℤ.NonNegative (ℤ.max 0 i)
-  nonNegative {i} = ℤ.nonNegative (ℤ.i≤i⊔j 0 i)
+  >-nonZero (+-mono-<-≤ (positive⁻¹ 1 {{_}}) (p≤p⊔q 0 x))
 \end{code}
 \begin{code}
 maxPool : PParams → Coin → UnitInterval → UnitInterval → Coin
 maxPool pparams rewardPot stake pledge = rewardℕ
   where
-    a0      = ℚ.max 0 (pparams .PParams.a0)
-    1+a0    = 1 + a0
-    nopt    = ℕ.max 1 (pparams .PParams.nopt)
+    a0    = 0 ⊔ℚ pparams .PParams.a0
+    1+a0  = 1 + a0
+    nopt  = 1 ⊔ pparams .PParams.nopt
 \end{code}
 \begin{code}[hide]
     instance
-      nonZero-nopt : ℕ.NonZero nopt
+      nonZero-nopt : NonZero nopt
       nonZero-nopt = nonZero-max-1 (pparams .PParams.nopt)
 \end{code}
 \begin{code}
     z0       = 1 / nopt
-    stake'   = ℚ.min (fromUnitInterval stake) z0
-    pledge'  = ℚ.min (fromUnitInterval pledge) z0
+    stake'   = fromUnitInterval stake ⊓ z0
+    pledge'  = fromUnitInterval pledge ⊓ z0
 \end{code}
 \begin{code}[hide]
     instance
-      nonZeroz0 : ℚ.NonZero z0
+      nonZeroz0 : NonZeroℚ z0
       nonZeroz0 = nonZero-1/n nopt
 
-      nonZero-1+a0 : ℚ.NonZero (1+a0)
+      nonZero-1+a0 : NonZeroℚ (1+a0)
       nonZero-1+a0 = nonZero-1+max0-x (pparams .PParams.a0)
 \end{code}
 \begin{code}
     rewardℚ =
-        ((fromℕ rewardPot) ÷ 1+a0)
+        fromℕ rewardPot ÷ 1+a0
         * (stake' + pledge' * a0 * (stake' - pledge' * (z0 - stake') ÷ z0) ÷ z0)
     rewardℕ = posPart (floor rewardℚ)
 \end{code}
@@ -230,11 +223,11 @@ mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ stake'
 \end{code}
 \begin{code}[hide]
     instance
-      nonZero-totalBlocks : ℕ.NonZero (ℕ.max 1 totalBlocks)
+      nonZero-totalBlocks : NonZero (1 ⊔ totalBlocks)
       nonZero-totalBlocks = nonZero-max-1 totalBlocks
 \end{code}
 \begin{code}
-    ratioBlocks = (ℤ.+ poolBlocks) / (ℕ.max 1 totalBlocks)
+    ratioBlocks = (pos poolBlocks) / (1 ⊔ totalBlocks)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Function mkApparentPerformance used for computing a Reward Update}
@@ -273,9 +266,9 @@ rewardOwners rewards pool ownerStake stake = if rewards ≤ cost
   else cost + posPart (floor (
         (fromℕ rewards - fromℕ cost) * (margin + (1 - margin) * ratioStake)))
   where
-    ratioStake   = fromUnitInterval ownerStake ÷₀ fromUnitInterval stake
-    cost         = pool .PoolParams.cost
-    margin       = fromUnitInterval (pool .PoolParams.margin)
+    ratioStake  = fromUnitInterval ownerStake ÷₀ fromUnitInterval stake
+    cost        = pool .PoolParams.cost
+    margin      = fromUnitInterval (pool .PoolParams.margin)
 \end{code}
 \end{AgdaMultiCode}
 \begin{AgdaMultiCode}
@@ -286,9 +279,9 @@ rewardMember rewards pool memberStake stake = if rewards ≤ cost
   else posPart (floor (
          (fromℕ rewards - fromℕ cost) * ((1 - margin) * ratioStake)))
   where
-    ratioStake    = fromUnitInterval memberStake ÷₀ fromUnitInterval stake
-    cost          = pool .PoolParams.cost
-    margin        = fromUnitInterval (pool .PoolParams.margin)
+    ratioStake  = fromUnitInterval memberStake ÷₀ fromUnitInterval stake
+    cost        = pool .PoolParams.cost
+    margin      = fromUnitInterval (pool .PoolParams.margin)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions rewardOwners and rewardMember}
@@ -461,19 +454,23 @@ The update consists of four net flows:
   \item \AgdaField{rs}: The map of new individual rewards,
     to be added to the existing rewards.
 \end{itemize}
+We require these net flows to satisfy certain constraints that
+are also stored in the \AgdaRecord{RewardUpdate} data type.
+Specifically, \AgdaField{flowConservation} states that
+all four net flows add up to zero,
+and we state the directions of \AgdaField{Δt} and \AgdaField{Δf}.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
 record RewardUpdate : Set where
-\end{code}
-\begin{code}[hide]
-  constructor ⟦_,_,_,_⟧ʳᵘ
-\end{code}
-\begin{code}
   field
-    Δt Δr Δf : ℤ
-    rs : Credential ⇀ Coin
+    Δt Δr Δf          : ℤ
+    rs                : Credential ⇀ Coin
+    flowConservation  : Δt + Δr + Δf + pos (∑[ c ← rs ] c) ≡ 0
+    Δt-nonnegative    : 0 ≤ Δt
+    Δf-nonpositive    : Δf ≤ 0
+
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate type}
