@@ -28,9 +28,11 @@ import qualified MAlonzo.Code.Class.HasOrder.Core
 import qualified MAlonzo.Code.Class.HasOrder.Instance
 import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Class.Show.Instances
+import qualified MAlonzo.Code.Data.Integer.Base
 import qualified MAlonzo.Code.Data.Nat.Base
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Data.Rational.Base
+import qualified MAlonzo.Code.Data.Rational.Properties
 import qualified MAlonzo.Code.Function.Base
 import qualified MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties
 import qualified MAlonzo.Code.Relation.Binary.Structures
@@ -227,8 +229,8 @@ data T_GlobalConstants_258
                                           MAlonzo.Code.Class.Show.Core.T_Show_10 Integer
                                           MAlonzo.Code.Data.Nat.Base.T_NonZero_112
                                           MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-                                          MAlonzo.Code.Data.Nat.Base.T_NonZero_112 Integer Integer
-                                          AgdaAny
+                                          MAlonzo.Code.Data.Integer.Base.T_Positive_134 Integer
+                                          Integer AgdaAny
 -- Ledger.Conway.Types.Epoch.GlobalConstants.Network
 d_Network_280 :: T_GlobalConstants_258 -> ()
 d_Network_280 = erased
@@ -271,10 +273,11 @@ d_ActiveSlotCoeff_290 v0
       C_GlobalConstants'46'constructor_6529 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Types.Epoch.GlobalConstants.NonZero-ActiveSlotCoeff
-d_NonZero'45'ActiveSlotCoeff_292 ::
-  T_GlobalConstants_258 -> MAlonzo.Code.Data.Nat.Base.T_NonZero_112
-d_NonZero'45'ActiveSlotCoeff_292 v0
+-- Ledger.Conway.Types.Epoch.GlobalConstants.Positive-ActiveSlotCoeff
+d_Positive'45'ActiveSlotCoeff_292 ::
+  T_GlobalConstants_258 ->
+  MAlonzo.Code.Data.Integer.Base.T_Positive_134
+d_Positive'45'ActiveSlotCoeff_292 v0
   = case coe v0 of
       C_GlobalConstants'46'constructor_6529 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v7
@@ -300,16 +303,26 @@ d_NetworkId_298 v0
       C_GlobalConstants'46'constructor_6529 v2 v3 v4 v5 v6 v7 v8 v9 v10
         -> coe v10
       _ -> MAlonzo.RTE.mazUnreachableError
+-- Ledger.Conway.Types.Epoch.GlobalConstants.NonZero-ActiveSlotCoeff
+d_NonZero'45'ActiveSlotCoeff_300 ::
+  T_GlobalConstants_258 -> MAlonzo.Code.Data.Nat.Base.T_NonZero_112
+d_NonZero'45'ActiveSlotCoeff_300 v0
+  = coe
+      MAlonzo.Code.Data.Rational.Base.d_'62''45'nonZero_224
+      (coe d_ActiveSlotCoeff_290 (coe v0))
+      (coe
+         MAlonzo.Code.Data.Rational.Properties.du_positive'8315''185'_3916
+         (coe d_ActiveSlotCoeff_290 (coe v0)))
 -- Ledger.Conway.Types.Epoch.GlobalConstants.ℕ+ᵉ≡+ᵉ'
-d_ℕ'43''7497''8801''43''7497'''_304 ::
+d_ℕ'43''7497''8801''43''7497'''_306 ::
   T_GlobalConstants_258 ->
   Integer ->
   Integer -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_ℕ'43''7497''8801''43''7497'''_304 = erased
+d_ℕ'43''7497''8801''43''7497'''_306 = erased
 -- Ledger.Conway.Types.Epoch.GlobalConstants.ℕEpochStructure
-d_ℕEpochStructure_312 ::
+d_ℕEpochStructure_314 ::
   T_GlobalConstants_258 -> T_EpochStructure_22
-d_ℕEpochStructure_312 v0
+d_ℕEpochStructure_314 v0
   = coe
       C_EpochStructure'46'constructor_1323
       MAlonzo.Code.Data.Nat.Properties.d_'43''45''42''45'semiring_3794

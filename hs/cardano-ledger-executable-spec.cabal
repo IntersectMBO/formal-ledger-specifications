@@ -629,9 +629,7 @@ library
       MAlonzo.Code.Tactic.Derive.DecEq
       MAlonzo.Code.Tactic.Derive.Show
       MAlonzo.Code.Tactic.Derive.TestTypes
-      MAlonzo.Code.Tactic.EquationalReasoning
       MAlonzo.Code.Tactic.Inline
-      MAlonzo.Code.Tactic.MonoidSolver
       MAlonzo.Code.Text.Format
       MAlonzo.Code.Text.Format.Generic
       MAlonzo.Code.Text.Printf
