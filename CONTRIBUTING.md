@@ -95,12 +95,12 @@ We use `niv` to manage external dependencies, which provides
 
 + *reproducible builds*: all dependencies pinned to specific commits/versions;
 + *easy updates*: `niv update <package>` updates individual dependencies;
-+ *declarative dependencies*: all versions stored in `sources.json`.
++ *declarative dependencies*: all versions stored in `build-tools/nix/sources.json`.
 
 #### Current Dependencies
 
 + `nixpkgs`: base Nix packages collection;
-+ `agda-stdlib`: standard Agda library (v2.2);
++ `agda-stdlib`:  Agda standard library;
 + `agda-stdlib-classes`: type-class extensions for Agda stdlib;
 + `agda-stdlib-meta`: meta-programming utilities for Agda;
 + `agda-sets`: abstract set theory library;
@@ -851,6 +851,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [latex]: https://www.latex-project.org/get/
 [latexmk]: https://ctan.org/pkg/latexmk
 [Nix download instructions]: https://nixos.org/download/
+[Niv]: https://github.com/nmattia/niv
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [shake]: https://shakebuild.com/
 [Shake]: https://shakebuild.com/
