@@ -1,14 +1,56 @@
-# Nix Configuration Setup and Usage Guide
+# Contributing to the Formal Ledger Specifications
+
+## Style Guidelines
+
+We follow the [Agda standard library style guide][] as much as reasonable. Since some of our code is rendered into PDF, the formatting of the PDF takes priority over code formatting, so deviations are expected.
+
+We also have a separate style guide for formatting the PDF: [PDF style guide](PDF-style-guide.md).
+
+## Quick Start
+
+Here are several ways to get started with the formal ledger specifications. All examples assume you have cloned the repository:
+
+```bash
+git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
+cd formal-ledger-specifications
+```
+
+**Quick examples:**
+
++  **Open Nix shell and launch your editor**.
+
+   ```bash
+   nix-shell -A devShells.mkDocs
+   emacs src/Ledger.*       # using wildcard here since filename extension will change soon
+   # Type-check everything with C-c C-l
+   ```
+
++  **Type-check from command line**.
+
+   ```bash
+   nix-shell -A devShells.mkDocs
+   agda src/Ledger.*
+   ```
+
++  **Build pdf documentation**.
+
+   ```bash
+   nix-shell -A devShells.ci --run 'fls-shake cardano-ledger.pdf'
+   ```
+
++  **Build everything with Nix flakes:**
+
+   ```bash
+   nix build
+   # Then use the built tools, e.g.,
+   ./result/bin/fls-shake cardano-ledger.pdf
+   ```
+
+**If you encounter any problems, please read the rest of these instructions and open a [New Issue](https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose) if necessary**.
 
 ## Overview
 
-This repository uses a sophisticated Nix configuration to manage dependencies, build
-processes, and development environments for the Agda formalization of the Cardano
-ledger specification.  The setup provides reproducible builds, pinned dependencies,
-and multiple output formats including HTML documentation, PDF specifications, and
-Haskell code generation.
-
----
+This repository uses a sophisticated Nix configuration to manage dependencies, build processes, and development environments for formal ledger specifications written in Agda. The setup provides reproducible builds, pinned dependencies, and multiple output formats including HTML documentation, PDF specifications, and Haskell code generation.
 
 ## Architecture
 
@@ -46,61 +88,99 @@ We use `niv` to manage external dependencies, which provides
 + `agda-sets`: abstract set theory library;
 + `iog-agda-prelude`: supplementary prelude for Agda.
 
+#### Modifying the Agda Libraries
+
+To work simultaneously on the ledger and one of its dependencies:
+
+1. Remove the library from the ledger's `.agda-lib` file.
+2. Add its path to the `include:` section.
+3. When finished, push changes to the library and update `default.nix` to point to your new commit.
+
+**Warning:** Don't forget to update the SHA when updating `default.nix`. Nix will fail silently on your local machine if you do that. Change a few characters, run `nix-build -A formalLedger` and Nix will tell you the correct hash.
+
+---
+
+## Alternative Agda Installation Methods
+
+### Global Installation
+
+For a global installation of the project's Agda setup, run
+
+```bash
+nix-env -iA agdaWithPackages -f .
+```
+
+**Note:** This is a global install, which you may not want if you have other Agda projects.
+
 ---
 
 ## Available Packages and Derivations
 
 ### Core Packages
 
-+  `agdaWithPackages`: pre-configured Agda environment with all required libraries installed and properly configured.
+#### `agdaWithPackages`
 
-   ```bash
-   nix-build -A agdaWithPackages
-   ./result/bin/agda --version
-   ```
+Pre-configured Agda environment with all required libraries installed and properly configured.
 
-+  `formalLedger`: main Agda project that type-checks the formal ledger specification.
+```bash
+nix-build -A agdaWithPackages
+./result/bin/agda --version
+```
 
-   ```bash
-   nix-build -A formalLedger
-   ```
+#### `formalLedger`
 
-+  `fls-shake`: custom [Shake][]-based build system for generating various outputs from Agda sources.
+Main Agda project that type-checks the formal ledger specification.
 
-   ```bash
-   nix-build -A fls-shake
-   ./result/bin/fls-shake --help
-   ```
+```bash
+nix-build -A formalLedger
+```
+
+#### `fls-shake`
+
+Custom Shake-based build system for generating various outputs from Agda sources.
+
+```bash
+nix-build -A fls-shake
+./result/bin/fls-shake --help
+```
 
 ### Generated Outputs
 
-+  `html` generates HTML documentation from Agda sources.
+#### `html`
 
-   ```bash
-   nix-build -A html
-   # Output available in ./result/html/
-   ```
+Generates HTML documentation from Agda sources.
 
-+  `hsSrc` generates Haskell source code from Agda specifications.
+```bash
+nix-build -A html
+# Output available in ./result/html/
+```
 
-   ```bash
-   nix-build -A hsSrc
-   # Output available in ./result/hs/
-   ```
+#### `hsSrc`
 
-+  `docs.conway.fullspec` generates complete PDF specification document.
+Generates Haskell source code from Agda specifications.
 
-   ```bash
-   nix-build -A docs.conway.fullspec
-   # PDF available at ./result/cardano-ledger.pdf
-   ```
+```bash
+nix-build -A hsSrc
+# Output available in ./result/hs/
+```
 
-+  `docs.conway.diffspec` generates Conway-specific differential PDF specification.
+#### `docs.conway.fullspec`
 
-   ```bash
-   nix-build -A docs.conway.diffspec
-   # PDF available at ./result/conway-ledger.pdf
-   ```
+Generates complete PDF specification document.
+
+```bash
+nix-build -A docs.conway.fullspec
+# PDF available at ./result/cardano-ledger.pdf
+```
+
+#### `docs.conway.diffspec`
+
+Generates Conway-specific differential PDF specification.
+
+```bash
+nix-build -A docs.conway.diffspec
+# PDF available at ./result/conway-ledger.pdf
+```
 
 ### Development Environments
 
@@ -167,7 +247,7 @@ nix-build -A docs.conway.fullspec
 
 ### Using Nix Flakes
 
-If you prefer the modern flakes interface:
+If you prefer the modern flakes interface, proceed as follows:
 
 ```bash
 # Build all packages:
