@@ -1,47 +1,21 @@
 # Contributing to the Formal Ledger Specifications
 
-
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
+**Brief Contents**
 
 - [Style Guidelines](#style-guidelines)
 - [Quick Start](#quick-start)
 - [Overview](#overview)
 - [Architecture](#architecture)
-  - [Directory Structure](#directory-structure)
-  - [Dependency Management](#dependency-management)
 - [Alternative Agda Installation Methods](#alternative-agda-installation-methods)
-  - [Global Installation](#global-installation)
 - [Available Packages and Derivations](#available-packages-and-derivations)
-  - [Core Packages](#core-packages)
-  - [Generated Outputs](#generated-outputs)
-  - [Development Environments](#development-environments)
 - [Usage Instructions](#usage-instructions)
-  - [Building Everything](#building-everything)
-  - [Building Specific Targets](#building-specific-targets)
-  - [Using Nix Flakes](#using-nix-flakes)
-  - [Development Workflow](#development-workflow)
-  - [Updating Dependencies](#updating-dependencies)
 - [Key Features](#key-features)
-  - [Reproducibility](#reproducibility)
-  - [Multi-format Output](#multi-format-output)
-  - [Incremental Development](#incremental-development)
 - [Troubleshooting](#troubleshooting)
-  - [Common Issues](#common-issues)
-  - [Getting Help](#getting-help)
 - [Integration with IDEs](#integration-with-ides)
-  - [Emacs](#emacs)
-  - [VS Code](#vs-code)
 - [Performance Notes](#performance-notes)
 - [Setup Without Nix](#setup-without-nix)
-  - [Installing Agda and Dependencies Manually](#installing-agda-and-dependencies-manually)
-  - [Building fls-shake Without Nix](#building-fls-shake-without-nix)
-  - [Required System Dependencies](#required-system-dependencies)
 - [Miscellanea](#miscellanea)
-  - [Plotting typechecking times](#plotting-typechecking-times)
 - [Maintainers](#maintainers)
-
-<!-- markdown-toc end -->
 
 
 ## Style Guidelines
