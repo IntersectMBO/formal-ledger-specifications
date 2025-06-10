@@ -121,7 +121,7 @@ let
         '';
       });
 
-  mkDocsDerivation = { pname, version, project }: stdenv.mkDerivation {
+  mkPdfDerivation = { pname, version, project }: stdenv.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = pname;
     version = version;
@@ -209,8 +209,8 @@ in
     };
 
     docs.conway = {
-      fullspec = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
-      diffspec = mkDocsDerivation { pname = "docs"; version = "0.1"; project = "conway";  };
+      fullspec = mkPdfDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
+      diffspec = mkPdfDerivation { pname = "docs"; version = "0.1"; project = "conway";  };
     };
 
     devShells = {
