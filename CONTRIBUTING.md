@@ -42,7 +42,7 @@ cd formal-ledger-specifications
 
 ### Examples
 
-+ Enter a Nix shell and explore the source code in [Emacs][]:
++ Enter a Nix shell and explore the source code in Emacs:
 
    ```bash
    nix-shell -A devShells.ci
