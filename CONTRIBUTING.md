@@ -17,46 +17,53 @@
 - [Miscellanea](#miscellanea)
 - [Maintainers](#maintainers)
 
+---
 
 ## Style Guidelines
 
-We follow the [Agda standard library style guide][] as much as reasonable. Since some of our code is rendered into PDF, the formatting of the PDF takes priority over code formatting, so deviations are expected.
+We follow the [Agda standard library style guide][] as much as reasonable. Since
+some of our code is rendered into PDF, the formatting of the PDF takes priority
+over code formatting, so deviations are expected.
 
-We also have a separate style guide for formatting the PDF: [PDF style guide](PDF-style-guide.md).
+We also have a separate style guide for formatting the PDF: [PDF style
+guide](PDF-style-guide.md).
+
+---
 
 ## Quick Start
 
-Here are several ways to get started with the formal ledger specifications. All examples assume you have cloned the repository:
+Here are several ways to get started with the formal ledger specifications. All
+examples assume you have cloned the repository:
 
 ```bash
 git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
 cd formal-ledger-specifications
 ```
 
-**Quick examples:**
+### Examples
 
-+  **Open Nix shell and launch your editor**.
++ Enter a Nix shell and explore the source code in [Emacs][]:
 
    ```bash
-   nix-shell -A devShells.mkDocs
-   emacs src/Ledger.*       # using wildcard here since filename extension will change soon
+   nix-shell -A devShells.ci
+   emacs src/Ledger.*
    # Type-check everything with C-c C-l
    ```
 
-+  **Type-check from command line**.
++ Type-check from command line:
 
    ```bash
-   nix-shell -A devShells.mkDocs
+   nix-shell -A devShells.ci
    agda src/Ledger.*
    ```
 
-+  **Build pdf documentation**.
++ Build PDF documentation:
 
    ```bash
    nix-shell -A devShells.ci --run 'fls-shake cardano-ledger.pdf'
    ```
 
-+  **Build everything with Nix flakes:**
++ Build everything using Nix flakes:
 
    ```bash
    nix build
@@ -64,13 +71,20 @@ cd formal-ledger-specifications
    ./result/bin/fls-shake cardano-ledger.pdf
    ```
 
-**If you encounter any problems, please read the rest of these instructions and open a [New Issue](https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose) if necessary**.
+**If you encounter any problems, please read the rest of these instructions and
+open a [New
+Issue](https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose)
+if necessary**.
+
+---
 
 ## Overview
 
-This repository uses a sophisticated Nix configuration to manage dependencies, build processes, and development environments for formal ledger specifications written in Agda. The setup provides reproducible builds, pinned dependencies, and multiple output formats including HTML documentation, PDF specifications, and Haskell code generation.
-
-## Architecture
+This repository uses [Nix][] to manage dependencies, build processes, and
+development environments for formal ledger specifications written in Agda. The
+setup provides reproducible builds, pinned dependencies, and multiple output
+formats including HTML documentation, PDF specifications, and Haskell code
+generation.
 
 ### Directory Structure
 
@@ -89,149 +103,109 @@ This repository uses a sophisticated Nix configuration to manage dependencies, b
         └── nix/fls-agda.nix                # Custom FLS Agda derivation
 ```
 
-### Dependency Management
+### Dependency Management in Nix
 
-We use `niv` to manage external dependencies, which provides
+We use [niv][] to manage external dependencies. It provides
 
-+ *reproducible builds*: all dependencies pinned to specific commits/versions;
-+ *easy updates*: `niv update <package>` updates individual dependencies;
-+ *declarative dependencies*: all versions stored in `build-tools/nix/sources.json`.
++ *reproducible builds*: all dependencies are pinned to specific commits/versions;
++ *declarative dependencies*: all versions stored in `build-tools/nix/sources.json`;
++ *easy updates*: `niv update <package>` updates individual dependencies.
 
-#### Current Dependencies
+#### Agda Dependencies
 
-+ `nixpkgs`: base Nix packages collection;
-+ `agda-stdlib`:  Agda standard library;
-+ `agda-stdlib-classes`: type-class extensions for Agda stdlib;
-+ `agda-stdlib-meta`: meta-programming utilities for Agda;
-+ `agda-sets`: abstract set theory library;
-+ `iog-agda-prelude`: supplementary prelude for Agda.
+The Agda development depends on the following libraries:
 
-#### Modifying the Agda Libraries
++ [agda-stdlib][]: standard library;
++ [agda-stdlib-classes][]: type-class extensions for the standard library;
++ [agda-stdlib-meta][]: meta-programming utilities;
++ [agda-sets][]: abstract set theory library;
++ [iog-agda-prelude][]: supplementary prelude.
 
-To work simultaneously on the ledger and one of its dependencies:
+### Available Packages and Derivations
 
-1. Remove the library from the ledger's `.agda-lib` file.
-2. Add its path to the `include:` section.
-3. When finished, push changes to the library and update `default.nix` to point to your new commit.
+#### Core Packages
 
-**Warning:** Don't forget to update the SHA when updating `default.nix`. Nix will fail silently on your local machine if you do that. Change a few characters, run `nix-build -A formalLedger` and Nix will tell you the correct hash.
++ `agdaWithPackages`
+  Pre-configured Agda environment with all required libraries installed and
+  properly configured.
 
----
+  ```bash
+  nix-build -A agdaWithPackages
+  ./result/bin/agda --version
+  ```
 
-## Alternative Agda Installation Methods
++ `formalLedger`
 
-### Global Installation
+  Main Agda project that type-checks the formal ledger specification.
 
-For a global installation of the project's Agda setup, run
+  ```bash
+  nix-build -A formalLedger
+  ```
 
-```bash
-nix-env -iA agdaWithPackages -f .
-```
++ `fls-shake`
 
-**Note:** This is a global install, which you may not want if you have other Agda projects.
+  Custom Shake-based build system for generating various outputs from Agda sources.
 
----
+  ```bash
+  nix-build -A fls-shake
+  ./result/bin/fls-shake --help
+  ```
 
-## Available Packages and Derivations
+#### Outputs
 
-### Core Packages
++ `html`
 
-#### `agdaWithPackages`
+  Generates HTML documentation from Agda sources.
 
-Pre-configured Agda environment with all required libraries installed and properly configured.
+  ```bash
+  nix-build -A html
+  # Output available in ./result/html/
+  ```
 
-```bash
-nix-build -A agdaWithPackages
-./result/bin/agda --version
-```
++ `hsSrc`
 
-#### `formalLedger`
+  Generates Haskell source code from Agda specifications.
 
-Main Agda project that type-checks the formal ledger specification.
+  ```bash
+  nix-build -A hsSrc
+  # Output available in ./result/hs/
+  ```
 
-```bash
-nix-build -A formalLedger
-```
++ `docs.conway.fullspec`
 
-#### `fls-shake`
+  Generates complete PDF specification document.
 
-Custom Shake-based build system for generating various outputs from Agda sources.
+  ```bash
+  nix-build -A docs.conway.fullspec
+  # PDF available at ./result/cardano-ledger.pdf
+  ```
 
-```bash
-nix-build -A fls-shake
-./result/bin/fls-shake --help
-```
++ `docs.conway.diffspec`
 
-### Generated Outputs
+  Generates Conway-specific differential PDF specification.
 
-#### `html`
+  ```bash
+  nix-build -A docs.conway.diffspec
+  # PDF available at ./result/conway-ledger.pdf
+  ```
 
-Generates HTML documentation from Agda sources.
+#### Development Environments
 
-```bash
-nix-build -A html
-# Output available in ./result/html/
-```
++ `devShells.ci`: a minimal environment for CI/CD builds
 
-#### `hsSrc`
+  ```bash
+  nix-shell -A devShells.ci
+  fls-shake --help # available for building outputs
+  ```
 
-Generates Haskell source code from Agda specifications.
++ `devShells.mkDocs`: dev environment focused on Agda development and
+  documentation.
 
-```bash
-nix-build -A hsSrc
-# Output available in ./result/hs/
-```
-
-#### `docs.conway.fullspec`
-
-Generates complete PDF specification document.
-
-```bash
-nix-build -A docs.conway.fullspec
-# PDF available at ./result/cardano-ledger.pdf
-```
-
-#### `docs.conway.diffspec`
-
-Generates Conway-specific differential PDF specification.
-
-```bash
-nix-build -A docs.conway.diffspec
-# PDF available at ./result/conway-ledger.pdf
-```
-
-### Development Environments
-
-#### `devShells.ci`: a minimal environment for CI/CD builds
-
-**Includes**
-
-+ `fls-shake` build system.
-
-**Commands**
-
-```bash
-nix-shell -A devShells.ci
-fls-shake --help  # available for building outputs
-```
-
-#### `devShells.mkDocs`: dev environment focused on Agda development and documentation.
-
-**Includes**
-
-+ `agdaWithPackages` (Agda 2.7.0.1 + all libraries);
-+ `pandoc` for document conversion;
-+ `python311` with MkDocs, Material theme, and extensions;
-+ `coreutils` for basic shell utilities.
-
-**Commands**
-
-```bash
-nix-shell -A devShells.mkDocs
-agda --version     # available for Agda development
-mkdocs --version   # available for documentation
-# Note: fls-shake is NOT available in this shell
-```
+  ```bash
+  nix-shell -A devShells.mkDocs
+  agda --version # available for Agda development
+  mkdocs --version # available for documentation
+  ```
 
 ---
 
@@ -347,27 +321,14 @@ niv update nixpkgs -v 21.11.337905.902d91def1e
 niv add owner/repo -v tag-or-branch
 ```
 
----
+### Working Simultaneously on the Agda Libraries
 
-## Key Features
+To work simultaneously on the ledger and one of its dependencies:
 
-### Reproducibility
-
-+ All dependencies pinned to specific versions.
-+ Builds are completely reproducible across machines.
-+ No dependency on system-installed packages.
-
-### Multi-format Output
-
-+ Html documentation for web viewing.
-+ Pdf specifications for formal documentation.
-+ Haskell code generation for executable specifications.
-
-### Incremental Development
-
-+ Fast development shells with pre-built dependencies.
-+ Cached builds of Agda libraries.
-+ Modular build system using [Shake][].
+1. Remove the library from the ledger's `.agda-lib` file.
+2. Add its path to the `include:` section.
+3. When finished, push changes to the library and update the Agda dependencies
+   to point to your new commit.
 
 ---
 
@@ -381,13 +342,13 @@ niv add owner/repo -v tag-or-branch
     - Use `nix-shell -A devShells.ci` or build it separately with `nix-build -A fls-shake`.
 
 2.  **LaTeX/latexmk errors when building PDFs**
-   
+
     **Error** `latexmk: createProcess: exec: invalid argument (Bad file descriptor)`
-   
+
     **Causes and Solutions**
 
     +  **Missing latexmk**
-    
+
        Install latexmk and LaTeX
 
        ```bash
@@ -398,29 +359,29 @@ niv add owner/repo -v tag-or-branch
        ```
 
     +  **PATH issues**
-    
+
        Ensure latexmk is in your PATH
 
     +  **Nix users**
-    
+
        This should be handled automatically
 
 3.  **Unicode/encoding errors**
-   
+
     **Error**
-    
+
     `commitBuffer: invalid argument (cannot encode character '\8474')`
-   
+
     **Cause**
-    
+
     Agda trying to write Unicode characters with wrong encoding.
-   
+
     **Solutions**
 
     ```bash
     # Option 1: Set locale for single command
     LC_ALL=en_US.UTF-8 fls-shake cardano-ledger.pdf
-   
+
     # Option 2: Set globally in shell
     export LANG=en_US.UTF-8
     export LC_ALL=en_US.UTF-8
@@ -438,14 +399,14 @@ niv add owner/repo -v tag-or-branch
 
 6.  **Memory issues during builds**
 
-    **Problem** 
-    
+    **Problem**
+
     Agda compilation is memory-intensive for large projects.
 
     **Solutions**
-    
+
     +  **Agda-specific**
-    
+
        Increase GHC heap size using RTS options.
 
        ```bash
@@ -455,7 +416,7 @@ niv add owner/repo -v tag-or-branch
        ```
 
     +  **Nix build options**
-    
+
        Reduce parallel builds to lower memory pressure.
 
        ```bash
@@ -463,7 +424,7 @@ niv add owner/repo -v tag-or-branch
        ```
 
     +  **System-level**
-    
+
        Add swap space if you have limited RAM.
 
        ```bash
@@ -472,7 +433,7 @@ niv add owner/repo -v tag-or-branch
        # Consider adding swap if needed (system-dependent)
        ```
     +  **Monitor usage**
-    
+
        Use `htop` or `nix-top` during builds to identify bottlenecks.
 
 ### Getting Help
@@ -685,7 +646,10 @@ For a setup that allows switching between different Agda versions, do the follow
 
 ## Setup Without Nix
 
-While we recommend using Nix for the best experience, it's possible to work with this repository without Nix. Those making nontrivial contributions are advised to use the Nix-based approach, but these instructions are provided for those who prefer not to use Nix.
+While we recommend using Nix for the best experience, it's possible to work with
+this repository without Nix. Those making nontrivial contributions are advised
+to use the Nix-based approach, but these instructions are provided for those who
+prefer not to use Nix.
 
 ### Installing Agda and Dependencies Manually
 
@@ -697,14 +661,14 @@ While we recommend using Nix for the best experience, it's possible to work with
 
     ```bash
     mkdir -p LIB && cd LIB
-   
+
     # Clone exact versions used by the project
     git clone --config advice.detachedHead=false --single-branch -b "v2.2" \
       https://github.com/agda/agda-stdlib.git
     git clone --config advice.detachedHead=false --single-branch \
       https://github.com/agda/agda-stdlib-classes.git
     git clone --config advice.detachedHead=false --single-branch \
-      https://github.com/agda/agda-stdlib-meta.git  
+      https://github.com/agda/agda-stdlib-meta.git
     git clone --config advice.detachedHead=false --single-branch -b "master" \
       https://github.com/input-output-hk/agda-sets.git
     git clone --config advice.detachedHead=false --single-branch -b "main" \
@@ -747,7 +711,7 @@ described in this subsection.
 1.  **Install GHC and Cabal**.
 
     Follow the [official Haskell instructions][].
-   
+
     Verify installation and update:
 
     ```bash
@@ -827,21 +791,17 @@ and open `index.html` in your browser.
 
 This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamdemeo][].
 
-
-**If you encounter any problems, please open a [New Issue][]**. 
+**If you encounter any problems, please open a [New Issue][]**.
 
 ---
 
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
 [agda-stdlib]: https://github.com/agda/agda-stdlib
-[agda-stdlib v2.2]: https://github.com/agda/agda-stdlib/tree/v2.2-release
 [agda-stdlib-classes]: https://github.com/agda/agda-stdlib-classes
-[agda-stdlib-classes v2.2]: https://github.com/agda/agda-stdlib-classes/releases/tag/v2.2
 [agda-stdlib-meta]: https://github.com/agda/agda-stdlib-meta
-[agda-stdlib-meta v2.2]: https://github.com/agda/agda-stdlib-meta/releases/tag/v2.2
 [agda-sets]: https://github.com/input-output-hk/agda-sets
-[agda-sets f517d0d]: https://github.com/input-output-hk/agda-sets/tree/f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6
+[iog-agda-prelude]: https://github.com/input-output-hk/iog-agda-prelude
 [binary]: https://github.com/haskell/binary
 [deepseq]: https://github.com/haskell/deepseq
 [Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
@@ -850,10 +810,10 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [Haskell]: https://www.haskell.org/downloads/
 [latex]: https://www.latex-project.org/get/
 [latexmk]: https://ctan.org/pkg/latexmk
+[Nix]: https://nixos.org/
 [Nix download instructions]: https://nixos.org/download/
-[Niv]: https://github.com/nmattia/niv
+[niv]: https://github.com/nmattia/niv
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
-[shake]: https://shakebuild.com/
 [Shake]: https://shakebuild.com/
 
 [@WhatisRT]: https://github.com/whatisrt
