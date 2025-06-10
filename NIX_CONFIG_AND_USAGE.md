@@ -65,7 +65,7 @@ We use `niv` to manage external dependencies, which provides
    nix-build -A formalLedger
    ```
 
-+  `fls-shake`: custom Shake-based build system for generating various outputs from Agda sources.
++  `fls-shake`: custom [Shake][]-based build system for generating various outputs from Agda sources.
 
    ```bash
    nix-build -A fls-shake
@@ -104,36 +104,38 @@ We use `niv` to manage external dependencies, which provides
 
 ### Development Environments
 
-+  `devShells.ci`: minimal environment for CI/CD builds.
+#### `devShells.ci`: a minimal environment for CI/CD builds
 
-   **Includes**
+**Includes**
 
-   + `fls-shake` build system.
++ `fls-shake` build system.
 
-   **Commands**
+**Commands**
 
-   ```bash
-   nix-shell -A devShells.ci
-   fls-shake --help  # available for building outputs
-   ```
+```bash
+nix-shell -A devShells.ci
+fls-shake --help  # available for building outputs
+```
 
-+  `devShells.mkDocs`: dev environment focused on Agda development and documentation.
+#### `devShells.mkDocs`: dev environment focused on Agda development and documentation.
 
-   **Includes**
+**Includes**
 
-   + `agdaWithPackages` (Agda 2.7.0.1 + all libraries);
-   + `pandoc` for document conversion;
-   + `python311` with MkDocs, Material theme, and extensions;
-   + `coreutils` for basic shell utilities.
++ `agdaWithPackages` (Agda 2.7.0.1 + all libraries);
++ `pandoc` for document conversion;
++ `python311` with MkDocs, Material theme, and extensions;
++ `coreutils` for basic shell utilities.
 
-   **Commands**
+**Commands**
 
-   ```bash
-   nix-shell -A devShells.mkDocs
-   agda --version     # available for Agda development
-   mkdocs --version   # available for documentation
-   # Note: fls-shake is NOT available in this shell
-   ```
+```bash
+nix-shell -A devShells.mkDocs
+agda --version     # available for Agda development
+mkdocs --version   # available for documentation
+# Note: fls-shake is NOT available in this shell
+```
+
+---
 
 ## Usage Instructions
 
@@ -229,7 +231,7 @@ nix-shell -A devShells.ci          # for fls-shake build tasks
 
 ### Updating Dependencies
 
-To update pinned dependencies:
+To update pinned dependencies managed by niv, do the following:
 
 ```bash
 # Update all dependencies:
@@ -238,6 +240,10 @@ niv update
 # Update specific dependency:
 niv update nixpkgs
 niv update agda-stdlib
+
+# Optionally, update to specific version/revision:
+niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c
+niv update nixpkgs -v 21.11.337905.902d91def1e
 
 # Add new dependency:
 niv add owner/repo -v tag-or-branch
@@ -263,7 +269,7 @@ niv add owner/repo -v tag-or-branch
 
 + Fast development shells with pre-built dependencies.
 + Cached builds of Agda libraries.
-+ Modular build system using Shake.
++ Modular build system using [Shake][].
 
 ---
 
@@ -276,39 +282,100 @@ niv add owner/repo -v tag-or-branch
     - The `fls-shake` tool is only available in the `ci` shell, not `mkDocs`.
     - Use `nix-shell -A devShells.ci` or build it separately with `nix-build -A fls-shake`.
 
-2.  **Build failures due to locale issues**
+2.  **LaTeX/latexmk errors when building PDFs**
+   
+    **Error** `latexmk: createProcess: exec: invalid argument (Bad file descriptor)`
+   
+    **Causes and Solutions**
+
+    +  **Missing latexmk**
+    
+       Install latexmk and LaTeX
+
+       ```bash
+       # Ubuntu/Debian
+       sudo apt update
+       sudo apt install latexmk texlive-full
+       # Or minimal: sudo apt install latexmk texlive-latex-extra
+       ```
+
+    +  **PATH issues**
+    
+       Ensure latexmk is in your PATH
+
+    +  **Nix users**
+    
+       This should be handled automatically
+
+3.  **Unicode/encoding errors**
+   
+    **Error**
+    
+    `commitBuffer: invalid argument (cannot encode character '\8474')`
+   
+    **Cause**
+    
+    Agda trying to write Unicode characters with wrong encoding.
+   
+    **Solutions**
+
+    ```bash
+    # Option 1: Set locale for single command
+    LC_ALL=en_US.UTF-8 fls-shake cardano-ledger.pdf
+   
+    # Option 2: Set globally in shell
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
+    ```
+
+4.  **Build failures due to locale issues**
 
     - The configuration sets proper UTF-8 locales automatically.
     - If issues persist, ensure your system has UTF-8 locales available.
 
-3.  **Agda library conflicts**
+5.  **Agda library conflicts**
 
     - All libraries are pre-configured with correct versions.
     - Avoid installing Agda libraries system-wide when using this setup.
 
-4.  **Memory issues during builds**
+6.  **Memory issues during builds**
 
-    - Agda compilation can be memory-intensive.
-    - Consider increasing available memory for large projects.
-4. **Memory issues during builds:**
-   - Agda compilation can be memory-intensive for large projects
-   - **Agda-specific**: Increase GHC heap size using RTS options:
-     ```bash
-     # Set environment variable to give Agda more memory
-     export AGDA_RTS_OPTIONS="+RTS -M8G -A128M -RTS"
-     nix-build -A formalLedger
-     ```
-   - **Nix build options**: Reduce parallel builds to lower memory pressure:
-     ```bash
-     nix-build --max-jobs 1 --cores 1  # Build sequentially
-     ```
-   - **System-level**: Add swap space if you have limited RAM:
-     ```bash
-     # Check current memory/swap
-     free -h
-     # Consider adding swap if needed (system-dependent)
-     ```
-   - **Monitor usage**: Use `htop` or `nix-top` during builds to identify bottlenecks
+    **Problem** 
+    
+    Agda compilation is memory-intensive for large projects.
+
+    **Solutions**
+    
+    +  **Agda-specific**
+    
+       Increase GHC heap size using RTS options.
+
+       ```bash
+       # Set environment variable to give Agda more memory
+       export AGDA_RTS_OPTIONS="+RTS -M8G -A128M -RTS"
+       nix-build -A formalLedger
+       ```
+
+    +  **Nix build options**
+    
+       Reduce parallel builds to lower memory pressure.
+
+       ```bash
+       nix-build --max-jobs 1 --cores 1  # Build sequentially
+       ```
+
+    +  **System-level**
+    
+       Add swap space if you have limited RAM.
+
+       ```bash
+       # Check current memory/swap
+       free -h
+       # Consider adding swap if needed (system-dependent)
+       ```
+    +  **Monitor usage**
+    
+       Use `htop` or `nix-top` during builds to identify bottlenecks.
 
 ### Getting Help
 
@@ -336,61 +403,65 @@ emacs src/YourFile.agda
 
 For a setup that allows switching between different Agda versions, do the following:
 
-1. **Build and symlink the project's Agda:**
-   ```bash
-   nix-build -A agdaWithPackages -o ~/ledger-agda
-   ```
-   
-   **Notes:**
-   - Replace `~/ledger-agda` with your preferred path
-   - This creates a persistent symlink to the project's Agda with all libraries
-   - You can verify with: `~/ledger-agda/bin/agda --version`
+1.  **Build and symlink the project's Agda**.
 
-2. **Configure Emacs for version switching**.
+    ```bash
+    nix-build -A agdaWithPackages -o ~/ledger-agda
+    ```
    
-   Add the following to your [Emacs init file](https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html) (highlight and `M-x eval-region` to load without restarting):
+    **Notes**
 
-   ```elisp
-   ;; Defines a function `my/switch-agda' that switches between different
-   ;; `agda' executables defined in `my/agda-versions'. The first entry of
-   ;; `my/agda-versions' is assumed to be the default Agda.
-   ;;
-   ;; If there are two entries in `my/agda-versions', `my/switch-agda' toggles
-   ;; between the two. If there are more entries, it will ask which one
-   ;; to choose.
-   (setq my/agda-versions `(("System Agda"  "2.6.4" "agda")  ; Adjust version as needed
-                            ("Ledger Agda"  "2.7.0.1" "~/ledger-agda/bin/agda")))
-   (setq my/selected-agda (caar my/agda-versions))
+    - Replace `~/ledger-agda` with your preferred path.
+    - This creates a persistent symlink to the project's Agda with all libraries.
+    - You can verify with: `~/ledger-agda/bin/agda --version`.
+
+2.  **Configure Emacs for version switching**.
    
-   (defun my/switch-agda (name version path)
-     (interactive
-      (cond ((> (length my/agda-versions) 2)
-             (assoc (completing-read "Agda: " my/agda-versions '(lambda (x) 't) 't) my/agda-versions))
-            ((= (length my/agda-versions) 2)
-             (car (seq-filter '(lambda (x) (not (string= my/selected-agda (car x)))) my/agda-versions)))
-            (t (error "my/agda-versions needs to have at least two elements!"))))
-     (message "Selecting %s, version %s" name version)
-     (setq my/selected-agda   name
-           agda2-version      version
-           agda2-program-name path)
-     (agda2-restart))
-   
-   ;; Bind the switch function to C-c C-x C-t in agda2-mode
-   (with-eval-after-load 'agda2-mode 
-     (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
-   ```
+    Add the following to your [Emacs init file][] (highlight and `M-x eval-region` to load without restarting):
 
-   **Configuration Notes:**
-   - Update the system Agda version in `my/agda-versions` to match your installation
-   - Check your system Agda with: `which agda && agda --version`
-   - Once configured, use `C-c C-x C-t` to switch between Agda versions
-   - This works with most Emacs distributions (Doom, Spacemacs, vanilla, etc.)
+    ```elisp
+    ;; Defines a function `my/switch-agda' that switches between different
+    ;; `agda' executables defined in `my/agda-versions'. The first entry of
+    ;; `my/agda-versions' is assumed to be the default Agda.
+    ;;
+    ;; If there are two entries in `my/agda-versions', `my/switch-agda' toggles
+    ;; between the two. If there are more entries, it will ask which one
+    ;; to choose.
+    (setq my/agda-versions `(("System Agda"  "2.6.4" "agda")  ; Adjust version as needed
+                             ("Ledger Agda"  "2.7.0.1" "~/ledger-agda/bin/agda")))
+    (setq my/selected-agda (caar my/agda-versions))
 
-3. **Usage:**
-   - Open any `.agda` file in Emacs
-   - Use `C-c C-x C-t` to switch to the ledger Agda version
-   - Use standard agda-mode commands (`C-c C-l` to load, `C-c C-c` to case split, etc.)
-   - The project's libraries will be automatically available
+    (defun my/switch-agda (name version path)
+      (interactive
+       (cond ((> (length my/agda-versions) 2)
+              (assoc (completing-read "Agda: " my/agda-versions '(lambda (x) 't) 't) my/agda-versions))
+             ((= (length my/agda-versions) 2)
+              (car (seq-filter '(lambda (x) (not (string= my/selected-agda (car x)))) my/agda-versions)))
+             (t (error "my/agda-versions needs to have at least two elements!"))))
+      (message "Selecting %s, version %s" name version)
+      (setq my/selected-agda   name
+            agda2-version      version
+            agda2-program-name path)
+      (agda2-restart))
+
+    ;; Bind the switch function to C-c C-x C-t in agda2-mode
+    (with-eval-after-load 'agda2-mode 
+      (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
+    ```
+
+    **Notes**
+
+    + Update the system Agda version in `my/agda-versions` to match your installation.
+    + Check your system Agda with `which agda && agda --version`.
+    + Once configured, use `C-c C-x C-t` to switch between Agda versions.
+    + This works with most Emacs distributions (Doom, Spacemacs, vanilla, etc.).
+
+3.  **Usage**.
+
+    -  Open any Agda file in Emacs.
+    -  Use `C-c C-x C-t` to switch to the ledger Agda version.
+    -  Use standard agda-mode commands (`C-c C-l` to load, `C-c C-c` to case split, etc.).
+    -  The project's libraries will be automatically available.
 
 #### Troubleshooting Emacs Setup
 
@@ -411,100 +482,232 @@ For a setup that allows switching between different Agda versions, do the follow
 
 #### Installation and Configuration
 
-1. **Install the Agda Language Server extension**.
+1.  **Install the Agda Language Server extension**.
 
-   + Open VS Code.
-   + Go to Extensions (`Ctrl+Shift+X`).
-   + Search for "agda-mode".
-   + Install the official Agda extension.
+    + Open VS Code.
+    + Go to Extensions (`Ctrl+Shift+X`).
+    + Search for "agda-mode".
+    + Install the official Agda extension.
 
-2. **Build the project's Agda binary**.
+2.  **Build the project's Agda binary**.
 
-   ```bash
-   nix-build -A agdaWithPackages
-   # Note the output path, e.g., /nix/store/r7qslc6myc3s2l1482vahqddv2lhzndp-agdaWithPackages-2.7.0.1
-   ```
+    ```bash
+    nix-build -A agdaWithPackages
+    # Note the output path, e.g., /nix/store/r7qslc6myc3s2l1482vahqddv2lhzndp-agdaWithPackages-2.7.0.1
+    ```
 
-3. **Configure VS Code to use the project's Agda**.
+3.  **Configure VS Code to use the project's Agda**.
 
-   **Method 1: Via Settings UI**
+    **Method 1: Via Settings UI**
 
-   + Open VS Code Settings (`Ctrl+,`).
-   + Search for "agda".
-   + Find "Agda Mode › Connection: Paths".
-   + Click "Add Item".
-   + Add the path to your built Agda binary; e.g.,
+    + Open VS Code Settings (`Ctrl+,`).
+    + Search for "agda".
+    + Find "Agda Mode › Connection: Paths".
+    + Click "Add Item".
+    + Add the path to your built Agda binary; e.g.,
 
-     ```
-     /nix/store/r7qslc6myc3s2l1482vahqddv2lhzndp-agdaWithPackages-2.7.0.1/bin/agda
-     ```
+      ```
+      /nix/store/r7qslc6myc3s2l1482vahqddv2lhzndp-agdaWithPackages-2.7.0.1/bin/agda
+      ```
 
-   **Method 2: Via settings.json**
+    **Method 2: Via settings.json**
 
-   + Open Command Palette (`Ctrl+Shift+P`).
-   + Type "Preferences: Open Settings (JSON)".
-   + Add or modify the "agdaMode.connection.paths" setting; e.g.,
+    + Open Command Palette (`Ctrl+Shift+P`).
+    + Type "Preferences: Open Settings (JSON)".
+    + Add or modify the "agdaMode.connection.paths" setting; e.g.,
 
-     ```json
-     {
-       "agdaMode.connection.paths": [
-         "/nix/store/r7qslc6myc3s2l1482vahqddv2lhzndp-agdaWithPackages-2.7.0.1/bin/agda",
-         "agda"
-       ]
-     }
-     ```
+      ```json
+      {
+        "agdaMode.connection.paths": [
+          "/nix/store/r7qslc6myc3s2l1482vahqddv2lhzndp-agdaWithPackages-2.7.0.1/bin/agda",
+          "agda"
+        ]
+      }
+      ```
 
-4. **Create a persistent symlink (recommended)**.
+4.  **Create a persistent symlink (recommended)**.
    
-   To avoid updating the path every time you rebuild:
+    To avoid updating the path every time you rebuild:
 
-   ```bash
-   nix-build -A agdaWithPackages -o ~/ledger-agda
-   ```
-   
-   Then use in VS Code settings:
-   ```json
-   {
-     "agdaMode.connection.paths": [
-       "~/ledger-agda/bin/agda",
-       "agda"
-     ]
-   }
-   ```
+    ```bash
+    nix-build -A agdaWithPackages -o ~/ledger-agda
+    ```
 
-5. **Switch between Agda versions**.
+    Then use in VS Code settings:
+    ```json
+    {
+      "agdaMode.connection.paths": [
+        "~/ledger-agda/bin/agda",
+        "agda"
+      ]
+    }
+    ```
 
-   + Use `Ctrl+C Ctrl+R` to switch between configured Agda executables.
-   + The first path in the list is the default.
+5.  **Switch between Agda versions**.
+
+    + Use `Ctrl+C Ctrl+R` to switch between configured Agda executables.
+    + The first path in the list is the default.
+
 
 #### VS Code Usage
 
-+ Open any `.agda` file.
-+ The extension should automatically start the Agda Language Server.
-+ Use `Ctrl+C Ctrl+L` to type-check/load the current file.
-+ Hover over definitions to see types.
-+ Use `Ctrl+C Ctrl+R` to switch Agda versions if you have multiple configured.
++  Open any Agda file.
++  The file name extension (`.agda`, `.lagda`, `.lagda.md`, etc) should automatically start the Agda Language Server.
++  Use `Ctrl+C Ctrl+L` to type-check/load the current file.
++  Hover over definitions to see types.
++  Use `Ctrl+C Ctrl+R` to switch Agda versions if you have multiple configured.
 
 #### Troubleshooting VS Code Setup
 
 +  **"Cannot find agda"**
 
-   Ensure the path in settings points to the actual binary
+   Ensure the path in settings points to the actual binary.
 
 +  **Libraries not found**
 
-   Make sure you're using the project's Agda with libraries (`agdaWithPackages`)
+   Make sure you're using the project's Agda with libraries (`agdaWithPackages`).
 
 +  **Extension not working**
 
-   Check VS Code's Output panel for error messages
+   Check VS Code's Output panel for error messages.
 
 +  **Performance issues**
 
-   The Agda Language Server can be memory-intensive; close other applications if needed.
+   The Agda Language Server can be memory-intensive; close other applications if needed..
+
+---
 
 ## Performance Notes
 
 - Initial builds may take significant time due to Agda library compilation
 - Subsequent builds are faster due to Nix caching
 - Consider using a Nix binary cache for faster builds in CI environments
+
+---
+
+## Setup Without Nix
+
+While we recommend using Nix for the best experience, it's possible to work with this repository without Nix. Those making nontrivial contributions are advised to use the Nix-based approach, but these instructions are provided for those who prefer not to use Nix.
+
+### Installing Agda and Dependencies Manually
+
+1.  **Install Agda 2.7.0.1**.
+
+    Follow the instructions at https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda
+
+2.  **Clone the required Agda libraries**.
+
+    ```bash
+    mkdir -p LIB && cd LIB
+   
+    # Clone exact versions used by the project
+    git clone --config advice.detachedHead=false --single-branch -b "v2.2" \
+      https://github.com/agda/agda-stdlib.git
+    git clone --config advice.detachedHead=false --single-branch \
+      https://github.com/agda/agda-stdlib-classes.git
+    git clone --config advice.detachedHead=false --single-branch \
+      https://github.com/agda/agda-stdlib-meta.git  
+    git clone --config advice.detachedHead=false --single-branch -b "master" \
+      https://github.com/input-output-hk/agda-sets.git
+    git clone --config advice.detachedHead=false --single-branch -b "main" \
+      https://github.com/input-output-hk/iog-agda-prelude.git
+
+    # Checkout specific commits (check sources.json for exact versions)
+    cd agda-stdlib-classes && git checkout aa62ce6348d39c554ef89487079871d5590e155e && cd ..
+    cd agda-stdlib-meta && git checkout 5ff853375180ef69f243ce72f2d3f6294bdb6aff && cd ..
+    cd agda-sets && git checkout f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6 && cd ..
+    cd iog-agda-prelude && git checkout 20e4ab42fd6a980233053c8c3b1b8b2ab42946c9 && cd ..
+    ```
+
+3.  **Create library configuration**.
+
+    Create a file `LIB/libraries` with the following content:
+
+    ```
+    LIB/agda-stdlib/standard-library.agda-lib
+    LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
+    LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
+    LIB/agda-sets/abstract-set-theory.agda-lib
+    LIB/iog-agda-prelude/iog-prelude.agda-lib
+    ```
+
+4.  **Use Agda with the libraries**.
+
+    ```bash
+    # Type-check the formal specification
+    AGDA_DIR=LIB agda src/Everything.agda
+
+    # Build artifacts (requires fls-shake, see below)
+    AGDA_DIR=LIB fls-shake cardano-ledger.pdf
+    ```
+
+### Building fls-shake Without Nix
+
+The build system `fls-shake` can be compiled manually by following the steps
+described in this subsection.
+
+1.  **Install GHC and Cabal**.
+
+    Follow the [official Haskell instructions][].
+   
+    Verify installation and update:
+
+    ```bash
+    ghc --version
+    cabal --version
+    cabal update
+    ```
+
+2.  **Compile fls-shake**.
+
+    ```bash
+    cd build-tools/shake
+    cabal build fls-shake
+    ```
+
+3.  **Run fls-shake:**
+
+    ```bash
+    # Build PDF documents
+    cabal run fls-shake -- -C '../..' cardano-ledger.pdf
+    cabal run fls-shake -- -C '../..' conway-ledger.pdf
+
+    # Build HTML and Haskell outputs
+    cabal run fls-shake -- -C '../..' html
+    cabal run fls-shake -- -C '../..' hs
+    ```
+
+    Note: The `-C '../..'` option makes fls-shake run from the repository's main directory.
+
+
+### Required System Dependencies
+
+For non-Nix users, you'll also need to install the following:
+
++  **LaTeX** (for PDF generation)
+
+   ```bash
+   # Ubuntu/Debian
+   sudo apt install texlive-full latexmk
+
+   # Or minimal installation
+   sudo apt install texlive-latex-extra latexmk
+   ```
+
++  **Python and dependencies** (for documentation tools)
+
+   ```bash
+   pip install mkdocs mkdocs-material pymdown-extensions pyyaml
+   ```
+
++  **Other tools**
+
+   pandoc, basic utilities (cp, mkdir, etc.)
+
+---
+
+
+[Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
+[Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
+[official Haskell instructions]: https://www.haskell.org/downloads/
+[Shake]: https://shakebuild.com/
