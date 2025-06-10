@@ -72,9 +72,7 @@ cd formal-ledger-specifications
    ```
 
 **If you encounter any problems, please read the rest of these instructions and
-open a [New
-Issue](https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose)
-if necessary**.
+open a [New Issue][] if necessary**.
 
 ---
 
@@ -441,6 +439,7 @@ To work simultaneously on the ledger and one of its dependencies:
 + Check build logs for specific error messages.
 + Ensure you're using a supported platform (x86_64-Linux).
 + Verify that Nix is properly installed and configured.
++ Open a [New Issue][] in [our GitHub repository][formal-ledger-specifications].
 
 ---
 
@@ -632,15 +631,15 @@ For a setup that allows switching between different Agda versions, do the follow
 
 +  **Performance issues**
 
-   The Agda Language Server can be memory-intensive; close other applications if needed..
+   The Agda Language Server can be memory-intensive; close other applications if needed.
 
 ---
 
 ## Performance Notes
 
-- Initial builds may take significant time due to Agda library compilation
-- Subsequent builds are faster due to Nix caching
-- Consider using a Nix binary cache for faster builds in CI environments
+- Initial builds may take significant time due to Agda library compilation.
+- Subsequent builds are faster due to Nix caching.
+- Consider using a Nix binary cache for faster builds in CI environments.
 
 ---
 
