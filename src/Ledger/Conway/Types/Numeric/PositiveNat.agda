@@ -28,6 +28,12 @@ toPosNat n with nonZero? n
 ... | yes p = just (n , [ p ])
 ... | no ¬p = nothing
 
+mkPosNat : ∀ (n : ℕ) → {T (does (nonZero? n))} → PosNat
+mkPosNat n {evidence}
+  with nonZero? n in eq
+... | no  _ = ⊥-elim evidence
+... | yes p = n , [ p ]
+
 PosNat-IsNonZero : (n : PosNat) → NonZero (fromPosNat n)
 PosNat-IsNonZero (suc n , n>0) .NonZero.nonZero = tt
 
