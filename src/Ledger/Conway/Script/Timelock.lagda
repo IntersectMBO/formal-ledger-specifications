@@ -13,9 +13,9 @@ open import Ledger.Conway.Crypto
 open import Ledger.Conway.Types.Epoch
   using (EpochStructure)
 
-module Ledger.Conway.Script.Timelock
-  (crypto : _) (open Crypto crypto)
-  (es     : _) (open EpochStructure es)
+module Ledger.Conway.Script
+  (cs : _) (open CryptoStructure cs)
+  (es : _) (open EpochStructure es)
   where
 
 open import Ledger.Prelude
