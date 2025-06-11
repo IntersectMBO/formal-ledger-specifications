@@ -42,28 +42,28 @@ cd formal-ledger-specifications
 
 ### Examples
 
-+ Enter a Nix shell and explore the source code in Emacs:
++  Enter a Nix shell and explore the source code in Emacs:
 
    ```bash
-   nix-shell -A devShells.ci
+   nix-shell
    emacs src/Ledger.*
-   # Type-check everything with C-c C-l
+   # Type-check with C-c C-l
    ```
 
-+ Type-check from command line:
++  Type-check from command line:
 
    ```bash
-   nix-shell -A devShells.ci
+   nix-shell
    agda src/Ledger.*
    ```
 
-+ Build PDF documentation:
++  Build PDF documentation:
 
    ```bash
-   nix-shell -A devShells.ci --run 'fls-shake cardano-ledger.pdf'
+   nix-shell --run 'fls-shake cardano-ledger.pdf'
    ```
 
-+ Build everything using Nix flakes:
++  Build everything using flakes:
 
    ```bash
    nix build
@@ -123,87 +123,124 @@ The Agda development depends on the following libraries:
 
 #### Core Packages
 
-+ `agdaWithPackages`
-  Pre-configured Agda environment with all required libraries installed and
-  properly configured.
++  `agdaWithPackages`
 
-  ```bash
-  nix-build -A agdaWithPackages
-  ./result/bin/agda --version
-  ```
+   Pre-configured Agda environment with all required libraries installed and
+   properly configured.
 
-+ `formalLedger`
+   ```bash
+   nix-build -A agdaWithPackages
+   ./result/bin/agda --version
+   ```
 
-  Main Agda project that type-checks the formal ledger specification.
++  `formalLedger`
 
-  ```bash
-  nix-build -A formalLedger
-  ```
+   Main Agda project that type-checks the formal ledger specification.
 
-+ `fls-shake`
+   ```bash
+   nix-build -A formalLedger
+   ```
 
-  Custom Shake-based build system for generating various outputs from Agda sources.
++  `fls-shake`
 
-  ```bash
-  nix-build -A fls-shake
-  ./result/bin/fls-shake --help
-  ```
+   Custom Shake-based build system for generating various outputs from Agda sources.
+
+   ```bash
+   nix-build -A fls-shake
+   ./result/bin/fls-shake --help
+   ```
 
 #### Outputs
 
-+ `html`
++  `html`
 
-  Generates HTML documentation from Agda sources.
+   Generates HTML documentation from Agda sources.
 
-  ```bash
-  nix-build -A html
-  # Output available in ./result/html/
-  ```
+   ```bash
+   nix-build -A html
+   # Output available in ./result/html/
+   ```
 
-+ `hsSrc`
++  `hsSrc`
 
-  Generates Haskell source code from Agda specifications.
+   Generates Haskell source code from Agda specifications.
 
-  ```bash
-  nix-build -A hsSrc
-  # Output available in ./result/hs/
-  ```
+   ```bash
+   nix-build -A hsSrc
+   # Output available in ./result/hs/
+   ```
 
-+ `docs.conway.fullspec`
++  `docs.conway.fullspec`
 
-  Generates complete PDF specification document.
+   Generates complete PDF specification document.
 
-  ```bash
-  nix-build -A docs.conway.fullspec
-  # PDF available at ./result/cardano-ledger.pdf
-  ```
+   ```bash
+   nix-build -A docs.conway.fullspec
+   # PDF available at ./result/cardano-ledger.pdf
+   ```
 
-+ `docs.conway.diffspec`
++  `docs.conway.diffspec`
 
-  Generates Conway-specific differential PDF specification.
+   Generates Conway-specific differential PDF specification.
 
-  ```bash
-  nix-build -A docs.conway.diffspec
-  # PDF available at ./result/conway-ledger.pdf
-  ```
+   ```bash
+   nix-build -A docs.conway.diffspec
+   # PDF available at ./result/conway-ledger.pdf
+   ```
 
 #### Development Environments
 
-+ `devShells.ci`: a minimal environment for CI/CD builds
+##### `devShells.default` (Main Development)
 
-  ```bash
-  nix-shell -A devShells.ci
-  fls-shake --help # available for building outputs
-  ```
+Primary environment for everyday Agda development work. Includes:
 
-+ `devShells.mkDocs`: dev environment focused on Agda development and
-  documentation.
++ `agdaWithPackages` (Agda 2.7.0.1 + all libraries)
++ `fls-shake` build system
++ `python311` for basic scripting
++ `hpack` and `coreutils`
 
-  ```bash
-  nix-shell -A devShells.mkDocs
-  agda --version # available for Agda development
-  mkdocs --version # available for documentation
-  ```
+```bash
+nix-shell  # uses default shell
+```
+or with flakes:
+```bash
+nix develop
+```
+
+##### `devShells.ci`
+
+Minimal environment for CI/CD builds and testing. Includes:
+
++ `agdaWithPackages` for type-checking
++ `fls-shake` for building artifacts  
++ `cabal-install` and `hpack` for Haskell builds
+
+```bash
+nix-shell -A devShells.ci
+```
+or with flakes:
+```bash
+nix develop .#ci
+```
+
+##### `devShells.docs`
+
+Complete documentation publishing environment for mkdocs and mdbook workflows. Includes everything from the default shell plus:
+
++ `pandoc` for document conversion
++ full `latex` environment 
++ `python311` with mkdocs, material theme, and extensions
++ `mdbook` + `cargo` for mdbook ecosystem
++ `chromium` for PDF rendering
++ additional build tools
+
+```bash
+nix-shell -A devShells.docs
+```
+or with flakes:
+```bash
+nix develop .#docs
+```
 
 ---
 
@@ -237,42 +274,77 @@ nix-build -A docs.conway.fullspec
 
 ### Using Nix Flakes
 
-If you prefer the modern flakes interface, proceed as follows:
+If you prefer the modern flakes interface:
 
 ```bash
-# Build all packages:
+# Build default package (formalLedger)
 nix build
 
-# Enter development shell:
+# Enter default development shell
 nix develop
 
-# Build a specific package:
-nix build .#formalLedger
-nix build .#html
+# Enter specific development shells
+nix develop          # Default development environment
+nix develop .#ci     # Minimal CI environment
+nix develop .#docs   # Complete docs publishing environment
+
+# Build specific packages
+nix build .#formalLedger              # Type-check formal ledger
+nix build .#html                      # Generate HTML documentation
+nix build .#hsSrc                     # Generate Haskell code
+nix build .#docs.conway.fullspec      # Full specification PDF
+nix build .#docs.conway.diffspec      # Conway differential PDF
 ```
 
 ### Development Workflow
 
-#### Agda Development with Documentation Tools
+#### For Agda Development
 
 ```bash
-# Enter development environment with Agda + documentation tools:
-nix-shell -A devShells.mkDocs
+# Enter default development environment
+nix-shell  # or: nix develop
 
-# Work on Agda files in src/ directory:
+# Work on Agda files in src/ directory
 agda src/Ledger.agda
+
+# Generate outputs using fls-shake
+fls-shake html                    # Generate HTML docs
+fls-shake hs                      # Generate Haskell code
+fls-shake cardano-ledger.pdf      # Generate PDF
 ```
 
-#### Build System and Output Generation
+#### For Documentation Publishing (mkdocs/mdbook)
 
 ```bash
-# Enter CI environment (includes fls-shake):
-nix-shell -A devShells.ci
+# Enter comprehensive docs environment
+nix-shell -A devShells.docs
+# or with flakes:
+nix develop .#docs
 
-# Generate outputs using fls-shake:
-fls-shake html                     # generate html docs
-fls-shake hs                       # generate Haskell code
-fls-shake cardano-ledger.pdf       # generate pdf
+# LaTeX to Markdown conversion
+pandoc input.tex -o output.md
+
+# Build mkdocs sites
+mkdocs build
+
+# Build mdbook sites  
+mdbook build
+
+# Install additional mdbook plugins
+cargo install mdbook-pdf
+```
+
+#### For CI and Testing
+
+```bash
+# Enter minimal CI environment
+nix-shell -A devShells.ci
+# or with flakes:
+nix develop .#ci
+
+# Run CI builds
+fls-shake cardano-ledger.pdf
+agda src/Ledger.*  # Type-check everything
 ```
 
 #### Alternative: Build Outputs with Nix
@@ -295,8 +367,9 @@ nix-build -A fls-shake
 ./result/bin/fls-shake cardano-ledger.pdf
 
 # Option 2. Use different shells for different tasks:
-nix-shell -A devShells.mkDocs      # for Agda development
-nix-shell -A devShells.ci          # for fls-shake build tasks
+nix-shell                          # for everyday Agda development
+nix-shell -A devShells.docs        # for documentation publishing
+nix-shell -A devShells.ci          # for CI builds
 ```
 
 ### Updating Dependencies
@@ -334,10 +407,11 @@ To work simultaneously on the ledger and one of its dependencies:
 
 ### Common Issues
 
-1.  **`fls-shake: command not found`** (e.g., in mkDocs shell)
+1.  **`fls-shake: command not found` error:**
 
-    - The `fls-shake` tool is only available in the `ci` shell, not `mkDocs`.
-    - Use `nix-shell -A devShells.ci` or build it separately with `nix-build -A fls-shake`.
+    - `fls-shake` is available in both the default development shell and ci shell
+    - Use `nix-shell` (default) or `nix-shell -A devShells.ci`
+    - Or build separately with `nix-build -A fls-shake`
 
 2.  **LaTeX/latexmk errors when building PDFs**
 
@@ -434,6 +508,23 @@ To work simultaneously on the ledger and one of its dependencies:
 
        Use `htop` or `nix-top` during builds to identify bottlenecks.
 
+7.  **Flake command errors:**
+   
+    **Error:** `does not provide attribute 'packages.x86_64-linux.default'`
+   
+    **Cause:** Flake doesn't expose required attributes
+   
+    **Solution:** Update your `flake.nix` to properly expose `devShells` and set defaults:
+    ```nix
+    # In flake.nix outputs
+    packages = packageSet // {
+      default = packageSet.formalLedger;
+    };
+    devShells = packageSet.devShells // {
+      default = packageSet.devShells.default;
+    };
+    ```
+
 ### Getting Help
 
 + Check build logs for specific error messages.
@@ -452,7 +543,7 @@ To work simultaneously on the ledger and one of its dependencies:
 For basic Agda development with the project's Agda environment, launch Emacs as follows:
 
 ```bash
-nix-shell -A devShells.mkDocs
+nix-shell
 emacs src/YourFile.agda
 # Use agda-mode commands as normal (C-c C-l to load, etc.)
 ```
@@ -516,10 +607,10 @@ For a setup that allows switching between different Agda versions, do the follow
 
 3.  **Usage**.
 
-    -  Open any Agda file in Emacs.
-    -  Use `C-c C-x C-t` to switch to the ledger Agda version.
-    -  Use standard agda-mode commands (`C-c C-l` to load, `C-c C-c` to case split, etc.).
-    -  The project's libraries will be automatically available.
+    + Open any Agda file in Emacs.
+    + Use `C-c C-x C-t` to switch to the ledger Agda version.
+    + Use standard agda-mode commands (`C-c C-l` to load, `C-c C-c` to case split, etc.).
+    + The project's libraries will be automatically available.
 
 #### Troubleshooting Emacs Setup
 
@@ -637,9 +728,9 @@ For a setup that allows switching between different Agda versions, do the follow
 
 ## Performance Notes
 
-- Initial builds may take significant time due to Agda library compilation.
-- Subsequent builds are faster due to Nix caching.
-- Consider using a Nix binary cache for faster builds in CI environments.
++ Initial builds may take significant time due to Agda library compilation.
++ Subsequent builds are faster due to Nix caching.
++ Consider using a Nix binary cache for faster builds in CI environments.
 
 ---
 
@@ -814,6 +905,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [niv]: https://github.com/nmattia/niv
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [Shake]: https://shakebuild.com/
+[official Haskell instructions]: https://www.haskell.org/downloads/
 
 [@WhatisRT]: https://github.com/whatisrt
 [@carlostome]: https://github.com/carlostome
