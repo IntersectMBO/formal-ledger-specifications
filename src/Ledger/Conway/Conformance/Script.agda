@@ -16,11 +16,11 @@ open import Ledger.Conway.Types.Epoch
 import Ledger.Conway.Script
 
 module Ledger.Conway.Conformance.Script
-  (crypto : _) (open Crypto crypto)
-  (es     : _) (open EpochStructure es)
+  (cs : _) (open CryptoStructure cs)
+  (es : _) (open EpochStructure es)
   where
 
-open Ledger.Conway.Script crypto es
+open Ledger.Conway.Script cs es
 
 record HSTimelock : Type where
   field

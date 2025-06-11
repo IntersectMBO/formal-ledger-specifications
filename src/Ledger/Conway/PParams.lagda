@@ -25,9 +25,9 @@ open import Ledger.Conway.Types.Epoch
 open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
 
 module Ledger.Conway.PParams
-  (crypto : Crypto )
-  (es     : _) (open EpochStructure es)
-  (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
+  (cs : CryptoStructure )
+  (es : _) (open EpochStructure es)
+  (ss : ScriptStructure cs es) (open ScriptStructure ss)
   where
 
 private variable

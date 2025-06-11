@@ -78,18 +78,22 @@ record TransactionStructure : Type₁ where
   field globalConstants : _
   open GlobalConstants globalConstants public
 
-  field crypto : _
-  open Crypto crypto public
+  field cryptoStructure : _
+  open CryptoStructure cryptoStructure public
   open Ledger.Conway.TokenAlgebra.Base ScriptHash public
   open Ledger.Conway.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
+<<<<<<< HEAD
   open Ledger.Conway.Script.Base crypto epochStructure public
+=======
+  open Ledger.Conway.Script cryptoStructure epochStructure public
+>>>>>>> 3bfcd60e (Rename record Crypto to CryptoStructure (for consistency))
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public
-  open Ledger.Conway.PParams crypto epochStructure scriptStructure public
+  open Ledger.Conway.PParams cryptoStructure epochStructure scriptStructure public
 
   field govParams : _
   open GovParams govParams public
@@ -103,7 +107,7 @@ record TransactionStructure : Type₁ where
   govStructure = record
     -- TODO: figure out what to do with the hash
     { TxId = TxId; DocHash = ADHash
-    ; crypto = crypto
+    ; cryptoStructure = cryptoStructure
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams

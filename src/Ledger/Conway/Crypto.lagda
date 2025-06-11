@@ -61,7 +61,7 @@ record PKKScheme : Type₁ where
     ⦃ DecEq-Sig  ⦄ : DecEq Sig
     ⦃ DecEq-Ser  ⦄ : DecEq Ser
 
-record Crypto : Type₁ where
+record CryptoStructure : Type₁ where
   field pkk : PKKScheme
 
   open PKKScheme pkk public
