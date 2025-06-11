@@ -1,6 +1,7 @@
 # build.py
 #
-# PURPOSE:
+# PURPOSE
+#
 # This script orchestrates the conversion of Agda source files (plain .agda
 # and LaTeX-based literate .lagda) into Markdown-based literate Agda files
 # and integration of these with manually maintained Markdown documents.
@@ -8,148 +9,196 @@
 # and mdbook web sites.
 #
 # KEY FEATURES
-# (Guidance for users and contributors on manual overrides and custom configurations)
 #
-# 1.  **Persistent, Manually-Refined Literate Agda Files (`.lagda.md`):**
-#     - **Location:** Place these files in (subdirectories of) `PROJECT_ROOT/src/`.
-#       (e.g., `src/Module/File.lagda.md`)
-#     - **Behavior:** These files should be committed to your repository. During the
-#       build, they will be copied into the `_build/agda_snapshot_src/`
-#       directory. If a file in `src/` already has the `.lagda.md` extension, this
-#       (probably manually refined version) will *override* (take precedence over)
-#       the version that would otherwise be generated from the original Agda source.
-#     - **Use Case:** for applying extensive manual edits, corrections, or
-#       custom Markdown content to literate Agda files that should persist
-#       across builds.
+# Guidance on manual overrides and custom configurations for contributors.
 #
-# 2.  **Static Site Content (Standard Markdown `.md` files, `mkdocs.yml` base):**
-#     -  **Location:**
-#        +  For **mkdocs**: place your base `mkdocs.yml` and static Markdown files
-#           (plus any other static assets like images) in (subdirectories of)
-#           `PROJECT_ROOT/mkdocs/src/`. For example, static pages go into
-#           `PROJECT_ROOT/mkdocs/src/docs/`.
-#        +  For **mdbook**: place your base `book.toml` and static Markdown files
-#           (plus any other static assets like images) in (subdirectories of)
-#           `PROJECT_ROOT/mdbook/`. For example, static pages go into
-#           `PROJECT_ROOT/mdbook/src/`.
-#     - **Behavior:** These files and directories should be committed to your
-#       repository. At the start of the build, the *entire content* of
-#       `PROJECT_ROOT/mkdocs/src/` (resp., `PROJECT_ROOT/mdbook` is copied to serve
-#       as the initial structure for `_build/mkdocs/src/` (resp., `_build/mdbook`).
-#       Generated files (e.g., from Agda) will be added to this structure.
-#       If a generated file has the same path and name as a file from this static
-#       template, the generated version will overwrite the static one, and a warning
-#       will be logged.
-#     - **Use Case:** For "About" pages, installation guides, a foundational `mkdocs.yml`
-#       (resp., `book.toml`), images, or any documentation not derived from Agda code.
+# 1.  **Persistent, Manually-Refined Literate Agda Files (`.lagda.md`)**
 #
-# 3.  **Custom MkDocs Navigation (`nav.yml`):**
-#     - **Location:** Create the YAML file `PROJECT_ROOT/mkdocs/nav.yml`.
-#     - **Behavior:** This file should be committed to your repository. If it exists
-#       and is valid YAML, its content will be used for the `nav:` section of
-#       the `_build/mkdocs/src/mkdocs.yml` file. This overrides any
-#       navigation structure that would otherwise be automatically generated
-#       by the build script based on file names.
-#     **Custom mdbook Navigation (`SUMMARY.md`):**
-#     - **Location:** Create a file `PROJECT_ROOT/mdbook/src/SUMMARY.md`.
-#     - **Behavior:** This file should be committed to your repository. If it exists,
-#       then its content will be used for the mdbook site navigation scheme.
-#     **Use Case:** Provides complete, explicit control over the site's
-#     navigation hierarchy and page titles in the navigation.
+#     +  **Location**. `src/` and subdirectories thereof;
+#        e.g., `src/Module/File.lagda.md`.
+#     +  **Behavior**.  During the build, these files are copied into
+#        `_build/agda_snapshot_src/`.  If a file already has the `.lagda.md`
+#        extension, this (possibly manually refined version) takes precedence over
+#        a version that would otherwise be generated from the original Agda source.
+#     +  **Use Case**.  Applying extensive manual edits, corrections, or custom
+#        Markdown content to literate Agda files that should persist across builds.
 #
-# PROCESS OVERVIEW:
+# 2.  **Static Site Content (Standard Markdown `.md` files, `mkdocs.yml` base)**
+#
+#     +  **Location**.
+#
+#        +  **mkdocs**.  Place the base `mkdocs.yml` and static Markdown files
+#           (plus any other static assets like images) in subdirectories of
+#           `build-tools/static/mkdocs/src/`; e.g., static pages
+#           go into `build-tools/static/mkdocs/src/docs/`.
+#
+#        +  **mdbook**.  Place the base `book.toml` and static Markdown files
+#           (plus any other static assets like images) in subdirectories of
+#           `build-tools/static/mdbook/`; e.g., static pages
+#           go into `build-tools/static/mdbook/src/`.
+#
+#     +  **Behavior**.  At start of build, *all contents* of
+#        `build-tools/static/mkdocs/src/` (resp.,
+#        `build-tools/static/mdbook`) are copied into
+#        `_build/website/mkdocs/src/` (resp., `_build/website/mdbook`) to serve
+#        as the initial web site content.  Generated files (e.g., from Agda) will
+#        be added to this structure. If a generated file has the same path and
+#        name as a file from this static template, the generated version will
+#        overwrite the static one, and a warning will be logged.
+#
+#     +  **Use Case**.  "About" pages, installation guides, `mkdocs.yml` (resp.,
+#        `book.toml`) "template" file, images, or any documentation not derived
+#        from Agda code.
+#
+# 3.  **Custom MkDocs Navigation (`nav.yml`)**
+#
+#     +  **Location**.  `build-tools/static/mkdocs/nav.yml`
+#
+#     +  **Behavior**.  This static file, if it exists and is valid YAML, is used
+#        for the mkdocs site navigation scheme (i.e., the `nav` section of
+#        `_build/website/mkdocs/src/mkdocs.yml`).  This overrides any navigation
+#        structure that would otherwise be automatically generated by the build
+#        script based on file names.
+#
+#     **Custom mdbook Navigation (`SUMMARY.md`)**
+#
+#     +  **Location**.  `build-tools/static/mdbook/src/SUMMARY.md`.
+#
+#     +  **Behavior**.  This file, if it exists, is used for the mdbook site
+#        navigation scheme.
+#
+#     +  **Use Case**.  Provides complete, explicit control over the site's
+#        navigation hierarchy and page titles in the navigation.
+#
+#
+# PROCESS OVERVIEW
+#
 # In this section `m?????` refers to either `mkdocs` or `mdbook`.  Where they differ,
 # instructions for mkdocs are given followed by the analog for mdbook in parentheses.
+#
 # 1.  Initial Site Structure Setup:
-#     a. Cleans and recreates necessary subdirectories within `_build/m?????/`
-#     b. The entire contents of `PROJECT_ROOT/m?????/`
-#        which should include a base `mkdocs.yml` (resp., `book.toml`) and any
-#        static `src/docs/` (resp., `src/`) content is copied to `_build/m?????/` to
-#        form the initial site structure.
-#     c. Generates `_build/macros.json` from `latex/macros.sty` for use
-#        in LaTeX-to-Markdown conversion steps.
+#
+#     a.  Cleans and recreates necessary subdirectories within `_build/website/m?????/`
+#
+#     b.  The entire contents of `build-tools/static/m?????/`
+#         which should include a base `mkdocs.yml` (resp., `book.toml`) and any
+#         static `src/docs/` (resp., `src/`) content is copied to
+#         `_build/website/m?????/` to form the initial site structure.
+#
+#     c.  Generates `_build/website/macros.json` from
+#         `build-tools/static/latex/macros.sty` for use in LaTeX-to-Markdown
+#         conversion steps.
 #
 # 2.  Agda Source Snapshot Preparation (`_build/agda_snapshot_src/`):
-#     a. Copies the entire `src/` directory (containing original Agda sources)
-#        to the `agda_snapshot_src/` directory.
-#     b. Converts any plain `.agda` files within this snapshot to `.lagda.md` format
-#        and updates them in place.
-#     c. Process each LaTeX-based literate Agda (`.lagda`) file in `src/`
-#        (by multi-stage pipeline: custom Python preprocessing -> Pandoc with Lua
-#        filter -> custom Python postprocessing) to convert it into a Markdown-based
-#        literate Agda (`.lagda.md`) file and place the result in
-#        `_build/agda_snapshot_src/`.
-#     d. Result: `_build/agda_snapshot_src/` now contains all project modules as
-#        `.lagda.md` files (derived from existing `.agda` or `.lagda.md` files, or
-#        created from `.lagda` files processed by the tex2md pipeline, maintaining
-#        the original `src/` directory structure.
 #
-#        **`_build/agda_snapshot_src/` is the primary input for Agda HTML generation.**
+#     a.  Copies the entire `src/` directory (containing original Agda sources)
+#         to the `_build/agda_snapshot_src/` directory.
+#
+#     b.  Converts any plain `.agda` files within this snapshot to `.lagda.md` format
+#         and updates them in place.
+#
+#     c.  Process each LaTeX-based literate Agda (`.lagda`) file in `src/`
+#         (by multi-stage pipeline: custom Python preprocessing -> Pandoc with Lua
+#         filter -> custom Python postprocessing) to convert it into a Markdown-based
+#         literate Agda (`.lagda.md`) file and place the result in
+#         `_build/agda_snapshot_src/`.
+#
+#     d.  Result: `_build/agda_snapshot_src/` now contains all project
+#         modules as `.lagda.md` files (derived from existing `.agda` or `.lagda.md`
+#         files, or created from `.lagda` files processed by the tex2md pipeline,
+#         maintaining the original `src/` directory structure.
+#
+#     NOTE files in `_build/agda_snapshot_src/` are the final `.lagda.md` files
+#          comprising the new, markdown-based literate Agda source code; they can
+#          be type-checking by Agda or used as input to the `agda --html` command
+#          for html code-highlighting for web page generation.
 #
 # 3.  Site Content Generation & Population
-#     This step adds Agda-derived content to the `_build/mkdocs/src/docs/`
-#     (resp., `_build/mdbook/src`) directory, which may already contain some static
-#     files from Step 1.b.)
-#     a. If the `--run-agda` flag is passed:
-#        i.  `agda --html` is run on the main `.lagda.md` file within
-#            `agda_snapshot_src/`.
-#        ii. Agda outputs its `.md` (and potentially other) files into
-#            `_build/agda-docs/`. Output filenames are typically
-#            flat, dot-separated module names (e.g., `Ledger.Transaction.md`).
-#     b. If `--run-agda` is NOT passed (or if Agda processing fails):
-#        i.  Each `.lagda.md` file from `agda_snapshot_src/` is copied to
-#            `_build/agda-docs/`
-#        ii. Files are renamed to the flat `ModuleName.md` format during this copy.
 #
-# 4.  Site Finalization: `_build/mkdocs/src/` and `_build/mdbook/`
+#     This step adds Agda-derived content to the `_build/website/mkdocs/src/docs/`
+#     (resp., `_build/website/mdbook/src`) directory, which may already contain
+#     some static files from Step 1.b.)
+#
+#     a.  If the `--run-agda` flag is passed, `agda --html` is run on the main
+#         `.lagda.md` file within `_build/agda_snapshot_src/`, with output set to
+#         `_build/agda-docs/`.  Output filenames are typically flat, dot-separated
+#         module names (e.g., `Ledger.Transaction.md`).
+#
+#     b.  If `--run-agda` is NOT passed (or if Agda processing fails), each
+#         `.lagda.md` file from `_build/agda_snapshot_src/` is copied to
+#         `_build/agda-docs/` and renamed to have flat, dot-separated names
+#         (e.g., `Ledger.Transaction.md`).
+#
+# 4.  Site Finalization: `_build/website/mkdocs/src/` and `_build/website/mdbook/`
+#
 #     a. Static assets needed by the site (e.g., `Agda.css` if Agda HTML
 #        was run, custom project CSS/JS) are copied into the appropriate
-#        subdirectories of `_build/mkdocs/src/docs/` and/or `_build/mdbook/src/`.
+#        subdirectories of `_build/website/mkdocs/src/docs/` and/or
+#        `_build/website/mdbook/src/`.
+#
 #     b. Files in `_build/agda-docs/` (processed by Agda to format the code blocks)
 #        are copied into `_build/mkdocs/src/docs/` *and* into `_build/mdbook/src/`.
 #        The `_build/mkdocs/src/mkdocs.yml`  and `_build/mdbook/book.toml` files are
 #        updated:
+#
 #        1.  Dynamically required `extra_css` and `extra_javascript` (like
 #            `Agda.css`) are added if not already present.
-#        2.  If `PROJECT_ROOT/mkdocs/nav.yml` exists and is valid,
+#
+#        2.  If `mkdocs/nav.yml` exists and is valid,
 #            its content is used for the `nav:` section of `mkdocs.yml`.
-#        3.  Otherwise, the `nav:` section is automatically generated by parsing
+#
+#        3.  Otherwise, the `nav` section is automatically generated by parsing
 #            the `.md` filenames in `_build/mkdocs/src/docs/` into a
 #            hierarchical structure.
 #
-# 5.  Cleanup:
-#     Intermediate artifact directories and files created in `_build/`
+# 5.  **Cleanup**. Intermediate artifact directories and files created in `_build/`
 #     (e.g., `agda-lagda_temp/`, `agda-docs`, `macros.json`) are removed.
 #
-# USAGE:
+#
+# USAGE
+#
 # From the main project directory (e.g., `formal-ledger-specifications/`):
-#   python ./scripts/mkdocs/build.py [--run-agda]
+#   python build-tools/scripts/tex2md/build.py [--run-agda]
 #   (or, using Python's module execution: python -m scripts.mkdocs.build [--run-agda])
 #
-# KEY OUTPUTS
-# -  agda_snapshot_src/: all project Agda sources as processed `.lagda.md`
-#    files, structured as in the original `src/` directory. This serves as the
-#    primary input for the `agda --html` step.
-# -  _build/mkdocs/src/: complete source for MkDocs site.
-#    -  `docs/`: final `.md` documentation pages (using flat,
-#       dot-separated names like `Ledger.Transaction.md`), CSS, JS.
-#       (output of `agda --html` command goes here)
-#    -  `mkdocs.yml`: MkDocs configuration file with site structure and navigation.
-#    (This directory is ready for `mkdocs build` or `mkdocs serve`.)
-# -  _build/mdbook/: complete source for mdbook site.
-#    -  `src/`: final `.md` documentation pages (using flat,
-#       dot-separated names like `Ledger.Transaction.md`), CSS, JS.
-#       (output of `agda --html` command goes here)
-#    -  `book.toml`: mdbook configuration file.
-#    -  `src/SUMMARY.md`: mdbook navigation structure.
-#    (This directory is ready for`mdbook build` or `mdbook serve`.)
-# - build.log: detailed log file of the build script's execution.
 #
-# INTERMEDIATE ARTIFACTS (created and then cleaned up by this script):
-# - _build/macros.json        (output of generate_macros_json.py)
-# - _build/lagda_temp/        (output of preprocess.py; input to pandoc+lua)
-# - _build/code_blocks_json/  (output of preprocess.py; input to postprocess.py)
-# - _build/md_intermediate/   (output of pandoc+lua; input to postprocess.py)
+# KEY OUTPUTS
+#
+# -  _build/agda_snapshot_src/: the new Agda source code (`.lagda.md`) files,
+#    with the same directory structure as under the original `src/` directory.
+#    This serves as the primary input to the agda command for type checking, or
+#    the `agda --html` command for html code-highlighting for web page generation.
+#
+# -  _build/website/mkdocs/src/: complete source for mkdocs site.
+#    In this directory, you can run the commands `mkdocs build` or `mkdocs serve`.
+#    This directory contains
+#
+#    -  `./docs/`: final `.md` documentation pages (using flat, dot-separated names
+#       like `Ledger.Transaction.md`), CSS, JS.
+#
+#    -  `./mkdocs.yml`: configuration file with mkdocs site structure and navigation.
+#
+# -  _build/website/mdbook/: complete source for mdbook site.
+#    In this directory, you can run the commands `mdbook build` or `mdbook serve`.
+#    This directory contains
+#
+#    -  `./src/`: final `.md` documentation pages (using flat,
+#       dot-separated names like `Ledger.Transaction.md`), CSS, JS.
+#       (output of `agda --html` command goes here)
+#
+#    -  `./src/SUMMARY.md`: mdbook navigation structure.
+#
+#    -  `./book.toml`: mdbook configuration file.
+#
+# -  _build/build.log: detailed log file of the build script's execution.
+#
+#
+# INTERMEDIATE ARTIFACTS
+#
+# - _build/website/macros.json        (output of generate_macros_json.py)
+# - _build/website/lagda_temp/        (output of preprocess.py; input to pandoc+lua)
+# - _build/website/code_blocks_json/  (output of preprocess.py; input to postprocess.py)
+# - _build/website/md_intermediate/   (output of pandoc+lua; input to postprocess.py)
 # - _build/agda-docs/         (output of `agda --html` if --run-agda flag used,
 #                             otherwise output of postprocess.py )
 import os
@@ -190,57 +239,27 @@ class LabelTargetInfo(TypedDict):
     caption_text: str
 
 
-# --- Configuration ---
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent      # assume build.py is in PROJECT_ROOT/scripts/tex2md
-SRC_DIR = PROJECT_ROOT / "src"                                    # original .lagda source
-<<<<<<<< HEAD:scripts/tex2md/build.py
-LIB_EXTS_DIR = PROJECT_ROOT / "lib-exts"                          # original .agda lib source
-SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "tex2md"                 # this script and helpers
-========
-MDSRC_DIR = PROJECT_ROOT / "mdsrc"                                # hand-tweaked .lagda.md source
-LIB_EXTS_DIR = PROJECT_ROOT / "src-lib-exts"                          # original .agda lib source
-SCRIPTS_DIR = PROJECT_ROOT / "scripts" / "mkdocs"                 # this script and helpers
->>>>>>>> master:build-tools/scripts/mkdocs/build.py
-MACROS_STY_PATH = PROJECT_ROOT / "latex/macros.sty"               # LaTeX macros
-BUILD_DIR = PROJECT_ROOT / "_build"                               # top-level build dir
-MACROS_JSON = BUILD_DIR / "macros.json"                           # macro JSONs:  output of generate_macros_json.py
-                                                                  #               input to preprocess.py
-TEMP_DIR = BUILD_DIR / "lagda_temp"                               # intermediate latex:  output of preprocess.py
-                                                                  #                      input to pandoc+lua
-CODE_BLOCKS_DIR = BUILD_DIR / "code_blocks_json"                  # code block JSONs:  output of preprocess.py
-                                                                  #                    input to postprocess.py
-INTERMEDIATE_MD_DIR = BUILD_DIR / "md_intermediate"               # intermediate `.lagda.md`:  output of pandoc+lua
-                                                                  #                            intput to postprocess.py
-AGDA_SNAPSHOT_SRC_DIR = BUILD_DIR / "agda_snapshot_src"           # markdown-based literate Agda source code:
-                                                                  #   output of postprocess.py
-                                                                  #   input to `agda --html`
-                                                                  #   input to shake (if `agda --html` relegated to shake)
-# AGDA_SNAPSHOT_SRC_DIR now contains whatever was in src/:
-# - some modules as pre-existing .lagda.md files
-# - some modules as .agda files
-# - some modules as .lagda (LaTeX) files
-# Crucially, for any given module, only ONE of these types will exist.
-AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_DIR / "agda_snapshot_lib_exts" # copy of Agda library extensions
-AGDA_DOCS_STAGING_DIR = BUILD_DIR / "agda-docs"                   # output of `agda --html` command if --run-agda flag used,
-                                                                  # otherwise output of postprocess.py
-
-# Script paths
-GENERATE_MACROS_PY = SCRIPTS_DIR / "generate_macros_json.py"
-PREPROCESS_PY = SCRIPTS_DIR / "preprocess.py"
-POSTPROCESS_PY = SCRIPTS_DIR / "postprocess.py"
-LUA_FILTER = SCRIPTS_DIR / "agda-filter.lua"
-
-
-# Directories for mkdocs site generation
-# - generated:
-MKDOCS_BUILD_DIR = BUILD_DIR / "mkdocs"
-MKDOCS_SRC_DIR = MKDOCS_BUILD_DIR / "src"
-MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
-MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
-MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
-# - static:
-MKDOCS_STATIC_DIR = PROJECT_ROOT / "mkdocs"
-MKDOCS_STATIC_NAV_YML = MKDOCS_STATIC_DIR / "nav.yml" #  mkdocs navigation template
+# === CONFIGURATION ===
+PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent # assume build.py is in ./build-tools/scripts/tex2md
+#
+# --- INPUTS --------------------------------------
+SRC_DIR = PROJECT_ROOT / "src"                         # original .lagda source
+LIB_EXTS_DIR = PROJECT_ROOT / "src-lib-exts"           # original .agda lib source
+BUILD_TOOLS = PROJECT_ROOT / "build-tools"             # build tools directory
+# - script paths -
+SCRIPTS_DIR = BUILD_TOOLS / "scripts"                  # scripts and helpers
+TEX2MD_DIR = SCRIPTS_DIR / "tex2md"                    # this script and helpers
+GENERATE_MACROS_PY = TEX2MD_DIR / "generate_macros_json.py"
+PREPROCESS_PY = TEX2MD_DIR / "preprocess.py"
+POSTPROCESS_PY = TEX2MD_DIR / "postprocess.py"
+LUA_FILTER = TEX2MD_DIR / "agda-filter.lua"
+# - static content -
+STATIC_DIR = BUILD_TOOLS / "static"                    # static files for mkdocs, mdbook, etc
+LATEX_DIR = STATIC_DIR / "latex"                       # LaTeX path
+MACROS_STY_PATH = LATEX_DIR / "macros.sty"             # LaTeX macros
+WEBSITE_STATIC_DIR = STATIC_DIR / "website"            # static website files
+MKDOCS_STATIC_DIR = WEBSITE_STATIC_DIR / "mkdocs"
+MKDOCS_STATIC_NAV_YML = MKDOCS_STATIC_DIR / "nav.yml"  # mkdocs navigation template
 MKDOCS_STATIC_SRC_DIR = MKDOCS_STATIC_DIR / "src"
 MKDOCS_STATIC_DOCS_DIR = MKDOCS_STATIC_SRC_DIR / "docs"
 MKDOCS_STATIC_CSS_DIR = MKDOCS_STATIC_DOCS_DIR / "css"
@@ -248,16 +267,7 @@ MKDOCS_STATIC_JS_DIR = MKDOCS_STATIC_DOCS_DIR / "js"
 MKDOCS_STATIC_CUSTOM_CSS_SOURCE = MKDOCS_STATIC_CSS_DIR / "custom.css"
 MKDOCS_STATIC_CUSTOM_JS_SOURCE = MKDOCS_STATIC_JS_DIR / "js" / "custom.js"
 MKDOCS_STATIC_INDEX = MKDOCS_STATIC_SRC_DIR / "docs" / "index.md"
-
-# Directories for mkdocs site generation
-# - generated:
-MDBOOK_BUILD_DIR = BUILD_DIR / "mdbook"
-MDBOOK_SRC_DIR = MDBOOK_BUILD_DIR
-MDBOOK_DOCS_DIR = MDBOOK_SRC_DIR / "src"
-MDBOOK_CSS_DIR = MDBOOK_DOCS_DIR / "css"
-MDBOOK_JS_DIR = MDBOOK_DOCS_DIR / "js"
-# - static:
-MDBOOK_STATIC_DIR = PROJECT_ROOT / "mdbook"
+MDBOOK_STATIC_DIR = WEBSITE_STATIC_DIR / "mdbook"
 MDBOOK_BOOK_TOML_TEMPLATE = MDBOOK_STATIC_DIR / "book.toml"
 MDBOOK_STATIC_DOCS_DIR = MDBOOK_STATIC_DIR / "src"
 MDBOOK_SUMMARY_MD_TEMPLATE = MDBOOK_STATIC_DOCS_DIR / "SUMMARY.md"
@@ -266,8 +276,42 @@ MDBOOK_STATIC_JS_DIR = MDBOOK_STATIC_DOCS_DIR / "js"
 MDBOOK_STATIC_CUSTOM_CSS_SOURCE = MDBOOK_STATIC_CSS_DIR / "custom.css"
 MDBOOK_STATIC_CUSTOM_JS_SOURCE = MDBOOK_STATIC_JS_DIR / "js" / "custom.js"
 MDBOOK_STATIC_INDEX = MDBOOK_STATIC_DOCS_DIR / "index.md"
-
-# --- Logging Setup ---
+#
+# --- OUTPUTS -------------------------------------------
+BUILD_DIR = PROJECT_ROOT / "_build"                     # top-level build dir
+#
+AGDA_SNAPSHOT_SRC_DIR = BUILD_DIR / "agda_snapshot_src" # markdown-based literate Agda source code:
+                                                        #   output of postprocess.py
+                                                        #   input to `agda --html`
+                                                        #   input to shake (if `agda --html` relegated to shake)
+# Initially, the AGDA_SNAPSHOT_SRC_DIR contains whatever was in src/:
+# - some modules as pre-existing .lagda.md files
+# - some modules as .agda files
+# - some modules as .lagda (LaTeX) files
+# Crucially, for any given module, only ONE of these types will exist.
+#
+AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_DIR / "agda_snapshot_lib_exts" # copy of Agda library extensions
+# - migration pipeline products -
+BUILD_WEBSITE_DIR = BUILD_DIR / "website"                   # website build directory
+MACROS_JSON = BUILD_WEBSITE_DIR / "macros.json"             # output of generate_macros_json.py; input to preprocess.py
+TEMP_DIR = BUILD_WEBSITE_DIR / "lagda_temp"                 # intermediate latex:  output of preprocess.py; input to pandoc+lua
+CODE_BLOCKS_DIR = BUILD_WEBSITE_DIR / "code_blocks_json"    # output of preprocess.py; input to postprocess.py
+INTERMEDIATE_MD_DIR = BUILD_WEBSITE_DIR / "md_intermediate" # intermediate `.lagda.md`: output of pandoc+lua; intput to postprocess.py
+AGDA_DOCS_STAGING_DIR = BUILD_WEBSITE_DIR / "agda-docs"     # output of `agda --html` command if --run-agda flag used,
+#                                                           # otherwise output of postprocess.py
+# - generated directories for mkdocs site -
+MKDOCS_BUILD_DIR = BUILD_WEBSITE_DIR / "mkdocs"
+MKDOCS_SRC_DIR = MKDOCS_BUILD_DIR / "src"
+MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
+MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
+MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
+# - generated directories for mdbook site -
+MDBOOK_BUILD_DIR = BUILD_DIR / "mdbook"
+MDBOOK_SRC_DIR = MDBOOK_BUILD_DIR
+MDBOOK_DOCS_DIR = MDBOOK_SRC_DIR / "src"
+MDBOOK_CSS_DIR = MDBOOK_DOCS_DIR / "css"
+MDBOOK_JS_DIR = MDBOOK_DOCS_DIR / "js"
+# - logging -
 LOG_FILE = BUILD_DIR / "build.log"
 
 
@@ -1540,8 +1584,7 @@ def main(run_agda_html_flag=False):
     )
     # staged_flat_md_filenames_str = [p.name for p in staged_md_file_paths] # (done by copy_staging_to_site_docs)
 
-    # 8.1: populate mkdocs site from staging ===
-    # (replaces content of old `publish_to_mkdocs_docs`)
+    # 8.1: populate mkdocs site from staging
     nav_files_in_docs: List[str] = copy_staging_to_site_docs(
         AGDA_DOCS_STAGING_DIR,
         MKDOCS_DOCS_DIR, # _build/mkdocs/src/docs/
