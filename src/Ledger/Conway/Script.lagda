@@ -23,8 +23,8 @@ open import Ledger.Conway.Crypto
 open import Ledger.Conway.Types.Epoch
 
 module Ledger.Conway.Script
-  (crypto : _) (open Crypto crypto)
-  (es     : _) (open EpochStructure es)
+  (cs : _) (open CryptoStructure cs)
+  (es : _) (open EpochStructure es)
   where
 
 record P1ScriptStructure : Type₁ where
