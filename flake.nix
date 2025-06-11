@@ -16,7 +16,17 @@
           nixpkgs = import sources.nixpkgs { inherit system; };
           packageSet = import ./default.nix { inherit nixpkgs; };
         in {
-          packages = packageSet;
+          packages = packageSet // {
+            # Set default package
+            default = packageSet.formalLedger;
+          };
+          # Expose development shells
+          devShells = packageSet.devShells // {
+            # default shell points to the main development environment
+            default = packageSet.devShells.default;
+          };
+          
+          # Keep hydraJobs for CI
           hydraJobs = packageSet;
       });
 }
