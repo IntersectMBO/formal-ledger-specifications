@@ -66,40 +66,40 @@ scriptsCost pp scriptSize
 \begin{code}[hide]
                   (<′-wellFounded scriptSize)
 \end{code}
-\begin{code}[hide]
+\begin{code}
   where
-    open PParams pp hiding (refScriptCostStride)
-    refScriptCostStride = suc m
-\end{code}
-\begin{code}
-    scriptsCostAux : ℚ        -- accumulator
-                   → ℚ        -- current tier price
-                   → (n : ℕ)  -- remaining script size
+    minFeeRefScriptCoinsPerByte = PParams.minFeeRefScriptCoinsPerByte pp
+    refScriptCostMultiplier = PParams.refScriptCostMultiplier pp
+    refScriptCostStride = PParams.refScriptCostStride pp
+
+    scriptsCostAux  : ℚ        -- accumulator
+                    → ℚ        -- current tier price
+                    → (n : ℕ)  -- remaining script size
 \end{code}
 \begin{code}[hide]
-                   → Acc _<′_ n
+                    → Acc _<′_ n
 \end{code}
 \begin{code}
-                   → Coin
+                    → Coin
     scriptsCostAux acl curTierPrice n
 \end{code}
 \begin{code}[hide]
       (acc rs)
 \end{code}
 \begin{code}
-        = case  n ≤? refScriptCostStride of
+        = case n ≤? fromℕ⁺ refScriptCostStride of
 \end{code}
 \begin{code}[hide]
-                λ where
+            λ where
 \end{code}
 \begin{code}
-                (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
-                (no  p)  → scriptsCostAux (acl + (fromℕ refScriptCostStride * curTierPrice))
-                                          (refScriptCostMultiplier * curTierPrice)
-                                          (n - refScriptCostStride)
+            (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
+            (no  p)  → scriptsCostAux (acl + (fromℕ (fromℕ⁺ refScriptCostStride) * curTierPrice))
+                                      (refScriptCostMultiplier * curTierPrice)
+                                      (n - fromℕ⁺ refScriptCostStride)
 \end{code}
 \begin{code}[hide]
-                                          (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (s≤s z≤n)))
+                                      (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (ℕ⁺->0 refScriptCostStride)))
 \end{code}
 \begin{code}[hide]
       where
