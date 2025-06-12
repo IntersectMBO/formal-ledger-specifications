@@ -12,7 +12,7 @@ open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunc
 open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Conway.Types.Epoch
-open import Ledger.Conway.Types.Numeric using (mkUnitInterval)
+open import Ledger.Conway.Types.Numeric using (mkUnitInterval; mkℕ⁺)
 open EpochStructure SVEpochStructure
 open import Data.Integer using (ℤ; +_)
 open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)
@@ -45,7 +45,7 @@ createEnv s = record { slot = s ; treasury = 0 ;
                                ; prices = tt -- fix this
                                ; maxRefScriptSizePerTx = 200 * 1024 -- 200KiB
                                ; maxRefScriptSizePerBlock = 1024 * 1024 -- 1MiB
-                               ; refScriptCostStride  = 25
+                               ; refScriptCostStride  = mkℕ⁺ 25
                                ; refScriptCostMultiplier = mkℚ+ 6 5 (gcd≡1⇒coprime refl) -- see [1]
                                ; a0 = 1ℚ -- don't know
                                ; Emax = 18
