@@ -15,39 +15,6 @@ jobs:
         with:
           name: _build
           path: _build
-      - name: Checkout legacy LaTeX files for PDF builds
-        if: contains(inputs.target, '.pdf')
-        uses: actions/checkout@v4
-        with:
-          ref: legacy-latex
-          path: legacy-temp
-          sparse-checkout: |
-            src
-          sparse-checkout-cone-mode: false
-      - name: Copy legacy LaTeX files
-        if: contains(inputs.target, '.pdf')
-        run: |
-          echo "Copying legacy .lagda files for PDF build..."
-          if [ -d "legacy-temp/src" ]; then
-            # Copy .lagda files, preserving directory structure
-            find legacy-temp/src -name "*.lagda" -type f | while read -r file; do
-              # Remove the legacy-temp/ prefix to get the target path
-              target_path="${file#legacy-temp/}"
-              target_dir=$(dirname "$target_path")
-              mkdir -p "$target_dir"
-              cp "$file" "$target_path"
-              echo "Copied: $file -> $target_path"
-            done
-
-            # List what we copied for debugging
-            echo "Legacy files copied:"
-            find src -name "*.lagda" -type f
-          else
-            echo "No legacy src directory found"
-          fi
-
-          # Clean up
-          rm -rf legacy-temp
       - uses: cachix/install-nix-action@v31
         with:
           nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
