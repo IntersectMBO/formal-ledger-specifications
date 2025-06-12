@@ -45,8 +45,8 @@ copyIn :: Rules ()
 copyIn =
   _build </> "*" </> latexIn <//> "*" %> \out -> do
     let file = dropDirectory 3 out
-    need [ "latex" </> file ]
-    copyFile' ("latex" </> file) out
+    need [ "build-tools/static/latex" </> file ]
+    copyFile' ("build-tools/static/latex" </> file) out
 
 -- | Generate tex from a lagda file.
 -- Takes the lagda file from src/ and puts the generated file in
@@ -71,17 +71,16 @@ tex2texPP =
     need [ _latexGen </> texfile ]
 
     -- agda2vec (used by Cardano and Conway)
-    need [ "scripts/agda2vec.py" ]
+    need [ "build-tools/scripts/agda2vec.py" ]
     if texfile `elem` vertVecFiles
-      then cmd_ "python ./scripts/agda2vec.py" [_latexGen </> texfile, out]
+      then cmd_ "python ./build-tools/scripts/agda2vec.py" [_latexGen </> texfile, out]
       else copyFile' (_latexGen </> texfile) out
 
     -- hldiff (used by Conway)
     let dir = dropDirectory 1 out
-    need [ "scripts/hldiff.py", "latex/hldiff_list.txt" ]
-    if "conway" `isPrefixOf` dir && texfile `elem` hlFiles
-      then cmd_ "python ./scripts/hldiff.py" [out, out, "latex/hldiff_list.txt"]
-      else return ()
+    need [ "build-tools/scripts/hldiff.py", "build-tools/static/latex/hldiff_list.txt" ]
+    when ("conway" `isPrefixOf` dir && texfile `elem` hlFiles) $
+      cmd_ "python ./build-tools/scripts/hldiff.py" [out, out, "build-tools/static/latex/hldiff_list.txt"]
 
 -- | Generate a pdf file in PROJ/latex.out from a tex file
 --
@@ -122,7 +121,7 @@ tex2pdf = do
                          [ "references.bib", "Notation.tex", "macros.sty", "preamble.tex"
                          , "Definitions.tex", "Diagrams/CardanoLedger.tex"
                          , "ConwayBootstrap.tex", "ConwayBootstrapEnact.tex" ]
-    fontfiles <- map (_latexIn </>) <$> getDirectoryFiles "latex" [ "fonts/*.ttf" ]
+    fontfiles <- map (_latexIn </>) <$> getDirectoryFiles "build-tools/static/latex" [ "fonts/*.ttf" ]
 
     -- declare the dependencies
     need $ fontfiles ++ otherfiles ++ agdafiles
@@ -179,9 +178,9 @@ pdfRule = do
 hsRule :: Rules ()
 hsRule = phony "hs" $ do
   -- read and copy the files in hs-src to _hs
-  hssrcfiles <- getDirectoryFiles "hs-src" [ "//*" ]
+  hssrcfiles <- getDirectoryFiles "build-tools/static/hs-src" [ "//*" ]
   forM_ hssrcfiles $ \file -> do
-    copyFileChanged ("hs-src" </> file) (hsDist </> file)
+    copyFileChanged ("build-tools/static/hs-src" </> file) (hsDist </> file)
 
   -- run Agda on the entrypoint and put the results in _build
   cmd_ "agda" [ "-c"
@@ -212,7 +211,7 @@ htmlIndex =
     -- declare dependencies on all agda files
     lagdafiles   <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.lagda" ]
     agdafiles    <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.agda"  ]
-    agdalibfiles <- map ("lib-exts" </>) <$> getDirectoryFiles "lib-exts" [ "//*.agda"  ]
+    agdalibfiles <- map ("src-lib-exts" </>) <$> getDirectoryFiles "src-lib-exts" [ "//*.agda"  ]
     need . map (_htmlPP </>) $ map (`replaceExtension` "agda") lagdafiles
                                ++ agdafiles
                                ++ agdalibfiles
@@ -229,10 +228,11 @@ htmlIndex =
           , ""
           , "include:"
           , "  " ++ htmlPP </> "src"
-          , "  " ++ htmlPP </> "lib-exts"
+          , "  " ++ htmlPP </> "src-lib-exts"
           , "  ./"
           ]
-        agdamodules = sort . map agdafile2module $ map (dropDirectory 1) (agdafiles ++ lagdafiles)
+        agdamodules = sort . map (agdafile2module . dropDirectory 1)
+                    $ agdafiles ++ lagdafiles
         -- index file
         indexfile =
           [ "module index where"
@@ -245,14 +245,14 @@ htmlIndex =
     -- run agda to generate the html
     command_ [ Cwd _html ]
              "agda"
-             [ "--html"
-             , "--html-dir=" ++ "../../" ++ htmlDist
+             [ "--fls"
+             , "--fls-html-dir=" ++ "../../" ++ htmlDist
              , "index.agda" ]
 
--- | Copy Agda files in lib-exts/ to generate the html.
+-- | Copy Agda files in src-lib-exts/ to generate the html.
 agdalibexts2htmlPP :: Rules ()
 agdalibexts2htmlPP =
-  _htmlPP </> "lib-exts" <//> "*.agda" %> \out -> do
+  _htmlPP </> "src-lib-exts" <//> "*.agda" %> \out -> do
     let srcfile = dropDirectory 3 out
     copyFileChanged srcfile out
 

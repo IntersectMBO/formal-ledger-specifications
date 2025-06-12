@@ -1,4 +1,4 @@
-name: Build and upload artifacts
+name: CI
 on:
   push:
     branches:
@@ -292,7 +292,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            scripts/prepare-conf-test.sh
+            build-tools/scripts/prepare-conf-test.sh
           sparse-checkout-cone-mode: false
           path: fls
 
@@ -311,4 +311,4 @@ jobs:
       - name: Build cardano-ledger
         run: |
           cd cl
-          nix develop --command bash -c "../fls/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
+          nix develop --command bash -c "../fls/build-tools/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
