@@ -9,7 +9,6 @@ open import Class.Show using (Show; show)
 open import Agda.Builtin.FromNat
 open import Data.Nat using (ℕ; NonZero; _>_)
 open import Data.Refinement using (Refinement-syntax; value; _,_)
-open import stdlib.Data.Refinement.Base
 open import Data.Irrelevant
 
 -- PosNat: Non zero natural number.

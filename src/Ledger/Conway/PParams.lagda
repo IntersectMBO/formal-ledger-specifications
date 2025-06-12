@@ -23,7 +23,7 @@ open import Ledger.Prelude
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Script
 open import Ledger.Conway.Types.Epoch
-open import Ledger.Conway.Types.Numeric using (UnitInterval)
+open import Ledger.Conway.Types.Numeric using (UnitInterval; ℕ⁺)
 
 module Ledger.Conway.PParams
   (crypto : Crypto )
@@ -141,7 +141,7 @@ record PParams : Type where
         minFeeRefScriptCoinsPerByte   : ℚ
         maxRefScriptSizePerTx         : ℕ
         maxRefScriptSizePerBlock      : ℕ
-        refScriptCostStride           : ℕ
+        refScriptCostStride           : ℕ⁺
         refScriptCostMultiplier       : ℚ
 \end{code}
 \begin{code}[hide]
@@ -201,7 +201,7 @@ instance
 \begin{code}
 positivePParams : PParams → List ℕ
 positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
-                      ∷ maxValSize ∷ refScriptCostStride ∷ coinsPerUTxOByte
+                      ∷ maxValSize ∷ coinsPerUTxOByte
                       ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                       ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
 \end{code}
@@ -219,8 +219,6 @@ paramsWF-elim pp pwf (suc n) x = z<s
 paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
   where open Equivalence
 
-refScriptCostStride>0 : (pp : PParams) → paramsWellFormed pp → (PParams.refScriptCostStride pp) > 0
-refScriptCostStride>0 pp pwf = paramsWF-elim pp pwf (PParams.refScriptCostStride pp) (there (there (there (there (here refl)))))
 \end{code}
 \end{AgdaMultiCode}
 \caption{Protocol parameter well-formedness}
@@ -261,7 +259,7 @@ module PParamsUpdate where
           minFeeRefScriptCoinsPerByte   : Maybe ℚ
           maxRefScriptSizePerTx         : Maybe ℕ
           maxRefScriptSizePerBlock      : Maybe ℕ
-          refScriptCostStride           : Maybe ℕ
+          refScriptCostStride           : Maybe ℕ⁺
           refScriptCostMultiplier       : Maybe ℚ
           minUTxOValue                  : Maybe Coin -- retired, keep for now
           a0                            : Maybe ℚ

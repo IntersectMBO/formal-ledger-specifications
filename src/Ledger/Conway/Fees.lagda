@@ -40,6 +40,7 @@ module Ledger.Conway.Fees
 
 open import Data.Rational using (0ℚ; ℚ; mkℚ+; _*_; floor)
 open import Data.Rational.Literals using (number)
+open import Ledger.Conway.Types.Numeric
 open import Data.Nat.Induction using (<′-wellFounded)
 open import Data.Nat.Properties using (<⇒<′; ≰⇒>; ∸-monoʳ-≤; +-monoʳ-≤; n≤1+n; m+[n∸m]≡n; ≤-reflexive; ≤-trans)
 open import Data.Integer using (∣_∣)
@@ -54,13 +55,6 @@ open Number number renaming (fromNat to fromℕ)
 \begin{code}
 scriptsCost : (pp : PParams) → ℕ → Coin
 scriptsCost pp scriptSize
-\end{code}
-\begin{code}[hide]
-  with (PParams.refScriptCostStride pp)
-... | 0 = 0  -- This case should never occur; refScriptCostStride should always be > 0.
-... | suc m
-\end{code}
-\begin{code}
   = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte scriptSize
 \end{code}
 \begin{code}[hide]
@@ -71,35 +65,35 @@ scriptsCost pp scriptSize
     minFeeRefScriptCoinsPerByte = PParams.minFeeRefScriptCoinsPerByte pp
     refScriptCostMultiplier = PParams.refScriptCostMultiplier pp
     refScriptCostStride = PParams.refScriptCostStride pp
-
-    scriptsCostAux  : ℚ        -- accumulator
-                    → ℚ        -- current tier price
-                    → (n : ℕ)  -- remaining script size
+    scriptsCostAux : ℚ        -- accumulator
+                   → ℚ        -- current tier price
+                   → (n : ℕ)  -- remaining script size
 \end{code}
 \begin{code}[hide]
-                    → Acc _<′_ n
+                   → Acc _<′_ n
 \end{code}
 \begin{code}
-                    → Coin
+                   → Coin
     scriptsCostAux acl curTierPrice n
 \end{code}
 \begin{code}[hide]
-      (acc rs)
+       (acc rs)
 \end{code}
 \begin{code}
-        = case n ≤? fromℕ⁺ refScriptCostStride of
+       = case  n ≤? fromℕ⁺ refScriptCostStride of
 \end{code}
 \begin{code}[hide]
-            λ where
+                λ where
 \end{code}
 \begin{code}
-            (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
-            (no  p)  → scriptsCostAux (acl + (fromℕ (fromℕ⁺ refScriptCostStride) * curTierPrice))
-                                      (refScriptCostMultiplier * curTierPrice)
-                                      (n - fromℕ⁺ refScriptCostStride)
+                (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
+                (no  p)  → scriptsCostAux
+                             (acl + (fromℕ (fromℕ⁺ refScriptCostStride) * curTierPrice))
+                             (refScriptCostMultiplier * curTierPrice)
+                             (n - fromℕ⁺ refScriptCostStride)
 \end{code}
 \begin{code}[hide]
-                                      (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (ℕ⁺->0 refScriptCostStride)))
+                             (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (ℕ⁺->0 refScriptCostStride)))
 \end{code}
 \begin{code}[hide]
       where
