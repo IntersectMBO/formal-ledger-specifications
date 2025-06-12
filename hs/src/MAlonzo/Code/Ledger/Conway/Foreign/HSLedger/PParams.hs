@@ -30,6 +30,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.Util
 import qualified MAlonzo.Code.Ledger.Conway.PParams
+import qualified MAlonzo.Code.Ledger.Conway.Types.Numeric.PositiveNat
 import qualified MAlonzo.Code.Ledger.Conway.Types.Numeric.UnitInterval
 
 import GHC.Generics (Generic)
@@ -940,7 +941,10 @@ d_Conv'45'PParams_24
                                                  (coe v37) (coe v38)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v17)
-                     (coe v18) (coe v19) (coe v20)
+                     (coe v18) (coe v19)
+                     (coe
+                        MAlonzo.Code.Ledger.Conway.Types.Numeric.PositiveNat.d_fromPosNat_18
+                        (coe v20))
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
                         (coe
@@ -1489,7 +1493,20 @@ d_Conv'45'PParams_24
                                                  (coe v37) (coe v38)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v17)
-                     (coe v18) (coe v19) (coe v20)
+                     (coe v18) (coe v19)
+                     (let v36
+                            = MAlonzo.Code.Ledger.Conway.Types.Numeric.PositiveNat.d_toPosNat_20
+                                (coe v20) in
+                      coe
+                        (case coe v36 of
+                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 v37 -> coe v37
+                           MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
+                             -> coe
+                                  MAlonzo.Code.Ledger.Conway.Foreign.Util.d_error_10 erased
+                                  ("Formal Spec: natural number is zero (not nonZero)"
+                                   ::
+                                   Data.Text.Text)
+                           _ -> MAlonzo.RTE.mazUnreachableError))
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2422,7 +2439,7 @@ d_Conv'45'PParamsUpdate_28
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.PParams.C_PParamsUpdate'46'constructor_494455 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35
+              MAlonzo.Code.Ledger.Conway.PParams.C_PParamsUpdate'46'constructor_496133 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35
                 -> coe
                      C_MkPParamsUpdate_116167
                      (coe
@@ -2539,7 +2556,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_2108))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_2106))
                         v13)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -2547,7 +2564,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_2108))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_2106))
                         v14)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -2597,7 +2614,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'PosNat_2118))
                         v20)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -2725,7 +2742,7 @@ d_Conv'45'PParamsUpdate_28
             case coe v0 of
               C_MkPParamsUpdate_116167 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20 v21 v22 v23 v24 v25 v26 v27 v28 v29 v30 v31 v32 v33 v34 v35
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.PParams.C_PParamsUpdate'46'constructor_494455
+                     MAlonzo.Code.Ledger.Conway.PParams.C_PParamsUpdate'46'constructor_496133
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe
@@ -2840,7 +2857,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_2108))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_2106))
                         v13)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -2848,7 +2865,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_2108))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'UnitInterval_2106))
                         v14)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -2898,7 +2915,7 @@ d_Conv'45'PParamsUpdate_28
                            MAlonzo.Code.Foreign.Convertible.du_Functor'8658'Convertible_62
                            (coe MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6)
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_Conv'45'PosNat_2118))
                         v20)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20

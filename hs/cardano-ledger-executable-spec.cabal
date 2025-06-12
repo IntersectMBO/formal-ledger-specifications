@@ -492,6 +492,7 @@ library
       MAlonzo.Code.Ledger.Conway.Types.Epoch
       MAlonzo.Code.Ledger.Conway.Types.GovStructure
       MAlonzo.Code.Ledger.Conway.Types.Numeric
+      MAlonzo.Code.Ledger.Conway.Types.Numeric.PositiveNat
       MAlonzo.Code.Ledger.Conway.Types.Numeric.UnitInterval
       MAlonzo.Code.Ledger.Conway.Utxo
       MAlonzo.Code.Ledger.Conway.Utxow
