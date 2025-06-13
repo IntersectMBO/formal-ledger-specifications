@@ -321,17 +321,21 @@ nix-shell -A devShells.docs
 # or with flakes:
 nix develop .#docs
 
-# LaTeX to Markdown conversion
-pandoc input.tex -o output.md
+# Optionally run the LaTeX-to-Markdown conversion pipeline
+python build-tools/scripts/tex2md/build.py
 
-# Build mkdocs sites
+# Build and serve mkdocs site locally
+cd _build/website/mkdocs/src
 mkdocs build
+mkdocs serve
 
-# Build mdbook sites  
-mdbook build
-
-# Install additional mdbook plugins
+# Optionally install additional mdbook-pdf plugin
 cargo install mdbook-pdf
+
+# Build mdbook site and pdf; serve mdbook site
+cd _build/website/mdbook
+mdbook build
+mdbook serve
 ```
 
 #### For CI and Testing

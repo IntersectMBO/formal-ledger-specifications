@@ -55,8 +55,8 @@ jobs:
   # !!! Build mkdocs site from markdown files !!!
   mkdocs-site:
     needs: [formal-ledger-agda]
-    # only run on master-markdown branch
-    if: ${{ github.ref == 'refs/heads/master-markdown' }}
+    # only run on master-markdown branch:
+    # if: ${{ github.ref == 'refs/heads/master-markdown' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
@@ -79,7 +79,7 @@ jobs:
           # 1. Explicitly use bash -c to run a sequence of commands.
           # 2. Run the python build script to generate the mkdocs source files.
           # 3. cd into the generated directory and run mkdocs build.
-          nix develop .#markdown --command bash -c "python ./scripts/mkdocs/build.py --run-agda && cd _build/mkdocs/src && mkdocs build --site-dir ../../../site"
+          nix develop .#docs --command bash -c "python ./build-tools/scripts/tex2md/build.py --run-agda && cd _build/website/mkdocs/src && mkdocs build --site-dir ../../../../site"
           # --site-dir places output in root for upload step
       - name: Upload MkDocs site artifact
         uses: actions/upload-artifact@v4
@@ -133,7 +133,8 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build the target cardano-ledger.pdf
         run: |
-          nix develop .#default --command fls-shake --trace -j8 cardano-ledger.pdf
+          #nix-shell -A devShells.ci --run 'fls-shake --trace -j8 ${{ inputs.target }}'
+          nix develop .#ci --command fls-shake --trace -j8 cardano-ledger.pdf
       - name: Upload cardano-ledger.pdf artifact
         uses: actions/upload-artifact@v4
         with:
@@ -181,7 +182,7 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build the target conway-ledger.pdf
         run: |
-          nix develop .#default --command fls-shake --trace -j8 conway-ledger.pdf
+          nix develop .#ci --command fls-shake --trace -j8 conway-ledger.pdf
       - name: Upload conway-ledger.pdf artifact
         uses: actions/upload-artifact@v4
         with:
