@@ -22,6 +22,7 @@ permissions:
 jobs:
   formal-ledger-agda:
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
@@ -57,6 +58,7 @@ jobs:
     # only run on master-markdown branch
     if: ${{ github.ref == 'refs/heads/master-markdown' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - name: Checkout main repository
         uses: actions/checkout@v4
@@ -93,6 +95,7 @@ jobs:
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - name: Checkout repo with build scripts (current branch)
         uses: actions/checkout@v4
@@ -140,6 +143,7 @@ jobs:
   conway-ledger-pdf:
     needs: [formal-ledger-agda]
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - name: Checkout repo with build scripts (current branch)
         uses: actions/checkout@v4
@@ -210,7 +214,7 @@ jobs:
             echo "artifacts_branch=${{ github.event.pull_request.head.ref }}-artifacts" >> $GITHUB_OUTPUT
             printf "artifacts_branch: %s\n" "${{ github.event.pull_request.head.ref }}-artifacts"
           else
-            # Default artifact branch for generic-migration
+            # Default artifact branch for current branch.
             printf "This workflow was triggered by a push event\n"
             printf "Current branch: ${{ github.ref_name }}\n"
             echo "artifacts_branch=${{ github.ref_name }}-artifacts" >> $GITHUB_OUTPUT
@@ -293,6 +297,7 @@ jobs:
     needs: [hs]
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - uses: cachix/install-nix-action@v31
         with:
