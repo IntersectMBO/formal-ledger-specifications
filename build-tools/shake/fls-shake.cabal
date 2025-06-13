@@ -16,5 +16,7 @@ executable fls-shake
     hashable,
     text,
     bytestring,
+    fsnotify,
+    directory,
     split
   default-language: Haskell2010

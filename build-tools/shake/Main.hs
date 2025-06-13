@@ -2,11 +2,9 @@
 {-# LANGUAGE TypeFamilies               #-}
 module Main where
 
-import Development.Shake
-import Development.Shake.FilePath
-import Control.Monad (when, forM_)
-import Data.List (sort, isPrefixOf)
-import Data.List.Split (splitOn)
+import Control.Monad (when, forM_, forever)
+import Data.List (sort, isPrefixOf, groupBy)
+import Data.List.Split (splitOn, splitWhen)
 import Data.Typeable (Typeable)
 import Control.DeepSeq (NFData)
 import Data.Hashable (Hashable)
@@ -14,16 +12,54 @@ import Data.Binary (Binary)
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as TE
 import qualified Data.ByteString as BS
+import qualified System.FSNotify as Watch
+import Development.Shake
+import Development.Shake.Database
+import Development.Shake.FilePath
+import Control.Concurrent (threadDelay)
+import qualified System.Directory as Dir
+
 
 ------------------------------------------------------------------------------
 -- Main function
 ------------------------------------------------------------------------------
 
+isModified :: Watch.Event -> Bool
+isModified (Watch.Modified {}) = True
+isModified _ = False
+
 main :: IO ()
-main = shakeArgs shakeOptions $ do
-  pdfRule
-  htmlRule
-  hsRule
+main = watchMode
+  -- (_, after) <- shakeWithDatabase shakeOptions htmlRule $ \db -> do
+  -- shakeRunAfter shakeOptions after
+
+-- shakeArgs shakeOptions $ do
+
+watchMode :: IO ()
+watchMode = do
+  root <- Dir.canonicalizePath "."
+  shakeWithDatabase shakeOptions (lagdamd2md >> md2mkdocs) $ \db -> do
+    -- (1) call Shake to run and build the top-level target, if needed
+    -- (_, after) <- shakeRunDatabase db [need [ htmlDist </> "index.html" ]]
+    -- shakeRunAfter shakeOptions after
+    -- (2) enter in watch mode for changes
+    Watch.withManager $ \mgr -> do
+      Watch.watchTree mgr "_build/md/md.in/src" isModified $ \event -> do
+        print $ Watch.eventPath event
+        -- find the html file corresponding to the file that triggered the event
+        let srcfile = map (\c -> if isPathSeparator c then '.' else c)
+                    . (<.> "md")
+                    . dropExtension
+                    . dropExtension
+                    . dropDirectory 4
+                    . makeRelative root
+                    $ Watch.eventPath event
+        print srcfile
+        -- run Shake passing as a target the html file that changed
+        (_, after) <- shakeRunDatabase db [withVerbosity Diagnostic $ need [ _md </> mkdocs </> "docs" </> srcfile ]]
+        shakeRunAfter shakeOptions after
+
+      forever $ threadDelay 100000
 
 ------------------------------------------------------------------------------
 -- Build rules
@@ -274,6 +310,25 @@ agdasrc2htmlPP =
               let ilcontents = illiterate lcontents
               writeFileLines out ilcontents
 
+agdaPP2html :: Rules ()
+agdaPP2html = do
+  htmlDist </> "index.html" %> \out ->
+    return ()
+  htmlDist </> "*.html" %> \out -> do
+    let agdafile = (<.> "agda") .
+                   joinPath .
+                   splitWhen (== '.') .
+                   takeBaseName $ out
+    liftIO . print $ "HERE: " ++ agdafile
+    need [_htmlPP </> "src" </> agdafile]
+
+    -- run agda to generate the html
+    command_ [ Cwd _html ]
+             "agda"
+             [ "--fls"
+             , "--fls-html-dir=" ++ "../../" ++ htmlDist
+             , htmlPP </> "src" </> agdafile ]
+
 -- | html rule
 htmlRule :: Rules ()
 htmlRule = do
@@ -281,6 +336,7 @@ htmlRule = do
   htmlIndex
   agdasrc2htmlPP
   agdalibexts2htmlPP
+  agdaPP2html
 
   -- Top level target
   phony "html" $ do
