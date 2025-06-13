@@ -146,13 +146,16 @@ the new deposits logic in older eras and then replaying the chain.
 record UTxOEnv : Type where
 \end{code}
 \begin{code}[hide]
-  constructor ⟦_,_,_⟧ᵘᵉ
+  constructor ⟦_,_,_,_,_⟧ᵘᵉ
   field
 \end{code}
 \begin{code}
     slot      : Slot
     pparams   : PParams
     treasury  : Coin
+    scripts   : ℙ Script 
+    topIsValid : Bool
+    refDats    : ℙ Data
 \end{code}
 \end{NoConway}
 \emph{UTxO states}
@@ -432,7 +435,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
       in
         ∙ ValidCertDeposits pp deposits txcerts
         ∙ evalScripts tx sLst ≡ true
-        ∙ isValid ≡ true
+        ∙ topIsValid ≡ true
           ────────────────────────────────
           Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb)
                               , fees + txfee
@@ -448,7 +451,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
           sLst = collectPhaseTwoScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ false
-        ∙ isValid ≡ false
+        ∙ topIsValid ≡ false
           ────────────────────────────────
           Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ᵘ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧ᵘ 
 \end{code}

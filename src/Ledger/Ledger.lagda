@@ -172,10 +172,24 @@ lookupOrNothingᵐ mp k default with lookupᵐ? mp k
 ... | nothing = default 
 ... | just a = a
 
-adjustTx : ℙ Script → Bool → Tx → Tx 
-adjustTx scs isv tx = record { body = body ; wits = record { TxWitnesses wits ; scripts = scs} ; isValid = isv ; txAD = txAD }
-  where
-    open Tx' tx ; open TxWitnesses 
+refOutScripts : Tx → ℙ Script
+refOutScripts tx = 
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range txouts)
+    where open Tx'; open TxBody (tx .body)
+
+isDatum : Maybe (Datum ⊎ DataHash) → Maybe Datum
+isDatum (just (inj₁ d)) = just d    
+isDatum _ = nothing
+
+refOutDats : Tx → ℙ Data
+refOutDats tx =
+    mapPartial (isDatum ∘ proj₁ ∘ proj₂ ∘ proj₂) (range txouts)
+    where open Tx'; open TxBody (tx .body)
+
+getRefDats : Tx → UTxO → ℙ Data
+getRefDats tx utxo = 
+    mapPartial (isDatum ∘ proj₁ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+    where open Tx'; open TxBody (tx .body)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -236,8 +250,10 @@ data
   LEDGER-I : 
     let open UTxOState u renaming (utxo to utx); open Tx' tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
         bods           = map (λ t → t .Tx'.body) subTxs
-        allScripts        = foldr (λ t l → (t .Tx'.wits .TxWitnesses.scripts) ∪ l) ∅ (tx ∷ subTxs)
-        txsWithScripts  = map (adjustTx allScripts isValid) (tx ∷ subTxs)
+        -- all scripts from all transactions, reference AND regular, shared across the whole batch
+        allScripts        = (foldr (λ t l → (t .Tx'.wits .TxWitnesses.scripts) ∪ (refScripts t utx) ∪ (refOutScripts t) ∪ l) ∅ (tx ∷ subTxs))
+        -- all datums from all transactions, reference AND regular, shared across the whole batch
+        allDatums = (foldr (λ t l → (range (t .Tx'.wits .TxWitnesses.txdats)) ∪ (getRefDats t utx) ∪ (refOutDats t) ∪ l) ∅ (tx ∷ subTxs)) 
         isBalanced        = consumed pp u (body ∷ bods) ≡ᵇ produced pp u (body ∷ bods) 
 
     in
@@ -252,16 +268,18 @@ data
     ∙ (⟦ epoch slot , pp ⟧ᶜᶜ ⊢ certState ⇀⦇ (body ∷ bods) ,ALLCERTS⦈ certState')
     ∙ (⟦ txid , epoch slot , pp , ppolicy , enactState , certState' ⟧ᵍ ⊢ govSt |ᵒ certState' ⇀⦇ (map txgov (body ∷ bods)) ,ALLGOV⦈ govSt')
 
-    ∙ record { LEnv Γ }  ⊢ u ⇀⦇ txsWithScripts ,ALLUTXOW⦈ u'
-    ∙ record { LEnv Γ }  ⊢ u ⇀⦇ txsWithScripts ,ALLUTXOS⦈ u'
+    ∙ record { LEnv Γ ; scripts = allScripts ; topIsValid = isValid ; refDats = allDatums }  ⊢ u ⇀⦇ (tx ∷ subTxs) ,ALLUTXOW⦈ u'
+    ∙ record { LEnv Γ ; scripts = allScripts ; topIsValid = isValid ; refDats = allDatums }  ⊢ u ⇀⦇ (tx ∷ subTxs) ,ALLUTXOS⦈ u'
        ────────────────────────────────
        Γ ⊢  ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , govSt' , certState' ⟧ˡ
 
   LEDGER-V : 
     let open UTxOState u renaming (utxo to utx); open Tx' tx; open TxBody body; open LEnv Γ renaming (pparams to pp); open PParams pp 
         bods           = map (λ t → t .Tx'.body) subTxs
-        allScripts        = foldr (λ t l → (t .Tx'.wits .TxWitnesses.scripts) ∪ l) ∅ (tx ∷ subTxs)
-        txsWithScripts  = map (adjustTx allScripts isValid) (tx ∷ subTxs)
+        -- all scripts from all transactions, reference AND regular, shared across the whole batch
+        allScripts        = (foldr (λ t l → (t .Tx'.wits .TxWitnesses.scripts) ∪ (refScripts t utx) ∪ (refOutScripts t) ∪ l) ∅ (tx ∷ subTxs))
+        -- all datums from all transactions, reference AND regular, shared across the whole batch
+        allDatums = (foldr (λ t l → (range (t .Tx'.wits .TxWitnesses.txdats)) ∪ (getRefDats t utx) ∪ (refOutDats t) ∪ l) ∅ (tx ∷ subTxs)) 
         isBalanced        = consumed pp u (body ∷ bods) ≡ᵇ produced pp u (body ∷ bods) 
 
     in
@@ -274,8 +292,8 @@ data
     ∙ (noSubsInSubs bods ≡ true) --6
     ∙ (noColsInSubs bods ≡ true) --7 -- TODO no returns either
 
-    ∙ (record { LEnv Γ }  ⊢ u ⇀⦇ txsWithScripts ,ALLUTXOW⦈ u')
-    ∙ (record { LEnv Γ }  ⊢ u ⇀⦇ txsWithScripts ,ALLUTXOS⦈ u')
+    ∙ (record { LEnv Γ ; scripts = allScripts ; topIsValid = isValid ; refDats = allDatums }  ⊢ u ⇀⦇ (tx ∷ subTxs) ,ALLUTXOW⦈ u')
+    ∙ (record { LEnv Γ ; scripts = allScripts ; topIsValid = isValid ; refDats = allDatums }  ⊢ u ⇀⦇ (tx ∷ subTxs) ,ALLUTXOS⦈ u')
        ────────────────────────────────
        Γ ⊢  ⟦ u , govSt , certState ⟧ˡ ⇀⦇ tx ,LEDGER⦈ ⟦ u' , govSt' , certState' ⟧ˡ
 \end{code}
