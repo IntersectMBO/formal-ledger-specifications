@@ -2,12 +2,18 @@ name: CI
 on:
   push:
     branches:
-    - master
+      # Include common main branch names and legacy branch
+      - master
+      - main
+      - master-markdown
+      - legacy-latex
   pull_request:
     branches:
-    - master
-  # For running the workflow manually - useful for branches without PRs, for
-  # which CI isn't run automatically
+      # Include common main branch names
+      - master
+      - main
+      - master-markdown
+  # For running workflow manually (for branches w/o PRs, where CI isn't run automatically)
   workflow_dispatch:
 
 permissions:
@@ -16,6 +22,7 @@ permissions:
 jobs:
   formal-ledger-agda:
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
@@ -45,17 +52,140 @@ jobs:
     with:
       target: hs
 
+  # !!! Build mkdocs site from markdown files !!!
+  mkdocs-site:
+    needs: [formal-ledger-agda]
+    # only run on master-markdown branch
+    if: ${{ github.ref == 'refs/heads/master-markdown' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v4
+      - name: Download agda _build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: _build
+          path: _build
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Generate and Build MkDocs site
+        run: |
+          # 1. Explicitly use bash -c to run a sequence of commands.
+          # 2. Run the python build script to generate the mkdocs source files.
+          # 3. cd into the generated directory and run mkdocs build.
+          nix develop .#markdown --command bash -c "python ./scripts/mkdocs/build.py --run-agda && cd _build/mkdocs/src && mkdocs build --site-dir ../../../site"
+          # --site-dir places output in root for upload step
+      - name: Upload MkDocs site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mkdocs-site
+          path: site
+
+  # !!! MODIFIED PDF JOBS !!!
+  # We now inline build steps and check out 'legacy-latex' branch to ensure PDF is
+  # built from correct LaTeX source files; also, checkout logic is updated to prevent
+  # deletion of flake.nix.
+
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
-    uses: ./.github/workflows/build_artifact.yml
-    with:
-      target: cardano-ledger.pdf
+    runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
+    steps:
+      - name: Checkout repo with build scripts (current branch)
+        uses: actions/checkout@v4
+
+      - name: Checkout legacy 'src' directory
+        uses: actions/checkout@v4
+        with:
+          # Check out the legacy-latex branch
+          ref: 'legacy-latex'
+          # Check it out into a temporary subdirectory
+          path: 'legacy-temp'
+          # Only get the 'src' directory from that branch
+          sparse-checkout: |
+            src
+          sparse-checkout-cone-mode: false
+
+      - name: Replace src with legacy version
+        run: |
+          echo "Current branch: ${{ github.ref_name }}"
+          echo "Replacing src with legacy LaTeX files..."
+          rm -rf ./src
+          mv ./legacy-temp/src ./src
+
+      - name: Download agda _build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: _build
+          path: _build
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Build the target cardano-ledger.pdf
+        run: |
+          nix develop .#default --command fls-shake --trace -j8 cardano-ledger.pdf
+      - name: Upload cardano-ledger.pdf artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cardano-ledger.pdf
+          path: dist
 
   conway-ledger-pdf:
     needs: [formal-ledger-agda]
-    uses: ./.github/workflows/build_artifact.yml
-    with:
-      target: conway-ledger.pdf
+    runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
+    steps:
+      - name: Checkout repo with build scripts (current branch)
+        uses: actions/checkout@v4
+
+      - name: Checkout legacy 'src' directory
+        uses: actions/checkout@v4
+        with:
+          # Check out the legacy-latex branch
+          ref: 'legacy-latex'
+          # Check it out into a temporary subdirectory
+          path: 'legacy-temp'
+          # Only get the 'src' directory from that branch
+          sparse-checkout: |
+            src
+          sparse-checkout-cone-mode: false
+
+      - name: Replace src with legacy version
+        run: |
+          echo "Current branch: ${{ github.ref_name }}"
+          echo "Replacing src with legacy LaTeX files..."
+          rm -rf ./src
+          mv ./legacy-temp/src ./src
+
+      - name: Download agda _build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: _build
+          path: _build
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Build the target conway-ledger.pdf
+        run: |
+          nix develop .#default --command fls-shake --trace -j8 conway-ledger.pdf
+      - name: Upload conway-ledger.pdf artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: conway-ledger.pdf
+          path: dist
 
   html:
     needs: [formal-ledger-agda]
@@ -64,9 +194,9 @@ jobs:
       target: html
 
   upload-artifacts:
-    # This job runs only if the workflow has not been manually dispached
+    # run only if workflow has not been manually dispatched
     if: ${{ github.event_name != 'workflow_dispatch' }}
-    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
+    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html, mkdocs-site]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -77,17 +207,18 @@ jobs:
         run: |
           printf "Set the artifacts branch name.\n"
           if [[ -n "${{ github.event.pull_request.head.ref }}" ]]; then
-            printf "This workflow was triggered by a PR to master\n"
+            printf "This workflow was triggered by a PR\n"
+            printf "PR source branch: ${{ github.event.pull_request.head.ref }}\n"
+            printf "PR target branch: ${{ github.event.pull_request.base.ref }}\n"
             echo "artifacts_branch=${{ github.event.pull_request.head.ref }}-artifacts" >> $GITHUB_OUTPUT
             printf "artifacts_branch: %s\n" "${{ github.event.pull_request.head.ref }}-artifacts"
           else
-            printf "This workflow was triggered by a push event to master\n"
-            echo "artifacts_branch=master-artifacts" >> $GITHUB_OUTPUT
-            printf "artifacts_branch: %s\n" "master-artifacts"
+            # Default artifact branch for current branch.
+            printf "This workflow was triggered by a push event\n"
+            printf "Current branch: ${{ github.ref_name }}\n"
+            echo "artifacts_branch=${{ github.ref_name }}-artifacts" >> $GITHUB_OUTPUT
+            printf "artifacts_branch: %s\n" "${{ github.ref_name }}-artifacts"
           fi
-      # Checkout env.artifacts_branch if it already exists
-      # otherwise create a new orphan branch.
-      # Lastly, remove all files from the repo
       - name: Checkout artifacts branch
         run: |
           if [[ -n "$(git ls-remote --heads origin "${ARTIFACTS_BRANCH}")" ]]; then
@@ -113,48 +244,48 @@ jobs:
            <meta name="Author" content="IOHK">
            <title>Formal Ledger Specifications</title>
            <style type="text/css">
-            BODY { font-family : monospace, sans-serif;  color: black;}
-            P { font-family : monospace, sans-serif; color: black; margin:0px; padding: 0px;}
-            A:visited { text-decoration : none; margin : 0px; padding : 0px;}
-            A:link    { text-decoration : none; margin : 0px; padding : 0px;}
-            A:hover   { text-decoration: underline; background-color : yellow; margin : 0px; padding : 0px;}
-            A:active  { margin : 0px; padding : 0px;}
-            .VERSION { font-size: small; font-family : arial, sans-serif; }
+             BODY { font-family : monospace, sans-serif;  color: black;}
+             P { font-family : monospace, sans-serif; color: black; margin:0px; padding: 0px;}
+             A:visited { text-decoration : none; margin : 0px; padding : 0px;}
+             A:link    { text-decoration : none; margin : 0px; padding : 0px;}
+             A:hover   { text-decoration: underline; background-color : yellow; margin : 0px; padding : 0px;}
+             A:active  { margin : 0px; padding : 0px;}
+             .VERSION { font-size: small; font-family : arial, sans-serif; }
            </style>
           </head>
           <body>
           	<h1>Directory Tree</h1><p>
+          	<p><strong>Generated from branch:</strong> ${{ github.ref_name }}</p>
           EOF
 
-          tree -H '.'                     \
-               -L 1                       \
-               --dirsfirst                \
-               --hintro=/dev/null         \
-               --houtro=/dev/null         \
-               --metafirst                \
-               --charset utf-8            \
-               --timefmt '%d-%b-%Y %H:%M' \
-               -I "index.html"            \
-               -I "hs"                    \
-               -h -D --du                 \
+          tree -H '.'                          \
+               -L 2                            \
+               --dirsfirst                     \
+               --hintro=/dev/null              \
+               --houtro=/dev/null              \
+               --metafirst                     \
+               --charset utf-8                 \
+               --timefmt '%d-%b-%Y %H:%M'      \
+               -I "index.html"                 \
+               -I "hs"                         \
+               -h -D --du                      \
                >> index.html
 
           cat << EOF >> index.html
           	<hr>
           	<p class="VERSION">
-              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a>
+              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a> on branch <strong>${{ github.ref_name }}</strong>
           	</p>
           </body>
           </html>
           EOF
-
       - name: Commit artifacts
         run: |
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -A
-            git commit -m "Artifacts generated from ${{ github.sha }}"
-      - name: Push ${{ env.artifacts_branch }}
+            git commit --allow-empty -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
+      - name: Push ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -165,6 +296,7 @@ jobs:
     needs: [hs]
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - uses: cachix/install-nix-action@v31
         with:

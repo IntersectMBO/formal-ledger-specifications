@@ -26,7 +26,7 @@ The *sum* (or disjoint union, coproduct, etc.) of `A`{.agdabound} and
 `B`{.agdabound} is denoted by
 `A`{.agdabound} `⊎`{.agdadatatype} `B`{.agdabound}, and their product
 is denoted by `A`{.agdabound} `×`{.agdafunction} `B`{.agdabound}. The 
-projection functions from products are denoted \fst{} and \snd{}, 
+projection functions from products are denoted
 `proj₁`{.agdafield} and `proj₂`{.agdafield} and the injections are denoted
 `inj₁`{.agdainductiveconstructor} and
 `inj₂`{.agdainductiveconstructor}, respectively. The
@@ -60,7 +60,6 @@ write
 `.`{.agdasymbol}
 `proj₁`{.agdafield}
 instead of
-
 `proj₁`{.agdafield}
 `x`{.agdabound}
 
@@ -201,6 +200,6 @@ and can safely be ignored. However there are the two exceptions:
 
 - `ᶜ`{.agdafunction}in the context of set restrictions, where it indicates the complement
 
-Also, non-letter superscripts do carry meaning.[^1]
+Also, non-letter superscripts do carry meaning.
 
-[^1]: At some point in the future we hope to be able to remove all those non-essential superscripts. Since we prefer doing this by changing the Agda source code instead of via hiding them in this document, this is a non-trivial problem that will take some time to address.
+(At some point in the future we hope to be able to remove all those non-essential superscripts. Since we prefer doing this by changing the Agda source code instead of via hiding them in this document, this is a non-trivial problem that will take some time to address.)
