@@ -6,6 +6,7 @@ import Development.Shake
 import Development.Shake.FilePath
 import Control.Monad (when, forM_)
 import Data.List (sort, isPrefixOf)
+import Data.List.Split (splitOn)
 import Data.Typeable (Typeable)
 import Control.DeepSeq (NFData)
 import Data.Hashable (Hashable)
@@ -286,6 +287,51 @@ htmlRule = do
     need [ htmlDist </> "index.html" ]
 
 ------------------------------------------------------------------------------
+-- Markdown
+------------------------------------------------------------------------------
+
+-- | List of folder paths of library extension files
+libExts :: [FilePath]
+libExts = [ "iog-prelude"
+          , "stdlib"
+          , "stdlib-classes"
+          , "stdlib-meta"
+          ]
+
+-- | Process literate Markdown Agda files using Agda
+-- The target is a *.md file in _build/md/md.pp
+-- Its dependency is a .lagda.md file in _build/md/md.in
+lagdamd2md :: Rules ()
+lagdamd2md =
+  _md </> mdPP </> "*.md" %> \out -> do
+    let mdfile = joinPath
+               . splitOn "."
+               . dropExtension
+               . dropDirectory 3 $ out
+
+        src = if any (`isPrefixOf` mdfile) libExts
+                then "src-lib-exts"
+                else "src"
+
+        srcfile = src </> mdfile <.> "lagda" <.> "md"
+
+    need [_md </> mdIn </> srcfile]
+
+    command_ [ Cwd $ _md </> mdIn ]
+             "agda"
+             [ "--fls"
+             , "--fls-html-dir=" ++ "../" ++ mdPP
+             , srcfile ]
+
+-- | Copy files into the mkDocs docs directory
+md2mkdocs :: Rules ()
+md2mkdocs =
+  _md </> mkdocs </> "docs" </> "*.md" %> \out -> do
+    let mdfile = (_md </>) . (mdPP </>)
+               . dropDirectory 4 $ out
+    copyFileChanged mdfile out
+
+------------------------------------------------------------------------------
 -- Build directory paths
 ------------------------------------------------------------------------------
 
@@ -318,6 +364,17 @@ htmlPP  = "html.pp"
 _html, _htmlPP :: FilePath
 _html    = _build </> html
 _htmlPP  = _html  </> htmlPP
+
+md, mdIn, mdPP :: FilePath
+md   = "md"
+mdIn   = "md.in"
+mdPP = "md.pp"
+
+_md :: FilePath
+_md = _build </> md
+
+mkdocs :: FilePath
+mkdocs = "mkdocs"
 
 -- | Root output directory
 dist :: FilePath

@@ -15,5 +15,6 @@ executable fls-shake
     deepseq,
     hashable,
     text,
-    bytestring
+    bytestring,
+    split
   default-language: Haskell2010
