@@ -133,8 +133,8 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build the target cardano-ledger.pdf
         run: |
-          #nix-shell -A devShells.ci --run 'fls-shake --trace -j8 ${{ inputs.target }}'
-          nix develop .#ci --command fls-shake --trace -j8 cardano-ledger.pdf
+          nix-shell -A devShells.ci --run 'fls-shake --trace -j8 cardano-ledger.pdf'
+          #nix develop .#ci --command fls-shake --trace -j8 cardano-ledger.pdf
       - name: Upload cardano-ledger.pdf artifact
         uses: actions/upload-artifact@v4
         with:
@@ -182,7 +182,8 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build the target conway-ledger.pdf
         run: |
-          nix develop .#ci --command fls-shake --trace -j8 conway-ledger.pdf
+          nix-shell -A devShells.ci --run 'fls-shake --trace -j8 conway-ledger.pdf'
+          #nix develop .#ci --command fls-shake --trace -j8 conway-ledger.pdf
       - name: Upload conway-ledger.pdf artifact
         uses: actions/upload-artifact@v4
         with:
