@@ -2,12 +2,16 @@ name: CI
 on:
   push:
     branches:
-      # !!! now running on new markdown branch and legacy latex branch !!!
+      # Include common main branch names and legacy branch
+      - master
+      - main
       - master-markdown
       - legacy-latex
   pull_request:
     branches:
-      # !!! now targeting PRs against new markdown branch !!!
+      # Include common main branch names
+      - master
+      - main
       - master-markdown
   # For running workflow manually (for branches w/o PRs, where CI isn't run automatically)
   workflow_dispatch:
@@ -18,6 +22,7 @@ permissions:
 jobs:
   formal-ledger-agda:
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
@@ -89,8 +94,9 @@ jobs:
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
-      - name: Checkout repo with build scripts (e.g., master-markdown)
+      - name: Checkout repo with build scripts (current branch)
         uses: actions/checkout@v4
 
       - name: Checkout legacy 'src' directory
@@ -107,6 +113,8 @@ jobs:
 
       - name: Replace src with legacy version
         run: |
+          echo "Current branch: ${{ github.ref_name }}"
+          echo "Replacing src with legacy LaTeX files..."
           rm -rf ./src
           mv ./legacy-temp/src ./src
 
@@ -134,8 +142,9 @@ jobs:
   conway-ledger-pdf:
     needs: [formal-ledger-agda]
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
-      - name: Checkout repo with build scripts (e.g., master-markdown)
+      - name: Checkout repo with build scripts (current branch)
         uses: actions/checkout@v4
 
       - name: Checkout legacy 'src' directory
@@ -152,6 +161,8 @@ jobs:
 
       - name: Replace src with legacy version
         run: |
+          echo "Current branch: ${{ github.ref_name }}"
+          echo "Replacing src with legacy LaTeX files..."
           rm -rf ./src
           mv ./legacy-temp/src ./src
 
@@ -183,7 +194,7 @@ jobs:
       target: html
 
   upload-artifacts:
-    # run only if workflow has not been manually dispached
+    # run only if workflow has not been manually dispatched
     if: ${{ github.event_name != 'workflow_dispatch' }}
     needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html, mkdocs-site]
     runs-on: ubuntu-latest
@@ -196,14 +207,17 @@ jobs:
         run: |
           printf "Set the artifacts branch name.\n"
           if [[ -n "${{ github.event.pull_request.head.ref }}" ]]; then
-            printf "This workflow was triggered by a PR to master-markdown\n"
+            printf "This workflow was triggered by a PR\n"
+            printf "PR source branch: ${{ github.event.pull_request.head.ref }}\n"
+            printf "PR target branch: ${{ github.event.pull_request.base.ref }}\n"
             echo "artifacts_branch=${{ github.event.pull_request.head.ref }}-artifacts" >> $GITHUB_OUTPUT
             printf "artifacts_branch: %s\n" "${{ github.event.pull_request.head.ref }}-artifacts"
           else
-            # Changed default artifact branch to master-markdown-artifacts.
+            # Default artifact branch for current branch.
             printf "This workflow was triggered by a push event\n"
-            echo "artifacts_branch=master-markdown-artifacts" >> $GITHUB_OUTPUT
-            printf "artifacts_branch: %s\n" "master-markdown-artifacts"
+            printf "Current branch: ${{ github.ref_name }}\n"
+            echo "artifacts_branch=${{ github.ref_name }}-artifacts" >> $GITHUB_OUTPUT
+            printf "artifacts_branch: %s\n" "${{ github.ref_name }}-artifacts"
           fi
       - name: Checkout artifacts branch
         run: |
@@ -241,6 +255,7 @@ jobs:
           </head>
           <body>
           	<h1>Directory Tree</h1><p>
+          	<p><strong>Generated from branch:</strong> ${{ github.ref_name }}</p>
           EOF
 
           tree -H '.'                          \
@@ -259,7 +274,7 @@ jobs:
           cat << EOF >> index.html
           	<hr>
           	<p class="VERSION">
-              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a>
+              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a> on branch <strong>${{ github.ref_name }}</strong>
           	</p>
           </body>
           </html>
@@ -269,7 +284,7 @@ jobs:
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -A
-            git commit --allow-empty -m "Artifacts generated from ${{ github.sha }}"
+            git commit --allow-empty -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
       - name: Push ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:
@@ -281,6 +296,7 @@ jobs:
     needs: [hs]
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - uses: cachix/install-nix-action@v31
         with:
