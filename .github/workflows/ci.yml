@@ -4,15 +4,11 @@ on:
     branches:
       # Include common main branch names and legacy branch
       - master
-      - main
-      - generic-migration
-      - legacy-latex
+      - legacy-latex  # ensure legacy-latex-artifacts branch gets created
   pull_request:
     branches:
       # Include common main branch names
       - master
-      - main
-      - generic-migration
   # For running workflow manually (for branches w/o PRs, where CI isn't run automatically)
   workflow_dispatch:
 
@@ -22,7 +18,6 @@ permissions:
 jobs:
   formal-ledger-agda:
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - uses: actions/checkout@v4
       - uses: cachix/install-nix-action@v31
@@ -52,138 +47,113 @@ jobs:
     with:
       target: hs
 
-  # !!! Build mkdocs site from markdown files !!!
-  mkdocs-site:
-    needs: [formal-ledger-agda]
-    # only run on master-markdown branch:
-    # if: ${{ github.ref == 'refs/heads/master-markdown' }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
-    steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v4
-      - name: Download agda _build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: _build
-          path: _build
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Generate and Build MkDocs site
-        run: |
-          # 1. Explicitly use bash -c to run a sequence of commands.
-          # 2. Run the python build script to generate the mkdocs source files.
-          # 3. cd into the generated directory and run mkdocs build.
-          nix develop .#docs --command bash -c "python ./build-tools/scripts/tex2md/build.py --run-agda && cd _build/website/mkdocs/src && mkdocs build --site-dir ../../../../site"
-          # --site-dir places output in root for upload step
-      - name: Upload MkDocs site artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: mkdocs-site
-          path: site
-
-  # !!! MODIFIED PDF JOBS !!!
-  # We now inline build steps and check out 'legacy-latex' branch to ensure PDF is
-  # built from correct LaTeX source files; also, checkout logic is updated to prevent
-  # deletion of flake.nix.
-
+  # !!! Just copy PDFs from legacy-latex-artifacts branch instead of building !!!
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
-      - name: Checkout repo with build scripts (current branch)
+      - name: Checkout current branch
         uses: actions/checkout@v4
 
-      - name: Checkout legacy 'src' directory
-        uses: actions/checkout@v4
-        with:
-          # Check out the legacy-latex branch
-          ref: 'legacy-latex'
-          # Check it out into a temporary subdirectory
-          path: 'legacy-temp'
-          # Only get the 'src' directory from that branch
-          sparse-checkout: |
-            src
-          sparse-checkout-cone-mode: false
-
-      - name: Replace src with legacy version
+      - name: Check if legacy-latex-artifacts branch exists
+        id: check-legacy-artifacts
         run: |
-          echo "Current branch: ${{ github.ref_name }}"
-          echo "Replacing src with legacy LaTeX files..."
-          rm -rf ./src
-          mv ./legacy-temp/src ./src
+          if git ls-remote --exit-code --heads origin legacy-latex-artifacts > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "legacy-latex-artifacts branch found"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "legacy-latex-artifacts branch not found"
+          fi
 
-      - name: Download agda _build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: _build
-          path: _build
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build the target cardano-ledger.pdf
+      - name: Copy PDF from legacy-latex-artifacts branch
+        if: steps.check-legacy-artifacts.outputs.exists == 'true'
         run: |
-          nix-shell -A devShells.ci --run 'fls-shake --trace -j8 cardano-ledger.pdf'
-          #nix develop .#ci --command fls-shake --trace -j8 cardano-ledger.pdf
+          echo "Copying cardano-ledger.pdf from legacy-latex-artifacts branch..."
+
+          # Checkout the legacy artifacts branch
+          git fetch origin legacy-latex-artifacts:legacy-latex-artifacts
+          git checkout legacy-latex-artifacts
+
+          # Create dist directory and copy PDF if it exists
+          mkdir -p ../dist
+          if [ -f "cardano-ledger.pdf" ]; then
+            cp cardano-ledger.pdf ../dist/
+            echo "Successfully copied cardano-ledger.pdf"
+          else
+            echo "Error: cardano-ledger.pdf not found in legacy-latex-artifacts branch"
+            exit 1
+          fi
+
+          # Return to original branch
+          git checkout ${{ github.ref_name }}
+          mv ../dist ./dist
+
+      - name: Handle missing legacy artifacts
+        if: steps.check-legacy-artifacts.outputs.exists == 'false'
+        run: |
+          echo "Warning: legacy-latex-artifacts branch not found"
+          echo "Creating placeholder PDF..."
+          mkdir -p dist
+          echo "Legacy PDF not available - please run CI on legacy-latex branch first" > dist/cardano-ledger-missing.txt
+          # You could also fail the job here if you prefer: exit 1
+
       - name: Upload cardano-ledger.pdf artifact
         uses: actions/upload-artifact@v4
         with:
           name: cardano-ledger.pdf
           path: dist
 
+  # !!! Just copy PDFs from legacy-latex-artifacts branch instead of building !!!
   conway-ledger-pdf:
     needs: [formal-ledger-agda]
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
-      - name: Checkout repo with build scripts (current branch)
+      - name: Checkout current branch
         uses: actions/checkout@v4
 
-      - name: Checkout legacy 'src' directory
-        uses: actions/checkout@v4
-        with:
-          # Check out the legacy-latex branch
-          ref: 'legacy-latex'
-          # Check it out into a temporary subdirectory
-          path: 'legacy-temp'
-          # Only get the 'src' directory from that branch
-          sparse-checkout: |
-            src
-          sparse-checkout-cone-mode: false
-
-      - name: Replace src with legacy version
+      - name: Check if legacy-latex-artifacts branch exists
+        id: check-legacy-artifacts
         run: |
-          echo "Current branch: ${{ github.ref_name }}"
-          echo "Replacing src with legacy LaTeX files..."
-          rm -rf ./src
-          mv ./legacy-temp/src ./src
+          if git ls-remote --exit-code --heads origin legacy-latex-artifacts > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "legacy-latex-artifacts branch found"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "legacy-latex-artifacts branch not found"
+          fi
 
-      - name: Download agda _build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: _build
-          path: _build
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build the target conway-ledger.pdf
+      - name: Copy PDF from legacy-latex-artifacts branch
+        if: steps.check-legacy-artifacts.outputs.exists == 'true'
         run: |
-          nix-shell -A devShells.ci --run 'fls-shake --trace -j8 conway-ledger.pdf'
-          #nix develop .#ci --command fls-shake --trace -j8 conway-ledger.pdf
+          echo "Copying conway-ledger.pdf from legacy-latex-artifacts branch..."
+
+          # Checkout the legacy artifacts branch
+          git fetch origin legacy-latex-artifacts:legacy-latex-artifacts
+          git checkout legacy-latex-artifacts
+
+          # Create dist directory and copy PDF if it exists
+          mkdir -p ../dist
+          if [ -f "conway-ledger.pdf" ]; then
+            cp conway-ledger.pdf ../dist/
+            echo "Successfully copied conway-ledger.pdf"
+          else
+            echo "Error: conway-ledger.pdf not found in legacy-latex-artifacts branch"
+            exit 1
+          fi
+
+          # Return to original branch
+          git checkout ${{ github.ref_name }}
+          mv ../dist ./dist
+
+      - name: Handle missing legacy artifacts
+        if: steps.check-legacy-artifacts.outputs.exists == 'false'
+        run: |
+          echo "Warning: legacy-latex-artifacts branch not found"
+          echo "Creating placeholder PDF..."
+          mkdir -p dist
+          echo "Legacy PDF not available - please run CI on legacy-latex branch first" > dist/conway-ledger-missing.txt
+
       - name: Upload conway-ledger.pdf artifact
         uses: actions/upload-artifact@v4
         with:
@@ -197,9 +167,9 @@ jobs:
       target: html
 
   upload-artifacts:
-    # run only if workflow has not been manually dispatched
+    # This job runs only if the workflow has not been manually dispached
     if: ${{ github.event_name != 'workflow_dispatch' }}
-    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html, mkdocs-site]
+    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -210,18 +180,16 @@ jobs:
         run: |
           printf "Set the artifacts branch name.\n"
           if [[ -n "${{ github.event.pull_request.head.ref }}" ]]; then
-            printf "This workflow was triggered by a PR\n"
-            printf "PR source branch: ${{ github.event.pull_request.head.ref }}\n"
-            printf "PR target branch: ${{ github.event.pull_request.base.ref }}\n"
+            printf "This workflow was triggered by a PR to master\n"
             echo "artifacts_branch=${{ github.event.pull_request.head.ref }}-artifacts" >> $GITHUB_OUTPUT
             printf "artifacts_branch: %s\n" "${{ github.event.pull_request.head.ref }}-artifacts"
           else
-            # Default artifact branch for current branch.
-            printf "This workflow was triggered by a push event\n"
-            printf "Current branch: ${{ github.ref_name }}\n"
+            printf "This workflow was triggered by a push event to ${{ github.ref_name }}\n"
             echo "artifacts_branch=${{ github.ref_name }}-artifacts" >> $GITHUB_OUTPUT
             printf "artifacts_branch: %s\n" "${{ github.ref_name }}-artifacts"
           fi
+      # Checkout env.artifacts_branch if it already exists otherwise create a new orphan branch.
+      # Lastly, remove all files from the repo.
       - name: Checkout artifacts branch
         run: |
           if [[ -n "$(git ls-remote --heads origin "${ARTIFACTS_BRANCH}")" ]]; then
@@ -247,47 +215,48 @@ jobs:
            <meta name="Author" content="IOHK">
            <title>Formal Ledger Specifications</title>
            <style type="text/css">
-             BODY { font-family : monospace, sans-serif;  color: black;}
-             P { font-family : monospace, sans-serif; color: black; margin:0px; padding: 0px;}
-             A:visited { text-decoration : none; margin : 0px; padding : 0px;}
-             A:link    { text-decoration : none; margin : 0px; padding : 0px;}
-             A:hover   { text-decoration: underline; background-color : yellow; margin : 0px; padding : 0px;}
-             A:active  { margin : 0px; padding : 0px;}
-             .VERSION { font-size: small; font-family : arial, sans-serif; }
+            BODY { font-family : monospace, sans-serif;  color: black;}
+            P { font-family : monospace, sans-serif; color: black; margin:0px; padding: 0px;}
+            A:visited { text-decoration : none; margin : 0px; padding : 0px;}
+            A:link    { text-decoration : none; margin : 0px; padding : 0px;}
+            A:hover   { text-decoration: underline; background-color : yellow; margin : 0px; padding : 0px;}
+            A:active  { margin : 0px; padding : 0px;}
+            .VERSION { font-size: small; font-family : arial, sans-serif; }
            </style>
           </head>
           <body>
           	<h1>Directory Tree</h1><p>
-          	<p><strong>Generated from branch:</strong> ${{ github.ref_name }}</p>
+          	<p><strong>Branch:</strong> ${{ github.ref_name }}</p>
           EOF
 
-          tree -H '.'                          \
-               -L 2                            \
-               --dirsfirst                     \
-               --hintro=/dev/null              \
-               --houtro=/dev/null              \
-               --metafirst                     \
-               --charset utf-8                 \
-               --timefmt '%d-%b-%Y %H:%M'      \
-               -I "index.html"                 \
-               -I "hs"                         \
-               -h -D --du                      \
+          tree -H '.'                     \
+               -L 1                       \
+               --dirsfirst                \
+               --hintro=/dev/null         \
+               --houtro=/dev/null         \
+               --metafirst                \
+               --charset utf-8            \
+               --timefmt '%d-%b-%Y %H:%M' \
+               -I "index.html"            \
+               -I "hs"                    \
+               -h -D --du                 \
                >> index.html
 
           cat << EOF >> index.html
           	<hr>
           	<p class="VERSION">
-              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a> on branch <strong>${{ github.ref_name }}</strong>
+              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a> on branch ${{ github.ref_name }}
           	</p>
           </body>
           </html>
           EOF
+
       - name: Commit artifacts
         run: |
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -A
-            git commit --allow-empty -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
+            git commit -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
       - name: Push ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:
@@ -299,7 +268,6 @@ jobs:
     needs: [hs]
     if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30  # Increase the timeout to handle long-running tasks
     steps:
       - uses: cachix/install-nix-action@v31
         with:
@@ -311,7 +279,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            scripts/prepare-conf-test.sh
+            build-tools/scripts/prepare-conf-test.sh
           sparse-checkout-cone-mode: false
           path: fls
 
@@ -330,4 +298,4 @@ jobs:
       - name: Build cardano-ledger
         run: |
           cd cl
-          nix develop --command bash -c "../fls/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
+          nix develop --command bash -c "../fls/build-tools/scripts/prepare-conf-test.sh . ../hs && cabal update && cabal build cardano-ledger-conformance"
