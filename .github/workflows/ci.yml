@@ -47,6 +47,39 @@ jobs:
     with:
       target: hs
 
+  # NEW: Build mkdocs site from markdown files
+  mkdocs-site:
+    needs: [formal-ledger-agda]
+    # Only run on master branch (adjust as needed)
+    if: ${{ github.ref_name == 'master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v4
+      - name: Download agda _build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: _build
+          path: _build
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Generate and Build MkDocs site
+        run: |
+          # Run the python build script to generate the mkdocs source files.
+          # Then cd into the generated directory and run mkdocs build.
+          nix develop .#docs --command bash -c "python ./scripts/mkdocs/build.py --run-agda && cd _build/mkdocs/src && mkdocs build --site-dir ../../../site"
+          # --site-dir places output in root for upload step
+      - name: Upload MkDocs site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mkdocs-site
+          path: site
+
   # !!! Just copy PDFs from legacy-latex-artifacts branch instead of building !!!
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
@@ -230,7 +263,7 @@ jobs:
           EOF
 
           tree -H '.'                     \
-               -L 1                       \
+               -L 2                       \
                --dirsfirst                \
                --hintro=/dev/null         \
                --houtro=/dev/null         \
@@ -256,7 +289,7 @@ jobs:
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -A
-            git commit -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
+            git commit --allow-empty -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
       - name: Push ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:
