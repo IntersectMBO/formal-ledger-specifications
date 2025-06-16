@@ -12,15 +12,18 @@ from LaTeX-based literate Agda to Markdown-based literate Agda.
 Until we have an adequate way of generating pdf documentation from the Markdown-based
 literate Agda, we refer to this branch for those documents.
 
-The CI configuration in this branch (in `.github/workflows/ci.yml`) was created
+The CI configuration in this branch (in [`.github/workflows/ci.yml`][]) was created
 specifically for the `legacy-latex` branch; it generates the PDFs and creates the
 `legacy-latex-artifacts` branch.
 
-For more details, see LEGACY_CI.md.
+For more details, see [LEGACY_CI.md][].
+
+
+[`.github/workflows/ci.yml`]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/legacy-latex/.github/workflows/ci.yml
+[LEGACY_CI.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/legacy-latex/LEGACY_CI.md
+
 
 ---
-
-
 
 This repository contains the formal ledger specifications that are intended to eventually replace the existing formal specifications of the Cardano ledger found [here](https://github.com/IntersectMBO/cardano-ledger). This project is currently incomplete and work in progress.
 

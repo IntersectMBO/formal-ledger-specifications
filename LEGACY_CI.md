@@ -1,6 +1,6 @@
-# CI for the legacy-latex branch
+# legacy-latex branch CI
 
-## What this CI does
+## What the CI does
 
 The CI for the `legacy-latex` branch
 
