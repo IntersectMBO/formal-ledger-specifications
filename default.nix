@@ -236,7 +236,6 @@ in
       ci = mkShell {
         inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
         packages = [
-          #agdaWithPackages  # For type-checking
           fls-shake         # For building artifacts
           #cabal-install     # For building Haskell components if needed
           #hpack             # Haskell package helper
