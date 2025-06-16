@@ -1,0 +1,67 @@
+on:
+  workflow_call:
+    inputs:
+      pdf_name:
+        required: true
+        type: string
+        description: 'Name of the PDF file to copy (e.g., cardano-ledger.pdf)'
+
+jobs:
+  copy-legacy-pdf:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current branch
+        uses: actions/checkout@v4
+
+      - name: Check if legacy-latex-artifacts branch exists
+        id: check-legacy-artifacts
+        run: |
+          if git ls-remote --exit-code --heads origin legacy-latex-artifacts > /dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+            echo "legacy-latex-artifacts branch found"
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+            echo "legacy-latex-artifacts branch not found"
+          fi
+
+      - name: Copy PDF from legacy-latex-artifacts branch
+        if: steps.check-legacy-artifacts.outputs.exists == 'true'
+        run: |
+          echo "Copying ${{ inputs.pdf_name }} from legacy-latex-artifacts branch..."
+
+          # Checkout the legacy artifacts branch
+          git fetch origin legacy-latex-artifacts:legacy-latex-artifacts
+          git checkout legacy-latex-artifacts
+
+          # Create dist directory and copy PDF if it exists
+          mkdir -p ../dist
+          if [ -f "${{ inputs.pdf_name }}" ]; then
+            cp "${{ inputs.pdf_name }}" ../dist/
+            echo "Successfully copied ${{ inputs.pdf_name }}"
+          else
+            echo "Error: ${{ inputs.pdf_name }} not found in legacy-latex-artifacts branch"
+            exit 1
+          fi
+
+          # Return to original branch
+          git checkout ${{ github.ref_name }}
+          mv ../dist ./dist
+
+      - name: Handle missing legacy artifacts
+        if: steps.check-legacy-artifacts.outputs.exists == 'false'
+        run: |
+          echo "Warning: legacy-latex-artifacts branch not found"
+          echo "Creating placeholder for ${{ inputs.pdf_name }}..."
+          mkdir -p dist
+
+          # Create a descriptive placeholder filename
+          PDF_BASE=$(basename "${{ inputs.pdf_name }}" .pdf)
+          echo "Legacy PDF not available - please run CI on legacy-latex branch first" > "dist/${PDF_BASE}-missing.txt"
+
+          echo "Created placeholder: dist/${PDF_BASE}-missing.txt"
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ inputs.pdf_name }}
+          path: dist

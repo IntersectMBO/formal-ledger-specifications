@@ -82,115 +82,15 @@ jobs:
   # !!! Just copy PDFs from legacy-latex-artifacts branch instead of building !!!
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout current branch
-        uses: actions/checkout@v4
+    uses: ./.github/workflows/copy_legacy_pdf.yml
+    with:
+      pdf_name: cardano-ledger.pdf
 
-      - name: Check if legacy-latex-artifacts branch exists
-        id: check-legacy-artifacts
-        run: |
-          if git ls-remote --exit-code --heads origin legacy-latex-artifacts > /dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-            echo "legacy-latex-artifacts branch found"
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "legacy-latex-artifacts branch not found"
-          fi
-
-      - name: Copy PDF from legacy-latex-artifacts branch
-        if: steps.check-legacy-artifacts.outputs.exists == 'true'
-        run: |
-          echo "Copying cardano-ledger.pdf from legacy-latex-artifacts branch..."
-
-          # Checkout the legacy artifacts branch
-          git fetch origin legacy-latex-artifacts:legacy-latex-artifacts
-          git checkout legacy-latex-artifacts
-
-          # Create dist directory and copy PDF if it exists
-          mkdir -p ../dist
-          if [ -f "cardano-ledger.pdf" ]; then
-            cp cardano-ledger.pdf ../dist/
-            echo "Successfully copied cardano-ledger.pdf"
-          else
-            echo "Error: cardano-ledger.pdf not found in legacy-latex-artifacts branch"
-            exit 1
-          fi
-
-          # Return to original branch
-          git checkout ${{ github.ref_name }}
-          mv ../dist ./dist
-
-      - name: Handle missing legacy artifacts
-        if: steps.check-legacy-artifacts.outputs.exists == 'false'
-        run: |
-          echo "Warning: legacy-latex-artifacts branch not found"
-          echo "Creating placeholder PDF..."
-          mkdir -p dist
-          echo "Legacy PDF not available - please run CI on legacy-latex branch first" > dist/cardano-ledger-missing.txt
-          # You could also fail the job here if you prefer: exit 1
-
-      - name: Upload cardano-ledger.pdf artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: cardano-ledger.pdf
-          path: dist
-
-  # !!! Just copy PDFs from legacy-latex-artifacts branch instead of building !!!
   conway-ledger-pdf:
     needs: [formal-ledger-agda]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout current branch
-        uses: actions/checkout@v4
-
-      - name: Check if legacy-latex-artifacts branch exists
-        id: check-legacy-artifacts
-        run: |
-          if git ls-remote --exit-code --heads origin legacy-latex-artifacts > /dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-            echo "legacy-latex-artifacts branch found"
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "legacy-latex-artifacts branch not found"
-          fi
-
-      - name: Copy PDF from legacy-latex-artifacts branch
-        if: steps.check-legacy-artifacts.outputs.exists == 'true'
-        run: |
-          echo "Copying conway-ledger.pdf from legacy-latex-artifacts branch..."
-
-          # Checkout the legacy artifacts branch
-          git fetch origin legacy-latex-artifacts:legacy-latex-artifacts
-          git checkout legacy-latex-artifacts
-
-          # Create dist directory and copy PDF if it exists
-          mkdir -p ../dist
-          if [ -f "conway-ledger.pdf" ]; then
-            cp conway-ledger.pdf ../dist/
-            echo "Successfully copied conway-ledger.pdf"
-          else
-            echo "Error: conway-ledger.pdf not found in legacy-latex-artifacts branch"
-            exit 1
-          fi
-
-          # Return to original branch
-          git checkout ${{ github.ref_name }}
-          mv ../dist ./dist
-
-      - name: Handle missing legacy artifacts
-        if: steps.check-legacy-artifacts.outputs.exists == 'false'
-        run: |
-          echo "Warning: legacy-latex-artifacts branch not found"
-          echo "Creating placeholder PDF..."
-          mkdir -p dist
-          echo "Legacy PDF not available - please run CI on legacy-latex branch first" > dist/conway-ledger-missing.txt
-
-      - name: Upload conway-ledger.pdf artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: conway-ledger.pdf
-          path: dist
+    uses: ./.github/workflows/copy_legacy_pdf.yml
+    with:
+      pdf_name: conway-ledger.pdf
 
   html:
     needs: [formal-ledger-agda]
@@ -201,7 +101,7 @@ jobs:
   upload-artifacts:
     # This job runs only if the workflow has not been manually dispached
     if: ${{ github.event_name != 'workflow_dispatch' }}
-    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
+    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html, mkdocs-site]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
