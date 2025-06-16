@@ -325,7 +325,8 @@ agdaPP2html = do
     -- run agda to generate the html
     command_ [ Cwd _html ]
              "agda"
-             [ "--fls"
+             [ "--main"
+             , "--fls"
              , "--fls-html-dir=" ++ "../../" ++ htmlDist
              , htmlPP </> "src" </> agdafile ]
 

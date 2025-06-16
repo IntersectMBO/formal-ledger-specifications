@@ -12,7 +12,7 @@ module Main where
 
 import Prelude hiding ((!!), concatMap)
 
-import Control.Monad (guard)
+import Control.Monad (guard, when)
 import Control.Monad.Trans ( MonadIO(..), lift )
 import Control.Monad.Trans.Reader ( ReaderT(runReaderT), ask )
 import Control.DeepSeq (NFData)
@@ -57,7 +57,7 @@ import Agda.Compiler.Backend
   , Recompile(..), MonadDebug, Definition, ReadTCState, reportS )
 import Agda.Compiler.Common (curIF)
 import Agda.Main ( runAgda )
-import Agda.Syntax.Common (IsMain, FileType(..), Induction(..))
+import Agda.Syntax.Common (IsMain(..), FileType(..), Induction(..))
 import Agda.Syntax.Common.Pretty (parens, pretty, render, (<+>))
 import Agda.Syntax.TopLevelModuleName
 import qualified Agda.TypeChecking.Monad as TCM
@@ -183,9 +183,10 @@ postModuleFls
   -> [FlsDef]
   -> m FlsModule
 postModuleFls _env menv _isMain _modName _defs = do
-  let generatePage = defaultPageGen . flsCompileEnvOpts . flsModEnvCompileEnv $ menv
-  htmlSrc <- srcFileOfInterface (flsModEnvName menv) <$> curIF
-  runLogHtmlWithMonadDebug $ generatePage htmlSrc
+  when (_isMain == IsMain) $ do
+    let generatePage = defaultPageGen . flsCompileEnvOpts . flsModEnvCompileEnv $ menv
+    htmlSrc <- srcFileOfInterface (flsModEnvName menv) <$> curIF
+    runLogHtmlWithMonadDebug $ generatePage htmlSrc
   return FlsModule
 
 postCompileFls
