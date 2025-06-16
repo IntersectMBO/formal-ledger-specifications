@@ -63,6 +63,10 @@ markdown_extensions:
   - attr_list                 # inline attributes like `code`{.class}
   - pymdownx.tabbed
   - pymdownx.emoji
+  - pymdownx.snippets:
+      check_paths: true  # for debugging
+      auto_append:
+        - includes/links.md
 
 extra_css:
   - css/custom.css
@@ -70,3 +74,4 @@ extra_css:
 
 extra_javascript:
   - js/custom.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
