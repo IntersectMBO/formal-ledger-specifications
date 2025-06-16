@@ -332,26 +332,6 @@ agdasrc2htmlPP =
               let ilcontents = illiterate lcontents
               writeFileLines out ilcontents
 
-agdaPP2html :: Rules ()
-agdaPP2html = do
-  htmlDist </> "index.html" %> \out ->
-    return ()
-  htmlDist </> "*.html" %> \out -> do
-    let agdafile = (<.> "agda") .
-                   joinPath .
-                   splitWhen (== '.') .
-                   takeBaseName $ out
-    liftIO . print $ "HERE: " ++ agdafile
-    need [_htmlPP </> "src" </> agdafile]
-
-    -- run agda to generate the html
-    command_ [ Cwd _html ]
-             "agda"
-             [ "--main"
-             , "--fls"
-             , "--fls-html-dir=" ++ "../../" ++ htmlDist
-             , htmlPP </> "src" </> agdafile ]
-
 -- | html rule
 htmlRule :: Rules ()
 htmlRule = do
@@ -359,7 +339,6 @@ htmlRule = do
   htmlIndex
   agdasrc2htmlPP
   agdalibexts2htmlPP
-  agdaPP2html
 
   -- Top level target
   phony "html" $ do
