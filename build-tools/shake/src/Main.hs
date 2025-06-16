@@ -53,10 +53,10 @@ main = do
 -- Watch mode
 ------------------------------------------------------------------------------
 
-isModified :: Watch.Event -> Bool
-isModified (Watch.Modified {}) = True
-isModified _ = False
-
+-- | Watch mode
+-- Start a file listener on the source directory.
+-- On file change run Shake with the corresponding *.md file as
+-- a target.
 watchMode :: IO ()
 watchMode = do
   root <- Dir.canonicalizePath "."
@@ -66,8 +66,7 @@ watchMode = do
          let loop = do file <- Watch.eventPath <$> readChan changedFiles
                        let srcfile = map (\c -> if isPathSeparator c then '.' else c)
                                    . (<.> "md")
-                                   . dropExtension
-                                   . dropExtension
+                                   . applyN 2 dropExtension
                                    . dropDirectory 4
                                    . makeRelative root
                                    $ file
@@ -78,6 +77,11 @@ watchMode = do
          forkIO $ void $ Watch.watchTreeChan mgr "_build/md/md.in/src" isModified changedFiles
          loop
     return ()
+
+-- | Predicate on Watch.Event to filter only modified files
+isModified :: Watch.Event -> Bool
+isModified (Watch.Modified {}) = True
+isModified _ = False
 
 ------------------------------------------------------------------------------
 -- Build rules
