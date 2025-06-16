@@ -378,6 +378,7 @@ lagdamd2md =
     command_ [ Cwd $ _md </> mdIn ]
              "agda"
              [ "--fls"
+             , "--fls-main-only"
              , "--fls-html-dir=" ++ "../" ++ mdPP
              , srcfile ]
 
