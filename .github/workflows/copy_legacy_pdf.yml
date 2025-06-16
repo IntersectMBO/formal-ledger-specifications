@@ -43,8 +43,8 @@ jobs:
             exit 1
           fi
 
-          # Return to original branch
-          git checkout ${{ github.ref_name }}
+          # Return to previous branch (more reliable than using github.ref_name)
+          git checkout -
           mv ../dist ./dist
 
       - name: Handle missing legacy artifacts
