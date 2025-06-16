@@ -2,14 +2,13 @@ name: CI
 on:
   push:
     branches:
-      # Include common main branch names and legacy branch
-      - master
-      - legacy-latex  # ensure legacy-latex-artifacts branch gets created
+    - master
+    - legacy-latex  # ensure legacy-latex-artifacts branch gets created
   pull_request:
     branches:
-      # Include common main branch names
-      - master
-  # For running workflow manually (for branches w/o PRs, where CI isn't run automatically)
+    - master
+  # For running the workflow manually - useful for branches without PRs, for
+  # which CI isn't run automatically
   workflow_dispatch:
 
 permissions:
@@ -263,7 +262,7 @@ jobs:
           EOF
 
           tree -H '.'                     \
-               -L 2                       \
+               -L 1                       \
                --dirsfirst                \
                --hintro=/dev/null         \
                --houtro=/dev/null         \
@@ -290,7 +289,7 @@ jobs:
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -A
             git commit --allow-empty -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
-      - name: Push ${{ steps.set-artifacts-branch.outputs.artifacts_branch }}
+      - name: Push ${{ env.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:
             github_token: ${{ secrets.GITHUB_TOKEN }}
