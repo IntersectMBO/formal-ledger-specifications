@@ -2,7 +2,7 @@
 {-# LANGUAGE TypeFamilies               #-}
 module Main where
 
-import Control.Monad (when, forM_, forever)
+import Control.Monad (when, forM_, forever, void)
 import Data.List (sort, isPrefixOf, groupBy)
 import Data.List.Split (splitOn, splitWhen)
 import Data.Typeable (Typeable)
@@ -16,50 +16,68 @@ import qualified System.FSNotify as Watch
 import Development.Shake
 import Development.Shake.Database
 import Development.Shake.FilePath
-import Control.Concurrent (threadDelay)
+import Control.Concurrent (threadDelay, forkIO)
+import Control.Concurrent.Chan (newChan, readChan)
 import qualified System.Directory as Dir
-
+import System.Console.GetOpt
+import System.Environment
+import System.FSNotify (WatchConfig(confThreadingMode))
 
 ------------------------------------------------------------------------------
 -- Main function
+------------------------------------------------------------------------------
+
+main :: IO ()
+main = do
+  let rules = do pdfRule
+                 htmlRule
+                 hsRule
+                 docsRule
+
+      flags = [Option "" ["watch"] (NoArg $ Left "Watch mode is exclusive") "Watch mode (exclusive)"]
+
+      buildMode = shakeArgsWith shakeOptions flags $ \flags targets -> pure $ Just $ do
+        if null targets
+          then rules
+          else want targets >> withoutActions rules
+
+  args <- getArgs
+  -- if the only option is "--watch", then enter watch mode;
+  -- otherwise let Shake handle the options
+  if args == ["--watch"]
+    then watchMode
+    else buildMode
+
+
+------------------------------------------------------------------------------
+-- Watch mode
 ------------------------------------------------------------------------------
 
 isModified :: Watch.Event -> Bool
 isModified (Watch.Modified {}) = True
 isModified _ = False
 
-main :: IO ()
-main = watchMode
-  -- (_, after) <- shakeWithDatabase shakeOptions htmlRule $ \db -> do
-  -- shakeRunAfter shakeOptions after
-
--- shakeArgs shakeOptions $ do
-
 watchMode :: IO ()
 watchMode = do
   root <- Dir.canonicalizePath "."
   shakeWithDatabase shakeOptions (lagdamd2md >> md2mkdocs) $ \db -> do
-    -- (1) call Shake to run and build the top-level target, if needed
-    -- (_, after) <- shakeRunDatabase db [need [ htmlDist </> "index.html" ]]
-    -- shakeRunAfter shakeOptions after
-    -- (2) enter in watch mode for changes
-    Watch.withManager $ \mgr -> do
-      Watch.watchTree mgr "_build/md/md.in/src" isModified $ \event -> do
-        print $ Watch.eventPath event
-        -- find the html file corresponding to the file that triggered the event
-        let srcfile = map (\c -> if isPathSeparator c then '.' else c)
-                    . (<.> "md")
-                    . dropExtension
-                    . dropExtension
-                    . dropDirectory 4
-                    . makeRelative root
-                    $ Watch.eventPath event
-        print srcfile
-        -- run Shake passing as a target the html file that changed
-        (_, after) <- shakeRunDatabase db [withVerbosity Diagnostic $ need [ _md </> mkdocs </> "docs" </> srcfile ]]
-        shakeRunAfter shakeOptions after
-
-      forever $ threadDelay 100000
+    _ <- Watch.withManager $ \mgr ->
+      do changedFiles <- newChan
+         let loop = do file <- Watch.eventPath <$> readChan changedFiles
+                       let srcfile = map (\c -> if isPathSeparator c then '.' else c)
+                                   . (<.> "md")
+                                   . dropExtension
+                                   . dropExtension
+                                   . dropDirectory 4
+                                   . makeRelative root
+                                   $ file
+                       (_, after) <- shakeRunDatabase db [withVerbosity Diagnostic
+                                                         $ need [ _md </> mkdocs </> "docs" </> srcfile ]]
+                       shakeRunAfter shakeOptions after
+                       loop
+         forkIO $ void $ Watch.watchTreeChan mgr "_build/md/md.in/src" isModified changedFiles
+         loop
+    return ()
 
 ------------------------------------------------------------------------------
 -- Build rules
@@ -387,6 +405,11 @@ md2mkdocs =
     let mdfile = (_md </>) . (mdPP </>)
                . dropDirectory 4 $ out
     copyFileChanged mdfile out
+
+docsRule :: Rules ()
+docsRule = do
+  lagdamd2md
+  md2mkdocs
 
 ------------------------------------------------------------------------------
 -- Build directory paths
