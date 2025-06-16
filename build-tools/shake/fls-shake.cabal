@@ -7,6 +7,7 @@ executable fls-shake
   ghc-options:
     -O3
     -threaded
+  hs-source-dirs: src
   main-is: Main.hs
   build-depends:
     base >=4.12 && <5,
