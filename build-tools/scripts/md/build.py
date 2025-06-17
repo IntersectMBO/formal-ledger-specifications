@@ -1054,11 +1054,8 @@ def populate_agda_docs_staging(
 
             run_command( # Assuming your run_command helper is available
                 [
-                    "agda", "--html", "--html-highlight=auto", # or your preferred highlighting
-                    f"--html-dir={agda_docs_staging_dir.resolve()}",
-                    "-i", ".", # Include path for current directory (snapshot root)
-                    # Add other include paths if your Agda project needs them from snapshot_lib_exts_dir
-                    # e.g., "-i", str(AGDA_SNAPSHOT_LIB_EXTS_DIR.resolve()),
+                    "agda", "--fls",
+                    f"--fls-html-dir={agda_docs_staging_dir.resolve()}",
                     master_agda_file_name # Path relative to cwd (agda_snapshot_src_dir)
                 ],
                 cwd=agda_snapshot_src_dir.resolve()
