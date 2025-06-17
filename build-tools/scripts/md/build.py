@@ -301,7 +301,7 @@ CODE_BLOCKS_DIR = BUILD_MD_AUX_DIR / "code_blocks_json"    # output of preproces
 INTERMEDIATE_MD_DIR = BUILD_MD_AUX_DIR / "md_intermediate" # intermediate `.lagda.md`: output of pandoc+lua; intput to postprocess.py
 # - generated directories for mkdocs site -
 MKDOCS_BUILD_DIR = BUILD_MD_DIR / "mkdocs"
-MKDOCS_SRC_DIR = MKDOCS_BUILD_DIR / "src"
+MKDOCS_SRC_DIR = MKDOCS_BUILD_DIR
 MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
 MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
 MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
