@@ -46,7 +46,7 @@ q *↓ n = ℤ.∣ ℚ.⌊ q ℚ.* (ℤ.+ n ℚ./ 1) ⌋ ∣
 isTwoPhaseScriptAddress : ℙ Script → Tx → UTxO → Addr → Bool
 isTwoPhaseScriptAddress bs tx utxo a =
   if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
+    (λ {p} → if lookupScriptHash bs (getScriptHash a p) 
                  then (λ {s} → isP2Script s)
                  else false)
   else
@@ -431,7 +431,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx' tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          sLst = collectPhaseTwoScriptInputs scripts refDats pp tx utxo
       in
         ∙ ValidCertDeposits pp deposits txcerts
         ∙ evalScripts tx sLst ≡ true
@@ -448,7 +448,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ where
     → let open Tx' tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          sLst = collectPhaseTwoScriptInputs scripts refDats pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ false
         ∙ topIsValid ≡ false

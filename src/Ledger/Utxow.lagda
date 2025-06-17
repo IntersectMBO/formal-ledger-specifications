@@ -170,15 +170,18 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \end{code}
 \begin{code}
   UTXOW-inductive :
-    let open Tx' tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+    let open Tx' tx renaming (body to txb); open TxBody txb; open TxWitnesses wits ; open UTxOEnv Γ renaming (scripts to allScripts) 
         open UTxOState s
         witsKeyHashes     = mapˢ hash (dom vkSigs)
-        witsScriptHashes  = mapˢ hash scripts 
+        witsScriptHashes  = mapˢ hash allScripts 
+        witsDatumHashes  = mapˢ hash refDats 
         spentHashes       = getSpentHashes scripts tx utxo
         refScriptHashes   = mapˢ hash (refScripts tx utxo)
         neededHashes      = scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = getDataHashes (range txouts)
+        datumHashesNeeded = getDataHashes (range (utxo ∣ txins))
+        
 
     in
     -- TODO can we share reference scripts?? how?
@@ -186,9 +189,9 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ mapPartial isInj₁ scripts ] validP1Script witsKeyHashes txvldt s
     ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  neededHashes ＼ refScriptHashes ⊆ witsScriptHashes  -- TODO this is relaxed because extra scripts are in batchScripts! is this ok?
-    ∙  spentHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ spentHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
+    ∙  neededHashes ⊆ witsScriptHashes  -- TODO this is relaxed because extra scripts are in batchScripts! is this ok?
+    ∙  txdatsHashes ⊆ datumHashesNeeded ∪ allOutHashes -- spentHashes ⊆ txdatsHashes
+    ∙  datumHashesNeeded ⊆ witsDatumHashes -- txdatsHashes ⊆ spentHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs)) 
     ∙  languages scripts tx utxo ⊆ allowedLanguages tx utxo 
     ∙  txADhash ≡ map hash txAD
     -- NEW 

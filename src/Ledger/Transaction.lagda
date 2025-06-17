@@ -217,13 +217,13 @@ Ingredients of the transaction body introduced in the Conway era are the followi
   getBatchScripts bs tx utxo = bs ∪ refScripts tx utxo
     where open Tx'; open TxWitnesses
 
-  lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo =
+  lookupScriptHash : ℙ Script → ScriptHash → Maybe Script
+  lookupScriptHash scr sh =
     if sh ∈ mapˢ proj₁ (m ˢ) then
       just (lookupᵐ m sh)
     else
       nothing
-    where m = setToHashMap (getBatchScripts (tx .Tx'.wits .TxWitnesses.scripts) tx utxo)
+    where m = setToHashMap scr 
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions related to transactions}

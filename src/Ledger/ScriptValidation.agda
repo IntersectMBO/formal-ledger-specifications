@@ -46,15 +46,18 @@ indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
 indexedRdmrs tx sp = maybe (λ x → lookupᵐ? txrdmrs x) nothing (rdptr body sp)
   where open Tx' tx; open TxWitnesses wits
 
-getDatum : Tx → UTxO → ScriptPurpose → List Datum
-getDatum tx utxo (Spend txin) = let open Tx' tx; open TxWitnesses wits in
+lookupL : ∀ {A B : Set} → ⦃ DecEq A ⦄ → A → List (A × B) → Maybe B
+lookupL x xs = proj₂ <$> findᵇ ((x ==_) ∘ proj₁) xs
+
+getDatum : ℙ Datum → UTxO → ScriptPurpose → List Datum
+getDatum dts utxo (Spend txin) =
   maybe
-    (λ { (_ , _ , just (inj₂ h), _)  → maybe [_] [] (lookupᵐ? txdats h)
-       ; (_ , _ , just (inj₁ d), _)  → [ d ]
+    (λ { (_ , _ , just (inj₂ h), _)  → maybe [_] [] (lookupL h ((map (λ d → (hash d , d)) (setToList dts)))) 
+       ; (_ , _ , just (inj₁ d) , _) → [ d ] 
        ; (_ , _ , nothing , _) → [] })
     []
     (lookupᵐ? utxo txin)
-getDatum tx utxo _ = []
+getDatum dts _ _ = []
 
 record TxInfo : Type where
   inductive
@@ -201,27 +204,27 @@ getTopData _ _ = []
 
 opaque
 
-  collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
+  collectPhaseTwoScriptInputs' : ℙ Script → ℙ Datum → PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
     → Maybe (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs' pp tx utxo (sp , sh)
-    with lookupScriptHash sh tx utxo
+  collectPhaseTwoScriptInputs' scr dts pp tx utxo (sp , sh)
+    with lookupScriptHash scr sh 
   ... | nothing = nothing
   ... | just s
     with isInj₂ s | indexedRdmrs tx sp
   ... | just p2s | just (rdmr , eu)
       = just (s ,
-          ( (getDatum tx utxo sp ++ (getTopData sp tx) ++ rdmr ∷ valContext (txInfo (language p2s) sp pp utxo tx) sp ∷ [])
+          ( (getDatum dts utxo sp ++ (getTopData sp tx) ++ rdmr ∷ valContext (txInfo (language p2s) sp pp utxo tx) sp ∷ [])
           , eu
           , PParams.costmdls pp)
         )
   ... | x | y = nothing
       
 
-  collectPhaseTwoScriptInputs : PParams → Tx → UTxO
+  collectPhaseTwoScriptInputs : ℙ Script → ℙ Datum → PParams → Tx → UTxO
     → List (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs pp tx utxo
+  collectPhaseTwoScriptInputs scr dts pp tx utxo
     = setToList
-    $ mapPartial (collectPhaseTwoScriptInputs' pp tx utxo)
+    $ mapPartial (collectPhaseTwoScriptInputs' scr dts pp tx utxo)
     $ scriptsNeeded utxo tx
 
 open TxBody
