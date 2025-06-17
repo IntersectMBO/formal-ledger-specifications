@@ -13,37 +13,27 @@ jobs:
       - name: Checkout current branch
         uses: actions/checkout@v4
 
-      - name: Check if legacy-latex-artifacts branch exists
-        id: check-legacy-artifacts
-        run: |
-          if git ls-remote --exit-code --heads origin legacy-latex-artifacts > /dev/null 2>&1; then
-            echo "exists=true" >> $GITHUB_OUTPUT
-            echo "✅ legacy-latex-artifacts branch found"
-          else
-            echo "exists=false" >> $GITHUB_OUTPUT
-            echo "❌ legacy-latex-artifacts branch not found"
-          fi
-
-      - name: Fail if legacy-latex-artifacts branch missing
-        if: steps.check-legacy-artifacts.outputs.exists == 'false'
-        run: |
-          echo "❌ FATAL: legacy-latex-artifacts branch does not exist"
-          echo ""
-          echo "This branch is required to provide legacy PDF files for the documentation."
-          echo "Please ensure the legacy-latex-artifacts branch exists and contains the required PDFs."
-          echo ""
-          echo "Expected file: ${{ inputs.pdf_name }}"
-          echo "Expected branch: legacy-latex-artifacts"
-          echo ""
-          echo "To resolve this issue:"
-          echo "1. Ensure the legacy-latex branch exists with the original LaTeX source."
-          echo "2. Run CI on the legacy-latex branch to generate the artifacts branch."
-          echo "3. Verify that ${{ inputs.pdf_name }} exists in the legacy-latex-artifacts branch."
-          exit 1
-
       - name: Copy PDF from legacy-latex-artifacts branch
         run: |
-          echo "📄 Copying ${{ inputs.pdf_name }} from legacy-latex-artifacts branch..."
+          echo "📄 Attempting to copy ${{ inputs.pdf_name }} from legacy-latex-artifacts branch..."
+
+          # Check if legacy-latex-artifacts branch exists
+          if ! git ls-remote --exit-code --heads origin legacy-latex-artifacts > /dev/null 2>&1; then
+            echo "❌ FATAL: legacy-latex-artifacts branch does not exist"
+            echo ""
+            echo "This branch is required to provide legacy PDF files for the documentation."
+            echo ""
+            echo "Expected file: ${{ inputs.pdf_name }}"
+            echo "Expected branch: legacy-latex-artifacts"
+            echo ""
+            echo "To resolve this issue:"
+            echo "1. Ensure the legacy-latex branch exists with the original LaTeX source"
+            echo "2. Run CI on the legacy-latex branch to generate the artifacts branch"
+            echo "3. Verify that ${{ inputs.pdf_name }} exists in the legacy-latex-artifacts branch"
+            exit 1
+          fi
+
+          echo "✅ legacy-latex-artifacts branch found"
 
           # Checkout the legacy artifacts branch
           git fetch origin legacy-latex-artifacts:legacy-latex-artifacts
@@ -58,9 +48,9 @@ jobs:
             ls -la *.pdf 2>/dev/null || echo "  No PDF files found"
             echo ""
             echo "To resolve this issue:"
-            echo "1. Check that the legacy-latex branch contains the source for ${{ inputs.pdf_name }}."
-            echo "2. Re-run CI on the legacy-latex branch to regenerate artifacts."
-            echo "3. Verify that the PDF generation process completed successfully."
+            echo "1. Check that the legacy-latex branch contains the source for ${{ inputs.pdf_name }}"
+            echo "2. Re-run CI on the legacy-latex branch to regenerate artifacts"
+            echo "3. Verify that the PDF generation process completed successfully"
             exit 1
           fi
 
