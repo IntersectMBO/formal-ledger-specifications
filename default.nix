@@ -251,12 +251,12 @@ in
           # Core Agda development
           agdaWithPackages
           fls-shake
-          
+
           # Document conversion tools
           pandoc
           latex  # Your custom LaTeX setup from default.nix
           dejavu_fonts
-          
+
           # Python environment for mkdocs pipeline
           (python311.withPackages (ps: with ps; [
             pip
@@ -266,22 +266,22 @@ in
             pyyaml
             # Add any other Python packages needed for conversion scripts
           ]))
-          
+
           # mdbook ecosystem
           mdbook
           chromium          # Required by mdbook-pdf for rendering
           cargo             # For installing mdbook extensions
           pkg-config        # For building cargo packages
           openssl           # For building cargo packages
-          
+
           # Additional tools
           coreutils
           hpack
         ];
-        
+
         shellHook = ''
           export PATH="$HOME/.cargo/bin:$PATH"    # Ensure cargo tools are in PATH
-          
+
           echo "----------------------------------------------------"
           echo "Documentation Publishing Environment"
           echo "Agda: $(agda --version)"
