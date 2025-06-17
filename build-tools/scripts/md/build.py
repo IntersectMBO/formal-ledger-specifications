@@ -85,7 +85,7 @@
 #         static `src/docs/` (resp., `src/`) content is copied to
 #         `_build/md/md.in/m?????/` to form the initial site structure.
 #
-#     c.  Generates `_build/md/md.in/macros.json` from
+#     c.  Generates `_build/md/md.aux/macros.json` from
 #         `build-tools/static/latex/macros.sty` for use in LaTeX-to-Markdown
 #         conversion steps.
 #
@@ -188,7 +188,7 @@
 #
 #    -  `./book.toml`: mdbook configuration file.
 #
-# -  _build/build.log: detailed log file of the build script's execution.
+# -  _build/md/md.aux/build.log: detailed log file of the build script's execution.
 #
 #
 # INTERMEDIATE ARTIFACTS
@@ -197,8 +197,8 @@
 # - _build/md/lagda_temp/        (output of preprocess.py; input to pandoc+lua)
 # - _build/md/code_blocks_json/  (output of preprocess.py; input to postprocess.py)
 # - _build/md/md_intermediate/   (output of pandoc+lua; input to postprocess.py)
-# - _build/md/agda-docs/         (output of `agda --html` if --run-agda flag used,
-#                                otherwise output of postprocess.py )
+# - _build/md/md.pp/             (output of `agda --html` if --run-agda flag used,
+#                                  otherwise output of postprocess.py )
 import os
 import sys
 import subprocess
@@ -281,24 +281,23 @@ MDBOOK_STATIC_INDEX = MDBOOK_STATIC_DOCS_DIR / "index.md"
 BUILD_DIR = PROJECT_ROOT / "_build"              # top-level build dir
 BUILD_MD_DIR = BUILD_DIR / "md"                  # main build directory for md-based literate Agda
 BUILD_MD_IN_DIR = BUILD_MD_DIR / "md.in"         # preprocessed md-based literate Agda
-BUILD_MD_OUT_DIR = BUILD_MD_DIR / "md.out"       # md-based lit Agda post-processed by `agda --html`
+BUILD_MD_PP_DIR = BUILD_MD_DIR / "md.pp"         # output of `agda --html` command if --run-agda flag used,
+#                                                #   otherwise output of postprocess.py
+BUILD_MD_AUX_DIR = BUILD_MD_DIR / "md.aux"       # intermediate products of translation from tex to md
 AGDA_SNAPSHOT_SRC_DIR = BUILD_MD_IN_DIR / "src"  # md-based literate Agda source code
                                                  # (input to shake when `agda --html` relegated to shake)
+AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MD_IN_DIR / "src-lib-exts" # copy of Agda library extensions
 # Initially, the AGDA_SNAPSHOT_SRC_DIR contains whatever was in src/:
 # - some modules as pre-existing .lagda.md files
 # - some modules as .agda files
 # - some modules as .lagda (LaTeX) files
 # Crucially, for any given module, only ONE of these types will exist.
-#
-AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MD_IN_DIR / "src-lib-exts" # copy of Agda library extensions
 
 # - migration pipeline products -
-MACROS_JSON = BUILD_MD_DIR / "macros.json"             # output of generate_macros_json.py; input to preprocess.py
-TEMP_DIR = BUILD_MD_DIR / "lagda_temp"                 # intermediate latex:  output of preprocess.py; input to pandoc+lua
-CODE_BLOCKS_DIR = BUILD_MD_DIR / "code_blocks_json"    # output of preprocess.py; input to postprocess.py
-INTERMEDIATE_MD_DIR = BUILD_MD_DIR / "md_intermediate" # intermediate `.lagda.md`: output of pandoc+lua; intput to postprocess.py
-AGDA_DOCS_STAGING_DIR = BUILD_MD_DIR / "agda-docs"     # output of `agda --html` command if --run-agda flag used,
-#                                                           # otherwise output of postprocess.py
+MACROS_JSON = BUILD_MD_AUX_DIR / "macros.json"             # output of generate_macros_json.py; input to preprocess.py
+TEMP_DIR = BUILD_MD_AUX_DIR / "lagda_temp"                 # intermediate latex:  output of preprocess.py; input to pandoc+lua
+CODE_BLOCKS_DIR = BUILD_MD_AUX_DIR / "code_blocks_json"    # output of preprocess.py; input to postprocess.py
+INTERMEDIATE_MD_DIR = BUILD_MD_AUX_DIR / "md_intermediate" # intermediate `.lagda.md`: output of pandoc+lua; intput to postprocess.py
 # - generated directories for mkdocs site -
 MKDOCS_BUILD_DIR = BUILD_MD_DIR / "mkdocs"
 MKDOCS_SRC_DIR = MKDOCS_BUILD_DIR / "src"
@@ -315,7 +314,7 @@ MDBOOK_CSS_DIR = MDBOOK_DOCS_DIR / "css"
 MDBOOK_JS_DIR = MDBOOK_DOCS_DIR / "js"
 
 # - logging -
-LOG_FILE = BUILD_DIR / "build.log"
+LOG_FILE = BUILD_MD_AUX_DIR / "build.log"
 
 
 # Helper class for managing paths within .lagda processing loop.
@@ -408,7 +407,7 @@ def setup_directories() -> None:
     INTERMEDIATE_MD_DIR.mkdir(parents=True, exist_ok=True)   # for .md.intermediate files
     AGDA_SNAPSHOT_SRC_DIR.mkdir(parents=True, exist_ok=True) # for Agda source snapshot
     AGDA_SNAPSHOT_LIB_EXTS_DIR.mkdir(parents=True, exist_ok=True) # for Agda source snapshot
-    AGDA_DOCS_STAGING_DIR.mkdir(parents=True, exist_ok=True)
+    BUILD_MD_PP_DIR.mkdir(parents=True, exist_ok=True)
 
     ### MKDOCS ###
     # Only remove and recreate the specific mkdocs build directory.
@@ -459,7 +458,7 @@ def cleanup_intermediate_artifacts() -> None:
         TEMP_DIR,
         CODE_BLOCKS_DIR,
         INTERMEDIATE_MD_DIR,
-        AGDA_DOCS_STAGING_DIR
+        BUILD_MD_PP_DIR
     ]
 
     # files to remove
@@ -763,24 +762,73 @@ def convert_agda_to_lagda(snapshot_src_dir: Path, project_root_for_logging: Path
         sys.exit(1) # Or raise
 
 
-def generate_agda_lib_file(
+def copy_or_generate_agda_lib_file(
+    project_root: Path,
+    build_md_in_dir: Path,
     snapshot_src_dir: Path,
     snapshot_lib_exts_dir: Path,
     agda_lib_dependencies: List[str]
 ) -> Path:
-    """Generate .agda-lib file in snapshot directory."""
-    agda_lib_includes = [".", str(snapshot_lib_exts_dir.resolve())] # Use resolved absolute path for robustness
-    agda_lib_content = f"name: {snapshot_src_dir.name}-build\n" \
-                       f"depend: {' '.join(agda_lib_dependencies)}\n" \
-                       f"include: {' '.join(agda_lib_includes)}"
-    snapshot_lib_file = snapshot_src_dir / f"{snapshot_src_dir.name}.agda-lib"
+    """
+    Copy existing .agda-lib file or generate new one in snapshot directory.
+
+    Priority:
+    1. If PROJECT_ROOT/formal-ledger.agda-lib exists, copy it
+    2. Otherwise, generate a new .agda-lib file
+
+    Args:
+        project_root: Root directory of the project
+        build_md_in_dir: Target directory for the .agda-lib file
+        snapshot_src_dir: Source directory to include in generated .agda-lib
+        snapshot_lib_exts_dir: Library extensions directory to include
+        agda_lib_dependencies: List of Agda library dependencies
+
+    Returns:
+        Path to the created .agda-lib file
+    """
+
+    # Target location for the .agda-lib file in snapshot
+    snapshot_lib_file = build_md_in_dir / "formal-ledger.agda-lib"
+
+    # Check if existing .agda-lib file exists in project root
+    existing_lib_file = project_root / "formal-ledger.agda-lib"
+
     try:
-        with open(snapshot_lib_file, "w", encoding="utf-8") as f:
-            f.write(agda_lib_content)
-        logging.info(f"Generated {snapshot_lib_file.name} in snapshot directory: {snapshot_lib_file}")
+        if existing_lib_file.exists():
+            # Copy existing .agda-lib file
+            import shutil
+            shutil.copy2(existing_lib_file, snapshot_lib_file)
+            logging.info(f"Copied existing {existing_lib_file.name} to snapshot directory: {snapshot_lib_file}")
+
+            # Optional: Log the contents for verification
+            with open(snapshot_lib_file, "r", encoding="utf-8") as f:
+                content = f.read().strip()
+            logging.debug(f"Copied .agda-lib content:\n{content}")
+
+        else:
+            # Generate new .agda-lib file
+            logging.info(f"No existing {existing_lib_file.name} found, generating new one...")
+
+            agda_lib_includes = [
+                ".",
+                str(snapshot_src_dir.resolve()),
+                str(snapshot_lib_exts_dir.resolve())
+            ]  # Use resolved absolute paths for robustness
+
+            agda_lib_content = f"name: formal-ledger\n" \
+                             f"depend: {' '.join(agda_lib_dependencies)}\n" \
+                             f"include: {' '.join(agda_lib_includes)}"
+
+            with open(snapshot_lib_file, "w", encoding="utf-8") as f:
+                f.write(agda_lib_content)
+
+            logging.info(f"Generated new {snapshot_lib_file.name} in snapshot directory: {snapshot_lib_file}")
+            logging.debug(f"Generated .agda-lib content:\n{agda_lib_content}")
+
     except Exception as e:
-        logging.error(f"Failed to write {snapshot_lib_file.name}: {e}", exc_info=True)
-        sys.exit(1) # Or raise
+        logging.error(f"Failed to copy or create {snapshot_lib_file.name}: {e}", exc_info=True)
+        sys.exit(1)  # Or raise
+
     return snapshot_lib_file
 
 def run_latex_preprocessing_stage(
@@ -965,11 +1013,11 @@ def populate_agda_docs_staging(
     run_agda_html_flag: bool,
     all_snapshot_lagda_md_files: List[Path], # from collect_all_literate_md_in_snapshot
     agda_snapshot_src_dir: Path,             # e.g., _build/agda_snapshot_src
-    agda_docs_staging_dir: Path,             # e.g., _build/agda-docs
+    agda_docs_staging_dir: Path,             # e.g., _build/md/md.pp
     master_agda_file_name: str = "Ledger.lagda.md" # default master Agda file for --html
 ) -> List[Path]: # Return list of Path objects for .md files in agda_docs_staging_dir
     """
-    Populates the _build/agda-docs/ staging directory.
+    Populates the _build/md/md.pp/ staging directory.
     If run_agda_html_flag is True, runs `agda --html`.
     Otherwise, copies files from snapshot, renaming them to flat "ModuleName.md" format.
     Returns a list of Path objects for the final .md files in agda_docs_staging_dir.
@@ -1396,6 +1444,67 @@ def generate_basic_summary_md(
         logging.error(f"    Failed to write generated {mdbook_summary_build_path.name}: {e}", exc_info=True)
 
 
+def generate_custom_css_from_agda(agda_css_path: str, output_css_path: str) -> bool:
+    """
+    Generate custom.css with Agda color mappings extracted from Agda.css.
+    This ensures perfect color consistency while maintaining human-friendly
+    flat CSS classes like .AgdaField, .AgdaFunction, etc.
+    """
+    import re
+    from pathlib import Path
+
+    print(f"Generating custom.css from {agda_css_path}...")
+
+    # Check if Agda.css exists
+    agda_css_file = Path(agda_css_path)
+    if not agda_css_file.exists():
+        print(f"Warning: Agda.css not found at {agda_css_path}")
+        return False
+
+    # Extract color mappings
+    content = agda_css_file.read_text()
+    pattern = r'\.Agda\s+\.(\w+)\s*\{\s*([^}]*)\s*\}'
+    color_mappings = {}
+
+    for match in re.finditer(pattern, content):
+        class_name = match.group(1)
+        properties = match.group(2).strip()
+        properties = re.sub(r'\s+', ' ', properties).strip()
+        color_mappings[class_name] = properties
+
+    if not color_mappings:
+        print("Warning: No Agda color mappings found")
+        return False
+
+    # custom.css content
+    css_parts = [
+        "/* Auto-generated custom.css for Formal Ledger Specifications */",
+        "/* Agda classes extracted from Agda.css for color consistency */",
+        ""
+    ]
+
+    # Agda color mappings
+    for class_name, properties in sorted(color_mappings.items()):
+        css_parts.append(f"code.Agda{class_name} {{ {properties} }}")
+
+    # project-specific styles
+    css_parts.extend([
+        "",
+        "/* Project-specific styles */",
+        ".highlight { background-color: yellow; padding: 2px 4px; border-radius: 3px; }",
+        ".caption-text { font-style: italic; color: #666; margin-top: 0.5em; }",
+        ".conway-specifics { border-left: 4px solid #2196F3; padding: 1em; margin: 1em 0; background-color: #f8f9fa; }",
+        ""
+    ])
+
+    # Write to output
+    output_path = Path(output_css_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text("\n".join(css_parts))
+
+    print(f"✅ Generated custom.css with {len(color_mappings)} Agda classes")
+    return True
+
 
 # --- Main Pipeline Logic ---
 def main(run_agda_html_flag=False):
@@ -1475,16 +1584,22 @@ def main(run_agda_html_flag=False):
             logging.debug(f"    Removing '{agda_file_in_snapshot.name}' as its .lagda.md now exists.")
             agda_file_in_snapshot.unlink(missing_ok=True) # missing_ok in case it was already handled
 
-    # 5. Generate snapshot .agda-lib file
-    logging.info(f"\n--- Stage 5: Generating snapshot .agda-lib file ---")
+    # 5. Copy existing .agda-lib file or generate a new one for snapshot.
+    logging.info(f"\n--- Stage 5: Copying or generating .agda-lib file for snapshot ---")
     agda_lib_deps = [
         "standard-library", "standard-library-classes", "standard-library-meta", "abstract-set-theory", "iog-prelude"
     ]
-    generate_agda_lib_file(AGDA_SNAPSHOT_SRC_DIR, AGDA_SNAPSHOT_LIB_EXTS_DIR, agda_lib_deps)
+    copy_or_generate_agda_lib_file(
+        PROJECT_ROOT,
+        BUILD_MD_IN_DIR,
+        AGDA_SNAPSHOT_SRC_DIR,
+        AGDA_SNAPSHOT_LIB_EXTS_DIR,
+        agda_lib_deps
+    )
 
     # 6. Process LaTeX-based literate .lagda files in src snapshot:
-    #    Identify .lagda (LaTeX) files still in the snapshot. These are the ones that
-    #    were not .lagda.md or .agda files in the original src/.
+    #    Identify .lagda (LaTeX) files still in the snapshot
+    #    (i.e. not .lagda.md or .agda in original src/ directory).
     latex_files_in_snapshot_to_process: List[Path] = sorted(list(AGDA_SNAPSHOT_SRC_DIR.rglob("*.lagda")))
 
     processed_info_for_latex_pipeline: List[ProcessedFileInfo] = [] # For files going through the full LaTeX pipeline
@@ -1553,14 +1668,13 @@ def main(run_agda_html_flag=False):
     # --- Stage 6b: Build Global Label Map ---
     labels_map_file: Optional[Path] = build_global_label_map(
         successfully_preprocessed_info, # Use only successfully preprocessed files
-        MKDOCS_BUILD_DIR
+        BUILD_MD_AUX_DIR
     )
 
     # --- Stage 6c: Run pandoc+lua and postprocess.py ---
-    # This uses `successfully_preprocessed_info`. `run_latex_conversion_stage` should
-    # use `file_info["original_path"]` (the .lagda file in snapshot) and convert it,
-    # placing the output at `file_info["snapshot_target_path"]`.
-    # It should also delete file_info["original_path"] (the .lagda file) from snapshot.
+    # Uses `file_info["original_path"]` (the .lagda file in snapshot) and converts it,
+    # placing output at `file_info["snapshot_target_path"]`; also deletes
+    # file_info["original_path"] (the .lagda file) from snapshot.
     run_latex_conversion_stage(
         successfully_preprocessed_info,
         labels_map_file,
@@ -1570,26 +1684,26 @@ def main(run_agda_html_flag=False):
         AGDA_SNAPSHOT_SRC_DIR
     )
 
-    # 7. Collect all .lagda.md files from snapshot.
+    # 7. Collect names of all .lagda.md files in snapshot.
     # - .lagda.md files originally in src/ and copied/preserved.
     # - .lagda.md files converted from .agda files in src/.
     # - .lagda.md files converted from .lagda files in src/.
-    # AGDA_SNAPSHOT_SRC_DIR should now only contain .lagda.md files and supporting files (like .agda-lib).
+    # AGDA_SNAPSHOT_SRC_DIR now contains only .lagda.md files and supporting files (like .agda-lib).
     all_snapshot_lagda_md_files: List[Path] = collect_all_literate_md_in_snapshot(AGDA_SNAPSHOT_SRC_DIR)
 
-    # 8. populate _build/agda-docs/ staging directory
+    # 8. populate _build/md/md.pp/ staging directory
     staged_md_file_paths: List[Path] = populate_agda_docs_staging(
-        run_agda_html_flag, # Your command-line argument
+        run_agda_html_flag, # command-line argument
         all_snapshot_lagda_md_files,
         AGDA_SNAPSHOT_SRC_DIR,
-        AGDA_DOCS_STAGING_DIR, # New global constant BUILD_DIR / "agda-docs"
+        BUILD_MD_PP_DIR, # New global constant BUILD_DIR / "md" / "md.pp"
         "Ledger.lagda.md" # Or your actual main Agda file name
     )
     # staged_flat_md_filenames_str = [p.name for p in staged_md_file_paths] # (done by copy_staging_to_site_docs)
 
     # 8.1: populate mkdocs site from staging
     nav_files_in_docs: List[str] = copy_staging_to_site_docs(
-        AGDA_DOCS_STAGING_DIR,
+        BUILD_MD_PP_DIR,
         MKDOCS_DOCS_DIR, # _build/md/mkdocs/src/docs/
         "MkDocs"
     )
@@ -1628,7 +1742,7 @@ def main(run_agda_html_flag=False):
 
     # 10. Populate mdbook site from staging
     mdbook_final_content_files: List[str] = copy_staging_to_site_docs(
-        AGDA_DOCS_STAGING_DIR,
+        BUILD_MD_PP_DIR,
         MDBOOK_DOCS_DIR, # _build/md/mdbook/src/
         "mdbook"
     )
