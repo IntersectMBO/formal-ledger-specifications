@@ -18,47 +18,60 @@ jobs:
         run: |
           if git ls-remote --exit-code --heads origin legacy-latex-artifacts > /dev/null 2>&1; then
             echo "exists=true" >> $GITHUB_OUTPUT
-            echo "legacy-latex-artifacts branch found"
+            echo "✅ legacy-latex-artifacts branch found"
           else
             echo "exists=false" >> $GITHUB_OUTPUT
-            echo "legacy-latex-artifacts branch not found"
+            echo "❌ legacy-latex-artifacts branch not found"
           fi
 
-      - name: Copy PDF from legacy-latex-artifacts branch
-        if: steps.check-legacy-artifacts.outputs.exists == 'true'
+      - name: Fail if legacy-latex-artifacts branch missing
+        if: steps.check-legacy-artifacts.outputs.exists == 'false'
         run: |
-          echo "Copying ${{ inputs.pdf_name }} from legacy-latex-artifacts branch..."
+          echo "❌ FATAL: legacy-latex-artifacts branch does not exist"
+          echo ""
+          echo "This branch is required to provide legacy PDF files for the documentation."
+          echo "Please ensure the legacy-latex-artifacts branch exists and contains the required PDFs."
+          echo ""
+          echo "Expected file: ${{ inputs.pdf_name }}"
+          echo "Expected branch: legacy-latex-artifacts"
+          echo ""
+          echo "To resolve this issue:"
+          echo "1. Ensure the legacy-latex branch exists with the original LaTeX source."
+          echo "2. Run CI on the legacy-latex branch to generate the artifacts branch."
+          echo "3. Verify that ${{ inputs.pdf_name }} exists in the legacy-latex-artifacts branch."
+          exit 1
+
+      - name: Copy PDF from legacy-latex-artifacts branch
+        run: |
+          echo "📄 Copying ${{ inputs.pdf_name }} from legacy-latex-artifacts branch..."
 
           # Checkout the legacy artifacts branch
           git fetch origin legacy-latex-artifacts:legacy-latex-artifacts
           git checkout legacy-latex-artifacts
 
-          # Create dist directory and copy PDF if it exists
-          mkdir -p ../dist
-          if [ -f "${{ inputs.pdf_name }}" ]; then
-            cp "${{ inputs.pdf_name }}" ../dist/
-            echo "Successfully copied ${{ inputs.pdf_name }}"
-          else
-            echo "Error: ${{ inputs.pdf_name }} not found in legacy-latex-artifacts branch"
+          # Check if the specific PDF exists
+          if [ ! -f "${{ inputs.pdf_name }}" ]; then
+            echo "❌ FATAL: ${{ inputs.pdf_name }} not found in legacy-latex-artifacts branch"
+            echo ""
+            echo "Expected file: ${{ inputs.pdf_name }}"
+            echo "Available files in legacy-latex-artifacts:"
+            ls -la *.pdf 2>/dev/null || echo "  No PDF files found"
+            echo ""
+            echo "To resolve this issue:"
+            echo "1. Check that the legacy-latex branch contains the source for ${{ inputs.pdf_name }}."
+            echo "2. Re-run CI on the legacy-latex branch to regenerate artifacts."
+            echo "3. Verify that the PDF generation process completed successfully."
             exit 1
           fi
 
-          # Return to previous branch (more reliable than using github.ref_name)
+          # Create dist directory and copy PDF
+          mkdir -p ../dist
+          cp "${{ inputs.pdf_name }}" ../dist/
+          echo "✅ Successfully copied ${{ inputs.pdf_name }}"
+
+          # Return to original branch and move the dist directory
           git checkout -
           mv ../dist ./dist
-
-      - name: Handle missing legacy artifacts
-        if: steps.check-legacy-artifacts.outputs.exists == 'false'
-        run: |
-          echo "Warning: legacy-latex-artifacts branch not found"
-          echo "Creating placeholder for ${{ inputs.pdf_name }}..."
-          mkdir -p dist
-
-          # Create a descriptive placeholder filename
-          PDF_BASE=$(basename "${{ inputs.pdf_name }}" .pdf)
-          echo "Legacy PDF not available - please run CI on legacy-latex branch first" > "dist/${PDF_BASE}-missing.txt"
-
-          echo "Created placeholder: dist/${PDF_BASE}-missing.txt"
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
