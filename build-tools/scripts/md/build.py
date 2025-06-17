@@ -252,11 +252,12 @@ PREPROCESS_PY = MD_DIR / "preprocess.py"
 POSTPROCESS_PY = MD_DIR / "postprocess.py"
 LUA_FILTER = MD_DIR / "agda-filter.lua"
 # - static content -
-STATIC_DIR = BUILD_TOOLS / "static"                    # static files for mkdocs, mdbook, etc
-LATEX_DIR = STATIC_DIR / "latex"                       # LaTeX path
-MACROS_STY_PATH = LATEX_DIR / "macros.sty"             # LaTeX macros
-MD_STATIC_DIR = STATIC_DIR / "md"                      # static website files
-MD_STATIC_COMMON_DIR = MD_STATIC_DIR / "common"        # files common to mkdocs and mdbook
+STATIC_DIR = BUILD_TOOLS / "static"                     # static files for mkdocs, mdbook, etc
+LATEX_DIR = STATIC_DIR / "latex"                        # LaTeX path
+MACROS_STY_PATH = LATEX_DIR / "macros.sty"              # LaTeX macros
+MD_STATIC_DIR = STATIC_DIR / "md"                       # static website files
+MD_STATIC_COMMON_DIR = MD_STATIC_DIR / "common"         # content to be copied into mkdocs/ and mdbook/
+MD_STATIC_COMMON_SRC_DIR = MD_STATIC_COMMON_DIR / "src" # content to be copied into mkdocs/docs and mdbook/src
 MKDOCS_STATIC_DIR = MD_STATIC_DIR / "mkdocs"
 MKDOCS_STATIC_NAV_YML = MD_STATIC_COMMON_DIR / "nav.yml"  # mkdocs navigation template
 MKDOCS_STATIC_SRC_DIR = MKDOCS_STATIC_DIR
@@ -1503,6 +1504,64 @@ def generate_custom_css_from_agda(agda_css_path: str, output_css_path: str) -> b
     print(f"✅ Generated custom.css with {len(color_mappings)} Agda classes")
     return True
 
+def copy_common_source_files(
+    common_src_dir: Path,
+    mkdocs_docs_dir: Path,
+    mdbook_src_dir: Path
+) -> None:
+    """
+    Copy shared files from `build-tools/static/md/common/src` to both
+    `_build/md/mkdocs/docs` and `_build/md/mdbook/src`.
+
+    Ensures a single source of truth (for files like `Notation.md`) is used
+    by both sites/documentation systems.
+
+    Args:
+        common_src_dir: Source directory with shared files (e.g. build-tools/static/md/common/src)
+        mkdocs_docs_dir: Target mkdocs docs directory
+        mdbook_src_dir: Target mdbook src directory
+    """
+    import shutil
+
+    if not common_src_dir.exists():
+        logging.info(f"No common source directory found at {common_src_dir}, skipping")
+        return
+
+    logging.info(f"Copying shared files from {common_src_dir}")
+
+    # Copy to mkdocs docs directory
+    if mkdocs_docs_dir.parent.exists():  # Check if mkdocs target exists
+        for item in common_src_dir.iterdir():
+            if item.is_file():
+                target_file = mkdocs_docs_dir / item.name
+                shutil.copy2(item, target_file)
+                logging.debug(f"  → {item.name} → mkdocs/docs/")
+            elif item.is_dir():
+                target_dir = mkdocs_docs_dir / item.name
+                if target_dir.exists():
+                    shutil.rmtree(target_dir)
+                shutil.copytree(item, target_dir)
+                logging.debug(f"  → {item.name}/ → mkdocs/docs/")
+
+    # Copy to mdbook src directory
+    if mdbook_src_dir.parent.exists():  # Check if mdbook target exists
+        for item in common_src_dir.iterdir():
+            if item.is_file():
+                target_file = mdbook_src_dir / item.name
+                shutil.copy2(item, target_file)
+                logging.debug(f"  → {item.name} → mdbook/src/")
+            elif item.is_dir():
+                target_dir = mdbook_src_dir / item.name
+                if target_dir.exists():
+                    shutil.rmtree(target_dir)
+                shutil.copytree(item, target_dir)
+                logging.debug(f"  → {item.name}/ → mdbook/src/")
+
+    # Count and report
+    common_files = list(common_src_dir.rglob('*'))
+    file_count = len([f for f in common_files if f.is_file()])
+    logging.info(f"✅ Copied {file_count} shared files to both documentation systems")
+
 
 # --- Main Pipeline Logic ---
 def main(run_agda_html_flag=False):
@@ -1563,6 +1622,13 @@ def main(run_agda_html_flag=False):
 
     mdbook_summary_in_build_path = MDBOOK_DOCS_DIR / "SUMMARY.md" # Path for generate_mdbook_config
 
+    # 1d. Copy common source files to both mkdocs/docs and mdbook/src directories
+    logging.info("Copying shared files from common source directory...")
+    copy_common_source_files(
+        common_src_dir=MD_STATIC_COMMON_SRC_DIR,
+        mkdocs_docs_dir=MKDOCS_DOCS_DIR,
+        mdbook_src_dir=MDBOOK_DOCS_DIR
+    )
 
     # 2. Get path to or generate macros.json.
     macros_json_path = macros_path(MACROS_JSON, GENERATE_MACROS_PY, MACROS_STY_PATH)
