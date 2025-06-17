@@ -7,23 +7,6 @@ code {
 }
 
 code.test-class { color: red; font-weight: bold; border: 1px solid red; }
-/* code.agda-agdafield { border: 1px solid blue; } /\* Add border to existing rule *\/ */
-/* Agda NameKind colours from agda.sty */
-code.agdainductiveconstructor { color: #008B00; } /* DarkGreen */
-code.agdacoinductiveconstructor { color: #8B7500; } /* DarkGoldenrod4 */
-code.agdadatatype { color: #0000CD; } /* MediumBlue */
-code.agdafield { color: #EE1289; } /* DeepPink1 */
-code.agdafunction { color: #0000CD; } /* MediumBlue */
-code.agdamacro { color: #458B74; } /* MediumAquamarine */
-code.agdamodule { color: #A020F0; } /* Purple */
-code.agdapostulate { color: #0000CD; } /* MediumBlue */
-code.agdaprimitive { color: #0000CD; } /* MediumBlue */
-code.agdarecord { color: #0000CD; } /* MediumBlue */
-
-/* Add rules for other Agda types (Bound, Keyword, etc.) if generated */
-/* code.agda-agdakeyword { color: #CD6600; } */ /* Example */
-/* code.agda-agdabound { color: #000000; } */ /* Example */
-
 
 /* Style for hldiff placeholder */
 span.highlight {

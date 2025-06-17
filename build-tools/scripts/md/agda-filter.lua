@@ -193,7 +193,7 @@ function Code(inline)
      -- Check if we successfully got required args: basename and class
      if args.basename and args['class'] then
          -- create CSS class name (e.g., "agdafield") by lowercasing
-         local css_class = args['class']:lower()
+         local css_class = args['class']
          -- create pandoc attrs structure
          local attrs = create_attrs({css_class})
          -- return new Code element with correct basename as text and attributes
