@@ -25,7 +25,7 @@
             # default shell points to the main development environment
             default = packageSet.devShells.default;
           };
-          
+
           # Keep hydraJobs for CI
           hydraJobs = packageSet;
       });

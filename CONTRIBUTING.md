@@ -207,7 +207,7 @@ The Agda development depends on the following libraries:
   Minimal environment for CI/CD builds and testing. Includes:
 
   + `agdaWithPackages` for type-checking
-  + `fls-shake` for building artifacts  
+  + `fls-shake` for building artifacts
   + `cabal-install` and `hpack` for Haskell builds
 
   ```bash
@@ -223,7 +223,7 @@ The Agda development depends on the following libraries:
   Complete documentation publishing environment for mkdocs and mdbook workflows. Includes everything from the default shell plus:
 
   + `pandoc` for document conversion
-  + full `latex` environment 
+  + full `latex` environment
   + `python311` with mkdocs, material theme, and extensions
   + `mdbook` + `cargo` for mdbook ecosystem
   + `chromium` for PDF rendering
@@ -425,7 +425,7 @@ For a setup that allows switching between different Agda versions, do the follow
     ```bash
     nix-build -A agdaWithPackages -o ~/ledger-agda
     ```
-   
+
     **Notes**
 
     - Replace `~/ledger-agda` with your preferred path.
@@ -433,7 +433,7 @@ For a setup that allows switching between different Agda versions, do the follow
     - You can verify with: `~/ledger-agda/bin/agda --version`.
 
 2.  **Configure Emacs for version switching**.
-   
+
     Add the following to your [Emacs init file][] (highlight and `M-x eval-region` to load without restarting):
 
     ```elisp
@@ -462,7 +462,7 @@ For a setup that allows switching between different Agda versions, do the follow
       (agda2-restart))
 
     ;; Bind the switch function to C-c C-x C-t in agda2-mode
-    (with-eval-after-load 'agda2-mode 
+    (with-eval-after-load 'agda2-mode
       (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
     ```
 
@@ -543,7 +543,7 @@ For a setup that allows switching between different Agda versions, do the follow
       ```
 
 4.  **Create a persistent symlink (recommended)**.
-   
+
     To avoid updating the path every time you rebuild:
 
     ```bash

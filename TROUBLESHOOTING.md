@@ -103,11 +103,11 @@
        Use `htop` or `nix-top` during builds to identify bottlenecks.
 
 7.  **Flake command errors:**
-   
+
     **Error:** `does not provide attribute 'packages.x86_64-linux.default'`
-   
+
     **Cause:** Flake doesn't expose required attributes
-   
+
     **Solution:** Update your `flake.nix` to properly expose `devShells` and set defaults:
     ```nix
     # In flake.nix outputs
