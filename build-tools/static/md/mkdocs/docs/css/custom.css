@@ -1,0 +1,48 @@
+/* docs/css/custom.css */
+
+/* Base style for inline Agda terms (optional, theme might cover) */
+code {
+  /* font-family: 'Your Mono Font', monospace; */ /* Example if needed */
+  /* Add other common styles if necessary */
+}
+
+code.test-class { color: red; font-weight: bold; border: 1px solid red; }
+
+/* Style for hldiff placeholder */
+span.highlight {
+  background-color: yellow;
+  padding: 0.1em 0.2em; /* Add slight padding */
+  border-radius: 3px; /* Optional rounded corners */
+}
+
+
+.agda-hidden-source {
+  display: none; /* Hidden by default */
+}
+
+body.show-all-agda-source .agda-hidden-source {
+  display: block; /* Shown when body has the class */
+}
+
+/* docs/css/custom.css */
+#toggle-agda-source {
+  font-size: 1.2em; /* Adjust as needed - balances with theme */
+  padding: 0.4em 0.7em;
+  margin-left: 1em; /* Example margin */
+  cursor: pointer;
+  border: 1px solid var(--md-default-fg-color--light); /* Use theme variable for border */
+  border-radius: 3px;
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  /* Add transition for smoother hover effects if desired */
+}
+
+#toggle-agda-source:hover {
+  background-color: var(--md-default-fg-color--lighter);
+}
+
+#toggle-agda-source .material-icons {
+  vertical-align: middle; /* Aligns icon with text */
+  font-size: 1.2em; /* Make icon slightly larger than button text */
+  margin-right: 0.3em;
+}
