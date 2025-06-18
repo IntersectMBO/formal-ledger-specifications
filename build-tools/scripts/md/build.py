@@ -1202,9 +1202,15 @@ def deploy_static_mkdocs_assets(
             else: logging.warning(f"Could not find Agda.css via 'agda --print-agda-data-dir'. Stderr: {agda_css_proc.stderr}")
         except Exception as e: logging.warning(f"Error trying to find Agda.css: {e}")
 
-    # Custom CSS/JS
-    if custom_css_source.exists(): assets_to_copy[custom_css_source] = mkdocs_css_dir / custom_css_source.name
-    if custom_js_source.exists(): assets_to_copy[custom_js_source] = mkdocs_js_dir / custom_js_source.name
+    # Custom CSS/JS - only process if not None and exists
+    if custom_css_source and custom_css_source.exists():
+        assets_to_copy[custom_css_source] = mkdocs_css_dir / custom_css_source.name
+    elif custom_css_source is None:
+        logging.debug("Custom CSS source not provided (handled separately)")
+    else:
+        logging.warning(f"Custom CSS source provided but not found: {custom_css_source}")
+    if custom_js_source.exists():
+        assets_to_copy[custom_js_source] = mkdocs_js_dir / custom_js_source.name
 
     updated_nav_files = list(current_nav_files)
     home_page_filename = "index.md"
@@ -1222,7 +1228,6 @@ def deploy_static_mkdocs_assets(
 
         if home_page_filename not in updated_nav_files: # Add to nav if we copied/created it
             updated_nav_files.append(home_page_filename)
-
 
     for src, dest in assets_to_copy.items():
         try:
@@ -1768,7 +1773,7 @@ def main(run_agda_html_flag=False):
         "Ledger.lagda.md" # Or our actual main (or "Everything") Agda file name
     )
 
-    # 8.01. Generate augmented custom.css with Agda classes (NEW STEP)
+    # 8.01. Generate augmented custom.css with Agda classes
     logging.info("\n--- Generating augmented custom.css with Agda classes ---")
 
     agda_css_in_staging = BUILD_MD_PP_DIR / "Agda.css"
