@@ -5,12 +5,7 @@
 - [Style Guidelines](#style-guidelines)
 - [Quick Start](#quick-start)
 - [Overview](#overview)
-- [Architecture](#architecture)
-- [Alternative Agda Installation Methods](#alternative-agda-installation-methods)
-- [Available Packages and Derivations](#available-packages-and-derivations)
 - [Usage Instructions](#usage-instructions)
-- [Key Features](#key-features)
-- [Troubleshooting](#troubleshooting)
 - [Integration with IDEs](#integration-with-ides)
 - [Performance Notes](#performance-notes)
 - [Setup Without Nix](#setup-without-nix)
@@ -45,25 +40,25 @@ cd formal-ledger-specifications
 + Enter a Nix shell and explore the source code in Emacs:
 
    ```bash
-   nix-shell -A devShells.ci
+   nix-shell
    emacs src/Ledger.*
-   # Type-check everything with C-c C-l
+   # Type-check with C-c C-l
    ```
 
 + Type-check from command line:
 
    ```bash
-   nix-shell -A devShells.ci
+   nix-shell
    agda src/Ledger.*
    ```
 
 + Build PDF documentation:
 
    ```bash
-   nix-shell -A devShells.ci --run 'fls-shake cardano-ledger.pdf'
+   nix-shell --run 'fls-shake cardano-ledger.pdf'
    ```
 
-+ Build everything using Nix flakes:
++ Build everything using flakes:
 
    ```bash
    nix build
@@ -124,6 +119,7 @@ The Agda development depends on the following libraries:
 #### Core Packages
 
 + `agdaWithPackages`
+
   Pre-configured Agda environment with all required libraries installed and
   properly configured.
 
@@ -189,20 +185,56 @@ The Agda development depends on the following libraries:
 
 #### Development Environments
 
-+ `devShells.ci`: a minimal environment for CI/CD builds
++ `devShells.default` (Main Development)
+
+  Primary environment for everyday Agda development work. Includes:
+
+  + `agdaWithPackages` (Agda 2.7.0.1 + all libraries)
+  + `fls-shake` build system
+  + `python311` for basic scripting
+  + `hpack` and `coreutils`
+
+  ```bash
+  nix-shell  # uses default shell
+  ```
+  or with flakes:
+  ```bash
+  nix develop
+  ```
+
++ `devShells.ci`
+
+  Minimal environment for CI/CD builds and testing. Includes:
+
+  + `agdaWithPackages` for type-checking
+  + `fls-shake` for building artifacts
+  + `cabal-install` and `hpack` for Haskell builds
 
   ```bash
   nix-shell -A devShells.ci
-  fls-shake --help # available for building outputs
+  ```
+  or with flakes:
+  ```bash
+  nix develop .#ci
   ```
 
-+ `devShells.mkDocs`: dev environment focused on Agda development and
-  documentation.
++ `devShells.docs`
+
+  Complete documentation publishing environment for mkdocs and mdbook workflows. Includes everything from the default shell plus:
+
+  + `pandoc` for document conversion
+  + full `latex` environment
+  + `python311` with mkdocs, material theme, and extensions
+  + `mdbook` + `cargo` for mdbook ecosystem
+  + `chromium` for PDF rendering
+  + additional build tools
 
   ```bash
-  nix-shell -A devShells.mkDocs
-  agda --version # available for Agda development
-  mkdocs --version # available for documentation
+  nix-shell -A devShells.docs
+  ```
+  or with flakes:
+  ```bash
+  nix develop .#docs
   ```
 
 ---
@@ -237,42 +269,81 @@ nix-build -A docs.conway.fullspec
 
 ### Using Nix Flakes
 
-If you prefer the modern flakes interface, proceed as follows:
+If you prefer the modern flakes interface:
 
 ```bash
-# Build all packages:
+# Build default package (formalLedger)
 nix build
 
-# Enter development shell:
+# Enter default development shell
 nix develop
 
-# Build a specific package:
-nix build .#formalLedger
-nix build .#html
+# Enter specific development shells
+nix develop          # Default development environment
+nix develop .#ci     # Minimal CI environment
+nix develop .#docs   # Complete docs publishing environment
+
+# Build specific packages
+nix build .#formalLedger              # Type-check formal ledger
+nix build .#html                      # Generate HTML documentation
+nix build .#hsSrc                     # Generate Haskell code
+nix build .#docs.conway.fullspec      # Full specification PDF
+nix build .#docs.conway.diffspec      # Conway differential PDF
 ```
 
 ### Development Workflow
 
-#### Agda Development with Documentation Tools
+#### For Agda Development
 
 ```bash
-# Enter development environment with Agda + documentation tools:
-nix-shell -A devShells.mkDocs
+# Enter default development environment
+nix-shell  # or: nix develop
 
-# Work on Agda files in src/ directory:
+# Work on Agda files in src/ directory
 agda src/Ledger.agda
+
+# Generate outputs using fls-shake
+fls-shake html                    # Generate HTML docs
+fls-shake hs                      # Generate Haskell code
+fls-shake cardano-ledger.pdf      # Generate PDF
 ```
 
-#### Build System and Output Generation
+#### For Documentation Publishing (mkdocs/mdbook)
 
 ```bash
-# Enter CI environment (includes fls-shake):
-nix-shell -A devShells.ci
+# Enter comprehensive docs environment
+nix-shell -A devShells.docs
+# or with flakes:
+nix develop .#docs
 
-# Generate outputs using fls-shake:
-fls-shake html                     # generate html docs
-fls-shake hs                       # generate Haskell code
-fls-shake cardano-ledger.pdf       # generate pdf
+# Optionally run the LaTeX-to-Markdown conversion pipeline
+python build-tools/scripts/tex2md/build.py
+
+# Build and serve mkdocs site locally
+cd _build/website/mkdocs/src
+mkdocs build
+mkdocs serve
+
+# Optionally install additional mdbook-pdf plugin
+cargo install mdbook-pdf
+
+# Build mdbook site and pdf; serve mdbook site
+cd _build/website/mdbook
+mdbook build
+mdbook serve
+```
+
+#### For CI and Testing
+
+```bash
+# Enter minimal CI environment
+nix-shell -A devShells.ci
+# or with flakes:
+nix develop .#ci
+
+# Run CI builds
+fls-shake cardano-ledger.pdf
+agda src/Ledger.*  # Type-check everything
 ```
 
 #### Alternative: Build Outputs with Nix
@@ -295,8 +366,9 @@ nix-build -A fls-shake
 ./result/bin/fls-shake cardano-ledger.pdf
 
 # Option 2. Use different shells for different tasks:
-nix-shell -A devShells.mkDocs      # for Agda development
-nix-shell -A devShells.ci          # for fls-shake build tasks
+nix-shell                          # for everyday Agda development
+nix-shell -A devShells.docs        # for documentation publishing
+nix-shell -A devShells.ci          # for CI builds
 ```
 
 ### Updating Dependencies
@@ -330,119 +402,6 @@ To work simultaneously on the ledger and one of its dependencies:
 
 ---
 
-## Troubleshooting
-
-### Common Issues
-
-1.  **`fls-shake: command not found`** (e.g., in mkDocs shell)
-
-    - The `fls-shake` tool is only available in the `ci` shell, not `mkDocs`.
-    - Use `nix-shell -A devShells.ci` or build it separately with `nix-build -A fls-shake`.
-
-2.  **LaTeX/latexmk errors when building PDFs**
-
-    **Error** `latexmk: createProcess: exec: invalid argument (Bad file descriptor)`
-
-    **Causes and Solutions**
-
-    +  **Missing latexmk**
-
-       Install latexmk and LaTeX
-
-       ```bash
-       # Ubuntu/Debian
-       sudo apt update
-       sudo apt install latexmk texlive-full
-       # Or minimal: sudo apt install latexmk texlive-latex-extra
-       ```
-
-    +  **PATH issues**
-
-       Ensure latexmk is in your PATH
-
-    +  **Nix users**
-
-       This should be handled automatically
-
-3.  **Unicode/encoding errors**
-
-    **Error**
-
-    `commitBuffer: invalid argument (cannot encode character '\8474')`
-
-    **Cause**
-
-    Agda trying to write Unicode characters with wrong encoding.
-
-    **Solutions**
-
-    ```bash
-    # Option 1: Set locale for single command
-    LC_ALL=en_US.UTF-8 fls-shake cardano-ledger.pdf
-
-    # Option 2: Set globally in shell
-    export LANG=en_US.UTF-8
-    export LC_ALL=en_US.UTF-8
-    ```
-
-4.  **Build failures due to locale issues**
-
-    - The configuration sets proper UTF-8 locales automatically.
-    - If issues persist, ensure your system has UTF-8 locales available.
-
-5.  **Agda library conflicts**
-
-    - All libraries are pre-configured with correct versions.
-    - Avoid installing Agda libraries system-wide when using this setup.
-
-6.  **Memory issues during builds**
-
-    **Problem**
-
-    Agda compilation is memory-intensive for large projects.
-
-    **Solutions**
-
-    +  **Agda-specific**
-
-       Increase GHC heap size using RTS options.
-
-       ```bash
-       # Set environment variable to give Agda more memory
-       export AGDA_RTS_OPTIONS="+RTS -M8G -A128M -RTS"
-       nix-build -A formalLedger
-       ```
-
-    +  **Nix build options**
-
-       Reduce parallel builds to lower memory pressure.
-
-       ```bash
-       nix-build --max-jobs 1 --cores 1  # Build sequentially
-       ```
-
-    +  **System-level**
-
-       Add swap space if you have limited RAM.
-
-       ```bash
-       # Check current memory/swap
-       free -h
-       # Consider adding swap if needed (system-dependent)
-       ```
-    +  **Monitor usage**
-
-       Use `htop` or `nix-top` during builds to identify bottlenecks.
-
-### Getting Help
-
-+ Check build logs for specific error messages.
-+ Ensure you're using a supported platform (x86_64-Linux).
-+ Verify that Nix is properly installed and configured.
-+ Open a [New Issue][] in [our GitHub repository][formal-ledger-specifications].
-
----
-
 ## Integration with IDEs
 
 ### Emacs
@@ -452,7 +411,7 @@ To work simultaneously on the ledger and one of its dependencies:
 For basic Agda development with the project's Agda environment, launch Emacs as follows:
 
 ```bash
-nix-shell -A devShells.mkDocs
+nix-shell
 emacs src/YourFile.agda
 # Use agda-mode commands as normal (C-c C-l to load, etc.)
 ```
@@ -466,7 +425,7 @@ For a setup that allows switching between different Agda versions, do the follow
     ```bash
     nix-build -A agdaWithPackages -o ~/ledger-agda
     ```
-   
+
     **Notes**
 
     - Replace `~/ledger-agda` with your preferred path.
@@ -474,7 +433,7 @@ For a setup that allows switching between different Agda versions, do the follow
     - You can verify with: `~/ledger-agda/bin/agda --version`.
 
 2.  **Configure Emacs for version switching**.
-   
+
     Add the following to your [Emacs init file][] (highlight and `M-x eval-region` to load without restarting):
 
     ```elisp
@@ -503,7 +462,7 @@ For a setup that allows switching between different Agda versions, do the follow
       (agda2-restart))
 
     ;; Bind the switch function to C-c C-x C-t in agda2-mode
-    (with-eval-after-load 'agda2-mode 
+    (with-eval-after-load 'agda2-mode
       (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
     ```
 
@@ -516,10 +475,10 @@ For a setup that allows switching between different Agda versions, do the follow
 
 3.  **Usage**.
 
-    -  Open any Agda file in Emacs.
-    -  Use `C-c C-x C-t` to switch to the ledger Agda version.
-    -  Use standard agda-mode commands (`C-c C-l` to load, `C-c C-c` to case split, etc.).
-    -  The project's libraries will be automatically available.
+    + Open any Agda file in Emacs.
+    + Use `C-c C-x C-t` to switch to the ledger Agda version.
+    + Use standard agda-mode commands (`C-c C-l` to load, `C-c C-c` to case split, etc.).
+    + The project's libraries will be automatically available.
 
 #### Troubleshooting Emacs Setup
 
@@ -584,7 +543,7 @@ For a setup that allows switching between different Agda versions, do the follow
       ```
 
 4.  **Create a persistent symlink (recommended)**.
-   
+
     To avoid updating the path every time you rebuild:
 
     ```bash
@@ -814,6 +773,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [niv]: https://github.com/nmattia/niv
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [Shake]: https://shakebuild.com/
+[official Haskell instructions]: https://www.haskell.org/downloads/
 
 [@WhatisRT]: https://github.com/whatisrt
 [@carlostome]: https://github.com/carlostome
@@ -844,6 +804,5 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [`fls-shake`]: #fls-shake
 [Building `fls-shake` manually]: #building-fls-shake-manually
 [Updating nixpkgs]: #updating-nixpkgs
-[Troubleshooting]: #troubleshooting
 [Maintainers]: #maintainers
 [Miscellanea]: #miscellanea

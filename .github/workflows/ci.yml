@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - master
+    - legacy-latex  # ensure legacy-latex-artifacts branch gets created
   pull_request:
     branches:
     - master
@@ -45,17 +46,51 @@ jobs:
     with:
       target: hs
 
+  # NEW: Build mkdocs site from markdown files
+  mkdocs-site:
+    needs: [formal-ledger-agda]
+    # # Should we only run on master branch? If so, uncomment next line.
+    # if: ${{ github.ref_name == 'master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main repository
+        uses: actions/checkout@v4
+      - name: Download agda _build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: _build
+          path: _build
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Generate and Build MkDocs site
+        run: |
+          # Run the python build script to generate the mkdocs source files.
+          # Then cd into the generated directory and run mkdocs build.
+          nix develop .#docs --command bash -c "python ./build-tools/scripts/md/build.py --run-agda && cd _build/md/mkdocs/ && mkdocs build --site-dir ../../../site"
+          # --site-dir places output in root for upload step
+      - name: Upload MkDocs site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: mkdocs-site
+          path: site
+
+  # !!! Just copy PDFs from legacy-latex-artifacts branch instead of building !!!
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
-    uses: ./.github/workflows/build_artifact.yml
+    uses: ./.github/workflows/copy_legacy_pdf.yml
     with:
-      target: cardano-ledger.pdf
+      pdf_name: cardano-ledger.pdf
 
   conway-ledger-pdf:
     needs: [formal-ledger-agda]
-    uses: ./.github/workflows/build_artifact.yml
+    uses: ./.github/workflows/copy_legacy_pdf.yml
     with:
-      target: conway-ledger.pdf
+      pdf_name: conway-ledger.pdf
 
   html:
     needs: [formal-ledger-agda]
@@ -66,7 +101,7 @@ jobs:
   upload-artifacts:
     # This job runs only if the workflow has not been manually dispached
     if: ${{ github.event_name != 'workflow_dispatch' }}
-    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html]
+    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html, mkdocs-site]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -81,13 +116,12 @@ jobs:
             echo "artifacts_branch=${{ github.event.pull_request.head.ref }}-artifacts" >> $GITHUB_OUTPUT
             printf "artifacts_branch: %s\n" "${{ github.event.pull_request.head.ref }}-artifacts"
           else
-            printf "This workflow was triggered by a push event to master\n"
-            echo "artifacts_branch=master-artifacts" >> $GITHUB_OUTPUT
-            printf "artifacts_branch: %s\n" "master-artifacts"
+            printf "This workflow was triggered by a push event to ${{ github.ref_name }}\n"
+            echo "artifacts_branch=${{ github.ref_name }}-artifacts" >> $GITHUB_OUTPUT
+            printf "artifacts_branch: %s\n" "${{ github.ref_name }}-artifacts"
           fi
-      # Checkout env.artifacts_branch if it already exists
-      # otherwise create a new orphan branch.
-      # Lastly, remove all files from the repo
+      # Checkout env.artifacts_branch if it already exists otherwise create a new orphan branch.
+      # Lastly, remove all files from the repo.
       - name: Checkout artifacts branch
         run: |
           if [[ -n "$(git ls-remote --heads origin "${ARTIFACTS_BRANCH}")" ]]; then
@@ -124,6 +158,7 @@ jobs:
           </head>
           <body>
           	<h1>Directory Tree</h1><p>
+          	<p><strong>Branch:</strong> ${{ github.ref_name }}</p>
           EOF
 
           tree -H '.'                     \
@@ -142,7 +177,7 @@ jobs:
           cat << EOF >> index.html
           	<hr>
           	<p class="VERSION">
-              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a>
+              Automatically generated from commit <a href="https://github.com/intersectmbo/formal-ledger-specifications/commit/${{ github.sha }}">${{ github.sha }}</a> on branch ${{ github.ref_name }}
           	</p>
           </body>
           </html>
@@ -153,7 +188,7 @@ jobs:
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -A
-            git commit -m "Artifacts generated from ${{ github.sha }}"
+            git commit --allow-empty -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
       - name: Push ${{ env.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:

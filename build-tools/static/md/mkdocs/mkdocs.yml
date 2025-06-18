@@ -50,6 +50,20 @@ theme:
 nav:
   - Home: index.md
 
+extra_css:
+  - css/custom.css
+  - css/Agda.css
+  # KaTeX CSS for math rendering
+  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css
+
+extra_javascript:
+  - js/custom.js
+  # KaTeX JavaScript
+  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js
+  # KaTeX configuration script (load after KaTeX)
+  - js/katex-config.js
+
 # Markdown extensions
 markdown_extensions:
   - admonition                # call-out boxes like !!! note
@@ -63,10 +77,10 @@ markdown_extensions:
   - attr_list                 # inline attributes like `code`{.class}
   - pymdownx.tabbed
   - pymdownx.emoji
-
-extra_css:
-  - css/custom.css
-  - css/Agda.css
-
-extra_javascript:
-  - js/custom.js
+  - pymdownx.snippets:
+      check_paths: true  # for debugging
+      auto_append:
+        - includes/links.md
+  # Important: Use pymdownx.arithmatex with KaTeX
+  - pymdownx.arithmatex:
+      generic: true

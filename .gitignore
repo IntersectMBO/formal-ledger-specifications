@@ -33,4 +33,4 @@ result*
 *.lagda.orig
 
 ## Python
-scripts/mkdocs/__pycache__/
+build-tools/scripts/md/__pycache__/
