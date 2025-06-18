@@ -190,8 +190,8 @@ postModuleFls
   -> TopLevelModuleName
   -> [FlsDef]
   -> m FlsModule
-postModuleFls _env menv _isMain _modName _defs = do
-  when (_isMain == IsMain) $ do
+postModuleFls env menv isMain _modName _defs = do
+  when (isMain == IsMain || (not . flsOptMainOnly . flsCompileEnvOpts $ env)) $ do
     let generatePage = defaultPageGen . flsCompileEnvOpts . flsModEnvCompileEnv $ menv
     htmlSrc <- srcFileOfInterface (flsModEnvName menv) <$> curIF
     runLogHtmlWithMonadDebug $ generatePage htmlSrc
