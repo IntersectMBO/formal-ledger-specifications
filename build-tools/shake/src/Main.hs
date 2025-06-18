@@ -2,10 +2,9 @@
 {-# LANGUAGE TypeFamilies               #-}
 module Main where
 
-import Development.Shake
-import Development.Shake.FilePath
-import Control.Monad (when, forM_)
-import Data.List (sort, isPrefixOf)
+import Control.Monad (when, forM_, forever, void)
+import Data.List (sort, isPrefixOf, groupBy)
+import Data.List.Split (splitOn, splitWhen)
 import Data.Typeable (Typeable)
 import Control.DeepSeq (NFData)
 import Data.Hashable (Hashable)
@@ -13,16 +12,76 @@ import Data.Binary (Binary)
 import qualified Data.Text as Text
 import qualified Data.Text.Encoding as TE
 import qualified Data.ByteString as BS
+import qualified System.FSNotify as Watch
+import Development.Shake
+import Development.Shake.Database
+import Development.Shake.FilePath
+import Control.Concurrent (threadDelay, forkIO)
+import Control.Concurrent.Chan (newChan, readChan)
+import qualified System.Directory as Dir
+import System.Console.GetOpt
+import System.Environment
+import System.FSNotify (WatchConfig(confThreadingMode))
 
 ------------------------------------------------------------------------------
 -- Main function
 ------------------------------------------------------------------------------
 
 main :: IO ()
-main = shakeArgs shakeOptions $ do
-  pdfRule
-  htmlRule
-  hsRule
+main = do
+  let rules = do pdfRule
+                 htmlRule
+                 hsRule
+                 docsRule
+
+      flags = [Option "" ["watch"] (NoArg $ Left "Watch mode is exclusive") "Watch mode (exclusive)"]
+
+      buildMode = shakeArgsWith shakeOptions flags $ \flags targets -> pure $ Just $ do
+        if null targets
+          then rules
+          else want targets >> withoutActions rules
+
+  args <- getArgs
+  -- if the only option is "--watch", then enter watch mode;
+  -- otherwise let Shake handle the options
+  if args == ["--watch"]
+    then watchMode
+    else buildMode
+
+
+------------------------------------------------------------------------------
+-- Watch mode
+------------------------------------------------------------------------------
+
+-- | Watch mode
+-- Start a file listener on the source directory.
+-- On file change run Shake with the corresponding *.md file as
+-- a target.
+watchMode :: IO ()
+watchMode = do
+  root <- Dir.canonicalizePath "."
+  shakeWithDatabase shakeOptions (lagdamd2md >> md2mkdocs) $ \db -> do
+    _ <- Watch.withManager $ \mgr ->
+      do changedFiles <- newChan
+         let loop = do file <- Watch.eventPath <$> readChan changedFiles
+                       let srcfile = map (\c -> if isPathSeparator c then '.' else c)
+                                   . (<.> "md")
+                                   . applyN 2 dropExtension
+                                   . dropDirectory 4
+                                   . makeRelative root
+                                   $ file
+                       (_, after) <- shakeRunDatabase db [withVerbosity Diagnostic
+                                                         $ need [ _md </> mkdocs </> "docs" </> srcfile ]]
+                       shakeRunAfter shakeOptions after
+                       loop
+         forkIO $ void $ Watch.watchTreeChan mgr "_build/md/md.in/src" isModified changedFiles
+         loop
+    return ()
+
+-- | Predicate on Watch.Event to filter only modified files
+isModified :: Watch.Event -> Bool
+isModified (Watch.Modified {}) = True
+isModified _ = False
 
 ------------------------------------------------------------------------------
 -- Build rules
@@ -286,6 +345,57 @@ htmlRule = do
     need [ htmlDist </> "index.html" ]
 
 ------------------------------------------------------------------------------
+-- Markdown
+------------------------------------------------------------------------------
+
+-- | List of folder paths of library extension files
+libExts :: [FilePath]
+libExts = [ "iog-prelude"
+          , "stdlib"
+          , "stdlib-classes"
+          , "stdlib-meta"
+          ]
+
+-- | Process literate Markdown Agda files using Agda
+-- The target is a *.md file in _build/md/md.pp
+-- Its dependency is a .lagda.md file in _build/md/md.in
+lagdamd2md :: Rules ()
+lagdamd2md =
+  _md </> mdPP </> "*.md" %> \out -> do
+    let mdfile = joinPath
+               . splitOn "."
+               . dropExtension
+               . dropDirectory 3 $ out
+
+        src = if any (`isPrefixOf` mdfile) libExts
+                then "src-lib-exts"
+                else "src"
+
+        srcfile = src </> mdfile <.> "lagda" <.> "md"
+
+    need [_md </> mdIn </> srcfile]
+
+    command_ [ Cwd $ _md </> mdIn ]
+             "agda"
+             [ "--fls"
+             , "--fls-main-only"
+             , "--fls-html-dir=" ++ "../" ++ mdPP
+             , srcfile ]
+
+-- | Copy files into the mkDocs docs directory
+md2mkdocs :: Rules ()
+md2mkdocs =
+  _md </> mkdocs </> "docs" </> "*.md" %> \out -> do
+    let mdfile = (_md </>) . (mdPP </>)
+               . dropDirectory 4 $ out
+    copyFileChanged mdfile out
+
+docsRule :: Rules ()
+docsRule = do
+  lagdamd2md
+  md2mkdocs
+
+------------------------------------------------------------------------------
 -- Build directory paths
 ------------------------------------------------------------------------------
 
@@ -318,6 +428,17 @@ htmlPP  = "html.pp"
 _html, _htmlPP :: FilePath
 _html    = _build </> html
 _htmlPP  = _html  </> htmlPP
+
+md, mdIn, mdPP :: FilePath
+md   = "md"
+mdIn   = "md.in"
+mdPP = "md.pp"
+
+_md :: FilePath
+_md = _build </> md
+
+mkdocs :: FilePath
+mkdocs = "mkdocs"
 
 -- | Root output directory
 dist :: FilePath

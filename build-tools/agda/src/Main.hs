@@ -12,7 +12,7 @@ module Main where
 
 import Prelude hiding ((!!), concatMap)
 
-import Control.Monad (guard)
+import Control.Monad (guard, when, unless)
 import Control.Monad.Trans ( MonadIO(..), lift )
 import Control.Monad.Trans.Reader ( ReaderT(runReaderT), ask )
 import Control.DeepSeq (NFData)
@@ -57,7 +57,7 @@ import Agda.Compiler.Backend
   , Recompile(..), MonadDebug, Definition, ReadTCState, reportS )
 import Agda.Compiler.Common (curIF)
 import Agda.Main ( runAgda )
-import Agda.Syntax.Common (IsMain, FileType(..), Induction(..))
+import Agda.Syntax.Common (IsMain(..), FileType(..), Induction(..))
 import Agda.Syntax.Common.Pretty (parens, pretty, render, (<+>))
 import Agda.Syntax.TopLevelModuleName
 import qualified Agda.TypeChecking.Monad as TCM
@@ -78,6 +78,7 @@ main = runAgda [Backend flsBackend']
 data FlsOpts = FlsOpts
   { flsOptEnabled :: Bool
   , flsOptHtmlDir :: FilePath
+  , flsOptMainOnly :: Bool
   } deriving (Eq, Generic)
 
 instance NFData FlsOpts
@@ -119,6 +120,7 @@ initialFlsOpts :: FlsOpts
 initialFlsOpts = FlsOpts
   { flsOptEnabled = False
   , flsOptHtmlDir = defaultHTMLDir
+  , flsOptMainOnly = False
   }
 
 -- | The default output directory for HTML.
@@ -133,6 +135,8 @@ flsOpts =
     , Option []     ["fls-html-dir"] (ReqArg flsHtmlDirOpt "DIR")
                     ("directory in which HTML files are placed (default: " ++
                      defaultHTMLDir ++ ")")
+    , Option []     ["fls-main-only"] (NoArg flsMainOnly)
+                    "generate HTML for the main file ONLY"
     ]
 
 flsOpt :: Flag FlsOpts
@@ -140,6 +144,9 @@ flsOpt o = return $ o { flsOptEnabled = True }
 
 flsHtmlDirOpt :: FilePath -> Flag FlsOpts
 flsHtmlDirOpt d o = return $ o { flsOptHtmlDir = d }
+
+flsMainOnly :: Flag FlsOpts
+flsMainOnly o = return $ o { flsOptMainOnly = True }
 
 runLogHtmlWithMonadDebug :: MonadDebug m => LogHtmlT m a -> m a
 runLogHtmlWithMonadDebug = runLogHtmlWith $ reportS "html" 1
@@ -149,11 +156,12 @@ preCompileFls
   => FlsOpts
   -> m FlsCompileEnv
 preCompileFls opts = runLogHtmlWithMonadDebug $ do
-  logHtml $ unlines
-    [ "Warning: HTML is currently generated for ALL files which can be"
-    , "reached from the given module, including library files."
-    ]
-  prepareCommonDestinationAssets opts
+  unless (flsOptMainOnly opts) $ do
+    logHtml $ unlines
+      [ "Warning: HTML is currently generated for ALL files which can be"
+      , "reached from the given module, including library files."
+      ]
+    prepareCommonDestinationAssets opts
   return $ FlsCompileEnv opts
 
 preModuleFls
@@ -182,10 +190,11 @@ postModuleFls
   -> TopLevelModuleName
   -> [FlsDef]
   -> m FlsModule
-postModuleFls _env menv _isMain _modName _defs = do
-  let generatePage = defaultPageGen . flsCompileEnvOpts . flsModEnvCompileEnv $ menv
-  htmlSrc <- srcFileOfInterface (flsModEnvName menv) <$> curIF
-  runLogHtmlWithMonadDebug $ generatePage htmlSrc
+postModuleFls env menv isMain _modName _defs = do
+  when (isMain == IsMain || (not . flsOptMainOnly . flsCompileEnvOpts $ env)) $ do
+    let generatePage = defaultPageGen . flsCompileEnvOpts . flsModEnvCompileEnv $ menv
+    htmlSrc <- srcFileOfInterface (flsModEnvName menv) <$> curIF
+    runLogHtmlWithMonadDebug $ generatePage htmlSrc
   return FlsModule
 
 postCompileFls
