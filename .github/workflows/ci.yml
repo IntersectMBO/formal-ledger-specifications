@@ -71,7 +71,7 @@ jobs:
         run: |
           # Run the python build script to generate the mkdocs source files.
           # Then cd into the generated directory and run mkdocs build.
-          nix develop .#docs --command bash -c "python ./scripts/mkdocs/build.py --run-agda && cd _build/mkdocs/src && mkdocs build --site-dir ../../../site"
+          nix develop .#docs --command bash -c "python ./build-tools/scripts/md/build.py --run-agda && cd _build/md/mkdocs/ && mkdocs build --site-dir ../../../site"
           # --site-dir places output in root for upload step
       - name: Upload MkDocs site artifact
         uses: actions/upload-artifact@v4
