@@ -46,7 +46,6 @@ jobs:
     with:
       target: hs
 
-  # NEW: Build mkdocs site from markdown files
   mkdocs-site:
     needs: [formal-ledger-agda]
     # # Should we only run on master branch? If so, uncomment next line.
@@ -69,17 +68,16 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Generate and Build MkDocs site
         run: |
-          # Run the python build script to generate the mkdocs source files.
-          # Then cd into the generated directory and run mkdocs build.
-          nix develop .#docs --command bash -c "python ./build-tools/scripts/md/build.py --run-agda && cd _build/md/mkdocs/ && mkdocs build --site-dir ../../../site"
-          # --site-dir places output in root for upload step
+          nix develop .#docs --command bash -c "python ./build-tools/scripts/md/build.py --run-agda
+          mkdir dist
+          cd _build/md/mkdocs/
+          mkdocs build --site-dir ../../../dist/site"
       - name: Upload MkDocs site artifact
         uses: actions/upload-artifact@v4
         with:
           name: mkdocs-site
-          path: site
+          path: dist
 
-  # !!! Just copy PDFs from legacy-latex-artifacts branch instead of building !!!
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/copy_legacy_pdf.yml
@@ -158,7 +156,6 @@ jobs:
           </head>
           <body>
           	<h1>Directory Tree</h1><p>
-          	<p><strong>Branch:</strong> ${{ github.ref_name }}</p>
           EOF
 
           tree -H '.'                     \
@@ -188,7 +185,7 @@ jobs:
             git config user.name 'github-actions[bot]'
             git config user.email 'github-actions[bot]@users.noreply.github.com'
             git add -A
-            git commit --allow-empty -m "Artifacts generated from ${{ github.sha }} (branch: ${{ github.ref_name }})"
+            git commit --allow-empty -m "Artifacts generated from ${{ github.sha }}"
       - name: Push ${{ env.artifacts_branch }}
         uses: ad-m/github-push-action@v0.6.0
         with:
