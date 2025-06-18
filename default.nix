@@ -112,7 +112,7 @@ let
   };
 
   fls-shake =
-    (import ./build-tools/shake/nix/fls-shake.nix { }).overrideAttrs
+    (import ./build-tools/shake/nix/fls-shake.nix { inherit nixpkgs; }).overrideAttrs
       (newAttrs: oldAttrs: {
         nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ makeWrapper ];
         postFixup = ''
@@ -214,27 +214,90 @@ in
     };
 
     devShells = {
+      # 1. DEVELOPMENT SHELL - For everyday Agda development work
+      default = mkShell {
+        inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+        packages = [
+          agdaWithPackages  # Agda 2.7.0.1 + all pinned libraries
+          fls-shake         # Build system for generating outputs
+          python311         # Python for basic scripting
+          hpack             # Haskell package helper
+          coreutils         # Basic shell utilities
+        ];
+        shellHook = ''
+          echo "Agda Development Environment"
+          echo "Agda: $(agda --version)"
+          echo "Available: agda, fls-shake, python3, hpack"
+          echo "Use 'fls-shake --help' to see build targets"
+        '';
+      };
+
+      # 2. CI SHELL - Minimal environment for CI builds and testing
       ci = mkShell {
         inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
         packages = [
-          fls-shake
+          fls-shake         # For building artifacts
         ];
+        shellHook = ''
+          echo "CI Build Environment"
+          echo "Minimal environment for automated builds"
+        '';
       };
 
-      mkDocs = mkShell {
+      # 3. DOCS SHELL - Complete documentation pipeline (mkdocs + mdbook)
+      docs = mkShell {
         inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
         packages = [
-          agdaWithPackages # Agda 2.7.0.1 + pinned libs
+          # Core Agda development
+          agdaWithPackages
           fls-shake
-          pandoc # for tex to md conversion
-          (python311.withPackages (ps: with ps; [ pip
-                                                 mkdocs
-                                                 mkdocs-material
-                                                 pymdown-extensions
-                                                 pyyaml # for mkdocs.yml generation
-                                               ]))
-          coreutils # for 'mkdir', 'cp', 'rm', 'basename', 'dirname'
+
+          # Document conversion tools
+          pandoc
+          latex  # Your custom LaTeX setup from default.nix
+          dejavu_fonts
+
+          # Python environment for mkdocs pipeline
+          (python311.withPackages (ps: with ps; [
+            pip
+            mkdocs
+            mkdocs-material
+            pymdown-extensions
+            pyyaml
+            # Add any other Python packages needed for conversion scripts
+          ]))
+
+          # mdbook ecosystem
+          mdbook
+          chromium          # Required by mdbook-pdf for rendering
+          cargo             # For installing mdbook extensions
+          pkg-config        # For building cargo packages
+          openssl           # For building cargo packages
+
+          # Additional tools
+          coreutils
+          hpack
         ];
+
+        shellHook = ''
+          export PATH="$HOME/.cargo/bin:$PATH"    # Ensure cargo tools are in PATH
+
+          echo "----------------------------------------------------"
+          echo "Documentation Publishing Environment"
+          echo "Agda: $(agda --version)"
+          echo "Python: $(python --version)"
+          echo "mdbook: $(mdbook --version)"
+          echo "Pandoc: $(pandoc --version)"
+          echo "Chromium: $(chromium --version 2>/dev/null | head -1 || echo 'available')"
+          echo ""
+          echo "Available workflows:"
+          echo "  • Agda development: agda, fls-shake"
+          echo "  • LaTeX→Markdown: pandoc, python scripts"
+          echo "  • MkDocs sites: mkdocs build"
+          echo "  • mdbook sites: mdbook build"
+          echo "  • Install mdbook extensions: cargo install mdbook-pdf"
+          echo "----------------------------------------------------"
+        '';
       };
     };
 
