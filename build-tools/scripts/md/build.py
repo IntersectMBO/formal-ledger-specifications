@@ -262,6 +262,7 @@ MD_STATIC_CSS_DIR = MD_STATIC_COMMON_SRC_DIR / "css"
 MD_STATIC_CUSTOM_CSS_PATH = MD_STATIC_CSS_DIR / "custom.css"
 MD_STATIC_JS_DIR = MD_STATIC_COMMON_SRC_DIR / "js"
 MD_STATIC_CUSTOM_JS_PATH = MD_STATIC_JS_DIR / "custom.js"
+MD_STATIC_KATEX_JS_PATH = MD_STATIC_JS_DIR / "katex-config.js"
 
 # - static mkdocs directories -
 MKDOCS_STATIC_DIR = MD_STATIC_DIR / "mkdocs"
@@ -1172,17 +1173,15 @@ def copy_staging_to_site_docs(
 
 
 def deploy_static_mkdocs_assets(
-    mkdocs_docs_dir: Path,
-    mkdocs_css_dir: Path,
-    mkdocs_js_dir: Path,
-    run_agda_html_flag: bool, # To know if Agda.css is needed
-    current_nav_files: List[str], # To check if index.md is already there
-    # Paths to static assets (could be part of a config dict/object)
-    custom_css_source: Path,
-    custom_js_source: Path,
-    index_md_template_source: Path,
-    project_root: Path # For relative logging
-) -> List[str]:
+        mkdocs_docs_dir: Path,
+        mkdocs_css_dir: Path,
+        mkdocs_js_dir: Path,
+        run_agda_html_flag: bool,     # To know if Agda.css is needed
+        current_nav_files: List[str], # To check if index.md is already there
+        custom_css_source: Path,
+        custom_js_source: Path,
+        index_md_template_source: Path,
+        project_root: Path) -> List[str]:
     """Copies static assets like CSS, JS, and index.md template to the docs folder.
     Returns the updated list of nav files (potentially adding index.md).
     """
@@ -1202,15 +1201,24 @@ def deploy_static_mkdocs_assets(
             else: logging.warning(f"Could not find Agda.css via 'agda --print-agda-data-dir'. Stderr: {agda_css_proc.stderr}")
         except Exception as e: logging.warning(f"Error trying to find Agda.css: {e}")
 
-    # Custom CSS/JS - only process if not None and exists
+    # Custom CSS - only process if not None and exists
     if custom_css_source and custom_css_source.exists():
         assets_to_copy[custom_css_source] = mkdocs_css_dir / custom_css_source.name
     elif custom_css_source is None:
         logging.debug("Custom CSS source not provided (handled separately)")
     else:
         logging.warning(f"Custom CSS source provided but not found: {custom_css_source}")
+
+    # Custom JS
     if custom_js_source.exists():
         assets_to_copy[custom_js_source] = mkdocs_js_dir / custom_js_source.name
+
+    # KaTeX configuration JS
+    if MD_STATIC_KATEX_JS_PATH.exists():
+        assets_to_copy[MD_STATIC_KATEX_JS_PATH] = mkdocs_js_dir / MD_STATIC_KATEX_JS_PATH.name
+        logging.info(f"Adding KaTeX configuration: {MD_STATIC_KATEX_JS_PATH.name}")
+    else:
+        logging.warning(f"KaTeX configuration file not found at: {MD_STATIC_KATEX_JS_PATH}")
 
     updated_nav_files = list(current_nav_files)
     home_page_filename = "index.md"
@@ -1224,11 +1232,13 @@ def deploy_static_mkdocs_assets(
         elif not mkdocs_index_final_path.exists(): # Create minimal only if absolutely no index.md
             logging.warning("No 'index.md' generated or templated. Creating minimal index.md.")
             mkdocs_index_final_path.parent.mkdir(parents=True, exist_ok=True) # Ensure docs dir exists
-            with open(mkdocs_index_final_path, "w", encoding="utf-8") as f: f.write("# Welcome\n")
+            with open(mkdocs_index_final_path, "w", encoding="utf-8") as f:
+                f.write("# Welcome\n")
 
         if home_page_filename not in updated_nav_files: # Add to nav if we copied/created it
             updated_nav_files.append(home_page_filename)
 
+    # Copy all assets
     for src, dest in assets_to_copy.items():
         try:
             if dest.exists() and dest.is_file(): # avoid warning for dirs
@@ -1238,7 +1248,8 @@ def deploy_static_mkdocs_assets(
             logging.info(f"  Copying asset {src.name} to {dest.relative_to(project_root)}")
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest)
-        except Exception as e: logging.error(f"Failed to copy asset {src} to {dest}: {e}")
+        except Exception as e:
+            logging.error(f"Failed to copy asset {src} to {dest}: {e}")
 
     # Ensure unique list for nav, with index.md first.
     return sorted(
@@ -1848,6 +1859,9 @@ def main(run_agda_html_flag=False):
     dynamic_js_list_for_config = []
     if MD_STATIC_CUSTOM_JS_PATH.exists() and (MKDOCS_JS_DIR / MD_STATIC_CUSTOM_JS_PATH.name).exists():
         dynamic_js_list_for_config.append(f"js/{MD_STATIC_CUSTOM_JS_PATH.name}")
+    # Add KaTeX config to the dynamic list
+    if MD_STATIC_KATEX_JS_PATH.exists() and (MKDOCS_JS_DIR / MD_STATIC_KATEX_JS_PATH.name).exists():
+        dynamic_js_list_for_config.append(f"js/{MD_STATIC_KATEX_JS_PATH.name}")
 
     generate_mkdocs_config(
         mkdocs_yml_in_build_path, # defined in Stage 1b

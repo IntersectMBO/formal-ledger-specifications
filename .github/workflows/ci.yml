@@ -49,8 +49,8 @@ jobs:
   # NEW: Build mkdocs site from markdown files
   mkdocs-site:
     needs: [formal-ledger-agda]
-    # Only run on master branch (adjust as needed)
-    if: ${{ github.ref_name == 'master' }}
+    # # Should we only run on master branch? If so, uncomment next line.
+    # if: ${{ github.ref_name == 'master' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout main repository
