@@ -1,0 +1,84 @@
+/* docs/css/custom.css */
+
+/* Base style for inline Agda terms (optional, theme might cover) */
+code {
+  /* font-family: 'Your Mono Font', monospace; */ /* Example if needed */
+  /* Add other common styles if necessary */
+}
+
+code.test-class { color: red; font-weight: bold; border: 1px solid red; }
+
+/* Style for hldiff placeholder */
+span.highlight {
+  background-color: yellow;
+  padding: 0.1em 0.2em; /* Add slight padding */
+  border-radius: 3px; /* Optional rounded corners */
+}
+
+
+.agda-hidden-source {
+  display: none; /* Hidden by default */
+}
+
+body.show-all-agda-source .agda-hidden-source {
+  display: block; /* Shown when body has the class */
+}
+
+/* docs/css/custom.css */
+#toggle-agda-source {
+  font-size: 1.2em; /* Adjust as needed - balances with theme */
+  padding: 0.4em 0.7em;
+  margin-left: 1em; /* Example margin */
+  cursor: pointer;
+  border: 1px solid var(--md-default-fg-color--light); /* Use theme variable for border */
+  border-radius: 3px;
+  background-color: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+  /* Add transition for smoother hover effects if desired */
+}
+
+#toggle-agda-source:hover {
+  background-color: var(--md-default-fg-color--lighter);
+}
+
+#toggle-agda-source .material-icons {
+  vertical-align: middle; /* Aligns icon with text */
+  font-size: 1.2em; /* Make icon slightly larger than button text */
+  margin-right: 0.3em;
+}
+
+/* Agda classes extracted from Agda.css for color consistency */
+/* Auto-generated section - do not edit manually */
+
+code.AgdaBackground {  }
+code.AgdaBound { color: black }
+code.AgdaCoinductiveConstructor { color: #8B7500 }
+code.AgdaComment { color: #B22222 }
+code.AgdaDatatype { color: #0000CD }
+code.AgdaDeadcode { color: black; background: #808080 }
+code.AgdaDottedPattern {  }
+code.AgdaError { color: red; text-decoration: underline }
+code.AgdaField { color: #EE1289 }
+code.AgdaFunction { color: #0000CD }
+code.AgdaGeneralizable { color: black }
+code.AgdaHole { background: #B4EEB4 }
+code.AgdaIncompletePattern { color: black; background: #F5DEB3 }
+code.AgdaInductiveConstructor { color: #008B00 }
+code.AgdaKeyword { color: #CD6600 }
+code.AgdaMacro { color: #0000CD }
+code.AgdaMarkup { color: #000000 }
+code.AgdaModule { color: #A020F0 }
+code.AgdaNumber { color: #A020F0 }
+code.AgdaOperator {  }
+code.AgdaPostulate { color: #0000CD }
+code.AgdaPragma { color: black }
+code.AgdaPrimitive { color: #0000CD }
+code.AgdaPrimitiveType { color: #0000CD }
+code.AgdaRecord { color: #0000CD }
+code.AgdaShadowingInTelescope { color: black; background: #808080 }
+code.AgdaString { color: #B22222 }
+code.AgdaSymbol { color: #404040 }
+code.AgdaTerminationProblem { color: black; background: #FFA07A }
+code.AgdaTypeChecks { color: black; background: #ADD8E6 }
+code.AgdaUnsolvedConstraint { color: black; background: yellow }
+code.AgdaUnsolvedMeta { color: black; background: yellow }
