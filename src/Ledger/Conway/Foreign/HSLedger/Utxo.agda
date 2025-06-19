@@ -81,7 +81,7 @@ module _ (ext : ExternalFunctions) where
         open UTxOEnv (from env)
         open TxWitnesses (coerce ⦃ TrustMe ⦄ wits)
         neededHashes = scriptsNeeded utxo body
-        refScriptHashes = fromList $ map
+        refScriptHashes = mapˢ
           hash 
           (refScripts (coerce ⦃ TrustMe ⦄ (from tx)) (coerce ⦃ TrustMe ⦄ utxo))
         witsScriptHashes  = mapˢ hash scripts

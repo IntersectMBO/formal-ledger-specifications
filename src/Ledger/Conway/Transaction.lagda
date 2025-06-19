@@ -254,13 +254,13 @@ record TransactionStructure : Type₁ where
   txinsScript : ℙ TxIn → UTxO → ℙ TxIn
   txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
 
-  refScripts : Tx → UTxO → List Script
+  refScripts : Tx → UTxO → ℙ Script
   refScripts tx utxo =
-    mapMaybe (proj₂ ∘ proj₂ ∘ proj₂) $ setToList (range (utxo ∣ (txins ∪ refInputs)))
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
     where open Tx; open TxBody (tx .body)
 
   txscripts : Tx → UTxO → ℙ Script
-  txscripts tx utxo = scripts (tx .wits) ∪ fromList (refScripts tx utxo)
+  txscripts tx utxo = scripts (tx .wits) ∪ refScripts tx utxo
     where open Tx; open TxWitnesses
 
   lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script

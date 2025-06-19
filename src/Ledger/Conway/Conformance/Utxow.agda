@@ -38,7 +38,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         witsKeyHashes     = mapˢ hash (dom vkSigs)
         witsScriptHashes  = mapˢ hash scripts
         inputHashes       = L.getInputHashes tx utxo
-        refScriptHashes   = fromList $ map hash (refScripts tx utxo)
+        refScriptHashes   = mapˢ hash (refScripts tx utxo)
         neededHashes      = L.scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = L.getDataHashes (range txouts)

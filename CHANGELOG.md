@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Change the return type of `refScripts` to a set
 - Add `poolParameters` field to `Snapshot` and compute it in `SNAP`.
 - Add `treasuryCut` (formerly `tau`) and `monetaryExpansion` (formerly `rho`) to `PParams`
 - Change the `DELEG-dereg` transition so that the deposit field can be empty
