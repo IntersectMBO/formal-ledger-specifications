@@ -583,17 +583,20 @@ instance
 the stake distribution from the data contained in a ledger state.
 Here,
 \begin{itemize}
-  \item \AgdaFunction{aggregate₊} takes a relation \ab{R ⊂ A × V},
-    where \ab{V} is any monoid with operation \ab{+},
-    and returns a mapping \ab{A ⇀ B} such that any item \ab{a ∈ A}
-    is mapped to the sum (using the operation \ab{+})
-    of all \ab{b ∈ B} such that \ab{(a , b) ∈ R}.
-  \item \AgdaFunction{m}
-    is the stake relation computed from the UTxO set.    
-  \item \AgdaFunction{stakeRelation}
-    is the total stake relation obtained
-    by combining the stake from the UTxO set
-    with the stake from the reward accounts.
+  \item \AgdaFunction{utxoBalance}
+    computes the coin balance of all those UTxO with a given
+    stake \AgdaDatatype{Credential}.
+  \item \AgdaFunction{activeDelegs}
+    represents the active stake \AgdaDatatype{Credential}s,
+    i.e.\ those that delegate to an existing pool
+    and that have a registered reward account.
+  \item \AgdaFunction{activeRewards}
+    is a mapping from active stake \AgdaDatatype{Credential}s
+    to the balance of their reward account.
+  \item \AgdaFunction{activeStake}
+    stores the stake for each active \AgdaDatatype{Credential},
+    i.e.\ the sum of coins from the UTxO set
+    plus the reward account balance.
 \end{itemize}
 
 \begin{figure*}[!h]
@@ -605,13 +608,16 @@ private
 \end{code}
 \begin{code}
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo stᵈ pState =
-    ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs , poolParams ⟧
+stakeDistr utxo dState pState =
+    ⟦ activeStake , stakeDelegs , poolParams ⟧
   where
     poolParams = pState .PState.pools
-    open DState stᵈ using (stakeDelegs; rewards)
-    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ ∣ rewards ∣
+    open DState dState using (stakeDelegs; rewards)
+    utxoBalance    = λ cred → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just cred)
+    activeDelegs   = (stakeDelegs ∣ dom rewards) ∣^ dom poolParams
+    activeRewards  = rewards ∣ dom activeDelegs
+    activeStake    =
+      mapWithKey (λ c rewardBalance → utxoBalance c + rewardBalance) activeRewards
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}
