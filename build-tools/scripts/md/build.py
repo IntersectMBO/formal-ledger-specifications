@@ -384,7 +384,7 @@ def setup_logging() -> None:
         logger.addHandler(file_handler)
     except Exception as e:
         # If this fails, we need to know why. Print to stderr.
-        print(f"CRITICAL LOGGING ERROR: Failed to set up file logging to {LOG_FILE}: {e}", file=sys.stderr)
+        print(f"💥 CRITICAL LOGGING ERROR: Failed to set up file logging to {LOG_FILE}: {e}", file=sys.stderr)
         # Optionally, re-raise or exit if file logging is critical
         # For now, let it continue so console logging might still work.
 
@@ -396,7 +396,7 @@ def setup_logging() -> None:
 
     # This message might not make it to file if file_handler failed,
     # but will go to console if console_handler working.
-    logging.info("Logging setup complete. Log file: %s", LOG_FILE)
+    logging.info("✅ Logging setup complete. Log file: %s", LOG_FILE)
 
 def setup_directories() -> None:
     """
@@ -473,23 +473,23 @@ def cleanup_intermediate_artifacts() -> None:
         if artifact_dir.exists():
             try:
                 shutil.rmtree(artifact_dir)
-                logging.info(f"  Successfully removed intermediate directory: {artifact_dir.relative_to(BUILD_DIR)}")
+                logging.info(f"  ✅ Successfully removed intermediate directory: {artifact_dir.relative_to(BUILD_DIR)}")
             except OSError as e: # catch more specific error for rmtree
-                logging.warning(f"  Warning: Could not remove intermediate directory {artifact_dir}: {e}")
+                logging.warning(f"  💥 Warning: Could not remove intermediate directory {artifact_dir}: {e}")
         else:
-            logging.debug(f"  Intermediate directory not found (already clean or not created): {artifact_dir.relative_to(BUILD_DIR)}")
+            logging.debug(f"  💥 Intermediate directory not found (already clean or not created): {artifact_dir.relative_to(BUILD_DIR)}")
 
     for artifact_file in intermediate_files:
         if artifact_file.exists():
             try:
                 artifact_file.unlink()
-                logging.info(f"  Successfully removed intermediate file: {artifact_file.relative_to(BUILD_DIR)}")
+                logging.info(f"  ✅ Successfully removed intermediate file: {artifact_file.relative_to(BUILD_DIR)}")
             except OSError as e: # catch more specific error for unlink
-                logging.warning(f"  Warning: Could not remove intermediate file {artifact_file}: {e}")
+                logging.warning(f"  💥 Warning: Could not remove intermediate file {artifact_file}: {e}")
         else:
-            logging.debug(f"  Intermediate file not found (already clean or not created): {artifact_file.relative_to(BUILD_DIR)}")
+            logging.debug(f"  💥 Intermediate file not found (already clean or not created): {artifact_file.relative_to(BUILD_DIR)}")
 
-    logging.info("Intermediate artifact cleanup complete.")
+    logging.info("✅ Intermediate artifact cleanup complete.")
 
 
 # --- Helper to run commands ---
@@ -533,7 +533,7 @@ def run_command(command_args: List[str],
 
         # Check return code if requested
         if check and process.returncode != 0:
-            logging.error(f"Command failed with exit code {process.returncode}: {' '.join(command_args_str)}")
+            logging.error(f"💥 Command failed with exit code {process.returncode}: {' '.join(command_args_str)}")
             # Log captured stdout only if it wasn't redirected and was captured
             if stdout_content and not stdout_file and capture_output: logging.error(f"Stdout:\n{stdout_content}")
             # Log captured stderr again for error context
@@ -543,7 +543,7 @@ def run_command(command_args: List[str],
         return process # Return completed process object
 
     except Exception as e:
-        logging.error(f"Failed to run command {' '.join(command_args_str)}: {e}")
+        logging.error(f"💥 Failed to run command {' '.join(command_args_str)}: {e}")
         raise # Re-raise exception after logging
 
 
@@ -707,7 +707,7 @@ def copy_snapshot_file_with_flat_name(
         logging.debug(f"  Copied snapshot file {lagda_md_file_in_snapshot.name} to {target_full_path.name} (flat name)")
         return final_flat_filename
     except Exception as e:
-        logging.error(f"  Failed to copy/rename snapshot file {lagda_md_file_in_snapshot.name} to flat name: {e}", exc_info=True)
+        logging.error(f"  💥 Failed to copy/rename snapshot file {lagda_md_file_in_snapshot.name} to flat name: {e}", exc_info=True)
         return None
 
 
@@ -720,12 +720,12 @@ def macros_path(
     logging.info(f"Checking for {macros_json_target_path.name}...")
     if generator_script.exists() and macros_sty_source.exists():
         if not macros_json_target_path.exists() or macros_sty_source.stat().st_mtime > macros_json_target_path.stat().st_mtime:
-            logging.info(f"Generating {macros_json_target_path.name} from {macros_sty_source.name}...")
+            logging.info(f"👷  Generating {macros_json_target_path.name} from {macros_sty_source.name}...")
             run_command(["python", str(generator_script), str(macros_sty_source), str(macros_json_target_path)])
         else:
             logging.info(f"Using existing and up-to-date {macros_json_target_path.name}.")
     elif not macros_json_target_path.exists():
-        logging.error(f"{macros_json_target_path.name} not found and cannot be generated. Exiting.")
+        logging.error(f"💥 {macros_json_target_path.name} not found and cannot be generated. Exiting.")
         sys.exit(1)
     else:
         logging.info(f"Using existing {macros_json_target_path.name} (generator or source .sty not found).")
@@ -750,7 +750,7 @@ def convert_agda_to_lagda(snapshot_src_dir: Path, project_root_for_logging: Path
     """Converts .agda files to .lagda.md within the snapshot directory."""
     logging.info("Converting .agda files to .lagda.md in the src snapshot directory...")
     if 'convert_agda_to_lagda_md' not in globals():
-        logging.error("agda2lagda.convert_agda_to_lagda_md not available. Skipping .agda conversion.")
+        logging.error("💥 agda2lagda.convert_agda_to_lagda_md not available. Skipping .agda conversion.")
         return # Or raise an error if critical
     try:
         conversion_success = convert_agda_to_lagda_md(
@@ -758,10 +758,10 @@ def convert_agda_to_lagda(snapshot_src_dir: Path, project_root_for_logging: Path
             project_root_for_logging=project_root_for_logging
         )
         if not conversion_success:
-            logging.error("Failure during .agda to .lagda.md conversion. Exiting.")
+            logging.error("💥 Failure during .agda to .lagda.md conversion. Exiting.")
             sys.exit(1) # Or raise an exception
     except Exception as e:
-        logging.error(f"Error during .agda to .lagda.md conversion: {e}", exc_info=True)
+        logging.error(f"💥 Error during .agda to .lagda.md conversion: {e}", exc_info=True)
         sys.exit(1) # Or raise
 
 
@@ -829,7 +829,7 @@ def copy_or_generate_agda_lib_file(
             logging.debug(f"Generated .agda-lib content:\n{agda_lib_content}")
 
     except Exception as e:
-        logging.error(f"Failed to copy or create {snapshot_lib_file.name}: {e}", exc_info=True)
+        logging.error(f"💥 Failed to copy or create {snapshot_lib_file.name}: {e}", exc_info=True)
         sys.exit(1)  # Or raise
 
     return snapshot_lib_file
@@ -847,7 +847,7 @@ def run_latex_preprocessing_stage(
         logging.info("No original LaTeX .lagda files found to preprocess.")
         return processed_files_info
 
-    logging.info("\n--- Running preprocess.py for all original LaTeX .lagda files ---")
+    logging.info("\n--- 👷  Running preprocess.py for all original LaTeX .lagda files ---")
     for lagda_file_abs_path in original_latex_lagda_files:
         relative_path = lagda_file_abs_path.relative_to(src_dir_root)
         logging.info(f"Preprocessing: {relative_path}")
@@ -888,7 +888,7 @@ def run_latex_preprocessing_stage(
                 "relative_path_original": relative_path
             })
         except Exception as e:
-            logging.error(f"Error during preprocess.py for {relative_path}: {e}", exc_info=True)
+            logging.error(f"💥 Error during preprocess.py for {relative_path}: {e}", exc_info=True)
             # Consider whether to continue or re-raise/sys.exit
     return processed_files_info
 
@@ -902,7 +902,7 @@ def build_global_label_map(
     if not processed_files_info:
         logging.info("No processed files to build label map from. Skipping map generation.")
         return None
-    logging.info("\n--- Building global label map from processed .lagda.temp files ---")
+    logging.info("\n--- 👷  Building global label map from processed .lagda.temp files ---")
     for file_info in processed_files_info:
         temp_file_path = file_info["temp_path"]
         final_flat_filename_for_map = file_info["final_flat_md_filename"]
@@ -932,7 +932,7 @@ def build_global_label_map(
         logging.info(f"Global label-to-target map saved to {labels_map_json_path}")
         return labels_map_json_path
     except Exception as e:
-        logging.error(f"Failed to save labels_map.json: {e}", exc_info=True)
+        logging.error(f"💥 Failed to save labels_map.json: {e}", exc_info=True)
         return None # Indicate failure
 
 
@@ -950,7 +950,7 @@ def run_latex_conversion_stage(
     generated_snapshot_files: List[Path] = []
     if not processed_files_info:
         return generated_snapshot_files
-    logging.info("\n--- Running Pandoc & postprocess.py for original LaTeX .lagda files ---")
+    logging.info("\n--- 👷  Running Pandoc & postprocess.py for original LaTeX .lagda files ---")
 
     # Prepare dummy map path if needed
     dummy_map_path = build_mkdocs_dir / "dummy_labels_map.json"
@@ -988,17 +988,17 @@ def run_latex_conversion_stage(
 
             if snapshot_target_lagda_md_path.exists():
                 generated_snapshot_files.append(snapshot_target_lagda_md_path)
-                logging.info(f"  Successfully generated {snapshot_target_lagda_md_path.relative_to(agda_snapshot_src_dir)}")
+                logging.info(f"  ✅ Successfully generated {snapshot_target_lagda_md_path.relative_to(agda_snapshot_src_dir)}")
                 # Remove original .lagda from snapshot
                 snapshot_original_latex_lagda = agda_snapshot_src_dir / relative_path
                 if snapshot_original_latex_lagda.exists() and snapshot_original_latex_lagda.is_file():
                     snapshot_original_latex_lagda.unlink(missing_ok=True)
-                    logging.info(f"  Removed original .lagda from snapshot: {snapshot_original_latex_lagda.name}")
+                    logging.info(f"  ✅ Removed original .lagda from snapshot: {snapshot_original_latex_lagda.name}")
             else:
-                logging.error(f"  Postprocessed file not found: {snapshot_target_lagda_md_path.name}")
+                logging.error(f"  💥 Postprocessed file not found: {snapshot_target_lagda_md_path.name}")
 
         except Exception as e:
-            logging.error(f"Error during Pandoc/Postprocess for {relative_path}: {e}", exc_info=True)
+            logging.error(f"💥 Error during Pandoc/Postprocess for {relative_path}: {e}", exc_info=True)
             # Decide on error handling: continue, or re-raise?
     return generated_snapshot_files
 
@@ -1007,7 +1007,7 @@ def run_latex_conversion_stage(
 def collect_all_literate_md_in_snapshot(snapshot_src_dir: Path) -> List[Path]:
     """Globs all .lagda.md files in the snapshot directory and sorts them."""
     all_lagda_md_files = sorted(list(snapshot_src_dir.rglob("*.lagda.md")))
-    logging.info(f"\nFound {len(all_lagda_md_files)} total unique literate .md files in snapshot for Agda processing.")
+    logging.info(f"  ✅ Found {len(all_lagda_md_files)} total unique literate .md files in snapshot for Agda processing.")
     for f_path in all_lagda_md_files:
         logging.debug(f"  Candidate for Agda: {f_path.relative_to(snapshot_src_dir)}")
     return all_lagda_md_files
@@ -1026,7 +1026,7 @@ def populate_agda_docs_staging(
     Returns a list of Path objects for the final .md files in agda_docs_staging_dir.
     """
     logging.info(
-        f"\n--- Populating Agda docs staging directory: "
+        f"\n--- 👷  Populating Agda docs staging directory: "
         f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} ---" # assuming PROJECT_ROOT is global
     )
     agda_docs_staging_dir.mkdir(parents=True, exist_ok=True) # ensure it exists
@@ -1039,7 +1039,7 @@ def populate_agda_docs_staging(
         master_agda_file_in_snapshot = agda_snapshot_src_dir / master_agda_file_name
         if not master_agda_file_in_snapshot.exists():
             logging.error(
-                f"Master Agda file '{master_agda_file_name}' not found in snapshot: "
+                f"💥 Master Agda file '{master_agda_file_name}' not found in snapshot: "
                 f"{master_agda_file_in_snapshot}"
             )
             logging.warning("Skipping Agda --html. Falling back to copying snapshot files.")
@@ -1062,7 +1062,7 @@ def populate_agda_docs_staging(
                 ],
                 cwd=agda_snapshot_src_dir.resolve()
             )
-            logging.info(f"Agda --html command completed. Files generated in {agda_docs_staging_dir}.")
+            logging.info(f"✅ Agda --html command completed. Files generated in {agda_docs_staging_dir}.")
 
             # Collect generated .md files
             for gen_file in agda_docs_staging_dir.glob("*.md"):
@@ -1075,8 +1075,8 @@ def populate_agda_docs_staging(
                 )
 
         except Exception as e_agda: # Catch subprocess.CalledProcessError or general exceptions
-            logging.error(f"Agda --html command failed: {e_agda}", exc_info=True)
-            logging.warning("Falling back to copying snapshot files (no Agda HTML highlighting).")
+            logging.error(f"💥 Agda --html command failed: {e_agda}", exc_info=True)
+            logging.warning("   Falling back to copying snapshot files (no Agda HTML highlighting).")
             effective_run_agda_html = False # Force fallback
 
     # 3. Fallback: Copy .lagda.md files from snapshot if Agda --html was not run or failed
@@ -1103,11 +1103,11 @@ def populate_agda_docs_staging(
             if flat_filename_str:
                 final_md_files_in_staging.append(agda_docs_staging_dir / flat_filename_str)
             else:
-                logging.warning(f"Failed to process/copy file: {lagda_md_file_in_snapshot}")
+                logging.warning(f"💥 Failed to process/copy file: {lagda_md_file_in_snapshot}")
 
     num_staged_files = len(final_md_files_in_staging)
     logging.info(
-        f"Populated {agda_docs_staging_dir.relative_to(PROJECT_ROOT)} with {num_staged_files} file(s)."
+        f"✅ Populated {agda_docs_staging_dir.relative_to(PROJECT_ROOT)} with {num_staged_files} file(s)."
     )
 
     # Return a sorted, unique list of Path objects
@@ -1125,7 +1125,7 @@ def copy_staging_to_site_docs(
     Returns a list of the basenames of .md files found at the top level of target_site_docs_dir.
     """
     logging.info(
-        f"\n--- Populating {site_name} site docs from "
+        f"\n--- 👷  Populating {site_name} site docs from "
         f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} "
         f"to {target_site_docs_dir.relative_to(PROJECT_ROOT)} ---"
     )
@@ -1151,11 +1151,11 @@ def copy_staging_to_site_docs(
     # With dirs_exist_ok=True (Python 3.8+), it works like `cp -rT SOURCEDIR TARGETDIR`
     try:
         shutil.copytree(agda_docs_staging_dir, target_site_docs_dir, dirs_exist_ok=True)
-        logging.info(f"Successfully copied all contents from {agda_docs_staging_dir.name} "
+        logging.info(f"✅ Successfully copied all contents from {agda_docs_staging_dir.name} "
                      f"to {target_site_docs_dir.name} for {site_name}.")
     except Exception as e:
         logging.error(
-            f"  Failed to copy directory {agda_docs_staging_dir.name} "
+            f"  💥 Failed to copy directory {agda_docs_staging_dir.name} "
             f"to {target_site_docs_dir.name} for {site_name}: {e}",
             exc_info=True
         )
@@ -1168,7 +1168,7 @@ def copy_staging_to_site_docs(
         if item.is_file() and item.suffix == ".md":
             copied_md_filenames.append(item.name)
 
-    logging.info(f"Found {len(copied_md_filenames)} .md files in {target_site_docs_dir.name} for {site_name} navigation.")
+    logging.info(f"✅ Found {len(copied_md_filenames)} .md files in {target_site_docs_dir.name} for {site_name} navigation.")
     return sorted(list(set(copied_md_filenames)))
 
 
@@ -1198,8 +1198,8 @@ def deploy_static_mkdocs_assets(
                 if agda_css_source.exists():
                     assets_to_copy[agda_css_source] = mkdocs_css_dir / "Agda.css"
                 else: logging.warning(f"Agda.css not found at: {agda_css_source}")
-            else: logging.warning(f"Could not find Agda.css via 'agda --print-agda-data-dir'. Stderr: {agda_css_proc.stderr}")
-        except Exception as e: logging.warning(f"Error trying to find Agda.css: {e}")
+            else: logging.warning(f"💥 Could not find Agda.css via 'agda --print-agda-data-dir'. Stderr: {agda_css_proc.stderr}")
+        except Exception as e: logging.warning(f"💥 Error trying to find Agda.css: {e}")
 
     # Custom CSS - only process if not None and exists
     if custom_css_source and custom_css_source.exists():
@@ -1249,7 +1249,7 @@ def deploy_static_mkdocs_assets(
             dest.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(src, dest)
         except Exception as e:
-            logging.error(f"Failed to copy asset {src} to {dest}: {e}")
+            logging.error(f"💥 Failed to copy asset {src} to {dest}: {e}")
 
     # Ensure unique list for nav, with index.md first.
     return sorted(
@@ -1274,13 +1274,13 @@ def generate_mkdocs_config(
         try:
             with open(mkdocs_yml_target_path, 'r', encoding='utf-8') as f_yml:
                 mkdocs_config = yaml.safe_load(f_yml) or {}
-            logging.info(f"  Loaded existing {mkdocs_yml_target_path.name} as base configuration.")
+            logging.info(f"  ✅ Loaded existing {mkdocs_yml_target_path.name} as base configuration.")
         except Exception as e:
-            logging.error(f"  Error loading existing {mkdocs_yml_target_path.name}: {e}. "
+            logging.error(f"  💥 Error loading existing {mkdocs_yml_target_path.name}: {e}. "
                           "Proceeding with minimal defaults and dynamic additions.", exc_info=True)
             mkdocs_config = {} # Reset to ensure defaults are applied
     elif not mkdocs_yml_target_path.exists():
-        logging.warning(f"  Base {mkdocs_yml_target_path.name} not found (template dir likely "
+        logging.warning(f"  💥 Base {mkdocs_yml_target_path.name} not found (template dir likely "
                         "missing/empty or copy failed). Creating minimal config.")
 
     # Ensure essential keys exist if loaded config is very minimal or missing
@@ -1320,24 +1320,24 @@ def generate_mkdocs_config(
                 nav_data = yaml.safe_load(f_nav)
             if isinstance(nav_data, list): # Basic validation: nav should be a list
                 nav_structure_for_yaml = nav_data
-                logging.info(f"  Successfully loaded navigation from {nav_yml_template_file.name}.")
+                logging.info(f"  ✅ Successfully loaded navigation from {nav_yml_template_file.name}.")
             elif nav_data is not None: # It loaded something, but not a list
                 logging.warning(f"  Content of {nav_yml_template_file.name} is not a valid list structure for 'nav'. "
                                 "Falling back to generated navigation.")
             # If nav_data is None (empty file), it will also fall through.
         except Exception as e:
-            logging.warning(f"  Error loading or parsing {nav_yml_template_file.name}: {e}. "
+            logging.warning(f"  💥 Error loading or parsing {nav_yml_template_file.name}: {e}. "
                             "Falling back to generated navigation.", exc_info=True)
     elif nav_yml_template_file.exists() and not has_yaml_library:
         logging.warning(f"  Navigation template {nav_yml_template_file.name} found but PyYAML not installed. "
                         "Generating navigation.")
 
     if nav_structure_for_yaml is None: # If nav.yml not used or failed to load
-        logging.info("  Generating navigation from processed files in docs/ directory.")
+        logging.info("  👷  Generating navigation from processed files in docs/ directory.")
         nav_structure_for_yaml = build_nav_from_flat_files(nav_files_from_docs_dir)
 
     mkdocs_config['nav'] = nav_structure_for_yaml
-    logging.info("  Set 'nav' section in configuration.")
+    logging.info("  ✅ Set 'nav' section in configuration.")
 
     # Write the updated/generated mkdocs.yml
     try:
@@ -1349,9 +1349,9 @@ def generate_mkdocs_config(
             with open(mkdocs_yml_target_path, "w", encoding="utf-8") as f_yml_json:
                 json.dump(mkdocs_config, f_yml_json, indent=2)
             logging.warning(f"  Generated {mkdocs_yml_target_path.name} as JSON (PyYAML not installed).")
-        logging.info(f"  Successfully wrote final configuration to {mkdocs_yml_target_path.name}.")
+        logging.info(f"  ✅ Successfully wrote final configuration to {mkdocs_yml_target_path.name}.")
     except Exception as e:
-        logging.error(f"  Error writing {mkdocs_yml_target_path.name}: {e}", exc_info=True)
+        logging.error(f"  💥 Error writing {mkdocs_yml_target_path.name}: {e}", exc_info=True)
 
     return mkdocs_yml_target_path
 
@@ -1365,7 +1365,7 @@ def generate_mdbook_config(
     """
     Ensures book.toml is in place and generates/copies SUMMARY.md for mdbook.
     """
-    logging.info(f"\n--- Finalizing mdbook configuration ---")
+    logging.info(f"\n--- 👷  Finalizing mdbook configuration ---")
 
     # --- 1. Handle book.toml ---
     logging.info(f"  Ensuring {mdbook_toml_build_path.name} is in place at "
@@ -1374,13 +1374,13 @@ def generate_mdbook_config(
         try:
             mdbook_toml_build_path.parent.mkdir(parents=True, exist_ok=True) # ensure _build/md/mdbook/ exists
             shutil.copy2(book_toml_template_source, mdbook_toml_build_path)
-            logging.info(f"    Copied template '{book_toml_template_source.relative_to(PROJECT_ROOT)}' "
+            logging.info(f"    ✅ Copied template '{book_toml_template_source.relative_to(PROJECT_ROOT)}' "
                          f"to '{mdbook_toml_build_path.relative_to(PROJECT_ROOT)}'.")
         except Exception as e:
-            logging.error(f"    Failed to copy {book_toml_template_source.name}: {e}", exc_info=True)
+            logging.error(f"    💥 Failed to copy {book_toml_template_source.name}: {e}", exc_info=True)
     else:
         logging.warning(
-            f"    Template book.toml '{book_toml_template_source}' not found. "
+            f"    💥 Template book.toml '{book_toml_template_source}' not found. "
             f"'{mdbook_toml_build_path.name}' may be missing. Consider creating a default one "
             f"at {book_toml_template_source} or ensure it's created by an earlier step."
         )
@@ -1402,7 +1402,7 @@ def generate_mdbook_config(
         try:
             shutil.copy2(summary_md_template_source, mdbook_summary_build_path)
             logging.info(
-                f"    Copied user-provided SUMMARY.md from '{summary_md_template_source.relative_to(PROJECT_ROOT)}' "
+                f"    ✅ Copied user-provided SUMMARY.md from '{summary_md_template_source.relative_to(PROJECT_ROOT)}' "
                 f"to '{mdbook_summary_build_path.relative_to(PROJECT_ROOT)}'."
             )
             # If user-provided SUMMARY.md already correctly lists all flat-named files (e.g., Ledger.Foo.md),
@@ -1410,7 +1410,7 @@ def generate_mdbook_config(
             # generate chapter list, replace placeholder, and write it back.
             # For now, we'll assume a direct copy if exists.
         except Exception as e:
-            logging.error(f"    Failed to copy user-provided {summary_md_template_source.name}: {e}", exc_info=True)
+            logging.error(f"    💥 Failed to copy user-provided {summary_md_template_source.name}: {e}", exc_info=True)
             # If copy fails, we might fall back to generating a basic one.
             # For robustness, let's fall back if the target still doesn't exist.
             if not mdbook_summary_build_path.exists():
@@ -1419,7 +1419,7 @@ def generate_mdbook_config(
     else:
         # Strategy 2: If no static template, generate basic SUMMARY.md from actual_content_files
         logging.info(
-            f"    User-provided SUMMARY.md template '{summary_md_template_source}' not found. "
+            f"    💥 User-provided SUMMARY.md template '{summary_md_template_source}' not found. "
             "Generating a basic SUMMARY.md from content files."
         )
         generate_basic_summary_md(mdbook_summary_build_path, actual_content_files_in_build_src)
@@ -1456,7 +1456,7 @@ def generate_basic_summary_md(
             f_summary.write(summary_content)
         logging.info(f"    Generated basic '{mdbook_summary_build_path.name}'.")
     except Exception as e:
-        logging.error(f"    Failed to write generated {mdbook_summary_build_path.name}: {e}", exc_info=True)
+        logging.error(f"    💥 Failed to write generated {mdbook_summary_build_path.name}: {e}", exc_info=True)
 
 
 def generate_custom_css_from_agda(
@@ -1472,7 +1472,7 @@ def generate_custom_css_from_agda(
 
     # Check if Agda.css exists
     if not agda_css_path.exists():
-        logging.warning(f"Agda.css not found at {agda_css_path}")
+        logging.warning(f"💥 Agda.css not found at {agda_css_path}")
         return False
 
     # Extract color mappings from Agda.css
@@ -1487,7 +1487,7 @@ def generate_custom_css_from_agda(
         color_mappings[class_name] = properties
 
     if not color_mappings:
-        logging.warning("No Agda color mappings found in Agda.css")
+        logging.warning("💥 No Agda color mappings found in Agda.css")
         return False
 
     # Start with template content if provided
@@ -1544,7 +1544,7 @@ def copy_common_source_files(
     import shutil
 
     if not common_src_dir.exists():
-        logging.info(f"No common source directory found at {common_src_dir}, skipping")
+        logging.info(f"💥 No common source directory found at {common_src_dir}, skipping")
         return
 
     logging.info(f"Copying shared files from {common_src_dir}")
@@ -1601,14 +1601,14 @@ def main(run_agda_html_flag=False):
         try:
             # Copytree will copy all contents from MKDOCS_STATIC_SRC_DIR into MKDOCS_SRC_DIR
             shutil.copytree(MKDOCS_STATIC_SRC_DIR, MKDOCS_SRC_DIR, dirs_exist_ok=True)
-            logging.info(f"  Successfully copied base structure to {MKDOCS_SRC_DIR.name}.")
+            logging.info(f"  ✅ Successfully copied base structure to {MKDOCS_SRC_DIR.name}.")
         except Exception as e:
-            logging.error(f"  Failed to copy static template from {MKDOCS_STATIC_SRC_DIR.name} "
+            logging.error(f"  💥 Failed to copy static template from {MKDOCS_STATIC_SRC_DIR.name} "
                           f"to {MKDOCS_SRC_DIR.name}: {e}", exc_info=True)
             # Decide if this is a fatal error. If mkdocs.yml is expected from here, it might be.
             # For now, we'll let it proceed, and later stages might fail if expected files are missing.
     else:
-        logging.warning(f"  Static template directory {MKDOCS_STATIC_SRC_DIR.name} not found. "
+        logging.warning(f"  💥 Static template directory {MKDOCS_STATIC_SRC_DIR.name} not found. "
                         f"{MKDOCS_SRC_DIR.name} may be missing essential base files like mkdocs.yml.")
         # Ensure essential subdirectories like docs/ are created if the template didn't provide them
         MKDOCS_DOCS_DIR.mkdir(parents=True, exist_ok=True)
@@ -1624,16 +1624,16 @@ def main(run_agda_html_flag=False):
         try:
             # copy the entire static mdbook project structure.
             shutil.copytree(MDBOOK_STATIC_DIR, MDBOOK_BUILD_DIR, dirs_exist_ok=True)
-            logging.info(f"  Successfully copied entire static mdbook structure to {MDBOOK_BUILD_DIR.name}.")
+            logging.info(f"  ✅ Successfully copied entire static mdbook structure to {MDBOOK_BUILD_DIR.name}.")
             # This will copy:
             # build-tools/static/md/mdbook/book.toml -> _build/md/mdbook/book.toml
             # build-tools/static/md/mdbook/src/* (index.md, SUMMARY.md, css/, js/) -> _build/md/mdbook/src/*
         except Exception as e:
-            logging.error(f"  Failed to copy static template from {MDBOOK_STATIC_DIR.name} "
+            logging.error(f"  💥 Failed to copy static template from {MDBOOK_STATIC_DIR.name} "
                           f"to {MDBOOK_BUILD_DIR.name}: {e}", exc_info=True)
     else:
         logging.warning(
-            f"  Static mdbook template directory {MDBOOK_STATIC_DIR.name} not found. "
+            f"  💥 Static mdbook template directory {MDBOOK_STATIC_DIR.name} not found. "
             f"{MDBOOK_BUILD_DIR.name} may be missing essential files like book.toml and SUMMARY.md.")
         # If static dir missing, we must ensure the core build dirs for mdbook still exist
         # for subsequent steps (like populating with Agda files).
@@ -1665,7 +1665,7 @@ def main(run_agda_html_flag=False):
     for agda_file_in_snapshot in list(AGDA_SNAPSHOT_SRC_DIR.rglob("*.agda")):
         corresponding_lagda_md = agda_file_in_snapshot.with_suffix(".lagda.md")
         if corresponding_lagda_md.exists(): # If conversion produced a .lagda.md
-            logging.debug(f"    Removing '{agda_file_in_snapshot.name}' as its .lagda.md now exists.")
+            logging.debug(f"    Removing '{agda_file_in_snapshot.name}' as corresponding .lagda.md file exists.")
             agda_file_in_snapshot.unlink(missing_ok=True) # missing_ok in case it was already handled
 
     # 5. Copy existing .agda-lib file or generate a new one for snapshot.
@@ -1746,7 +1746,7 @@ def main(run_agda_html_flag=False):
                 ], stdout_file=str(file_info["temp_path"]))
                 successfully_preprocessed_info.append(file_info) # Add if preprocess succeeded
             except Exception as e:
-                logging.error(f"  Error during preprocess.py for {file_info['relative_path_original']}: {e}", exc_info=True)
+                logging.error(f"  💥 Error during preprocess.py for {file_info['relative_path_original']}: {e}", exc_info=True)
     # `successfully_preprocessed_info` is now the list for the next stages.
 
     # --- Stage 6b: Build Global Label Map ---
@@ -1785,7 +1785,7 @@ def main(run_agda_html_flag=False):
     )
 
     # 8.01. Generate augmented custom.css with Agda classes
-    logging.info("\n--- Generating augmented custom.css with Agda classes ---")
+    logging.info("\n--- 👷  Generating augmented custom.css with Agda classes ---")
 
     agda_css_in_staging = BUILD_MD_PP_DIR / "Agda.css"
     custom_css_template = MD_STATIC_CUSTOM_CSS_PATH  # build-tools/static/md/common/src/css/custom.css
@@ -1800,14 +1800,14 @@ def main(run_agda_html_flag=False):
             template_css_path=custom_css_template
         )
         if css_generation_success:
-            logging.info(f"Successfully generated augmented custom.css at {custom_css_temp_output}")
+            logging.info(f"✅ Successfully generated augmented custom.css at {custom_css_temp_output}")
         else:
-            logging.error("Failed to generate augmented custom.css, falling back to template")
+            logging.error("💥 Failed to generate augmented custom.css, falling back to template")
     else:
         if run_agda_html_flag:
-            logging.warning("Agda css classes are missing; symbols in literate Agda prose will lack correct highlighting.")
+            logging.warning("💥 Agda css classes are missing; symbols in literate Agda prose will lack correct highlighting.")
         else:
-            logging.info("Agda HTML generation was skipped, using template custom.css without Agda classes.")
+            logging.info("💥 Agda HTML generation was skipped, using template custom.css without Agda classes.")
 
     # If generation failed or wasn't attempted, copy template as-is
     if not css_generation_success:
@@ -1824,9 +1824,9 @@ def main(run_agda_html_flag=False):
     final_custom_css_path = MKDOCS_CSS_DIR / "custom.css"
     if custom_css_temp_output.exists():
         shutil.copy2(custom_css_temp_output, final_custom_css_path)
-        logging.info(f"Copied final custom.css to {final_custom_css_path}")
+        logging.info(f"✅ Copied final custom.css to {final_custom_css_path}")
     else:
-        logging.error("No custom.css file available to copy to mkdocs directory")
+        logging.error("💥 No custom.css file available to copy to mkdocs directory")
 
     # 8.1: populate mkdocs site from staging
     nav_files_in_docs: List[str] = copy_staging_to_site_docs(
@@ -1896,7 +1896,7 @@ def main(run_agda_html_flag=False):
     )
 
     # 11. Final messages and cleanup
-    logging.info(f"\nBuild script finished successfully!")
+    logging.info(f"✅ Build script finished successfully!")
     logging.info(f"Primary input for Shake/Agda (if used): {AGDA_SNAPSHOT_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Final source for MkDocs build/serve: {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Full log saved to: {LOG_FILE.relative_to(PROJECT_ROOT)}")
@@ -1917,13 +1917,13 @@ if __name__ == "__main__":
     try:
         main(run_agda_html_flag=args.run_agda)
     except SystemExit as e: # catch sys.exit() specifically if used for early exits
-        logging.error(f"Build process exited prematurely with code {e.code}.")
+        logging.error(f"💥 Build process exited prematurely with code {e.code}.")
         # We may want to cleanup here; for now, cleanup is only on successful main completion.
     except Exception as e:
-        logging.exception("CRITICAL ERROR: Build failed due to an unhandled exception.")
+        logging.exception("💥 CRITICAL ERROR: Build failed due to an unhandled exception.")
         # no cleanup here; preserve intermediate files for debugging error.
         sys.exit(1) # ensure non-zero exit code for CI
     finally:
         # executes whether main() succeeds or fails (unless sys.exit called)
-        logging.info("Build script execution finished. Shutting down logging.")
+        logging.info("✅ Build script execution finished. Shutting down logging.")
         logging.shutdown()
