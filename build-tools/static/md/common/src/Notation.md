@@ -73,71 +73,44 @@ to some domain
 is denoted by
 `f`{.AgdaBound}
 `|`{.agdafunction}
-`A`{.agdabound},
-and the restriction to the complement of `A`{.agdabound} is written
-`f`{.agdabound}
-`|`{.agdafunction}
-`A`{.agdabound}
-`ᶜ`{.agdafunction}.
+`A`{.AgdaBound},
+and the restriction to the complement of `A`{.AgdaBound} is written
+`f`{.AgdaBound}
+`|`{.AgdaFunction}
+`A`{.AgdaBound}
+`ᶜ`{.AgdaFunction}.
 
 Corestriction or range restriction is
-denoted similarly, except that `|`{.agdafunction} is replaced by
-`∣^`{.agdafunction}.
+denoted similarly, except that `|`{.AgdaFunction} is replaced by
+`∣^`{.AgdaFunction}.
 
 ## Inverse Image
 
-The expression 
-`m`{.agdabound}
-`⁻¹`{.agdafunction}
-`B`{.agdabound}
-denotes the
-*inverse image* of the set 
-`B`{.agdabound} 
-under the map 
-`m`{.agdabound}.
+The expression `m`{.AgdaBound} `⁻¹`{.AgdaFunction} `B`{.AgdaBound} denotes the
+*inverse image* of the set `B`{.AgdaBound} under the map `m`{.AgdaBound}.
 
 ## Left-biased Union
 
-For maps 
-`m`{.agdabound} and 
-`m'`{.agdabound}, we write
-`m`{.agdabound}
-`∪ˡ`{.agdafunction}
-`m'`{.agdabound} 
-for their *left-biased union*. This means that
-key-value pairs in 
-`m`{.agdabound}
-are guaranteed to be in the union, while a key-value pair in
-`m'`{.AgdaBound} is in the union if and only if the key is not in
-`m`{.AgdaBound}.
+For maps `m`{.AgdaBound} and `m'`{.AgdaBound}, we write
+`m`{.AgdaBound} `∪ˡ`{.AgdaFunction} `m'`{.AgdaBound} for their *left-biased union*.
+This means that key-value pairs in `m`{.AgdaBound} are guaranteed to be in the union,
+while a key-value pair in `m'`{.AgdaBound} is in the union if and only if the key is
+not in `m`{.AgdaBound}.
 
 ## Map Addition
 
-For maps 
-`m`{.AgdaBound} and 
-`m'`{.AgdaBound}, we write
-`m`{.AgdaBound}
-`∪⁺`{.AgdaFunction}
-`m'`{.AgdaBound} 
-for their *union*, where keys that appear
-in both maps have their corresponding values added.
+For maps `m`{.AgdaBound} and `m'`{.AgdaBound}, we write
+`m`{.AgdaBound} `∪⁺`{.AgdaFunction} `m'`{.AgdaBound} for their *union*, where keys
+that appear in both maps have their corresponding values added.
 
 ## Mapping a Partial Function.
 
-A *partial function* is a function on 
-`A`{.AgdaBound}
-which may not be defined for all elements of 
-`A`{.AgdaBound}. 
-We denote such a function by
-`f`{.AgdaBound} :
-`A`{.AgdaBound} ⇀ 
-`B`{.AgdaBound}.
-If we happen to know that the function is
-*total* (defined for all elements of 
-`A`{.AgdaBound}), then we write
-`f`{.AgdaBound} :
-`A`{.AgdaBound} →
-`B`{.AgdaBound}.
+A *partial function* is a function on `A`{.AgdaBound} which may not be defined for
+all elements of `A`{.AgdaBound}.  We denote such a function by
+`f`{.AgdaBound} : `A`{.AgdaBound} ⇀ `B`{.AgdaBound}.
+
+If we happen to know that the function is *total* (defined for all elements of
+`A`{.AgdaBound}), then we write `f`{.AgdaBound} : `A`{.AgdaBound} → `B`{.AgdaBound}.
 
 The `mapPartial`{.AgdaFunction} operation takes such a function
 `f`{.AgdaBound} and a set
@@ -185,9 +158,9 @@ and can safely be ignored. However there are the two exceptions:
 
 - `ᶜ`{.AgdaFunction} in the context of set restrictions, where it indicates the complement
 
-Also, non-letter superscripts do carry meaning.[^1]
+Also, non-letter superscripts do carry meaning.
 
-[^1]:  At some point in the future we hope to be able to remove all those
-       non-essential superscripts. Since we prefer doing this by changing the Agda
-       source code instead of via hiding them in this document, this is a non-trivial
-       problem that will take some time to address.
+(At some point in the future we hope to be able to remove all those
+non-essential superscripts. Since we prefer doing this by changing the Agda
+source code instead of via hiding them in this document, this is a non-trivial
+problem that will take some time to address.)
