@@ -34,6 +34,12 @@ from utils.pipeline_types import (
     ProcessedFile, ProcessingStage
 )
 
+try:
+    from modules.bibliography_stage import process_bibliography_stage
+    HAS_BIBLIOGRAPHY_PROCESSOR = True
+except ImportError:
+    HAS_BIBLIOGRAPHY_PROCESSOR = False
+
 # =============================================================================
 # Mathematical Types for LaTeX Processing
 # =============================================================================
@@ -210,24 +216,65 @@ def run_pandoc_stage(
 def run_postprocess_stage(
     processing_stage: LaTeXProcessingStage,
     labels_map_path: Path,
-    postprocess_script: Path
+    postprocess_script: Path,
+    bibliography_path: Optional[Path] = None
 ) -> Result[None, PipelineError]:
     """
-    Mathematical transformation: .md.intermediate → .lagda.md
+    Mathematical transformation: .md.intermediate → .lagda.md (with bibliography)
 
-    Applies postprocess.py transformation with cross-reference resolution.
+    Enhanced postprocessing that includes bibliography integration.
     """
+
+    # Stage 1: Standard postprocessing
+    temp_postprocess_output = processing_stage.final_file.with_suffix('.postprocess.tmp')
 
     command = [
         "python", str(postprocess_script),
         str(processing_stage.intermediate_file),
         str(processing_stage.code_blocks_file),
         str(labels_map_path),
-        str(processing_stage.final_file)
+        str(temp_postprocess_output)  # Temporary output
     ]
 
     result = run_command_functional(command)
-    return result.map(lambda _: None)
+    if result.is_err:
+        return result
+
+    # Stage 2: Bibliography processing (if available and bibliography file exists)
+    if HAS_BIBLIOGRAPHY_PROCESSOR and bibliography_path and bibliography_path.exists():
+        logging.debug(f"Processing bibliography for {processing_stage.relative_path}")
+
+        bib_result = process_bibliography_stage(
+            input_md_file=temp_postprocess_output,
+            bib_file=bibliography_path,
+            output_md_file=processing_stage.final_file
+        )
+
+        if bib_result.is_err:
+            error = bib_result.unwrap_err()
+            logging.warning(f"Bibliography processing failed for {processing_stage.relative_path}: {error.message}")
+            # Fallback: copy temp file without bibliography
+            import shutil
+            shutil.copy2(temp_postprocess_output, processing_stage.final_file)
+
+        # Cleanup temp file
+        if temp_postprocess_output.exists():
+            temp_postprocess_output.unlink()
+
+    else:
+        # No bibliography processing: just move temp file to final location
+        if HAS_BIBLIOGRAPHY_PROCESSOR:
+            logging.debug(f"No bibliography file found, skipping bibliography processing")
+        else:
+            logging.warning(f"Bibliography processor not available")
+
+        import shutil
+        shutil.copy2(temp_postprocess_output, processing_stage.final_file)
+
+        if temp_postprocess_output.exists():
+            temp_postprocess_output.unlink()
+
+    return Result.ok(None)
 
 
 # =============================================================================
@@ -325,12 +372,10 @@ def process_latex_files(
     config: BuildConfig
 ) -> Result[LaTeXProcessingResult, PipelineError]:
     """
-    Complete LaTeX processing pipeline composition.
+    Complete LaTeX processing pipeline composition with bibliography.
 
     Mathematical composition:
-    process = postprocess ∘ pandoc ∘ preprocess
-
-    This is the main entry point for LaTeX processing.
+    process = bibliography ∘ postprocess ∘ pandoc ∘ preprocess
     """
 
     logging.info(f"🔄 Processing {len(latex_files)} LaTeX files...")
@@ -390,13 +435,16 @@ def process_latex_files(
         if result.is_err:
             return Result.err(result.unwrap_err())
 
-    # Stage 4: Postprocessing
-    logging.info("🔄 Running postprocessing stage...")
+    # Stage 4: Postprocessing + Bibliography (ENHANCED!)
+    logging.info("🔄 Running postprocessing + bibliography stage...")
+    bibliography_path = config.source_paths.references_bib_path  # From build_config
+
     for stage in processing_stages:
         result = run_postprocess_stage(
             stage,
             labels_map_path,
-            config.source_paths.md_scripts_dir / "postprocess.py"
+            config.source_paths.md_scripts_dir / "postprocess.py",
+            bibliography_path  # ADD bibliography processing!
         )
         if result.is_err:
             return Result.err(result.unwrap_err())
@@ -416,7 +464,8 @@ def process_latex_files(
     statistics = {
         "files_processed": len(processed_files),
         "labels_extracted": len(label_map),
-        "total_stages": len(processing_stages)
+        "total_stages": len(processing_stages),
+        "bibliography_processed": bibliography_path.exists() if bibliography_path else False
     }
 
     result = LaTeXProcessingResult(
@@ -426,6 +475,8 @@ def process_latex_files(
     )
 
     logging.info(f"✅ LaTeX processing completed: {len(processed_files)} files")
+    if bibliography_path and bibliography_path.exists():
+        logging.info(f"✅ Bibliography processing included using: {bibliography_path.name}")
 
     return Result.ok(result)
 
