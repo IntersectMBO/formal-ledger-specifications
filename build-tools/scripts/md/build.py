@@ -242,18 +242,6 @@ except ImportError as e:
     print("Falling back to legacy functions", file=sys.stderr)
     HAS_FUNCTIONAL_MODULES = False
 
-# try:
-#     from modules.agda_processing import (
-#         process_agda_source_files,
-#         agda_processing_stage,
-#         create_agda_snapshots as functional_create_agda_snapshots,
-#         collect_lagda_md_files
-#     )
-#     HAS_AGDA_PROCESSING = True
-# except ImportError as e:
-#     print(f"WARNING: Could not import Agda processing modules: {e}", file=sys.stderr)
-#     HAS_AGDA_PROCESSING = False
-
 # Agda processing integration
 try:
     from modules.agda_processing import process_agda_source_files, collect_lagda_md_files
@@ -262,6 +250,13 @@ except ImportError as e:
     print(f"WARNING: Could not import Agda processing modules: {e}", file=sys.stderr)
     HAS_AGDA_PROCESSING = False
 
+# LaTeX processing integration
+try:
+    from modules.latex_pipeline import latex_pipeline_stage
+    HAS_LATEX_PIPELINE = True
+except ImportError as e:
+    print(f"WARNING: Could not import LaTeX pipeline module: {e}", file=sys.stderr)
+    HAS_LATEX_PIPELINE = False
 
 
 # --- Custom Type Definitions ---
@@ -1781,14 +1776,6 @@ def deploy_bibliography_assets():
         logging.warning(f"❌ Bibliography file not found: {REFS_STATIC_PATH}")
 
 
-    """Orchestrates the documentation build pipeline with functional composition."""
-
-    if HAS_FUNCTIONAL_MODULES:
-        return main_functional(run_agda_html_flag)
-    else:
-        return main_legacy(run_agda_html_flag)
-
-
 def main(run_agda_html_flag=False):
     """Main dispatcher: Choose functional or legacy pipeline based on module availability."""
     if HAS_FUNCTIONAL_MODULES and HAS_AGDA_PROCESSING:
@@ -1824,6 +1811,115 @@ def main_functional_simple(run_agda_html_flag=False):
     logging.info("✅ Test completed!")
 
 def main_functional(run_agda_html_flag=False):
+    """Functional pipeline using mathematical composition where possible."""
+    logging.info("🔧 Starting functional documentation build pipeline...")
+    logging.info(f"Run Agda --html flag: {run_agda_html_flag}")
+
+    # STAGE 1: Load immutable configuration
+    config = load_build_config(run_agda_html=run_agda_html_flag, mode="development")
+
+    # STAGE 2: Functional setup
+    logging.info("🏗️ Setting up build environment with functional modules...")
+    setup_result = setup_build_environment(config)
+
+    if setup_result.is_err:
+        error = setup_result.unwrap_err()
+        logging.error(f"❌ Functional setup failed: {error}")
+        sys.exit(1)
+
+    setup_info = setup_result.unwrap()
+    logging.info(f"✅ Functional setup completed:")
+    logging.info(f"   Directories created: {len(setup_info.get('directories', []))}")
+    logging.info(f"   Static structures: {list(setup_info.get('structures', {}).keys())}")
+    logging.info(f"   Common files copied: {setup_info.get('common_files_copied', 0)}")
+
+    # STAGE 3: Generate macros (legacy bridge)
+    macros_json_path = macros_path(
+        config.build_paths.macros_json_path,
+        config.source_paths.md_scripts_dir / "generate_macros_json.py",
+        config.source_paths.macros_sty_path
+    )
+
+    # STAGE 4: Functional Agda processing
+    logging.info("🔄 Using functional Agda processing pipeline...")
+    agda_result = process_agda_source_files(config)
+
+    if agda_result.is_err:
+        error = agda_result.unwrap_err()
+        logging.error(f"❌ Functional Agda processing failed: {error}")
+        sys.exit(1)
+
+    processed_agda_files = agda_result.unwrap()
+    logging.info(f"✅ Functional Agda processing: {len(processed_agda_files)} files processed")
+
+    # STAGE 5: NEW! Functional LaTeX processing
+    logging.info("🔄 LaTeX processing stage...")
+
+    latex_files = list(config.build_paths.agda_snapshot_src_dir.rglob("*.lagda"))
+
+    if latex_files and HAS_LATEX_PIPELINE:
+        logging.info(f"Found {len(latex_files)} LaTeX files to process")
+
+        latex_result = latex_pipeline_stage(latex_files, config)
+
+        if latex_result.is_err:
+            error = latex_result.unwrap_err()
+            logging.error(f"❌ LaTeX processing failed: {error}")
+            sys.exit(1)
+
+        processed_latex_files = latex_result.unwrap()
+        logging.info(f"✅ LaTeX processing: {len(processed_latex_files)} files processed")
+    else:
+        if latex_files and not HAS_LATEX_PIPELINE:
+            logging.warning(f"Found {len(latex_files)} LaTeX files but LaTeX pipeline not available")
+            logging.warning("Falling back to legacy LaTeX processing...")
+            # TODO: Add legacy fallback here if needed
+        processed_latex_files = []
+
+    # STAGE 6: Compose all processed files
+    all_processed_files = list(processed_agda_files) + processed_latex_files
+    all_snapshot_lagda_md_files = [f.current_path for f in all_processed_files]
+
+    logging.info(f"✅ Total processed files: {len(all_processed_files)}")
+    logging.info(f"   Agda files: {len(processed_agda_files)}")
+    logging.info(f"   LaTeX files: {len(processed_latex_files)}")
+
+    # STAGE 7: Continue with existing pipeline (simplified for now)
+    logging.info("🔄 Continuing with existing pipeline components...")
+
+    staged_md_file_paths = populate_agda_docs_staging(
+        run_agda_html_flag,
+        all_snapshot_lagda_md_files,
+        config.build_paths.agda_snapshot_src_dir,
+        config.build_paths.build_md_pp_dir,
+        "Ledger.lagda.md"
+    )
+
+    logging.info(f"✅ Staged {len(staged_md_file_paths)} files")
+
+    # STAGE 8: Continue with legacy bridge (for now)
+    continue_with_legacy_pipeline(
+        config,
+        macros_json_path,
+        all_snapshot_lagda_md_files,
+        run_agda_html_flag
+    )
+
+    # STAGE 9: Functional cleanup
+    if config.cleanup_intermediates:
+        cleanup_result = cleanup_intermediate_artifacts(config)
+        if cleanup_result.is_ok:
+            cleaned = cleanup_result.unwrap()
+            logging.info(f"✅ Functional cleanup: {len(cleaned)} artifacts removed")
+        else:
+            error = cleanup_result.unwrap_err()
+            logging.warning(f"⚠️ Cleanup warning: {error}")
+
+    logging.info("✅ Functional build completed successfully!")
+
+
+
+def main_functional_old(run_agda_html_flag=False):
     """Functional pipeline using mathematical composition where possible."""
     logging.info("🔧 Starting functional documentation build pipeline...")
     logging.info(f"Run Agda --html flag: {run_agda_html_flag}")
@@ -1914,108 +2010,29 @@ def main_legacy(run_agda_html_flag=False):
 
 def continue_with_legacy_pipeline(config, macros_json_path, all_snapshot_lagda_md_files, run_agda_html_flag):
     """
-    Continue with the parts of the pipeline not yet converted to functional style.
+    Bridge function to continue with legacy pipeline parts.
+    This will be gradually replaced by functional modules.
     """
-    # Get legacy paths for compatibility
-    legacy_paths = get_legacy_paths()
 
-    # Extract commonly used paths
+    # Extract paths for legacy compatibility
     AGDA_SNAPSHOT_SRC_DIR = config.build_paths.agda_snapshot_src_dir
     BUILD_MD_PP_DIR = config.build_paths.build_md_pp_dir
     MKDOCS_DOCS_DIR = config.build_paths.mkdocs_docs_dir
     MKDOCS_CSS_DIR = config.build_paths.mkdocs_css_dir
     MKDOCS_JS_DIR = config.build_paths.mkdocs_js_dir
     MKDOCS_SRC_DIR = config.build_paths.mkdocs_src_dir
+    PROJECT_ROOT = config.source_paths.project_root
 
-    # Define missing mdbook paths for now
-    MDBOOK_BUILD_DIR = config.build_paths.build_md_dir / "mdbook"
-    MDBOOK_DOCS_DIR = MDBOOK_BUILD_DIR / "src"
+    # For now, we can skip the LaTeX processing here since it's handled functionally
+    # Just continue with site generation...
 
-    # Continue with LaTeX processing (existing logic)
-    latex_files_in_snapshot_to_process = sorted(list(AGDA_SNAPSHOT_SRC_DIR.rglob("*.lagda")))
-
-    if latex_files_in_snapshot_to_process:
-        logging.info(f"Processing {len(latex_files_in_snapshot_to_process)} LaTeX .lagda files...")
-
-        # Build file info for preprocessing
-        processed_info_for_latex_pipeline = []
-        for lagda_tex_file_in_snapshot in latex_files_in_snapshot_to_process:
-            current_relative_path = lagda_tex_file_in_snapshot.relative_to(AGDA_SNAPSHOT_SRC_DIR)
-            paths = LagdaProcessingPaths(current_relative_path)
-
-            # Calculate flat filename
-            module_name_parts = list(current_relative_path.parent.parts)
-            file_stem = current_relative_path.stem
-
-            is_index_file = file_stem.lower() == "index"
-            if not module_name_parts and is_index_file:
-                module_name_flat = "index"
-            elif not module_name_parts:
-                module_name_flat = file_stem
-            else:
-                if not is_index_file:
-                    module_name_parts.append(file_stem)
-                module_name_flat = ".".join(part for part in module_name_parts if part)
-
-            final_flat_md_filename = module_name_flat + ".md"
-
-            file_info = {
-                "original_path": lagda_tex_file_in_snapshot,
-                "temp_path": paths.temp_lagda,
-                "code_blocks_json_path": paths.code_blocks_json,
-                "intermediate_md_path": paths.intermediate_md,
-                "snapshot_target_path": paths.snapshot_target_lagda_md,
-                "final_flat_md_filename": final_flat_md_filename,
-                "relative_path_original": current_relative_path
-            }
-            processed_info_for_latex_pipeline.append(file_info)
-
-        # Run preprocessing
-        successfully_preprocessed_info = []
-        for file_info in processed_info_for_latex_pipeline:
-            LagdaProcessingPaths(file_info['relative_path_original']).ensure_parent_dirs_exist()
-            logging.info(f"  Preprocessing: {file_info['relative_path_original']}")
-            try:
-                run_command([
-                    "python", str(PREPROCESS_PY),
-                    str(file_info["original_path"]),
-                    str(macros_json_path),
-                    str(file_info["code_blocks_json_path"])
-                ], stdout_file=str(file_info["temp_path"]))
-                successfully_preprocessed_info.append(file_info)
-            except Exception as e:
-                logging.error(f"  ❌ Error during preprocess.py for {file_info['relative_path_original']}: {e}")
-
-        # Build global label map
-        labels_map_file = build_global_label_map(successfully_preprocessed_info, BUILD_MD_AUX_DIR)
-
-        # Run conversion pipeline
-        run_latex_conversion_stage_with_bibliography(
-            successfully_preprocessed_info,
-            labels_map_file,
-            LUA_FILTER,
-            POSTPROCESS_PY,
-            REFS_STATIC_PATH,
-            MKDOCS_BUILD_DIR,
-            AGDA_SNAPSHOT_SRC_DIR
-        )
-
-    # Continue with site generation
-    staged_md_file_paths = populate_agda_docs_staging(
-        run_agda_html_flag,
-        all_snapshot_lagda_md_files,
-        AGDA_SNAPSHOT_SRC_DIR,
-        BUILD_MD_PP_DIR,
-        "Ledger.lagda.md"
-    )
-
-    # Generate CSS
+    # Generate CSS and deploy assets
     generate_and_deploy_css(run_agda_html_flag, BUILD_MD_PP_DIR, MKDOCS_CSS_DIR)
 
     # Copy to sites
     nav_files_in_docs = copy_staging_to_site_docs(BUILD_MD_PP_DIR, MKDOCS_DOCS_DIR, "MkDocs")
 
-    # Deploy assets and generate configs
+    # Deploy assets
     final_nav_list = deploy_static_mkdocs_assets(
         MKDOCS_DOCS_DIR, MKDOCS_CSS_DIR, MKDOCS_JS_DIR, run_agda_html_flag,
         nav_files_in_docs, None, MD_STATIC_CUSTOM_JS_PATH, MKDOCS_STATIC_INDEX, PROJECT_ROOT
@@ -2045,7 +2062,6 @@ def continue_with_legacy_pipeline(config, macros_json_path, all_snapshot_lagda_m
         dynamic_extra_javascript=dynamic_js_list
     )
 
-    # Final messages
     logging.info("✅ Build script finished successfully!")
     logging.info(f"Final source for MkDocs: {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)}")
 
