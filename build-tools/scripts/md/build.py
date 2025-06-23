@@ -365,7 +365,13 @@ class LagdaProcessingPaths:
 
 # Logging Setup
 def setup_logging() -> None:
-    """Configures logging to file (DEBUG) and console (INFO) without basicConfig."""
+    """Configures logging to file (DEBUG) and console (INFO) without basicConfig.
+
+    DEPRECATED: Use functional setup.setup_build_environment() instead."""
+    if HAS_FUNCTIONAL_MODULES:
+        logging.warning("setup_logging() is deprecated, use functional setup instead")
+
+    # Original imperative implementation as fallback
     log_formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
     # get root logger
@@ -400,12 +406,19 @@ def setup_logging() -> None:
     # but will go to console if console_handler working.
     logging.info("✅ Logging setup complete. Log file: %s", LOG_FILE)
 
-def setup_directories() -> None:
-    """
-    Cleans the main mkdocs and mdbook build artifacts directories and recreates
-    essential subdirectories for the current build run.
-    """
+def functional_setup_logging(config):
+    """Functional wrapper for logging setup."""
+    return setup_build_environment(config).map(lambda x: x['logging_configured'])
 
+def setup_directories() -> None:
+    """Cleans the main mkdocs and mdbook build artifacts directories and recreates
+    essential subdirectories for the current build run.
+
+    DEPRECATED: Use functional setup.setup_build_environment() instead."""
+    if HAS_FUNCTIONAL_MODULES:
+        logging.warning("setup_directories() is deprecated, use functional setup instead")
+
+    # Original imperative implementation as fallback
     ### Directories for intermediate build products and final staging.
     TEMP_DIR.mkdir(parents=True, exist_ok=True)              # for .lagda.temp files
     CODE_BLOCKS_DIR.mkdir(parents=True, exist_ok=True)       # for code_blocks.json
@@ -448,6 +461,9 @@ def setup_directories() -> None:
     MDBOOK_CSS_DIR.mkdir(parents=True, exist_ok=True)        # for CSS assets
     MDBOOK_JS_DIR.mkdir(parents=True, exist_ok=True)         # for JS assets
 
+def functional_setup_directories(config):
+    """Functional wrapper for directory setup."""
+    return setup_build_environment(config).map(lambda x: x['directories'])
 
 
 def cleanup_intermediate_artifacts() -> None:
@@ -455,7 +471,12 @@ def cleanup_intermediate_artifacts() -> None:
     Remove intermediate artifact directories and files generated within
     _build/ during the build process, keeping only the final outputs
     (like _build/md/md.in/src/ and _build/md/mkdocs/).
-    """
+
+    DEPRECATED: Use functional setup.cleanup_intermediate_artifacts() instead."""
+    if HAS_FUNCTIONAL_MODULES:
+        logging.warning("cleanup_intermediate_artifacts() is deprecated, use functional setup instead")
+
+    # Original imperative implementation as fallback
     logging.info("Cleaning up intermediate build artifacts in _build/...")
 
     # directories to remove
@@ -1743,84 +1764,41 @@ def deploy_bibliography_assets():
     else:
         return main_legacy(run_agda_html_flag)
 
-def main_functional(run_agda_html_flag=False):
+
+def main(run_agda_html_flag=False):
     """
     Functional pipeline orchestration using mathematical composition.
     """
     logging.info("🔧 Starting functional documentation build pipeline...")
     logging.info(f"Run Agda --html flag: {run_agda_html_flag}")
 
-    # Load immutable configuration
-    config = load_build_config(
-        run_agda_html=run_agda_html_flag,
-        mode="development"  # Could be parameterized
-    )
+    if HAS_FUNCTIONAL_MODULES:
+        # Use functional pipeline
+        config = load_build_config(run_agda_html=run_agda_html_flag, mode="development")
 
-    # FUNCTIONAL SETUP STAGE - Pure composition
-    logging.info("🏗️ Setting up build environment with functional modules...")
+        setup_result = setup_build_environment(config)
+        if setup_result.is_err:
+            error = setup_result.unwrap_err()
+            logging.error(f"❌ Functional setup failed: {error}")
+            sys.exit(1)
 
-    setup_result = setup_build_environment(config)
+        setup_info = setup_result.unwrap()
+        logging.info(f"✅ Functional setup completed:")
+        logging.info(f"   Directories created: {len(setup_info['directories'])}")
+        logging.info(f"   Static structures: {list(setup_info['structures'].keys())}")
+        logging.info(f"   Common files copied: {setup_info['common_files_copied']}")
 
-    if setup_result.is_err:
-        error = setup_result.unwrap_err()
-        logging.error(f"❌ Setup failed: {error}")
-        sys.exit(1)
+        # Continue with existing pipeline using config paths
+        legacy_paths = get_legacy_paths()
+    else:
+        # Fallback to legacy setup
+        logging.info("⚠️ Using legacy pipeline (functional modules not available)")
+        # 1. Setup directories and logging.
+        logging.info("Setting up build directories and logging...")
+        setup_directories()
+        setup_logging()
+        legacy_paths = get_legacy_paths()
 
-    setup_info = setup_result.unwrap()
-    logging.info(f"✅ Functional setup completed:")
-    logging.info(f"   Directories created: {len(setup_info['directories'])}")
-    logging.info(f"   Static structures: {list(setup_info['structures'].keys())}")
-    logging.info(f"   Common files copied: {setup_info['common_files_copied']}")
-
-    # Get paths from configuration for legacy compatibility
-    from config.build_config import get_legacy_paths
-    legacy_paths = get_legacy_paths()
-
-    # Continue with existing pipeline logic...
-    # (Replace these calls with the existing pipeline stages from build.py)
-
-    # 2. Get path to or generate macros.json
-    macros_json_path = macros_path(
-        legacy_paths["MACROS_JSON"],
-        legacy_paths["MD_SCRIPTS_DIR"] / "generate_macros_json.py",
-        legacy_paths["MACROS_STY_PATH"]
-    )
-
-    # 3. Create Agda source snapshot
-    create_agda_snapshots(
-        legacy_paths["SRC_DIR"],
-        legacy_paths["AGDA_SNAPSHOT_SRC_DIR"],
-        legacy_paths["LIB_EXTS_DIR"],
-        legacy_paths["AGDA_SNAPSHOT_LIB_EXTS_DIR"]
-    )
-
-    common_pipeline(run_agda_html_flag)
-
-    # FUNCTIONAL CLEANUP STAGE
-    if config.cleanup_intermediates:
-        logging.info("🧹 Cleaning up with functional module...")
-        cleanup_result = cleanup_intermediate_artifacts(config)
-        if cleanup_result.is_ok:
-            cleaned = cleanup_result.unwrap()
-            logging.info(f"✅ Cleaned {len(cleaned)} artifacts")
-        else:
-            error = cleanup_result.unwrap_err()
-            logging.warning(f"⚠️ Cleanup warning: {error}")
-
-# --- Legacy Pipeline Logic ---
-def main_legacy(run_agda_html_flag=False):
-    """
-    Legacy pipeline orchestration (fallback when functional modules unavailable).
-
-    This is the existing main() function renamed for backward compatibility.
-    """
-    # We keep this as a fallback during the transition period
-    logging.info("⚠️ Using legacy pipeline (functional modules not available)")
-
-    # 1. Setup directories and logging.
-    logging.info("Setting up build directories and logging...")
-    setup_directories()
-    setup_logging()
 
     # 1b. populate MKDOCS_SRC_DIR from static template content
     logging.info(f"Initializing {MKDOCS_SRC_DIR.name} from template source: "
@@ -1886,12 +1864,6 @@ def main_legacy(run_agda_html_flag=False):
 
     common_pipeline(run_agda_html_flag)
 
-    # Call cleanup for intermediate artifacts now that the build has succeeded
-    cleanup_intermediate_artifacts()  # << comment out if artifacts needed for debugging
-
-
-
-def common_pipeline(run_agda_html_flag=False):
     # 4. Convert .agda to .lagda.md in src snapshot only
     logging.info(f"\n--- Stage 4: Converting .agda files in snapshot to .lagda.md ---")
     convert_agda_to_lagda(AGDA_SNAPSHOT_SRC_DIR, PROJECT_ROOT)
@@ -2132,12 +2104,23 @@ def common_pipeline(run_agda_html_flag=False):
         mdbook_final_content_files       # List of .md basenames in _build/md/mdbook/src/
     )
 
-    # 11. Final messages and cleanup
+    # 11. Final messages and cleanup.
     logging.info(f"✅ Build script finished successfully!")
     logging.info(f"Primary input for Shake/Agda (if used): {AGDA_SNAPSHOT_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Final source for MkDocs build/serve: {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)}")
     logging.info(f"Full log saved to: {LOG_FILE.relative_to(PROJECT_ROOT)}")
     logging.info(f"To serve the site locally, CWD to {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)} and run \"mkdocs serve\"")
+
+    # Cleanup for intermediate artifacts now that the build has succeeded.
+    if HAS_FUNCTIONAL_MODULES:
+        cleanup_result = cleanup_intermediate_artifacts(config)
+        if cleanup_result.is_ok:
+            cleaned = cleanup_result.unwrap()
+            logging.info(f"✅ Functional cleanup: {len(cleaned)} artifacts removed")
+    else:
+        # Legacy cleanup (existing function)
+        cleanup_intermediate_artifacts()  # << comment out if artifacts needed for debugging
+
 
 
 if __name__ == "__main__":
