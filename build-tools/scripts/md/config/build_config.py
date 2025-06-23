@@ -495,13 +495,20 @@ def get_legacy_paths() -> Dict[str, Path]:
         "AGDA_SNAPSHOT_SRC_DIR": config.build_paths.agda_snapshot_src_dir,
         "AGDA_SNAPSHOT_LIB_EXTS_DIR": config.build_paths.agda_snapshot_lib_exts_dir,
 
-        # Site build directories
+        # MkDocs site build directories
         "MKDOCS_BUILD_DIR": config.build_paths.mkdocs_build_dir,
         "MKDOCS_SRC_DIR": config.build_paths.mkdocs_src_dir,
         "MKDOCS_DOCS_DIR": config.build_paths.mkdocs_docs_dir,
         "MKDOCS_CSS_DIR": config.build_paths.mkdocs_css_dir,
         "MKDOCS_JS_DIR": config.build_paths.mkdocs_js_dir,
         "MKDOCS_INCLUDES_DIR": config.build_paths.mkdocs_includes_dir,
+
+        # MdBook site build directories (MISSING - ADD THESE)
+        "MDBOOK_BUILD_DIR": config.build_paths.mdbook_build_dir,
+        "MDBOOK_SRC_DIR": config.build_paths.mdbook_src_dir,
+        "MDBOOK_DOCS_DIR": config.build_paths.mdbook_docs_dir,
+        "MDBOOK_CSS_DIR": config.build_paths.mdbook_css_dir,
+        "MDBOOK_JS_DIR": config.build_paths.mdbook_js_dir,
 
         # Script paths
         "SCRIPTS_DIR": config.source_paths.scripts_dir,
@@ -516,6 +523,10 @@ def get_legacy_paths() -> Dict[str, Path]:
         "MKDOCS_STATIC_DIR": config.source_paths.mkdocs_static_dir,
         "MKDOCS_STATIC_SRC_DIR": config.source_paths.mkdocs_static_src_dir,
         "MKDOCS_STATIC_DOCS_DIR": config.source_paths.mkdocs_static_docs_dir,
+
+        # MdBook static paths (MISSING - ADD THESE)
+        "MDBOOK_STATIC_DIR": config.source_paths.mdbook_static_dir,
+        "MDBOOK_STATIC_SRC_DIR": config.source_paths.mdbook_static_src_dir,
 
         # Key files
         "MACROS_JSON": config.build_paths.macros_json_path,
@@ -534,12 +545,15 @@ def get_legacy_paths() -> Dict[str, Path]:
         "MKDOCS_STATIC_NAV_YML": config.source_paths.mkdocs_nav_yml_path,
         "MKDOCS_STATIC_INDEX": config.source_paths.mkdocs_static_docs_dir / "index.md",
 
+        # MdBook navigation (MISSING - ADD THESE)
+        "MDBOOK_SUMMARY_MD_TEMPLATE": config.source_paths.mdbook_summary_md_path,
+        "MDBOOK_BOOK_TOML_TEMPLATE": config.source_paths.mdbook_static_dir / "book.toml",
+
         # Pipeline intermediate directories
         "TEMP_DIR": config.build_paths.temp_dir,
         "CODE_BLOCKS_DIR": config.build_paths.code_blocks_dir,
         "INTERMEDIATE_MD_DIR": config.build_paths.intermediate_md_dir,
     }
-
 
 # Type checking helpers
 if __name__ == "__main__":
