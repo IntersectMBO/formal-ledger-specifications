@@ -203,6 +203,33 @@ def run_pandoc_stage(
     return result.map(lambda _: None)
 
 
+
+def cleanup_original_lagda_file(
+    processing_stage: LaTeXProcessingStage
+) -> Result[None, PipelineError]:
+    """
+    Pure function: Remove original .lagda file after successful .lagda.md creation.
+
+    This prevents Agda module ambiguity when both f.lagda and f.lagda.md exist.
+    Mathematical operation: Remove f.lagda iff f.lagda.md ∃
+    """
+    try:
+        if processing_stage.final_file.exists():
+            # Original source file should be removed from snapshot
+            if processing_stage.source_file.exists():
+                processing_stage.source_file.unlink()
+                logging.debug(f"  Removed original .lagda: {processing_stage.source_file.name}")
+
+        return Result.ok(None)
+
+    except Exception as e:
+        return Result.err(PipelineError(
+            error_type=ErrorType.COMMAND_FAILED,
+            message=f"Failed to cleanup original .lagda file: {e}",
+            context={"source_file": str(processing_stage.source_file)},
+            cause=e
+        ))
+
 # =============================================================================
 # Postprocessing Stage
 # =============================================================================
@@ -213,9 +240,10 @@ def run_postprocess_stage(
     postprocess_script: Path
 ) -> Result[None, PipelineError]:
     """
-    Mathematical transformation: .md.intermediate → .lagda.md
+    Mathematical transformation: .md.intermediate → .lagda.md + cleanup
 
-    Applies postprocess.py transformation with cross-reference resolution.
+    Applies postprocess.py transformation with cross-reference resolution,
+    then removes original .lagda to prevent module ambiguity.
     """
 
     command = [
@@ -226,9 +254,9 @@ def run_postprocess_stage(
         str(processing_stage.final_file)
     ]
 
-    result = run_command_functional(command)
-    return result.map(lambda _: None)
-
+    # Chain: postprocess → cleanup
+    return (run_command_functional(command)
+            .and_then(lambda _: cleanup_original_lagda_file(processing_stage)))
 
 # =============================================================================
 # Label Map Generation
