@@ -166,7 +166,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
          witsKeyHashes                       = mapˢ hash (dom vkSigs)
          witsScriptHashes                    = mapˢ hash scripts
          inputHashes                         = getInputHashes tx utxo
-         refScriptHashes                     = fromList (map hash (refScripts tx utxo))
+         refScriptHashes                     = mapˢ hash (refScripts tx utxo)
          neededHashes                        = scriptsNeeded utxo txb
          txdatsHashes                        = dom txdats
          allOutHashes                        = getDataHashes (range txouts)
