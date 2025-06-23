@@ -930,7 +930,7 @@ du_HasUTxOState'45'LState_2510 ::
   MAlonzo.Code.Ledger.Conway.Utxo.T_HasUTxOState_2320
 du_HasUTxOState'45'LState_2510
   = coe
-      MAlonzo.Code.Ledger.Conway.Utxo.C_HasUTxOState'46'constructor_18465
+      MAlonzo.Code.Ledger.Conway.Utxo.C_HasUTxOState'46'constructor_18177
       (coe (\ v0 -> d_utxoSt_2484 (coe v0)))
 -- Ledger.Conway.Ledger.HasUTxO-LState
 d_HasUTxO'45'LState_2512 ::

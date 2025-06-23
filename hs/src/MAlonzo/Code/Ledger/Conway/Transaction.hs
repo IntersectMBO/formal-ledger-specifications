@@ -44,7 +44,6 @@ import qualified MAlonzo.Code.Class.Show.Instances
 import qualified MAlonzo.Code.Class.ToBool
 import qualified MAlonzo.Code.Data.Integer.Base
 import qualified MAlonzo.Code.Data.Irrelevant
-import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Maybe.Base
@@ -5125,13 +5124,15 @@ d_refScripts_3270 ::
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 d_refScripts_3270 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.List.Base.du_mapMaybe_258
-      (coe
-         (\ v3 ->
-            MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-              (coe
-                 MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                 (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3)))))
+      MAlonzo.Code.Axiom.Set.du_mapPartial_576
+      (MAlonzo.Code.Axiom.Set.d_th_1470
+         (coe
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+      (\ v3 ->
+         MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+           (coe
+              MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+              (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))))
       (coe
          MAlonzo.Code.Class.IsSet.du_range_550
          (coe
@@ -5340,13 +5341,7 @@ d_txscripts_3322 v0 v1 v2
          (coe
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
       (coe d_scripts_3190 (coe d_wits_3210 (coe v1)))
-      (coe
-         MAlonzo.Code.Axiom.Set.du_fromList_428
-         (coe
-            MAlonzo.Code.Axiom.Set.d_th_1470
-            (coe
-               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-         (coe d_refScripts_3270 (coe v0) (coe v1) (coe v2)))
+      (coe d_refScripts_3270 (coe v0) (coe v1) (coe v2))
 -- Ledger.Conway.Transaction.TransactionStructure.lookupScriptHash
 d_lookupScriptHash_3332 ::
   T_TransactionStructure_22 ->
