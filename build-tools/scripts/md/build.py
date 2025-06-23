@@ -1797,7 +1797,7 @@ def main(run_agda_html_flag=False):
         return main_legacy(run_agda_html_flag)
 
 
-def main_functional(run_agda_html_flag=False):
+def main_functional_simple(run_agda_html_flag=False):
     """Simplified functional pipeline for testing."""
     logging.info("🔧 Testing functional setup only...")
 
@@ -1823,7 +1823,7 @@ def main_functional(run_agda_html_flag=False):
 
     logging.info("✅ Test completed!")
 
-def main_functional_full(run_agda_html_flag=False):
+def main_functional(run_agda_html_flag=False):
     """Functional pipeline using mathematical composition where possible."""
     logging.info("🔧 Starting functional documentation build pipeline...")
     logging.info(f"Run Agda --html flag: {run_agda_html_flag}")
