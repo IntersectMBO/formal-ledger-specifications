@@ -209,3 +209,79 @@ function Code(inline)
   -- if not Code element containing our marker, return it unchanged
   return inline
 end
+
+
+--- Processes citations into mkdocs-bibtex format
+-- @param cite The Cite element from Pandoc
+-- @return Pandoc element (Str) with mkdocs-bibtex formatted citation
+function Cite(cite)
+  -- Handle the common case of a single citation
+  if #cite.citations == 1 then
+    local citation = cite.citations[1]
+    local key = citation.id
+    local prefix = citation.prefix and pandoc.utils.stringify(citation.prefix) or ""
+    local suffix = citation.suffix and pandoc.utils.stringify(citation.suffix) or ""
+
+    -- Build citation string
+    local cite_str = "[@" .. key
+
+    -- Add prefix/suffix if present (e.g., page numbers, section references)
+    if prefix ~= "" and suffix ~= "" then
+      cite_str = cite_str .. ", " .. prefix .. " " .. suffix
+    elseif prefix ~= "" then
+      cite_str = cite_str .. ", " .. prefix
+    elseif suffix ~= "" then
+      cite_str = cite_str .. ", " .. suffix
+    end
+
+    cite_str = cite_str .. "]"
+    return pandoc.Str(cite_str)
+
+  -- Handle multiple citations
+  else
+    local cite_parts = {}
+    for i, citation in ipairs(cite.citations) do
+      local key = citation.id
+      local prefix = citation.prefix and pandoc.utils.stringify(citation.prefix) or ""
+      local suffix = citation.suffix and pandoc.utils.stringify(citation.suffix) or ""
+
+      local cite_part = "@" .. key
+      if prefix ~= "" or suffix ~= "" then
+        cite_part = cite_part .. " " .. prefix .. " " .. suffix
+      end
+
+      table.insert(cite_parts, cite_part)
+    end
+
+    return pandoc.Str("[" .. table.concat(cite_parts, "; ") .. "]")
+  end
+end
+
+-- Handle special citation commands that might not be parsed as Cite elements
+function RawInline(inline)
+  -- First try existing transformations
+  local transformed = transform_latex_commands(inline.text)
+  if transformed then
+    return transformed
+  end
+
+  -- Handle any special citation patterns that Pandoc might miss
+  if inline.format and inline.format:match 'latex' then
+    -- Pattern for textcite and similar commands that might not be parsed
+    local textcite_match = inline.text:match '^\\textcite%[(.-)%]%{(.-)%}$'
+    if textcite_match then
+      local optional_args, keys = textcite_match:match '(.+)%}%{(.+)'
+      if optional_args and keys then
+        return pandoc.Str("[@" .. keys .. ", " .. optional_args .. "]")
+      end
+    end
+
+    -- Simple cite without optional args
+    local simple_cite = inline.text:match '^\\(?:text)?cite%{(.-)%}$'
+    if simple_cite then
+      return pandoc.Str("[@" .. simple_cite .. "]")
+    end
+  end
+
+  return inline
+end

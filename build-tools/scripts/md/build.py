@@ -215,10 +215,16 @@ try:
     HAS_YAML = True
 except ImportError:
     HAS_YAML = False
+
 try:
     from agda2lagda import convert_agda_to_lagda_md
 except ImportError:
     print(f"FATAL: Could not import 'convert_agda_to_lagda_md'. Ensure 'agda2lagda.py' is in {SCRIPTS_DIR}.", file=sys.stderr)
+    sys.exit(1)
+try:
+    from build_config import get_legacy_paths
+except ImportError:
+    print(f"FATAL: Could not import 'get_legacy_paths'. Ensure 'build_config.py' is in {SCRIPTS_DIR}.", file=sys.stderr)
     sys.exit(1)
 
 # --- Custom Type Definitions ---
@@ -238,86 +244,68 @@ class LabelTargetInfo(TypedDict):
 
 
 # === CONFIGURATION ===
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent.parent # assume build.py is in ./build-tools/scripts/md
-#
-# --- INPUTS --------------------------------------
-SRC_DIR = PROJECT_ROOT / "src"                         # original .lagda source
-LIB_EXTS_DIR = PROJECT_ROOT / "src-lib-exts"           # original .agda lib source
-BUILD_TOOLS = PROJECT_ROOT / "build-tools"             # build tools directory
-# - script paths -
-SCRIPTS_DIR = BUILD_TOOLS / "scripts"                  # scripts and helpers
-MD_DIR = SCRIPTS_DIR / "md"                    # this script and helpers
+# Get all path constants from centralized configuration
+legacy_paths = get_legacy_paths()
+
+# Extract all constants (same names as before, but centralized source)
+PROJECT_ROOT = legacy_paths["PROJECT_ROOT"]
+SRC_DIR = legacy_paths["SRC_DIR"]
+LIB_EXTS_DIR = legacy_paths["LIB_EXTS_DIR"]
+BUILD_TOOLS = legacy_paths["BUILD_TOOLS"]
+BUILD_DIR = legacy_paths["BUILD_DIR"]
+BUILD_MD_DIR = legacy_paths["BUILD_MD_DIR"]
+BUILD_MD_IN_DIR = legacy_paths["BUILD_MD_IN_DIR"]
+BUILD_MD_PP_DIR = legacy_paths["BUILD_MD_PP_DIR"]
+BUILD_MD_AUX_DIR = legacy_paths["BUILD_MD_AUX_DIR"]
+AGDA_SNAPSHOT_SRC_DIR = legacy_paths["AGDA_SNAPSHOT_SRC_DIR"]
+AGDA_SNAPSHOT_LIB_EXTS_DIR = legacy_paths["AGDA_SNAPSHOT_LIB_EXTS_DIR"]
+MKDOCS_BUILD_DIR = legacy_paths["MKDOCS_BUILD_DIR"]
+MKDOCS_SRC_DIR = legacy_paths["MKDOCS_SRC_DIR"]
+MKDOCS_DOCS_DIR = legacy_paths["MKDOCS_DOCS_DIR"]
+MKDOCS_CSS_DIR = legacy_paths["MKDOCS_CSS_DIR"]
+MKDOCS_JS_DIR = legacy_paths["MKDOCS_JS_DIR"]
+MKDOCS_INCLUDES_DIR = legacy_paths["MKDOCS_INCLUDES_DIR"]
+
+# Script paths
+SCRIPTS_DIR = legacy_paths["SCRIPTS_DIR"]
+MD_DIR = legacy_paths["MD_SCRIPTS_DIR"]  # Note: MD_SCRIPTS_DIR maps to MD_DIR
 GENERATE_MACROS_PY = MD_DIR / "generate_macros_json.py"
 PREPROCESS_PY = MD_DIR / "preprocess.py"
 POSTPROCESS_PY = MD_DIR / "postprocess.py"
 LUA_FILTER = MD_DIR / "agda-filter.lua"
-# - static content -
-STATIC_DIR = BUILD_TOOLS / "static"                     # static files for mkdocs, mdbook, etc
-LATEX_DIR = STATIC_DIR / "latex"                        # LaTeX path
-MACROS_STY_PATH = LATEX_DIR / "macros.sty"              # LaTeX macros
-MD_STATIC_DIR = STATIC_DIR / "md"                       # static website files
-MD_STATIC_COMMON_DIR = MD_STATIC_DIR / "common"         # content to be copied into mkdocs/ and mdbook/
-MD_STATIC_COMMON_SRC_DIR = MD_STATIC_COMMON_DIR / "src" # content to be copied into mkdocs/docs and mdbook/src
-MD_STATIC_CSS_DIR = MD_STATIC_COMMON_SRC_DIR / "css"
-MD_STATIC_CUSTOM_CSS_PATH = MD_STATIC_CSS_DIR / "custom.css"
-MD_STATIC_JS_DIR = MD_STATIC_COMMON_SRC_DIR / "js"
-MD_STATIC_CUSTOM_JS_PATH = MD_STATIC_JS_DIR / "custom.js"
-MD_STATIC_KATEX_JS_PATH = MD_STATIC_JS_DIR / "katex-config.js"
 
-# - static mkdocs directories -
-MKDOCS_STATIC_DIR = MD_STATIC_DIR / "mkdocs"
-MKDOCS_STATIC_NAV_YML = MD_STATIC_COMMON_DIR / "nav.yml"  # mkdocs navigation template
-MKDOCS_STATIC_SRC_DIR = MKDOCS_STATIC_DIR
-MKDOCS_STATIC_DOCS_DIR = MKDOCS_STATIC_SRC_DIR / "docs"
-MKDOCS_STATIC_INDEX = MKDOCS_STATIC_SRC_DIR / "docs" / "index.md"
+# Static content paths
+STATIC_DIR = legacy_paths["STATIC_DIR"]
+LATEX_DIR = legacy_paths["LATEX_DIR"]
+MD_STATIC_DIR = legacy_paths["MD_STATIC_DIR"]
+MD_STATIC_COMMON_DIR = legacy_paths["MD_STATIC_COMMON_DIR"]
+MD_STATIC_COMMON_SRC_DIR = legacy_paths["MD_STATIC_COMMON_SRC_DIR"]
+MKDOCS_STATIC_DIR = legacy_paths["MKDOCS_STATIC_DIR"]
+MKDOCS_STATIC_SRC_DIR = legacy_paths["MKDOCS_STATIC_SRC_DIR"]
+MKDOCS_STATIC_DOCS_DIR = legacy_paths["MKDOCS_STATIC_DOCS_DIR"]
 
-# - static mdbook directories (note: mdbook is not yet fully supported) -
-MDBOOK_STATIC_DIR = MD_STATIC_DIR / "mdbook"
-MDBOOK_BOOK_TOML_TEMPLATE = MDBOOK_STATIC_DIR / "book.toml"
-MDBOOK_STATIC_DOCS_DIR = MDBOOK_STATIC_DIR / "src"
-MDBOOK_SUMMARY_MD_TEMPLATE = MDBOOK_STATIC_DOCS_DIR / "SUMMARY.md"
-MDBOOK_STATIC_INDEX = MDBOOK_STATIC_DOCS_DIR / "index.md"
-#
-# --- OUTPUTS -------------------------------------------
-BUILD_DIR = PROJECT_ROOT / "_build"              # top-level build dir
-BUILD_MD_DIR = BUILD_DIR / "md"                  # main build directory for md-based literate Agda
-BUILD_MD_IN_DIR = BUILD_MD_DIR / "md.in"         # preprocessed md-based literate Agda
-BUILD_MD_PP_DIR = BUILD_MD_DIR / "md.pp"         # output of `agda --html` command if --run-agda flag used,
-#                                                #   otherwise output of postprocess.py
-BUILD_MD_AUX_DIR = BUILD_MD_DIR / "md.aux"       # intermediate products of translation from tex to md
-AGDA_SNAPSHOT_SRC_DIR = BUILD_MD_IN_DIR / "src"  # md-based literate Agda source code
-                                                 # (input to shake when `agda --html` relegated to shake)
-AGDA_SNAPSHOT_LIB_EXTS_DIR = BUILD_MD_IN_DIR / "src-lib-exts" # copy of Agda library extensions
-# Initially, the AGDA_SNAPSHOT_SRC_DIR contains whatever was in src/:
-# - some modules as pre-existing .lagda.md files
-# - some modules as .agda files
-# - some modules as .lagda (LaTeX) files
-# Crucially, for any given module, only ONE of these types will exist.
+# Key files
+MACROS_JSON = legacy_paths["MACROS_JSON"]
+LOG_FILE = legacy_paths["LOG_FILE"]
+MACROS_STY_PATH = legacy_paths["MACROS_STY_PATH"]
+REFS_STATIC_PATH = legacy_paths["REFS_STATIC_PATH"]
 
-AGDA_CSS_PATH = BUILD_MD_AUX_DIR / "Agda.css"
+# CSS and JS
+MD_STATIC_CSS_DIR = legacy_paths["MD_STATIC_CSS_DIR"]
+MD_STATIC_JS_DIR = legacy_paths["MD_STATIC_JS_DIR"]
+MD_STATIC_CUSTOM_CSS_PATH = legacy_paths["MD_STATIC_CUSTOM_CSS_PATH"]
+MD_STATIC_CUSTOM_JS_PATH = legacy_paths["MD_STATIC_CUSTOM_JS_PATH"]
+MD_STATIC_KATEX_JS_PATH = legacy_paths["MD_STATIC_KATEX_JS_PATH"]
 
-# - migration pipeline products -
-MACROS_JSON = BUILD_MD_AUX_DIR / "macros.json"             # output of generate_macros_json.py; input to preprocess.py
-TEMP_DIR = BUILD_MD_AUX_DIR / "lagda_temp"                 # intermediate latex:  output of preprocess.py; input to pandoc+lua
-CODE_BLOCKS_DIR = BUILD_MD_AUX_DIR / "code_blocks_json"    # output of preprocess.py; input to postprocess.py
-INTERMEDIATE_MD_DIR = BUILD_MD_AUX_DIR / "md_intermediate" # intermediate `.lagda.md`: output of pandoc+lua; intput to postprocess.py
-# - generated directories for mkdocs site -
-MKDOCS_BUILD_DIR = BUILD_MD_DIR / "mkdocs"
-MKDOCS_SRC_DIR = MKDOCS_BUILD_DIR
-MKDOCS_DOCS_DIR = MKDOCS_SRC_DIR / "docs"
-MKDOCS_CSS_DIR = MKDOCS_DOCS_DIR / "css"
-MKDOCS_JS_DIR = MKDOCS_DOCS_DIR / "js"
+# Navigation
+MKDOCS_STATIC_NAV_YML = legacy_paths["MKDOCS_STATIC_NAV_YML"]
+MKDOCS_STATIC_INDEX = legacy_paths["MKDOCS_STATIC_INDEX"]
 
-### mdbook is not yet fully supported
-# - generated directories for mdbook site -
-MDBOOK_BUILD_DIR = BUILD_MD_DIR / "mdbook"
-MDBOOK_SRC_DIR = MDBOOK_BUILD_DIR
-MDBOOK_DOCS_DIR = MDBOOK_SRC_DIR / "src"
-MDBOOK_CSS_DIR = MDBOOK_DOCS_DIR / "css"
-MDBOOK_JS_DIR = MDBOOK_DOCS_DIR / "js"
+# Pipeline intermediate directories
+TEMP_DIR = legacy_paths["TEMP_DIR"]
+CODE_BLOCKS_DIR = legacy_paths["CODE_BLOCKS_DIR"]
+INTERMEDIATE_MD_DIR = legacy_paths["INTERMEDIATE_MD_DIR"]
 
-# - logging -
-LOG_FILE = BUILD_MD_AUX_DIR / "build.log"
 
 
 # Helper class for managing paths within .lagda processing loop.
@@ -415,13 +403,13 @@ def setup_directories() -> None:
     ### MKDOCS ###
     # Only remove and recreate the specific mkdocs build directory.
     # Avoid deleting unrelated artifacts in _build/ (e.g., from shake/CI)!
-    if MKDOCS_BUILD_DIR.exists(): # MKDOCS_BUILD_DIR is _build/md/mkdocs/
-        logging.info(f"Cleaning up existing MkDocs build directory: {MKDOCS_BUILD_DIR}")
-        shutil.rmtree(MKDOCS_BUILD_DIR)
+    if MKDOCS_SRC_DIR.exists(): # MKDOCS_SRC_DIR is _build/md/mkdocs/
+        logging.info(f"Cleaning up existing MkDocs build directory: {MKDOCS_SRC_DIR}")
+        shutil.rmtree(MKDOCS_SRC_DIR)
     else:
-        logging.info(f"MkDocs build directory does not exist, will create: {MKDOCS_BUILD_DIR}")
+        logging.info(f"MkDocs build directory does not exist, will create: {MKDOCS_SRC_DIR}")
 
-    logging.info(f"Creating fresh MkDocs build directories under: {MKDOCS_BUILD_DIR}")
+    logging.info(f"Creating fresh MkDocs build directories under: {MKDOCS_SRC_DIR}")
 
     # Create final mkdocs site source structure (where content is copied to).
     MKDOCS_SRC_DIR.mkdir(parents=True, exist_ok=True)        # root for mkdocs.yml and docs/
@@ -1052,9 +1040,9 @@ def populate_agda_docs_staging(
             # Construct the path to master_agda_file_name relative to agda_snapshot_src_dir
             # if master_agda_file_name might include path components.
             # If it's always a direct child, master_agda_file_name is fine as is.
-            # Your current script uses master_agda_file_name directly when cwd is agda_snapshot_src_dir.
+            # Current script uses master_agda_file_name directly when cwd is agda_snapshot_src_dir.
 
-            run_command( # Assuming your run_command helper is available
+            run_command( # Assuming run_command helper is available
                 [
                     "agda", "--fls",
                     f"--fls-html-dir={agda_docs_staging_dir.resolve()}",
@@ -1095,7 +1083,7 @@ def populate_agda_docs_staging(
             # 1. Path to the .lagda.md file in the snapshot.
             # 2. The root of the snapshot directory (for calculating relative path for flat name).
             # 3. The target directory where the flat-named file will be placed.
-            flat_filename_str = copy_snapshot_file_with_flat_name( # Your existing helper
+            flat_filename_str = copy_snapshot_file_with_flat_name( # existing helper
                 lagda_md_file_in_snapshot,
                 agda_snapshot_src_dir,
                 agda_docs_staging_dir
@@ -1583,6 +1571,18 @@ def copy_common_source_files(
     logging.info(f"✅ Copied {file_count} shared files to both documentation systems")
 
 
+def deploy_bibliography_assets():
+    """Copy bibliography file to mkdocs source directory"""
+    # Source: REFS_STATIC_PATH = BUILD_TOOLS / "static" / "latex" / "references.bib"
+    # Target: MKDOCS_INCLUDES_DIR = BUILD_MD_DIR / "mkdocs" / "includes"
+    bib_target = MKDOCS_INCLUDES_DIR / REFS_STATIC_PATH.name
+
+    if REFS_STATIC_PATH.exists():
+        shutil.copy2(REFS_STATIC_PATH, bib_target)
+        logging.info(f"✅ Copied bibliography: {REFS_STATIC_PATH.name} to {bib_target.relative_to(PROJECT_ROOT)}")
+    else:
+        logging.warning(f"💥 Bibliography file not found: {REFS_STATIC_PATH}")
+
 # --- Main Pipeline Logic ---
 def main(run_agda_html_flag=False):
     """Orchestrates the documentation build pipeline."""
@@ -1726,7 +1726,7 @@ def main(run_agda_html_flag=False):
 
 
     # --- Stage 6a: Run preprocess.py on the identified LaTeX .lagda files ---
-    # The `run_latex_preprocessing_stage` function from your modular build.py needs to be
+    # The `run_latex_preprocessing_stage` function from modular build.py needs to be
     # adapted to take this `processed_info_for_latex_pipeline`. Its core loop would iterate this list,
     # run `preprocess.py` using `file_info["original_path"]` as input, and use other paths from `file_info`.
     # For simplicity, I'll show the loop here if `run_latex_preprocessing_stage` isn't adapted yet.
@@ -1764,7 +1764,7 @@ def main(run_agda_html_flag=False):
         labels_map_file,
         LUA_FILTER,
         POSTPROCESS_PY,
-        MKDOCS_BUILD_DIR,
+        MKDOCS_SRC_DIR,
         AGDA_SNAPSHOT_SRC_DIR
     )
 
@@ -1848,6 +1848,9 @@ def main(run_agda_html_flag=False):
         PROJECT_ROOT
     )
 
+    # 9.1 Deploy bibliography assets for citations
+    deploy_bibliography_assets()
+
     # Update the dynamic CSS list for mkdocs config
     dynamic_css_list_for_config = []
     if (MKDOCS_CSS_DIR / "Agda.css").exists():
@@ -1891,7 +1894,7 @@ def main(run_agda_html_flag=False):
         MDBOOK_BUILD_DIR / "book.toml",  # Target: _build/md/mdbook/book.toml
         mdbook_summary_in_build_path,    # Target: _build/md/mdbook/src/SUMMARY.md
         MDBOOK_BOOK_TOML_TEMPLATE,       # Source: build-tools/static/md/mdbook/book.toml
-        MDBOOK_SUMMARY_MD_TEMPLATE,      # Source: build-tools/static/md/mdbook/src/SUMMARY.md (using your var name)
+        MDBOOK_SUMMARY_MD_TEMPLATE,      # Source: build-tools/static/md/mdbook/src/SUMMARY.md (using var name)
         mdbook_final_content_files       # List of .md basenames in _build/md/mdbook/src/
     )
 
