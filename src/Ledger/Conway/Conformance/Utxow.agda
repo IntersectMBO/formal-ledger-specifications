@@ -42,7 +42,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         neededHashes      = L.scriptsNeeded utxo txb
         txdatsHashes      = dom txdats
         allOutHashes      = L.getDataHashes (range txouts)
-        nativeScripts     = mapPartial isInj₁ (txscripts tx utxo)
+        nativeScripts     = mapPartial toP1Script (txscripts tx utxo)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)

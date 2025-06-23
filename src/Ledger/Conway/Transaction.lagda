@@ -20,7 +20,7 @@ open import Ledger.Conway.Crypto
 open import Ledger.Conway.Types.Epoch
 open import Ledger.Conway.Types.GovStructure
 import Ledger.Conway.PParams
-import Ledger.Conway.Script
+import Ledger.Conway.Script.Base
 import Ledger.Conway.GovernanceActions
 import Ledger.Conway.Certs
 import Ledger.Conway.TokenAlgebra
@@ -86,7 +86,7 @@ record TransactionStructure : Type₁ where
 
   field epochStructure : _
   open EpochStructure epochStructure public
-  open Ledger.Conway.Script crypto epochStructure public
+  open Ledger.Conway.Script.Base crypto epochStructure public
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public
@@ -192,7 +192,7 @@ record TransactionStructure : Type₁ where
       txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
 
     scriptsP1 : ℙ P1Script
-    scriptsP1 = mapPartial isInj₁ scripts
+    scriptsP1 = mapPartial toP1Script scripts
 
   record Tx : Type where
     field
@@ -278,13 +278,6 @@ record TransactionStructure : Type₁ where
 \end{NoConway}
 
 \begin{code}[hide]
-  isP2Script : Script → Type
-  isP2Script = T ∘ is-just ∘ isInj₂
-
-  isP2Script? : ∀ {s} → isP2Script s ⁇
-  isP2Script? {inj₁ x} .dec = no λ ()
-  isP2Script? {inj₂ y} .dec = yes tt
-
   instance
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂

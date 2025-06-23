@@ -21,7 +21,7 @@ open import Tactic.Derive.Show
 
 open import Ledger.Prelude
 open import Ledger.Conway.Crypto
-open import Ledger.Conway.Script
+open import Ledger.Conway.Script.Base
 open import Ledger.Conway.Types.Epoch
 open import Ledger.Conway.Types.Numeric using (UnitInterval; ℕ⁺)
 
