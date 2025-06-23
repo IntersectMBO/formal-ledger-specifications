@@ -227,17 +227,20 @@ except ImportError:
     sys.exit(1)
 
 try:
-    from config.build_config import get_legacy_paths  # ← Fixed import
+    from config.build_config import get_legacy_paths
 except ImportError:
     print(f"FATAL: Could not import 'get_legacy_paths'. Ensure 'build_config.py' is in {SCRIPTS_MD_DIR}/config/.", file=sys.stderr)
     sys.exit(1)
 
 try:
     from modules.bibliography_stage import process_bibliography_stage
-except ImportError:
-    print(f"FATAL: Could not import 'process_bibliography_stage'. Ensure 'bibliography_stage.py' is in {SCRIPTS_MD_DIR}/modules/.", file=sys.stderr)
-    sys.exit(1)
-
+    from modules.setup import setup_build_environment, cleanup_intermediate_artifacts
+    from config.build_config import load_build_config
+    HAS_FUNCTIONAL_MODULES = True
+except ImportError as e:
+    print(f"WARNING: Could not import functional modules: {e}", file=sys.stderr)
+    print("Falling back to legacy functions", file=sys.stderr)
+    HAS_FUNCTIONAL_MODULES = False
 
 # --- Custom Type Definitions ---
 class ProcessedFileInfo(TypedDict):
@@ -1732,11 +1735,87 @@ def deploy_bibliography_assets():
     else:
         logging.warning(f"❌ Bibliography file not found: {REFS_STATIC_PATH}")
 
-# --- Main Pipeline Logic ---
-def main(run_agda_html_flag=False):
-    """Orchestrates the documentation build pipeline."""
-    logging.info("Starting MkDocs build process...")
+
+    """Orchestrates the documentation build pipeline with functional composition."""
+
+    if HAS_FUNCTIONAL_MODULES:
+        return main_functional(run_agda_html_flag)
+    else:
+        return main_legacy(run_agda_html_flag)
+
+def main_functional(run_agda_html_flag=False):
+    """
+    Functional pipeline orchestration using mathematical composition.
+    """
+    logging.info("🔧 Starting functional documentation build pipeline...")
     logging.info(f"Run Agda --html flag: {run_agda_html_flag}")
+
+    # Load immutable configuration
+    config = load_build_config(
+        run_agda_html=run_agda_html_flag,
+        mode="development"  # Could be parameterized
+    )
+
+    # FUNCTIONAL SETUP STAGE - Pure composition
+    logging.info("🏗️ Setting up build environment with functional modules...")
+
+    setup_result = setup_build_environment(config)
+
+    if setup_result.is_err:
+        error = setup_result.unwrap_err()
+        logging.error(f"❌ Setup failed: {error}")
+        sys.exit(1)
+
+    setup_info = setup_result.unwrap()
+    logging.info(f"✅ Functional setup completed:")
+    logging.info(f"   Directories created: {len(setup_info['directories'])}")
+    logging.info(f"   Static structures: {list(setup_info['structures'].keys())}")
+    logging.info(f"   Common files copied: {setup_info['common_files_copied']}")
+
+    # Get paths from configuration for legacy compatibility
+    from config.build_config import get_legacy_paths
+    legacy_paths = get_legacy_paths()
+
+    # Continue with existing pipeline logic...
+    # (Replace these calls with the existing pipeline stages from build.py)
+
+    # 2. Get path to or generate macros.json
+    macros_json_path = macros_path(
+        legacy_paths["MACROS_JSON"],
+        legacy_paths["MD_SCRIPTS_DIR"] / "generate_macros_json.py",
+        legacy_paths["MACROS_STY_PATH"]
+    )
+
+    # 3. Create Agda source snapshot
+    create_agda_snapshots(
+        legacy_paths["SRC_DIR"],
+        legacy_paths["AGDA_SNAPSHOT_SRC_DIR"],
+        legacy_paths["LIB_EXTS_DIR"],
+        legacy_paths["AGDA_SNAPSHOT_LIB_EXTS_DIR"]
+    )
+
+    common_pipeline(run_agda_html_flag)
+
+    # FUNCTIONAL CLEANUP STAGE
+    if config.cleanup_intermediates:
+        logging.info("🧹 Cleaning up with functional module...")
+        cleanup_result = cleanup_intermediate_artifacts(config)
+        if cleanup_result.is_ok:
+            cleaned = cleanup_result.unwrap()
+            logging.info(f"✅ Cleaned {len(cleaned)} artifacts")
+        else:
+            error = cleanup_result.unwrap_err()
+            logging.warning(f"⚠️ Cleanup warning: {error}")
+
+# --- Legacy Pipeline Logic ---
+def main_legacy(run_agda_html_flag=False):
+    """
+    Legacy pipeline orchestration (fallback when functional modules unavailable).
+
+    This is the existing main() function renamed for backward compatibility.
+    """
+    # We keep this as a fallback during the transition period
+    logging.info("⚠️ Using legacy pipeline (functional modules not available)")
 
     # 1. Setup directories and logging.
     logging.info("Setting up build directories and logging...")
@@ -1805,6 +1884,14 @@ def main(run_agda_html_flag=False):
     # 3. Create Agda source snapshot
     create_agda_snapshots(SRC_DIR, AGDA_SNAPSHOT_SRC_DIR, LIB_EXTS_DIR, AGDA_SNAPSHOT_LIB_EXTS_DIR)
 
+    common_pipeline(run_agda_html_flag)
+
+    # Call cleanup for intermediate artifacts now that the build has succeeded
+    cleanup_intermediate_artifacts()  # << comment out if artifacts needed for debugging
+
+
+
+def common_pipeline(run_agda_html_flag=False):
     # 4. Convert .agda to .lagda.md in src snapshot only
     logging.info(f"\n--- Stage 4: Converting .agda files in snapshot to .lagda.md ---")
     convert_agda_to_lagda(AGDA_SNAPSHOT_SRC_DIR, PROJECT_ROOT)
@@ -2052,8 +2139,6 @@ def main(run_agda_html_flag=False):
     logging.info(f"Full log saved to: {LOG_FILE.relative_to(PROJECT_ROOT)}")
     logging.info(f"To serve the site locally, CWD to {MKDOCS_SRC_DIR.relative_to(PROJECT_ROOT)} and run \"mkdocs serve\"")
 
-    # Call cleanup for intermediate artifacts now that the build has succeeded
-    #cleanup_intermediate_artifacts()  # << comment out if artifacts needed for debugging
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build mkdocs site source from literate Agda files.")
