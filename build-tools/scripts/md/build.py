@@ -2,7 +2,7 @@
 #
 # PURPOSE
 #
-# This script orchestrates the functional documentation migration pipeline using
+# This script orchestrates the functional documentation migration build pipeline using
 # mathematical composition principles. It transforms Agda source files (.agda, .lagda)
 # into a complete MkDocs documentation website with syntax highlighting and
 # cross-references.
@@ -324,7 +324,7 @@ def setup_logging() -> None:
 
     # get root logger
     logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG) # set lowest level for logger itself
+    #logger.setLevel(logging.DEBUG) # set lowest level for logger itself
 
     # clear existing handlers (important if this function could be called multiple times)
     if logger.hasHandlers():
