@@ -12,11 +12,13 @@ module Ledger.Conway.Epoch.Properties
   where
 
 open import Ledger.Conway.Certs govStructure
+open import Ledger.Conway.Enact govStructure
 open import Ledger.Conway.Epoch txs abs
 open import Ledger.Conway.Ledger txs abs
 open import Ledger.Conway.Ratify txs
 open import Ledger.Conway.Ratify.Properties txs
 open import Ledger.Conway.Rewards txs abs
+open import Ledger.Conway.Utxo txs abs
 
 open import Data.List using (filter)
 import Relation.Binary.PropositionalEquality as PE
@@ -33,26 +35,65 @@ module _ (lstate : LState) (ss : Snapshots) where
 module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
-  open RatifyState fut using (removed) renaming (es to esW)
-  open LState ls; open CertState certState; open Acnt acnt
-  es         = record esW { withdrawals = ∅ }
-  govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
+  open LState ls; open CertState certState
+  open RatifyState fut using (removed)
+
+  -- repated definitions from EPOCH to satisfy the type checker
+  open UTxOState
+  open PState; open DState; open GState
+  open Acnt; open EnactState; open GovActionState
+
+  esW      = RatifyState.es fut
+  es       = record esW { withdrawals = ∅ }
+  tmpGovSt = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
+  orphans  = fromList (getOrphans es tmpGovSt)
+  removed' = removed ∪ orphans
+  removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
+    mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+  govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+
+  trWithdrawals  = esW .withdrawals
+  totWithdrawals = ∑[ x ← trWithdrawals ] x
+
+  retired    = (pState .retiring) ⁻¹ e
+  payout     = govActionReturns ∪⁺ trWithdrawals
+  refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
+  unclaimed  = getCoin payout ∸ getCoin refunds
+
+  govSt' = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed' ¿) govSt
+
+  dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
+
+  pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
+
+  gState' = ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
+            , gState .ccHotKeys ∣ ccCreds (es .cc) ⟧
+
+  certState' : CertState
+  certState' = ⟦ dState' , pState' , gState' ⟧
+
+  utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+
+  acnt' = record acnt
+    { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
+
+  ls' = ⟦ utxoSt' , govSt' , certState' ⟧
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total = -, EPOCH (RATIFIES-total' .proj₂) (SNAP-total ls ss .proj₂)
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
-  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut }) (SNAP-complete _ _ _ p₂)
+  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ (λ ss fut → record { acnt = acnt' ; ss = ss ; ls = ls' ; es = _ ; fut = fut }) (SNAP-complete _ _ _ p₂)
     (RATIFIES-complete' (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
     where
       ty : Snapshot → Set
       ty x = record
-        { stakeDistrs = mkStakeDistrs x _ _ _
+        { stakeDistrs = mkStakeDistrs x govSt' _ _
         ; currentEpoch = _
         ; dreps = _
         ; ccHotKeys = _
         ; treasury = _
-        } ⊢ _ ⇀⦇ _ ,RATIFIES⦈ _
+        } ⊢ _ ⇀⦇ govSt' ,RATIFIES⦈ _
 
   abstract
     EPOCH-total' : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
@@ -90,3 +131,4 @@ instance
   Computational-NEWEPOCH : Computational _⊢_⇀⦇_,NEWEPOCH⦈_ ⊥
   Computational-NEWEPOCH .computeProof Γ s sig = success (NEWEPOCH-total _)
   Computational-NEWEPOCH .completeness Γ s sig s' h = cong success (NEWEPOCH-complete _ s' h)
+ 
