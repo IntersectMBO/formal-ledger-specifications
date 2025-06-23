@@ -719,7 +719,7 @@ def macros_path(
     logging.info(f"Checking for {macros_json_target_path.name}...")
     if generator_script.exists() and macros_sty_source.exists():
         if not macros_json_target_path.exists() or macros_sty_source.stat().st_mtime > macros_json_target_path.stat().st_mtime:
-            logging.info(f"👷  Generating {macros_json_target_path.name} from {macros_sty_source.name}...")
+            logging.info(f"🏗️ Generating {macros_json_target_path.name} from {macros_sty_source.name}...")
             run_command(["python", str(generator_script), str(macros_sty_source), str(macros_json_target_path)])
         else:
             logging.info(f"Using existing and up-to-date {macros_json_target_path.name}.")
@@ -846,7 +846,7 @@ def run_latex_preprocessing_stage(
         logging.info("No original LaTeX .lagda files found to preprocess.")
         return processed_files_info
 
-    logging.info("\n--- 👷  Running preprocess.py for all original LaTeX .lagda files ---")
+    logging.info("\n--- 🏗️ Running preprocess.py for all original LaTeX .lagda files ---")
     for lagda_file_abs_path in original_latex_lagda_files:
         relative_path = lagda_file_abs_path.relative_to(src_dir_root)
         logging.info(f"Preprocessing: {relative_path}")
@@ -901,7 +901,7 @@ def build_global_label_map(
     if not processed_files_info:
         logging.info("No processed files to build label map from. Skipping map generation.")
         return None
-    logging.info("\n--- 👷  Building global label map from processed .lagda.temp files ---")
+    logging.info("\n--- 🏗️ Building global label map from processed .lagda.temp files ---")
     for file_info in processed_files_info:
         temp_file_path = file_info["temp_path"]
         final_flat_filename_for_map = file_info["final_flat_md_filename"]
@@ -949,7 +949,7 @@ def run_latex_conversion_stage(
     generated_snapshot_files: List[Path] = []
     if not processed_files_info:
         return generated_snapshot_files
-    logging.info("\n--- 👷  Running Pandoc & postprocess.py for original LaTeX .lagda files ---")
+    logging.info("\n--- 🏗️ Running Pandoc & postprocess.py for original LaTeX .lagda files ---")
 
     # Prepare dummy map path if needed
     dummy_map_path = build_mkdocs_dir / "dummy_labels_map.json"
@@ -1022,7 +1022,7 @@ def run_latex_conversion_stage_with_bibliography(
     if not processed_files_info:
         return generated_snapshot_files
 
-    logging.info("\n--- 👷 Running Pandoc, postprocess.py, and bibliography processing ---")
+    logging.info("\n--- 🏗️ Running Pandoc, postprocess.py, and bibliography processing ---")
 
     # Prepare dummy map path if needed (existing logic)
     dummy_map_path = build_mkdocs_dir / "dummy_labels_map.json"
@@ -1163,7 +1163,7 @@ def populate_agda_docs_staging(
     Returns a list of Path objects for the final .md files in agda_docs_staging_dir.
     """
     logging.info(
-        f"\n--- 👷  Populating Agda docs staging directory: "
+        f"\n--- 🏗️ Populating Agda docs staging directory: "
         f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} ---" # assuming PROJECT_ROOT is global
     )
     agda_docs_staging_dir.mkdir(parents=True, exist_ok=True) # ensure it exists
@@ -1262,7 +1262,7 @@ def copy_staging_to_site_docs(
     Returns a list of the basenames of .md files found at the top level of target_site_docs_dir.
     """
     logging.info(
-        f"\n--- 👷  Populating {site_name} site docs from "
+        f"\n--- 🏗️ Populating {site_name} site docs from "
         f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} "
         f"to {target_site_docs_dir.relative_to(PROJECT_ROOT)} ---"
     )
@@ -1470,7 +1470,7 @@ def generate_mkdocs_config(
                         "Generating navigation.")
 
     if nav_structure_for_yaml is None: # If nav.yml not used or failed to load
-        logging.info("  👷  Generating navigation from processed files in docs/ directory.")
+        logging.info("  🏗️ Generating navigation from processed files in docs/ directory.")
         nav_structure_for_yaml = build_nav_from_flat_files(nav_files_from_docs_dir)
 
     mkdocs_config['nav'] = nav_structure_for_yaml
@@ -1502,7 +1502,7 @@ def generate_mdbook_config(
     """
     Ensures book.toml is in place and generates/copies SUMMARY.md for mdbook.
     """
-    logging.info(f"\n--- 👷  Finalizing mdbook configuration ---")
+    logging.info(f"\n--- 🏗️ Finalizing mdbook configuration ---")
 
     # --- 1. Handle book.toml ---
     logging.info(f"  Ensuring {mdbook_toml_build_path.name} is in place at "
@@ -1932,7 +1932,7 @@ def main(run_agda_html_flag=False):
     )
 
     # 8.01. Generate augmented custom.css with Agda classes
-    logging.info("\n--- 👷  Generating augmented custom.css with Agda classes ---")
+    logging.info("\n--- 🏗️ Generating augmented custom.css with Agda classes ---")
 
     agda_css_in_staging = BUILD_MD_PP_DIR / "Agda.css"
     custom_css_template = MD_STATIC_CUSTOM_CSS_PATH  # build-tools/static/md/common/src/css/custom.css
