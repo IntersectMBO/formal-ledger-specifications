@@ -7,7 +7,7 @@
 
 open import Ledger.Prelude renaming (filterˢ to filter)
 open import Ledger.Conway.Types.GovStructure
-open import Ledger.Conway.Types.Numeric.UnitInterval
+open import Ledger.Prelude.Numeric.UnitInterval
 
 module Ledger.Conway.Certs (gs : _) (open GovStructure gs) where
 

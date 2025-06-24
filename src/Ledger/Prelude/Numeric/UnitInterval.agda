@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 -- Rational number in the unit interval.
-module Ledger.Conway.Types.Numeric.UnitInterval where
+module Ledger.Prelude.Numeric.UnitInterval where
 
 open import Prelude
   hiding ([_,_]; [_]; _*_)

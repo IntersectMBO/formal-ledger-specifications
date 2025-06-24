@@ -40,7 +40,7 @@ module Ledger.Conway.Fees
 
 open import Data.Rational using (0ℚ; ℚ; mkℚ+; _*_; floor)
 open import Data.Rational.Literals using (number)
-open import Ledger.Conway.Types.Numeric
+open import Ledger.Prelude.Numeric
 open import Data.Nat.Induction using (<′-wellFounded)
 open import Data.Nat.Properties using (<⇒<′; ≰⇒>; ∸-monoʳ-≤; +-monoʳ-≤; n≤1+n; m+[n∸m]≡n; ≤-reflexive; ≤-trans)
 open import Data.Integer using (∣_∣)
