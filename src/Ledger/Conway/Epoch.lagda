@@ -23,7 +23,7 @@ open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
 open Filter using (filter)
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
-open import Ledger.Conway.Types.Numeric.UnitInterval
+open import Ledger.Prelude.Numeric.UnitInterval
 
 open Number number renaming (fromNat to fromℕ)
 

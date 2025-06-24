@@ -12,7 +12,7 @@ open import Data.Rational.Literals using (number; fromℤ)
 open import Data.Rational.Properties using (pos⇒nonZero; positive⁻¹; +-mono-<-≤; normalize-pos; p≤p⊔q)
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
-open import Ledger.Conway.Types.Numeric.UnitInterval
+open import Ledger.Prelude.Numeric.UnitInterval
 
 open import Agda.Builtin.FromNat
 open        Number number renaming (fromNat to fromℕ)
