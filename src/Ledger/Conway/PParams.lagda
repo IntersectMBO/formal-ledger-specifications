@@ -16,7 +16,6 @@ open import Data.Rational using (ℚ)
 open import Relation.Nullary.Decidable
 open import Data.List.Relation.Unary.Any using (Any; here; there)
 
-open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude

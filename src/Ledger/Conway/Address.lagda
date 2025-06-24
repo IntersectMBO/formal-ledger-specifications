@@ -18,7 +18,6 @@ by setting \stake{} to \nothing{}.
 
 open import Ledger.Prelude
 
-open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
 
 module Ledger.Conway.Address (
