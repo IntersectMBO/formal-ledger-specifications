@@ -1,5 +1,5 @@
 {-# OPTIONS --safe #-}
-module Ledger.Conway.Types.Numeric.PositiveNat where
+module Ledger.Prelude.Numeric.PositiveNat where
 
 open import Prelude
   hiding ([_,_]; [_]; _*_)
