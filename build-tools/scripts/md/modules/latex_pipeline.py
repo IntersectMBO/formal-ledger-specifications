@@ -5,6 +5,9 @@ LaTeX pipeline module for the documentation build system.
 
 Mathematical transformation: .lagda → preprocess → pandoc+lua → postprocess → bibliography → .lagda.md
 
+Old (broken) approach: LaTeX → pandoc → markdown citations → bibliography_stage → fails
+New (correct) approach: LaTeX → bibliography_stage → pandoc → final markdown
+
 This module provides pure functional transformations for:
 - LaTeX preprocessing (extracting code blocks, processing macros)
 - Label mapping and cross-reference resolution
