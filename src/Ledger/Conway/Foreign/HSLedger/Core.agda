@@ -20,7 +20,7 @@ open import Ledger.Conway.Types.Epoch
 
 open import Ledger.Conway.Transaction renaming (Vote to VoteTag) public
 
-open import Ledger.Conway.Foreign.Util public
+open import Ledger.Prelude.Foreign.Util public
 
 open import Tactic.Derive.Show
 

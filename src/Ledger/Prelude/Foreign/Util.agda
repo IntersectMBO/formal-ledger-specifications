@@ -1,4 +1,4 @@
-module Ledger.Conway.Foreign.Util where
+module Ledger.Prelude.Foreign.Util where
 
 open import Ledger.Prelude
 
