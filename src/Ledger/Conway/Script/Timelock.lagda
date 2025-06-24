@@ -123,3 +123,4 @@ instance
         (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
         (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
         (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
+\end{code}
