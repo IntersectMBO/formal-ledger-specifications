@@ -7,7 +7,7 @@ module Ledger.Conway.Specification.Certs.Properties.PoV (gs : _) (open GovStruct
 
 \end{code}
 % If the module name changes, change the following macro to match!
-\newcommand{\CertsPoV}{Conway/Certs/Properties/PoV}
+\newcommand{\CertsPoV}{Conway/Specification/Certs/Properties/PoV}
 
 \begin{code}[hide]
 open import Ledger.Conway.Specification.Certs gs

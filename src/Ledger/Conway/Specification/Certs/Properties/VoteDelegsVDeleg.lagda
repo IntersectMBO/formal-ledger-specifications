@@ -10,11 +10,11 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Gov.Actions gs
 \end{code}
 % If the module name changes, change the following macro to match!
-\newcommand{\CertsVDelegs}{Conway/Certs/Properties/VoteDelegsVDeleg}
+\newcommand{\CertsVDelegs}{Conway/Specification/Certs/Properties/VoteDelegsVDeleg}
 
 \begin{claim}[%
   \LedgerMod{\CertsVDelegs.lagda}{\AgdaModule{\CertsVDelegs{}}}:
-  \voteDelegs{} by \credVoter{} constructor% 
+  \voteDelegs{} by \credVoter{} constructor%
   ]\label{thm:VDelegsInRegDReps}
   \begin{itemize}
     \item \textit{Informally}. A \CertState{} has a \DState{}, \PState{}, and a
@@ -25,10 +25,10 @@ open import Ledger.Conway.Specification.Gov.Actions gs
       interest to us here is \credVoter{}, which takes two arguments,
       a \GovRole{} and a \Credential{}.
 
-      Now suppose we have a collection \ab{C} of credentials---for instance, 
+      Now suppose we have a collection \ab{C} of credentials---for instance,
       given \ab{d}~:~\DState{}, take \ab{C} to be the domain of the
       \voteDelegs{} field of \ab{d}.  We could then obtain a set of \VDeleg{}s
-      by applying \credVoter{}~\DRep{} to each element of \ab{C}. 
+      by applying \credVoter{}~\DRep{} to each element of \ab{C}.
 
       The present property asserts that the set of \VDeleg{}s that results from the
       application of \credVoter{}~\DRep{} to the domain of the \voteDelegs{} of

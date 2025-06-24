@@ -146,7 +146,6 @@ exampleDatum' : Maybe Datum
 exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 
 opaque
-  unfolding Computational-UTXO
   unfolding collectP2ScriptsWithContext
   unfolding setToList
   unfolding outs

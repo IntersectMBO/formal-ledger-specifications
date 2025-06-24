@@ -8,3 +8,6 @@ import Ledger.Conway.Conformance
 
 -- ** Haskell code extraction
 import Ledger.Conway.Foreign.HSLedger
+
+-- ** Not currently used
+import Foreign.Convertible.DerivingTest

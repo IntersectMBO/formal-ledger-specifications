@@ -33,8 +33,8 @@ open Inverse
 
 lookupActionId : (pparams : PParams) (role : GovRole) (aid : GovActionID) (epoch : Epoch) (s : GovState) →
                  Dec (Any (λ (aid' , ast) → aid ≡ aid' × canVote pparams (action ast) role × ¬ (expired epoch ast)) s)
-lookupActionId pparams role aid epoch = 
-  let instance _ = λ {e ga} → ⁇ (expired? e ga) 
+lookupActionId pparams role aid epoch =
+  let instance _ = λ {e ga} → ⁇ (expired? e ga)
    in any? λ _ → ¿ _ ¿
 
 private

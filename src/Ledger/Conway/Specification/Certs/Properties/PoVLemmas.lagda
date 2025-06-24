@@ -7,7 +7,7 @@ module Ledger.Conway.Specification.Certs.Properties.PoVLemmas (gs : _) (open Gov
 
 \end{code}
 % If the module name changes, change the following macro to match!
-\newcommand{\CertsPoVL}{Conway/Certs/Properties/PoVLemmas}
+\newcommand{\CertsPoVL}{Conway/Specifications/Certs/Properties/PoVLemmas}
 
 \begin{code}[hide]
 open import Ledger.Conway.Specification.Certs gs
