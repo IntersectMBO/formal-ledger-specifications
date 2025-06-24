@@ -207,7 +207,7 @@ def process_figure_environment(match):
 
     return placeholder + figure_inner_content
 
-# --- New Helper Function for \Cref and \cref ---
+# --- Helper Function for \Cref and \cref ---
 def replace_cref_commands(match):
     """
     Replaces \Cref{targets} or \cref{targets} with a placeholder.
@@ -226,6 +226,31 @@ def replace_cref_commands(match):
     targets_str_escaped = targets_str_raw.replace("@@", "@ @")
 
     return f"@@CROSS_REF@@command={command_name}@@targets={targets_str_escaped}@@"
+
+
+# --- New Helper Function for Agda macros like \AgdaFunction{myfun} ---
+def process_generic_agda_macros(content):
+    """Process generic Agda macros from agda.sty"""
+    import re
+
+    agda_classes = [
+        'AgdaFunction', 'AgdaField', 'AgdaDatatype', 'AgdaRecord',
+        'AgdaInductiveConstructor', 'AgdaCoinductiveConstructor',
+        'AgdaModule', 'AgdaPostulate', 'AgdaPrimitive', 'AgdaMacro',
+        'AgdaBound', 'AgdaGeneralizable', 'AgdaArgument',
+        'AgdaKeyword', 'AgdaString', 'AgdaNumber', 'AgdaSymbol',
+        'AgdaPrimitiveType', 'AgdaComment', 'AgdaPragma'
+    ]
+
+    agda_pattern = r'\\(' + '|'.join(re.escape(cls) for cls in agda_classes) + r')\{([^}]+)\}'
+
+    def replace_agda_macro(match):
+        agda_class = match.group(1)
+        content_name = match.group(2)
+        return f"\\texttt{{@@AgdaTerm@@basename={content_name}@@class={agda_class}@@}}"
+
+    return re.sub(agda_pattern, replace_agda_macro, content, flags=re.DOTALL)
+
 
 # --- Main Processing Function ---
 def preprocess_lagda(content):
@@ -261,6 +286,9 @@ def preprocess_lagda(content):
       # Build a regex pattern matching any known Agda term macro (keys from JSON) followed by {}
       agda_term_pattern = r'\\(' + '|'.join(re.escape(k) for k in macro_data["agda_terms"].keys()) + r')\{\}'
       content = re.sub(agda_term_pattern, expand_agda_term_placeholder, content)
+
+    # 3b. ENHANCED: Process generic Agda macros from agda.sty
+    content = process_generic_agda_macros(content)
 
     # 4. Replace \hldiff with \HighlightPlaceholder
     # Use non-greedy match for content and DOTALL flag for potential multiline content

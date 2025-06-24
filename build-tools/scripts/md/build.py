@@ -1713,32 +1713,6 @@ def main(run_agda_html_flag=False):
         return main_legacy(run_agda_html_flag)
 
 
-def main_functional_simple(run_agda_html_flag=False):
-    """Simplified functional pipeline for testing."""
-    logging.info("🔧 Testing functional setup only...")
-
-    # Load config
-    config = load_build_config(run_agda_html=run_agda_html_flag, mode="development")
-
-    # Test setup
-    try:
-        setup_result = setup_build_environment(config)
-        logging.info(f"Setup result created: {setup_result}")
-        logging.info(f"Setup is_ok: {setup_result.is_ok}")
-        logging.info(f"Setup is_err: {setup_result.is_err}")
-
-        if setup_result.is_ok:
-            setup_info = setup_result.unwrap()
-            logging.info(f"✅ Setup succeeded: {setup_info}")
-        else:
-            error = setup_result.unwrap_err()
-            logging.error(f"❌ Setup failed: {error}")
-
-    except Exception as e:
-        logging.error(f"❌ Exception during setup: {e}", exc_info=True)
-
-    logging.info("✅ Test completed!")
-
 def main_functional(run_agda_html_flag=False):
     """Functional pipeline using mathematical composition where possible."""
     logging.info("🔧 Starting functional documentation build pipeline...")
@@ -1781,23 +1755,41 @@ def main_functional(run_agda_html_flag=False):
     processed_agda_files = agda_result.unwrap()
     logging.info(f"✅ Functional Agda processing: {len(processed_agda_files)} files processed")
 
-    # STAGE 5: NEW! Functional LaTeX processing
+    # STAGE 5: Functional LaTeX processing
     logging.info("🔄 LaTeX processing stage...")
 
     latex_files = list(config.build_paths.agda_snapshot_src_dir.rglob("*.lagda"))
 
-    if latex_files and HAS_LATEX_PIPELINE:
-        logging.info(f"Found {len(latex_files)} LaTeX files to process")
+if latex_files:
+    logging.info(f"Found {len(latex_files)} LaTeX files to process")
 
-        latex_result = latex_pipeline_stage(latex_files, config)
+    # Use the enhanced bibliography integration
+    processed_files_info = run_latex_preprocessing_stage(
+        latex_files, config.build_paths.agda_snapshot_src_dir,
+        config.build_paths.macros_json_path,
+        config.build_paths.temp_dir, config.build_paths.code_blocks_dir
+    )
 
-        if latex_result.is_err:
-            error = latex_result.unwrap_err()
-            logging.error(f"❌ LaTeX processing failed: {error}")
-            sys.exit(1)
+    labels_map_path = build_global_label_map(processed_files_info, config.build_paths.build_md_aux_dir)
 
-        processed_latex_files = latex_result.unwrap()
-        logging.info(f"✅ LaTeX processing: {len(processed_latex_files)} files processed")
+    generated_files = run_latex_conversion_stage_with_bibliography(
+        processed_files_info, labels_map_path,
+        config.source_paths.md_scripts_dir / "agda-filter.lua",
+        config.source_paths.md_scripts_dir / "postprocess.py",
+        config.source_paths.references_bib_path,
+        config.build_paths.build_md_aux_dir,
+        config.build_paths.agda_snapshot_src_dir
+    )
+
+    processed_latex_files = []
+    for file_path in generated_files:
+        processed_file = ProcessedFile(
+            source_path=file_path, current_path=file_path,
+            metadata=calculate_file_metadata(file_path, ProcessingStage.POSTPROCESSED),
+            content_hash=""
+        )
+        processed_latex_files.append(processed_file)
+    logging.info(f"✅ LaTeX processing: {len(processed_latex_files)} files processed")
     else:
         if latex_files and not HAS_LATEX_PIPELINE:
             logging.warning(f"Found {len(latex_files)} LaTeX files but LaTeX pipeline not available")
