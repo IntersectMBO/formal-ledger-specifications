@@ -3,15 +3,17 @@
 """
 LaTeX pipeline module for the documentation build system.
 
-Mathematical transformation: .lagda → preprocess → pandoc+lua → postprocess → .lagda.md
+Mathematical transformation: .lagda → preprocess → pandoc+lua → postprocess → bibliography → .lagda.md
 
 This module provides pure functional transformations for:
 - LaTeX preprocessing (extracting code blocks, processing macros)
 - Label mapping and cross-reference resolution
 - Pandoc + Lua filter processing
-- Final postprocessing with bibliography integration
+- Postprocessing with cross-reference resolution
+- Bibliography processing with citation conversion
+- Final cleanup
 
-Design: LaTeX → Preprocessed → Intermediate → Final Markdown
+Design: LaTeX → Preprocessed → Intermediate → Postprocessed → Bibliography → Final Markdown
 """
 
 from __future__ import annotations
@@ -34,6 +36,14 @@ from utils.pipeline_types import (
     ProcessedFile, ProcessingStage
 )
 
+# Try to import bibliography processing
+try:
+    from modules.bibliography_stage import process_bibliography_stage
+    HAS_BIBLIOGRAPHY_PROCESSING = True
+except ImportError:
+    HAS_BIBLIOGRAPHY_PROCESSING = False
+    logging.warning("Bibliography processing not available")
+
 # =============================================================================
 # Mathematical Types for LaTeX Processing
 # =============================================================================
@@ -46,6 +56,7 @@ class LaTeXProcessingStage:
     temp_file: Path
     code_blocks_file: Path
     intermediate_file: Path
+    postprocess_file: Path  # NEW: intermediate file after postprocessing
     final_file: Path
     relative_path: Path
 
@@ -68,6 +79,7 @@ class LaTeXProcessingStage:
             temp_file=temp_dir / relative_path.with_suffix(".lagda.temp"),
             code_blocks_file=code_blocks_dir / relative_path.with_suffix(".codeblocks.json"),
             intermediate_file=intermediate_dir / relative_path.with_suffix(".md.intermediate"),
+            postprocess_file=intermediate_dir / relative_path.with_suffix(".md.postprocess"),  # NEW
             final_file=target_dir / relative_path.with_suffix(".lagda.md"),
             relative_path=relative_path
         )
@@ -75,7 +87,7 @@ class LaTeXProcessingStage:
     def ensure_directories(self) -> None:
         """Ensure all parent directories exist (side effect for file creation)."""
         for path in [self.temp_file, self.code_blocks_file,
-                    self.intermediate_file, self.final_file]:
+                    self.intermediate_file, self.postprocess_file, self.final_file]:
             path.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -203,6 +215,100 @@ def run_pandoc_stage(
     return result.map(lambda _: None)
 
 
+# =============================================================================
+# Postprocessing Stage
+# =============================================================================
+
+def run_postprocess_stage(
+    processing_stage: LaTeXProcessingStage,
+    labels_map_path: Path,
+    postprocess_script: Path
+) -> Result[None, PipelineError]:
+    """
+    Mathematical transformation: .md.intermediate → .md.postprocess
+
+    Applies postprocess.py transformation with cross-reference resolution.
+    """
+
+    command = [
+        "python", str(postprocess_script),
+        str(processing_stage.intermediate_file),
+        str(processing_stage.code_blocks_file),
+        str(labels_map_path),
+        str(processing_stage.postprocess_file)  # Output to intermediate postprocess file
+    ]
+
+    result = run_command_functional(command)
+    return result.map(lambda _: None)
+
+
+# =============================================================================
+# Bibliography Processing Stage
+# =============================================================================
+
+def run_bibliography_stage(
+    processing_stage: LaTeXProcessingStage,
+    bibliography_path: Path
+) -> Result[None, PipelineError]:
+    """
+    Mathematical transformation: .md.postprocess → .lagda.md (with bibliography)
+
+    Applies bibliography processing using functional modules.
+    """
+
+    if not HAS_BIBLIOGRAPHY_PROCESSING:
+        # Fallback: just copy postprocess file to final file
+        try:
+            if processing_stage.postprocess_file.exists():
+                import shutil
+                shutil.copy2(processing_stage.postprocess_file, processing_stage.final_file)
+                logging.warning(f"Bibliography processing not available, copying without bibliography")
+                return Result.ok(None)
+            else:
+                return Result.err(PipelineError(
+                    error_type=ErrorType.FILE_NOT_FOUND,
+                    message=f"Postprocess file not found: {processing_stage.postprocess_file}"
+                ))
+        except Exception as e:
+            return Result.err(PipelineError(
+                error_type=ErrorType.COMMAND_FAILED,
+                message=f"Failed to copy postprocess file: {e}",
+                cause=e
+            ))
+
+    # Use functional bibliography processing
+    logging.debug(f"📚 Processing bibliography for {processing_stage.relative_path}")
+
+    bib_result = process_bibliography_stage(
+        input_md_file=processing_stage.postprocess_file,
+        bib_file=bibliography_path,
+        output_md_file=processing_stage.final_file
+    )
+
+    if bib_result.is_err:
+        error = bib_result.unwrap_err()
+        logging.warning(f"Bibliography processing failed: {error.message}")
+
+        # Fallback: copy postprocess file without bibliography
+        try:
+            if processing_stage.postprocess_file.exists():
+                import shutil
+                shutil.copy2(processing_stage.postprocess_file, processing_stage.final_file)
+                logging.warning(f"Falling back to version without bibliography processing")
+                return Result.ok(None)
+        except Exception as e:
+            return Result.err(PipelineError(
+                error_type=ErrorType.COMMAND_FAILED,
+                message=f"Bibliography processing failed and fallback failed: {e}",
+                cause=e
+            ))
+
+    return Result.ok(None)
+
+
+# =============================================================================
+# Cleanup Stage
+# =============================================================================
 
 def cleanup_original_lagda_file(
     processing_stage: LaTeXProcessingStage
@@ -230,33 +336,6 @@ def cleanup_original_lagda_file(
             cause=e
         ))
 
-# =============================================================================
-# Postprocessing Stage
-# =============================================================================
-
-def run_postprocess_stage(
-    processing_stage: LaTeXProcessingStage,
-    labels_map_path: Path,
-    postprocess_script: Path
-) -> Result[None, PipelineError]:
-    """
-    Mathematical transformation: .md.intermediate → .lagda.md + cleanup
-
-    Applies postprocess.py transformation with cross-reference resolution,
-    then removes original .lagda to prevent module ambiguity.
-    """
-
-    command = [
-        "python", str(postprocess_script),
-        str(processing_stage.intermediate_file),
-        str(processing_stage.code_blocks_file),
-        str(labels_map_path),
-        str(processing_stage.final_file)
-    ]
-
-    # Chain: postprocess → cleanup
-    return (run_command_functional(command)
-            .and_then(lambda _: cleanup_original_lagda_file(processing_stage)))
 
 # =============================================================================
 # Label Map Generation
@@ -356,7 +435,7 @@ def process_latex_files(
     Complete LaTeX processing pipeline composition.
 
     Mathematical composition:
-    process = postprocess ∘ pandoc ∘ preprocess
+    process = cleanup ∘ bibliography ∘ postprocess ∘ pandoc ∘ preprocess
 
     This is the main entry point for LaTeX processing.
     """
@@ -426,6 +505,23 @@ def process_latex_files(
             labels_map_path,
             config.source_paths.md_scripts_dir / "postprocess.py"
         )
+        if result.is_err:
+            return Result.err(result.unwrap_err())
+
+    # Stage 5: Bibliography processing (NEW!)
+    logging.info("🔄 Running bibliography processing stage...")
+    for stage in processing_stages:
+        result = run_bibliography_stage(
+            stage,
+            config.source_paths.references_bib_path
+        )
+        if result.is_err:
+            return Result.err(result.unwrap_err())
+
+    # Stage 6: Cleanup
+    logging.info("🔄 Running cleanup stage...")
+    for stage in processing_stages:
+        result = cleanup_original_lagda_file(stage)
         if result.is_err:
             return Result.err(result.unwrap_err())
 
