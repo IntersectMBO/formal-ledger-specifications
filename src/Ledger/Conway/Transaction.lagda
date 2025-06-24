@@ -26,7 +26,6 @@ import Ledger.Conway.Certs
 import Ledger.Conway.TokenAlgebra
 import Ledger.Conway.Address
 
-open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
 data Tag : Type where

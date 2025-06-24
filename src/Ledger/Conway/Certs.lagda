@@ -11,7 +11,6 @@ open import Ledger.Conway.Types.Numeric.UnitInterval
 
 module Ledger.Conway.Certs (gs : _) (open GovStructure gs) where
 
-open import Tactic.Derive.DecEq
 
 open import Ledger.Conway.GovernanceActions gs
 open RwdAddr

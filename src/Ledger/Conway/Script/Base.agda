@@ -7,8 +7,6 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 
 open import stdlib.Data.List.Relation.Unary.MOf
 
-open import Tactic.Derive.DecEq
-open import Tactic.Inline
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Conway.Crypto

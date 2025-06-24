@@ -27,8 +27,6 @@ open import Data.List.Relation.Unary.Any
   using (Any; any?)
 open import stdlib.Data.List.Relation.Unary.MOf
 
-open import Tactic.Derive.DecEq
-open import Tactic.Inline
 \end{code}
 
 \begin{figure*}[h]

@@ -22,7 +22,6 @@ open import Ledger.Conway.Transaction renaming (Vote to VoteTag) public
 
 open import Ledger.Conway.Foreign.Util public
 
-open import Tactic.Derive.DecEq
 open import Tactic.Derive.Show
 
 instance
