@@ -36,9 +36,9 @@ from utils.pipeline_types import (
     ProcessedFile, ProcessingStage
 )
 
-# Try to import bibliography processing
+# Import bibliography processing directly
 try:
-    from modules.bibliography_stage import process_bibliography_stage
+    from modules.bibtex_processor import BibTeXProcessor
     HAS_BIBLIOGRAPHY_PROCESSING = True
 except ImportError:
     HAS_BIBLIOGRAPHY_PROCESSING = False
@@ -56,7 +56,6 @@ class LaTeXProcessingStage:
     temp_file: Path
     code_blocks_file: Path
     intermediate_file: Path
-    postprocess_file: Path  # NEW: intermediate file after postprocessing
     final_file: Path
     relative_path: Path
 
@@ -79,7 +78,6 @@ class LaTeXProcessingStage:
             temp_file=temp_dir / relative_path.with_suffix(".lagda.temp"),
             code_blocks_file=code_blocks_dir / relative_path.with_suffix(".codeblocks.json"),
             intermediate_file=intermediate_dir / relative_path.with_suffix(".md.intermediate"),
-            postprocess_file=intermediate_dir / relative_path.with_suffix(".md.postprocess"),  # NEW
             final_file=target_dir / relative_path.with_suffix(".lagda.md"),
             relative_path=relative_path
         )
@@ -87,7 +85,7 @@ class LaTeXProcessingStage:
     def ensure_directories(self) -> None:
         """Ensure all parent directories exist (side effect for file creation)."""
         for path in [self.temp_file, self.code_blocks_file,
-                    self.intermediate_file, self.postprocess_file, self.final_file]:
+                    self.intermediate_file, self.final_file]:
             path.parent.mkdir(parents=True, exist_ok=True)
 
 
@@ -225,7 +223,7 @@ def run_postprocess_stage(
     postprocess_script: Path
 ) -> Result[None, PipelineError]:
     """
-    Mathematical transformation: .md.intermediate → .md.postprocess
+    Mathematical transformation: .md.intermediate → .lagda.md
 
     Applies postprocess.py transformation with cross-reference resolution.
     """
@@ -235,7 +233,7 @@ def run_postprocess_stage(
         str(processing_stage.intermediate_file),
         str(processing_stage.code_blocks_file),
         str(labels_map_path),
-        str(processing_stage.postprocess_file)  # Output to intermediate postprocess file
+        str(processing_stage.final_file)  # Output directly to final file
     ]
 
     result = run_command_functional(command)
@@ -243,7 +241,7 @@ def run_postprocess_stage(
 
 
 # =============================================================================
-# Bibliography Processing Stage
+# Bibliography Processing Stage (Applied to LaTeX Temp Files)
 # =============================================================================
 
 def run_bibliography_stage(
@@ -251,59 +249,57 @@ def run_bibliography_stage(
     bibliography_path: Path
 ) -> Result[None, PipelineError]:
     """
-    Mathematical transformation: .md.postprocess → .lagda.md (with bibliography)
+    Mathematical transformation: .lagda.temp → .lagda.temp.withbib (LaTeX citations → markdown + bibliography)
 
-    Applies bibliography processing using functional modules.
+    Applies bibliography processing directly using BibTeXProcessor on LaTeX temp files.
+    This must run BEFORE pandoc conversion when citations are still in LaTeX format.
     """
 
     if not HAS_BIBLIOGRAPHY_PROCESSING:
-        # Fallback: just copy postprocess file to final file
-        try:
-            if processing_stage.postprocess_file.exists():
-                import shutil
-                shutil.copy2(processing_stage.postprocess_file, processing_stage.final_file)
-                logging.warning(f"Bibliography processing not available, copying without bibliography")
-                return Result.ok(None)
-            else:
-                return Result.err(PipelineError(
-                    error_type=ErrorType.FILE_NOT_FOUND,
-                    message=f"Postprocess file not found: {processing_stage.postprocess_file}"
-                ))
-        except Exception as e:
+        logging.warning(f"Bibliography processing not available, skipping for {processing_stage.relative_path}")
+        return Result.ok(None)
+
+    try:
+        # Create BibTeX processor
+        processor_result = BibTeXProcessor.from_file(bibliography_path)
+        if processor_result.is_err:
+            error = processor_result.unwrap_err()
+            logging.warning(f"Failed to create BibTeX processor: {error}")
+            return Result.ok(None)  # Continue without bibliography processing
+
+        processor = processor_result.unwrap()
+
+        # Read the temp file (has LaTeX citations)
+        if not processing_stage.temp_file.exists():
             return Result.err(PipelineError(
-                error_type=ErrorType.COMMAND_FAILED,
-                message=f"Failed to copy postprocess file: {e}",
-                cause=e
+                error_type=ErrorType.FILE_NOT_FOUND,
+                message=f"Temp file not found: {processing_stage.temp_file}"
             ))
 
-    # Use functional bibliography processing
-    logging.debug(f"📚 Processing bibliography for {processing_stage.relative_path}")
+        content = processing_stage.temp_file.read_text(encoding='utf-8')
 
-    bib_result = process_bibliography_stage(
-        input_md_file=processing_stage.postprocess_file,
-        bib_file=bibliography_path,
-        output_md_file=processing_stage.final_file
-    )
+        # Process citations (LaTeX → Markdown + bibliography)
+        logging.debug(f"📚 Processing bibliography for {processing_stage.relative_path}")
+        processed_content, replacements, bibliography = processor.process_content(content)
 
-    if bib_result.is_err:
-        error = bib_result.unwrap_err()
-        logging.warning(f"Bibliography processing failed: {error.message}")
+        # Combine content with bibliography
+        final_content = processed_content
+        if bibliography.strip():
+            final_content += f"\n\n{bibliography}"
 
-        # Fallback: copy postprocess file without bibliography
-        try:
-            if processing_stage.postprocess_file.exists():
-                import shutil
-                shutil.copy2(processing_stage.postprocess_file, processing_stage.final_file)
-                logging.warning(f"Falling back to version without bibliography processing")
-                return Result.ok(None)
-        except Exception as e:
-            return Result.err(PipelineError(
-                error_type=ErrorType.COMMAND_FAILED,
-                message=f"Bibliography processing failed and fallback failed: {e}",
-                cause=e
-            ))
+        # Write back to temp file (overwrite with bibliography-processed version)
+        processing_stage.temp_file.write_text(final_content, encoding='utf-8')
 
-    return Result.ok(None)
+        logging.debug(f"✅ Bibliography processing: {len(replacements)} citations processed")
+        return Result.ok(None)
+
+    except Exception as e:
+        return Result.err(PipelineError(
+            error_type=ErrorType.COMMAND_FAILED,
+            message=f"Bibliography processing failed: {e}",
+            context={"file": str(processing_stage.temp_file)},
+            cause=e
+        ))
 
 
 # =============================================================================
