@@ -76,6 +76,7 @@ class BibliographyConfig:
     bibliography_id: str = "references"
     citation_prefix: str = ""
     citation_suffix: str = ""
+    output_format: str = "markdown"  # NEW: "markdown" or "latex"
 
     @classmethod
     def default_alpha(cls) -> BibliographyConfig:
@@ -83,9 +84,19 @@ class BibliographyConfig:
         return cls(
             style=CitationStyle.alpha(),
             bibliography_title="References",
-            bibliography_id="references"
+            bibliography_id="references",
+            output_format="markdown"
         )
 
+    @classmethod
+    def latex_alpha(cls) -> BibliographyConfig:
+        """Configuration for LaTeX output with alpha-style citations."""
+        return cls(
+            style=CitationStyle.alpha(),
+            bibliography_title="References",
+            bibliography_id="references",
+            output_format="latex"
+        )
 
 # =============================================================================
 # Citation Pattern Recognition
@@ -388,25 +399,27 @@ def create_markdown_citation(
     optional_args: Optional[str] = None
 ) -> str:
     """
-    Pure function: Create markdown citation from reference keys.
+    Create citation from reference keys in specified output format.
 
-    Examples:
-        ["shelley-ledger-spec"] → "[SL19](references.html#shelley-ledger-spec)"
-        ["key1", "key2"] → "[AB20; CD21](references.html)"
+    Supports both markdown and LaTeX output formats.
     """
 
     if not keys:
         return "[?]"
 
     if config.style.name == "alpha":
-        # Alpha style: [DeM98] with links
         labels = []
         for key in keys:
             entry = bibliography.get(key)
             if entry and entry.short_label:
                 label = entry.short_label
                 if config.style.link_citations:
-                    label = f"[{label}](#{config.bibliography_id}#{key})"
+                    if config.output_format == "latex":
+                        # Generate LaTeX hyperlink
+                        label = f"\\href{{#{config.bibliography_id}#{key}}}{{{label}}}"
+                    else:
+                        # Generate markdown link
+                        label = f"[{label}](#{config.bibliography_id}#{key})"
                 else:
                     label = f"[{label}]"
                 labels.append(label)
@@ -417,20 +430,26 @@ def create_markdown_citation(
         if len(labels) == 1:
             citation = labels[0]
         else:
-            # Multiple citations: [AB20; CD21]
-            citation = f"[{'; '.join([l.strip('[]') for l in labels])}]"
-            if config.style.link_citations:
-                citation = f"[{citation}](#{config.bibliography_id})"
+            # Multiple citations
+            if config.output_format == "latex":
+                # For LaTeX: separate multiple citations with commas
+                citation = ", ".join(labels)
+            else:
+                # For markdown: [AB20; CD21] format
+                citation = f"[{'; '.join([l.strip('[]') for l in labels])}]"
+                if config.style.link_citations:
+                    citation = f"[{citation}](#{config.bibliography_id})"
 
     else:  # numeric or other styles
-        # Simple numeric style for now
         citation = f"[{', '.join(keys)}]"
         if config.style.link_citations:
-            citation = f"[{citation}](#{config.bibliography_id})"
+            if config.output_format == "latex":
+                citation = f"\\href{{#{config.bibliography_id}}}{{{citation}}}"
+            else:
+                citation = f"[{citation}](#{config.bibliography_id})"
 
     # Add optional arguments if present
     if optional_args:
-        # Remove brackets and add as suffix
         clean_args = optional_args.strip('[]')
         citation = f"{citation}, {clean_args}"
 
@@ -488,42 +507,53 @@ def generate_bibliography_markdown(
     config: BibliographyConfig
 ) -> str:
     """
-    Pure function: Generate bibliography section in Markdown.
+    Generate bibliography section in specified output format.
     """
 
     if not used_keys:
         return ""
 
-    # Filter to only used entries
+    # Filter and sort entries (same logic as before)
     used_entries = [bibliography[key] for key in used_keys if key in bibliography]
 
-    # Sort entries
     if config.style.sort_bibliography:
         if config.style.name == "alpha":
-            # Sort by short label
             used_entries.sort(key=lambda e: e.short_label)
         else:
-            # Sort by key
             used_entries.sort(key=lambda e: e.key)
 
-    # Generate markdown
-    lines = [
-        f"## {config.bibliography_title} {{#{config.bibliography_id}}}",
-        ""
-    ]
+    # Generate section header and entries based on format
+    if config.output_format == "latex":
+        lines = [
+            f"\\section{{{config.bibliography_title}}}\\label{{{config.bibliography_id}}}",
+            ""
+        ]
 
-    for entry in used_entries:
-        anchor_id = f"{config.bibliography_id}#{entry.key}"
+        for entry in used_entries:
+            if config.style.name == "alpha":
+                label = f"\\textbf{{{entry.short_label}}} \\label{{{entry.key}}}"
+            else:
+                label = f"\\textbf{{{entry.key}}} \\label{{{entry.key}}}"
 
-        if config.style.name == "alpha":
-            label = f"**[{entry.short_label}]** {{#{entry.key}}}"
-        else:
-            label = f"**[{entry.key}]** {{#{entry.key}}}"
+            citation_text = format_bibliography_entry(entry)
+            lines.append(f"{label} {citation_text}")
+            lines.append("")
 
-        # Format entry
-        citation_text = format_bibliography_entry(entry)
-        lines.append(f"{label} {citation_text}")
-        lines.append("")
+    else:  # markdown format
+        lines = [
+            f"## {config.bibliography_title} {{#{config.bibliography_id}}}",
+            ""
+        ]
+
+        for entry in used_entries:
+            if config.style.name == "alpha":
+                label = f"**[{entry.short_label}]** {{#{entry.key}}}"
+            else:
+                label = f"**[{entry.key}]** {{#{entry.key}}}"
+
+            citation_text = format_bibliography_entry(entry)
+            lines.append(f"{label} {citation_text}")
+            lines.append("")
 
     return "\n".join(lines)
 

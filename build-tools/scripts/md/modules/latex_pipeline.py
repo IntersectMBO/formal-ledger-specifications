@@ -259,10 +259,7 @@ def run_bibliography_stage(
     bibliography_path: Path
 ) -> Result[None, PipelineError]:
     """
-    Mathematical transformation: .lagda.temp → .lagda.temp.withbib (LaTeX citations → markdown + bibliography)
-
-    Applies bibliography processing directly using BibTeXProcessor on LaTeX temp files.
-    This must run BEFORE pandoc conversion when citations are still in LaTeX format.
+    Mathematical transformation: .lagda.temp → .lagda.temp.withbib (LaTeX citations → LaTeX links + bibliography)
     """
 
     if not HAS_BIBLIOGRAPHY_PROCESSING:
@@ -270,16 +267,19 @@ def run_bibliography_stage(
         return Result.ok(None)
 
     try:
-        # Create BibTeX processor
-        processor_result = BibTeXProcessor.from_file(bibliography_path)
+        # Create BibTeX processor with LaTeX output format
+        from modules.bibtex_processor import BibliographyConfig
+        latex_config = BibliographyConfig.latex_alpha()  # Use LaTeX format
+
+        processor_result = BibTeXProcessor.from_file(bibliography_path, latex_config)
         if processor_result.is_err:
             error = processor_result.unwrap_err()
             logging.warning(f"Failed to create BibTeX processor: {error}")
-            return Result.ok(None)  # Continue without bibliography processing
+            return Result.ok(None)
 
         processor = processor_result.unwrap()
 
-        # Read the temp file (has LaTeX citations)
+        # Read and process content (rest same as before)
         if not processing_stage.temp_file.exists():
             return Result.err(PipelineError(
                 error_type=ErrorType.FILE_NOT_FOUND,
@@ -287,19 +287,14 @@ def run_bibliography_stage(
             ))
 
         content = processing_stage.temp_file.read_text(encoding='utf-8')
-
-        # Process citations (LaTeX → Markdown + bibliography)
         logging.debug(f"📚 Processing bibliography for {processing_stage.relative_path}")
         processed_content, replacements, bibliography = processor.process_content(content)
 
-        # Combine content with bibliography
         final_content = processed_content
         if bibliography.strip():
             final_content += f"\n\n{bibliography}"
 
-        # Write back to temp file (overwrite with bibliography-processed version)
         processing_stage.temp_file.write_text(final_content, encoding='utf-8')
-
         logging.debug(f"✅ Bibliography processing: {len(replacements)} citations processed")
         return Result.ok(None)
 
