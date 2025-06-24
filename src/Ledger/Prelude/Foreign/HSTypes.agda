@@ -1,4 +1,4 @@
-module Ledger.Conway.Foreign.HSTypes where
+module Ledger.Prelude.Foreign.HSTypes where
 
 {-# FOREIGN GHC
   {-# LANGUAGE DeriveGeneric #-}
@@ -8,21 +8,15 @@ module Ledger.Conway.Foreign.HSTypes where
 open import Prelude
 
 open import Foreign.Haskell
+open import stdlib.Foreign.Haskell.Empty public
 open import Foreign.Haskell.Coerce
-open import Foreign.Haskell.Either
 open import Data.Rational.Base
 
 {-# FOREIGN GHC
   import GHC.Generics (Generic)
-  import Data.Void (Void)
   import Prelude hiding (Rational)
   import GHC.Real (Ratio(..))
 #-}
-
--- * The empty type
-
-data Empty : Type where
-{-# COMPILE GHC Empty = data Void () #-}
 
 -- * Rational
 

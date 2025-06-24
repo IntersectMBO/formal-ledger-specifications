@@ -9,9 +9,9 @@ open import Ledger.Conway.Foreign.HSLedger.Epoch
 open import Ledger.Conway.Conformance.Epoch it it
 open import Ledger.Conway.Conformance.Epoch.Properties it it
 
-open import Ledger.Conway.Foreign.HSTypes hiding (ComputationResult)
+open import Ledger.Prelude.Foreign.HSTypes hiding (ComputationResult)
 
-open import Ledger.Conway.Foreign.Util
+open import Ledger.Prelude.Foreign.Util
 
 record HsRewardUpdate : Type where
   field Δt Δr Δf : ℤ
@@ -22,7 +22,7 @@ record HsRewardUpdate : Type where
     , deltaR  :: Integer
     , deltaF  :: Integer
     , rs      ::
-        MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.HSMap
+        MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap
           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential
           Integer
     }
