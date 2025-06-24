@@ -149,62 +149,6 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
         logging.error(f"Exception in setup_build_directories: {error}")
         return Result.err(error)
 
-# def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineError]:
-#     """
-#     Functional directory setup: Create all necessary build directories.
-
-#     Returns list of successfully created directories.
-#     """
-
-#     directories_to_create = [
-#         # Core build directories
-#         config.build_paths.build_dir,
-#         config.build_paths.build_md_dir,
-#         config.build_paths.build_md_in_dir,
-#         config.build_paths.build_md_pp_dir,
-#         config.build_paths.build_md_aux_dir,
-
-#         # Snapshot directories
-#         config.build_paths.agda_snapshot_src_dir,
-#         config.build_paths.agda_snapshot_lib_exts_dir,
-
-#         # Pipeline intermediate directories
-#         config.build_paths.temp_dir,
-#         config.build_paths.code_blocks_dir,
-#         config.build_paths.intermediate_md_dir,
-
-#         # Site directories (will be cleaned and recreated)
-#         config.build_paths.mkdocs_src_dir,
-#         config.build_paths.mkdocs_docs_dir,
-#         config.build_paths.mkdocs_css_dir,
-#         config.build_paths.mkdocs_js_dir,
-#         config.build_paths.mkdocs_includes_dir,
-#     ]
-
-#     # Clean directories that should start fresh
-#     directories_to_clean = [
-#         config.build_paths.mkdocs_build_dir,
-#         config.build_paths.mdbook_build_dir,
-#     ]
-
-#     created_dirs = []
-
-#     # Clean directories first
-#     for dir_path in directories_to_clean:
-#         result = clean_directory(dir_path)
-#         if result.is_err:
-#             return Result.err(result.unwrap_err())
-#         created_dirs.append(result.unwrap())
-
-#     # Create directories
-#     for dir_path in directories_to_create:
-#         result = ensure_directory_exists(dir_path)
-#         if result.is_err:
-#             return Result.err(result.unwrap_err())
-#         created_dirs.append(result.unwrap())
-
-#     return Result.ok(created_dirs)
-
 
 def setup_static_site_structure(config: BuildConfig) -> Result[Dict[str, Path], PipelineError]:
     """
@@ -332,55 +276,6 @@ def setup_logging(config: BuildConfig) -> Result[bool, PipelineError]:
             message=f"Failed to setup logging: {e}",
             cause=e
         ))
-# def setup_logging(config: BuildConfig) -> Result[None, PipelineError]:
-#     """
-#     Functional logging setup: Configure file and console logging.
-
-#     Uses configuration to determine log levels and output paths.
-#     """
-
-#     try:
-#         # Clear any existing handlers
-#         logger = logging.getLogger()
-#         if logger.hasHandlers():
-#             logger.handlers.clear()
-
-#         # Set base level
-#         logger.setLevel(logging.DEBUG)
-
-#         # Create formatter
-#         formatter = logging.Formatter(
-#             '%(asctime)s - %(levelname)-8s - %(message)s',
-#             datefmt='%Y-%m-%d %H:%M:%S'
-#         )
-
-#         # File handler (always DEBUG level)
-#         config.build_paths.log_file_path.parent.mkdir(parents=True, exist_ok=True)
-#         file_handler = logging.FileHandler(config.build_paths.log_file_path, mode='w', encoding='utf-8')
-#         file_handler.setFormatter(formatter)
-#         file_handler.setLevel(logging.DEBUG)
-#         logger.addHandler(file_handler)
-
-#         # Console handler (level depends on config)
-#         console_handler = logging.StreamHandler(sys.stderr)
-#         console_handler.setFormatter(formatter)
-#         console_level = logging.DEBUG if config.verbose_logging else logging.INFO
-#         console_handler.setLevel(console_level)
-#         logger.addHandler(console_handler)
-
-#         logging.info("✅ Logging configuration complete")
-#         logging.info(f"   Log file: {config.build_paths.log_file_path}")
-#         logging.info(f"   Verbose mode: {config.verbose_logging}")
-
-#         return Result.ok(None)
-
-#     except Exception as e:
-#         return Result.err(PipelineError(
-#             error_type=ErrorType.COMMAND_FAILED,
-#             message=f"Failed to setup logging",
-#             cause=e
-#         ))
-
 
 # =============================================================================
 # Cleanup Operations
@@ -487,25 +382,6 @@ def setup_build_environment(config: BuildConfig) -> Result[Dict[str, Any], Pipel
         )
         logging.error(f"❌ Setup failed with exception: {error}")
         return Result.err(error)
-# def setup_build_environment(config: BuildConfig) -> Result[Dict[str, Any], PipelineError]:
-#     """
-#     Complete build environment setup using functional composition.
-
-#     This is the main entry point that orchestrates all setup operations.
-#     """
-
-#     logging.info("🏗️ Setting up build environment...")
-
-#     # Chain all setup operations functionally
-#     return (
-#         setup_build_directories(config)
-#         .and_then(lambda dirs: setup_static_site_structure(config)
-#                   .map(lambda structures: {"directories": dirs, "structures": structures}))
-#         .and_then(lambda result: copy_common_source_files(config)
-#                   .map(lambda count: {**result, "common_files_copied": count}))
-#         .and_then(lambda result: setup_logging(config)
-#                   .map(lambda _: {**result, "logging_configured": True}))
-#     )
 
 
 # =============================================================================
