@@ -225,6 +225,11 @@ MKDOCS_DOCS_DIR = legacy_paths["MKDOCS_DOCS_DIR"]
 MKDOCS_CSS_DIR = legacy_paths["MKDOCS_CSS_DIR"]
 MKDOCS_JS_DIR = legacy_paths["MKDOCS_JS_DIR"]
 MKDOCS_INCLUDES_DIR = legacy_paths["MKDOCS_INCLUDES_DIR"]
+MDBOOK_BUILD_DIR = legacy_paths["MDBOOK_BUILD_DIR"]
+MDBOOK_SRC_DIR = legacy_paths["MDBOOK_SRC_DIR"]
+MDBOOK_DOCS_DIR = legacy_paths["MDBOOK_DOCS_DIR"]
+MDBOOK_CSS_DIR = legacy_paths["MDBOOK_CSS_DIR"],
+MDBOOK_JS_DIR = legacy_paths["MDBOOK_JS_DIR"]
 
 # Script paths
 SCRIPTS_DIR = legacy_paths["SCRIPTS_DIR"]
@@ -1760,41 +1765,20 @@ def main_functional(run_agda_html_flag=False):
 
     latex_files = list(config.build_paths.agda_snapshot_src_dir.rglob("*.lagda"))
 
-if latex_files:
-    logging.info(f"Found {len(latex_files)} LaTeX files to process")
+    if latex_files:
+        logging.info(f"Found {len(latex_files)} LaTeX files to process")
 
-    # Use the enhanced bibliography integration
-    processed_files_info = run_latex_preprocessing_stage(
-        latex_files, config.build_paths.agda_snapshot_src_dir,
-        config.build_paths.macros_json_path,
-        config.build_paths.temp_dir, config.build_paths.code_blocks_dir
-    )
+        # Use the new functional latex pipeline
+        latex_result = latex_pipeline_stage(latex_files, config)
 
-    labels_map_path = build_global_label_map(processed_files_info, config.build_paths.build_md_aux_dir)
-
-    generated_files = run_latex_conversion_stage_with_bibliography(
-        processed_files_info, labels_map_path,
-        config.source_paths.md_scripts_dir / "agda-filter.lua",
-        config.source_paths.md_scripts_dir / "postprocess.py",
-        config.source_paths.references_bib_path,
-        config.build_paths.build_md_aux_dir,
-        config.build_paths.agda_snapshot_src_dir
-    )
-
-    processed_latex_files = []
-    for file_path in generated_files:
-        processed_file = ProcessedFile(
-            source_path=file_path, current_path=file_path,
-            metadata=calculate_file_metadata(file_path, ProcessingStage.POSTPROCESSED),
-            content_hash=""
-        )
-        processed_latex_files.append(processed_file)
-    logging.info(f"✅ LaTeX processing: {len(processed_latex_files)} files processed")
+        if latex_result.is_err:
+            error = latex_result.unwrap_err()
+            logging.error(f"❌ LaTeX processing failed: {error}")
+            processed_latex_files = []
+        else:
+            processed_latex_files = latex_result.unwrap()
+            logging.info(f"✅ LaTeX processing: {len(processed_latex_files)} files processed")
     else:
-        if latex_files and not HAS_LATEX_PIPELINE:
-            logging.warning(f"Found {len(latex_files)} LaTeX files but LaTeX pipeline not available")
-            logging.warning("Falling back to legacy LaTeX processing...")
-            # TODO: Add legacy fallback here if needed
         processed_latex_files = []
 
     # STAGE 6: Compose all processed files
