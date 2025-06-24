@@ -2,11 +2,11 @@ module Ledger.Conway.Foreign.HSLedger.BaseTypes where
 
 open import Data.Rational
 
-open import Ledger.Conway.Types.Numeric.UnitInterval
-open import Ledger.Conway.Types.Numeric.PositiveNat
+open import Ledger.Prelude.Numeric.UnitInterval
+open import Ledger.Prelude.Numeric.PositiveNat
 open import Ledger.Conway.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.HSLedger.Core public
-import Ledger.Conway.Foreign.HSTypes as F
+import Ledger.Prelude.Foreign.HSTypes as F
 
 instance
   iConvTop    = Convertible-Refl {⊤}
