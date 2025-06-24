@@ -11,12 +11,20 @@ New (correct) approach: LaTeX → bibliography_stage → pandoc → final markdo
 This module provides pure functional transformations for:
 - LaTeX preprocessing (extracting code blocks, processing macros)
 - Label mapping and cross-reference resolution
+- Bibliography processing with citation conversion
 - Pandoc + Lua filter processing
 - Postprocessing with cross-reference resolution
-- Bibliography processing with citation conversion
 - Final cleanup
 
-Design: LaTeX → Preprocessed → Intermediate → Postprocessed → Bibliography → Final Markdown
+New transformation ordering:
+
+LaTeX(.lagda) → preprocess → LaTeX(.lagda.temp) with \textcite{shelley-ledger-spec}
+              ↓
+           bibliography → LaTeX(.lagda.temp) with [SL19](#shelley-ledger-spec) + bibliography section
+              ↓
+           pandoc → Markdown(.md.intermediate) with proper hyperlinks
+              ↓
+           postprocess → Final(.lagda.md) with working bibliography
 """
 
 from __future__ import annotations
@@ -431,12 +439,19 @@ def process_latex_files(
     config: BuildConfig
 ) -> Result[LaTeXProcessingResult, PipelineError]:
     """
-    Complete LaTeX processing pipeline composition.
+    Complete LaTeX processing pipeline composition with correct bibliography ordering.
 
     Mathematical composition:
-    process = cleanup ∘ bibliography ∘ postprocess ∘ pandoc ∘ preprocess
+    process = cleanup ∘ postprocess ∘ pandoc ∘ label_map ∘ bibliography ∘ preprocess
 
-    This is the main entry point for LaTeX processing.
+    Correct transformation sequence:
+    LaTeX(.lagda)
+      → preprocess → LaTeX(.lagda.temp) with \textcite{refs}
+      → bibliography → LaTeX(.lagda.temp) with [RefLabel](link) + bibliography section
+      → label_map → extract cross-references for later resolution
+      → pandoc → Markdown(.md.intermediate)
+      → postprocess → Final(.lagda.md) with resolved cross-references
+      → cleanup → remove original .lagda files
     """
 
     logging.info(f"🔄 Processing {len(latex_files)} LaTeX files...")
@@ -454,8 +469,9 @@ def process_latex_files(
         )
         processing_stages.append(stage)
 
-    # Stage 1: Preprocessing
-    logging.info("🔄 Running preprocessing stage...")
+    # STAGE 1: Preprocessing (.lagda → .lagda.temp + .codeblocks.json)
+    # Creates temp files with LaTeX citations still intact
+    logging.info("🔄 Stage 1: Running preprocessing...")
     for stage in processing_stages:
         result = run_preprocess_stage(
             stage,
@@ -465,20 +481,46 @@ def process_latex_files(
         if result.is_err:
             return Result.err(result.unwrap_err())
 
-    # Stage 2: Generate label map
-    logging.info("🔄 Generating label map...")
+    # STAGE 2: Bibliography processing (.lagda.temp with LaTeX citations → .lagda.temp with markdown links + bibliography)
+    # *** CRITICAL: This must happen BEFORE pandoc converts LaTeX to markdown ***
+    logging.info("🔄 Stage 2: Running bibliography processing (before pandoc)...")
+    bibliography_stats = {"files_with_citations": 0, "total_citations": 0}
+
+    for stage in processing_stages:
+        # Check if file has citations before processing
+        if stage.temp_file.exists():
+            temp_content = stage.temp_file.read_text(encoding='utf-8')
+            if any(pattern in temp_content for pattern in [r'\textcite', r'\cite{', r'\citep']):
+                bibliography_stats["files_with_citations"] += 1
+
+        result = run_bibliography_stage(
+            stage,
+            config.source_paths.references_bib_path
+        )
+        if result.is_err:
+            # Log warning but continue - bibliography processing is enhancement, not critical
+            error = result.unwrap_err()
+            logging.warning(f"Bibliography processing failed for {stage.relative_path}: {error.message}")
+            continue
+
+    logging.info(f"✅ Bibliography stage: processed {bibliography_stats['files_with_citations']} files with citations")
+
+    # STAGE 3: Generate label map (from bibliography-processed temp files)
+    # Extract cross-reference labels after bibliography processing adds section headers
+    logging.info("🔄 Stage 3: Generating label map...")
     label_map_result = extract_labels_from_temp_files(processing_stages)
     if label_map_result.is_err:
         return Result.err(label_map_result.unwrap_err())
 
     label_map = label_map_result.unwrap()
 
-    # Save label map
+    # Save label map for postprocessing stage
     labels_map_path = config.build_paths.build_md_aux_dir / "labels_map.json"
     try:
         labels_map_path.parent.mkdir(parents=True, exist_ok=True)
         with open(labels_map_path, 'w', encoding='utf-8') as f:
             json.dump(label_map, f, indent=2)
+        logging.info(f"✅ Label map saved: {len(label_map)} labels")
     except Exception as e:
         return Result.err(PipelineError(
             error_type=ErrorType.COMMAND_FAILED,
@@ -486,8 +528,9 @@ def process_latex_files(
             cause=e
         ))
 
-    # Stage 3: Pandoc processing
-    logging.info("🔄 Running Pandoc + Lua filter stage...")
+    # STAGE 4: Pandoc processing (.lagda.temp → .md.intermediate)
+    # Now processes temp files that already have markdown citations and bibliography sections
+    logging.info("🔄 Stage 4: Running Pandoc + Lua filter...")
     for stage in processing_stages:
         result = run_pandoc_stage(
             stage,
@@ -496,8 +539,9 @@ def process_latex_files(
         if result.is_err:
             return Result.err(result.unwrap_err())
 
-    # Stage 4: Postprocessing
-    logging.info("🔄 Running postprocessing stage...")
+    # STAGE 5: Postprocessing (.md.intermediate → .lagda.md)
+    # Resolves cross-references and restores code blocks
+    logging.info("🔄 Stage 5: Running postprocessing...")
     for stage in processing_stages:
         result = run_postprocess_stage(
             stage,
@@ -507,22 +551,14 @@ def process_latex_files(
         if result.is_err:
             return Result.err(result.unwrap_err())
 
-    # Stage 5: Bibliography processing (NEW!)
-    logging.info("🔄 Running bibliography processing stage...")
-    for stage in processing_stages:
-        result = run_bibliography_stage(
-            stage,
-            config.source_paths.references_bib_path
-        )
-        if result.is_err:
-            return Result.err(result.unwrap_err())
-
-    # Stage 6: Cleanup
-    logging.info("🔄 Running cleanup stage...")
+    # STAGE 6: Cleanup (remove original .lagda files to prevent Agda module conflicts)
+    logging.info("🔄 Stage 6: Running cleanup...")
     for stage in processing_stages:
         result = cleanup_original_lagda_file(stage)
         if result.is_err:
-            return Result.err(result.unwrap_err())
+            # Log warning but continue - cleanup failure shouldn't fail the whole pipeline
+            error = result.unwrap_err()
+            logging.warning(f"Cleanup failed for {stage.relative_path}: {error.message}")
 
     # Create ProcessedFile objects for results
     processed_files = []
@@ -536,8 +572,10 @@ def process_latex_files(
             )
             processed_files.append(processed_file)
 
+    # Compile statistics
     statistics = {
         "files_processed": len(processed_files),
+        "files_with_citations": bibliography_stats["files_with_citations"],
         "labels_extracted": len(label_map),
         "total_stages": len(processing_stages)
     }
@@ -548,7 +586,10 @@ def process_latex_files(
         processing_statistics=statistics
     )
 
-    logging.info(f"✅ LaTeX processing completed: {len(processed_files)} files")
+    logging.info(f"✅ LaTeX processing completed:")
+    logging.info(f"   Files processed: {len(processed_files)}")
+    logging.info(f"   Files with citations: {bibliography_stats['files_with_citations']}")
+    logging.info(f"   Labels extracted: {len(label_map)}")
 
     return Result.ok(result)
 
