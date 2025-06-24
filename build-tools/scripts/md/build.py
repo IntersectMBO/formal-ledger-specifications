@@ -209,67 +209,29 @@ legacy_paths = get_legacy_paths()
 
 # Extract all constants (same names as before, but centralized source)
 PROJECT_ROOT = legacy_paths["PROJECT_ROOT"]
-SRC_DIR = legacy_paths["SRC_DIR"]
-LIB_EXTS_DIR = legacy_paths["LIB_EXTS_DIR"]
-BUILD_TOOLS = legacy_paths["BUILD_TOOLS"]
-BUILD_DIR = legacy_paths["BUILD_DIR"]
-BUILD_MD_DIR = legacy_paths["BUILD_MD_DIR"]
-BUILD_MD_IN_DIR = legacy_paths["BUILD_MD_IN_DIR"]
-BUILD_MD_PP_DIR = legacy_paths["BUILD_MD_PP_DIR"]
 BUILD_MD_AUX_DIR = legacy_paths["BUILD_MD_AUX_DIR"]
 AGDA_SNAPSHOT_SRC_DIR = legacy_paths["AGDA_SNAPSHOT_SRC_DIR"]
 AGDA_SNAPSHOT_LIB_EXTS_DIR = legacy_paths["AGDA_SNAPSHOT_LIB_EXTS_DIR"]
-MKDOCS_BUILD_DIR = legacy_paths["MKDOCS_BUILD_DIR"]
 MKDOCS_SRC_DIR = legacy_paths["MKDOCS_SRC_DIR"]
 MKDOCS_DOCS_DIR = legacy_paths["MKDOCS_DOCS_DIR"]
-MKDOCS_CSS_DIR = legacy_paths["MKDOCS_CSS_DIR"]
-MKDOCS_JS_DIR = legacy_paths["MKDOCS_JS_DIR"]
 MKDOCS_INCLUDES_DIR = legacy_paths["MKDOCS_INCLUDES_DIR"]
-MDBOOK_BUILD_DIR = legacy_paths["MDBOOK_BUILD_DIR"]
-MDBOOK_SRC_DIR = legacy_paths["MDBOOK_SRC_DIR"]
 MDBOOK_DOCS_DIR = legacy_paths["MDBOOK_DOCS_DIR"]
-MDBOOK_CSS_DIR = legacy_paths["MDBOOK_CSS_DIR"],
-MDBOOK_JS_DIR = legacy_paths["MDBOOK_JS_DIR"]
 
-# Script paths
-SCRIPTS_DIR = legacy_paths["SCRIPTS_DIR"]
-MD_DIR = legacy_paths["MD_SCRIPTS_DIR"]  # Note: MD_SCRIPTS_DIR maps to MD_DIR
-GENERATE_MACROS_PY = MD_DIR / "generate_macros_json.py"
-PREPROCESS_PY = MD_DIR / "preprocess.py"
-POSTPROCESS_PY = MD_DIR / "postprocess.py"
-LUA_FILTER = MD_DIR / "agda-filter.lua"
-
-# Static content paths
-STATIC_DIR = legacy_paths["STATIC_DIR"]
-LATEX_DIR = legacy_paths["LATEX_DIR"]
-MD_STATIC_DIR = legacy_paths["MD_STATIC_DIR"]
-MD_STATIC_COMMON_DIR = legacy_paths["MD_STATIC_COMMON_DIR"]
-MD_STATIC_COMMON_SRC_DIR = legacy_paths["MD_STATIC_COMMON_SRC_DIR"]
-MKDOCS_STATIC_DIR = legacy_paths["MKDOCS_STATIC_DIR"]
-MKDOCS_STATIC_SRC_DIR = legacy_paths["MKDOCS_STATIC_SRC_DIR"]
-MKDOCS_STATIC_DOCS_DIR = legacy_paths["MKDOCS_STATIC_DOCS_DIR"]
-MDBOOK_STATIC_DIR = legacy_paths["MDBOOK_STATIC_DIR"]
-MDBOOK_STATIC_BOOK_TOML = MDBOOK_STATIC_DIR / "book.toml" if 'MDBOOK_STATIC_DIR' in globals() else BUILD_MD_DIR / "mdbook" / "book.toml"
-
-# Key files
-MACROS_JSON = legacy_paths["MACROS_JSON"]
+# # Key files
 LOG_FILE = legacy_paths["LOG_FILE"]
-MACROS_STY_PATH = legacy_paths["MACROS_STY_PATH"]
 REFS_STATIC_PATH = legacy_paths["REFS_STATIC_PATH"]
 
-# CSS and JS
-MD_STATIC_CSS_DIR = legacy_paths["MD_STATIC_CSS_DIR"]
+# # CSS and JS
 MD_STATIC_JS_DIR = legacy_paths["MD_STATIC_JS_DIR"]
 MD_STATIC_CUSTOM_CSS_PATH = legacy_paths["MD_STATIC_CUSTOM_CSS_PATH"]
 MD_STATIC_CUSTOM_JS_PATH = legacy_paths["MD_STATIC_CUSTOM_JS_PATH"]
 MD_STATIC_KATEX_JS_PATH = legacy_paths["MD_STATIC_KATEX_JS_PATH"]
 
-# Navigation
+# # Navigation
 MKDOCS_STATIC_NAV_YML = legacy_paths["MKDOCS_STATIC_NAV_YML"]
 MKDOCS_STATIC_INDEX = legacy_paths["MKDOCS_STATIC_INDEX"]
-MDBOOK_STATIC_SUMMARY_MD = MDBOOK_STATIC_DIR / "src" / "SUMMARY.md" if 'MDBOOK_STATIC_DIR' in globals() else BUILD_MD_DIR / "mdbook" / "src" / "SUMMARY.md"
 
-# Pipeline intermediate directories
+# # Pipeline intermediate directories
 TEMP_DIR = legacy_paths["TEMP_DIR"]
 CODE_BLOCKS_DIR = legacy_paths["CODE_BLOCKS_DIR"]
 INTERMEDIATE_MD_DIR = legacy_paths["INTERMEDIATE_MD_DIR"]
@@ -613,7 +575,7 @@ def populate_agda_docs_staging(
     Returns a list of Path objects for the final .md files in agda_docs_staging_dir.
     """
     logging.info(
-        f"\n--- 🏗️ Populating Agda docs staging directory: "
+        f"\n--- 🏗️  Populating Agda docs staging directory: "
         f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} ---" # assuming PROJECT_ROOT is global
     )
     agda_docs_staging_dir.mkdir(parents=True, exist_ok=True) # ensure it exists
