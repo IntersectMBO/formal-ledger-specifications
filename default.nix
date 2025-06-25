@@ -93,7 +93,6 @@ let
     fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ./src-lib-exts ] ++ other);
   };
 
-
   latex = texlive.combine {
     inherit (texlive)
       scheme-small
@@ -193,7 +192,7 @@ let
     '';
   };
 
-  hsSrc = mkDerivation {
+  hs-src = mkDerivation {
     pname = "hs-src";
     src = addToAgdaSrc [ ./build-tools/static/hs-src ];
     buildPhase = ''
@@ -306,7 +305,7 @@ in
     inherit agdaWithPackages
             fls-shake
             formal-ledger
-            hsSrc
+            hs-src
             html
             docs
             devShells;
