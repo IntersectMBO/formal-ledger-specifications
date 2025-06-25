@@ -43,6 +43,7 @@ import re
 import json
 import sys
 import os
+from typing import Dict
 
 # --- Configuration ---
 repo_url = "https://github.com/IntersectMBO/formal-ledger-specifications"
@@ -55,15 +56,31 @@ code_block_counter = 0
 # Stores macro definitions loaded from JSON file { "macroName": {"basename": "...", "agda_class": "..."} }
 macro_data = {}
 
+def sanitize_latex_commands(content: str) -> str:
+    """
+    Replaces common LaTeX commands with their text/Unicode equivalents
+    to prevent Pandoc parsing errors.
+    """
+    replacements: Dict[str, str] = {
+        r"\\sectionname": "Section",
+        r"\\S": "§",
+        # LaTeX non-breaking space `~` can be replaced with a regular space
+        # as Pandoc and Markdown handle spacing differently.
+        r"~": " ",
+    }
+    for pattern, replacement in replacements.items():
+        content = re.sub(pattern, replacement, content)
+    return content
+
 # --- Replacement Functions ---
 
-def process_code_block(match, is_hidden):
+def process_code_block(match: re.Match, is_hidden: bool) -> str:
     """
     Callback function for re.sub to process matched code blocks.
     Stores the verbatim code content in the global dictionary and returns a unique placeholder ID.
     Args:
-        match (re.Match): The regex match object. Group 1 contains the code content.
-        is_hidden (bool): True if the block was marked with [hide].
+        match     : The regex match object. Group 1 contains the code content.
+        is_hidden : True if the block was marked with [hide].
     Returns:
         str: The placeholder ID (e.g., "@@CODEBLOCK_ID_1@@").
     """
@@ -87,33 +104,59 @@ def process_code_block(match, is_hidden):
     # Return ONLY the placeholder to replace the entire \begin{code}...\end{code} block
     return placeholder_id
 
-def replace_modulenote_direct(match):
+def replace_modulenote_direct(match: re.Match) -> str:
     """
-    Callback function for re.sub to expand modulenote{LedgerModule{Arg}}
-    directly into the corresponding sentence with LaTeX href commands.
+    Callback for re.sub to expand modulenote{<Type>Module{Arg}}
+    into a sentence with LaTeX href commands.
     Args:
-        match (re.Match): The regex match object. Group 1 contains the Module name.
+        match: The regex match object. Group 1 contains the Module name.
     Returns:
         str: The expanded sentence with href links.
     """
-    module_name = match.group(1) # Capture group 1 is the module name
-    module_text = f"Ledger.{module_name}"
-    module_file = f"{module_name}.lagda"
-    # Construct URL assuming standard project structure
-    module_url = f"{repo_url}/{repo_src_base}/{module_file}"
-    # Use \href{URL}{\texttt{TEXT}} for Pandoc compatibility
+    # capture the module type (e.g., "Conway") and name (e.g., "Utxow").
+    module_type = match.group(1)
+    module_name = match.group(2)
+
+    # Use the captured type to form the module path.
+    base_path = "Ledger/Conway" if module_type == "Conway" else "Ledger"
+
+    module_text = f"{base_path.replace('/', '.')}.{module_name}"
+
+    # The file path needs to be constructed relative to the 'src' directory.
+    # The repo_src_base in your script already points to 'blob/master/src/Ledger',
+    # so we need to adjust accordingly.
+    if module_type == "Conway":
+        # The URL needs to go up one level from '.../src/Ledger' to get to '.../src'
+        # before descending into 'Ledger/Conway'. A simpler way is to just construct it.
+        module_file = f"Ledger/Conway/{module_name}.lagda"
+        # And redefine the base URL for the link text
+        repo_link_base = f"{repo_url}/{repo_src_base}/../../src"
+        module_url = f"{repo_link_base}/{module_file}"
+    else:
+        module_file = f"{module_name}.lagda"
+        module_url = f"{repo_url}/{repo_src_base}/{module_file}"
+
+
     module_link = f"\\href{{{module_url}}}{{\\texttt{{{module_text}}}}}"
     repo_link = f"\\href{{{repo_url}}}{{formal ledger specification}}"
-    # Reconstruct the sentence based on original \modulenote definition
+
     return f"This section is part of the {module_link} module of the {repo_link}"
 
-def expand_agda_term_placeholder(match):
+def replace_cip_href(match: re.Match) -> str:
+    """
+    Callback for re.sub to expand \hrefCIP{XXXX} into a full URL.
+    """
+    cip_number = match.group(1).zfill(4) # Pad with zeros to 4 digits
+    cip_url = f"https://cips.cardano.org/cip-{cip_number}"
+    return f"\\href{{{cip_url}}}{{CIP-{cip_number}}}"
+
+def expand_agda_term_placeholder(match: re.Match) -> str:
     """
     Callback function for re.sub to replace known Agda term macros (e.g., \txins{})
     with a \texttt enclosed marker containing semantic info from the loaded JSON.
     Example output: \texttt{@@AgdaTerm@@basename=txins@@class=AgdaField@@}
     Args:
-        match (re.Match): The regex match object. Group 1 contains the macro name (e.g., "txins").
+        match: The regex match object. Group 1 contains the macro name (e.g., "txins").
     Returns:
         str: The \texttt enclosed marker string, or the original macro if not found in JSON.
     """
@@ -131,7 +174,7 @@ def expand_agda_term_placeholder(match):
         print(f"WARNING: Macro {macro_name} not found in JSON, keeping original.", file=sys.stderr)
         return match.group(0)
 
-def expand_hldiff(match):
+def expand_hldiff(match: re.Match) -> str:
     """
     Callback function for re.sub to replace hldiff{content} with a placeholder
     that the Lua filter can convert to a styled span.
@@ -145,7 +188,7 @@ def expand_hldiff(match):
     return f"\\HighlightPlaceholder{{{content}}}"
 
 # --- New Helper Function for Figures ---
-def process_figure_environment(match):
+def process_figure_environment(match: re.Match) -> str:
     """
     Processes the content of a LaTeX figure* environment. Extract caption and label, remove
     them and figure wrappers, return placeholder string followed by remaining content.
@@ -208,7 +251,7 @@ def process_figure_environment(match):
     return placeholder + figure_inner_content
 
 # --- Helper Function for \Cref and \cref ---
-def replace_cref_commands(match):
+def replace_cref_commands(match: re.Match) -> str:
     """
     Replaces \Cref{targets} or \cref{targets} with a placeholder.
     Details
@@ -229,7 +272,7 @@ def replace_cref_commands(match):
 
 
 # --- New Helper Function for Agda macros like \AgdaFunction{myfun} ---
-def process_generic_agda_macros(content):
+def process_generic_agda_macros(content: str) -> str:
     """Process generic Agda macros from agda.sty"""
     import re
 
@@ -244,7 +287,7 @@ def process_generic_agda_macros(content):
 
     agda_pattern = r'\\(' + '|'.join(re.escape(cls) for cls in agda_classes) + r')\{([^}]+)\}'
 
-    def replace_agda_macro(match):
+    def replace_agda_macro(match:re.Match) -> str:
         agda_class = match.group(1)
         content_name = match.group(2)
         return f"\\texttt{{@@AgdaTerm@@basename={content_name}@@class={agda_class}@@}}"
@@ -253,94 +296,136 @@ def process_generic_agda_macros(content):
 
 
 # --- Main Processing Function ---
-def preprocess_lagda(content):
+def preprocess_lagda(content: str) -> str:
     """
     Applies all preprocessing replacements to input LaTeX content.
     Args:
-        content (str): original content of .lagda file.
+        content: The original content of the .lagda file.
     Returns:
-        str: processed LaTeX content with placeholders.
+        The processed LaTeX content with placeholders.
     """
     global macro_data # Ensure loaded macro data is accessible
 
     # Order of operations matters here. Code blocks are replaced first.
 
-    # 1. Replace code blocks with placeholders (@@CODEBLOCK_ID_n@@) and store content
-    # Process hidden blocks first to ensure the [hide] variant is matched correctly
+    # STEP 0: Sanitize basic LaTeX commands before any other processing.
+    # This new step prevents downstream errors.
+    content = sanitize_latex_commands(content)
+
+    # STEP 1: Replace code blocks with placeholders (@@CODEBLOCK_ID_n@@) and store content.
+    # Process hidden blocks first to ensure the [hide] variant is matched correctly.
     content = re.sub(r'\\begin\{code\}\s*\[hide\](.*?)\\end\{code\}',
                      lambda m: process_code_block(m, is_hidden=True),
                      content, flags=re.DOTALL)
-    # Process remaining visible blocks
+    # Process remaining visible blocks.
     content = re.sub(r'\\begin\{code\}(.*?)\\end\{code\}',
                      lambda m: process_code_block(m, is_hidden=False),
                      content, flags=re.DOTALL)
 
-    # 2. Inline \modulenote
-    # Uses specific regex to match the known structure with \LedgerModule inside
-    content = re.sub(r'\\modulenote\{\s*\\LedgerModule\{(.*?)\}\s*\}',
+    # STEP 2: Inline \modulenote (now with updated, more general regex)
+    content = re.sub(r'\\modulenote\{\s*\\(Conway|Ledger)Module\{(.*?)\}\s*\}',
                      replace_modulenote_direct,
                      content)
 
-    # 3. Replace Agda term macros with \texttt{@@AgdaTerm@@...} placeholders
+    # STEP 2b: New step to handle CIP links
+    content = re.sub(r'\\hrefCIP\{(.*?)\}', replace_cip_href, content)
+
+    # STEP 3: Replace Agda term macros with \texttt{@@AgdaTerm@@...} placeholders.
     if macro_data.get("agda_terms"):
       # Build a regex pattern matching any known Agda term macro (keys from JSON) followed by {}
       agda_term_pattern = r'\\(' + '|'.join(re.escape(k) for k in macro_data["agda_terms"].keys()) + r')\{\}'
       content = re.sub(agda_term_pattern, expand_agda_term_placeholder, content)
 
-    # 3b. ENHANCED: Process generic Agda macros from agda.sty
+    # STEP 3b: Process generic Agda macros from agda.sty.
     content = process_generic_agda_macros(content)
 
-    # 4. Replace \hldiff with \HighlightPlaceholder
+    # STEP 4: Replace \hldiff with \HighlightPlaceholder.
     # Use non-greedy match for content and DOTALL flag for potential multiline content
     content = re.sub(r'\\hldiff\{(.*?)\}', expand_hldiff, content, flags=re.DOTALL)
 
-    # 5. Process figure* environments to extract caption/label into placeholders
+    # STEP 5: Process figure* environments to extract caption/label into placeholders.
     #    This replaces the old simple stripping of \begin{figure*} and \end{figure*}
     #    The regex captures the content between \begin{figure*}[optional_attrs] and \end{figure*}
     #    It assumes \begin and \end are on lines by themselves, possibly with attributes for \begin.
-    #    More Details
-    #    * Match `\begin{figure*}` at the start of a line (with optional attributes).
-    #    * Capture all content `(.*?)` until `\end{figure*}` on its own line.
-    #    * Use `re.DOTALL` so `.` matches newlines, and `re.MULTILINE` for `^` and `$`.
     content = re.sub(
         r"^\s*\\begin\{figure\*\}(\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\*\}\s*$",
-        #r"^\s*\\begin\{figure\*\}(?:\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\*\}\s*$",
         process_figure_environment,
         content,
-        flags=re.DOTALL | re.MULTILINE  # DOTALL for (.*?), MULTILINE for ^$
-    )
-    # Do not handle non-starred fig environments (e.g. in Introduction.lagda);
-    # hopefully pandoc can handle those.
-    # content = re.sub(
-    #     r"^\s*\\begin\{figure\}(\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\}\s*$",
-    #     process_figure_environment,
-    #     content,
-    #     flags=re.DOTALL | re.MULTILINE
-    # )
+        flags=re.DOTALL | re.MULTILINE
+    )   #    More Details
+        #    * Match `\begin{figure*}` at the start of a line (with optional attributes).
+        #    * Capture all content `(.*?)` until `\end{figure*}` on its own line.
+        #    * Use `re.DOTALL` so `.` matches newlines, and `re.MULTILINE` for `^` and `$`.
 
-    # 6. Replace \Cref and \cref commands with placeholders.
-    #    Regex handles optional whitespace around braces and captures comma-separated targets.
-    #    Non-greedy (.*?) captures only up to first closing brace.
-    #    (`flags=re.DOTALL` handles `\Cref` arguments that span lines)
+    # STEP 6: Replace \Cref and \cref commands with placeholders. Regex handles optional
+    # whitespace around braces and captures comma-separated targets. Non-greedy (.*?) captures
+    # only up to first closing brace. `flags=re.DOTALL` handles `\Cref` arguments that span lines.
     content = re.sub(r"\\(Cref|cref)\s*\{(.*?)\}", replace_cref_commands, content, flags=re.DOTALL)
 
-    # 7. Remove AgdaMultiCode environment wrappers
-    #    If AgdaMultiCode *always* inside figure*, then process_figure_environment
-    #    strips them from figure's content.  If AgdaMultiCode can be standalone, separate stripping
-    #    still needed. To be safe, let's assume it can be standalone. AFTER figure processing,
-    #    run the following in case process_figure_environment doesn't strip them fully.
+    # STEP 7: Remove AgdaMultiCode environment wrappers. If AgdaMultiCode is always
+    # inside a figure* environment, then `process_figure_environment` strips them
+    # from figure's content.  If AgdaMultiCode can be standalone, separate stripping
+    # still needed. To be safe, let's assume it can be standalone. AFTER figure processing,
+    # run the following in case process_figure_environment doesn't strip them fully.
     content = re.sub(r'^\s*\\begin\{AgdaMultiCode\}\s*?\n', '', content, flags=re.MULTILINE)
     content = re.sub(r'^\s*\\end\{AgdaMultiCode\}\s*?\n?', '', content, flags=re.MULTILINE)
 
-    # 8. Handle Conway/NoConway environments
+    # STEP 8: Handle Conway/NoConway environments.
     # Remove NoConway wrappers entirely
     content = re.sub(r'^\s*\\begin\{NoConway\}\s*?\n', '', content, flags=re.MULTILINE)
     content = re.sub(r'^\s*\\end\{NoConway\}\s*?\n?', '', content, flags=re.MULTILINE)
+
+    # STEP 9: Handle the \defn{...} command by simply extracting its content.
+    # This replaces `\defn{record}` with just `record`.
+    content = re.sub(r'\\defn\{(.*?)\}', r'\1', content)
+
+    # STEP 10: Handle the custom Agda documentation links.
+    # First, handle the variant with arguments: \hrefAgdaDocs[path][text]
+    content = re.sub(r'\\hrefAgdaDocs\[([^\]]*)\]\[([^\]]*)\]',
+                     r'\\href{https://agda.readthedocs.io/en/latest/\1}{\2}',
+                     content)
+
+    # Second, handle the variant with no arguments: \hrefAgdaDocs{}
+    content = re.sub(r'\\hrefAgdaDocs\{\}',
+                     r'\\href{https://agda.readthedocs.io/en/latest/}{Agda documentation}',
+                     content)
+
+    # STEP 11: Remove manual vertical space commands like \\[...].
+    # Markdown handles paragraph spacing automatically.
+    content = re.sub(r'\\\[[^\]]*\]', '', content)
+
+    # =================================================================
+    # NEW SYSTEMIC MACRO REPLACEMENT
+    # This block can replace many of the one-off re.sub calls.
+    # It assumes your macros.json has a "simple_macros" dictionary like:
+    # { "simple_macros": { "hrefAgdaDocs": "\\href{...}{...}", "mycmd": "my text" } }
+
+    if "simple_macros" in macro_data:
+        # Create a single, powerful regex that matches any of the simple macro names
+        # e.g. r"\\(hrefAgdaDocs|defn|anotherCmd)"
+        macro_names = [re.escape(k) for k in macro_data["simple_macros"].keys()]
+        pattern = r"\\(" + "|".join(macro_names) + r")"
+
+        # Define a callback function to handle the replacement
+        def replace_from_json(match: re.Match) -> str:
+            macro_name = match.group(1)
+            # Look up the replacement text in the dictionary
+            return macro_data["simple_macros"].get(macro_name, "")
+
+        # Apply all simple macro replacements in one go
+        content = re.sub(pattern, replace_from_json, content)
+
+    # We could do a similar thing for macros with arguments.
+    # =================================================================
+
     # Replace Conway wrappers with Admonition markers, ensuring separation with newlines
     content = re.sub(r'^\s*\\begin\{Conway\}\s*?\n', '\n\n@@ADMONITION_START|Conway specifics@@\n\n', content, flags=re.MULTILINE)
     content = re.sub(r'^\s*\\end\{Conway\}\s*?\n?', '\n\n@@ADMONITION_END@@\n\n', content, flags=re.MULTILINE)
 
     return content
+
+
+
 
 # --- Script Entry Point ---
 if __name__ == "__main__":

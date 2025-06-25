@@ -117,8 +117,12 @@ CITEP_PATTERN = re.compile(
     r'\\citep(?:\[([^\]]*)\])?\{([^}]+)\}',
     re.IGNORECASE
 )
+PARENCITE_PATTERN = re.compile(
+    r'\\parencite(?:\[([^\]]*)\])?\{([^}]+)\}',
+    re.IGNORECASE
+)
 
-ALL_CITATION_PATTERNS = [TEXTCITE_PATTERN, CITE_PATTERN, CITEP_PATTERN]
+ALL_CITATION_PATTERNS = [TEXTCITE_PATTERN, CITE_PATTERN, CITEP_PATTERN, PARENCITE_PATTERN]
 
 
 # =============================================================================
@@ -400,58 +404,72 @@ def create_markdown_citation(
 ) -> str:
     """
     Create citation from reference keys in specified output format.
-
     Supports both markdown and LaTeX output formats.
     """
-
     if not keys:
         return "[?]"
+
+    # Combine optional args into a single string to be appended inside the brackets
+    extra_info = f", {optional_args.strip()}" if optional_args else ""
 
     if config.style.name == "alpha":
         labels = []
         for key in keys:
             entry = bibliography.get(key)
             if entry and entry.short_label:
-                label = entry.short_label
+                # Append extra_info only to the last label in a multi-citation
+                label_text = entry.short_label
+                if key == keys[-1]: # Apply to the last one
+                    label_text += extra_info
+
                 if config.style.link_citations:
                     if config.output_format == "latex":
                         # Generate LaTeX hyperlink
-                        label = f"\\href{{#{config.bibliography_id}#{key}}}{{{label}}}"
+                        label = f"\\href{{#{config.bibliography_id}#{key}}}{{{label_text}}}"
                     else:
                         # Generate markdown link
-                        label = f"[{label}](#{config.bibliography_id}#{key})"
+                        label = f"[{label_text}](#{config.bibliography_id}#{key})"
                 else:
-                    label = f"[{label}]"
+                    label = label_text # No brackets if not linking, text will be bracketed later
                 labels.append(label)
             else:
-                # Missing reference
-                labels.append(f"[{key}?]")
+                labels.append(f"[{key}?]") # Missing reference
 
         if len(labels) == 1:
-            citation = labels[0]
-        else:
-            # Multiple citations
+            # For a single citation, the format is [Label, extra]; we need to strip
+            # outer brackets from the generated label to add them back correctly.
+            single_label_content = labels[0]
             if config.output_format == "latex":
-                # For LaTeX: separate multiple citations with commas
-                citation = ", ".join(labels)
-            else:
-                # For markdown: [AB20; CD21] format
-                citation = f"[{'; '.join([l.strip('[]') for l in labels])}]"
+                # The href already contains the full text, so just return it.
+                return single_label_content
+            else: # Markdown
+                # Re-construct to ensure proper formatting like "[SL19, Section 6.5]"
+                entry = bibliography.get(keys[0])
+                label_text = f"{entry.short_label}{extra_info}" if entry else f"{keys[0]}?{extra_info}"
                 if config.style.link_citations:
-                    citation = f"[{citation}](#{config.bibliography_id})"
+                    return f"[{label_text}](#{config.bibliography_id}#{keys[0]})"
+                else:
+                    return f"[{label_text}]"
+        else: # Multiple citations
+             # For LaTeX, just join them. For Markdown, group them like [SL19; CL23, Sec 5]
+            if config.output_format == "latex":
+                return ", ".join(labels)
+            else:
+                # For Markdown multi-cite, the extra info is appended to the last one.
+                base_labels = [f"[{bibliography.get(k).short_label if bibliography.get(k) else k + '?'}]" for k in keys]
+                # This is a simplification; a truly robust multi-citation with optional args
+                # would require a more complex structure. For now, we append to the whole group.
+                multi_label_text = "; ".join(l.strip("[]") for l in base_labels)
+                return f"[[{multi_label_text}]{extra_info}](#{config.bibliography_id})"
 
     else:  # numeric or other styles
-        citation = f"[{', '.join(keys)}]"
+        label_text = f"{', '.join(keys)}{extra_info}"
+        citation = f"[{label_text}]"
         if config.style.link_citations:
             if config.output_format == "latex":
-                citation = f"\\href{{#{config.bibliography_id}}}{{{citation}}}"
+                return f"\\href{{#{config.bibliography_id}}}{{{label_text}}}"
             else:
-                citation = f"[{citation}](#{config.bibliography_id})"
-
-    # Add optional arguments if present
-    if optional_args:
-        clean_args = optional_args.strip('[]')
-        citation = f"{citation}, {clean_args}"
+                return f"[{citation}](#{config.bibliography_id})"
 
     return citation
 

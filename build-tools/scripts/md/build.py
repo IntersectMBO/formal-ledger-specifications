@@ -550,7 +550,7 @@ def macros_path(
     logging.info(f"Checking for {macros_json_target_path.name}...")
     if generator_script.exists() and macros_sty_source.exists():
         if not macros_json_target_path.exists() or macros_sty_source.stat().st_mtime > macros_json_target_path.stat().st_mtime:
-            logging.info(f"🏗️ Generating {macros_json_target_path.name} from {macros_sty_source.name}...")
+            logging.info(f"🏗️  Generating {macros_json_target_path.name} from {macros_sty_source.name}...")
             run_command(["python", str(generator_script), str(macros_sty_source), str(macros_json_target_path)])
         else:
             logging.info(f"Using existing and up-to-date {macros_json_target_path.name}.")
@@ -674,7 +674,7 @@ def copy_staging_to_site_docs(
     Returns a list of the basenames of .md files found at the top level of target_site_docs_dir.
     """
     logging.info(
-        f"\n--- 🏗️ Populating {site_name} site docs from "
+        f"\n--- 🏗️  Populating {site_name} site docs from "
         f"{agda_docs_staging_dir.relative_to(PROJECT_ROOT)} "
         f"to {target_site_docs_dir.relative_to(PROJECT_ROOT)} ---"
     )
@@ -882,7 +882,7 @@ def generate_mkdocs_config(
                         "Generating navigation.")
 
     if nav_structure_for_yaml is None: # If nav.yml not used or failed to load
-        logging.info("  🏗️ Generating navigation from processed files in docs/ directory.")
+        logging.info("  🏗️  Generating navigation from processed files in docs/ directory.")
         nav_structure_for_yaml = build_nav_from_flat_files(nav_files_from_docs_dir)
 
     mkdocs_config['nav'] = nav_structure_for_yaml
@@ -949,7 +949,7 @@ def generate_mdbook_config(
     """
     Ensures book.toml is in place and generates/copies SUMMARY.md for mdbook.
     """
-    logging.info(f"\n--- 🏗️ Finalizing mdbook configuration ---")
+    logging.info(f"\n--- 🏗️  Finalizing mdbook configuration ---")
 
     # --- 1. Handle book.toml ---
     logging.info(f"  Ensuring {mdbook_toml_build_path.name} is in place at "
@@ -1098,7 +1098,7 @@ def main(run_agda_html_flag=False):
     config = load_build_config(run_agda_html=run_agda_html_flag, mode="development")
 
     # STAGE 2: Functional setup
-    logging.info("🏗️ Setting up build environment with functional modules...")
+    logging.info("🏗️  Setting up build environment with functional modules...")
     setup_result = setup_build_environment(config)
 
     if setup_result.is_err:

@@ -210,78 +210,32 @@ function Code(inline)
   return inline
 end
 
-
---- Processes citations into mkdocs-bibtex format
--- @param cite The Cite element from Pandoc
--- @return Pandoc element (Str) with mkdocs-bibtex formatted citation
-function Cite(cite)
-  -- Handle the common case of a single citation
-  if #cite.citations == 1 then
-    local citation = cite.citations[1]
-    local key = citation.id
-    local prefix = citation.prefix and pandoc.utils.stringify(citation.prefix) or ""
-    local suffix = citation.suffix and pandoc.utils.stringify(citation.suffix) or ""
-
-    -- Build citation string
-    local cite_str = "[@" .. key
-
-    -- Add prefix/suffix if present (e.g., page numbers, section references)
-    if prefix ~= "" and suffix ~= "" then
-      cite_str = cite_str .. ", " .. prefix .. " " .. suffix
-    elseif prefix ~= "" then
-      cite_str = cite_str .. ", " .. prefix
-    elseif suffix ~= "" then
-      cite_str = cite_str .. ", " .. suffix
-    end
-
-    cite_str = cite_str .. "]"
-    return pandoc.Str(cite_str)
-
-  -- Handle multiple citations
-  else
-    local cite_parts = {}
-    for i, citation in ipairs(cite.citations) do
-      local key = citation.id
-      local prefix = citation.prefix and pandoc.utils.stringify(citation.prefix) or ""
-      local suffix = citation.suffix and pandoc.utils.stringify(citation.suffix) or ""
-
-      local cite_part = "@" .. key
-      if prefix ~= "" or suffix ~= "" then
-        cite_part = cite_part .. " " .. prefix .. " " .. suffix
-      end
-
-      table.insert(cite_parts, cite_part)
-    end
-
-    return pandoc.Str("[" .. table.concat(cite_parts, "; ") .. "]")
-  end
-end
-
--- Handle special citation commands that might not be parsed as Cite elements
+--- Processes RawInline elements.
+-- Expected input from preprocess.py: \HighlightPlaceholder{...}
+-- This function will now also delegate to transform_latex_commands.
+-- @param inline The RawInline element.
+-- @return table The modified element (Span) or the original RawInline.
 function RawInline(inline)
-  -- First try existing transformations
-  local transformed = transform_latex_commands(inline.text)
-  if transformed then
-    return transformed
-  end
-
-  -- Handle any special citation patterns that Pandoc might miss
+  -- Check if it's a raw 'latex' element and the format field exists
   if inline.format and inline.format:match 'latex' then
-    -- Pattern for textcite and similar commands that might not be parsed
-    local textcite_match = inline.text:match '^\\textcite%[(.-)%]%{(.-)%}$'
-    if textcite_match then
-      local optional_args, keys = textcite_match:match '(.+)%}%{(.+)'
-      if optional_args and keys then
-        return pandoc.Str("[@" .. keys .. ", " .. optional_args .. "]")
-      end
+    -- First, try to process specific LaTeX commands (\label, \Cref, \caption)
+    local transformed_latex_command = transform_latex_commands(inline.text)
+    if transformed_latex_command then
+      return transformed_latex_command -- Return the transformed element
     end
-
-    -- Simple cite without optional args
-    local simple_cite = inline.text:match '^\\(?:text)?cite%{(.-)%}$'
-    if simple_cite then
-      return pandoc.Str("[@" .. simple_cite .. "]")
+    -- Check specifically for our HighlightPlaceholder marker
+    -- Use non-greedy match (.*?) for the content within braces {}
+    local highlight_match = inline.text:match '\\HighlightPlaceholder{(.*)}'
+    if highlight_match then
+       local content_str = highlight_match
+       -- Convert the captured string content back to a basic Pandoc Str element.
+       local content_inline = { pandoc.Str(content_str) }
+       -- Create attributes structure with the "highlight" class
+       local attrs = create_attrs({"highlight"})
+       -- Return a Pandoc Span element wrapping the content with the class
+       return pandoc.Span(content_inline, attrs)
     end
   end
-
+  -- If it's not the HighlightPlaceholder or not LaTeX format, return it unchanged
   return inline
 end

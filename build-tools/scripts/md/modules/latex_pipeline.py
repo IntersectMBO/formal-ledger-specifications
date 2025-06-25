@@ -34,6 +34,7 @@ import subprocess
 import json
 import logging
 import sys
+import shutil
 
 # Add path for our functional imports
 current_dir = Path(__file__).parent.parent
@@ -203,13 +204,22 @@ def run_preprocess_stage(
 
 def run_pandoc_stage(
     processing_stage: LaTeXProcessingStage,
-    lua_filter_path: Path
+    lua_filter_path: Path,
+    build_dir: Path
 ) -> Result[None, PipelineError]:
     """
     Mathematical transformation: .lagda.temp → .md.intermediate
-
     Applies Pandoc + Lua filter transformation.
     """
+    # Check if this is the file that is known to fail.
+    if "EssentialAgda.lagda.temp" in str(processing_stage.temp_file):
+        try:
+            # AND CHANGE the name of the output file for clarity.
+            debug_path = build_dir / "DEBUG_EssentialAgda.lagda.temp"
+            shutil.copy2(processing_stage.temp_file, debug_path)
+            logging.warning(f"DEBUG: Saved a copy of the failing intermediate file to: {debug_path}")
+        except Exception as e:
+            logging.error(f"DEBUG: Could not save a copy of the failing file: {e}")
 
     command = [
         "pandoc", str(processing_stage.temp_file),
@@ -234,7 +244,6 @@ def run_postprocess_stage(
 ) -> Result[None, PipelineError]:
     """
     Mathematical transformation: .md.intermediate → .lagda.md
-
     Applies postprocess.py transformation with cross-reference resolution.
     """
 
@@ -528,7 +537,8 @@ def process_latex_files(
     for stage in processing_stages:
         result = run_pandoc_stage(
             stage,
-            config.source_paths.md_scripts_dir / "agda-filter.lua"
+            config.source_paths.md_scripts_dir / "agda-filter.lua",
+            config.build_paths.build_dir
         )
         if result.is_err:
             return Result.err(result.unwrap_err())
