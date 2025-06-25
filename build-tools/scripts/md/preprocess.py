@@ -64,9 +64,6 @@ def sanitize_latex_commands(content: str) -> str:
     replacements: Dict[str, str] = {
         r"\\sectionname": "Section",
         r"\\S": "§",
-        # LaTeX non-breaking space `~` can be replaced with a regular space
-        # as Pandoc and Markdown handle spacing differently.
-        r"~": " ",
     }
     for pattern, replacement in replacements.items():
         content = re.sub(pattern, replacement, content)
@@ -321,6 +318,10 @@ def preprocess_lagda(content: str) -> str:
     content = re.sub(r'\\begin\{code\}(.*?)\\end\{code\}',
                      lambda m: process_code_block(m, is_hidden=False),
                      content, flags=re.DOTALL)
+
+    # Now that the Agda code is safely stored in the JSON, we can replace
+    # the non-breaking space tildes in the remaining LaTeX text.
+    content = re.sub(r"~", " ", content)
 
     # STEP 2: Inline \modulenote (now with updated, more general regex)
     content = re.sub(r'\\modulenote\{\s*\\(Conway|Ledger)Module\{(.*?)\}\s*\}',
