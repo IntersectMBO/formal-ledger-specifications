@@ -25,10 +25,10 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build formalLedger
-        id: formalLedger
+      - name: Build formal-ledger
+        id: formal-ledger
         run: |
-          nix-build -A formalLedger -o outputs
+          nix-build -A formal-ledger -o outputs
       - name: Upload agda _build artifact
         uses: actions/upload-artifact@v4
         with:
