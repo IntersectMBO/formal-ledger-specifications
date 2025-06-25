@@ -121,7 +121,7 @@ let
         '';
       });
 
-  formalLedger = our-agda.mkDerivation {
+  formal-ledger = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "formal-ledger";
     version = "0.1";
@@ -142,26 +142,30 @@ let
     '';
   };
 
-  mkPdfDerivation = { pname, version, project }: stdenv.mkDerivation {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+  mkDerivation = args:
+    let
+      defaults = {
+        inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+        version = "0.1";
+        meta = { };
+        buildInputs = (args.buildInputs or []) ++ [ fls-shake formal-ledger ];
+        copyAgdaBuild = ''
+          cp -r "${formal-ledger}/_build" .
+          find _build -type d -print0 | xargs -0 chmod 755
+          find _build -type f -print0 | xargs -0 chmod 644
+        '';
+        preBuildPhases = (args.preBuildPhases or []) ++ [ "copyAgdaBuild" ];
+      };
+    in stdenv.mkDerivation (args // defaults);
+
+  mkPdfDerivation = { pname, project }: mkDerivation {
     pname = pname;
-    version = version;
     src = addToAgdaSrc [ ./build-tools/static/latex
                          ./build-tools/scripts/agda2vec.py
                          ./build-tools/scripts/hldiff.py ];
-    meta = { };
-    buildInputs = [ fls-shake formalLedger ];
-    preBuild = ''
-      printf "Copying _build folder of formalLedger\n"
-      cp -r "${formalLedger}/_build" .
-      find _build -type d -print0 | xargs -0 chmod 755
-      find _build -type f -print0 | xargs -0 chmod 644
-    '';
     buildPhase = ''
-      runHook preBuild
       export XDG_CACHE_HOME="$(mktemp -d)"
       fls-shake --trace "${project}-ledger.pdf"
-      runHook postBuild
     '';
     installPhase = ''
       mkdir "$out"
@@ -173,24 +177,11 @@ let
     '';
   };
 
-
-  html = stdenv.mkDerivation {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+  html = mkDerivation {
     pname = "html";
-    version = "0.1";
     src = addToAgdaSrc [];
-    meta = { };
-    buildInputs = [ fls-shake formalLedger ];
-    preBuild = ''
-      printf "Copying _build folder of formalLedger\n"
-      cp -r "${formalLedger}/_build" .
-      find _build -type d -print0 | xargs -0 chmod 755
-      find _build -type f -print0 | xargs -0 chmod 644
-    '';
     buildPhase = ''
-      runHook preBuild
       fls-shake --trace html
-      runHook postBuild
     '';
     installPhase = ''
       mkdir "$out"
@@ -202,24 +193,11 @@ let
     '';
   };
 
-  hsSrc = stdenv.mkDerivation {
-    inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
+  hsSrc = mkDerivation {
     pname = "hs-src";
-    version = "0.1";
     src = addToAgdaSrc [ ./build-tools/static/hs-src ];
-    meta = { };
-    buildInputs = [ fls-shake formalLedger ];
-    preBuild = ''
-      printf "Copying _build folder of formalLedger\n"
-      cp -r "${formalLedger}/_build" .
-      find _build -type d -print0 | xargs -0 chmod 755
-      find _build -type f -print0 | xargs -0 chmod 644
-    '';
-
     buildPhase = ''
-      runHook preBuild
       fls-shake --trace hs
-      runHook postBuild
     '';
     installPhase = ''
       mkdir "$out"
@@ -232,8 +210,8 @@ let
   };
 
   docs.conway = {
-    fullspec = mkPdfDerivation { pname = "docs"; version = "0.1"; project = "cardano"; };
-    diffspec = mkPdfDerivation { pname = "docs"; version = "0.1"; project = "conway";  };
+    fullspec = mkPdfDerivation { pname = "docs"; project = "cardano"; };
+    diffspec = mkPdfDerivation { pname = "docs"; project = "conway";  };
   };
 
   devShells = {
@@ -327,7 +305,7 @@ in
   {
     inherit agdaWithPackages
             fls-shake
-            formalLedger
+            formal-ledger
             hsSrc
             html
             docs
