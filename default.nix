@@ -328,5 +328,8 @@ in
     inherit agdaWithPackages
             fls-shake
             formalLedger
-            hsSrc;
+            hsSrc
+            html
+            docs
+            devShells;
   }
