@@ -159,7 +159,7 @@ let
     in stdenv.mkDerivation (args // defaults);
 
   mkPdfDerivation = { pname, project }: mkDerivation {
-    pname = pname;
+    pname = "${pname}-${project}";
     src = addToAgdaSrc [ ./build-tools/static/latex
                          ./build-tools/scripts/agda2vec.py
                          ./build-tools/scripts/hldiff.py ];
