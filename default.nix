@@ -15,7 +15,7 @@ let
   };
 
   our-agda = (
-    agdaPackages.override { Agda = import ./build-tools/agda/nix/fls-agda.nix { inherit sources; }; }
+    agdaPackages.override { Agda = import ./build-tools/agda/nix/fls-agda.nix { inherit nixpkgs; }; }
   );
 
   agda-stdlib = our-agda.mkDerivation {
@@ -158,11 +158,11 @@ let
     checkPhase = ''
       sh build-tools/scripts/checkTypeChecked.sh
     '';
-    # installPhase = ''
-    #   mkdir "$out"
-    #   awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
-    #   cp -r _build "$out"
-    # '';
+    installPhase = ''
+      mkdir "$out"
+      awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
+      cp -r _build "$out"
+    '';
   };
 
   mkDerivation =
