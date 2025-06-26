@@ -1,8 +1,9 @@
-{ sources ? import ./build-tools/nix/sources.nix
-, nixpkgs ? import sources.nixpkgs {
+{
+  sources ? import ./build-tools/nix/sources.nix,
+  nixpkgs ? import sources.nixpkgs {
     overlays = [ ];
     config = { };
-  }
+  },
 }:
 
 with nixpkgs;
@@ -10,15 +11,12 @@ let
   locales = {
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
-    LOCALE_ARCHIVE = lib.optionalString
-      stdenv.isLinux
-      "${glibcLocales}/lib/locale/locale-archive";
+    LOCALE_ARCHIVE = lib.optionalString stdenv.isLinux "${glibcLocales}/lib/locale/locale-archive";
   };
 
-  our-agda = callPackage ./build-tools/nix/agda {
-    inherit nixpkgs;
-    Agda = import ./build-tools/agda/nix/fls-agda.nix { inherit nixpkgs; };
-  };
+  our-agda = (
+    agdaPackages.override { Agda = import ./build-tools/agda/nix/fls-agda.nix { inherit sources; }; }
+  );
 
   agda-stdlib = our-agda.mkDerivation {
     pname = "standard-library";
@@ -53,7 +51,10 @@ let
     meta = { };
     libraryFile = "agda-stdlib-meta.agda-lib";
     everythingFile = "standard-library-meta.agda";
-    buildInputs = [ agda-stdlib agda-stdlib-classes ];
+    buildInputs = [
+      agda-stdlib
+      agda-stdlib-classes
+    ];
   };
 
   agda-sets = our-agda.mkDerivation {
@@ -64,7 +65,11 @@ let
     meta = { };
     libraryFile = "abstract-set-theory.agda-lib";
     everythingFile = "src/abstract-set-theory.agda";
-    buildInputs = [ agda-stdlib agda-stdlib-classes agda-stdlib-meta ];
+    buildInputs = [
+      agda-stdlib
+      agda-stdlib-classes
+      agda-stdlib-meta
+    ];
   };
 
   iog-agda-prelude = our-agda.mkDerivation {
@@ -74,24 +79,35 @@ let
     src = sources.iog-agda-prelude;
     libraryFile = "iog-prelude.agda-lib";
     everythingFile = "src/Everything.agda";
-    buildInputs = [ agda-stdlib agda-stdlib-classes ];
+    buildInputs = [
+      agda-stdlib
+      agda-stdlib-classes
+    ];
   };
 
-  agda-package-set = [ agda-stdlib
-                       agda-stdlib-classes
-                       agda-stdlib-meta
-                       agda-sets
-                       iog-agda-prelude
-                     ];
+  agda-package-set = [
+    agda-stdlib
+    agda-stdlib-classes
+    agda-stdlib-meta
+    agda-sets
+    iog-agda-prelude
+  ];
 
-  agdaWithPackages = our-agda.withPackages agda-package-set;
+  agdaWithPackages = our-agda.agda.withPackages agda-package-set;
 
-  fs = lib.fileset;
-
-  addToAgdaSrc = other: fs.toSource {
-    root = ./.;
-    fileset = fs.unions ([ ./src ./formal-ledger.agda-lib ./src-lib-exts ] ++ other);
-  };
+  addToAgdaSrc =
+    other:
+    lib.fileset.toSource {
+      root = ./.;
+      fileset = lib.fileset.unions (
+        [
+          ./src
+          ./formal-ledger.agda-lib
+          ./src-lib-exts
+        ]
+        ++ other
+      );
+    };
 
   latex = texlive.combine {
     inherit (texlive)
@@ -107,18 +123,26 @@ let
       biblatex-ieee
       biblatex-software
       latexmk
-      environ;
+      environ
+      ;
   };
 
-  fls-shake =
-    (import ./build-tools/shake/nix/fls-shake.nix { inherit nixpkgs; }).overrideAttrs
-      (newAttrs: oldAttrs: {
-        nativeBuildInputs = (oldAttrs.nativeBuildInputs or []) ++ [ makeWrapper ];
-        postFixup = ''
-          wrapProgram $out/bin/fls-shake \
-            --prefix PATH : ${lib.makeBinPath [ agdaWithPackages python311 hpack latex ]}
-        '';
-      });
+  fls-shake = (import ./build-tools/shake/nix/fls-shake.nix { inherit nixpkgs; }).overrideAttrs (
+    newAttrs: oldAttrs: {
+      nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ makeWrapper ];
+      postFixup = ''
+        wrapProgram $out/bin/fls-shake \
+          --prefix PATH : ${
+            lib.makeBinPath [
+              agdaWithPackages
+              python311
+              hpack
+              latex
+            ]
+          }
+      '';
+    }
+  );
 
   formal-ledger = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
@@ -134,51 +158,60 @@ let
     checkPhase = ''
       sh build-tools/scripts/checkTypeChecked.sh
     '';
-    installPhase = ''
-      mkdir "$out"
-      awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
-      cp -r _build "$out"
-    '';
+    # installPhase = ''
+    #   mkdir "$out"
+    #   awk '/^Total/{p=1}p' typecheck.log > "$out/typecheck.time"
+    #   cp -r _build "$out"
+    # '';
   };
 
-  mkDerivation = args:
+  mkDerivation =
+    args:
     let
       defaults = {
         inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
         version = "0.1";
         meta = { };
-        buildInputs = (args.buildInputs or []) ++ [ fls-shake formal-ledger ];
+        buildInputs = (args.buildInputs or [ ]) ++ [
+          fls-shake
+          formal-ledger
+        ];
         copyAgdaBuild = ''
           cp -r "${formal-ledger}/_build" .
           find _build -type d -print0 | xargs -0 chmod 755
           find _build -type f -print0 | xargs -0 chmod 644
         '';
-        preBuildPhases = (args.preBuildPhases or []) ++ [ "copyAgdaBuild" ];
+        preBuildPhases = (args.preBuildPhases or [ ]) ++ [ "copyAgdaBuild" ];
       };
-    in stdenv.mkDerivation (args // defaults);
+    in
+    stdenv.mkDerivation (args // defaults);
 
-  mkPdfDerivation = { pname, project }: mkDerivation {
-    pname = "${pname}-${project}";
-    src = addToAgdaSrc [ ./build-tools/static/latex
-                         ./build-tools/scripts/agda2vec.py
-                         ./build-tools/scripts/hldiff.py ];
-    buildPhase = ''
-      export XDG_CACHE_HOME="$(mktemp -d)"
-      fls-shake --trace "${project}-ledger.pdf"
-    '';
-    installPhase = ''
-      mkdir "$out"
-      cp "dist/${project}-ledger.pdf" "$out"
-    '';
-    doInstallCheck = true;
-    installCheckPhase = ''
-      test -f "$out/${project}-ledger.pdf"
-    '';
-  };
+  mkPdfDerivation =
+    { pname, project }:
+    mkDerivation {
+      pname = "${pname}-${project}";
+      src = addToAgdaSrc [
+        ./build-tools/static/latex
+        ./build-tools/scripts/agda2vec.py
+        ./build-tools/scripts/hldiff.py
+      ];
+      buildPhase = ''
+        export XDG_CACHE_HOME="$(mktemp -d)"
+        fls-shake --trace "${project}-ledger.pdf"
+      '';
+      installPhase = ''
+        mkdir "$out"
+        cp "dist/${project}-ledger.pdf" "$out"
+      '';
+      doInstallCheck = true;
+      installCheckPhase = ''
+        test -f "$out/${project}-ledger.pdf"
+      '';
+    };
 
   html = mkDerivation {
     pname = "html";
-    src = addToAgdaSrc [];
+    src = addToAgdaSrc [ ];
     buildPhase = ''
       fls-shake --trace html
     '';
@@ -209,8 +242,14 @@ let
   };
 
   docs.conway = {
-    fullspec = mkPdfDerivation { pname = "docs"; project = "cardano"; };
-    diffspec = mkPdfDerivation { pname = "docs"; project = "conway";  };
+    fullspec = mkPdfDerivation {
+      pname = "docs";
+      project = "cardano";
+    };
+    diffspec = mkPdfDerivation {
+      pname = "docs";
+      project = "conway";
+    };
   };
 
   devShells = {
@@ -218,11 +257,11 @@ let
     default = mkShell {
       inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
       packages = [
-        agdaWithPackages  # Agda 2.7.0.1 + all pinned libraries
-        fls-shake         # Build system for generating outputs
-        python311         # Python for basic scripting
-        hpack             # Haskell package helper
-        coreutils         # Basic shell utilities
+        agdaWithPackages # Agda 2.7.0.1 + all pinned libraries
+        fls-shake # Build system for generating outputs
+        python311 # Python for basic scripting
+        hpack # Haskell package helper
+        coreutils # Basic shell utilities
       ];
       shellHook = ''
         echo "Agda Development Environment"
@@ -236,7 +275,7 @@ let
     ci = mkShell {
       inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
       packages = [
-        fls-shake         # For building artifacts
+        fls-shake # For building artifacts
       ];
       shellHook = ''
         echo "CI Build Environment"
@@ -254,25 +293,27 @@ let
 
         # Document conversion tools
         pandoc
-        latex  # Your custom LaTeX setup from default.nix
+        latex # Your custom LaTeX setup from default.nix
         dejavu_fonts
 
         # Python environment for mkdocs pipeline
-        (python311.withPackages (ps: with ps; [
-          pip
-          mkdocs
-          mkdocs-material
-          pymdown-extensions
-          pyyaml
-          # Add any other Python packages needed for conversion scripts
-        ]))
+        (python311.withPackages (
+          ps: with ps; [
+            pip
+            mkdocs
+            mkdocs-material
+            pymdown-extensions
+            pyyaml
+            # Add any other Python packages needed for conversion scripts
+          ]
+        ))
 
         # mdbook ecosystem
         mdbook
-        chromium          # Required by mdbook-pdf for rendering
-        cargo             # For installing mdbook extensions
-        pkg-config        # For building cargo packages
-        openssl           # For building cargo packages
+        chromium # Required by mdbook-pdf for rendering
+        cargo # For installing mdbook extensions
+        pkg-config # For building cargo packages
+        openssl # For building cargo packages
 
         # Additional tools
         coreutils
@@ -301,12 +342,14 @@ let
     };
   };
 in
-  {
-    inherit agdaWithPackages
-            fls-shake
-            formal-ledger
-            hs-src
-            html
-            docs
-            devShells;
-  }
+{
+  inherit
+    agdaWithPackages
+    fls-shake
+    formal-ledger
+    hs-src
+    html
+    docs
+    devShells
+    ;
+}
