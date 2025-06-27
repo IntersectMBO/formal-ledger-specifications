@@ -48,35 +48,9 @@ jobs:
 
   mkdocs-site:
     needs: [formal-ledger-agda]
-    # # Should we only run on master branch? If so, uncomment next line.
-    # if: ${{ github.ref_name == 'master' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout main repository
-        uses: actions/checkout@v4
-      - name: Download agda _build artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: _build
-          path: _build
-      - name: Install Nix
-        uses: cachix/install-nix-action@v31
-        with:
-          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
-          extra_nix_config: |
-            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-            substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Generate and Build MkDocs site
-        run: |
-          nix develop .#docs --command bash -c "python ./build-tools/scripts/md/build.py --run-agda
-          mkdir dist
-          cd _build/md/mkdocs/
-          mkdocs build --site-dir ../../../dist/site"
-      - name: Upload MkDocs site artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: mkdocs-site
-          path: dist
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      target: mkdocs
 
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]

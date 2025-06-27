@@ -128,7 +128,7 @@ let
   };
 
   fls-shake = (import ./build-tools/shake/nix/fls-shake.nix { inherit nixpkgs; }).overrideAttrs (
-    newAttrs: oldAttrs: {
+    oldAttrs: {
       nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ makeWrapper ];
       postFixup = ''
         wrapProgram $out/bin/fls-shake \
@@ -241,6 +241,34 @@ let
     '';
   };
 
+  mkdocs = mkDerivation {
+    pname = "mkdocs";
+    src = addToAgdaSrc [ ./build-tools/scripts/md ./build-tools/static/md
+    ./build-tools/static/latex ];
+    buildInputs = [
+        agdaWithPackages
+        pandoc
+        (python311.withPackages (
+          ps: with ps; [
+            pip
+            mkdocs
+            mkdocs-material
+            pymdown-extensions
+            pyyaml
+          ]
+        )) ];
+
+    buildPhase = ''
+      mkdir dist
+      python ./build-tools/scripts/md/build.py --run-agda
+      (cd _build/md/mkdocs/; mkdocs build --site-dir ../../../dist/site)
+    '';
+    installPhase = ''
+      mkdir "$out"
+      cp -r "dist/site" "$out"
+    '';
+  };
+
   docs.conway = {
     fullspec = mkPdfDerivation {
       pname = "docs";
@@ -350,6 +378,7 @@ in
     hs-src
     html
     docs
+    mkdocs
     devShells
     ;
 }
