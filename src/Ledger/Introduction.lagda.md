@@ -124,7 +124,7 @@ a list of *stake pools* operating the network, and so on.
 The ledger can be updated in response to certain events, such as
 receiving a new transaction, time passing and crossing an *epoch
 boundary*, enacting a *governance proposal*, to name a few. This
-document defines, as part of the behaior of the ledger, a set of rules
+document defines, as part of the behavior of the ledger, a set of rules
 that determine which events are valid and exactly how the state of the
 ledger should be updated in response to those events. The primary aim of
 this document is to provide a precise description of this system—the
