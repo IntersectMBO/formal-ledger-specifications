@@ -116,7 +116,7 @@ $X$ is simply a placeholder for the name of the transition rule.
 ## Ledger State Transition Rules {#sec:ledger-state-transition-rules}
 
 By a *ledger* we mean a structure that contains information about how
-funds in the system are distributed accross accounts—that is, account
+funds in the system are distributed across accounts—that is, account
 balances, how such balances should be adjusted when transactions and
 proposals are processed, the ADA currently held in the treasury reserve,
 a list of *stake pools* operating the network, and so on.
