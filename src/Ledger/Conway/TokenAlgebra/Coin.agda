@@ -6,7 +6,7 @@ module Ledger.Conway.TokenAlgebra.Coin (X : Type) where
 open import Algebra.Morphism.Construct.Identity
   using (isMonoidHomomorphism)
 
-open import Ledger.Conway.TokenAlgebra X
+open import Ledger.Conway.TokenAlgebra.Base X
 
 open TokenAlgebra
 
