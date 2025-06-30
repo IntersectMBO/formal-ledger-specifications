@@ -13,7 +13,7 @@ open import Data.Vec as Vec
 import stdlib.Data.Vec.Instances as Vec
 import Data.Vec.Relation.Binary.Pointwise.Inductive as Vec
 
-open import Ledger.Conway.TokenAlgebra PolicyId
+open import Ledger.Conway.TokenAlgebra.Base PolicyId
 
 Quantity = ℕ
 

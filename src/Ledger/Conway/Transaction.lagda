@@ -23,7 +23,7 @@ import Ledger.Conway.PParams
 import Ledger.Conway.Script.Base
 import Ledger.Conway.GovernanceActions
 import Ledger.Conway.Certs
-import Ledger.Conway.TokenAlgebra
+import Ledger.Conway.TokenAlgebra.Base
 import Ledger.Conway.Address
 
 open import Relation.Nullary.Decidable using (⌊_⌋)
@@ -80,7 +80,7 @@ record TransactionStructure : Type₁ where
 
   field crypto : _
   open Crypto crypto public
-  open Ledger.Conway.TokenAlgebra ScriptHash public
+  open Ledger.Conway.TokenAlgebra.Base ScriptHash public
   open Ledger.Conway.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
