@@ -425,12 +425,10 @@ def create_markdown_citation(
                 if config.style.link_citations:
                     if config.output_format == "latex":
                         # Generate LaTeX hyperlink
-                        # The LaTeX link should also point directly to the key.
-                        label = f"\\href{{#{key}}}{{{label_text}}}"
+                        label = f"\\href{{#{config.bibliography_id}#{key}}}{{{label_text}}}"
                     else:
                         # Generate markdown link
-                        # The link should point directly to the anchor, which is just the key.
-                        label = f"[{label_text}](#{key})"
+                        label = f"[{label_text}](#{config.bibliography_id}#{key})"
                 else:
                     label = label_text # No brackets if not linking, text will be bracketed later
                 labels.append(label)
@@ -462,9 +460,7 @@ def create_markdown_citation(
                 # This is a simplification; a truly robust multi-citation with optional args
                 # would require a more complex structure. For now, we append to the whole group.
                 multi_label_text = "; ".join(l.strip("[]") for l in base_labels)
-                # Point to the anchor of the *first* citation in the list as a sensible default.
-                first_key = keys[0] if keys else ""
-                return f"[{multi_label_text}{extra_info}](#{first_key})"
+                return f"[[{multi_label_text}]{extra_info}](#{config.bibliography_id})"
 
     else:  # numeric or other styles
         label_text = f"{', '.join(keys)}{extra_info}"
