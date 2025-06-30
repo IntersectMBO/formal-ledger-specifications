@@ -485,8 +485,10 @@ library
       MAlonzo.Code.Ledger.Conway.Ratify
       MAlonzo.Code.Ledger.Conway.Ratify.Properties
       MAlonzo.Code.Ledger.Conway.Script
+      MAlonzo.Code.Ledger.Conway.Script.Base
+      MAlonzo.Code.Ledger.Conway.Script.Timelock
       MAlonzo.Code.Ledger.Conway.ScriptValidation
-      MAlonzo.Code.Ledger.Conway.TokenAlgebra
+      MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base
       MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin
       MAlonzo.Code.Ledger.Conway.Transaction
       MAlonzo.Code.Ledger.Conway.Types.Epoch
