@@ -68,12 +68,12 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Generate and Build MkDocs site
         run: |
-          nix-build -A mkdocs
+          nix-build -A mkdocs -o outputs
       - name: Upload MkDocs site artifact
         uses: actions/upload-artifact@v4
         with:
           name: mkdocs-site
-          path: dist
+          path: outputs
 
   cardano-ledger-pdf:
     needs: [formal-ledger-agda]
