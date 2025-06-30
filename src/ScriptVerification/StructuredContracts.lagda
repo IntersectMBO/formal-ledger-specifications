@@ -9,7 +9,7 @@ open import Data.Nat.Properties using (+-0-monoid)
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Abstract
-open import Ledger.Conway.TokenAlgebra 
+open import Ledger.Conway.TokenAlgebra.Base
 open import Ledger.Conway.TokenAlgebra.ValueSet
 
 

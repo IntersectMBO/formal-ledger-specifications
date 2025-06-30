@@ -31,6 +31,8 @@ open import Interface.HasSubset.Instance public
 open import Interface.Hashable public
 open import Ledger.Interface.HasCoin public
 open import Tactic.Defaults public
+open import Tactic.Derive.DecEq hiding (map') public
+open import Tactic.Inline hiding (iTC; iTCE) public
 open import MyDebugOptions public
 open import iog-prelude.Tactic.Premises public
 

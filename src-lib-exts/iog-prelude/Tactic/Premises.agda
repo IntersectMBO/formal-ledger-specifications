@@ -34,8 +34,6 @@ open import Class.MonadError
   using (MonadError; MonadError-TC)
 open MonadError ⦃...⦄
   using (error; catch)
-instance
-  iTC  = MonadTC-TC
 open import Meta.Prelude
 
 open Debug ("tactic.premises", 100)

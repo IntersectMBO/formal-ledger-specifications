@@ -170,7 +170,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
          neededHashes                        = scriptsNeeded utxo txb
          txdatsHashes                        = dom txdats
          allOutHashes                        = getDataHashes (range txouts)
-         nativeScripts                       = mapPartial isInj₁ (txscripts tx utxo)
+         nativeScripts                       = mapPartial toP1Script (txscripts tx utxo)
 \end{code}
 \begin{code}
     in

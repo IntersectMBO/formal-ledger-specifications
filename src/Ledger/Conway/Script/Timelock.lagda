@@ -8,60 +8,27 @@ interval.  The scripts are executed as part of the regular witnessing.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Algebra.Morphism
-open import Data.List.Relation.Unary.All using (All; []; _∷_; all?; uncons)
-open import Data.List.Relation.Unary.Any
-open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
-
-open import stdlib.Data.List.Relation.Unary.MOf
-
-open import Tactic.Derive.DecEq
-open import Tactic.Inline
-
-open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Conway.Crypto
+  using (Crypto)
 open import Ledger.Conway.Types.Epoch
+  using (EpochStructure)
 
-module Ledger.Conway.Script
+module Ledger.Conway.Script.Timelock
   (crypto : _) (open Crypto crypto)
   (es     : _) (open EpochStructure es)
   where
 
-record P1ScriptStructure : Type₁ where
-  field P1Script : Type
-        validP1Script : ℙ KeyHash → Maybe Slot × Maybe Slot → P1Script → Type
-        ⦃ Dec-validP1Script ⦄ : validP1Script ⁇³
-        ⦃ Hashable-P1Script ⦄ : Hashable P1Script ScriptHash
-        ⦃ DecEq-P1Script    ⦄ : DecEq P1Script
+open import Ledger.Prelude
+  hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 
-record PlutusStructure : Type₁ where
-  field Dataʰ : HashableSet
-        Language PlutusScript CostModel Prices LangDepView ExUnits : Type
-        PlutusV1 PlutusV2 PlutusV3   : Language
-        ⦃ ExUnit-CommutativeMonoid ⦄ : CommutativeMonoid 0ℓ 0ℓ ExUnits
-        ⦃ Hashable-PlutusScript    ⦄ : Hashable PlutusScript ScriptHash
-        ⦃ DecEq-Language           ⦄ : DecEq Language
-        ⦃ DecEq-CostModel          ⦄ : DecEq CostModel
-        ⦃ DecEq-LangDepView        ⦄ : DecEq LangDepView
-        ⦃ Show-CostModel           ⦄ : Show CostModel
+open import Data.List.Relation.Unary.All
+  using (All; []; _∷_; all?; uncons)
+open import Data.List.Relation.Unary.Any
+  using (Any; any?)
+open import stdlib.Data.List.Relation.Unary.MOf
 
-  field  _≥ᵉ_              : ExUnits → ExUnits → Type
-         ⦃ DecEq-ExUnits ⦄ : DecEq ExUnits
-         ⦃ DecEQ-Prices  ⦄ : DecEq Prices
-         ⦃ Show-ExUnits  ⦄ : Show ExUnits
-         ⦃ Show-Prices   ⦄ : Show Prices
-
-  open HashableSet Dataʰ renaming (T to Data; THash to DataHash) public
-
-  -- Type aliases for Data
-  Datum    = Data
-  Redeemer = Data
-
-  field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Type
-        ⦃ Dec-validPlutusScript ⦄ : ∀ {x} → (validPlutusScript x ⁇³)
-        language : PlutusScript → Language
-        toData : ∀ {A : Type} → A → Data
 \end{code}
+
 \begin{figure*}[h]
 \begin{code}
 data Timelock : Type where
@@ -154,29 +121,4 @@ instance
         (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
         (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
         (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
-
-record ScriptStructure : Type₁ where
-
-  field p1s : P1ScriptStructure
-
-  open P1ScriptStructure p1s public
-
-  field hashRespectsUnion :
-          {A B Hash : Type} → Hashable A Hash → Hashable B Hash → Hashable (A ⊎ B) Hash
-
-  field ps : PlutusStructure
-  open PlutusStructure ps public
-    renaming ( PlutusScript       to P2Script
-             ; validPlutusScript  to validP2Script
-             )
-
-  Script = P1Script ⊎ P2Script
-
-  open import Data.Empty
-  open import Agda.Builtin.Equality
-  open import Relation.Binary.PropositionalEquality
-
-  instance
-    Hashable-Script : Hashable Script ScriptHash
-    Hashable-Script = hashRespectsUnion Hashable-P1Script Hashable-PlutusScript
 \end{code}
