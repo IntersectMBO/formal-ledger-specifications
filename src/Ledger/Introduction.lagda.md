@@ -116,7 +116,7 @@ $X$ is simply a placeholder for the name of the transition rule.
 ## Ledger State Transition Rules {#sec:ledger-state-transition-rules}
 
 By a *ledger* we mean a structure that contains information about how
-funds in the system are distributed across accounts—that is, account
+funds in the system are distributed accross accounts—that is, account
 balances, how such balances should be adjusted when transactions and
 proposals are processed, the ADA currently held in the treasury reserve,
 a list of *stake pools* operating the network, and so on.
@@ -124,7 +124,7 @@ a list of *stake pools* operating the network, and so on.
 The ledger can be updated in response to certain events, such as
 receiving a new transaction, time passing and crossing an *epoch
 boundary*, enacting a *governance proposal*, to name a few. This
-document defines, as part of the behavior of the ledger, a set of rules
+document defines, as part of the behaior of the ledger, a set of rules
 that determine which events are valid and exactly how the state of the
 ledger should be updated in response to those events. The primary aim of
 this document is to provide a precise description of this system—the

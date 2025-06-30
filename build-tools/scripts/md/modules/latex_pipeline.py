@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """
 LaTeX pipeline module for the documentation build system.
 
@@ -41,11 +39,13 @@ current_dir = Path(__file__).parent.parent
 if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
-from config.build_config import BuildConfig
-from utils.pipeline_types import (
-    Result, PipelineError, ErrorType,
-    ProcessedFile, ProcessingStage
-)
+try:
+    from modules.agda_latex_preprocessor import process_latex_content
+    from config.build_config import BuildConfig
+    from utils.pipeline_types import Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage
+except ImportError as e:
+    print(f"WARNING: Could not import functional modules: {e}", file=sys.stderr)
+    print("Falling back to legacy functions", file=sys.stderr)
 
 # Import bibliography processing directly
 try:
@@ -172,30 +172,39 @@ def run_command_functional(
 
 def run_preprocess_stage(
     processing_stage: LaTeXProcessingStage,
-    macros_json_path: Path,
-    preprocess_script: Path
+    macros_json_path: Path
 ) -> Result[None, PipelineError]:
     """
     Mathematical transformation: .lagda → preprocessed (.lagda.temp + .codeblocks.json)
 
-    This is a pure function that applies the preprocess.py transformation.
+    This now uses the pure functional latex_processor module directly.
     """
+    try:
+        processing_stage.ensure_directories()
 
-    processing_stage.ensure_directories()
+        # 1. Load the macro definitions
+        with open(macros_json_path, 'r', encoding='utf-8') as f:
+            macros = json.load(f)
 
-    command = [
-        "python", str(preprocess_script),
-        str(processing_stage.source_file),
-        str(macros_json_path),
-        str(processing_stage.code_blocks_file)
-    ]
+        # 2. Read the source file content
+        source_content = processing_stage.source_file.read_text(encoding='utf-8')
 
-    result = run_command_functional(
-        command,
-        stdout_file=processing_stage.temp_file
-    )
+        # 3. Call the pure processing function
+        processed_text, extracted_code_blocks = process_latex_content(source_content, macros)
 
-    return result.map(lambda _: None)
+        # 4. Write the results to their respective files (side-effect)
+        processing_stage.temp_file.write_text(processed_text, encoding='utf-8')
+        with open(processing_stage.code_blocks_file, 'w', encoding='utf-8') as f:
+            json.dump(extracted_code_blocks, f, indent=2)
+
+        return Result.ok(None)
+
+    except Exception as e:
+        return Result.err(PipelineError(
+            error_type=ErrorType.COMMAND_FAILED,
+            message=f"Preprocessing failed for {processing_stage.source_file.name}",
+            cause=e
+        ))
 
 
 # =============================================================================
@@ -266,9 +275,10 @@ def run_postprocess_stage(
 def run_bibliography_stage(
     processing_stage: LaTeXProcessingStage,
     bibliography_path: Path
-) -> Result[None, PipelineError]:
+) -> Result[None, PipelineError]: # Return type is now None
     """
-    Mathematical transformation: .lagda.temp → .lagda.temp.withbib (LaTeX citations → LaTeX links + bibliography)
+    Mathematical transformation: .lagda.temp → .lagda.temp.withbib
+    This version appends a bibliography section to the file itself.
     """
 
     if not HAS_BIBLIOGRAPHY_PROCESSING:
@@ -282,8 +292,7 @@ def run_bibliography_stage(
 
         processor_result = BibTeXProcessor.from_file(bibliography_path, latex_config)
         if processor_result.is_err:
-            error = processor_result.unwrap_err()
-            logging.warning(f"Failed to create BibTeX processor: {error}")
+            logging.warning(f"Failed to create BibTeX processor: {processor_result.unwrap_err()}")
             return Result.ok(None)
 
         processor = processor_result.unwrap()
@@ -478,8 +487,7 @@ def process_latex_files(
     for stage in processing_stages:
         result = run_preprocess_stage(
             stage,
-            config.build_paths.macros_json_path,
-            config.source_paths.md_scripts_dir / "preprocess.py"
+            config.build_paths.macros_json_path
         )
         if result.is_err:
             return Result.err(result.unwrap_err())
