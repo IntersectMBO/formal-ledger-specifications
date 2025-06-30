@@ -8,7 +8,6 @@ module Ledger.Conway.Conformance.Certs
   (gs : _) (open GovStructure gs)
   where
 
-open import Tactic.Derive.DecEq
 
 open import Ledger.Conway.GovernanceActions gs
 private module Certs = Ledger.Conway.Certs gs

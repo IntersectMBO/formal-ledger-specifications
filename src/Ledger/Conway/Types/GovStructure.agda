@@ -5,7 +5,7 @@ module Ledger.Conway.Types.GovStructure where
 open import Prelude using (Type)
 open import Class.DecEq
 open import Ledger.Conway.Crypto
-open import Ledger.Conway.Script
+open import Ledger.Conway.Script.Base
 open import Ledger.Conway.Types.Epoch
 import Ledger.Conway.PParams
 

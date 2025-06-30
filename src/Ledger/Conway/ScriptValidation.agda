@@ -162,7 +162,7 @@ opaque
     with lookupScriptHash sh tx utxo
   ... | nothing = nothing
   ... | just s
-    with isInj₂ s | indexedRdmrs tx sp
+    with toP2Script s | indexedRdmrs tx sp
   ... | just p2s | just (rdmr , eu)
       = just (s ,
           ( (getDatum tx utxo sp ++ rdmr ∷ valContext (txInfo (language p2s) pp utxo tx) sp ∷ [])

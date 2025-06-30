@@ -15,7 +15,6 @@ import Data.Sum.Relation.Unary.All as Sum
 import Data.Integer as ℤ
 import Data.Rational as ℚ
 
-open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude
 open import Ledger.Conway.Abstract
