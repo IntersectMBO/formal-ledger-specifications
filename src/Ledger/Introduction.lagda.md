@@ -399,6 +399,7 @@ returns a proposition asserting that the relation `R`{.AgdaFunction} holds betwe
 `x`{.AgdaBound} and `y`{.AgdaBound}. Thus, such a relation is a function of type
 `A`{.AgdaBound} `×`{.AgdaFunction} `B`{.AgdaBound} → `Type`{.AgdaPrimitive} or
 `A`{.AgdaBound} → `B`{.AgdaBound} → `Type`{.AgdaPrimitive}.
+
 These relations are typically required to be decidable, which means
 that there is a boolean-valued function that computes whether the
 predicate holds or not. This means that it is generally safe to think
