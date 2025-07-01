@@ -26,8 +26,8 @@ Invoke the following `nix-build` commands from inside the
 `formal-ledger-specifications` directory:
 
 ```
-nix-build -A ledger.docs      # generate the PDF spec of the Cardano ledger
-nix-build -A ledger.hsSrc     # extract the Haskell code of the Cardano ledger
+nix-build -A docs.conway.fullspec # generate the PDF spec of the Cardano ledger
+nix-build -A hs-src # extract the Haskell code of the Cardano ledger
 ```
 
 ## Conformance-testing example

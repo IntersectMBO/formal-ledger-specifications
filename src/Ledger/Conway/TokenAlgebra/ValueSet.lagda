@@ -10,7 +10,7 @@ module Ledger.Conway.TokenAlgebra.ValueSet (PolicyId AssetName : Type) where
 
 open import Ledger.Prelude                         hiding (lookup ; update ; isMagma ; isEquivalence) renaming (TotalMap to _⇒_)
 open _⇒_
-open import Ledger.Conway.TokenAlgebra PolicyId           using (TokenAlgebra)
+open import Ledger.Conway.TokenAlgebra.Base PolicyId using (TokenAlgebra)
 
 open import Algebra                                using (Op₂ ; IsSemigroup ; IsMonoid ; IsMagma ; IsCommutativeMonoid)
 open import Algebra.Morphism                       using (IsMonoidHomomorphism ; IsMagmaHomomorphism)

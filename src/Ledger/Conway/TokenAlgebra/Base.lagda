@@ -7,7 +7,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 open import Prelude using (Type)
-module Ledger.Conway.TokenAlgebra (
+module Ledger.Conway.TokenAlgebra.Base (
 \end{code}
 \emph{Abstract types}
 \AgdaTarget{PolicyId}
