@@ -154,16 +154,6 @@ def run_pandoc_stage(
     Mathematical transformation: .lagda.temp → .md.intermediate
     Applies Pandoc + Lua filter transformation.
     """
-    # Check if this is the file that is known to fail.
-    if "EssentialAgda.lagda.temp" in str(processing_stage.temp_file):
-        try:
-            # AND CHANGE the name of the output file for clarity.
-            debug_path = build_dir / "DEBUG_EssentialAgda.lagda.temp"
-            shutil.copy2(processing_stage.temp_file, debug_path)
-            logging.warning(f"DEBUG: Saved a copy of the failing intermediate file to: {debug_path}")
-        except Exception as e:
-            logging.error(f"DEBUG: Could not save a copy of the failing file: {e}")
-
     command = [
         "pandoc", str(processing_stage.temp_file),
         "-f", "latex",
