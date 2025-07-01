@@ -39,13 +39,12 @@ current_dir = Path(__file__).parent.parent
 if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
-from modules.latex_preprocessor import process_latex_content
 from config.build_config import BuildConfig
+from modules.latex_preprocessor import process_latex_content
+from modules.bibtex_processor import BibTeXProcessor
 from utils.pipeline_types import Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage
 from utils.text_processing import slugify
-
-# Import bibliography processing directly
-from modules.bibtex_processor import BibTeXProcessor
+from utils.command_runner import run_command
 
 # =============================================================================
 # Mathematical Types for LaTeX Processing
@@ -99,63 +98,6 @@ class LaTeXProcessingResult:
     processed_files: Tuple[ProcessedFile, ...]
     label_map: Dict[str, Dict[str, str]]
     processing_statistics: Dict[str, int]
-
-
-# =============================================================================
-# Command Execution (Functional Wrapper)
-# =============================================================================
-
-def run_command_functional(
-    command: List[str],
-    cwd: Optional[Path] = None,
-    stdout_file: Optional[Path] = None
-) -> Result[subprocess.CompletedProcess, PipelineError]:
-    """Pure functional command execution with Result error handling."""
-
-    try:
-        logging.debug(f"Executing: {' '.join(command)}")
-
-        if stdout_file:
-            stdout_file.parent.mkdir(parents=True, exist_ok=True)
-            with open(stdout_file, 'w', encoding='utf-8') as f:
-                process = subprocess.run(
-                    command,
-                    cwd=cwd,
-                    stdout=f,
-                    stderr=subprocess.PIPE,
-                    text=True,
-                    check=False
-                )
-        else:
-            process = subprocess.run(
-                command,
-                cwd=cwd,
-                capture_output=True,
-                text=True,
-                check=False
-            )
-
-        if process.returncode != 0:
-            return Result.err(PipelineError(
-                error_type=ErrorType.COMMAND_FAILED,
-                message=f"Command failed: {' '.join(command)}",
-                context={
-                    "command": command,
-                    "return_code": process.returncode,
-                    "stderr": process.stderr,
-                    "cwd": str(cwd) if cwd else None
-                }
-            ))
-
-        return Result.ok(process)
-
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Command execution failed: {e}",
-            context={"command": command},
-            cause=e
-        ))
 
 
 # =============================================================================
@@ -230,7 +172,7 @@ def run_pandoc_stage(
         "-o", str(processing_stage.intermediate_file)
     ]
 
-    result = run_command_functional(command)
+    result = run_command(command)
     return result.map(lambda _: None)
 
 
@@ -256,7 +198,7 @@ def run_postprocess_stage(
         str(processing_stage.final_file)  # Output directly to final file
     ]
 
-    result = run_command_functional(command)
+    result = run_command(command)
     return result.map(lambda _: None)
 
 

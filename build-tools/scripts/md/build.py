@@ -152,8 +152,8 @@ from config.build_config import get_legacy_paths, load_build_config, BuildConfig
 from modules.setup import setup_build_environment, cleanup_intermediate_artifacts
 from modules.agda_processing import process_agda_source_files
 from modules.latex_pipeline import latex_pipeline_stage
-# --- NEW: Import from our new asset generator module ---
 from modules.asset_generator import generate_macros_json, generate_custom_css_from_agda
+from utils.command_runner import run_command
 
 
 # === CONFIGURATION ===
@@ -229,59 +229,6 @@ class LagdaProcessingPaths:
         for parent_dir in parents_to_create:
             parent_dir.mkdir(parents=True, exist_ok=True)
 
-
-
-# --- Helper to run commands ---
-def run_command(command_args: List[str],
-                cwd: Optional[Path] = None,
-                capture_output: bool = False,
-                text: bool = False,
-                check: bool = False,
-                stdout_file: Optional[Path] = None) -> subprocess.CompletedProcess:
-    """Runs a shell command, logs output/errors, optionally redirects stdout."""
-    command_args_str = [str(arg) for arg in command_args]
-    logging.info(f"Running: {' '.join(command_args_str)}")
-
-    stdout_target = None
-    stdout_content = None
-    stderr_content = None
-
-    if stdout_file:
-        # Ensure parent directory exists for stdout_file
-        Path(stdout_file).parent.mkdir(parents=True, exist_ok=True)
-        stdout_target = open(stdout_file, "w", encoding="utf-8")
-    elif capture_output:
-        stdout_target = subprocess.PIPE
-
-    try:
-        process = subprocess.run(command_args_str, cwd=cwd,
-                                 stdout=stdout_target,
-                                 stderr=subprocess.PIPE, # Always capture stderr
-                                 text=text, check=False, # Check manually after logging stderr
-                                 encoding='utf-8')
-
-        # Capture outputs if needed
-        stdout_content = process.stdout
-        stderr_content = process.stderr
-
-        # Log stderr output as debug info, even on success
-        if stderr_content:
-             logging.debug(f"Stderr output for {' '.join(command_args_str)}:\n{stderr_content}")
-
-        # Check return code if requested
-        if check and process.returncode != 0:
-            logging.error(f"❌ Command failed with exit code {process.returncode}: {' '.join(command_args_str)}")
-            # Log captured stdout only if it wasn't redirected and was captured
-            if stdout_content and not stdout_file and capture_output: logging.error(f"Stdout:\n{stdout_content}")
-            # Log captured stderr again for error context
-            if stderr_content: logging.error(f"Stderr:\n{stderr_content}")
-            raise subprocess.CalledProcessError(process.returncode, command_args_str,
-                                                output=stdout_content, stderr=stderr_content)
-        return process # Return completed process object
-
-    except Exception as e:
-        logging.error(f"❌ Failed to run command {' '.join(command_args_str)}: {e}")
-        raise # Re-raise exception after logging
 
 
 # --- Helper for changing header phrases to link labels (slugs) ---
@@ -502,34 +449,25 @@ def populate_agda_docs_staging(
     # 2. Attempt to run Agda --html if requested and master file exists
     if effective_run_agda_html:
         logging.info(f"Running Agda --html, outputting directly to {agda_docs_staging_dir}...")
-        try:
-            # Construct the path to master_agda_file_name relative to agda_snapshot_src_dir
-            # if master_agda_file_name might include path components.
-            # If it's always a direct child, master_agda_file_name is fine as is.
-            # Current script uses master_agda_file_name directly when cwd is agda_snapshot_src_dir.
+        agda_command = [
+            "agda", "--fls",
+            f"--fls-html-dir={agda_docs_staging_dir.resolve()}",
+            master_agda_file_name
+        ]
+        agda_result = run_command(
+            agda_command,
+            cwd=agda_snapshot_src_dir.resolve(),
+            stream_output=True  # lets us see Agda type-checking and html generation logging
+        )
 
-            run_command( # Assuming run_command helper is available
-                [
-                    "agda", "--fls",
-                    f"--fls-html-dir={agda_docs_staging_dir.resolve()}",
-                    master_agda_file_name # Path relative to cwd (agda_snapshot_src_dir)
-                ],
-                cwd=agda_snapshot_src_dir.resolve()
-            )
+        if agda_result.is_ok:
             logging.info(f"✅ Agda --html command completed. Files generated in {agda_docs_staging_dir}.")
-
             # Collect generated .md files
             for gen_file in agda_docs_staging_dir.glob("*.md"):
                 final_md_files_in_staging.append(gen_file)
-
-            if not final_md_files_in_staging and all_snapshot_lagda_md_files:
-                logging.warning(
-                    f"Agda --html ran but no '.md' files were collected from {agda_docs_staging_dir}. "
-                    "This might indicate an issue with Agda's output or the master file."
-                )
-
-        except Exception as e_agda: # Catch subprocess.CalledProcessError or general exceptions
-            logging.error(f"❌ Agda --html command failed: {e_agda}", exc_info=True)
+        else:
+            error = agda_result.unwrap_err()
+            logging.error(f"❌ Agda --html command failed: {error.message}\n{error.context.get('stderr','')}")
             logging.warning("   Falling back to copying snapshot files (no Agda HTML highlighting).")
             effective_run_agda_html = False # Force fallback
 
@@ -645,16 +583,19 @@ def deploy_static_mkdocs_assets(
 
     # Agda.css
     if run_agda_html_flag:
-        try:
-            agda_css_proc = run_command(["agda", "--print-agda-data-dir"], capture_output=True, check=False, text=True)
-            if agda_css_proc.returncode == 0 and agda_css_proc.stdout:
-                agda_data_dir = Path(agda_css_proc.stdout.strip())
+        agda_dir_result = run_command(["agda", "--print-agda-data-dir"], capture_output=True, text=True)
+        if agda_dir_result.is_ok:
+            agda_proc = agda_dir_result.unwrap()
+            if agda_proc.stdout:
+                agda_data_dir = Path(agda_proc.stdout.strip())
                 agda_css_source = agda_data_dir / "html" / "Agda.css"
                 if agda_css_source.exists():
                     assets_to_copy[agda_css_source] = mkdocs_css_dir / "Agda.css"
-                else: logging.warning(f"Agda.css not found at: {agda_css_source}")
-            else: logging.warning(f"❌ Could not find Agda.css via 'agda --print-agda-data-dir'. Stderr: {agda_css_proc.stderr}")
-        except Exception as e: logging.warning(f"❌ Error trying to find Agda.css: {e}")
+                else:
+                    logging.warning(f"Agda.css not found at expected path: {agda_css_source}")
+        else:
+            error = agda_dir_result.unwrap_err()
+            logging.warning(f"❌ Could not find Agda.css via 'agda --print-agda-data-dir': {error.message}")
 
     # Custom CSS - only process if not None and exists
     if custom_css_source and custom_css_source.exists():
@@ -1134,15 +1075,16 @@ def continue_with_legacy_pipeline(
              agda_css_source = None # Clear it so we can try the fallback
 
     if not agda_css_source:
-        # Fallback: try to find Agda.css from `agda --print-agda-data-dir`
-        try:
-            proc = run_command(["agda", "--print-agda-data-dir"], capture_output=True, text=True)
-            if proc.returncode == 0 and proc.stdout:
+        logging.info("Attempting to find Agda.css via 'agda --print-agda-data-dir'...")
+        agda_dir_result = run_command(["agda", "--print-agda-data-dir"], capture_output=True, text=True)
+        if agda_dir_result.is_ok:
+            proc = agda_dir_result.unwrap()
+            if proc.stdout:
                 agda_css_path = Path(proc.stdout.strip()) / "html" / "Agda.css"
                 if agda_css_path.exists():
                     agda_css_source = agda_css_path
-        except Exception as e:
-            logging.warning(f"Could not locate Agda.css via agda command: {e}")
+        else:
+            logging.warning(f"Could not locate Agda.css via agda command: {agda_dir_result.unwrap_err().message}")
 
     generate_and_deploy_custom_css(config, agda_css_source)
 
