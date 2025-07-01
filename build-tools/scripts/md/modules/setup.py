@@ -4,7 +4,6 @@ Functional setup module for the documentation pipeline.
 
 Handles directory creation, logging configuration, environment preparation, and cleanup.
 """
-
 from __future__ import annotations
 from pathlib import Path
 import logging
@@ -19,58 +18,7 @@ if str(current_dir) not in sys.path:
 
 from config.build_config import BuildConfig
 from utils.pipeline_types import Result, PipelineError, ErrorType
-
-
-# =============================================================================
-# Pure Directory Operations
-# =============================================================================
-
-def ensure_directory_exists(path: Path) -> Result[Path, PipelineError]:
-    """Pure function: Create directory if it doesn't exist."""
-    try:
-        path.mkdir(parents=True, exist_ok=True)
-        return Result.ok(path)
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.PERMISSION_DENIED,
-            message=f"Failed to create directory: {path}",
-            cause=e
-        ))
-
-
-def clean_directory(path: Path) -> Result[Path, PipelineError]:
-    """Pure function: Remove and recreate directory."""
-    try:
-        if path.exists():
-            shutil.rmtree(path)
-        path.mkdir(parents=True, exist_ok=True)
-        return Result.ok(path)
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.PERMISSION_DENIED,
-            message=f"Failed to clean directory: {path}",
-            cause=e
-        ))
-
-
-def copy_directory_tree(source: Path, target: Path) -> Result[Path, PipelineError]:
-    """Pure function: Copy entire directory tree."""
-    try:
-        if not source.exists():
-            return Result.err(PipelineError(
-                error_type=ErrorType.FILE_NOT_FOUND,
-                message=f"Source directory not found: {source}"
-            ))
-
-        shutil.copytree(source, target, dirs_exist_ok=True)
-        return Result.ok(target)
-
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to copy directory tree: {source} -> {target}",
-            cause=e
-        ))
+from utils.file_ops import ensure_directory_exists, clean_directory, copy_directory_tree
 
 
 # =============================================================================
@@ -80,13 +28,10 @@ def copy_directory_tree(source: Path, target: Path) -> Result[Path, PipelineErro
 def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineError]:
     """
     Functional directory setup: Create all necessary build directories.
-
     Returns list of successfully created directories.
     """
-
     try:
         logging.info("Creating build directories...")
-
         directories_to_create = [
             # Core build directories
             config.build_paths.build_dir,
@@ -94,16 +39,13 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
             config.build_paths.build_md_in_dir,
             config.build_paths.build_md_pp_dir,
             config.build_paths.build_md_aux_dir,
-
             # Snapshot directories
             config.build_paths.agda_snapshot_src_dir,
             config.build_paths.agda_snapshot_lib_exts_dir,
-
             # Pipeline intermediate directories
             config.build_paths.temp_dir,
             config.build_paths.code_blocks_dir,
             config.build_paths.intermediate_md_dir,
-
             # Site directories (will be cleaned and recreated)
             config.build_paths.mkdocs_src_dir,
             config.build_paths.mkdocs_docs_dir,
@@ -111,15 +53,12 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
             config.build_paths.mkdocs_js_dir,
             config.build_paths.mkdocs_includes_dir,
         ]
-
         # Clean directories that should start fresh
         directories_to_clean = [
             config.build_paths.mkdocs_build_dir,
             config.build_paths.mdbook_build_dir,
         ]
-
         created_dirs = []
-
         # Clean directories first
         for dir_path in directories_to_clean:
             result = clean_directory(dir_path)

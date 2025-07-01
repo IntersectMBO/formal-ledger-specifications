@@ -15,9 +15,13 @@ from config.build_config import load_build_config
 from modules.setup import setup_build_environment, cleanup_intermediate_artifacts
 from modules.agda_processing import process_agda_source_files
 from modules.latex_pipeline import latex_pipeline_stage
-from modules.asset_generator import generate_macros_json
 from modules.content_staging import stage_content
-from modules.site_assembly import copy_staged_to_mkdocs, deploy_mkdocs_assets, generate_mkdocs_config
+from modules.site_assembly import (
+    generate_macros_json,
+    copy_staged_to_mkdocs,
+    deploy_mkdocs_assets,
+    generate_mkdocs_config
+)
 
 def main(run_agda_html_flag: bool = False) -> None:
     """High-level pipeline orchestration."""
