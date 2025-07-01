@@ -16,7 +16,7 @@
       system:
       let
         nixpkgs = import sources.nixpkgs { inherit system; };
-        packageSet = import ./default.nix { inherit nixpkgs; };
+        pkgs = import ./default.nix { inherit nixpkgs; };
       in
       {
         packages = packageSet // {
@@ -30,7 +30,27 @@
         };
 
         # Keep hydraJobs for CI
-        hydraJobs = packageSet;
+        hydraJobs = {
+          required = nixpkgs.releaseTools.aggregate {
+            name = "required";
+            meta.description = "All jobs required to pass CI";
+            constituents = with pkgs; [
+              agdaWithPackages
+              fls-shake
+              formal-ledger
+              hs-src
+              mkdocs
+            ];
+          };
+          nonrequired = nixpkgs.releaseTools.aggregate {
+            name = "nonrequired";
+            meta.description = "Nonrequired jobs that should not affect CI status";
+            constituents = with pkgs; [
+              html
+              docs
+            ];
+          };
+        };
       }
     );
 }
