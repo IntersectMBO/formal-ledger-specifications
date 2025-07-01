@@ -58,9 +58,12 @@
       - Properties: Ledger.Conway.Ratify.Properties.md
     - Rewards: Ledger.Conway.Rewards.md
     - Script: Ledger.Conway.Script.md
+    - Script/:
+      - Base: Ledger.Conway.Script.Base.md
+      - Timelock: Ledger.Conway.Script.Timelock.md
     - ScriptValidation: Ledger.Conway.ScriptValidation.md
-    - TokenAlgebra: Ledger.Conway.TokenAlgebra.md
     - TokenAlgebra/:
+      - Base: Ledger.Conway.TokenAlgebra.Base.md
       - Coin: Ledger.Conway.TokenAlgebra.Coin.md
       - ValueSet: Ledger.Conway.TokenAlgebra.ValueSet.md
       - ValueVector: Ledger.Conway.TokenAlgebra.ValueVector.md
@@ -71,6 +74,7 @@
       - Numeric: Ledger.Conway.Types.Numeric.md
       - Numeric/:
         - UnitInterval: Ledger.Conway.Types.Numeric.UnitInterval.md
+        - PositiveNat: Ledger.Conway.Types.Numeric.PositiveNat.md
     - Utxo: Ledger.Conway.Utxo.md
     - Utxo/:
       - Properties: Ledger.Conway.Utxo.Properties.md

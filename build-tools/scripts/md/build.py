@@ -152,6 +152,8 @@ from config.build_config import get_legacy_paths, load_build_config, BuildConfig
 from modules.setup import setup_build_environment, cleanup_intermediate_artifacts
 from modules.agda_processing import process_agda_source_files
 from modules.latex_pipeline import latex_pipeline_stage
+# --- NEW: Import from our new asset generator module ---
+from modules.asset_generator import generate_macros_json, generate_custom_css_from_agda
 
 
 # === CONFIGURATION ===
@@ -429,24 +431,39 @@ def copy_snapshot_file_with_flat_name(
         return None
 
 
-def macros_path(
+def generate_and_save_macros_json(
     macros_json_target_path: Path,
-    generator_script: Path,
     macros_sty_source: Path
 ) -> Path:
-    """Ensures macros.json exists, generating it if necessary."""
+    """
+    Ensures macros.json exists, generating it if necessary by calling the
+    asset generator module.
+    """
     logging.info(f"Checking for {macros_json_target_path.name}...")
-    if generator_script.exists() and macros_sty_source.exists():
-        if not macros_json_target_path.exists() or macros_sty_source.stat().st_mtime > macros_json_target_path.stat().st_mtime:
-            logging.info(f"🏗️  Generating {macros_json_target_path.name} from {macros_sty_source.name}...")
-            run_command(["python", str(generator_script), str(macros_sty_source), str(macros_json_target_path)])
+    if not macros_sty_source.exists():
+        if not macros_json_target_path.exists():
+            logging.error(f"❌ {macros_json_target_path.name} not found and cannot be generated "
+                          f"because source {macros_sty_source.name} is missing. Exiting.")
+            sys.exit(1)
         else:
-            logging.info(f"Using existing and up-to-date {macros_json_target_path.name}.")
-    elif not macros_json_target_path.exists():
-        logging.error(f"❌ {macros_json_target_path.name} not found and cannot be generated. Exiting.")
-        sys.exit(1)
+            logging.warning(f"Using existing {macros_json_target_path.name}, but its source "
+                            f"{macros_sty_source.name} is missing. It may be stale.")
+            return macros_json_target_path
+
+    # Regenerate if target doesn't exist or is older than the source .sty file
+    if not macros_json_target_path.exists() or macros_sty_source.stat().st_mtime > macros_json_target_path.stat().st_mtime:
+        logging.info(f"🏗️  Generating {macros_json_target_path.name} from {macros_sty_source.name}...")
+        try:
+            sty_content = macros_sty_source.read_text(encoding='utf-8')
+            json_content = generate_macros_json(sty_content) # Call the imported function
+            macros_json_target_path.write_text(json_content, encoding='utf-8')
+            logging.info(f"✅ Successfully generated {macros_json_target_path.name}.")
+        except Exception as e:
+            logging.error(f"❌ Failed to generate {macros_json_target_path.name}: {e}", exc_info=True)
+            sys.exit(1)
     else:
-        logging.info(f"Using existing {macros_json_target_path.name} (generator or source .sty not found).")
+        logging.info(f"Using existing and up-to-date {macros_json_target_path.name}.")
+
     return macros_json_target_path
 
 def populate_agda_docs_staging(
@@ -898,71 +915,72 @@ def generate_mdbook_config(
         generate_basic_summary_md(mdbook_summary_build_path, actual_content_files_in_build_src)
 
 
-def generate_custom_css_from_agda(
-        agda_css_path: Path,
-        output_css_path: Path,
-        template_css_path: Optional[Path] = None
+def generate_and_deploy_custom_css(
+    config: BuildConfig,
+    agda_css_source_path: Optional[Path] = None,
 ) -> bool:
     """
-    Generate custom.css with Agda color mappings extracted from Agda.css.
-    If template_css_path is provided, append Agda classes to the template content.
-    Otherwise, create a complete custom.css from scratch.
+    Generates custom.css by combining a template with styles extracted from
+    Agda.css, and deploys it to the site build directories.
+
+    Args:
+        config: The main build configuration object.
+        agda_css_source_path: Path to the source Agda.css. If None, or if the
+                              file doesn't exist, only the template will be used.
+
+    Returns:
+        True if the final custom.css was created, False otherwise.
     """
-    logging.info(f"Generating custom.css from {agda_css_path}...")
+    logging.info("Generating and deploying custom.css...")
 
-    # Check if Agda.css exists
-    if not agda_css_path.exists():
-        logging.warning(f"❌ Agda.css not found at {agda_css_path}")
-        return False
+    agda_css_content = None
+    if agda_css_source_path and agda_css_source_path.exists():
+        logging.info(f"Reading Agda styles from {agda_css_source_path}")
+        agda_css_content = agda_css_source_path.read_text(encoding='utf-8')
+    elif agda_css_source_path:
+        logging.warning(f"Agda.css source was specified but not found at {agda_css_source_path}")
 
-    # Extract color mappings from Agda.css
-    content = agda_css_path.read_text(encoding='utf-8')
-    pattern = r'\.Agda\s+\.(\w+)\s*\{\s*([^}]*)\s*\}'
-    color_mappings = {}
-
-    for match in re.finditer(pattern, content):
-        class_name = match.group(1)
-        properties = match.group(2).strip()
-        properties = re.sub(r'\s+', ' ', properties).strip()
-        color_mappings[class_name] = properties
-
-    if not color_mappings:
-        logging.warning("❌ No Agda color mappings found in Agda.css")
-        return False
-
-    # Start with template content if provided
-    css_parts = []
-    if template_css_path and template_css_path.exists():
-        template_content = template_css_path.read_text(encoding='utf-8')
-        css_parts.append(template_content.rstrip())  # Remove trailing whitespace
-        css_parts.append("")  # Add spacing before Agda classes
-        logging.info(f"Using template from {template_css_path}")
+    template_css_content = None
+    if config.source_paths.custom_css_path.exists():
+        logging.info(f"Using template from {config.source_paths.custom_css_path}")
+        template_css_content = config.source_paths.custom_css_path.read_text(encoding='utf-8')
     else:
-        if template_css_path:
-            logging.warning(f"Template file not found at {template_css_path}, creating from scratch")
-        css_parts.extend([
-            "/* Auto-generated custom.css for Formal Ledger Specifications */",
-            ""
-        ])
+        logging.warning(f"CSS template not found at {config.source_paths.custom_css_path}")
 
-    # Add Agda color mappings section
-    css_parts.extend([
-        "/* Agda classes extracted from Agda.css for color consistency */",
-        "/* Auto-generated section - do not edit manually */",
-        ""
-    ])
+    # Generate the final CSS content using the asset generator
+    final_css_content = generate_custom_css_from_agda(
+        agda_css_content=agda_css_content or "",
+        existing_custom_css=template_css_content
+    )
 
-    # Add Agda color mappings
-    for class_name, properties in sorted(color_mappings.items()):
-        css_parts.append(f"code.Agda{class_name} {{ {properties} }}")
+    # --- Deploy the generated CSS to all target locations ---
+    # We write it to an intermediate file first, then copy it.
+    temp_css_path = config.build_paths.build_md_aux_dir / "custom.css"
+    temp_css_path.parent.mkdir(parents=True, exist_ok=True)
+    temp_css_path.write_text(final_css_content, encoding='utf-8')
+    logging.info(f"Intermediate custom.css created at {temp_css_path}")
 
-    css_parts.append("")  # Final newline
+    # Define target directories
+    target_css_dirs = []
+    if config.site_config.generate_mkdocs:
+        target_css_dirs.append(config.build_paths.mkdocs_css_dir)
+    if config.site_config.generate_mdbook:
+        target_css_dirs.append(config.build_paths.mdbook_css_dir)
 
-    # Write to output
-    output_css_path.parent.mkdir(parents=True, exist_ok=True)
-    output_css_path.write_text("\n".join(css_parts), encoding='utf-8')
+    if not target_css_dirs:
+        logging.warning("No site generators enabled, skipping CSS deployment.")
+        return False
 
-    logging.info(f"✅ Generated custom.css with {len(color_mappings)} Agda classes")
+    # Copy to each target
+    for css_dir in target_css_dirs:
+        try:
+            css_dir.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(temp_css_path, css_dir / "custom.css")
+            logging.info(f"✅ Deployed custom.css to {css_dir}")
+        except Exception as e:
+            logging.error(f"❌ Failed to deploy custom.css to {css_dir}: {e}")
+            return False
+
     return True
 
 
@@ -1002,10 +1020,9 @@ def main(run_agda_html_flag: bool = False) -> None:
     logging.info(f"   Static structures: {list(setup_info.get('structures', {}).keys())}")
     logging.info(f"   Common files copied: {setup_info.get('common_files_copied', 0)}")
 
-    # STAGE 3: Generate macros (legacy bridge)
-    macros_json_path = macros_path(
+    # STAGE 3: Generate macros (using the new integrated function)
+    macros_json_path = generate_and_save_macros_json(
         config.build_paths.macros_json_path,
-        config.source_paths.md_scripts_dir / "generate_macros_json.py",
         config.source_paths.macros_sty_path
     )
 
@@ -1084,38 +1101,11 @@ def main(run_agda_html_flag: bool = False) -> None:
     logging.info("✅ Functional build completed successfully!")
 
 
-def generate_and_deploy_css(
-        run_agda_html_flag: bool,
-        staging_dir: Path,  # e.g., _build/md/md.in/
-        css_dir: Path  # e.g., _build/md/mkdocs/css/ or _build/md/mdbook/src/css/
-) -> None:
-    """Helper function to handle CSS generation."""
-    agda_css_in_staging = staging_dir / "Agda.css"
-    custom_css_temp_output = BUILD_MD_AUX_DIR / "custom_augmented.css"
-
-    if run_agda_html_flag and agda_css_in_staging.exists():
-        css_success = generate_custom_css_from_agda(
-            agda_css_path=agda_css_in_staging,
-            output_css_path=custom_css_temp_output,
-            template_css_path=MD_STATIC_CUSTOM_CSS_PATH
-        )
-    else:
-        if MD_STATIC_CUSTOM_CSS_PATH.exists():
-            shutil.copy2(MD_STATIC_CUSTOM_CSS_PATH, custom_css_temp_output)
-        else:
-            custom_css_temp_output.write_text("/* Minimal CSS */\n", encoding='utf-8')
-
-    # Copy to CSS directory
-    css_dir.mkdir(parents=True, exist_ok=True)
-    final_custom_css = css_dir / "custom.css"
-    if custom_css_temp_output.exists():
-        shutil.copy2(custom_css_temp_output, final_custom_css)
-
 def continue_with_legacy_pipeline(
         config: BuildConfig,  # Immutable configuration object
         macros_json_path: Path,  # Path to macros.json
         all_snapshot_lagda_md_files: List[Path],  # List of all processed .lagda.md files
-        run_agda_html_flag: bool = False  # Flag to run Agda HTML processing (legacy bridge function only, not functional module
+        run_agda_html_flag: bool = False  # Flag to run Agda HTML processing
 ) -> None:
     """
     Bridge function to continue with legacy pipeline parts.
@@ -1123,51 +1113,61 @@ def continue_with_legacy_pipeline(
     """
 
     # Extract paths for legacy compatibility
-    AGDA_SNAPSHOT_SRC_DIR = config.build_paths.agda_snapshot_src_dir
     BUILD_MD_PP_DIR = config.build_paths.build_md_pp_dir
     MKDOCS_DOCS_DIR = config.build_paths.mkdocs_docs_dir
     MKDOCS_CSS_DIR = config.build_paths.mkdocs_css_dir
     MKDOCS_JS_DIR = config.build_paths.mkdocs_js_dir
     MKDOCS_SRC_DIR = config.build_paths.mkdocs_src_dir
     PROJECT_ROOT = config.source_paths.project_root
+    MKDOCS_STATIC_NAV_YML = config.source_paths.mkdocs_nav_yml_path
+    MKDOCS_STATIC_INDEX = config.source_paths.mkdocs_static_docs_dir / "index.md"
 
-    # For now, we can skip the LaTeX processing here since it's handled functionally
-    # Just continue with site generation...
+    # --- Generate and Deploy CSS ---
+    # Determine the source for Agda.css. If --run-agda was used, it's in the
+    # staging directory (_build/md/md.pp/). Otherwise, we need to find it
+    # from the Agda data directory as a fallback.
+    agda_css_source = None
+    if run_agda_html_flag:
+        agda_css_source = BUILD_MD_PP_DIR / "Agda.css"
+        if not agda_css_source.exists():
+             logging.warning(f"--run-agda was true but Agda.css not found in staging dir: {agda_css_source}")
+             agda_css_source = None # Clear it so we can try the fallback
 
-    # Generate CSS and deploy assets
-    generate_and_deploy_css(run_agda_html_flag, BUILD_MD_PP_DIR, MKDOCS_CSS_DIR)
+    if not agda_css_source:
+        # Fallback: try to find Agda.css from `agda --print-agda-data-dir`
+        try:
+            proc = run_command(["agda", "--print-agda-data-dir"], capture_output=True, text=True)
+            if proc.returncode == 0 and proc.stdout:
+                agda_css_path = Path(proc.stdout.strip()) / "html" / "Agda.css"
+                if agda_css_path.exists():
+                    agda_css_source = agda_css_path
+        except Exception as e:
+            logging.warning(f"Could not locate Agda.css via agda command: {e}")
+
+    generate_and_deploy_custom_css(config, agda_css_source)
 
     # Copy to sites
     nav_files_in_docs = copy_staging_to_site_docs(BUILD_MD_PP_DIR, MKDOCS_DOCS_DIR, "MkDocs")
 
-    # Deploy assets
+    # Deploy other static assets
     final_nav_list = deploy_static_mkdocs_assets(
         mkdocs_docs_dir=MKDOCS_DOCS_DIR,
         mkdocs_css_dir=MKDOCS_CSS_DIR,
         mkdocs_js_dir=MKDOCS_JS_DIR,
         run_agda_html_flag=run_agda_html_flag,
         current_nav_files=nav_files_in_docs,
-        custom_css_source=MD_STATIC_CUSTOM_CSS_PATH,
-        custom_js_source=MD_STATIC_CUSTOM_JS_PATH,
+        custom_css_source=config.source_paths.custom_css_path,
+        custom_js_source=config.source_paths.custom_js_path,
         index_md_template_source=MKDOCS_STATIC_INDEX,
         project_root=PROJECT_ROOT
     )
 
-
     deploy_bibliography_assets()
 
-    # Generate configs
-    dynamic_css_list = []
-    if (MKDOCS_CSS_DIR / "Agda.css").exists():
-        dynamic_css_list.append("css/Agda.css")
-    if (MKDOCS_CSS_DIR / "custom.css").exists():
-        dynamic_css_list.append("css/custom.css")
-
-    dynamic_js_list = []
-    if MD_STATIC_CUSTOM_JS_PATH.exists() and (MKDOCS_JS_DIR / MD_STATIC_CUSTOM_JS_PATH.name).exists():
-        dynamic_js_list.append(f"js/{MD_STATIC_CUSTOM_JS_PATH.name}")
-    if MD_STATIC_KATEX_JS_PATH.exists() and (MKDOCS_JS_DIR / MD_STATIC_KATEX_JS_PATH.name).exists():
-        dynamic_js_list.append(f"js/{MD_STATIC_KATEX_JS_PATH.name}")
+    # --- Generate MkDocs Config ---
+    # Use the dynamic files from the config object
+    dynamic_css_list = list(config.site_config.dynamic_css_files)
+    dynamic_js_list = list(config.site_config.dynamic_js_files)
 
     generate_mkdocs_config(
         MKDOCS_SRC_DIR / "mkdocs.yml",
