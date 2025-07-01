@@ -31,25 +31,13 @@
 
         # Keep hydraJobs for CI
         hydraJobs = {
-          required = nixpkgs.releaseTools.aggregate {
-            name = "required";
-            meta.description = "All jobs required to pass CI";
-            constituents = with pkgs; [
-              agdaWithPackages
-              fls-shake
-              formal-ledger
-              hs-src
-              mkdocs
-            ];
-          };
-          nonrequired = nixpkgs.releaseTools.aggregate {
-            name = "nonrequired";
-            meta.description = "Nonrequired jobs that should not affect CI status";
-            constituents = with pkgs; [
-              html
-              docs
-            ];
-          };
+          inherit (pkgs)
+            agdaWithPackages
+            fls-shake
+            formal-ledger
+            hs-src
+            mkdocs
+            ;
         };
       }
     );
