@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-
+# build-tools/scripts/md/modules/setup.py
 """
 Functional setup module for the documentation pipeline.
 

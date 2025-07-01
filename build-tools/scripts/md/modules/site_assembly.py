@@ -1,0 +1,132 @@
+# build-tools/scripts/md/modules/modules/site_assembly.py
+"""
+Handles the final site assembly and configuration generation.
+"""
+import logging
+import shutil
+import json
+from pathlib import Path
+from typing import List, Dict, Any
+
+try:
+    import yaml
+    HAS_YAML = True
+except ImportError:
+    HAS_YAML = False
+
+current_dir = Path(__file__).parent.parent
+if str(current_dir) not in __import__('sys').path:
+    __import__('sys').path.insert(0, str(current_dir))
+
+from config.build_config import BuildConfig
+from modules.asset_generator import generate_custom_css_from_agda
+
+def copy_staged_to_mkdocs(config: BuildConfig) -> List[str]:
+    """Copies contents of the staging directory to the MkDocs docs directory."""
+    staging_dir = config.build_paths.build_md_pp_dir
+    target_dir = config.build_paths.mkdocs_docs_dir
+
+    logging.info(f"\n--- 🏗️  Copying staged content to MkDocs ---")
+    if not staging_dir.exists():
+        logging.warning("Staging directory does not exist. Nothing to copy.")
+        return []
+
+    try:
+        shutil.copytree(staging_dir, target_dir, dirs_exist_ok=True)
+        copied_files = [item.name for item in target_dir.glob("*.md")]
+        logging.info(f"✅ Copied {len(copied_files)} files to {target_dir.name}/")
+        return sorted(copied_files)
+    except Exception as e:
+        logging.error(f"❌ Failed to copy staged directory: {e}", exc_info=True)
+        return []
+
+def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]:
+    """Deploys all static and generated assets to the MkDocs source folder."""
+    logging.info("\n--- 🏗️  Deploying assets for MkDocs site ---")
+
+    # 1. Deploy CSS
+    agda_css_path = config.build_paths.build_md_pp_dir / "Agda.css"
+    if config.run_agda_html and agda_css_path.exists():
+        agda_css_content = agda_css_path.read_text('utf-8')
+        template_css_content = config.source_paths.custom_css_path.read_text('utf-8')
+        final_css = generate_custom_css_from_agda(agda_css_content, template_css_content)
+        (config.build_paths.mkdocs_css_dir / "custom.css").write_text(final_css, 'utf-8')
+        shutil.copy2(agda_css_path, config.build_paths.mkdocs_css_dir)
+        logging.info("✅ Deployed generated custom.css and Agda.css")
+
+    # 2. Deploy JS
+    shutil.copy2(config.source_paths.custom_js_path, config.build_paths.mkdocs_js_dir)
+    shutil.copy2(config.source_paths.katex_js_path, config.build_paths.mkdocs_js_dir)
+    logging.info("✅ Deployed custom JS and KaTeX config")
+
+    # 3. Deploy Bibliography
+    bib_source = config.source_paths.references_bib_path
+    bib_target_dir = config.build_paths.mkdocs_includes_dir
+    if bib_source.exists():
+        bib_target_dir.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(bib_source, bib_target_dir)
+        logging.info(f"✅ Deployed bibliography: {bib_source.name}")
+
+    # 4. Handle index.md
+    home_page = "index.md"
+    if not any(f.lower() == home_page.lower() for f in nav_files):
+        index_template = config.source_paths.mkdocs_static_docs_dir / home_page
+        if index_template.exists():
+            shutil.copy2(index_template, config.build_paths.mkdocs_docs_dir)
+            if home_page not in nav_files:
+                nav_files.append(home_page)
+
+    return sorted(list(set(nav_files)), key=lambda f: (f.lower() != home_page.lower(), f.lower()))
+
+def _build_nav_from_files(files: List[str]) -> List[Dict[str, Any]]:
+    """Helper to build a hierarchical navigation tree."""
+    nav_tree, home_file = {}, "index.md"
+    sorted_files = sorted(list(set(files)), key=lambda f: (f.lower() != home_file.lower(), f.lower()))
+    home_entry = next(({'Home': f} for f in sorted_files if f.lower() == home_file.lower()), None)
+
+    for file in (f for f in sorted_files if f.lower() != home_file.lower()):
+        parts = Path(file).stem.split('.')
+        level = nav_tree
+        for i, part in enumerate(parts):
+            if i == len(parts) - 1:
+                level[part] = file
+            else:
+                if part not in level: level[part] = {}
+                level = level[part]
+
+    def format_nav(tree: Dict) -> List:
+        return sorted([{k: format_nav(v) if isinstance(v, dict) else v} for k, v in tree.items()], key=lambda d: list(d.keys())[0])
+
+    final_nav = format_nav(nav_tree)
+    if home_entry: final_nav.insert(0, home_entry)
+    return final_nav
+
+def generate_mkdocs_config(config: BuildConfig, nav_files: List[str]):
+    """Generates the final mkdocs.yml by merging a template with dynamic data."""
+    logging.info("\n--- 🏗️  Generating mkdocs.yml configuration ---")
+    template_path = config.build_paths.mkdocs_src_dir / "mkdocs.yml"
+
+    cfg = yaml.safe_load(template_path.read_text('utf-8')) if template_path.exists() and HAS_YAML else {}
+    if cfg: logging.info(f"✅ Loaded base configuration from {template_path.name}")
+
+    # Merge CSS/JS lists, preserving template values
+    template_css = cfg.get("extra_css", [])
+    [template_css.append(css) for css in config.site_config.dynamic_css_files if css not in template_css]
+    cfg['extra_css'] = template_css
+
+    template_js = cfg.get("extra_javascript", [])
+    [template_js.append(js) for js in config.site_config.dynamic_js_files if js not in template_js]
+    cfg['extra_javascript'] = template_js
+
+    # Build navigation
+    nav_template_path = config.source_paths.mkdocs_nav_yml_path
+    if nav_template_path.exists() and HAS_YAML:
+        logging.info(f"Loading navigation from template: {nav_template_path.name}")
+        cfg['nav'] = yaml.safe_load(nav_template_path.read_text('utf-8'))
+    else:
+        logging.info("Generating navigation from processed files.")
+        cfg['nav'] = _build_nav_from_files(nav_files)
+
+    with open(template_path, "w", encoding="utf-8") as f:
+        yaml.dump(cfg, f, sort_keys=False, allow_unicode=True) if HAS_YAML else json.dump(cfg, f, indent=2)
+    logging.info(f"✅ Final configuration written to {template_path.name}")

@@ -1,4 +1,4 @@
-# config/build_config.py
+# build-tools/scripts/md/config/build_config.py
 """
 Centralized configuration for the documentation build pipeline.
 
