@@ -48,21 +48,6 @@ import sys
 import io
 import logging # For warnings about unresolved labels
 
-# --- Add slugify function (should be identical to the one in build.py) ---
-import re as re_for_slugify_post # Use an alias for this script's re usage
-
-def slugify_post(text_to_slug): # Renamed to avoid conflict if this script is imported elsewhere
-    """
-    Generates a slug from text, aiming for consistency with Python-Markdown's default.
-    """
-    if not text_to_slug: return "section" # Default slug for empty text
-    text_to_slug = str(text_to_slug)
-    slug = text_to_slug.lower()
-    slug = re_for_slugify_post.sub(r'[^\w\s-]', '', slug) # Keep alphanumeric, whitespace, hyphens
-    slug = re_for_slugify_post.sub(r'[-\s]+', '-', slug)  # Replace whitespace/multiple hyphens with one
-    slug = slug.strip('-') # Remove leading/trailing hyphens
-    return slug if slug else "section" # Ensure non-empty slug
-
 # --- Global variable to store the loaded labels map ---
 LABEL_TARGETS_MAP = {} # Populated from labels_map.json
 

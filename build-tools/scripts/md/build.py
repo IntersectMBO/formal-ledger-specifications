@@ -128,14 +128,13 @@
 # The pipeline gracefully handles failures with detailed error context
 # and supports partial success scenarios where appropriate.
 #
-import os
 import sys
 import subprocess
 import json
 import re
 import shutil
 from pathlib import Path
-from typing import List, Dict, Optional, Any, TypedDict
+from typing import List, Dict, Optional, Any, Tuple
 import logging
 import argparse
 
@@ -149,59 +148,11 @@ except ImportError:
 SCRIPTS_MD_DIR = Path(__file__).parent
 sys.path.insert(0, str(SCRIPTS_MD_DIR))
 
-try:
-    from agda2lagda import convert_agda_to_lagda_md
-except ImportError:
-    print(f"FATAL: Could not import 'convert_agda_to_lagda_md'. Ensure 'agda2lagda.py' is in {SCRIPTS_MD_DIR}.", file=sys.stderr)
-    sys.exit(1)
+from config.build_config import get_legacy_paths, load_build_config, BuildConfig
+from modules.setup import setup_build_environment, cleanup_intermediate_artifacts
+from modules.agda_processing import process_agda_source_files
+from modules.latex_pipeline import latex_pipeline_stage
 
-try:
-    from config.build_config import get_legacy_paths
-except ImportError:
-    print(f"FATAL: Could not import 'get_legacy_paths'. Ensure 'build_config.py' is in {SCRIPTS_MD_DIR}/config/.", file=sys.stderr)
-    sys.exit(1)
-
-try:
-    from modules.bibliography_stage import process_bibliography_stage
-    from modules.setup import setup_build_environment, cleanup_intermediate_artifacts
-    from config.build_config import load_build_config
-    HAS_FUNCTIONAL_MODULES = True
-except ImportError as e:
-    print(f"WARNING: Could not import functional modules: {e}", file=sys.stderr)
-    print("Falling back to legacy functions", file=sys.stderr)
-    HAS_FUNCTIONAL_MODULES = False
-
-# Agda processing integration
-try:
-    from modules.agda_processing import process_agda_source_files, collect_lagda_md_files
-    HAS_AGDA_PROCESSING = True
-except ImportError as e:
-    print(f"WARNING: Could not import Agda processing modules: {e}", file=sys.stderr)
-    HAS_AGDA_PROCESSING = False
-
-# LaTeX processing integration
-try:
-    from modules.latex_pipeline import latex_pipeline_stage
-    HAS_LATEX_PIPELINE = True
-except ImportError as e:
-    print(f"WARNING: Could not import LaTeX pipeline module: {e}", file=sys.stderr)
-    HAS_LATEX_PIPELINE = False
-
-
-# --- Custom Type Definitions ---
-class ProcessedFileInfo(TypedDict):
-    original_path: Path
-    temp_path: Path
-    code_blocks_json_path: Path
-    intermediate_md_path: Path
-    snapshot_target_path: Path
-    final_flat_md_filename: str
-    relative_path_original: Path
-
-class LabelTargetInfo(TypedDict):
-    file: str
-    anchor: str
-    caption_text: str
 
 # === CONFIGURATION ===
 # Get all path constants from centralized configuration
@@ -211,8 +162,6 @@ legacy_paths = get_legacy_paths()
 PROJECT_ROOT = legacy_paths["PROJECT_ROOT"]
 BUILD_MD_AUX_DIR = legacy_paths["BUILD_MD_AUX_DIR"]
 AGDA_SNAPSHOT_SRC_DIR = legacy_paths["AGDA_SNAPSHOT_SRC_DIR"]
-AGDA_SNAPSHOT_LIB_EXTS_DIR = legacy_paths["AGDA_SNAPSHOT_LIB_EXTS_DIR"]
-MKDOCS_SRC_DIR = legacy_paths["MKDOCS_SRC_DIR"]
 MKDOCS_DOCS_DIR = legacy_paths["MKDOCS_DOCS_DIR"]
 MKDOCS_INCLUDES_DIR = legacy_paths["MKDOCS_INCLUDES_DIR"]
 MDBOOK_DOCS_DIR = legacy_paths["MDBOOK_DOCS_DIR"]
@@ -243,7 +192,7 @@ class LagdaProcessingPaths:
     Manage set of file paths for processing a single .lagda file.
     All paths constructed based on `relative_path` from source directory.
     """
-    def __init__(self, relative_path: Path):
+    def __init__(self, relative_path: Path) -> None:
         self.relative = relative_path # e.g., Path("Module/File.lagda")
 
         # intermediate file paths based on global directories
@@ -278,48 +227,6 @@ class LagdaProcessingPaths:
         for parent_dir in parents_to_create:
             parent_dir.mkdir(parents=True, exist_ok=True)
 
-# Logging Setup
-def setup_logging() -> None:
-    """Configures logging to file (DEBUG) and console (INFO) without basicConfig.
-
-    DEPRECATED: Use functional setup.setup_build_environment() instead."""
-    if HAS_FUNCTIONAL_MODULES:
-        logging.warning("setup_logging() is deprecated, use functional setup instead")
-
-    # Original imperative implementation as fallback
-    log_formatter = logging.Formatter('%(asctime)s - %(levelname)-8s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-
-    # get root logger
-    logger = logging.getLogger()
-    #logger.setLevel(logging.DEBUG) # set lowest level for logger itself
-
-    # clear existing handlers (important if this function could be called multiple times)
-    if logger.hasHandlers():
-        logger.handlers.clear()
-
-    # file handler (DEBUG level)
-    try:
-        # ensure directory for LOG_FILE exists just before opening
-        LOG_FILE.parent.mkdir(parents=True, exist_ok=True) # for extra safety
-        file_handler = logging.FileHandler(LOG_FILE, mode='w', encoding='utf-8')
-        file_handler.setFormatter(log_formatter)
-        file_handler.setLevel(logging.INFO)
-        logger.addHandler(file_handler)
-    except Exception as e:
-        # If this fails, we need to know why. Print to stderr.
-        print(f"❌ CRITICAL LOGGING ERROR: Failed to set up file logging to {LOG_FILE}: {e}", file=sys.stderr)
-        # Optionally, re-raise or exit if file logging is critical
-        # For now, let it continue so console logging might still work.
-
-    # Console handler (INFO level)
-    console_handler = logging.StreamHandler(sys.stderr)
-    console_handler.setFormatter(log_formatter)
-    console_handler.setLevel(logging.INFO)  # set this to DEBUG for troubleshooting
-    logger.addHandler(console_handler)
-
-    # This message might not make it to file if file_handler failed,
-    # but will go to console if console_handler working.
-    logging.info("✅ Logging setup complete. Log file: %s", LOG_FILE)
 
 
 # --- Helper to run commands ---
@@ -350,8 +257,6 @@ def run_command(command_args: List[str],
                                  stderr=subprocess.PIPE, # Always capture stderr
                                  text=text, check=False, # Check manually after logging stderr
                                  encoding='utf-8')
-        if stdout_file:
-            stdout_target.close() # Ensure file is written and closed
 
         # Capture outputs if needed
         stdout_content = process.stdout
@@ -378,25 +283,8 @@ def run_command(command_args: List[str],
 
 
 # --- Helper for changing header phrases to link labels (slugs) ---
-def slugify(text_to_slug: Optional[str]) -> str:
-    """
-    Generates a slug from text, similar to Python-Markdown's default.
-    """
-    if not text_to_slug: # handle empty string case
-        return "section" # default slug for empty text
-    text_to_slug = str(text_to_slug) # ensure text is string
-    slug = text_to_slug.lower()
 
-    # Remove unwanted characters
-    slug = re.sub(r'[^\w\s-]', '', slug) # remove anything not a letter, number, underscore, or hyphen
-    slug = re.sub(r'[-\s]+', '-', slug)  # replace whitespace and hyphen sequences with single hyphen
-    slug = slug.strip('-')               # remove leading/trailing hyphens
-    if not slug:         # if all chars stripped
-        return "section" # default slug if original text yields empty slug
-    return slug
-
-
-def build_nav_from_flat_files(flat_file_paths_str_list) -> List[Dict[str, Any]]:
+def build_nav_from_flat_files(flat_file_paths_str_list: List[str]) -> List[Dict[str, Any]]:
     """
     Builds a mkdocs navigation structure from a list of flat file path strings
     (e.g., ["Ledger.Transaction.md", "Ledger.Prelude.md", "index.md"]).
@@ -477,7 +365,7 @@ def build_nav_from_flat_files(flat_file_paths_str_list) -> List[Dict[str, Any]]:
             current_level_dict[page_title_str] = filename_str
 
     # Convert the dictionary tree to mkdocs nav list format (recursive helper)
-    def format_nav_subtree(subtree_dict):
+    def format_nav_subtree(subtree_dict: Dict[str, Any]) -> List[Dict[str, Any]]:
         nav_list_segment = []
         # Sort items by key (title) for consistent navigation order
         for title, content_or_path in sorted(subtree_dict.items(), key=lambda item: item[0]):
@@ -730,7 +618,8 @@ def deploy_static_mkdocs_assets(
         custom_css_source: Path,
         custom_js_source: Path,
         index_md_template_source: Path,
-        project_root: Path) -> List[str]:
+        project_root: Path
+) -> List[str]:
     """Copies static assets like CSS, JS, and index.md template to the docs folder.
     Returns the updated list of nav files (potentially adding index.md).
     """
@@ -822,7 +711,7 @@ def generate_mkdocs_config(
     if mkdocs_yml_target_path.exists() and has_yaml_library:
         try:
             with open(mkdocs_yml_target_path, 'r', encoding='utf-8') as f_yml:
-                mkdocs_config = yaml.safe_load(f_yml) or {}
+                mkdocs_config = yaml.safe_load(f_yml) or {} # type: ignore
             logging.info(f"  ✅ Loaded existing {mkdocs_yml_target_path.name} as base configuration.")
         except Exception as e:
             logging.error(f"  ❌ Error loading existing {mkdocs_yml_target_path.name}: {e}. "
@@ -866,7 +755,7 @@ def generate_mkdocs_config(
         logging.info(f"  Attempting to load navigation structure from {nav_yml_template_file.name}.")
         try:
             with open(nav_yml_template_file, 'r', encoding='utf-8') as f_nav:
-                nav_data = yaml.safe_load(f_nav)
+                nav_data = yaml.safe_load(f_nav) # type: ignore
             if isinstance(nav_data, list): # Basic validation: nav should be a list
                 nav_structure_for_yaml = nav_data
                 logging.info(f"  ✅ Successfully loaded navigation from {nav_yml_template_file.name}.")
@@ -893,7 +782,7 @@ def generate_mkdocs_config(
         mkdocs_yml_target_path.parent.mkdir(parents=True, exist_ok=True) # Ensure target dir exists
         if has_yaml_library:
             with open(mkdocs_yml_target_path, "w", encoding="utf-8") as f_yml:
-                yaml.dump(mkdocs_config, f_yml, sort_keys=False, default_flow_style=False, allow_unicode=True, width=1000)
+                yaml.dump(mkdocs_config, f_yml, sort_keys=False, default_flow_style=False, allow_unicode=True, width=1000) # type: ignore
         else: # Fallback to JSON
             with open(mkdocs_yml_target_path, "w", encoding="utf-8") as f_yml_json:
                 json.dump(mkdocs_config, f_yml_json, indent=2)
@@ -907,13 +796,13 @@ def generate_mkdocs_config(
 def generate_basic_summary_md(
     mdbook_summary_build_path: Path,
     actual_content_files_in_build_src: List[str]
-):
+) -> None:
     """Helper function to generate a basic SUMMARY.md from a flat list of files."""
     summary_content = "# Summary\n\n"
     # Sort files, trying to put "Introduction.md" or "index.md" first.
     # This simple sort helps, but a more sophisticated one would be needed for a better ordering.
 
-    def sort_key(filename):
+    def sort_key(filename: str) -> Tuple[int, str]:
         lower_name = filename.lower()
         if lower_name == "introduction.md" or lower_name == "index.md":
             return (0, filename) # prioritize these...
@@ -945,7 +834,7 @@ def generate_mdbook_config(
     book_toml_template_source: Path,   # Source: build-tools/static/md/mdbook/book.toml
     summary_md_template_source: Path,  # Source: build-tools/static/md/mdbook/src/SUMMARY.md
     actual_content_files_in_build_src: List[str] # Basenames of .md files in _build/md/mdbook/src/
-):
+) -> None:
     """
     Ensures book.toml is in place and generates/copies SUMMARY.md for mdbook.
     """
@@ -1012,7 +901,8 @@ def generate_mdbook_config(
 def generate_custom_css_from_agda(
         agda_css_path: Path,
         output_css_path: Path,
-        template_css_path: Optional[Path] = None) -> bool:
+        template_css_path: Optional[Path] = None
+) -> bool:
     """
     Generate custom.css with Agda color mappings extracted from Agda.css.
     If template_css_path is provided, append Agda classes to the template content.
@@ -1076,7 +966,7 @@ def generate_custom_css_from_agda(
     return True
 
 
-def deploy_bibliography_assets():
+def deploy_bibliography_assets() -> None:
     """Copy bibliography file to mkdocs source directory"""
     # Source: REFS_STATIC_PATH = BUILD_TOOLS / "static" / "latex" / "references.bib"
     # Target: MKDOCS_INCLUDES_DIR = BUILD_MD_DIR / "mkdocs" / "includes"
@@ -1089,7 +979,7 @@ def deploy_bibliography_assets():
         logging.warning(f"❌ Bibliography file not found: {REFS_STATIC_PATH}")
 
 
-def main(run_agda_html_flag=False):
+def main(run_agda_html_flag: bool = False) -> None:
     """Functional pipeline using mathematical composition where possible."""
     logging.info("🔧 Starting functional documentation build pipeline...")
     logging.info(f"Run Agda --html flag: {run_agda_html_flag}")
@@ -1194,7 +1084,11 @@ def main(run_agda_html_flag=False):
     logging.info("✅ Functional build completed successfully!")
 
 
-def generate_and_deploy_css(run_agda_html_flag, staging_dir, css_dir):
+def generate_and_deploy_css(
+        run_agda_html_flag: bool,
+        staging_dir: Path,  # e.g., _build/md/md.in/
+        css_dir: Path  # e.g., _build/md/mkdocs/css/ or _build/md/mdbook/src/css/
+) -> None:
     """Helper function to handle CSS generation."""
     agda_css_in_staging = staging_dir / "Agda.css"
     custom_css_temp_output = BUILD_MD_AUX_DIR / "custom_augmented.css"
@@ -1217,7 +1111,12 @@ def generate_and_deploy_css(run_agda_html_flag, staging_dir, css_dir):
     if custom_css_temp_output.exists():
         shutil.copy2(custom_css_temp_output, final_custom_css)
 
-def continue_with_legacy_pipeline(config, macros_json_path, all_snapshot_lagda_md_files, run_agda_html_flag):
+def continue_with_legacy_pipeline(
+        config: BuildConfig,  # Immutable configuration object
+        macros_json_path: Path,  # Path to macros.json
+        all_snapshot_lagda_md_files: List[Path],  # List of all processed .lagda.md files
+        run_agda_html_flag: bool = False  # Flag to run Agda HTML processing (legacy bridge function only, not functional module
+) -> None:
     """
     Bridge function to continue with legacy pipeline parts.
     This will be gradually replaced by functional modules.
@@ -1243,9 +1142,17 @@ def continue_with_legacy_pipeline(config, macros_json_path, all_snapshot_lagda_m
 
     # Deploy assets
     final_nav_list = deploy_static_mkdocs_assets(
-        MKDOCS_DOCS_DIR, MKDOCS_CSS_DIR, MKDOCS_JS_DIR, run_agda_html_flag,
-        nav_files_in_docs, None, MD_STATIC_CUSTOM_JS_PATH, MKDOCS_STATIC_INDEX, PROJECT_ROOT
+        mkdocs_docs_dir=MKDOCS_DOCS_DIR,
+        mkdocs_css_dir=MKDOCS_CSS_DIR,
+        mkdocs_js_dir=MKDOCS_JS_DIR,
+        run_agda_html_flag=run_agda_html_flag,
+        current_nav_files=nav_files_in_docs,
+        custom_css_source=MD_STATIC_CUSTOM_CSS_PATH,
+        custom_js_source=MD_STATIC_CUSTOM_JS_PATH,
+        index_md_template_source=MKDOCS_STATIC_INDEX,
+        project_root=PROJECT_ROOT
     )
+
 
     deploy_bibliography_assets()
 

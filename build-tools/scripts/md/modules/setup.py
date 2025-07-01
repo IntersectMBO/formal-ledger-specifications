@@ -3,7 +3,7 @@
 """
 Functional setup module for the documentation pipeline.
 
-Handles directory creation, logging configuration, and environment preparation.
+Handles directory creation, logging configuration, environment preparation, and cleanup.
 """
 
 from __future__ import annotations
@@ -126,7 +126,7 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
             result = clean_directory(dir_path)
             if result.is_err:
                 logging.error(f"Failed to clean directory {dir_path}: {result.unwrap_err()}")
-                return result  # Return the error
+                return Result.err(result.unwrap_err())  # Return the error with correct type
             created_dirs.append(result.unwrap())
 
         # Create directories
@@ -134,7 +134,7 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
             result = ensure_directory_exists(dir_path)
             if result.is_err:
                 logging.error(f"Failed to create directory {dir_path}: {result.unwrap_err()}")
-                return result  # Return the error
+                return Result.err(result.unwrap_err())  # Return the error with correct type
             created_dirs.append(result.unwrap())
 
         logging.info(f"Successfully created {len(created_dirs)} directories")

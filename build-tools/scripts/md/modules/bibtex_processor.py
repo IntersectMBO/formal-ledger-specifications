@@ -20,7 +20,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Tuple, Set, Optional, Pattern
 import re
-import json
 import sys
 from functools import reduce
 
@@ -36,8 +35,8 @@ from utils.pipeline_types import (
 
 # Try to import pybtex for robust .bib parsing
 try:
-    from pybtex.database import parse_file, BibliographyData, Entry
-    from pybtex.database.input import bibtex
+    from pybtex.database import parse_file, BibliographyData, Entry # type: ignore[import-error]
+    from pybtex.database.input import bibtex # type: ignore[import-error]
     HAS_PYBTEX = True
 except ImportError:
     HAS_PYBTEX = False
@@ -298,7 +297,7 @@ def _parse_with_pybtex(bib_path: Path) -> Result[Dict[str, BibEntry], PipelineEr
     """Parse using robust pybtex library."""
 
     try:
-        bib_data = parse_file(str(bib_path))
+        bib_data = parse_file(str(bib_path)) # type: ignore[call-arg]
         entries = {}
 
         for key, entry in bib_data.entries.items():
@@ -384,8 +383,8 @@ def find_citations_in_content(content: str) -> List[Tuple[int, int, str, List[st
         for match in pattern.finditer(content):
             start, end = match.span()
             command = match.group(0).split('{')[0].lstrip('\\')  # Extract command name
-            optional_args = match.group(1) if match.lastindex >= 1 else None
-            keys_str = match.group(2) if match.lastindex >= 2 else ""
+            optional_args = match.group(1) if (match.lastindex is not None and match.lastindex >= 1) else None
+            keys_str = match.group(2) if (match.lastindex is not None and match.lastindex >= 2) else ""
 
             # Split comma-separated keys
             keys = [k.strip() for k in keys_str.split(',') if k.strip()]
@@ -458,7 +457,10 @@ def create_markdown_citation(
                 return ", ".join(labels)
             else:
                 # For Markdown multi-cite, the extra info is appended to the last one.
-                base_labels = [f"[{bibliography.get(k).short_label if bibliography.get(k) else k + '?'}]" for k in keys]
+                base_labels = [
+                    f"[{bibliography[k].short_label}]" if k in bibliography and bibliography[k].short_label else f"[{k}?]"
+                    for k in keys
+                ]
                 # This is a simplification; a truly robust multi-citation with optional args
                 # would require a more complex structure. For now, we append to the whole group.
                 multi_label_text = "; ".join(l.strip("[]") for l in base_labels)

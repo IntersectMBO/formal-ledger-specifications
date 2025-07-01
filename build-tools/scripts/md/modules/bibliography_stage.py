@@ -72,7 +72,7 @@ def process_bibliography_stage(
 
     except Exception as e:
         return Result.err(PipelineError(
-            error_type=ErrorType.PROCESSING_ERROR,
+            error_type=ErrorType.BIBTEX_ERROR,
             message=f"Bibliography stage failed: {e}",
             context={"input_file": str(input_md_file), "output_file": str(output_md_file)},
             cause=e

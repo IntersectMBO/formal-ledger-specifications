@@ -36,14 +36,7 @@ from utils.pipeline_types import (
     ProcessedFile, FileMetadata, ProcessingStage,
     PipelineState
 )
-
-# Try to import agda2lagda converter
-try:
-    from agda2lagda import convert_agda_to_lagda_md
-    HAS_AGDA_CONVERTER = True
-except ImportError:
-    HAS_AGDA_CONVERTER = False
-
+from agda2lagda import convert_agda_to_lagda_md
 
 # =============================================================================
 # Pure File Discovery Functions
@@ -184,13 +177,6 @@ def convert_agda_files_in_snapshot(
     Mathematical transformation: .agda → .lagda.md
     Returns list of newly created .lagda.md files.
     """
-    if not HAS_AGDA_CONVERTER:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message="Agda converter not available",
-            context={"converter": "agda2lagda", "available": False}
-        ))
-
     try:
         logging.info(f"Converting .agda files in snapshot: {snapshot_dir}")
 
@@ -263,7 +249,7 @@ def cleanup_converted_agda_files(snapshot_dir: Path) -> Result[int, PipelineErro
 # =============================================================================
 
 def generate_agda_lib_content(
-    dependencies: List[str],
+    dependencies: Tuple[str, ...],
     include_paths: List[Path]
 ) -> str:
     """
@@ -284,7 +270,7 @@ def generate_agda_lib_content(
 
 def create_agda_lib_file(
     target_path: Path,
-    dependencies: List[str],
+    dependencies: Tuple[str, ...],
     snapshot_src_dir: Path,
     snapshot_lib_dir: Path,
     existing_lib_file: Optional[Path] = None

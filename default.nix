@@ -264,7 +264,7 @@ in
             mkdocs-material
             pymdown-extensions
             pyyaml
-            # Add any other Python packages needed for conversion scripts
+            pybtex
           ]))
 
           # mdbook ecosystem
@@ -284,11 +284,14 @@ in
 
           echo "----------------------------------------------------"
           echo "Documentation Publishing Environment"
-          echo "Agda: $(agda --version)"
-          echo "Python: $(python --version)"
+          echo "agda: $(agda --version)"
+          echo "python: $(python --version)"
+          echo "pip: $(pip --version)"
+          echo "pybtex: $(pybtex --version)"
+          echo "mkdocs: $(mkdocs --version)"
           echo "mdbook: $(mdbook --version)"
-          echo "Pandoc: $(pandoc --version)"
-          echo "Chromium: $(chromium --version 2>/dev/null | head -1 || echo 'available')"
+          echo "pandoc: $(pandoc --version)"
+          echo "chromium: $(chromium --version 2>/dev/null | head -1 || echo 'available')"
           echo ""
           echo "Available workflows:"
           echo "  • Agda development: agda, fls-shake"

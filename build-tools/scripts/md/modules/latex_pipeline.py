@@ -39,21 +39,13 @@ current_dir = Path(__file__).parent.parent
 if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
-try:
-    from modules.agda_latex_preprocessor import process_latex_content
-    from config.build_config import BuildConfig
-    from utils.pipeline_types import Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage
-except ImportError as e:
-    print(f"WARNING: Could not import functional modules: {e}", file=sys.stderr)
-    print("Falling back to legacy functions", file=sys.stderr)
+from modules.agda_latex_preprocessor import process_latex_content
+from config.build_config import BuildConfig
+from utils.pipeline_types import Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage
+from utils.text_processing import slugify
 
 # Import bibliography processing directly
-try:
-    from modules.bibtex_processor import BibTeXProcessor
-    HAS_BIBLIOGRAPHY_PROCESSING = True
-except ImportError:
-    HAS_BIBLIOGRAPHY_PROCESSING = False
-    logging.warning("Bibliography processing not available")
+from modules.bibtex_processor import BibTeXProcessor
 
 # =============================================================================
 # Mathematical Types for LaTeX Processing
@@ -275,54 +267,41 @@ def run_postprocess_stage(
 def run_bibliography_stage(
     processing_stage: LaTeXProcessingStage,
     bibliography_path: Path
-) -> Result[None, PipelineError]: # Return type is now None
+) -> Result[None, PipelineError]:
     """
     Mathematical transformation: .lagda.temp → .lagda.temp.withbib
     This version appends a bibliography section to the file itself.
     """
 
-    if not HAS_BIBLIOGRAPHY_PROCESSING:
-        logging.warning(f"Bibliography processing not available, skipping for {processing_stage.relative_path}")
+    # Create BibTeX processor with LaTeX output format
+    from modules.bibtex_processor import BibliographyConfig
+    latex_config = BibliographyConfig.latex_alpha()  # Use LaTeX format
+
+    processor_result = BibTeXProcessor.from_file(bibliography_path, latex_config)
+    if processor_result.is_err:
+        logging.warning(f"Failed to create BibTeX processor: {processor_result.unwrap_err()}")
         return Result.ok(None)
 
-    try:
-        # Create BibTeX processor with LaTeX output format
-        from modules.bibtex_processor import BibliographyConfig
-        latex_config = BibliographyConfig.latex_alpha()  # Use LaTeX format
+    processor = processor_result.unwrap()
 
-        processor_result = BibTeXProcessor.from_file(bibliography_path, latex_config)
-        if processor_result.is_err:
-            logging.warning(f"Failed to create BibTeX processor: {processor_result.unwrap_err()}")
-            return Result.ok(None)
-
-        processor = processor_result.unwrap()
-
-        # Read and process content (rest same as before)
-        if not processing_stage.temp_file.exists():
-            return Result.err(PipelineError(
-                error_type=ErrorType.FILE_NOT_FOUND,
-                message=f"Temp file not found: {processing_stage.temp_file}"
-            ))
-
-        content = processing_stage.temp_file.read_text(encoding='utf-8')
-        logging.debug(f"📚 Processing bibliography for {processing_stage.relative_path}")
-        processed_content, replacements, bibliography = processor.process_content(content)
-
-        final_content = processed_content
-        if bibliography.strip():
-            final_content += f"\n\n{bibliography}"
-
-        processing_stage.temp_file.write_text(final_content, encoding='utf-8')
-        logging.debug(f"✅ Bibliography processing: {len(replacements)} citations processed")
-        return Result.ok(None)
-
-    except Exception as e:
+    # Read and process content (rest same as before)
+    if not processing_stage.temp_file.exists():
         return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Bibliography processing failed: {e}",
-            context={"file": str(processing_stage.temp_file)},
-            cause=e
+            error_type=ErrorType.FILE_NOT_FOUND,
+            message=f"Temp file not found: {processing_stage.temp_file}"
         ))
+
+    content = processing_stage.temp_file.read_text(encoding='utf-8')
+    logging.debug(f"📚 Processing bibliography for {processing_stage.relative_path}")
+    processed_content, replacements, bibliography = processor.process_content(content)
+
+    final_content = processed_content
+    if bibliography.strip():
+        final_content += f"\n\n{bibliography}"
+
+    processing_stage.temp_file.write_text(final_content, encoding='utf-8')
+    logging.debug(f"✅ Bibliography processing: {len(replacements)} citations processed")
+    return Result.ok(None)
 
 
 # =============================================================================
@@ -425,21 +404,6 @@ def calculate_flat_filename(relative_path: Path) -> str:
             flat_name = file_stem
 
     return f"{flat_name}.md"
-
-
-def slugify(text: str) -> str:
-    """Pure function: Convert text to URL-safe slug."""
-    import re
-
-    if not text:
-        return "section"
-
-    slug = text.lower()
-    slug = re.sub(r'[^\w\s-]', '', slug)
-    slug = re.sub(r'[-\s]+', '-', slug)
-    slug = slug.strip('-')
-
-    return slug if slug else "section"
 
 
 # =============================================================================
@@ -650,7 +614,7 @@ def calculate_file_metadata(file_path: Path, stage: ProcessingStage):
         file_size = file_path.stat().st_size if file_path.exists() else 0
 
         return FileMetadata(
-            relative_path=file_path.name,
+            relative_path=Path(file_path.name),
             stage=stage,
             processing_time=0.0,
             file_size=file_size,
