@@ -1,10 +1,9 @@
-# modules/agda_latex_preprocessor.py
+# modules/latex_preprocessor.py
 """
 Functional preprocessor for literate Agda LaTeX files.
 
 This module contains a pure function for transforming LaTeX source content,
 extracting code blocks, and preparing it for the main LaTeX-to-Markdown pipeline.
-It replaces the legacy preprocess.py script.
 """
 from __future__ import annotations
 import re

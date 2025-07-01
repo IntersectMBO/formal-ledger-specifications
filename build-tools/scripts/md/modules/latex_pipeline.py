@@ -39,7 +39,7 @@ current_dir = Path(__file__).parent.parent
 if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
-from modules.agda_latex_preprocessor import process_latex_content
+from modules.latex_preprocessor import process_latex_content
 from config.build_config import BuildConfig
 from utils.pipeline_types import Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage
 from utils.text_processing import slugify
