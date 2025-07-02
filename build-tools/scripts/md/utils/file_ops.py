@@ -63,6 +63,21 @@ def rm_dir(path: Path) -> Result[None, PipelineError]:
     except Exception as e:
         return Result.err(PipelineError(ErrorType.COMMAND_FAILED, f"Failed to remove directory: {path}", cause=e))
 
+def rm_artifact(path: Path) -> Result[Path, PipelineError]:
+    """Removes a file or directory path if it exists."""
+    try:
+        if path.is_dir():
+            shutil.rmtree(path)
+        elif path.is_file():
+            path.unlink()
+        return Result.ok(path)
+    except Exception as e:
+        return Result.err(PipelineError(
+            error_type=ErrorType.COMMAND_FAILED,
+            message=f"Failed to remove artifact: {path}",
+            cause=e
+        ))
+
 def cp_file(source: Path, target: Path) -> Result[Path, PipelineError]:
     """Copies a single file."""
     try:

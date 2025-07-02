@@ -17,7 +17,7 @@ if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
 from config.build_config import BuildConfig
-from utils.pipeline_types import Result, PipelineError, ErrorType
+from utils.pipeline_types import Result, PipelineError, ErrorType, sequence_results
 from utils.file_ops import ensure_dir_exists, clean_dir, cp_dir
 
 
@@ -30,136 +30,80 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
     Functional directory setup: Create all necessary build directories.
     Returns list of successfully created directories.
     """
-    try:
-        logging.info("Creating build directories...")
-        directories_to_create = [
-            # Core build directories
-            config.build_paths.build_dir,
-            config.build_paths.build_md_dir,
-            config.build_paths.build_md_in_dir,
-            config.build_paths.build_md_pp_dir,
-            config.build_paths.build_md_aux_dir,
-            # Snapshot directories
-            config.build_paths.agda_snapshot_src_dir,
-            config.build_paths.agda_snapshot_lib_exts_dir,
-            # Pipeline intermediate directories
-            config.build_paths.temp_dir,
-            config.build_paths.code_blocks_dir,
-            config.build_paths.intermediate_md_dir,
-            # Site directories (will be cleaned and recreated)
-            config.build_paths.mkdocs_src_dir,
-            config.build_paths.mkdocs_docs_dir,
-            config.build_paths.mkdocs_css_dir,
-            config.build_paths.mkdocs_js_dir,
-            config.build_paths.mkdocs_includes_dir,
-        ]
-        # Clean directories that should start fresh
-        directories_to_clean = [
-            config.build_paths.mkdocs_build_dir,
-            config.build_paths.mdbook_build_dir,
-        ]
-        created_dirs = []
-        # Clean directories first
-        for dir_path in directories_to_clean:
-            result = clean_dir(dir_path)
-            if result.is_err:
-                logging.error(f"Failed to clean directory {dir_path}: {result.unwrap_err()}")
-                return Result.err(result.unwrap_err())  # Return the error with correct type
-            created_dirs.append(result.unwrap())
+    logging.info("Creating build directories...")
+    dirs_to_create = [
+        # Core build directories
+        config.build_paths.build_dir,
+        config.build_paths.build_md_dir,
+        config.build_paths.build_md_in_dir,
+        config.build_paths.build_md_pp_dir,
+        config.build_paths.build_md_aux_dir,
+        # Snapshot directories
+        config.build_paths.agda_snapshot_src_dir,
+        config.build_paths.agda_snapshot_lib_exts_dir,
+        # Pipeline intermediate directories
+        config.build_paths.temp_dir,
+        config.build_paths.code_blocks_dir,
+        config.build_paths.intermediate_md_dir,
+        # Site directories (will be cleaned and recreated)
+        config.build_paths.mkdocs_src_dir,
+        config.build_paths.mkdocs_docs_dir,
+        config.build_paths.mkdocs_css_dir,
+        config.build_paths.mkdocs_js_dir,
+        config.build_paths.mkdocs_includes_dir,
+    ]
+    # Clean directories that should start fresh
+    dirs_to_clean = [
+        config.build_paths.mkdocs_build_dir,
+        config.build_paths.mdbook_build_dir,
+    ]
 
-        # Create directories
-        for dir_path in directories_to_create:
-            result = ensure_dir_exists(dir_path)
-            if result.is_err:
-                logging.error(f"Failed to create directory {dir_path}: {result.unwrap_err()}")
-                return Result.err(result.unwrap_err())  # Return the error with correct type
-            created_dirs.append(result.unwrap())
-
-        logging.info(f"Successfully created {len(created_dirs)} directories")
-        return Result.ok(created_dirs)
-
-    except Exception as e:
-        error = PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to setup build directories: {e}",
-            cause=e
+    # This functional chain first cleans a list of directories, and_then creates another list.
+    # If any single operation fails, the entire chain stops and returns the Err.
+    return (
+        sequence_results([clean_dir(p) for p in dirs_to_clean])
+        .and_then(lambda cleaned:
+            sequence_results([ensure_dir_exists(p) for p in dirs_to_create])
+            .map(lambda created: cleaned + created)
         )
-        logging.error(f"Exception in setup_build_directories: {error}")
-        return Result.err(error)
+    )
 
 
 def setup_static_site_structure(config: BuildConfig) -> Result[Dict[str, Path], PipelineError]:
     """
-    Functional static structure setup: Copy static templates to build directories.
-
-    Returns mapping of copied structures.
+    Static structure setup: Copy static site templates to build directories.
     """
-
     copy_operations = [
-        # mkdocs static structure
         (config.source_paths.mkdocs_static_src_dir, config.build_paths.mkdocs_src_dir),
-
-        # mdbook static structure
         (config.source_paths.mdbook_static_dir, config.build_paths.mdbook_build_dir),
     ]
 
-    copied_structures = {}
+    # Create a list of Result objects by applying cp_dir to each operation
+    results = [cp_dir(src, dest) for src, dest in copy_operations if src.exists()]
 
-    for source, target in copy_operations:
-        if source.exists():
-            result = cp_dir(source, target)
-            if result.is_err:
-                return Result.err(result.unwrap_err())
-            copied_structures[source.name] = result.unwrap()
-        else:
-            # Log warning but don't fail (some static structures might not exist)
-            logging.warning(f"Static structure not found: {source}")
+    # Convert the list of Results into a single Result
+    return sequence_results(results).map(lambda paths: {
+        # Create the original dictionary output on success
+        op[0].name: path for op, path in zip(copy_operations, paths)
+    })
 
-    return Result.ok(copied_structures)
-
-
-def copy_common_source_files(config: BuildConfig) -> Result[int, PipelineError]:
-    """
-    Copy shared files from common source directory to both documentation systems.
-
-    Returns count of files copied.
-    """
-
+def copy_common_source_files(config: BuildConfig) -> Result[None, PipelineError]:
+    """Copies shared files from the common source to all target site directories."""
     common_src_dir = config.source_paths.md_static_common_src_dir
-    mkdocs_docs_dir = config.build_paths.mkdocs_docs_dir
-    mdbook_docs_dir = config.build_paths.mdbook_docs_dir
-
     if not common_src_dir.exists():
-        logging.info(f"No common source directory found at {common_src_dir}")
-        return Result.ok(0)
+        logging.info("No common source directory found. Skipping copy.")
+        return Result.ok(None)
 
-    try:
-        file_count = 0
+    target_dirs = [
+        config.build_paths.mkdocs_docs_dir,
+        config.build_paths.mdbook_docs_dir
+    ]
 
-        # Copy to both mkdocs and mdbook
-        for target_dir in [mkdocs_docs_dir, mdbook_docs_dir]:
-            if target_dir.parent.exists():
-                for item in common_src_dir.iterdir():
-                    if item.is_file():
-                        target_file = target_dir / item.name
-                        shutil.copy2(item, target_file)
-                        file_count += 1
-                    elif item.is_dir():
-                        target_subdir = target_dir / item.name
-                        if target_subdir.exists():
-                            shutil.rmtree(target_subdir)
-                        shutil.copytree(item, target_subdir)
-                        # Count files in subdirectory
-                        file_count += len(list(item.rglob('*')))
+    # Create and sequence the results of copying the common directory to each target
+    results = [cp_dir(common_src_dir, target) for target in target_dirs]
 
-        return Result.ok(file_count)
-
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to copy common source files",
-            cause=e
-        ))
+    # Return a single Result. We map to None because the calling function doesn't need the paths.
+    return sequence_results(results).map(lambda _: None)
 
 
 # =============================================================================
@@ -269,57 +213,15 @@ def setup_build_environment(config: BuildConfig) -> Result[Dict[str, Any], Pipel
 
     logging.info("🏗️ Setting up build environment...")
 
-    try:
-        # Chain all setup operations functionally
-        # STAGE 1: Setup directories
-        setup_dirs_result = setup_build_directories(config)
-        if setup_dirs_result.is_err:
-            return setup_dirs_result  # Return the error directly
-
-        directories = setup_dirs_result.unwrap()
-        logging.info(f"✅ Created {len(directories)} directories")
-
-        # STAGE 2: Setup static structures
-        structures_result = setup_static_site_structure(config)
-        if structures_result.is_err:
-            return Result.err(structures_result.unwrap_err())
-
-        structures = structures_result.unwrap()
-        logging.info(f"✅ Setup static structures: {list(structures.keys())}")
-
-        # STAGE 3: Copy common files
-        common_files_result = copy_common_source_files(config)
-        if common_files_result.is_err:
-            return Result.err(common_files_result.unwrap_err())
-
-        common_files_copied = common_files_result.unwrap()
-        logging.info(f"✅ Copied {common_files_copied} common files")
-
-        # STAGE 4: Setup logging (this might be redundant but ensure it's working)
-        logging_result = setup_logging(config)
-        if logging_result.is_err:
-            return Result.err(logging_result.unwrap_err())
-
-        # SUCCESS: Return combined results
-        result = {
-            "directories": directories,
-            "structures": structures,
-            "common_files_copied": common_files_copied,
-            "logging_configured": True
-        }
-
-        logging.info("✅ Build environment setup completed successfully")
-        return Result.ok(result)
-
-    except Exception as e:
-        # Catch any unexpected exceptions and wrap them properly
-        error = PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Unexpected error during build environment setup: {e}",
-            cause=e
-        )
-        logging.error(f"❌ Setup failed with exception: {error}")
-        return Result.err(error)
+    return (
+        # Chain subsequent operations, ignoring the successful result of the previous step
+        setup_build_directories(config)                            # STAGE 1: Setup directories
+        .and_then(lambda _: setup_static_site_structure(config))   # STAGE 2: Setup static structures
+        .and_then(lambda _: copy_common_source_files(config))      # STAGE 3: Copy common files
+        .and_then(lambda _: setup_logging(config))                 # STAGE 4: Setup logging (maybe redundant but ensure it's working)
+        # If all succeed, map the final result to the dictionary for the main build script
+        .map(lambda _: { "setup_complete": True })
+    )
 
 
 # =============================================================================
