@@ -25,7 +25,7 @@ module Ledger.Conway.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Fees txs using (scriptsCost)
 open import Ledger.Conway.Certs govStructure
 

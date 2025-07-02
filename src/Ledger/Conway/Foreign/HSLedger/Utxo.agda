@@ -17,7 +17,7 @@ open import Ledger.Conway.Foreign.HSLedger.Transaction
 open import Foreign.Haskell.Coerce
 
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (TxWitnesses; refScripts)
-open import Ledger.Conway.ScriptValidation DummyTransactionStructure DummyAbstractFunctions
+open import Ledger.Conway.Script.Validation DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxo DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxow DummyTransactionStructure DummyAbstractFunctions
 

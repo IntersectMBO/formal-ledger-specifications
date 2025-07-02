@@ -11,7 +11,7 @@ module Ledger.Conway.Conformance.Utxow
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Certs govStructure
 
 private

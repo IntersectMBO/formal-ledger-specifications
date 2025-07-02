@@ -23,7 +23,7 @@ module Ledger.Conway.Utxow
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Conway.Utxo txs abs
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Certs govStructure
 \end{code}
 

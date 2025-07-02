@@ -6,7 +6,7 @@ module ScriptVerification.Lib (A D : Type)
   where
 
 open import ScriptVerification.LedgerImplementation A D scriptImp
-open import Ledger.Conway.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
