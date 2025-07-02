@@ -255,7 +255,6 @@ def collect_lagda_md_files(snapshot_dir: Path) -> Result[List[ProcessedFile], Pi
 
     return result
 
-
 # =============================================================================
 # High-Level Composition Functions
 # =============================================================================

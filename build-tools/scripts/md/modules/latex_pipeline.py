@@ -45,7 +45,7 @@ from config.build_config import BuildConfig
 from modules.latex_preprocessor import process_latex_content
 from modules.bibtex_processor import BibTeXProcessor
 from utils.command_runner import run_command
-from utils.file_ops import read_text, write_text, load_json
+from utils.file_ops import read_text, write_text, load_json, write_json
 from utils.pipeline_types import (
     Result, PipelineError, ErrorType,
     ProcessedFile, ProcessingStage
@@ -116,42 +116,42 @@ class LaTeXProcessingResult:
 # LaTeX Preprocessing Stage
 # =============================================================================
 
+
+def _write_preprocessed_artifacts(
+    processed_data: Tuple[str, Dict],
+    stage: LaTeXProcessingStage
+) -> Result[None, PipelineError]:
+    """Helper function to write the text and code-block files."""
+    # This named function allows us to use assignment statements.
+    processed_text, code_blocks = processed_data
+    return (
+        write_text(stage.temp_file, processed_text)
+        .and_then(lambda _: write_json(stage.code_blocks_file, code_blocks))
+    )
+
 def run_preprocess_stage(
     processing_stage: LaTeXProcessingStage,
     macros_json_path: Path
 ) -> Result[None, PipelineError]:
     """
-    Mathematical transformation: .lagda → preprocessed (.lagda.temp + .codeblocks.json)
-
-    This now uses the pure functional latex_processor module directly.
+    Transforms a .lagda file into a pre-processed .lagda.temp file
+    and extracts its code blocks to a .codeblocks.json file.
     """
-    try:
-        processing_stage.ensure_directories()
-
-        # 1. Load the macro definitions
-        with open(macros_json_path, 'r', encoding='utf-8') as f:
-            macros = json.load(f)
-
+    # This functional chain reads the two necessary input files,
+    # processes them, and then writes the two output files.
+    return (
+        # 1. Load the macro definitions and the source content
+        load_json(macros_json_path)
+        .and_then(lambda macros:
         # 2. Read the source file content
-        source_content = processing_stage.source_file.read_text(encoding='utf-8')
-
-        # 3. Call the pure processing function
-        processed_text, extracted_code_blocks = process_latex_content(source_content, macros)
-
-        # 4. Write the results to their respective files (side-effect)
-        processing_stage.temp_file.write_text(processed_text, encoding='utf-8')
-        with open(processing_stage.code_blocks_file, 'w', encoding='utf-8') as f:
-            json.dump(extracted_code_blocks, f, indent=2)
-
-        return Result.ok(None)
-
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Preprocessing failed for {processing_stage.source_file.name}",
-            cause=e
-        ))
-
+            read_text(processing_stage.source_file)
+            .map(lambda content: (macros, content))
+        )
+        # 3. If loading succeeds, run the pure processing function
+        .map(lambda data: process_latex_content(data[1], data[0]))
+        # 4. If processing succeeds, use the named helper to write the artifacts
+        .and_then(lambda processed: _write_preprocessed_artifacts(processed, processing_stage))
+    )
 
 # =============================================================================
 # Pandoc + Lua Filter Stage
@@ -163,9 +163,18 @@ def run_pandoc_stage(
     build_dir: Path
 ) -> Result[None, PipelineError]:
     """
-    Mathematical transformation: .lagda.temp → .md.intermediate
-    Applies Pandoc + Lua filter transformation.
+    Applies Pandoc + Lua filter, ensuring the output directory exists first.
     """
+    try:
+        # Ensure the parent directory for the output file exists.
+        processing_stage.intermediate_file.parent.mkdir(parents=True, exist_ok=True)
+    except OSError as e:
+        return Result.err(PipelineError(
+            error_type=ErrorType.PERMISSION_DENIED,
+            message=f"Failed to create Pandoc output directory for {processing_stage.intermediate_file}",
+            cause=e
+        ))
+
     command = [
         "pandoc", str(processing_stage.temp_file),
         "-f", "latex",

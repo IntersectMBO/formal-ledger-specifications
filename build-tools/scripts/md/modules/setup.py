@@ -112,9 +112,9 @@ def copy_common_source_files(config: BuildConfig) -> Result[None, PipelineError]
 
 def setup_logging(config: BuildConfig) -> Result[bool, PipelineError]:
     """
-    Functional logging setup: Configure file and console logging.
-
+    Logging setup: Configure file and console logging.
     Uses configuration to determine log levels and output paths.
+    Do not refactor; leave as is.
     """
 
     try:
@@ -164,12 +164,7 @@ def setup_logging(config: BuildConfig) -> Result[bool, PipelineError]:
 # =============================================================================
 
 def cleanup_intermediate_artifacts(config: BuildConfig) -> Result[List[Path], PipelineError]:
-    """
-    Functional cleanup: Remove intermediate build artifacts.
-
-    Returns list of cleaned directories/files.
-    """
-
+    """Removes intermediate build artifacts using a functional style."""
     if not config.cleanup_intermediates:
         logging.info("Skipping cleanup (cleanup_intermediates=False)")
         return Result.ok([])
@@ -182,22 +177,18 @@ def cleanup_intermediate_artifacts(config: BuildConfig) -> Result[List[Path], Pi
         config.build_paths.macros_json_path,
     ]
 
-    cleaned = []
+    # Apply the rm_artifact function to all paths and collect the results
+    results = [rm_artifact(p) for p in artifacts_to_clean if p.exists()]
 
-    for artifact in artifacts_to_clean:
-        try:
-            if artifact.exists():
-                if artifact.is_dir():
-                    shutil.rmtree(artifact)
-                else:
-                    artifact.unlink()
-                cleaned.append(artifact)
-                logging.debug(f"  Cleaned: {artifact.relative_to(config.source_paths.project_root)}")
-        except Exception as e:
-            logging.warning(f"  Failed to clean {artifact}: {e}")
+    # Separate successful results from errors
+    successes, failures = collect_errors(results)
 
-    logging.info(f"✅ Cleaned {len(cleaned)} intermediate artifacts")
-    return Result.ok(cleaned)
+    # Log any errors as warnings, but don't halt the pipeline
+    for error in failures:
+        logging.warning(f"Failed to clean an artifact: {error.message}")
+
+    logging.info(f"✅ Cleaned {len(successes)} intermediate artifacts.")
+    return Result.ok(successes)
 
 
 # =============================================================================

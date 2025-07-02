@@ -152,3 +152,11 @@ def load_json(path: Path) -> Result[Dict, PipelineError]:
             return Result.err(PipelineError(ErrorType.PARSING_ERROR, f"Failed to parse JSON: {path}", cause=e))
 
     return read_text(path).and_then(parse)
+
+def write_json(path: Path, data: Dict) -> Result[None, PipelineError]:
+    """Serializes a dictionary to a JSON file."""
+    try:
+        content = json.dumps(data, indent=2)
+        return write_text(path, content)
+    except TypeError as e:
+        return Result.err(PipelineError(ErrorType.PARSING_ERROR, f"Failed to serialize JSON for: {path}", cause=e))
