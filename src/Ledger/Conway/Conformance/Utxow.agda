@@ -19,8 +19,6 @@ private
     open import Ledger.Conway.Utxow txs abs public
     open import Ledger.Conway.Utxo txs abs public
 
-open L using (scriptsNeeded; witsVKeyNeeded) public
-
 data
 
   _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
@@ -35,19 +33,20 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
-        witsKeyHashes     = mapˢ hash (dom vkSigs)
-        witsScriptHashes  = mapˢ hash scripts
-        inputHashes       = L.getInputHashes tx utxo
-        refScriptHashes   = mapˢ hash (refScripts tx utxo)
-        neededHashes      = L.scriptsNeeded utxo txb
-        txdatsHashes      = dom txdats
-        allOutHashes      = L.getDataHashes (range txouts)
-        nativeScripts     = mapPartial toP1Script (txscripts tx utxo)
+        witsKeyHashes      = mapˢ hash (dom vkSigs)
+        witsScriptHashes   = mapˢ hash scripts
+        inputHashes        = L.getInputHashes tx utxo
+        refScriptHashes    = mapˢ hash (refScripts tx utxo)
+        neededScriptHashes = mapˢ proj₂ (scriptsNeeded utxo txb)
+        neededVKeyHashes   = mapˢ proj₂ (vKeysNeeded utxo txb)
+        txdatsHashes       = mapˢ hash txdats
+        allOutHashes       = L.getDataHashes (range txouts)
+        nativeScripts      = mapPartial toP1Script (txscripts tx utxo)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
-    ∙  L.witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
+    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txvldt s)
+    ∙  neededVKeyHashes ⊆ witsKeyHashes
+    ∙  neededScriptHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ L.getDataHashes (range (utxo ∣ refInputs))
     ∙  L.languages tx utxo ⊆ L.allowedLanguages tx utxo

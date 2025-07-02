@@ -80,8 +80,6 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
     getLanguage (inj₂ s) = just (language s)
 \end{code}
 \begin{code}
-getVKeys : ℙ Credential → ℙ KeyHash
-getVKeys = mapPartial isKeyHashObj
 
 allowedLanguages : Tx → UTxO → ℙ Language
 allowedLanguages tx utxo =
@@ -96,36 +94,6 @@ allowedLanguages tx utxo =
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
-
-getScripts : ℙ Credential → ℙ ScriptHash
-getScripts = mapPartial isScriptObj
-
-credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
-credsNeeded utxo txb
-  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txins ∪ collateral)) ˢ)
-  ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom ∣ txwdrls ∣)
-  ∪  mapPartial (λ c  → (Cert   c ,_) <$> cwitness c) (fromList txcerts)
-  ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
-  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList (map voter txvote))
-  ∪  mapPartial (λ p  → case  p .policy of
-\end{code}
-\begin{code}[hide]
-    λ where
-\end{code}
-\begin{code}
-                              (just sh)  → just (Propose  p , ScriptObj sh)
-                              nothing    → nothing) (fromList txprop)
-\end{code}
-\begin{code}[hide]
-  where open TxBody txb; open GovVote; open RwdAddr; open GovProposal
-\end{code}
-\begin{code}
-
-witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded = getVKeys ∘ mapˢ proj₂ ∘ credsNeeded
-
-scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded = getScripts ∘ mapˢ proj₂ ∘ credsNeeded
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used for witnessing}
@@ -167,17 +135,18 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
          witsScriptHashes                    = mapˢ hash scripts
          inputHashes                         = getInputHashes tx utxo
          refScriptHashes                     = mapˢ hash (refScripts tx utxo)
-         neededHashes                        = scriptsNeeded utxo txb
-         txdatsHashes                        = dom txdats
+         neededScriptHashes                  = mapˢ proj₂ (scriptsNeeded utxo txb)
+         neededVKeyHashes                    = mapˢ proj₂ (vKeysNeeded utxo txb)
+         txdatsHashes                        = mapˢ hash txdats
          allOutHashes                        = getDataHashes (range txouts)
          nativeScripts                       = mapPartial toP1Script (txscripts tx utxo)
 \end{code}
 \begin{code}
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
-    ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
+    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txvldt s)
+    ∙  neededVKeyHashes ⊆ witsKeyHashes
+    ∙  neededScriptHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo

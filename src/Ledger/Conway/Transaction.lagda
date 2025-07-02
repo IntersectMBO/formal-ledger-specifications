@@ -187,7 +187,7 @@ record TransactionStructure : Type₁ where
     field
       vkSigs   : VKey ⇀ Sig
       scripts  : ℙ Script
-      txdats   : DataHash ⇀ Datum
+      txdats   : ℙ Datum
       txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
 
     scriptsP1 : ℙ P1Script

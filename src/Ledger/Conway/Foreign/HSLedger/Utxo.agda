@@ -17,6 +17,7 @@ open import Ledger.Conway.Foreign.HSLedger.Transaction
 open import Foreign.Haskell.Coerce
 
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes hiding (TxWitnesses; refScripts)
+open import Ledger.Conway.ScriptValidation DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxo DummyTransactionStructure DummyAbstractFunctions
 open import Ledger.Conway.Conformance.Utxow DummyTransactionStructure DummyAbstractFunctions
 
@@ -80,18 +81,19 @@ module _ (ext : ExternalFunctions) where
         open UTxOState (from st)
         open UTxOEnv (from env)
         open TxWitnesses (coerce ⦃ TrustMe ⦄ wits)
-        neededHashes = scriptsNeeded utxo body
+        neededScriptHashes = mapˢ proj₂ (scriptsNeeded utxo body)
+        neededVKeyHashes   = mapˢ proj₂ (vKeysNeeded utxo body)
         refScriptHashes = mapˢ
           hash 
           (refScripts (coerce ⦃ TrustMe ⦄ (from tx)) (coerce ⦃ TrustMe ⦄ utxo))
         witsScriptHashes  = mapˢ hash scripts
      in unlines
-       $ "witsVKeyNeeded utxo txb = "
-       ∷ show (witsVKeyNeeded utxo body)
+       $ "neededVKeyHashes utxo txb = "
+       ∷ show neededVKeyHashes
        ∷ "\nwitsKeyHashes = "
        ∷ show (mapˢ hash (dom vkSigs))
-       ∷ "\nneededHashes = "
-       ∷ show neededHashes
+       ∷ "\nneededScriptHashes = "
+       ∷ show neededScriptHashes
        ∷ "\nrefScriptHashes = "
        ∷ show refScriptHashes
        ∷ "\nwitsScriptHashes = "
