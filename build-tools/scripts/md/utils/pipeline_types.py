@@ -1,4 +1,4 @@
-# utils/pipeline_types.py
+# build-tools/scripts/md/utils/pipeline_types.py
 """
 Types for the documentation build pipeline.
 
@@ -61,6 +61,8 @@ class Result(Generic[T, E]):
 
     @classmethod
     def err(cls, error: E) -> Result[T, E]:
+        if error is None:  # prevent creating error with None value
+            raise ValueError("Cannot create an Err result with a None value. Errors must be non-null.")
         """Construct a failed result."""
         return cls(_is_ok=False, _value=None, _error=error)
 
@@ -86,19 +88,24 @@ class Result(Generic[T, E]):
 
     def unwrap_err(self) -> E:
         """Extract the error value (throws if success)."""
-        if not self._is_ok and self._error is not None:
-            return self._error
-        raise ValueError(f"Called unwrap_err() on success result: {self._value}")
+        if self._is_ok:
+            raise ValueError(f"Called unwrap_err() on a success result: {self._value}")
+        if self._error is None:
+            # This handles the specific invalid state that caused the crash.
+            raise ValueError("Called unwrap_err() on an invalid Err result that contains no error value.")
+        return self._error
 
     # Functor operations
     def map(self, f: Callable[[T], B]) -> Result[B, E]:
         """Apply function to success value, preserve error."""
-        if self._is_ok and self._value is not None:
+        # The only check should be for success, not the contained value.
+        if self._is_ok:
             try:
                 return Result.ok(f(self._value))
             except Exception as e:
-                return Result.err(e)  # type: ignore
-        return Result.err(self._error)  # type: ignore
+                # This correctly catches exceptions inside the mapping function
+                return Result.err(e)
+        return Result.err(self._error)
 
     def map_err(self, f: Callable[[E], B]) -> Result[T, B]:
         """Apply function to error value, preserve success."""
@@ -109,9 +116,10 @@ class Result(Generic[T, E]):
     # Monad operations
     def flat_map(self, f: Callable[[T], Result[B, E]]) -> Result[B, E]:
         """Monadic bind - chain computations that might fail."""
-        if self._is_ok and self._value is not None:
-            return f(self._value)
-        return Result.err(self._error)  # type: ignore
+        # The only check should be for success, not the contained value.
+        if self._is_ok:
+            return f(self._value) # It's valid to pass None to the next function.
+        return Result.err(self._error)
 
     def and_then(self, f: Callable[[T], Result[B, E]]) -> Result[B, E]:
         """Alias for flat_map (more readable)."""

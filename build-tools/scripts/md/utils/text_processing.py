@@ -1,22 +1,76 @@
 # build-tools/scripts/md/utils/text_processing.py
-
+"""
+Pure text processing utilities for the documentation pipeline.
+"""
 import re
-from typing import Optional
-
+from typing import Optional, Dict
 
 def slugify(text_to_slug: Optional[str]) -> str:
-    """
-    Generates a slug from text, similar to Python-Markdown's default.
-    """
-    if not text_to_slug: # handle empty string case
-        return "section" # default slug for empty text
-    text_to_slug = str(text_to_slug) # ensure text is string
-    slug = text_to_slug.lower()
+    """Generates a slug from text, similar to Python-Markdown's default."""
+    if not text_to_slug: return "section"
+    slug = str(text_to_slug).lower()
+    slug = re.sub(r'[^\w\s-]', '', slug).strip()
+    slug = re.sub(r'[-\s]+', '-', slug)
+    return slug or "section"
 
-    # Remove unwanted characters
-    slug = re.sub(r'[^\w\s-]', '', slug) # remove anything not a letter, number, underscore, or hyphen
-    slug = re.sub(r'[-\s]+', '-', slug)  # replace whitespace and hyphen sequences with single hyphen
-    slug = slug.strip('-')               # remove leading/trailing hyphens
-    if not slug:         # if all chars stripped
-        return "section" # default slug if original text yields empty slug
-    return slug
+def replace_code_placeholder(match: re.Match, code_blocks: Dict) -> str:
+    """Replaces a '@@CODEBLOCK_ID_n@@' placeholder with its code content."""
+    placeholder_id = match.group(0)
+    block_data = code_blocks.get(placeholder_id, {})
+    content = block_data.get("content", "").rstrip() + '\n'
+    if block_data.get("hidden", False):
+        return f'\n<div class="agda-hidden-source">\n\n```agda\n{content}```\n\n</div>\n'
+    else:
+        return f"\n```agda\n{content}```\n"
+
+def replace_figure_placeholder(match: re.Match) -> str:
+    """Replaces a figure placeholder with a Markdown H3 heading."""
+    caption_text = match.group(2).replace("@ @", "@@")
+    caption_text_single_line = re.sub(r'\s+', ' ', caption_text).strip()
+    return f"\n### {caption_text_single_line}\n\n"
+
+def replace_cross_ref_placeholder(match: re.Match, label_map: Dict) -> str:
+    """Replaces a '@@CROSS_REF@@...' placeholder with a Markdown link."""
+    command_name = match.group(1)
+    targets_str = match.group(2).replace("@ @", "@@")
+    labels = [t.strip() for t in targets_str.split(',') if t.strip()]
+
+    link_parts = []
+    for i, label_id in enumerate(labels):
+        target_info = label_map.get(label_id)
+        if target_info:
+            caption = target_info.get("caption_text", label_id)
+            target_file = target_info.get("file", "")
+            anchor = target_info.get("anchor", "")
+            prefix = "Figure" if label_id.startswith("fig:") else "Section"
+
+            link_text = f"{prefix} '{caption}'"
+            if target_file and anchor:
+                link_parts.append(f"[{link_text}]({target_file}{anchor})")
+            else:
+                link_parts.append(f"*{link_text} (link generation error)*")
+        else:
+            link_parts.append(f"*'{label_id}' (unresolved reference)*")
+
+    return " and ".join(link_parts)
+
+def process_admonitions(content: str) -> str:
+    """Converts '@@ADMONITION_START/END@@' markers to MkDocs admonition blocks."""
+    output_lines, in_admonition = [], False
+    admonition_start = re.compile(r'^\s*@@ADMONITION_START\|(.*?)\s*@@\s*$')
+    admonition_end = re.compile(r'^\s*@@ADMONITION_END@@\s*$')
+
+    for line in content.splitlines():
+        start_match = admonition_start.match(line)
+        if start_match:
+            title = start_match.group(1).strip() or "Conway specifics"
+            output_lines.append(f'\n??? note "{title}"')
+            in_admonition = True
+        elif admonition_end.match(line):
+            in_admonition = False
+        elif in_admonition:
+            output_lines.append(f"    {line}")
+        else:
+            output_lines.append(line)
+
+    return "\n".join(output_lines) + "\n"

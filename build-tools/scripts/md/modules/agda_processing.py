@@ -1,5 +1,4 @@
-#!/usr/bin/env python3
-
+# build-tools/scripts/md/modules/agda_processing.py
 """
 Agda source processing stage for the documentation pipeline.
 
@@ -22,143 +21,148 @@ if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
 from config.build_config import BuildConfig
+from utils.file_ops import (
+    rm_dir, cp_dir, ls_dir, write_text,
+    cp_file, rm_file, read_text
+)
 from utils.pipeline_types import (
     Result, PipelineError, ErrorType,
     ProcessedFile, FileMetadata, ProcessingStage,
-    PipelineState
+    PipelineState, sequence_results
 )
+
 
 # =============================================================================
 # Helper function (previously in agda2lagda.py)
 # =============================================================================
+
+def _wrap_content_in_agda_fence(content: str) -> str:
+    """A pure helper function to wrap string content in an Agda code fence."""
+    new_content = "```agda\n" + content
+    if content and not content.endswith('\n'):
+        new_content += "\n"
+    new_content += "```\n"
+    return new_content
+
+def _convert_single_agda_file(agda_path: Path) -> Result[Path, PipelineError]:
+    """
+    Converts a single .agda file to .lagda.md using a functional chain.
+    Returns the path of the newly created literate file.
+    """
+    literate_path = agda_path.with_suffix(".lagda.md")
+    return (
+        read_text(agda_path)
+        .map(_wrap_content_in_agda_fence)
+        .and_then(lambda new_content: write_text(literate_path, new_content))
+        .and_then(lambda _: rm_file(agda_path))
+        # On success, return the path of the new file
+        .map(lambda _: literate_path)
+    )
 
 def _convert_agda_to_lagda_md_in_dir(
     root_dir: Path,
     project_root_for_logging: Path
 ) -> Result[List[Path], PipelineError]:
     """
-    Traverse directory, convert .agda to .lagda.md, and remove originals.
+    Traverses a directory, converts all .agda files, and collects the results.
     Returns a list of the paths to the newly created .lagda.md files.
     """
     if not root_dir.is_dir():
         return Result.err(PipelineError(
             error_type=ErrorType.FILE_NOT_FOUND,
-            message=f"Conversion Error: Path '{root_dir.resolve()}' is not a valid directory."
+            message=f"Conversion source directory not found: {root_dir}"
         ))
 
-    logging.info(f"Starting .agda to .lagda.md conversion in directory: {root_dir.resolve()}")
-    newly_created_files = []
+    logging.info(f"Starting .agda to .lagda.md conversion in: {root_dir}")
+    agda_files = list(root_dir.rglob('*.agda'))
+    if not agda_files:
+        logging.info("No .agda files found for conversion.")
+        return Result.ok([])
 
-    try:
-        agda_files = list(root_dir.rglob('*.agda'))
-        if not agda_files:
-            logging.info("No .agda files found for conversion.")
-            return Result.ok([])
+    # Process each file and collect the Result objects
+    conversion_results = [_convert_single_agda_file(p) for p in agda_files]
 
-        for agda_file_path in agda_files:
-            new_file_name = agda_file_path.stem + ".lagda.md"
-            literate_file_path = agda_file_path.with_name(new_file_name)
+    # Use sequence_results to consolidate the list of Results into a single Result
+    final_result = sequence_results(conversion_results)
 
-            with open(agda_file_path, 'r', encoding='utf-8') as f_original:
-                original_content = f_original.read()
+    if final_result.is_ok:
+        logging.info(f"Successfully converted {len(final_result.unwrap())} .agda files.")
 
-            new_content = "```agda\n" + original_content
-            if original_content and not original_content.endswith('\n'):
-                new_content += "\n"
-            new_content += "```\n"
+    return final_result
 
-            literate_file_path.write_text(new_content, encoding='utf-8')
-            newly_created_files.append(literate_file_path)
-            agda_file_path.unlink() # Delete the original .agda file
-
-        logging.info(f"Successfully converted {len(newly_created_files)} .agda files.")
-        return Result.ok(sorted(newly_created_files))
-
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"An unexpected error occurred during .agda conversion: {e}",
-            context={"directory": str(root_dir)},
-            cause=e
-        ))
 
 # =============================================================================
 # Pure File Discovery Functions
 # =============================================================================
 
 def discover_agda_source_files(src_dir: Path) -> Result[Dict[str, List[Path]], PipelineError]:
-    """
-    Pure function: Discover and categorize Agda source files.
-    """
-    try:
-        if not src_dir.exists():
-            return Result.err(PipelineError(
-                error_type=ErrorType.FILE_NOT_FOUND,
-                message=f"Source directory not found: {src_dir}",
-                context={"src_dir": str(src_dir)}
-            ))
-
-        file_categories = {
-            'agda': list(src_dir.rglob('*.agda')),
-            'lagda': list(src_dir.rglob('*.lagda')),
-            'lagda_md': list(src_dir.rglob('*.lagda.md'))
-        }
-        for category in file_categories:
-            file_categories[category].sort()
-        return Result.ok(file_categories)
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to discover Agda files: {e}",
-            context={"src_dir": str(src_dir)},
-            cause=e
-        ))
+    """Discovers and categorizes Agda source files by composing file operations."""
+    return (
+        ls_dir(src_dir, pattern='**/*.agda').and_then(lambda agda:
+            ls_dir(src_dir, pattern='**/*.lagda').and_then(lambda lagda:
+                ls_dir(src_dir, pattern='**/*.lagda.md').map(lambda lagda_md:
+                    {
+                        'agda': agda,
+                        'lagda': lagda,
+                        'lagda_md': lagda_md
+                    }
+                )
+            )
+        )
+    )
 
 def calculate_file_metadata(file_path: Path, stage: ProcessingStage) -> FileMetadata:
-    """Pure function: Calculate metadata for a processed file."""
+    """
+    Calculates metadata for a processed file. This is a special case where a
+    try-except is pragmatic because a failure to get a file's size is not
+    a pipeline-halting error; we can simply default to 0.
+    """
     try:
-        file_size = file_path.stat().st_size if file_path.exists() else 0
-        return FileMetadata(
-            relative_path=Path(file_path.name), stage=stage,
-            processing_time=0.0, file_size=file_size, checksum=""
-        )
-    except Exception:
-        return FileMetadata(
-            relative_path=Path(file_path.name), stage=stage,
-            processing_time=0.0, file_size=0, checksum=""
-        )
+        file_size = file_path.stat().st_size
+    except FileNotFoundError:
+        file_size = 0
+    return FileMetadata(
+        relative_path=Path(file_path.name), stage=stage,
+        processing_time=0.0, file_size=file_size, checksum=""
+    )
+
+def collect_lagda_md_files(snapshot_dir: Path) -> Result[List[ProcessedFile], PipelineError]:
+    """Collects all .lagda.md files from the snapshot by composing helpers."""
+
+    def create_processed_files(paths: List[Path]) -> List[ProcessedFile]:
+        return [
+            ProcessedFile(
+                source_path=p,
+                current_path=p,
+                metadata=calculate_file_metadata(p, ProcessingStage.SNAPSHOT)
+            ) for p in paths
+        ]
+
+    # Call our file op utility and then map the successful result
+    result = ls_dir(snapshot_dir, pattern='**/*.lagda.md').map(create_processed_files)
+
+    if result.is_ok:
+        logging.info(f"Collected {len(result.unwrap())} .lagda.md files from snapshot")
+
+    return result
+
 
 # =============================================================================
 # Snapshot Creation Functions
 # =============================================================================
 
 def create_source_snapshot(
-    source_dir: Path,
-    target_dir: Path
+        source_dir: Path,
+        target_dir: Path
 ) -> Result[List[Path], PipelineError]:
     """
-    Pure function: Create immutable snapshot of source directory.
+    Pure function: Create an immutable snapshot of a source directory using a functional chain.
     """
-    try:
-        if not source_dir.exists():
-            return Result.err(PipelineError(
-                error_type=ErrorType.FILE_NOT_FOUND,
-                message=f"Source directory not found: {source_dir}",
-                context={"source": str(source_dir), "target": str(target_dir)}
-            ))
-        if target_dir.exists():
-            shutil.rmtree(target_dir)
-        shutil.copytree(source_dir, target_dir)
-        snapshot_files = [f for f in list(target_dir.rglob('*')) if f.is_file()]
-        logging.info(f"Created snapshot: {len(snapshot_files)} files copied")
-        return Result.ok(snapshot_files)
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to create source snapshot: {e}",
-            context={"source": str(source_dir), "target": str(target_dir)},
-            cause=e
-        ))
+    return (
+        rm_dir(target_dir)     # The first operation now starts the chain directly.
+        .and_then(lambda _: cp_dir(source_dir, target_dir))
+        .and_then(lambda copied_path: ls_dir(copied_path, pattern='**/*'))
+    )
 
 def create_lib_snapshot(
     lib_dir: Path,
@@ -168,6 +172,7 @@ def create_lib_snapshot(
     Pure function: Create snapshot of library extensions directory.
     """
     return create_source_snapshot(lib_dir, target_dir)
+
 
 # =============================================================================
 # File Format Conversion Functions
@@ -181,6 +186,7 @@ def convert_agda_files_in_snapshot(
     Pure function: Convert .agda files to .lagda.md format within snapshot.
     """
     return _convert_agda_to_lagda_md_in_dir(snapshot_dir, project_root)
+
 
 # =============================================================================
 # Agda Library Configuration
@@ -208,87 +214,77 @@ def create_agda_lib_file(
     snapshot_lib_dir: Path,
     existing_lib_file: Optional[Path] = None
 ) -> Result[Path, PipelineError]:
-    """
-    Pure function: Create or copy .agda-lib file for the snapshot.
-    """
-    try:
-        if existing_lib_file and existing_lib_file.exists():
-            shutil.copy2(existing_lib_file, target_path)
-            logging.info(f"Copied existing .agda-lib file: {existing_lib_file.name}")
-        else:
-            include_paths = [".", snapshot_src_dir.resolve(), snapshot_lib_dir.resolve()]
-            content = generate_agda_lib_content(dependencies, include_paths)
-            target_path.parent.mkdir(parents=True, exist_ok=True)
-            target_path.write_text(content, encoding='utf-8')
-            logging.info(f"Generated new .agda-lib file: {target_path.name}")
-        return Result.ok(target_path)
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to create .agda-lib file: {e}",
-            context={"target": str(target_path)},
-            cause=e
-        ))
+    """Creates or copies the .agda-lib file for the snapshot."""
+
+    if existing_lib_file and existing_lib_file.exists():
+        # Case 1: An existing .agda-lib file is provided and exists. Copy it.
+        logging.info(f"Copying existing .agda-lib file: {existing_lib_file.name}")
+        return cp_file(existing_lib_file, target_path)
+    else:
+        # Case 2: No existing file. Generate a new one.
+        logging.info(f"Generating new .agda-lib file: {target_path.name}")
+        include_paths = [".", snapshot_src_dir.resolve(), snapshot_lib_dir.resolve()]
+        content = generate_agda_lib_content(dependencies, include_paths)
+        # Use our functional writer and map its success value to the target path
+        return write_text(target_path, content).map(lambda _: target_path)
+
 
 # =============================================================================
 # File Collection and Metadata
 # =============================================================================
 
 def collect_lagda_md_files(snapshot_dir: Path) -> Result[List[ProcessedFile], PipelineError]:
-    """
-    Pure function: Collect all .lagda.md files and create metadata.
-    """
-    try:
-        lagda_md_files = sorted(list(snapshot_dir.rglob('*.lagda.md')))
-        processed_files = []
-        for file_path in lagda_md_files:
-            try:
-                metadata = calculate_file_metadata(file_path, ProcessingStage.SNAPSHOT)
-                processed_file = ProcessedFile(
-                    source_path=file_path,
-                    current_path=file_path,
-                    metadata=metadata,
-                    content_hash=""
-                )
-                processed_files.append(processed_file)
-            except Exception as e:
-                logging.warning(f"Could not process metadata for {file_path}: {e}")
-                continue
-        logging.info(f"Collected {len(processed_files)} .lagda.md files from snapshot")
-        return Result.ok(processed_files)
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to collect .lagda.md files: {e}",
-            context={"snapshot_dir": str(snapshot_dir)},
-            cause=e
-        ))
+    """Collects all .lagda.md files from the snapshot using a functional style."""
+
+    def create_processed_files(paths: List[Path]) -> List[ProcessedFile]:
+        """A pure mapping function that converts a list of paths to a list of ProcessedFile objects."""
+        return [
+            ProcessedFile(
+                source_path=p,
+                current_path=p,
+                metadata=calculate_file_metadata(p, ProcessingStage.SNAPSHOT)
+            ) for p in paths
+        ]
+
+    # The entire function is now a single, declarative expression.
+    result = ls_dir(snapshot_dir, pattern='**/*.lagda.md').map(create_processed_files)
+
+    # We can perform side-effects like logging after the pure computation is done.
+    if result.is_ok:
+        logging.info(f"Collected {len(result.unwrap())} processed .lagda.md files")
+
+    return result
+
 
 # =============================================================================
 # High-Level Composition Functions
 # =============================================================================
 
-def create_agda_snapshots(config: BuildConfig) -> Result[Dict[str, List[Path]], PipelineError]:
-    """
-    Mathematical composition: Create both source and library snapshots.
-    """
+def create_agda_snapshots(config: BuildConfig) -> Result[Dict[str, Any], PipelineError]:
+    """Mathematical composition: Create both source and library snapshots."""
     logging.info("🔄 Creating Agda source snapshots...")
+
+    # Create the source snapshot
     source_result = create_source_snapshot(
         config.source_paths.src_dir,
         config.build_paths.agda_snapshot_src_dir
     )
     if source_result.is_err:
-        return Result.err(source_result.unwrap_err())
+        # If it fails, we wrap the error and return immediately
+        return Result.err(source_result.unwrap_err().with_context(snapshot="source"))
 
+    # Create the library snapshot
     lib_result = create_lib_snapshot(
         config.source_paths.lib_exts_dir,
         config.build_paths.agda_snapshot_lib_exts_dir
     )
     if lib_result.is_err:
-        return Result.err(lib_result.unwrap_err())
+        return Result.err(lib_result.unwrap_err().with_context(snapshot="library"))
 
+    # If both succeed, unwrap the values and return the final dictionary
     source_files = source_result.unwrap()
     lib_files = lib_result.unwrap()
+    logging.info(f"✅ Snapshots created: {len(source_files)} source files, {len(lib_files)} library files.")
 
     return Result.ok({
         "source_files": source_files,

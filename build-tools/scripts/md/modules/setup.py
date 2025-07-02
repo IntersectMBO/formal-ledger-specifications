@@ -18,7 +18,7 @@ if str(current_dir) not in sys.path:
 
 from config.build_config import BuildConfig
 from utils.pipeline_types import Result, PipelineError, ErrorType
-from utils.file_ops import ensure_directory_exists, clean_directory, copy_directory_tree
+from utils.file_ops import ensure_dir_exists, clean_dir, cp_dir
 
 
 # =============================================================================
@@ -61,7 +61,7 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
         created_dirs = []
         # Clean directories first
         for dir_path in directories_to_clean:
-            result = clean_directory(dir_path)
+            result = clean_dir(dir_path)
             if result.is_err:
                 logging.error(f"Failed to clean directory {dir_path}: {result.unwrap_err()}")
                 return Result.err(result.unwrap_err())  # Return the error with correct type
@@ -69,7 +69,7 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
 
         # Create directories
         for dir_path in directories_to_create:
-            result = ensure_directory_exists(dir_path)
+            result = ensure_dir_exists(dir_path)
             if result.is_err:
                 logging.error(f"Failed to create directory {dir_path}: {result.unwrap_err()}")
                 return Result.err(result.unwrap_err())  # Return the error with correct type
@@ -107,7 +107,7 @@ def setup_static_site_structure(config: BuildConfig) -> Result[Dict[str, Path], 
 
     for source, target in copy_operations:
         if source.exists():
-            result = copy_directory_tree(source, target)
+            result = cp_dir(source, target)
             if result.is_err:
                 return Result.err(result.unwrap_err())
             copied_structures[source.name] = result.unwrap()

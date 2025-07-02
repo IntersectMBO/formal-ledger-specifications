@@ -1,6 +1,25 @@
 # build.py
 """
 Main build orchestrator for the Formal Ledger Specifications documentation.
+
+This script serves as the entry point for the build pipeline, transforming
+literate Agda source files (.agda, .lagda.md) into a complete MkDocs static site.
+
+The pipeline is composed of several high-level functional stages:
+1.  **Configuration & Setup**: An immutable BuildConfig object is created,
+    and the entire build directory structure is prepared.
+2.  **Asset Generation**: Helper assets like 'macros.json' are created.
+3.  **Agda Processing**: Source files are snapshotted, and non-literate
+    `.agda` files are converted to `.lagda.md` format.
+4.  **LaTeX Processing**: Literate `.lagda` files are processed through a
+    complex sub-pipeline involving LaTeX-to-Markdown conversion,
+    bibliography handling, and cross-reference mapping.
+5.  **Site Assembly**: The processed Markdown files are staged. Static assets
+    (CSS, JS, images) and the final mkdocs.yml configuration are generated
+    and copied into the final site source directory (_build/md/mkdocs).
+
+The orchestration logic is primarily contained in `main()`, which calls
+specialized functions from the `modules/` directory for each major stage.
 """
 import sys
 import logging

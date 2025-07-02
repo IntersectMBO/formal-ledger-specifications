@@ -1,3 +1,4 @@
+# build-tools/scripts/md/modules/latex_pipeline.py
 """
 LaTeX pipeline module for the documentation build system.
 
@@ -31,6 +32,7 @@ from typing import List, Dict, Tuple, Optional
 import subprocess
 import json
 import logging
+import re
 import sys
 import shutil
 
@@ -42,9 +44,19 @@ if str(current_dir) not in sys.path:
 from config.build_config import BuildConfig
 from modules.latex_preprocessor import process_latex_content
 from modules.bibtex_processor import BibTeXProcessor
-from utils.pipeline_types import Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage
-from utils.text_processing import slugify
 from utils.command_runner import run_command
+from utils.file_ops import read_text, write_text, load_json
+from utils.pipeline_types import (
+    Result, PipelineError, ErrorType,
+    ProcessedFile, ProcessingStage
+)
+from utils.text_processing import (
+    process_admonitions,
+    replace_code_placeholder,
+    replace_figure_placeholder,
+    replace_cross_ref_placeholder,
+    slugify
+)
 
 # =============================================================================
 # Mathematical Types for LaTeX Processing
@@ -160,32 +172,6 @@ def run_pandoc_stage(
         "-t", "gfm+attributes",
         "--lua-filter", str(lua_filter_path),
         "-o", str(processing_stage.intermediate_file)
-    ]
-
-    result = run_command(command)
-    return result.map(lambda _: None)
-
-
-# =============================================================================
-# Postprocessing Stage
-# =============================================================================
-
-def run_postprocess_stage(
-    processing_stage: LaTeXProcessingStage,
-    labels_map_path: Path,
-    postprocess_script: Path
-) -> Result[None, PipelineError]:
-    """
-    Mathematical transformation: .md.intermediate → .lagda.md
-    Applies postprocess.py transformation with cross-reference resolution.
-    """
-
-    command = [
-        "python", str(postprocess_script),
-        str(processing_stage.intermediate_file),
-        str(processing_stage.code_blocks_file),
-        str(labels_map_path),
-        str(processing_stage.final_file)  # Output directly to final file
     ]
 
     result = run_command(command)
@@ -385,11 +371,10 @@ def process_latex_files(
             stage,
             config.build_paths.macros_json_path
         )
-        if result.is_err:
-            return Result.err(result.unwrap_err())
+        if result.is_err: return Result.err(result.unwrap_err())
 
     # STAGE 2: Bibliography processing (.lagda.temp with LaTeX citations → .lagda.temp with markdown links + bibliography)
-    # *** CRITICAL: This must happen BEFORE pandoc converts LaTeX to markdown ***
+    # This must happen BEFORE pandoc converts LaTeX to markdown.
     logging.info("🔄 Stage 2: Running bibliography processing (before pandoc)...")
     bibliography_stats = {"files_with_citations": 0, "total_citations": 0}
 
@@ -413,30 +398,15 @@ def process_latex_files(
     logging.info(f"✅ Bibliography stage: processed {bibliography_stats['files_with_citations']} files with citations")
 
     # STAGE 3: Generate label map (from bibliography-processed temp files)
-    # Extract cross-reference labels after bibliography processing adds section headers
+    # Extract cross-reference labels after bibliography processing adds section headers.
     logging.info("🔄 Stage 3: Generating label map...")
     label_map_result = extract_labels_from_temp_files(processing_stages)
-    if label_map_result.is_err:
-        return Result.err(label_map_result.unwrap_err())
-
+    if label_map_result.is_err: return Result.err(label_map_result.unwrap_err())
     label_map = label_map_result.unwrap()
-
-    # Save label map for postprocessing stage
-    labels_map_path = config.build_paths.build_md_aux_dir / "labels_map.json"
-    try:
-        labels_map_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(labels_map_path, 'w', encoding='utf-8') as f:
-            json.dump(label_map, f, indent=2)
-        logging.info(f"✅ Label map saved: {len(label_map)} labels")
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to save label map: {e}",
-            cause=e
-        ))
+    logging.info(f"✅ Label map created with {len(label_map)} labels.")
 
     # STAGE 4: Pandoc processing (.lagda.temp → .md.intermediate)
-    # Now processes temp files that already have markdown citations and bibliography sections
+    # Processes temp files that already have markdown citations and bibliography sections.
     logging.info("🔄 Stage 4: Running Pandoc + Lua filter...")
     for stage in processing_stages:
         result = run_pandoc_stage(
@@ -444,20 +414,40 @@ def process_latex_files(
             config.source_paths.md_scripts_dir / "agda-filter.lua",
             config.build_paths.build_dir
         )
-        if result.is_err:
-            return Result.err(result.unwrap_err())
+        if result.is_err: return Result.err(result.unwrap_err())
 
     # STAGE 5: Postprocessing (.md.intermediate → .lagda.md)
-    # Resolves cross-references and restores code blocks
-    logging.info("🔄 Stage 5: Running postprocessing...")
+    # Resolves cross-references and restores code blocks,
+    # refactored to use a functional monadic chain.
+    logging.info("🔄 Stage 5: Running post-processing...")
     for stage in processing_stages:
-        result = run_postprocess_stage(
-            stage,
-            labels_map_path,
-            config.source_paths.md_scripts_dir / "postprocess.py"
+        # This chain of .and_then calls ensures that if any step fails,
+        # the subsequent steps are skipped and an Err is returned.
+        post_process_result = (
+            load_json(stage.code_blocks_file)
+            .and_then(lambda code_blocks:
+                read_text(stage.intermediate_file)
+                .and_then(lambda content:
+                    # Perform all text replacements
+                    Result.ok(re.sub(r'@@CODEBLOCK_ID_\d+@@', lambda m: replace_code_placeholder(m, code_blocks), content))
+                    .map(lambda c: re.sub(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL))
+                    .map(lambda c: re.sub(r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@", lambda m: f"\n### {m.group(1).replace('@ @', '@@').strip()}\n\n", c, flags=re.DOTALL))
+                    .map(lambda c: re.sub(r"@@CROSS_REF@@command=(.*?)@@targets=(.*?)@@", lambda m: replace_cross_ref_placeholder(m, label_map), c, flags=re.DOTALL))
+                    .map(process_admonitions)
+                )
+                .and_then(lambda final_content: write_text(stage.final_file, final_content))
+            )
         )
-        if result.is_err:
-            return Result.err(result.unwrap_err())
+
+        if post_process_result.is_err:
+            error = post_process_result.unwrap_err()
+            # A missing intermediate file is a recoverable error for the build as a whole.
+            if error.error_type == ErrorType.FILE_NOT_FOUND:
+                logging.warning(f"Skipping post-processing for {stage.relative_path}: {error.message}")
+                continue
+            else:
+                # Any other error (like failing to write the final file) is critical.
+                return Result.err(error)
 
     # STAGE 6: Cleanup (remove original .lagda files to prevent Agda module conflicts)
     logging.info("🔄 Stage 6: Running cleanup...")
