@@ -1,22 +1,15 @@
 {-# OPTIONS --safe #-}
 
-import Data.Maybe as M
-
-open import Tactic.AnyOf
-open import Tactic.Assumption
-
-open import Ledger.Prelude; open Properties
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Abstract
-open import Ledger.Conway.Crypto
 
-module Ledger.Conway.ScriptValidation
+module Ledger.Conway.Script.Validation
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs) (open indexOf indexOfImp)
   where
 
+open import Ledger.Prelude
 open import Ledger.Conway.Certs govStructure
-open import Tactic.Derive.Show
 
 instance
   _ = DecEq-Slot
@@ -31,12 +24,12 @@ data ScriptPurpose : Type where
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
-  (Cert h)     → M.map (Cert    ,_) $ indexOfDCert    h txcerts
-  (Rwrd h)     → M.map (Rewrd   ,_) $ indexOfRwdAddr  h txwdrls
-  (Mint h)     → M.map (Mint    ,_) $ indexOfPolicyId h (policies mint)
-  (Spend h)    → M.map (Spend   ,_) $ indexOfTxIn     h txins
-  (Vote h)     → M.map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txvote)
-  (Propose h)  → M.map (Propose ,_) $ indexOfProposal h txprop
+  (Cert h)     → map (Cert    ,_) $ indexOfDCert    h txcerts
+  (Rwrd h)     → map (Rewrd   ,_) $ indexOfRwdAddr  h txwdrls
+  (Mint h)     → map (Mint    ,_) $ indexOfPolicyId h (policies mint)
+  (Spend h)    → map (Spend   ,_) $ indexOfTxIn     h txins
+  (Vote h)     → map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txvote)
+  (Propose h)  → map (Propose ,_) $ indexOfProposal h txprop
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
@@ -105,10 +98,6 @@ vKeysNeeded = mapPartial (λ (sp , c) → if isKeyHashObj c then (λ {sh} → ju
 
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
-
--- need to get map from language script ↦ cm
--- need to update costmodels to add the language map in order to check
--- (Language ↦ CostModel) ∈ costmdls ↦ (Language ↦ CostModel)
 
 opaque
 
