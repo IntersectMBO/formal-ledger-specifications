@@ -35,7 +35,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Utxow
 import qualified MAlonzo.Code.Ledger.Conway.Crypto
 import qualified MAlonzo.Code.Ledger.Conway.Script.Base
-import qualified MAlonzo.Code.Ledger.Conway.ScriptValidation
+import qualified MAlonzo.Code.Ledger.Conway.Script.Validation
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Utxo
 import qualified MAlonzo.Code.Ledger.Conway.Utxow
@@ -235,7 +235,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                    MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                      (coe v11))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Conway.ScriptValidation.du_scriptsNeeded_2350
+                                                                   MAlonzo.Code.Ledger.Conway.Script.Validation.du_scriptsNeeded_2352
                                                                    v0
                                                                    (MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2238
                                                                       (coe v3))
@@ -295,7 +295,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                        (case coe v10 of
                                           MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v11
                                             -> coe
-                                                 ("\172\nClass.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 s\8321 \8594\n   (z\n    : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n       Class.IsSet.IsSet.\8712\n       .Hashable.hash\n       (.Ledger.Conway.Script.Base.P1ScriptStructure.Hashable-P1Script\n        (.Ledger.Conway.Script.Base.ScriptStructure.p1s\n         (.TransactionStructure.scriptStructure txs)))\n       s\8321)\n      (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n       (\955 r \8594 .proj\8322 r)\n       (Ledger.Conway.ScriptValidation.scriptsNeeded txs abs\n        (.Ledger.Conway.Utxo.UTxOState.utxo s)\n        (.TransactionStructure.Tx.body tx)))) \8594\n   .Ledger.Conway.Script.Base.P1ScriptStructure.validP1Script\n   (.Ledger.Conway.Script.Base.ScriptStructure.p1s\n    (.TransactionStructure.scriptStructure txs))\n   (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.Hashable.hash\n     (.isHashableSet.T-Hashable\n      (.Crypto.khs (.TransactionStructure.crypto txs))))\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.TransactionStructure.TxWitnesses.vkSigs\n      (.TransactionStructure.Tx.wits tx))))\n   (.TransactionStructure.TxBody.txvldt\n    (.TransactionStructure.Tx.body tx))\n   s\8321)\n(Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (Ledger.Conway.Script.Base.ScriptStructure.toP1Script\n  (.TransactionStructure.scriptStructure txs))\n (TransactionStructure.txscripts txs tx\n  (.Ledger.Conway.Utxo.UTxOState.utxo s)))"
+                                                 ("\172\nClass.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 s\8321 \8594\n   (z\n    : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n       Class.IsSet.IsSet.\8712\n       .Hashable.hash\n       (.Ledger.Conway.Script.Base.P1ScriptStructure.Hashable-P1Script\n        (.Ledger.Conway.Script.Base.ScriptStructure.p1s\n         (.TransactionStructure.scriptStructure txs)))\n       s\8321)\n      (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n       (\955 r \8594 .proj\8322 r)\n       (Ledger.Conway.Script.Validation.scriptsNeeded txs abs\n        (.Ledger.Conway.Utxo.UTxOState.utxo s)\n        (.TransactionStructure.Tx.body tx)))) \8594\n   .Ledger.Conway.Script.Base.P1ScriptStructure.validP1Script\n   (.Ledger.Conway.Script.Base.ScriptStructure.p1s\n    (.TransactionStructure.scriptStructure txs))\n   (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.Hashable.hash\n     (.isHashableSet.T-Hashable\n      (.Crypto.khs (.TransactionStructure.crypto txs))))\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.TransactionStructure.TxWitnesses.vkSigs\n      (.TransactionStructure.Tx.wits tx))))\n   (.TransactionStructure.TxBody.txvldt\n    (.TransactionStructure.Tx.body tx))\n   s\8321)\n(Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (Ledger.Conway.Script.Base.ScriptStructure.toP1Script\n  (.TransactionStructure.scriptStructure txs))\n (TransactionStructure.txscripts txs tx\n  (.Ledger.Conway.Utxo.UTxOState.utxo s)))"
                                                   ::
                                                   Data.Text.Text)
                                           MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v11
@@ -355,7 +355,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                   MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                     (coe v12))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.ScriptValidation.du_vKeysNeeded_2360
+                                                                  MAlonzo.Code.Ledger.Conway.Script.Validation.du_vKeysNeeded_2362
                                                                   v0
                                                                   (MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2238
                                                                      (coe v3))
@@ -366,7 +366,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                  (case coe v12 of
                                                     MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v13
                                                       -> coe
-                                                           ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 r \8594 .proj\8322 r)\n (Ledger.Conway.ScriptValidation.vKeysNeeded txs abs\n  (.Ledger.Conway.Utxo.UTxOState.utxo s)\n  (.TransactionStructure.Tx.body tx)))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.Crypto.khs (.TransactionStructure.crypto txs))))\n (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.TransactionStructure.TxWitnesses.vkSigs\n   (.TransactionStructure.Tx.wits tx))))"
+                                                           ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 r \8594 .proj\8322 r)\n (Ledger.Conway.Script.Validation.vKeysNeeded txs abs\n  (.Ledger.Conway.Utxo.UTxOState.utxo s)\n  (.TransactionStructure.Tx.body tx)))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.Crypto.khs (.TransactionStructure.crypto txs))))\n (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.TransactionStructure.TxWitnesses.vkSigs\n   (.TransactionStructure.Tx.wits tx))))"
                                                             ::
                                                             Data.Text.Text)
                                                     MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v13
@@ -431,7 +431,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                   MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                                     (coe v14))
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.ScriptValidation.du_scriptsNeeded_2350
+                                                                                  MAlonzo.Code.Ledger.Conway.Script.Validation.du_scriptsNeeded_2352
                                                                                   v0
                                                                                   (MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2238
                                                                                      (coe v3))
@@ -494,7 +494,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                             (coe
                                                                                                v15))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.ScriptValidation.du_scriptsNeeded_2350
+                                                                                          MAlonzo.Code.Ledger.Conway.Script.Validation.du_scriptsNeeded_2352
                                                                                           v0
                                                                                           (MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2238
                                                                                              (coe
@@ -541,7 +541,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                            (case coe v14 of
                                                               MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v15
                                                                 -> coe
-                                                                     ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8801\7497\n (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.Intersection.\65340\n  .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 r \8594 .proj\8322 r)\n  (Ledger.Conway.ScriptValidation.scriptsNeeded txs abs\n   (.Ledger.Conway.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.Tx.body tx)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.Hashable.hash\n   (Ledger.Conway.Script.Base.ScriptStructure.Hashable-Script\n    (.TransactionStructure.scriptStructure txs)))\n  (TransactionStructure.refScripts txs tx\n   (.Ledger.Conway.Utxo.UTxOState.utxo s))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (Ledger.Conway.Script.Base.ScriptStructure.Hashable-Script\n   (.TransactionStructure.scriptStructure txs)))\n (.TransactionStructure.TxWitnesses.scripts\n  (.TransactionStructure.Tx.wits tx)))"
+                                                                     ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8801\7497\n (.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.Intersection.\65340\n  .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 r \8594 .proj\8322 r)\n  (Ledger.Conway.Script.Validation.scriptsNeeded txs abs\n   (.Ledger.Conway.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.Tx.body tx)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.Hashable.hash\n   (Ledger.Conway.Script.Base.ScriptStructure.Hashable-Script\n    (.TransactionStructure.scriptStructure txs)))\n  (TransactionStructure.refScripts txs tx\n   (.Ledger.Conway.Utxo.UTxOState.utxo s))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (Ledger.Conway.Script.Base.ScriptStructure.Hashable-Script\n   (.TransactionStructure.scriptStructure txs)))\n (.TransactionStructure.TxWitnesses.scripts\n  (.TransactionStructure.Tx.wits tx)))"
                                                                       ::
                                                                       Data.Text.Text)
                                                               MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v15

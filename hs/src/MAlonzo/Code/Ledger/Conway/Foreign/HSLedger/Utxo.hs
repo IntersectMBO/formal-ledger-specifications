@@ -68,7 +68,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.Util
 import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
 import qualified MAlonzo.Code.Ledger.Conway.PParams
-import qualified MAlonzo.Code.Ledger.Conway.ScriptValidation
+import qualified MAlonzo.Code.Ledger.Conway.Script.Validation
 import qualified MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Types.Epoch
@@ -98,7 +98,7 @@ d_collectPhaseTwoScriptInputs_28 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_collectPhaseTwoScriptInputs_28
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_collectPhaseTwoScriptInputs_2452
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectPhaseTwoScriptInputs_2454
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -114,7 +114,7 @@ d_collectPhaseTwoScriptInputs''_30 ::
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_collectPhaseTwoScriptInputs''_30
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_collectPhaseTwoScriptInputs''_2376
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectPhaseTwoScriptInputs''_2378
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -128,7 +128,7 @@ d_credsNeeded_32 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_credsNeeded_32
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.du_credsNeeded_2278
+      MAlonzo.Code.Ledger.Conway.Script.Validation.du_credsNeeded_2280
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -139,7 +139,7 @@ d_evalScripts_34 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Bool
 d_evalScripts_34
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_evalScripts_2470
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_evalScripts_2472
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -150,11 +150,11 @@ d_evalScripts_34
 d_getDatum_36 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_ScriptPurpose_1960 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_ScriptPurpose_1962 ->
   Maybe Integer
 d_getDatum_36
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.du_getDatum_2084
+      MAlonzo.Code.Ledger.Conway.Script.Validation.du_getDatum_2086
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -162,11 +162,11 @@ d_getDatum_36
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.indexedRdmrs
 d_indexedRdmrs_38 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134 ->
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_ScriptPurpose_1960 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_ScriptPurpose_1962 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_indexedRdmrs_38
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_indexedRdmrs_2050
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_indexedRdmrs_2052
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -176,11 +176,11 @@ d_indexedRdmrs_38
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.rdptr
 d_rdptr_40 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TxBody_2942 ->
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_ScriptPurpose_1960 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_ScriptPurpose_1962 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_rdptr_40
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_rdptr_1974
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_rdptr_1976
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -194,7 +194,7 @@ d_scriptsNeeded_42 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_scriptsNeeded_42
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.du_scriptsNeeded_2350
+      MAlonzo.Code.Ledger.Conway.Script.Validation.du_scriptsNeeded_2352
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -205,10 +205,10 @@ d_txInfo_44 ::
   MAlonzo.Code.Ledger.Conway.PParams.T_PParams_296 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134 ->
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114
 d_txInfo_44 v0 v1 v2 v3
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.du_txInfo_2154
+      MAlonzo.Code.Ledger.Conway.Script.Validation.du_txInfo_2156
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -221,19 +221,19 @@ d_vKeysNeeded_46 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_vKeysNeeded_46
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.du_vKeysNeeded_2360
+      MAlonzo.Code.Ledger.Conway.Script.Validation.du_vKeysNeeded_2362
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
             MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.valContext
 d_valContext_48 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_ScriptPurpose_1960 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_ScriptPurpose_1962 ->
   Integer
 d_valContext_48
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.du_valContext_2370
+      MAlonzo.Code.Ledger.Conway.Script.Validation.du_valContext_2372
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -250,75 +250,77 @@ du_'10214'_'10215''44'_'44'_'44'__50
   = coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.fee
 d_fee_68 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   Integer
 d_fee_68 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_fee_2138 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_fee_2140 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.mint
 d_mint_70 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   Integer
 d_mint_70 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_mint_2140 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_mint_2142 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.realizedInputs
 d_realizedInputs_72 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_realizedInputs_72 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_realizedInputs_2134
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_realizedInputs_2136
       (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.txcerts
 d_txcerts_74 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   [MAlonzo.Code.Ledger.Conway.Certs.T_DCert_1022]
 d_txcerts_74 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_txcerts_2142 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_txcerts_2144
+      (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.txdats
 d_txdats_76 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   [Integer]
 d_txdats_76 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_txdats_2150 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_txdats_2152 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.txid
 d_txid_78 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   Integer
 d_txid_78 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_txid_2152 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_txid_2154 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.txouts
 d_txouts_80 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txouts_80 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_txouts_2136 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_txouts_2138 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.txvldt
 d_txvldt_82 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txvldt_82 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_txvldt_2146 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_txvldt_2148 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.txwdrls
 d_txwdrls_84 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_txwdrls_84 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_txwdrls_2144 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_txwdrls_2146
+      (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo.vkKey
 d_vkKey_86 ::
-  MAlonzo.Code.Ledger.Conway.ScriptValidation.T_TxInfo_2112 ->
+  MAlonzo.Code.Ledger.Conway.Script.Validation.T_TxInfo_2114 ->
   [Integer]
 d_vkKey_86 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.ScriptValidation.d_vkKey_2148 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_vkKey_2150 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Utxo._._⊢_⇀⦇_,UTXOS⦈_
 d__'8866'_'8640''10631'_'44'UTXOS'10632'__90 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Foreign.HSLedger.Utxo._._⊢_⇀⦇_,UTXO⦈_
@@ -5368,7 +5370,7 @@ du_utxow'45'debug_2246 v0 v1 v2
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                               (\ v3 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.ScriptValidation.du_vKeysNeeded_2360
+                                 MAlonzo.Code.Ledger.Conway.Script.Validation.du_vKeysNeeded_2362
                                  (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
@@ -5453,7 +5455,7 @@ du_utxow'45'debug_2246 v0 v1 v2
                                           (\ v3 ->
                                              MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.ScriptValidation.du_scriptsNeeded_2350
+                                             MAlonzo.Code.Ledger.Conway.Script.Validation.du_scriptsNeeded_2352
                                              (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
