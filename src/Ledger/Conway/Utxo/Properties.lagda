@@ -54,7 +54,7 @@ instance
       (let H-No  , ⁇ H-No?  = Scripts-No-premises  {Γ} {tx} {utxo}) where
       open Tx tx renaming (body to txb); open TxBody txb
       open UTxOEnv Γ renaming (pparams to pp)
-      sLst = collectP2Scripts pp tx utxo
+      sLst = collectP2ScriptsWithContext pp tx utxo
 
       computeProof =
         case H-Yes? ,′ H-No? of λ where

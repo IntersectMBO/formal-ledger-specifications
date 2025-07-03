@@ -108,10 +108,10 @@ txOutToP2Script utxo tx (a , _) =
      toP2Script s
 
 opaque
-  collectP2Scripts
+  collectP2ScriptsWithContext
     : PParams → Tx → UTxO
     → List (P2Script × List Data × ExUnits × CostModel)
-  collectP2Scripts pp tx utxo
+  collectP2ScriptsWithContext pp tx utxo
     = setToList
     $ mapPartial toScriptInput
     $ scriptsNeeded utxo (tx .Tx.body)

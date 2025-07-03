@@ -482,7 +482,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          open Tx tx renaming (body to txb); open TxBody txb
 \end{code}
 \begin{code}
-         p2Scripts  = collectP2Scripts pp tx utxo
+         p2Scripts  = collectP2ScriptsWithContext pp tx utxo
       in
         ∙ ValidCertDeposits pp deposits txcerts
         ∙ evalP2Scripts p2Scripts ≡ isValid
@@ -496,7 +496,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          open Tx tx renaming (body to txb); open TxBody txb
 \end{code}
 \begin{code}
-         p2Scripts  = collectP2Scripts pp tx utxo
+         p2Scripts  = collectP2ScriptsWithContext pp tx utxo
       in
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false

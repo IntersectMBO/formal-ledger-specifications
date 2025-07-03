@@ -114,19 +114,19 @@ failTx = record { body = record
                 txAD = nothing }
 
 succeedState : List (P2Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-succeedState = (collectP2Scripts (UTxOEnv.pparams initEnv) succeedTx initState)
+succeedState = (collectP2ScriptsWithContext (UTxOEnv.pparams initEnv) succeedTx initState)
 
 evalSucceedScript : Bool
 evalSucceedScript = evalP2Scripts succeedState
 
 failState : List (P2Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-failState = (collectP2Scripts (UTxOEnv.pparams initEnv) failTx initState)
+failState = (collectP2ScriptsWithContext (UTxOEnv.pparams initEnv) failTx initState)
 
 evalFailScript : Bool
 evalFailScript = evalP2Scripts failState
 
 opaque
-  unfolding collectP2Scripts
+  unfolding collectP2ScriptsWithContext
   unfolding setToList
   unfolding outs
 
