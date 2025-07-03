@@ -3,6 +3,7 @@
 Pure text processing utilities for the documentation pipeline.
 """
 import re
+from pathlib import Path
 from typing import Optional, Dict
 
 def slugify(text_to_slug: Optional[str]) -> str:
@@ -74,3 +75,32 @@ def process_admonitions(content: str) -> str:
             output_lines.append(line)
 
     return "\n".join(output_lines) + "\n"
+
+
+def get_flat_filename(relative_path: Path) -> str:
+    """
+    Calculates the flat 'ModuleName.md' filename from a relative path,
+    correctly handling index files and double extensions.
+    """
+    # Use the full name and manually strip known extensions for robustness
+    name = relative_path.name
+    if name.endswith(".lagda.md"):
+        stem = name[:-len(".lagda.md")]
+    elif name.endswith(".lagda"):
+        stem = name[:-len(".lagda")]
+    else:
+        stem = relative_path.stem
+
+    parts = list(relative_path.parent.parts)
+    is_index = stem.lower() == "index"
+
+    if not parts and is_index:
+        flat_name = "index"
+    elif not parts:
+        flat_name = stem
+    else:
+        if not is_index:
+            parts.append(stem)
+        flat_name = ".".join(parts)
+
+    return f"{flat_name}.md"

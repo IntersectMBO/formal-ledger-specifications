@@ -55,7 +55,8 @@ from utils.text_processing import (
     replace_code_placeholder,
     replace_figure_placeholder,
     replace_cross_ref_placeholder,
-    slugify
+    slugify,
+    get_flat_filename
 )
 
 # =============================================================================
@@ -294,7 +295,8 @@ def extract_labels_from_temp_files(
                 caption_text = match.group(2).replace("@ @", "@@")
 
                 # Calculate flat filename for this stage
-                flat_filename = calculate_flat_filename(stage.relative_path)
+                flat_filename = get_flat_filename(stage.relative_path)
+                #               ^^^^^^^^^^^^^^^^^ the single, authoritative function
 
                 label_map[label_id] = {
                     "file": flat_filename,
@@ -310,27 +312,6 @@ def extract_labels_from_temp_files(
             message=f"Failed to extract labels: {e}",
             cause=e
         ))
-
-
-def calculate_flat_filename(relative_path: Path) -> str:
-    """Pure function: Calculate flat filename from relative path."""
-
-    module_parts = list(relative_path.parent.parts)
-    file_stem = relative_path.stem
-
-    # Handle index files
-    if file_stem.lower() == "index":
-        if not module_parts:
-            return "index.md"
-        flat_name = ".".join(module_parts)
-    else:
-        if module_parts:
-            module_parts.append(file_stem)
-            flat_name = ".".join(module_parts)
-        else:
-            flat_name = file_stem
-
-    return f"{flat_name}.md"
 
 
 # =============================================================================

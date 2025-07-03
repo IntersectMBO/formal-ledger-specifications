@@ -42,10 +42,13 @@ from modules.site_assembly import (
     generate_mkdocs_config
 )
 
-def main(run_agda_html_flag: bool = False) -> None:
+def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None:
     """High-level pipeline orchestration."""
     # 1. Load config and setup environment
-    config = load_build_config(run_agda_html=run_agda_html_flag)
+    config = load_build_config(
+        run_agda_html=run_agda_html_flag,
+        test_mode=test_mode_flag
+    )
     setup_result = setup_build_environment(config)
     if setup_result.is_err:
         logging.error(f"❌ Setup failed: {setup_result.unwrap_err()}")
@@ -87,11 +90,20 @@ def main(run_agda_html_flag: bool = False) -> None:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build documentation from literate Agda files.")
-    parser.add_argument('--run-agda', action='store_true', help="Run 'agda --html' for syntax highlighting.")
+    parser.add_argument(
+        '--run-agda',
+        action='store_true',
+        help="Run 'agda --html' for syntax highlighting."
+    )
+    parser.add_argument(
+        '--test',
+        action='store_true',
+        help="Run in test mode using a smaller Agda file for HTML generation."
+    )
     args = parser.parse_args()
 
     try:
-        main(run_agda_html_flag=args.run_agda)
+        main(run_agda_html_flag=args.run_agda, test_mode_flag=args.test)
     except Exception as e:
         logging.exception("❌ CRITICAL ERROR: Build failed.")
         sys.exit(1)

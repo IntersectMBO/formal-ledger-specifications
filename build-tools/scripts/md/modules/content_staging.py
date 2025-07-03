@@ -16,6 +16,7 @@ if str(current_dir) not in __import__('sys').path:
 
 from config.build_config import BuildConfig
 from utils.command_runner import run_command
+from utils.text_processing import get_flat_filename
 
 def _copy_to_staging_with_flat_name(
     source_file: Path,
@@ -25,13 +26,8 @@ def _copy_to_staging_with_flat_name(
     """Helper to calculate a flat filename and copy a file to staging."""
     try:
         relative_path = source_file.relative_to(snapshot_root)
-        parts = list(relative_path.parent.parts)
-        # Remove the .lagda suffix before getting the stem
-        stem = source_file.name.replace(".lagda.md", "").replace(".md", "")
+        final_flat_filename = get_flat_filename(relative_path)
 
-        module_name_flat = ".".join(parts + [stem]) if parts and stem.lower() != "index" else ".".join(parts) or stem
-
-        final_flat_filename = f"{module_name_flat}.md"
         target_path = staging_dir / final_flat_filename
         target_path.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source_file, target_path)
@@ -54,11 +50,17 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
     staging_dir.mkdir(parents=True, exist_ok=True)
 
     if run_agda:
-        logging.info(f"Running Agda --html, outputting to {staging_dir}...")
+        if config.test_mode:
+            main_agda_file = config.agda_config.html_test_file
+            logging.info(f"⚡ Running in TEST mode. Using Agda test file: {main_agda_file}")
+        else:
+            main_agda_file = config.agda_config.html_main_file
+
+        logging.info(f"Running Agda --html on '{main_agda_file}', outputting to {staging_dir}...")
         agda_command = [
             "agda", "--fls",
             f"--fls-html-dir={staging_dir.resolve()}",
-            config.agda_config.main_file
+            main_agda_file
         ]
         result = run_command(agda_command, cwd=snapshot_dir.resolve(), stream_output=True)
         if result.is_err:

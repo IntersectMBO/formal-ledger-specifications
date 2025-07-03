@@ -228,8 +228,15 @@ def generate_mkdocs_config(config: BuildConfig, nav_files: List[str]):
     logging.info("\n--- 🏗️  Generating mkdocs.yml configuration ---")
     template_path = config.build_paths.mkdocs_src_dir / "mkdocs.yml"
 
-    cfg = yaml.safe_load(template_path.read_text('utf-8')) if template_path.exists() and HAS_YAML else {}
-    if cfg: logging.info(f"✅ Loaded base configuration from {template_path.name}")
+    cfg = {}
+    if template_path.exists() and HAS_YAML:
+        cfg = yaml.safe_load(template_path.read_text('utf-8')) or {}
+        logging.info(f"✅ Loaded base configuration from {template_path.name}")
+
+    # --- Explicitly set use_directory_urls to False ---
+    # This ensures that MkDocs generates URLs like `page.html` instead of `page/`,
+    # which is required for the Agda-generated links to work correctly.
+    cfg['use_directory_urls'] = False
 
     # Merge CSS/JS lists, preserving template values
     template_css = cfg.get("extra_css", [])

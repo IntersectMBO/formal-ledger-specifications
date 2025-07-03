@@ -262,15 +262,14 @@ class BuildPaths:
 @dataclass(frozen=True)
 class AgdaConfig:
     """Configuration for Agda processing."""
-
     # Library dependencies
     dependencies: Tuple[str, ...]
-
     # Processing options
-    main_file: str  # e.g., "Ledger.lagda.md"
+    html_main_file: str  # e.g., "Ledger.lagda.md"
     generate_html: bool
+    # File for testing (on just a small subset of the code base)
+    html_test_file: str
     html_backend_flags: Tuple[str, ...]
-
     # Library file configuration
     lib_file_name: str
 
@@ -285,12 +284,11 @@ class AgdaConfig:
                 "abstract-set-theory",
                 "iog-prelude"
             ),
-            main_file="Ledger.lagda.md",
+            html_main_file="Ledger.lagda.md",
+            # Using EssentialAgda for now
+            html_test_file="EssentialAgda.lagda.md",
             generate_html=True,
-            html_backend_flags=(
-                "--fls",
-                "--fls-main-only"
-            ),
+            html_backend_flags=("--fls","--fls-main-only"),
             lib_file_name="formal-ledger.agda-lib"
         )
 
@@ -368,6 +366,7 @@ class BuildConfig:
 
     # Build options
     mode: BuildMode
+    test_mode: bool
     run_agda_html: bool
     cleanup_intermediates: bool
     verbose_logging: bool
@@ -378,6 +377,7 @@ class BuildConfig:
         project_root: Optional[Path] = None,
         mode: BuildMode = "development",
         run_agda_html: bool = False,
+        test_mode: bool = False,
         **overrides
     ) -> BuildConfig:
         """Create a complete build configuration.
@@ -425,6 +425,7 @@ class BuildConfig:
             bibtex_config=bibtex_config,
             site_config=site_config,
             mode=mode,
+            test_mode=test_mode,
             run_agda_html=run_agda_html,
             cleanup_intermediates=cleanup_intermediates,
             verbose_logging=verbose_logging
@@ -442,21 +443,18 @@ class BuildConfig:
 # Convenience function for easy config creation
 def load_build_config(
     run_agda_html: bool = False,
+    test_mode: bool = False,
     mode: BuildMode = "development",
     project_root: Optional[Path] = None
 ) -> BuildConfig:
     """Load build configuration with common defaults.
-
     This is the main entry point for getting a build configuration.
-
     Args:
         run_agda_html: Whether to run Agda HTML generation
         mode: Build mode (development, ci, docs)
         project_root: Project root (auto-detected if None)
-
     Returns:
         Complete BuildConfig ready for use
-
     Example:
         config = load_build_config(run_agda_html=True, mode="docs")
         print(f"Building in {config.build_paths.build_dir}")
@@ -464,7 +462,8 @@ def load_build_config(
     return BuildConfig.create(
         project_root=project_root,
         mode=mode,
-        run_agda_html=run_agda_html
+        run_agda_html=run_agda_html,
+        test_mode=test_mode
     )
 
 
