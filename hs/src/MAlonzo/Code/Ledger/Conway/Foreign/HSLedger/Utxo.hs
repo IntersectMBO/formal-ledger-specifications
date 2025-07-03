@@ -89,15 +89,15 @@ type Redeemer = Integer
 d_ScriptPurpose_20 = ()
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.TxInfo
 d_TxInfo_24 = ()
--- Ledger.Conway.Foreign.HSLedger.Utxo._.collectP2Scripts
-d_collectP2Scripts_28 ::
+-- Ledger.Conway.Foreign.HSLedger.Utxo._.collectP2ScriptsWithContext
+d_collectP2ScriptsWithContext_28 ::
   MAlonzo.Code.Ledger.Conway.PParams.T_PParams_296 ->
   MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_collectP2Scripts_28
+d_collectP2ScriptsWithContext_28
   = coe
-      MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2Scripts_2392
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2ScriptsWithContext_2392
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe

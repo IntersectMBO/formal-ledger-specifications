@@ -720,17 +720,17 @@ d_txwdrls_1570 ::
 d_txwdrls_1570 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Transaction.d_txwdrls_2998 (coe v0)
--- Ledger.Conway.Utxo._.collectP2Scripts
-d_collectP2Scripts_1634 ::
+-- Ledger.Conway.Utxo._.collectP2ScriptsWithContext
+d_collectP2ScriptsWithContext_1634 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
   MAlonzo.Code.Ledger.Conway.PParams.T_PParams_296 ->
   MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_collectP2Scripts_1634 v0 v1
+d_collectP2ScriptsWithContext_1634 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2Scripts_2392
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2ScriptsWithContext_2392
       (coe v0) (coe v1)
 -- Ledger.Conway.Utxo._.evalP2Scripts
 d_evalP2Scripts_1638 ::
@@ -3033,7 +3033,7 @@ d_Scripts'45'Yes'45'premises_3108 v0 v1 v2 v3 v4 v5
                (coe
                   MAlonzo.Code.Ledger.Conway.Script.Validation.du_evalP2Scripts_2424
                   v1
-                  (MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2Scripts_2392
+                  (MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2ScriptsWithContext_2392
                      (coe v0) (coe v1) (coe d_pparams_2056 (coe v2)) (coe v3) (coe v4)))
                (coe
                   MAlonzo.Code.Ledger.Conway.Transaction.d_isValid_3148 (coe v3)))
@@ -3062,7 +3062,7 @@ d_Scripts'45'No'45'premises_3110 v0 v1 v2 v3 v4
             (coe
                MAlonzo.Code.Ledger.Conway.Script.Validation.du_evalP2Scripts_2424
                v1
-               (MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2Scripts_2392
+               (MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2ScriptsWithContext_2392
                   (coe v0) (coe v1) (coe d_pparams_2056 (coe v2)) (coe v3) (coe v4)))
             (coe
                MAlonzo.Code.Ledger.Conway.Transaction.d_isValid_3148 (coe v3)))

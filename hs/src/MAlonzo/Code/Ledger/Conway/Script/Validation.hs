@@ -1411,15 +1411,15 @@ du_txOutToP2Script_2380 v0 v1 v2 v3
                         (coe v0) (coe v6) (coe v2) (coe v1))
                      (coe MAlonzo.Code.Ledger.Conway.Script.Base.du_toP2Script_416)))
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Script.Validation.collectP2Scripts
-d_collectP2Scripts_2392 ::
+-- Ledger.Conway.Script.Validation.collectP2ScriptsWithContext
+d_collectP2ScriptsWithContext_2392 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
   MAlonzo.Code.Ledger.Conway.PParams.T_PParams_296 ->
   MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_collectP2Scripts_2392 v0 v1 v2 v3 v4
+d_collectP2ScriptsWithContext_2392 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Axiom.Set.du_mapPartial_576
       (MAlonzo.Code.Axiom.Set.d_th_1470
