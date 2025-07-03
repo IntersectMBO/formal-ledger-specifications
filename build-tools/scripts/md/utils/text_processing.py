@@ -58,7 +58,9 @@ def replace_cross_ref_placeholder(match: re.Match, label_map: Dict) -> str:
 def process_admonitions(content: str) -> str:
     """Converts '@@ADMONITION_START/END@@' markers to MkDocs admonition blocks."""
     output_lines, in_admonition = [], False
-    admonition_start = re.compile(r'^\s*@@ADMONITION_START\|(.*?)\s*@@\s*$')
+
+    # --- FIX: backslash is optional in the regex: `\\?|` ---
+    admonition_start = re.compile(r'^\s*@@ADMONITION_START\\?\|(.*?)\s*@@\s*$')
     admonition_end = re.compile(r'^\s*@@ADMONITION_END@@\s*$')
 
     for line in content.splitlines():
@@ -67,7 +69,7 @@ def process_admonitions(content: str) -> str:
             title = start_match.group(1).strip() or "Conway specifics"
             output_lines.append(f'\n??? note "{title}"')
             in_admonition = True
-        elif admonition_end.match(line):
+        elif admonition_end.match(line) and in_admonition:
             in_admonition = False
         elif in_admonition:
             output_lines.append(f"    {line}")
@@ -75,7 +77,6 @@ def process_admonitions(content: str) -> str:
             output_lines.append(line)
 
     return "\n".join(output_lines) + "\n"
-
 
 def get_flat_filename(relative_path: Path) -> str:
     """
