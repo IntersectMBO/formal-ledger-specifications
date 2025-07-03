@@ -11,9 +11,6 @@ module Ledger.Conway.Script.Validation
 open import Ledger.Prelude
 open import Ledger.Conway.Certs govStructure
 
-instance
-  _ = DecEq-Slot
-
 data ScriptPurpose : Type where
   Cert     : DCert        → ScriptPurpose
   Rwrd     : RwdAddr      → ScriptPurpose
