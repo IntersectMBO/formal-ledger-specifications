@@ -146,7 +146,7 @@ d_wits_1530 v0
 d__'8866'_'8640''10631'_'44'LEDGERS'10632'__1698 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
-  MAlonzo.Code.Ledger.Conway.Ledger.T_LEnv_2406 ->
+  MAlonzo.Code.Ledger.Conway.Ledger.T_LEnv_2388 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2196 ->
   [MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134] ->
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2196 -> ()
@@ -160,7 +160,7 @@ d_HasCast'45'LEnv_1702 ~v0 ~v1 = du_HasCast'45'LEnv_1702
 du_HasCast'45'LEnv_1702 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'LEnv_1702
-  = coe MAlonzo.Code.Ledger.Conway.Ledger.du_HasCast'45'LEnv_2474
+  = coe MAlonzo.Code.Ledger.Conway.Ledger.du_HasCast'45'LEnv_2456
 -- Ledger.Conway.Conformance.Chain._.LState
 d_LState_1712 a0 a1 = ()
 -- Ledger.Conway.Conformance.Chain._.LState.certState
@@ -181,7 +181,7 @@ d_govSt_1744 v0
 -- Ledger.Conway.Conformance.Chain._.LState.utxoSt
 d_utxoSt_1746 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2196 ->
-  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOState_2226
+  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOState_2064
 d_utxoSt_1746 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204

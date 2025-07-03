@@ -48,7 +48,7 @@
 
 
   <a id="914" class="Keyword">field</a>
-    <a id="LState.utxoSt"></a><a id="924" href="Ledger.Conway.Ledger.html#924" class="Field">utxoSt</a>     <a id="935" class="Symbol">:</a> <a id="937" href="Ledger.Conway.Utxo.html#2716" class="Record">UTxOState</a>
+    <a id="LState.utxoSt"></a><a id="924" href="Ledger.Conway.Ledger.html#924" class="Field">utxoSt</a>     <a id="935" class="Symbol">:</a> <a id="937" href="Ledger.Conway.Utxo.html#1390" class="Record">UTxOState</a>
     <a id="LState.govSt"></a><a id="951" href="Ledger.Conway.Ledger.html#951" class="Field">govSt</a>      <a id="962" class="Symbol">:</a> <a id="964" href="Ledger.Conway.Gov.html#1397" class="Function">GovState</a>
     <a id="LState.certState"></a><a id="977" href="Ledger.Conway.Ledger.html#977" class="Field">certState</a>  <a id="988" class="Symbol">:</a> <a id="990" href="Ledger.Conway.Certs.html#4323" class="Record">CertState</a>
 
@@ -59,11 +59,11 @@
 <a id="1082" class="Keyword">open</a> <a id="1087" href="Ledger.Conway.Ledger.html#1010" class="Module">HasLState</a> <a id="1097" class="Symbol">⦃...⦄</a> <a id="1103" class="Keyword">public</a>
 
 <a id="1111" class="Keyword">instance</a>
-  <a id="HasUTxOState-LState"></a><a id="1122" href="Ledger.Conway.Ledger.html#1122" class="Function">HasUTxOState-LState</a> <a id="1142" class="Symbol">:</a> <a id="1144" href="Ledger.Conway.Utxo.html#2878" class="Record">HasUTxOState</a> <a id="1157" href="Ledger.Conway.Ledger.html#865" class="Record">LState</a>
-  <a id="1166" href="Ledger.Conway.Ledger.html#1122" class="Function">HasUTxOState-LState</a> <a id="1186" class="Symbol">.</a><a id="1187" href="Ledger.Conway.Utxo.html#2931" class="Field">UTxOStateOf</a> <a id="1199" class="Symbol">=</a> <a id="1201" href="Ledger.Conway.Ledger.html#924" class="Field">LState.utxoSt</a>
+  <a id="HasUTxOState-LState"></a><a id="1122" href="Ledger.Conway.Ledger.html#1122" class="Function">HasUTxOState-LState</a> <a id="1142" class="Symbol">:</a> <a id="1144" href="Ledger.Conway.Utxo.html#1552" class="Record">HasUTxOState</a> <a id="1157" href="Ledger.Conway.Ledger.html#865" class="Record">LState</a>
+  <a id="1166" href="Ledger.Conway.Ledger.html#1122" class="Function">HasUTxOState-LState</a> <a id="1186" class="Symbol">.</a><a id="1187" href="Ledger.Conway.Utxo.html#1605" class="Field">UTxOStateOf</a> <a id="1199" class="Symbol">=</a> <a id="1201" href="Ledger.Conway.Ledger.html#924" class="Field">LState.utxoSt</a>
 
   <a id="HasUTxO-LState"></a><a id="1218" href="Ledger.Conway.Ledger.html#1218" class="Function">HasUTxO-LState</a> <a id="1233" class="Symbol">:</a> <a id="1235" href="Ledger.Conway.Transaction.html#2643" class="Record">HasUTxO</a> <a id="1243" href="Ledger.Conway.Ledger.html#865" class="Record">LState</a>
-  <a id="1252" href="Ledger.Conway.Ledger.html#1218" class="Function">HasUTxO-LState</a> <a id="1267" class="Symbol">.</a><a id="1268" href="Ledger.Conway.Transaction.html#2693" class="Field">UTxOOf</a> <a id="1275" class="Symbol">=</a> <a id="1277" href="Ledger.Conway.Transaction.html#2693" class="Field">UTxOOf</a> <a id="1284" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="1286" href="Ledger.Conway.Utxo.html#2931" class="Field">UTxOStateOf</a>
+  <a id="1252" href="Ledger.Conway.Ledger.html#1218" class="Function">HasUTxO-LState</a> <a id="1267" class="Symbol">.</a><a id="1268" href="Ledger.Conway.Transaction.html#2693" class="Field">UTxOOf</a> <a id="1275" class="Symbol">=</a> <a id="1277" href="Ledger.Conway.Transaction.html#2693" class="Field">UTxOOf</a> <a id="1284" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="1286" href="Ledger.Conway.Utxo.html#1605" class="Field">UTxOStateOf</a>
 
   <a id="HasGovState-LState"></a><a id="1301" href="Ledger.Conway.Ledger.html#1301" class="Function">HasGovState-LState</a> <a id="1320" class="Symbol">:</a> <a id="1322" href="Ledger.Conway.Gov.html#1471" class="Record">HasGovState</a> <a id="1334" href="Ledger.Conway.Ledger.html#865" class="Record">LState</a>
   <a id="1343" href="Ledger.Conway.Ledger.html#1301" class="Function">HasGovState-LState</a> <a id="1362" class="Symbol">.</a><a id="1363" href="Ledger.Conway.Gov.html#1523" class="Field">GovStateOf</a> <a id="1374" class="Symbol">=</a> <a id="1376" href="Ledger.Conway.Ledger.html#951" class="Field">LState.govSt</a>
@@ -72,7 +72,7 @@
   <a id="1436" href="Ledger.Conway.Ledger.html#1392" class="Function">HasCertState-LState</a> <a id="1456" class="Symbol">.</a><a id="1457" href="Ledger.Conway.Certs.html#4504" class="Field">CertStateOf</a> <a id="1469" class="Symbol">=</a> <a id="1471" href="Ledger.Conway.Ledger.html#977" class="Field">LState.certState</a>
 
   <a id="HasDeposits-LState"></a><a id="1491" href="Ledger.Conway.Ledger.html#1491" class="Function">HasDeposits-LState</a> <a id="1510" class="Symbol">:</a> <a id="1512" href="Ledger.Conway.Certs.html#673" class="Record">HasDeposits</a> <a id="1524" href="Ledger.Conway.Ledger.html#865" class="Record">LState</a>
-  <a id="1533" href="Ledger.Conway.Ledger.html#1491" class="Function">HasDeposits-LState</a> <a id="1552" class="Symbol">.</a><a id="1553" href="Ledger.Conway.Certs.html#725" class="Field">DepositsOf</a> <a id="1564" class="Symbol">=</a> <a id="1566" href="Ledger.Conway.Certs.html#725" class="Field">DepositsOf</a> <a id="1577" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="1579" href="Ledger.Conway.Utxo.html#2931" class="Field">UTxOStateOf</a>
+  <a id="1533" href="Ledger.Conway.Ledger.html#1491" class="Function">HasDeposits-LState</a> <a id="1552" class="Symbol">.</a><a id="1553" href="Ledger.Conway.Certs.html#725" class="Field">DepositsOf</a> <a id="1564" class="Symbol">=</a> <a id="1566" href="Ledger.Conway.Certs.html#725" class="Field">DepositsOf</a> <a id="1577" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="1579" href="Ledger.Conway.Utxo.html#1605" class="Field">UTxOStateOf</a>
 
 <a id="1592" class="Keyword">open</a> <a id="1597" href="Ledger.Conway.Certs.html#4323" class="Module">CertState</a>
 <a id="1607" class="Keyword">open</a> <a id="1612" href="Ledger.Conway.Certs.html#3167" class="Module">DState</a>
@@ -103,7 +103,7 @@
 <a id="2380" class="Keyword">private</a> <a id="2388" class="Keyword">variable</a>
   <a id="2399" href="Ledger.Conway.Ledger.html#2399" class="Generalizable">Γ</a> <a id="2401" class="Symbol">:</a> <a id="2403" href="Ledger.Conway.Ledger.html#601" class="Record">LEnv</a>
   <a id="2410" href="Ledger.Conway.Ledger.html#2410" class="Generalizable">s</a> <a id="2412" href="Ledger.Conway.Ledger.html#2412" class="Generalizable">s&#39;</a> <a id="2415" href="Ledger.Conway.Ledger.html#2415" class="Generalizable">s&#39;&#39;</a> <a id="2419" class="Symbol">:</a> <a id="2421" href="Ledger.Conway.Ledger.html#865" class="Record">LState</a>
-  <a id="2430" href="Ledger.Conway.Ledger.html#2430" class="Generalizable">utxoSt</a> <a id="2437" href="Ledger.Conway.Ledger.html#2437" class="Generalizable">utxoSt&#39;</a> <a id="2445" class="Symbol">:</a> <a id="2447" href="Ledger.Conway.Utxo.html#2716" class="Record">UTxOState</a>
+  <a id="2430" href="Ledger.Conway.Ledger.html#2430" class="Generalizable">utxoSt</a> <a id="2437" href="Ledger.Conway.Ledger.html#2437" class="Generalizable">utxoSt&#39;</a> <a id="2445" class="Symbol">:</a> <a id="2447" href="Ledger.Conway.Utxo.html#1390" class="Record">UTxOState</a>
   <a id="2459" href="Ledger.Conway.Ledger.html#2459" class="Generalizable">govSt</a> <a id="2465" href="Ledger.Conway.Ledger.html#2465" class="Generalizable">govSt&#39;</a> <a id="2472" class="Symbol">:</a> <a id="2474" href="Ledger.Conway.Gov.html#1397" class="Function">GovState</a>
   <a id="2485" href="Ledger.Conway.Ledger.html#2485" class="Generalizable">certState</a> <a id="2495" href="Ledger.Conway.Ledger.html#2495" class="Generalizable">certState&#39;</a> <a id="2506" class="Symbol">:</a> <a id="2508" href="Ledger.Conway.Certs.html#4323" class="Record">CertState</a>
   <a id="2520" href="Ledger.Conway.Ledger.html#2520" class="Generalizable">tx</a> <a id="2523" class="Symbol">:</a> <a id="2525" href="Ledger.Conway.Transaction.html#4289" class="Record">Tx</a>
