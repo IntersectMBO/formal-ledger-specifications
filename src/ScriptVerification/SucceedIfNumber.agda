@@ -13,14 +13,13 @@ open import ScriptVerification.Lib ℕ ℕ scriptImp
 open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import stdlib-classes.Class.HasCast
-open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Conway.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Conformance.Utxow.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 
 -- succeed if the datum is 1
 succeedIf1Datum' : Maybe ℕ → Maybe ℕ → Bool

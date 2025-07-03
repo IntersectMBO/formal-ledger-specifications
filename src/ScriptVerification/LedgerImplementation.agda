@@ -10,12 +10,11 @@ open import Ledger.Prelude hiding (fromList; ε); open Computational
 import      Data.Integer as ℤ
 open import Data.Rational using (0ℚ; ½)
 import      Data.Rational as ℚ
-open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
-open import Foreign.Convertible
-import Foreign.Haskell as F
+  using (commutativeMonoid)
+
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Types.Epoch
@@ -78,6 +77,7 @@ module Implementation where
     where open import Ledger.Conway.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)
 
+open Implementation using (ScriptHash)
 
 SVGlobalConstants = GlobalConstants ∋ record {Implementation}
 SVEpochStructure  = EpochStructure  ∋ ℕEpochStructure SVGlobalConstants
@@ -101,7 +101,33 @@ SVCrypto = record
 instance _ = SVCrypto
 
 open import Ledger.Conway.Script it it
-open import Ledger.Conway.Conformance.Script it it
+
+record HSTimelock : Type where
+  field
+    timelock     : Timelock
+    tlScriptHash : ScriptHash
+    tlScriptSize : ℕ
+
+instance
+  Hashable-HSTimelock : Hashable HSTimelock ScriptHash
+  Hashable-HSTimelock .hash = HSTimelock.tlScriptHash
+
+unquoteDecl DecEq-HSTimelock = derive-DecEq ((quote HSTimelock , DecEq-HSTimelock) ∷ [])
+
+record HSPlutusScript : Type where
+  constructor MkHSPlutusScript
+  field psScriptHash : ScriptHash
+        psScriptSize : ℕ
+
+instance
+  Hashable-HSPlutusScript : Hashable HSPlutusScript ScriptHash
+  Hashable-HSPlutusScript .hash = HSPlutusScript.psScriptHash
+
+P1ScriptStructure-HTL : P1ScriptStructure
+P1ScriptStructure-HTL = record
+  { P1Script = HSTimelock
+  ; validP1Script = λ x y → evalTimelock x y ∘ HSTimelock.timelock }
+
 
 SVScriptStructure : ScriptStructure
 SVScriptStructure = record

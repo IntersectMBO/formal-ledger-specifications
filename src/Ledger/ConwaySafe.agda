@@ -73,7 +73,6 @@ import Ledger.Conway.Conformance.Utxo
 import Ledger.Conway.Conformance.Utxo.Properties
 import Ledger.Conway.Conformance.Utxow
 import Ledger.Conway.Conformance.Utxow.Properties
-import Ledger.Conway.Conformance.Script
 
 -- -- ** Not currently used
 import iog-prelude.Tactic.DeriveComp
