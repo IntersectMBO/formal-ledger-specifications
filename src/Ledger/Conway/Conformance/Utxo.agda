@@ -48,7 +48,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          sLst = collectP2ScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ true
@@ -64,7 +64,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          sLst = collectP2ScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false

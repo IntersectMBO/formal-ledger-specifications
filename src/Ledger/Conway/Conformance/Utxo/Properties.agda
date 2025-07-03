@@ -38,7 +38,7 @@ instance
       open Tx tx renaming (body to txb); open TxBody txb
       open UTxOEnv Γ renaming (pparams to pp)
       open UTxOState s
-      sLst = collectPhaseTwoScriptInputs pp tx utxo
+      sLst = collectP2ScriptInputs pp tx utxo
 
       computeProof =
         case H-Yes? ,′ H-No? of λ where

@@ -523,7 +523,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          open Tx tx renaming (body to txb); open TxBody txb
 \end{code}
 \begin{code}
-         sLst       = collectPhaseTwoScriptInputs pp tx utxo
+         sLst       = collectP2ScriptInputs pp tx utxo
       in
         ∙ ValidCertDeposits pp deposits txcerts
         ∙ evalScripts tx sLst ≡ isValid
@@ -537,7 +537,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          open Tx tx renaming (body to txb); open TxBody txb
 \end{code}
 \begin{code}
-         sLst       = collectPhaseTwoScriptInputs pp tx utxo
+         sLst       = collectP2ScriptInputs pp tx utxo
       in
         ∙ evalScripts tx sLst ≡ isValid
         ∙ isValid ≡ false

@@ -101,27 +101,25 @@ valContext txinfo sp = toData (txinfo , sp)
 
 opaque
 
-  collectPhaseTwoScriptInputs' : PParams → Tx → UTxO → (ScriptPurpose × ScriptHash)
-    → Maybe (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs' pp tx utxo (sp , sh)
-    with lookupScriptHash sh tx utxo
-  ... | nothing = nothing
-  ... | just s
-    with toP2Script s | indexedRdmrs tx sp
-  ... | just p2s | just (rdmr , eu)
-      = just (s ,
-          ( (maybe [_] [] (getDatum tx utxo sp) ++ rdmr ∷ valContext (txInfo (language p2s) pp utxo tx) sp ∷ [])
-          , eu
-          , PParams.costmdls pp)
-        )
-  ... | x | y = nothing
-
-  collectPhaseTwoScriptInputs : PParams → Tx → UTxO
+opaque
+  collectP2ScriptInputs
+    : PParams → Tx → UTxO
     → List (Script × List Data × ExUnits × CostModel)
-  collectPhaseTwoScriptInputs pp tx utxo
+  collectP2ScriptInputs pp tx utxo
     = setToList
-    $ mapPartial (collectPhaseTwoScriptInputs' pp tx utxo)
+    $ mapPartial toScriptInput
     $ scriptsNeeded utxo (tx .Tx.body)
+    where
+      toScriptInput
+        : (ScriptPurpose × ScriptHash)
+        → Maybe (Script × List Data × ExUnits × CostModel)
+      toScriptInput (sp , sh) =
+        do s ← lookupScriptHash sh tx utxo
+           p2s ← toP2Script s
+           (rdmr , exunits) ← indexedRdmrs tx sp
+           let data'     = maybe [_] [] (getDatum tx utxo sp) ++ rdmr ∷ [ valContext (txInfo (language p2s) pp utxo tx) sp ]
+               costModel = PParams.costmdls pp
+           just (s , data' , exunits , costModel)
 
 open TxBody
 open Tx
