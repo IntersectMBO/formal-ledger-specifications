@@ -12,22 +12,28 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Foreign.HaskellTypes.html">
       
       
+        <link rel="prev" href="Foreign.Convertible.DerivingTest.html">
       
-      <link rel="icon" href="/formal-ledger-specifications/assets/images/favicon.png">
+      
+        <link rel="next" href="Foreign.HaskellTypes.Deriving.html">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
-        <title>Formal Ledger Specification</title>
+        <title>HaskellTypes - Formal Ledger Specification</title>
       
     
     
-      <link rel="stylesheet" href="/formal-ledger-specifications/assets/stylesheets/main.8608ea7d.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.8608ea7d.min.css">
       
         
-        <link rel="stylesheet" href="/formal-ledger-specifications/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,13 +54,13 @@
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     
-      <link rel="stylesheet" href="/formal-ledger-specifications/Agda.css">
+      <link rel="stylesheet" href="Agda.css">
     
-      <link rel="stylesheet" href="/formal-ledger-specifications/css/custom.css">
+      <link rel="stylesheet" href="css/custom.css">
     
-      <link rel="stylesheet" href="/formal-ledger-specifications/css/Agda.css">
+      <link rel="stylesheet" href="css/Agda.css">
     
-    <script>__md_scope=new URL("/formal-ledger-specifications/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -91,7 +97,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/formal-ledger-specifications/index.html" title="Formal Ledger Specification" class="md-header__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
+    <a href="index.html" title="Formal Ledger Specification" class="md-header__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -111,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              HaskellTypes
             
           </span>
         </div>
@@ -226,7 +232,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/formal-ledger-specifications/index.html" title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
+    <a href="index.html" title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -256,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/index.html" class="md-nav__link">
+      <a href="index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -318,7 +324,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Introduction.html" class="md-nav__link">
+      <a href="Ledger.Introduction.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -340,7 +346,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Notation.html" class="md-nav__link">
+      <a href="Notation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -369,7 +375,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.html" class="md-nav__link">
+      <a href="Ledger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -431,7 +437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Prelude.html" class="md-nav__link">
+      <a href="Ledger.Prelude.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -491,7 +497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Prelude.Base.html" class="md-nav__link">
+      <a href="Ledger.Prelude.Base.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -521,7 +527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.html" class="md-nav__link">
+      <a href="Ledger.Conway.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -581,7 +587,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Abstract.html" class="md-nav__link">
+      <a href="Ledger.Conway.Abstract.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -603,7 +609,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Address.html" class="md-nav__link">
+      <a href="Ledger.Conway.Address.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -625,7 +631,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.BaseTypes.html" class="md-nav__link">
+      <a href="Ledger.Conway.BaseTypes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -647,7 +653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -707,7 +713,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -767,7 +773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.Properties.PoV.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.Properties.PoV.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -789,7 +795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.Properties.PoVLemmas.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.Properties.PoVLemmas.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -811,7 +817,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -849,7 +855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -909,7 +915,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -969,7 +975,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -991,7 +997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.EpochStep.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.EpochStep.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1013,7 +1019,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.GovDepsMatch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.GovDepsMatch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1035,7 +1041,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.PParamsWellFormed.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1073,7 +1079,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Crypto.html" class="md-nav__link">
+      <a href="Ledger.Conway.Crypto.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1095,7 +1101,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Enact.html" class="md-nav__link">
+      <a href="Ledger.Conway.Enact.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1117,7 +1123,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1177,7 +1183,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1237,7 +1243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.Properties.ConstRwds.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.Properties.ConstRwds.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1259,7 +1265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.Properties.GovDepsMatch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.Properties.GovDepsMatch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1281,7 +1287,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.Properties.NoPropSameDReps.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.Properties.NoPropSameDReps.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1319,7 +1325,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Fees.html" class="md-nav__link">
+      <a href="Ledger.Conway.Fees.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1341,7 +1347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Gov.html" class="md-nav__link">
+      <a href="Ledger.Conway.Gov.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1401,7 +1407,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Gov.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Gov.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1431,7 +1437,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1491,7 +1497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.GovernanceActions.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1551,7 +1557,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1589,7 +1595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ledger.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ledger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1649,7 +1655,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ledger.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ledger.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1709,7 +1715,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ledger.Properties.GovDepsMatch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ledger.Properties.GovDepsMatch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1731,7 +1737,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ledger.Properties.PoV.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ledger.Properties.PoV.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1769,7 +1775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.PParams.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1791,7 +1797,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1813,7 +1819,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ratify.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1873,7 +1879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ratify.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ratify.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1903,7 +1909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Rewards.html" class="md-nav__link">
+      <a href="Ledger.Conway.Rewards.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1925,7 +1931,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Script.html" class="md-nav__link">
+      <a href="Ledger.Conway.Script.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1985,7 +1991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Script.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Script.Base.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2007,7 +2013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Script.Timelock.html" class="md-nav__link">
+      <a href="Ledger.Conway.Script.Timelock.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2037,7 +2043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.ScriptValidation.html" class="md-nav__link">
+      <a href="Ledger.Conway.ScriptValidation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2097,7 +2103,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.TokenAlgebra.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.TokenAlgebra.Base.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2119,7 +2125,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.TokenAlgebra.Coin.html" class="md-nav__link">
+      <a href="Ledger.Conway.TokenAlgebra.Coin.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2141,7 +2147,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.TokenAlgebra.ValueSet.html" class="md-nav__link">
+      <a href="Ledger.Conway.TokenAlgebra.ValueSet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2163,7 +2169,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.TokenAlgebra.ValueVector.html" class="md-nav__link">
+      <a href="Ledger.Conway.TokenAlgebra.ValueVector.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2193,7 +2199,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Transaction.html" class="md-nav__link">
+      <a href="Ledger.Conway.Transaction.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2253,7 +2259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.Epoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.Epoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2275,7 +2281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.GovStructure.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.GovStructure.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2297,7 +2303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.Numeric.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.Numeric.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2357,7 +2363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.Numeric.UnitInterval.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.Numeric.UnitInterval.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2379,7 +2385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.Numeric.PositiveNat.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.Numeric.PositiveNat.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2417,7 +2423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxo.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxo.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2477,7 +2483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxo.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxo.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2537,7 +2543,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxo.Properties.MinSpend.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxo.Properties.MinSpend.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2559,7 +2565,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxo.Properties.PoV.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxo.Properties.PoV.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2597,7 +2603,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxow.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2657,7 +2663,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxow.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxow.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2725,7 +2731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.ExternalFunctions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.ExternalFunctions.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2747,7 +2753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2807,7 +2813,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Address.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Address.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2829,7 +2835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2851,7 +2857,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Cert.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Cert.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2873,7 +2879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Certs.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Certs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2895,7 +2901,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Chain.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2917,7 +2923,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Core.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Core.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2939,7 +2945,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Enact.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Enact.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2961,7 +2967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Epoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Epoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2983,7 +2989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.ExternalStructures.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3005,7 +3011,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Gov.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Gov.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3065,7 +3071,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Gov.Core.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3095,7 +3101,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3117,7 +3123,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Ledger.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Ledger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3139,7 +3145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.NewEpoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.NewEpoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3161,7 +3167,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.PParams.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3183,7 +3189,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Ratify.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3205,7 +3211,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Transaction.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Transaction.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3227,7 +3233,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Utxo.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Utxo.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3257,7 +3263,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSTypes.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSTypes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3279,7 +3285,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.Util.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.Util.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3347,7 +3353,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Certs.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Certs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3407,7 +3413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Certs.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Certs.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3437,7 +3443,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Chain.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3497,7 +3503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Chain.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Chain.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3527,7 +3533,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Epoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Epoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3587,7 +3593,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Epoch.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Epoch.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3617,7 +3623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3677,7 +3683,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Bisimilarity.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Bisimilarity.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3699,7 +3705,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Certs.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Certs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3721,7 +3727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Convert.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Convert.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3743,7 +3749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Deposits.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Deposits.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3765,7 +3771,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Map.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Map.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3787,7 +3793,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Utxo.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Utxo.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3817,7 +3823,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Gov.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Gov.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3839,7 +3845,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Ledger.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Ledger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3899,7 +3905,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Ledger.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Ledger.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3929,7 +3935,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3951,7 +3957,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Script.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Script.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3973,7 +3979,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Utxo.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Utxo.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4033,7 +4039,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Utxo.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Utxo.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4063,7 +4069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Utxow.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4123,7 +4129,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Utxow.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Utxow.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4169,7 +4175,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.ConwaySafe.html" class="md-nav__link">
+      <a href="Ledger.ConwaySafe.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4229,7 +4235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Interface.HasCoin.html" class="md-nav__link">
+      <a href="Ledger.Interface.HasCoin.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4259,7 +4265,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.html" class="md-nav__link">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4357,7 +4363,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.Conformance.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.Conformance.NewPP.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4417,7 +4423,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.Conformance.NewPP.Properties.html" class="md-nav__link">
+      <a href="Ledger.PreConway.Conformance.NewPP.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4447,7 +4453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.Conformance.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.Conformance.PPUp.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4507,7 +4513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.Conformance.PPUp.Properties.html" class="md-nav__link">
+      <a href="Ledger.PreConway.Conformance.PPUp.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4545,7 +4551,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4605,7 +4611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.NewPP.Properties.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4635,7 +4641,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4695,7 +4701,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.PPUp.Properties.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4737,8 +4743,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -4748,11 +4756,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
           <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
@@ -4767,7 +4775,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Foreign
@@ -4781,7 +4789,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.Convertible.html" class="md-nav__link">
+      <a href="Foreign.Convertible.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4841,7 +4849,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.Convertible.Deriving.html" class="md-nav__link">
+      <a href="Foreign.Convertible.Deriving.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4863,7 +4871,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.Convertible.DerivingTest.html" class="md-nav__link">
+      <a href="Foreign.Convertible.DerivingTest.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4890,10 +4898,17 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.HaskellTypes.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="Foreign.HaskellTypes.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -4903,6 +4918,7 @@
   
 
       </a>
+      
     </li>
   
 
@@ -4953,7 +4969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.HaskellTypes.Deriving.html" class="md-nav__link">
+      <a href="Foreign.HaskellTypes.Deriving.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5031,7 +5047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.Examples.html" class="md-nav__link">
+      <a href="ScriptVerification.Examples.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5053,7 +5069,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.HelloWorld.html" class="md-nav__link">
+      <a href="ScriptVerification.HelloWorld.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5075,7 +5091,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.LedgerImplementation.html" class="md-nav__link">
+      <a href="ScriptVerification.LedgerImplementation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5097,7 +5113,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.Lib.html" class="md-nav__link">
+      <a href="ScriptVerification.Lib.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5119,7 +5135,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.Prelude.html" class="md-nav__link">
+      <a href="ScriptVerification.Prelude.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5141,7 +5157,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.StructuredContracts.html" class="md-nav__link">
+      <a href="ScriptVerification.StructuredContracts.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5163,7 +5179,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.SucceedIfNumber.html" class="md-nav__link">
+      <a href="ScriptVerification.SucceedIfNumber.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5233,7 +5249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/EssentialAgda.html" class="md-nav__link">
+      <a href="EssentialAgda.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5255,7 +5271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Prelude.html" class="md-nav__link">
+      <a href="Prelude.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5353,7 +5369,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.ComputationalRelation.html" class="md-nav__link">
+      <a href="Interface.ComputationalRelation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5375,7 +5391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.HasSubset.html" class="md-nav__link">
+      <a href="Interface.HasSubset.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5435,7 +5451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.HasSubset.Instance.html" class="md-nav__link">
+      <a href="Interface.HasSubset.Instance.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5465,7 +5481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.HasSubtract.html" class="md-nav__link">
+      <a href="Interface.HasSubtract.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5525,7 +5541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.HasSubtract.Instance.html" class="md-nav__link">
+      <a href="Interface.HasSubtract.Instance.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5555,7 +5571,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.Hashable.html" class="md-nav__link">
+      <a href="Interface.Hashable.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5577,7 +5593,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.STS.html" class="md-nav__link">
+      <a href="Interface.STS.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5607,7 +5623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/MyDebugOptions.html" class="md-nav__link">
+      <a href="MyDebugOptions.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5649,8 +5665,81 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+  
+  
+
+
+  <h1>HaskellTypes</h1>
+
+<pre class="Agda">
+<a id="10" class="Keyword">module</a> <a id="17" href="Foreign.HaskellTypes.html" class="Module">Foreign.HaskellTypes</a> <a id="38" class="Keyword">where</a>
+
+<a id="45" class="Keyword">open</a> <a id="50" class="Keyword">import</a> <a id="57" href="Level.html" class="Module">Level</a> <a id="63" class="Keyword">using</a> <a id="69" class="Symbol">(</a><a id="70" href="Agda.Primitive.html#742" class="Postulate">Level</a><a id="75" class="Symbol">)</a>
+<a id="77" class="Keyword">open</a> <a id="82" class="Keyword">import</a> <a id="89" href="Data.Bool.Base.html" class="Module">Data.Bool.Base</a> <a id="104" class="Keyword">using</a> <a id="110" class="Symbol">(</a><a id="111" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a><a id="115" class="Symbol">)</a>
+<a id="117" class="Keyword">open</a> <a id="122" class="Keyword">import</a> <a id="129" href="Data.Nat.Base.html" class="Module">Data.Nat.Base</a> <a id="143" class="Keyword">using</a> <a id="149" class="Symbol">(</a><a id="150" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="151" class="Symbol">)</a>
+<a id="153" class="Keyword">open</a> <a id="158" class="Keyword">import</a> <a id="165" href="Data.String.Base.html" class="Module">Data.String.Base</a> <a id="182" class="Keyword">using</a> <a id="188" class="Symbol">(</a><a id="189" href="Agda.Builtin.String.html#335" class="Postulate">String</a><a id="195" class="Symbol">)</a>
+<a id="197" class="Keyword">open</a> <a id="202" class="Keyword">import</a> <a id="209" href="Data.List.Base.html" class="Module">Data.List.Base</a> <a id="224" class="Keyword">using</a> <a id="230" class="Symbol">(</a><a id="231" href="Agda.Builtin.List.html#147" class="Datatype">List</a><a id="235" class="Symbol">)</a>
+<a id="237" class="Keyword">open</a> <a id="242" class="Keyword">import</a> <a id="249" href="Data.Maybe.Base.html" class="Module">Data.Maybe.Base</a> <a id="265" class="Keyword">using</a> <a id="271" class="Symbol">(</a><a id="272" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a><a id="277" class="Symbol">)</a>
+<a id="279" class="Keyword">open</a> <a id="284" class="Keyword">import</a> <a id="291" href="Data.Sum.Base.html" class="Module">Data.Sum.Base</a> <a id="305" class="Keyword">using</a> <a id="311" class="Symbol">(</a><a id="312" href="Data.Sum.Base.html#625" class="Datatype Operator">_⊎_</a><a id="315" class="Symbol">)</a>
+<a id="317" class="Keyword">open</a> <a id="322" class="Keyword">import</a> <a id="329" href="Data.Product.Base.html" class="Module">Data.Product.Base</a> <a id="347" class="Keyword">using</a> <a id="353" class="Symbol">(</a><a id="354" href="Data.Product.Base.html#1618" class="Function Operator">_×_</a><a id="357" class="Symbol">)</a>
+<a id="359" class="Keyword">open</a> <a id="364" class="Keyword">import</a> <a id="371" href="Data.Unit.html" class="Module">Data.Unit</a> <a id="381" class="Keyword">using</a> <a id="387" class="Symbol">(</a><a id="388" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a><a id="389" class="Symbol">)</a>
+
+<a id="392" class="Keyword">open</a> <a id="397" class="Keyword">import</a> <a id="404" href="Foreign.Haskell.Pair.html" class="Module">Foreign.Haskell.Pair</a> <a id="425" class="Keyword">using</a> <a id="431" class="Symbol">(</a><a id="432" href="Foreign.Haskell.Pair.html#534" class="Record">Pair</a><a id="436" class="Symbol">)</a>
+<a id="438" class="Keyword">open</a> <a id="443" class="Keyword">import</a> <a id="450" href="Foreign.Haskell.Either.html" class="Module">Foreign.Haskell.Either</a> <a id="473" class="Keyword">using</a> <a id="479" class="Symbol">(</a><a id="480" href="Foreign.Haskell.Either.html#539" class="Datatype">Either</a><a id="486" class="Symbol">)</a>
+
+<a id="489" class="Keyword">private</a> <a id="497" class="Keyword">variable</a>
+  <a id="508" href="Foreign.HaskellTypes.html#508" class="Generalizable">l</a> <a id="510" class="Symbol">:</a> <a id="512" href="Agda.Primitive.html#742" class="Postulate">Level</a>
+  <a id="520" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="522" href="Foreign.HaskellTypes.html#522" class="Generalizable">B</a> <a id="524" class="Symbol">:</a> <a id="526" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="530" href="Foreign.HaskellTypes.html#508" class="Generalizable">l</a>
+
+<a id="533" class="Keyword">record</a> <a id="HasHsType"></a><a id="540" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="550" class="Symbol">(</a><a id="551" href="Foreign.HaskellTypes.html#551" class="Bound">A</a> <a id="553" class="Symbol">:</a> <a id="555" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="559" href="Foreign.HaskellTypes.html#508" class="Generalizable">l</a><a id="560" class="Symbol">)</a> <a id="562" class="Symbol">:</a> <a id="564" href="Agda.Primitive.html#388" class="Primitive">Set₁</a> <a id="569" class="Keyword">where</a>
+  <a id="577" class="Keyword">field</a>
+    <a id="HasHsType.HsType"></a><a id="587" href="Foreign.HaskellTypes.html#587" class="Field">HsType</a> <a id="594" class="Symbol">:</a> <a id="596" href="Agda.Primitive.html#388" class="Primitive">Set</a>
+
+<a id="HsType"></a><a id="601" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="608" class="Symbol">:</a> <a id="610" class="Symbol">(</a><a id="611" href="Foreign.HaskellTypes.html#611" class="Bound">A</a> <a id="613" class="Symbol">:</a> <a id="615" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="619" href="Foreign.HaskellTypes.html#508" class="Generalizable">l</a><a id="620" class="Symbol">)</a> <a id="622" class="Symbol">→</a> <a id="624" class="Symbol">⦃</a> <a id="626" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="636" href="Foreign.HaskellTypes.html#611" class="Bound">A</a> <a id="638" class="Symbol">⦄</a> <a id="640" class="Symbol">→</a> <a id="642" href="Agda.Primitive.html#388" class="Primitive">Set</a>
+<a id="646" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="653" class="Symbol">_</a> <a id="655" class="Symbol">⦃</a> <a id="657" href="Foreign.HaskellTypes.html#657" class="Bound">i</a> <a id="659" class="Symbol">⦄</a> <a id="661" class="Symbol">=</a> <a id="663" href="Foreign.HaskellTypes.html#657" class="Bound">i</a> <a id="665" class="Symbol">.</a><a id="666" href="Foreign.HaskellTypes.html#587" class="Field">HasHsType.HsType</a>
+
+<a id="MkHsType"></a><a id="684" href="Foreign.HaskellTypes.html#684" class="Function">MkHsType</a> <a id="693" class="Symbol">:</a> <a id="695" class="Symbol">(</a><a id="696" href="Foreign.HaskellTypes.html#696" class="Bound">A</a> <a id="698" class="Symbol">:</a> <a id="700" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="704" href="Foreign.HaskellTypes.html#508" class="Generalizable">l</a><a id="705" class="Symbol">)</a> <a id="707" class="Symbol">(</a><a id="708" href="Foreign.HaskellTypes.html#708" class="Bound">Hs</a> <a id="711" class="Symbol">:</a> <a id="713" href="Agda.Primitive.html#388" class="Primitive">Set</a><a id="716" class="Symbol">)</a> <a id="718" class="Symbol">→</a> <a id="720" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="730" href="Foreign.HaskellTypes.html#696" class="Bound">A</a>
+<a id="732" href="Foreign.HaskellTypes.html#684" class="Function">MkHsType</a> <a id="741" href="Foreign.HaskellTypes.html#741" class="Bound">A</a> <a id="743" href="Foreign.HaskellTypes.html#743" class="Bound">Hs</a> <a id="746" class="Symbol">.</a><a id="747" href="Foreign.HaskellTypes.html#587" class="Field">HasHsType.HsType</a> <a id="764" class="Symbol">=</a> <a id="766" href="Foreign.HaskellTypes.html#743" class="Bound">Hs</a>
+
+<a id="770" class="Keyword">instance</a>
+
+  <a id="iHsTy-ℕ"></a><a id="782" href="Foreign.HaskellTypes.html#782" class="Function">iHsTy-ℕ</a>      <a id="795" class="Symbol">=</a> <a id="797" href="Foreign.HaskellTypes.html#684" class="Function">MkHsType</a> <a id="806" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="808" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+  <a id="iHsTy-Bool"></a><a id="812" href="Foreign.HaskellTypes.html#812" class="Function">iHsTy-Bool</a>   <a id="825" class="Symbol">=</a> <a id="827" href="Foreign.HaskellTypes.html#684" class="Function">MkHsType</a> <a id="836" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a> <a id="841" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
+  <a id="iHsTy-⊤"></a><a id="848" href="Foreign.HaskellTypes.html#848" class="Function">iHsTy-⊤</a>      <a id="861" class="Symbol">=</a> <a id="863" href="Foreign.HaskellTypes.html#684" class="Function">MkHsType</a> <a id="872" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="874" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
+  <a id="iHsTy-String"></a><a id="878" href="Foreign.HaskellTypes.html#878" class="Function">iHsTy-String</a> <a id="891" class="Symbol">=</a> <a id="893" href="Foreign.HaskellTypes.html#684" class="Function">MkHsType</a> <a id="902" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="909" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
+
+  <a id="919" class="Comment">-- Could make a macro for these kind of congruence instances.</a>
+  <a id="iHsTy-List"></a><a id="983" href="Foreign.HaskellTypes.html#983" class="Function">iHsTy-List</a> <a id="994" class="Symbol">:</a> <a id="996" class="Symbol">⦃</a> <a id="998" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1008" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="1010" class="Symbol">⦄</a> <a id="1012" class="Symbol">→</a> <a id="1014" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1024" class="Symbol">(</a><a id="1025" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1030" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a><a id="1031" class="Symbol">)</a>
+  <a id="1035" href="Foreign.HaskellTypes.html#983" class="Function">iHsTy-List</a> <a id="1046" class="Symbol">{</a><a id="1047" class="Argument">A</a> <a id="1049" class="Symbol">=</a> <a id="1051" href="Foreign.HaskellTypes.html#1051" class="Bound">A</a><a id="1052" class="Symbol">}</a> <a id="1054" class="Symbol">.</a><a id="1055" href="Foreign.HaskellTypes.html#587" class="Field">HasHsType.HsType</a> <a id="1072" class="Symbol">=</a> <a id="1074" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1079" class="Symbol">(</a><a id="1080" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1087" href="Foreign.HaskellTypes.html#1051" class="Bound">A</a><a id="1088" class="Symbol">)</a>
+
+  <a id="iHsTy-Maybe"></a><a id="1093" href="Foreign.HaskellTypes.html#1093" class="Function">iHsTy-Maybe</a> <a id="1105" class="Symbol">:</a> <a id="1107" class="Symbol">⦃</a> <a id="1109" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1119" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="1121" class="Symbol">⦄</a> <a id="1123" class="Symbol">→</a> <a id="1125" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1135" class="Symbol">(</a><a id="1136" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1142" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a><a id="1143" class="Symbol">)</a>
+  <a id="1147" href="Foreign.HaskellTypes.html#1093" class="Function">iHsTy-Maybe</a> <a id="1159" class="Symbol">{</a><a id="1160" class="Argument">A</a> <a id="1162" class="Symbol">=</a> <a id="1164" href="Foreign.HaskellTypes.html#1164" class="Bound">A</a><a id="1165" class="Symbol">}</a> <a id="1167" class="Symbol">.</a><a id="1168" href="Foreign.HaskellTypes.html#587" class="Field">HasHsType.HsType</a> <a id="1185" class="Symbol">=</a> <a id="1187" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1193" class="Symbol">(</a><a id="1194" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1201" href="Foreign.HaskellTypes.html#1164" class="Bound">A</a><a id="1202" class="Symbol">)</a>
+
+  <a id="iHsTy-Fun"></a><a id="1207" href="Foreign.HaskellTypes.html#1207" class="Function">iHsTy-Fun</a> <a id="1217" class="Symbol">:</a> <a id="1219" class="Symbol">⦃</a> <a id="1221" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1231" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="1233" class="Symbol">⦄</a> <a id="1235" class="Symbol">→</a> <a id="1237" class="Symbol">⦃</a> <a id="1239" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1249" href="Foreign.HaskellTypes.html#522" class="Generalizable">B</a> <a id="1251" class="Symbol">⦄</a> <a id="1253" class="Symbol">→</a> <a id="1255" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1265" class="Symbol">(</a><a id="1266" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="1268" class="Symbol">→</a> <a id="1270" href="Foreign.HaskellTypes.html#522" class="Generalizable">B</a><a id="1271" class="Symbol">)</a>
+  <a id="1275" href="Foreign.HaskellTypes.html#1207" class="Function">iHsTy-Fun</a> <a id="1285" class="Symbol">{</a><a id="1286" class="Argument">A</a> <a id="1288" class="Symbol">=</a> <a id="1290" href="Foreign.HaskellTypes.html#1290" class="Bound">A</a><a id="1291" class="Symbol">}</a> <a id="1293" class="Symbol">{</a><a id="1294" class="Argument">B</a> <a id="1296" class="Symbol">=</a> <a id="1298" href="Foreign.HaskellTypes.html#1298" class="Bound">B</a><a id="1299" class="Symbol">}</a> <a id="1301" class="Symbol">.</a><a id="1302" href="Foreign.HaskellTypes.html#587" class="Field">HasHsType.HsType</a> <a id="1319" class="Symbol">=</a> <a id="1321" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1328" href="Foreign.HaskellTypes.html#1290" class="Bound">A</a> <a id="1330" class="Symbol">→</a> <a id="1332" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1339" href="Foreign.HaskellTypes.html#1298" class="Bound">B</a>
+
+  <a id="iHsTy-Sum"></a><a id="1344" href="Foreign.HaskellTypes.html#1344" class="Function">iHsTy-Sum</a> <a id="1354" class="Symbol">:</a> <a id="1356" class="Symbol">⦃</a> <a id="1358" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1368" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="1370" class="Symbol">⦄</a> <a id="1372" class="Symbol">→</a> <a id="1374" class="Symbol">⦃</a> <a id="1376" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1386" href="Foreign.HaskellTypes.html#522" class="Generalizable">B</a> <a id="1388" class="Symbol">⦄</a> <a id="1390" class="Symbol">→</a> <a id="1392" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1402" class="Symbol">(</a><a id="1403" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="1405" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="1407" href="Foreign.HaskellTypes.html#522" class="Generalizable">B</a><a id="1408" class="Symbol">)</a>
+  <a id="1412" href="Foreign.HaskellTypes.html#1344" class="Function">iHsTy-Sum</a> <a id="1422" class="Symbol">{</a><a id="1423" class="Argument">A</a> <a id="1425" class="Symbol">=</a> <a id="1427" href="Foreign.HaskellTypes.html#1427" class="Bound">A</a><a id="1428" class="Symbol">}</a> <a id="1430" class="Symbol">{</a><a id="1431" class="Argument">B</a> <a id="1433" class="Symbol">=</a> <a id="1435" href="Foreign.HaskellTypes.html#1435" class="Bound">B</a><a id="1436" class="Symbol">}</a> <a id="1438" class="Symbol">.</a><a id="1439" href="Foreign.HaskellTypes.html#587" class="Field">HasHsType.HsType</a> <a id="1456" class="Symbol">=</a> <a id="1458" href="Foreign.Haskell.Either.html#539" class="Datatype">Either</a> <a id="1465" class="Symbol">(</a><a id="1466" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1473" href="Foreign.HaskellTypes.html#1427" class="Bound">A</a><a id="1474" class="Symbol">)</a> <a id="1476" class="Symbol">(</a><a id="1477" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1484" href="Foreign.HaskellTypes.html#1435" class="Bound">B</a><a id="1485" class="Symbol">)</a>
+
+  <a id="iHsTy-Pair"></a><a id="1490" href="Foreign.HaskellTypes.html#1490" class="Function">iHsTy-Pair</a> <a id="1501" class="Symbol">:</a> <a id="1503" class="Symbol">⦃</a> <a id="1505" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1515" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="1517" class="Symbol">⦄</a> <a id="1519" class="Symbol">→</a> <a id="1521" class="Symbol">⦃</a> <a id="1523" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1533" href="Foreign.HaskellTypes.html#522" class="Generalizable">B</a> <a id="1535" class="Symbol">⦄</a> <a id="1537" class="Symbol">→</a> <a id="1539" href="Foreign.HaskellTypes.html#540" class="Record">HasHsType</a> <a id="1549" class="Symbol">(</a><a id="1550" href="Foreign.HaskellTypes.html#520" class="Generalizable">A</a> <a id="1552" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1554" href="Foreign.HaskellTypes.html#522" class="Generalizable">B</a><a id="1555" class="Symbol">)</a>
+  <a id="1559" href="Foreign.HaskellTypes.html#1490" class="Function">iHsTy-Pair</a> <a id="1570" class="Symbol">{</a><a id="1571" class="Argument">A</a> <a id="1573" class="Symbol">=</a> <a id="1575" href="Foreign.HaskellTypes.html#1575" class="Bound">A</a><a id="1576" class="Symbol">}</a> <a id="1578" class="Symbol">{</a><a id="1579" class="Argument">B</a> <a id="1581" class="Symbol">=</a> <a id="1583" href="Foreign.HaskellTypes.html#1583" class="Bound">B</a><a id="1584" class="Symbol">}</a> <a id="1586" class="Symbol">.</a><a id="1587" href="Foreign.HaskellTypes.html#587" class="Field">HasHsType.HsType</a> <a id="1604" class="Symbol">=</a> <a id="1606" href="Foreign.Haskell.Pair.html#534" class="Record">Pair</a> <a id="1611" class="Symbol">(</a><a id="1612" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1619" href="Foreign.HaskellTypes.html#1575" class="Bound">A</a><a id="1620" class="Symbol">)</a> <a id="1622" class="Symbol">(</a><a id="1623" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1630" href="Foreign.HaskellTypes.html#1583" class="Bound">B</a><a id="1631" class="Symbol">)</a>
+</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -5662,6 +5751,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="Foreign.Convertible.DerivingTest.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: DerivingTest">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                DerivingTest
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="Foreign.HaskellTypes.Deriving.html" class="md-footer__link md-footer__link--next" aria-label="Next: Deriving">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Deriving
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
@@ -5686,20 +5813,20 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/formal-ledger-specifications/", "features": ["navigation.sections", "toc.integrate", "content.tooltips", "navigation.footer"], "search": "/formal-ledger-specifications/assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "toc.integrate", "content.tooltips", "navigation.footer"], "search": "assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="/formal-ledger-specifications/assets/javascripts/bundle.f1b6f286.min.js"></script>
+      <script src="assets/javascripts/bundle.f1b6f286.min.js"></script>
       
-        <script src="/formal-ledger-specifications/js/custom.js"></script>
+        <script src="js/custom.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
-        <script src="/formal-ledger-specifications/js/katex-config.js"></script>
+        <script src="js/katex-config.js"></script>
       
-        <script src="/formal-ledger-specifications/AgdaKaTeX.js"></script>
+        <script src="AgdaKaTeX.js"></script>
       
     
   </body>

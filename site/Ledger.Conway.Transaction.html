@@ -12,22 +12,28 @@
         <meta name="author" content="Formal Methods Ledger Team">
       
       
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Transaction.html">
       
       
+        <link rel="prev" href="Ledger.Conway.TokenAlgebra.ValueVector.html">
       
-      <link rel="icon" href="/formal-ledger-specifications/assets/images/favicon.png">
+      
+        <link rel="next" href="Ledger.Conway.Types.Epoch.html">
+      
+      
+      <link rel="icon" href="assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.4">
     
     
       
-        <title>Formal Ledger Specification</title>
+        <title>Transaction - Formal Ledger Specification</title>
       
     
     
-      <link rel="stylesheet" href="/formal-ledger-specifications/assets/stylesheets/main.8608ea7d.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.8608ea7d.min.css">
       
         
-        <link rel="stylesheet" href="/formal-ledger-specifications/assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,13 +54,13 @@
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     
-      <link rel="stylesheet" href="/formal-ledger-specifications/Agda.css">
+      <link rel="stylesheet" href="Agda.css">
     
-      <link rel="stylesheet" href="/formal-ledger-specifications/css/custom.css">
+      <link rel="stylesheet" href="css/custom.css">
     
-      <link rel="stylesheet" href="/formal-ledger-specifications/css/Agda.css">
+      <link rel="stylesheet" href="css/Agda.css">
     
-    <script>__md_scope=new URL("/formal-ledger-specifications/",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -79,6 +85,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#sec:transactions" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -91,7 +102,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="/formal-ledger-specifications/index.html" title="Formal Ledger Specification" class="md-header__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
+    <a href="index.html" title="Formal Ledger Specification" class="md-header__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -111,7 +122,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              
+              Transaction
             
           </span>
         </div>
@@ -226,7 +237,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="/formal-ledger-specifications/index.html" title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
+    <a href="index.html" title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -256,7 +267,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/index.html" class="md-nav__link">
+      <a href="index.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -318,7 +329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Introduction.html" class="md-nav__link">
+      <a href="Ledger.Introduction.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -340,7 +351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Notation.html" class="md-nav__link">
+      <a href="Notation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -369,7 +380,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.html" class="md-nav__link">
+      <a href="Ledger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -387,8 +398,10 @@
       
   
   
+    
   
   
+  
     
     
     
@@ -398,11 +411,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
@@ -417,7 +430,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
             Ledger/
@@ -431,7 +444,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Prelude.html" class="md-nav__link">
+      <a href="Ledger.Prelude.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -491,7 +504,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Prelude.Base.html" class="md-nav__link">
+      <a href="Ledger.Prelude.Base.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -521,7 +534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.html" class="md-nav__link">
+      <a href="Ledger.Conway.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -540,6 +553,8 @@
                 
   
   
+    
+  
   
   
     
@@ -548,11 +563,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" checked>
         
           
           <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="0">
@@ -567,7 +582,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_4_4">
             <span class="md-nav__icon md-icon"></span>
             Conway/
@@ -581,7 +596,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Abstract.html" class="md-nav__link">
+      <a href="Ledger.Conway.Abstract.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -603,7 +618,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Address.html" class="md-nav__link">
+      <a href="Ledger.Conway.Address.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -625,7 +640,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.BaseTypes.html" class="md-nav__link">
+      <a href="Ledger.Conway.BaseTypes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -647,7 +662,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -707,7 +722,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -767,7 +782,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.Properties.PoV.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.Properties.PoV.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -789,7 +804,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.Properties.PoVLemmas.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.Properties.PoVLemmas.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -811,7 +826,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html" class="md-nav__link">
+      <a href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -849,7 +864,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -909,7 +924,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -969,7 +984,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -991,7 +1006,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.EpochStep.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.EpochStep.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1013,7 +1028,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.GovDepsMatch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.GovDepsMatch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1035,7 +1050,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Chain.Properties.PParamsWellFormed.html" class="md-nav__link">
+      <a href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1073,7 +1088,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Crypto.html" class="md-nav__link">
+      <a href="Ledger.Conway.Crypto.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1095,7 +1110,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Enact.html" class="md-nav__link">
+      <a href="Ledger.Conway.Enact.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1117,7 +1132,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1177,7 +1192,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1237,7 +1252,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.Properties.ConstRwds.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.Properties.ConstRwds.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1259,7 +1274,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.Properties.GovDepsMatch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.Properties.GovDepsMatch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1281,7 +1296,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Epoch.Properties.NoPropSameDReps.html" class="md-nav__link">
+      <a href="Ledger.Conway.Epoch.Properties.NoPropSameDReps.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1319,7 +1334,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Fees.html" class="md-nav__link">
+      <a href="Ledger.Conway.Fees.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1341,7 +1356,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Gov.html" class="md-nav__link">
+      <a href="Ledger.Conway.Gov.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1401,7 +1416,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Gov.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Gov.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1431,7 +1446,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1491,7 +1506,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.GovernanceActions.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1551,7 +1566,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1589,7 +1604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ledger.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ledger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1649,7 +1664,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ledger.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ledger.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1709,7 +1724,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ledger.Properties.GovDepsMatch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ledger.Properties.GovDepsMatch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1731,7 +1746,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ledger.Properties.PoV.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ledger.Properties.PoV.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1769,7 +1784,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.PParams.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1791,7 +1806,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1813,7 +1828,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ratify.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1873,7 +1888,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Ratify.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Ratify.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1903,7 +1918,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Rewards.html" class="md-nav__link">
+      <a href="Ledger.Conway.Rewards.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1925,7 +1940,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Script.html" class="md-nav__link">
+      <a href="Ledger.Conway.Script.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1985,7 +2000,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Script.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Script.Base.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2007,7 +2022,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Script.Timelock.html" class="md-nav__link">
+      <a href="Ledger.Conway.Script.Timelock.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2037,7 +2052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.ScriptValidation.html" class="md-nav__link">
+      <a href="Ledger.Conway.ScriptValidation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2097,7 +2112,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.TokenAlgebra.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.TokenAlgebra.Base.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2119,7 +2134,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.TokenAlgebra.Coin.html" class="md-nav__link">
+      <a href="Ledger.Conway.TokenAlgebra.Coin.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2141,7 +2156,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.TokenAlgebra.ValueSet.html" class="md-nav__link">
+      <a href="Ledger.Conway.TokenAlgebra.ValueSet.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2163,7 +2178,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.TokenAlgebra.ValueVector.html" class="md-nav__link">
+      <a href="Ledger.Conway.TokenAlgebra.ValueVector.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2190,10 +2205,31 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Transaction.html" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Transaction
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="Ledger.Conway.Transaction.html" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -2203,6 +2239,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#transactions-and-related-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Transactions and related types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#functions-related-to-transactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Functions related to transactions
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2253,7 +2327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.Epoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.Epoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2275,7 +2349,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.GovStructure.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.GovStructure.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2297,7 +2371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.Numeric.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.Numeric.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2357,7 +2431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.Numeric.UnitInterval.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.Numeric.UnitInterval.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2379,7 +2453,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Types.Numeric.PositiveNat.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.Numeric.PositiveNat.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2417,7 +2491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxo.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxo.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2477,7 +2551,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxo.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxo.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2537,7 +2611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxo.Properties.MinSpend.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxo.Properties.MinSpend.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2559,7 +2633,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxo.Properties.PoV.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxo.Properties.PoV.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2597,7 +2671,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxow.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2657,7 +2731,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Utxow.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Utxow.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2725,7 +2799,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.ExternalFunctions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.ExternalFunctions.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2747,7 +2821,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2807,7 +2881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Address.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Address.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2829,7 +2903,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2851,7 +2925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Cert.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Cert.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2873,7 +2947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Certs.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Certs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2895,7 +2969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Chain.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2917,7 +2991,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Core.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Core.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2939,7 +3013,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Enact.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Enact.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2961,7 +3035,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Epoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Epoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2983,7 +3057,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.ExternalStructures.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3005,7 +3079,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Gov.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Gov.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3065,7 +3139,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Gov.Core.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3095,7 +3169,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3117,7 +3191,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Ledger.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Ledger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3139,7 +3213,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.NewEpoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.NewEpoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3161,7 +3235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.PParams.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3183,7 +3257,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Ratify.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3205,7 +3279,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Transaction.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Transaction.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3227,7 +3301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Utxo.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.Utxo.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3257,7 +3331,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.HSTypes.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSTypes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3279,7 +3353,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Foreign.Util.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.Util.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3347,7 +3421,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Certs.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Certs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3407,7 +3481,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Certs.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Certs.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3437,7 +3511,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Chain.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3497,7 +3571,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Chain.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Chain.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3527,7 +3601,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Epoch.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Epoch.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3587,7 +3661,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Epoch.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Epoch.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3617,7 +3691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3677,7 +3751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Bisimilarity.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Bisimilarity.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3699,7 +3773,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Certs.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Certs.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3721,7 +3795,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Convert.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Convert.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3743,7 +3817,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Deposits.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Deposits.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3765,7 +3839,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Map.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Map.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3787,7 +3861,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Utxo.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Equivalence.Utxo.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3817,7 +3891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Gov.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Gov.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3839,7 +3913,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Ledger.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Ledger.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3899,7 +3973,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Ledger.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Ledger.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3929,7 +4003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3951,7 +4025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Script.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Script.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3973,7 +4047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Utxo.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Utxo.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4033,7 +4107,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Utxo.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Utxo.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4063,7 +4137,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Utxow.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4123,7 +4197,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Conway.Conformance.Utxow.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Conformance.Utxow.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4169,7 +4243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.ConwaySafe.html" class="md-nav__link">
+      <a href="Ledger.ConwaySafe.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4229,7 +4303,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.Interface.HasCoin.html" class="md-nav__link">
+      <a href="Ledger.Interface.HasCoin.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4259,7 +4333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.html" class="md-nav__link">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4357,7 +4431,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.Conformance.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.Conformance.NewPP.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4417,7 +4491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.Conformance.NewPP.Properties.html" class="md-nav__link">
+      <a href="Ledger.PreConway.Conformance.NewPP.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4447,7 +4521,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.Conformance.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.Conformance.PPUp.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4507,7 +4581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.Conformance.PPUp.Properties.html" class="md-nav__link">
+      <a href="Ledger.PreConway.Conformance.PPUp.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4545,7 +4619,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4605,7 +4679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.NewPP.Properties.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4635,7 +4709,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4695,7 +4769,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Ledger.PreConway.PPUp.Properties.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.Properties.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4781,7 +4855,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.Convertible.html" class="md-nav__link">
+      <a href="Foreign.Convertible.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4841,7 +4915,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.Convertible.Deriving.html" class="md-nav__link">
+      <a href="Foreign.Convertible.Deriving.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4863,7 +4937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.Convertible.DerivingTest.html" class="md-nav__link">
+      <a href="Foreign.Convertible.DerivingTest.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4893,7 +4967,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.HaskellTypes.html" class="md-nav__link">
+      <a href="Foreign.HaskellTypes.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -4953,7 +5027,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Foreign.HaskellTypes.Deriving.html" class="md-nav__link">
+      <a href="Foreign.HaskellTypes.Deriving.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5031,7 +5105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.Examples.html" class="md-nav__link">
+      <a href="ScriptVerification.Examples.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5053,7 +5127,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.HelloWorld.html" class="md-nav__link">
+      <a href="ScriptVerification.HelloWorld.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5075,7 +5149,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.LedgerImplementation.html" class="md-nav__link">
+      <a href="ScriptVerification.LedgerImplementation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5097,7 +5171,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.Lib.html" class="md-nav__link">
+      <a href="ScriptVerification.Lib.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5119,7 +5193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.Prelude.html" class="md-nav__link">
+      <a href="ScriptVerification.Prelude.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5141,7 +5215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.StructuredContracts.html" class="md-nav__link">
+      <a href="ScriptVerification.StructuredContracts.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5163,7 +5237,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/ScriptVerification.SucceedIfNumber.html" class="md-nav__link">
+      <a href="ScriptVerification.SucceedIfNumber.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5233,7 +5307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/EssentialAgda.html" class="md-nav__link">
+      <a href="EssentialAgda.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5255,7 +5329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Prelude.html" class="md-nav__link">
+      <a href="Prelude.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5353,7 +5427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.ComputationalRelation.html" class="md-nav__link">
+      <a href="Interface.ComputationalRelation.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5375,7 +5449,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.HasSubset.html" class="md-nav__link">
+      <a href="Interface.HasSubset.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5435,7 +5509,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.HasSubset.Instance.html" class="md-nav__link">
+      <a href="Interface.HasSubset.Instance.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5465,7 +5539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.HasSubtract.html" class="md-nav__link">
+      <a href="Interface.HasSubtract.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5525,7 +5599,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.HasSubtract.Instance.html" class="md-nav__link">
+      <a href="Interface.HasSubtract.Instance.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5555,7 +5629,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.Hashable.html" class="md-nav__link">
+      <a href="Interface.Hashable.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5577,7 +5651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/Interface.STS.html" class="md-nav__link">
+      <a href="Interface.STS.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5607,7 +5681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="/formal-ledger-specifications/MyDebugOptions.html" class="md-nav__link">
+      <a href="MyDebugOptions.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5649,8 +5723,329 @@
             <div class="md-content" data-md-component="content">
               <article class="md-content__inner md-typeset">
                 
-  <h1>404 - Not found</h1>
+                  
 
+
+  
+  
+
+
+<h1 id="sec:transactions">Transactions<a class="headerlink" href="#sec:transactions" title="Permanent link">&para;</a></h1>
+<p>This section is part of the
+<a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Transaction.lagda"><code>Ledger.Conway.Transaction</code></a>
+module of the <a href="https://github.com/IntersectMBO/formal-ledger-specifications">formal ledger
+specification</a>,
+where we define transactions.</p>
+<p>A transaction consists of a transaction body, a collection of witnesses
+and some optional auxiliary data.</p>
+<div class="agda-hidden-source">
+
+<pre class="Agda">
+<a id="494" class="Symbol">{-#</a> <a id="498" class="Keyword">OPTIONS</a> <a id="506" class="Pragma">--safe</a> <a id="513" class="Symbol">#-}</a>
+<a id="517" class="Comment">--------------------------------------------------------------------------------</a>
+<a id="598" class="Comment">-- NOTE: Everything in this module is part of TransactionStructure</a>
+<a id="665" class="Comment">--------------------------------------------------------------------------------</a>
+<a id="746" class="Keyword">module</a> <a id="753" href="Ledger.Conway.Transaction.html" class="Module">Ledger.Conway.Transaction</a> <a id="779" class="Keyword">where</a>
+
+<a id="786" class="Keyword">import</a> <a id="793" href="Data.Maybe.Base.html" class="Module">Data.Maybe.Base</a> <a id="809" class="Symbol">as</a> <a id="812" class="Module">M</a>
+
+<a id="815" class="Keyword">open</a> <a id="820" class="Keyword">import</a> <a id="827" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="842" class="Keyword">renaming</a> <a id="851" class="Symbol">(</a><a id="852" href="abstract-set-theory.FiniteSetTheory.html#2895" class="Function">filterᵐ</a> <a id="860" class="Symbol">to</a> <a id="863" class="Function">filter</a><a id="869" class="Symbol">)</a>
+
+<a id="872" class="Keyword">open</a> <a id="877" class="Keyword">import</a> <a id="884" href="Ledger.Conway.Crypto.html" class="Module">Ledger.Conway.Crypto</a>
+<a id="905" class="Keyword">open</a> <a id="910" class="Keyword">import</a> <a id="917" href="Ledger.Conway.Types.Epoch.html" class="Module">Ledger.Conway.Types.Epoch</a>
+<a id="943" class="Keyword">open</a> <a id="948" class="Keyword">import</a> <a id="955" href="Ledger.Conway.Types.GovStructure.html" class="Module">Ledger.Conway.Types.GovStructure</a>
+<a id="988" class="Keyword">import</a> <a id="995" href="Ledger.Conway.PParams.html" class="Module">Ledger.Conway.PParams</a>
+<a id="1017" class="Keyword">import</a> <a id="1024" href="Ledger.Conway.Script.Base.html" class="Module">Ledger.Conway.Script.Base</a>
+<a id="1050" class="Keyword">import</a> <a id="1057" href="Ledger.Conway.GovernanceActions.html" class="Module">Ledger.Conway.GovernanceActions</a>
+<a id="1089" class="Keyword">import</a> <a id="1096" href="Ledger.Conway.Certs.html" class="Module">Ledger.Conway.Certs</a>
+<a id="1116" class="Keyword">import</a> <a id="1123" href="Ledger.Conway.TokenAlgebra.Base.html" class="Module">Ledger.Conway.TokenAlgebra.Base</a>
+<a id="1155" class="Keyword">import</a> <a id="1162" href="Ledger.Conway.Address.html" class="Module">Ledger.Conway.Address</a>
+
+<a id="1185" class="Keyword">open</a> <a id="1190" class="Keyword">import</a> <a id="1197" href="Relation.Nullary.Decidable.html" class="Module">Relation.Nullary.Decidable</a> <a id="1224" class="Keyword">using</a> <a id="1230" class="Symbol">(</a><a id="1231" href="Relation.Nullary.Decidable.Core.html#4636" class="Function Operator">⌊_⌋</a><a id="1234" class="Symbol">)</a>
+
+<a id="1237" class="Keyword">data</a> <a id="Tag"></a><a id="1242" href="Ledger.Conway.Transaction.html#1242" class="Datatype">Tag</a> <a id="1246" class="Symbol">:</a> <a id="1248" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1253" class="Keyword">where</a>
+  <a id="Tag.Spend"></a><a id="1261" href="Ledger.Conway.Transaction.html#1261" class="InductiveConstructor">Spend</a> <a id="Tag.Mint"></a><a id="1267" href="Ledger.Conway.Transaction.html#1267" class="InductiveConstructor">Mint</a> <a id="Tag.Cert"></a><a id="1272" href="Ledger.Conway.Transaction.html#1272" class="InductiveConstructor">Cert</a> <a id="Tag.Rewrd"></a><a id="1277" href="Ledger.Conway.Transaction.html#1277" class="InductiveConstructor">Rewrd</a> <a id="Tag.Vote"></a><a id="1283" href="Ledger.Conway.Transaction.html#1283" class="InductiveConstructor">Vote</a> <a id="Tag.Propose"></a><a id="1288" href="Ledger.Conway.Transaction.html#1288" class="InductiveConstructor">Propose</a> <a id="1296" class="Symbol">:</a> <a id="1298" href="Ledger.Conway.Transaction.html#1242" class="Datatype">Tag</a>
+<a id="1302" class="Keyword">unquoteDecl</a> <a id="DecEq-Tag"></a><a id="1314" href="Ledger.Conway.Transaction.html#1314" class="Function">DecEq-Tag</a> <a id="1324" class="Symbol">=</a> <a id="1326" href="Tactic.Derive.DecEq.html#3519" class="Function">derive-DecEq</a> <a id="1339" class="Symbol">((</a><a id="1341" class="Keyword">quote</a> <a id="1347" href="Ledger.Conway.Transaction.html#1242" class="Datatype">Tag</a> <a id="1351" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1353" href="Ledger.Conway.Transaction.html#1314" class="Function">DecEq-Tag</a><a id="1362" class="Symbol">)</a> <a id="1364" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="1366" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="1368" class="Symbol">)</a>
+</pre>
+</div>
+<p>Some key ingredients in the transaction body are:</p>
+<ul>
+<li>
+<p>A set <code class="AgdaField">txins</code> of transaction inputs, each of which
+  identifies an output from a previous transaction. A transaction input
+  consists of a transaction id and an index to uniquely identify the
+  output.</p>
+</li>
+<li>
+<p>An indexed collection <code class="AgdaField">txouts</code> of transaction outputs. The
+  <code class="AgdaFunction">TxOut</code> type is an address paired with a coin value.</p>
+</li>
+<li>
+<p>A transaction fee. This value will be added to the fee pot.</p>
+</li>
+<li>
+<p>The size <code class="AgdaField">txsize</code> and the hash <code class="AgdaField">txid</code> of the
+  serialized form of the transaction that was included in the block.</p>
+</li>
+</ul>
+<p>@@ADMONITION_START|Conway specifics@@</p>
+<p>Ingredients of the transaction body introduced in the Conway era are the
+following:</p>
+<ul>
+<li>
+<p><code class="AgdaField">txvote</code>, the list of votes for goverance actions;</p>
+</li>
+<li>
+<p><code class="AgdaField">txprop</code>, the list of governance proposals;</p>
+</li>
+<li>
+<p><code class="AgdaField">txdonation</code>, amount of <code class="AgdaFunction">Coin</code> to donate to
+  treasury, e.g., to return money to the treasury after a governance
+  action;</p>
+</li>
+<li>
+<p><code class="AgdaField">curTreasury</code>, the current value of the treasury. This
+  field serves as a precondition to executing Plutus scripts that access
+  the value of the treasury.</p>
+</li>
+</ul>
+<h3 id="transactions-and-related-types">Transactions and related types<a class="headerlink" href="#transactions-and-related-types" title="Permanent link">&para;</a></h3>
+<div class="agda-hidden-source">
+
+<pre class="Agda">
+<a id="2657" class="Keyword">record</a> <a id="TransactionStructure"></a><a id="2664" href="Ledger.Conway.Transaction.html#2664" class="Record">TransactionStructure</a> <a id="2685" class="Symbol">:</a> <a id="2687" href="Agda.Primitive.html#388" class="Primitive">Type₁</a> <a id="2693" class="Keyword">where</a>
+  <a id="2701" class="Keyword">field</a>
+</pre>
+</div>
+<p><em>Abstract types</em></p>
+<pre class="Agda">
+    <a id="TransactionStructure.Ix"></a><a id="2751" href="Ledger.Conway.Transaction.html#2751" class="Field">Ix</a> <a id="TransactionStructure.TxId"></a><a id="2754" href="Ledger.Conway.Transaction.html#2754" class="Field">TxId</a> <a id="TransactionStructure.AuxiliaryData"></a><a id="2759" href="Ledger.Conway.Transaction.html#2759" class="Field">AuxiliaryData</a> <a id="2773" class="Symbol">:</a> <a id="2775" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+</pre>
+<div class="agda-hidden-source">
+
+<pre class="Agda">
+    <a id="2833" class="Symbol">⦃</a> <a id="TransactionStructure.DecEq-Ix"></a><a id="2835" href="Ledger.Conway.Transaction.html#2835" class="Field">DecEq-Ix</a>   <a id="2846" class="Symbol">⦄</a> <a id="2848" class="Symbol">:</a> <a id="2850" href="Class.DecEq.Core.html#117" class="Record">DecEq</a> <a id="2856" href="Ledger.Conway.Transaction.html#2751" class="Field">Ix</a>
+    <a id="2863" class="Symbol">⦃</a> <a id="TransactionStructure.DecEq-TxId"></a><a id="2865" href="Ledger.Conway.Transaction.html#2865" class="Field">DecEq-TxId</a> <a id="2876" class="Symbol">⦄</a> <a id="2878" class="Symbol">:</a> <a id="2880" href="Class.DecEq.Core.html#117" class="Record">DecEq</a> <a id="2886" href="Ledger.Conway.Transaction.html#2754" class="Field">TxId</a>
+    <a id="TransactionStructure.adHashingScheme"></a><a id="2895" href="Ledger.Conway.Transaction.html#2895" class="Field">adHashingScheme</a> <a id="2911" class="Symbol">:</a> <a id="2913" href="Ledger.Conway.Crypto.html#752" class="Record">isHashableSet</a> <a id="2927" href="Ledger.Conway.Transaction.html#2759" class="Field">AuxiliaryData</a>
+  <a id="2943" class="Keyword">open</a> <a id="2948" href="Ledger.Conway.Crypto.html#752" class="Module">isHashableSet</a> <a id="2962" href="Ledger.Conway.Transaction.html#2895" class="Field">adHashingScheme</a> <a id="2978" class="Keyword">renaming</a> <a id="2987" class="Symbol">(</a><a id="2988" href="Ledger.Conway.Crypto.html#829" class="Field">THash</a> <a id="2994" class="Symbol">to</a> <a id="2997" class="Field">ADHash</a><a id="3003" class="Symbol">)</a> <a id="3005" class="Keyword">public</a>
+
+  <a id="3015" class="Keyword">field</a> <a id="TransactionStructure.globalConstants"></a><a id="3021" href="Ledger.Conway.Transaction.html#3021" class="Field">globalConstants</a> <a id="3037" class="Symbol">:</a> <a id="3039" class="Symbol">_</a>
+  <a id="3043" class="Keyword">open</a> <a id="3048" href="Ledger.Conway.Types.Epoch.html#2019" class="Module">GlobalConstants</a> <a id="3064" href="Ledger.Conway.Transaction.html#3021" class="Field">globalConstants</a> <a id="3080" class="Keyword">public</a>
+
+  <a id="3090" class="Keyword">field</a> <a id="TransactionStructure.crypto"></a><a id="3096" href="Ledger.Conway.Transaction.html#3096" class="Field">crypto</a> <a id="3103" class="Symbol">:</a> <a id="3105" class="Symbol">_</a>
+  <a id="3109" class="Keyword">open</a> <a id="3114" href="Ledger.Conway.Crypto.html#1987" class="Module">Crypto</a> <a id="3121" href="Ledger.Conway.Transaction.html#3096" class="Field">crypto</a> <a id="3128" class="Keyword">public</a>
+  <a id="3137" class="Keyword">open</a> <a id="3142" href="Ledger.Conway.TokenAlgebra.Base.html" class="Module">Ledger.Conway.TokenAlgebra.Base</a> <a id="3174" href="Ledger.Conway.Crypto.html#2110" class="Function">ScriptHash</a> <a id="3185" class="Keyword">public</a>
+  <a id="3194" class="Keyword">open</a> <a id="3199" href="Ledger.Conway.Address.html" class="Module">Ledger.Conway.Address</a> <a id="3221" href="Ledger.Conway.Types.Epoch.html#2058" class="Function">Network</a> <a id="3229" href="Ledger.Conway.Crypto.html#2254" class="Function">KeyHash</a> <a id="3237" href="Ledger.Conway.Crypto.html#2110" class="Function">ScriptHash</a> <a id="3248" class="Symbol">⦃</a> <a id="3250" href="Function.Base.html#4736" class="Function">it</a> <a id="3253" class="Symbol">⦄</a> <a id="3255" class="Symbol">⦃</a> <a id="3257" href="Function.Base.html#4736" class="Function">it</a> <a id="3260" class="Symbol">⦄</a> <a id="3262" class="Symbol">⦃</a> <a id="3264" href="Function.Base.html#4736" class="Function">it</a> <a id="3267" class="Symbol">⦄</a> <a id="3269" class="Keyword">public</a>
+
+  <a id="3279" class="Keyword">field</a> <a id="TransactionStructure.epochStructure"></a><a id="3285" href="Ledger.Conway.Transaction.html#3285" class="Field">epochStructure</a> <a id="3300" class="Symbol">:</a> <a id="3302" class="Symbol">_</a>
+  <a id="3306" class="Keyword">open</a> <a id="3311" href="Ledger.Conway.Types.Epoch.html#532" class="Module">EpochStructure</a> <a id="3326" href="Ledger.Conway.Transaction.html#3285" class="Field">epochStructure</a> <a id="3341" class="Keyword">public</a>
+  <a id="3350" class="Keyword">open</a> <a id="3355" href="Ledger.Conway.Script.Base.html" class="Module">Ledger.Conway.Script.Base</a> <a id="3381" href="Ledger.Conway.Transaction.html#3096" class="Field">crypto</a> <a id="3388" href="Ledger.Conway.Transaction.html#3285" class="Field">epochStructure</a> <a id="3403" class="Keyword">public</a>
+
+  <a id="3413" class="Keyword">field</a> <a id="TransactionStructure.scriptStructure"></a><a id="3419" href="Ledger.Conway.Transaction.html#3419" class="Field">scriptStructure</a> <a id="3435" class="Symbol">:</a> <a id="3437" class="Symbol">_</a>
+  <a id="3441" class="Keyword">open</a> <a id="3446" href="Ledger.Conway.Script.Base.html#2026" class="Module">ScriptStructure</a> <a id="3462" href="Ledger.Conway.Transaction.html#3419" class="Field">scriptStructure</a> <a id="3478" class="Keyword">public</a>
+  <a id="3487" class="Keyword">open</a> <a id="3492" href="Ledger.Conway.PParams.html" class="Module">Ledger.Conway.PParams</a> <a id="3514" href="Ledger.Conway.Transaction.html#3096" class="Field">crypto</a> <a id="3521" href="Ledger.Conway.Transaction.html#3285" class="Field">epochStructure</a> <a id="3536" href="Ledger.Conway.Transaction.html#3419" class="Field">scriptStructure</a> <a id="3552" class="Keyword">public</a>
+
+  <a id="3562" class="Keyword">field</a> <a id="TransactionStructure.govParams"></a><a id="3568" href="Ledger.Conway.Transaction.html#3568" class="Field">govParams</a> <a id="3578" class="Symbol">:</a> <a id="3580" class="Symbol">_</a>
+  <a id="3584" class="Keyword">open</a> <a id="3589" href="Ledger.Conway.PParams.html#20712" class="Module">GovParams</a> <a id="3599" href="Ledger.Conway.Transaction.html#3568" class="Field">govParams</a> <a id="3609" class="Keyword">public</a>
+
+  <a id="3619" class="Keyword">field</a> <a id="TransactionStructure.tokenAlgebra"></a><a id="3625" href="Ledger.Conway.Transaction.html#3625" class="Field">tokenAlgebra</a> <a id="3638" class="Symbol">:</a> <a id="3640" href="Ledger.Conway.TokenAlgebra.Base.html#992" class="Record">TokenAlgebra</a>
+  <a id="3655" class="Keyword">open</a> <a id="3660" href="Ledger.Conway.TokenAlgebra.Base.html#992" class="Module">TokenAlgebra</a> <a id="3673" href="Ledger.Conway.Transaction.html#3625" class="Field">tokenAlgebra</a> <a id="3686" class="Keyword">public</a>
+
+  <a id="3696" class="Keyword">field</a> <a id="TransactionStructure.txidBytes"></a><a id="3702" href="Ledger.Conway.Transaction.html#3702" class="Field">txidBytes</a> <a id="3712" class="Symbol">:</a> <a id="3714" href="Ledger.Conway.Transaction.html#2754" class="Field">TxId</a> <a id="3719" class="Symbol">→</a> <a id="3721" href="Ledger.Conway.Crypto.html#1396" class="Function">Ser</a>
+
+  <a id="TransactionStructure.govStructure"></a><a id="3728" href="Ledger.Conway.Transaction.html#3728" class="Function">govStructure</a> <a id="3741" class="Symbol">:</a> <a id="3743" href="Ledger.Conway.Types.GovStructure.html#283" class="Record">GovStructure</a>
+  <a id="3758" href="Ledger.Conway.Transaction.html#3728" class="Function">govStructure</a> <a id="3771" class="Symbol">=</a> <a id="3773" class="Keyword">record</a>
+    <a id="3784" class="Comment">-- TODO: figure out what to do with the hash</a>
+    <a id="3833" class="Symbol">{</a> <a id="3835" href="Ledger.Conway.Types.GovStructure.html#318" class="Field">TxId</a> <a id="3840" class="Symbol">=</a> <a id="3842" href="Ledger.Conway.Transaction.html#2754" class="Field">TxId</a><a id="3846" class="Symbol">;</a> <a id="3848" href="Ledger.Conway.Types.GovStructure.html#323" class="Field">DocHash</a> <a id="3856" class="Symbol">=</a> <a id="3858" href="Ledger.Conway.Transaction.html#2997" class="Function">ADHash</a>
+    <a id="3869" class="Symbol">;</a> <a id="3871" href="Ledger.Conway.Types.GovStructure.html#383" class="Field">crypto</a> <a id="3878" class="Symbol">=</a> <a id="3880" href="Ledger.Conway.Transaction.html#3096" class="Field">crypto</a>
+    <a id="3891" class="Symbol">;</a> <a id="3893" href="Ledger.Conway.Types.GovStructure.html#431" class="Field">epochStructure</a> <a id="3908" class="Symbol">=</a> <a id="3910" href="Ledger.Conway.Transaction.html#3285" class="Field">epochStructure</a>
+    <a id="3929" class="Symbol">;</a> <a id="3931" href="Ledger.Conway.Types.GovStructure.html#503" class="Field">scriptStructure</a> <a id="3947" class="Symbol">=</a> <a id="3949" href="Ledger.Conway.Transaction.html#3419" class="Field">scriptStructure</a>
+    <a id="3969" class="Symbol">;</a> <a id="3971" href="Ledger.Conway.Types.GovStructure.html#689" class="Field">govParams</a> <a id="3981" class="Symbol">=</a> <a id="3983" href="Ledger.Conway.Transaction.html#3568" class="Field">govParams</a>
+    <a id="3997" class="Symbol">;</a> <a id="3999" href="Ledger.Conway.Types.GovStructure.html#754" class="Field">globalConstants</a> <a id="4015" class="Symbol">=</a> <a id="4017" href="Ledger.Conway.Transaction.html#3021" class="Field">globalConstants</a>
+    <a id="4037" class="Symbol">}</a>
+
+  <a id="4042" class="Keyword">module</a> <a id="TransactionStructure.GovernanceActions"></a><a id="4049" href="Ledger.Conway.Transaction.html#4049" class="Module">GovernanceActions</a> <a id="4067" class="Symbol">=</a> <a id="4069" href="Ledger.Conway.GovernanceActions.html" class="Module">Ledger.Conway.GovernanceActions</a> <a id="4101" href="Ledger.Conway.Transaction.html#3728" class="Function">govStructure</a>
+  <a id="4116" class="Keyword">open</a> <a id="4121" href="Ledger.Conway.Transaction.html#4049" class="Module">GovernanceActions</a> <a id="4139" class="Keyword">hiding</a> <a id="4146" class="Symbol">(</a><a id="4147" href="Ledger.Conway.GovernanceActions.html#7653" class="Datatype">Vote</a><a id="4151" class="Symbol">;</a> <a id="4153" href="Ledger.Conway.GovernanceActions.html#7673" class="InductiveConstructor">yes</a><a id="4156" class="Symbol">;</a> <a id="4158" href="Ledger.Conway.GovernanceActions.html#7677" class="InductiveConstructor">no</a><a id="4160" class="Symbol">;</a> <a id="4162" href="Ledger.Conway.GovernanceActions.html#7680" class="InductiveConstructor">abstain</a><a id="4169" class="Symbol">)</a> <a id="4171" class="Keyword">public</a>
+
+  <a id="4181" class="Keyword">open</a> <a id="4186" class="Keyword">import</a> <a id="4193" href="Ledger.Conway.Certs.html" class="Module">Ledger.Conway.Certs</a> <a id="4213" href="Ledger.Conway.Transaction.html#3728" class="Function">govStructure</a>
+</pre>
+</div>
+<p><em>Derived types</em> </p>
+<pre class="Agda">
+  <a id="TransactionStructure.TxIn"></a><a id="4267" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a>     <a id="4276" class="Symbol">=</a> <a id="4278" href="Ledger.Conway.Transaction.html#2754" class="Field">TxId</a> <a id="4283" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="4285" href="Ledger.Conway.Transaction.html#2751" class="Field">Ix</a>
+  <a id="TransactionStructure.TxOut"></a><a id="4290" href="Ledger.Conway.Transaction.html#4290" class="Function">TxOut</a>    <a id="4299" class="Symbol">=</a> <a id="4301" href="Ledger.Conway.Address.html#3667" class="Function">Addr</a> <a id="4306" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="4308" href="Ledger.Conway.TokenAlgebra.Base.html#1031" class="Function">Value</a> <a id="4314" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="4316" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="4322" class="Symbol">(</a><a id="4323" href="Ledger.Conway.Script.Base.html#1748" class="Function">Datum</a> <a id="4329" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="4331" href="Ledger.Conway.Script.Base.html#1701" class="Function">DataHash</a><a id="4339" class="Symbol">)</a> <a id="4341" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="4343" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="4349" href="Ledger.Conway.Script.Base.html#2421" class="Function">Script</a>
+  <a id="TransactionStructure.UTxO"></a><a id="4358" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a>     <a id="4367" class="Symbol">=</a> <a id="4369" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a> <a id="4374" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="4376" href="Ledger.Conway.Transaction.html#4290" class="Function">TxOut</a>
+  <a id="TransactionStructure.Wdrl"></a><a id="4384" href="Ledger.Conway.Transaction.html#4384" class="Function">Wdrl</a>     <a id="4393" class="Symbol">=</a> <a id="4395" href="Ledger.Conway.Address.html#2611" class="Record">RwdAddr</a> <a id="4403" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="4405" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
+  <a id="TransactionStructure.RdmrPtr"></a><a id="4412" href="Ledger.Conway.Transaction.html#4412" class="Function">RdmrPtr</a>  <a id="4421" class="Symbol">=</a> <a id="4423" href="Ledger.Conway.Transaction.html#1242" class="Datatype">Tag</a> <a id="4427" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="4429" href="Ledger.Conway.Transaction.html#2751" class="Field">Ix</a>
+
+  <a id="TransactionStructure.ProposedPPUpdates"></a><a id="4435" href="Ledger.Conway.Transaction.html#4435" class="Function">ProposedPPUpdates</a>  <a id="4454" class="Symbol">=</a> <a id="4456" href="Ledger.Conway.Crypto.html#2254" class="Function">KeyHash</a> <a id="4464" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="4466" href="Ledger.Conway.PParams.html#20810" class="Function">PParamsUpdate</a>
+  <a id="TransactionStructure.Update"></a><a id="4482" href="Ledger.Conway.Transaction.html#4482" class="Function">Update</a>             <a id="4501" class="Symbol">=</a> <a id="4503" href="Ledger.Conway.Transaction.html#4435" class="Function">ProposedPPUpdates</a> <a id="4521" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="4523" href="Ledger.Conway.Types.Epoch.html#600" class="Function">Epoch</a>
+</pre>
+
+<div class="agda-hidden-source">
+
+<pre class="Agda">
+  <a id="4580" class="Keyword">record</a> <a id="TransactionStructure.HasUTxO"></a><a id="4587" href="Ledger.Conway.Transaction.html#4587" class="Record">HasUTxO</a> <a id="4595" class="Symbol">{</a><a id="4596" href="Ledger.Conway.Transaction.html#4596" class="Bound">a</a><a id="4597" class="Symbol">}</a> <a id="4599" class="Symbol">(</a><a id="4600" href="Ledger.Conway.Transaction.html#4600" class="Bound">A</a> <a id="4602" class="Symbol">:</a> <a id="4604" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="4609" href="Ledger.Conway.Transaction.html#4596" class="Bound">a</a><a id="4610" class="Symbol">)</a> <a id="4612" class="Symbol">:</a> <a id="4614" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="4619" href="Ledger.Conway.Transaction.html#4596" class="Bound">a</a> <a id="4621" class="Keyword">where</a>
+    <a id="4631" class="Keyword">field</a> <a id="4637" href="Ledger.Conway.Transaction.html#4637" class="Field">UTxOOf</a> <a id="4644" class="Symbol">:</a> <a id="4646" href="Ledger.Conway.Transaction.html#4600" class="Bound">A</a> <a id="4648" class="Symbol">→</a> <a id="4650" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a>
+  <a id="4657" class="Keyword">open</a> <a id="4662" href="Ledger.Conway.Transaction.html#4587" class="Module">HasUTxO</a> <a id="4670" class="Symbol">⦃...⦄</a> <a id="4676" class="Keyword">public</a>
+</pre>
+</div>
+<p><em>Transaction types</em> </p>
+<pre class="Agda">
+  <a id="4728" class="Keyword">record</a> <a id="TransactionStructure.TxBody"></a><a id="4735" href="Ledger.Conway.Transaction.html#4735" class="Record">TxBody</a> <a id="4742" class="Symbol">:</a> <a id="4744" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="4749" class="Keyword">where</a>
+    <a id="4759" class="Keyword">field</a>
+      <a id="4771" href="Ledger.Conway.Transaction.html#4771" class="Field">txins</a>          <a id="4786" class="Symbol">:</a> <a id="4788" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="4790" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a>
+      <a id="4801" href="Ledger.Conway.Transaction.html#4801" class="Field">refInputs</a>      <a id="4816" class="Symbol">:</a> <a id="4818" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="4820" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a>
+      <a id="4831" href="Ledger.Conway.Transaction.html#4831" class="Field">txouts</a>         <a id="4846" class="Symbol">:</a> <a id="4848" href="Ledger.Conway.Transaction.html#2751" class="Field">Ix</a> <a id="4851" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="4853" href="Ledger.Conway.Transaction.html#4290" class="Function">TxOut</a>
+      <a id="4865" href="Ledger.Conway.Transaction.html#4865" class="Field">txfee</a>          <a id="4880" class="Symbol">:</a> <a id="4882" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
+      <a id="4893" href="Ledger.Conway.Transaction.html#4893" class="Field">mint</a>           <a id="4908" class="Symbol">:</a> <a id="4910" href="Ledger.Conway.TokenAlgebra.Base.html#1031" class="Function">Value</a>
+      <a id="4922" href="Ledger.Conway.Transaction.html#4922" class="Field">txvldt</a>         <a id="4937" class="Symbol">:</a> <a id="4939" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="4945" href="Ledger.Conway.Types.Epoch.html#676" class="Function">Slot</a> <a id="4950" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="4952" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="4958" href="Ledger.Conway.Types.Epoch.html#676" class="Function">Slot</a>
+      <a id="4969" href="Ledger.Conway.Transaction.html#4969" class="Field">txcerts</a>        <a id="4984" class="Symbol">:</a> <a id="4986" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="4991" href="Ledger.Conway.Certs.html#1873" class="Datatype">DCert</a>
+      <a id="5003" href="Ledger.Conway.Transaction.html#5003" class="Field">txwdrls</a>        <a id="5018" class="Symbol">:</a> <a id="5020" href="Ledger.Conway.Transaction.html#4384" class="Function">Wdrl</a>
+      <a id="5031" href="Ledger.Conway.Transaction.html#5031" class="Field">txvote</a>         <a id="5046" class="Symbol">:</a> <a id="5048" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="5053" href="Ledger.Conway.GovernanceActions.html#7704" class="Record">GovVote</a>
+      <a id="5067" href="Ledger.Conway.Transaction.html#5067" class="Field">txprop</a>         <a id="5082" class="Symbol">:</a> <a id="5084" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="5089" href="Ledger.Conway.GovernanceActions.html#7849" class="Record">GovProposal</a>
+      <a id="5107" href="Ledger.Conway.Transaction.html#5107" class="Field">txdonation</a>     <a id="5122" class="Symbol">:</a> <a id="5124" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
+      <a id="5135" href="Ledger.Conway.Transaction.html#5135" class="Field">txup</a>           <a id="5150" class="Symbol">:</a> <a id="5152" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="5158" href="Ledger.Conway.Transaction.html#4482" class="Function">Update</a>
+      <a id="5171" href="Ledger.Conway.Transaction.html#5171" class="Field">txADhash</a>       <a id="5186" class="Symbol">:</a> <a id="5188" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="5194" href="Ledger.Conway.Transaction.html#2997" class="Function">ADHash</a>
+      <a id="5207" href="Ledger.Conway.Transaction.html#5207" class="Field">txNetworkId</a>    <a id="5222" class="Symbol">:</a> <a id="5224" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="5230" href="Ledger.Conway.Types.Epoch.html#2058" class="Function">Network</a>
+      <a id="5244" href="Ledger.Conway.Transaction.html#5244" class="Field">curTreasury</a>    <a id="5259" class="Symbol">:</a> <a id="5261" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="5267" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
+      <a id="5278" href="Ledger.Conway.Transaction.html#5278" class="Field">txsize</a>         <a id="5293" class="Symbol">:</a> <a id="5295" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+      <a id="5303" href="Ledger.Conway.Transaction.html#5303" class="Field">txid</a>           <a id="5318" class="Symbol">:</a> <a id="5320" href="Ledger.Conway.Transaction.html#2754" class="Field">TxId</a>
+      <a id="5331" href="Ledger.Conway.Transaction.html#5331" class="Field">collateral</a>     <a id="5346" class="Symbol">:</a> <a id="5348" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="5350" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a>
+      <a id="5361" href="Ledger.Conway.Transaction.html#5361" class="Field">reqSigHash</a>     <a id="5376" class="Symbol">:</a> <a id="5378" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="5380" href="Ledger.Conway.Crypto.html#2254" class="Function">KeyHash</a>
+      <a id="5394" href="Ledger.Conway.Transaction.html#5394" class="Field">scriptIntHash</a>  <a id="5409" class="Symbol">:</a> <a id="5411" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="5417" href="Ledger.Conway.Crypto.html#2110" class="Function">ScriptHash</a>
+</pre>
+
+<div class="agda-hidden-source">
+
+<pre class="Agda">
+  <a id="5479" class="Keyword">record</a> <a id="TransactionStructure.HasTxBody"></a><a id="5486" href="Ledger.Conway.Transaction.html#5486" class="Record">HasTxBody</a> <a id="5496" class="Symbol">{</a><a id="5497" href="Ledger.Conway.Transaction.html#5497" class="Bound">a</a><a id="5498" class="Symbol">}</a> <a id="5500" class="Symbol">(</a><a id="5501" href="Ledger.Conway.Transaction.html#5501" class="Bound">A</a> <a id="5503" class="Symbol">:</a> <a id="5505" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5510" href="Ledger.Conway.Transaction.html#5497" class="Bound">a</a><a id="5511" class="Symbol">)</a> <a id="5513" class="Symbol">:</a> <a id="5515" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5520" href="Ledger.Conway.Transaction.html#5497" class="Bound">a</a> <a id="5522" class="Keyword">where</a>
+    <a id="5532" class="Keyword">field</a> <a id="5538" href="Ledger.Conway.Transaction.html#5538" class="Field">TxBodyOf</a> <a id="5547" class="Symbol">:</a> <a id="5549" href="Ledger.Conway.Transaction.html#5501" class="Bound">A</a> <a id="5551" class="Symbol">→</a> <a id="5553" href="Ledger.Conway.Transaction.html#4735" class="Record">TxBody</a>
+  <a id="5562" class="Keyword">open</a> <a id="5567" href="Ledger.Conway.Transaction.html#5486" class="Module">HasTxBody</a>  <a id="5578" class="Symbol">⦃...⦄</a> <a id="5584" class="Keyword">public</a>
+
+  <a id="5594" class="Keyword">record</a> <a id="TransactionStructure.Hastxfee"></a><a id="5601" href="Ledger.Conway.Transaction.html#5601" class="Record">Hastxfee</a> <a id="5610" class="Symbol">{</a><a id="5611" href="Ledger.Conway.Transaction.html#5611" class="Bound">a</a><a id="5612" class="Symbol">}</a> <a id="5614" class="Symbol">(</a><a id="5615" href="Ledger.Conway.Transaction.html#5615" class="Bound">A</a> <a id="5617" class="Symbol">:</a> <a id="5619" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5624" href="Ledger.Conway.Transaction.html#5611" class="Bound">a</a><a id="5625" class="Symbol">)</a> <a id="5627" class="Symbol">:</a> <a id="5629" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5634" href="Ledger.Conway.Transaction.html#5611" class="Bound">a</a> <a id="5636" class="Keyword">where</a>
+    <a id="5646" class="Keyword">field</a> <a id="5652" href="Ledger.Conway.Transaction.html#5652" class="Field">txfeeOf</a> <a id="5660" class="Symbol">:</a> <a id="5662" href="Ledger.Conway.Transaction.html#5615" class="Bound">A</a> <a id="5664" class="Symbol">→</a> <a id="5666" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
+  <a id="5673" class="Keyword">open</a> <a id="5678" href="Ledger.Conway.Transaction.html#5601" class="Module">Hastxfee</a>   <a id="5689" class="Symbol">⦃...⦄</a> <a id="5695" class="Keyword">public</a>
+
+  <a id="5705" class="Keyword">record</a> <a id="TransactionStructure.Hastxcerts"></a><a id="5712" href="Ledger.Conway.Transaction.html#5712" class="Record">Hastxcerts</a> <a id="5723" class="Symbol">{</a><a id="5724" href="Ledger.Conway.Transaction.html#5724" class="Bound">a</a><a id="5725" class="Symbol">}</a> <a id="5727" class="Symbol">(</a><a id="5728" href="Ledger.Conway.Transaction.html#5728" class="Bound">A</a> <a id="5730" class="Symbol">:</a> <a id="5732" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5737" href="Ledger.Conway.Transaction.html#5724" class="Bound">a</a><a id="5738" class="Symbol">)</a> <a id="5740" class="Symbol">:</a> <a id="5742" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5747" href="Ledger.Conway.Transaction.html#5724" class="Bound">a</a> <a id="5749" class="Keyword">where</a>
+    <a id="5759" class="Keyword">field</a> <a id="5765" href="Ledger.Conway.Transaction.html#5765" class="Field">txcertsOf</a> <a id="5775" class="Symbol">:</a> <a id="5777" href="Ledger.Conway.Transaction.html#5728" class="Bound">A</a> <a id="5779" class="Symbol">→</a> <a id="5781" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="5786" href="Ledger.Conway.Certs.html#1873" class="Datatype">DCert</a>
+  <a id="5794" class="Keyword">open</a> <a id="5799" href="Ledger.Conway.Transaction.html#5712" class="Module">Hastxcerts</a> <a id="5810" class="Symbol">⦃...⦄</a> <a id="5816" class="Keyword">public</a>
+
+  <a id="5826" class="Keyword">record</a> <a id="TransactionStructure.Hastxprop"></a><a id="5833" href="Ledger.Conway.Transaction.html#5833" class="Record">Hastxprop</a> <a id="5843" class="Symbol">{</a><a id="5844" href="Ledger.Conway.Transaction.html#5844" class="Bound">a</a><a id="5845" class="Symbol">}</a> <a id="5847" class="Symbol">(</a><a id="5848" href="Ledger.Conway.Transaction.html#5848" class="Bound">A</a> <a id="5850" class="Symbol">:</a> <a id="5852" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5857" href="Ledger.Conway.Transaction.html#5844" class="Bound">a</a><a id="5858" class="Symbol">)</a> <a id="5860" class="Symbol">:</a> <a id="5862" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5867" href="Ledger.Conway.Transaction.html#5844" class="Bound">a</a> <a id="5869" class="Keyword">where</a>
+    <a id="5879" class="Keyword">field</a> <a id="5885" href="Ledger.Conway.Transaction.html#5885" class="Field">txpropOf</a>  <a id="5895" class="Symbol">:</a> <a id="5897" href="Ledger.Conway.Transaction.html#5848" class="Bound">A</a> <a id="5899" class="Symbol">→</a> <a id="5901" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="5906" href="Ledger.Conway.GovernanceActions.html#7849" class="Record">GovProposal</a>
+  <a id="5920" class="Keyword">open</a> <a id="5925" href="Ledger.Conway.Transaction.html#5833" class="Module">Hastxprop</a>  <a id="5936" class="Symbol">⦃...⦄</a> <a id="5942" class="Keyword">public</a>
+
+  <a id="5952" class="Keyword">record</a> <a id="TransactionStructure.Hastxid"></a><a id="5959" href="Ledger.Conway.Transaction.html#5959" class="Record">Hastxid</a>    <a id="5970" class="Symbol">{</a><a id="5971" href="Ledger.Conway.Transaction.html#5971" class="Bound">a</a><a id="5972" class="Symbol">}</a> <a id="5974" class="Symbol">(</a><a id="5975" href="Ledger.Conway.Transaction.html#5975" class="Bound">A</a> <a id="5977" class="Symbol">:</a> <a id="5979" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5984" href="Ledger.Conway.Transaction.html#5971" class="Bound">a</a><a id="5985" class="Symbol">)</a> <a id="5987" class="Symbol">:</a> <a id="5989" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5994" href="Ledger.Conway.Transaction.html#5971" class="Bound">a</a> <a id="5996" class="Keyword">where</a> 
+    <a id="6007" class="Keyword">field</a> <a id="6013" href="Ledger.Conway.Transaction.html#6013" class="Field">txidOf</a>    <a id="6023" class="Symbol">:</a> <a id="6025" href="Ledger.Conway.Transaction.html#5975" class="Bound">A</a> <a id="6027" class="Symbol">→</a> <a id="6029" href="Ledger.Conway.Transaction.html#2754" class="Field">TxId</a>
+  <a id="6036" class="Keyword">open</a> <a id="6041" href="Ledger.Conway.Transaction.html#5959" class="Module">Hastxid</a>    <a id="6052" class="Symbol">⦃...⦄</a> <a id="6058" class="Keyword">public</a>
+</pre>
+</div>
+
+<pre class="Agda">
+  <a id="6090" class="Keyword">record</a> <a id="TransactionStructure.TxWitnesses"></a><a id="6097" href="Ledger.Conway.Transaction.html#6097" class="Record">TxWitnesses</a> <a id="6109" class="Symbol">:</a> <a id="6111" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="6116" class="Keyword">where</a>
+    <a id="6126" class="Keyword">field</a>
+      <a id="6138" href="Ledger.Conway.Transaction.html#6138" class="Field">vkSigs</a>   <a id="6147" class="Symbol">:</a> <a id="6149" href="Ledger.Conway.Crypto.html#1387" class="Function">VKey</a> <a id="6154" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="6156" href="Ledger.Conway.Crypto.html#1392" class="Function">Sig</a>
+      <a id="6166" href="Ledger.Conway.Transaction.html#6166" class="Field">scripts</a>  <a id="6175" class="Symbol">:</a> <a id="6177" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="6179" href="Ledger.Conway.Script.Base.html#2421" class="Function">Script</a>
+      <a id="6192" href="Ledger.Conway.Transaction.html#6192" class="Field">txdats</a>   <a id="6201" class="Symbol">:</a> <a id="6203" href="Ledger.Conway.Script.Base.html#1701" class="Function">DataHash</a> <a id="6212" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="6214" href="Ledger.Conway.Script.Base.html#1748" class="Function">Datum</a>
+      <a id="6226" href="Ledger.Conway.Transaction.html#6226" class="Field">txrdmrs</a>  <a id="6235" class="Symbol">:</a> <a id="6237" href="Ledger.Conway.Transaction.html#4412" class="Function">RdmrPtr</a>  <a id="6246" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="6248" href="Ledger.Conway.Script.Base.html#1766" class="Function">Redeemer</a> <a id="6257" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="6259" href="Ledger.Conway.Script.Base.html#996" class="Function">ExUnits</a>
+
+    <a id="TransactionStructure.TxWitnesses.scriptsP1"></a><a id="6272" href="Ledger.Conway.Transaction.html#6272" class="Function">scriptsP1</a> <a id="6282" class="Symbol">:</a> <a id="6284" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="6286" href="Ledger.Conway.Script.Base.html#620" class="Function">P1Script</a>
+    <a id="6299" href="Ledger.Conway.Transaction.html#6272" class="Function">scriptsP1</a> <a id="6309" class="Symbol">=</a> <a id="6311" href="Axiom.Set.html#7805" class="Function">mapPartial</a> <a id="6322" href="Ledger.Conway.Script.Base.html#2954" class="Function">toP1Script</a> <a id="6333" href="Ledger.Conway.Transaction.html#6166" class="Field">scripts</a>
+
+  <a id="6344" class="Keyword">record</a> <a id="TransactionStructure.Tx"></a><a id="6351" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a> <a id="6354" class="Symbol">:</a> <a id="6356" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="6361" class="Keyword">where</a>
+    <a id="6371" class="Keyword">field</a>
+      <a id="6383" href="Ledger.Conway.Transaction.html#6383" class="Field">body</a>     <a id="6392" class="Symbol">:</a> <a id="6394" href="Ledger.Conway.Transaction.html#4735" class="Record">TxBody</a>
+      <a id="6407" href="Ledger.Conway.Transaction.html#6407" class="Field">wits</a>     <a id="6416" class="Symbol">:</a> <a id="6418" href="Ledger.Conway.Transaction.html#6097" class="Record">TxWitnesses</a>
+      <a id="6436" href="Ledger.Conway.Transaction.html#6436" class="Field">isValid</a>  <a id="6445" class="Symbol">:</a> <a id="6447" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
+      <a id="6458" href="Ledger.Conway.Transaction.html#6458" class="Field">txAD</a>     <a id="6467" class="Symbol">:</a> <a id="6469" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="6475" href="Ledger.Conway.Transaction.html#2759" class="Field">AuxiliaryData</a>
+</pre>
+<div class="agda-hidden-source">
+
+<pre class="Agda">
+  <a id="6540" class="Keyword">instance</a>
+    <a id="TransactionStructure.HasTxBody-Tx"></a><a id="6553" href="Ledger.Conway.Transaction.html#6553" class="Function">HasTxBody-Tx</a> <a id="6566" class="Symbol">:</a> <a id="6568" href="Ledger.Conway.Transaction.html#5486" class="Record">HasTxBody</a> <a id="6578" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a>
+    <a id="6585" href="Ledger.Conway.Transaction.html#6553" class="Function">HasTxBody-Tx</a> <a id="6598" class="Symbol">.</a><a id="6599" href="Ledger.Conway.Transaction.html#5538" class="Field">TxBodyOf</a> <a id="6608" class="Symbol">=</a> <a id="6610" href="Ledger.Conway.Transaction.html#6383" class="Field">Tx.body</a>
+
+    <a id="TransactionStructure.Hastxfee-Tx"></a><a id="6623" href="Ledger.Conway.Transaction.html#6623" class="Function">Hastxfee-Tx</a> <a id="6635" class="Symbol">:</a> <a id="6637" href="Ledger.Conway.Transaction.html#5601" class="Record">Hastxfee</a> <a id="6646" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a>
+    <a id="6653" href="Ledger.Conway.Transaction.html#6623" class="Function">Hastxfee-Tx</a> <a id="6665" class="Symbol">.</a><a id="6666" href="Ledger.Conway.Transaction.html#5652" class="Field">txfeeOf</a> <a id="6674" class="Symbol">=</a> <a id="6676" href="Ledger.Conway.Transaction.html#4865" class="Field">TxBody.txfee</a> <a id="6689" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="6691" href="Ledger.Conway.Transaction.html#5538" class="Field">TxBodyOf</a>
+
+    <a id="TransactionStructure.Hastxcerts-Tx"></a><a id="6709" href="Ledger.Conway.Transaction.html#6709" class="Function">Hastxcerts-Tx</a> <a id="6723" class="Symbol">:</a> <a id="6725" href="Ledger.Conway.Transaction.html#5712" class="Record">Hastxcerts</a> <a id="6736" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a>
+    <a id="6743" href="Ledger.Conway.Transaction.html#6709" class="Function">Hastxcerts-Tx</a> <a id="6757" class="Symbol">.</a><a id="6758" href="Ledger.Conway.Transaction.html#5765" class="Field">txcertsOf</a> <a id="6768" class="Symbol">=</a> <a id="6770" href="Ledger.Conway.Transaction.html#4969" class="Field">TxBody.txcerts</a> <a id="6785" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="6787" href="Ledger.Conway.Transaction.html#5538" class="Field">TxBodyOf</a>
+
+    <a id="TransactionStructure.Hastxprop-Tx"></a><a id="6801" href="Ledger.Conway.Transaction.html#6801" class="Function">Hastxprop-Tx</a> <a id="6814" class="Symbol">:</a> <a id="6816" href="Ledger.Conway.Transaction.html#5833" class="Record">Hastxprop</a> <a id="6826" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a>
+    <a id="6833" href="Ledger.Conway.Transaction.html#6801" class="Function">Hastxprop-Tx</a> <a id="6846" class="Symbol">.</a><a id="6847" href="Ledger.Conway.Transaction.html#5885" class="Field">txpropOf</a> <a id="6856" class="Symbol">=</a> <a id="6858" href="Ledger.Conway.Transaction.html#5067" class="Field">TxBody.txprop</a> <a id="6872" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="6874" href="Ledger.Conway.Transaction.html#5538" class="Field">TxBodyOf</a>
+
+    <a id="TransactionStructure.HasWdrls-TxBody"></a><a id="6888" href="Ledger.Conway.Transaction.html#6888" class="Function">HasWdrls-TxBody</a> <a id="6904" class="Symbol">:</a> <a id="6906" href="Ledger.Conway.Certs.html#3742" class="Record">HasWdrls</a> <a id="6915" href="Ledger.Conway.Transaction.html#4735" class="Record">TxBody</a>
+    <a id="6926" href="Ledger.Conway.Transaction.html#6888" class="Function">HasWdrls-TxBody</a> <a id="6942" class="Symbol">.</a><a id="6943" href="Ledger.Conway.Certs.html#3791" class="Field">wdrlsOf</a> <a id="6951" class="Symbol">=</a> <a id="6953" href="Ledger.Conway.Transaction.html#5003" class="Field">TxBody.txwdrls</a>
+
+    <a id="TransactionStructure.HasWdrls-Tx"></a><a id="6973" href="Ledger.Conway.Transaction.html#6973" class="Function">HasWdrls-Tx</a> <a id="6985" class="Symbol">:</a> <a id="6987" href="Ledger.Conway.Certs.html#3742" class="Record">HasWdrls</a> <a id="6996" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a>
+    <a id="7003" href="Ledger.Conway.Transaction.html#6973" class="Function">HasWdrls-Tx</a> <a id="7015" class="Symbol">.</a><a id="7016" href="Ledger.Conway.Certs.html#3791" class="Field">wdrlsOf</a> <a id="7024" class="Symbol">=</a> <a id="7026" href="Ledger.Conway.Certs.html#3791" class="Field">wdrlsOf</a> <a id="7034" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="7036" href="Ledger.Conway.Transaction.html#5538" class="Field">TxBodyOf</a>
+
+    <a id="TransactionStructure.Hastxid-Tx"></a><a id="7050" href="Ledger.Conway.Transaction.html#7050" class="Function">Hastxid-Tx</a> <a id="7061" class="Symbol">:</a> <a id="7063" href="Ledger.Conway.Transaction.html#5959" class="Record">Hastxid</a> <a id="7071" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a>
+    <a id="7078" href="Ledger.Conway.Transaction.html#7050" class="Function">Hastxid-Tx</a> <a id="7089" class="Symbol">.</a><a id="7090" href="Ledger.Conway.Transaction.html#6013" class="Field">txidOf</a> <a id="7097" class="Symbol">=</a> <a id="7099" href="Ledger.Conway.Transaction.html#5303" class="Field">TxBody.txid</a> <a id="7111" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="7113" href="Ledger.Conway.Transaction.html#5538" class="Field">TxBodyOf</a>
+</pre>
+</div>
+
+<h3 id="functions-related-to-transactions">Functions related to transactions<a class="headerlink" href="#functions-related-to-transactions" title="Permanent link">&para;</a></h3>
+<pre class="Agda">
+  <a id="TransactionStructure.getValue"></a><a id="7189" href="Ledger.Conway.Transaction.html#7189" class="Function">getValue</a> <a id="7198" class="Symbol">:</a> <a id="7200" href="Ledger.Conway.Transaction.html#4290" class="Function">TxOut</a> <a id="7206" class="Symbol">→</a> <a id="7208" href="Ledger.Conway.TokenAlgebra.Base.html#1031" class="Function">Value</a>
+  <a id="7216" href="Ledger.Conway.Transaction.html#7189" class="Function">getValue</a> <a id="7225" class="Symbol">(_</a> <a id="7228" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7230" href="Ledger.Conway.Transaction.html#7230" class="Bound">v</a> <a id="7232" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7234" class="Symbol">_)</a> <a id="7237" class="Symbol">=</a> <a id="7239" href="Ledger.Conway.Transaction.html#7230" class="Bound">v</a>
+
+  <a id="TransactionStructure.TxOutʰ"></a><a id="7244" href="Ledger.Conway.Transaction.html#7244" class="Function">TxOutʰ</a> <a id="7251" class="Symbol">=</a> <a id="7253" href="Ledger.Conway.Address.html#3667" class="Function">Addr</a> <a id="7258" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="7260" href="Ledger.Conway.TokenAlgebra.Base.html#1031" class="Function">Value</a> <a id="7266" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="7268" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="7274" class="Symbol">(</a><a id="7275" href="Ledger.Conway.Script.Base.html#1748" class="Function">Datum</a> <a id="7281" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="7283" href="Ledger.Conway.Script.Base.html#1701" class="Function">DataHash</a><a id="7291" class="Symbol">)</a> <a id="7293" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="7295" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="7301" href="Ledger.Conway.Crypto.html#2110" class="Function">ScriptHash</a>
+
+  <a id="TransactionStructure.txOutHash"></a><a id="7315" href="Ledger.Conway.Transaction.html#7315" class="Function">txOutHash</a> <a id="7325" class="Symbol">:</a> <a id="7327" href="Ledger.Conway.Transaction.html#4290" class="Function">TxOut</a> <a id="7333" class="Symbol">→</a> <a id="7335" href="Ledger.Conway.Transaction.html#7244" class="Function">TxOutʰ</a>
+  <a id="7344" href="Ledger.Conway.Transaction.html#7315" class="Function">txOutHash</a> <a id="7354" class="Symbol">(</a><a id="7355" href="Ledger.Conway.Transaction.html#7355" class="Bound">a</a> <a id="7357" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7359" href="Ledger.Conway.Transaction.html#7359" class="Bound">v</a> <a id="7361" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7363" href="Ledger.Conway.Transaction.html#7363" class="Bound">d</a> <a id="7365" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7367" href="Ledger.Conway.Transaction.html#7367" class="Bound">s</a><a id="7368" class="Symbol">)</a> <a id="7370" class="Symbol">=</a> <a id="7372" href="Ledger.Conway.Transaction.html#7355" class="Bound">a</a> <a id="7374" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7376" class="Symbol">(</a><a id="7377" href="Ledger.Conway.Transaction.html#7359" class="Bound">v</a> <a id="7379" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7381" class="Symbol">(</a><a id="7382" href="Ledger.Conway.Transaction.html#7363" class="Bound">d</a> <a id="7384" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7386" href="Data.Maybe.Base.html#1934" class="Function">M.map</a> <a id="7392" href="Interface.Hashable.html#213" class="Field">hash</a> <a id="7397" href="Ledger.Conway.Transaction.html#7367" class="Bound">s</a><a id="7398" class="Symbol">))</a>
+
+  <a id="TransactionStructure.getValueʰ"></a><a id="7404" href="Ledger.Conway.Transaction.html#7404" class="Function">getValueʰ</a> <a id="7414" class="Symbol">:</a> <a id="7416" href="Ledger.Conway.Transaction.html#7244" class="Function">TxOutʰ</a> <a id="7423" class="Symbol">→</a> <a id="7425" href="Ledger.Conway.TokenAlgebra.Base.html#1031" class="Function">Value</a>
+  <a id="7433" href="Ledger.Conway.Transaction.html#7404" class="Function">getValueʰ</a> <a id="7443" class="Symbol">(_</a> <a id="7446" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7448" href="Ledger.Conway.Transaction.html#7448" class="Bound">v</a> <a id="7450" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7452" class="Symbol">_)</a> <a id="7455" class="Symbol">=</a> <a id="7457" href="Ledger.Conway.Transaction.html#7448" class="Bound">v</a>
+
+  <a id="TransactionStructure.txinsVKey"></a><a id="7462" href="Ledger.Conway.Transaction.html#7462" class="Function">txinsVKey</a> <a id="7472" class="Symbol">:</a> <a id="7474" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="7476" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a> <a id="7481" class="Symbol">→</a> <a id="7483" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a> <a id="7488" class="Symbol">→</a> <a id="7490" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="7492" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a>
+  <a id="7499" href="Ledger.Conway.Transaction.html#7462" class="Function">txinsVKey</a> <a id="7509" href="Ledger.Conway.Transaction.html#7509" class="Bound">txins</a> <a id="7515" href="Ledger.Conway.Transaction.html#7515" class="Bound">utxo</a> <a id="7520" class="Symbol">=</a> <a id="7522" href="Ledger.Conway.Transaction.html#7509" class="Bound">txins</a> <a id="7528" href="Axiom.Set.html#9292" class="Function Operator">∩</a> <a id="7530" href="Class.IsSet.html#916" class="Function">dom</a> <a id="7534" class="Symbol">(</a><a id="7535" href="Ledger.Conway.Transaction.html#7515" class="Bound">utxo</a> <a id="7540" href="abstract-set-theory.FiniteSetTheory.html#3088" class="Function Operator">∣^&#39;</a> <a id="7544" class="Symbol">(</a><a id="7545" href="Ledger.Conway.Address.html#3956" class="Function">isVKeyAddr</a> <a id="7556" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="7558" href="Data.Product.Base.html#636" class="Field">proj₁</a><a id="7563" class="Symbol">))</a>
+
+  <a id="TransactionStructure.scriptOuts"></a><a id="7569" href="Ledger.Conway.Transaction.html#7569" class="Function">scriptOuts</a> <a id="7580" class="Symbol">:</a> <a id="7582" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a> <a id="7587" class="Symbol">→</a> <a id="7589" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a>
+  <a id="7596" href="Ledger.Conway.Transaction.html#7569" class="Function">scriptOuts</a> <a id="7607" href="Ledger.Conway.Transaction.html#7607" class="Bound">utxo</a> <a id="7612" class="Symbol">=</a> <a id="7614" href="Ledger.Conway.Transaction.html#863" class="Function">filter</a> <a id="7621" class="Symbol">(λ</a> <a id="7624" class="Symbol">(_</a> <a id="7627" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7629" href="Ledger.Conway.Transaction.html#7629" class="Bound">addr</a> <a id="7634" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="7636" class="Symbol">_)</a> <a id="7639" class="Symbol">→</a> <a id="7641" href="Ledger.Conway.Address.html#3984" class="Function">isScriptAddr</a> <a id="7654" href="Ledger.Conway.Transaction.html#7629" class="Bound">addr</a><a id="7658" class="Symbol">)</a> <a id="7660" href="Ledger.Conway.Transaction.html#7607" class="Bound">utxo</a>
+
+  <a id="TransactionStructure.txinsScript"></a><a id="7668" href="Ledger.Conway.Transaction.html#7668" class="Function">txinsScript</a> <a id="7680" class="Symbol">:</a> <a id="7682" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="7684" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a> <a id="7689" class="Symbol">→</a> <a id="7691" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a> <a id="7696" class="Symbol">→</a> <a id="7698" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="7700" href="Ledger.Conway.Transaction.html#4267" class="Function">TxIn</a>
+  <a id="7707" href="Ledger.Conway.Transaction.html#7668" class="Function">txinsScript</a> <a id="7719" href="Ledger.Conway.Transaction.html#7719" class="Bound">txins</a> <a id="7725" href="Ledger.Conway.Transaction.html#7725" class="Bound">utxo</a> <a id="7730" class="Symbol">=</a> <a id="7732" href="Ledger.Conway.Transaction.html#7719" class="Bound">txins</a> <a id="7738" href="Axiom.Set.html#9292" class="Function Operator">∩</a> <a id="7740" href="Class.IsSet.html#916" class="Function">dom</a> <a id="7744" class="Symbol">(</a><a id="7745" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="7751" class="Symbol">(</a><a id="7752" href="Ledger.Conway.Transaction.html#7569" class="Function">scriptOuts</a> <a id="7763" href="Ledger.Conway.Transaction.html#7725" class="Bound">utxo</a><a id="7767" class="Symbol">))</a>
+
+  <a id="TransactionStructure.refScripts"></a><a id="7773" href="Ledger.Conway.Transaction.html#7773" class="Function">refScripts</a> <a id="7784" class="Symbol">:</a> <a id="7786" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a> <a id="7789" class="Symbol">→</a> <a id="7791" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a> <a id="7796" class="Symbol">→</a> <a id="7798" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="7800" href="Ledger.Conway.Script.Base.html#2421" class="Function">Script</a>
+  <a id="7809" href="Ledger.Conway.Transaction.html#7773" class="Function">refScripts</a> <a id="7820" href="Ledger.Conway.Transaction.html#7820" class="Bound">tx</a> <a id="7823" href="Ledger.Conway.Transaction.html#7823" class="Bound">utxo</a> <a id="7828" class="Symbol">=</a>
+    <a id="7834" href="Axiom.Set.html#7805" class="Function">mapPartial</a> <a id="7845" class="Symbol">(</a><a id="7846" href="Data.Product.Base.html#650" class="Field">proj₂</a> <a id="7852" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="7854" href="Data.Product.Base.html#650" class="Field">proj₂</a> <a id="7860" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="7862" href="Data.Product.Base.html#650" class="Field">proj₂</a><a id="7867" class="Symbol">)</a> <a id="7869" class="Symbol">(</a><a id="7870" href="Class.IsSet.html#959" class="Function">range</a> <a id="7876" class="Symbol">(</a><a id="7877" href="Ledger.Conway.Transaction.html#7823" class="Bound">utxo</a> <a id="7882" href="Axiom.Set.Map.html#10678" class="Function Operator">∣</a> <a id="7884" class="Symbol">(</a><a id="7885" href="Ledger.Conway.Transaction.html#4771" class="Function">txins</a> <a id="7891" href="Axiom.Set.html#8952" class="Function Operator">∪</a> <a id="7893" href="Ledger.Conway.Transaction.html#4801" class="Function">refInputs</a><a id="7902" class="Symbol">)))</a>
+    <a id="7910" class="Keyword">where</a> <a id="7916" class="Keyword">open</a> <a id="7921" href="Ledger.Conway.Transaction.html#6351" class="Module">Tx</a><a id="7923" class="Symbol">;</a> <a id="7925" class="Keyword">open</a> <a id="7930" href="Ledger.Conway.Transaction.html#4735" class="Module">TxBody</a> <a id="7937" class="Symbol">(</a><a id="7938" href="Ledger.Conway.Transaction.html#7820" class="Bound">tx</a> <a id="7941" class="Symbol">.</a><a id="7942" href="Ledger.Conway.Transaction.html#6383" class="Field">body</a><a id="7946" class="Symbol">)</a>
+
+  <a id="TransactionStructure.txscripts"></a><a id="7951" href="Ledger.Conway.Transaction.html#7951" class="Function">txscripts</a> <a id="7961" class="Symbol">:</a> <a id="7963" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a> <a id="7966" class="Symbol">→</a> <a id="7968" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a> <a id="7973" class="Symbol">→</a> <a id="7975" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="7977" href="Ledger.Conway.Script.Base.html#2421" class="Function">Script</a>
+  <a id="7986" href="Ledger.Conway.Transaction.html#7951" class="Function">txscripts</a> <a id="7996" href="Ledger.Conway.Transaction.html#7996" class="Bound">tx</a> <a id="7999" href="Ledger.Conway.Transaction.html#7999" class="Bound">utxo</a> <a id="8004" class="Symbol">=</a> <a id="8006" href="Ledger.Conway.Transaction.html#6166" class="Field">scripts</a> <a id="8014" class="Symbol">(</a><a id="8015" href="Ledger.Conway.Transaction.html#7996" class="Bound">tx</a> <a id="8018" class="Symbol">.</a><a id="8019" href="Ledger.Conway.Transaction.html#6407" class="Field">wits</a><a id="8023" class="Symbol">)</a> <a id="8025" href="Axiom.Set.html#8952" class="Function Operator">∪</a> <a id="8027" href="Ledger.Conway.Transaction.html#7773" class="Function">refScripts</a> <a id="8038" href="Ledger.Conway.Transaction.html#7996" class="Bound">tx</a> <a id="8041" href="Ledger.Conway.Transaction.html#7999" class="Bound">utxo</a>
+    <a id="8050" class="Keyword">where</a> <a id="8056" class="Keyword">open</a> <a id="8061" href="Ledger.Conway.Transaction.html#6351" class="Module">Tx</a><a id="8063" class="Symbol">;</a> <a id="8065" class="Keyword">open</a> <a id="8070" href="Ledger.Conway.Transaction.html#6097" class="Module">TxWitnesses</a>
+
+  <a id="TransactionStructure.lookupScriptHash"></a><a id="8085" href="Ledger.Conway.Transaction.html#8085" class="Function">lookupScriptHash</a> <a id="8102" class="Symbol">:</a> <a id="8104" href="Ledger.Conway.Crypto.html#2110" class="Function">ScriptHash</a> <a id="8115" class="Symbol">→</a> <a id="8117" href="Ledger.Conway.Transaction.html#6351" class="Record">Tx</a> <a id="8120" class="Symbol">→</a> <a id="8122" href="Ledger.Conway.Transaction.html#4358" class="Function">UTxO</a> <a id="8127" class="Symbol">→</a> <a id="8129" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="8135" href="Ledger.Conway.Script.Base.html#2421" class="Function">Script</a>
+  <a id="8144" href="Ledger.Conway.Transaction.html#8085" class="Function">lookupScriptHash</a> <a id="8161" href="Ledger.Conway.Transaction.html#8161" class="Bound">sh</a> <a id="8164" href="Ledger.Conway.Transaction.html#8164" class="Bound">tx</a> <a id="8167" href="Ledger.Conway.Transaction.html#8167" class="Bound">utxo</a> <a id="8172" class="Symbol">=</a>
+    <a id="8178" href="Class.ToBool.html#389" class="Function Operator">if</a> <a id="8181" href="Ledger.Conway.Transaction.html#8161" class="Bound">sh</a> <a id="8184" href="Class.IsSet.html#458" class="Function Operator">∈</a> <a id="8186" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="8191" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="8197" class="Symbol">(</a><a id="8198" href="Ledger.Conway.Transaction.html#8267" class="Function">m</a> <a id="8200" href="Axiom.Set.Map.html#2293" class="Function Operator">ˢ</a><a id="8201" class="Symbol">)</a> <a id="8203" href="Class.ToBool.html#389" class="Function Operator">then</a>
+      <a id="8214" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="8219" class="Symbol">(</a><a id="8220" href="Axiom.Set.Map.html#13563" class="Function">lookupᵐ</a> <a id="8228" href="Ledger.Conway.Transaction.html#8267" class="Function">m</a> <a id="8230" href="Ledger.Conway.Transaction.html#8161" class="Bound">sh</a><a id="8232" class="Symbol">)</a>
+    <a id="8238" href="Class.ToBool.html#389" class="Function Operator">else</a>
+      <a id="8249" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+    <a id="8261" class="Keyword">where</a> <a id="8267" href="Ledger.Conway.Transaction.html#8267" class="Function">m</a> <a id="8269" class="Symbol">=</a> <a id="8271" href="Ledger.Prelude.html#2143" class="Function">setToMap</a> <a id="8280" class="Symbol">(</a><a id="8281" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="8286" href="Data.Product.Base.html#2000" class="Function Operator">&lt;</a> <a id="8288" href="Interface.Hashable.html#213" class="Field">hash</a> <a id="8293" href="Data.Product.Base.html#2000" class="Function Operator">,</a> <a id="8295" href="Function.Base.html#704" class="Function">id</a> <a id="8298" href="Data.Product.Base.html#2000" class="Function Operator">&gt;</a> <a id="8300" class="Symbol">(</a><a id="8301" href="Ledger.Conway.Transaction.html#7951" class="Function">txscripts</a> <a id="8311" href="Ledger.Conway.Transaction.html#8164" class="Bound">tx</a> <a id="8314" href="Ledger.Conway.Transaction.html#8167" class="Bound">utxo</a><a id="8318" class="Symbol">))</a>
+</pre>
+<div class="agda-hidden-source">
+
+<pre class="Agda">
+  <a id="8372" class="Keyword">instance</a>
+    <a id="TransactionStructure.HasCoin-TxOut"></a><a id="8385" href="Ledger.Conway.Transaction.html#8385" class="Function">HasCoin-TxOut</a> <a id="8399" class="Symbol">:</a> <a id="8401" href="Ledger.Interface.HasCoin.html#132" class="Record">HasCoin</a> <a id="8409" href="Ledger.Conway.Transaction.html#4290" class="Function">TxOut</a>
+    <a id="8419" href="Ledger.Conway.Transaction.html#8385" class="Function">HasCoin-TxOut</a> <a id="8433" class="Symbol">.</a><a id="8434" href="Ledger.Interface.HasCoin.html#180" class="Field">getCoin</a> <a id="8442" class="Symbol">=</a> <a id="8444" href="Ledger.Conway.TokenAlgebra.Base.html#1418" class="Function">coin</a> <a id="8449" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="8451" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="8457" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="8459" href="Data.Product.Base.html#650" class="Field">proj₂</a>
+</pre>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
               </article>
             </div>
           
@@ -5662,6 +6057,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="Ledger.Conway.TokenAlgebra.ValueVector.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: ValueVector">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                ValueVector
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="Ledger.Conway.Types.Epoch.html" class="md-footer__link md-footer__link--next" aria-label="Next: Epoch">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Epoch
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
@@ -5686,20 +6119,20 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "/formal-ledger-specifications/", "features": ["navigation.sections", "toc.integrate", "content.tooltips", "navigation.footer"], "search": "/formal-ledger-specifications/assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "toc.integrate", "content.tooltips", "navigation.footer"], "search": "assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="/formal-ledger-specifications/assets/javascripts/bundle.f1b6f286.min.js"></script>
+      <script src="assets/javascripts/bundle.f1b6f286.min.js"></script>
       
-        <script src="/formal-ledger-specifications/js/custom.js"></script>
+        <script src="js/custom.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
       
-        <script src="/formal-ledger-specifications/js/katex-config.js"></script>
+        <script src="js/katex-config.js"></script>
       
-        <script src="/formal-ledger-specifications/AgdaKaTeX.js"></script>
+        <script src="AgdaKaTeX.js"></script>
       
     
   </body>
