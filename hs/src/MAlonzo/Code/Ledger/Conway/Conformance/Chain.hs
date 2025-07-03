@@ -181,7 +181,7 @@ d_govSt_1744 v0
 -- Ledger.Conway.Conformance.Chain._.LState.utxoSt
 d_utxoSt_1746 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2196 ->
-  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOState_2228
+  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOState_2226
 d_utxoSt_1746 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
