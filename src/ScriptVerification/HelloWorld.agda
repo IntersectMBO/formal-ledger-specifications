@@ -113,27 +113,27 @@ failTx = record { body = record
                 isValid = true ;
                 txAD = nothing }
 
-succeedState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-succeedState = (collectP2ScriptInputs (UTxOEnv.pparams initEnv) succeedTx initState)
+succeedState : List (P2Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
+succeedState = (collectP2Scripts (UTxOEnv.pparams initEnv) succeedTx initState)
 
 evalSucceedScript : Bool
-evalSucceedScript = evalScripts succeedTx succeedState
+evalSucceedScript = evalP2Scripts succeedState
 
-failState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-failState = (collectP2ScriptInputs (UTxOEnv.pparams initEnv) failTx initState)
+failState : List (P2Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
+failState = (collectP2Scripts (UTxOEnv.pparams initEnv) failTx initState)
 
 evalFailScript : Bool
-evalFailScript = evalScripts failTx failState
+evalFailScript = evalP2Scripts failState
 
 opaque
-  unfolding collectP2ScriptInputs
+  unfolding collectP2Scripts
   unfolding setToList
   unfolding outs
 
   _ : notEmpty succeedState ≡ ⊤
   _ = refl
 
-  -- need to check that the state is non-empty otherwise evalScripts will always return true
+  -- need to check that the state is non-empty otherwise evalP2Scripts will always return true
   _ : notEmpty succeedState ≡ ⊤
   _ = refl
 

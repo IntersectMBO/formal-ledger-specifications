@@ -104,7 +104,7 @@ succeedTx = record { body = record
                 txAD = nothing }
 
 evalScriptDatum : Bool
-evalScriptDatum = evalScripts succeedTx (collectP2ScriptInputs (UTxOEnv.pparams initEnv) succeedTx initStateDatum)
+evalScriptDatum = evalP2Scripts (collectP2Scripts (UTxOEnv.pparams initEnv) succeedTx initStateDatum)
 
 exampleDatum : Maybe Datum
 exampleDatum = getDatum succeedTx initStateDatum (Spend (6 , 6))
@@ -141,13 +141,13 @@ failTx = record { body = record
 
 
 evalScriptRedeemer : Bool
-evalScriptRedeemer = evalScripts failTx (collectP2ScriptInputs (UTxOEnv.pparams initEnv) failTx initStateRedeemer)
+evalScriptRedeemer = evalP2Scripts (collectP2Scripts (UTxOEnv.pparams initEnv) failTx initStateRedeemer)
 
 exampleDatum' : Maybe Datum
 exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 
 opaque
-  unfolding collectP2ScriptInputs
+  unfolding collectP2Scripts
   unfolding setToList
   unfolding outs
 

@@ -523,10 +523,10 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          open Tx tx renaming (body to txb); open TxBody txb
 \end{code}
 \begin{code}
-         sLst       = collectP2ScriptInputs pp tx utxo
+         p2Scripts  = collectP2Scripts pp tx utxo
       in
         ∙ ValidCertDeposits pp deposits txcerts
-        ∙ evalScripts tx sLst ≡ isValid
+        ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
           Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
@@ -537,9 +537,9 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          open Tx tx renaming (body to txb); open TxBody txb
 \end{code}
 \begin{code}
-         sLst       = collectP2ScriptInputs pp tx utxo
+         p2Scripts  = collectP2Scripts pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ isValid
+        ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
           Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧

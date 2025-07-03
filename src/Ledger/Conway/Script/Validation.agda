@@ -99,36 +99,31 @@ vKeysNeeded = mapPartial (λ (sp , c) → if isKeyHashObj c then (λ {sh} → ju
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
 
-opaque
+scriptHashToP2Script : Tx → UTxO → ScriptHash → Maybe P2Script
+scriptHashToP2Script tx utxo sh = lookupScriptHash sh tx utxo >>= toP2Script
+  where
+    addrToScriptHash : Addr → Maybe ScriptHash
+    addrToScriptHash = isScriptObj ∘ payCred
 
 opaque
-  collectP2ScriptInputs
+  collectP2Scripts
     : PParams → Tx → UTxO
-    → List (Script × List Data × ExUnits × CostModel)
-  collectP2ScriptInputs pp tx utxo
+    → List (P2Script × List Data × ExUnits × CostModel)
+  collectP2Scripts pp tx utxo
     = setToList
     $ mapPartial toScriptInput
     $ scriptsNeeded utxo (tx .Tx.body)
     where
       toScriptInput
         : (ScriptPurpose × ScriptHash)
-        → Maybe (Script × List Data × ExUnits × CostModel)
+        → Maybe (P2Script × List Data × ExUnits × CostModel)
       toScriptInput (sp , sh) =
         do s ← lookupScriptHash sh tx utxo
            p2s ← toP2Script s
            (rdmr , exunits) ← indexedRdmrs tx sp
            let data'     = maybe [_] [] (getDatum tx utxo sp) ++ rdmr ∷ [ valContext (txInfo (language p2s) pp utxo tx) sp ]
                costModel = PParams.costmdls pp
-           just (s , data' , exunits , costModel)
+           just (p2s , data' , exunits , costModel)
 
-open TxBody
-open Tx
-
-⟦_⟧,_,_,_ : P2Script → CostModel → ExUnits → List Data → Bool
-⟦ s ⟧, cm , eu , d = runPLCScript cm s eu d
-
-evalScripts : Tx → List (Script × List Data × ExUnits × CostModel) → Bool
-evalScripts tx [] = true
-evalScripts tx ((inj₁ tl , d , eu , cm) ∷ Γ) =
-  ¿ validP1Script (reqSigHash (body tx)) (txvldt (body tx)) tl ¿ᵇ ∧ evalScripts tx Γ
-evalScripts tx ((inj₂ ps , d , eu , cm) ∷ Γ) = ⟦ ps ⟧, cm , eu , d ∧ evalScripts tx Γ
+evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
+evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
