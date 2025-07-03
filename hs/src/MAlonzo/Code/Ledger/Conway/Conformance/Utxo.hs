@@ -149,28 +149,31 @@ d_wits_1530 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TxWitnesses_3114
 d_wits_1530 v0
   = coe MAlonzo.Code.Ledger.Conway.Transaction.d_wits_3146 (coe v0)
--- Ledger.Conway.Conformance.Utxo._.collectP2ScriptInputs
-d_collectP2ScriptInputs_1636 ::
+-- Ledger.Conway.Conformance.Utxo._.collectP2Scripts
+d_collectP2Scripts_1636 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
   MAlonzo.Code.Ledger.Conway.PParams.T_PParams_296 ->
   MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_collectP2ScriptInputs_1636 v0 v1
+d_collectP2Scripts_1636 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2ScriptInputs_2378
+      MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2Scripts_2392
       (coe v0) (coe v1)
--- Ledger.Conway.Conformance.Utxo._.evalScripts
-d_evalScripts_1640 ::
+-- Ledger.Conway.Conformance.Utxo._.evalP2Scripts
+d_evalP2Scripts_1640 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
-  MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3134 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Bool
-d_evalScripts_1640 v0 v1
+d_evalP2Scripts_1640 ~v0 v1 = du_evalP2Scripts_1640 v1
+du_evalP2Scripts_1640 ::
+  MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Bool
+du_evalP2Scripts_1640 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Script.Validation.d_evalScripts_2420
-      (coe v0) (coe v1)
+      MAlonzo.Code.Ledger.Conway.Script.Validation.du_evalP2Scripts_2424
+      (coe v0)
 -- Ledger.Conway.Conformance.Utxo.L._.Dec-inInterval
 d_Dec'45'inInterval_2074 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
@@ -488,10 +491,9 @@ d_Scripts'45'Yes'45'premises_2440 v0 v1 v2 v3 v4
             MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
             (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16)
             (coe
-               MAlonzo.Code.Ledger.Conway.Script.Validation.d_evalScripts_2420
-               (coe v0) (coe v1) (coe v4)
-               (coe
-                  MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2ScriptInputs_2378
+               MAlonzo.Code.Ledger.Conway.Script.Validation.du_evalP2Scripts_2424
+               v1
+               (MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2Scripts_2392
                   (coe v0) (coe v1)
                   (coe MAlonzo.Code.Ledger.Conway.Utxo.d_pparams_2218 (coe v2))
                   (coe v4)
@@ -521,10 +523,9 @@ d_Scripts'45'No'45'premises_2442 v0 v1 v2 v3 v4
             MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
             (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'Bool_16)
             (coe
-               MAlonzo.Code.Ledger.Conway.Script.Validation.d_evalScripts_2420
-               (coe v0) (coe v1) (coe v4)
-               (coe
-                  MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2ScriptInputs_2378
+               MAlonzo.Code.Ledger.Conway.Script.Validation.du_evalP2Scripts_2424
+               v1
+               (MAlonzo.Code.Ledger.Conway.Script.Validation.d_collectP2Scripts_2392
                   (coe v0) (coe v1)
                   (coe MAlonzo.Code.Ledger.Conway.Utxo.d_pparams_2218 (coe v2))
                   (coe v4)
