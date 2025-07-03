@@ -33,22 +33,25 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
-        witsKeyHashes      = mapˢ hash (dom vkSigs)
-        witsScriptHashes   = mapˢ hash scripts
-        inputHashes        = L.getInputHashes tx utxo
-        refScriptHashes    = mapˢ hash (refScripts tx utxo)
-        neededScriptHashes = mapˢ proj₂ (scriptsNeeded utxo txb)
-        neededVKeyHashes   = mapˢ proj₂ (vKeysNeeded utxo txb)
-        txdatsHashes       = mapˢ hash txdats
-        allOutHashes       = L.getDataHashes (range txouts)
-        nativeScripts      = mapPartial toP1Script (txscripts tx utxo)
+        witsKeyHashes       = mapˢ hash (dom vkSigs)
+        witsScriptHashes    = mapˢ hash scripts
+        refScriptHashes     = mapˢ hash (refScripts tx utxo)
+        neededScriptHashes  = mapˢ proj₂ (scriptsNeeded utxo txb)
+        neededVKeyHashes    = mapˢ proj₂ (vKeysNeeded utxo txb)
+        txdatsHashes        = mapˢ hash txdats
+        inputsDataHashes    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
+                                                     then txOutToDataHash txout
+                                                     else nothing) (range (utxo ∣ txins))
+        refInputsDataHashes = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
+        outputsDataHashes   = mapPartial txOutToDataHash (range txouts)
+        nativeScripts       = mapPartial toP1Script (txscripts tx utxo)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txvldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
-    ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ L.getDataHashes (range (utxo ∣ refInputs))
+    ∙  inputsDataHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  L.languages tx utxo ⊆ L.allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

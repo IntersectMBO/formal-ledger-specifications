@@ -99,11 +99,16 @@ vKeysNeeded = mapPartial (λ (sp , c) → if isKeyHashObj c then (λ {sh} → ju
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
 
-scriptHashToP2Script : Tx → UTxO → ScriptHash → Maybe P2Script
-scriptHashToP2Script tx utxo sh = lookupScriptHash sh tx utxo >>= toP2Script
-  where
-    addrToScriptHash : Addr → Maybe ScriptHash
-    addrToScriptHash = isScriptObj ∘ payCred
+txOutToDataHash : TxOut → Maybe DataHash
+txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
+
+txOutToP2Script
+  : UTxO → Tx
+  → TxOut → Maybe P2Script
+txOutToP2Script utxo tx (a , _) =
+  do sh ← isScriptObj (payCred a)
+     s  ← lookupScriptHash sh tx utxo
+     toP2Script s
 
 opaque
   collectP2Scripts

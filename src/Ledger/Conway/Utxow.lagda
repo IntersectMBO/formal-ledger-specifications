@@ -133,12 +133,15 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \begin{code}
          witsKeyHashes                       = mapˢ hash (dom vkSigs)
          witsScriptHashes                    = mapˢ hash scripts
-         inputHashes                         = getInputHashes tx utxo
          refScriptHashes                     = mapˢ hash (refScripts tx utxo)
          neededScriptHashes                  = mapˢ proj₂ (scriptsNeeded utxo txb)
          neededVKeyHashes                    = mapˢ proj₂ (vKeysNeeded utxo txb)
          txdatsHashes                        = mapˢ hash txdats
-         allOutHashes                        = getDataHashes (range txouts)
+         inputsDataHashes                    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
+                                                                      then txOutToDataHash txout
+                                                                      else nothing) (range (utxo ∣ txins))
+         refInputsDataHashes                 = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
+         outputsDataHashes                   = mapPartial txOutToDataHash (range txouts)
          nativeScripts                       = mapPartial toP1Script (txscripts tx utxo)
 \end{code}
 \begin{code}
@@ -147,8 +150,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txvldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
-    ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
+    ∙  inputsDataHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
