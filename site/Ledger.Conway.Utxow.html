@@ -2677,7 +2677,7 @@
           <li class="md-nav__item">
   <a href="#utxow-transition-system-types" class="md-nav__link">
     <span class="md-ellipsis">
-      UTxOW transition-system types
+      UTxOW transition system types
     </span>
   </a>
   
@@ -5777,7 +5777,7 @@ in which we define witnessing.</p>
 <p>The purpose of witnessing is make sure the intended action is authorized
 by the holder of the signing key. (For details see <a href="#shelley-ledger-spec">CVG19,
 </a>.)
-<a href="Ledger.Conway.Utxow.html#functions-used-for-witnessing">Figure 'Functions used for witnessing'</a> defines
+<a href="Ledger.Conway.Utxow.html#functions-used-for-witnessing">Figure 'Functions-used-for-witnessing'</a> defines
 functions used for witnessing. <code class="AgdaFunction">witsVKeyNeeded</code> and
 <code class="AgdaFunction">scriptsNeeded</code> are now defined by projecting the same
 information out of <code class="AgdaFunction">credsNeeded</code>. Note that the last
@@ -5887,7 +5887,6 @@ from appearing together with a Plutus V1 script.</p>
   <a id="4742" href="Axiom.Set.html#8952" class="Function Operator">∪</a>  <a id="4745" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="4750" class="Symbol">(λ</a> <a id="4753" href="Ledger.Conway.Utxow.html#4753" class="Bound">v</a>        <a id="4762" class="Symbol">→</a> <a id="4764" class="Symbol">(</a><a id="4765" href="Ledger.Conway.ScriptValidation.html#748" class="InductiveConstructor">Vote</a>   <a id="4772" href="Ledger.Conway.Utxow.html#4753" class="Bound">v</a> <a id="4774" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4776" href="Data.Product.Base.html#650" class="Field">proj₂</a> <a id="4782" href="Ledger.Conway.Utxow.html#4753" class="Bound">v</a><a id="4783" class="Symbol">))</a> <a id="4786" class="Symbol">(</a><a id="4787" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="4796" class="Symbol">(</a><a id="4797" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="4801" href="Ledger.Conway.GovernanceActions.html#7767" class="Field">voter</a> <a id="4807" href="Ledger.Conway.Transaction.html#5085" class="Field">txvote</a><a id="4813" class="Symbol">))</a>
   <a id="4818" href="Axiom.Set.html#8952" class="Function Operator">∪</a>  <a id="4821" href="Axiom.Set.html#7805" class="Function">mapPartial</a> <a id="4832" class="Symbol">(λ</a> <a id="4835" href="Ledger.Conway.Utxow.html#4835" class="Bound">p</a>  <a id="4838" class="Symbol">→</a> <a id="4840" href="Function.Base.html#4042" class="Function Operator">case</a>  <a id="4846" href="Ledger.Conway.Utxow.html#4835" class="Bound">p</a> <a id="4848" class="Symbol">.</a><a id="4849" href="Ledger.Conway.GovernanceActions.html#7958" class="Field">policy</a> <a id="4856" href="Function.Base.html#4042" class="Function Operator">of</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5915,7 +5914,7 @@ from appearing together with a Plutus V1 script.</p>
 <a id="5375" href="Ledger.Conway.Utxow.html#5329" class="Function">scriptsNeeded</a> <a id="5389" class="Symbol">=</a> <a id="5391" href="Ledger.Conway.Utxow.html#4287" class="Function">getScripts</a> <a id="5402" href="Ledger.Conway.Utxow.html#1026" class="Function Operator">∘</a> <a id="5404" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="5409" href="Data.Product.Base.html#650" class="Field">proj₂</a> <a id="5415" href="Ledger.Conway.Utxow.html#1026" class="Function Operator">∘</a> <a id="5417" href="Ledger.Conway.Utxow.html#4365" class="Function">credsNeeded</a>
 </pre>
 
-<h3 id="utxow-transition-system-types">UTxOW transition-system types<a class="headerlink" href="#utxow-transition-system-types" title="Permanent link">&para;</a></h3>
+<h3 id="utxow-transition-system-types">UTxOW transition system types<a class="headerlink" href="#utxow-transition-system-types" title="Permanent link">&para;</a></h3>
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5946,7 +5945,6 @@ from appearing together with a Plutus V1 script.</p>
   <a id="_⊢_⇀⦇_,UTXOW⦈_.UTXOW-inductive"></a><a id="5838" href="Ledger.Conway.Utxow.html#5838" class="InductiveConstructor">UTXOW-inductive</a> <a id="5854" class="Symbol">:</a>
     <a id="5860" class="Keyword">let</a>  <a id="5865" href="Ledger.Conway.Utxow.html#5865" class="Bound">utxo</a>                                <a id="5901" class="Symbol">=</a> <a id="5903" href="Ledger.Conway.Utxow.html#5727" class="Generalizable">s</a> <a id="5905" class="Symbol">.</a><a id="5906" href="Ledger.Conway.Utxo.html#6377" class="Field">utxo</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5978,7 +5976,6 @@ from appearing together with a Plutus V1 script.</p>
        <a id="7169" href="iog-prelude.Prelude.InferenceRules.html#217" class="Function Operator">────────────────────────────────</a>
        <a id="7209" href="Ledger.Conway.Utxow.html#5703" class="Generalizable">Γ</a> <a id="7211" href="Ledger.Conway.Utxow.html#5545" class="Datatype Operator">⊢</a> <a id="7213" href="Ledger.Conway.Utxow.html#5727" class="Generalizable">s</a> <a id="7215" href="Ledger.Conway.Utxow.html#5545" class="Datatype Operator">⇀⦇</a> <a id="7218" href="Ledger.Conway.Utxow.html#5753" class="Generalizable">tx</a> <a id="7221" href="Ledger.Conway.Utxow.html#5545" class="Datatype Operator">,UTXOW⦈</a> <a id="7229" href="Ledger.Conway.Utxow.html#5729" class="Generalizable">s&#39;</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6004,7 +6001,7 @@ provide a <a href="https://cips.cardano.org/cip-0069">CIP-0069</a>-conformant
 implementation of Plutus to this specification, an additional step
 processing the <code class="AgdaDatatype">List</code> <code class="AgdaFunction">Data</code> argument we
 provide would be required.</p>
-<p>In <a href="Ledger.Conway.Utxow.html#utxow-inference-rules">Figure 'UTXOW inference rules'</a>, the line
+<p>In <a href="Ledger.Conway.Utxow.html#utxow-inference-rules">Figure 'UTXOW-inference-rules'</a>, the line
 <code class="AgdaBound">inputHashes</code> <code class="AgdaInductiveConstructor">subseteqfield</code>
 <code class="AgdaBound">txdatsHashes</code> compares two inhabitants of
 <code class="AgdaFunction">PowerSet</code> <code class="AgdaFunction">DataHash</code>. In the Alonzo spec,

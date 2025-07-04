@@ -1870,7 +1870,7 @@
         <li class="md-nav__item">
   <a href="#protocol-parameter-well-formedness" class="md-nav__link">
     <span class="md-ellipsis">
-      Protocol parameter well-formedness
+      Protocol parameter well formedness
     </span>
   </a>
   
@@ -5843,6 +5843,7 @@ in treasury and reserves.</p>
   <a id="pvCanFollow.canFollowMajor"></a><a id="2108" href="Ledger.Conway.PParams.html#2108" class="InductiveConstructor">canFollowMajor</a> <a id="2123" class="Symbol">:</a> <a id="2125" href="Ledger.Conway.PParams.html#2061" class="Datatype">pvCanFollow</a> <a id="2137" class="Symbol">(</a><a id="2138" href="Ledger.Conway.PParams.html#1285" class="Generalizable">m</a> <a id="2140" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2142" href="Ledger.Conway.PParams.html#1287" class="Generalizable">n</a><a id="2143" class="Symbol">)</a> <a id="2145" class="Symbol">(</a><a id="2146" href="Ledger.Conway.PParams.html#1285" class="Generalizable">m</a> <a id="2148" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="2150" class="Number">1</a> <a id="2152" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2154" class="Number">0</a><a id="2155" class="Symbol">)</a>
   <a id="pvCanFollow.canFollowMinor"></a><a id="2159" href="Ledger.Conway.PParams.html#2159" class="InductiveConstructor">canFollowMinor</a> <a id="2174" class="Symbol">:</a> <a id="2176" href="Ledger.Conway.PParams.html#2061" class="Datatype">pvCanFollow</a> <a id="2188" class="Symbol">(</a><a id="2189" href="Ledger.Conway.PParams.html#1285" class="Generalizable">m</a> <a id="2191" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2193" href="Ledger.Conway.PParams.html#1287" class="Generalizable">n</a><a id="2194" class="Symbol">)</a> <a id="2196" class="Symbol">(</a><a id="2197" href="Ledger.Conway.PParams.html#1285" class="Generalizable">m</a> <a id="2199" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="2201" href="Ledger.Conway.PParams.html#1287" class="Generalizable">n</a> <a id="2203" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="2205" class="Number">1</a><a id="2206" class="Symbol">)</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5878,7 +5879,7 @@ in treasury and reserves.</p>
 <a id="2880" class="Keyword">record</a> <a id="PParams"></a><a id="2887" href="Ledger.Conway.PParams.html#2887" class="Record">PParams</a> <a id="2895" class="Symbol">:</a> <a id="2897" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2902" class="Keyword">where</a>
   <a id="2910" class="Keyword">field</a>
 </pre>
-<p><em>Network group</em></p>
+<p><em>Network group</em> </p>
 <pre class="Agda">
         <a id="PParams.maxBlockSize"></a><a id="2955" href="Ledger.Conway.PParams.html#2955" class="Field">maxBlockSize</a>                  <a id="2985" class="Symbol">:</a> <a id="2987" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
         <a id="PParams.maxTxSize"></a><a id="2997" href="Ledger.Conway.PParams.html#2997" class="Field">maxTxSize</a>                     <a id="3027" class="Symbol">:</a> <a id="3029" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
@@ -5888,13 +5889,14 @@ in treasury and reserves.</p>
         <a id="PParams.maxValSize"></a><a id="3177" href="Ledger.Conway.PParams.html#3177" class="Field">maxValSize</a>                    <a id="3207" class="Symbol">:</a> <a id="3209" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
         <a id="PParams.maxCollateralInputs"></a><a id="3219" href="Ledger.Conway.PParams.html#3219" class="Field">maxCollateralInputs</a>           <a id="3249" class="Symbol">:</a> <a id="3251" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
         <a id="PParams.pv"></a><a id="3310" href="Ledger.Conway.PParams.html#3310" class="Field">pv</a>                            <a id="3340" class="Symbol">:</a> <a id="3342" href="Ledger.Conway.PParams.html#1960" class="Function">ProtVer</a> <a id="3350" class="Comment">-- retired, keep for now</a>
 </pre>
 </div>
-<p><em>Economic group</em></p>
+<p><em>Economic group</em> </p>
 <pre class="Agda">
         <a id="PParams.a"></a><a id="3423" href="Ledger.Conway.PParams.html#3423" class="Field">a</a>                             <a id="3453" class="Symbol">:</a> <a id="3455" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
         <a id="PParams.b"></a><a id="3465" href="Ledger.Conway.PParams.html#3465" class="Field">b</a>                             <a id="3495" class="Symbol">:</a> <a id="3497" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
@@ -5910,19 +5912,21 @@ in treasury and reserves.</p>
         <a id="PParams.refScriptCostStride"></a><a id="3955" href="Ledger.Conway.PParams.html#3955" class="Field">refScriptCostStride</a>           <a id="3985" class="Symbol">:</a> <a id="3987" href="Ledger.Conway.Types.Numeric.html#220" class="Function">ℕ⁺</a>
         <a id="PParams.refScriptCostMultiplier"></a><a id="3998" href="Ledger.Conway.PParams.html#3998" class="Field">refScriptCostMultiplier</a>       <a id="4028" class="Symbol">:</a> <a id="4030" href="Data.Rational.Base.html#1342" class="Record">ℚ</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
         <a id="PParams.minUTxOValue"></a><a id="4089" href="Ledger.Conway.PParams.html#4089" class="Field">minUTxOValue</a>                  <a id="4119" class="Symbol">:</a> <a id="4121" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a> <a id="4126" class="Comment">-- retired, keep for now</a>
 </pre>
 </div>
-<p><em>Technical group</em></p>
+<p><em>Technical group</em> </p>
 <pre class="Agda">
         <a id="PParams.Emax"></a><a id="4200" href="Ledger.Conway.PParams.html#4200" class="Field">Emax</a>                          <a id="4230" class="Symbol">:</a> <a id="4232" href="Ledger.Conway.Types.Epoch.html#600" class="Field">Epoch</a>
         <a id="PParams.nopt"></a><a id="4246" href="Ledger.Conway.PParams.html#4246" class="Field">nopt</a>                          <a id="4276" class="Symbol">:</a> <a id="4278" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
         <a id="PParams.a0"></a><a id="4288" href="Ledger.Conway.PParams.html#4288" class="Field">a0</a>                            <a id="4318" class="Symbol">:</a> <a id="4320" href="Data.Rational.Base.html#1342" class="Record">ℚ</a>
         <a id="PParams.collateralPercentage"></a><a id="4330" href="Ledger.Conway.PParams.html#4330" class="Field">collateralPercentage</a>          <a id="4360" class="Symbol">:</a> <a id="4362" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5933,8 +5937,7 @@ in treasury and reserves.</p>
 <pre class="Agda">
         <a id="PParams.costmdls"></a><a id="4534" href="Ledger.Conway.PParams.html#4534" class="Field">costmdls</a>                      <a id="4564" class="Symbol">:</a> <a id="4566" href="Ledger.Conway.Script.Base.html#967" class="Function">CostModel</a>
 </pre>
-<p><em>Governance
-group</em> </p>
+<p><em>Governance group</em></p>
 <pre class="Agda">
         <a id="PParams.poolThresholds"></a><a id="4618" href="Ledger.Conway.PParams.html#4618" class="Field">poolThresholds</a>                <a id="4648" class="Symbol">:</a> <a id="4650" href="Ledger.Conway.PParams.html#2766" class="Record">PoolThresholds</a>
         <a id="PParams.drepThresholds"></a><a id="4673" href="Ledger.Conway.PParams.html#4673" class="Field">drepThresholds</a>                <a id="4703" class="Symbol">:</a> <a id="4705" href="Ledger.Conway.PParams.html#2678" class="Record">DrepThresholds</a>
@@ -5971,7 +5974,7 @@ group</em> </p>
 </pre>
 </div>
 
-<h3 id="protocol-parameter-well-formedness">Protocol parameter well-formedness<a class="headerlink" href="#protocol-parameter-well-formedness" title="Permanent link">&para;</a></h3>
+<h3 id="protocol-parameter-well-formedness">Protocol parameter well formedness<a class="headerlink" href="#protocol-parameter-well-formedness" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
 <a id="positivePParams"></a><a id="5908" href="Ledger.Conway.PParams.html#5908" class="Function">positivePParams</a> <a id="5924" class="Symbol">:</a> <a id="5926" href="Ledger.Conway.PParams.html#2887" class="Record">PParams</a> <a id="5934" class="Symbol">→</a> <a id="5936" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="5941" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
 <a id="5943" href="Ledger.Conway.PParams.html#5908" class="Function">positivePParams</a> <a id="5959" href="Ledger.Conway.PParams.html#5959" class="Bound">pp</a> <a id="5962" class="Symbol">=</a>  <a id="5965" class="Symbol">(</a> <a id="5967" href="Ledger.Conway.PParams.html#2955" class="Field">maxBlockSize</a> <a id="5980" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="5982" href="Ledger.Conway.PParams.html#2997" class="Field">maxTxSize</a> <a id="5992" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="5994" href="Ledger.Conway.PParams.html#3039" class="Field">maxHeaderSize</a>
@@ -5991,6 +5994,7 @@ group</em> </p>
 <a id="paramsWellFormed"></a><a id="6318" href="Ledger.Conway.PParams.html#6318" class="Function">paramsWellFormed</a> <a id="6335" class="Symbol">:</a> <a id="6337" href="Ledger.Conway.PParams.html#2887" class="Record">PParams</a> <a id="6345" class="Symbol">→</a> <a id="6347" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 <a id="6352" href="Ledger.Conway.PParams.html#6318" class="Function">paramsWellFormed</a> <a id="6369" href="Ledger.Conway.PParams.html#6369" class="Bound">pp</a> <a id="6372" class="Symbol">=</a> <a id="6374" class="Number">0</a> <a id="6376" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="6378" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="6387" class="Symbol">(</a><a id="6388" href="Ledger.Conway.PParams.html#5908" class="Function">positivePParams</a> <a id="6404" href="Ledger.Conway.PParams.html#6369" class="Bound">pp</a><a id="6406" class="Symbol">)</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6243,7 +6247,7 @@ into and from this we determine the voting threshold for that proposal.
 <em>'sec:ratification-requirements' (unresolved reference)</em>; in
 particular, the definition of the <code class="AgdaFunction">threshold</code> function
 appears in
-<a href="Ledger.Conway.Ratify.html#functions-related-to-voting">Figure 'Functions related to voting'</a>.)</p>
+<a href="Ledger.Conway.Ratify.html#functions-related-to-voting">Figure 'Functions-related-to-voting'</a>.)</p>
 <p>The first four groups have the property that every protocol parameter is
 associated to precisely one of these groups. The
 <code class="AgdaInductiveConstructor">SecurityGroup</code> is special: a protocol
@@ -6256,7 +6260,7 @@ security-relevant protocol parameters (see <a href="#cip1694">CKB+23</a>). The
 difference between these notions is only social, so we implement
 security-relevant protocol parameters as a group.</p>
 <p>The new protocol parameters are declared in
-<a href="Ledger.Conway.PParams.html#protocol-parameter-definitions">Figure 'Protocol parameter definitions'</a>
+<a href="Ledger.Conway.PParams.html#protocol-parameter-definitions">Figure 'Protocol-parameter-definitions'</a>
 and denote the following concepts:</p>
 <ul>
 <li>
@@ -6296,10 +6300,10 @@ and denote the following concepts:</p>
 <p><code class="AgdaField">minimumAVS</code>: the minimum active voting threshold.</p>
 </li>
 </ul>
-<p><a href="Ledger.Conway.PParams.html#protocol-parameter-definitions">Figure 'Protocol parameter definitions'</a>
+<p><a href="Ledger.Conway.PParams.html#protocol-parameter-definitions">Figure 'Protocol-parameter-definitions'</a>
 also defines the function <code class="AgdaFunction">paramsWellFormed</code> which
 performs some sanity checks on protocol parameters.
-<a href="Ledger.Conway.PParams.html#abstract-type-for-parameter-updates">Figure 'Abstract type for parameter updates'</a> defines types
+<a href="Ledger.Conway.PParams.html#abstract-type-for-parameter-updates">Figure 'Abstract-type-for-parameter-updates'</a> defines types
 and functions to update parameters. These consist of an abstract type
 <code class="AgdaField">UpdateT</code> and two functions <code class="AgdaField">applyUpdate</code> and
 <code class="AgdaField">updateGroups</code>. The type <code class="AgdaField">UpdateT</code> is to be
@@ -6339,27 +6343,27 @@ well-formedness.</p>
   <a id="20153" class="Keyword">field</a>
 </pre>
 </div>
-<p><em>Abstract types &amp;
-functions</em> </p>
+<p><em>Abstract types &amp; functions</em> </p>
 <pre class="Agda">
     <a id="PParamsDiff.UpdateT"></a><a id="20215" href="Ledger.Conway.PParams.html#20215" class="Field">UpdateT</a> <a id="20223" class="Symbol">:</a> <a id="20225" href="Agda.Primitive.html#388" class="Primitive">Type</a>
     <a id="PParamsDiff.applyUpdate"></a><a id="20234" href="Ledger.Conway.PParams.html#20234" class="Field">applyUpdate</a> <a id="20246" class="Symbol">:</a> <a id="20248" href="Ledger.Conway.PParams.html#2887" class="Record">PParams</a> <a id="20256" class="Symbol">→</a> <a id="20258" href="Ledger.Conway.PParams.html#20215" class="Field">UpdateT</a> <a id="20266" class="Symbol">→</a> <a id="20268" href="Ledger.Conway.PParams.html#2887" class="Record">PParams</a>
     <a id="PParamsDiff.updateGroups"></a><a id="20280" href="Ledger.Conway.PParams.html#20280" class="Field">updateGroups</a> <a id="20293" class="Symbol">:</a> <a id="20295" href="Ledger.Conway.PParams.html#20215" class="Field">UpdateT</a> <a id="20303" class="Symbol">→</a> <a id="20305" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="20307" href="Ledger.Conway.PParams.html#2418" class="Datatype">PParamGroup</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
     <a id="20372" class="Symbol">⦃</a> <a id="PParamsDiff.ppWF?"></a><a id="20374" href="Ledger.Conway.PParams.html#20374" class="Field">ppWF?</a> <a id="20380" class="Symbol">⦄</a> <a id="20382" class="Symbol">:</a> <a id="20384" class="Symbol">∀</a> <a id="20386" class="Symbol">{</a><a id="20387" href="Ledger.Conway.PParams.html#20387" class="Bound">u</a><a id="20388" class="Symbol">}</a> <a id="20390" class="Symbol">→</a> <a id="20392" class="Symbol">(∀</a> <a id="20395" href="Ledger.Conway.PParams.html#20395" class="Bound">pp</a> <a id="20398" class="Symbol">→</a> <a id="20400" href="Ledger.Conway.PParams.html#6318" class="Function">paramsWellFormed</a> <a id="20417" href="Ledger.Conway.PParams.html#20395" class="Bound">pp</a> <a id="20420" class="Symbol">→</a> <a id="20422" href="Ledger.Conway.PParams.html#6318" class="Function">paramsWellFormed</a> <a id="20439" class="Symbol">(</a><a id="20440" href="Ledger.Conway.PParams.html#20234" class="Field">applyUpdate</a> <a id="20452" href="Ledger.Conway.PParams.html#20395" class="Bound">pp</a> <a id="20455" href="Ledger.Conway.PParams.html#20387" class="Bound">u</a><a id="20456" class="Symbol">))</a> <a id="20459" href="Class.Decidable.Core.html#208" class="Record Operator">⁇</a>
 </pre>
 </div>
-<p><em>Well-formedness
-condition</em> </p>
+<p><em>Well-formedness condition</em> </p>
 <pre class="Agda">
 
   <a id="PParamsDiff.ppdWellFormed"></a><a id="20515" href="Ledger.Conway.PParams.html#20515" class="Function">ppdWellFormed</a> <a id="20529" class="Symbol">:</a> <a id="20531" href="Ledger.Conway.PParams.html#20215" class="Field">UpdateT</a> <a id="20539" class="Symbol">→</a> <a id="20541" href="Agda.Primitive.html#388" class="Primitive">Type</a>
   <a id="20548" href="Ledger.Conway.PParams.html#20515" class="Function">ppdWellFormed</a> <a id="20562" href="Ledger.Conway.PParams.html#20562" class="Bound">u</a> <a id="20564" class="Symbol">=</a> <a id="20566" href="Ledger.Conway.PParams.html#20280" class="Field">updateGroups</a> <a id="20579" href="Ledger.Conway.PParams.html#20562" class="Bound">u</a> <a id="20581" href="Relation.Binary.PropositionalEquality.Core.html#858" class="Function Operator">≢</a> <a id="20583" href="Class.HasEmptySet.html#287" class="Field">∅</a>
     <a id="20589" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="20591" class="Symbol">∀</a> <a id="20593" href="Ledger.Conway.PParams.html#20593" class="Bound">pp</a> <a id="20596" class="Symbol">→</a> <a id="20598" href="Ledger.Conway.PParams.html#6318" class="Function">paramsWellFormed</a> <a id="20615" href="Ledger.Conway.PParams.html#20593" class="Bound">pp</a> <a id="20618" class="Symbol">→</a> <a id="20620" href="Ledger.Conway.PParams.html#6318" class="Function">paramsWellFormed</a> <a id="20637" class="Symbol">(</a><a id="20638" href="Ledger.Conway.PParams.html#20234" class="Field">applyUpdate</a> <a id="20650" href="Ledger.Conway.PParams.html#20593" class="Bound">pp</a> <a id="20653" href="Ledger.Conway.PParams.html#20562" class="Bound">u</a><a id="20654" class="Symbol">)</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">

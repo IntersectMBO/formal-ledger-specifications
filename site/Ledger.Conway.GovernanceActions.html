@@ -1557,7 +1557,7 @@
           <li class="md-nav__item">
   <a href="#governance-helper-function" class="md-nav__link">
     <span class="md-ellipsis">
-      Governance helper function
+      Governance-helper-function
     </span>
   </a>
   
@@ -5891,7 +5891,7 @@ the new governance framework:</p>
 </pre>
 </div>
 
-<p><a href="Ledger.Conway.GovernanceActions.html#governance-actions">Section 'Governance actions'</a> defines several
+<p><a href="Ledger.Conway.GovernanceActions.html#governance-actions">Section 'Governance-actions'</a> defines several
 data types used to represent governance actions. The type
 <code class="AgdaField">DocHash</code> is abstract but in the implementation it will be
 instantiated with a 32-bit hash type (like
@@ -5921,7 +5921,7 @@ for a different purpose.</p>
 <li>
 <p><code class="AgdaDatatype">GovAction</code> (governance action): one of seven possible
   actions (see
-  <a href="Ledger.Conway.GovernanceActions.html#types-of-governance-actions">Figure 'Types of governance actions'</a>
+  <a href="Ledger.Conway.GovernanceActions.html#types-of-governance-actions">Figure 'Types-of-governance-actions'</a>
   for definitions);</p>
 </li>
 </ul>
@@ -5993,7 +5993,7 @@ protection. For <code class="AgdaInductiveConstructor">TreasuryWdrl</code> and
 <code class="AgdaInductiveConstructor">Info</code>, enacting them does not change the
 state in non-commutative ways, so they can always be enacted.</p>
 <p>Types related to this hash protection scheme are defined in
-<a href="Ledger.Conway.GovernanceActions.html#needshash-and-hashprotected-types">Figure 'NeedsHash and HashProtected types'</a>.</p>
+<a href="Ledger.Conway.GovernanceActions.html#needshash-and-hashprotected-types">Figure 'NeedsHash-and-HashProtected-types'</a>.</p>
 <h3 id="needshash-and-hashprotected-types">NeedsHash and HashProtected types<a class="headerlink" href="#needshash-and-hashprotected-types" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
 <a id="NeedsHash"></a><a id="6888" href="Ledger.Conway.GovernanceActions.html#6888" class="Function">NeedsHash</a> <a id="6898" class="Symbol">:</a> <a id="6900" href="Ledger.Conway.GovernanceActions.html#1466" class="Datatype">GovActionType</a> <a id="6914" class="Symbol">→</a> <a id="6916" href="Agda.Primitive.html#388" class="Primitive">Type</a>
@@ -6063,7 +6063,7 @@ state in non-commutative ways, so they can always be enacted.</p>
 </div>
 
 <h2 id="votes-and-proposals">Votes and Proposals<a class="headerlink" href="#votes-and-proposals" title="Permanent link">&para;</a></h2>
-<h3 id="governance-helper-function">Governance helper function<a class="headerlink" href="#governance-helper-function" title="Permanent link">&para;</a></h3>
+<h3 id="governance-helper-function">Governance-helper-function<a class="headerlink" href="#governance-helper-function" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
 <a id="getDRepVote"></a><a id="8850" href="Ledger.Conway.GovernanceActions.html#8850" class="Function">getDRepVote</a> <a id="8862" class="Symbol">:</a> <a id="8864" href="Ledger.Conway.GovernanceActions.html#7704" class="Record">GovVote</a> <a id="8872" class="Symbol">→</a> <a id="8874" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="8880" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a>
 <a id="8891" href="Ledger.Conway.GovernanceActions.html#8850" class="Function">getDRepVote</a> <a id="8903" class="Keyword">record</a> <a id="8910" class="Symbol">{</a> <a id="8912" href="Ledger.Conway.GovernanceActions.html#7767" class="Field">voter</a> <a id="8918" class="Symbol">=</a> <a id="8920" class="Symbol">(</a><a id="8921" href="Ledger.Conway.GovernanceActions.html#1123" class="InductiveConstructor">DRep</a> <a id="8926" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="8928" href="Ledger.Conway.GovernanceActions.html#8928" class="Bound">credential</a><a id="8938" class="Symbol">)</a> <a id="8940" class="Symbol">}</a>  <a id="8943" class="Symbol">=</a> <a id="8945" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="8950" href="Ledger.Conway.GovernanceActions.html#8928" class="Bound">credential</a>

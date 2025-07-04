@@ -721,25 +721,25 @@
         <li class="md-nav__item">
   <a href="#stake-pool-parameter-definitions" class="md-nav__link">
     <span class="md-ellipsis">
-      Stake pool parameter definitions
+      Stake-pool-parameter-definitions
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#delegation" class="md-nav__link">
+  <a href="#delegation-definitions" class="md-nav__link">
     <span class="md-ellipsis">
-      Delegation
+      Delegation-definitions
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#types-used-for" class="md-nav__link">
+  <a href="#types-used-for-certs-transition-system" class="md-nav__link">
     <span class="md-ellipsis">
-      Types used for
+      Types-used-for-CERTS-transition-system
     </span>
   </a>
   
@@ -756,7 +756,7 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#delegation_1" class="md-nav__link">
+  <a href="#delegation" class="md-nav__link">
     <span class="md-ellipsis">
       Delegation
     </span>
@@ -5907,7 +5907,7 @@ specification</a>.</p>
 </pre>
 </div>
 
-<h3 id="stake-pool-parameter-definitions">Stake pool parameter definitions<a class="headerlink" href="#stake-pool-parameter-definitions" title="Permanent link">&para;</a></h3>
+<h3 id="stake-pool-parameter-definitions">Stake-pool-parameter-definitions<a class="headerlink" href="#stake-pool-parameter-definitions" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
 <a id="1630" class="Keyword">record</a> <a id="PoolParams"></a><a id="1637" href="Ledger.Conway.Certs.html#1637" class="Record">PoolParams</a> <a id="1648" class="Symbol">:</a> <a id="1650" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1655" class="Keyword">where</a>
   <a id="1663" class="Keyword">field</a>
@@ -5917,8 +5917,8 @@ specification</a>.</p>
     <a id="PoolParams.pledge"></a><a id="1767" href="Ledger.Conway.Certs.html#1767" class="Field">pledge</a>          <a id="1783" class="Symbol">:</a> <a id="1785" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
     <a id="PoolParams.rewardAccount"></a><a id="1794" href="Ledger.Conway.Certs.html#1794" class="Field">rewardAccount</a>   <a id="1810" class="Symbol">:</a> <a id="1812" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a>
 </pre>
-<h3 id="delegation">Delegation<a class="headerlink" href="#delegation" title="Permanent link">&para;</a></h3>
-<p>definitions</p>
+
+<h3 id="delegation-definitions">Delegation-definitions<a class="headerlink" href="#delegation-definitions" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
 <a id="1868" class="Keyword">data</a> <a id="DCert"></a><a id="1873" href="Ledger.Conway.Certs.html#1873" class="Datatype">DCert</a> <a id="1879" class="Symbol">:</a> <a id="1881" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1886" class="Keyword">where</a>
   <a id="DCert.delegate"></a><a id="1894" href="Ledger.Conway.Certs.html#1894" class="InductiveConstructor">delegate</a>    <a id="1906" class="Symbol">:</a> <a id="1908" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a> <a id="1919" class="Symbol">→</a> <a id="1921" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1927" href="Ledger.Conway.GovernanceActions.html#1209" class="Datatype">VDeleg</a> <a id="1934" class="Symbol">→</a> <a id="1936" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1942" href="Ledger.Conway.Crypto.html#2254" class="Function">KeyHash</a> <a id="1950" class="Symbol">→</a> <a id="1952" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a> <a id="1957" class="Symbol">→</a> <a id="1959" href="Ledger.Conway.Certs.html#1873" class="Datatype">DCert</a>
@@ -5964,8 +5964,7 @@ specification</a>.</p>
 </pre>
 </div>
 
-<h3 id="types-used-for">Types used for<a class="headerlink" href="#types-used-for" title="Permanent link">&para;</a></h3>
-<p>CERTS transition system</p>
+<h3 id="types-used-for-certs-transition-system">Types-used-for-CERTS-transition-system<a class="headerlink" href="#types-used-for-certs-transition-system" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
 <a id="3515" class="Keyword">record</a> <a id="CertEnv"></a><a id="3522" href="Ledger.Conway.Certs.html#3522" class="Record">CertEnv</a> <a id="3530" class="Symbol">:</a> <a id="3532" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="3537" class="Keyword">where</a>
   <a id="3545" class="Keyword">field</a>
@@ -5992,6 +5991,7 @@ specification</a>.</p>
 
 <a id="3963" class="Keyword">record</a> <a id="DState"></a><a id="3970" href="Ledger.Conway.Certs.html#3970" class="Record">DState</a> <a id="3977" class="Symbol">:</a> <a id="3979" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="3984" class="Keyword">where</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6005,7 +6005,6 @@ specification</a>.</p>
     <a id="DState.stakeDelegs"></a><a id="4136" href="Ledger.Conway.Certs.html#4136" class="Field">stakeDelegs</a>  <a id="4149" class="Symbol">:</a> <a id="4151" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a> <a id="4162" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="4164" href="Ledger.Conway.Crypto.html#2254" class="Function">KeyHash</a>
     <a id="DState.rewards"></a><a id="4176" href="Ledger.Conway.Certs.html#4176" class="Field">rewards</a>      <a id="4189" class="Symbol">:</a> <a id="4191" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a> <a id="4202" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="4204" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6046,6 +6045,7 @@ specification</a>.</p>
 
 <a id="4993" class="Keyword">record</a> <a id="GState"></a><a id="5000" href="Ledger.Conway.Certs.html#5000" class="Record">GState</a> <a id="5007" class="Symbol">:</a> <a id="5009" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5014" class="Keyword">where</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6058,7 +6058,6 @@ specification</a>.</p>
     <a id="GState.dreps"></a><a id="5125" href="Ledger.Conway.Certs.html#5125" class="Field">dreps</a>      <a id="5136" class="Symbol">:</a> <a id="5138" href="Ledger.Conway.Certs.html#1035" class="Function">DReps</a>
     <a id="GState.ccHotKeys"></a><a id="5148" href="Ledger.Conway.Certs.html#5148" class="Field">ccHotKeys</a>  <a id="5159" class="Symbol">:</a> <a id="5161" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a> <a id="5172" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="5174" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="5180" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6089,6 +6088,7 @@ specification</a>.</p>
     <a id="CertState.pState"></a><a id="5617" href="Ledger.Conway.Certs.html#5617" class="Field">pState</a> <a id="5624" class="Symbol">:</a> <a id="5626" href="Ledger.Conway.Certs.html#4716" class="Record">PState</a>
     <a id="CertState.gState"></a><a id="5637" href="Ledger.Conway.Certs.html#5637" class="Field">gState</a> <a id="5644" class="Symbol">:</a> <a id="5646" href="Ledger.Conway.Certs.html#5000" class="Record">GState</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6125,7 +6125,6 @@ specification</a>.</p>
 <a id="GovCertEnv"></a><a id="6481" href="Ledger.Conway.Certs.html#6481" class="Function">GovCertEnv</a>  <a id="6493" class="Symbol">=</a> <a id="6495" href="Ledger.Conway.Certs.html#3522" class="Record">CertEnv</a>
 <a id="PoolEnv"></a><a id="6503" href="Ledger.Conway.Certs.html#6503" class="Function">PoolEnv</a>     <a id="6515" class="Symbol">=</a> <a id="6517" href="Ledger.Conway.PParams.html#2887" class="Record">PParams</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6184,7 +6183,7 @@ specification</a>.</p>
 </div>
 
 <h2 id="changes-introduced-in-conway-era">Changes Introduced in Conway Era<a class="headerlink" href="#changes-introduced-in-conway-era" title="Permanent link">&para;</a></h2>
-<h3 id="delegation_1">Delegation<a class="headerlink" href="#delegation_1" title="Permanent link">&para;</a></h3>
+<h3 id="delegation">Delegation<a class="headerlink" href="#delegation" title="Permanent link">&para;</a></h3>
 <p>Registered credentials can now delegate to a DRep as well as to a stake
 pool. This is achieved by giving the
 <code class="AgdaInductiveConstructor">delegate</code> certificate two optional fields,
@@ -6220,10 +6219,10 @@ compatibility.</p>
 <h2 id="governance-certificate-rules">Governance Certificate Rules<a class="headerlink" href="#governance-certificate-rules" title="Permanent link">&para;</a></h2>
 <p>The rules for transition systems dealing with individual certificates
 are defined in
-<a href="Ledger.Conway.Certs.html#auxiliary-deleg-transition-system">Figure 'Auxiliary DELEG transition system'</a> and <a href="Ledger.Conway.Certs.html#auxiliary-pool-transition-system">Figure 'Auxiliary POOL transition system'</a> and <a href="Ledger.Conway.Certs.html#auxiliary-govcert-transition-system">Figure 'Auxiliary GOVCERT transition system'</a>.</p>
+<a href="Ledger.Conway.Certs.html#auxiliary-deleg-transition-system">Figure 'Auxiliary-DELEG-transition-system'</a> and <a href="Ledger.Conway.Certs.html#auxiliary-pool-transition-system">Figure 'Auxiliary-POOL-transition-system'</a> and <a href="Ledger.Conway.Certs.html#auxiliary-govcert-transition-system">Figure 'Auxiliary-GOVCERT-transition-system'</a>.</p>
 <details class="note">
 <summary>Conway specifics</summary>
-<p><a href="Ledger.Conway.Certs.html#auxiliary-deleg-transition-system">Figure 'Auxiliary DELEG transition system'</a> and <a href="Ledger.Conway.Certs.html#auxiliary-govcert-transition-system">Figure 'Auxiliary GOVCERT transition system'</a>.</p>
+<p><a href="Ledger.Conway.Certs.html#auxiliary-deleg-transition-system">Figure 'Auxiliary-DELEG-transition-system'</a> and <a href="Ledger.Conway.Certs.html#auxiliary-govcert-transition-system">Figure 'Auxiliary-GOVCERT-transition-system'</a>.</p>
 </details>
 <p>GOVCERT deals with the new certificates relating to DReps and the
 constitutional committee.</p>
@@ -6418,7 +6417,7 @@ constitutional committee.</p>
 
 </div>
 
-<p><a href="Ledger.Conway.Certs.html#certs-rules">Figure 'CERTS rules'</a> assembles the CERTS
+<p><a href="Ledger.Conway.Certs.html#certs-rules">Figure 'CERTS-rules'</a> assembles the CERTS
 transition system by bundling the previously defined pieces together
 into the CERT system, and then taking the reflexive-transitive closure
 of CERT together with CERTBASE as the base case. CERTBASE does the

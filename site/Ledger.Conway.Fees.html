@@ -5693,13 +5693,13 @@ reference scripts.</p>
 fee for reference scripts in a transaction. It takes as input the total
 size of the reference scripts in bytes—which can be calculated using
 <code class="AgdaFunction">refScriptsSize</code>
-(<a href="Ledger.Conway.Utxo.html#functions-used-in-utxo-rules-continued">Figure 'Functions used in UTxO rules, continued'</a>)—and
+(<a href="Ledger.Conway.Utxo.html#functions-used-in-utxo-rules-continued">Figure 'Functions-used-in-UTxO-rules,-continued'</a>)—and
 uses a function (<code class="AgdaFunction">scriptsCostAux</code>) that is piece-wise
 linear in the size, where the linear constant multiple grows with each
 <code class="AgdaFunction">refScriptCostStride</code> bytes. In addition,
 <code class="AgdaFunction">scriptsCost</code> depends on the following constants (which
 are bundled with the protocol parameters; see
-<a href="Ledger.Conway.PParams.html#protocol-parameter-definitions">Figure 'Protocol parameter definitions'</a>):</p>
+<a href="Ledger.Conway.PParams.html#protocol-parameter-definitions">Figure 'Protocol-parameter-definitions'</a>):</p>
 <ul>
 <li>
 <p><code class="AgdaFunction">refScriptCostMultiplier</code>, a rational number, the

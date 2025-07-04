@@ -1180,9 +1180,9 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#definitions-for-the-epoch-and" class="md-nav__link">
+  <a href="#definitions-for-the-epoch-and-newepoch-transition-systems" class="md-nav__link">
     <span class="md-ellipsis">
-      Definitions for the EPOCH and
+      Definitions-for-the-EPOCH-and-NEWEPOCH-transition-systems
     </span>
   </a>
   
@@ -1207,9 +1207,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#functions-for" class="md-nav__link">
+  <a href="#functions-for-computing-stake-distributions" class="md-nav__link">
     <span class="md-ellipsis">
-      Functions for
+      Functions-for-computing-stake-distributions
     </span>
   </a>
   
@@ -1236,7 +1236,7 @@
         <li class="md-nav__item">
   <a href="#newepoch-transition-system" class="md-nav__link">
     <span class="md-ellipsis">
-      NEWEPOCH transition system
+      NEWEPOCH-transition-system
     </span>
   </a>
   
@@ -5822,8 +5822,7 @@ specification</a></p>
 </pre>
 </div>
 
-<h3 id="definitions-for-the-epoch-and">Definitions for the EPOCH and<a class="headerlink" href="#definitions-for-the-epoch-and" title="Permanent link">&para;</a></h3>
-<p>NEWEPOCH transition systems</p>
+<h3 id="definitions-for-the-epoch-and-newepoch-transition-systems">Definitions-for-the-EPOCH-and-NEWEPOCH-transition-systems<a class="headerlink" href="#definitions-for-the-epoch-and-newepoch-transition-systems" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
 
 <a id="1894" class="Keyword">record</a> <a id="EpochState"></a><a id="1901" href="Ledger.Conway.Epoch.html#1901" class="Record">EpochState</a> <a id="1912" class="Symbol">:</a> <a id="1914" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1919" class="Keyword">where</a>
@@ -5843,6 +5842,7 @@ specification</a></p>
     <a id="EpochState.es"></a><a id="2110" href="Ledger.Conway.Epoch.html#2110" class="Field">es</a>         <a id="2121" class="Symbol">:</a> <a id="2123" href="Ledger.Conway.Enact.html#1924" class="Record">EnactState</a>
     <a id="EpochState.fut"></a><a id="2138" href="Ledger.Conway.Epoch.html#2138" class="Field">fut</a>        <a id="2149" class="Symbol">:</a> <a id="2151" href="Ledger.Conway.Ratify.html#8285" class="Record">RatifyState</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5879,7 +5879,6 @@ specification</a></p>
     <a id="NewEpochState.epochState"></a><a id="3113" href="Ledger.Conway.Epoch.html#3113" class="Field">epochState</a>  <a id="3125" class="Symbol">:</a> <a id="3127" href="Ledger.Conway.Epoch.html#1901" class="Record">EpochState</a>
     <a id="NewEpochState.ru"></a><a id="3142" href="Ledger.Conway.Epoch.html#3142" class="Field">ru</a>          <a id="3154" class="Symbol">:</a> <a id="3156" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="3162" href="Ledger.Conway.Rewards.html#17693" class="Record">RewardUpdate</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5928,7 +5927,7 @@ specification</a></p>
 </pre>
 </div>
 
-<p><a href="Ledger.Conway.Epoch.html#rewardupdate-creation">Figure 'RewardUpdate Creation'</a> defines
+<p><a href="Ledger.Conway.Epoch.html#rewardupdate-creation">Figure 'RewardUpdate-Creation'</a> defines
 the function <code class="AgdaFunction">createRUpd</code> which creates a
 <code class="AgdaRecord">RewardUpdate</code>, i.e.the net flow of Ada due to paying out
 rewards after an epoch. Relevant quantities are:</p>
@@ -6114,8 +6113,8 @@ rewards after an epoch. Relevant quantities are:</p>
       <a id="11082" class="Keyword">in</a>
         <a id="11093" class="Symbol">(</a><a id="11094" href="Ledger.Conway.Epoch.html#10859" class="Bound">orps</a> <a id="11099" href="Data.List.Base.html#1734" class="Function Operator">++</a> <a id="11102" href="Ledger.Conway.Epoch.html#10953" class="Bound">orps&#39;</a> <a id="11108" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="11110" href="Ledger.Conway.Epoch.html#10961" class="Bound">govSt&#39;</a><a id="11116" class="Symbol">)</a>
 </pre>
-<h3 id="functions-for">Functions for<a class="headerlink" href="#functions-for" title="Permanent link">&para;</a></h3>
-<p>computing stake distributions</p>
+
+<h3 id="functions-for-computing-stake-distributions">Functions-for-computing-stake-distributions<a class="headerlink" href="#functions-for-computing-stake-distributions" title="Permanent link">&para;</a></h3>
 <div class="AgdaSuppressSpace">
 
 
@@ -6173,7 +6172,7 @@ rewards after an epoch. Relevant quantities are:</p>
 <pre class="Agda">
 <a id="12310" class="Keyword">data</a> <a id="_⊢_⇀⦇_,EPOCH⦈_"></a><a id="12315" href="Ledger.Conway.Epoch.html#12315" class="Datatype Operator">_⊢_⇀⦇_,EPOCH⦈_</a> <a id="12330" class="Symbol">:</a> <a id="12332" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="12334" class="Symbol">→</a> <a id="12336" href="Ledger.Conway.Epoch.html#1901" class="Record">EpochState</a> <a id="12347" class="Symbol">→</a> <a id="12349" href="Ledger.Conway.Types.Epoch.html#600" class="Function">Epoch</a> <a id="12355" class="Symbol">→</a> <a id="12357" href="Ledger.Conway.Epoch.html#1901" class="Record">EpochState</a> <a id="12368" class="Symbol">→</a> <a id="12370" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="12375" class="Keyword">where</a>
 </pre>
-<p><a href="Ledger.Conway.Epoch.html#epoch-transition-system">Figure 'EPOCH transition system'</a>
+<p><a href="Ledger.Conway.Epoch.html#epoch-transition-system">Figure 'EPOCH-transition-system'</a>
 defines the EPOCH transition rule. Currently, this incorporates logic
 that was previously handled by POOLREAP in the Shelley specification
 <a href="#shelley-ledger-spec">CVG19, </a>; POOLREAP is not implemented here.</p>
@@ -6261,7 +6260,7 @@ its results by carrying out each of the following tasks.</p>
         <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Epoch.html#14977}{\htmlId{15587}{\htmlClass{Bound}{\text{acnt&#39;}}}}\, \\ \,\href{Ledger.Conway.Epoch.html#12199}{\htmlId{15595}{\htmlClass{Generalizable}{\text{ss&#39;}}}}\, \\ \begin{pmatrix} \,\href{Ledger.Conway.Epoch.html#14862}{\htmlId{15603}{\htmlClass{Bound}{\text{utxoSt&#39;}}}}\, \\ \,\href{Ledger.Conway.Epoch.html#14392}{\htmlId{15613}{\htmlClass{Bound}{\text{govSt&#39;}}}}\, \\ \,\href{Ledger.Conway.Epoch.html#14781}{\htmlId{15622}{\htmlClass{Bound}{\text{certState&#39;}}}}\, \end{pmatrix} \\ \,\href{Ledger.Conway.Epoch.html#13600}{\htmlId{15637}{\htmlClass{Bound}{\text{es}}}}\, \\ \,\href{Ledger.Conway.Epoch.html#12040}{\htmlId{15642}{\htmlClass{Generalizable}{\text{fut&#39;}}}}\, \end{pmatrix}$</a>
 </pre>
 
-<h3 id="newepoch-transition-system">NEWEPOCH transition system<a class="headerlink" href="#newepoch-transition-system" title="Permanent link">&para;</a></h3>
+<h3 id="newepoch-transition-system">NEWEPOCH-transition-system<a class="headerlink" href="#newepoch-transition-system" title="Permanent link">&para;</a></h3>
 <div class="agda-hidden-source">
 
 <pre class="Agda">

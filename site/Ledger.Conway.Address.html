@@ -5757,14 +5757,13 @@ we would use an “enterprise” address. In contrast, the type of
   <a id="1279" href="Ledger.Conway.Address.html#1279" class="Bound">KeyHash</a>
   <a id="1289" href="Ledger.Conway.Address.html#1289" class="Bound">ScriptHash</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
   <a id="1351" class="Symbol">:</a> <a id="1353" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="1357" class="Symbol">)</a>  <a id="1360" class="Symbol">⦃</a> <a id="1362" href="Ledger.Conway.Address.html#1362" class="Bound">_</a> <a id="1364" class="Symbol">:</a> <a id="1366" href="Class.DecEq.Core.html#117" class="Record">DecEq</a> <a id="1372" href="Ledger.Conway.Address.html#1269" class="Bound">Network</a> <a id="1380" class="Symbol">⦄</a> <a id="1382" class="Symbol">⦃</a> <a id="1384" href="Ledger.Conway.Address.html#1384" class="Bound">_</a> <a id="1386" class="Symbol">:</a> <a id="1388" href="Class.DecEq.Core.html#117" class="Record">DecEq</a> <a id="1394" href="Ledger.Conway.Address.html#1279" class="Bound">KeyHash</a> <a id="1402" class="Symbol">⦄</a> <a id="1404" class="Symbol">⦃</a> <a id="1406" href="Ledger.Conway.Address.html#1406" class="Bound">_</a> <a id="1408" class="Symbol">:</a> <a id="1410" href="Class.DecEq.Core.html#117" class="Record">DecEq</a> <a id="1416" href="Ledger.Conway.Address.html#1289" class="Bound">ScriptHash</a> <a id="1427" class="Symbol">⦄</a> <a id="1429" class="Keyword">where</a>
 </pre>
 </div>
-<p><em>Derived types</em> </p>
+<p><em>Derived types</em></p>
 <pre class="Agda">
 <a id="1474" class="Keyword">data</a> <a id="Credential"></a><a id="1479" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a> <a id="1490" class="Symbol">:</a> <a id="1492" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1497" class="Keyword">where</a>
   <a id="Credential.KeyHashObj"></a><a id="1505" href="Ledger.Conway.Address.html#1505" class="InductiveConstructor">KeyHashObj</a> <a id="1516" class="Symbol">:</a> <a id="1518" href="Ledger.Conway.Address.html#1279" class="Bound">KeyHash</a> <a id="1526" class="Symbol">→</a> <a id="1528" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a>
@@ -5816,6 +5815,7 @@ we would use an “enterprise” address. In contrast, the type of
   <a id="2634" class="Keyword">field</a> <a id="RwdAddr.net"></a><a id="2640" href="Ledger.Conway.Address.html#2640" class="Field">net</a>    <a id="2647" class="Symbol">:</a> <a id="2649" href="Ledger.Conway.Address.html#1269" class="Bound">Network</a>
         <a id="RwdAddr.stake"></a><a id="2665" href="Ledger.Conway.Address.html#2665" class="Field">stake</a>  <a id="2672" class="Symbol">:</a> <a id="2674" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">

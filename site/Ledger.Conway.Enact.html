@@ -5761,7 +5761,7 @@ specification</a></p>
 </pre>
 </div>
 
-<p><a href="Ledger.Conway.Enact.html#types-and-function-used-for-the-enact-transition-system">Figure 'Types and function used for the ENACT transition system'</a> contains some
+<p><a href="Ledger.Conway.Enact.html#types-and-function-used-for-the-enact-transition-system">Figure 'Types-and-function-used-for-the-ENACT-transition-system'</a> contains some
 definitions required to define the ENACT transition system.
 <code class="AgdaRecord">EnactEnv</code> is the environment and <code class="AgdaRecord">EnactState</code>
 the state of ENACT, which enacts a governance action. All governance
@@ -5771,7 +5771,7 @@ permanently, which of course can have further consequences.
 <code class="AgdaInductiveConstructor">TreasuryWdrl</code> accumulates withdrawal
 temporarily in the <code class="AgdaField">withdrawals</code> field of
 <code class="AgdaRecord">EnactState</code>, but this information is applied and reset in
-EPOCH (see <a href="Ledger.Conway.Epoch.html#epoch-transition-system">Figure 'EPOCH transition system'</a>). Also,
+EPOCH (see <a href="Ledger.Conway.Epoch.html#epoch-transition-system">Figure 'EPOCH-transition-system'</a>). Also,
 enacting these governance actions is the <em>only</em> way of modifying
 <code class="AgdaRecord">EnactState</code>.</p>
 <p>Note that all other fields of <code class="AgdaRecord">EnactState</code> also contain a
@@ -5793,7 +5793,6 @@ enacting these governance actions is the <em>only</em> way of modifying
     <a id="EnactState.pparams"></a><a id="2134" href="Ledger.Conway.Enact.html#2134" class="Field">pparams</a>       <a id="2148" class="Symbol">:</a> <a id="2150" href="Ledger.Conway.GovernanceActions.html#7189" class="Function">HashProtected</a> <a id="2164" href="Ledger.Conway.PParams.html#2887" class="Record">PParams</a>
     <a id="EnactState.withdrawals"></a><a id="2176" href="Ledger.Conway.Enact.html#2176" class="Field">withdrawals</a>   <a id="2190" class="Symbol">:</a> <a id="2192" href="Ledger.Conway.Address.html#2611" class="Record">RwdAddr</a> <a id="2200" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="2202" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5839,8 +5838,8 @@ enacting these governance actions is the <em>only</em> way of modifying
 <a id="3601" href="Ledger.Conway.Enact.html#3252" class="Function">getHashES</a> <a id="3611" href="Ledger.Conway.Enact.html#3611" class="Bound">es</a> <a id="3614" class="Symbol">(</a><a id="3615" href="Ledger.Conway.GovernanceActions.html#1670" class="InductiveConstructor">TreasuryWdrl</a><a id="3627" class="Symbol">)</a>     <a id="3633" class="Symbol">=</a> <a id="3635" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
 <a id="3643" href="Ledger.Conway.Enact.html#3252" class="Function">getHashES</a> <a id="3653" href="Ledger.Conway.Enact.html#3653" class="Bound">es</a> <a id="3656" href="Ledger.Conway.GovernanceActions.html#1705" class="InductiveConstructor">Info</a>               <a id="3675" class="Symbol">=</a> <a id="3677" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
 </pre>
-<p><em>Type of the ENACT transition
-system</em> </p>
+<p><em>Type of the
+ENACT transition system</em> </p>
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5851,6 +5850,7 @@ system</em> </p>
 <pre class="Agda">
   <a id="_⊢_⇀⦇_,ENACT⦈_"></a><a id="3802" href="Ledger.Conway.Enact.html#3802" class="Datatype Operator">_⊢_⇀⦇_,ENACT⦈_</a> <a id="3817" class="Symbol">:</a> <a id="3819" href="Ledger.Conway.Enact.html#1815" class="Record">EnactEnv</a> <a id="3828" class="Symbol">→</a> <a id="3830" href="Ledger.Conway.Enact.html#1924" class="Record">EnactState</a> <a id="3841" class="Symbol">→</a> <a id="3843" href="Ledger.Conway.GovernanceActions.html#2123" class="Record">GovAction</a> <a id="3853" class="Symbol">→</a> <a id="3855" href="Ledger.Conway.Enact.html#1924" class="Record">EnactState</a> <a id="3866" class="Symbol">→</a> <a id="3868" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5875,7 +5875,7 @@ system</em> </p>
 </pre>
 </div>
 
-<p><a href="Ledger.Conway.Enact.html#enact-transition-system">Figure 'ENACT transition system'</a> and <a href="Ledger.Conway.Enact.html#enact-transition-system-continued">Figure 'ENACT transition system (continued)'</a>
+<p><a href="Ledger.Conway.Enact.html#enact-transition-system">Figure 'ENACT-transition-system'</a> and <a href="Ledger.Conway.Enact.html#enact-transition-system-continued">Figure 'ENACT-transition-system-(continued)'</a>
 define the rules of the ENACT transition system. Usually no
 preconditions are checked and the state is simply updated (including the
 <code class="AgdaDatatype">GovActionID</code> for the hash protection scheme, if

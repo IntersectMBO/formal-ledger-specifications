@@ -5728,7 +5728,7 @@ module of the <a href="https://github.com/IntersectMBO/formal-ledger-specificati
 specification</a>,
 in which we rely on a public key signing scheme for verification of
 spending.</p>
-<p><a href="Ledger.Conway.Crypto.html#definitions-for-the-public-key-signature-scheme">Figure 'Definitions for the public key signature scheme'</a> shows some of the
+<p><a href="Ledger.Conway.Crypto.html#definitions-for-the-public-key-signature-scheme">Figure 'Definitions-for-the-public-key-signature-scheme'</a> shows some of the
 types, functions and properties of this scheme.</p>
 <div class="agda-hidden-source">
 
@@ -5762,8 +5762,7 @@ types, functions and properties of this scheme.</p>
   <a id="1329" class="Keyword">field</a>
 </pre>
 </div>
-<p><em>Types &amp;
-functions</em> </p>
+<p><em>Types &amp; functions</em> </p>
 <pre class="Agda">
     <a id="PKKScheme.SKey"></a><a id="1382" href="Ledger.Conway.Crypto.html#1382" class="Field">SKey</a> <a id="PKKScheme.VKey"></a><a id="1387" href="Ledger.Conway.Crypto.html#1387" class="Field">VKey</a> <a id="PKKScheme.Sig"></a><a id="1392" href="Ledger.Conway.Crypto.html#1392" class="Field">Sig</a> <a id="PKKScheme.Ser"></a><a id="1396" href="Ledger.Conway.Crypto.html#1396" class="Field">Ser</a>  <a id="1401" class="Symbol">:</a> <a id="1403" href="Agda.Primitive.html#388" class="Primitive">Type</a>
     <a id="PKKScheme.isKeyPair"></a><a id="1412" href="Ledger.Conway.Crypto.html#1412" class="Field">isKeyPair</a>          <a id="1431" class="Symbol">:</a> <a id="1433" href="Ledger.Conway.Crypto.html#1382" class="Field">SKey</a> <a id="1438" class="Symbol">→</a> <a id="1440" href="Ledger.Conway.Crypto.html#1387" class="Field">VKey</a> <a id="1445" class="Symbol">→</a> <a id="1447" href="Agda.Primitive.html#388" class="Primitive">Type</a>
@@ -5772,6 +5771,7 @@ functions</em> </p>
 
   <a id="PKKScheme.KeyPair"></a><a id="1546" href="Ledger.Conway.Crypto.html#1546" class="Function">KeyPair</a> <a id="1554" class="Symbol">=</a> <a id="1556" href="Data.Product.Base.html#1244" class="Function">Σ[</a> <a id="1559" href="Ledger.Conway.Crypto.html#1559" class="Bound">sk</a> <a id="1562" href="Data.Product.Base.html#1244" class="Function">∈</a> <a id="1564" href="Ledger.Conway.Crypto.html#1382" class="Field">SKey</a> <a id="1569" href="Data.Product.Base.html#1244" class="Function">]</a> <a id="1571" href="Data.Product.Base.html#1244" class="Function">Σ[</a> <a id="1574" href="Ledger.Conway.Crypto.html#1574" class="Bound">vk</a> <a id="1577" href="Data.Product.Base.html#1244" class="Function">∈</a> <a id="1579" href="Ledger.Conway.Crypto.html#1387" class="Field">VKey</a> <a id="1584" href="Data.Product.Base.html#1244" class="Function">]</a> <a id="1586" href="Ledger.Conway.Crypto.html#1412" class="Field">isKeyPair</a> <a id="1596" href="Ledger.Conway.Crypto.html#1559" class="Bound">sk</a> <a id="1599" href="Ledger.Conway.Crypto.html#1574" class="Bound">vk</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5779,12 +5779,12 @@ functions</em> </p>
     <a id="1663" class="Symbol">⦃</a> <a id="PKKScheme.Dec-isSigned"></a><a id="1665" href="Ledger.Conway.Crypto.html#1665" class="Field">Dec-isSigned</a> <a id="1678" class="Symbol">⦄</a> <a id="1680" class="Symbol">:</a> <a id="1682" href="Ledger.Conway.Crypto.html#1456" class="Field">isSigned</a> <a id="1691" href="Class.Decidable.Core.html#784" class="Function Operator">⁇³</a>
 </pre>
 </div>
-<p><em>Property of
-signatures</em> </p>
+<p><em>Property of signatures</em> </p>
 <pre class="Agda">
     <a id="PKKScheme.isSigned-correct"></a><a id="1746" href="Ledger.Conway.Crypto.html#1746" class="Field">isSigned-correct</a>  <a id="1764" class="Symbol">:</a> <a id="1766" class="Symbol">(</a><a id="1767" href="Ledger.Conway.Crypto.html#1767" class="Bound">(</a><a id="1768" href="Ledger.Conway.Crypto.html#1768" class="Bound">sk</a> <a id="1771" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1773" href="Ledger.Conway.Crypto.html#1773" class="Bound">vk</a> <a id="1776" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1778" href="Ledger.Conway.Crypto.html#1767" class="Bound">_)</a> <a id="1781" class="Symbol">:</a> <a id="1783" href="Ledger.Conway.Crypto.html#1546" class="Function">KeyPair</a><a id="1790" class="Symbol">)</a> <a id="1792" class="Symbol">(</a><a id="1793" href="Ledger.Conway.Crypto.html#1793" class="Bound">d</a> <a id="1795" class="Symbol">:</a> <a id="1797" href="Ledger.Conway.Crypto.html#1396" class="Field">Ser</a><a id="1800" class="Symbol">)</a> <a id="1802" class="Symbol">(</a><a id="1803" href="Ledger.Conway.Crypto.html#1803" class="Bound">σ</a> <a id="1805" class="Symbol">:</a> <a id="1807" href="Ledger.Conway.Crypto.html#1392" class="Field">Sig</a><a id="1810" class="Symbol">)</a>
                       <a id="1834" class="Symbol">→</a> <a id="1836" href="Ledger.Conway.Crypto.html#1505" class="Field">sign</a> <a id="1841" href="Ledger.Conway.Crypto.html#1768" class="Bound">sk</a> <a id="1844" href="Ledger.Conway.Crypto.html#1793" class="Bound">d</a> <a id="1846" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1848" href="Ledger.Conway.Crypto.html#1803" class="Bound">σ</a> <a id="1850" class="Symbol">→</a> <a id="1852" href="Ledger.Conway.Crypto.html#1456" class="Field">isSigned</a> <a id="1861" href="Ledger.Conway.Crypto.html#1773" class="Bound">vk</a> <a id="1864" href="Ledger.Conway.Crypto.html#1793" class="Bound">d</a> <a id="1866" href="Ledger.Conway.Crypto.html#1803" class="Bound">σ</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">

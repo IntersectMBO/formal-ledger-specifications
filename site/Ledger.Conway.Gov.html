@@ -5844,6 +5844,7 @@ proposals take priority. Note that <code class="AgdaRecord">EnactState</code> us
 <pre class="Agda">
 <a id="2937" href="Ledger.Conway.Gov.html#2898" class="Function">GovState</a> <a id="2946" class="Symbol">=</a> <a id="2948" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="2953" class="Symbol">(</a><a id="2954" href="Ledger.Conway.GovernanceActions.html#1179" class="Function">GovActionID</a> <a id="2966" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="2968" href="Ledger.Conway.GovernanceActions.html#8071" class="Record">GovActionState</a><a id="2982" class="Symbol">)</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5865,7 +5866,6 @@ proposals take priority. Note that <code class="AgdaRecord">EnactState</code> us
     <a id="GovEnv.certState"></a><a id="3348" href="Ledger.Conway.Gov.html#3348" class="Field">certState</a>   <a id="3360" class="Symbol">:</a> <a id="3362" href="Ledger.Conway.Certs.html#5466" class="Record">CertState</a>
     <a id="GovEnv.rewardCreds"></a><a id="3376" href="Ledger.Conway.Gov.html#3376" class="Field">rewardCreds</a> <a id="3388" class="Symbol">:</a> <a id="3390" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="3392" href="Ledger.Conway.Address.html#1479" class="Datatype">Credential</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5908,7 +5908,6 @@ proposals take priority. Note that <code class="AgdaRecord">EnactState</code> us
 <a id="4269" href="Ledger.Conway.Gov.html#4177" class="Function">Overlap</a> <a id="4277" href="Ledger.Conway.GovernanceActions.html#1530" class="InductiveConstructor">UpdateCommittee</a> <a id="4293" href="Ledger.Conway.GovernanceActions.html#1495" class="InductiveConstructor">NoConfidence</a>     <a id="4310" class="Symbol">=</a> <a id="4312" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
 <a id="4314" href="Ledger.Conway.Gov.html#4177" class="CatchallClause Function">Overlap</a><a id="4321" class="CatchallClause"> </a><a id="4322" href="Ledger.Conway.Gov.html#4322" class="CatchallClause Bound">a</a><a id="4323" class="CatchallClause">               </a><a id="4338" href="Ledger.Conway.Gov.html#4338" class="CatchallClause Bound">a&#39;</a>               <a id="4355" class="Symbol">=</a> <a id="4357" href="Ledger.Conway.Gov.html#4322" class="Bound">a</a> <a id="4359" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="4361" href="Ledger.Conway.Gov.html#4338" class="Bound">a&#39;</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5985,6 +5984,7 @@ proposals take priority. Note that <code class="AgdaRecord">EnactState</code> us
           <a id="7525" class="Symbol">→</a> <a id="7527" href="Ledger.Conway.Gov.html#2898" class="Function">GovState</a>
 <a id="7536" href="Ledger.Conway.Gov.html#7410" class="Function">addAction</a> <a id="7546" href="Ledger.Conway.Gov.html#7546" class="Bound">s</a> <a id="7548" href="Ledger.Conway.Gov.html#7548" class="Bound">e</a> <a id="7550" href="Ledger.Conway.Gov.html#7550" class="Bound">aid</a> <a id="7554" href="Ledger.Conway.Gov.html#7554" class="Bound">addr</a> <a id="7559" href="Ledger.Conway.Gov.html#7559" class="Bound">a</a> <a id="7561" href="Ledger.Conway.Gov.html#7561" class="Bound">prev</a> <a id="7566" class="Symbol">=</a> <a id="7568" href="Ledger.Conway.Gov.html#6764" class="Function">insertGovAction</a> <a id="7584" href="Ledger.Conway.Gov.html#7546" class="Bound">s</a> <a id="7586" class="Symbol">(</a><a id="7587" href="Ledger.Conway.Gov.html#7137" class="Function">mkGovStatePair</a> <a id="7602" href="Ledger.Conway.Gov.html#7548" class="Bound">e</a> <a id="7604" href="Ledger.Conway.Gov.html#7550" class="Bound">aid</a> <a id="7608" href="Ledger.Conway.Gov.html#7554" class="Bound">addr</a> <a id="7613" href="Ledger.Conway.Gov.html#7559" class="Bound">a</a> <a id="7615" href="Ledger.Conway.Gov.html#7561" class="Bound">prev</a><a id="7619" class="Symbol">)</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6039,7 +6039,7 @@ proposals take priority. Note that <code class="AgdaRecord">EnactState</code> us
 <pre class="Agda">
 <a id="_⊢_⇀⦇_,GOVS⦈_"></a><a id="9033" href="Ledger.Conway.Gov.html#9033" class="Function Operator">_⊢_⇀⦇_,GOVS⦈_</a>   <a id="9049" class="Symbol">:</a> <a id="9051" href="Ledger.Conway.Gov.html#3179" class="Record">GovEnv</a> <a id="9058" class="Symbol">→</a> <a id="9060" href="Ledger.Conway.Gov.html#2898" class="Function">GovState</a> <a id="9069" class="Symbol">→</a> <a id="9071" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="9076" class="Symbol">(</a><a id="9077" href="Ledger.Conway.GovernanceActions.html#7704" class="Record">GovVote</a> <a id="9085" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="9087" href="Ledger.Conway.GovernanceActions.html#7849" class="Record">GovProposal</a><a id="9098" class="Symbol">)</a> <a id="9100" class="Symbol">→</a> <a id="9102" href="Ledger.Conway.Gov.html#2898" class="Function">GovState</a> <a id="9111" class="Symbol">→</a> <a id="9113" href="Agda.Primitive.html#388" class="Primitive">Type</a>
 </pre>
-<p><a href="Ledger.Conway.Gov.html#enactability-predicate">Section 'Enactability predicate'</a>
+<p><a href="Ledger.Conway.Gov.html#enactability-predicate">Section 'Enactability-predicate'</a>
 shows some of the functions used to determine whether certain actions
 are enactable in a given state. Specifically,
 <code class="AgdaFunction">allEnactable</code> passes the <code class="AgdaFunction">GovState</code> to
@@ -6052,7 +6052,7 @@ previously enacted one.</p>
 <p>The function <code class="AgdaFunction">govActionPriority</code> assigns a priority to
 the various types of governance actions. This is useful for ordering
 lists of governance actions (see <code class="AgdaFunction">insertGovAction</code> in
-<a href="Ledger.Conway.Gov.html#functions-used-in-the-gov-transition-system">Section 'Functions used in the GOV transition system'</a>). Priority is
+<a href="Ledger.Conway.Gov.html#functions-used-in-the-gov-transition-system">Section 'Functions-used-in-the-GOV-transition-system'</a>). Priority is
 also used to check if two actions <code class="AgdaFunction">Overlap</code>; that is,
 they would modify the same piece of <code class="AgdaDatatype">EnactState</code>.</p>
 <h3 id="enactability-predicate">Enactability predicate<a class="headerlink" href="#enactability-predicate" title="Permanent link">&para;</a></h3>
@@ -6223,7 +6223,7 @@ they would modify the same piece of <code class="AgdaDatatype">EnactState</code>
   <a id="16755" class="Symbol">(</a><a id="16756" href="Class.IsSet.html#576" class="Function">∀[</a> <a id="16759" href="Ledger.Conway.Gov.html#16759" class="Bound">a</a> <a id="16761" href="Class.IsSet.html#576" class="Function">∈</a> <a id="16763" href="Class.IsSet.html#916" class="Function">dom</a> <a id="16767" href="Ledger.Conway.Gov.html#16745" class="Bound">x</a> <a id="16769" href="Class.IsSet.html#576" class="Function">]</a> <a id="16771" href="Ledger.Conway.Address.html#2864" class="Field">NetworkIdOf</a> <a id="16783" href="Ledger.Conway.Gov.html#16759" class="Bound">a</a> <a id="16785" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="16787" href="Ledger.Conway.Types.Epoch.html#2369" class="Function">NetworkId</a><a id="16796" class="Symbol">)</a> <a id="16798" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="16800" class="Symbol">(</a><a id="16801" href="Class.IsSet.html#736" class="Function">∃[</a> <a id="16804" href="Ledger.Conway.Gov.html#16804" class="Bound">v</a> <a id="16806" href="Class.IsSet.html#736" class="Function">∈</a> <a id="16808" href="Class.IsSet.html#959" class="Function">range</a> <a id="16814" href="Ledger.Conway.Gov.html#16745" class="Bound">x</a> <a id="16816" href="Class.IsSet.html#736" class="Function">]</a> <a id="16818" href="Relation.Nullary.Negation.Core.html#658" class="Function Operator">¬</a> <a id="16820" class="Symbol">(</a><a id="16821" href="Ledger.Conway.Gov.html#16804" class="Bound">v</a> <a id="16823" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="16825" class="Number">0</a><a id="16826" class="Symbol">))</a>
 <a id="16829" href="Ledger.Conway.Gov.html#16615" class="CatchallClause Function">actionWellFormed</a><a id="16845" class="CatchallClause"> </a><a id="16846" class="CatchallClause Symbol">_</a>                 <a id="16864" class="Symbol">=</a> <a id="16866" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
 </pre>
-<p><a href="Ledger.Conway.Gov.html#validity-and-wellformedness-predicates">Figure 'Validity and wellformedness predicates'</a> defines
+<p><a href="Ledger.Conway.Gov.html#validity-and-wellformedness-predicates">Figure 'Validity-and-wellformedness-predicates'</a> defines
 predicates used in the <code class="AgdaInductiveConstructor">GOVPropose</code> case of
 the GOV rule to ensure that a governance action is valid and
 well-formed.</p>
@@ -6330,22 +6330,21 @@ well-formed.</p>
 
 <a id="20379" href="Ledger.Conway.Gov.html#9033" class="Function Operator">_⊢_⇀⦇_,GOVS⦈_</a> <a id="20393" class="Symbol">=</a> <a id="20395" href="Interface.STS.html#2362" class="Function">ReflexiveTransitiveClosureᵢ</a> <a id="20423" class="Symbol">{</a><a id="20424" class="Argument">sts</a> <a id="20428" class="Symbol">=</a> <a id="20430" href="Ledger.Conway.Gov.html#8938" class="Datatype Operator">_⊢_⇀⦇_,GOV⦈_</a><a id="20442" class="Symbol">}</a>
 </pre>
-<p>The
-GOVS transition system is now given as the reflexitive-transitive
-closure of the system GOV, described in
-<a href="Ledger.Conway.Gov.html#rules-for-the-gov-transition-system">Section 'Rules for the GOV transition system'</a>.</p>
+<p>The GOVS transition system is
+now given as the reflexitive-transitive closure of the system GOV,
+described in <a href="Ledger.Conway.Gov.html#rules-for-the-gov-transition-system">Section 'Rules-for-the-GOV-transition-system'</a>.</p>
 <p>For <code class="AgdaInductiveConstructor">GOVVote</code>, we check that the governance
 action being voted on exists; that the voter’s role is allowed to vote
 (see <code class="AgdaFunction">canVote</code> in
-<a href="Ledger.Conway.Ratify.html#functions-related-to-voting">Figure 'Functions related to voting'</a>); and
+<a href="Ledger.Conway.Ratify.html#functions-related-to-voting">Figure 'Functions-related-to-voting'</a>); and
 that the voter’s credential is actually associated with their role (see
 <code class="AgdaFunction">isRegistered</code> in
-<a href="Ledger.Conway.Gov.html#type-signature-of-the-transition-relation-of-the-gov-transition-system">Section 'Type signature of the transition relation of the GOV transition system'</a>).</p>
+<a href="Ledger.Conway.Gov.html#type-signature-of-the-transition-relation-of-the-gov-transition-system">Section 'Type-signature-of-the-transition-relation-of-the-GOV-transition-system'</a>).</p>
 <p>For <code class="AgdaInductiveConstructor">GOVPropose</code>, we check the correctness of
 the deposit along with some and some conditions that ensure the action
 is well-formed and valid; naturally, these checks depend on the type of
 action being proposed (see
-<a href="Ledger.Conway.Gov.html#validity-and-wellformedness-predicates">Figure 'Validity and wellformedness predicates'</a>).</p>
+<a href="Ledger.Conway.Gov.html#validity-and-wellformedness-predicates">Figure 'Validity-and-wellformedness-predicates'</a>).</p>
 
 
 

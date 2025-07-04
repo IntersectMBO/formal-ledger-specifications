@@ -6047,7 +6047,7 @@ rewards according to this specification!</p>
 <h3 id="sec:rewards-distribution-calculation">Rewards Distribution Calculation<a class="headerlink" href="#sec:rewards-distribution-calculation" title="Permanent link">&para;</a></h3>
 <p>This section defines the amount of rewards that are paid out to stake
 pools and their delegators.</p>
-<p><a href="Ledger.Conway.Rewards.html#function-maxpool-used-for-computing-a-reward-update">Figure 'Function maxPool used for computing a Reward Update'</a> defines the
+<p><a href="Ledger.Conway.Rewards.html#function-maxpool-used-for-computing-a-reward-update">Figure 'Function-maxPool-used-for-computing-a-Reward-Update'</a> defines the
 function <code class="AgdaFunction">maxPool</code> which gives the maximum reward a stake
 pool can receive in an epoch. Relevant quantities are:</p>
 <ul>
@@ -6120,7 +6120,6 @@ pool can receive in an epoch. Relevant quantities are:</p>
     <a id="7779" href="Ledger.Conway.Rewards.html#7779" class="Function">stake&#39;</a>   <a id="7788" class="Symbol">=</a> <a id="7790" href="Ledger.Conway.Types.Numeric.UnitInterval.html#2001" class="Function">fromUnitInterval</a> <a id="7807" href="Ledger.Conway.Rewards.html#7448" class="Bound">stake</a> <a id="7813" href="Data.Rational.Base.html#6854" class="Function Operator">⊓</a> <a id="7815" href="Ledger.Conway.Rewards.html#7755" class="Function">z0</a>
     <a id="7822" href="Ledger.Conway.Rewards.html#7822" class="Function">pledge&#39;</a>  <a id="7831" class="Symbol">=</a> <a id="7833" href="Ledger.Conway.Types.Numeric.UnitInterval.html#2001" class="Function">fromUnitInterval</a> <a id="7850" href="Ledger.Conway.Rewards.html#7454" class="Bound">pledge</a> <a id="7857" href="Data.Rational.Base.html#6854" class="Function Operator">⊓</a> <a id="7859" href="Ledger.Conway.Rewards.html#7755" class="Function">z0</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6139,7 +6138,7 @@ pool can receive in an epoch. Relevant quantities are:</p>
         <a id="8163" href="Data.Rational.Base.html#6315" class="Function Operator">*</a> <a id="8165" class="Symbol">(</a><a id="8166" href="Ledger.Conway.Rewards.html#7779" class="Function">stake&#39;</a> <a id="8173" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="8175" href="Ledger.Conway.Rewards.html#7822" class="Function">pledge&#39;</a> <a id="8183" href="Data.Rational.Base.html#6315" class="Function Operator">*</a> <a id="8185" href="Ledger.Conway.Rewards.html#7483" class="Function">a0</a> <a id="8188" href="Data.Rational.Base.html#6315" class="Function Operator">*</a> <a id="8190" class="Symbol">(</a><a id="8191" href="Ledger.Conway.Rewards.html#7779" class="Function">stake&#39;</a> <a id="8198" href="Data.Rational.Base.html#6405" class="Function Operator">-</a> <a id="8200" href="Ledger.Conway.Rewards.html#7822" class="Function">pledge&#39;</a> <a id="8208" href="Data.Rational.Base.html#6315" class="Function Operator">*</a> <a id="8210" class="Symbol">(</a><a id="8211" href="Ledger.Conway.Rewards.html#7755" class="Function">z0</a> <a id="8214" href="Data.Rational.Base.html#6405" class="Function Operator">-</a> <a id="8216" href="Ledger.Conway.Rewards.html#7779" class="Function">stake&#39;</a><a id="8222" class="Symbol">)</a> <a id="8224" href="Data.Rational.Base.html#6708" class="Function Operator">÷</a> <a id="8226" href="Ledger.Conway.Rewards.html#7755" class="Function">z0</a><a id="8228" class="Symbol">)</a> <a id="8230" href="Data.Rational.Base.html#6708" class="Function Operator">÷</a> <a id="8232" href="Ledger.Conway.Rewards.html#7755" class="Function">z0</a><a id="8234" class="Symbol">)</a>
     <a id="8240" href="Ledger.Conway.Rewards.html#8240" class="Function">rewardℕ</a> <a id="8248" class="Symbol">=</a> <a id="8250" href="Prelude.html#3175" class="Function">posPart</a> <a id="8258" class="Symbol">(</a><a id="8259" href="Data.Rational.Base.html#7116" class="Function">floor</a> <a id="8265" href="Ledger.Conway.Rewards.html#8114" class="Function">rewardℚ</a><a id="8272" class="Symbol">)</a>
 </pre>
-<p><a href="Ledger.Conway.Rewards.html#function-mkapparentperformance-used-for-computing-a-reward-update">Figure 'Function mkApparentPerformance used for computing a Reward Update'</a>
+<p><a href="Ledger.Conway.Rewards.html#function-mkapparentperformance-used-for-computing-a-reward-update">Figure 'Function-mkApparentPerformance-used-for-computing-a-Reward-Update'</a>
 defines the function <code class="AgdaFunction">mkApparentPerformance</code> which
 computes the apparent performance of a stake pool. Relevant quantities
 are:</p>
@@ -6173,7 +6172,7 @@ are:</p>
 <pre class="Agda">
     <a id="9206" href="Ledger.Conway.Rewards.html#9206" class="Function">ratioBlocks</a> <a id="9218" class="Symbol">=</a> <a id="9220" class="Symbol">(</a><a id="9221" href="Ledger.Conway.Rewards.html#412" class="InductiveConstructor">pos</a> <a id="9225" href="Ledger.Conway.Rewards.html#8918" class="Bound">poolBlocks</a><a id="9235" class="Symbol">)</a> <a id="9237" href="Data.Rational.Base.html#3884" class="Function Operator">/</a> <a id="9239" class="Symbol">(</a><a id="9240" class="Number">1</a> <a id="9242" href="Data.Nat.Base.html#5485" class="Function Operator">⊔</a> <a id="9244" href="Ledger.Conway.Rewards.html#8929" class="Bound">totalBlocks</a><a id="9255" class="Symbol">)</a>
 </pre>
-<p><a href="Ledger.Conway.Rewards.html#functions-rewardowners-and-rewardmember">Figure 'Functions rewardOwners and rewardMember'</a>
+<p><a href="Ledger.Conway.Rewards.html#functions-rewardowners-and-rewardmember">Figure 'Functions-rewardOwners-and-rewardMember'</a>
 defines the functions <code class="AgdaFunction">rewardOwners</code> and
 <code class="AgdaFunction">rewardMember</code>. Their purpose is to divide the reward for
 one pool between pool owners and individual delegators by taking into
@@ -6230,7 +6229,7 @@ member. The rewards will be distributed as follows:</p>
     <a id="11053" href="Ledger.Conway.Rewards.html#11053" class="Function">cost</a>        <a id="11065" class="Symbol">=</a> <a id="11067" href="Ledger.Conway.Rewards.html#10822" class="Bound">pool</a> <a id="11072" class="Symbol">.</a><a id="11073" href="Ledger.Conway.Certs.html#1705" class="Field">PoolParams.cost</a>
     <a id="11093" href="Ledger.Conway.Rewards.html#11093" class="Function">margin</a>      <a id="11105" class="Symbol">=</a> <a id="11107" href="Ledger.Conway.Types.Numeric.UnitInterval.html#2001" class="Function">fromUnitInterval</a> <a id="11124" class="Symbol">(</a><a id="11125" href="Ledger.Conway.Rewards.html#10822" class="Bound">pool</a> <a id="11130" class="Symbol">.</a><a id="11131" href="Ledger.Conway.Certs.html#1732" class="Field">PoolParams.margin</a><a id="11148" class="Symbol">)</a>
 </pre>
-<p><a href="Ledger.Conway.Rewards.html#function-rewardonepool-used-for-computing-a-reward-update">Figure 'Function rewardOnePool used for computing a Reward Update'</a> defines
+<p><a href="Ledger.Conway.Rewards.html#function-rewardonepool-used-for-computing-a-reward-update">Figure 'Function-rewardOnePool-used-for-computing-a-Reward-Update'</a> defines
 the function <code class="AgdaFunction">rewardOnePool</code> which calculates the rewards
 given out to each member of a given pool. Relevant quantities are:</p>
 <ul>
@@ -6301,7 +6300,7 @@ given out to each member of a given pool. Relevant quantities are:</p>
       <a id="13294" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="13296" href="Ledger.Conway.Rewards.html#10278" class="Function">rewardOwners</a> <a id="13309" href="Ledger.Conway.Rewards.html#13031" class="Function">poolReward</a> <a id="13320" href="Ledger.Conway.Rewards.html#12626" class="Bound">pool</a> <a id="13325" class="Symbol">(</a><a id="13326" href="Ledger.Conway.Rewards.html#12673" class="Function">mkRelativeStake</a> <a id="13342" href="Ledger.Conway.Rewards.html#12780" class="Function">ownerStake</a><a id="13352" class="Symbol">)</a> <a id="13354" href="Ledger.Conway.Rewards.html#12642" class="Bound">σ</a> <a id="13356" href="Axiom.Set.Map.html#4588" class="Function Operator">❵ᵐ</a>
     <a id="13363" href="Ledger.Conway.Rewards.html#13363" class="Function">rewards</a> <a id="13371" class="Symbol">=</a> <a id="13373" href="Ledger.Conway.Rewards.html#13099" class="Function">memberRewards</a> <a id="13387" href="Axiom.Set.Map.Dec.html#1854" class="Function Operator">∪⁺</a> <a id="13390" href="Ledger.Conway.Rewards.html#13232" class="Function">ownersRewards</a>
 </pre>
-<p><a href="Ledger.Conway.Rewards.html#function-poolstake">Figure 'Function poolStake'</a> defines the
+<p><a href="Ledger.Conway.Rewards.html#function-poolstake">Figure 'Function-poolStake'</a> defines the
 function <code class="AgdaFunction">poolStake</code> which filters the stake distribution
 to one stake pool. Relevant quantities are:</p>
 <ul>
@@ -6323,7 +6322,7 @@ to one stake pool. Relevant quantities are:</p>
 <a id="poolStake"></a><a id="13904" href="Ledger.Conway.Rewards.html#13904" class="Function">poolStake</a>  <a id="13915" class="Symbol">:</a> <a id="13917" href="Ledger.Conway.Crypto.html#2254" class="Function">KeyHash</a> <a id="13925" class="Symbol">→</a> <a id="13927" href="Ledger.Conway.Rewards.html#13868" class="Function">Delegations</a> <a id="13939" class="Symbol">→</a> <a id="13941" href="Ledger.Conway.Rewards.html#12442" class="Function">Stake</a> <a id="13947" class="Symbol">→</a> <a id="13949" href="Ledger.Conway.Rewards.html#12442" class="Function">Stake</a>
 <a id="13955" href="Ledger.Conway.Rewards.html#13904" class="Function">poolStake</a> <a id="13965" href="Ledger.Conway.Rewards.html#13965" class="Bound">hk</a> <a id="13968" href="Ledger.Conway.Rewards.html#13968" class="Bound">delegs</a> <a id="13975" href="Ledger.Conway.Rewards.html#13975" class="Bound">stake</a> <a id="13981" class="Symbol">=</a> <a id="13983" href="Ledger.Conway.Rewards.html#13975" class="Bound">stake</a> <a id="13989" href="Axiom.Set.Map.html#10678" class="Function Operator">∣</a> <a id="13991" href="Class.IsSet.html#916" class="Function">dom</a> <a id="13995" class="Symbol">(</a><a id="13996" href="Ledger.Conway.Rewards.html#13968" class="Bound">delegs</a> <a id="14003" href="Axiom.Set.Map.html#14048" class="Function Operator">∣^</a> <a id="14006" href="Class.HasSingleton.html#288" class="Field Operator">❴</a> <a id="14008" href="Ledger.Conway.Rewards.html#13965" class="Bound">hk</a> <a id="14011" href="Class.HasSingleton.html#288" class="Field Operator">❵</a><a id="14012" class="Symbol">)</a>
 </pre>
-<p><a href="Ledger.Conway.Rewards.html#function-reward-used-for-computing-a-reward-update">Figure 'Function reward used for computing a Reward Update'</a> defines the
+<p><a href="Ledger.Conway.Rewards.html#function-reward-used-for-computing-a-reward-update">Figure 'Function-reward-used-for-computing-a-Reward-Update'</a> defines the
 function <code class="AgdaFunction">reward</code> which applies
 <code class="AgdaFunction">rewardOnePool</code> to each registered stake pool. Relevant
 quantities are:</p>
@@ -6374,7 +6373,6 @@ quantities are:</p>
 
 <a id="uncurryᵐ"></a><a id="15302" href="Ledger.Conway.Rewards.html#15302" class="Function">uncurryᵐ</a> <a id="15311" class="Symbol">:</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6385,6 +6383,7 @@ quantities are:</p>
 <pre class="Agda">
   <a id="15440" href="Ledger.Conway.Rewards.html#15367" class="Bound">A</a> <a id="15442" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="15444" class="Symbol">(</a><a id="15445" href="Ledger.Conway.Rewards.html#15369" class="Bound">B</a> <a id="15447" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="15449" href="Ledger.Conway.Rewards.html#15371" class="Bound">C</a><a id="15450" class="Symbol">)</a> <a id="15452" class="Symbol">→</a> <a id="15454" class="Symbol">(</a><a id="15455" href="Ledger.Conway.Rewards.html#15367" class="Bound">A</a> <a id="15457" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="15459" href="Ledger.Conway.Rewards.html#15369" class="Bound">B</a><a id="15460" class="Symbol">)</a> <a id="15462" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="15464" href="Ledger.Conway.Rewards.html#15371" class="Bound">C</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6428,7 +6427,7 @@ quantities are:</p>
 <p>This section defines the <code class="AgdaRecord">RewardUpdate</code> type, which records
 the net flow of Ada due to paying out rewards after an epoch. This type
 is defined in
-<a href="Ledger.Conway.Rewards.html#rewardupdate-type">Figure 'RewardUpdate type'</a>. The
+<a href="Ledger.Conway.Rewards.html#rewardupdate-type">Figure 'RewardUpdate-type'</a>. The
 update consists of four net flows:</p>
 <ul>
 <li>
@@ -6463,11 +6462,10 @@ zero, and we state the directions of <code class="AgdaField">Δt</code> and
     <a id="RewardUpdate.Δt-nonnegative"></a><a id="17861" href="Ledger.Conway.Rewards.html#17861" class="Field">Δt-nonnegative</a>    <a id="17879" class="Symbol">:</a> <a id="17881" class="Number">0</a> <a id="17883" href="Class.HasOrder.Core.html#608" class="Field Operator">≤</a> <a id="17885" href="Ledger.Conway.Rewards.html#17730" class="Field">Δt</a>
     <a id="RewardUpdate.Δf-nonpositive"></a><a id="17892" href="Ledger.Conway.Rewards.html#17892" class="Field">Δf-nonpositive</a>    <a id="17910" class="Symbol">:</a> <a id="17912" href="Ledger.Conway.Rewards.html#17736" class="Field">Δf</a> <a id="17915" href="Class.HasOrder.Core.html#608" class="Field Operator">≤</a> <a id="17917" class="Number">0</a>
 </pre>
-<p>The function <code class="AgdaFunction">createRUpd</code>
-calculates the <code class="AgdaRecord">RewardUpdate</code>, but requires the definition
-of the type <code class="AgdaRecord">EpochState</code>, so we have to defer the
-definition of this function to
-<em>'sec:epoch-boundary' (unresolved reference)</em>.</p>
+<p>The function <code class="AgdaFunction">createRUpd</code> calculates
+the <code class="AgdaRecord">RewardUpdate</code>, but requires the definition of the type
+<code class="AgdaRecord">EpochState</code>, so we have to defer the definition of this
+function to <em>'sec:epoch-boundary' (unresolved reference)</em>.</p>
 <p><em>'fig:rewardPot' (unresolved reference)</em> captures the
 potential movement of funds in the entire system that can happen during
 one transition step as described in this document. Exception:
@@ -6490,7 +6488,7 @@ passed through the <code class="AgdaFunction">rewardPot</code>.</p>
 <h3 id="sec:stake-distribution-calculation">Stake Distribution Calculation<a class="headerlink" href="#sec:stake-distribution-calculation" title="Permanent link">&para;</a></h3>
 <p>This section defines the calculation of the stake distribution for the
 purpose of calculating rewards.</p>
-<p><a href="Ledger.Conway.Rewards.html#definitions-of-the-snapshot-type">Figure 'Definitions of the Snapshot type'</a> defines the type
+<p><a href="Ledger.Conway.Rewards.html#definitions-of-the-snapshot-type">Figure 'Definitions-of-the-Snapshot-type'</a> defines the type
 <code class="AgdaField">Snapshot</code> that represents a stake distribution snapshot.
 Such a snapshot contains the essential data needed to compute rewards:</p>
 <ul>
@@ -6524,7 +6522,7 @@ Such a snapshot contains the essential data needed to compute rewards:</p>
 </pre>
 </div>
 
-<p><a href="Ledger.Conway.Rewards.html#functions-for-computing-stake-distributions">Figure 'Functions for computing stake distributions'</a> defines
+<p><a href="Ledger.Conway.Rewards.html#functions-for-computing-stake-distributions">Figure 'Functions-for-computing-stake-distributions'</a> defines
 the calculation of the stake distribution from the data contained in a
 ledger state. Here,</p>
 <ul>
@@ -6670,7 +6668,7 @@ beginning of epoch <span class="arithmatex">\(e_5\)</span>.</p>
 <h3 id="sec:stake-distribution-snapshots">Stake Distribution Snapshots<a class="headerlink" href="#sec:stake-distribution-snapshots" title="Permanent link">&para;</a></h3>
 <p>This section defines the SNAP transition rule for stake distribution
 snapshots.</p>
-<p><a href="Ledger.Conway.Rewards.html#definitions-for-the-snap-transition-system">Figure 'Definitions for the SNAP transition system'</a> defines the type
+<p><a href="Ledger.Conway.Rewards.html#definitions-for-the-snap-transition-system">Figure 'Definitions-for-the-SNAP-transition-system'</a> defines the type
 <code class="AgdaField">Snapshots</code> that contains the data that needs to be saved at
 the end of an epoch. This data is:</p>
 <ul>
@@ -6701,7 +6699,7 @@ the end of an epoch. This data is:</p>
 </pre>
 </div>
 
-<p><a href="Ledger.Conway.Rewards.html#snap-transition-system">Figure 'SNAP transition system'</a> defines the snapshot
+<p><a href="Ledger.Conway.Rewards.html#snap-transition-system">Figure 'SNAP-transition-system'</a> defines the snapshot
 transition rule. This transition has no preconditions and results in the
 following state change:</p>
 <ul>

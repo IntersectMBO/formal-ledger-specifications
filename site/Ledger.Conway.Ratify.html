@@ -1955,9 +1955,9 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#types-of-the-ratify-and-ratifies" class="md-nav__link">
+  <a href="#types-of-the-ratify-and-ratifies-transition-systems" class="md-nav__link">
     <span class="md-ellipsis">
-      Types of the RATIFY and RATIFIES
+      Types-of-the-RATIFY-and-RATIFIES-transition-systems
     </span>
   </a>
   
@@ -5857,7 +5857,7 @@ new constitution, and ensures that the (in principle arbitrary) semantic
 changes caused by enacting a hard-fork do not have unintended
 consequences in combination with other actions.</p>
 <h2 id="sec:ratification-requirements">Ratification Requirements<a class="headerlink" href="#sec:ratification-requirements" title="Permanent link">&para;</a></h2>
-<p><a href="Ledger.Conway.Ratify.html#functions-related-to-voting">Figure 'Functions related to voting'</a>
+<p><a href="Ledger.Conway.Ratify.html#functions-related-to-voting">Figure 'Functions-related-to-voting'</a>
 details the ratification requirements for each governance action
 scenario. For a governance action to be ratified, all of these
 requirements must be satisfied, on top of other conditions that are
@@ -5910,7 +5910,7 @@ protocol parameter may or may not be in the
 <code class="AgdaInductiveConstructor">SecurityGroup</code>, so an
 <code class="AgdaInductiveConstructor">SPO</code> vote may not be required.</p>
 <p>Finally, each of the <code class="AgdaFunction">P</code><span class="arithmatex">\(_x\)</span> and <code class="AgdaFunction">Q</code><span class="arithmatex">\(_x\)</span>
-in <a href="Ledger.Conway.Ratify.html#functions-related-to-voting">Figure 'Functions related to voting'</a>
+in <a href="Ledger.Conway.Ratify.html#functions-related-to-voting">Figure 'Functions-related-to-voting'</a>
 are protocol parameters.</p>
 <h3 id="functions-related-to-voting">Functions related to voting<a class="headerlink" href="#functions-related-to-voting" title="Permanent link">&para;</a></h3>
 <div class="agda-hidden-source">
@@ -5949,7 +5949,6 @@ are protocol parameters.</p>
 <a id="5191" href="Ledger.Conway.Ratify.html#5129" class="Function">threshold</a> <a id="5201" href="Ledger.Conway.Ratify.html#5201" class="Bound">pp</a> <a id="5204" href="Ledger.Conway.Ratify.html#5204" class="Bound">ccThreshold</a> <a id="5216" href="Ledger.Conway.Ratify.html#5216" class="Bound">ga</a> <a id="5219" class="Symbol">=</a>
   <a id="5223" href="Function.Base.html#4042" class="Function Operator">case</a>  <a id="5229" href="Ledger.Conway.Ratify.html#5216" class="Bound">ga</a> <a id="5232" href="Ledger.Conway.Ratify.html#578" class="Function Operator">↓</a> <a id="5234" href="Function.Base.html#4042" class="Function Operator">of</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -5982,6 +5981,7 @@ are protocol parameters.</p>
           <a id="6049" href="Ledger.Conway.Ratify.html#6049" class="Function">P/Q2a/b</a> <a id="6057" class="Symbol">:</a> <a id="6059" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="6065" href="Data.Rational.Base.html#1342" class="Record">ℚ</a> <a id="6067" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="6069" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="6075" href="Data.Rational.Base.html#1342" class="Record">ℚ</a>
           <a id="6087" href="Ledger.Conway.Ratify.html#6049" class="Function">P/Q2a/b</a> <a id="6095" class="Symbol">=</a>  <a id="6098" href="Function.Base.html#4042" class="Function Operator">case</a> <a id="6103" href="Ledger.Conway.Ratify.html#5204" class="Bound">ccThreshold</a> <a id="6115" href="Function.Base.html#4042" class="Function Operator">of</a>
 </pre>
+
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6041,7 +6041,6 @@ parameter must also be accepted by at least half of the SPO stake.</p>
     <a id="RatifyState.removed"></a><a id="8355" href="Ledger.Conway.Ratify.html#8355" class="Field">removed</a>         <a id="8371" class="Symbol">:</a> <a id="8373" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="8375" class="Symbol">(</a><a id="8376" href="Ledger.Conway.GovernanceActions.html#1179" class="Function">GovActionID</a> <a id="8388" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="8390" href="Ledger.Conway.GovernanceActions.html#8071" class="Record">GovActionState</a><a id="8404" class="Symbol">)</a>
     <a id="RatifyState.delay"></a><a id="8410" href="Ledger.Conway.Ratify.html#8410" class="Field">delay</a>           <a id="8426" class="Symbol">:</a> <a id="8428" href="Agda.Builtin.Bool.html#173" class="Datatype">Bool</a>
 </pre>
-
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6070,12 +6069,12 @@ parameter must also be accepted by at least half of the SPO stake.</p>
 <a id="9001" href="Ledger.Conway.Ratify.html#8945" class="Function">IsDRep</a>  <a id="9009" href="Ledger.Conway.Ratify.html#9009" class="Bound">v</a> <a id="9011" class="Symbol">=</a> <a id="9013" href="Ledger.Conway.Ratify.html#8815" class="Function">govRole</a> <a id="9021" href="Ledger.Conway.Ratify.html#9009" class="Bound">v</a> <a id="9023" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="9025" href="Ledger.Conway.GovernanceActions.html#1123" class="InductiveConstructor">DRep</a>
 <a id="9030" href="Ledger.Conway.Ratify.html#8952" class="Function">IsSPO</a>   <a id="9038" href="Ledger.Conway.Ratify.html#9038" class="Bound">v</a> <a id="9040" class="Symbol">=</a> <a id="9042" href="Ledger.Conway.Ratify.html#8815" class="Function">govRole</a> <a id="9050" href="Ledger.Conway.Ratify.html#9038" class="Bound">v</a> <a id="9052" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="9054" href="Ledger.Conway.GovernanceActions.html#1128" class="InductiveConstructor">SPO</a>
 </pre>
-<p>As mentioned earlier, most
-governance actions must include a <code class="AgdaDatatype">GovActionID</code> for the
-most recently enacted action of its given type. Consequently, two
-actions of the same type can be enacted at the same time, but they must
-be <em>deliberately</em> designed to do so.</p>
-<p><a href="Ledger.Conway.Ratify.html#types-and-functions-for-the-ratify-transition-system">Figure 'Types and functions for the RATIFY transition system'</a>
+<p>As mentioned
+earlier, most governance actions must include a
+<code class="AgdaDatatype">GovActionID</code> for the most recently enacted action of its
+given type. Consequently, two actions of the same type can be enacted at
+the same time, but they must be <em>deliberately</em> designed to do so.</p>
+<p><a href="Ledger.Conway.Ratify.html#types-and-functions-for-the-ratify-transition-system">Figure 'Types-and-functions-for-the-RATIFY-transition-system'</a>
 defines some types and functions used in the RATIFY transition system.
 <code class="AgdaFunction">CCData</code> is simply an alias to define some functions more
 easily.</p>
@@ -6202,7 +6201,7 @@ easily.</p>
   <a id="12655" href="Ledger.Conway.Ratify.html#12655" class="Function">actualSPOVotes</a> <a id="12670" class="Symbol">:</a> <a id="12672" href="Ledger.Conway.GovernanceActions.html#1466" class="Datatype">GovActionType</a> <a id="12686" class="Symbol">→</a> <a id="12688" href="Ledger.Conway.GovernanceActions.html#1209" class="Datatype">VDeleg</a> <a id="12695" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="12697" href="Ledger.Conway.GovernanceActions.html#7653" class="Datatype">Vote</a>
   <a id="12704" href="Ledger.Conway.Ratify.html#12655" class="Function">actualSPOVotes</a> <a id="12719" href="Ledger.Conway.Ratify.html#12719" class="Bound">gaTy</a> <a id="12724" class="Symbol">=</a> <a id="12726" href="Ledger.Conway.Ratify.html#10267" class="Function">roleVotes</a> <a id="12736" href="Ledger.Conway.GovernanceActions.html#1128" class="InductiveConstructor">SPO</a> <a id="12740" href="Axiom.Set.Map.html#6320" class="Function Operator">∪ˡ</a> <a id="12743" href="Axiom.Set.Map.html#8368" class="Function">mapFromFun</a> <a id="12754" class="Symbol">(</a><a id="12755" href="Ledger.Conway.Ratify.html#10864" class="Function">SPODefaultVote</a> <a id="12770" href="Ledger.Conway.Ratify.html#12719" class="Bound">gaTy</a><a id="12774" class="Symbol">)</a> <a id="12776" href="Ledger.Conway.Ratify.html#10457" class="Function">spos</a>
 </pre>
-<p><a href="Ledger.Conway.Ratify.html#vote-counting">Figure 'Vote counting'</a> defines
+<p><a href="Ledger.Conway.Ratify.html#vote-counting">Figure 'Vote-counting'</a> defines
 the <code class="AgdaFunction">actualVotes</code> function. Given the current state about
 votes and other parts of the system it calculates a new mapping of
 votes, which is the mapping that will actually be used during
@@ -6322,7 +6321,7 @@ voting.</p>
   <a id="expired"></a><a id="17665" href="Ledger.Conway.Ratify.html#17665" class="Function">expired</a> <a id="17673" class="Symbol">:</a> <a id="17675" href="Ledger.Conway.Types.Epoch.html#600" class="Function">Epoch</a> <a id="17681" class="Symbol">→</a> <a id="17683" href="Ledger.Conway.GovernanceActions.html#8071" class="Record">GovActionState</a> <a id="17698" class="Symbol">→</a> <a id="17700" href="Agda.Primitive.html#388" class="Primitive">Type</a>
   <a id="17707" href="Ledger.Conway.Ratify.html#17665" class="Function">expired</a> <a id="17715" href="Ledger.Conway.Ratify.html#17715" class="Bound">current</a> <a id="17723" class="Keyword">record</a> <a id="17730" class="Symbol">{</a> <a id="17732" href="Ledger.Conway.GovernanceActions.html#8168" class="Field">expiresIn</a> <a id="17742" class="Symbol">=</a> <a id="17744" href="Ledger.Conway.Ratify.html#17744" class="Bound">expiresIn</a> <a id="17754" class="Symbol">}</a> <a id="17756" class="Symbol">=</a> <a id="17758" href="Ledger.Conway.Ratify.html#17744" class="Bound">expiresIn</a> <a id="17768" href="Class.HasOrder.Core.html#641" class="Field Operator">&lt;</a> <a id="17770" href="Ledger.Conway.Ratify.html#17715" class="Bound">current</a>
 </pre>
-<p><a href="Ledger.Conway.Ratify.html#functions-related-to-ratification">Figure 'Functions related to ratification'</a> defines the
+<p><a href="Ledger.Conway.Ratify.html#functions-related-to-ratification">Figure 'Functions-related-to-ratification'</a> defines the
 <code class="AgdaFunction">accepted</code> and <code class="AgdaFunction">expired</code> functions
 (together with some helpers) that are used in the rules of RATIFY.</p>
 <ul>
@@ -6431,7 +6430,7 @@ voting.</p>
 </pre>
 </div>
 
-<p><a href="Ledger.Conway.Ratify.html#functions-related-to-ratification-continued">Figure 'Functions related to ratification, continued'</a> defines
+<p><a href="Ledger.Conway.Ratify.html#functions-related-to-ratification-continued">Figure 'Functions-related-to-ratification,-continued'</a> defines
 functions that deal with delays and the acceptance criterion for
 ratification. A given action can either be delayed if the action
 contained in <code class="AgdaRecord">EnactState</code> isn’t the one the given action is
@@ -6458,8 +6457,7 @@ delaying one. This information is passed in as an argument.</p>
 </pre>
 </div>
 
-<h3 id="types-of-the-ratify-and-ratifies">Types of the RATIFY and RATIFIES<a class="headerlink" href="#types-of-the-ratify-and-ratifies" title="Permanent link">&para;</a></h3>
-<p>transition systems</p>
+<h3 id="types-of-the-ratify-and-ratifies-transition-systems">Types-of-the-RATIFY-and-RATIFIES-transition-systems<a class="headerlink" href="#types-of-the-ratify-and-ratifies-transition-systems" title="Permanent link">&para;</a></h3>
 <div class="agda-hidden-source">
 
 <pre class="Agda">
@@ -6523,7 +6521,7 @@ delaying one. This information is passed in as an argument.</p>
 
 <p>The RATIFIES transition system is defined as the reflexive-transitive
 closure of RATIFY, which is defined via three rules, defined in
-<a href="Ledger.Conway.Ratify.html#the-ratify-transition-system">Figure 'The RATIFY transition system'</a>.</p>
+<a href="Ledger.Conway.Ratify.html#the-ratify-transition-system">Figure 'The-RATIFY-transition-system'</a>.</p>
 <ul>
 <li>
 <p><code class="AgdaInductiveConstructor">RATIFYAccept</code> checks if the votes for a
