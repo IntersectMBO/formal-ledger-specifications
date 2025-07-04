@@ -314,9 +314,37 @@ def extract_labels_from_temp_files(
         ))
 
 
+
+
+
 # =============================================================================
 # High-Level Pipeline Composition
 # =============================================================================
+
+def _apply_all_postprocessing(
+    content: str,
+    code_blocks: Dict,
+    label_map: Dict
+) -> str:
+    """
+    Applies a sequence of text transformations to the content in a pure functional style.
+    """
+    # Define the sequence of transformations (functions) to apply.
+    # Each function takes the content string and returns a new one.
+    transformations = [
+        lambda c: re.sub(r'@@CODEBLOCK_ID_\d+@@', lambda m: replace_code_placeholder(m, code_blocks), c),
+        lambda c: re.sub(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
+        lambda c: re.sub(r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
+        lambda c: re.sub(r"@@CROSS_REF@@command=(.*?)@@targets=(.*?)@@", lambda m: replace_cross_ref_placeholder(m, label_map), c, flags=re.DOTALL),
+        process_admonitions
+    ]
+
+    # Pipe the initial content through all the transformation functions.
+    processed_content = content
+    for func in transformations:
+        processed_content = func(processed_content)
+
+    return processed_content
 
 def process_latex_files(
     latex_files: List[Path],
@@ -411,32 +439,25 @@ def process_latex_files(
     # refactored to use a functional monadic chain.
     logging.info("🔄 Stage 5: Running post-processing...")
     for stage in processing_stages:
-        # This chain of .and_then calls ensures that if any step fails,
-        # the subsequent steps are skipped and an Err is returned.
         post_process_result = (
+            # 1. Load the necessary data for this file
             load_json(stage.code_blocks_file)
             .and_then(lambda code_blocks:
                 read_text(stage.intermediate_file)
-                .and_then(lambda content:
-                    # Perform all text replacements
-                    Result.ok(re.sub(r'@@CODEBLOCK_ID_\d+@@', lambda m: replace_code_placeholder(m, code_blocks), content))
-                    .map(lambda c: re.sub(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL))
-                    .map(lambda c: re.sub(r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@", lambda m: f"\n### {m.group(1).replace('@ @', '@@').strip()}\n\n", c, flags=re.DOTALL))
-                    .map(lambda c: re.sub(r"@@CROSS_REF@@command=(.*?)@@targets=(.*?)@@", lambda m: replace_cross_ref_placeholder(m, label_map), c, flags=re.DOTALL))
-                    .map(process_admonitions)
-                )
-                .and_then(lambda final_content: write_text(stage.final_file, final_content))
+                .map(lambda content: (content, code_blocks))
             )
+            # 2. Apply all transformations in a single, pure step
+            .map(lambda data: _apply_all_postprocessing(data[0], data[1], label_map))
+            # 3. Write the final result to disk
+            .and_then(lambda final_content: write_text(stage.final_file, final_content))
         )
 
         if post_process_result.is_err:
             error = post_process_result.unwrap_err()
-            # A missing intermediate file is a recoverable error for the build as a whole.
             if error.error_type == ErrorType.FILE_NOT_FOUND:
                 logging.warning(f"Skipping post-processing for {stage.relative_path}: {error.message}")
                 continue
             else:
-                # Any other error (like failing to write the final file) is critical.
                 return Result.err(error)
 
     # STAGE 6: Cleanup (remove original .lagda files to prevent Agda module conflicts)

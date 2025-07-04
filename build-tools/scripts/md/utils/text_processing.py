@@ -25,12 +25,22 @@ def replace_code_placeholder(match: re.Match, code_blocks: Dict) -> str:
         return f"\n```agda\n{content}```\n"
 
 def replace_figure_placeholder(match: re.Match) -> str:
-    """Replaces a figure placeholder with a Markdown H3 heading."""
-    # group(2) will now contain text like "Delegation_definitions"
-    placeholder_caption = match.group(2).replace("@ @", "@@")
-    final_caption_text = placeholder_caption.replace("-", " ")
-    # Final cleanup of any extra whitespace
+    """
+    Replaces a figure or caption placeholder with a Markdown H3 heading.
+    This function handles both labeled and unlabelled figure placeholders.
+    """
+    # If the regex had 2 capture groups, it's the labeled figure pattern.
+    # If it had 1, it's the unlabelled one.
+    if match.re.groups == 2:
+        placeholder_caption = match.group(2)  # Caption is the second group
+    else:
+        placeholder_caption = match.group(1)  # Caption is the first group
+
+    # Perform the necessary replacements
+    cleaned_caption = placeholder_caption.replace("@ @", "@@")
+    final_caption_text = cleaned_caption.replace("-", " ")
     caption_text_squashed = re.sub(r'\s+', ' ', final_caption_text).strip()
+
     return f"\n### {caption_text_squashed}\n\n"
 
 def replace_cross_ref_placeholder(match: re.Match, label_map: Dict) -> str:
