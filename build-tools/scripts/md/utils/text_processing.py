@@ -26,9 +26,12 @@ def replace_code_placeholder(match: re.Match, code_blocks: Dict) -> str:
 
 def replace_figure_placeholder(match: re.Match) -> str:
     """Replaces a figure placeholder with a Markdown H3 heading."""
-    caption_text = match.group(2).replace("@ @", "@@")
-    caption_text_single_line = re.sub(r'\s+', ' ', caption_text).strip()
-    return f"\n### {caption_text_single_line}\n\n"
+    # group(2) will now contain text like "Delegation_definitions"
+    placeholder_caption = match.group(2).replace("@ @", "@@")
+    final_caption_text = placeholder_caption.replace("-", " ")
+    # Final cleanup of any extra whitespace
+    caption_text_squashed = re.sub(r'\s+', ' ', final_caption_text).strip()
+    return f"\n### {caption_text_squashed}\n\n"
 
 def replace_cross_ref_placeholder(match: re.Match, label_map: Dict) -> str:
     """Replaces a '@@CROSS_REF@@...' placeholder with a Markdown link."""
@@ -59,7 +62,7 @@ def process_admonitions(content: str) -> str:
     """Converts '@@ADMONITION_START/END@@' markers to MkDocs admonition blocks."""
     output_lines, in_admonition = [], False
 
-    # --- FIX: backslash is optional in the regex: `\\?|` ---
+    # --- backslash is optional in the regex: `\\?|` ---
     admonition_start = re.compile(r'^\s*@@ADMONITION_START\\?\|(.*?)\s*@@\s*$')
     admonition_end = re.compile(r'^\s*@@ADMONITION_END@@\s*$')
 

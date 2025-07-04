@@ -48,7 +48,8 @@ def _process_figure_environment(match: re.Match) -> str:
     caption_match = re.search(r"\\caption\{(.*?)\}", figure_inner_content, flags=re.DOTALL)
     if caption_match:
         raw_caption = caption_match.group(1).strip()
-        caption_text = re.sub(r'\s+', ' ', raw_caption.replace("\n", " ")).replace("@@", "@ @")
+        temp_caption_text = re.sub(r'\s+', ' ', raw_caption.replace("\n", " ")).strip()
+        caption_text = temp_caption_text.replace(" ", "-").replace("@@", "@ @")
         figure_inner_content = figure_inner_content.replace(caption_match.group(0), "", 1)
 
     label_match = re.search(r"\\label\{(.*?)\}", figure_inner_content)
