@@ -1,9 +1,10 @@
-- Home: index.md
-- Preliminaries:
-  - Introduction: Ledger.Introduction.md
-  - Notation: Notation.md
-- Ledger: Ledger.md
-- Ledger/:
+- Navigation:
+  - Home: index.md
+  - Preliminaries:
+    - Notation: Notation.md
+  - Ledger: Ledger.md
+  - Ledger/:
+    - Introduction: Ledger.Introduction.md
     - Prelude: Ledger.Prelude.md
     - Prelude/:
       - Base: Ledger.Prelude.Base.md
@@ -157,34 +158,34 @@
       - PPUp: Ledger.PreConway.PPUp.md
       - PPUp/:
         - Properties: Ledger.PreConway.PPUp.Properties.md
-- Foreign:
-  - Convertible: Foreign.Convertible.md
-  - Convertible/:
-    - Deriving: Foreign.Convertible.Deriving.md
-    - DerivingTest: Foreign.Convertible.DerivingTest.md
-  - HaskellTypes: Foreign.HaskellTypes.md
-  - HaskellTypes/:
-    - Deriving: Foreign.HaskellTypes.Deriving.md
-- ScriptVerification:
-  - Examples: ScriptVerification.Examples.md
-  - HelloWorld: ScriptVerification.HelloWorld.md
-  - LedgerImplementation: ScriptVerification.LedgerImplementation.md
-  - Lib: ScriptVerification.Lib.md
-  - Prelude: ScriptVerification.Prelude.md
-  - StructuredContracts: ScriptVerification.StructuredContracts.md
-  - SucceedIfNumber: ScriptVerification.SucceedIfNumber.md
-- Appendix:
-  - EssentialAgda: EssentialAgda.md
-  - Agda Prelude: Prelude.md
-  - Type Classes:
-    - Interface:
-      - ComputationalRelation: Interface.ComputationalRelation.md
-      - HasSubset: Interface.HasSubset.md
-      - HasSubset/:
-        - Instance: Interface.HasSubset.Instance.md
-      - HasSubtract: Interface.HasSubtract.md
-      - HasSubtract/:
-        - Instance: Interface.HasSubtract.Instance.md
-      - Hashable: Interface.Hashable.md
-      - STS: Interface.STS.md
-    - MyDebugOptions: MyDebugOptions.md
+  - Foreign/:
+    - Convertible: Foreign.Convertible.md
+    - Convertible/:
+      - Deriving: Foreign.Convertible.Deriving.md
+      - DerivingTest: Foreign.Convertible.DerivingTest.md
+    - HaskellTypes: Foreign.HaskellTypes.md
+    - HaskellTypes/:
+      - Deriving: Foreign.HaskellTypes.Deriving.md
+  - ScriptVerification/:
+    - Examples: ScriptVerification.Examples.md
+    - HelloWorld: ScriptVerification.HelloWorld.md
+    - LedgerImplementation: ScriptVerification.LedgerImplementation.md
+    - Lib: ScriptVerification.Lib.md
+    - Prelude: ScriptVerification.Prelude.md
+    - StructuredContracts: ScriptVerification.StructuredContracts.md
+    - SucceedIfNumber: ScriptVerification.SucceedIfNumber.md
+  - Appendix/:
+    - EssentialAgda: EssentialAgda.md
+    - Agda Prelude: Prelude.md
+    - Type Classes:
+      - Interface:
+        - ComputationalRelation: Interface.ComputationalRelation.md
+        - HasSubset: Interface.HasSubset.md
+        - HasSubset/:
+          - Instance: Interface.HasSubset.Instance.md
+        - HasSubtract: Interface.HasSubtract.md
+        - HasSubtract/:
+          - Instance: Interface.HasSubtract.Instance.md
+        - Hashable: Interface.Hashable.md
+        - STS: Interface.STS.md
+      - MyDebugOptions: MyDebugOptions.md
