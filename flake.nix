@@ -16,21 +16,29 @@
       system:
       let
         nixpkgs = import sources.nixpkgs { inherit system; };
-        packageSet = import ./default.nix { inherit nixpkgs; };
+        pkgs = import ./default.nix { inherit nixpkgs; };
       in
       {
-        packages = packageSet // {
+        packages = pkgs // {
           # Set default package
-          default = packageSet.formalLedger;
+          default = pkgs.formalLedger;
         };
         # Expose development shells
-        devShells = packageSet.devShells // {
+        devShells = pkgs.devShells // {
           # default shell points to the main development environment
-          default = packageSet.devShells.default;
+          default = pkgs.devShells.default;
         };
 
         # Keep hydraJobs for CI
-        hydraJobs = packageSet;
+        hydraJobs = {
+          inherit (pkgs)
+            agdaWithPackages
+            fls-shake
+            formal-ledger
+            hs-src
+            mkdocs
+            ;
+        };
       }
     );
 }
