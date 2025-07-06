@@ -43,7 +43,7 @@ if str(current_dir) not in sys.path:
 
 from config.build_config import BuildConfig
 from modules.latex_preprocessor import process_latex_content
-from modules.bibtex_processor import BibTeXProcessor
+from modules.bibtex_processor import BibTeXProcessor, generate_global_bibliography_page, format_bibliography_entry
 from utils.command_runner import run_command
 from utils.file_ops import read_text, write_text, load_json, write_json
 from utils.pipeline_types import (
@@ -195,10 +195,9 @@ def run_pandoc_stage(
 def run_bibliography_stage(
     processing_stage: LaTeXProcessingStage,
     bibliography_path: Path
-) -> Result[None, PipelineError]:
+) -> Result[Set[str], PipelineError]:
     """
-    Mathematical transformation: .lagda.temp → .lagda.temp.withbib
-    This version appends a bibliography section to the file itself.
+    Process bibliography citations in a file and return the set of keys that were used.
     """
 
     # Create BibTeX processor with LaTeX output format
@@ -208,7 +207,7 @@ def run_bibliography_stage(
     processor_result = BibTeXProcessor.from_file(bibliography_path, latex_config)
     if processor_result.is_err:
         logging.warning(f"Failed to create BibTeX processor: {processor_result.unwrap_err()}")
-        return Result.ok(None)
+        return Result.ok(set())
 
     processor = processor_result.unwrap()
 
@@ -221,15 +220,29 @@ def run_bibliography_stage(
 
     content = processing_stage.temp_file.read_text(encoding='utf-8')
     logging.debug(f"📚 Processing bibliography for {processing_stage.relative_path}")
-    processed_content, replacements, bibliography = processor.process_content(content)
+    processed_content, replacements, _ = processor.process_content(content)
 
-    final_content = processed_content
-    if bibliography.strip():
-        final_content += f"\n\n{bibliography}"
+    # 1. Collect the keys that were actually found and replaced.
+    used_keys = {key for replacement in replacements for key in replacement.referenced_keys}
 
-    processing_stage.temp_file.write_text(final_content, encoding='utf-8')
-    logging.debug(f"✅ Bibliography processing: {len(replacements)} citations processed")
-    return Result.ok(None)
+    # 2. Build the bibliography section using the "latex" format
+    if used_keys:
+        used_entries = sorted([processor.bibliography[key] for key in used_keys], key=lambda e: e.short_label)
+        bib_lines = ["\\section*{References}"]
+        for entry in used_entries:
+            # Use a LaTeX-compatible label and call the formatter with "latex"
+            label = f"\\textbf{{[{entry.short_label}]}} \\label{{{entry.key}}}"
+            citation_text = format_bibliography_entry(entry, output_format="latex")
+            bib_lines.append(f"{label} {citation_text}\n")
+
+        bibliography_section = "\n".join(bib_lines)
+        processed_content += f"\n\n{bibliography_section}"
+
+    # 3. Write the final content back to the file.
+    write_text(processing_stage.temp_file, processed_content)
+
+    logging.debug(f"✅ Bibliography processing: {len(replacements)} citations processed in {processing_stage.relative_path.name}")
+    return Result.ok(used_keys)
 
 
 # =============================================================================
@@ -395,6 +408,8 @@ def process_latex_files(
     # This must happen BEFORE pandoc converts LaTeX to markdown.
     logging.info("🔄 Stage 2: Running bibliography processing (before pandoc)...")
     bibliography_stats = {"files_with_citations": 0, "total_citations": 0}
+    all_cited_keys: Set[str] = set() # Initialize an empty set for all keys
+    files_with_citations = 0
 
     for stage in processing_stages:
         # Check if file has citations before processing
@@ -408,12 +423,17 @@ def process_latex_files(
             config.source_paths.references_bib_path
         )
         if result.is_err:
-            # Log warning but continue - bibliography processing is enhancement, not critical
-            error = result.unwrap_err()
-            logging.warning(f"Bibliography processing failed for {stage.relative_path}: {error.message}")
+            # Log the error but continue, as this is not a build-halting failure
+            logging.warning(f"Bibliography processing failed for {stage.relative_path}: {result.unwrap_err().message}")
             continue
 
-    logging.info(f"✅ Bibliography stage: processed {bibliography_stats['files_with_citations']} files with citations")
+        # On success, update the master set of keys
+        cited_keys_in_file = result.unwrap()
+        if cited_keys_in_file:
+            files_with_citations += 1
+            all_cited_keys.update(cited_keys_in_file)
+
+    logging.info(f"✅ Bibliography stage: found citations in {files_with_citations} files.")
 
     # STAGE 3: Generate label map (from bibliography-processed temp files)
     # Extract cross-reference labels after bibliography processing adds section headers.
@@ -460,8 +480,22 @@ def process_latex_files(
             else:
                 return Result.err(error)
 
-    # STAGE 6: Cleanup (remove original .lagda files to prevent Agda module conflicts)
-    logging.info("🔄 Stage 6: Running cleanup...")
+    # STAGE 6: After all files are processed, generate the global bibliography
+    logging.info("🔄 Stage 6: Generating global bibliography page...")
+    bib_processor_result = BibTeXProcessor.from_file(config.source_paths.references_bib_path)
+    if bib_processor_result.is_ok:
+        bib_page_path = config.build_paths.mkdocs_docs_dir / "references.md"
+        generate_global_bibliography_page(
+            all_cited_keys,
+            bib_processor_result.unwrap(),
+            bib_page_path
+        )
+    else:
+        logging.warning("Could not create BibTeX processor to generate global bibliography.")
+
+
+    # STAGE 7: Cleanup (remove original .lagda files to prevent Agda module conflicts)
+    logging.info("🔄 Stage 7: Running cleanup...")
     for stage in processing_stages:
         result = cleanup_original_lagda_file(stage)
         if result.is_err:
@@ -484,7 +518,7 @@ def process_latex_files(
     # Compile statistics
     statistics = {
         "files_processed": len(processed_files),
-        "files_with_citations": bibliography_stats["files_with_citations"],
+        "files_with_citations": files_with_citations,
         "labels_extracted": len(label_map),
         "total_stages": len(processing_stages)
     }

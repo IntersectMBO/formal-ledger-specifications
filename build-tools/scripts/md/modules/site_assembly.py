@@ -251,10 +251,18 @@ def generate_mkdocs_config(config: BuildConfig, nav_files: List[str]):
     nav_template_path = config.source_paths.mkdocs_nav_yml_path
     if nav_template_path.exists() and HAS_YAML:
         logging.info(f"Loading navigation from template: {nav_template_path.name}")
-        cfg['nav'] = yaml.safe_load(nav_template_path.read_text('utf-8'))
+        nav_structure = yaml.safe_load(nav_template_path.read_text('utf-8'))
     else:
         logging.info("Generating navigation from processed files.")
-        cfg['nav'] = _build_nav_from_files(nav_files)
+        nav_structure = _build_nav_from_files(nav_files)
+
+    # --- Add References page to end of navigation ---
+    if (config.build_paths.mkdocs_docs_dir / "references.md").exists():
+        # Ensure it's not already there from a template
+        if not any("references.md" in str(item) for item in nav_structure):
+             nav_structure.append({'References': 'references.md'})
+
+    cfg['nav'] = nav_structure
 
     with open(template_path, "w", encoding="utf-8") as f:
         yaml.dump(cfg, f, sort_keys=False, allow_unicode=True) if HAS_YAML else json.dump(cfg, f, indent=2)

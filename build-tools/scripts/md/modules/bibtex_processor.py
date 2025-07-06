@@ -531,13 +531,11 @@ def generate_bibliography_markdown(
     config: BibliographyConfig
 ) -> str:
     """
-    Generate bibliography section in specified output format.
+    Generates a bibliography section in pure Markdown format.
     """
-
     if not used_keys:
         return ""
 
-    # Filter and sort entries (same logic as before)
     used_entries = [bibliography[key] for key in used_keys if key in bibliography]
 
     if config.style.sort_bibliography:
@@ -546,67 +544,73 @@ def generate_bibliography_markdown(
         else:
             used_entries.sort(key=lambda e: e.key)
 
-    # Generate section header and entries based on format
-    if config.output_format == "latex":
-        lines = [
-            f"\\section{{{config.bibliography_title}}}\\label{{{config.bibliography_id}}}",
-            ""
-        ]
+    # This function now only generates Markdown. The old "if/else" for LaTeX is removed.
+    lines = []
+    for entry in used_entries:
+        # FIX 1: Use a standard HTML span for the anchor. This is more robust
+        # than the Pandoc-specific {#...} syntax.
+        label = f'<span id="{entry.key}"></span>**[{entry.short_label}]**'
 
-        for entry in used_entries:
-            if config.style.name == "alpha":
-                label = f"\\textbf{{{entry.short_label}}} \\label{{{entry.key}}}"
-            else:
-                label = f"\\textbf{{{entry.key}}} \\label{{{entry.key}}}"
+        # FIX 2: Explicitly request "markdown" output format to get correct italics.
+        citation_text = format_bibliography_entry(entry, output_format="markdown")
 
-            citation_text = format_bibliography_entry(entry)
-            lines.append(f"{label} {citation_text}")
-            lines.append("")
-
-    else:  # markdown format
-        lines = [
-            f"## {config.bibliography_title} {{#{config.bibliography_id}}}",
-            ""
-        ]
-
-        for entry in used_entries:
-            if config.style.name == "alpha":
-                label = f"**[{entry.short_label}]** {{#{entry.key}}}"
-            else:
-                label = f"**[{entry.key}]** {{#{entry.key}}}"
-
-            citation_text = format_bibliography_entry(entry)
-            lines.append(f"{label} {citation_text}")
-            lines.append("")
+        lines.append(f"{label} {citation_text}")
+        lines.append("")
 
     return "\n".join(lines)
 
-
-def format_bibliography_entry(entry: BibEntry) -> str:
-    """Pure function: Format a single bibliography entry."""
-
-    # Basic formatting - can be enhanced
+def format_bibliography_entry(entry: BibEntry, output_format: str = "md") -> str:
+    """
+    Formats a single bibliography entry for either Markdown or LaTeX output.
+    """
+    # Basic formatting (could be enhanced later)
     author = entry.get_field("author", "Unknown Author")
     title = entry.get_field("title", "Untitled")
     year = entry.get_field("year", "")
 
+    def italicize(text):
+        return f"\\textit{{{text}}}" if output_format == "latex" else f"*{text}*"
+
     if entry.entry_type == "article":
         journal = entry.get_field("journal", "")
-        if journal:
-            return f"{author}. {title}. *{journal}*, {year}."
-        else:
-            return f"{author}. {title}. {year}."
-
+        return f"{author}. {title}. \\textit{{{journal}}}, {year}." if journal else f"{author}. {title}. {year}."
     elif entry.entry_type in ["book", "misc"]:
         publisher = entry.get_field("publisher", "")
-        if publisher:
-            return f"{author}. *{title}*. {publisher}, {year}."
-        else:
-            return f"{author}. *{title}*. {year}."
-
-    else:
-        # Generic format
+        return f"{author}. {italicize(title)}. {publisher}, {year}." if publisher else f"{author}. {italicize(title)}. {year}."
+    else: # Generic format
         return f"{author}. {title}. {year}."
+
+
+def generate_global_bibliography_page(
+    all_used_keys: Set[str],
+    processor: BibTeXProcessor,
+    output_path: Path
+) -> Result[None, PipelineError]:
+    """
+    Generates a single Markdown page containing all cited references.
+    """
+    try:
+        # Use the existing markdown generator with the complete set of keys
+        markdown_content = generate_bibliography_markdown(
+            all_used_keys,
+            processor.bibliography,
+            processor.config
+        )
+
+        # Prepend a title for the standalone page
+        final_content = f"# References\n\n{markdown_content}"
+
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(final_content, 'utf-8')
+        logging.info(f"✅ Global bibliography generated at: {output_path}")
+        return Result.ok(None)
+
+    except Exception as e:
+        return Result.err(PipelineError(
+            error_type=ErrorType.COMMAND_FAILED,
+            message=f"Failed to generate global bibliography page: {e}",
+            cause=e
+        ))
 
 
 # =============================================================================
