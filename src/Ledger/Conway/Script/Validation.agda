@@ -85,14 +85,6 @@ credsNeeded utxo txb
     open RwdAddr
     open GovProposal
 
-scriptsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × ScriptHash)
-scriptsNeeded = mapPartial (λ (sp , c) → if isScriptObj c then (λ {sh} → just (sp , sh)) else nothing)
-                ∘₂ credsNeeded
-
-vKeysNeeded : UTxO → TxBody → ℙ (ScriptPurpose × KeyHash)
-vKeysNeeded = mapPartial (λ (sp , c) → if isKeyHashObj c then (λ {sh} → just (sp , sh)) else nothing)
-              ∘₂ credsNeeded
-
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
 
@@ -113,13 +105,15 @@ opaque
     → List (P2Script × List Data × ExUnits × CostModel)
   collectP2ScriptsWithContext pp tx utxo
     = setToList
-    $ mapPartial toScriptInput
-    $ scriptsNeeded utxo (tx .Tx.body)
+    $ mapPartial (λ (sp , c) → if isScriptObj c
+                                then (λ {sh} → toScriptInput sp sh)
+                                else nothing)
+    $ credsNeeded utxo (tx .Tx.body)
     where
       toScriptInput
-        : (ScriptPurpose × ScriptHash)
+        : ScriptPurpose → ScriptHash
         → Maybe (P2Script × List Data × ExUnits × CostModel)
-      toScriptInput (sp , sh) =
+      toScriptInput sp sh =
         do s ← lookupScriptHash sh tx utxo
            p2s ← toP2Script s
            (rdmr , exunits) ← indexedRdmrs tx sp

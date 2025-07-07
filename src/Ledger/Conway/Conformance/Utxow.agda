@@ -1,7 +1,7 @@
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
+open import Ledger.Prelude
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
@@ -36,8 +36,8 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         witsKeyHashes       = mapˢ hash (dom vkSigs)
         witsScriptHashes    = mapˢ hash scripts
         refScriptHashes     = mapˢ hash (refScripts tx utxo)
-        neededScriptHashes  = mapˢ proj₂ (scriptsNeeded utxo txb)
-        neededVKeyHashes    = mapˢ proj₂ (vKeysNeeded utxo txb)
+        neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
+        neededVKeyHashes    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
         txdatsHashes        = mapˢ hash txdats
         inputsDataHashes    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
                                                      then txOutToDataHash txout
