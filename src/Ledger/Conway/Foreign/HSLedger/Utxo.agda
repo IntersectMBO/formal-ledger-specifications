@@ -81,8 +81,8 @@ module _ (ext : ExternalFunctions) where
         open UTxOState (from st)
         open UTxOEnv (from env)
         open TxWitnesses (coerce ⦃ TrustMe ⦄ wits)
-        neededScriptHashes = mapˢ proj₂ (scriptsNeeded utxo body)
-        neededVKeyHashes   = mapˢ proj₂ (vKeysNeeded utxo body)
+        neededScriptHashes = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
+        neededVKeyHashes   = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
         refScriptHashes = mapˢ
           hash 
           (refScripts (coerce ⦃ TrustMe ⦄ (from tx)) (coerce ⦃ TrustMe ⦄ utxo))
