@@ -400,50 +400,6 @@ class PipelineStage(Protocol):
         ...
 
 
-# =============================================================================
-# BibTeX Types (Preview)
-# =============================================================================
-
-@dataclass(frozen=True)
-class BibEntry:
-    """Immutable representation of a bibliography entry."""
-
-    key: str
-    entry_type: str  # article, book, inproceedings, etc.
-    fields: Dict[str, str]
-    short_label: str = ""  # e.g., "DeM98" for alpha style
-
-    def get_field(self, field_name: str, default: str = "") -> str:
-        """Get field value with default."""
-        return self.fields.get(field_name.lower(), default)
-
-    @property
-    def title(self) -> str:
-        return self.get_field("title")
-
-    @property
-    def author(self) -> str:
-        return self.get_field("author")
-
-    @property
-    def year(self) -> str:
-        return self.get_field("year")
-
-
-@dataclass(frozen=True)
-class CitationReplacement:
-    """Immutable representation of a citation replacement operation."""
-
-    original_latex: str
-    markdown_replacement: str
-    referenced_keys: Tuple[str, ...]
-    citation_style: str = "alpha"
-
-    @property
-    def references_count(self) -> int:
-        """Number of references in this citation."""
-        return len(self.referenced_keys)
-
 
 # =============================================================================
 # Utility Functions

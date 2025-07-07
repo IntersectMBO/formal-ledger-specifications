@@ -27,10 +27,6 @@ from .pipeline_types import (
     FileTransformer,
     PipelineStage,
 
-    # BibTeX types (preview)
-    BibEntry,
-    CitationReplacement,
-
     # Utility functions
     sequence_results,
     collect_errors,
@@ -56,10 +52,6 @@ __all__ = [
     "ProcessingFunction",
     "FileTransformer",
     "PipelineStage",
-
-    # BibTeX
-    "BibEntry",
-    "CitationReplacement",
 
     # Utilities
     "sequence_results",

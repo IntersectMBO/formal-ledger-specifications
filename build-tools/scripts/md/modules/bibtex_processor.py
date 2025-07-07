@@ -4,19 +4,13 @@ Functional BibTeX citation processor for the documentation pipeline.
 
 This module provides pure, mathematical transformations for:
 - Parsing BibTeX files into immutable data structures
-- Generating alpha-style citation labels ([DeM98], [SL19], etc.)
+- Generating alpha-style citation labels (e.g., [DeM98], [SL19], etc.)
 - Converting LaTeX citations to Markdown format
 - Building bibliography sections
-
-Design principles:
-- Pure functions with no side effects
-- Immutable data structures everywhere
-- Functional error handling with Result types
-- Mathematical composition of transformations
 """
 
 from __future__ import annotations
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 from pathlib import Path
 from typing import Dict, List, Tuple, Set, Optional, Pattern
 import re
@@ -29,14 +23,13 @@ if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
 # Import our mathematical foundation
-from utils.pipeline_types import (
-    Result, PipelineError, ErrorType, BibEntry, CitationReplacement
-)
+from utils.pipeline_types import Result, PipelineError, ErrorType
 
 # Try to import pybtex for robust .bib parsing
 try:
     from pybtex.database import parse_file, BibliographyData, Entry # type: ignore[import-error]
     from pybtex.database.input import bibtex # type: ignore[import-error]
+    from pybtex.backends.plaintext import Backend as PlaintextBackend
     HAS_PYBTEX = True
 except ImportError:
     HAS_PYBTEX = False
@@ -45,6 +38,50 @@ except ImportError:
 # =============================================================================
 # Immutable Configuration
 # =============================================================================
+
+@dataclass(frozen=True)
+class BibEntry:
+    """Immutable representation of a bibliography entry."""
+
+    key: str
+    entry_type: str  # article, book, inproceedings, etc.
+    fields: Dict[str, str]
+    short_label: str = ""  # e.g., "DeM98" for alpha style
+
+    def get_field(self, field_name: str, default: str = "") -> str:
+        """Get field value with default."""
+        return self.fields.get(field_name.lower(), default)
+
+    @property
+    def title(self) -> str:
+        return self.get_field("title")
+
+    @property
+    def author(self) -> str:
+        return self.get_field("author")
+
+    @property
+    def year(self) -> str:
+        return self.get_field("year")
+
+    def update(self, **changes) -> 'BibEntry':
+        return replace(self, **changes)
+
+@dataclass(frozen=True)
+class CitationReplacement:
+    """Immutable representation of a citation replacement operation."""
+
+    original_latex: str
+    markdown_replacement: str
+    referenced_keys: Tuple[str, ...]
+    citation_style: str = "alpha"
+
+    @property
+    def references_count(self) -> int:
+        """Number of references in this citation."""
+        return len(self.referenced_keys)
+
+
 
 @dataclass(frozen=True)
 class CitationStyle:
@@ -190,54 +227,47 @@ def generate_alpha_label(entry: BibEntry) -> str:
         Smith & Jones, 2023 → "SJ23"
         Single author, 2020 → "Author20"
     """
+    backend = PlaintextBackend() # to render LaTeX macros to unicode
     author = entry.get_field("author", "Unknown")
     year = entry.get_field("year", "")
-
-    # Extract author part
     author_part = extract_author_initials(author)
-
-    # Extract year part (last 2 digits)
+    # get last 2 digits of year
     year_part = year[-2:] if len(year) >= 2 else year
-
     return f"{author_part}{year_part}"
 
 
 def create_bib_entry_from_pybtex(key: str, entry: Entry) -> BibEntry:
     """Pure function: Convert pybtex Entry to our immutable BibEntry."""
+    backend = PlaintextBackend()
 
     # Convert pybtex fields to our format
-    fields = {}
-    for field_key, field_value in entry.fields.items():
-        # Convert pybtex rich text to plain string
-        fields[field_key.lower()] = str(field_value)
+    fields = {
+        k.lower(): v.render(backend) if hasattr(v, 'render') else str(v)
+        for k, v in entry.fields.items()
+    }
 
-    # Handle authors specially
+    # Use a generator expression to format author names
     if entry.persons:
-        author_strings = []
-        for person_list in entry.persons.values():
-            for person in person_list:
-                # Convert pybtex Person to string
-                author_strings.append(str(person))
-        fields["author"] = " and ".join(author_strings)
+        def format_person(person):
+            """Helper to format a single person object."""
+            first = ' '.join(part.render(backend) for part in person.rich_first_names)
+            middle = ' '.join(part.render(backend) for part in person.rich_middle_names)
+            last = ' '.join(part.render(backend) for part in person.rich_last_names)
+            return ' '.join(filter(None, [first, middle, last]))
 
-    # Handle different pybtex versions - try different attribute names for entry type
-    entry_type = _extract_entry_type(entry)
+        all_persons = (p for p_list in entry.persons.values() for p in p_list)
+        author_string = " and ".join(format_person(p) for p in all_persons)
+        fields["author"] = author_string
 
-    bib_entry = BibEntry(
+    # initial BibEntry without short_label
+    bib_entry_initial = BibEntry(
         key=key,
-        entry_type=entry_type,
+        entry_type=_extract_entry_type(entry),
         fields=fields
     )
 
-    # Generate alpha label
-    alpha_label = generate_alpha_label(bib_entry)
+    return bib_entry_initial.update(short_label=generate_alpha_label(bib_entry_initial))
 
-    return BibEntry(
-        key=key,
-        entry_type=entry_type,
-        fields=fields,
-        short_label=alpha_label
-    )
 
 
 def _extract_entry_type(entry: Entry) -> str:
