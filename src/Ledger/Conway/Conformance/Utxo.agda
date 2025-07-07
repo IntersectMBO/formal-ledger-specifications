@@ -81,7 +81,7 @@ unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scrip
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
 
   UTXO-inductive :
-    let open Tx tx renaming (body to txb); open TxBody txb
+    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
         txoutsʰ = (mapValues txOutHash txouts)
@@ -89,8 +89,9 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txvldt
-    ∙ L.feesOK pp tx utxo                    ∙ L.consumed pp s txb ≡ L.produced pp s txb
-    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ L.minfee pp utxo tx ≤ txfee            ∙ (txrdmrs ˢ ≢ ∅ → L.collateralCheck pp tx utxo)
+    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
     ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
@@ -107,6 +108,6 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m c v j n o p q r t u h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
