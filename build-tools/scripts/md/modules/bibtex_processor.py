@@ -17,18 +17,18 @@ import re
 import sys
 from functools import reduce
 
-# Add current directory to Python path for imports
 current_dir = Path(__file__).parent.parent
 if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
-# Import our mathematical foundation
 from utils.pipeline_types import Result, PipelineError, ErrorType
+from utils.file_ops import read_text, write_text
 
 # Try to import pybtex for robust .bib parsing
 try:
-    from pybtex.database import parse_file, BibliographyData, Entry # type: ignore[import-error]
+    #from pybtex.database import parse_file, BibliographyData, Entry # type: ignore[import-error]
     from pybtex.database.input import bibtex # type: ignore[import-error]
+    from pybtex.database import parse_string, BibliographyData, Entry
     from pybtex.backends.plaintext import Backend as PlaintextBackend
     HAS_PYBTEX = True
 except ImportError:
@@ -162,8 +162,93 @@ ALL_CITATION_PATTERNS = [TEXTCITE_PATTERN, CITE_PATTERN, CITEP_PATTERN, PARENCIT
 
 
 # =============================================================================
-# Pure Bibliography Entry Processing
+# Pure Helper Functions
 # =============================================================================
+
+def generate_alpha_label(entry: BibEntry) -> str:
+    """
+    Pure function: Generate alpha-style citation label.
+
+    Examples:
+        DeMeo et al, 1998 → "DeM98"
+        Smith & Jones, 2023 → "SJ23"
+        Single author, 2020 → "Author20"
+    """
+    backend = PlaintextBackend() # to render LaTeX macros to unicode
+    author = entry.get_field("author", "Unknown")
+    year = entry.get_field("year", "")
+    author_part = extract_author_initials(author)
+    # get last 2 digits of year
+    year_part = year[-2:] if len(year) >= 2 else year
+    return f"{author_part}{year_part}"
+
+def format_bibliography_entry(entry: BibEntry, output_format: str = "md") -> str:
+    """
+    Formats a single bibliography entry for either Markdown or LaTeX output.
+    """
+    # Basic formatting (could be enhanced later)
+    author = entry.get_field("author", "Unknown Author")
+    title = entry.get_field("title", "Untitled")
+    year = entry.get_field("year", "")
+
+    def italicize(text):
+        return f"\\textit{{{text}}}" if output_format == "latex" else f"*{text}*"
+
+    if entry.entry_type == "article":
+        journal = entry.get_field("journal", "")
+        return f"{author}. {title}. \\textit{{{journal}}}, {year}." if journal else f"{author}. {title}. {year}."
+    elif entry.entry_type in ["book", "misc"]:
+        publisher = entry.get_field("publisher", "")
+        return f"{author}. {italicize(title)}. {publisher}, {year}." if publisher else f"{author}. {italicize(title)}. {year}."
+    else: # Generic format
+        return f"{author}. {title}. {year}."
+
+def _extract_entry_type(entry: Entry) -> str:
+    """
+    Pure function: Extract entry type from pybtex Entry, handling version differences.
+
+    Different pybtex versions use different attribute names:
+    - Some use entry.type_
+    - Some use entry.type
+    - Some use entry.entry_type
+    """
+    # Try different possible attribute names
+    return next(
+        (
+            str(getattr(entry, attr)).lower()
+            for attr in ['type_', 'type', 'entry_type']
+            if hasattr(entry, attr) and getattr(entry, attr)
+        ),
+        'misc'  # Default value if the generator is exhausted
+    )
+
+def create_bib_entry_from_pybtex(key: str, entry: Entry) -> BibEntry:
+    """Pure function: Convert pybtex Entry to our immutable BibEntry."""
+    backend = PlaintextBackend()
+
+    # Convert pybtex fields to our format
+    fields = {
+        k.lower(): v.render(backend) if hasattr(v, 'render') else str(v)
+        for k, v in entry.fields.items()
+    }
+
+    # Use a generator expression to format author names
+    if entry.persons:
+        def format_person(person):
+            """Helper to format a single person object."""
+            first = ' '.join(part.render(backend) for part in person.rich_first_names)
+            middle = ' '.join(part.render(backend) for part in person.rich_middle_names)
+            last = ' '.join(part.render(backend) for part in person.rich_last_names)
+            return ' '.join(filter(None, [first, middle, last]))
+
+        all_persons = (p for p_list in entry.persons.values() for p in p_list)
+        fields["author"] = " and ".join(format_person(p) for p in all_persons)
+
+    # initial BibEntry without short_label
+    bib_entry = BibEntry(key=key,entry_type=_extract_entry_type(entry),fields=fields)
+
+    return bib_entry.update(short_label=generate_alpha_label(bib_entry))
+
 
 def normalize_author_name(author: str) -> str:
     """
@@ -218,128 +303,36 @@ def extract_author_initials(authors: str, max_authors: int = 3) -> str:
         return ''.join(initials) + '+'
 
 
-def generate_alpha_label(entry: BibEntry) -> str:
-    """
-    Pure function: Generate alpha-style citation label.
-
-    Examples:
-        DeMeo et al, 1998 → "DeM98"
-        Smith & Jones, 2023 → "SJ23"
-        Single author, 2020 → "Author20"
-    """
-    backend = PlaintextBackend() # to render LaTeX macros to unicode
-    author = entry.get_field("author", "Unknown")
-    year = entry.get_field("year", "")
-    author_part = extract_author_initials(author)
-    # get last 2 digits of year
-    year_part = year[-2:] if len(year) >= 2 else year
-    return f"{author_part}{year_part}"
-
-
-def create_bib_entry_from_pybtex(key: str, entry: Entry) -> BibEntry:
-    """Pure function: Convert pybtex Entry to our immutable BibEntry."""
-    backend = PlaintextBackend()
-
-    # Convert pybtex fields to our format
-    fields = {
-        k.lower(): v.render(backend) if hasattr(v, 'render') else str(v)
-        for k, v in entry.fields.items()
-    }
-
-    # Use a generator expression to format author names
-    if entry.persons:
-        def format_person(person):
-            """Helper to format a single person object."""
-            first = ' '.join(part.render(backend) for part in person.rich_first_names)
-            middle = ' '.join(part.render(backend) for part in person.rich_middle_names)
-            last = ' '.join(part.render(backend) for part in person.rich_last_names)
-            return ' '.join(filter(None, [first, middle, last]))
-
-        all_persons = (p for p_list in entry.persons.values() for p in p_list)
-        author_string = " and ".join(format_person(p) for p in all_persons)
-        fields["author"] = author_string
-
-    # initial BibEntry without short_label
-    bib_entry_initial = BibEntry(
-        key=key,
-        entry_type=_extract_entry_type(entry),
-        fields=fields
-    )
-
-    return bib_entry_initial.update(short_label=generate_alpha_label(bib_entry_initial))
-
-
-
-def _extract_entry_type(entry: Entry) -> str:
-    """
-    Pure function: Extract entry type from pybtex Entry, handling version differences.
-
-    Different pybtex versions use different attribute names:
-    - Some use entry.type_
-    - Some use entry.type
-    - Some use entry.entry_type
-    """
-    # Try different possible attribute names
-    for attr_name in ['type_', 'type', 'entry_type']:
-        if hasattr(entry, attr_name):
-            attr_value = getattr(entry, attr_name)
-            if attr_value:
-                return str(attr_value).lower()
-
-    # Fallback to 'misc' if we can't determine the type
-    return 'misc'
-
 
 # =============================================================================
-# BibTeX File Parsing
+# Core BibTeX Parsing Logic
 # =============================================================================
 
 def parse_bibtex_file(bib_path: Path) -> Result[Dict[str, BibEntry], PipelineError]:
     """
-    Pure function: Parse .bib file into immutable bibliography entries.
-
+    Parse .bib file into immutable bibliography entries.
+    This function reads the file once and passes the content to the parsers.
     Uses pybtex for robust parsing if available, falls back to simple parser.
     """
+    if not HAS_PYBTEX:
+        return _parse_with_simple_parser(bib_path)
 
-    if not bib_path.exists():
-        return Result.err(PipelineError(
-            error_type=ErrorType.FILE_NOT_FOUND,
-            message=f"Bibliography file not found: {bib_path}",
-            context={"file_path": str(bib_path)}
-        ))
+    return read_text(bib_path).and_then(_parse_with_pybtex)
 
+
+def _parse_with_pybtex(content: str) -> Result[Dict[str, BibEntry], PipelineError]:
+    """Parse BibTeX content using pybtex library."""
     try:
-        if HAS_PYBTEX:
-            return _parse_with_pybtex(bib_path)
-        else:
-            return _parse_with_simple_parser(bib_path)
-
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.BIBTEX_ERROR,
-            message=f"Failed to parse BibTeX file: {e}",
-            context={"file_path": str(bib_path)},
-            cause=e
-        ))
-
-
-def _parse_with_pybtex(bib_path: Path) -> Result[Dict[str, BibEntry], PipelineError]:
-    """Parse using robust pybtex library."""
-
-    try:
-        bib_data = parse_file(str(bib_path)) # type: ignore[call-arg]
-        entries = {}
-
-        for key, entry in bib_data.entries.items():
-            entries[key] = create_bib_entry_from_pybtex(key, entry)
-
-        return Result.ok(entries)
-
+        bib_data = parse_string(content, 'bibtex')
+        # Use a dictionary comprehension for a more functional style
+        return Result.ok({
+            key: create_bib_entry_from_pybtex(key, entry)
+            for key, entry in bib_data.entries.items()
+        })
     except Exception as e:
         return Result.err(PipelineError(
             error_type=ErrorType.BIBTEX_ERROR,
             message=f"pybtex parsing failed: {e}",
-            context={"parser": "pybtex"},
             cause=e
         ))
 
@@ -347,15 +340,9 @@ def _parse_with_pybtex(bib_path: Path) -> Result[Dict[str, BibEntry], PipelineEr
 def _parse_with_simple_parser(bib_path: Path) -> Result[Dict[str, BibEntry], PipelineError]:
     """Fallback simple parser (basic functionality)."""
 
-    try:
-        content = bib_path.read_text(encoding='utf-8')
-        entries = {}
-
+    def parse_content(content: str) -> Dict[str, BibEntry]:
         # Very basic regex-based parsing
-        entry_pattern = re.compile(
-            r'@(\w+)\s*\{\s*([^,\s]+)\s*,\s*(.*?)\n\}',
-            re.DOTALL | re.IGNORECASE
-        )
+        entry_pattern = re.compile(r'@(\w+)\s*\{\s*([^,\s]+)\s*,', re.DOTALL | re.IGNORECASE)
 
         for match in entry_pattern.finditer(content):
             entry_type = match.group(1).lower()
@@ -386,15 +373,9 @@ def _parse_with_simple_parser(bib_path: Path) -> Result[Dict[str, BibEntry], Pip
                 short_label=alpha_label
             )
 
-        return Result.ok(entries)
+        return entries
 
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.BIBTEX_ERROR,
-            message=f"Simple parser failed: {e}",
-            context={"parser": "simple"},
-            cause=e
-        ))
+    return read_text(bib_path).map(parse_content)
 
 
 # =============================================================================
@@ -402,26 +383,20 @@ def _parse_with_simple_parser(bib_path: Path) -> Result[Dict[str, BibEntry], Pip
 # =============================================================================
 
 def find_citations_in_content(content: str) -> List[Tuple[int, int, str, List[str], Optional[str]]]:
-    """
-    Pure function: Find all citations in LaTeX content.
-
+    """Finds all citations in content using a generator expression.
     Returns list of (start, end, command, keys, optional_args) tuples.
     """
-    citations = []
-
-    for pattern in ALL_CITATION_PATTERNS:
-        for match in pattern.finditer(content):
-            start, end = match.span()
-            command = match.group(0).split('{')[0].lstrip('\\')  # Extract command name
-            optional_args = match.group(1) if (match.lastindex is not None and match.lastindex >= 1) else None
-            keys_str = match.group(2) if (match.lastindex is not None and match.lastindex >= 2) else ""
-
-            # Split comma-separated keys
-            keys = [k.strip() for k in keys_str.split(',') if k.strip()]
-
-            citations.append((start, end, command, keys, optional_args))
-
-    # Sort by position to process from end to beginning (for safe replacement)
+    citations = [
+        (
+            match.span()[0],
+            match.span()[1],
+            match.group(0).split('{')[0].lstrip('\\'),
+            [k.strip() for k in (match.group(2) or "").split(',') if k.strip()],
+            match.group(1)
+        )
+        for pattern in ALL_CITATION_PATTERNS
+        for match in pattern.finditer(content)
+    ]
     return sorted(citations, key=lambda x: x[0], reverse=True)
 
 
@@ -515,40 +490,30 @@ def replace_citations_in_content(
     bibliography: Dict[str, BibEntry],
     config: BibliographyConfig
 ) -> Tuple[str, List[CitationReplacement]]:
+    """Pure function: Replace all LaTeX citations with Markdown format using
+    functools.reduce, a functional fold.  Returns (new_content, list_of_replacements).
     """
-    Pure function: Replace all LaTeX citations with Markdown format.
-
-    Returns (new_content, list_of_replacements).
-    """
-
     citations = find_citations_in_content(content)
-    replacements = []
-    new_content = content
 
-    # Process citations from end to beginning to preserve positions
-    for start, end, command, keys, optional_args in citations:
-        original_latex = content[start:end]
+    # use functools.reduce
+    # This is a pure function that avoids mutation.
+    def reducer(acc: Tuple[str, List], citation: Tuple) -> Tuple[str, List]:
+        current_content, replacements_acc = acc
+        start, end, command, keys, optional_args = citation
 
-        markdown_replacement = create_markdown_citation(
-            keys, bibliography, config, optional_args
-        )
+        markdown_replacement = create_markdown_citation(keys, bibliography, config, optional_args)
+        new_content = current_content[:start] + markdown_replacement + current_content[end:]
 
-        replacement = CitationReplacement(
-            original_latex=original_latex,
+        new_replacement = CitationReplacement(
+            original_latex=content[start:end],
             markdown_replacement=markdown_replacement,
             referenced_keys=tuple(keys),
             citation_style=config.style.name
         )
+        return (new_content, [new_replacement] + replacements_acc)
 
-        replacements.append(replacement)
-
-        # Replace in content
-        new_content = new_content[:start] + markdown_replacement + new_content[end:]
-
-    # Reverse replacements list to match original document order
-    replacements.reverse()
-
-    return new_content, replacements
+    initial_state = (content, [])
+    return reduce(reducer, citations, initial_state)
 
 
 # =============================================================================
@@ -589,59 +554,21 @@ def generate_bibliography_markdown(
 
     return "\n".join(lines)
 
-def format_bibliography_entry(entry: BibEntry, output_format: str = "md") -> str:
-    """
-    Formats a single bibliography entry for either Markdown or LaTeX output.
-    """
-    # Basic formatting (could be enhanced later)
-    author = entry.get_field("author", "Unknown Author")
-    title = entry.get_field("title", "Untitled")
-    year = entry.get_field("year", "")
-
-    def italicize(text):
-        return f"\\textit{{{text}}}" if output_format == "latex" else f"*{text}*"
-
-    if entry.entry_type == "article":
-        journal = entry.get_field("journal", "")
-        return f"{author}. {title}. \\textit{{{journal}}}, {year}." if journal else f"{author}. {title}. {year}."
-    elif entry.entry_type in ["book", "misc"]:
-        publisher = entry.get_field("publisher", "")
-        return f"{author}. {italicize(title)}. {publisher}, {year}." if publisher else f"{author}. {italicize(title)}. {year}."
-    else: # Generic format
-        return f"{author}. {title}. {year}."
-
 
 def generate_global_bibliography_page(
     all_used_keys: Set[str],
-    processor: BibTeXProcessor,
+    processor: "BibTeXProcessor",
     output_path: Path
 ) -> Result[None, PipelineError]:
-    """
-    Generates a single Markdown page containing all cited references.
-    """
-    try:
-        # Use the existing markdown generator with the complete set of keys
-        markdown_content = generate_bibliography_markdown(
-            all_used_keys,
-            processor.bibliography,
-            processor.config
-        )
+    """Generates a single Markdown page containing all cited references."""
+    markdown_content = generate_bibliography_markdown(
+        all_used_keys,
+        processor.bibliography,
+        processor.config
+    )
+    final_content = f"# References\n\n{markdown_content}"
 
-        # Prepend a title for the standalone page
-        final_content = f"# References\n\n{markdown_content}"
-
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_path.write_text(final_content, 'utf-8')
-        logging.info(f"✅ Global bibliography generated at: {output_path}")
-        return Result.ok(None)
-
-    except Exception as e:
-        return Result.err(PipelineError(
-            error_type=ErrorType.COMMAND_FAILED,
-            message=f"Failed to generate global bibliography page: {e}",
-            cause=e
-        ))
-
+    return write_text(output_path, final_content)
 
 # =============================================================================
 # Main BibTeX Processor Class
