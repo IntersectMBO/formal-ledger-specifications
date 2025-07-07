@@ -170,8 +170,8 @@ opaque
   succeedExample : ComputationResult String UTxOState
   succeedExample = UTXO-step initEnv ⟦ initStateDatum , 0 , ∅ , 0 ⟧  succeedTx
 
-  -- _ : isSuccess succeedExample ≡ true
-  -- _  = refl
+  _ : isSuccess succeedExample ≡ true
+  _  = refl
 
   -- Compute the result of running the UTXO rules on the failTx transaction
   failExample : ComputationResult String UTxOState
