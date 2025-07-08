@@ -27,7 +27,7 @@ open import Interface.ComputationalRelation public
 open import Interface.Hashable public
 open import Interface.HasSubset public
 open import Interface.HasSubtract public
-open import Interface.HasSubtract.Instance public
+open import Interface.HasSubtract.Instances public
 open import Ledger.Prelude.Instances public
 open import Ledger.Interface.HasCoin public
 open import Tactic.Defaults public

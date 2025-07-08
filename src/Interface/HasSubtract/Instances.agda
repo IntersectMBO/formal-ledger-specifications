@@ -1,14 +1,11 @@
 {-# OPTIONS --safe #-}
 
-module Interface.HasSubtract.Instance where
+module Interface.HasSubtract.Instances where
 
 open import Interface.HasSubtract
 
 open import Data.Integer as ℤ using (ℤ)
 open import Data.Nat     as ℕ using (ℕ)
-
-open import Prelude using (DecEq)
-open import abstract-set-theory.FiniteSetTheory
 
 instance
   HasSubtract-ℕ : HasSubtract ℕ ℕ
