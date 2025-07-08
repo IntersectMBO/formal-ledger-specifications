@@ -87,16 +87,10 @@ jobs:
     with:
       pdf_name: conway-ledger.pdf
 
-  html:
-    needs: [formal-ledger-agda]
-    uses: ./.github/workflows/build_artifact.yml
-    with:
-      target: html
-
   upload-artifacts:
     # This job runs only if the workflow has not been manually dispached
     if: ${{ github.event_name != 'workflow_dispatch' }}
-    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, html, mkdocs-site]
+    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, mkdocs-site]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
