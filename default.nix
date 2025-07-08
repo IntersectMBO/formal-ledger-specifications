@@ -127,22 +127,22 @@ let
       ;
   };
 
-  fls-shake = (import ./build-tools/shake/nix/fls-shake.nix { inherit nixpkgs; }).overrideAttrs (
-    oldAttrs: {
-      nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ makeWrapper ];
-      postFixup = ''
-        wrapProgram $out/bin/fls-shake \
-          --prefix PATH : ${
-            lib.makeBinPath [
-              agdaWithPackages
-              python311
-              hpack
-              latex
-            ]
-          }
-      '';
-    }
-  );
+  fls-shake =
+    (import ./build-tools/shake/nix/fls-shake.nix { inherit nixpkgs; }).overrideAttrs
+      (oldAttrs: {
+        nativeBuildInputs = (oldAttrs.nativeBuildInputs or [ ]) ++ [ makeWrapper ];
+        postFixup = ''
+          wrapProgram $out/bin/fls-shake \
+            --prefix PATH : ${
+              lib.makeBinPath [
+                agdaWithPackages
+                python311
+                hpack
+                latex
+              ]
+            }
+        '';
+      });
 
   formal-ledger = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
@@ -243,20 +243,24 @@ let
 
   mkdocs = mkDerivation {
     pname = "mkdocs";
-    src = addToAgdaSrc [ ./build-tools/scripts/md ./build-tools/static/md
-    ./build-tools/static/latex ];
+    src = addToAgdaSrc [
+      ./build-tools/scripts/md
+      ./build-tools/static/md
+      ./build-tools/static/latex
+    ];
     buildInputs = [
-        agdaWithPackages
-        pandoc
-        (python311.withPackages (
-          ps: with ps; [
-            pip
-            mkdocs
-            mkdocs-material
-            pymdown-extensions
-            pyyaml
-          ]
-        )) ];
+      agdaWithPackages
+      pandoc
+      (python311.withPackages (
+        ps: with ps; [
+          pip
+          mkdocs
+          mkdocs-material
+          pymdown-extensions
+          pyyaml
+        ]
+      ))
+    ];
 
     buildPhase = ''
       mkdir dist
@@ -332,7 +336,7 @@ let
             mkdocs-material
             pymdown-extensions
             pyyaml
-            # Add any other Python packages needed for conversion scripts
+            pybtex
           ]
         ))
 
@@ -355,6 +359,9 @@ let
         echo "Documentation Publishing Environment"
         echo "Agda: $(agda --version)"
         echo "Python: $(python --version)"
+        echo "pip: $(pip --version)"
+        echo "pybtex: $(pybtex --version)"
+        echo "mkdocs: $(mkdocs --version)"
         echo "mdbook: $(mdbook --version)"
         echo "Pandoc: $(pandoc --version)"
         echo "Chromium: $(chromium --version 2>/dev/null | head -1 || echo 'available')"
