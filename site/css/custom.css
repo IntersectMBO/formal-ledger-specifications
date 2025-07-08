@@ -1,3 +1,115 @@
+/*
+ * Custom CSS for Formal Ledger Specifications
+ *
+ * This file contains auto-generated Agda class styles (from Agda.css)
+ * and project-specific customizations.
+ */
+
+/* ======================================================================= */
+/* AUTO-GENERATED AGDA CLASSES (from Agda.css)                        */
+/* ======================================================================= */
+
+code.AgdaBackground {
+    
+}
+code.AgdaBound {
+    color: black
+}
+code.AgdaCoinductiveConstructor {
+    color: #8B7500
+}
+code.AgdaComment {
+    color: #B22222
+}
+code.AgdaDatatype {
+    color: #0000CD
+}
+code.AgdaDeadcode {
+    color: black; background: #808080
+}
+code.AgdaDottedPattern {
+    
+}
+code.AgdaError {
+    color: red; text-decoration: underline
+}
+code.AgdaField {
+    color: #EE1289
+}
+code.AgdaFunction {
+    color: #0000CD
+}
+code.AgdaGeneralizable {
+    color: black
+}
+code.AgdaHole {
+    background: #B4EEB4
+}
+code.AgdaIncompletePattern {
+    color: black; background: #F5DEB3
+}
+code.AgdaInductiveConstructor {
+    color: #008B00
+}
+code.AgdaKeyword {
+    color: #CD6600
+}
+code.AgdaMacro {
+    color: #0000CD
+}
+code.AgdaMarkup {
+    color: #000000
+}
+code.AgdaModule {
+    color: #A020F0
+}
+code.AgdaNumber {
+    color: #A020F0
+}
+code.AgdaOperator {
+    
+}
+code.AgdaPostulate {
+    color: #0000CD
+}
+code.AgdaPragma {
+    color: black
+}
+code.AgdaPrimitive {
+    color: #0000CD
+}
+code.AgdaPrimitiveType {
+    color: #0000CD
+}
+code.AgdaRecord {
+    color: #0000CD
+}
+code.AgdaShadowingInTelescope {
+    color: black; background: #808080
+}
+code.AgdaString {
+    color: #B22222
+}
+code.AgdaSymbol {
+    color: #404040
+}
+code.AgdaTerminationProblem {
+    color: black; background: #FFA07A
+}
+code.AgdaTypeChecks {
+    color: black; background: #ADD8E6
+}
+code.AgdaUnsolvedConstraint {
+    color: black; background: yellow
+}
+code.AgdaUnsolvedMeta {
+    color: black; background: yellow
+}
+
+/* ======================================================================= */
+/* PROJECT-SPECIFIC STYLES                                            */
+/* ======================================================================= */
+
 /* docs/css/custom.css */
 
 /* Base style for inline Agda terms (optional, theme might cover) */
@@ -46,39 +158,3 @@ body.show-all-agda-source .agda-hidden-source {
   font-size: 1.2em; /* Make icon slightly larger than button text */
   margin-right: 0.3em;
 }
-
-/* Agda classes extracted from Agda.css for color consistency */
-/* Auto-generated section - do not edit manually */
-
-code.AgdaBackground {  }
-code.AgdaBound { color: black }
-code.AgdaCoinductiveConstructor { color: #8B7500 }
-code.AgdaComment { color: #B22222 }
-code.AgdaDatatype { color: #0000CD }
-code.AgdaDeadcode { color: black; background: #808080 }
-code.AgdaDottedPattern {  }
-code.AgdaError { color: red; text-decoration: underline }
-code.AgdaField { color: #EE1289 }
-code.AgdaFunction { color: #0000CD }
-code.AgdaGeneralizable { color: black }
-code.AgdaHole { background: #B4EEB4 }
-code.AgdaIncompletePattern { color: black; background: #F5DEB3 }
-code.AgdaInductiveConstructor { color: #008B00 }
-code.AgdaKeyword { color: #CD6600 }
-code.AgdaMacro { color: #0000CD }
-code.AgdaMarkup { color: #000000 }
-code.AgdaModule { color: #A020F0 }
-code.AgdaNumber { color: #A020F0 }
-code.AgdaOperator {  }
-code.AgdaPostulate { color: #0000CD }
-code.AgdaPragma { color: black }
-code.AgdaPrimitive { color: #0000CD }
-code.AgdaPrimitiveType { color: #0000CD }
-code.AgdaRecord { color: #0000CD }
-code.AgdaShadowingInTelescope { color: black; background: #808080 }
-code.AgdaString { color: #B22222 }
-code.AgdaSymbol { color: #404040 }
-code.AgdaTerminationProblem { color: black; background: #FFA07A }
-code.AgdaTypeChecks { color: black; background: #ADD8E6 }
-code.AgdaUnsolvedConstraint { color: black; background: yellow }
-code.AgdaUnsolvedMeta { color: black; background: yellow }
