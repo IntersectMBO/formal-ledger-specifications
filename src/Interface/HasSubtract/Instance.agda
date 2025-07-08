@@ -12,9 +12,6 @@ open import Prelude using (DecEq)
 open import abstract-set-theory.FiniteSetTheory
 -- }
 
-private variable
-  A : Set
-
 instance
   subtractNat : HasSubtract ℕ ℕ
   subtractNat ._-_ = ℕ._∸_
