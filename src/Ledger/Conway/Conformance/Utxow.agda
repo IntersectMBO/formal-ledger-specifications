@@ -47,7 +47,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
     ∙  L.witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
+    ∙  neededHashes - refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ L.getDataHashes (range (utxo ∣ refInputs))
     ∙  L.languages tx utxo ⊆ L.allowedLanguages tx utxo
