@@ -20,7 +20,6 @@ theme:
   # palette: # Optional: color scheme
   #   primary: indigo
   #   accent: indigo
-
   palette:
     # Dark Mode
     - scheme: slate
@@ -45,10 +44,12 @@ theme:
   #   text: Roboto
   #   code: Roboto Mono # Or perhaps StrippedJuliaMono if available via CSS?
 
+  custom_dir: overrides
 
 # Navigation structure
 nav:
   - Home: index.md
+  - Interactive Guide: guide.md
 
 extra_css:
   # KaTeX CSS for math rendering
