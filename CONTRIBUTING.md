@@ -3,12 +3,12 @@
 **Brief Contents**
 
 - [Style Guidelines](#style-guidelines)
-- [Quick Start](#quick-start)
-- [Overview](#overview)
-- [Usage Instructions](#usage-instructions)
-- [Integration with IDEs](#integration-with-ides)
-- [Performance Notes](#performance-notes)
-- [Setup Without Nix](#setup-without-nix)
+- [Project Overview](#project-overview)
+- [Development Environment Setup](#development-environment-setup)
+- [Building Project Artifacts](#building-project-artifacts)
+- [IDE Integration](#ide-integration)
+- [CI/CD Workflow](#cicd-workflow)
+- [Setup Without Nix (Advanced)](#setup-without-nix-advanced)
 - [Miscellanea](#miscellanea)
 - [Maintainers](#maintainers)
 
