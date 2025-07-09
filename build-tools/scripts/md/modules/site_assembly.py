@@ -169,14 +169,12 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
         final_css = generate_custom_css_from_agda(agda_css_content, template_css_content)
         (config.build_paths.mkdocs_css_dir / "custom.css").write_text(final_css, 'utf-8')
         shutil.copy2(agda_css_path, config.build_paths.mkdocs_css_dir)
-        logging.info("✅ Deployed generated custom.css and Agda.css")
+        logging.info("✅ Deployed generated custom.css and Agda.css.")
 
     # 2. Deploy JS
     shutil.copy2(config.source_paths.custom_js_path, config.build_paths.mkdocs_js_dir)
     shutil.copy2(config.source_paths.katex_js_path, config.build_paths.mkdocs_js_dir)
-    shutil.copy2(config.source_paths.extra_js_path, config.build_paths.mkdocs_javascripts_dir)
-    shutil.copy2(config.source_paths.extra_css_path, config.build_paths.mkdocs_stylesheets_dir)
-    logging.info("✅ Deployed custom JavaScript, CSS, and KaTeX config")
+    logging.info("✅ Deployed custom.js and KaTeX config.")
 
     # 3. Deploy Bibliography
     bib_source = config.source_paths.references_bib_path
@@ -184,7 +182,7 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
     if bib_source.exists():
         bib_target_dir.mkdir(parents=True, exist_ok=True)
         shutil.copy2(bib_source, bib_target_dir)
-        logging.info(f"✅ Deployed bibliography: {bib_source.name}")
+        logging.info(f"✅ Deployed bibliography: {bib_source.name}.")
 
     # 4. Handle index.md
     home_page = "index.md"
@@ -194,13 +192,17 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
             shutil.copy2(index_template, config.build_paths.mkdocs_docs_dir)
             if home_page not in nav_files:
                 nav_files.append(home_page)
+            logging.info("✅ Deployed index.md.")
 
-    # 5. Handle main.html template, guide.md template, and partials/interactive-guide-content.html
-    shutil.copy2(config.source_paths.guide_path, config.build_paths.mkdocs_docs_dir)
-    shutil.copy2(config.source_paths.main_path, config.build_paths.mkdocs_overrides_dir)
-    config.build_paths.mkdocs_partials_dir.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(config.source_paths.md_interactive_guide_path, config.build_paths.mkdocs_partials_dir)
-    logging.info("✅ Deployed main.html, guide.md, and interactive-guide-content.html")
+    # 5. Handle guide.md template
+    guide_page = "guide.md"
+    if not any(f.lower() == guide_page.lower() for f in nav_files):
+        guide_template = config.source_paths.md_common_src_dir / guide_page
+        if guide_template.exists():
+            shutil.copy2(guide_template, config.build_paths.mkdocs_docs_dir)
+            if guide_page not in nav_files:
+                nav_files.append(guide_page)
+            logging.info("✅ Deployed guide.md.")
 
     return sorted(list(set(nav_files)), key=lambda f: (f.lower() != home_page.lower(), f.lower()))
 

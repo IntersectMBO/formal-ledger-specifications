@@ -45,3 +45,11 @@ body.reveal-agda-source pre.Agda.hidden-source {
   font-size: 1.2em; /* Make icon slightly larger than button text */
   margin-right: 0.3em;
 }
+
+/* Style for inline code snippets */
+:not(pre) > code {
+  background-color: rgba(245, 158, 11, 0.1); /* Light amber background */
+  color: #B45309; /* Darker amber text */
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+ }
