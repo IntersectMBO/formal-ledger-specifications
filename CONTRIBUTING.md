@@ -16,12 +16,11 @@
 
 ## Style Guidelines
 
-We follow the [Agda standard library style guide][] as much as reasonable. Since
-some of our code is rendered into PDF, the formatting of the PDF takes priority
-over code formatting, so deviations are expected.
-
-We also have a separate style guide for formatting the PDF: [PDF style
-guide](PDF-style-guide.md).
+We adhere to the [Agda standard library style
+guide](https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md) where
+practical. However, because our code is *literate* Agda which is used to produce html
+documentation, readability of the latter takes precedence over code formatting, so
+deviations are expected.
 
 ---
 
@@ -806,3 +805,4 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [Updating nixpkgs]: #updating-nixpkgs
 [Maintainers]: #maintainers
 [Miscellanea]: #miscellanea
+[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md

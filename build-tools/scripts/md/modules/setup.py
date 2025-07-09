@@ -49,10 +49,7 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
         config.build_paths.mkdocs_docs_dir,
         config.build_paths.mkdocs_css_dir,
         config.build_paths.mkdocs_js_dir,
-        config.build_paths.mkdocs_includes_dir,
-        config.build_paths.mkdocs_overrides_dir,
-        config.build_paths.mkdocs_javascripts_dir,
-        config.build_paths.mkdocs_stylesheets_dir
+        config.build_paths.mkdocs_includes_dir
     ]
     # Clean directories that should start fresh
     dirs_to_clean = [

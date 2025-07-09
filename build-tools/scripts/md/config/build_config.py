@@ -63,16 +63,8 @@ class SourcePaths:
     custom_js_path: Path
     katex_js_path: Path
 
-    # Assets for material theme overrides (for interactive guide)
-    md_overrides_dir : Path
-    md_javascripts_dir: Path
-    md_stylesheets_dir: Path
-    md_partials_dir : Path
-    md_interactive_guide_path : Path
-    extra_js_path: Path
-    extra_css_path: Path
+    # Assets for interactive guide
     guide_path : Path
-    main_path: Path
 
     # Navigation templates
     mkdocs_nav_yml_path: Path
@@ -120,15 +112,7 @@ class SourcePaths:
         custom_css_path = md_css_dir / "custom.css"
         custom_js_path = md_js_dir / "custom.js"
         katex_js_path = md_js_dir / "katex-config.js"
-        md_overrides_dir = md_common_dir / "overrides"
-        md_javascripts_dir = md_overrides_dir / "assets" / "javascripts"
-        md_stylesheets_dir = md_overrides_dir / "assets" / "stylesheets"
-        md_partials_dir = md_overrides_dir / "partials"
-        md_interactive_guide_path = md_partials_dir / "interactive-guide-content.html"
-        extra_js_path = md_javascripts_dir / "extra.js"
-        extra_css_path = md_stylesheets_dir / "extra.css"
         guide_path = md_common_src_dir / "guide.md"
-        main_path = md_overrides_dir / "main.html"
 
         # Navigation
         mkdocs_nav_yml_path = md_common_dir / "nav.yml"
@@ -157,15 +141,7 @@ class SourcePaths:
             custom_css_path=custom_css_path,
             custom_js_path=custom_js_path,
             katex_js_path=katex_js_path,
-            md_overrides_dir=md_overrides_dir,
-            md_javascripts_dir=md_javascripts_dir,
-            md_stylesheets_dir=md_stylesheets_dir,
-            md_partials_dir=md_partials_dir,
-            md_interactive_guide_path=md_interactive_guide_path,
-            extra_js_path=extra_js_path,
-            extra_css_path=extra_css_path,
             guide_path=guide_path,
-            main_path=main_path,
             mkdocs_nav_yml_path=mkdocs_nav_yml_path,
             mdbook_summary_md_path=mdbook_summary_md_path,
         )
@@ -200,11 +176,6 @@ class BuildPaths:
     mkdocs_css_dir: Path
     mkdocs_js_dir: Path
     mkdocs_includes_dir: Path
-    mkdocs_overrides_dir: Path
-    mkdocs_javascripts_dir: Path
-    mkdocs_stylesheets_dir: Path
-    mkdocs_partials_dir: Path
-    mkdocs_interactive_guide_path : Path
 
     mdbook_dir: Path
     mdbook_src_dir: Path
@@ -245,11 +216,6 @@ class BuildPaths:
         mkdocs_css_dir = mkdocs_docs_dir / "css"
         mkdocs_js_dir = mkdocs_docs_dir / "js"
         mkdocs_includes_dir = mkdocs_dir / "includes"
-        mkdocs_overrides_dir = mkdocs_dir / "overrides"
-        mkdocs_javascripts_dir = mkdocs_overrides_dir / "assets" / "javascripts"
-        mkdocs_stylesheets_dir = mkdocs_overrides_dir / "assets" / "stylesheets"
-        mkdocs_partials_dir = mkdocs_overrides_dir / "partials"
-        mkdocs_interactive_guide_path = mkdocs_partials_dir / "interactive-guide-content.html"
 
         # MdBook site
         mdbook_dir = build_md_dir / "mdbook"
@@ -279,11 +245,6 @@ class BuildPaths:
             mkdocs_css_dir=mkdocs_css_dir,
             mkdocs_js_dir=mkdocs_js_dir,
             mkdocs_includes_dir=mkdocs_includes_dir,
-            mkdocs_overrides_dir=mkdocs_overrides_dir,
-            mkdocs_javascripts_dir=mkdocs_javascripts_dir,
-            mkdocs_stylesheets_dir=mkdocs_stylesheets_dir,
-            mkdocs_partials_dir=mkdocs_partials_dir,
-            mkdocs_interactive_guide_path=mkdocs_interactive_guide_path,
             mdbook_dir=mdbook_dir,
             mdbook_src_dir=mdbook_src_dir,
             mdbook_css_dir=mdbook_css_dir,

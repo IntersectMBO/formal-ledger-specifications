@@ -37,3 +37,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+  // Draw the dependency chart on the guide page
+const depsChartCanvas = document.getElementById('depsChart');
+if (depsChartCanvas) {
+    new Chart(depsChartCanvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['agda-stdlib', 'stdlib-classes', 'stdlib-meta', 'agda-sets', 'iog-prelude'],
+            datasets: [{
+                label: 'Relative Complexity (Lines of Code Estimate)',
+                data: [25000, 4000, 3000, 1500, 1000],
+                backgroundColor: 'rgba(245, 158, 11, 0.6)',
+                borderColor: 'rgba(245, 158, 11, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } }
+        }
+    });
+}

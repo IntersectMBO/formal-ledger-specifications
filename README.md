@@ -71,10 +71,11 @@ testing see [`conformance-example`](conformance-example)
 We welcome contributions and feedback!
 
 For detailed instructions on setting up a development environment, running tests, and
-understanding the project structure, please see our
-[**Contributing Guide**](CONTRIBUTING.md).
+understanding the project structure, please see our [Contributing Guide][].
 
-If you encounter any issues, please check the
-[**Troubleshooting Guide**](TROUBLESHOOTING.md) first. If your issue is not listed, please
-[submit a new issue](https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose)
-in this repository.
+If you encounter any issues, please check the [Troubleshooting Guide][] first.
+If your issue is not listed, please [submit a new issue][] in this repository.
+
+[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/TROUBLESHOOTING.md
+[submit a new issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
+[Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/CONTRIBUTING.md
