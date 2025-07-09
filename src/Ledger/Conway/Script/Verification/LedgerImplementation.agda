@@ -1,7 +1,7 @@
-open import ScriptVerification.Prelude
+open import Ledger.Conway.Script.Verification.Prelude
 open import Prelude using (Type)
 
-module ScriptVerification.LedgerImplementation
+module Ledger.Conway.Script.Verification.LedgerImplementation
   (T D : Type)
   (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
   where

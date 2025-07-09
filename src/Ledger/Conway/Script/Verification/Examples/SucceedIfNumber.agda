@@ -1,26 +1,23 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import ScriptVerification.Prelude
+open import Ledger.Conway.Script.Verification.Prelude
 
-module ScriptVerification.SucceedIfNumber where
+module Ledger.Conway.Script.Verification.Examples.SucceedIfNumber where
 
 scriptImp : ScriptImplementation ℕ ℕ
 scriptImp = record { serialise = id ;
                      deserialise = λ x → just x ;
                      toData' = λ x → 9999999 }
 
-open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
-open import ScriptVerification.Lib ℕ ℕ scriptImp
+open import Ledger.Conway.Script.Verification.LedgerImplementation ℕ ℕ scriptImp
+open import Ledger.Conway.Script.Verification.Lib ℕ ℕ scriptImp
 open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
-open import stdlib-classes.Class.HasCast
-open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Conway.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Conformance.Utxow.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 
 -- succeed if the datum is 1
 succeedIf1Datum' : Maybe ℕ → Maybe ℕ → Bool
@@ -147,6 +144,7 @@ exampleDatum' : Maybe Datum
 exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 
 opaque
+  unfolding Computational-UTXO
   unfolding collectP2ScriptsWithContext
   unfolding setToList
   unfolding outs
