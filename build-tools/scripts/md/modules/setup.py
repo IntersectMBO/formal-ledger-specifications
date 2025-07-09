@@ -46,16 +46,18 @@ def setup_build_directories(config: BuildConfig) -> Result[List[Path], PipelineE
         config.build_paths.code_blocks_dir,
         config.build_paths.intermediate_md_dir,
         # Site directories (will be cleaned and recreated)
-        config.build_paths.mkdocs_src_dir,
         config.build_paths.mkdocs_docs_dir,
         config.build_paths.mkdocs_css_dir,
         config.build_paths.mkdocs_js_dir,
         config.build_paths.mkdocs_includes_dir,
+        config.build_paths.mkdocs_overrides_dir,
+        config.build_paths.mkdocs_javascripts_dir,
+        config.build_paths.mkdocs_stylesheets_dir
     ]
     # Clean directories that should start fresh
     dirs_to_clean = [
-        config.build_paths.mkdocs_build_dir,
-        config.build_paths.mdbook_build_dir,
+        config.build_paths.mkdocs_dir,
+        config.build_paths.mdbook_dir,
     ]
 
     # This functional chain first cleans a list of directories, and_then creates another list.
@@ -74,8 +76,8 @@ def setup_static_site_structure(config: BuildConfig) -> Result[Dict[str, Path], 
     Static structure setup: Copy static site templates to build directories.
     """
     copy_operations = [
-        (config.source_paths.mkdocs_static_src_dir, config.build_paths.mkdocs_src_dir),
-        (config.source_paths.mdbook_static_dir, config.build_paths.mdbook_build_dir),
+        (config.source_paths.mkdocs_dir, config.build_paths.mkdocs_dir),
+        (config.source_paths.mdbook_dir, config.build_paths.mdbook_dir),
     ]
 
     # Create a list of Result objects by applying cp_dir to each operation
@@ -89,14 +91,14 @@ def setup_static_site_structure(config: BuildConfig) -> Result[Dict[str, Path], 
 
 def copy_common_source_files(config: BuildConfig) -> Result[None, PipelineError]:
     """Copies shared files from the common source to all target site directories."""
-    common_src_dir = config.source_paths.md_static_common_src_dir
+    common_src_dir = config.source_paths.md_common_src_dir
     if not common_src_dir.exists():
         logging.info("No common source directory found. Skipping copy.")
         return Result.ok(None)
 
     target_dirs = [
         config.build_paths.mkdocs_docs_dir,
-        config.build_paths.mdbook_docs_dir
+        config.build_paths.mdbook_src_dir
     ]
 
     # Create and sequence the results of copying the common directory to each target

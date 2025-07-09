@@ -39,30 +39,40 @@ class SourcePaths:
     static_dir: Path
 
     # Static content directories
-    latex_static_dir: Path
-    md_static_dir: Path
-    md_static_common_dir: Path
-    md_static_common_src_dir: Path
+    latex_dir: Path
+    md_dir: Path
+    md_common_dir: Path
+    md_common_src_dir: Path
 
     # MkDocs static structure
-    mkdocs_static_dir: Path
-    mkdocs_static_src_dir: Path
-    mkdocs_static_docs_dir: Path
+    mkdocs_dir: Path
+    mkdocs_docs_dir: Path
 
     # MdBook static structure
-    mdbook_static_dir: Path
-    mdbook_static_src_dir: Path
+    mdbook_dir: Path
+    mdbook_src_dir: Path
 
     # Key input files
     macros_sty_path: Path
     references_bib_path: Path
 
     # CSS and JS assets
-    md_static_css_dir: Path
-    md_static_js_dir: Path
+    md_css_dir: Path
+    md_js_dir: Path
     custom_css_path: Path
     custom_js_path: Path
     katex_js_path: Path
+
+    # Assets for material theme overrides (for interactive guide)
+    md_overrides_dir : Path
+    md_javascripts_dir: Path
+    md_stylesheets_dir: Path
+    md_partials_dir : Path
+    md_interactive_guide_path : Path
+    extra_js_path: Path
+    extra_css_path: Path
+    guide_path : Path
+    main_path: Path
 
     # Navigation templates
     mkdocs_nav_yml_path: Path
@@ -87,34 +97,42 @@ class SourcePaths:
         static_dir = build_tools_dir / "static"
 
         # Static content
-        latex_static_dir = static_dir / "latex"
-        md_static_dir = static_dir / "md"
-        md_static_common_dir = md_static_dir / "common"
-        md_static_common_src_dir = md_static_common_dir / "src"
+        latex_dir = static_dir / "latex"
+        md_dir = static_dir / "md"
+        md_common_dir = md_dir / "common"
+        md_common_src_dir = md_common_dir / "src"
 
         # MkDocs static
-        mkdocs_static_dir = md_static_dir / "mkdocs"
-        mkdocs_static_src_dir = mkdocs_static_dir
-        mkdocs_static_docs_dir = mkdocs_static_src_dir / "docs"
+        mkdocs_dir = md_dir / "mkdocs"
+        mkdocs_docs_dir = mkdocs_dir / "docs"
 
         # MdBook static
-        mdbook_static_dir = md_static_dir / "mdbook"
-        mdbook_static_src_dir = mdbook_static_dir / "src"
+        mdbook_dir = md_dir / "mdbook"
+        mdbook_src_dir = mdbook_dir / "src"
 
         # Key files
-        macros_sty_path = latex_static_dir / "macros.sty"
-        references_bib_path = latex_static_dir / "references.bib"
+        macros_sty_path = latex_dir / "macros.sty"
+        references_bib_path = latex_dir / "references.bib"
 
         # Assets
-        md_static_css_dir = md_static_common_src_dir / "css"
-        md_static_js_dir = md_static_common_src_dir / "js"
-        custom_css_path = md_static_css_dir / "custom.css"
-        custom_js_path = md_static_js_dir / "custom.js"
-        katex_js_path = md_static_js_dir / "katex-config.js"
+        md_css_dir = md_common_src_dir / "css"
+        md_js_dir = md_common_src_dir / "js"
+        custom_css_path = md_css_dir / "custom.css"
+        custom_js_path = md_js_dir / "custom.js"
+        katex_js_path = md_js_dir / "katex-config.js"
+        md_overrides_dir = md_common_dir / "overrides"
+        md_javascripts_dir = md_overrides_dir / "assets" / "javascripts"
+        md_stylesheets_dir = md_overrides_dir / "assets" / "stylesheets"
+        md_partials_dir = md_overrides_dir / "partials"
+        md_interactive_guide_path = md_partials_dir / "interactive-guide-content.html"
+        extra_js_path = md_javascripts_dir / "extra.js"
+        extra_css_path = md_stylesheets_dir / "extra.css"
+        guide_path = md_common_src_dir / "guide.md"
+        main_path = md_overrides_dir / "main.html"
 
         # Navigation
-        mkdocs_nav_yml_path = md_static_common_dir / "nav.yml"
-        mdbook_summary_md_path = mdbook_static_src_dir / "SUMMARY.md"
+        mkdocs_nav_yml_path = md_common_dir / "nav.yml"
+        mdbook_summary_md_path = mdbook_src_dir / "SUMMARY.md"
 
         return cls(
             project_root=project_root,
@@ -124,22 +142,30 @@ class SourcePaths:
             scripts_dir=scripts_dir,
             md_scripts_dir=md_scripts_dir,
             static_dir=static_dir,
-            latex_static_dir=latex_static_dir,
-            md_static_dir=md_static_dir,
-            md_static_common_dir=md_static_common_dir,
-            md_static_common_src_dir=md_static_common_src_dir,
-            mkdocs_static_dir=mkdocs_static_dir,
-            mkdocs_static_src_dir=mkdocs_static_src_dir,
-            mkdocs_static_docs_dir=mkdocs_static_docs_dir,
-            mdbook_static_dir=mdbook_static_dir,
-            mdbook_static_src_dir=mdbook_static_src_dir,
+            latex_dir=latex_dir,
+            md_dir=md_dir,
+            md_common_dir=md_common_dir,
+            md_common_src_dir=md_common_src_dir,
+            mkdocs_dir=mkdocs_dir,
+            mkdocs_docs_dir=mkdocs_docs_dir,
+            mdbook_dir=mdbook_dir,
+            mdbook_src_dir=mdbook_src_dir,
             macros_sty_path=macros_sty_path,
             references_bib_path=references_bib_path,
-            md_static_css_dir=md_static_css_dir,
-            md_static_js_dir=md_static_js_dir,
+            md_css_dir=md_css_dir,
+            md_js_dir=md_js_dir,
             custom_css_path=custom_css_path,
             custom_js_path=custom_js_path,
             katex_js_path=katex_js_path,
+            md_overrides_dir=md_overrides_dir,
+            md_javascripts_dir=md_javascripts_dir,
+            md_stylesheets_dir=md_stylesheets_dir,
+            md_partials_dir=md_partials_dir,
+            md_interactive_guide_path=md_interactive_guide_path,
+            extra_js_path=extra_js_path,
+            extra_css_path=extra_css_path,
+            guide_path=guide_path,
+            main_path=main_path,
             mkdocs_nav_yml_path=mkdocs_nav_yml_path,
             mdbook_summary_md_path=mdbook_summary_md_path,
         )
@@ -169,16 +195,19 @@ class BuildPaths:
     intermediate_md_dir: Path         # .md.intermediate files
 
     # Site build directories
-    mkdocs_build_dir: Path
-    mkdocs_src_dir: Path
+    mkdocs_dir: Path
     mkdocs_docs_dir: Path
     mkdocs_css_dir: Path
     mkdocs_js_dir: Path
     mkdocs_includes_dir: Path
+    mkdocs_overrides_dir: Path
+    mkdocs_javascripts_dir: Path
+    mkdocs_stylesheets_dir: Path
+    mkdocs_partials_dir: Path
+    mkdocs_interactive_guide_path : Path
 
-    mdbook_build_dir: Path
+    mdbook_dir: Path
     mdbook_src_dir: Path
-    mdbook_docs_dir: Path
     mdbook_css_dir: Path
     mdbook_js_dir: Path
 
@@ -211,19 +240,22 @@ class BuildPaths:
         intermediate_md_dir = build_md_aux_dir / "md_intermediate"
 
         # MkDocs site
-        mkdocs_build_dir = build_md_dir / "mkdocs"
-        mkdocs_src_dir = mkdocs_build_dir
-        mkdocs_docs_dir = mkdocs_src_dir / "docs"
+        mkdocs_dir = build_md_dir / "mkdocs"
+        mkdocs_docs_dir = mkdocs_dir / "docs"
         mkdocs_css_dir = mkdocs_docs_dir / "css"
         mkdocs_js_dir = mkdocs_docs_dir / "js"
-        mkdocs_includes_dir = mkdocs_build_dir / "includes"
+        mkdocs_includes_dir = mkdocs_dir / "includes"
+        mkdocs_overrides_dir = mkdocs_dir / "overrides"
+        mkdocs_javascripts_dir = mkdocs_overrides_dir / "assets" / "javascripts"
+        mkdocs_stylesheets_dir = mkdocs_overrides_dir / "assets" / "stylesheets"
+        mkdocs_partials_dir = mkdocs_overrides_dir / "partials"
+        mkdocs_interactive_guide_path = mkdocs_partials_dir / "interactive-guide-content.html"
 
         # MdBook site
-        mdbook_build_dir = build_md_dir / "mdbook"
-        mdbook_src_dir = mdbook_build_dir
-        mdbook_docs_dir = mdbook_src_dir / "src"
-        mdbook_css_dir = mdbook_docs_dir / "css"
-        mdbook_js_dir = mdbook_docs_dir / "js"
+        mdbook_dir = build_md_dir / "mdbook"
+        mdbook_src_dir = mdbook_dir / "src"
+        mdbook_css_dir = mdbook_src_dir / "css"
+        mdbook_js_dir = mdbook_src_dir / "js"
 
         # Key files
         macros_json_path = build_md_aux_dir / "macros.json"
@@ -242,15 +274,18 @@ class BuildPaths:
             temp_dir=temp_dir,
             code_blocks_dir=code_blocks_dir,
             intermediate_md_dir=intermediate_md_dir,
-            mkdocs_build_dir=mkdocs_build_dir,
-            mkdocs_src_dir=mkdocs_src_dir,
+            mkdocs_dir=mkdocs_dir,
             mkdocs_docs_dir=mkdocs_docs_dir,
             mkdocs_css_dir=mkdocs_css_dir,
             mkdocs_js_dir=mkdocs_js_dir,
             mkdocs_includes_dir=mkdocs_includes_dir,
-            mdbook_build_dir=mdbook_build_dir,
+            mkdocs_overrides_dir=mkdocs_overrides_dir,
+            mkdocs_javascripts_dir=mkdocs_javascripts_dir,
+            mkdocs_stylesheets_dir=mkdocs_stylesheets_dir,
+            mkdocs_partials_dir=mkdocs_partials_dir,
+            mkdocs_interactive_guide_path=mkdocs_interactive_guide_path,
+            mdbook_dir=mdbook_dir,
             mdbook_src_dir=mdbook_src_dir,
-            mdbook_docs_dir=mdbook_docs_dir,
             mdbook_css_dir=mdbook_css_dir,
             mdbook_js_dir=mdbook_js_dir,
             macros_json_path=macros_json_path,
