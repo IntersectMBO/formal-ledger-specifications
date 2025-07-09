@@ -1,3 +1,5 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Prelude hiding (fromList; ε; _/_); open Computational
 open import Ledger.Conway.Script.Verification.Prelude
 
