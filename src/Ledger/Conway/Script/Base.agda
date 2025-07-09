@@ -9,12 +9,12 @@ open import stdlib.Data.List.Relation.Unary.MOf
 
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
-open import Ledger.Conway.Crypto
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Crypto
+open import Ledger.Prelude.Epoch
 
 module Ledger.Conway.Script.Base
-  (crypto : _) (open Crypto crypto)
-  (es     : _) (open EpochStructure es)
+  (cs : _) (open CryptoStructure cs)
+  (es : _) (open EpochStructure es)
   where
 
 record P1ScriptStructure : Type₁ where

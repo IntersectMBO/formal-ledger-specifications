@@ -85,11 +85,7 @@ record TransactionStructure : Type₁ where
 
   field epochStructure : _
   open EpochStructure epochStructure public
-<<<<<<< HEAD
-  open Ledger.Conway.Script.Base crypto epochStructure public
-=======
-  open Ledger.Conway.Script cryptoStructure epochStructure public
->>>>>>> 3bfcd60e (Rename record Crypto to CryptoStructure (for consistency))
+  open Ledger.Conway.Script.Base cryptoStructure epochStructure public
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public
