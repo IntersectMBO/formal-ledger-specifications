@@ -1,3 +1,5 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Conway.Script.Verification.Prelude
 open import Prelude using (Type)
 
@@ -14,8 +16,6 @@ open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
-open import Foreign.Convertible
-import Foreign.Haskell as F
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Types.Epoch
