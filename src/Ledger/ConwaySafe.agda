@@ -45,7 +45,7 @@ import Ledger.Conway.TokenAlgebra.Coin
 import Ledger.Conway.TokenAlgebra.ValueSet
 import Ledger.Conway.TokenAlgebra.ValueVector
 import Ledger.Conway.Transaction
-import Ledger.Conway.Types.Epoch
+import Ledger.Prelude.Epoch
 import Ledger.Conway.Types.GovStructure
 import Ledger.Conway.Utxo
 import Ledger.Conway.Utxo.Properties

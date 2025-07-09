@@ -18,7 +18,7 @@ open import Foreign.Convertible
 import Foreign.Haskell as F
 open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Transaction
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Epoch
 open import Ledger.Conway.Types.GovStructure
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance

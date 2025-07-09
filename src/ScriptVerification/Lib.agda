@@ -11,7 +11,7 @@ open import Data.Empty
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Epoch
 open import Ledger.Prelude.Numeric using (mkUnitInterval; mkℕ⁺)
 open EpochStructure SVEpochStructure
 open import Data.Integer using (ℤ; +_)

@@ -20,8 +20,7 @@ open import Tactic.Inline
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Prelude.Crypto
-open import Ledger.Conway.Types.Epoch
-  using (EpochStructure)
+open import Ledger.Prelude.Epoch
 
 module Ledger.Conway.Script
   (cs : _) (open CryptoStructure cs)

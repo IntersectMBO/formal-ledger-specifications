@@ -6,7 +6,7 @@ open import Prelude using (Type)
 open import Class.DecEq
 open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Script.Base
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Epoch
 import Ledger.Conway.PParams
 
 record GovStructure : Type₁ where
