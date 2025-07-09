@@ -15,7 +15,7 @@ import Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds
 import Ledger.Conway.Chain.Properties.EpochStep
 import Ledger.Conway.Chain.Properties.GovDepsMatch
 import Ledger.Conway.Chain.Properties.PParamsWellFormed
-import Ledger.Conway.Crypto
+import Ledger.Prelude.Crypto
 import Ledger.Conway.Enact
 import Ledger.Conway.Epoch
 import Ledger.Conway.Epoch.Properties

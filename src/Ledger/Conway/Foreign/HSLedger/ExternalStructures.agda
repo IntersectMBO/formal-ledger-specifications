@@ -4,7 +4,7 @@ module Ledger.Conway.Foreign.HSLedger.ExternalStructures (externalFunctions : Ex
 
 import      Data.Rational as ℚ using (pos) -- import an instance
 
-open import Ledger.Conway.Crypto
+open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Types.Epoch
 open import Ledger.Conway.Foreign.HSLedger.Core
 
