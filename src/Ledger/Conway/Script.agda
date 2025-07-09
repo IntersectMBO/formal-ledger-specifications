@@ -1,12 +1,12 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Crypto
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Crypto
+open import Ledger.Prelude.Epoch
 
 module Ledger.Conway.Script
-  (crypto : _) (open Crypto crypto)
-  (es     : _) (open EpochStructure es)
+  (cs : _) (open CryptoStructure cs)
+  (es : _) (open EpochStructure es)
   where
 
-open import Ledger.Conway.Script.Base crypto es public
-open import Ledger.Conway.Script.Timelock crypto es public
+open import Ledger.Conway.Script.Base cs es public
+open import Ledger.Conway.Script.Timelock cs es public

@@ -22,7 +22,7 @@ open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Prelude.Crypto
 open import Ledger.Prelude.Epoch
 
-module Ledger.Conway.Script
+module Ledger.Conway.Script.Timelock
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
   where

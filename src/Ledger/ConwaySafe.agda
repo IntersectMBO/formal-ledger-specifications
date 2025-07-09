@@ -3,7 +3,6 @@ module Ledger.ConwaySafe where
 
 -- ** Cardano ledger in the Coway era
 import Ledger.Conway.Address
-import Ledger.Conway.BaseTypes
 import Ledger.Conway.Certs
 import Ledger.Conway.Certs.Properties
 import Ledger.Conway.Certs.Properties.PoV
@@ -15,7 +14,6 @@ import Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds
 import Ledger.Conway.Chain.Properties.EpochStep
 import Ledger.Conway.Chain.Properties.GovDepsMatch
 import Ledger.Conway.Chain.Properties.PParamsWellFormed
-import Ledger.Prelude.Crypto
 import Ledger.Conway.Enact
 import Ledger.Conway.Epoch
 import Ledger.Conway.Epoch.Properties
@@ -28,7 +26,6 @@ import Ledger.Conway.Gov.Properties
 import Ledger.Conway.GovernanceActions
 import Ledger.Conway.GovernanceActions.Properties
 import Ledger.Conway.GovernanceActions.Properties.ChangePPGroup
-import Ledger.Introduction
 import Ledger.Conway.Ledger
 import Ledger.Conway.Ledger.Properties
 import Ledger.Conway.Ledger.Properties.GovDepsMatch
@@ -45,7 +42,6 @@ import Ledger.Conway.TokenAlgebra.Coin
 import Ledger.Conway.TokenAlgebra.ValueSet
 import Ledger.Conway.TokenAlgebra.ValueVector
 import Ledger.Conway.Transaction
-import Ledger.Prelude.Epoch
 import Ledger.Conway.Types.GovStructure
 import Ledger.Conway.Utxo
 import Ledger.Conway.Utxo.Properties
