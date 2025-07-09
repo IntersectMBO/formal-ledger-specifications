@@ -1,6 +1,6 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
-module ScriptVerification.Prelude where
+module Ledger.Conway.Script.Verification.Prelude where
 
 record ScriptImplementation (T D : Type) : Type₁ where
   field serialise : T → D

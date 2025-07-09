@@ -1,26 +1,23 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import ScriptVerification.Prelude
+open import Ledger.Conway.Script.Verification.Prelude
 
-module ScriptVerification.HelloWorld where
+module Ledger.Conway.Script.Verification.Examples.HelloWorld where
 
 scriptImp : ScriptImplementation String String
 scriptImp = record { serialise = id ;
                      deserialise = λ x → just x ;
                      toData' = λ x → "dummy" }
 
-open import ScriptVerification.LedgerImplementation String String scriptImp
-open import ScriptVerification.Lib String String scriptImp
+open import Ledger.Conway.Script.Verification.LedgerImplementation String String scriptImp
+open import Ledger.Conway.Script.Verification.Lib String String scriptImp
 open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
-open import stdlib-classes.Class.HasCast
-open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Conway.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Conformance.Utxow.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool
@@ -126,6 +123,7 @@ evalFailScript : Bool
 evalFailScript = evalP2Scripts failState
 
 opaque
+  unfolding Computational-UTXO
   unfolding collectP2ScriptsWithContext
   unfolding setToList
   unfolding outs

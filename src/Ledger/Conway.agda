@@ -5,9 +5,9 @@ import Ledger.ConwaySafe
 import Ledger.Conway.Foreign.HSLedger
 
 -- ** Verifying script examples
-import ScriptVerification.Examples
-import ScriptVerification.StructuredContracts
-import ScriptVerification.Lib
+import Ledger.Conway.Script.Verification.Examples
+import Ledger.Conway.Script.Verification.StructuredContracts
+import Ledger.Conway.Script.Verification.Lib
 
 -- ** Not currently used
 import Foreign.Convertible.DerivingTest
