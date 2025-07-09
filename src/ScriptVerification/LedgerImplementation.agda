@@ -16,7 +16,7 @@ open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
 open import Foreign.Convertible
 import Foreign.Haskell as F
-open import Ledger.Conway.Crypto
+open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Types.Epoch
 open import Ledger.Conway.Types.GovStructure

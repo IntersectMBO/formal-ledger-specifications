@@ -19,7 +19,7 @@ open import Data.List.Relation.Unary.Any using (Any; here; there)
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude
-open import Ledger.Conway.Crypto
+open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Script.Base
 open import Ledger.Conway.Types.Epoch
 open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)

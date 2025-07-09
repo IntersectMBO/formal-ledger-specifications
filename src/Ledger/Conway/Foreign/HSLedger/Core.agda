@@ -15,7 +15,7 @@ open import Foreign.Convertible.Deriving  public
 open import Foreign.HaskellTypes          public
 open import Foreign.HaskellTypes.Deriving public
 
-open import Ledger.Conway.Crypto
+open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Types.Epoch
 
 open import Ledger.Conway.Transaction renaming (Vote to VoteTag) public
