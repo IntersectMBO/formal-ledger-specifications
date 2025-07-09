@@ -11,7 +11,7 @@ open import stdlib.Data.List.Relation.Unary.MOf
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Prelude.Crypto
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Epoch
 
 import Ledger.Conway.Script
 

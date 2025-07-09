@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-module Ledger.Conway.Types.Epoch where
+module Ledger.Prelude.Epoch where
 
 open import Ledger.Prelude hiding (compare; Rel)
 
