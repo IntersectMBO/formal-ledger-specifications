@@ -155,7 +155,7 @@ module _ -- ASSUMPTION --
       \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
       in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
-  utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
+  utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
     length txprop * govActionDepositOf Γ
       ≡˘⟨ updatePropDeps≡ txprop ⟩
