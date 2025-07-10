@@ -13,7 +13,7 @@ open import Ledger.Conway.Types.GovStructure
 
 module Ledger.Conway.Enact (gs : _) (open GovStructure gs) where
 
-open import Ledger.Conway.GovernanceActions gs
+open import Ledger.Conway.Governance.Actions gs
 \end{code}
 
 \Cref{fig:enact-defs} contains some definitions required to

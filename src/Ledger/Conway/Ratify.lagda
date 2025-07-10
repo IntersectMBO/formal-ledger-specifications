@@ -16,7 +16,7 @@ module Ledger.Conway.Ratify (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Conway.Certs govStructure
 open import Ledger.Conway.Enact govStructure
-open import Ledger.Conway.GovernanceActions govStructure using (Vote)
+open import Ledger.Conway.Governance.Actions govStructure using (Vote)
 
 infixr 2 _∧_
 _∧_ = _×_

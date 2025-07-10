@@ -32,7 +32,7 @@ open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
-open import Ledger.Conway.GovernanceActions govStructure using (Vote)
+open import Ledger.Conway.Governance.Actions govStructure using (Vote)
 open import Ledger.Conway.Enact govStructure
 open import Ledger.Conway.Ratify txs hiding (vote)
 open import Ledger.Conway.Certs govStructure

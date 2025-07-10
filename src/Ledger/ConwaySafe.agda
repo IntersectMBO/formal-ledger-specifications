@@ -25,9 +25,9 @@ import Ledger.Conway.Epoch.Properties.NoPropSameDReps
 import Ledger.Conway.Fees
 import Ledger.Conway.Gov
 import Ledger.Conway.Gov.Properties
-import Ledger.Conway.GovernanceActions
-import Ledger.Conway.GovernanceActions.Properties
-import Ledger.Conway.GovernanceActions.Properties.ChangePPGroup
+import Ledger.Conway.Governance.Actions
+import Ledger.Conway.Governance.Actions.Properties
+import Ledger.Conway.Governance.Actions.Properties.ChangePPGroup
 import Ledger.Introduction
 import Ledger.Conway.Ledger
 import Ledger.Conway.Ledger.Properties

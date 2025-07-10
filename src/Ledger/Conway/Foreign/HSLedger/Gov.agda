@@ -7,7 +7,7 @@ open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
-open import Ledger.Conway.Foreign.HSLedger.GovernanceActions
+open import Ledger.Conway.Foreign.HSLedger.Governance.Actions
 open import Ledger.Conway.Foreign.HSLedger.Cert
 
 open import Ledger.Conway.Conformance.Certs govStructure

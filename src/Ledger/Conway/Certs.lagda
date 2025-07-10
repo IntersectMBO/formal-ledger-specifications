@@ -12,7 +12,7 @@ open import Ledger.Conway.Types.Numeric.UnitInterval
 module Ledger.Conway.Certs (gs : _) (open GovStructure gs) where
 
 
-open import Ledger.Conway.GovernanceActions gs
+open import Ledger.Conway.Governance.Actions gs
 open RwdAddr
 open PParams
 \end{code}

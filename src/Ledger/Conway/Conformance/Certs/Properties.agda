@@ -8,7 +8,7 @@ module Ledger.Conway.Conformance.Certs.Properties (gs : _) (open GovStructure gs
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
 
-open import Ledger.Conway.GovernanceActions gs hiding (yes; no)
+open import Ledger.Conway.Governance.Actions gs hiding (yes; no)
 open import Ledger.Conway.Conformance.Certs gs
 
 open Computational ⦃...⦄

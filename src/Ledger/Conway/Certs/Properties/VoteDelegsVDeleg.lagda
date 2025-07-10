@@ -7,7 +7,7 @@ module Ledger.Conway.Certs.Properties.VoteDelegsVDeleg (gs : _) (open GovStructu
 
 open import Ledger.Conway.Certs gs
 open import Ledger.Prelude
-open import Ledger.Conway.GovernanceActions gs
+open import Ledger.Conway.Governance.Actions gs
 \end{code}
 % If the module name changes, change the following macro to match!
 \newcommand{\CertsVDelegs}{Conway/Certs/Properties/VoteDelegsVDeleg}

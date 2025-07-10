@@ -9,7 +9,7 @@ module Ledger.Conway.Conformance.Certs
   where
 
 
-open import Ledger.Conway.GovernanceActions gs
+open import Ledger.Conway.Governance.Actions gs
 private module Certs = Ledger.Conway.Certs gs
 open Certs public
   hiding (DState; GState; CertState; HasCast-DState; HasCast-GState; HasCast-CertState;

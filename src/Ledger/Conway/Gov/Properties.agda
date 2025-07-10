@@ -13,7 +13,7 @@ open import Axiom.Set.Properties
 
 open import Ledger.Conway.Enact govStructure
 open import Ledger.Conway.Gov txs
-open import Ledger.Conway.GovernanceActions govStructure hiding (yes; no)
+open import Ledger.Conway.Governance.Actions govStructure hiding (yes; no)
 open import Ledger.Conway.Ratify txs
 
 import Data.List.Membership.Propositional as P

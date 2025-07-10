@@ -1,6 +1,6 @@
 \section{Governance Actions}
 \label{sec:governance-actions}
-\modulenote{\ConwayModule{GovernanceActions}}.
+\modulenote{\ConwayModule{Governance.Actions}}.
 
 We introduce the following distinct bodies with specific functions in the new governance framework:
 \begin{enumerate}
@@ -20,7 +20,7 @@ open import Tactic.Derive.Show
 open import Ledger.Prelude hiding (yes; no)
 open import Ledger.Conway.Types.GovStructure
 
-module Ledger.Conway.GovernanceActions (gs : _) (open GovStructure gs) where
+module Ledger.Conway.Governance.Actions (gs : _) (open GovStructure gs) where
 \end{code}
 
 \begin{figure*}[ht]
