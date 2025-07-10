@@ -87,3 +87,4 @@ markdown_extensions:
   # Important: Use pymdownx.arithmatex with KaTeX
   - pymdownx.arithmatex:
       generic: true
+  - footnotes

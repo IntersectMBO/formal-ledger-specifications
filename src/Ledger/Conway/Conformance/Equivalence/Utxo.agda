@@ -52,7 +52,7 @@ module _ {Γ s tx s'} where
   utxoSDeposits (C.Scripts-No  _) = deposits
 
   utxoDeposits : Γ C.⊢ s ⇀⦇ tx ,UTXO⦈ s' → L.Deposits
-  utxoDeposits (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) = utxoSDeposits h
+  utxoDeposits (C.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) = utxoSDeposits h
 
   utxowDeposits : Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ s' → L.Deposits
   utxowDeposits (C.UTXOW-inductive⋯ _ _ _ _ _ _ _ _ h) = utxoDeposits h
@@ -79,8 +79,8 @@ instance
   -- deposits don't change! Why are they even part of the UTxOState?
   -- In conformance the update happens in GOVCERT (under CERT).
   UTXOToConf : ∀ {Γ s tx s'} → Γ L.⊢ s ⇀⦇ tx ,UTXO⦈ s' ⭆ Γ C.⊢ s ⇀⦇ tx ,UTXO⦈ (withDepositsFrom s s')
-  UTXOToConf {s = s} {tx = tx} .convⁱ _ (L.UTXO-inductive (a , b , c , d , e , f , g , h , i , j , k , l , m , n , o , p , utxo)) =
-    C.UTXO-inductive (a , b , c , d , e , f , g , h , i , j , k , l , m , n , o , p , conv utxo)
+  UTXOToConf {s = s} {tx = tx} .convⁱ _ (L.UTXO-inductive (a , b , c , d , e , f , g , r , h , i , j , k , l , m , n , o , p , utxo)) =
+    C.UTXO-inductive (a , b , c , d , e , f , g , r , h , i , j , k , l , m , n , o , p , conv utxo)
 
   UTXOFromConf : ∀ {Γ s tx s'}
                    (let open L.UTxOEnv Γ using () renaming (pparams to pp)
@@ -90,8 +90,8 @@ instance
                → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txcerts)
                  ⊢ Γ C.⊢ s ⇀⦇ tx ,UTXO⦈ s' ⭆ⁱ λ _ h →
                    Γ L.⊢ s ⇀⦇ tx ,UTXO⦈ (setDeposits (utxoDeposits h) s')
-  UTXOFromConf {s = s} {tx = tx} .convⁱ validCerts (C.UTXO-inductive (a , b , c , d , e , f , g , h , i , j , k , l , m , n , o , p , utxo)) =
-    L.UTXO-inductive (a , b , c , d , e , f , g , h , i , j , k , l , m , n , o , p , (validCerts ⊢conv utxo))
+  UTXOFromConf {s = s} {tx = tx} .convⁱ validCerts (C.UTXO-inductive (a , b , c , d , e , f , g , r , h , i , j , k , l , m , n , o , p , utxo)) =
+    L.UTXO-inductive (a , b , c , d , e , f , g , r , h , i , j , k , l , m , n , o , p , (validCerts ⊢conv utxo))
 
   UTXOWToConf : ∀ {Γ s tx s'} → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s' ⭆ Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ (withDepositsFrom s s')
   UTXOWToConf .convⁱ _ (L.UTXOW-inductive⋯ a b c d e f g h utxo) =

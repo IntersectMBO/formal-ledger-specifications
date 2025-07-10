@@ -389,19 +389,15 @@ isAdaOnly : Value → Type
 isAdaOnly v = policies v ≡ᵉ coinPolicies
 \end{code}
 \begin{code}
-feesOK : PParams → Tx → UTxO → Type
-feesOK pp tx utxo = ( minfee pp utxo tx ≤ txfee × (txrdmrs ˢ ≢ ∅
-                      → ( All (λ (addr , _) → isVKeyAddr addr) collateralRange
-                        × isAdaOnly bal
-                        × coin bal * 100 ≥ txfee * pp .collateralPercentage
-                        × collateral ≢ ∅
-                        )
-                      )
-                    )
+collateralCheck : PParams → Tx → UTxO → Type
+collateralCheck pp tx utxo =
+  All (λ (addr , _) → isVKeyAddr addr) (range (utxo ∣ collateral))
+  × isAdaOnly balance′
+  × coin balance′ * 100 ≥ txfee * pp .collateralPercentage
+  × collateral ≢ ∅
   where
-    open Tx tx; open TxBody body; open TxWitnesses wits; open PParams pp
-    collateralRange  = range    ((mapValues txOutHash utxo) ∣ collateral)
-    bal              = balance  (utxo ∣ collateral)
+    open Tx tx; open TxBody body
+    balance′ = balance (utxo ∣ collateral)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules, continued}
@@ -526,6 +522,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \begin{code}[hide]
         open Tx tx renaming (body to txb); open TxBody txb
+        open TxWitnesses wits
 \end{code}
 \begin{code}
         txoutsʰ   = mapValues txOutHash txouts
@@ -533,8 +530,9 @@ data _⊢_⇀⦇_,UTXO⦈_ where
     in
     ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
     ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ feesOK pp tx utxo                      ∙ consumed pp s txb ≡ produced pp s txb
-    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ minfee pp utxo tx ≤ txfee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
+    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
     ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
         inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
@@ -552,8 +550,8 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 \end{code}
 \end{AgdaMultiCode}
 \begin{code}[hide]
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
-  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m c v j n o p q r t u h
+  = UTXO-inductive {Γ = Γ} {s = s} {tx = tx} (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)
 \end{code}
 \caption{UTXO inference rules}

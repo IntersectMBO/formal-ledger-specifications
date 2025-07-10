@@ -209,3 +209,33 @@ function Code(inline)
   -- if not Code element containing our marker, return it unchanged
   return inline
 end
+
+--- Processes RawInline elements.
+-- Expected input from preprocess.py: \HighlightPlaceholder{...}
+-- This function will now also delegate to transform_latex_commands.
+-- @param inline The RawInline element.
+-- @return table The modified element (Span) or the original RawInline.
+function RawInline(inline)
+  -- Check if it's a raw 'latex' element and the format field exists
+  if inline.format and inline.format:match 'latex' then
+    -- First, try to process specific LaTeX commands (\label, \Cref, \caption)
+    local transformed_latex_command = transform_latex_commands(inline.text)
+    if transformed_latex_command then
+      return transformed_latex_command -- Return the transformed element
+    end
+    -- Check specifically for our HighlightPlaceholder marker
+    -- Use non-greedy match (.*?) for the content within braces {}
+    local highlight_match = inline.text:match '\\HighlightPlaceholder{(.*)}'
+    if highlight_match then
+       local content_str = highlight_match
+       -- Convert the captured string content back to a basic Pandoc Str element.
+       local content_inline = { pandoc.Str(content_str) }
+       -- Create attributes structure with the "highlight" class
+       local attrs = create_attrs({"highlight"})
+       -- Return a Pandoc Span element wrapping the content with the class
+       return pandoc.Span(content_inline, attrs)
+    end
+  end
+  -- If it's not the HighlightPlaceholder or not LaTeX format, return it unchanged
+  return inline
+end
