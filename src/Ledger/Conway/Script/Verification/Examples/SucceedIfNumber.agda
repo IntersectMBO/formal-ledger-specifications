@@ -1,26 +1,25 @@
-open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import ScriptVerification.Prelude
+{-# OPTIONS --safe #-}
 
-module ScriptVerification.SucceedIfNumber where
+open import Ledger.Prelude hiding (fromList; ε); open Computational
+open import Ledger.Conway.Script.Verification.Prelude
+
+module Ledger.Conway.Script.Verification.Examples.SucceedIfNumber where
 
 scriptImp : ScriptImplementation ℕ ℕ
 scriptImp = record { serialise = id ;
                      deserialise = λ x → just x ;
                      toData' = λ x → 9999999 }
 
-open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
-open import ScriptVerification.Lib ℕ ℕ scriptImp
-open import Ledger.Conway.ScriptValidation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
-open import stdlib-classes.Class.HasCast
-open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Script.Verification.LedgerImplementation ℕ ℕ scriptImp
+open import Ledger.Conway.Script.Verification.Lib ℕ ℕ scriptImp
+open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Conway.Types.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Conformance.Utxow.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 
 -- succeed if the datum is 1
 succeedIf1Datum' : Maybe ℕ → Maybe ℕ → Bool
@@ -46,7 +45,7 @@ initTxOut : TxOut
 initTxOut = inj₁ (record { net = 0 ;
                            pay = ScriptObj 777 ;
                            stake = just (ScriptObj 777) })
-                           , 10 , just (inj₂ 99) , nothing
+                           , 10 , just (inj₂ 1) , nothing
 
 -- initTxOut for script without datum reference
 initTxOut' : TxOut
@@ -98,15 +97,15 @@ succeedTx = record { body = record
                          } ;
                 wits = record { vkSigs = fromListᵐ ((5 , 12) ∷ []) ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ succeedIf1Datum) ∷ []) ;
-                                txdats = fromListᵐ ((99 , 1) ∷ []) ;
+                                txdats = Ledger.Prelude.fromList (1 ∷ []) ;
                                 txrdmrs = fromListᵐ (((Spend , 6) , 5 , (5 , 5)) ∷ []) } ;
                 isValid = true ;
                 txAD = nothing }
 
 evalScriptDatum : Bool
-evalScriptDatum = evalScripts succeedTx (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) succeedTx initStateDatum)
+evalScriptDatum = evalP2Scripts (collectP2ScriptsWithContext (UTxOEnv.pparams initEnv) succeedTx initStateDatum)
 
-exampleDatum : List Datum
+exampleDatum : Maybe Datum
 exampleDatum = getDatum succeedTx initStateDatum (Spend (6 , 6))
 
 failTx : Tx
@@ -141,23 +140,24 @@ failTx = record { body = record
 
 
 evalScriptRedeemer : Bool
-evalScriptRedeemer = evalScripts failTx (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) failTx initStateRedeemer)
+evalScriptRedeemer = evalP2Scripts (collectP2ScriptsWithContext (UTxOEnv.pparams initEnv) failTx initStateRedeemer)
 
-exampleDatum' : List Datum
+exampleDatum' : Maybe Datum
 exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 
 opaque
-  unfolding collectPhaseTwoScriptInputs
+  unfolding Computational-UTXO
+  unfolding collectP2ScriptsWithContext
   unfolding setToList
   unfolding outs
 
   gotScript : lookupScriptHash 777 succeedTx initStateDatum ≡ just (inj₂ succeedIf1Datum)
   gotScript = refl
 
-  _ : exampleDatum ≡ 1 ∷ []
+  _ : exampleDatum ≡ just 1
   _ = refl
 
-  _ : exampleDatum' ≡ []
+  _ : exampleDatum' ≡ nothing
   _ = refl
 
   _ : evalScriptDatum ≡ true

@@ -36,7 +36,7 @@ module Ledger.Conway.Utxo.Properties
   where
 
 open import Ledger.Conway.Utxo txs abs
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Certs govStructure
 open import Algebra.Definitions.RawMagma +-rawMagma using () renaming (_,_ to _,≤_)
 
@@ -54,7 +54,7 @@ instance
       (let H-No  , ⁇ H-No?  = Scripts-No-premises  {Γ} {tx} {utxo}) where
       open Tx tx renaming (body to txb); open TxBody txb
       open UTxOEnv Γ renaming (pparams to pp)
-      sLst = collectPhaseTwoScriptInputs pp tx utxo
+      sLst = collectP2ScriptsWithContext pp tx utxo
 
       computeProof =
         case H-Yes? ,′ H-No? of λ where

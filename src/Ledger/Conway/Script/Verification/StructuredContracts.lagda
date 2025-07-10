@@ -13,13 +13,13 @@ open import Ledger.Conway.TokenAlgebra.Base
 open import Ledger.Conway.TokenAlgebra.ValueSet
 
 
-module ScriptVerification.StructuredContracts
+module Ledger.Conway.Script.Verification.StructuredContracts
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Ledger.Conway.Ledger txs abs
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Utxo txs abs
 \end{code}
 

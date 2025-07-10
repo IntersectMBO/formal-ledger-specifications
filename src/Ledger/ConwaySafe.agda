@@ -39,7 +39,9 @@ import Ledger.Conway.Ratify
 import Ledger.Conway.Ratify.Properties
 import Ledger.Conway.Rewards
 import Ledger.Conway.Script
-import Ledger.Conway.ScriptValidation
+import Ledger.Conway.Script.Validation
+import Ledger.Conway.Script.Verification.Examples
+import Ledger.Conway.Script.Verification.StructuredContracts
 import Ledger.Conway.TokenAlgebra.Base
 import Ledger.Conway.TokenAlgebra.Coin
 import Ledger.Conway.TokenAlgebra.ValueSet
