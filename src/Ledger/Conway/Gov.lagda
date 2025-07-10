@@ -23,7 +23,7 @@ for the purposes of enactment, earlier proposals take priority.  Note that
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 open import Ledger.Conway.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Gov (txs : _) (open TransactionStructure txs hiding (epoch)) where

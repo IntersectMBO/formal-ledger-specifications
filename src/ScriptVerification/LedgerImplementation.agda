@@ -19,7 +19,7 @@ import Foreign.Haskell as F
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Types.Epoch
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A

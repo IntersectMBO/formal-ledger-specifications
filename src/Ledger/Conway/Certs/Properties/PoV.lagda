@@ -1,7 +1,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 
 module Ledger.Conway.Certs.Properties.PoV (gs : _) (open GovStructure gs) where
 

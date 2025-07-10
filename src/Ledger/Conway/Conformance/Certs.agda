@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 import Ledger.Conway.Certs
 
 module Ledger.Conway.Conformance.Certs

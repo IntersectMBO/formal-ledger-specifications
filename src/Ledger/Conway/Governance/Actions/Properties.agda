@@ -3,7 +3,7 @@
 open import Data.Nat.Properties using (+-0-monoid)
 
 open import Ledger.Prelude
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 
 module Ledger.Conway.Governance.Actions.Properties (gs : _) (open GovStructure gs) where
 

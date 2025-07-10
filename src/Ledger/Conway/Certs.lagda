@@ -6,7 +6,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude renaming (filterˢ to filter)
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 open import Ledger.Conway.Types.Numeric.UnitInterval
 
 module Ledger.Conway.Certs (gs : _) (open GovStructure gs) where

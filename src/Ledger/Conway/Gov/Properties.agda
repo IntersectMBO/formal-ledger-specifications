@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 open import Ledger.Conway.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Gov.Properties

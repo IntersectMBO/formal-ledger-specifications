@@ -18,7 +18,7 @@ open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude hiding (yes; no)
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 
 module Ledger.Conway.Governance.Actions (gs : _) (open GovStructure gs) where
 \end{code}

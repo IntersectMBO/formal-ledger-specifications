@@ -18,7 +18,7 @@ open import Ledger.Prelude renaming (filterᵐ to filter)
 
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Types.Epoch
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Governance.Base
 import Ledger.Conway.PParams
 import Ledger.Conway.Script.Base
 import Ledger.Conway.Governance.Actions
