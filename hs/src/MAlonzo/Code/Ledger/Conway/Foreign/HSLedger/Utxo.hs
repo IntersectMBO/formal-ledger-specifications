@@ -131,7 +131,7 @@ d_UTXO'45'premises_28 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_UTXO'45'premises_28
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_UTXO'45'premises_2618
+      MAlonzo.Code.Ledger.Conway.Conformance.Utxo.d_UTXO'45'premises_2632
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -168,7 +168,7 @@ d_consumed_38
           = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
               (coe
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
-    coe (coe MAlonzo.Code.Ledger.Conway.Utxo.du_consumed_3154 (coe v0))
+    coe (coe MAlonzo.Code.Ledger.Conway.Utxo.du_consumed_3068 (coe v0))
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.depositRefunds
 d_depositRefunds_40 ::
   MAlonzo.Code.Ledger.Conway.PParams.T_PParams_296 ->
@@ -181,7 +181,7 @@ d_depositRefunds_40
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Conway.Utxo.du_depositRefunds_3138 (coe v0))
+         MAlonzo.Code.Ledger.Conway.Utxo.du_depositRefunds_3052 (coe v0))
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.newDeposits
 d_newDeposits_42 ::
   MAlonzo.Code.Ledger.Conway.PParams.T_PParams_296 ->
@@ -193,7 +193,7 @@ d_newDeposits_42
               (coe
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
     coe
-      (coe MAlonzo.Code.Ledger.Conway.Utxo.du_newDeposits_3146 (coe v0))
+      (coe MAlonzo.Code.Ledger.Conway.Utxo.du_newDeposits_3060 (coe v0))
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.outs
 d_outs_44 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TxBody_2942 ->
@@ -209,7 +209,7 @@ d_produced_46
           = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
               (coe
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14) in
-    coe (coe MAlonzo.Code.Ledger.Conway.Utxo.du_produced_3162 (coe v0))
+    coe (coe MAlonzo.Code.Ledger.Conway.Utxo.du_produced_3076 (coe v0))
 -- Ledger.Conway.Foreign.HSLedger.Utxo._.refScriptsSize
 d_refScriptsSize_48 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3198,7 +3198,7 @@ du_utxo'45'debug_2094 v0 v1 v2
                               (MAlonzo.Code.Ledger.Conway.Transaction.d_tokenAlgebra_2294
                                  (coe v3))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Utxo.du_depositRefunds_3138
+                                 MAlonzo.Code.Ledger.Conway.Utxo.du_depositRefunds_3052
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                     (coe
@@ -3432,7 +3432,7 @@ du_utxo'45'debug_2094 v0 v1 v2
                            (coe
                               MAlonzo.Code.Data.Nat.Show.d_show_56
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Utxo.du_consumed_3154
+                                 MAlonzo.Code.Ledger.Conway.Utxo.du_consumed_3068
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                     (coe
@@ -3662,7 +3662,7 @@ du_utxo'45'debug_2094 v0 v1 v2
                                                 (MAlonzo.Code.Ledger.Conway.Transaction.d_tokenAlgebra_2294
                                                    (coe v3))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Utxo.du_newDeposits_3146
+                                                   MAlonzo.Code.Ledger.Conway.Utxo.du_newDeposits_3060
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                                       (coe
@@ -3860,7 +3860,7 @@ du_utxo'45'debug_2094 v0 v1 v2
                                              (coe
                                                 MAlonzo.Code.Data.Nat.Show.d_show_56
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Utxo.du_produced_3162
+                                                   MAlonzo.Code.Ledger.Conway.Utxo.du_produced_3076
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                                       (coe
