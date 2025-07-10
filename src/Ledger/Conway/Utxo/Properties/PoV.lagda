@@ -47,10 +47,10 @@ UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
   in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
 -- Proof.
-UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
+UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
   = DepositHelpers.pov-scripts step h' refl valid
 
-UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid)))
+UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid)))
   = DepositHelpers.pov-no-scripts step h' invalid
 \end{code}
   \end{itemize}
