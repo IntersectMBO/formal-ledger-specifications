@@ -115,7 +115,7 @@ instance
                         (inj₂ b₄) → case dec-de-morgan b₄ of λ where
                           (inj₁ a₅) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
                           (inj₂ b₅) → case dec-de-morgan b₅ of λ where
-                              (inj₁ a₆) → "¬(TxBody.txsize (Tx.body tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
+                              (inj₁ a₆) → "¬((Tx.txsize tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
                               (inj₂ b₆) → case dec-de-morgan b₆ of λ where
                                 (inj₁ a₇) → "∀[ (_ , txout) ∈ txouts .proj₁ ] inject (utxoEntrySize txout * coinsPerUTxOByte pp) ≤ᵗ getValue txout"
                                 (inj₂ b₇) → case dec-de-morgan b₇ of λ where

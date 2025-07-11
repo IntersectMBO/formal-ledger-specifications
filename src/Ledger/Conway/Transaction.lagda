@@ -43,7 +43,7 @@ Some key ingredients in the transaction body are:
   \item An indexed collection \txouts{} of transaction outputs.
     The \TxOut{} type is an address paired with a coin value.
   \item A transaction fee. This value will be added to the fee pot.
-  \item The size \txsize{} and the hash \txid{} of the serialized form of the
+  \item The hash \txid{} of the serialized form of the
     transaction that was included in the block.
 \end{itemize}
 \end{NoConway}
@@ -153,7 +153,6 @@ record TransactionStructure : Type₁ where
       txADhash       : Maybe ADHash
       txNetworkId    : Maybe Network
       curTreasury    : Maybe Coin
-      txsize         : ℕ
       txid           : TxId
       collateral     : ℙ TxIn
       reqSigHash     : ℙ KeyHash
@@ -176,7 +175,7 @@ record TransactionStructure : Type₁ where
     field txpropOf  : A → List GovProposal
   open Hastxprop  ⦃...⦄ public
 
-  record Hastxid    {a} (A : Type a) : Type a where 
+  record Hastxid    {a} (A : Type a) : Type a where
     field txidOf    : A → TxId
   open Hastxid    ⦃...⦄ public
 \end{code}
@@ -197,6 +196,7 @@ record TransactionStructure : Type₁ where
     field
       body     : TxBody
       wits     : TxWitnesses
+      txsize   : ℕ
       isValid  : Bool
       txAD     : Maybe AuxiliaryData
 \end{code}
@@ -207,7 +207,7 @@ record TransactionStructure : Type₁ where
 
     Hastxfee-Tx : Hastxfee Tx
     Hastxfee-Tx .txfeeOf = TxBody.txfee ∘ TxBodyOf
-    
+
     Hastxcerts-Tx : Hastxcerts Tx
     Hastxcerts-Tx .txcertsOf = TxBody.txcerts ∘ TxBodyOf
 
