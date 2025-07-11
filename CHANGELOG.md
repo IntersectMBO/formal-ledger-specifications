@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Move `txsize` from `TxBody` to `Tx`.
 - Change the return type of `refScripts` to a set
 - Add `poolParameters` field to `Snapshot` and compute it in `SNAP`.
 - Add `treasuryCut` (formerly `tau`) and `monetaryExpansion` (formerly `rho`) to `PParams`
