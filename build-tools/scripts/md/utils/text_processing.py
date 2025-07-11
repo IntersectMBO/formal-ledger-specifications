@@ -20,7 +20,7 @@ def replace_code_placeholder(match: re.Match, code_blocks: Dict) -> str:
     block_data = code_blocks.get(placeholder_id, {})
     content = block_data.get("content", "").rstrip() + '\n'
     if block_data.get("hidden", False):
-        return f'\n<div class="agda-hidden-source">\n\n```agda\n{content}```\n\n</div>\n'
+        return f'\n<!--\n```agda\n{content}```\n-->\n'
     else:
         return f"\n```agda\n{content}```\n"
 
