@@ -5731,16 +5731,16 @@
 <a id="189" class="Keyword">open</a> <a id="194" class="Keyword">import</a> <a id="201" href="Ledger.Conway.Abstract.html" class="Module">Ledger.Conway.Abstract</a>
 
 <a id="225" class="Keyword">module</a> <a id="232" href="Ledger.Conway.Conformance.Chain.html" class="Module">Ledger.Conway.Conformance.Chain</a>
-  <a id="266" class="Symbol">(</a><a id="267" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a> <a id="271" class="Symbol">:</a> <a id="273" class="Symbol">_)</a> <a id="276" class="Symbol">(</a><a id="277" class="Keyword">open</a> <a id="282" href="Ledger.Conway.Transaction.html#2718" class="Module">TransactionStructure</a> <a id="303" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a><a id="306" class="Symbol">)</a>
+  <a id="266" class="Symbol">(</a><a id="267" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a> <a id="271" class="Symbol">:</a> <a id="273" class="Symbol">_)</a> <a id="276" class="Symbol">(</a><a id="277" class="Keyword">open</a> <a id="282" href="Ledger.Conway.Transaction.html#2684" class="Module">TransactionStructure</a> <a id="303" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a><a id="306" class="Symbol">)</a>
   <a id="310" class="Symbol">(</a><a id="311" href="Ledger.Conway.Conformance.Chain.html#311" class="Bound">abs</a> <a id="315" class="Symbol">:</a> <a id="317" href="Ledger.Conway.Abstract.html#607" class="Record">AbstractFunctions</a> <a id="335" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a><a id="338" class="Symbol">)</a> <a id="340" class="Symbol">(</a><a id="341" class="Keyword">open</a> <a id="346" href="Ledger.Conway.Abstract.html#607" class="Module">AbstractFunctions</a> <a id="364" href="Ledger.Conway.Conformance.Chain.html#311" class="Bound">abs</a><a id="367" class="Symbol">)</a>
   <a id="371" class="Keyword">where</a>
 
-<a id="378" class="Keyword">open</a> <a id="383" class="Keyword">import</a> <a id="390" href="Ledger.Conway.Enact.html" class="Module">Ledger.Conway.Enact</a> <a id="410" href="Ledger.Conway.Transaction.html#3782" class="Function">govStructure</a>
+<a id="378" class="Keyword">open</a> <a id="383" class="Keyword">import</a> <a id="390" href="Ledger.Conway.Enact.html" class="Module">Ledger.Conway.Enact</a> <a id="410" href="Ledger.Conway.Transaction.html#3748" class="Function">govStructure</a>
 <a id="423" class="Keyword">open</a> <a id="428" class="Keyword">import</a> <a id="435" href="Ledger.Conway.Conformance.Ledger.html" class="Module">Ledger.Conway.Conformance.Ledger</a> <a id="468" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a> <a id="472" href="Ledger.Conway.Conformance.Chain.html#311" class="Bound">abs</a>
 <a id="476" class="Keyword">open</a> <a id="481" class="Keyword">import</a> <a id="488" href="Ledger.Conway.Ratify.html" class="Module">Ledger.Conway.Ratify</a> <a id="509" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a>
 <a id="513" class="Keyword">open</a> <a id="518" class="Keyword">import</a> <a id="525" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a> <a id="556" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a> <a id="560" href="Ledger.Conway.Conformance.Chain.html#311" class="Bound">abs</a>
 <a id="564" class="Keyword">open</a> <a id="569" class="Keyword">import</a> <a id="576" href="Ledger.Conway.Conformance.Epoch.html" class="Module">Ledger.Conway.Conformance.Epoch</a> <a id="608" href="Ledger.Conway.Conformance.Chain.html#267" class="Bound">txs</a> <a id="612" href="Ledger.Conway.Conformance.Chain.html#311" class="Bound">abs</a>
-<a id="616" class="Keyword">open</a> <a id="621" class="Keyword">import</a> <a id="628" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="660" href="Ledger.Conway.Transaction.html#3782" class="Function">govStructure</a>
+<a id="616" class="Keyword">open</a> <a id="621" class="Keyword">import</a> <a id="628" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="660" href="Ledger.Conway.Transaction.html#3748" class="Function">govStructure</a>
 
 <a id="674" class="Keyword">record</a> <a id="ChainState"></a><a id="681" href="Ledger.Conway.Conformance.Chain.html#681" class="Record">ChainState</a> <a id="692" class="Symbol">:</a> <a id="694" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="699" class="Keyword">where</a>
 
@@ -5752,7 +5752,7 @@
 
   <a id="780" class="Keyword">field</a>
 
-    <a id="Block.ts"></a><a id="791" href="Ledger.Conway.Conformance.Chain.html#791" class="Field">ts</a>    <a id="797" class="Symbol">:</a> <a id="799" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="804" href="Ledger.Conway.Transaction.html#6405" class="Record">Tx</a>
+    <a id="Block.ts"></a><a id="791" href="Ledger.Conway.Conformance.Chain.html#791" class="Field">ts</a>    <a id="797" class="Symbol">:</a> <a id="799" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="804" href="Ledger.Conway.Transaction.html#6345" class="Record">Tx</a>
     <a id="Block.slot"></a><a id="811" href="Ledger.Conway.Conformance.Chain.html#811" class="Field">slot</a>  <a id="817" class="Symbol">:</a> <a id="819" href="Ledger.Conway.Types.Epoch.html#676" class="Function">Slot</a>
 
 <a id="825" class="Keyword">private</a> <a id="833" class="Keyword">variable</a>
