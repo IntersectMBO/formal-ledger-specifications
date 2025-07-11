@@ -19,7 +19,7 @@ import Foreign.Haskell as F
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Types.Epoch
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Gov.Base
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
@@ -149,7 +149,7 @@ SVGovStructure = record
   }
 instance _ = SVGovStructure
 
-open import Ledger.Conway.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
+open import Ledger.Conway.Gov.Actions it hiding (Vote; GovRole; VDeleg; Anchor)
 open import Ledger.Conway.Conformance.Certs it hiding (PoolParams; DCert)
 
 SVTransactionStructure : TransactionStructure

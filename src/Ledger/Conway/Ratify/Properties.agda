@@ -6,7 +6,7 @@ open import Ledger.Conway.Transaction
 module Ledger.Conway.Ratify.Properties (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Conway.Gov txs
-open import Ledger.Conway.GovernanceActions.Properties govStructure
+open import Ledger.Conway.Enact.Properties govStructure
 open import Ledger.Conway.Enact govStructure
 open import Ledger.Conway.Ratify txs
 

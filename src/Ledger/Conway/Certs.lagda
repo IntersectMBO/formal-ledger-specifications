@@ -6,13 +6,13 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude renaming (filterˢ to filter)
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Gov.Base
 open import Ledger.Conway.Types.Numeric.UnitInterval
 
 module Ledger.Conway.Certs (gs : _) (open GovStructure gs) where
 
 
-open import Ledger.Conway.GovernanceActions gs
+open import Ledger.Conway.Gov.Actions gs
 open RwdAddr
 open PParams
 \end{code}

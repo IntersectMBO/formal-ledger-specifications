@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Gov.Base
 open import Ledger.Conway.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Gov.Properties
@@ -13,7 +13,7 @@ open import Axiom.Set.Properties
 
 open import Ledger.Conway.Enact govStructure
 open import Ledger.Conway.Gov txs
-open import Ledger.Conway.GovernanceActions govStructure hiding (yes; no)
+open import Ledger.Conway.Gov.Actions govStructure hiding (yes; no)
 open import Ledger.Conway.Ratify txs
 
 import Data.List.Membership.Propositional as P
