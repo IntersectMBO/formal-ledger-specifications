@@ -19,15 +19,15 @@ open import Data.List.Relation.Unary.Any using (Any; here; there)
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude
-open import Ledger.Conway.Crypto
+open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Script.Base
-open import Ledger.Conway.Types.Epoch
-open import Ledger.Conway.Types.Numeric using (UnitInterval; ℕ⁺)
+open import Ledger.Prelude.Epoch
+open import Ledger.Prelude.Numeric using (UnitInterval; ℕ⁺)
 
 module Ledger.Conway.PParams
-  (crypto : Crypto )
-  (es     : _) (open EpochStructure es)
-  (ss     : ScriptStructure crypto es) (open ScriptStructure ss)
+  (cs : CryptoStructure )
+  (es : _) (open EpochStructure es)
+  (ss : ScriptStructure cs es) (open ScriptStructure ss)
   where
 
 private variable

@@ -15,12 +15,12 @@ open import Foreign.Convertible.Deriving  public
 open import Foreign.HaskellTypes          public
 open import Foreign.HaskellTypes.Deriving public
 
-open import Ledger.Conway.Crypto
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Crypto
+open import Ledger.Prelude.Epoch
 
 open import Ledger.Conway.Transaction renaming (Vote to VoteTag) public
 
-open import Ledger.Conway.Foreign.Util public
+open import Ledger.Prelude.Foreign.Util public
 
 open import Tactic.Derive.Show
 

@@ -16,9 +16,9 @@ open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
 open import Foreign.Convertible
 import Foreign.Haskell as F
-open import Ledger.Conway.Crypto
+open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Transaction
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Epoch
 open import Ledger.Conway.Types.GovStructure
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
@@ -83,8 +83,8 @@ SVGlobalConstants = GlobalConstants ∋ record {Implementation}
 SVEpochStructure  = EpochStructure  ∋ ℕEpochStructure SVGlobalConstants
 instance _ = SVEpochStructure
 
-SVCrypto : Crypto
-SVCrypto = record
+SVCryptoStructure : CryptoStructure
+SVCryptoStructure = record
   { Implementation
   ; pkk = SVPKKScheme
   }
@@ -98,7 +98,7 @@ SVCrypto = record
     ; isSigned-correct = λ where (sk , sk , refl) _ _ h → tt
     }
 
-instance _ = SVCrypto
+instance _ = SVCryptoStructure
 
 open import Ledger.Conway.Script it it
 open import Ledger.Conway.Conformance.Script it it
@@ -144,7 +144,7 @@ SVGovStructure = record
   { Implementation
   ; epochStructure  = SVEpochStructure
   ; govParams       = SVGovParams
-  ; crypto          = SVCrypto
+  ; cryptoStructure = SVCryptoStructure
   ; globalConstants = SVGlobalConstants
   }
 instance _ = SVGovStructure
@@ -158,7 +158,7 @@ SVTransactionStructure = record
   ; epochStructure  = SVEpochStructure
   ; globalConstants = SVGlobalConstants
   ; adHashingScheme = it
-  ; crypto          = SVCrypto
+  ; cryptoStructure = SVCryptoStructure
   ; govParams       = SVGovParams
   ; txidBytes       = id
   ; scriptStructure = SVScriptStructure

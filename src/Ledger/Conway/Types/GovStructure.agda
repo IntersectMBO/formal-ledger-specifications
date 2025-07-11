@@ -4,25 +4,25 @@ module Ledger.Conway.Types.GovStructure where
 
 open import Prelude using (Type)
 open import Class.DecEq
-open import Ledger.Conway.Crypto
+open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Script.Base
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Prelude.Epoch
 import Ledger.Conway.PParams
 
 record GovStructure : Type₁ where
   field TxId DocHash : Type
         ⦃ DecEq-TxId ⦄ : DecEq TxId
 
-  field crypto : _
-  open Crypto crypto public
+  field cryptoStructure : _
+  open CryptoStructure cryptoStructure public
 
   field epochStructure : _
   open EpochStructure epochStructure public
 
-  field scriptStructure : ScriptStructure crypto epochStructure
+  field scriptStructure : ScriptStructure cryptoStructure epochStructure
   open ScriptStructure scriptStructure public
 
-  open Ledger.Conway.PParams crypto epochStructure scriptStructure public
+  open Ledger.Conway.PParams cryptoStructure epochStructure scriptStructure public
 
   field govParams : GovParams
   open GovParams govParams public

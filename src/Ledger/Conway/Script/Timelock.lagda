@@ -8,14 +8,23 @@ interval.  The scripts are executed as part of the regular witnessing.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Crypto
-  using (Crypto)
-open import Ledger.Conway.Types.Epoch
-  using (EpochStructure)
+open import Algebra.Morphism
+open import Data.List.Relation.Unary.All using (All; []; _∷_; all?; uncons)
+open import Data.List.Relation.Unary.Any
+open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
+
+open import stdlib.Data.List.Relation.Unary.MOf
+
+open import Tactic.Derive.DecEq
+open import Tactic.Inline
+
+open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
+open import Ledger.Prelude.Crypto
+open import Ledger.Prelude.Epoch
 
 module Ledger.Conway.Script.Timelock
-  (crypto : _) (open Crypto crypto)
-  (es     : _) (open EpochStructure es)
+  (cs : _) (open CryptoStructure cs)
+  (es : _) (open EpochStructure es)
   where
 
 open import Ledger.Prelude

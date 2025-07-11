@@ -8,7 +8,7 @@ functions and properties of this scheme.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-module Ledger.Conway.Crypto where
+module Ledger.Prelude.Crypto where
 
 open import Ledger.Prelude hiding (T)
 
@@ -61,7 +61,7 @@ record PKKScheme : Type₁ where
     ⦃ DecEq-Sig  ⦄ : DecEq Sig
     ⦃ DecEq-Ser  ⦄ : DecEq Ser
 
-record Crypto : Type₁ where
+record CryptoStructure : Type₁ where
   field pkk : PKKScheme
 
   open PKKScheme pkk public

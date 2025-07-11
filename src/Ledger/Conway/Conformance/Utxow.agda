@@ -2,7 +2,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
-open import Ledger.Conway.Crypto
+open import Ledger.Prelude.Crypto
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
 
