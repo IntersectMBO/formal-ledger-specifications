@@ -1878,7 +1878,7 @@ du_stakeDistr_2604 v0 v1 v2
   = case coe v2 of
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1276 v3 v4 v5 v6
         -> coe
-             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+             MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
              (coe
                 MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                 (coe
@@ -2182,7 +2182,7 @@ du_stakeRelation_2624 v0 v1 v2
          (coe MAlonzo.Code.Axiom.Set.d_th_1470 (coe v3))
          (coe du_m_2618 (coe v0) (coe v1) (coe v2))
          (coe
-            MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_116
+            MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
             (coe
                MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
             v2))
@@ -2380,7 +2380,7 @@ du_mkStakeDistrs_2648 v0 v1 v2 v3 v4
             MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
             (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
          (coe
-            MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_116
+            MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
             (coe
                MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
             v4)

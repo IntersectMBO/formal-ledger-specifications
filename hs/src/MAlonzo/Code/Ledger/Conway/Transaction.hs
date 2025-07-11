@@ -5522,7 +5522,7 @@ du_m_3278 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_m_3278 v0 v1 v2
   = coe
-      MAlonzo.Code.Ledger.Prelude.du_setToMap_70
+      MAlonzo.Code.Ledger.Prelude.du_setToMap_44
       (coe
          MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'ScriptHash_206
          (coe d_crypto_1268 (coe v0)))

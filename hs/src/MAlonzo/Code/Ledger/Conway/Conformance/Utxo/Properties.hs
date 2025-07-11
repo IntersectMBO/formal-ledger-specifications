@@ -1692,7 +1692,7 @@ d_computeProofH_2552 v0 v1 v2 v3 v4 v5
                                                                                                                                                        (coe
                                                                                                                                                           v28)))))
                                                                                                                                          (coe
-                                                                                                                                            MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_116
+                                                                                                                                            MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
                                                                                                                                             (coe
                                                                                                                                                MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                                                                                                             (coe
@@ -1747,7 +1747,7 @@ d_computeProofH_2552 v0 v1 v2 v3 v4 v5
                                                                                                                                                                  (coe
                                                                                                                                                                     v2)))))
                                                                                                                                                    (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_116
+                                                                                                                                                      MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
                                                                                                                                                       (coe
                                                                                                                                                          MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                                                                                                                       (coe

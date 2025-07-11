@@ -427,9 +427,8 @@ library
       MAlonzo.Code.Interface.ComputationalRelation
       MAlonzo.Code.Interface.Hashable
       MAlonzo.Code.Interface.HasSubset
-      MAlonzo.Code.Interface.HasSubset.Instance
       MAlonzo.Code.Interface.HasSubtract
-      MAlonzo.Code.Interface.HasSubtract.Instance
+      MAlonzo.Code.Interface.HasSubtract.Instances
       MAlonzo.Code.Interface.STS
       MAlonzo.Code.IO.Primitive.Core
       MAlonzo.Code.Ledger.Conway.Abstract
@@ -501,6 +500,7 @@ library
       MAlonzo.Code.Ledger.Interface.HasCoin
       MAlonzo.Code.Ledger.Prelude
       MAlonzo.Code.Ledger.Prelude.Base
+      MAlonzo.Code.Ledger.Prelude.Instances
       MAlonzo.Code.Level
       MAlonzo.Code.Meta.Init
       MAlonzo.Code.Meta.Prelude

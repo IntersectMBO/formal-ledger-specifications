@@ -62,6 +62,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Types.Epoch
 import qualified MAlonzo.Code.Ledger.Interface.HasCoin
 import qualified MAlonzo.Code.Ledger.Prelude
+import qualified MAlonzo.Code.Ledger.Prelude.Instances
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -2215,7 +2216,7 @@ du_validCertDeposits'63'_2460 v0 v1 v2 v3
                        (coe
                           MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__502
                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                          MAlonzo.Code.Ledger.Prelude.d_CommMonoid'45'ℕ'45''43'_20
+                          MAlonzo.Code.Ledger.Prelude.Instances.d_CommMonoid'45'ℕ'45''43'_6
                           (MAlonzo.Code.Ledger.Conway.Certs.d_DecEq'45'DepositPurpose_998
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
@@ -2448,7 +2449,7 @@ du_validCertDeposits'63'_2460 v0 v1 v2 v3
                        (coe
                           MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__502
                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                          MAlonzo.Code.Ledger.Prelude.d_CommMonoid'45'ℕ'45''43'_20
+                          MAlonzo.Code.Ledger.Prelude.Instances.d_CommMonoid'45'ℕ'45''43'_6
                           (MAlonzo.Code.Ledger.Conway.Certs.d_DecEq'45'DepositPurpose_998
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
@@ -2493,7 +2494,7 @@ du_validCertDeposits'63'_2460 v0 v1 v2 v3
                        (coe
                           MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__502
                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                          MAlonzo.Code.Ledger.Prelude.d_CommMonoid'45'ℕ'45''43'_20
+                          MAlonzo.Code.Ledger.Prelude.Instances.d_CommMonoid'45'ℕ'45''43'_6
                           (MAlonzo.Code.Ledger.Conway.Certs.d_DecEq'45'DepositPurpose_998
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
@@ -2609,7 +2610,7 @@ du_validCertDeposits'63'_2460 v0 v1 v2 v3
                        (coe
                           MAlonzo.Code.Axiom.Set.Map.Dec.du__'8746''8314'__502
                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                          MAlonzo.Code.Ledger.Prelude.d_CommMonoid'45'ℕ'45''43'_20
+                          MAlonzo.Code.Ledger.Prelude.Instances.d_CommMonoid'45'ℕ'45''43'_6
                           (MAlonzo.Code.Ledger.Conway.Certs.d_DecEq'45'DepositPurpose_998
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
@@ -4173,7 +4174,7 @@ d_UTXO'45'premises_3358 v0 v1 v2 v3 v4
                                                         MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                         (coe v5)))))
                                           (coe
-                                             MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_116
+                                             MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
                                              (coe
                                                 MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                              (coe
@@ -4211,7 +4212,7 @@ d_UTXO'45'premises_3358 v0 v1 v2 v3 v4
                                                      (MAlonzo.Code.Ledger.Conway.PParams.d_maxValSize_378
                                                         (coe d_pparams_2250 (coe v2)))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_116
+                                                MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
                                                 (coe
                                                    MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances.du_HasCast'45'A'8640'B'45'RelAB_12)
                                                 (coe

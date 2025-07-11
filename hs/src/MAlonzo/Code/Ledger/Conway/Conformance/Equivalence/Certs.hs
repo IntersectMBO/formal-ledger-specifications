@@ -482,7 +482,7 @@ du_DStateToConf_2318
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
               (coe
                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                  (coe
@@ -1627,7 +1627,7 @@ du_DStateFromConf_2332
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
               (coe
                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                  (coe
@@ -2731,7 +2731,7 @@ du_GStateToConf_2346
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
               (coe
                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                  (coe
@@ -3835,7 +3835,7 @@ du_GStateFromConf_2358
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
               (coe
                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                  (coe
@@ -4784,7 +4784,7 @@ du_CertStToConf_2682
                 -> coe
                      (\ v3 ->
                         coe
-                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                          MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                           (coe
                              MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                              (coe
@@ -4932,7 +4932,7 @@ du_CertStToConf_2682
                           (coe
                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                              (coe
-                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                                MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                 (coe
                                    MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                                    (coe
@@ -6136,7 +6136,7 @@ du_CertStToConf_2682
                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                 (coe MAlonzo.Code.Ledger.Conway.Certs.d_pState_1226 (coe v3))
                                 (coe
-                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                                   MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                    (coe
                                       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                                       (coe
@@ -7304,7 +7304,7 @@ du_CertStFromConf_2698
       (coe
          (\ v0 v1 ->
             coe
-              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+              MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
               (coe
                  MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                  (coe
@@ -7886,7 +7886,7 @@ du_CERTS''ToConf_2876 v0 v1 v2
                        -> coe
                             MAlonzo.Code.Interface.STS.C_BS'45'ind_42
                             (coe
-                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                (coe
                                   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                                   (coe
@@ -8035,7 +8035,7 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                   (coe
-                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                      (coe
                                         MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                                         (coe
@@ -9255,7 +9255,7 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                      (coe MAlonzo.Code.Ledger.Conway.Certs.d_pState_1226 (coe v8))
                                      (coe
-                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                         (coe
                                            MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                                            (coe
@@ -10475,7 +10475,7 @@ du_CERTSToConf_2910 v0 v1 v2
                        -> coe
                             MAlonzo.Code.Interface.STS.C_RTC_96
                             (coe
-                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                               MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                (coe
                                   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                                   (coe
@@ -10624,7 +10624,7 @@ du_CERTSToConf_2910 v0 v1 v2
                                (coe
                                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                   (coe
-                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                                     MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                      (coe
                                         MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                                         (coe
@@ -11837,7 +11837,7 @@ du_CERTSToConf_2910 v0 v1 v2
                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                      (coe MAlonzo.Code.Ledger.Conway.Certs.d_pState_1226 (coe v7))
                                      (coe
-                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_98
+                                        MAlonzo.Code.Ledger.Prelude.du_'10214'_'10215'_72
                                         (coe
                                            MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_HasCast'46'constructor_29
                                            (coe

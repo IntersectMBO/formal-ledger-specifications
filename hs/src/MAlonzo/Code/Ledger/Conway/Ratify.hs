@@ -649,7 +649,7 @@ d_threshold_2074 ::
 d_threshold_2074 v0 v1 v2 v3
   = let v4
           = coe
-              MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_116
+              MAlonzo.Code.Ledger.Prelude.du_'8739'_'8739'_90
               (coe
                  MAlonzo.Code.Ledger.Conway.GovernanceActions.du_HasCast'45'GovAction'45'Sigma_812)
               v3 in
@@ -2242,7 +2242,7 @@ d_acceptedStakeRatio_2484 ::
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_acceptedStakeRatio_2484 v0 v1 v2 v3 v4
   = coe
-      MAlonzo.Code.Ledger.Prelude.d__'47''8320'__72
+      MAlonzo.Code.Ledger.Prelude.d__'47''8320'__46
       (coe
          d_acceptedStake_2500 (coe v0) (coe v1) (coe v2) (coe v3) (coe v4))
       (coe
