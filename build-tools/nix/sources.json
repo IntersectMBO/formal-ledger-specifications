@@ -36,15 +36,15 @@
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "agda-stdlib-meta": {
-        "branch": "master",
+        "branch": "andre/derive-deceq-performance",
         "description": "Meta-programming utilities for Agda.",
         "homepage": "https://agda.github.io/agda-stdlib-meta/",
         "owner": "agda",
         "repo": "agda-stdlib-meta",
-        "rev": "5ff853375180ef69f243ce72f2d3f6294bdb6aff",
-        "sha256": "1c6m2ivkjjwjshsc8spf02jws0lag756p6m1zcps380k6nf89lh8",
+        "rev": "d459f65812b7eb73f8ebec771c2f6c17c9d79dc3",
+        "sha256": "1ajp4g5i4klgd02392rxr79h44iqynyx2zljqjnwf0ws0q19j8d1",
         "type": "tarball",
-        "url": "https://github.com/agda/agda-stdlib-meta/archive/5ff853375180ef69f243ce72f2d3f6294bdb6aff.tar.gz",
+        "url": "https://github.com/agda/agda-stdlib-meta/archive/d459f65812b7eb73f8ebec771c2f6c17c9d79dc3.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "iog-agda-prelude": {
