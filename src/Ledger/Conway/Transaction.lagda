@@ -186,7 +186,7 @@ record TransactionStructure : Type₁ where
     field
       vkSigs   : VKey ⇀ Sig
       scripts  : ℙ Script
-      txdats   : DataHash ⇀ Datum
+      txdats   : ℙ Datum
       txrdmrs  : RdmrPtr  ⇀ Redeemer × ExUnits
 
     scriptsP1 : ℙ P1Script
@@ -263,11 +263,7 @@ record TransactionStructure : Type₁ where
     where open Tx; open TxWitnesses
 
   lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
-  lookupScriptHash sh tx utxo =
-    if sh ∈ mapˢ proj₁ (m ˢ) then
-      just (lookupᵐ m sh)
-    else
-      nothing
+  lookupScriptHash sh tx utxo = lookupᵐ? m sh
     where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
 \end{code}
 \end{AgdaMultiCode}

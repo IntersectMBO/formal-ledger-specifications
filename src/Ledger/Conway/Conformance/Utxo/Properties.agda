@@ -12,7 +12,7 @@ open import Data.Nat.Properties hiding (_≟_)
 open import Data.String.Base renaming (_++_ to _+ˢ_) using ()
 open import Interface.ComputationalRelation
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Prelude
@@ -38,7 +38,7 @@ instance
       open Tx tx renaming (body to txb); open TxBody txb
       open UTxOEnv Γ renaming (pparams to pp)
       open UTxOState s
-      sLst = collectPhaseTwoScriptInputs pp tx utxo
+      sLst = collectP2ScriptsWithContext pp tx utxo
 
       computeProof =
         case H-Yes? ,′ H-No? of λ where
