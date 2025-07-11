@@ -4,13 +4,13 @@
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
 
-module Ledger.Conway.Governance.Actions.Properties.ChangePPGroup
+module Ledger.Conway.Gov.Actions.Properties.ChangePPGroup
   (txs : _) (open TransactionStructure txs)
   where
 \end{code}
 
 % If the module name changes, change the following macro to match!
-\newcommand{\ChangePPGroup}{Conway/Governance.Actions/Properties/ChangePPGroup}
+\newcommand{\ChangePPGroup}{Conway/Gov.Actions/Properties/ChangePPGroup}
 
 \begin{code}[hide]
 open import Ledger.Prelude

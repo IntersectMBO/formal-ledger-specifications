@@ -1,6 +1,6 @@
-\section{Governance Actions}
+\section{Gov Actions}
 \label{sec:governance-actions}
-\modulenote{\ConwayModule{Governance.Actions}}.
+\modulenote{\ConwayModule{Gov.Actions}}.
 
 We introduce the following distinct bodies with specific functions in the new governance framework:
 \begin{enumerate}
@@ -18,9 +18,9 @@ open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude hiding (yes; no)
-open import Ledger.Conway.Governance.Base
+open import Ledger.Conway.Gov.Base
 
-module Ledger.Conway.Governance.Actions (gs : _) (open GovStructure gs) where
+module Ledger.Conway.Gov.Actions (gs : _) (open GovStructure gs) where
 \end{code}
 
 \begin{figure*}[ht]
@@ -74,7 +74,7 @@ record GovAction : Type where
 open GovAction public
 \end{code}
 \end{AgdaMultiCode}
-\caption{Governance actions}
+\caption{Gov actions}
 \label{defs:governance}
 \end{figure*}
 \begin{code}[hide]
@@ -244,7 +244,7 @@ proposedCC : GovAction → ℙ Credential
 proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ  = dom x
 proposedCC _                                    = ∅
 \end{code}
-\caption{Governance helper function}
+\caption{Gov helper function}
 \end{figure*}
 
 The data type \Vote{} represents the different voting options: \yes{},

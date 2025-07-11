@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Governance.Base
+open import Ledger.Conway.Gov.Base
 import Ledger.Conway.Certs
 
 module Ledger.Conway.Conformance.Certs
@@ -9,7 +9,7 @@ module Ledger.Conway.Conformance.Certs
   where
 
 
-open import Ledger.Conway.Governance.Actions gs
+open import Ledger.Conway.Gov.Actions gs
 private module Certs = Ledger.Conway.Certs gs
 open Certs public
   hiding (DState; GState; CertState; HasCast-DState; HasCast-GState; HasCast-CertState;

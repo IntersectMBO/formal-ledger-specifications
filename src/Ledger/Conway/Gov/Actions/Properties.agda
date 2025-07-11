@@ -3,11 +3,11 @@
 open import Data.Nat.Properties using (+-0-monoid)
 
 open import Ledger.Prelude
-open import Ledger.Conway.Governance.Base
+open import Ledger.Conway.Gov.Base
 
-module Ledger.Conway.Governance.Actions.Properties (gs : _) (open GovStructure gs) where
+module Ledger.Conway.Gov.Actions.Properties (gs : _) (open GovStructure gs) where
 
-open import Ledger.Conway.Governance.Actions gs hiding (yes; no)
+open import Ledger.Conway.Gov.Actions gs hiding (yes; no)
 open import Ledger.Conway.Enact gs
 
 open EnactState

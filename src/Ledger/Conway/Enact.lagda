@@ -9,11 +9,11 @@ open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ)
 
 open import Ledger.Prelude
-open import Ledger.Conway.Governance.Base
+open import Ledger.Conway.Gov.Base
 
 module Ledger.Conway.Enact (gs : _) (open GovStructure gs) where
 
-open import Ledger.Conway.Governance.Actions gs
+open import Ledger.Conway.Gov.Actions gs
 \end{code}
 
 \Cref{fig:enact-defs} contains some definitions required to
