@@ -41,10 +41,10 @@
         "homepage": "https://agda.github.io/agda-stdlib-meta/",
         "owner": "agda",
         "repo": "agda-stdlib-meta",
-        "rev": "d459f65812b7eb73f8ebec771c2f6c17c9d79dc3",
-        "sha256": "1ajp4g5i4klgd02392rxr79h44iqynyx2zljqjnwf0ws0q19j8d1",
+        "rev": "36349fe6b4a61d2fce111975684f75074f072b7d",
+        "sha256": "005q217vgqq4nbcm5gpqfcs5na1n1f9i7kkd47ycajsm4r82rz5b",
         "type": "tarball",
-        "url": "https://github.com/agda/agda-stdlib-meta/archive/d459f65812b7eb73f8ebec771c2f6c17c9d79dc3.tar.gz",
+        "url": "https://github.com/agda/agda-stdlib-meta/archive/36349fe6b4a61d2fce111975684f75074f072b7d.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "iog-agda-prelude": {
