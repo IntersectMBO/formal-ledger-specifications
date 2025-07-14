@@ -115,7 +115,7 @@ instance
                         (inj₂ b₄) → case dec-de-morgan b₄ of λ where
                           (inj₁ a₅) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
                           (inj₂ b₅) → case dec-de-morgan b₅ of λ where
-                              (inj₁ a₆) → "¬(TxBody.txsize (Tx.body tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
+                              (inj₁ a₆) → "¬((Tx.txsize tx) Data.Nat.Base.≤ maxTxSize (UTxOEnv.pparams Γ))"
                               (inj₂ b₆) → case dec-de-morgan b₆ of λ where
                                 (inj₁ a₇) → "∀[ (_ , txout) ∈ txouts .proj₁ ] inject (utxoEntrySize txout * coinsPerUTxOByte pp) ≤ᵗ getValue txout"
                                 (inj₂ b₇) → case dec-de-morgan b₇ of λ where
@@ -125,16 +125,16 @@ instance
                                       (inj₂ _) → "something else broke"
 
         computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
-        computeProofH (yes (x , y , z , e , k , l , m , v , j , n , o , p , q , r , t , u)) =
-            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m v j n o p q r t u) <$> computeProof' Γ s tx
+        computeProofH (yes (x , y , z , e , k , l , m , c , v , j , n , o , p , q , r , t , u)) =
+            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m c v j n o p q r t u) <$> computeProof' Γ s tx
         computeProofH (no ¬p) = failure $ genErr ¬p
 
         computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProof = computeProofH H?
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m v j n o p q r t u h) with H?
-        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u)
+        completeness s' (UTXO-inductive⋯ _ _ _ x y z w k l m c v j n o p q r t u h) with H?
+        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u)
         ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
         ... | success _ | refl = refl
 
@@ -301,7 +301,7 @@ module DepositHelpers
     stepS : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXOS⦈
                 ⟦ utxo' , fees' , deposits' , donations' ⟧
     stepS = case step of λ where
-      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
+      (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ h) → h
 
     pp : PParams
     pp = UTxOEnv.pparams Γ
@@ -323,13 +323,13 @@ module DepositHelpers
     newBal' : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXO⦈
                   ⟦ utxo' , fees' , deposits' , donations' ⟧
             → consumed pp utxoSt txb ≡ produced pp utxoSt txb
-    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _ _) = x
+    newBal' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _ _) = x
     newBal : consumed pp utxoSt txb ≡ produced pp utxoSt txb
     newBal = newBal' step
     noMintAda' : Γ ⊢ ⟦ utxo  , fees  , deposits  , donations  ⟧ ⇀⦇ tx ,UTXO⦈
                      ⟦ utxo' , fees' , deposits' , donations' ⟧
                → coin (mint) ≡ 0
-    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _) = x
+    noMintAda' (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ x _ _ _ _ _ _ _ _ _ _) = x
     noMintAda : coin mint ≡ 0
     noMintAda = noMintAda' step
     remDepTot : Coin
@@ -666,7 +666,7 @@ module _ -- ASSUMPTION --
        -------------------------------------------------------------------
     →  coin (consumed pp utxoState txb) ≥ length txprop * govActionDeposit
 
-  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
+  gmsc step@(UTXO-inductive⋯ tx Γ utxoState _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
     length txprop * govActionDeposit
       ≡˘⟨ updatePropDeps≡ txprop ⟩
