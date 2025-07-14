@@ -1,28 +1,33 @@
 # Formal Ledger Specifications
 
 This repository contains the formal ledger specifications for the Cardano blockchain,
-written in [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php). These
-specifications are executable, and Haskell code can be extracted from the Agda source
+written in [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php).  These
+specifications are executable; Haskell code can be extracted from the Agda source
 code and run for conformance testing.
 
-The project consists entirely of literate Agda code from which we generate documentation,
-viewable in a web browser, that replaces the PDF-based specifications of previous eras.
+The project consists entirely of [literate][] Agda code from which [the
+documentation](https://intersectmbo.github.io/formal-ledger-specifications/site/),
+that is, the *formal ledger specification*, is generated.
 
-The specification here is for the Cardano ledger up to and including the Conway era.
-The Agda formalization of the Conway era is complete.  Some pieces of the ledgers
-from previous eras have yet to be formalized, but we hope to complete them in
-the near future.
+To reiterate, the latest human-readable Cardano ledger specification consists of a collection
+of Markdown and HTML files; these replace the PDF documents of previous eras.
+
+This repository contains the formal ledger specifications for all eras, starting with
+Shelley, up to and including the Conway era.
+While the Agda formalization of the Conway era is complete, some pieces of the
+ledgers from previous eras have yet to be formalized.  We hope to finish formalizing
+the outstanding pieces in the near future.
 
 You can interact with the specification by building the artifacts,
-generating Haskell source code for conformance testing, or exploring the Agda source
-in a development environment.  Instructions for doing so are provided in the [Contributing Guide][].
+generating Haskell source code for conformance testing, or exploring the literate
+Agda files in a development environment.  Instructions for doing so are provided in
+the [Contributing Guide][].
 
 ---
 
-## **Published Artifacts**
+## 📜 **Published Artifacts**
 
-The browseable documentation and the legacy PDF artifacts are available at the
-links in the table.
+The table below provides links to the full formal ledger specification (as browsable HTML), as well as the legacy PDF artifacts.
 
 | Artifact | Link | Description |
 | :---- | :---- | :---- |
@@ -30,13 +35,13 @@ links in the table.
 | **Full PDF**<sup>†</sup> | [cardano-ledger.pdf](https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf) | The complete specification for the Cardano Ledger. |
 | **Conway-Era PDF**<sup>†</sup> | [conway-ledger.pdf](https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf) | A differential specification for the Conway era. |
 
-† **Note on PDFs** As we are migrating from a LaTeX-based to a Markdown-based documentation workflow, **building** PDFs **from source is currently deprecated and unsupported.** Please use the links above to access the pre-built PDF documents.
+† As we are migrating from a LaTeX-based to a Markdown-based documentation workflow,
+*building PDFs from source is currently deprecated and unsupported*.  Please use the
+links above to access the pre-built PDF documents.
 
 ---
 
----
-
-## **🤝 Contributions and Feedback**
+## 🤝 **Contributions and Feedback**
 
 We welcome contributions and feedback!
 
@@ -47,6 +52,7 @@ If you encounter any issues, please check the [Troubleshooting Guide][] or [subm
 
 
 
-[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/TROUBLESHOOTING.md
+[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
 [submit a new issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
-[Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/CONTRIBUTING.md
+[Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/CONTRIBUTING.md
+[literate]: https://en.wikipedia.org/wiki/Literate_programming
