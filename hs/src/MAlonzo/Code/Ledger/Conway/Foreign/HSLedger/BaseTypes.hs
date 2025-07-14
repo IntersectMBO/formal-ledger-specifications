@@ -6089,7 +6089,7 @@ d_scriptsP1_2072
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.TxWitnesses.txdats
 d_txdats_2074 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TxWitnesses_3110 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  [Integer]
 d_txdats_2074 v0
   = coe MAlonzo.Code.Ledger.Conway.Transaction.d_txdats_3124 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.TxWitnesses.txrdmrs

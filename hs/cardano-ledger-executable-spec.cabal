@@ -486,7 +486,7 @@ library
       MAlonzo.Code.Ledger.Conway.Script
       MAlonzo.Code.Ledger.Conway.Script.Base
       MAlonzo.Code.Ledger.Conway.Script.Timelock
-      MAlonzo.Code.Ledger.Conway.ScriptValidation
+      MAlonzo.Code.Ledger.Conway.Script.Validation
       MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base
       MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin
       MAlonzo.Code.Ledger.Conway.Transaction
