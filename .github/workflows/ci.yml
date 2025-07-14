@@ -46,6 +46,12 @@ jobs:
     with:
       target: hs
 
+  html:
+    needs: [formal-ledger-agda]
+    uses: ./.github/workflows/build_artifact.yml
+    with:
+      target: html
+
   mkdocs-site:
     needs: [formal-ledger-agda]
     # # Should we only run on master branch? If so, uncomment next line.
@@ -90,7 +96,7 @@ jobs:
   upload-artifacts:
     # This job runs only if the workflow has not been manually dispached
     if: ${{ github.event_name != 'workflow_dispatch' }}
-    needs: [formal-ledger-agda, hs, conway-ledger-pdf, cardano-ledger-pdf, mkdocs-site]
+    needs: [formal-ledger-agda, hs, html, conway-ledger-pdf, cardano-ledger-pdf, mkdocs-site]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
