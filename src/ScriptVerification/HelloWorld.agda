@@ -10,7 +10,7 @@ scriptImp = record { serialise = id ;
 
 open import ScriptVerification.LedgerImplementation String String scriptImp
 open import ScriptVerification.Lib String String scriptImp
-open import Ledger.Conway.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import stdlib-classes.Class.HasCast
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
@@ -113,27 +113,27 @@ failTx = record { body = record
                 isValid = true ;
                 txAD = nothing }
 
-succeedState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-succeedState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) succeedTx initState)
+succeedState : List (P2Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
+succeedState = (collectP2ScriptsWithContext (UTxOEnv.pparams initEnv) succeedTx initState)
 
 evalSucceedScript : Bool
-evalSucceedScript = evalScripts succeedTx succeedState
+evalSucceedScript = evalP2Scripts succeedState
 
-failState : List (Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
-failState = (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) failTx initState)
+failState : List (P2Script × List Implementation.Data × Implementation.ExUnits × Implementation.CostModel)
+failState = (collectP2ScriptsWithContext (UTxOEnv.pparams initEnv) failTx initState)
 
 evalFailScript : Bool
-evalFailScript = evalScripts failTx failState
+evalFailScript = evalP2Scripts failState
 
 opaque
-  unfolding collectPhaseTwoScriptInputs
+  unfolding collectP2ScriptsWithContext
   unfolding setToList
   unfolding outs
 
   _ : notEmpty succeedState ≡ ⊤
   _ = refl
 
-  -- need to check that the state is non-empty otherwise evalScripts will always return true
+  -- need to check that the state is non-empty otherwise evalP2Scripts will always return true
   _ : notEmpty succeedState ≡ ⊤
   _ = refl
 

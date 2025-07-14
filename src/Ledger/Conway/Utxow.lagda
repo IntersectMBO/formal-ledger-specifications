@@ -13,7 +13,7 @@ adds the script in the proposal policy only if it is present.
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
+open import Ledger.Prelude
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
@@ -23,7 +23,7 @@ module Ledger.Conway.Utxow
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Conway.Utxo txs abs
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Certs govStructure
 \end{code}
 
@@ -80,8 +80,6 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
     getLanguage (inj₂ s) = just (language s)
 \end{code}
 \begin{code}
-getVKeys : ℙ Credential → ℙ KeyHash
-getVKeys = mapPartial isKeyHashObj
 
 allowedLanguages : Tx → UTxO → ℙ Language
 allowedLanguages tx utxo =
@@ -96,36 +94,6 @@ allowedLanguages tx utxo =
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
-
-getScripts : ℙ Credential → ℙ ScriptHash
-getScripts = mapPartial isScriptObj
-
-credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
-credsNeeded utxo txb
-  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txins ∪ collateral)) ˢ)
-  ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom ∣ txwdrls ∣)
-  ∪  mapPartial (λ c  → (Cert   c ,_) <$> cwitness c) (fromList txcerts)
-  ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
-  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList (map voter txvote))
-  ∪  mapPartial (λ p  → case  p .policy of
-\end{code}
-\begin{code}[hide]
-    λ where
-\end{code}
-\begin{code}
-                              (just sh)  → just (Propose  p , ScriptObj sh)
-                              nothing    → nothing) (fromList txprop)
-\end{code}
-\begin{code}[hide]
-  where open TxBody txb; open GovVote; open RwdAddr; open GovProposal
-\end{code}
-\begin{code}
-
-witsVKeyNeeded : UTxO → TxBody → ℙ KeyHash
-witsVKeyNeeded = getVKeys ∘ mapˢ proj₂ ∘ credsNeeded
-
-scriptsNeeded  : UTxO → TxBody → ℙ ScriptHash
-scriptsNeeded = getScripts ∘ mapˢ proj₂ ∘ credsNeeded
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used for witnessing}
@@ -165,21 +133,25 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
 \begin{code}
          witsKeyHashes                       = mapˢ hash (dom vkSigs)
          witsScriptHashes                    = mapˢ hash scripts
-         inputHashes                         = getInputHashes tx utxo
          refScriptHashes                     = mapˢ hash (refScripts tx utxo)
-         neededHashes                        = scriptsNeeded utxo txb
-         txdatsHashes                        = dom txdats
-         allOutHashes                        = getDataHashes (range txouts)
+         neededScriptHashes                  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
+         neededVKeyHashes                    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
+         txdatsHashes                        = mapˢ hash txdats
+         inputsDataHashes                    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
+                                                                      then txOutToDataHash txout
+                                                                      else nothing) (range (utxo ∣ txins))
+         refInputsDataHashes                 = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
+         outputsDataHashes                   = mapPartial txOutToDataHash (range txouts)
          nativeScripts                       = mapPartial toP1Script (txscripts tx utxo)
 \end{code}
 \begin{code}
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
-    ∙  witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  neededHashes - refScriptHashes ≡ᵉ witsScriptHashes
-    ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ getDataHashes (range (utxo ∣ refInputs))
+    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txvldt s)
+    ∙  neededVKeyHashes ⊆ witsKeyHashes
+    ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
+    ∙  inputsDataHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

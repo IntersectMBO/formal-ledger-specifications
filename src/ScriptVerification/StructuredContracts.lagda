@@ -19,7 +19,7 @@ module ScriptVerification.StructuredContracts
   where
 
 open import Ledger.Conway.Ledger txs abs
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Utxo txs abs
 \end{code}
 
