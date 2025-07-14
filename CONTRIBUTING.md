@@ -2,41 +2,45 @@
 
 **Brief Contents**
 
-- [Style Guidelines](#style-guidelines)
-- [Project Overview](#project-overview)
-- [Development Environment Setup](#development-environment-setup)
-- [Building Project Artifacts](#building-project-artifacts)
-- [IDE Integration](#ide-integration)
-- [CI/CD Workflow](#cicd-workflow)
-- [Setup Without Nix (Advanced)](#setup-without-nix-advanced)
-- [Miscellanea](#miscellanea)
-- [Maintainers](#maintainers)
+  - [Style Guidelines](#style-guidelines)
+  - [Project Overview](#project-overview)
+  - [Development Environment Setup](#development-environment-setup)
+  - [Building Project Artifacts](#building-project-artifacts)
+  - [IDE Integration](#ide-integration)
+  - [CI/CD Workflow](#cicd-workflow)
+  - [Setup Without Nix (Advanced)](#setup-without-nix-advanced)
+  - [Miscellanea](#miscellanea)
+  - [Maintainers](#maintainers)
 
 ---
 
-## Style Guidelines
+## 🖊️️ Style Guidelines
 
-We adhere to the [Agda standard library style
-guide](https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md) where
-practical. However, because our code is *literate* Agda which is used to produce html
-documentation, readability of the latter takes precedence over code formatting, so
-deviations are expected.
+We adhere to the [Agda standard library style guide][] where practical.
+However, because we use [literate][] Agda to produce html documentation, readability
+of the latter takes precedence over code formatting, so deviations are expected.
 
 ---
 
-## Project Overview
+## 🗺️ Project Overview
 
-This repository uses [Nix](https://nixos.org/) and [Shake][] to provide a reproducible, declarative, and portable development environment.
+This repository uses [Nix][] and [Shake][] to provide a reproducible, declarative,
+and portable development environment.
+
 
 ### Nix and Flakes
 
-We use Nix to manage dependencies, build processes, and development shells. The
-modern [Flakes](https://nixos.wiki/wiki/Flakes) feature is the recommended interface
-for interacting with the project, but we also support non-flake `nix-shell` derivations.
+We use Nix to manage dependencies, build processes, and development shells.
+Using [Nix flakes][] is the recommended way to interact with the project, but we also
+support the use of `nix-shell`.
+
 
 ### Dependency Management
 
-All external Nix dependencies (like `nixpkgs`) and Agda libraries are pinned to specific versions or Git commits using [niv](https://github.com/nmattia/niv). The pinned versions are stored in `build-tools/nix/sources.json`, which guarantees reproducible builds.
+All external Nix dependencies (like `nixpkgs`) and Agda libraries are pinned to
+specific versions (e.g., Git commits) using [niv](https://github.com/nmattia/niv).
+The pinned versions are stored in `build-tools/nix/sources.json`, which guarantees
+reproducible builds.
 
 The core Agda dependencies include:
 
@@ -46,34 +50,33 @@ The core Agda dependencies include:
 + [agda-sets][]: abstract set theory library;
 + [iog-agda-prelude][]: supplementary prelude.
 
+
 ### Directory Structure
 
 The main directories and files involved in the build process are as follows. (A more
 detailed version of this annotated tree can be found at the bottom of this page.)
 
 ```
-├── default.nix                             # Definitions of Nix derivations
-├── flake.nix                               # Nix flake interface
-├── build-tools/                            #
-│   ├── agda/                               #
-│   │   ├── data/                           #
-│   │   │   ├── Agda.css                    # for styling Agda HTML output
-│   │   │   └── AgdaKaTeX.js                # for integrating Agda's HTML with KaTeX
-│   │   ├── fls-agda.cabal                  # for building fls-agda Haskell package
-│   │   ├── nix/                            #
-│   │   │   └── fls-agda.nix                # Nix derivation for fls-agda package
-│   │   ├── src/                            #
-│   │   │   └── Main.hs                     # Main entry point for fls-agda executable
-│   │   └── test/                           #
-│   │       └── Test0.agda                  # for testing the backend's functionality
-│   ├── shake/                              #
-│   │   ├── fls-shake.cabal                 # for building fls-shake Haskell package
-│   │   ├── nix/                            #
-│   │   │   └── fls-shake.nix               # Nix derivation for fls-shake package
-│   │   └── src/                            #
-│   │       └── Main.hs                     # Main entry point for fls-shake build system
-├── TEX2MD_MIGRATION.md                     # Guide for LaTeX to Markdown migration process
-└── TROUBLESHOOTING.md                      # Guide for resolving common build issues
+├── default.nix                # Definitions of Nix derivations
+├── flake.nix                  # Nix flake interface
+├── TROUBLESHOOTING.md         # Guide for resolving common build issues
+├── TEX2MD_MIGRATION.md        # Guide for LaTeX to Markdown migration process
+└── build-tools/
+    ├── agda/
+    │   ├── data/
+    │   │   ├── Agda.css       # for styling Agda HTML output
+    │   │   └── AgdaKaTeX.js   # for integrating Agda's HTML with KaTeX
+    │   ├── fls-agda.cabal     # for building fls-agda Haskell package
+    │   ├── nix/
+    │   │   └── fls-agda.nix   # Nix derivation for fls-agda package
+    │   └── src/
+    │       └── Main.hs        # Main entry point for fls-agda executable
+    └── shake/
+        ├── fls-shake.cabal    # for building fls-shake Haskell package
+        ├── nix/
+        │   └── fls-shake.nix  # Nix derivation for fls-shake package
+        └── src/
+            └── Main.hs        # Main entry point for fls-shake build system
 ```
 
 ---
@@ -82,50 +85,56 @@ detailed version of this annotated tree can be found at the bottom of this page.
 
 We provide several development shells tailored for different tasks. You can enter them using `nix develop`.
 
-### Default Shell
 
-This is the primary environment for Agda development. It includes Agda, all required libraries, and the `fls-shake` build tool.
++  🐚 **Default Shell**
 
-```bash
-# Enter the default development shell
-nix develop
-```
+    This is the primary environment for Agda development. It includes Agda, all required libraries, and the `fls-shake` build tool.
 
-**Available Tools**
+    ```bash
+    # Enter the default development shell
+    nix develop
+    ```
 
-+ `agda` (with all project libraries)
-+ `fls-shake` (custom build tool)
-+ `python311`
-+ `hpack`
+    ⚒️ **Available Tools**
 
-### CI Shell
+    + `agda` (with all project libraries)
+    + `fls-shake` (our custom build tool)
+    + `python311` (Python version 3.11)
+    + `hpack` (the Haskell package helper)
 
-A minimal environment designed for automated builds, containing only the `fls-shake` build tool and its runtime dependencies.
 
-```bash
-# Enter the CI shell
-nix develop .#ci
-```
++  🐚 **CI Shell**
 
-### Documentation Shell
+    A minimal environment designed for automated builds, containing only the `fls-shake` build tool and its runtime dependencies.
 
-A comprehensive environment for working on documentation, including the full documentation generation pipeline.
+    ```bash
+    # Enter the CI shell
+    nix develop .#ci
+    ```
 
-```bash
-# Enter the documentation shell
-nix develop .#docs
-```
++  🐚 **Documentation Shell**
 
-**Available Tools:**
+    A comprehensive environment for working on documentation, including the full documentation generation pipeline.
 
-* Everything from the default shell.
-* `pandoc`, a full `latex` distribution.
-* `mkdocs` and its Python dependencies.
-* `mdbook`, `cargo`, and related tools.
+    ```bash
+    # Enter the documentation shell
+    nix develop .#docs
+    ```
 
------
+    ⚒️ **Available Tools**
 
-## Building Project Artifacts
+    Everything from the default shell plus
+
+    + `pandoc` (the document conversion tool)
+    + `latex` (the typesetting language)
+    + `mkdocs` (with Python dependencies)
+    + `mdbook` (with Rust dependencies)
+
+
+---
+
+
+## 🏗️ Building Project Artifacts
 
 You can build project artifacts in several ways. The recommended method is using `nix build`.
 
@@ -152,7 +161,7 @@ nix build .#mkdocs
 Build outputs are symlinked in the `result/` directory.
 
 
-### Using Legacy `nix-build`
+### Using `nix-build`
 
 If you do not use Flakes, you can use the legacy `nix-build` commands.
 
@@ -187,17 +196,17 @@ fls-shake hs                  # Build Haskell source
 fls-shake --help
 ```
 
+---
 
-### Conformance-testing example
+## 🕵️‍♀️ Conformance-testing example
 
 For an example on how to use the Agda-generated Haskell code for conformance
 testing see [`conformance-example`](conformance-example)
 
 
-
 -----
 
-## IDE Integration
+## 🖥️ IDE Integration
 
 For the best development experience, you should configure your IDE to use the Agda executable provided by this project's Nix environment.
 
@@ -279,7 +288,7 @@ nix-build -A agdaWithPackages -o ~/ledger-agda
 
 -----
 
-## CI/CD Workflow
+## 🔧 CI/CD Workflow
 
 Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and publishing of artifacts. Here are some key details:
 
@@ -297,7 +306,7 @@ Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and 
 
 -----
 
-## Setup Without Nix (Advanced)
+## 🪡 Setup Without Nix (Advanced)
 
 While we recommend using Nix for the best experience, it's possible to work with
 this repository without Nix. Those making nontrivial contributions are advised
@@ -421,7 +430,7 @@ For non-Nix users, you'll also need to install the following:
 
 ---
 
-## Miscellanea
+## 🗃️ Miscellanea
 
 ### Plotting typechecking times
 
@@ -545,7 +554,9 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [Haskell]: https://www.haskell.org/downloads/
 [latex]: https://www.latex-project.org/get/
 [latexmk]: https://ctan.org/pkg/latexmk
+[literate]: https://en.wikipedia.org/wiki/Literate_programming
 [Nix]: https://nixos.org/
+[Nix flakes]: https://nixos.wiki/wiki/Flakes 
 [Nix download instructions]: https://nixos.org/download/
 [niv]: https://github.com/nmattia/niv
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
@@ -584,3 +595,15 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [Maintainers]: #maintainers
 [Miscellanea]: #miscellanea
 [Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
+[default.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/default.nix
+[flake.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/flake.nix
+[TROUBLESHOOTING.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
+[TEX2MD_MIGRATION.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TEX2MD_MIGRATION.md
+[Agda.css]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/Agda.css
+[AgdaKaTeX.js]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/AgdaKaTeX.js
+[fls-agda.cabal]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/fls-agda.cabal
+[fls-agda.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/nix/fls-agda.nix
+[Main.hs]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/src/Main.hs
+[fls-shake.cabal]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/fls-shake.cabal
+[fls-shake.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/nix/fls-shake.nix
+[Main.hs]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/src/Main.hs
