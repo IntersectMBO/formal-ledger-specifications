@@ -149,7 +149,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txvldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
-    ∙  neededScriptHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
+    ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputsDataHashes ⊆ txdatsHashes
     ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  languages tx utxo ⊆ allowedLanguages tx utxo

@@ -202,7 +202,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
   refScriptsSize utxo tx = sum (map scriptSize (setToList (refScripts tx utxo)))
 
   minfee : PParams → UTxO → Tx → Coin
-  minfee pp utxo tx  = pp .a * tx .body .txsize + pp .b
+  minfee pp utxo tx  = pp .a * tx .txsize + pp .b
                      + txscriptfee (pp .prices) (totExUnits tx)
                      + scriptsCost pp (refScriptsSize utxo tx)
 

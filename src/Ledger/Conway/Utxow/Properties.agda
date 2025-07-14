@@ -32,7 +32,7 @@ instance
         (inj₂ b₁) → case dec-de-morgan b₁ of λ where
           (inj₁ a₂) → "witsVKeyNeeded utxo txb ⊆ witsKeyHashes"
           (inj₂ b₂) → case dec-de-morgan b₂ of λ where
-            (inj₁ a₃) → "(neededHashes ＼ refScriptHashes) ≡ᵉ witsScriptHashes"
+            (inj₁ a₃) → "(neededHashes - refScriptHashes) ≡ᵉ witsScriptHashes"
             (inj₂ b₃) → case dec-de-morgan b₃ of λ where
               (inj₁ a₄) → "inputHashes ⊆ txdatsHashes"
               (inj₂ b₄) → case dec-de-morgan b₄ of λ where

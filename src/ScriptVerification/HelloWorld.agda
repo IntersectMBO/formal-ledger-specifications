@@ -68,7 +68,6 @@ succeedTx = record { body = record
                          ; txADhash = nothing
                          ; txNetworkId = just 0
                          ; curTreasury = nothing
-                         ; txsize = 10
                          ; txid = 7
                          ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
                          ; reqSigHash = ∅
@@ -80,6 +79,7 @@ succeedTx = record { body = record
                                 scripts = Ledger.Prelude.fromList ((inj₂ helloWorld) ∷ []) ;
                                 txdats = ∅ ;
                                 txrdmrs = fromListᵐ (((Spend , 6) , "Hello World" , (5 , 5)) ∷ []) } ;
+                txsize = 10 ;
                 isValid = true ;
                 txAD = nothing }
 
@@ -100,7 +100,6 @@ failTx = record { body = record
                          ; txADhash = nothing
                          ; txNetworkId = just 0
                          ; curTreasury = nothing
-                         ; txsize = 10
                          ; txid = 7
                          ; collateral = ∅
                          ; reqSigHash = ∅
@@ -110,6 +109,7 @@ failTx = record { body = record
                                 scripts = Ledger.Prelude.fromList ((inj₂ helloWorld) ∷ []) ;
                                 txdats = ∅ ;
                                 txrdmrs = fromListᵐ (((Spend , 6) , "Hello World!" , (5 , 5)) ∷ []) } ;
+                txsize = 10 ;
                 isValid = true ;
                 txAD = nothing }
 
