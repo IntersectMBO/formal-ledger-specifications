@@ -10,7 +10,7 @@ scriptImp = record { serialise = id ;
 
 open import ScriptVerification.LedgerImplementation ℕ ℕ scriptImp
 open import ScriptVerification.Lib ℕ ℕ scriptImp
-open import Ledger.Conway.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import stdlib-classes.Class.HasCast
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
@@ -46,7 +46,7 @@ initTxOut : TxOut
 initTxOut = inj₁ (record { net = 0 ;
                            pay = ScriptObj 777 ;
                            stake = just (ScriptObj 777) })
-                           , 10 , just (inj₂ 99) , nothing
+                           , 10 , just (inj₂ 1) , nothing
 
 -- initTxOut for script without datum reference
 initTxOut' : TxOut
@@ -97,16 +97,16 @@ succeedTx = record { body = record
                          } ;
                 wits = record { vkSigs = fromListᵐ ((5 , 12) ∷ []) ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ succeedIf1Datum) ∷ []) ;
-                                txdats = fromListᵐ ((99 , 1) ∷ []) ;
+                                txdats = Ledger.Prelude.fromList (1 ∷ []) ;
                                 txrdmrs = fromListᵐ (((Spend , 6) , 5 , (5 , 5)) ∷ []) } ;
                 txsize = 10 ;
                 isValid = true ;
                 txAD = nothing }
 
 evalScriptDatum : Bool
-evalScriptDatum = evalScripts succeedTx (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) succeedTx initStateDatum)
+evalScriptDatum = evalP2Scripts (collectP2ScriptsWithContext (UTxOEnv.pparams initEnv) succeedTx initStateDatum)
 
-exampleDatum : List Datum
+exampleDatum : Maybe Datum
 exampleDatum = getDatum succeedTx initStateDatum (Spend (6 , 6))
 
 failTx : Tx
@@ -141,23 +141,23 @@ failTx = record { body = record
 
 
 evalScriptRedeemer : Bool
-evalScriptRedeemer = evalScripts failTx (collectPhaseTwoScriptInputs (UTxOEnv.pparams initEnv) failTx initStateRedeemer)
+evalScriptRedeemer = evalP2Scripts (collectP2ScriptsWithContext (UTxOEnv.pparams initEnv) failTx initStateRedeemer)
 
-exampleDatum' : List Datum
+exampleDatum' : Maybe Datum
 exampleDatum' = getDatum failTx initStateRedeemer (Spend (6 , 6))
 
 opaque
-  unfolding collectPhaseTwoScriptInputs
+  unfolding collectP2ScriptsWithContext
   unfolding setToList
   unfolding outs
 
   gotScript : lookupScriptHash 777 succeedTx initStateDatum ≡ just (inj₂ succeedIf1Datum)
   gotScript = refl
 
-  _ : exampleDatum ≡ 1 ∷ []
+  _ : exampleDatum ≡ just 1
   _ = refl
 
-  _ : exampleDatum' ≡ []
+  _ : exampleDatum' ≡ nothing
   _ = refl
 
   _ : evalScriptDatum ≡ true

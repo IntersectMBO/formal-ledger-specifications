@@ -25,7 +25,7 @@ module Ledger.Conway.Utxo
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Script.Validation txs abs
 open import Ledger.Conway.Fees txs using (scriptsCost)
 open import Ledger.Conway.Certs govStructure
 
@@ -36,47 +36,6 @@ instance
 \begin{NoConway}
 \begin{figure*}[ht]
 \begin{code}
-isTwoPhaseScriptAddress : Tx → UTxO → Addr → Type
-isTwoPhaseScriptAddress tx utxo a =
-  if isScriptAddr a then
-    (λ {p} → if lookupScriptHash (getScriptHash a p) tx utxo
-                 then (λ {s} → isP2Script s)
-                 else ⊥)
-  else
-    ⊥
-\end{code}
-\begin{code}[hide]
-isTwoPhaseScriptAddress? : ∀ {tx utxo a} → isTwoPhaseScriptAddress tx utxo a ⁇
-isTwoPhaseScriptAddress? {tx} {utxo} {a} .dec
-  with decide (isScriptAddr a)
-... | inj₂ _ = no λ ()
-... | inj₁ p
-  with decide (lookupScriptHash (getScriptHash a p) tx utxo)
-... | inj₂ _ = no λ ()
-... | inj₁ s = isP2Script? {s} .dec
-
-record isTwoPhaseScriptAddress′ (tx : Tx) (utxo : UTxO) (a : Addr) : Type where
-  constructor wrap
-  field unwrap : isTwoPhaseScriptAddress tx utxo a
-
-instance
-  isTwoPhaseScriptAddress′? : ∀ {tx utxo a} → isTwoPhaseScriptAddress′ tx utxo a ⁇
-  isTwoPhaseScriptAddress′? {tx} {utxo} {a} = ⁇ (map′ wrap unwrap (isTwoPhaseScriptAddress? {tx} {utxo} {a} .dec))
-    where open isTwoPhaseScriptAddress′
-\end{code}
-\begin{code}[hide]
-opaque
-\end{code}
-\begin{code}
-  getDataHashes : ℙ TxOut → ℙ DataHash
-  getDataHashes txo = mapPartial isInj₂ (mapPartial (proj₁ ∘ proj₂ ∘ proj₂) txo)
-
-  getInputHashes : Tx → UTxO → ℙ DataHash
-  getInputHashes tx utxo = getDataHashes
-    (filterˢ (λ (a , _ ) → isTwoPhaseScriptAddress′ tx utxo a)
-             (range (utxo ∣ txins)))
-    where open Tx; open TxBody (tx .body)
-
 totExUnits : Tx → ExUnits
 totExUnits tx = ∑[ (_ , eu) ← tx .wits .txrdmrs ] eu
   where open Tx; open TxWitnesses
@@ -519,10 +478,10 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          open Tx tx renaming (body to txb); open TxBody txb
 \end{code}
 \begin{code}
-         sLst       = collectPhaseTwoScriptInputs pp tx utxo
+         p2Scripts  = collectP2ScriptsWithContext pp tx utxo
       in
         ∙ ValidCertDeposits pp deposits txcerts
-        ∙ evalScripts tx sLst ≡ isValid
+        ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
           Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
@@ -533,9 +492,9 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
          open Tx tx renaming (body to txb); open TxBody txb
 \end{code}
 \begin{code}
-         sLst       = collectPhaseTwoScriptInputs pp tx utxo
+         p2Scripts  = collectP2ScriptsWithContext pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ isValid
+        ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
           Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
