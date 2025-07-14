@@ -18,9 +18,9 @@ The official PDF specifications and a browseable HTML version of the source code
 
 | Artifact | Link | Description |
 | :---- | :---- | :---- |
-| **Full PDF Specification** | [cardano-ledger.pdf](https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf) | The complete specification for the Cardano Ledger. |
+| **Full PDF** | [cardano-ledger.pdf](https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf) | The complete specification for the Cardano Ledger. |
 | **Conway-Era PDF** | [conway-ledger.pdf](https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf) | A differential specification for the Conway era. |
-| **HTML Source Code** | [Browseable HTML](https://IntersectMBO.github.io/formal-ledger-specifications/html/index.html) | An interactive, hyperlinked version of the Agda source code. |
+| **HTML Source Code** | [Browseable HTML](https://IntersectMBO.github.io/formal-ledger-specifications/site) | An interactive, hyperlinked version of the Agda source code. |
 
 **Note on PDFs:** As we are migrating from a LaTeX-based to a Markdown-based documentation workflow, **building** PDFs **from source is currently deprecated and unsupported.** Please use the links above to access the official, pre-built PDF documents.
 
