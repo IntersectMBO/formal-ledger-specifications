@@ -1,8 +1,8 @@
 # Introduction {#sec:introduction}
 
 
-<div class="agda-hidden-source">
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -24,8 +24,7 @@ private variable
   b sig : Sig
   sigs : List Sig
 ```
-
-</div>
+-->
 
 ??? note "Conway specifics"
 
@@ -246,14 +245,13 @@ remainder of the text, the closure operation is called
 
 ### Reflexive transitive closure
 
-<div class="agda-hidden-source">
-
+<!--
 ```agda
 
 module _ (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) where
 ```
+-->
 
-</div>
  *Closure type*
 
 ```agda
@@ -294,16 +292,13 @@ record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Typ
   nothing⇒∀¬STS : compute Γ s b ≡ nothing → ∀ s' → ¬ Γ ⊢ s ⇀⦇ b ,X⦈ s'
 ```
 
-<div class="agda-hidden-source">
-
+<!--
 ```agda
 
   nothing⇒∀¬STS comp≡nothing s' h rewrite ≡-just⇔STS .Equivalence.from h =
     case comp≡nothing of λ ()
 ```
-
-</div>
-
+-->
 
 Unpacking this, we have a `compute`{.AgdaField} function that computes a
 final state from a given environment, state and signal. The second piece
@@ -352,9 +347,7 @@ relation and the equality relation for sets.
 When we need to convert a list to its set of elements, we write
 `fromList`{.AgdaFunction} .
 
-
-<div class="agda-hidden-source">
-
+<!--
 ```agda
 
 open Theory th using (_∈_) renaming (Set to ℙ)
@@ -365,8 +358,7 @@ private variable
 Σ-syntax' = Σ
 syntax Σ-syntax' A (λ x → B) = x ∈ A ﹐ B
 ```
-
-</div>
+-->
 
 ```agda
 

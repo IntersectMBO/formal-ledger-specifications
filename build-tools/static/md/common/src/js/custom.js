@@ -17,23 +17,23 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Check localStorage for previous state
-  const currentDisplayState = localStorage.getItem('show-all-agda-source') === 'true';
+  const currentDisplayState = localStorage.getItem('reveal-agda-source') === 'true';
   if (currentDisplayState) {
-    document.body.classList.add('show-all-agda-source');
+    document.body.classList.add('reveal-agda-source');
     toggleBtn.textContent = 'Show less Agda';
   } else {
     toggleBtn.textContent = 'Show more Agda';
   }
 
   toggleBtn.addEventListener('click', function () {
-    if (document.body.classList.contains('show-all-agda-source')) {
-      document.body.classList.remove('show-all-agda-source');
+    if (document.body.classList.contains('reveal-agda-source')) {
+      document.body.classList.remove('reveal-agda-source');
       toggleBtn.textContent = 'Show more Agda';
-      localStorage.setItem('show-all-agda-source', 'false');
+      localStorage.setItem('reveal-agda-source', 'false');
     } else {
-      document.body.classList.add('show-all-agda-source');
+      document.body.classList.add('reveal-agda-source');
       toggleBtn.textContent = 'Show less Agda';
-      localStorage.setItem('show-all-agda-source', 'true');
+      localStorage.setItem('reveal-agda-source', 'true');
     }
   });
 });

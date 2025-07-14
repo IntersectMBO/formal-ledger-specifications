@@ -8,6 +8,7 @@
     - Prelude: Ledger.Prelude.md
     - Prelude/:
       - Base: Ledger.Prelude.Base.md
+      - Instances: Ledger.Prelude.Instances.md
     - Conway: Ledger.Conway.md
     - Conway/:
       - Abstract: Ledger.Conway.Abstract.md
@@ -62,7 +63,7 @@
       - Script/:
         - Base: Ledger.Conway.Script.Base.md
         - Timelock: Ledger.Conway.Script.Timelock.md
-      - ScriptValidation: Ledger.Conway.ScriptValidation.md
+        - Validation: Ledger.Conway.Script.Validation.md
       - TokenAlgebra/:
         - Base: Ledger.Conway.TokenAlgebra.Base.md
         - Coin: Ledger.Conway.TokenAlgebra.Coin.md
@@ -181,8 +182,6 @@
       - Interface:
         - ComputationalRelation: Interface.ComputationalRelation.md
         - HasSubset: Interface.HasSubset.md
-        - HasSubset/:
-          - Instance: Interface.HasSubset.Instance.md
         - HasSubtract: Interface.HasSubtract.md
         - HasSubtract/:
           - Instance: Interface.HasSubtract.Instance.md

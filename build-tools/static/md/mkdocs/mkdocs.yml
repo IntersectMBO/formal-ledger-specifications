@@ -88,3 +88,5 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - footnotes
+hooks:
+  - hooks/agda_hidden_code.py
