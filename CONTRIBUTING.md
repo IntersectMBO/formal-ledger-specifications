@@ -26,11 +26,13 @@ deviations are expected.
 
 ## Project Overview
 
-This repository uses [Nix](https://nixos.org/) to provide a reproducible, declarative, and portable development environment.
+This repository uses [Nix](https://nixos.org/) and [Shake][] to provide a reproducible, declarative, and portable development environment.
 
 ### Nix and Flakes
 
-We use Nix to manage all dependencies, build processes, and development shells. The modern [Flakes](https://nixos.wiki/wiki/Flakes) feature is the recommended interface for interacting with the project.
+We use Nix to manage dependencies, build processes, and development shells. The
+modern [Flakes](https://nixos.wiki/wiki/Flakes) feature is the recommended interface
+for interacting with the project, but we also support non-flake `nix-shell` derivations.
 
 ### Dependency Management
 
@@ -46,19 +48,32 @@ The core Agda dependencies include:
 
 ### Directory Structure
 
+The main directories and files involved in the build process are as follows. (A more
+detailed version of this annotated tree can be found at the bottom of this page.)
+
 ```
-./
-├── default.nix                             # Main package definitions
-├── flake.nix                               # Flake interface
-└── build-tools/
-    ├── nix/
-    │   ├── sources.nix                     # Niv-generated dependency fetcher
-    │   ├── sources.json                    # Pinned dependency versions
-    │   ├── agda/default.nix                # Agda package scope
-    │   └── build-support/agda/default.nix  # Low-level Agda build functions
-    └── agda/
-        ├── default.nix                     # Agda environment wrapper
-        └── nix/fls-agda.nix                # Custom FLS Agda derivation
+├── default.nix                             # Definitions of Nix derivations
+├── flake.nix                               # Nix flake interface
+├── build-tools/                            #
+│   ├── agda/                               #
+│   │   ├── data/                           #
+│   │   │   ├── Agda.css                    # for styling Agda HTML output
+│   │   │   └── AgdaKaTeX.js                # for integrating Agda's HTML with KaTeX
+│   │   ├── fls-agda.cabal                  # for building fls-agda Haskell package
+│   │   ├── nix/                            #
+│   │   │   └── fls-agda.nix                # Nix derivation for fls-agda package
+│   │   ├── src/                            #
+│   │   │   └── Main.hs                     # Main entry point for fls-agda executable
+│   │   └── test/                           #
+│   │       └── Test0.agda                  # for testing the backend's functionality
+│   ├── shake/                              #
+│   │   ├── fls-shake.cabal                 # for building fls-shake Haskell package
+│   │   ├── nix/                            #
+│   │   │   └── fls-shake.nix               # Nix derivation for fls-shake package
+│   │   └── src/                            #
+│   │       └── Main.hs                     # Main entry point for fls-shake build system
+├── TEX2MD_MIGRATION.md                     # Guide for LaTeX to Markdown migration process
+└── TROUBLESHOOTING.md                      # Guide for resolving common build issues
 ```
 
 ---
@@ -124,12 +139,6 @@ nix build .#formal-ledger
 # or simply:
 nix build
 
-# Build the full PDF specification (deprecated)
-# nix build .#docs.conway.fullspec
-
-# Build the Conway-era differential PDF (deprecated)
-# nix build .#docs.conway.diffspec
-
 # Generate browseable HTML documentation
 nix build .#html
 
@@ -142,6 +151,7 @@ nix build .#mkdocs
 
 Build outputs are symlinked in the `result/` directory.
 
+
 ### Using Legacy `nix-build`
 
 If you do not use Flakes, you can use the legacy `nix-build` commands.
@@ -150,14 +160,14 @@ If you do not use Flakes, you can use the legacy `nix-build` commands.
 # Type-check the Agda specification
 nix-build -A formal-ledger
 
-# Build the full PDF specification (deprecated)
-# nix-build -A docs.conway.fullspec
-
 # Generate HTML documentation
 nix-build -A html
 
 # Generate Haskell source code
 nix-build -A hs-src
+
+# Build the mkdocs site
+nix-build -A mkdocs
 ```
 
 ### Using the `fls-shake` Build Tool
@@ -176,6 +186,14 @@ fls-shake hs                  # Build Haskell source
 # See all available targets
 fls-shake --help
 ```
+
+
+### Conformance-testing example
+
+For an example on how to use the Agda-generated Haskell code for conformance
+testing see [`conformance-example`](conformance-example)
+
+
 
 -----
 
@@ -229,20 +247,23 @@ nix-build -A agdaWithPackages -o ~/ledger-agda
 
     + Update the system Agda version in `my/agda-versions` to match your installation.
     + Check your system Agda with `which agda && agda --version`.
-    + Once configured, use `C-c C-x C-t` to switch between Agda versions.
+    + Once configured, use `M-x my/switch-agda` (or `C-c C-x C-t`) to switch between Agda versions.
     + This works with most Emacs distributions (Doom, Spacemacs, vanilla, etc.).
 
-
 2.  Launch Emacs from within the project's Nix shell to make it aware of the environment:
+
     ```bash
     nix develop
     emacs src/Ledger.agda
     ```
+
 3.  Use standard `agda-mode` commands (e.g., `C-c C-l` to load a file).
+
 
 ### Visual Studio Code
 
 1.  Install the official **Agda Language Server** extension from the marketplace.
+
 2.  Configure the extension to use the project's Agda executable. Open your `settings.json` (`Ctrl+Shift+P` \> "Preferences: Open User Settings (JSON)") and add the path to the symlink:
     ```json
     {
@@ -253,6 +274,7 @@ nix-build -A agdaWithPackages -o ~/ledger-agda
     }
     ```
     *(Note: VS Code may not expand `~`, so you might need to use the full path, e.g., `/home/user/ledger-agda/bin/agda`)*.
+
 3.  Use `Ctrl+C Ctrl+R` to switch between Agda versions if you have multiple configured.
 
 -----
@@ -261,9 +283,17 @@ nix-build -A agdaWithPackages -o ~/ledger-agda
 
 Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and publishing of artifacts. Here are some key details:
 
-  * **Caching:** The initial `formal-ledger-agda` job type-checks the code and uploads the resulting `_build` directory as a GitHub artifact. Subsequent jobs download this artifact to avoid re-compiling Agda code.
-  * **Artifact Branches:** For every push to `master` or a pull request branch, the CI creates a corresponding `<branch-name>-artifacts` branch. This branch stores the generated artifacts (PDFs, HTML, Haskell code).
-  * **PDF Generation Note:** The CI workflow **does not** build PDFs from the current source. Instead, it checks out the `legacy-latex-artifacts` branch and copies the PDFs from there. This is a temporary measure to ensure the stability of the published documents. You can still build PDFs locally from source using the commands described above.
++ **Caching**
+
+   The initial `formal-ledger-agda` job type-checks the code and uploads the resulting `_build` directory as a GitHub artifact. Subsequent jobs download this artifact to avoid re-compiling Agda code.
+
++ **Artifact Branches**
+
+   For every push to `master` or a pull request branch, the CI creates a corresponding `<branch-name>-artifacts` branch. This branch stores the generated artifacts (PDFs, HTML, Haskell code).
+
++ **PDF Generation Note**
+
+   The CI workflow **does not** build PDFs from the current source. Instead, it checks out the `legacy-latex-artifacts` branch and copies the PDFs from there. This is a temporary measure to ensure the stability of the published documents. You can still build PDFs locally from source using the commands described above.
 
 -----
 
@@ -410,6 +440,87 @@ and open `index.html` in your browser.
 
 ---
 
+### Build-tools
+
+Here is the complete annotated subtree of the `build-tools` directory.
+
+
+```
+├── build-tools/                                     # All build-related utilities and static assets
+│   ├── agda/                                        # Source for the custom `fls-agda` Agda backend
+│   │   ├── data/                                    # Static assets used by the fls-agda backend
+│   │   │   ├── Agda.css                             # Base CSS for styling Agda HTML output
+│   │   │   └── AgdaKaTeX.js                         # JS for integrating Agda's HTML with KaTeX
+│   │   ├── fls-agda.cabal                           # Cabal file for building the fls-agda Haskell package
+│   │   ├── nix/                                     # Nix-specific build files for fls-agda
+│   │   │   └── fls-agda.nix                         # Nix derivation for the fls-agda package
+│   │   ├── src/                                     # Haskell source code for the fls-agda backend
+│   │   │   └── Main.hs                              # Main entry point for the fls-agda executable
+│   │   └── test/                                    # Test files for the fls-agda backend
+│   │       └── Test0.agda                           # Agda file for testing the backend's functionality
+│   ├── nix/                                         # General Nix configuration for the project
+│   │   ├── sources.json                             # Niv-managed file pinning exact dependency versions
+│   │   └── sources.nix                              # Niv-generated file to load pinned dependencies
+│   ├── scripts/                                     # Various utility scripts for building and processing
+│   │   ├── agda2vec.py                              # Python script for post-processing Agda-generated LaTeX
+│   │   ├── checkTypeChecked.sh                      # Shell script to verify Agda type-checking success
+│   │   ├── hldiff.py                                # Python script for highlighting differences in LaTeX
+│   │   ├── md/                                      # Scripts for the Markdown documentation pipeline
+│   │   │   ├── agda-filter.lua                      # Pandoc Lua filter for processing Agda code blocks
+│   │   │   ├── build.py                             # Main entry point for the Markdown build script
+│   │   │   ├── config/                              # Configuration modules for the build script
+│   │   │   │   └── build_config.py                  # Defines dataclasses for build paths and settings
+│   │   │   ├── modules/                             # Core logic modules for the build script
+│   │   │   │   ├── agda_processing.py               # Handles interaction with the Agda compiler
+│   │   │   │   ├── bibtex_processor.py              # Processes BibTeX citations
+│   │   │   │   ├── content_staging.py               # Manages intermediate build files
+│   │   │   │   ├── latex_pipeline.py                # Orchestrates LaTeX-to-Markdown conversion
+│   │   │   │   ├── latex_preprocessor.py            # Pre-processes LaTeX files before conversion
+│   │   │   │   └── site_assembly.py                 # Assembles the final MkDocs/MdBook site
+│   │   │   ├── test/                                # Tests for the Markdown build pipeline
+│   │   │   │   └── test_bibtex_processor.py         # Unit tests for the BibTeX processor
+│   │   │   └── utils/                               # Utility functions used by the build script
+│   │   │       ├── command_runner.py                # Helper for running external commands
+│   │   │       ├── file_ops.py                      # Helpers for file system operations
+│   │   │       ├── pipeline_types.py                # Defines custom types used in the pipeline
+│   │   │       └── text_processing.py               # Helpers for text manipulation
+│   │   ├── plot_typecheck_time.py                   # Script to plot Agda type-checking performance
+│   │   └── prepare-conf-test.sh                     # Script to prepare for conformance testing
+│   ├── shake/                                       # Source for the `fls-shake` build tool
+│   │   ├── fls-shake.cabal                          # Cabal file for building the fls-shake Haskell package
+│   │   ├── nix/                                     # Nix-specific build files for fls-shake
+│   │   │   └── fls-shake.nix                        # Nix derivation for the fls-shake package
+│   │   └── src/                                     # Haskell source code for fls-shake
+│   │       └── Main.hs                              # Main entry point for the fls-shake build system
+│   └── static/                                      # Static assets copied into builds
+│       ├── hs-src/                                  # Template for the extracted Haskell source code
+│       │   ├── package.yaml                         # hpack file to generate the .cabal file
+│       │   └── src/MAlonzo/Code/Ledger/Foreign/API.hs # Manual Haskell FFI to Agda code
+│       ├── latex/                                   # Static LaTeX files for (legacy) PDF generation
+│       │   ├── cardano-ledger.tex                   # Main TeX file for the full specification PDF
+│       │   ├── ...                                  # Other TeX includes, diagrams, fonts, etc.
+│       │   └── references.bib                       # BibTeX file for all citations
+│       └── md/                                      # Static assets for Markdown documentation sites
+│           ├── common/                              # Assets shared between MkDocs and MdBook
+│           │   ├── nav.yml                          # Template for the MkDocs navigation structure
+│           │   └── src/                             # Source assets (CSS, JS, images, etc.)
+│           │       ├── css/custom.css               # Custom stylesheet for documentation sites
+│           │       ├── guide.md                     # Source Markdown for the interactive guide page
+│           │       └── js/custom.js                 # Custom JavaScript for documentation sites
+│           ├── mdbook/                              # Configuration and templates for MdBook
+│           │   ├── book.toml                        # Main configuration file for MdBook
+│           │   └── src/SUMMARY.md                   # Defines the navigation for the MdBook site
+│           └── mkdocs/                              # Configuration and templates for MkDocs
+│               ├── docs/index.md                    # Homepage/landing page for the MkDocs site
+│               ├── includes/links.md                # Common Markdown link references
+│               └── mkdocs.yml                       # Main configuration file for the MkDocs site
+├── TEX2MD_MIGRATION.md                              # Guide for the LaTeX to Markdown migration process
+└── TROUBLESHOOTING.md                               # Guide for resolving common build issues
+```
+
+
+---
+
 ## Maintainers
 
 This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamdemeo][].
@@ -426,6 +537,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [agda-sets]: https://github.com/input-output-hk/agda-sets
 [iog-agda-prelude]: https://github.com/input-output-hk/iog-agda-prelude
 [binary]: https://github.com/haskell/binary
+[conformance-example]: https://github.com/IntersectMBO/formal-ledger-specifications/tree/master/conformance-example
 [deepseq]: https://github.com/haskell/deepseq
 [Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
