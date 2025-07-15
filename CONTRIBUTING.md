@@ -153,17 +153,13 @@ nix build .#html
 
 # Generate Haskell source code for conformance testing
 nix build .#hs-src
-
-# Build the mkdocs site
-nix build .#mkdocs
 ```
 
 Build outputs are symlinked in the `result/` directory.
 
-
 ### Using `nix-build`
 
-If you do not use Flakes, you can use the legacy `nix-build` commands.
+If you don't want to use Flakes, the following legacy `nix-build` commands are available:
 
 ```bash
 # Type-check the Agda specification
@@ -174,9 +170,6 @@ nix-build -A html
 
 # Generate Haskell source code
 nix-build -A hs-src
-
-# Build the mkdocs site
-nix-build -A mkdocs
 ```
 
 ### Using the `fls-shake` Build Tool
@@ -188,13 +181,43 @@ For more granular control, you can use our Shake-based build tool, `fls-shake`, 
 nix develop
 
 # Build specific artifacts using fls-shake
-# fls-shake cardano-ledger.pdf  # Build the full PDF (deprecated)
 fls-shake html                # Build HTML docs
 fls-shake hs                  # Build Haskell source
 
 # See all available targets
 fls-shake --help
 ```
+
+### Building and testing the site
+
+```bash
+nix develop .#docs
+python build-tools/scripts/md/build.py --run-agda
+cd _build/md/mkdocs
+mkdocs serve
+```
+
+and then point your browser to the local server url: <http://127.0.0.1:8000/>.
+
+### Editing the Agda source code
+
+One you have generated the mkdocs site using the commands provided in the previous
+section, you can edit the files in the Agda source files `_build/md/md.in/src`
+directory.  You should then check that the changes you made look okay on the website.
+(We'll explain how to do that next.)  If you like the changes, you can replace the
+corresponding file in the main `src` directory with your modified version.
+
+Using the following steps you can check how your revisions to files in
+`_build/md/md.in/src` will affect the appearance of the corresponding page in the
+site docs:
+
+1.  Enter the `docs` shell (`nix develop .#docs`), build the mkdocs site, and run
+    `mkdocs serve` as described in the previous section.
+
+2.  In another terminal window, enter the default Nix shell: `nix develop`.
+
+3.  Run `fls-shake --watch`.
+
 
 ---
 
