@@ -30,4 +30,4 @@ record GovStructure : Type₁ where
   field globalConstants : _
   open GlobalConstants globalConstants public
 
-  open import Ledger.Conway.Address Network KeyHash ScriptHash public
+  open import Ledger.Core.Specification.Address Network KeyHash ScriptHash public

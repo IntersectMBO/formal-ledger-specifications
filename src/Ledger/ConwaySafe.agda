@@ -2,7 +2,7 @@
 module Ledger.ConwaySafe where
 
 -- ** Cardano ledger in the Coway era
-import Ledger.Conway.Address
+import Ledger.Core.Specification.Address
 import Ledger.Conway.Certs
 import Ledger.Conway.Certs.Properties
 import Ledger.Conway.Certs.Properties.PoV

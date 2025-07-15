@@ -129,4 +129,4 @@ instance
         (inj₂ x) → HSPlutusScript.psScriptSize x
     }
 
-open import Ledger.Conway.Address Network KeyHash ScriptHash using () public
+open import Ledger.Core.Specification.Address Network KeyHash ScriptHash using () public

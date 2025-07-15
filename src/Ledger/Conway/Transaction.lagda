@@ -24,7 +24,7 @@ import Ledger.Conway.Script.Base
 import Ledger.Conway.GovernanceActions
 import Ledger.Conway.Certs
 import Ledger.Conway.TokenAlgebra.Base
-import Ledger.Conway.Address
+import Ledger.Core.Specification.Address
 
 open import Relation.Nullary.Decidable using (⌊_⌋)
 
@@ -81,7 +81,7 @@ record TransactionStructure : Type₁ where
   field cryptoStructure : _
   open CryptoStructure cryptoStructure public
   open Ledger.Conway.TokenAlgebra.Base ScriptHash public
-  open Ledger.Conway.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
+  open Ledger.Core.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public

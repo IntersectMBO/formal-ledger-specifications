@@ -20,7 +20,7 @@ open import Ledger.Prelude
 
 open import Tactic.Derive.Show
 
-module Ledger.Conway.Address (
+module Ledger.Core.Specification.Address (
 \end{code}
 
 \begin{figure*}[!ht]
