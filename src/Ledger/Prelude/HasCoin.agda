@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-module Ledger.Interface.HasCoin where
+module Ledger.Prelude.HasCoin where
 
 open import Prelude
 open import Ledger.Prelude.Base
