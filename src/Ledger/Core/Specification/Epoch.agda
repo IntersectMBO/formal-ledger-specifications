@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-module Ledger.Prelude.Epoch where
+module Ledger.Core.Specification.Epoch where
 
 open import Ledger.Prelude hiding (compare; Rel)
 

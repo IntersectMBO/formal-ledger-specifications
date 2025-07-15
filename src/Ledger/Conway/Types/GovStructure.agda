@@ -4,9 +4,9 @@ module Ledger.Conway.Types.GovStructure where
 
 open import Prelude using (Type)
 open import Class.DecEq
-open import Ledger.Prelude.Crypto
+open import Ledger.Core.Specification.Crypto
 open import Ledger.Conway.Script.Base
-open import Ledger.Prelude.Epoch
+open import Ledger.Core.Specification.Epoch
 import Ledger.Conway.PParams
 
 record GovStructure : Type₁ where

@@ -16,7 +16,7 @@ open import stdlib-classes.Class.HasCast
 open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
-open import Ledger.Prelude.Epoch
+open import Ledger.Core.Specification.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
 open import Ledger.Conway.Conformance.Utxo.Properties SVTransactionStructure SVAbstractFunctions

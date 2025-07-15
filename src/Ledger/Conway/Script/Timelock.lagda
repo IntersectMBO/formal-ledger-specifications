@@ -19,8 +19,8 @@ open import Tactic.Derive.DecEq
 open import Tactic.Inline
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
-open import Ledger.Prelude.Crypto
-open import Ledger.Prelude.Epoch
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
 
 module Ledger.Conway.Script.Timelock
   (cs : _) (open CryptoStructure cs)

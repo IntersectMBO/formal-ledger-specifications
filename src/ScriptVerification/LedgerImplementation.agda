@@ -16,9 +16,9 @@ open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
 open import Foreign.Convertible
 import Foreign.Haskell as F
-open import Ledger.Prelude.Crypto
+open import Ledger.Core.Specification.Crypto
 open import Ledger.Conway.Transaction
-open import Ledger.Prelude.Epoch
+open import Ledger.Core.Specification.Epoch
 open import Ledger.Conway.Types.GovStructure
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance

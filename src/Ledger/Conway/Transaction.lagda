@@ -16,8 +16,8 @@ import Data.Maybe.Base as M
 
 open import Ledger.Prelude renaming (filterᵐ to filter)
 
-open import Ledger.Prelude.Crypto
-open import Ledger.Prelude.Epoch
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
 open import Ledger.Conway.Types.GovStructure
 import Ledger.Conway.PParams
 import Ledger.Conway.Script.Base

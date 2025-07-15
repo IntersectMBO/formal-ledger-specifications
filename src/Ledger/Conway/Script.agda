@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude.Crypto
-open import Ledger.Prelude.Epoch
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
 
 module Ledger.Conway.Script
   (cs : _) (open CryptoStructure cs)

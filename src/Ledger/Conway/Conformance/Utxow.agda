@@ -2,7 +2,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Prelude.Crypto
+open import Ledger.Core.Specification.Crypto
 open import Ledger.Conway.Abstract
 open import Ledger.Conway.Transaction
 

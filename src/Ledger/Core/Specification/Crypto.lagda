@@ -8,7 +8,7 @@ functions and properties of this scheme.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
-module Ledger.Prelude.Crypto where
+module Ledger.Core.Specification.Crypto where
 
 open import Ledger.Prelude hiding (T)
 
