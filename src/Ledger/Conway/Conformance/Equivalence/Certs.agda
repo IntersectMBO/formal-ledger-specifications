@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 open import Data.Product using (_×_; _,_)
 open import Relation.Binary.PropositionalEquality
@@ -16,7 +16,7 @@ module Ledger.Conway.Conformance.Equivalence.Certs
 
 private
   module L where
-    open import Ledger.Conway.Certs govStructure public
+    open import Ledger.Conway.Specification.Certs govStructure public
 
   module C where
     open import Ledger.Conway.Conformance.Certs govStructure public

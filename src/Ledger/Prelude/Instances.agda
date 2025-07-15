@@ -4,7 +4,7 @@ module Ledger.Prelude.Instances where
 
 open import Prelude
 open import Ledger.Prelude.Base
-open import Ledger.Interface.HasCoin
+open import Ledger.Prelude.HasCoin
 open import Interface.HasSubtract
 open import Interface.HasSubset
 

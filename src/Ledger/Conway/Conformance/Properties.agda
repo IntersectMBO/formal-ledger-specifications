@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Properties
   (txs : _) (open TransactionStructure txs)
@@ -13,8 +13,8 @@ open import Ledger.Conway.Conformance.Chain txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Enact govStructure
-open import Ledger.Conway.Gov txs
+open import Ledger.Conway.Specification.Enact govStructure
+open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Conformance.Certs govStructure
 
 isCredDeposit : DepositPurpose → Type

@@ -10,21 +10,21 @@ import Data.Rational as ℚ
 
 
 open import Ledger.Prelude
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxo
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Script.Validation txs abs
-open import Ledger.Conway.Fees txs using (scriptsCost)
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Fees txs using (scriptsCost)
 open import Ledger.Conway.Conformance.Certs govStructure
 
 private
   module L where
-    open import Ledger.Conway.Utxo txs abs public
+    open import Ledger.Conway.Specification.Utxo txs abs public
 
 open PParams
 
