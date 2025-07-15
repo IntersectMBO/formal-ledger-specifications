@@ -33,13 +33,11 @@ import qualified MAlonzo.Code.Foreign.Haskell.Coerce
 import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Interface.STS
-import qualified MAlonzo.Code.Ledger.Conway.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Chain
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Chain.Properties
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Epoch
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Ledger
-import qualified MAlonzo.Code.Ledger.Conway.Enact
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes
@@ -56,10 +54,12 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo
-import qualified MAlonzo.Code.Ledger.Conway.PParams
-import qualified MAlonzo.Code.Ledger.Conway.Ratify
-import qualified MAlonzo.Code.Ledger.Conway.Transaction
-import qualified MAlonzo.Code.Ledger.Conway.Utxo
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Enact
+import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Ratify
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxo
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
@@ -81,7 +81,7 @@ d_ChainState_18 = ()
 -- Ledger.Conway.Foreign.HSLedger.Chain._.calculateStakeDistrs
 d_calculateStakeDistrs_20 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2196 ->
-  MAlonzo.Code.Ledger.Conway.Ratify.T_StakeDistrs_2216
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_StakeDistrs_2218
 d_calculateStakeDistrs_20
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Chain.du_calculateStakeDistrs_2596
@@ -91,7 +91,7 @@ d_calculateStakeDistrs_20
             MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
 -- Ledger.Conway.Foreign.HSLedger.Chain._.filterPurpose
 d_filterPurpose_22 ::
-  MAlonzo.Code.Ledger.Conway.Certs.T_DepositPurpose_928 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DepositPurpose_930 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_filterPurpose_22
@@ -114,7 +114,7 @@ d_govActionDeposits_24
             MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
 -- Ledger.Conway.Foreign.HSLedger.Chain._.maybePurpose
 d_maybePurpose_26 ::
-  MAlonzo.Code.Ledger.Conway.Certs.T_DepositPurpose_928 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DepositPurpose_930 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Integer -> Maybe Integer
 d_maybePurpose_26
   = coe
@@ -125,8 +125,8 @@ d_maybePurpose_26
             MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14))
 -- Ledger.Conway.Foreign.HSLedger.Chain._.maybePurpose-prop
 d_maybePurpose'45'prop_28 ::
-  MAlonzo.Code.Ledger.Conway.Certs.T_DepositPurpose_928 ->
-  MAlonzo.Code.Ledger.Conway.Certs.T_DepositPurpose_928 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DepositPurpose_930 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DepositPurpose_930 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
@@ -142,7 +142,7 @@ d_slot_36 v0
 -- Ledger.Conway.Foreign.HSLedger.Chain._.Block.ts
 d_ts_38 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Chain.T_Block_2432 ->
-  [MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3130]
+  [MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3132]
 d_ts_38 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Chain.d_ts_2438 (coe v0)
@@ -192,14 +192,14 @@ d_Conv'45'ChainState_50
                            (coe
                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_9607
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.PParams.d_treasury_166
+                                 MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_168
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_2502
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_epochState_2524
                                        (coe v1))))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.PParams.d_reserves_168
+                                 MAlonzo.Code.Ledger.Conway.Specification.PParams.d_reserves_170
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_2502
                                     (coe
@@ -402,7 +402,7 @@ d_Conv'45'ChainState_50
                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'HSPlutusScript_24))))))))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2072
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                 (coe
@@ -411,7 +411,7 @@ d_Conv'45'ChainState_50
                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_epochState_2524
                                                       (coe v1))))))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Utxo.d_fees_2072
+                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2074
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                        (coe
@@ -433,7 +433,7 @@ d_Conv'45'ChainState_50
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Utxo.d_deposits_2074
+                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2076
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                 (coe
@@ -442,7 +442,7 @@ d_Conv'45'ChainState_50
                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_epochState_2524
                                                       (coe v1))))))))
                                  (coe
-                                    MAlonzo.Code.Ledger.Conway.Utxo.d_donations_2076
+                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2078
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                        (coe
@@ -587,7 +587,7 @@ d_Conv'45'ChainState_50
                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Certs.d_pools_1162
+                                                MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1164
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1304
                                                    (coe
@@ -611,7 +611,7 @@ d_Conv'45'ChainState_50
                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                           (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Certs.d_retiring_1164
+                                                MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1166
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1304
                                                    (coe
@@ -726,12 +726,12 @@ d_Conv'45'ChainState_50
                                                             (coe
                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                   (coe v3))))
                                                          (coe
                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                (coe v3))))))
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16)
@@ -749,7 +749,7 @@ d_Conv'45'ChainState_50
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Enact.d_cc_954
+                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_956
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                           (coe
@@ -780,7 +780,7 @@ d_Conv'45'ChainState_50
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Enact.d_constitution_956
+                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_958
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                           (coe
@@ -809,7 +809,7 @@ d_Conv'45'ChainState_50
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Enact.d_pv_958
+                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_960
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                           (coe
@@ -834,7 +834,7 @@ d_Conv'45'ChainState_50
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Enact.d_pparams_960
+                                       MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_962
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                           (coe
@@ -854,7 +854,7 @@ d_Conv'45'ChainState_50
                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                     (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Enact.d_withdrawals_962
+                                          MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_964
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                              (coe
@@ -892,12 +892,12 @@ d_Conv'45'ChainState_50
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                      (coe v3))))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                   (coe v3))))))
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16)
@@ -915,9 +915,9 @@ d_Conv'45'ChainState_50
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Enact.d_cc_954
+                                          MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_956
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                 (coe
@@ -949,9 +949,9 @@ d_Conv'45'ChainState_50
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Enact.d_constitution_956
+                                          MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_958
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                 (coe
@@ -981,9 +981,9 @@ d_Conv'45'ChainState_50
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Enact.d_pv_958
+                                          MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_960
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                 (coe
@@ -1009,9 +1009,9 @@ d_Conv'45'ChainState_50
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Enact.d_pparams_960
+                                          MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_962
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                 (coe
@@ -1031,9 +1031,9 @@ d_Conv'45'ChainState_50
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                        (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Enact.d_withdrawals_962
+                                             MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_964
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                    (coe
@@ -1055,14 +1055,14 @@ d_Conv'45'ChainState_50
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_796)))
-                                    (MAlonzo.Code.Ledger.Conway.Ratify.d_removed_2262
+                                    (MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_2264
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                           (coe
                                              MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_epochState_2524
                                              (coe v1))))))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Ratify.d_delay_2264
+                                 MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_2266
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                     (coe
@@ -1099,12 +1099,12 @@ d_Conv'45'ChainState_50
                                              (coe
                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_9607
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.PParams.d_treasury_166
+                                                   MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_168
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_2502
                                                       (coe v4)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.PParams.d_reserves_168
+                                                   MAlonzo.Code.Ledger.Conway.Specification.PParams.d_reserves_170
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_acnt_2502
                                                       (coe v4))))
@@ -1291,14 +1291,14 @@ d_Conv'45'ChainState_50
                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'HSPlutusScript_24))))))))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2072
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_2506
                                                                      (coe v4)))))))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Utxo.d_fees_2072
+                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2074
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                          (coe
@@ -1318,14 +1318,14 @@ d_Conv'45'ChainState_50
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Utxo.d_deposits_2074
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2076
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ls_2506
                                                                      (coe v4)))))))
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Utxo.d_donations_2076
+                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2078
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                          (coe
@@ -1458,7 +1458,7 @@ d_Conv'45'ChainState_50
                                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Certs.d_pools_1162
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1164
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1304
                                                                      (coe
@@ -1480,7 +1480,7 @@ d_Conv'45'ChainState_50
                                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                             (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Certs.d_retiring_1164
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1166
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1304
                                                                      (coe
@@ -1589,12 +1589,12 @@ d_Conv'45'ChainState_50
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                     (coe v7))))
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                  (coe v7))))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16)
@@ -1612,7 +1612,7 @@ d_Conv'45'ChainState_50
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Enact.d_cc_954
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_956
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                                             (coe v4)))))
@@ -1643,7 +1643,7 @@ d_Conv'45'ChainState_50
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Enact.d_constitution_956
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_958
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                                             (coe v4)))))
@@ -1672,7 +1672,7 @@ d_Conv'45'ChainState_50
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Enact.d_pv_958
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_960
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                                             (coe v4)))))
@@ -1697,7 +1697,7 @@ d_Conv'45'ChainState_50
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Enact.d_pparams_960
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_962
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                                             (coe v4)))))
@@ -1715,7 +1715,7 @@ d_Conv'45'ChainState_50
                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                       (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Enact.d_withdrawals_962
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_964
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_es_2508
                                                                (coe v4)))))))
@@ -1752,12 +1752,12 @@ d_Conv'45'ChainState_50
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                        (coe v7))))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                     (coe v7))))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16)
@@ -1775,9 +1775,9 @@ d_Conv'45'ChainState_50
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Enact.d_cc_954
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_956
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                                   (coe v4))))))
@@ -1808,9 +1808,9 @@ d_Conv'45'ChainState_50
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Enact.d_constitution_956
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_958
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                                   (coe v4))))))
@@ -1839,9 +1839,9 @@ d_Conv'45'ChainState_50
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Enact.d_pv_958
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_960
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                                   (coe v4))))))
@@ -1866,9 +1866,9 @@ d_Conv'45'ChainState_50
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Enact.d_pparams_960
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_962
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                                   (coe v4))))))
@@ -1886,9 +1886,9 @@ d_Conv'45'ChainState_50
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                          (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Conway.Enact.d_withdrawals_962
+                                                               MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_964
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                                      (coe v4))))))))
@@ -1908,12 +1908,12 @@ d_Conv'45'ChainState_50
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_796)))
-                                                      (MAlonzo.Code.Ledger.Conway.Ratify.d_removed_2262
+                                                      (MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_2264
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                             (coe v4)))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Ratify.d_delay_2264
+                                                   MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_2266
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_fut_2510
                                                       (coe v4)))))
@@ -1947,10 +1947,10 @@ d_Conv'45'ChainState_50
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_9607
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.PParams.d_treasury_166
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasury_168
                                                                      (coe v7))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.PParams.d_reserves_168
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.PParams.d_reserves_170
                                                                      (coe v7)))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Epoch.C_MkSnapshots_1665
@@ -2121,12 +2121,12 @@ d_Conv'45'ChainState_50
                                                                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'HSPlutusScript_24))))))))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2072
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                                                     (coe v9))))))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Utxo.d_fees_2072
+                                                                        MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2074
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                                            (coe v9)))
@@ -2144,12 +2144,12 @@ d_Conv'45'ChainState_50
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Utxo.d_deposits_2074
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2076
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                                                     (coe v9))))))
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Utxo.d_donations_2076
+                                                                        MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2078
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_utxoSt_2204
                                                                            (coe v9))))
@@ -2274,7 +2274,7 @@ d_Conv'45'ChainState_50
                                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Certs.d_pools_1162
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1164
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1304
                                                                                        (coe
@@ -2295,7 +2295,7 @@ d_Conv'45'ChainState_50
                                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Certs.d_retiring_1164
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1166
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1304
                                                                                        (coe
@@ -2401,13 +2401,13 @@ d_Conv'45'ChainState_50
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                       (coe
                                                                                                          v13))))
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                    (coe
                                                                                                       v13))))))
                                                                                     (coe
@@ -2426,7 +2426,7 @@ d_Conv'45'ChainState_50
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Enact.d_cc_954
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_956
                                                                            (coe v10))))
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -2455,7 +2455,7 @@ d_Conv'45'ChainState_50
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Enact.d_constitution_956
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_958
                                                                            (coe v10))))
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -2482,7 +2482,7 @@ d_Conv'45'ChainState_50
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Enact.d_pv_958
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_960
                                                                            (coe v10))))
                                                                   (coe
                                                                      MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -2505,7 +2505,7 @@ d_Conv'45'ChainState_50
                                                                                    (coe
                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Enact.d_pparams_960
+                                                                           MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_962
                                                                            (coe v10))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_26
@@ -2521,7 +2521,7 @@ d_Conv'45'ChainState_50
                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Enact.d_withdrawals_962
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_964
                                                                               (coe v10))))))
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_9569
@@ -2557,13 +2557,13 @@ d_Conv'45'ChainState_50
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                          (coe
                                                                                                             v13))))
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                       (coe
                                                                                                          v13))))))
                                                                                        (coe
@@ -2582,9 +2582,9 @@ d_Conv'45'ChainState_50
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Enact.d_cc_954
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_956
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                                  (coe v11)))))
                                                                      (coe
                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -2613,9 +2613,9 @@ d_Conv'45'ChainState_50
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Enact.d_constitution_956
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_958
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                                  (coe v11)))))
                                                                      (coe
                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -2642,9 +2642,9 @@ d_Conv'45'ChainState_50
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Enact.d_pv_958
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_960
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                                  (coe v11)))))
                                                                      (coe
                                                                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44
@@ -2667,9 +2667,9 @@ d_Conv'45'ChainState_50
                                                                                       (coe
                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Enact.d_pparams_960
+                                                                              MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_962
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                                  (coe v11)))))
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_26
@@ -2685,9 +2685,9 @@ d_Conv'45'ChainState_50
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                                            (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Enact.d_withdrawals_962
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_964
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Ratify.d_es_2260
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_es_2262
                                                                                     (coe v11)))))))
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSSet_38
@@ -2705,10 +2705,10 @@ d_Conv'45'ChainState_50
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovActionState_796)))
-                                                                        (MAlonzo.Code.Ledger.Conway.Ratify.d_removed_2262
+                                                                        (MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_removed_2264
                                                                            (coe v11))))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Ratify.d_delay_2264
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delay_2266
                                                                      (coe v11)))
                                                         _ -> MAlonzo.RTE.mazUnreachableError))
                                                 (coe
@@ -2724,7 +2724,7 @@ d_Conv'45'ChainState_50
                                                                      (coe
                                                                         (\ v12 ->
                                                                            case coe v12 of
-                                                                             MAlonzo.Code.Ledger.Conway.PParams.C_'10214'_'44'_'10215''7491'_170 v13 v14
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_172 v13 v14
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_9607
                                                                                     (coe v13)
@@ -2735,7 +2735,7 @@ d_Conv'45'ChainState_50
                                                                            case coe v12 of
                                                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams.C_MkAcnt_9607 v13 v14
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Conway.PParams.C_'10214'_'44'_'10215''7491'_170
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.PParams.C_'10214'_'44'_'10215''7491'_172
                                                                                     (coe v13)
                                                                                     (coe v14)
                                                                              _ -> MAlonzo.RTE.mazUnreachableError)))
@@ -2934,13 +2934,13 @@ d_Conv'45'ChainState_50
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                               (coe
                                                                                                                                  v21))))))
                                                                                                                (coe
@@ -2969,13 +2969,13 @@ d_Conv'45'ChainState_50
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                               (coe
                                                                                                                                  v21))))))
                                                                                                                (coe
@@ -3055,13 +3055,13 @@ d_Conv'45'ChainState_50
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                               (coe
                                                                                                                                  v21))))))
                                                                                                                (coe
@@ -3090,13 +3090,13 @@ d_Conv'45'ChainState_50
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                               (coe
                                                                                                                                  v21))))))
                                                                                                                (coe
@@ -3176,13 +3176,13 @@ d_Conv'45'ChainState_50
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                               (coe
                                                                                                                                  v21))))))
                                                                                                                (coe
@@ -3211,13 +3211,13 @@ d_Conv'45'ChainState_50
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                               (coe
                                                                                                                                  v21))))))
                                                                                                                (coe
@@ -3290,11 +3290,11 @@ d_Conv'45'ChainState_50
                                                                                                                      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.d_Conv'45'HSPlutusScript_24))))))))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2072
                                                                                                    (coe
                                                                                                       v13)))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Utxo.d_fees_2072
+                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_fees_2074
                                                                                           (coe v13))
                                                                                        (coe
                                                                                           MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_26
@@ -3310,11 +3310,11 @@ d_Conv'45'ChainState_50
                                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Utxo.d_deposits_2074
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_deposits_2076
                                                                                                    (coe
                                                                                                       v13)))))
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Utxo.d_donations_2076
+                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_donations_2078
                                                                                           (coe
                                                                                              v13)))
                                                                                     (coe
@@ -3430,7 +3430,7 @@ d_Conv'45'ChainState_50
                                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Conway.Certs.d_pools_1162
+                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1164
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1304
                                                                                                          (coe
@@ -3449,7 +3449,7 @@ d_Conv'45'ChainState_50
                                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Conway.Certs.d_retiring_1164
+                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1166
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_pState_1304
                                                                                                          (coe
@@ -3530,7 +3530,7 @@ d_Conv'45'ChainState_50
                                                                                              (\ v16 ->
                                                                                                 case coe
                                                                                                        v16 of
-                                                                                                  MAlonzo.Code.Ledger.Conway.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2078 v17 v18 v19 v20
+                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2080 v17 v18 v19 v20
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1107
                                                                                                          (coe
@@ -3606,7 +3606,7 @@ d_Conv'45'ChainState_50
                                                                                                        v16 of
                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo.C_MkUTxOState_1107 v17 v18 v19 v20
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2078
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Utxo.C_'10214'_'44'_'44'_'44'_'10215''7512'_2080
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                                             (coe
@@ -3668,9 +3668,9 @@ d_Conv'45'ChainState_50
                                                                                                                       = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                 coe
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Certs.d_DecEq'45'DepositPurpose_998
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1000
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
+                                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2406
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                                                                                                            (coe
@@ -3800,7 +3800,7 @@ d_Conv'45'ChainState_50
                                                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Certs.d_pools_1162
+                                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1164
                                                                                                                         (coe
                                                                                                                            v18)))))
                                                                                                             (coe
@@ -3817,7 +3817,7 @@ d_Conv'45'ChainState_50
                                                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                                                                                   (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Certs.d_retiring_1164
+                                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1166
                                                                                                                         (coe
                                                                                                                            v18))))))
                                                                                                          (coe
@@ -3981,13 +3981,13 @@ d_Conv'45'ChainState_50
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                       (coe
                                                                                                                                                          v26))))
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                    (coe
                                                                                                                                                       v26))))))
                                                                                                                                     (coe
@@ -4016,13 +4016,13 @@ d_Conv'45'ChainState_50
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                       (coe
                                                                                                                                                          v26))))
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                    (coe
                                                                                                                                                       v26))))))
                                                                                                                                     (coe
@@ -4051,13 +4051,13 @@ d_Conv'45'ChainState_50
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                       (coe
                                                                                                                                                          v26))))
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                    (coe
                                                                                                                                                       v26))))))
                                                                                                                                     (coe
@@ -4075,9 +4075,9 @@ d_Conv'45'ChainState_50
                                                                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                                      coe
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Ledger.Conway.Certs.d_DecEq'45'DepositPurpose_998
+                                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1000
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
+                                                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2406
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                                                                                                                                 (coe
@@ -4099,7 +4099,7 @@ d_Conv'45'ChainState_50
                                                                                                                   (\ v20 ->
                                                                                                                      case coe
                                                                                                                             v20 of
-                                                                                                                       MAlonzo.Code.Ledger.Conway.Certs.C_PState'46'constructor_19285 v21 v22
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Certs.C_PState'46'constructor_19285 v21 v22
                                                                                                                          -> coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_5743
                                                                                                                               (coe
@@ -4139,7 +4139,7 @@ d_Conv'45'ChainState_50
                                                                                                                             v20 of
                                                                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkPState_5743 v21 v22
                                                                                                                          -> coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Certs.C_PState'46'constructor_19285
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Certs.C_PState'46'constructor_19285
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                                                                  (coe
@@ -4253,13 +4253,13 @@ d_Conv'45'ChainState_50
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                       (coe
                                                                                                                                                          v25))))
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                    (coe
                                                                                                                                                       v25))))))
                                                                                                                                     (coe
@@ -4288,13 +4288,13 @@ d_Conv'45'ChainState_50
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
-                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                       (coe
                                                                                                                                                          v25))))
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                                    (coe
                                                                                                                                                       v25))))))
                                                                                                                                     (coe
@@ -4314,9 +4314,9 @@ d_Conv'45'ChainState_50
                                                                                                                                            = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
                                                                                                                                      coe
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Ledger.Conway.Certs.d_DecEq'45'DepositPurpose_998
+                                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Certs.d_DecEq'45'DepositPurpose_1000
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
+                                                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2406
                                                                                                                                              (coe
                                                                                                                                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
                                                                                                                                                 (coe
@@ -4341,7 +4341,7 @@ d_Conv'45'ChainState_50
                                                                      (coe
                                                                         (\ v12 ->
                                                                            case coe v12 of
-                                                                             MAlonzo.Code.Ledger.Conway.Enact.C_EnactState'46'constructor_2885 v13 v14 v15 v16 v17
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Enact.C_EnactState'46'constructor_2885 v13 v14 v15 v16 v17
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_141
                                                                                     (coe
@@ -4375,13 +4375,13 @@ d_Conv'45'ChainState_50
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                         (coe
                                                                                                                            v19))))
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                      (coe
                                                                                                                         v19))))))
                                                                                                       (coe
@@ -4501,7 +4501,7 @@ d_Conv'45'ChainState_50
                                                                            case coe v12 of
                                                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_141 v13 v14 v15 v16 v17
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Enact.C_EnactState'46'constructor_2885
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Enact.C_EnactState'46'constructor_2885
                                                                                     (coe
                                                                                        MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                        (coe
@@ -4527,13 +4527,13 @@ d_Conv'45'ChainState_50
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                      (coe
                                                                                                                         v19))))
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                   (coe
                                                                                                                      v19))))))
                                                                                                    (coe
@@ -4651,7 +4651,7 @@ d_Conv'45'ChainState_50
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1240
                                                                                                          (coe
                                                                                                             v19)))
                                                                                                    (coe
@@ -4659,13 +4659,13 @@ d_Conv'45'ChainState_50
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                             (coe
                                                                                                                v19))))
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                          (coe
                                                                                                             v19))))))
                                                                                           (coe
@@ -4684,7 +4684,7 @@ d_Conv'45'ChainState_50
                                                                      (coe
                                                                         (\ v12 ->
                                                                            case coe v12 of
-                                                                             MAlonzo.Code.Ledger.Conway.Ratify.C_RatifyState'46'constructor_15907 v13 v14 v15
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_RatifyState'46'constructor_15907 v13 v14 v15
                                                                                -> coe
                                                                                     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_9569
                                                                                     (coe
@@ -4720,13 +4720,13 @@ d_Conv'45'ChainState_50
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                            (coe
                                                                                                                               v17))))
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                         (coe
                                                                                                                            v17))))))
                                                                                                          (coe
@@ -4745,7 +4745,7 @@ d_Conv'45'ChainState_50
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Enact.d_cc_954
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Enact.d_cc_956
                                                                                                 (coe
                                                                                                    v13))))
                                                                                        (coe
@@ -4776,7 +4776,7 @@ d_Conv'45'ChainState_50
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Enact.d_constitution_956
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Enact.d_constitution_958
                                                                                                 (coe
                                                                                                    v13))))
                                                                                        (coe
@@ -4805,7 +4805,7 @@ d_Conv'45'ChainState_50
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Enact.d_pv_958
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pv_960
                                                                                                 (coe
                                                                                                    v13))))
                                                                                        (coe
@@ -4830,7 +4830,7 @@ d_Conv'45'ChainState_50
                                                                                                         (coe
                                                                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Enact.d_pparams_960
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Enact.d_pparams_962
                                                                                                 (coe
                                                                                                    v13))))
                                                                                        (coe
@@ -4847,7 +4847,7 @@ d_Conv'45'ChainState_50
                                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)))
                                                                                              (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Enact.d_withdrawals_962
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Enact.d_withdrawals_964
                                                                                                    (coe
                                                                                                       v13))))))
                                                                                     (coe
@@ -4874,7 +4874,7 @@ d_Conv'45'ChainState_50
                                                                            case coe v12 of
                                                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify.C_MkRatifyState_9569 v13 v14 v15
                                                                                -> coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Ratify.C_RatifyState'46'constructor_15907
+                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_RatifyState'46'constructor_15907
                                                                                     (coe
                                                                                        MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                        (coe
@@ -4883,7 +4883,7 @@ d_Conv'45'ChainState_50
                                                                                              (\ v16 ->
                                                                                                 case coe
                                                                                                        v16 of
-                                                                                                  MAlonzo.Code.Ledger.Conway.Enact.C_EnactState'46'constructor_2885 v17 v18 v19 v20 v21
+                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Enact.C_EnactState'46'constructor_2885 v17 v18 v19 v20 v21
                                                                                                     -> coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_141
                                                                                                          (coe
@@ -4919,13 +4919,13 @@ d_Conv'45'ChainState_50
                                                                                                                                        (coe
                                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                              (coe
                                                                                                                                                 v23))))
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                           (coe
                                                                                                                                              v23))))))
                                                                                                                            (coe
@@ -5052,7 +5052,7 @@ d_Conv'45'ChainState_50
                                                                                                        v16 of
                                                                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact.C_MkEnactState_141 v17 v18 v19 v20 v21
                                                                                                     -> coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Enact.C_EnactState'46'constructor_2885
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Enact.C_EnactState'46'constructor_2885
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Data.Product.Base.du_map_128
                                                                                                             (coe
@@ -5078,13 +5078,13 @@ d_Conv'45'ChainState_50
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                           (coe
                                                                                                                                              v23))))
                                                                                                                                  (coe
                                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                        (coe
                                                                                                                                           v23))))))
                                                                                                                         (coe
@@ -5210,7 +5210,7 @@ d_Conv'45'ChainState_50
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1240
                                                                                                                               (coe
                                                                                                                                  v23)))
                                                                                                                         (coe
@@ -5218,13 +5218,13 @@ d_Conv'45'ChainState_50
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                                  (coe
                                                                                                                                     v23))))
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
+                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                                                                                                                               (coe
                                                                                                                                  v23))))))
                                                                                                                (coe

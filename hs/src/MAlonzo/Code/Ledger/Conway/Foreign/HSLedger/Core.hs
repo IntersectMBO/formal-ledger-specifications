@@ -35,8 +35,8 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.Hashable
-import qualified MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base
-import qualified MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin
+import qualified MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base
+import qualified MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Coin
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -325,7 +325,7 @@ d_DocHash_104 :: ()
 d_DocHash_104 = erased
 -- Ledger.Conway.Foreign.HSLedger.Core.Implementation.tokenAlgebra
 d_tokenAlgebra_106 ::
-  MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base.T_TokenAlgebra_12
+  MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Base.T_TokenAlgebra_14
 d_tokenAlgebra_106
   = coe
-      MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin.du_Coin'45'TokenAlgebra_122
+      MAlonzo.Code.Ledger.Conway.Specification.TokenAlgebra.Coin.du_Coin'45'TokenAlgebra_124
