@@ -33,7 +33,6 @@ import qualified MAlonzo.Code.Foreign.Haskell.Coerce
 import qualified MAlonzo.Code.Foreign.HaskellTypes
 import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Interface.STS
-import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Chain
@@ -61,8 +60,9 @@ import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Ratify
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Utxo
-import qualified MAlonzo.Code.Ledger.Prelude.Crypto
-import qualified MAlonzo.Code.Ledger.Prelude.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
@@ -127,7 +127,7 @@ d_maybePurpose_26
 d_maybePurpose'45'prop_28 ::
   MAlonzo.Code.Ledger.Conway.Certs.T_DepositPurpose_928 ->
   MAlonzo.Code.Ledger.Conway.Certs.T_DepositPurpose_928 ->
-  MAlonzo.Code.Ledger.Conway.Address.T_Credential_18 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
@@ -720,16 +720,16 @@ d_Conv'45'ChainState_50
                                                               (coe v2) in
                                                     coe
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                         MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                   (coe v3))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                (coe v3))))))
@@ -886,16 +886,16 @@ d_Conv'45'ChainState_50
                                                                  (coe v2) in
                                                        coe
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                   (coe
                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                      (coe v3))))
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                   (coe v3))))))
@@ -1583,16 +1583,16 @@ d_Conv'45'ChainState_50
                                                                                 (coe v6) in
                                                                       coe
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                     (coe v7))))
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                  (coe v7))))))
@@ -1746,16 +1746,16 @@ d_Conv'45'ChainState_50
                                                                                    (coe v6) in
                                                                          coe
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                     (coe
                                                                                        MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                        (coe v7))))
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                  (coe
                                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                     (coe v7))))))
@@ -2395,17 +2395,17 @@ d_Conv'45'ChainState_50
                                                                                                      v12) in
                                                                                         coe
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                       (coe
                                                                                                          v13))))
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                    (coe
@@ -2551,17 +2551,17 @@ d_Conv'45'ChainState_50
                                                                                                         v12) in
                                                                                            coe
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                          (coe
                                                                                                             v13))))
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                       (coe
@@ -2928,17 +2928,17 @@ d_Conv'45'ChainState_50
                                                                                                                                 v20) in
                                                                                                                    coe
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                               (coe
@@ -2963,17 +2963,17 @@ d_Conv'45'ChainState_50
                                                                                                                                 v20) in
                                                                                                                    coe
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                               (coe
@@ -3049,17 +3049,17 @@ d_Conv'45'ChainState_50
                                                                                                                                 v20) in
                                                                                                                    coe
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                               (coe
@@ -3084,17 +3084,17 @@ d_Conv'45'ChainState_50
                                                                                                                                 v20) in
                                                                                                                    coe
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                               (coe
@@ -3170,17 +3170,17 @@ d_Conv'45'ChainState_50
                                                                                                                                 v20) in
                                                                                                                    coe
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                               (coe
@@ -3205,17 +3205,17 @@ d_Conv'45'ChainState_50
                                                                                                                                 v20) in
                                                                                                                    coe
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                  (coe
                                                                                                                                     v21))))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                               (coe
@@ -3975,17 +3975,17 @@ d_Conv'45'ChainState_50
                                                                                                                                                      v25) in
                                                                                                                                         coe
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
                                                                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                       (coe
                                                                                                                                                          v26))))
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                    (coe
@@ -4010,17 +4010,17 @@ d_Conv'45'ChainState_50
                                                                                                                                                      v25) in
                                                                                                                                         coe
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
                                                                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                       (coe
                                                                                                                                                          v26))))
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                    (coe
@@ -4045,17 +4045,17 @@ d_Conv'45'ChainState_50
                                                                                                                                                      v25) in
                                                                                                                                         coe
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
                                                                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                       (coe
                                                                                                                                                          v26))))
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                    (coe
@@ -4247,17 +4247,17 @@ d_Conv'45'ChainState_50
                                                                                                                                                      v24) in
                                                                                                                                         coe
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
                                                                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                       (coe
                                                                                                                                                          v25))))
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                    (coe
@@ -4282,17 +4282,17 @@ d_Conv'45'ChainState_50
                                                                                                                                                      v24) in
                                                                                                                                         coe
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                                 (coe
-                                                                                                                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                                    (coe
                                                                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                       (coe
                                                                                                                                                          v25))))
                                                                                                                                              (coe
-                                                                                                                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                                 (coe
                                                                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                                    (coe
@@ -4369,17 +4369,17 @@ d_Conv'45'ChainState_50
                                                                                                                        v18) in
                                                                                                           coe
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                         (coe
                                                                                                                            v19))))
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                      (coe
@@ -4521,17 +4521,17 @@ d_Conv'45'ChainState_50
                                                                                                                     v18) in
                                                                                                        coe
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                   (coe
                                                                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                      (coe
                                                                                                                         v19))))
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                               MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                (coe
                                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                   (coe
@@ -4647,23 +4647,23 @@ d_Conv'45'ChainState_50
                                                                                                            v18) in
                                                                                               coe
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'RwdAddr_240
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_242
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Netw_280
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
                                                                                                          (coe
                                                                                                             v19)))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                             (coe
                                                                                                                v19))))
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                          (coe
@@ -4714,17 +4714,17 @@ d_Conv'45'ChainState_50
                                                                                                                           v16) in
                                                                                                              coe
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                            (coe
                                                                                                                               v17))))
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                      (coe
                                                                                                                         MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                         (coe
@@ -4913,17 +4913,17 @@ d_Conv'45'ChainState_50
                                                                                                                                             v22) in
                                                                                                                                coe
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                        (coe
-                                                                                                                                          MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                              (coe
                                                                                                                                                 v23))))
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                        (coe
                                                                                                                                           MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                           (coe
@@ -5072,17 +5072,17 @@ d_Conv'45'ChainState_50
                                                                                                                                          v22) in
                                                                                                                             coe
                                                                                                                               (coe
-                                                                                                                                 MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                                     (coe
-                                                                                                                                       MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                                        (coe
                                                                                                                                           MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                           (coe
                                                                                                                                              v23))))
                                                                                                                                  (coe
-                                                                                                                                    MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                                     (coe
                                                                                                                                        MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                        (coe
@@ -5206,23 +5206,23 @@ d_Conv'45'ChainState_50
                                                                                                                                 v22) in
                                                                                                                    coe
                                                                                                                      (coe
-                                                                                                                        MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'RwdAddr_240
+                                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_242
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Netw_280
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
                                                                                                                               (coe
                                                                                                                                  v23)))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                                               (coe
                                                                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                                  (coe
                                                                                                                                     v23))))
                                                                                                                         (coe
-                                                                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                                            (coe
                                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                                                                                               (coe

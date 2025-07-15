@@ -680,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Address.html" class="md-nav__link">
+      <a href="Ledger.Conway.Address.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5720,7 +5720,7 @@ are bundled with the protocol parameters; see
 <a id="1803" class="Keyword">open</a> <a id="1808" class="Keyword">import</a> <a id="1815" href="Ledger.Conway.Transaction.html" class="Module">Ledger.Conway.Transaction</a>
 
 <a id="1842" class="Keyword">module</a> <a id="1849" href="Ledger.Conway.Fees.html" class="Module">Ledger.Conway.Fees</a>
-  <a id="1870" class="Symbol">(</a><a id="1871" href="Ledger.Conway.Fees.html#1871" class="Bound">txs</a> <a id="1875" class="Symbol">:</a> <a id="1877" class="Symbol">_)</a> <a id="1880" class="Symbol">(</a><a id="1881" class="Keyword">open</a> <a id="1886" href="Ledger.Conway.Transaction.html#2618" class="Module">TransactionStructure</a> <a id="1907" href="Ledger.Conway.Fees.html#1871" class="Bound">txs</a><a id="1910" class="Symbol">)</a>
+  <a id="1870" class="Symbol">(</a><a id="1871" href="Ledger.Conway.Fees.html#1871" class="Bound">txs</a> <a id="1875" class="Symbol">:</a> <a id="1877" class="Symbol">_)</a> <a id="1880" class="Symbol">(</a><a id="1881" class="Keyword">open</a> <a id="1886" href="Ledger.Conway.Transaction.html#2652" class="Module">TransactionStructure</a> <a id="1907" href="Ledger.Conway.Fees.html#1871" class="Bound">txs</a><a id="1910" class="Symbol">)</a>
   <a id="1914" class="Keyword">where</a>
 
 <a id="1921" class="Keyword">open</a> <a id="1926" class="Keyword">import</a> <a id="1933" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="1947" class="Keyword">using</a> <a id="1953" class="Symbol">(</a><a id="1954" href="Data.Rational.Base.html#4325" class="Function">0ℚ</a><a id="1956" class="Symbol">;</a> <a id="1958" href="Data.Rational.Base.html#1342" class="Record">ℚ</a><a id="1959" class="Symbol">;</a> <a id="1961" href="Data.Rational.Base.html#1960" class="Function">mkℚ+</a><a id="1965" class="Symbol">;</a> <a id="1967" href="Data.Rational.Base.html#6315" class="Function Operator">_*_</a><a id="1970" class="Symbol">;</a> <a id="1972" href="Data.Rational.Base.html#7116" class="Function">floor</a><a id="1977" class="Symbol">)</a>
@@ -5738,7 +5738,7 @@ are bundled with the protocol parameters; see
 <figure id="fig:scriptsCost">
 <p>
 <pre class="Agda">
-<a id="scriptsCost"></a><a id="2467" href="Ledger.Conway.Fees.html#2467" class="Function">scriptsCost</a> <a id="2479" class="Symbol">:</a> <a id="2481" class="Symbol">(</a><a id="2482" href="Ledger.Conway.Fees.html#2482" class="Bound">pp</a> <a id="2485" class="Symbol">:</a> <a id="2487" href="Ledger.Conway.PParams.html#2772" class="Record">PParams</a><a id="2494" class="Symbol">)</a> <a id="2496" class="Symbol">→</a> <a id="2498" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="2500" class="Symbol">→</a> <a id="2502" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
+<a id="scriptsCost"></a><a id="2467" href="Ledger.Conway.Fees.html#2467" class="Function">scriptsCost</a> <a id="2479" class="Symbol">:</a> <a id="2481" class="Symbol">(</a><a id="2482" href="Ledger.Conway.Fees.html#2482" class="Bound">pp</a> <a id="2485" class="Symbol">:</a> <a id="2487" href="Ledger.Conway.PParams.html#2794" class="Record">PParams</a><a id="2494" class="Symbol">)</a> <a id="2496" class="Symbol">→</a> <a id="2498" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="2500" class="Symbol">→</a> <a id="2502" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
 <a id="2507" href="Ledger.Conway.Fees.html#2467" class="Function">scriptsCost</a> <a id="2519" href="Ledger.Conway.Fees.html#2519" class="Bound">pp</a> <a id="2522" href="Ledger.Conway.Fees.html#2522" class="Bound">scriptSize</a>
   <a id="2535" class="Symbol">=</a> <a id="2537" href="Ledger.Conway.Fees.html#2886" class="Function">scriptsCostAux</a> <a id="2552" href="Data.Rational.Base.html#4325" class="Function">0ℚ</a> <a id="2555" href="Ledger.Conway.Fees.html#2691" class="Function">minFeeRefScriptCoinsPerByte</a> <a id="2583" href="Ledger.Conway.Fees.html#2522" class="Bound">scriptSize</a>
 </pre> 
@@ -5748,9 +5748,9 @@ are bundled with the protocol parameters; see
 
 <pre class="Agda">
   <a id="2681" class="Keyword">where</a>
-    <a id="2691" href="Ledger.Conway.Fees.html#2691" class="Function">minFeeRefScriptCoinsPerByte</a> <a id="2719" class="Symbol">=</a> <a id="2721" href="Ledger.Conway.PParams.html#3681" class="Field">PParams.minFeeRefScriptCoinsPerByte</a> <a id="2757" href="Ledger.Conway.Fees.html#2519" class="Bound">pp</a>
-    <a id="2764" href="Ledger.Conway.Fees.html#2764" class="Function">refScriptCostMultiplier</a> <a id="2788" class="Symbol">=</a> <a id="2790" href="Ledger.Conway.PParams.html#3850" class="Field">PParams.refScriptCostMultiplier</a> <a id="2822" href="Ledger.Conway.Fees.html#2519" class="Bound">pp</a>
-    <a id="2829" href="Ledger.Conway.Fees.html#2829" class="Function">refScriptCostStride</a> <a id="2849" class="Symbol">=</a> <a id="2851" href="Ledger.Conway.PParams.html#3807" class="Field">PParams.refScriptCostStride</a> <a id="2879" href="Ledger.Conway.Fees.html#2519" class="Bound">pp</a>
+    <a id="2691" href="Ledger.Conway.Fees.html#2691" class="Function">minFeeRefScriptCoinsPerByte</a> <a id="2719" class="Symbol">=</a> <a id="2721" href="Ledger.Conway.PParams.html#3703" class="Field">PParams.minFeeRefScriptCoinsPerByte</a> <a id="2757" href="Ledger.Conway.Fees.html#2519" class="Bound">pp</a>
+    <a id="2764" href="Ledger.Conway.Fees.html#2764" class="Function">refScriptCostMultiplier</a> <a id="2788" class="Symbol">=</a> <a id="2790" href="Ledger.Conway.PParams.html#3872" class="Field">PParams.refScriptCostMultiplier</a> <a id="2822" href="Ledger.Conway.Fees.html#2519" class="Bound">pp</a>
+    <a id="2829" href="Ledger.Conway.Fees.html#2829" class="Function">refScriptCostStride</a> <a id="2849" class="Symbol">=</a> <a id="2851" href="Ledger.Conway.PParams.html#3829" class="Field">PParams.refScriptCostStride</a> <a id="2879" href="Ledger.Conway.Fees.html#2519" class="Bound">pp</a>
     <a id="2886" href="Ledger.Conway.Fees.html#2886" class="Function">scriptsCostAux</a> <a id="2901" class="Symbol">:</a> <a id="2903" href="Data.Rational.Base.html#1342" class="Record">ℚ</a>        <a id="2912" class="Comment">-- accumulator</a>
                    <a id="2946" class="Symbol">→</a> <a id="2948" href="Data.Rational.Base.html#1342" class="Record">ℚ</a>        <a id="2957" class="Comment">-- current tier price</a>
                    <a id="2998" class="Symbol">→</a> <a id="3000" class="Symbol">(</a><a id="3001" href="Ledger.Conway.Fees.html#3001" class="Bound">n</a> <a id="3003" class="Symbol">:</a> <a id="3005" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="3006" class="Symbol">)</a>  <a id="3009" class="Comment">-- remaining script size</a>

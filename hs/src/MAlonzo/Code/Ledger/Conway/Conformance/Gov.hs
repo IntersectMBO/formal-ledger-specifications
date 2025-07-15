@@ -26,13 +26,13 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Ledger.Conway.Abstract
-import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Enact
 import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
 
@@ -93,7 +93,7 @@ d_prevAction_776 v0
 -- _.GovProposal.returnAddr
 d_returnAddr_778 ::
   MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
-  MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_98
 d_returnAddr_778 v0
   = coe
       MAlonzo.Code.Ledger.Conway.GovernanceActions.d_returnAddr_876
@@ -408,7 +408,7 @@ data T_GovEnv_2414
                                  MAlonzo.Code.Ledger.Conway.PParams.T_PParams_296 (Maybe AgdaAny)
                                  MAlonzo.Code.Ledger.Conway.Enact.T_EnactState_942
                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.T_CertState_1294
-                                 [MAlonzo.Code.Ledger.Conway.Address.T_Credential_18]
+                                 [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 -- Ledger.Conway.Conformance.Gov.GovEnv.txid
 d_txid_2430 :: T_GovEnv_2414 -> AgdaAny
 d_txid_2430 v0
@@ -452,7 +452,7 @@ d_certState_2440 v0
 -- Ledger.Conway.Conformance.Gov.GovEnv.rewardCreds
 d_rewardCreds_2442 ::
   T_GovEnv_2414 ->
-  [MAlonzo.Code.Ledger.Conway.Address.T_Credential_18]
+  [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_rewardCreds_2442 v0
   = case coe v0 of
       C_GovEnv'46'constructor_7535 v1 v2 v3 v4 v5 v6 v7 -> coe v7
@@ -887,11 +887,11 @@ d_rewardCreds_2472 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  [MAlonzo.Code.Ledger.Conway.Address.T_Credential_18]
+  [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_rewardCreds_2472 v0 ~v1 ~v2 ~v3 = du_rewardCreds_2472 v0
 du_rewardCreds_2472 ::
   T_GovEnv_2414 ->
-  [MAlonzo.Code.Ledger.Conway.Address.T_Credential_18]
+  [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 du_rewardCreds_2472 v0 = coe d_rewardCreds_2442 (coe v0)
 -- Ledger.Conway.Conformance.Gov._._.txid
 d_txid_2474 ::

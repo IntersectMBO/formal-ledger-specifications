@@ -35,7 +35,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Enact
 import qualified MAlonzo.Code.Ledger.Conway.Ledger
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
-import qualified MAlonzo.Code.Ledger.Prelude.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 
 -- _.Epoch
 d_Epoch_148 ::
@@ -128,7 +128,7 @@ d_Computational'45'CHAIN_1830 v0 v1
                     MAlonzo.Code.Ledger.Conway.Conformance.Epoch.Properties.du_NEWEPOCH'45'total_2444
                     (coe v0)
                     (coe
-                       MAlonzo.Code.Ledger.Prelude.Epoch.d_epoch_68
+                       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_epoch_70
                        (MAlonzo.Code.Ledger.Conway.Transaction.d_epochStructure_1572
                           (coe v0))
                        (MAlonzo.Code.Ledger.Conway.Conformance.Chain.d_slot_2440

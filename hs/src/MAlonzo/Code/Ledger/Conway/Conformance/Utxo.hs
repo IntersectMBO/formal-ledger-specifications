@@ -29,16 +29,16 @@ import qualified MAlonzo.Code.Class.Decidable.Instances
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Ledger.Conway.Abstract
-import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Script.Base
 import qualified MAlonzo.Code.Ledger.Conway.Script.Validation
 import qualified MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Utxo
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Ledger.Prelude
-import qualified MAlonzo.Code.Ledger.Prelude.Crypto
-import qualified MAlonzo.Code.Ledger.Prelude.Epoch
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
@@ -52,31 +52,32 @@ d__'8804''7511'__20 = erased
 -- _.Dec-isVKey
 d_Dec'45'isVKey_66 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
-  MAlonzo.Code.Ledger.Conway.Address.T_Credential_18 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 d_Dec'45'isVKey_66 ~v0 = du_Dec'45'isVKey_66
 du_Dec'45'isVKey_66 ::
-  MAlonzo.Code.Ledger.Conway.Address.T_Credential_18 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
 du_Dec'45'isVKey_66
-  = coe MAlonzo.Code.Ledger.Conway.Address.du_Dec'45'isVKey_190
+  = coe
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isVKey_192
 -- _.HasNetworkId-RwdAddr
 d_HasNetworkId'45'RwdAddr_194 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
-  MAlonzo.Code.Ledger.Conway.Address.T_HasNetworkId_110
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_112
 d_HasNetworkId'45'RwdAddr_194 ~v0 = du_HasNetworkId'45'RwdAddr_194
 du_HasNetworkId'45'RwdAddr_194 ::
-  MAlonzo.Code.Ledger.Conway.Address.T_HasNetworkId_110
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_HasNetworkId_112
 du_HasNetworkId'45'RwdAddr_194
   = coe
-      MAlonzo.Code.Ledger.Conway.Address.du_HasNetworkId'45'RwdAddr_128
+      MAlonzo.Code.Ledger.Core.Specification.Address.du_HasNetworkId'45'RwdAddr_130
 -- _.NetworkId
 d_NetworkId_272 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
   AgdaAny
 d_NetworkId_272 v0
   = coe
-      MAlonzo.Code.Ledger.Prelude.Epoch.d_NetworkId_296
+      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_NetworkId_298
       (coe
          MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
          (coe v0))
@@ -117,7 +118,8 @@ d_netId_562 ::
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> AgdaAny
 d_netId_562 ~v0 = du_netId_562
 du_netId_562 :: MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> AgdaAny
-du_netId_562 = coe MAlonzo.Code.Ledger.Conway.Address.du_netId_158
+du_netId_562
+  = coe MAlonzo.Code.Ledger.Core.Specification.Address.du_netId_160
 -- _.txOutHash
 d_txOutHash_626 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
@@ -939,9 +941,9 @@ d_UTXO'45'premises_2578 v0 v1 v2 v3 v4
                                        (coe
                                           MAlonzo.Code.Prelude.d_DecEq'45''215''8242'_4 () erased ()
                                           erased
-                                          (MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'T_28
+                                          (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'T_30
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42
+                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Script.Base.d_Data'688'_194
                                                    (coe
@@ -978,9 +980,9 @@ d_UTXO'45'premises_2578 v0 v1 v2 v3 v4
                                  (coe
                                     (\ v5 ->
                                        coe
-                                         MAlonzo.Code.Ledger.Conway.Address.du_Dec'45'isVKey_190
+                                         MAlonzo.Code.Ledger.Core.Specification.Address.du_Dec'45'isVKey_192
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Address.du_payCred_154
+                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_payCred_156
                                             (coe
                                                MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v5)))))
                                  (coe
@@ -1029,7 +1031,7 @@ d_UTXO'45'premises_2578 v0 v1 v2 v3 v4
                                                (coe
                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                (coe
-                                                  MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                      (coe v0)))
@@ -1058,7 +1060,7 @@ d_UTXO'45'premises_2578 v0 v1 v2 v3 v4
                                                (coe
                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                (coe
-                                                  MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                  MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_cryptoStructure_1268
                                                      (coe v0)))
@@ -1292,7 +1294,7 @@ d_UTXO'45'premises_2578 v0 v1 v2 v3 v4
                                                            (\ v6 ->
                                                               coe
                                                                 MAlonzo.Code.Class.Decidable.Instances.d_ℕ'45'Dec'45''8804'_74
-                                                                (MAlonzo.Code.Ledger.Conway.Address.d_attrsSize_94
+                                                                (MAlonzo.Code.Ledger.Core.Specification.Address.d_attrsSize_96
                                                                    (coe v6))
                                                                 (64 :: Integer)))
                                                         (coe
@@ -1331,17 +1333,17 @@ d_UTXO'45'premises_2578 v0 v1 v2 v3 v4
                                                          coe
                                                            MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Netw_280
+                                                              MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
                                                                  (coe v0)))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Address.du_netId_158
+                                                              MAlonzo.Code.Ledger.Core.Specification.Address.du_netId_160
                                                               (coe
                                                                  MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                  (coe v5)))
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Prelude.Epoch.d_NetworkId_296
+                                                              MAlonzo.Code.Ledger.Core.Specification.Epoch.d_NetworkId_298
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
                                                                  (coe v0)))))
@@ -1378,15 +1380,15 @@ d_UTXO'45'premises_2578 v0 v1 v2 v3 v4
                                                             coe
                                                               MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Netw_280
+                                                                 MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
                                                                     (coe v0)))
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Address.d_net_102
+                                                                 MAlonzo.Code.Ledger.Core.Specification.Address.d_net_104
                                                                  (coe v5))
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Prelude.Epoch.d_NetworkId_296
+                                                                 MAlonzo.Code.Ledger.Core.Specification.Epoch.d_NetworkId_298
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
                                                                     (coe v0)))))
@@ -1415,12 +1417,12 @@ d_UTXO'45'premises_2578 v0 v1 v2 v3 v4
                                                          (coe
                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                             (coe
-                                                               MAlonzo.Code.Ledger.Prelude.Epoch.d_NetworkId_296
+                                                               MAlonzo.Code.Ledger.Core.Specification.Epoch.d_NetworkId_298
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
                                                                   (coe v0))))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Netw_280
+                                                            MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Transaction.d_globalConstants_1238
                                                                (coe v0))))

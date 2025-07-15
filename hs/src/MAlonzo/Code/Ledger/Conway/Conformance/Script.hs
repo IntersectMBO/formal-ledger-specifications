@@ -30,8 +30,8 @@ import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Interface.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Script.Base
 import qualified MAlonzo.Code.Ledger.Conway.Script.Timelock
-import qualified MAlonzo.Code.Ledger.Prelude.Crypto
-import qualified MAlonzo.Code.Ledger.Prelude.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.Tactic.Derive.DecEq
@@ -39,8 +39,8 @@ import qualified MAlonzo.Code.Qstdlib.Data.List.Relation.Unary.MOf
 
 -- Ledger.Conway.Conformance.Script._.Dec-evalTimelock
 d_Dec'45'evalTimelock_98 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   [AgdaAny] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Script.Timelock.T_Timelock_96 ->
@@ -118,8 +118,8 @@ d_tlScriptSize_362 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Script.Hashable-HSTimelock
 d_Hashable'45'HSTimelock_364 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_Hashable'45'HSTimelock_364 ~v0 ~v1
   = du_Hashable'45'HSTimelock_364
@@ -131,8 +131,8 @@ du_Hashable'45'HSTimelock_364
       (coe (\ v0 -> d_tlScriptHash_360 (coe v0)))
 -- Ledger.Conway.Conformance.Script.DecEq-HSTimelock
 d_DecEq'45'HSTimelock_366 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'HSTimelock_366 v0 v1
   = coe
@@ -164,7 +164,7 @@ d_DecEq'45'HSTimelock_366 v0 v1
                                              (coe v9) (coe v5)))
                                        (coe
                                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                                          (MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                          (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                              (coe v0))
                                           v8 v4))
                                     (coe
@@ -205,8 +205,8 @@ d_psScriptSize_376 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Conformance.Script.Hashable-HSPlutusScript
 d_Hashable'45'HSPlutusScript_380 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_Hashable'45'HSPlutusScript_380 ~v0 ~v1
   = du_Hashable'45'HSPlutusScript_380
@@ -218,8 +218,8 @@ du_Hashable'45'HSPlutusScript_380
       (coe (\ v0 -> d_psScriptHash_374 (coe v0)))
 -- Ledger.Conway.Conformance.Script.P1ScriptStructure-HTL
 d_P1ScriptStructure'45'HTL_382 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_P1ScriptStructure_96
 d_P1ScriptStructure'45'HTL_382 v0 v1
   = coe

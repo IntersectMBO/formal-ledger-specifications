@@ -24,7 +24,6 @@ import qualified MAlonzo.Code.Data.List.Base
 import qualified MAlonzo.Code.Data.Product.Nary.NonDependent
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Ledger.Conway.Abstract
-import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Gov
@@ -35,7 +34,8 @@ import qualified MAlonzo.Code.Ledger.Conway.Ledger
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Utxo
-import qualified MAlonzo.Code.Ledger.Prelude.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
 
@@ -47,7 +47,7 @@ d_epoch_486 ::
   AgdaAny -> AgdaAny
 d_epoch_486 v0
   = coe
-      MAlonzo.Code.Ledger.Prelude.Epoch.d_epoch_68
+      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_epoch_70
       (coe
          MAlonzo.Code.Ledger.Conway.Transaction.d_epochStructure_1572
          (coe v0))
@@ -209,12 +209,12 @@ d_allColdCreds_2178 ::
   MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Ledger.Conway.Enact.T_EnactState_942 ->
-  [MAlonzo.Code.Ledger.Conway.Address.T_Credential_18]
+  [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 d_allColdCreds_2178 ~v0 ~v1 = du_allColdCreds_2178
 du_allColdCreds_2178 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Ledger.Conway.Enact.T_EnactState_942 ->
-  [MAlonzo.Code.Ledger.Conway.Address.T_Credential_18]
+  [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 du_allColdCreds_2178
   = coe MAlonzo.Code.Ledger.Conway.Ledger.du_allColdCreds_2528
 -- Ledger.Conway.Conformance.Ledger._.rmOrphanDRepVotes

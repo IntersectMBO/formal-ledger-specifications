@@ -39,13 +39,13 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Base
 import qualified MAlonzo.Code.Interface.ComputationalRelation
-import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Enact
 import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Types.GovStructure
-import qualified MAlonzo.Code.Ledger.Prelude.Crypto
-import qualified MAlonzo.Code.Ledger.Prelude.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Ledger.Prelude.Instances
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -57,7 +57,7 @@ d_preoEpoch_388 ::
   MAlonzo.Code.Class.HasOrder.Core.T_HasPreorder_28
 d_preoEpoch_388 v0
   = coe
-      MAlonzo.Code.Ledger.Prelude.Epoch.d_preoEpoch_86
+      MAlonzo.Code.Ledger.Core.Specification.Epoch.d_preoEpoch_88
       (coe
          MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_epochStructure_644
          (coe v0))
@@ -145,19 +145,19 @@ d_Computational'45'ENACT_1026 v0
                                                                      MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8846'_26
                                                                      (coe
                                                                         MAlonzo.Code.Class.HasOrder.Core.d_dec'45''60'_268
-                                                                        (MAlonzo.Code.Ledger.Prelude.Epoch.d_DecPo'45'Slot_64
+                                                                        (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecPo'45'Slot_66
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_epochStructure_644
                                                                               (coe v0)))
                                                                         (coe
                                                                            MAlonzo.Code.Function.Base.du__'45''10216'_'8739'_292
-                                                                           (MAlonzo.Code.Ledger.Prelude.Epoch.d_firstSlot_70
+                                                                           (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_72
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_epochStructure_644
                                                                                  (coe v0)))
                                                                            (\ v12 v13 -> v12) v11
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Prelude.Epoch.d__'43''7497'''__78
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Epoch.d__'43''7497'''__80
                                                                               (MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_epochStructure_644
                                                                                  (coe v0))
                                                                               (coe
@@ -170,13 +170,13 @@ d_Computational'45'ENACT_1026 v0
                                                                         (coe
                                                                            MAlonzo.Code.Function.Base.du_'8739'_'10217''45'__298
                                                                            (\ v12 v13 -> v13)
-                                                                           (MAlonzo.Code.Ledger.Prelude.Epoch.d_firstSlot_70
+                                                                           (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_firstSlot_72
                                                                               (coe
                                                                                  MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_epochStructure_644
                                                                                  (coe v0)))
                                                                            v11
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Prelude.Epoch.d__'43''7497'''__78
+                                                                              MAlonzo.Code.Ledger.Core.Specification.Epoch.d__'43''7497'''__80
                                                                               (MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_epochStructure_644
                                                                                  (coe v0))
                                                                               (coe
@@ -189,13 +189,13 @@ d_Computational'45'ENACT_1026 v0
                                                                      (coe
                                                                         MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_16
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Epoch_58
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_60
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_epochStructure_644
                                                                               (coe v0)))
                                                                         (coe v11)
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Prelude.Epoch.d__'43''7497'''__78
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Epoch.d__'43''7497'''__80
                                                                            (MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_epochStructure_644
                                                                               (coe v0))
                                                                            (coe
@@ -235,23 +235,23 @@ d_Computational'45'ENACT_1026 v0
                                                                               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                               (let v14
                                                                                      = let v14
-                                                                                             = MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                             = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                  (coe
-                                                                                                    MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                     (coe
                                                                                                        MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                                                                        (coe
                                                                                                           v0))) in
                                                                                        coe
                                                                                          (let v15
-                                                                                                = MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                     (coe
                                                                                                        MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                                                                        (coe
                                                                                                           v0)) in
                                                                                           coe
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                               MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                (coe
                                                                                                   v14)
                                                                                                (coe
@@ -269,23 +269,23 @@ d_Computational'45'ENACT_1026 v0
                                                                                        erased v14)
                                                                                     (let v15
                                                                                            = let v15
-                                                                                                   = MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                                                   = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                                                           (coe
                                                                                                              MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                                                                              (coe
                                                                                                                 v0))) in
                                                                                              coe
                                                                                                (let v16
-                                                                                                      = MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                                      = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                                                           (coe
                                                                                                              MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                                                                              (coe
                                                                                                                 v0)) in
                                                                                                 coe
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'Credential_188
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                                                                                                      (coe
                                                                                                         v15)
                                                                                                      (coe
@@ -422,21 +422,21 @@ d_Computational'45'ENACT_1026 v0
                                        (coe
                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1190
                                           (coe
-                                             MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'RwdAddr_240
+                                             MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_242
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Netw_280
+                                                MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_globalConstants_1172
                                                    (coe v0)))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                       (coe v0))))
                                              (coe
-                                                MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                    (coe v0))))
@@ -456,21 +456,21 @@ d_Computational'45'ENACT_1026 v0
                                                 (coe
                                                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
                                              (coe
-                                                MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'RwdAddr_240
+                                                MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_242
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Netw_280
+                                                   MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_globalConstants_1172
                                                       (coe v0)))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                          (coe v0))))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                    (coe
                                                       MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                       (coe v0))))
@@ -509,27 +509,27 @@ d_Computational'45'ENACT_1026 v0
                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                           MAlonzo.Code.Ledger.Prelude.Instances.d_CommMonoid'45'ℕ'45''43'_6
                                                           (let v10
-                                                                 = MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Netw_280
+                                                                 = MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Netw_282
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_globalConstants_1172
                                                                         (coe v0)) in
                                                            coe
                                                              (let v11
-                                                                    = MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+                                                                    = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                         (coe
-                                                                           MAlonzo.Code.Ledger.Prelude.Crypto.d_khs_202
+                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_204
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                                               (coe v0))) in
                                                               coe
                                                                 (let v12
-                                                                       = MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'ScriptHash_206
+                                                                       = MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_208
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Conway.Types.GovStructure.d_cryptoStructure_598
                                                                               (coe v0)) in
                                                                  coe
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Address.du_DecEq'45'RwdAddr_240
+                                                                      MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'RwdAddr_242
                                                                       (coe v10) (coe v11)
                                                                       (coe v12)))))
                                                           (MAlonzo.Code.Ledger.Conway.Enact.d_withdrawals_962

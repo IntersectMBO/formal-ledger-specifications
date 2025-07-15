@@ -675,7 +675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Address.html" class="md-nav__link">
+      <a href="Ledger.Conway.Address.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5688,8 +5688,8 @@
 <a id="355" class="Keyword">open</a> <a id="360" class="Keyword">import</a> <a id="367" href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.html" class="Module">Ledger.Conway.Foreign.HSLedger.GovernanceActions</a>
 <a id="416" class="Keyword">open</a> <a id="421" class="Keyword">import</a> <a id="428" href="Ledger.Conway.Foreign.HSLedger.Cert.html" class="Module">Ledger.Conway.Foreign.HSLedger.Cert</a>
 
-<a id="465" class="Keyword">open</a> <a id="470" class="Keyword">import</a> <a id="477" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="509" href="Ledger.Conway.Transaction.html#3694" class="Function">govStructure</a>
-<a id="522" class="Keyword">open</a> <a id="527" class="Keyword">import</a> <a id="534" href="Ledger.Conway.Enact.html" class="Module">Ledger.Conway.Enact</a> <a id="554" href="Ledger.Conway.Transaction.html#3694" class="Function">govStructure</a>
+<a id="465" class="Keyword">open</a> <a id="470" class="Keyword">import</a> <a id="477" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="509" href="Ledger.Conway.Transaction.html#3740" class="Function">govStructure</a>
+<a id="522" class="Keyword">open</a> <a id="527" class="Keyword">import</a> <a id="534" href="Ledger.Conway.Enact.html" class="Module">Ledger.Conway.Enact</a> <a id="554" href="Ledger.Conway.Transaction.html#3740" class="Function">govStructure</a>
 <a id="567" class="Keyword">open</a> <a id="572" class="Keyword">import</a> <a id="579" href="Ledger.Conway.Conformance.Gov.html" class="Module">Ledger.Conway.Conformance.Gov</a> <a id="609" href="Function.Base.html#4736" class="Function">it</a> <a id="612" href="Function.Base.html#4736" class="Function">it</a>
 <a id="615" class="Keyword">import</a> <a id="622" href="Ledger.Conway.Gov.html" class="Module">Ledger.Conway.Gov</a> <a id="640" href="Function.Base.html#4736" class="Function">it</a> <a id="643" class="Symbol">as</a> <a id="L"></a><a id="646" href="Ledger.Conway.Foreign.HSLedger.Gov.html#646" class="Module">L</a>
 <a id="648" class="Keyword">open</a> <a id="653" class="Keyword">import</a> <a id="660" href="Ledger.Conway.Gov.Properties.html" class="Module">Ledger.Conway.Gov.Properties</a> <a id="689" href="Function.Base.html#4736" class="Function">it</a>
@@ -5731,16 +5731,16 @@
   <a id="1844" class="Keyword">field</a>
     <a id="GovProposal&#39;.action"></a><a id="1854" href="Ledger.Conway.Foreign.HSLedger.Gov.html#1854" class="Field">action</a>      <a id="1866" class="Symbol">:</a> <a id="1868" href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.html#476" class="Datatype">GovAction&#39;</a>
     <a id="GovProposal&#39;.prevAction"></a><a id="1883" href="Ledger.Conway.Foreign.HSLedger.Gov.html#1883" class="Field">prevAction</a>  <a id="1895" class="Symbol">:</a> <a id="1897" href="Ledger.Conway.GovernanceActions.html#1146" class="Function">GovActionID</a>       <a id="1915" class="Comment">-- NeedsHash action</a>
-    <a id="GovProposal&#39;.policy"></a><a id="1939" href="Ledger.Conway.Foreign.HSLedger.Gov.html#1939" class="Field">policy</a>      <a id="1951" class="Symbol">:</a> <a id="1953" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1959" href="Ledger.Prelude.Crypto.html#1993" class="Function">ScriptHash</a>
+    <a id="GovProposal&#39;.policy"></a><a id="1939" href="Ledger.Conway.Foreign.HSLedger.Gov.html#1939" class="Field">policy</a>      <a id="1951" class="Symbol">:</a> <a id="1953" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1959" href="Ledger.Core.Specification.Crypto.html#2015" class="Function">ScriptHash</a>
     <a id="GovProposal&#39;.deposit"></a><a id="1974" href="Ledger.Conway.Foreign.HSLedger.Gov.html#1974" class="Field">deposit</a>     <a id="1986" class="Symbol">:</a> <a id="1988" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
-    <a id="GovProposal&#39;.returnAddr"></a><a id="1997" href="Ledger.Conway.Foreign.HSLedger.Gov.html#1997" class="Field">returnAddr</a>  <a id="2009" class="Symbol">:</a> <a id="2011" href="Ledger.Conway.Address.html#2481" class="Record">RwdAddr</a>
+    <a id="GovProposal&#39;.returnAddr"></a><a id="1997" href="Ledger.Conway.Foreign.HSLedger.Gov.html#1997" class="Field">returnAddr</a>  <a id="2009" class="Symbol">:</a> <a id="2011" href="Ledger.Core.Specification.Address.html#2493" class="Record">RwdAddr</a>
     <a id="GovProposal&#39;.anchor"></a><a id="2023" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2023" class="Field">anchor</a>      <a id="2035" class="Symbol">:</a> <a id="2037" href="Ledger.Conway.GovernanceActions.html#1360" class="Record">Anchor</a>
 
 <a id="2045" class="Keyword">record</a> <a id="GovActionState&#39;"></a><a id="2052" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2052" class="Record">GovActionState&#39;</a> <a id="2068" class="Symbol">:</a> <a id="2070" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2075" class="Keyword">where</a>
   <a id="2083" class="Keyword">field</a>
     <a id="GovActionState&#39;.votes"></a><a id="2093" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2093" class="Field">votes</a>       <a id="2105" class="Symbol">:</a> <a id="2107" href="Ledger.Conway.GovernanceActions.html#1110" class="Function">Voter</a> <a id="2113" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="2115" href="Ledger.Conway.GovernanceActions.html#7488" class="Datatype">Vote</a>
-    <a id="GovActionState&#39;.returnAddr"></a><a id="2124" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2124" class="Field">returnAddr</a>  <a id="2136" class="Symbol">:</a> <a id="2138" href="Ledger.Conway.Address.html#2481" class="Record">RwdAddr</a>
-    <a id="GovActionState&#39;.expiresIn"></a><a id="2150" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2150" class="Field">expiresIn</a>   <a id="2162" class="Symbol">:</a> <a id="2164" href="Ledger.Prelude.Epoch.html#595" class="Function">Epoch</a>
+    <a id="GovActionState&#39;.returnAddr"></a><a id="2124" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2124" class="Field">returnAddr</a>  <a id="2136" class="Symbol">:</a> <a id="2138" href="Ledger.Core.Specification.Address.html#2493" class="Record">RwdAddr</a>
+    <a id="GovActionState&#39;.expiresIn"></a><a id="2150" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2150" class="Field">expiresIn</a>   <a id="2162" class="Symbol">:</a> <a id="2164" href="Ledger.Core.Specification.Epoch.html#606" class="Function">Epoch</a>
     <a id="GovActionState&#39;.action"></a><a id="2174" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2174" class="Field">action</a>      <a id="2186" class="Symbol">:</a> <a id="2188" href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.html#476" class="Datatype">GovAction&#39;</a>
     <a id="GovActionState&#39;.prevAction"></a><a id="2203" href="Ledger.Conway.Foreign.HSLedger.Gov.html#2203" class="Field">prevAction</a>  <a id="2215" class="Symbol">:</a> <a id="2217" href="Ledger.Conway.GovernanceActions.html#1146" class="Function">GovActionID</a>       <a id="2235" class="Comment">-- NeedsHash action</a>
 

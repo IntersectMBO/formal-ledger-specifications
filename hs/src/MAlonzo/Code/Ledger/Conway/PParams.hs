@@ -54,8 +54,8 @@ import qualified MAlonzo.Code.Data.String.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
 import qualified MAlonzo.Code.Ledger.Conway.Script.Base
-import qualified MAlonzo.Code.Ledger.Prelude.Crypto
-import qualified MAlonzo.Code.Ledger.Prelude.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Level
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
@@ -132,8 +132,8 @@ data T_pvCanFollow_212
   = C_canFollowMajor_214 | C_canFollowMinor_216
 -- Ledger.Conway.PParams.HasCast-Acnt
 d_HasCast'45'Acnt_218 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 d_HasCast'45'Acnt_218 ~v0 ~v1 ~v2 = du_HasCast'45'Acnt_218
@@ -668,8 +668,8 @@ d_ccMaxTermLengthOf_490 ::
 d_ccMaxTermLengthOf_490 v0 = coe d_ccMaxTermLengthOf_486 (coe v0)
 -- Ledger.Conway.PParams.HasgovActionDeposit-PParams
 d_HasgovActionDeposit'45'PParams_492 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_HasgovActionDeposit_460
 d_HasgovActionDeposit'45'PParams_492 ~v0 ~v1 ~v2
@@ -681,8 +681,8 @@ du_HasgovActionDeposit'45'PParams_492
       (coe (\ v0 -> d_govActionDeposit_432 (coe v0)))
 -- Ledger.Conway.PParams.positivePParams
 d_positivePParams_494 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParams_296 -> [Integer]
 d_positivePParams_494 ~v0 ~v1 ~v2 v3 = du_positivePParams_494 v3
@@ -841,15 +841,15 @@ d_treasuryCut_572 ::
 d_treasuryCut_572 v0 = coe d_treasuryCut_394 (coe v0)
 -- Ledger.Conway.PParams.paramsWellFormed
 d_paramsWellFormed_574 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParams_296 -> ()
 d_paramsWellFormed_574 = erased
 -- Ledger.Conway.PParams.paramsWF-elim
 d_paramsWF'45'elim_582 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParams_296 ->
   (MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
@@ -869,8 +869,8 @@ du_paramsWF'45'elim_582 v0
              (coe MAlonzo.Code.Data.Nat.Base.C_z'8804'n_26)
 -- Ledger.Conway.PParams.DecEq-DrepThresholds
 d_DecEq'45'DrepThresholds_602 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'DrepThresholds_602 ~v0 ~v1 ~v2
@@ -988,8 +988,8 @@ du_DecEq'45'DrepThresholds_602
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.PParams.DecEq-PoolThresholds
 d_DecEq'45'PoolThresholds_604 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PoolThresholds_604 ~v0 ~v1 ~v2
@@ -1064,13 +1064,13 @@ du_DecEq'45'PoolThresholds_604
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.PParams.DecEq-PParams
 d_DecEq'45'PParams_606 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParams_606 ~v0 v1 v2 = du_DecEq'45'PParams_606 v1 v2
 du_DecEq'45'PParams_606 ::
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PParams_606 v0 v1
@@ -1166,7 +1166,7 @@ du_DecEq'45'PParams_606 v0 v1
                                                                                                                                                    MAlonzo.Code.Agda.Builtin.Unit.C_tt_8)))
                                                                                                                                           (coe
                                                                                                                                              MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                                                                                                                                             (MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Epoch_58
+                                                                                                                                             (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_60
                                                                                                                                                 (coe
                                                                                                                                                    v0))
                                                                                                                                              v73
@@ -1489,7 +1489,7 @@ du_DecEq'45'PParams_606 v0 v1
                                                                                                                v26)))
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
-                                                                                                         (MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Epoch_58
+                                                                                                         (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_60
                                                                                                             (coe
                                                                                                                v0))
                                                                                                          v61
@@ -1807,8 +1807,8 @@ du_DecEq'45'PParams_606 v0 v1
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.PParams.DecEq-PParamGroup
 d_DecEq'45'PParamGroup_608 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParamGroup_608 ~v0 ~v1 ~v2
@@ -2009,8 +2009,8 @@ du_DecEq'45'PParamGroup_608
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.PParams.Show-DrepThresholds
 d_Show'45'DrepThresholds_610 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'DrepThresholds_610 ~v0 ~v1 ~v2
@@ -2083,8 +2083,8 @@ du_Show'45'DrepThresholds_610
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.PParams.Show-PoolThresholds
 d_Show'45'PoolThresholds_612 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'PoolThresholds_612 ~v0 ~v1 ~v2
@@ -2127,13 +2127,13 @@ du_Show'45'PoolThresholds_612
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.PParams.Show-PParams
 d_Show'45'PParams_614 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 d_Show'45'PParams_614 ~v0 v1 v2 = du_Show'45'PParams_614 v1 v2
 du_Show'45'PParams_614 ::
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
 du_Show'45'PParams_614 v0 v1
@@ -2368,7 +2368,7 @@ du_Show'45'PParams_614 v0 v1
                                                             MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
                                                             (coe
                                                                MAlonzo.Code.Class.Show.Core.d_show_16
-                                                               (MAlonzo.Code.Ledger.Prelude.Epoch.d_Show'45'Epoch_60
+                                                               (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_Show'45'Epoch_62
                                                                   (coe v0))
                                                                v25)))
                                                       (coe
@@ -2530,7 +2530,8 @@ du_Show'45'PParams_614 v0 v1
                         MAlonzo.Code.Tactic.Derive.Show.d_wrapWithPars_40
                         (coe
                            MAlonzo.Code.Class.Show.Core.d_show_16
-                           (MAlonzo.Code.Ledger.Prelude.Epoch.d_Show'45'Epoch_60 (coe v0))
+                           (MAlonzo.Code.Ledger.Core.Specification.Epoch.d_Show'45'Epoch_62
+                              (coe v0))
                            v37))
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.PParams.PParamsUpdate.PParamsUpdate
@@ -2816,8 +2817,8 @@ d_ccMaxTermLength_758 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.PParams.PParamsUpdate.paramsUpdateWellFormed
 d_paramsUpdateWellFormed_760 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 -> ()
 d_paramsUpdateWellFormed_760 = erased
@@ -2948,8 +2949,8 @@ d_treasuryCut_838 ::
 d_treasuryCut_838 v0 = coe d_treasuryCut_716 (coe v0)
 -- Ledger.Conway.PParams.PParamsUpdate.paramsUpdateWellFormed?
 d_paramsUpdateWellFormed'63'_842 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
@@ -3016,8 +3017,8 @@ du_paramsUpdateWellFormed'63'_842 v0
          (coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_18))
 -- Ledger.Conway.PParams.PParamsUpdate.modifiesNetworkGroup
 d_modifiesNetworkGroup_846 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 -> Bool
 d_modifiesNetworkGroup_846 ~v0 ~v1 ~v2 v3
@@ -3194,8 +3195,8 @@ d_treasuryCut_920 ::
 d_treasuryCut_920 v0 = coe d_treasuryCut_716 (coe v0)
 -- Ledger.Conway.PParams.PParamsUpdate.modifiesEconomicGroup
 d_modifiesEconomicGroup_922 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 -> Bool
 d_modifiesEconomicGroup_922 ~v0 ~v1 ~v2 v3
@@ -3403,8 +3404,8 @@ d_treasuryCut_996 ::
 d_treasuryCut_996 v0 = coe d_treasuryCut_716 (coe v0)
 -- Ledger.Conway.PParams.PParamsUpdate.modifiesTechnicalGroup
 d_modifiesTechnicalGroup_998 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 -> Bool
 d_modifiesTechnicalGroup_998 ~v0 ~v1 ~v2 v3
@@ -3567,8 +3568,8 @@ d_treasuryCut_1072 ::
 d_treasuryCut_1072 v0 = coe d_treasuryCut_716 (coe v0)
 -- Ledger.Conway.PParams.PParamsUpdate.modifiesGovernanceGroup
 d_modifiesGovernanceGroup_1074 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 -> Bool
 d_modifiesGovernanceGroup_1074 ~v0 ~v1 ~v2 v3
@@ -3746,8 +3747,8 @@ d_treasuryCut_1148 ::
 d_treasuryCut_1148 v0 = coe d_treasuryCut_716 (coe v0)
 -- Ledger.Conway.PParams.PParamsUpdate.modifiesSecurityGroup
 d_modifiesSecurityGroup_1150 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 -> Bool
 d_modifiesSecurityGroup_1150 ~v0 ~v1 ~v2 v3
@@ -3935,8 +3936,8 @@ d_treasuryCut_1224 ::
 d_treasuryCut_1224 v0 = coe d_treasuryCut_716 (coe v0)
 -- Ledger.Conway.PParams.PParamsUpdate.modifiedUpdateGroups
 d_modifiedUpdateGroups_1226 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 -> [T_PParamGroup_220]
 d_modifiedUpdateGroups_1226 ~v0 ~v1 ~v2 v3
@@ -3985,8 +3986,8 @@ du_modifiedUpdateGroups_1226 v0
                   (coe du_modifiesSecurityGroup_1150) (coe C_SecurityGroup_230)))))
 -- Ledger.Conway.PParams.PParamsUpdate._._?═⇒_
 d__'63''9552''8658'__1234 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsUpdate_618 ->
   (T_PParamsUpdate_618 -> Bool) ->
@@ -4026,8 +4027,8 @@ du__'63''9552''8658'__1234 v0 v1 v2
                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))))
 -- Ledger.Conway.PParams.PParamsUpdate._?↗_
 d__'63''8599'__1242 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   () -> Maybe AgdaAny -> AgdaAny -> AgdaAny
 d__'63''8599'__1242 ~v0 ~v1 ~v2 ~v3 v4 v5
@@ -4040,8 +4041,8 @@ du__'63''8599'__1242 v0 v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.PParams.PParamsUpdate.≡-update
 d_'8801''45'update_1256 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   () ->
   Maybe AgdaAny ->
@@ -4057,8 +4058,8 @@ du_'8801''45'update_1256 v0
       (\ v1 -> coe du_to_1276 (coe v0)) erased
 -- Ledger.Conway.PParams.PParamsUpdate._.to
 d_to_1276 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   () ->
   Maybe AgdaAny ->
@@ -4085,8 +4086,8 @@ du_to_1276 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.PParams.PParamsUpdate._.from
 d_from_1288 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   () ->
   Maybe AgdaAny ->
@@ -4101,8 +4102,8 @@ d_from_1288 ::
 d_from_1288 = erased
 -- Ledger.Conway.PParams.PParamsUpdate.applyPParamsUpdate
 d_applyPParamsUpdate_1290 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParams_296 -> T_PParamsUpdate_618 -> T_PParams_296
 d_applyPParamsUpdate_1290 ~v0 ~v1 ~v2 v3 v4
@@ -4575,14 +4576,14 @@ d_treasuryCut_1442 ::
 d_treasuryCut_1442 v0 = coe d_treasuryCut_716 (coe v0)
 -- Ledger.Conway.PParams.PParamsUpdate.DecEq-PParamsUpdate
 d_DecEq'45'PParamsUpdate_1444 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'PParamsUpdate_1444 ~v0 v1 v2
   = du_DecEq'45'PParamsUpdate_1444 v1 v2
 du_DecEq'45'PParamsUpdate_1444 ::
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'PParamsUpdate_1444 v0 v1
@@ -4701,7 +4702,7 @@ du_DecEq'45'PParamsUpdate_1444 v0 v1
                                                                                                                                        (coe
                                                                                                                                           MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                                                                                                           (coe
-                                                                                                                                             MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Epoch_58
+                                                                                                                                             MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_60
                                                                                                                                              (coe
                                                                                                                                                 v0)))
                                                                                                                                        (coe
@@ -4797,7 +4798,7 @@ du_DecEq'45'PParamsUpdate_1444 v0 v1
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Class.DecEq.Core.d__'8799'__16
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Prelude.Epoch.d_DecEq'45'Epoch_58
+                                                                                                                  MAlonzo.Code.Ledger.Core.Specification.Epoch.d_DecEq'45'Epoch_60
                                                                                                                   (coe
                                                                                                                      v0)))
                                                                                                             (coe
@@ -5220,8 +5221,8 @@ du_DecEq'45'PParamsUpdate_1444 v0 v1
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Ledger.Conway.PParams.pvCanFollow?
 d_pvCanFollow'63'_1450 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -5745,8 +5746,8 @@ d_ppWF'63'_1522 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.PParams.PParamsDiff.ppdWellFormed
 d_ppdWellFormed_1524 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsDiff_1498 -> AgdaAny -> ()
 d_ppdWellFormed_1524 = erased
@@ -5769,8 +5770,8 @@ d_ppWF'63'_1540 ::
 d_ppWF'63'_1540 v0 = coe d_ppWF'63'_1522 (coe v0)
 -- Ledger.Conway.PParams._.ppdWellFormed
 d_ppdWellFormed_1542 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_PParamsDiff_1498 -> AgdaAny -> ()
 d_ppdWellFormed_1542 = erased
@@ -5800,8 +5801,8 @@ d_ppWF'63'_1556 v0
   = coe d_ppWF'63'_1522 (coe d_ppUpd_1548 (coe v0))
 -- Ledger.Conway.PParams.GovParams._.ppdWellFormed
 d_ppdWellFormed_1558 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Script.Base.T_ScriptStructure_268 ->
   T_GovParams_1530 -> AgdaAny -> ()
 d_ppdWellFormed_1558 = erased

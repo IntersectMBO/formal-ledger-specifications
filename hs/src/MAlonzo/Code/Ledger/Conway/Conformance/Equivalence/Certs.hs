@@ -29,7 +29,6 @@ import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Interface.STS
 import qualified MAlonzo.Code.Ledger.Conway.Abstract
-import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert
@@ -37,6 +36,7 @@ import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Types.GovStructure
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 import qualified MAlonzo.Code.Ledger.Prelude
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
 import qualified MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
@@ -567,9 +567,9 @@ du_DStateToConf_2318
                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                         (coe
                                                            (MAlonzo.RTE.QName
-                                                              (280 :: Integer)
-                                                              (8903727640779459985 :: Integer)
-                                                              "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                              (282 :: Integer)
+                                                              (753823221557309123 :: Integer)
+                                                              "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                               (MAlonzo.RTE.Fixity
                                                                  MAlonzo.RTE.NonAssoc
                                                                  MAlonzo.RTE.Unrelated)))
@@ -639,9 +639,9 @@ du_DStateToConf_2318
                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                            (coe
                                                               (MAlonzo.RTE.QName
-                                                                 (24 :: Integer)
-                                                                 (11805095676729757169 :: Integer)
-                                                                 "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                 (26 :: Integer)
+                                                                 (14321319370142338143 :: Integer)
+                                                                 "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                  (MAlonzo.RTE.Fixity
                                                                     MAlonzo.RTE.NonAssoc
                                                                     MAlonzo.RTE.Unrelated)))
@@ -679,10 +679,10 @@ du_DStateToConf_2318
                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                        (coe
                                                                           (MAlonzo.RTE.QName
-                                                                             (202 :: Integer)
-                                                                             (11805095676729757169 ::
+                                                                             (204 :: Integer)
+                                                                             (14321319370142338143 ::
                                                                                 Integer)
-                                                                             "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                             "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                              (MAlonzo.RTE.Fixity
                                                                                 MAlonzo.RTE.NonAssoc
                                                                                 MAlonzo.RTE.Unrelated)))
@@ -757,10 +757,10 @@ du_DStateToConf_2318
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (206 :: Integer)
-                                                                    (11805095676729757169 ::
+                                                                    (208 :: Integer)
+                                                                    (14321319370142338143 ::
                                                                        Integer)
-                                                                    "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                    "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -920,9 +920,9 @@ du_DStateToConf_2318
                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                            (coe
                                                               (MAlonzo.RTE.QName
-                                                                 (280 :: Integer)
-                                                                 (8903727640779459985 :: Integer)
-                                                                 "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                 (282 :: Integer)
+                                                                 (753823221557309123 :: Integer)
+                                                                 "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                  (MAlonzo.RTE.Fixity
                                                                     MAlonzo.RTE.NonAssoc
                                                                     MAlonzo.RTE.Unrelated)))
@@ -992,10 +992,10 @@ du_DStateToConf_2318
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (24 :: Integer)
-                                                                    (11805095676729757169 ::
+                                                                    (26 :: Integer)
+                                                                    (14321319370142338143 ::
                                                                        Integer)
-                                                                    "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                    "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -1033,10 +1033,10 @@ du_DStateToConf_2318
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (202 :: Integer)
-                                                                                (11805095676729757169 ::
+                                                                                (204 :: Integer)
+                                                                                (14321319370142338143 ::
                                                                                    Integer)
-                                                                                "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -1111,10 +1111,10 @@ du_DStateToConf_2318
                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                  (coe
                                                                     (MAlonzo.RTE.QName
-                                                                       (206 :: Integer)
-                                                                       (11805095676729757169 ::
+                                                                       (208 :: Integer)
+                                                                       (14321319370142338143 ::
                                                                           Integer)
-                                                                       "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                       "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                        (MAlonzo.RTE.Fixity
                                                                           MAlonzo.RTE.NonAssoc
                                                                           MAlonzo.RTE.Unrelated)))
@@ -1278,9 +1278,9 @@ du_DStateToConf_2318
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (280 :: Integer)
-                                                                    (8903727640779459985 :: Integer)
-                                                                    "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                    (282 :: Integer)
+                                                                    (753823221557309123 :: Integer)
+                                                                    "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -1350,10 +1350,10 @@ du_DStateToConf_2318
                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                  (coe
                                                                     (MAlonzo.RTE.QName
-                                                                       (24 :: Integer)
-                                                                       (11805095676729757169 ::
+                                                                       (26 :: Integer)
+                                                                       (14321319370142338143 ::
                                                                           Integer)
-                                                                       "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                       "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                        (MAlonzo.RTE.Fixity
                                                                           MAlonzo.RTE.NonAssoc
                                                                           MAlonzo.RTE.Unrelated)))
@@ -1391,10 +1391,10 @@ du_DStateToConf_2318
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (202 :: Integer)
-                                                                                   (11805095676729757169 ::
+                                                                                   (204 :: Integer)
+                                                                                   (14321319370142338143 ::
                                                                                       Integer)
-                                                                                   "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                   "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                    (MAlonzo.RTE.Fixity
                                                                                       MAlonzo.RTE.NonAssoc
                                                                                       MAlonzo.RTE.Unrelated)))
@@ -1469,10 +1469,10 @@ du_DStateToConf_2318
                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                     (coe
                                                                        (MAlonzo.RTE.QName
-                                                                          (206 :: Integer)
-                                                                          (11805095676729757169 ::
+                                                                          (208 :: Integer)
+                                                                          (14321319370142338143 ::
                                                                              Integer)
-                                                                          "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                          "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                           (MAlonzo.RTE.Fixity
                                                                              MAlonzo.RTE.NonAssoc
                                                                              MAlonzo.RTE.Unrelated)))
@@ -1712,9 +1712,9 @@ du_DStateFromConf_2332
                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                         (coe
                                                            (MAlonzo.RTE.QName
-                                                              (280 :: Integer)
-                                                              (8903727640779459985 :: Integer)
-                                                              "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                              (282 :: Integer)
+                                                              (753823221557309123 :: Integer)
+                                                              "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                               (MAlonzo.RTE.Fixity
                                                                  MAlonzo.RTE.NonAssoc
                                                                  MAlonzo.RTE.Unrelated)))
@@ -1784,9 +1784,9 @@ du_DStateFromConf_2332
                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                            (coe
                                                               (MAlonzo.RTE.QName
-                                                                 (24 :: Integer)
-                                                                 (11805095676729757169 :: Integer)
-                                                                 "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                 (26 :: Integer)
+                                                                 (14321319370142338143 :: Integer)
+                                                                 "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                  (MAlonzo.RTE.Fixity
                                                                     MAlonzo.RTE.NonAssoc
                                                                     MAlonzo.RTE.Unrelated)))
@@ -1824,10 +1824,10 @@ du_DStateFromConf_2332
                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                        (coe
                                                                           (MAlonzo.RTE.QName
-                                                                             (202 :: Integer)
-                                                                             (11805095676729757169 ::
+                                                                             (204 :: Integer)
+                                                                             (14321319370142338143 ::
                                                                                 Integer)
-                                                                             "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                             "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                              (MAlonzo.RTE.Fixity
                                                                                 MAlonzo.RTE.NonAssoc
                                                                                 MAlonzo.RTE.Unrelated)))
@@ -1902,10 +1902,10 @@ du_DStateFromConf_2332
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (206 :: Integer)
-                                                                    (11805095676729757169 ::
+                                                                    (208 :: Integer)
+                                                                    (14321319370142338143 ::
                                                                        Integer)
-                                                                    "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                    "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -2065,9 +2065,9 @@ du_DStateFromConf_2332
                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                            (coe
                                                               (MAlonzo.RTE.QName
-                                                                 (280 :: Integer)
-                                                                 (8903727640779459985 :: Integer)
-                                                                 "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                 (282 :: Integer)
+                                                                 (753823221557309123 :: Integer)
+                                                                 "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                  (MAlonzo.RTE.Fixity
                                                                     MAlonzo.RTE.NonAssoc
                                                                     MAlonzo.RTE.Unrelated)))
@@ -2137,10 +2137,10 @@ du_DStateFromConf_2332
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (24 :: Integer)
-                                                                    (11805095676729757169 ::
+                                                                    (26 :: Integer)
+                                                                    (14321319370142338143 ::
                                                                        Integer)
-                                                                    "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                    "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -2178,10 +2178,10 @@ du_DStateFromConf_2332
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (202 :: Integer)
-                                                                                (11805095676729757169 ::
+                                                                                (204 :: Integer)
+                                                                                (14321319370142338143 ::
                                                                                    Integer)
-                                                                                "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -2256,10 +2256,10 @@ du_DStateFromConf_2332
                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                  (coe
                                                                     (MAlonzo.RTE.QName
-                                                                       (206 :: Integer)
-                                                                       (11805095676729757169 ::
+                                                                       (208 :: Integer)
+                                                                       (14321319370142338143 ::
                                                                           Integer)
-                                                                       "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                       "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                        (MAlonzo.RTE.Fixity
                                                                           MAlonzo.RTE.NonAssoc
                                                                           MAlonzo.RTE.Unrelated)))
@@ -2423,9 +2423,9 @@ du_DStateFromConf_2332
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (280 :: Integer)
-                                                                    (8903727640779459985 :: Integer)
-                                                                    "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                    (282 :: Integer)
+                                                                    (753823221557309123 :: Integer)
+                                                                    "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -2495,10 +2495,10 @@ du_DStateFromConf_2332
                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                  (coe
                                                                     (MAlonzo.RTE.QName
-                                                                       (24 :: Integer)
-                                                                       (11805095676729757169 ::
+                                                                       (26 :: Integer)
+                                                                       (14321319370142338143 ::
                                                                           Integer)
-                                                                       "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                       "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                        (MAlonzo.RTE.Fixity
                                                                           MAlonzo.RTE.NonAssoc
                                                                           MAlonzo.RTE.Unrelated)))
@@ -2536,10 +2536,10 @@ du_DStateFromConf_2332
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (202 :: Integer)
-                                                                                   (11805095676729757169 ::
+                                                                                   (204 :: Integer)
+                                                                                   (14321319370142338143 ::
                                                                                       Integer)
-                                                                                   "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                   "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                    (MAlonzo.RTE.Fixity
                                                                                       MAlonzo.RTE.NonAssoc
                                                                                       MAlonzo.RTE.Unrelated)))
@@ -2614,10 +2614,10 @@ du_DStateFromConf_2332
                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                     (coe
                                                                        (MAlonzo.RTE.QName
-                                                                          (206 :: Integer)
-                                                                          (11805095676729757169 ::
+                                                                          (208 :: Integer)
+                                                                          (14321319370142338143 ::
                                                                              Integer)
-                                                                          "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                          "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                           (MAlonzo.RTE.Fixity
                                                                              MAlonzo.RTE.NonAssoc
                                                                              MAlonzo.RTE.Unrelated)))
@@ -2816,9 +2816,9 @@ du_GStateToConf_2346
                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                         (coe
                                                            (MAlonzo.RTE.QName
-                                                              (280 :: Integer)
-                                                              (8903727640779459985 :: Integer)
-                                                              "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                              (282 :: Integer)
+                                                              (753823221557309123 :: Integer)
+                                                              "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                               (MAlonzo.RTE.Fixity
                                                                  MAlonzo.RTE.NonAssoc
                                                                  MAlonzo.RTE.Unrelated)))
@@ -2888,9 +2888,9 @@ du_GStateToConf_2346
                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                            (coe
                                                               (MAlonzo.RTE.QName
-                                                                 (24 :: Integer)
-                                                                 (11805095676729757169 :: Integer)
-                                                                 "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                 (26 :: Integer)
+                                                                 (14321319370142338143 :: Integer)
+                                                                 "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                  (MAlonzo.RTE.Fixity
                                                                     MAlonzo.RTE.NonAssoc
                                                                     MAlonzo.RTE.Unrelated)))
@@ -2928,10 +2928,10 @@ du_GStateToConf_2346
                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                        (coe
                                                                           (MAlonzo.RTE.QName
-                                                                             (202 :: Integer)
-                                                                             (11805095676729757169 ::
+                                                                             (204 :: Integer)
+                                                                             (14321319370142338143 ::
                                                                                 Integer)
-                                                                             "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                             "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                              (MAlonzo.RTE.Fixity
                                                                                 MAlonzo.RTE.NonAssoc
                                                                                 MAlonzo.RTE.Unrelated)))
@@ -3006,10 +3006,10 @@ du_GStateToConf_2346
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (206 :: Integer)
-                                                                    (11805095676729757169 ::
+                                                                    (208 :: Integer)
+                                                                    (14321319370142338143 ::
                                                                        Integer)
-                                                                    "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                    "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -3168,9 +3168,9 @@ du_GStateToConf_2346
                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                            (coe
                                                               (MAlonzo.RTE.QName
-                                                                 (280 :: Integer)
-                                                                 (8903727640779459985 :: Integer)
-                                                                 "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                 (282 :: Integer)
+                                                                 (753823221557309123 :: Integer)
+                                                                 "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                  (MAlonzo.RTE.Fixity
                                                                     MAlonzo.RTE.NonAssoc
                                                                     MAlonzo.RTE.Unrelated)))
@@ -3240,10 +3240,10 @@ du_GStateToConf_2346
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (24 :: Integer)
-                                                                    (11805095676729757169 ::
+                                                                    (26 :: Integer)
+                                                                    (14321319370142338143 ::
                                                                        Integer)
-                                                                    "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                    "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -3281,10 +3281,10 @@ du_GStateToConf_2346
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (202 :: Integer)
-                                                                                (11805095676729757169 ::
+                                                                                (204 :: Integer)
+                                                                                (14321319370142338143 ::
                                                                                    Integer)
-                                                                                "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -3359,10 +3359,10 @@ du_GStateToConf_2346
                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                  (coe
                                                                     (MAlonzo.RTE.QName
-                                                                       (206 :: Integer)
-                                                                       (11805095676729757169 ::
+                                                                       (208 :: Integer)
+                                                                       (14321319370142338143 ::
                                                                           Integer)
-                                                                       "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                       "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                        (MAlonzo.RTE.Fixity
                                                                           MAlonzo.RTE.NonAssoc
                                                                           MAlonzo.RTE.Unrelated)))
@@ -3512,10 +3512,10 @@ du_GStateToConf_2346
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (280 :: Integer)
-                                                                                (8903727640779459985 ::
+                                                                                (282 :: Integer)
+                                                                                (753823221557309123 ::
                                                                                    Integer)
-                                                                                "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -3588,10 +3588,10 @@ du_GStateToConf_2346
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (24 :: Integer)
-                                                                                   (11805095676729757169 ::
+                                                                                   (26 :: Integer)
+                                                                                   (14321319370142338143 ::
                                                                                       Integer)
-                                                                                   "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                   "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                    (MAlonzo.RTE.Fixity
                                                                                       MAlonzo.RTE.NonAssoc
                                                                                       MAlonzo.RTE.Unrelated)))
@@ -3629,11 +3629,11 @@ du_GStateToConf_2346
                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                          (coe
                                                                                             (MAlonzo.RTE.QName
-                                                                                               (202 ::
+                                                                                               (204 ::
                                                                                                   Integer)
-                                                                                               (11805095676729757169 ::
+                                                                                               (14321319370142338143 ::
                                                                                                   Integer)
-                                                                                               "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                               "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                (MAlonzo.RTE.Fixity
                                                                                                   MAlonzo.RTE.NonAssoc
                                                                                                   MAlonzo.RTE.Unrelated)))
@@ -3708,11 +3708,11 @@ du_GStateToConf_2346
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (206 ::
+                                                                                      (208 ::
                                                                                          Integer)
-                                                                                      (11805095676729757169 ::
+                                                                                      (14321319370142338143 ::
                                                                                          Integer)
-                                                                                      "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                      "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                       (MAlonzo.RTE.Fixity
                                                                                          MAlonzo.RTE.NonAssoc
                                                                                          MAlonzo.RTE.Unrelated)))
@@ -3958,9 +3958,9 @@ du_GStateFromConf_2358
                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                            (coe
                                                               (MAlonzo.RTE.QName
-                                                                 (280 :: Integer)
-                                                                 (8903727640779459985 :: Integer)
-                                                                 "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                 (282 :: Integer)
+                                                                 (753823221557309123 :: Integer)
+                                                                 "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                  (MAlonzo.RTE.Fixity
                                                                     MAlonzo.RTE.NonAssoc
                                                                     MAlonzo.RTE.Unrelated)))
@@ -4030,10 +4030,10 @@ du_GStateFromConf_2358
                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                               (coe
                                                                  (MAlonzo.RTE.QName
-                                                                    (24 :: Integer)
-                                                                    (11805095676729757169 ::
+                                                                    (26 :: Integer)
+                                                                    (14321319370142338143 ::
                                                                        Integer)
-                                                                    "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                    "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                     (MAlonzo.RTE.Fixity
                                                                        MAlonzo.RTE.NonAssoc
                                                                        MAlonzo.RTE.Unrelated)))
@@ -4071,10 +4071,10 @@ du_GStateFromConf_2358
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (202 :: Integer)
-                                                                                (11805095676729757169 ::
+                                                                                (204 :: Integer)
+                                                                                (14321319370142338143 ::
                                                                                    Integer)
-                                                                                "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -4149,10 +4149,10 @@ du_GStateFromConf_2358
                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                  (coe
                                                                     (MAlonzo.RTE.QName
-                                                                       (206 :: Integer)
-                                                                       (11805095676729757169 ::
+                                                                       (208 :: Integer)
+                                                                       (14321319370142338143 ::
                                                                           Integer)
-                                                                       "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                       "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                        (MAlonzo.RTE.Fixity
                                                                           MAlonzo.RTE.NonAssoc
                                                                           MAlonzo.RTE.Unrelated)))
@@ -4302,10 +4302,10 @@ du_GStateFromConf_2358
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (280 :: Integer)
-                                                                                (8903727640779459985 ::
+                                                                                (282 :: Integer)
+                                                                                (753823221557309123 ::
                                                                                    Integer)
-                                                                                "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -4378,10 +4378,10 @@ du_GStateFromConf_2358
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (24 :: Integer)
-                                                                                   (11805095676729757169 ::
+                                                                                   (26 :: Integer)
+                                                                                   (14321319370142338143 ::
                                                                                       Integer)
-                                                                                   "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                   "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                    (MAlonzo.RTE.Fixity
                                                                                       MAlonzo.RTE.NonAssoc
                                                                                       MAlonzo.RTE.Unrelated)))
@@ -4419,11 +4419,11 @@ du_GStateFromConf_2358
                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                          (coe
                                                                                             (MAlonzo.RTE.QName
-                                                                                               (202 ::
+                                                                                               (204 ::
                                                                                                   Integer)
-                                                                                               (11805095676729757169 ::
+                                                                                               (14321319370142338143 ::
                                                                                                   Integer)
-                                                                                               "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                               "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                (MAlonzo.RTE.Fixity
                                                                                                   MAlonzo.RTE.NonAssoc
                                                                                                   MAlonzo.RTE.Unrelated)))
@@ -4498,11 +4498,11 @@ du_GStateFromConf_2358
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (206 ::
+                                                                                      (208 ::
                                                                                          Integer)
-                                                                                      (11805095676729757169 ::
+                                                                                      (14321319370142338143 ::
                                                                                          Integer)
-                                                                                      "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                      "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                       (MAlonzo.RTE.Fixity
                                                                                          MAlonzo.RTE.NonAssoc
                                                                                          MAlonzo.RTE.Unrelated)))
@@ -5026,10 +5026,10 @@ du_CertStToConf_2682
                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                           (coe
                                                                              (MAlonzo.RTE.QName
-                                                                                (280 :: Integer)
-                                                                                (8903727640779459985 ::
+                                                                                (282 :: Integer)
+                                                                                (753823221557309123 ::
                                                                                    Integer)
-                                                                                "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                 (MAlonzo.RTE.Fixity
                                                                                    MAlonzo.RTE.NonAssoc
                                                                                    MAlonzo.RTE.Unrelated)))
@@ -5102,10 +5102,10 @@ du_CertStToConf_2682
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (24 :: Integer)
-                                                                                   (11805095676729757169 ::
+                                                                                   (26 :: Integer)
+                                                                                   (14321319370142338143 ::
                                                                                       Integer)
-                                                                                   "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                   "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                    (MAlonzo.RTE.Fixity
                                                                                       MAlonzo.RTE.NonAssoc
                                                                                       MAlonzo.RTE.Unrelated)))
@@ -5143,11 +5143,11 @@ du_CertStToConf_2682
                                                                                          MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                          (coe
                                                                                             (MAlonzo.RTE.QName
-                                                                                               (202 ::
+                                                                                               (204 ::
                                                                                                   Integer)
-                                                                                               (11805095676729757169 ::
+                                                                                               (14321319370142338143 ::
                                                                                                   Integer)
-                                                                                               "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                               "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                (MAlonzo.RTE.Fixity
                                                                                                   MAlonzo.RTE.NonAssoc
                                                                                                   MAlonzo.RTE.Unrelated)))
@@ -5222,11 +5222,11 @@ du_CertStToConf_2682
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (206 ::
+                                                                                      (208 ::
                                                                                          Integer)
-                                                                                      (11805095676729757169 ::
+                                                                                      (14321319370142338143 ::
                                                                                          Integer)
-                                                                                      "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                      "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                       (MAlonzo.RTE.Fixity
                                                                                          MAlonzo.RTE.NonAssoc
                                                                                          MAlonzo.RTE.Unrelated)))
@@ -5399,10 +5399,10 @@ du_CertStToConf_2682
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (280 :: Integer)
-                                                                                   (8903727640779459985 ::
+                                                                                   (282 :: Integer)
+                                                                                   (753823221557309123 ::
                                                                                       Integer)
-                                                                                   "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                   "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                    (MAlonzo.RTE.Fixity
                                                                                       MAlonzo.RTE.NonAssoc
                                                                                       MAlonzo.RTE.Unrelated)))
@@ -5475,11 +5475,11 @@ du_CertStToConf_2682
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (24 ::
+                                                                                      (26 ::
                                                                                          Integer)
-                                                                                      (11805095676729757169 ::
+                                                                                      (14321319370142338143 ::
                                                                                          Integer)
-                                                                                      "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                      "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                       (MAlonzo.RTE.Fixity
                                                                                          MAlonzo.RTE.NonAssoc
                                                                                          MAlonzo.RTE.Unrelated)))
@@ -5517,11 +5517,11 @@ du_CertStToConf_2682
                                                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                             (coe
                                                                                                (MAlonzo.RTE.QName
-                                                                                                  (202 ::
+                                                                                                  (204 ::
                                                                                                      Integer)
-                                                                                                  (11805095676729757169 ::
+                                                                                                  (14321319370142338143 ::
                                                                                                      Integer)
-                                                                                                  "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                  "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                   (MAlonzo.RTE.Fixity
                                                                                                      MAlonzo.RTE.NonAssoc
                                                                                                      MAlonzo.RTE.Unrelated)))
@@ -5596,11 +5596,11 @@ du_CertStToConf_2682
                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                    (coe
                                                                                       (MAlonzo.RTE.QName
-                                                                                         (206 ::
+                                                                                         (208 ::
                                                                                             Integer)
-                                                                                         (11805095676729757169 ::
+                                                                                         (14321319370142338143 ::
                                                                                             Integer)
-                                                                                         "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                         "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -5773,11 +5773,11 @@ du_CertStToConf_2682
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (280 ::
+                                                                                      (282 ::
                                                                                          Integer)
-                                                                                      (8903727640779459985 ::
+                                                                                      (753823221557309123 ::
                                                                                          Integer)
-                                                                                      "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                      "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                       (MAlonzo.RTE.Fixity
                                                                                          MAlonzo.RTE.NonAssoc
                                                                                          MAlonzo.RTE.Unrelated)))
@@ -5850,11 +5850,11 @@ du_CertStToConf_2682
                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                    (coe
                                                                                       (MAlonzo.RTE.QName
-                                                                                         (24 ::
+                                                                                         (26 ::
                                                                                             Integer)
-                                                                                         (11805095676729757169 ::
+                                                                                         (14321319370142338143 ::
                                                                                             Integer)
-                                                                                         "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                         "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -5892,11 +5892,11 @@ du_CertStToConf_2682
                                                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                (coe
                                                                                                   (MAlonzo.RTE.QName
-                                                                                                     (202 ::
+                                                                                                     (204 ::
                                                                                                         Integer)
-                                                                                                     (11805095676729757169 ::
+                                                                                                     (14321319370142338143 ::
                                                                                                         Integer)
-                                                                                                     "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                     "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                      (MAlonzo.RTE.Fixity
                                                                                                         MAlonzo.RTE.NonAssoc
                                                                                                         MAlonzo.RTE.Unrelated)))
@@ -5971,11 +5971,11 @@ du_CertStToConf_2682
                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                       (coe
                                                                                          (MAlonzo.RTE.QName
-                                                                                            (206 ::
+                                                                                            (208 ::
                                                                                                Integer)
-                                                                                            (11805095676729757169 ::
+                                                                                            (14321319370142338143 ::
                                                                                                Integer)
-                                                                                            "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                            "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                             (MAlonzo.RTE.Fixity
                                                                                                MAlonzo.RTE.NonAssoc
                                                                                                MAlonzo.RTE.Unrelated)))
@@ -6230,10 +6230,10 @@ du_CertStToConf_2682
                                                                              MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                              (coe
                                                                                 (MAlonzo.RTE.QName
-                                                                                   (280 :: Integer)
-                                                                                   (8903727640779459985 ::
+                                                                                   (282 :: Integer)
+                                                                                   (753823221557309123 ::
                                                                                       Integer)
-                                                                                   "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                   "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                    (MAlonzo.RTE.Fixity
                                                                                       MAlonzo.RTE.NonAssoc
                                                                                       MAlonzo.RTE.Unrelated)))
@@ -6306,11 +6306,11 @@ du_CertStToConf_2682
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (24 ::
+                                                                                      (26 ::
                                                                                          Integer)
-                                                                                      (11805095676729757169 ::
+                                                                                      (14321319370142338143 ::
                                                                                          Integer)
-                                                                                      "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                      "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                       (MAlonzo.RTE.Fixity
                                                                                          MAlonzo.RTE.NonAssoc
                                                                                          MAlonzo.RTE.Unrelated)))
@@ -6348,11 +6348,11 @@ du_CertStToConf_2682
                                                                                             MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                             (coe
                                                                                                (MAlonzo.RTE.QName
-                                                                                                  (202 ::
+                                                                                                  (204 ::
                                                                                                      Integer)
-                                                                                                  (11805095676729757169 ::
+                                                                                                  (14321319370142338143 ::
                                                                                                      Integer)
-                                                                                                  "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                  "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                   (MAlonzo.RTE.Fixity
                                                                                                      MAlonzo.RTE.NonAssoc
                                                                                                      MAlonzo.RTE.Unrelated)))
@@ -6427,11 +6427,11 @@ du_CertStToConf_2682
                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                    (coe
                                                                                       (MAlonzo.RTE.QName
-                                                                                         (206 ::
+                                                                                         (208 ::
                                                                                             Integer)
-                                                                                         (11805095676729757169 ::
+                                                                                         (14321319370142338143 ::
                                                                                             Integer)
-                                                                                         "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                         "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -6604,11 +6604,11 @@ du_CertStToConf_2682
                                                                                 MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                 (coe
                                                                                    (MAlonzo.RTE.QName
-                                                                                      (280 ::
+                                                                                      (282 ::
                                                                                          Integer)
-                                                                                      (8903727640779459985 ::
+                                                                                      (753823221557309123 ::
                                                                                          Integer)
-                                                                                      "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                      "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                       (MAlonzo.RTE.Fixity
                                                                                          MAlonzo.RTE.NonAssoc
                                                                                          MAlonzo.RTE.Unrelated)))
@@ -6681,11 +6681,11 @@ du_CertStToConf_2682
                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                    (coe
                                                                                       (MAlonzo.RTE.QName
-                                                                                         (24 ::
+                                                                                         (26 ::
                                                                                             Integer)
-                                                                                         (11805095676729757169 ::
+                                                                                         (14321319370142338143 ::
                                                                                             Integer)
-                                                                                         "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                         "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                          (MAlonzo.RTE.Fixity
                                                                                             MAlonzo.RTE.NonAssoc
                                                                                             MAlonzo.RTE.Unrelated)))
@@ -6723,11 +6723,11 @@ du_CertStToConf_2682
                                                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                (coe
                                                                                                   (MAlonzo.RTE.QName
-                                                                                                     (202 ::
+                                                                                                     (204 ::
                                                                                                         Integer)
-                                                                                                     (11805095676729757169 ::
+                                                                                                     (14321319370142338143 ::
                                                                                                         Integer)
-                                                                                                     "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                     "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                      (MAlonzo.RTE.Fixity
                                                                                                         MAlonzo.RTE.NonAssoc
                                                                                                         MAlonzo.RTE.Unrelated)))
@@ -6802,11 +6802,11 @@ du_CertStToConf_2682
                                                                                       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                       (coe
                                                                                          (MAlonzo.RTE.QName
-                                                                                            (206 ::
+                                                                                            (208 ::
                                                                                                Integer)
-                                                                                            (11805095676729757169 ::
+                                                                                            (14321319370142338143 ::
                                                                                                Integer)
-                                                                                            "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                            "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                             (MAlonzo.RTE.Fixity
                                                                                                MAlonzo.RTE.NonAssoc
                                                                                                MAlonzo.RTE.Unrelated)))
@@ -6960,11 +6960,11 @@ du_CertStToConf_2682
                                                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                (coe
                                                                                                   (MAlonzo.RTE.QName
-                                                                                                     (280 ::
+                                                                                                     (282 ::
                                                                                                         Integer)
-                                                                                                     (8903727640779459985 ::
+                                                                                                     (753823221557309123 ::
                                                                                                         Integer)
-                                                                                                     "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                                     "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                                      (MAlonzo.RTE.Fixity
                                                                                                         MAlonzo.RTE.NonAssoc
                                                                                                         MAlonzo.RTE.Unrelated)))
@@ -7037,11 +7037,11 @@ du_CertStToConf_2682
                                                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                   (coe
                                                                                                      (MAlonzo.RTE.QName
-                                                                                                        (24 ::
+                                                                                                        (26 ::
                                                                                                            Integer)
-                                                                                                        (11805095676729757169 ::
+                                                                                                        (14321319370142338143 ::
                                                                                                            Integer)
-                                                                                                        "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                                        "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                                         (MAlonzo.RTE.Fixity
                                                                                                            MAlonzo.RTE.NonAssoc
                                                                                                            MAlonzo.RTE.Unrelated)))
@@ -7079,11 +7079,11 @@ du_CertStToConf_2682
                                                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                               (coe
                                                                                                                  (MAlonzo.RTE.QName
-                                                                                                                    (202 ::
+                                                                                                                    (204 ::
                                                                                                                        Integer)
-                                                                                                                    (11805095676729757169 ::
+                                                                                                                    (14321319370142338143 ::
                                                                                                                        Integer)
-                                                                                                                    "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                                    "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                                     (MAlonzo.RTE.Fixity
                                                                                                                        MAlonzo.RTE.NonAssoc
                                                                                                                        MAlonzo.RTE.Unrelated)))
@@ -7158,11 +7158,11 @@ du_CertStToConf_2682
                                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                      (coe
                                                                                                         (MAlonzo.RTE.QName
-                                                                                                           (206 ::
+                                                                                                           (208 ::
                                                                                                               Integer)
-                                                                                                           (11805095676729757169 ::
+                                                                                                           (14321319370142338143 ::
                                                                                                               Integer)
-                                                                                                           "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                                           "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                                            (MAlonzo.RTE.Fixity
                                                                                                               MAlonzo.RTE.NonAssoc
                                                                                                               MAlonzo.RTE.Unrelated)))
@@ -8129,11 +8129,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                (coe
                                                                                   (MAlonzo.RTE.QName
-                                                                                     (280 ::
+                                                                                     (282 ::
                                                                                         Integer)
-                                                                                     (8903727640779459985 ::
+                                                                                     (753823221557309123 ::
                                                                                         Integer)
-                                                                                     "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                     "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                      (MAlonzo.RTE.Fixity
                                                                                         MAlonzo.RTE.NonAssoc
                                                                                         MAlonzo.RTE.Unrelated)))
@@ -8206,11 +8206,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                   (coe
                                                                                      (MAlonzo.RTE.QName
-                                                                                        (24 ::
+                                                                                        (26 ::
                                                                                            Integer)
-                                                                                        (11805095676729757169 ::
+                                                                                        (14321319370142338143 ::
                                                                                            Integer)
-                                                                                        "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                        "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                         (MAlonzo.RTE.Fixity
                                                                                            MAlonzo.RTE.NonAssoc
                                                                                            MAlonzo.RTE.Unrelated)))
@@ -8248,11 +8248,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                               (coe
                                                                                                  (MAlonzo.RTE.QName
-                                                                                                    (202 ::
+                                                                                                    (204 ::
                                                                                                        Integer)
-                                                                                                    (11805095676729757169 ::
+                                                                                                    (14321319370142338143 ::
                                                                                                        Integer)
-                                                                                                    "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                    "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                     (MAlonzo.RTE.Fixity
                                                                                                        MAlonzo.RTE.NonAssoc
                                                                                                        MAlonzo.RTE.Unrelated)))
@@ -8327,11 +8327,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (206 ::
+                                                                                           (208 ::
                                                                                               Integer)
-                                                                                           (11805095676729757169 ::
+                                                                                           (14321319370142338143 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                           "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -8506,11 +8506,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                   (coe
                                                                                      (MAlonzo.RTE.QName
-                                                                                        (280 ::
+                                                                                        (282 ::
                                                                                            Integer)
-                                                                                        (8903727640779459985 ::
+                                                                                        (753823221557309123 ::
                                                                                            Integer)
-                                                                                        "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                        "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                         (MAlonzo.RTE.Fixity
                                                                                            MAlonzo.RTE.NonAssoc
                                                                                            MAlonzo.RTE.Unrelated)))
@@ -8583,11 +8583,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (24 ::
+                                                                                           (26 ::
                                                                                               Integer)
-                                                                                           (11805095676729757169 ::
+                                                                                           (14321319370142338143 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                           "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -8625,11 +8625,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                  (coe
                                                                                                     (MAlonzo.RTE.QName
-                                                                                                       (202 ::
+                                                                                                       (204 ::
                                                                                                           Integer)
-                                                                                                       (11805095676729757169 ::
+                                                                                                       (14321319370142338143 ::
                                                                                                           Integer)
-                                                                                                       "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                       "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                        (MAlonzo.RTE.Fixity
                                                                                                           MAlonzo.RTE.NonAssoc
                                                                                                           MAlonzo.RTE.Unrelated)))
@@ -8704,11 +8704,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                         (coe
                                                                                            (MAlonzo.RTE.QName
-                                                                                              (206 ::
+                                                                                              (208 ::
                                                                                                  Integer)
-                                                                                              (11805095676729757169 ::
+                                                                                              (14321319370142338143 ::
                                                                                                  Integer)
-                                                                                              "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                              "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                               (MAlonzo.RTE.Fixity
                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -8883,11 +8883,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (280 ::
+                                                                                           (282 ::
                                                                                               Integer)
-                                                                                           (8903727640779459985 ::
+                                                                                           (753823221557309123 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                           "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -8960,11 +8960,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                         (coe
                                                                                            (MAlonzo.RTE.QName
-                                                                                              (24 ::
+                                                                                              (26 ::
                                                                                                  Integer)
-                                                                                              (11805095676729757169 ::
+                                                                                              (14321319370142338143 ::
                                                                                                  Integer)
-                                                                                              "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                              "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                               (MAlonzo.RTE.Fixity
                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -9002,11 +9002,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                     (coe
                                                                                                        (MAlonzo.RTE.QName
-                                                                                                          (202 ::
+                                                                                                          (204 ::
                                                                                                              Integer)
-                                                                                                          (11805095676729757169 ::
+                                                                                                          (14321319370142338143 ::
                                                                                                              Integer)
-                                                                                                          "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                          "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                           (MAlonzo.RTE.Fixity
                                                                                                              MAlonzo.RTE.NonAssoc
                                                                                                              MAlonzo.RTE.Unrelated)))
@@ -9081,11 +9081,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                            (coe
                                                                                               (MAlonzo.RTE.QName
-                                                                                                 (206 ::
+                                                                                                 (208 ::
                                                                                                     Integer)
-                                                                                                 (11805095676729757169 ::
+                                                                                                 (14321319370142338143 ::
                                                                                                     Integer)
-                                                                                                 "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                                 "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                                  (MAlonzo.RTE.Fixity
                                                                                                     MAlonzo.RTE.NonAssoc
                                                                                                     MAlonzo.RTE.Unrelated)))
@@ -9351,11 +9351,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                   (coe
                                                                                      (MAlonzo.RTE.QName
-                                                                                        (280 ::
+                                                                                        (282 ::
                                                                                            Integer)
-                                                                                        (8903727640779459985 ::
+                                                                                        (753823221557309123 ::
                                                                                            Integer)
-                                                                                        "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                        "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                         (MAlonzo.RTE.Fixity
                                                                                            MAlonzo.RTE.NonAssoc
                                                                                            MAlonzo.RTE.Unrelated)))
@@ -9428,11 +9428,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (24 ::
+                                                                                           (26 ::
                                                                                               Integer)
-                                                                                           (11805095676729757169 ::
+                                                                                           (14321319370142338143 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                           "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -9470,11 +9470,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                  (coe
                                                                                                     (MAlonzo.RTE.QName
-                                                                                                       (202 ::
+                                                                                                       (204 ::
                                                                                                           Integer)
-                                                                                                       (11805095676729757169 ::
+                                                                                                       (14321319370142338143 ::
                                                                                                           Integer)
-                                                                                                       "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                       "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                        (MAlonzo.RTE.Fixity
                                                                                                           MAlonzo.RTE.NonAssoc
                                                                                                           MAlonzo.RTE.Unrelated)))
@@ -9549,11 +9549,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                         (coe
                                                                                            (MAlonzo.RTE.QName
-                                                                                              (206 ::
+                                                                                              (208 ::
                                                                                                  Integer)
-                                                                                              (11805095676729757169 ::
+                                                                                              (14321319370142338143 ::
                                                                                                  Integer)
-                                                                                              "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                              "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                               (MAlonzo.RTE.Fixity
                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -9728,11 +9728,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (280 ::
+                                                                                           (282 ::
                                                                                               Integer)
-                                                                                           (8903727640779459985 ::
+                                                                                           (753823221557309123 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                           "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -9805,11 +9805,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                         (coe
                                                                                            (MAlonzo.RTE.QName
-                                                                                              (24 ::
+                                                                                              (26 ::
                                                                                                  Integer)
-                                                                                              (11805095676729757169 ::
+                                                                                              (14321319370142338143 ::
                                                                                                  Integer)
-                                                                                              "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                              "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                               (MAlonzo.RTE.Fixity
                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -9847,11 +9847,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                     (coe
                                                                                                        (MAlonzo.RTE.QName
-                                                                                                          (202 ::
+                                                                                                          (204 ::
                                                                                                              Integer)
-                                                                                                          (11805095676729757169 ::
+                                                                                                          (14321319370142338143 ::
                                                                                                              Integer)
-                                                                                                          "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                          "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                           (MAlonzo.RTE.Fixity
                                                                                                              MAlonzo.RTE.NonAssoc
                                                                                                              MAlonzo.RTE.Unrelated)))
@@ -9926,11 +9926,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                            (coe
                                                                                               (MAlonzo.RTE.QName
-                                                                                                 (206 ::
+                                                                                                 (208 ::
                                                                                                     Integer)
-                                                                                                 (11805095676729757169 ::
+                                                                                                 (14321319370142338143 ::
                                                                                                     Integer)
-                                                                                                 "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                                 "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                                  (MAlonzo.RTE.Fixity
                                                                                                     MAlonzo.RTE.NonAssoc
                                                                                                     MAlonzo.RTE.Unrelated)))
@@ -10084,11 +10084,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                     (coe
                                                                                                        (MAlonzo.RTE.QName
-                                                                                                          (280 ::
+                                                                                                          (282 ::
                                                                                                              Integer)
-                                                                                                          (8903727640779459985 ::
+                                                                                                          (753823221557309123 ::
                                                                                                              Integer)
-                                                                                                          "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                                          "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                                           (MAlonzo.RTE.Fixity
                                                                                                              MAlonzo.RTE.NonAssoc
                                                                                                              MAlonzo.RTE.Unrelated)))
@@ -10161,11 +10161,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                        (coe
                                                                                                           (MAlonzo.RTE.QName
-                                                                                                             (24 ::
+                                                                                                             (26 ::
                                                                                                                 Integer)
-                                                                                                             (11805095676729757169 ::
+                                                                                                             (14321319370142338143 ::
                                                                                                                 Integer)
-                                                                                                             "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                                             "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                                              (MAlonzo.RTE.Fixity
                                                                                                                 MAlonzo.RTE.NonAssoc
                                                                                                                 MAlonzo.RTE.Unrelated)))
@@ -10203,11 +10203,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                                    (coe
                                                                                                                       (MAlonzo.RTE.QName
-                                                                                                                         (202 ::
+                                                                                                                         (204 ::
                                                                                                                             Integer)
-                                                                                                                         (11805095676729757169 ::
+                                                                                                                         (14321319370142338143 ::
                                                                                                                             Integer)
-                                                                                                                         "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                                         "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                                          (MAlonzo.RTE.Fixity
                                                                                                                             MAlonzo.RTE.NonAssoc
                                                                                                                             MAlonzo.RTE.Unrelated)))
@@ -10282,11 +10282,11 @@ du_CERTS''ToConf_2876 v0 v1 v2
                                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                           (coe
                                                                                                              (MAlonzo.RTE.QName
-                                                                                                                (206 ::
+                                                                                                                (208 ::
                                                                                                                    Integer)
-                                                                                                                (11805095676729757169 ::
+                                                                                                                (14321319370142338143 ::
                                                                                                                    Integer)
-                                                                                                                "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                                                "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                                    MAlonzo.RTE.Unrelated)))
@@ -10718,11 +10718,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                (coe
                                                                                   (MAlonzo.RTE.QName
-                                                                                     (280 ::
+                                                                                     (282 ::
                                                                                         Integer)
-                                                                                     (8903727640779459985 ::
+                                                                                     (753823221557309123 ::
                                                                                         Integer)
-                                                                                     "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                     "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                      (MAlonzo.RTE.Fixity
                                                                                         MAlonzo.RTE.NonAssoc
                                                                                         MAlonzo.RTE.Unrelated)))
@@ -10795,11 +10795,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                   (coe
                                                                                      (MAlonzo.RTE.QName
-                                                                                        (24 ::
+                                                                                        (26 ::
                                                                                            Integer)
-                                                                                        (11805095676729757169 ::
+                                                                                        (14321319370142338143 ::
                                                                                            Integer)
-                                                                                        "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                        "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                         (MAlonzo.RTE.Fixity
                                                                                            MAlonzo.RTE.NonAssoc
                                                                                            MAlonzo.RTE.Unrelated)))
@@ -10837,11 +10837,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                               MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                               (coe
                                                                                                  (MAlonzo.RTE.QName
-                                                                                                    (202 ::
+                                                                                                    (204 ::
                                                                                                        Integer)
-                                                                                                    (11805095676729757169 ::
+                                                                                                    (14321319370142338143 ::
                                                                                                        Integer)
-                                                                                                    "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                    "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                     (MAlonzo.RTE.Fixity
                                                                                                        MAlonzo.RTE.NonAssoc
                                                                                                        MAlonzo.RTE.Unrelated)))
@@ -10916,11 +10916,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (206 ::
+                                                                                           (208 ::
                                                                                               Integer)
-                                                                                           (11805095676729757169 ::
+                                                                                           (14321319370142338143 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                           "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -11095,11 +11095,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                   (coe
                                                                                      (MAlonzo.RTE.QName
-                                                                                        (280 ::
+                                                                                        (282 ::
                                                                                            Integer)
-                                                                                        (8903727640779459985 ::
+                                                                                        (753823221557309123 ::
                                                                                            Integer)
-                                                                                        "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                        "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                         (MAlonzo.RTE.Fixity
                                                                                            MAlonzo.RTE.NonAssoc
                                                                                            MAlonzo.RTE.Unrelated)))
@@ -11172,11 +11172,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (24 ::
+                                                                                           (26 ::
                                                                                               Integer)
-                                                                                           (11805095676729757169 ::
+                                                                                           (14321319370142338143 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                           "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -11214,11 +11214,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                  (coe
                                                                                                     (MAlonzo.RTE.QName
-                                                                                                       (202 ::
+                                                                                                       (204 ::
                                                                                                           Integer)
-                                                                                                       (11805095676729757169 ::
+                                                                                                       (14321319370142338143 ::
                                                                                                           Integer)
-                                                                                                       "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                       "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                        (MAlonzo.RTE.Fixity
                                                                                                           MAlonzo.RTE.NonAssoc
                                                                                                           MAlonzo.RTE.Unrelated)))
@@ -11293,11 +11293,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                         (coe
                                                                                            (MAlonzo.RTE.QName
-                                                                                              (206 ::
+                                                                                              (208 ::
                                                                                                  Integer)
-                                                                                              (11805095676729757169 ::
+                                                                                              (14321319370142338143 ::
                                                                                                  Integer)
-                                                                                              "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                              "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                               (MAlonzo.RTE.Fixity
                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -11472,11 +11472,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (280 ::
+                                                                                           (282 ::
                                                                                               Integer)
-                                                                                           (8903727640779459985 ::
+                                                                                           (753823221557309123 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                           "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -11549,11 +11549,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                         (coe
                                                                                            (MAlonzo.RTE.QName
-                                                                                              (24 ::
+                                                                                              (26 ::
                                                                                                  Integer)
-                                                                                              (11805095676729757169 ::
+                                                                                              (14321319370142338143 ::
                                                                                                  Integer)
-                                                                                              "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                              "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                               (MAlonzo.RTE.Fixity
                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -11591,11 +11591,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                     (coe
                                                                                                        (MAlonzo.RTE.QName
-                                                                                                          (202 ::
+                                                                                                          (204 ::
                                                                                                              Integer)
-                                                                                                          (11805095676729757169 ::
+                                                                                                          (14321319370142338143 ::
                                                                                                              Integer)
-                                                                                                          "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                          "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                           (MAlonzo.RTE.Fixity
                                                                                                              MAlonzo.RTE.NonAssoc
                                                                                                              MAlonzo.RTE.Unrelated)))
@@ -11670,11 +11670,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                            (coe
                                                                                               (MAlonzo.RTE.QName
-                                                                                                 (206 ::
+                                                                                                 (208 ::
                                                                                                     Integer)
-                                                                                                 (11805095676729757169 ::
+                                                                                                 (14321319370142338143 ::
                                                                                                     Integer)
-                                                                                                 "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                                 "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                                  (MAlonzo.RTE.Fixity
                                                                                                     MAlonzo.RTE.NonAssoc
                                                                                                     MAlonzo.RTE.Unrelated)))
@@ -11933,11 +11933,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                   MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                   (coe
                                                                                      (MAlonzo.RTE.QName
-                                                                                        (280 ::
+                                                                                        (282 ::
                                                                                            Integer)
-                                                                                        (8903727640779459985 ::
+                                                                                        (753823221557309123 ::
                                                                                            Integer)
-                                                                                        "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                        "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                         (MAlonzo.RTE.Fixity
                                                                                            MAlonzo.RTE.NonAssoc
                                                                                            MAlonzo.RTE.Unrelated)))
@@ -12010,11 +12010,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (24 ::
+                                                                                           (26 ::
                                                                                               Integer)
-                                                                                           (11805095676729757169 ::
+                                                                                           (14321319370142338143 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                           "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -12052,11 +12052,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                                  MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                  (coe
                                                                                                     (MAlonzo.RTE.QName
-                                                                                                       (202 ::
+                                                                                                       (204 ::
                                                                                                           Integer)
-                                                                                                       (11805095676729757169 ::
+                                                                                                       (14321319370142338143 ::
                                                                                                           Integer)
-                                                                                                       "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                       "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                        (MAlonzo.RTE.Fixity
                                                                                                           MAlonzo.RTE.NonAssoc
                                                                                                           MAlonzo.RTE.Unrelated)))
@@ -12131,11 +12131,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                         (coe
                                                                                            (MAlonzo.RTE.QName
-                                                                                              (206 ::
+                                                                                              (208 ::
                                                                                                  Integer)
-                                                                                              (11805095676729757169 ::
+                                                                                              (14321319370142338143 ::
                                                                                                  Integer)
-                                                                                              "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                              "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                               (MAlonzo.RTE.Fixity
                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -12310,11 +12310,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                      MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                      (coe
                                                                                         (MAlonzo.RTE.QName
-                                                                                           (280 ::
+                                                                                           (282 ::
                                                                                               Integer)
-                                                                                           (8903727640779459985 ::
+                                                                                           (753823221557309123 ::
                                                                                               Integer)
-                                                                                           "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                           "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                            (MAlonzo.RTE.Fixity
                                                                                               MAlonzo.RTE.NonAssoc
                                                                                               MAlonzo.RTE.Unrelated)))
@@ -12387,11 +12387,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                         MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                         (coe
                                                                                            (MAlonzo.RTE.QName
-                                                                                              (24 ::
+                                                                                              (26 ::
                                                                                                  Integer)
-                                                                                              (11805095676729757169 ::
+                                                                                              (14321319370142338143 ::
                                                                                                  Integer)
-                                                                                              "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                              "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                               (MAlonzo.RTE.Fixity
                                                                                                  MAlonzo.RTE.NonAssoc
                                                                                                  MAlonzo.RTE.Unrelated)))
@@ -12429,11 +12429,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                     (coe
                                                                                                        (MAlonzo.RTE.QName
-                                                                                                          (202 ::
+                                                                                                          (204 ::
                                                                                                              Integer)
-                                                                                                          (11805095676729757169 ::
+                                                                                                          (14321319370142338143 ::
                                                                                                              Integer)
-                                                                                                          "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                          "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                           (MAlonzo.RTE.Fixity
                                                                                                              MAlonzo.RTE.NonAssoc
                                                                                                              MAlonzo.RTE.Unrelated)))
@@ -12508,11 +12508,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                            MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                            (coe
                                                                                               (MAlonzo.RTE.QName
-                                                                                                 (206 ::
+                                                                                                 (208 ::
                                                                                                     Integer)
-                                                                                                 (11805095676729757169 ::
+                                                                                                 (14321319370142338143 ::
                                                                                                     Integer)
-                                                                                                 "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                                 "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                                  (MAlonzo.RTE.Fixity
                                                                                                     MAlonzo.RTE.NonAssoc
                                                                                                     MAlonzo.RTE.Unrelated)))
@@ -12666,11 +12666,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                                     MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                     (coe
                                                                                                        (MAlonzo.RTE.QName
-                                                                                                          (280 ::
+                                                                                                          (282 ::
                                                                                                              Integer)
-                                                                                                          (8903727640779459985 ::
+                                                                                                          (753823221557309123 ::
                                                                                                              Integer)
-                                                                                                          "Ledger.Prelude.Epoch.GlobalConstants.DecEq-Netw"
+                                                                                                          "Ledger.Core.Specification.Epoch.GlobalConstants.DecEq-Netw"
                                                                                                           (MAlonzo.RTE.Fixity
                                                                                                              MAlonzo.RTE.NonAssoc
                                                                                                              MAlonzo.RTE.Unrelated)))
@@ -12743,11 +12743,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                                        MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                        (coe
                                                                                                           (MAlonzo.RTE.QName
-                                                                                                             (24 ::
+                                                                                                             (26 ::
                                                                                                                 Integer)
-                                                                                                             (11805095676729757169 ::
+                                                                                                             (14321319370142338143 ::
                                                                                                                 Integer)
-                                                                                                             "Ledger.Prelude.Crypto.isHashableSet.DecEq-THash"
+                                                                                                             "Ledger.Core.Specification.Crypto.isHashableSet.DecEq-THash"
                                                                                                              (MAlonzo.RTE.Fixity
                                                                                                                 MAlonzo.RTE.NonAssoc
                                                                                                                 MAlonzo.RTE.Unrelated)))
@@ -12785,11 +12785,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                                                    MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                                    (coe
                                                                                                                       (MAlonzo.RTE.QName
-                                                                                                                         (202 ::
+                                                                                                                         (204 ::
                                                                                                                             Integer)
-                                                                                                                         (11805095676729757169 ::
+                                                                                                                         (14321319370142338143 ::
                                                                                                                             Integer)
-                                                                                                                         "Ledger.Prelude.Crypto.CryptoStructure.khs"
+                                                                                                                         "Ledger.Core.Specification.Crypto.CryptoStructure.khs"
                                                                                                                          (MAlonzo.RTE.Fixity
                                                                                                                             MAlonzo.RTE.NonAssoc
                                                                                                                             MAlonzo.RTE.Unrelated)))
@@ -12864,11 +12864,11 @@ du_CERTSToConf_2910 v0 v1 v2
                                                                                                           MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
                                                                                                           (coe
                                                                                                              (MAlonzo.RTE.QName
-                                                                                                                (206 ::
+                                                                                                                (208 ::
                                                                                                                    Integer)
-                                                                                                                (11805095676729757169 ::
+                                                                                                                (14321319370142338143 ::
                                                                                                                    Integer)
-                                                                                                                "Ledger.Prelude.Crypto.CryptoStructure.DecEq-ScriptHash"
+                                                                                                                "Ledger.Core.Specification.Crypto.CryptoStructure.DecEq-ScriptHash"
                                                                                                                 (MAlonzo.RTE.Fixity
                                                                                                                    MAlonzo.RTE.NonAssoc
                                                                                                                    MAlonzo.RTE.Unrelated)))

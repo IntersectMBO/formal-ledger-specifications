@@ -19,10 +19,10 @@ import qualified MAlonzo.RTE
 import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Data.Sum.Base
-import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Certs
 import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
 
 -- Ledger.Conway.Abstract._.CostModel
 d_CostModel_44 ::
@@ -127,7 +127,7 @@ d_prevAction_776 v0
 -- Ledger.Conway.Abstract._.GovProposal.returnAddr
 d_returnAddr_778 ::
   MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
-  MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_98
 d_returnAddr_778 v0
   = coe
       MAlonzo.Code.Ledger.Conway.GovernanceActions.d_returnAddr_876
@@ -136,15 +136,18 @@ d_returnAddr_778 v0
 d_GovProposal_826 a0 = ()
 -- Ledger.Conway.Abstract._.RwdAddr.net
 d_net_1306 ::
-  MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96 -> AgdaAny
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_98 ->
+  AgdaAny
 d_net_1306 v0
-  = coe MAlonzo.Code.Ledger.Conway.Address.d_net_102 (coe v0)
+  = coe
+      MAlonzo.Code.Ledger.Core.Specification.Address.d_net_104 (coe v0)
 -- Ledger.Conway.Abstract._.RwdAddr.stake
 d_stake_1308 ::
-  MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96 ->
-  MAlonzo.Code.Ledger.Conway.Address.T_Credential_18
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_98 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_stake_1308 v0
-  = coe MAlonzo.Code.Ledger.Conway.Address.d_stake_104 (coe v0)
+  = coe
+      MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_106 (coe v0)
 -- Ledger.Conway.Abstract._.DCert
 d_DCert_1632 a0 = ()
 -- Ledger.Conway.Abstract.indexOf
@@ -152,7 +155,7 @@ d_indexOf_1930 a0 = ()
 data T_indexOf_1930
   = C_indexOf'46'constructor_4241 (MAlonzo.Code.Ledger.Conway.Certs.T_DCert_1022 ->
                                    [MAlonzo.Code.Ledger.Conway.Certs.T_DCert_1022] -> Maybe AgdaAny)
-                                  (MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96 ->
+                                  (MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_98 ->
                                    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny)
                                   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
                                    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny)
@@ -174,7 +177,7 @@ d_indexOfDCert_1944 v0
 -- Ledger.Conway.Abstract.indexOf.indexOfRwdAddr
 d_indexOfRwdAddr_1946 ::
   T_indexOf_1930 ->
-  MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96 ->
+  MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_98 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny
 d_indexOfRwdAddr_1946 v0
   = case coe v0 of

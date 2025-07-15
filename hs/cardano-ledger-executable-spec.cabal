@@ -432,7 +432,6 @@ library
       MAlonzo.Code.Interface.STS
       MAlonzo.Code.IO.Primitive.Core
       MAlonzo.Code.Ledger.Conway.Abstract
-      MAlonzo.Code.Ledger.Conway.Address
       MAlonzo.Code.Ledger.Conway.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties
@@ -490,10 +489,11 @@ library
       MAlonzo.Code.Ledger.Conway.Types.GovStructure
       MAlonzo.Code.Ledger.Conway.Utxo
       MAlonzo.Code.Ledger.Conway.Utxow
+      MAlonzo.Code.Ledger.Core.Specification.Address
+      MAlonzo.Code.Ledger.Core.Specification.Crypto
+      MAlonzo.Code.Ledger.Core.Specification.Epoch
       MAlonzo.Code.Ledger.Prelude
       MAlonzo.Code.Ledger.Prelude.Base
-      MAlonzo.Code.Ledger.Prelude.Crypto
-      MAlonzo.Code.Ledger.Prelude.Epoch
       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
       MAlonzo.Code.Ledger.Prelude.Foreign.Util
       MAlonzo.Code.Ledger.Prelude.HasCoin

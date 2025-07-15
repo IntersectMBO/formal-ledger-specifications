@@ -27,19 +27,21 @@ import qualified MAlonzo.Code.Class.Show.Core
 import qualified MAlonzo.Code.Data.Sum
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Interface.Hashable
-import qualified MAlonzo.Code.Ledger.Prelude.Crypto
-import qualified MAlonzo.Code.Ledger.Prelude.Epoch
+import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
+import qualified MAlonzo.Code.Ledger.Core.Specification.Epoch
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
 -- _.THash
 d_THash_22 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 -> ()
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  ()
 d_THash_22 = erased
 -- _.Slot
 d_Slot_76 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 -> ()
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
+  ()
 d_Slot_76 = erased
 -- Ledger.Conway.Script.Base.P1ScriptStructure
 d_P1ScriptStructure_96 a0 a1 = ()
@@ -87,7 +89,7 @@ d_DecEq'45'P1Script_116 v0
 -- Ledger.Conway.Script.Base.PlutusStructure
 d_PlutusStructure_118 a0 a1 = ()
 data T_PlutusStructure_118
-  = C_PlutusStructure'46'constructor_4263 MAlonzo.Code.Ledger.Prelude.Crypto.T_HashableSet_34
+  = C_PlutusStructure'46'constructor_4263 MAlonzo.Code.Ledger.Core.Specification.Crypto.T_HashableSet_36
                                           AgdaAny AgdaAny AgdaAny
                                           MAlonzo.Code.Class.CommutativeMonoid.Core.T_CommutativeMonoid_12
                                           MAlonzo.Code.Interface.Hashable.T_Hashable_8
@@ -107,9 +109,9 @@ data T_PlutusStructure_118
                                           (AgdaAny -> AgdaAny) (() -> AgdaAny -> AgdaAny)
 -- Ledger.Conway.Script.Base._.T
 d_T_164 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_HashableSet_34 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_HashableSet_36 ->
   () ->
   () ->
   () ->
@@ -134,7 +136,7 @@ d_T_164 = erased
 -- Ledger.Conway.Script.Base.PlutusStructure.Dataʰ
 d_Data'688'_194 ::
   T_PlutusStructure_118 ->
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_HashableSet_34
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_HashableSet_36
 d_Data'688'_194 v0
   = case coe v0 of
       C_PlutusStructure'46'constructor_4263 v1 v8 v9 v10 v11 v12 v13 v14 v15 v16 v18 v19 v20 v21 v23 v24 v25
@@ -278,9 +280,10 @@ d_DecEq'45'T_242 v0
   = let v1 = d_Data'688'_194 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'T_28
+         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'T_30
          (coe
-            MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42 (coe v1)))
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
+            (coe v1)))
 -- Ledger.Conway.Script.Base.PlutusStructure._.DecEq-THash
 d_DecEq'45'THash_244 ::
   T_PlutusStructure_118 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
@@ -288,9 +291,10 @@ d_DecEq'45'THash_244 v0
   = let v1 = d_Data'688'_194 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe
-            MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42 (coe v1)))
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
+            (coe v1)))
 -- Ledger.Conway.Script.Base.PlutusStructure._.Show-THash
 d_Show'45'THash_246 ::
   T_PlutusStructure_118 -> MAlonzo.Code.Class.Show.Core.T_Show_10
@@ -298,9 +302,10 @@ d_Show'45'THash_246 v0
   = let v1 = d_Data'688'_194 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Prelude.Crypto.d_Show'45'THash_26
+         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_Show'45'THash_28
          (coe
-            MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42 (coe v1)))
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
+            (coe v1)))
 -- Ledger.Conway.Script.Base.PlutusStructure._.T-Hashable
 d_T'45'Hashable_248 ::
   T_PlutusStructure_118 ->
@@ -309,27 +314,28 @@ d_T'45'Hashable_248 v0
   = let v1 = d_Data'688'_194 (coe v0) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'Hashable_30
+         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
          (coe
-            MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42 (coe v1)))
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
+            (coe v1)))
 -- Ledger.Conway.Script.Base.PlutusStructure._.T-isHashable
 d_T'45'isHashable_250 ::
   T_PlutusStructure_118 ->
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_isHashableSet_8
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_isHashableSet_10
 d_T'45'isHashable_250 v0
   = coe
-      MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42
+      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
       (coe d_Data'688'_194 (coe v0))
 -- Ledger.Conway.Script.Base.PlutusStructure.Datum
 d_Datum_252 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_PlutusStructure_118 -> ()
 d_Datum_252 = erased
 -- Ledger.Conway.Script.Base.PlutusStructure.Redeemer
 d_Redeemer_254 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_PlutusStructure_118 -> ()
 d_Redeemer_254 = erased
 -- Ledger.Conway.Script.Base.PlutusStructure.validPlutusScript
@@ -470,12 +476,12 @@ d_THash_326 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure._.Dataʰ
 d_Data'688'_328 ::
   T_ScriptStructure_268 ->
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_HashableSet_34
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_HashableSet_36
 d_Data'688'_328 v0 = coe d_Data'688'_194 (coe d_ps_316 (coe v0))
 -- Ledger.Conway.Script.Base.ScriptStructure._.Datum
 d_Datum_330 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 -> ()
 d_Datum_330 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure._.Dec-validPlutusScript
@@ -519,9 +525,10 @@ d_DecEq'45'T_344 v0
   = let v1 = d_Data'688'_194 (coe d_ps_316 (coe v0)) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'T_28
+         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'T_30
          (coe
-            MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42 (coe v1)))
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
+            (coe v1)))
 -- Ledger.Conway.Script.Base.ScriptStructure._.DecEq-THash
 d_DecEq'45'THash_346 ::
   T_ScriptStructure_268 -> MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
@@ -529,9 +536,10 @@ d_DecEq'45'THash_346 v0
   = let v1 = d_Data'688'_194 (coe d_ps_316 (coe v0)) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Prelude.Crypto.d_DecEq'45'THash_24
+         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
          (coe
-            MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42 (coe v1)))
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
+            (coe v1)))
 -- Ledger.Conway.Script.Base.ScriptStructure._.ExUnit-CommutativeMonoid
 d_ExUnit'45'CommutativeMonoid_348 ::
   T_ScriptStructure_268 ->
@@ -570,8 +578,8 @@ d_Prices_366 :: T_ScriptStructure_268 -> ()
 d_Prices_366 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure._.Redeemer
 d_Redeemer_368 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 -> ()
 d_Redeemer_368 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure._.Show-CostModel
@@ -596,9 +604,10 @@ d_Show'45'THash_376 v0
   = let v1 = d_Data'688'_194 (coe d_ps_316 (coe v0)) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Prelude.Crypto.d_Show'45'THash_26
+         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_Show'45'THash_28
          (coe
-            MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42 (coe v1)))
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
+            (coe v1)))
 -- Ledger.Conway.Script.Base.ScriptStructure._.T-Hashable
 d_T'45'Hashable_378 ::
   T_ScriptStructure_268 ->
@@ -607,16 +616,17 @@ d_T'45'Hashable_378 v0
   = let v1 = d_Data'688'_194 (coe d_ps_316 (coe v0)) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'Hashable_30
+         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
          (coe
-            MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42 (coe v1)))
+            MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
+            (coe v1)))
 -- Ledger.Conway.Script.Base.ScriptStructure._.T-isHashable
 d_T'45'isHashable_380 ::
   T_ScriptStructure_268 ->
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_isHashableSet_8
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_isHashableSet_10
 d_T'45'isHashable_380 v0
   = coe
-      MAlonzo.Code.Ledger.Prelude.Crypto.d_T'45'isHashable_42
+      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
       (coe d_Data'688'_194 (coe d_ps_316 (coe v0)))
 -- Ledger.Conway.Script.Base.ScriptStructure._.language
 d_language_382 :: T_ScriptStructure_268 -> AgdaAny -> AgdaAny
@@ -631,14 +641,14 @@ d_validPlutusScript_386 ::
 d_validPlutusScript_386 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure.Script
 d_Script_388 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 -> ()
 d_Script_388 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure.Hashable-Script
 d_Hashable'45'Script_390 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 ->
   MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_Hashable'45'Script_390 ~v0 ~v1 v2 = du_Hashable'45'Script_390 v2
@@ -652,15 +662,15 @@ du_Hashable'45'Script_390 v0
       (d_Hashable'45'PlutusScript_216 (coe d_ps_316 (coe v0)))
 -- Ledger.Conway.Script.Base.ScriptStructure.isP1Script
 d_isP1Script_392 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
 d_isP1Script_392 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure.isP1Script?
 d_isP1Script'63'_396 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
@@ -687,15 +697,15 @@ du_isP1Script'63'_396 v0
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Script.Base.ScriptStructure.isNativeScript
 d_isNativeScript_402 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
 d_isNativeScript_402 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure.toP1Script
 d_toP1Script_404 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Maybe AgdaAny
 d_toP1Script_404 ~v0 ~v1 ~v2 = du_toP1Script_404
@@ -704,15 +714,15 @@ du_toP1Script_404 ::
 du_toP1Script_404 = coe MAlonzo.Code.Data.Sum.du_isInj'8321'_24
 -- Ledger.Conway.Script.Base.ScriptStructure.isP2Script
 d_isP2Script_406 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> ()
 d_isP2Script_406 = erased
 -- Ledger.Conway.Script.Base.ScriptStructure.isP2Script?
 d_isP2Script'63'_410 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   MAlonzo.Code.Class.Decidable.Core.T__'8263'_10
@@ -739,8 +749,8 @@ du_isP2Script'63'_410 v0
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Script.Base.ScriptStructure.toP2Script
 d_toP2Script_416 ::
-  MAlonzo.Code.Ledger.Prelude.Crypto.T_CryptoStructure_136 ->
-  MAlonzo.Code.Ledger.Prelude.Epoch.T_EpochStructure_20 ->
+  MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
+  MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   T_ScriptStructure_268 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Maybe AgdaAny
 d_toP2Script_416 ~v0 ~v1 ~v2 = du_toP2Script_416
