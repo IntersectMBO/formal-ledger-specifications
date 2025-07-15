@@ -33,15 +33,11 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Interface.HasSubset.Instance.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Interface.HasSubset.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Interface.HasSubtract.Instance.html</loc>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Interface.HasSubtract.Instances.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -369,11 +365,11 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Script.html</loc>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Script.Validation.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.ScriptValidation.html</loc>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Script.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -433,10 +429,6 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Interface.HasCoin.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.PreConway.Conformance.NewPP.Properties.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -490,6 +482,14 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Prelude.Foreign.Util.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Prelude.HasCoin.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Prelude.Instances.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>

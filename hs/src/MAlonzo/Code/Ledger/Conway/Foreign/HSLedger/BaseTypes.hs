@@ -67,11 +67,11 @@ import qualified MAlonzo.Code.Ledger.Conway.Script.Timelock
 import qualified MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Types.GovStructure
-import qualified MAlonzo.Code.Ledger.Interface.HasCoin
 import qualified MAlonzo.Code.Ledger.Prelude.Crypto
 import qualified MAlonzo.Code.Ledger.Prelude.Epoch
 import qualified MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
 import qualified MAlonzo.Code.Ledger.Prelude.Foreign.Util
+import qualified MAlonzo.Code.Ledger.Prelude.HasCoin
 import qualified MAlonzo.Code.Ledger.Prelude.Numeric.PositiveNat
 import qualified MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval
 import qualified MAlonzo.Code.Relation.Binary.Morphism.Structures
@@ -1340,7 +1340,7 @@ d_HasCast'45'PState_364
 d_HasCertState_366 a0 a1 = ()
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasCoin-CertState
 d_HasCoin'45'CertState_368 ::
-  MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
+  MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 d_HasCoin'45'CertState_368
   = let v0
           = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
@@ -1354,7 +1354,7 @@ d_HasCoin'45'CertState_368
                (coe v0))))
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.HasCoin-TxOut
 d_HasCoin'45'TxOut_370 ::
-  MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
+  MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 d_HasCoin'45'TxOut_370
   = let v0
           = MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_14 in
@@ -6115,7 +6115,7 @@ d_scriptsP1_2072
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.TxWitnesses.txdats
 d_txdats_2074 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TxWitnesses_3110 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  [Integer]
 d_txdats_2074 v0
   = coe MAlonzo.Code.Ledger.Conway.Transaction.d_txdats_3124 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.BaseTypes._.TxWitnesses.txrdmrs

@@ -70,10 +70,10 @@ import qualified MAlonzo.Code.Ledger.Conway.Script.Timelock
 import qualified MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Types.GovStructure
-import qualified MAlonzo.Code.Ledger.Interface.HasCoin
 import qualified MAlonzo.Code.Ledger.Prelude.Crypto
 import qualified MAlonzo.Code.Ledger.Prelude.Epoch
 import qualified MAlonzo.Code.Ledger.Prelude.Foreign.Util
+import qualified MAlonzo.Code.Ledger.Prelude.HasCoin
 import qualified MAlonzo.Code.Relation.Binary.Morphism.Structures
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
@@ -2077,7 +2077,7 @@ du_HasCast'45'HashProtected'45'MaybeScriptHash_946
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.HasCoin-TxOut
 d_HasCoin'45'TxOut_948 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
+  MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 d_HasCoin'45'TxOut_948 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Transaction.d_HasCoin'45'TxOut_3280
@@ -6660,7 +6660,7 @@ du_scriptsP1_2344
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.TxWitnesses.txdats
 d_txdats_2346 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TxWitnesses_3110 ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+  [Integer]
 d_txdats_2346 v0
   = coe MAlonzo.Code.Ledger.Conway.Transaction.d_txdats_3124 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.TxWitnesses.txrdmrs
@@ -6824,7 +6824,7 @@ d_HasCertState_2454 a0 a1 a2 = ()
 -- Ledger.Conway.Foreign.HSLedger.ExternalStructures._.HasCoin-CertState
 d_HasCoin'45'CertState_2456 ::
   MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.T_ExternalFunctions_8 ->
-  MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
+  MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 d_HasCoin'45'CertState_2456 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Certs.d_HasCoin'45'CertState_1284

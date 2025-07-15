@@ -127,12 +127,11 @@ span.highlight {
   border-radius: 3px; /* Optional rounded corners */
 }
 
-
-.agda-hidden-source {
+pre.Agda.hidden-source {
   display: none; /* Hidden by default */
 }
 
-body.show-all-agda-source .agda-hidden-source {
+body.reveal-agda-source pre.Agda.hidden-source {
   display: block; /* Shown when body has the class */
 }
 

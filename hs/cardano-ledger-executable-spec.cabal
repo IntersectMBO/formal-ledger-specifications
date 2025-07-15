@@ -427,9 +427,8 @@ library
       MAlonzo.Code.Interface.ComputationalRelation
       MAlonzo.Code.Interface.Hashable
       MAlonzo.Code.Interface.HasSubset
-      MAlonzo.Code.Interface.HasSubset.Instance
       MAlonzo.Code.Interface.HasSubtract
-      MAlonzo.Code.Interface.HasSubtract.Instance
+      MAlonzo.Code.Interface.HasSubtract.Instances
       MAlonzo.Code.Interface.STS
       MAlonzo.Code.IO.Primitive.Core
       MAlonzo.Code.Ledger.Conway.Abstract
@@ -484,20 +483,21 @@ library
       MAlonzo.Code.Ledger.Conway.Script
       MAlonzo.Code.Ledger.Conway.Script.Base
       MAlonzo.Code.Ledger.Conway.Script.Timelock
-      MAlonzo.Code.Ledger.Conway.ScriptValidation
+      MAlonzo.Code.Ledger.Conway.Script.Validation
       MAlonzo.Code.Ledger.Conway.TokenAlgebra.Base
       MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin
       MAlonzo.Code.Ledger.Conway.Transaction
       MAlonzo.Code.Ledger.Conway.Types.GovStructure
       MAlonzo.Code.Ledger.Conway.Utxo
       MAlonzo.Code.Ledger.Conway.Utxow
-      MAlonzo.Code.Ledger.Interface.HasCoin
       MAlonzo.Code.Ledger.Prelude
       MAlonzo.Code.Ledger.Prelude.Base
       MAlonzo.Code.Ledger.Prelude.Crypto
       MAlonzo.Code.Ledger.Prelude.Epoch
       MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes
       MAlonzo.Code.Ledger.Prelude.Foreign.Util
+      MAlonzo.Code.Ledger.Prelude.HasCoin
+      MAlonzo.Code.Ledger.Prelude.Instances
       MAlonzo.Code.Ledger.Prelude.Numeric
       MAlonzo.Code.Ledger.Prelude.Numeric.PositiveNat
       MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval
