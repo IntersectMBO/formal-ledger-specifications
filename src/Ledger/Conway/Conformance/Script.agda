@@ -13,14 +13,14 @@ open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
 
-import Ledger.Conway.Script
+import Ledger.Conway.Specification.Script
 
 module Ledger.Conway.Conformance.Script
   (cs : _) (open CryptoStructure cs)
   (es : _) (open EpochStructure es)
   where
 
-open Ledger.Conway.Script cs es
+open Ledger.Conway.Specification.Script cs es
 
 record HSTimelock : Type where
   field

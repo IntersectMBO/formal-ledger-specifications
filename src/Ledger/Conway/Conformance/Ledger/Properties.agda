@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Transaction
-open import Ledger.Conway.Abstract
+open import Ledger.Conway.Specification.Transaction
+open import Ledger.Conway.Specification.Abstract
 import Ledger.Conway.Conformance.Certs
 
 module Ledger.Conway.Conformance.Ledger.Properties
@@ -12,13 +12,13 @@ module Ledger.Conway.Conformance.Ledger.Properties
 
 open import Axiom.Set.Properties th
 open import Ledger.Conway.Conformance.Chain txs abs
-open import Ledger.Conway.Enact govStructure
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
-open import Ledger.Conway.Gov txs
-open import Ledger.Conway.Gov.Properties txs
+open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov.Properties txs
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Ratify txs hiding (vote)
+open import Ledger.Conway.Specification.Ratify txs hiding (vote)
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxo.Properties txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs

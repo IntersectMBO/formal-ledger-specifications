@@ -31,8 +31,8 @@ instance
 
 -- No P2 scripts for now
 
-open import Ledger.Conway.Script it it
-open import Ledger.Conway.Script.Timelock it it public
+open import Ledger.Conway.Specification.Script it it
+open import Ledger.Conway.Specification.Script.Timelock it it public
 open import Ledger.Conway.Conformance.Script it it public
 
 instance
@@ -56,7 +56,7 @@ instance
         ; PlutusScript = HSPlutusScript
         }
 
-open import Ledger.Conway.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
+open import Ledger.Conway.Specification.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
 
 HsGovParams : GovParams
 HsGovParams = record
@@ -105,9 +105,9 @@ instance
     }
 
 open TransactionStructure HSTransactionStructure public
-open import Ledger.Conway.Certs govStructure public
+open import Ledger.Conway.Specification.Certs govStructure public
 
-open import Ledger.Conway.Abstract it
+open import Ledger.Conway.Specification.Abstract it
 
 instance
   HSAbstractFunctions : AbstractFunctions

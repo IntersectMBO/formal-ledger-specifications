@@ -3,21 +3,21 @@
 
 open import Ledger.Prelude
 open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxow
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.Conway.Script.Validation txs abs
-open import Ledger.Conway.Certs govStructure
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Certs govStructure
 
 private
   module L where
-    open import Ledger.Conway.Utxow txs abs public
-    open import Ledger.Conway.Utxo txs abs public
+    open import Ledger.Conway.Specification.Utxow txs abs public
+    open import Ledger.Conway.Specification.Utxo txs abs public
 
 data
 

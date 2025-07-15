@@ -17,9 +17,9 @@ open import Algebra.Construct.DirectProduct
 open import Foreign.Convertible
 import Foreign.Haskell as F
 open import Ledger.Core.Specification.Crypto
-open import Ledger.Conway.Transaction
+open import Ledger.Conway.Specification.Transaction
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Conway.Types.GovStructure
+open import Ledger.Conway.Specification.Types.GovStructure
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
@@ -75,7 +75,7 @@ module Implementation where
   AuxiliaryData   = ℕ
   DocHash         = ℕ
   tokenAlgebra    = Coin-TokenAlgebra
-    where open import Ledger.Conway.TokenAlgebra.Coin ScriptHash
+    where open import Ledger.Conway.Specification.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)
 
 
@@ -100,7 +100,7 @@ SVCryptoStructure = record
 
 instance _ = SVCryptoStructure
 
-open import Ledger.Conway.Script it it
+open import Ledger.Conway.Specification.Script it it
 open import Ledger.Conway.Conformance.Script it it
 
 SVScriptStructure : ScriptStructure
@@ -127,7 +127,7 @@ SVScriptStructure = record
 
 instance _ = SVScriptStructure
 
-open import Ledger.Conway.PParams it it it hiding (PParams)
+open import Ledger.Conway.Specification.PParams it it it hiding (PParams)
 
 SVGovParams : GovParams
 SVGovParams = record
@@ -149,7 +149,7 @@ SVGovStructure = record
   }
 instance _ = SVGovStructure
 
-open import Ledger.Conway.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
+open import Ledger.Conway.Specification.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
 open import Ledger.Conway.Conformance.Certs it hiding (PoolParams; DCert)
 
 SVTransactionStructure : TransactionStructure
@@ -165,8 +165,8 @@ SVTransactionStructure = record
   }
 instance _ = SVTransactionStructure
 
-open import Ledger.Conway.Abstract it
-open import Ledger.Conway.Gov it
+open import Ledger.Conway.Specification.Abstract it
+open import Ledger.Conway.Specification.Gov it
 
 open TransactionStructure it
 

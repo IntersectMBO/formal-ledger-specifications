@@ -8,18 +8,18 @@ import Data.Integer as ℤ
 open import Agda.Builtin.FromNat
 
 open import Ledger.Prelude
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Epoch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Gov txs
-open import Ledger.Conway.Enact govStructure
+open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Ratify txs
+open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 

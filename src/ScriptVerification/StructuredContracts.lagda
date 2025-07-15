@@ -7,10 +7,10 @@ open import Algebra
 open import Data.Nat.Properties using (+-0-monoid)
 
 open import Ledger.Prelude; open Equivalence
-open import Ledger.Conway.Transaction
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.TokenAlgebra.Base
-open import Ledger.Conway.TokenAlgebra.ValueSet
+open import Ledger.Conway.Specification.Transaction
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.TokenAlgebra.Base
+open import Ledger.Conway.Specification.TokenAlgebra.ValueSet
 
 
 module ScriptVerification.StructuredContracts
@@ -18,9 +18,9 @@ module ScriptVerification.StructuredContracts
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Ledger txs abs
-open import Ledger.Conway.Script.Validation txs abs
-open import Ledger.Conway.Utxo txs abs
+open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Utxo txs abs
 \end{code}
 
 Defining an instance of the $\type{StrucSimulation}$ record constitutes implementing a 
