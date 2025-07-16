@@ -50,7 +50,6 @@ theme:
 # Navigation structure
 nav:
   - Home: index.md
-  - Interactive Guide: guide.md
 
 extra_css:
   # KaTeX CSS for math rendering

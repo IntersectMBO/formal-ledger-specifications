@@ -2,6 +2,8 @@
 
 **Brief Contents**
 
+<!-- DO NOT REMOVE TRAILING WHITE SPACE FROM TOC LIST -->
+
 [🖊️️ Style Guidelines][]  
 [🗺️ Project Overview][]  
 [💻 Development Environment Setup][]  
@@ -10,11 +12,9 @@
 [🕵️‍♀️ Conformance Testing][]  
 [🖥️ IDE Integration][]  
 [🔁 CI/CD Workflow][]  
-[🪡 Setup Without Nix][]  
+[🎛️️ Setup Without Nix][]  
 [🗃️ Miscellanea][]  
 [🧑‍🔧 Maintainers][]
-
-
 
 ---
 
@@ -151,13 +151,19 @@ You can build project artifacts in several ways. The recommended method is using
 
 The `flake.nix` file exposes all buildable artifacts as packages.
 
+(How to view or use what these commands build is explained below; see
+[Building and viewing the formal specification][] and [Browsing the source code][].)
+
 ```bash
 # Type-check the Agda specification (default package)
 nix build .#formal-ledger
 # or simply:
 nix build
 
-# Generate browseable HTML documentation
+# Generate the (HTML version of the) formal specification
+nix build .#mkdocs
+
+# Generate browseable HTML version of Agda code
 nix build .#html
 
 # Generate Haskell source code for conformance testing
@@ -174,7 +180,10 @@ If you don't want to use Flakes, the following legacy `nix-build` commands are a
 # Type-check the Agda specification
 nix-build -A formal-ledger
 
-# Generate HTML documentation
+# Generate the html version of the Agda specification
+nix-build -A .#mkdocs
+
+# Generate browsable HTML version of Agda code
 nix-build -A html
 
 # Generate Haskell source code
@@ -223,30 +232,44 @@ site docs:
 <a id="html-documentation"></a>
 ## 📖 HTML Documentation
 
+### Building and viewing the formal specification
+
+There are two ways to do this.
+
+1.  **With Nix**
+
+    Enter the command `nix build .#mkdocs` (or `nix-build -A mkdocs`) then open the
+    file `result/site/index.html` in a browser.
+
+    **Note**. This currently works in Chrome but may not work in Brave or
+    Firefox.  If you want to use one of those browsers to view the generated
+    documentation, you can run a local server on the result,
+    `cd result/site; python3 -m http.server`, and then point your browser
+    to <http://127.0.0.1:8000/>.
+
+2.  **Manually**
+
+    ```bash
+    nix develop .#docs
+    python build-tools/scripts/md/build.py --run-agda
+    cd _build/md/mkdocs
+    mkdocs serve
+    ```
+
+    Then point your browser to  <http://127.0.0.1:8000/>.
+
 ### Browsing the source code
 
 After generating the HTML version of the source code with `nix build .#html` (or `nix-build -A html`), you can
-view the result as follows:
+view the result by pointing your (Chrome) browser to `result/html/index.html`.  If
+this fails, then you may have to run a local server, as follows:
 
 ```
 cd result/html
 python3 -m http.server
 ```
 
-Then open a web browser and navigate to <http://localhost:8000> to see the generated documentation.
-
-
-### Building and testing the mkdocs site
-
-```bash
-nix develop .#docs
-python build-tools/scripts/md/build.py --run-agda
-cd _build/md/mkdocs
-mkdocs serve
-```
-
-Then open a web browser and navigate to  <http://127.0.0.1:8000/>.
-
+Then point your browser to <http://127.0.0.1:8000>.
 
 ---
 
@@ -370,7 +393,7 @@ Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and 
 ---
 
 <a id="setup-without-nix"></a>
-## 🪡 Setup Without Nix
+## 🎛️️ Setup Without Nix
 
 While we recommend using Nix for the best experience, it's possible to work with
 this repository without Nix. Those making nontrivial contributions are advised
@@ -579,7 +602,6 @@ Here is the complete annotated subtree of the `build-tools` directory.
 │           │   ├── nav.yml                          # Template for the MkDocs navigation structure
 │           │   └── src/                             # Source assets (CSS, JS, images, etc.)
 │           │       ├── css/custom.css               # Custom stylesheet for documentation sites
-│           │       ├── guide.md                     # Source Markdown for the interactive guide page
 │           │       └── js/custom.js                 # Custom JavaScript for documentation sites
 │           ├── mdbook/                              # Configuration and templates for MdBook
 │           │   ├── book.toml                        # Main configuration file for MdBook
@@ -661,9 +683,11 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [💻 Development Environment Setup]: #development-environment-setup
 [🏗️ Building Project Artifacts]: #building-project-artifacts
 [📖 HTML Documentation]: #html-documentation
+[Building and viewing the formal specification]: #building-and-viewing-the-formal-specification
+[Browsing the source code]: #browsing-the-source-code
 [🕵️‍♀️ Conformance Testing]: #conformance-testing
 [🖥️ IDE Integration]: #ide-integration
 [🔁 CI/CD Workflow]: #cicd-workflow
-[🪡 Setup Without Nix]: #setup-without-nix
+[🎛️️ Setup Without Nix]: #setup-without-nix
 [🗃️ Miscellanea]: #miscellanea
 [🧑‍🔧 Maintainers]: #maintainers

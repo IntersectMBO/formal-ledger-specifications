@@ -29,6 +29,7 @@ class SourcePaths:
 
     # Project structure
     project_root: Path
+    readme_md_path: Path
     src_dir: Path
     lib_exts_dir: Path
     build_tools_dir: Path
@@ -63,9 +64,6 @@ class SourcePaths:
     custom_js_path: Path
     katex_js_path: Path
 
-    # Assets for interactive guide
-    guide_path : Path
-
     # Navigation templates
     mkdocs_nav_yml_path: Path
     mdbook_summary_md_path: Path
@@ -79,6 +77,7 @@ class SourcePaths:
             raise ValueError(f"Project root does not exist: {project_root}")
 
         # Core directories
+        readme_md_path = project_root / "README.md"
         src_dir = project_root / "src"
         lib_exts_dir = project_root / "src-lib-exts"
         build_tools_dir = project_root / "build-tools"
@@ -112,7 +111,6 @@ class SourcePaths:
         custom_css_path = md_css_dir / "custom.css"
         custom_js_path = md_js_dir / "custom.js"
         katex_js_path = md_js_dir / "katex-config.js"
-        guide_path = md_common_src_dir / "guide.md"
 
         # Navigation
         mkdocs_nav_yml_path = md_common_dir / "nav.yml"
@@ -120,6 +118,7 @@ class SourcePaths:
 
         return cls(
             project_root=project_root,
+            readme_md_path=readme_md_path,
             src_dir=src_dir,
             lib_exts_dir=lib_exts_dir,
             build_tools_dir=build_tools_dir,
@@ -141,7 +140,6 @@ class SourcePaths:
             custom_css_path=custom_css_path,
             custom_js_path=custom_js_path,
             katex_js_path=katex_js_path,
-            guide_path=guide_path,
             mkdocs_nav_yml_path=mkdocs_nav_yml_path,
             mdbook_summary_md_path=mdbook_summary_md_path,
         )
