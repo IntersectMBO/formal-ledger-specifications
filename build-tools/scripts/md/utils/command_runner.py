@@ -28,7 +28,7 @@ def run_command(
     Can either capture output or stream it live to the logger.
     """
     command_str = ' '.join(map(str, command))
-    logging.info(f"Running: {command_str}")
+    logging.debug(f"Running: {command_str}")
 
     try:
         # --- NEW: Logic to handle live streaming output ---

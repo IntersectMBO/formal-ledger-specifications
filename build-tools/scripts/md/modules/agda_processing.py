@@ -86,7 +86,7 @@ def _convert_agda_to_lagda_md_in_dir(
     final_result = sequence_results(conversion_results)
 
     if final_result.is_ok:
-        logging.info(f"Successfully converted {len(final_result.unwrap())} .agda files.")
+        logging.debug(f"✅ Successfully converted {len(final_result.unwrap())} .agda files.")
 
     return final_result
 
@@ -142,7 +142,7 @@ def collect_lagda_md_files(snapshot_dir: Path) -> Result[List[ProcessedFile], Pi
     result = ls_dir(snapshot_dir, pattern='**/*.lagda.md').map(create_processed_files)
 
     if result.is_ok:
-        logging.info(f"Collected {len(result.unwrap())} .lagda.md files from snapshot")
+        logging.info(f"✅ Collected {len(result.unwrap())} .lagda.md files from snapshot")
 
     return result
 
@@ -218,7 +218,7 @@ def create_agda_lib_file(
 
     if existing_lib_file and existing_lib_file.exists():
         # Case 1: An existing .agda-lib file is provided and exists. Copy it.
-        logging.info(f"Copying existing .agda-lib file: {existing_lib_file.name}")
+        logging.info(f"♻️  Copying existing .agda-lib file: {existing_lib_file.name}")
         return cp_file(existing_lib_file, target_path)
     else:
         # Case 2: No existing file. Generate a new one.
@@ -251,7 +251,7 @@ def collect_lagda_md_files(snapshot_dir: Path) -> Result[List[ProcessedFile], Pi
 
     # We can perform side-effects like logging after the pure computation is done.
     if result.is_ok:
-        logging.info(f"Collected {len(result.unwrap())} processed .lagda.md files")
+        logging.debug(f"✅ Collected {len(result.unwrap())} processed .lagda.md files")
 
     return result
 

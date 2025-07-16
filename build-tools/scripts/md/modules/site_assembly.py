@@ -143,7 +143,7 @@ def copy_staged_to_mkdocs(config: BuildConfig) -> List[str]:
     staging_dir = config.build_paths.build_md_pp_dir
     target_dir = config.build_paths.mkdocs_docs_dir
 
-    logging.info(f"\n--- 🏗️  Copying staged content to MkDocs ---")
+    logging.info(f"♻️️  Copying staged content to MkDocs...")
     if not staging_dir.exists():
         logging.warning("Staging directory does not exist. Nothing to copy.")
         return []
@@ -159,7 +159,7 @@ def copy_staged_to_mkdocs(config: BuildConfig) -> List[str]:
 
 def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]:
     """Deploys all static and generated assets to the MkDocs source folder."""
-    logging.info("\n--- 🏗️  Deploying assets for MkDocs site ---")
+    logging.info("🏗️  Deploying assets for MkDocs site...")
 
     # 1. Deploy CSS
     agda_css_path = config.build_paths.build_md_pp_dir / "Agda.css"
@@ -184,8 +184,10 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
         shutil.copy2(bib_source, bib_target_dir)
         logging.info(f"✅ Deployed bibliography: {bib_source.name}.")
 
-   # 4. Handle index.md by copying from the root README.md
+   # 4. Handle index.md and guide.md by copying from root repo files
     home_page = "index.md"
+    guide_page = "guide.md"
+    # Copy README.md to docs/index.md
     readme_source_path = config.source_paths.readme_md_path
     index_target_path = config.build_paths.mkdocs_docs_dir / home_page
 
@@ -197,6 +199,17 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
         logging.info(f"✅ Deployed root {readme_source_path.name} as site index.")
     else:
         logging.warning(f"Root README.md not found at {readme_source_path}. Cannot create site index.")
+
+    # Copy CONTRIBUTING.md to docs/guide.md
+    contrib_source_path = config.source_paths.contributing_md_path
+    guide_target_path = config.build_paths.mkdocs_docs_dir / guide_page
+    if contrib_source_path.exists():
+        shutil.copy2(contrib_source_path, guide_target_path)
+        if guide_page not in [f.lower() for f in nav_files]:
+            nav_files.append(guide_page)
+        logging.info(f"✅ Deployed root {contrib_source_path.name} as interactive guide page.")
+    else:
+        logging.warning(f"Root CONTRIBUTING.md not found at {contrib_source_path}. Cannot create guide page.")
 
     return sorted(list(set(nav_files)), key=lambda f: (f.lower() != home_page.lower(), f.lower()))
 
@@ -230,7 +243,7 @@ def _build_nav_from_files(files: List[str]) -> List[Dict[str, Any]]:
 
 def generate_mkdocs_config(config: BuildConfig, nav_files: List[str]):
     """Generates the final mkdocs.yml by merging a template with dynamic data."""
-    logging.info("\n--- 🏗️  Generating mkdocs.yml configuration ---")
+    logging.info("🏗️  Generating mkdocs.yml configuration...")
     template_path = config.build_paths.mkdocs_dir / "mkdocs.yml"
 
     cfg = {}
@@ -255,7 +268,7 @@ def generate_mkdocs_config(config: BuildConfig, nav_files: List[str]):
     # Build navigation
     nav_template_path = config.source_paths.mkdocs_nav_yml_path
     if nav_template_path.exists() and HAS_YAML:
-        logging.info(f"Loading navigation from template: {nav_template_path.name}")
+        logging.info(f"🏗️  Loading navigation from template: {nav_template_path.name}...")
         nav_structure = yaml.safe_load(nav_template_path.read_text('utf-8'))
     else:
         logging.info("Generating navigation from processed files.")

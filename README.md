@@ -6,8 +6,8 @@ is executable; Haskell code can be extracted and run for conformance testing.
 
 The project consists entirely of [literate][] Agda code from which the HTML
 documentation is generated.  Thus the latest human-readable Cardano ledger
-specification is a collection of Markdown and HTML files; these replace the
-PDF documents of previous eras.
+specification is a collection of HTML files; these replace the PDF documents of
+previous eras.
 
 [The formal ledger GitHub repository][formal-ledger-specifications] contains formal
 ledger specifications for all eras, starting with Shelley, up to and including the Conway era.
@@ -15,10 +15,22 @@ While the Agda formalization of the Conway era is complete, some pieces of the
 ledgers from previous eras have yet to be formalized.  We hope to finish formalizing
 the outstanding pieces in the near future.
 
-You can interact with the specification by building the artifacts,
-generating Haskell source code for conformance testing, or exploring the literate
-Agda files in a development environment.  Instructions for doing so are provided in
-the [Contributing Guide][].
+## Where to go from here?
+
+You can
+
++  **read the formal specification**; the latest HTML version is at
+
+   <https://intersectmbo.github.io/formal-ledger-specifications/site/>
+
++  **read the Agda source code**; the latest HTML version of is at
+
+   <https://intersectmbo.github.io/formal-ledger-specifications/html/>
+
++  **interact with and/or contribute to the formal specification**; instructions for
+   building the artifacts, generating Haskell source code for conformance testing, or
+   exploring the literate Agda files in a development environment are available in
+   the [Contributing Guide][].
 
 ---
 
@@ -28,9 +40,9 @@ The table below provides links to the full formal ledger specification (as brows
 
 | Artifact | Link | Description |
 | :---- | :---- | :---- |
-| **HTML Source Code** | [Browseable HTML](https://IntersectMBO.github.io/formal-ledger-specifications/site) | An interactive, hyperlinked version of the Agda source code. |
-| **Full PDF**<sup>†</sup> | [cardano-ledger.pdf](https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf) | The complete specification for the Cardano Ledger. |
-| **Conway-Era PDF**<sup>†</sup> | [conway-ledger.pdf](https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf) | A differential specification for the Conway era. |
+| **Source Code** | [HTML][fls-html] | Interactive, hyperlinked version of the Agda source code |
+| **Formal Specification** | [HTML][fls-site] [cardano-ledger.pdf][]<sup>†</sup> | Complete specification of the Cardano Ledger |
+| **Conway-Era PDF** | [conway-ledger.pdf][]<sup>†</sup> | Covers what's new in the Conway era |
 
 † As we are migrating from a LaTeX-based to a Markdown-based documentation workflow,
 *building PDFs from source is currently deprecated and unsupported*.  Please use the
@@ -49,8 +61,12 @@ If you encounter any issues, please check the [Troubleshooting Guide][] or [subm
 
 
 
-[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
-[submit a new issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
+[fls-html]: https://IntersectMBO.github.io/formal-ledger-specifications/html
+[fls-site]: https://IntersectMBO.github.io/formal-ledger-specifications/site
+[cardano-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf
+[conway-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf
 [Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/CONTRIBUTING.md
+[formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications/
 [literate]: https://en.wikipedia.org/wiki/Literate_programming
-
+[submit a new issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
+[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md

@@ -30,6 +30,7 @@ class SourcePaths:
     # Project structure
     project_root: Path
     readme_md_path: Path
+    contributing_md_path: Path
     src_dir: Path
     lib_exts_dir: Path
     build_tools_dir: Path
@@ -78,6 +79,7 @@ class SourcePaths:
 
         # Core directories
         readme_md_path = project_root / "README.md"
+        contributing_md_path = project_root / "CONTRIBUTING.md"
         src_dir = project_root / "src"
         lib_exts_dir = project_root / "src-lib-exts"
         build_tools_dir = project_root / "build-tools"
@@ -119,6 +121,7 @@ class SourcePaths:
         return cls(
             project_root=project_root,
             readme_md_path=readme_md_path,
+            contributing_md_path=contributing_md_path,
             src_dir=src_dir,
             lib_exts_dir=lib_exts_dir,
             build_tools_dir=build_tools_dir,
@@ -407,7 +410,7 @@ class BuildConfig:
             verbose_logging = False
         elif mode == "development":
             cleanup_intermediates = False
-            verbose_logging = True
+            verbose_logging = False
         else:  # docs mode
             cleanup_intermediates = True
             verbose_logging = True

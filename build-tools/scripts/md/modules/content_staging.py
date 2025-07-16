@@ -46,7 +46,7 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
     snapshot_dir = config.build_paths.agda_snapshot_src_dir
     run_agda = config.run_agda_html
 
-    logging.info(f"\n--- 🏗️  Populating content staging directory: {staging_dir.relative_to(project_root)} ---")
+    logging.info(f"🏗️  Populating content staging directory: {staging_dir.relative_to(project_root)}...")
     staging_dir.mkdir(parents=True, exist_ok=True)
 
     if run_agda:
@@ -56,7 +56,7 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
         else:
             main_agda_file = config.agda_config.html_main_file
 
-        logging.info(f"Running Agda --html on '{main_agda_file}', outputting to {staging_dir}...")
+        logging.info(f"🐔 Running Agda --html on '{main_agda_file}', outputting to {staging_dir}...")
         agda_command = [
             "agda", "--fls",
             f"--fls-html-dir={staging_dir.resolve()}",
@@ -68,7 +68,7 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
             run_agda = False
 
     if not run_agda:
-        logging.info(f"Copying processed files to staging with flat names...")
+        logging.info(f"♻️  Copying processed files to staging with flat names...")
         for file_path in processed_files:
             _copy_to_staging_with_flat_name(file_path, snapshot_dir, staging_dir)
 
