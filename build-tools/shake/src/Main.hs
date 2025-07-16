@@ -303,7 +303,7 @@ htmlRule =
           , "  ./"
           ]
         agdamodules = sort . map (agdafile2module . dropDirectory 1)
-                    $ agdafiles ++ lagdafiles
+                      $ agdafiles ++ lagdafiles ++ lagdamdfiles
         -- index file
         indexfile =
           [ "module index where"
