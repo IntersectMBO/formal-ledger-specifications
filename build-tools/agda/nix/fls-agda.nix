@@ -4,6 +4,7 @@
 }:
 let
   fls-agda-override = oldAttrs: {
+    doCheck = false;  # explicitly disable test phase to prevent circular dependency
     outputs = [ "bin" ] ++ (oldAttrs.outputs or [ ]);
     postInstall =
       (oldAttrs.postInstall or "")
