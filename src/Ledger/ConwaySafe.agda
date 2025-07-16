@@ -25,9 +25,9 @@ import Ledger.Conway.Epoch.Properties.NoPropSameDReps
 import Ledger.Conway.Fees
 import Ledger.Conway.Gov
 import Ledger.Conway.Gov.Properties
-import Ledger.Conway.GovernanceActions
-import Ledger.Conway.GovernanceActions.Properties
-import Ledger.Conway.GovernanceActions.Properties.ChangePPGroup
+import Ledger.Conway.Gov.Properties.ChangePPGroup
+import Ledger.Conway.Gov.Actions
+import Ledger.Conway.Enact.Properties
 import Ledger.Introduction
 import Ledger.Conway.Ledger
 import Ledger.Conway.Ledger.Properties
@@ -46,7 +46,7 @@ import Ledger.Conway.TokenAlgebra.ValueSet
 import Ledger.Conway.TokenAlgebra.ValueVector
 import Ledger.Conway.Transaction
 import Ledger.Conway.Types.Epoch
-import Ledger.Conway.Types.GovStructure
+import Ledger.Conway.Gov.Base
 import Ledger.Conway.Utxo
 import Ledger.Conway.Utxo.Properties
 import Ledger.Conway.Utxo.Properties.MinSpend

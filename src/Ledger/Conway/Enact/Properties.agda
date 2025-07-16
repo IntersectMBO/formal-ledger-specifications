@@ -1,21 +1,18 @@
 {-# OPTIONS --safe #-}
 
-open import Data.Nat.Properties using (+-0-monoid)
+open import Ledger.Conway.Gov.Base
+
+module Ledger.Conway.Enact.Properties (gs : _) (open GovStructure gs) where
 
 open import Ledger.Prelude
-open import Ledger.Conway.Types.GovStructure
 
-module Ledger.Conway.GovernanceActions.Properties (gs : _) (open GovStructure gs) where
-
-open import Ledger.Conway.GovernanceActions gs hiding (yes; no)
+open import Ledger.Conway.Gov.Actions gs hiding (yes; no)
 open import Ledger.Conway.Enact gs
 
 open EnactState
 
-instance
-  _ = +-0-monoid
-
 open Computational ⦃...⦄
+
 instance
   Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_ String
   Computational-ENACT .computeProof Γᵉ s =

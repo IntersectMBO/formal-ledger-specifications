@@ -1,6 +1,6 @@
 {-# OPTIONS --safe #-}
 
-module Ledger.Conway.Types.GovStructure where
+module Ledger.Conway.Gov.Base where
 
 open import Prelude using (Type)
 open import Class.DecEq
