@@ -2,26 +2,32 @@
 
 **Brief Contents**
 
-  - [Style Guidelines](#style-guidelines)
-  - [Project Overview](#project-overview)
-  - [Development Environment Setup](#development-environment-setup)
-  - [Building Project Artifacts](#building-project-artifacts)
-  - [IDE Integration](#ide-integration)
-  - [CI/CD Workflow](#cicd-workflow)
-  - [Setup Without Nix (Advanced)](#setup-without-nix-advanced)
-  - [Miscellanea](#miscellanea)
-  - [Maintainers](#maintainers)
+[🖊️️ Style Guidelines][]  
+[🗺️ Project Overview][]  
+[💻 Development Environment Setup][]  
+[🏗️ Building Project Artifacts][]  
+[📖 HTML Documentation][]  
+[🕵️‍♀️ Conformance Testing][]  
+[🖥️ IDE Integration][]  
+[🔁 CI/CD Workflow][]  
+[🪡 Setup Without Nix][]  
+[🗃️ Miscellanea][]  
+[🧑‍🔧 Maintainers][]
+
+
 
 ---
 
+<a id="style-guidelines"></a>
 ## 🖊️️ Style Guidelines
 
 We adhere to the [Agda standard library style guide][] where practical.
 However, because we use [literate][] Agda to produce html documentation, readability
-of the latter takes precedence over code formatting, so deviations are expected.
+of the latter takes precedence over code formatting.
 
 ---
 
+<a id="project-overview"></a>
 ## 🗺️ Project Overview
 
 This repository uses [Nix][] and [Shake][] to provide a reproducible, declarative,
@@ -39,7 +45,8 @@ support the use of `nix-shell`.
 
 All external Nix dependencies (like `nixpkgs`) and Agda libraries are pinned to
 specific versions (e.g., Git commits) using [niv](https://github.com/nmattia/niv).
-The pinned versions are stored in `build-tools/nix/sources.json`, which guarantees
+The pinned versions are stored in
+[`build-tools/nix/sources.json`][build-tools/nix/sources.json], which guarantees
 reproducible builds.
 
 The core Agda dependencies include:
@@ -81,7 +88,8 @@ detailed version of this annotated tree can be found at the bottom of this page.
 
 ---
 
-## Development Environment Setup
+<a id="development-environment-setup"></a>
+## 💻 Development Environment Setup
 
 We provide several development shells tailored for different tasks. You can enter them using `nix develop`.
 
@@ -97,10 +105,10 @@ We provide several development shells tailored for different tasks. You can ente
 
     ⚒️ **Available Tools**
 
-    + `agda` (with all project libraries)
+    + [`agda`][Agda] (with all project libraries)
     + `fls-shake` (our custom build tool)
-    + `python311` (Python version 3.11)
-    + `hpack` (the Haskell package helper)
+    + [`python311`][python311] (Python version 3.11)
+    + [`hpack`][hpack] (the Haskell package helper)
 
 
 +  🐚 **CI Shell**
@@ -125,15 +133,16 @@ We provide several development shells tailored for different tasks. You can ente
 
     Everything from the default shell plus
 
-    + `pandoc` (the document conversion tool)
-    + `latex` (the typesetting language)
-    + `mkdocs` (with Python dependencies)
-    + `mdbook` (with Rust dependencies)
+    + [`pandoc`][pandoc] (the document conversion tool)
+    + [`latex`][latex] (the typesetting language)
+    + [`mkdocs`][mkdocs] (with Python dependencies)
+    + [`mdbook`][mdbook] (with Rust dependencies)
 
 
 ---
 
 
+<a id="building-project-artifacts"></a>
 ## 🏗️ Building Project Artifacts
 
 You can build project artifacts in several ways. The recommended method is using `nix build`.
@@ -172,6 +181,7 @@ nix-build -A html
 nix-build -A hs-src
 ```
 
+
 ### Using the `fls-shake` Build Tool
 
 For more granular control, you can use our Shake-based build tool, `fls-shake`, from within a development shell.
@@ -187,17 +197,6 @@ fls-shake hs                  # Build Haskell source
 # See all available targets
 fls-shake --help
 ```
-
-### Building and testing the site
-
-```bash
-nix develop .#docs
-python build-tools/scripts/md/build.py --run-agda
-cd _build/md/mkdocs
-mkdocs serve
-```
-
-and then point your browser to the local server url: <http://127.0.0.1:8000/>.
 
 ### Editing the Agda source code
 
@@ -221,14 +220,54 @@ site docs:
 
 ---
 
-## 🕵️‍♀️ Conformance-testing example
+<a id="html-documentation"></a>
+## 📖 HTML Documentation
 
-For an example on how to use the Agda-generated Haskell code for conformance
-testing see [`conformance-example`](conformance-example)
+### Browsing the source code
+
+After generating the HTML version of the source code with `nix build .#html` (or `nix-build -A html`), you can
+view the result as follows:
+
+```
+cd result/html
+python3 -m http.server
+```
+
+Then open a web browser and navigate to <http://localhost:8000> to see the generated documentation.
+
+
+### Building and testing the mkdocs site
+
+```bash
+nix develop .#docs
+python build-tools/scripts/md/build.py --run-agda
+cd _build/md/mkdocs
+mkdocs serve
+```
+
+Then open a web browser and navigate to  <http://127.0.0.1:8000/>.
+
+
+---
+
+<a id="conformance-testing"></a>
+## 🕵️‍♀️ Conformance Testing
+
+After producing the Agda-generated Haskell code with `nix build .#hs-src`
+(or `nix-build -A hs-src`), you can run the conformance tests. For example,
+
+```
+cabal repl
+> :m Lib
+> :i UTxOState
+```
+
+See also [the `conformance-example` directory][conformance-example].
 
 
 -----
 
+<a id="ide-integration"></a>
 ## 🖥️ IDE Integration
 
 For the best development experience, you should configure your IDE to use the Agda executable provided by this project's Nix environment.
@@ -309,9 +348,10 @@ nix-build -A agdaWithPackages -o ~/ledger-agda
 
 3.  Use `Ctrl+C Ctrl+R` to switch between Agda versions if you have multiple configured.
 
------
+---
 
-## 🔧 CI/CD Workflow
+<a id="cicd-workflow"></a>
+## 🔁 CI/CD Workflow
 
 Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and publishing of artifacts. Here are some key details:
 
@@ -327,9 +367,10 @@ Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and 
 
    The CI workflow **does not** build PDFs from the current source. Instead, it checks out the `legacy-latex-artifacts` branch and copies the PDFs from there. This is a temporary measure to ensure the stability of the published documents. You can still build PDFs locally from source using the commands described above.
 
------
+---
 
-## 🪡 Setup Without Nix (Advanced)
+<a id="setup-without-nix"></a>
+## 🪡 Setup Without Nix
 
 While we recommend using Nix for the best experience, it's possible to work with
 this repository without Nix. Those making nontrivial contributions are advised
@@ -453,6 +494,7 @@ For non-Nix users, you'll also need to install the following:
 
 ---
 
+<a id="miscellanea"></a>
 ## 🗃️ Miscellanea
 
 ### Plotting typechecking times
@@ -553,7 +595,8 @@ Here is the complete annotated subtree of the `build-tools` directory.
 
 ---
 
-## Maintainers
+<a id="maintainers"></a>
+## 🧑‍🔧 Maintainers
 
 This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamdemeo][].
 
@@ -563,28 +606,46 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
+[Agda.css]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/Agda.css
+[AgdaKaTeX.js]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/AgdaKaTeX.js
 [agda-stdlib]: https://github.com/agda/agda-stdlib
 [agda-stdlib-classes]: https://github.com/agda/agda-stdlib-classes
 [agda-stdlib-meta]: https://github.com/agda/agda-stdlib-meta
 [agda-sets]: https://github.com/input-output-hk/agda-sets
-[iog-agda-prelude]: https://github.com/input-output-hk/iog-agda-prelude
 [binary]: https://github.com/haskell/binary
+[build-tools/nix/sources.json]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/nix/sources.json
 [conformance-example]: https://github.com/IntersectMBO/formal-ledger-specifications/tree/master/conformance-example
 [deepseq]: https://github.com/haskell/deepseq
+[default.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/default.nix
 [Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
+[flake.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/flake.nix
+[fls-agda.cabal]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/fls-agda.cabal
+[fls-agda.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/nix/fls-agda.nix
+[fls-shake.cabal]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/fls-shake.cabal
+[fls-shake.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/nix/fls-shake.nix
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
 [hashable]: https://github.com/haskell-unordered-containers/hashable
 [Haskell]: https://www.haskell.org/downloads/
+[hpack]: https://hackage.haskell.org/package/hpack
+[iog-agda-prelude]: https://github.com/input-output-hk/iog-agda-prelude
 [latex]: https://www.latex-project.org/get/
 [latexmk]: https://ctan.org/pkg/latexmk
 [literate]: https://en.wikipedia.org/wiki/Literate_programming
+[Main.hs]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/src/Main.hs
+[mdbook]: https://rust-lang.github.io/mdBook/
+[mkdocs]: https://www.mkdocs.org/
+[New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
+[niv]: https://github.com/nmattia/niv
 [Nix]: https://nixos.org/
 [Nix flakes]: https://nixos.wiki/wiki/Flakes 
 [Nix download instructions]: https://nixos.org/download/
-[niv]: https://github.com/nmattia/niv
-[New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
-[Shake]: https://shakebuild.com/
 [official Haskell instructions]: https://www.haskell.org/downloads/
+[pandoc]: https://pandoc.org/
+[python311]: https://www.python.org/downloads/release/python-3110/
+[Shake]: https://shakebuild.com/
+[TEX2MD_MIGRATION.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TEX2MD_MIGRATION.md
+[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
+[TROUBLESHOOTING.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
 
 [@WhatisRT]: https://github.com/whatisrt
 [@carlostome]: https://github.com/carlostome
@@ -594,39 +655,15 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 <!-- These links will probably need to be updated by hand whenever -->
 <!-- `markdown-toc-generate-toc` is used to update the toc. -->
 <!-- TODO: find or make a script/utility that generates all the links from the toc -->
-[Style guidelines]: #style-guidelines
-[Quick Start]: #quick-start
-[Working on the ledger spec from inside a Nix shell]: #working-on-the-ledger-spec-from-inside-a-nix-shell
-[Dependencies]: #dependencies
-[Nix Dependencies]: #nix-dependencies
-[Agda Dependencies]: #agda-dependencies
-[Agda Setup]: #agda-setup
-[Global `ledger-agda` installation]: #global-ledger-agda-installation
-[Local `ledger-agda`installation]: #local-ledger-agdainstallation
-[Working on the artifacts]: #working-on-the-artifacts
-[Building the artifacts]: #building-the-artifacts
-[PDF]: #pdf
-[Haskell code (for conformance testing)]: #haskell-code-for-conformance-testing
-[Html-hyperlinked Agda code]: #html-hyperlinked-agda-code
-[fls-shake intermediate outputs]: #fls-shake-intermediate-outputs
-[Modifying the Agda libraries]: #modifying-the-agda-libraries
-[Setup Without Nix]: #setup-without-nix
-[Agda and its dependencies]: #agda-and-its-dependencies
-[`fls-shake`]: #fls-shake
-[Building `fls-shake` manually]: #building-fls-shake-manually
-[Updating nixpkgs]: #updating-nixpkgs
-[Maintainers]: #maintainers
-[Miscellanea]: #miscellanea
-[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
-[default.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/default.nix
-[flake.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/flake.nix
-[TROUBLESHOOTING.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
-[TEX2MD_MIGRATION.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TEX2MD_MIGRATION.md
-[Agda.css]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/Agda.css
-[AgdaKaTeX.js]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/AgdaKaTeX.js
-[fls-agda.cabal]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/fls-agda.cabal
-[fls-agda.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/nix/fls-agda.nix
-[Main.hs]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/src/Main.hs
-[fls-shake.cabal]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/fls-shake.cabal
-[fls-shake.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/nix/fls-shake.nix
-[Main.hs]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/src/Main.hs
+
+[🖊️️ Style Guidelines]: #style-guidelines
+[🗺️ Project Overview]: #project-overview
+[💻 Development Environment Setup]: #development-environment-setup
+[🏗️ Building Project Artifacts]: #building-project-artifacts
+[📖 HTML Documentation]: #html-documentation
+[🕵️‍♀️ Conformance Testing]: #conformance-testing
+[🖥️ IDE Integration]: #ide-integration
+[🔁 CI/CD Workflow]: #cicd-workflow
+[🪡 Setup Without Nix]: #setup-without-nix
+[🗃️ Miscellanea]: #miscellanea
+[🧑‍🔧 Maintainers]: #maintainers
