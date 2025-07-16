@@ -1,5 +1,6 @@
 - Navigation:
   - Home: index.md
+  - Guide for Contributors: guide.md
   - Preliminaries:
     - Notation: Notation.md
   - Ledger: Ledger.md
@@ -31,6 +32,8 @@
           - PParamsWellFormed: Ledger.Conway.Chain.Properties.PParamsWellFormed.md
       - Crypto: Ledger.Conway.Crypto.md
       - Enact: Ledger.Conway.Enact.md
+      - Enact/:
+        - Properties: Ledger.Conway.Enact.Properties.md
       - Epoch: Ledger.Conway.Epoch.md
       - Epoch/:
         - Properties: Ledger.Conway.Epoch.Properties.md
@@ -41,12 +44,11 @@
       - Fees: Ledger.Conway.Fees.md
       - Gov: Ledger.Conway.Gov.md
       - Gov/:
+        - Base : Ledger.Conway.Gov.Base.md
+        - Actions: Ledger.Conway.Gov.Actions.md
         - Properties: Ledger.Conway.Gov.Properties.md
-      - GovernanceActions: Ledger.Conway.GovernanceActions.md
-      - GovernanceActions/:
-        - Properties: Ledger.Conway.GovernanceActions.Properties.md
         - Properties/:
-          - ChangePPGroup: Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.md
+            - ChangePPGroup: Ledger.Conway.Gov.Properties.ChangePPGroup.md
       - Ledger.Ledger: Ledger.Conway.Ledger.md
       - Ledger.Ledger/:
         - Properties: Ledger.Conway.Ledger.Properties.md
@@ -72,7 +74,6 @@
       - Transaction: Ledger.Conway.Transaction.md
       - Types:
         - Epoch: Ledger.Conway.Types.Epoch.md
-        - GovStructure: Ledger.Conway.Types.GovStructure.md
         - Numeric: Ledger.Conway.Types.Numeric.md
         - Numeric/:
           - UnitInterval: Ledger.Conway.Types.Numeric.UnitInterval.md
@@ -102,7 +103,7 @@
           - Gov: Ledger.Conway.Foreign.HSLedger.Gov.md
           - Gov/:
             - Core: Ledger.Conway.Foreign.HSLedger.Gov.Core.md
-          - GovernanceActions: Ledger.Conway.Foreign.HSLedger.GovernanceActions.md
+            - Actions: Ledger.Conway.Foreign.HSLedger.Gov.Actions.md
           - Ledger: Ledger.Conway.Foreign.HSLedger.Ledger.md
           - NewEpoch: Ledger.Conway.Foreign.HSLedger.NewEpoch.md
           - PParams: Ledger.Conway.Foreign.HSLedger.PParams.md
@@ -184,7 +185,7 @@
         - HasSubset: Interface.HasSubset.md
         - HasSubtract: Interface.HasSubtract.md
         - HasSubtract/:
-          - Instance: Interface.HasSubtract.Instance.md
+          - Instance: Interface.HasSubtract.Instances.md
         - Hashable: Interface.Hashable.md
         - STS: Interface.STS.md
       - MyDebugOptions: MyDebugOptions.md

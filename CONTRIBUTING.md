@@ -181,7 +181,7 @@ If you don't want to use Flakes, the following legacy `nix-build` commands are a
 nix-build -A formal-ledger
 
 # Generate the html version of the Agda specification
-nix-build -A .#mkdocs
+nix-build -A mkdocs
 
 # Generate browsable HTML version of Agda code
 nix-build -A html
@@ -206,26 +206,6 @@ fls-shake hs                  # Build Haskell source
 # See all available targets
 fls-shake --help
 ```
-
-### Editing the Agda source code
-
-One you have generated the mkdocs site using the commands provided in the previous
-section, you can edit the files in the Agda source files `_build/md/md.in/src`
-directory.  You should then check that the changes you made look okay on the website.
-(We'll explain how to do that next.)  If you like the changes, you can replace the
-corresponding file in the main `src` directory with your modified version.
-
-Using the following steps you can check how your revisions to files in
-`_build/md/md.in/src` will affect the appearance of the corresponding page in the
-site docs:
-
-1.  Enter the `docs` shell (`nix develop .#docs`), build the mkdocs site, and run
-    `mkdocs serve` as described in the previous section.
-
-2.  In another terminal window, enter the default Nix shell: `nix develop`.
-
-3.  Run `fls-shake --watch`.
-
 
 ---
 
@@ -288,7 +268,32 @@ cabal repl
 See also [the `conformance-example` directory][conformance-example].
 
 
------
+### Editing the Agda source code
+
+One you have generated the mkdocs site **Manually** (as described in option 2 in the [Building and
+viewing the formal specification][] section), you can edit the `.lagda.md` files in the
+directory `_build/md/md.in/src`.  You should then check that the changes you made
+look okay on the website.  (We'll explain how to do that next.)  If you like the
+changes, you can replace the corresponding file in the main *top-level* `src`
+directory with your modified version.
+
+Using the following steps you can check how your revisions to files in
+`_build/md/md.in/src` will change the corresponding page in the
+formal specification site pages:
+
+1.  Enter the `docs` shell (`nix develop .#docs`), build the mkdocs site, and run
+    `mkdocs serve` as described above, using the **Manual** method.
+
+2.  In another terminal window, enter the default Nix shell: `nix develop`.
+
+3.  Run `fls-shake --watch`.
+
+The `fls-shake --watch` command watches for changes to files in the
+`_build/md/md.in/src` directory and, whenever a change occurs, generates a new
+corresponding page in the mkdocs site directory.  Since `mkdocs serve` is running in
+that directory, the effect of your changes will appear in the browser.
+
+---
 
 <a id="ide-integration"></a>
 ## 🖥️ IDE Integration

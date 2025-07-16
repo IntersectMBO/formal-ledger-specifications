@@ -86,7 +86,7 @@ def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None
     if config.cleanup_intermediates:
         cleanup_intermediate_artifacts(config)
 
-    logging.info("\n✅ Build completed successfully!")
+    logging.info("✅ Build completed successfully!")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Build documentation from literate Agda files.")
@@ -108,5 +108,5 @@ if __name__ == "__main__":
         logging.exception("❌ CRITICAL ERROR: Build failed.")
         sys.exit(1)
     finally:
-        logging.info("✅ Build script execution finished.")
+        logging.info("🏁 Build script execution finished.")
         logging.shutdown()

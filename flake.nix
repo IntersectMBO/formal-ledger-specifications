@@ -21,7 +21,7 @@
       {
         packages = pkgs // {
           # Set default package
-          default = pkgs."formal-ledger";
+          default = pkgs.formal-ledger;
         };
         # Expose development shells
         devShells = pkgs.devShells // {

@@ -245,6 +245,7 @@ let
     pname = "mkdocs";
     src = addToAgdaSrc [
       ./README.md
+      ./CONTRIBUTING.md
       ./build-tools/scripts/md
       ./build-tools/static/md
       ./build-tools/static/latex
@@ -267,8 +268,8 @@ let
       runHook preBuild
       mkdir -p dist
       python ./build-tools/scripts/md/build.py --run-agda
-      cp README.md _build/md/mkdocs/docs/index.md
       (cd _build/md/mkdocs/; mkdocs build --site-dir ../../../dist/site)
+      runHook postBuild
     '';
     installPhase = ''
       runHook preInstall
