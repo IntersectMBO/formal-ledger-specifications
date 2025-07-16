@@ -13,7 +13,7 @@ open import Ledger.Conway.TokenAlgebra.Base
 open import Ledger.Conway.TokenAlgebra.ValueSet
 
 
-module Ledger.Conway.Script.Verification.StructuredContracts
+module Ledger.Conway.Test.StructuredContracts
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where

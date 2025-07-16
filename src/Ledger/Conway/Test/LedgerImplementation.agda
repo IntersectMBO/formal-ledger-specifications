@@ -1,9 +1,9 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Script.Verification.Prelude
+open import Ledger.Conway.Test.Prelude
 open import Prelude using (Type)
 
-module Ledger.Conway.Script.Verification.LedgerImplementation
+module Ledger.Conway.Test.LedgerImplementation
   (T D : Type)
   (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
   where

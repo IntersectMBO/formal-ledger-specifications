@@ -1,13 +1,13 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (fromList; ε; _/_); open Computational
-open import Ledger.Conway.Script.Verification.Prelude
+open import Ledger.Conway.Test.Prelude
 
-module Ledger.Conway.Script.Verification.Lib (A D : Type)
+module Ledger.Conway.Test.Lib (A D : Type)
   (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
   where
 
-open import Ledger.Conway.Script.Verification.LedgerImplementation A D scriptImp
+open import Ledger.Conway.Test.LedgerImplementation A D scriptImp
 open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
