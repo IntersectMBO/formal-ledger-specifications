@@ -1,19 +1,16 @@
-# Formal Ledger Specifications
+# The Cardano Formal Ledger Specification
 
-This repository contains the formal ledger specifications for the Cardano blockchain,
-written in [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php).  These
-specifications are executable; Haskell code can be extracted from the Agda source
-code and run for conformance testing.
+This is the formal ledger specifications for the Cardano blockchain.
+It is written in [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php) and
+is executable; Haskell code can be extracted and run for conformance testing.
 
-The project consists entirely of [literate][] Agda code from which [the
-documentation](https://intersectmbo.github.io/formal-ledger-specifications/site/),
-that is, the *formal ledger specification*, is generated.
+The project consists entirely of [literate][] Agda code from which the HTML
+documentation is generated.  Thus the latest human-readable Cardano ledger
+specification is a collection of Markdown and HTML files; these replace the
+PDF documents of previous eras.
 
-To reiterate, the latest human-readable Cardano ledger specification consists of a collection
-of Markdown and HTML files; these replace the PDF documents of previous eras.
-
-This repository contains the formal ledger specifications for all eras, starting with
-Shelley, up to and including the Conway era.
+[The formal ledger GitHub repository][formal-ledger-specifications] contains formal
+ledger specifications for all eras, starting with Shelley, up to and including the Conway era.
 While the Agda formalization of the Conway era is complete, some pieces of the
 ledgers from previous eras have yet to be formalized.  We hope to finish formalizing
 the outstanding pieces in the near future.
@@ -56,3 +53,4 @@ If you encounter any issues, please check the [Troubleshooting Guide][] or [subm
 [submit a new issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/CONTRIBUTING.md
 [literate]: https://en.wikipedia.org/wiki/Literate_programming
+

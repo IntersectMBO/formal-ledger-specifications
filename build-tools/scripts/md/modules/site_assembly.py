@@ -184,25 +184,19 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
         shutil.copy2(bib_source, bib_target_dir)
         logging.info(f"✅ Deployed bibliography: {bib_source.name}.")
 
-    # 4. Handle index.md
+   # 4. Handle index.md by copying from the root README.md
     home_page = "index.md"
-    if not any(f.lower() == home_page.lower() for f in nav_files):
-        index_template = config.source_paths.mkdocs_docs_dir / home_page
-        if index_template.exists():
-            shutil.copy2(index_template, config.build_paths.mkdocs_docs_dir)
-            if home_page not in nav_files:
-                nav_files.append(home_page)
-            logging.info("✅ Deployed index.md.")
+    readme_source_path = config.source_paths.readme_md_path
+    index_target_path = config.build_paths.mkdocs_docs_dir / home_page
 
-    # 5. Handle guide.md template
-    guide_page = "guide.md"
-    if not any(f.lower() == guide_page.lower() for f in nav_files):
-        guide_template = config.source_paths.md_common_src_dir / guide_page
-        if guide_template.exists():
-            shutil.copy2(guide_template, config.build_paths.mkdocs_docs_dir)
-            if guide_page not in nav_files:
-                nav_files.append(guide_page)
-            logging.info("✅ Deployed guide.md.")
+    if readme_source_path.exists():
+        shutil.copy2(readme_source_path, index_target_path)
+        # Ensure index.md is in the list of files for navigation generation
+        if home_page not in [f.lower() for f in nav_files]:
+            nav_files.append(home_page)
+        logging.info(f"✅ Deployed root {readme_source_path.name} as site index.")
+    else:
+        logging.warning(f"Root README.md not found at {readme_source_path}. Cannot create site index.")
 
     return sorted(list(set(nav_files)), key=lambda f: (f.lower() != home_page.lower(), f.lower()))
 
