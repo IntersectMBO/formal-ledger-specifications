@@ -452,6 +452,7 @@ library
       MAlonzo.Code.Ledger.Conway.Conformance.Utxow.Properties
       MAlonzo.Code.Ledger.Conway.Crypto
       MAlonzo.Code.Ledger.Conway.Enact
+      MAlonzo.Code.Ledger.Conway.Enact.Properties
       MAlonzo.Code.Ledger.Conway.Fees
       MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger
@@ -465,8 +466,8 @@ library
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Epoch
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov
+      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core
-      MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.GovernanceActions
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.NewEpoch
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
@@ -476,9 +477,9 @@ library
       MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
       MAlonzo.Code.Ledger.Conway.Foreign.Util
       MAlonzo.Code.Ledger.Conway.Gov
+      MAlonzo.Code.Ledger.Conway.Gov.Actions
+      MAlonzo.Code.Ledger.Conway.Gov.Base
       MAlonzo.Code.Ledger.Conway.Gov.Properties
-      MAlonzo.Code.Ledger.Conway.GovernanceActions
-      MAlonzo.Code.Ledger.Conway.GovernanceActions.Properties
       MAlonzo.Code.Ledger.Conway.Ledger
       MAlonzo.Code.Ledger.Conway.PParams
       MAlonzo.Code.Ledger.Conway.Ratify
@@ -491,7 +492,6 @@ library
       MAlonzo.Code.Ledger.Conway.TokenAlgebra.Coin
       MAlonzo.Code.Ledger.Conway.Transaction
       MAlonzo.Code.Ledger.Conway.Types.Epoch
-      MAlonzo.Code.Ledger.Conway.Types.GovStructure
       MAlonzo.Code.Ledger.Conway.Types.Numeric
       MAlonzo.Code.Ledger.Conway.Types.Numeric.PositiveNat
       MAlonzo.Code.Ledger.Conway.Types.Numeric.UnitInterval

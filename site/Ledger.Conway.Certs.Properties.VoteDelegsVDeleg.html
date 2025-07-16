@@ -1515,7 +1515,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1575,7 +1575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1635,7 +1635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2359,7 +2359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Types.GovStructure.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.GovStructure.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3179,7 +3179,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5679,13 +5679,13 @@
 <pre class="Agda hidden-source">
 <a id="16" class="Symbol">{-#</a> <a id="20" class="Keyword">OPTIONS</a> <a id="28" class="Pragma">--safe</a> <a id="35" class="Symbol">#-}</a>
 
-<a id="40" class="Keyword">open</a> <a id="45" class="Keyword">import</a> <a id="52" href="Ledger.Conway.Types.GovStructure.html" class="Module">Ledger.Conway.Types.GovStructure</a>
+<a id="40" class="Keyword">open</a> <a id="45" class="Keyword">import</a> <a id="52" href="Ledger.Conway.Gov.Base.html" class="Module">Ledger.Conway.Gov.Base</a>
 
-<a id="86" class="Keyword">module</a> <a id="93" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html" class="Module">Ledger.Conway.Certs.Properties.VoteDelegsVDeleg</a> <a id="141" class="Symbol">(</a><a id="142" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#142" class="Bound">gs</a> <a id="145" class="Symbol">:</a> <a id="147" class="Symbol">_)</a> <a id="150" class="Symbol">(</a><a id="151" class="Keyword">open</a> <a id="156" href="Ledger.Conway.Types.GovStructure.html#283" class="Module">GovStructure</a> <a id="169" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#142" class="Bound">gs</a><a id="171" class="Symbol">)</a> <a id="173" class="Keyword">where</a>
+<a id="76" class="Keyword">module</a> <a id="83" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html" class="Module">Ledger.Conway.Certs.Properties.VoteDelegsVDeleg</a> <a id="131" class="Symbol">(</a><a id="132" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#132" class="Bound">gs</a> <a id="135" class="Symbol">:</a> <a id="137" class="Symbol">_)</a> <a id="140" class="Symbol">(</a><a id="141" class="Keyword">open</a> <a id="146" href="Ledger.Conway.Gov.Base.html#273" class="Module">GovStructure</a> <a id="159" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#132" class="Bound">gs</a><a id="161" class="Symbol">)</a> <a id="163" class="Keyword">where</a>
 
-<a id="180" class="Keyword">open</a> <a id="185" class="Keyword">import</a> <a id="192" href="Ledger.Conway.Certs.html" class="Module">Ledger.Conway.Certs</a> <a id="212" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#142" class="Bound">gs</a>
-<a id="215" class="Keyword">open</a> <a id="220" class="Keyword">import</a> <a id="227" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="242" class="Keyword">open</a> <a id="247" class="Keyword">import</a> <a id="254" href="Ledger.Conway.GovernanceActions.html" class="Module">Ledger.Conway.GovernanceActions</a> <a id="286" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#142" class="Bound">gs</a>
+<a id="170" class="Keyword">open</a> <a id="175" class="Keyword">import</a> <a id="182" href="Ledger.Conway.Certs.html" class="Module">Ledger.Conway.Certs</a> <a id="202" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#132" class="Bound">gs</a>
+<a id="205" class="Keyword">open</a> <a id="210" class="Keyword">import</a> <a id="217" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="232" class="Keyword">open</a> <a id="237" class="Keyword">import</a> <a id="244" href="Ledger.Conway.Gov.Actions.html" class="Module">Ledger.Conway.Gov.Actions</a> <a id="270" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#132" class="Bound">gs</a>
 </pre>
 
 <div class="claim">
@@ -5719,8 +5719,8 @@
 
 - *Formally*. 
 <pre class="Agda">
-<a id="voteDelegsVDeleg"></a><a id="1572" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1572" class="Function">voteDelegsVDeleg</a> <a id="1589" class="Symbol">:</a>  <a id="1592" href="Ledger.Conway.Certs.html#3805" class="Record">DState</a> <a id="1599" class="Symbol">→</a> <a id="1601" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1606" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1572" class="Function">voteDelegsVDeleg</a> <a id="1623" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1623" class="Bound">d</a> <a id="1625" class="Symbol">=</a> <a id="1627" href="Class.IsSet.html#959" class="Function">range</a> <a id="1633" class="Symbol">(</a><a id="1634" href="Ledger.Conway.Certs.html#4197" class="Field">voteDelegsOf</a> <a id="1647" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1623" class="Bound">d</a><a id="1648" class="Symbol">)</a> <a id="1650" href="Interface.HasSubset.html#166" class="Field Operator">⊆</a> <a id="1652" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="1657" class="Symbol">(</a><a id="1658" href="Ledger.Conway.GovernanceActions.html#1198" class="InductiveConstructor">credVoter</a> <a id="1668" href="Ledger.Conway.GovernanceActions.html#1090" class="InductiveConstructor">DRep</a><a id="1672" class="Symbol">)</a> <a id="1674" class="Symbol">(</a><a id="1675" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1679" class="Symbol">(</a><a id="1680" href="Ledger.Conway.Certs.html#4197" class="Field">voteDelegsOf</a> <a id="1693" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1623" class="Bound">d</a><a id="1694" class="Symbol">))</a>
+<a id="voteDelegsVDeleg"></a><a id="1556" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1556" class="Function">voteDelegsVDeleg</a> <a id="1573" class="Symbol">:</a>  <a id="1576" href="Ledger.Conway.Certs.html#3789" class="Record">DState</a> <a id="1583" class="Symbol">→</a> <a id="1585" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1590" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1556" class="Function">voteDelegsVDeleg</a> <a id="1607" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1607" class="Bound">d</a> <a id="1609" class="Symbol">=</a> <a id="1611" href="Class.IsSet.html#959" class="Function">range</a> <a id="1617" class="Symbol">(</a><a id="1618" href="Ledger.Conway.Certs.html#4181" class="Field">voteDelegsOf</a> <a id="1631" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1607" class="Bound">d</a><a id="1632" class="Symbol">)</a> <a id="1634" href="Interface.HasSubset.html#166" class="Field Operator">⊆</a> <a id="1636" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="1641" class="Symbol">(</a><a id="1642" href="Ledger.Conway.Gov.Actions.html#1156" class="InductiveConstructor">credVoter</a> <a id="1652" href="Ledger.Conway.Gov.Actions.html#1048" class="InductiveConstructor">DRep</a><a id="1656" class="Symbol">)</a> <a id="1658" class="Symbol">(</a><a id="1659" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1663" class="Symbol">(</a><a id="1664" href="Ledger.Conway.Certs.html#4181" class="Field">voteDelegsOf</a> <a id="1677" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1607" class="Bound">d</a><a id="1678" class="Symbol">))</a>
 </pre>
 
 - *Proof*. To appear in the module in the [formal ledger

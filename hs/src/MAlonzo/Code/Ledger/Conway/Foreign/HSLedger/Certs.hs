@@ -47,7 +47,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.Util
-import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
+import qualified MAlonzo.Code.Ledger.Conway.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Types.Epoch
@@ -98,7 +98,7 @@ d_pp_28 v0
 -- Ledger.Conway.Foreign.HSLedger.Certs._.CertEnv.votes
 d_votes_30 ::
   MAlonzo.Code.Ledger.Conway.Certs.T_CertEnv_1058 ->
-  [MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovVote_836]
+  [MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovVote_838]
 d_votes_30 v0
   = coe MAlonzo.Code.Ledger.Conway.Certs.d_votes_1074 (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Certs._.CertEnv.wdrls
@@ -6130,10 +6130,8 @@ d_Conv'45'DCert_86
                      (coe v2)
                      (coe
                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.C_Anchor_145
-                        (coe
-                           MAlonzo.Code.Ledger.Conway.GovernanceActions.d_url_778 (coe v3))
-                        (coe
-                           MAlonzo.Code.Ledger.Conway.GovernanceActions.d_hash_780 (coe v3)))
+                        (coe MAlonzo.Code.Ledger.Conway.Gov.Actions.d_url_780 (coe v3))
+                        (coe MAlonzo.Code.Ledger.Conway.Gov.Actions.d_hash_782 (coe v3)))
               MAlonzo.Code.Ledger.Conway.Certs.C_deregdrep_1034 v1 v2
                 -> coe
                      C_Deregdrep_16151
@@ -6548,7 +6546,7 @@ d_Conv'45'DCert_86
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Conway.GovernanceActions.C_Anchor'46'constructor_2407 v5 v6
+                                   MAlonzo.Code.Ledger.Conway.Gov.Actions.C_Anchor'46'constructor_2407 v5 v6
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.C_Anchor_145
                                           (coe v5) (coe v6)
@@ -6558,7 +6556,7 @@ d_Conv'45'DCert_86
                                  case coe v4 of
                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.C_Anchor_145 v5 v6
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.GovernanceActions.C_Anchor'46'constructor_2407
+                                          MAlonzo.Code.Ledger.Conway.Gov.Actions.C_Anchor'46'constructor_2407
                                           (coe v5) (coe v6)
                                    _ -> MAlonzo.RTE.mazUnreachableError)))
                         v3)

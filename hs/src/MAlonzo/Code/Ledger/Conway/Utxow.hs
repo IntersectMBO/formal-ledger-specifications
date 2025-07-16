@@ -41,7 +41,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Abstract
 import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Crypto
-import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
+import qualified MAlonzo.Code.Ledger.Conway.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Script.Base
 import qualified MAlonzo.Code.Ledger.Conway.Script.Validation
@@ -276,7 +276,7 @@ d_txouts_1560 v0
 -- _.TxBody.txprop
 d_txprop_1562 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TxBody_2942 ->
-  [MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854]
+  [MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856]
 d_txprop_1562 v0
   = coe MAlonzo.Code.Ledger.Conway.Transaction.d_txprop_3000 (coe v0)
 -- _.TxBody.txup
@@ -294,7 +294,7 @@ d_txvldt_1566 v0
 -- _.TxBody.txvote
 d_txvote_1568 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TxBody_2942 ->
-  [MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovVote_836]
+  [MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovVote_838]
 d_txvote_1568 v0
   = coe MAlonzo.Code.Ledger.Conway.Transaction.d_txvote_2998 (coe v0)
 -- _.TxBody.txwdrls

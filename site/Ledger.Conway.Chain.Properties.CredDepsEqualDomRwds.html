@@ -1515,7 +1515,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1575,7 +1575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1635,7 +1635,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2359,7 +2359,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Types.GovStructure.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.GovStructure.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3179,7 +3179,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5683,11 +5683,11 @@
 <a id="75" class="Keyword">open</a> <a id="80" class="Keyword">import</a> <a id="87" href="Ledger.Conway.Transaction.html" class="Module">Ledger.Conway.Transaction</a>
 
 <a id="114" class="Keyword">module</a> <a id="121" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html" class="Module">Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds</a>
-  <a id="175" class="Symbol">(</a><a id="176" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#176" class="Bound">txs</a> <a id="180" class="Symbol">:</a> <a id="182" class="Symbol">_)</a> <a id="185" class="Symbol">(</a><a id="186" class="Keyword">open</a> <a id="191" href="Ledger.Conway.Transaction.html#2622" class="Module">TransactionStructure</a> <a id="212" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#176" class="Bound">txs</a><a id="215" class="Symbol">)</a>
+  <a id="175" class="Symbol">(</a><a id="176" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#176" class="Bound">txs</a> <a id="180" class="Symbol">:</a> <a id="182" class="Symbol">_)</a> <a id="185" class="Symbol">(</a><a id="186" class="Keyword">open</a> <a id="191" href="Ledger.Conway.Transaction.html#2606" class="Module">TransactionStructure</a> <a id="212" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#176" class="Bound">txs</a><a id="215" class="Symbol">)</a>
   <a id="219" class="Symbol">(</a><a id="220" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#220" class="Bound">abs</a> <a id="224" class="Symbol">:</a> <a id="226" href="Ledger.Conway.Abstract.html#607" class="Record">AbstractFunctions</a> <a id="244" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#176" class="Bound">txs</a><a id="247" class="Symbol">)</a>
   <a id="251" class="Keyword">where</a>
 
-<a id="258" class="Keyword">open</a> <a id="263" class="Keyword">import</a> <a id="270" href="Ledger.Conway.Certs.html" class="Module">Ledger.Conway.Certs</a> <a id="290" href="Ledger.Conway.Transaction.html#3653" class="Function">govStructure</a>
+<a id="258" class="Keyword">open</a> <a id="263" class="Keyword">import</a> <a id="270" href="Ledger.Conway.Certs.html" class="Module">Ledger.Conway.Certs</a> <a id="290" href="Ledger.Conway.Transaction.html#3637" class="Function">govStructure</a>
 <a id="303" class="Keyword">open</a> <a id="308" class="Keyword">import</a> <a id="315" href="Ledger.Conway.Chain.html" class="Module">Ledger.Conway.Chain</a> <a id="335" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#176" class="Bound">txs</a> <a id="339" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#220" class="Bound">abs</a>
 <a id="343" class="Keyword">open</a> <a id="348" class="Keyword">import</a> <a id="355" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="370" class="Keyword">hiding</a> <a id="377" class="Symbol">(</a><a id="378" href="Class.Functor.Core.html#272" class="Function">map</a><a id="381" class="Symbol">)</a> <a id="383" class="Keyword">renaming</a> <a id="392" class="Symbol">(</a><a id="393" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="398" class="Symbol">to</a> <a id="401" class="Function">map</a><a id="404" class="Symbol">;</a> <a id="406" href="abstract-set-theory.FiniteSetTheory.html#2813" class="Function">filterˢ</a> <a id="414" class="Symbol">to</a> <a id="417" class="Function">filter</a><a id="423" class="Symbol">)</a>
 <a id="425" class="Keyword">open</a> <a id="430" class="Keyword">import</a> <a id="437" href="Ledger.Conway.Properties.html" class="Module">Ledger.Conway.Properties</a> <a id="462" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#176" class="Bound">txs</a> <a id="466" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#220" class="Bound">abs</a>
@@ -5706,8 +5706,8 @@
   these quantities are equal for . Formally, 
 <pre class="Agda">
 <a id="credDeposits≡dom-rwds"></a><a id="870" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#870" class="Function">credDeposits≡dom-rwds</a> <a id="892" class="Symbol">:</a> <a id="894" href="Ledger.Conway.Chain.html#1030" class="Record">ChainState</a> <a id="905" class="Symbol">→</a> <a id="907" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="912" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#870" class="Function">credDeposits≡dom-rwds</a> <a id="934" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#934" class="Bound">cs</a> <a id="937" class="Symbol">=</a>  <a id="940" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#417" class="Function">filter</a> <a id="947" href="Ledger.Conway.Properties.html#497" class="Function">isCredDeposit</a> <a id="961" class="Symbol">(</a><a id="962" href="Class.IsSet.html#916" class="Function">dom</a> <a id="966" class="Symbol">(</a><a id="967" href="Ledger.Conway.Certs.html#1112" class="Field">DepositsOf</a> <a id="978" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#934" class="Bound">cs</a><a id="980" class="Symbol">))</a>
-                            <a id="1011" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1013" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#401" class="Function">map</a> <a id="1017" href="Ledger.Conway.Certs.html#727" class="InductiveConstructor">CredentialDeposit</a> <a id="1035" class="Symbol">(</a><a id="1036" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1040" class="Symbol">(</a><a id="1041" href="Ledger.Conway.Certs.html#1227" class="Field">RewardsOf</a> <a id="1051" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#934" class="Bound">cs</a><a id="1053" class="Symbol">))</a>
+<a id="912" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#870" class="Function">credDeposits≡dom-rwds</a> <a id="934" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#934" class="Bound">cs</a> <a id="937" class="Symbol">=</a>  <a id="940" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#417" class="Function">filter</a> <a id="947" href="Ledger.Conway.Properties.html#497" class="Function">isCredDeposit</a> <a id="961" class="Symbol">(</a><a id="962" href="Class.IsSet.html#916" class="Function">dom</a> <a id="966" class="Symbol">(</a><a id="967" href="Ledger.Conway.Certs.html#1096" class="Field">DepositsOf</a> <a id="978" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#934" class="Bound">cs</a><a id="980" class="Symbol">))</a>
+                            <a id="1011" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1013" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#401" class="Function">map</a> <a id="1017" href="Ledger.Conway.Certs.html#711" class="InductiveConstructor">CredentialDeposit</a> <a id="1035" class="Symbol">(</a><a id="1036" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1040" class="Symbol">(</a><a id="1041" href="Ledger.Conway.Certs.html#1211" class="Field">RewardsOf</a> <a id="1051" href="Ledger.Conway.Chain.Properties.CredDepsEqualDomRwds.html#934" class="Bound">cs</a><a id="1053" class="Symbol">))</a>
 </pre> The
   property `credDeposits≡dom-rwds-inv`{.AgdaFunction} asserts that
   `credDeposits≡dom-rwds`{.AgdaFunction} is a chain invariant. That is,

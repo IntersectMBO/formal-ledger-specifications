@@ -48,7 +48,7 @@ import qualified MAlonzo.Code.Ledger.Conway.Conformance.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Ledger
 import qualified MAlonzo.Code.Ledger.Conway.Crypto
 import qualified MAlonzo.Code.Ledger.Conway.Enact
-import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
+import qualified MAlonzo.Code.Ledger.Conway.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Ratify
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
@@ -158,8 +158,8 @@ d_treasury_666 ::
   MAlonzo.Code.Ledger.Conway.PParams.T_Acnt_160 -> Integer
 d_treasury_666 v0
   = coe MAlonzo.Code.Ledger.Conway.PParams.d_treasury_166 (coe v0)
--- _.GovernanceActions.VDeleg
-d_VDeleg_860 a0 = ()
+-- _.GovActions.VDeleg
+d_VDeleg_812 a0 = ()
 -- _.RwdAddr.net
 d_net_1308 ::
   MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96 -> AgdaAny
@@ -2323,8 +2323,7 @@ du_govSt''_2636 v0
             (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45''215'_152)
             (coe
                (\ v2 ->
-                  MAlonzo.Code.Ledger.Conway.GovernanceActions.d_returnAddr_894
-                    (coe v2))))
+                  MAlonzo.Code.Ledger.Conway.Gov.Actions.d_returnAddr_896 (coe v2))))
          (coe
             MAlonzo.Code.Axiom.Set.du_fromList_428
             (coe
@@ -2368,7 +2367,7 @@ du_mkStakeDistrs_2648 v0 v1 v2 v3 v4
                (coe
                   MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268 (coe v0))))
          (coe
-            MAlonzo.Code.Ledger.Conway.GovernanceActions.d_DecEq'45'VDeleg_908
+            MAlonzo.Code.Ledger.Conway.Gov.Actions.d_DecEq'45'VDeleg_910
             (coe
                MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
                (coe v0)))

@@ -1503,7 +1503,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1563,7 +1563,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -1623,7 +1623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.html" class="md-nav__link">
+      <a href="Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -2347,7 +2347,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Types.GovStructure.html" class="md-nav__link">
+      <a href="Ledger.Conway.Types.GovStructure.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -3179,7 +3179,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Foreign.HSLedger.GovernanceActions.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -5678,34 +5678,34 @@
 
 <pre class="Agda"><a id="9" class="Keyword">module</a> <a id="16" href="Ledger.Conway.Foreign.HSLedger.Cert.html" class="Module">Ledger.Conway.Foreign.HSLedger.Cert</a> <a id="52" class="Keyword">where</a>
 
-<a id="59" class="Keyword">open</a> <a id="64" class="Keyword">import</a> <a id="71" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a> <a id="112" class="Keyword">hiding</a> <a id="119" class="Symbol">(</a><a id="120" href="Ledger.Conway.Certs.html#3390" class="Record">CertEnv</a><a id="127" class="Symbol">;</a> <a id="129" href="Ledger.Conway.Certs.html#1807" class="Datatype">DCert</a><a id="134" class="Symbol">)</a> <a id="136" class="Keyword">renaming</a> <a id="145" class="Symbol">(</a><a id="146" href="Ledger.Conway.Certs.html#5193" class="InductiveConstructor Operator">⟦_,_,_⟧ᶜˢ</a> <a id="156" class="Symbol">to</a> <a id="159" class="InductiveConstructor Operator">⟦_,_,_⟧ᶜˢ&#39;</a><a id="169" class="Symbol">;</a> <a id="171" href="Ledger.Conway.Certs.html#5136" class="Record">CertState</a> <a id="181" class="Symbol">to</a> <a id="184" class="Record">CertState&#39;</a><a id="194" class="Symbol">)</a>
+<a id="59" class="Keyword">open</a> <a id="64" class="Keyword">import</a> <a id="71" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a> <a id="112" class="Keyword">hiding</a> <a id="119" class="Symbol">(</a><a id="120" href="Ledger.Conway.Certs.html#3374" class="Record">CertEnv</a><a id="127" class="Symbol">;</a> <a id="129" href="Ledger.Conway.Certs.html#1791" class="Datatype">DCert</a><a id="134" class="Symbol">)</a> <a id="136" class="Keyword">renaming</a> <a id="145" class="Symbol">(</a><a id="146" href="Ledger.Conway.Certs.html#5177" class="InductiveConstructor Operator">⟦_,_,_⟧ᶜˢ</a> <a id="156" class="Symbol">to</a> <a id="159" class="InductiveConstructor Operator">⟦_,_,_⟧ᶜˢ&#39;</a><a id="169" class="Symbol">;</a> <a id="171" href="Ledger.Conway.Certs.html#5120" class="Record">CertState</a> <a id="181" class="Symbol">to</a> <a id="184" class="Record">CertState&#39;</a><a id="194" class="Symbol">)</a>
 <a id="196" class="Keyword">open</a> <a id="201" class="Keyword">import</a> <a id="208" href="Ledger.Conway.Foreign.HSLedger.Certs.html" class="Module">Ledger.Conway.Foreign.HSLedger.Certs</a>
 
-<a id="246" class="Keyword">open</a> <a id="251" class="Keyword">import</a> <a id="258" href="Ledger.Conway.Conformance.Certs.Properties.html" class="Module">Ledger.Conway.Conformance.Certs.Properties</a> <a id="301" href="Ledger.Conway.Transaction.html#3653" class="Function">govStructure</a>
-  <a id="316" class="Keyword">using</a> <a id="322" class="Symbol">(</a> <a id="324" href="Ledger.Conway.Conformance.Certs.Properties.html#6124" class="Function">Computational-CERT</a>
-        <a id="351" class="Symbol">;</a> <a id="353" href="Ledger.Conway.Conformance.Certs.Properties.html#10789" class="Function">Computational-CERTS</a>
+<a id="246" class="Keyword">open</a> <a id="251" class="Keyword">import</a> <a id="258" href="Ledger.Conway.Conformance.Certs.Properties.html" class="Module">Ledger.Conway.Conformance.Certs.Properties</a> <a id="301" href="Ledger.Conway.Transaction.html#3637" class="Function">govStructure</a>
+  <a id="316" class="Keyword">using</a> <a id="322" class="Symbol">(</a> <a id="324" href="Ledger.Conway.Conformance.Certs.Properties.html#6108" class="Function">Computational-CERT</a>
+        <a id="351" class="Symbol">;</a> <a id="353" href="Ledger.Conway.Conformance.Certs.Properties.html#10773" class="Function">Computational-CERTS</a>
         <a id="381" class="Symbol">)</a>
 
-<a id="384" class="Keyword">open</a> <a id="389" class="Keyword">import</a> <a id="396" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="428" href="Ledger.Conway.Transaction.html#3653" class="Function">govStructure</a>
+<a id="384" class="Keyword">open</a> <a id="389" class="Keyword">import</a> <a id="396" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="428" href="Ledger.Conway.Transaction.html#3637" class="Function">govStructure</a>
 
 <a id="442" class="Keyword">instance</a>
   <a id="453" class="Comment">-- HsTy-CertState = autoHsType&#39; CertState (⟦_,_,_⟧ᶜˢ ↦ &quot;MkCertState&quot; ∷ [])</a>
   <a id="530" class="Comment">-- Conv-CertState = autoConvert CertState</a>
 
-  <a id="HsTy-CertState"></a><a id="575" href="Ledger.Conway.Foreign.HSLedger.Cert.html#575" class="Function">HsTy-CertState</a> <a id="590" class="Symbol">=</a> <a id="592" href="Foreign.HaskellTypes.Deriving.html#11538" class="Macro Operator">autoHsType</a> <a id="603" href="Ledger.Conway.Conformance.Certs.html#938" class="Record">CertState</a> <a id="613" href="Foreign.HaskellTypes.Deriving.html#11538" class="Macro Operator">⊣</a> <a id="615" href="Foreign.HaskellTypes.Deriving.html#3245" class="Function">withConstructor</a> <a id="631" class="String">&quot;MkCertState&quot;</a>
-  <a id="Conv-CertState"></a><a id="647" href="Ledger.Conway.Foreign.HSLedger.Cert.html#647" class="Function">Conv-CertState</a> <a id="662" class="Symbol">=</a> <a id="664" href="Foreign.Convertible.Deriving.html#6827" class="Macro">autoConvert</a> <a id="676" href="Ledger.Conway.Conformance.Certs.html#938" class="Record">CertState</a>
+  <a id="HsTy-CertState"></a><a id="575" href="Ledger.Conway.Foreign.HSLedger.Cert.html#575" class="Function">HsTy-CertState</a> <a id="590" class="Symbol">=</a> <a id="592" href="Foreign.HaskellTypes.Deriving.html#11538" class="Macro Operator">autoHsType</a> <a id="603" href="Ledger.Conway.Conformance.Certs.html#922" class="Record">CertState</a> <a id="613" href="Foreign.HaskellTypes.Deriving.html#11538" class="Macro Operator">⊣</a> <a id="615" href="Foreign.HaskellTypes.Deriving.html#3245" class="Function">withConstructor</a> <a id="631" class="String">&quot;MkCertState&quot;</a>
+  <a id="Conv-CertState"></a><a id="647" href="Ledger.Conway.Foreign.HSLedger.Cert.html#647" class="Function">Conv-CertState</a> <a id="662" class="Symbol">=</a> <a id="664" href="Foreign.Convertible.Deriving.html#6827" class="Macro">autoConvert</a> <a id="676" href="Ledger.Conway.Conformance.Certs.html#922" class="Record">CertState</a>
 
-  <a id="Conv-CertState-CertState&#39;"></a><a id="689" href="Ledger.Conway.Foreign.HSLedger.Cert.html#689" class="Function">Conv-CertState-CertState&#39;</a> <a id="715" class="Symbol">:</a> <a id="717" href="Foreign.Convertible.html#111" class="Record">Convertible</a> <a id="729" href="Ledger.Conway.Conformance.Certs.html#938" class="Record">CertState</a> <a id="739" href="Ledger.Conway.Foreign.HSLedger.Cert.html#184" class="Record">CertState&#39;</a>
+  <a id="Conv-CertState-CertState&#39;"></a><a id="689" href="Ledger.Conway.Foreign.HSLedger.Cert.html#689" class="Function">Conv-CertState-CertState&#39;</a> <a id="715" class="Symbol">:</a> <a id="717" href="Foreign.Convertible.html#111" class="Record">Convertible</a> <a id="729" href="Ledger.Conway.Conformance.Certs.html#922" class="Record">CertState</a> <a id="739" href="Ledger.Conway.Foreign.HSLedger.Cert.html#184" class="Record">CertState&#39;</a>
   <a id="752" href="Ledger.Conway.Foreign.HSLedger.Cert.html#689" class="Function">Conv-CertState-CertState&#39;</a> <a id="778" class="Symbol">.</a><a id="779" href="Foreign.Convertible.html#157" class="Field">to</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#784}{\htmlId{784}{\htmlClass{Bound}{\text{dState}}}}\, \\ \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#793}{\htmlId{793}{\htmlClass{Bound}{\text{pState}}}}\, \\ \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#802}{\htmlId{802}{\htmlClass{Bound}{\text{gState}}}}\, \end{pmatrix}$</a>    <a id="816" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Foreign.Convertible.html#157}{\htmlId{820}{\htmlClass{Field}{\text{to}}}}\, \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#784}{\htmlId{823}{\htmlClass{Bound}{\text{dState}}}}\, \\ \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#793}{\htmlId{832}{\htmlClass{Bound}{\text{pState}}}}\, \\ \,\href{Foreign.Convertible.html#157}{\htmlId{841}{\htmlClass{Field}{\text{to}}}}\, \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#802}{\htmlId{844}{\htmlClass{Bound}{\text{gState}}}}\, \end{pmatrix}$</a>
   <a id="858" href="Ledger.Conway.Foreign.HSLedger.Cert.html#689" class="Function">Conv-CertState-CertState&#39;</a> <a id="884" class="Symbol">.</a><a id="885" href="Foreign.Convertible.html#178" class="Field">from</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#892}{\htmlId{892}{\htmlClass{Bound}{\text{dState}}}}\, \\ \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#901}{\htmlId{901}{\htmlClass{Bound}{\text{pState}}}}\, \\ \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#910}{\htmlId{910}{\htmlClass{Bound}{\text{gState}}}}\, \end{pmatrix}$</a> <a id="922" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Foreign.Convertible.html#178}{\htmlId{926}{\htmlClass{Field}{\text{from}}}}\, \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#892}{\htmlId{931}{\htmlClass{Bound}{\text{dState}}}}\, \\ \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#901}{\htmlId{940}{\htmlClass{Bound}{\text{pState}}}}\, \\ \,\href{Foreign.Convertible.html#178}{\htmlId{949}{\htmlClass{Field}{\text{from}}}}\, \,\href{Ledger.Conway.Foreign.HSLedger.Cert.html#910}{\htmlId{954}{\htmlClass{Bound}{\text{gState}}}}\, \end{pmatrix}$</a>
 
-<a id="certs-step"></a><a id="966" href="Ledger.Conway.Foreign.HSLedger.Cert.html#966" class="Function">certs-step</a> <a id="977" class="Symbol">:</a> <a id="979" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="986" class="Symbol">(</a><a id="987" href="Ledger.Conway.Certs.html#3390" class="Record">CertEnv</a> <a id="995" class="Symbol">→</a> <a id="997" href="Ledger.Conway.Conformance.Certs.html#938" class="Record">CertState</a> <a id="1007" class="Symbol">→</a> <a id="1009" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1014" href="Ledger.Conway.Certs.html#1807" class="Datatype">DCert</a> <a id="1020" class="Symbol">→</a> <a id="1022" href="Interface.ComputationalRelation.html#243" class="Datatype">ComputationResult</a> <a id="1040" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="1047" href="Ledger.Conway.Conformance.Certs.html#938" class="Record">CertState</a><a id="1056" class="Symbol">)</a>
-<a id="1058" href="Ledger.Conway.Foreign.HSLedger.Cert.html#966" class="Function">certs-step</a> <a id="1069" class="Symbol">=</a> <a id="1071" href="Foreign.Convertible.html#157" class="Field">to</a> <a id="1074" class="Symbol">(</a><a id="1075" href="Interface.ComputationalRelation.html#2984" class="Function">compute</a> <a id="1083" href="Ledger.Conway.Conformance.Certs.Properties.html#10789" class="Function">Computational-CERTS</a><a id="1102" class="Symbol">)</a>
+<a id="certs-step"></a><a id="966" href="Ledger.Conway.Foreign.HSLedger.Cert.html#966" class="Function">certs-step</a> <a id="977" class="Symbol">:</a> <a id="979" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="986" class="Symbol">(</a><a id="987" href="Ledger.Conway.Certs.html#3374" class="Record">CertEnv</a> <a id="995" class="Symbol">→</a> <a id="997" href="Ledger.Conway.Conformance.Certs.html#922" class="Record">CertState</a> <a id="1007" class="Symbol">→</a> <a id="1009" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="1014" href="Ledger.Conway.Certs.html#1791" class="Datatype">DCert</a> <a id="1020" class="Symbol">→</a> <a id="1022" href="Interface.ComputationalRelation.html#243" class="Datatype">ComputationResult</a> <a id="1040" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="1047" href="Ledger.Conway.Conformance.Certs.html#922" class="Record">CertState</a><a id="1056" class="Symbol">)</a>
+<a id="1058" href="Ledger.Conway.Foreign.HSLedger.Cert.html#966" class="Function">certs-step</a> <a id="1069" class="Symbol">=</a> <a id="1071" href="Foreign.Convertible.html#157" class="Field">to</a> <a id="1074" class="Symbol">(</a><a id="1075" href="Interface.ComputationalRelation.html#2984" class="Function">compute</a> <a id="1083" href="Ledger.Conway.Conformance.Certs.Properties.html#10773" class="Function">Computational-CERTS</a><a id="1102" class="Symbol">)</a>
 
 <a id="1105" class="Symbol">{-#</a> <a id="1109" class="Keyword">COMPILE</a> <a id="1117" class="Keyword">GHC</a> <a id="1121" href="Ledger.Conway.Foreign.HSLedger.Cert.html#966" class="Function">certs-step</a> <a id="1132" class="Pragma">as</a> <a id="1135" class="Pragma">certsStep</a> <a id="1145" class="Symbol">#-}</a>
 
-<a id="cert-step"></a><a id="1150" href="Ledger.Conway.Foreign.HSLedger.Cert.html#1150" class="Function">cert-step</a> <a id="1160" class="Symbol">:</a> <a id="1162" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1169" class="Symbol">(</a><a id="1170" href="Ledger.Conway.Certs.html#3390" class="Record">CertEnv</a> <a id="1178" class="Symbol">→</a> <a id="1180" href="Ledger.Conway.Conformance.Certs.html#938" class="Record">CertState</a> <a id="1190" class="Symbol">→</a> <a id="1192" href="Ledger.Conway.Certs.html#1807" class="Datatype">DCert</a> <a id="1198" class="Symbol">→</a> <a id="1200" href="Interface.ComputationalRelation.html#243" class="Datatype">ComputationResult</a> <a id="1218" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="1225" href="Ledger.Conway.Conformance.Certs.html#938" class="Record">CertState</a><a id="1234" class="Symbol">)</a>
-<a id="1236" href="Ledger.Conway.Foreign.HSLedger.Cert.html#1150" class="Function">cert-step</a> <a id="1246" class="Symbol">=</a> <a id="1248" href="Foreign.Convertible.html#157" class="Field">to</a> <a id="1251" class="Symbol">(</a><a id="1252" href="Interface.ComputationalRelation.html#2984" class="Function">compute</a> <a id="1260" href="Ledger.Conway.Conformance.Certs.Properties.html#6124" class="Function">Computational-CERT</a><a id="1278" class="Symbol">)</a>
+<a id="cert-step"></a><a id="1150" href="Ledger.Conway.Foreign.HSLedger.Cert.html#1150" class="Function">cert-step</a> <a id="1160" class="Symbol">:</a> <a id="1162" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="1169" class="Symbol">(</a><a id="1170" href="Ledger.Conway.Certs.html#3374" class="Record">CertEnv</a> <a id="1178" class="Symbol">→</a> <a id="1180" href="Ledger.Conway.Conformance.Certs.html#922" class="Record">CertState</a> <a id="1190" class="Symbol">→</a> <a id="1192" href="Ledger.Conway.Certs.html#1791" class="Datatype">DCert</a> <a id="1198" class="Symbol">→</a> <a id="1200" href="Interface.ComputationalRelation.html#243" class="Datatype">ComputationResult</a> <a id="1218" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="1225" href="Ledger.Conway.Conformance.Certs.html#922" class="Record">CertState</a><a id="1234" class="Symbol">)</a>
+<a id="1236" href="Ledger.Conway.Foreign.HSLedger.Cert.html#1150" class="Function">cert-step</a> <a id="1246" class="Symbol">=</a> <a id="1248" href="Foreign.Convertible.html#157" class="Field">to</a> <a id="1251" class="Symbol">(</a><a id="1252" href="Interface.ComputationalRelation.html#2984" class="Function">compute</a> <a id="1260" href="Ledger.Conway.Conformance.Certs.Properties.html#6108" class="Function">Computational-CERT</a><a id="1278" class="Symbol">)</a>
 
 <a id="1281" class="Symbol">{-#</a> <a id="1285" class="Keyword">COMPILE</a> <a id="1293" class="Keyword">GHC</a> <a id="1297" href="Ledger.Conway.Foreign.HSLedger.Cert.html#1150" class="Function">cert-step</a> <a id="1307" class="Pragma">as</a> <a id="1310" class="Pragma">certStep</a> <a id="1319" class="Symbol">#-}</a>
 </pre>

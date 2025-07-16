@@ -21,7 +21,7 @@ import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Certs
-import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
+import qualified MAlonzo.Code.Ledger.Conway.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 
 -- Ledger.Conway.Abstract._.CostModel
@@ -88,52 +88,44 @@ d_Wdrl_452 ::
   MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
   ()
 d_Wdrl_452 = erased
--- Ledger.Conway.Abstract._.GovProposal.action
-d_action_768 ::
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovAction_800
-d_action_768 v0
-  = coe
-      MAlonzo.Code.Ledger.Conway.GovernanceActions.d_action_868 (coe v0)
--- Ledger.Conway.Abstract._.GovProposal.anchor
-d_anchor_770 ::
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_Anchor_772
-d_anchor_770 v0
-  = coe
-      MAlonzo.Code.Ledger.Conway.GovernanceActions.d_anchor_878 (coe v0)
--- Ledger.Conway.Abstract._.GovProposal.deposit
-d_deposit_772 ::
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
-  Integer
-d_deposit_772 v0
-  = coe
-      MAlonzo.Code.Ledger.Conway.GovernanceActions.d_deposit_874 (coe v0)
--- Ledger.Conway.Abstract._.GovProposal.policy
-d_policy_774 ::
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
+-- Ledger.Conway.Abstract._.GovActions.GovProposal
+d_GovProposal_778 a0 = ()
+-- Ledger.Conway.Abstract._.GovActions.GovProposal.action
+d_action_840 ::
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856 ->
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovAction_802
+d_action_840 v0
+  = coe MAlonzo.Code.Ledger.Conway.Gov.Actions.d_action_870 (coe v0)
+-- Ledger.Conway.Abstract._.GovActions.GovProposal.anchor
+d_anchor_842 ::
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856 ->
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_Anchor_774
+d_anchor_842 v0
+  = coe MAlonzo.Code.Ledger.Conway.Gov.Actions.d_anchor_880 (coe v0)
+-- Ledger.Conway.Abstract._.GovActions.GovProposal.deposit
+d_deposit_844 ::
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856 -> Integer
+d_deposit_844 v0
+  = coe MAlonzo.Code.Ledger.Conway.Gov.Actions.d_deposit_876 (coe v0)
+-- Ledger.Conway.Abstract._.GovActions.GovProposal.policy
+d_policy_846 ::
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856 ->
   Maybe AgdaAny
-d_policy_774 v0
+d_policy_846 v0
+  = coe MAlonzo.Code.Ledger.Conway.Gov.Actions.d_policy_874 (coe v0)
+-- Ledger.Conway.Abstract._.GovActions.GovProposal.prevAction
+d_prevAction_848 ::
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856 -> AgdaAny
+d_prevAction_848 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.GovernanceActions.d_policy_872 (coe v0)
--- Ledger.Conway.Abstract._.GovProposal.prevAction
-d_prevAction_776 ::
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
-  AgdaAny
-d_prevAction_776 v0
-  = coe
-      MAlonzo.Code.Ledger.Conway.GovernanceActions.d_prevAction_870
-      (coe v0)
--- Ledger.Conway.Abstract._.GovProposal.returnAddr
-d_returnAddr_778 ::
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
+      MAlonzo.Code.Ledger.Conway.Gov.Actions.d_prevAction_872 (coe v0)
+-- Ledger.Conway.Abstract._.GovActions.GovProposal.returnAddr
+d_returnAddr_850 ::
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856 ->
   MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96
-d_returnAddr_778 v0
+d_returnAddr_850 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.GovernanceActions.d_returnAddr_876
-      (coe v0)
--- Ledger.Conway.Abstract._.GovernanceActions.GovProposal
-d_GovProposal_826 a0 = ()
+      MAlonzo.Code.Ledger.Conway.Gov.Actions.d_returnAddr_878 (coe v0)
 -- Ledger.Conway.Abstract._.RwdAddr.net
 d_net_1306 ::
   MAlonzo.Code.Ledger.Conway.Address.T_RwdAddr_96 -> AgdaAny
@@ -159,8 +151,8 @@ data T_indexOf_1930
                                   (AgdaAny -> [AgdaAny] -> Maybe AgdaAny)
                                   (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
                                    [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny)
-                                  (MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
-                                   [MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854] ->
+                                  (MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856 ->
+                                   [MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856] ->
                                    Maybe AgdaAny)
 -- Ledger.Conway.Abstract.indexOf.indexOfDCert
 d_indexOfDCert_1944 ::
@@ -208,8 +200,8 @@ d_indexOfVote_1952 v0
 -- Ledger.Conway.Abstract.indexOf.indexOfProposal
 d_indexOfProposal_1954 ::
   T_indexOf_1930 ->
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854 ->
-  [MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovProposal_854] ->
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856 ->
+  [MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovProposal_856] ->
   Maybe AgdaAny
 d_indexOfProposal_1954 v0
   = case coe v0 of

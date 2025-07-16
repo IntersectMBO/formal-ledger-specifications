@@ -34,15 +34,15 @@ import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Crypto
 import qualified MAlonzo.Code.Ledger.Conway.Enact
+import qualified MAlonzo.Code.Ledger.Conway.Enact.Properties
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures
-import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.GovernanceActions
+import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Foreign.HSTypes
-import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions
-import qualified MAlonzo.Code.Ledger.Conway.GovernanceActions.Properties
+import qualified MAlonzo.Code.Ledger.Conway.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Transaction
 import qualified MAlonzo.Code.Ledger.Conway.Types.Epoch
@@ -91,13 +91,13 @@ d_ccCreds_42 ::
 d_ccCreds_42 = coe MAlonzo.Code.Ledger.Conway.Enact.du_ccCreds_988
 -- Ledger.Conway.Foreign.HSLedger.Enact._.getHash
 d_getHash_44 ::
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovActionType_782 ->
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovActionType_784 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_getHash_44 = coe MAlonzo.Code.Ledger.Conway.Enact.du_getHash_994
 -- Ledger.Conway.Foreign.HSLedger.Enact._.getHashES
 d_getHashES_46 ::
   MAlonzo.Code.Ledger.Conway.Enact.T_EnactState_942 ->
-  MAlonzo.Code.Ledger.Conway.GovernanceActions.T_GovActionType_782 ->
+  MAlonzo.Code.Ledger.Conway.Gov.Actions.T_GovActionType_784 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_getHashES_46
   = coe MAlonzo.Code.Ledger.Conway.Enact.du_getHashES_1006
@@ -156,7 +156,7 @@ d_Computational'45'ENACT_90 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
 d_Computational'45'ENACT_90
   = coe
-      MAlonzo.Code.Ledger.Conway.GovernanceActions.Properties.d_Computational'45'ENACT_1026
+      MAlonzo.Code.Ledger.Conway.Enact.Properties.d_Computational'45'ENACT_1024
       (coe
          MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
          (coe
@@ -525,14 +525,14 @@ d_Conv'45'EnactEnv_98
 enactStep ::
   T_EnactEnv_11159 ->
   T_EnactState_139 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.GovernanceActions.T_GovAction_1061 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions.T_GovAction_1061 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_EnactState_139
 enactStep = coe d_enact'45'step_100
 d_enact'45'step_100 ::
   T_EnactEnv_11159 ->
   T_EnactState_139 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.GovernanceActions.T_GovAction_1061 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions.T_GovAction_1061 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSTypes.T_ComputationResult_46
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_EnactState_139
 d_enact'45'step_100 v0
@@ -544,7 +544,7 @@ d_enact'45'step_100 v0
          (coe
             MAlonzo.Code.Foreign.Convertible.du_Convertible'45'Fun_130
             (coe
-               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.GovernanceActions.d_Conv'45'GovAction_82)
+               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions.d_Conv'45'GovAction_84)
             (coe
                MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.du_Conv'45'ComputationResult_88
                (coe
@@ -553,7 +553,7 @@ d_enact'45'step_100 v0
       (coe
          MAlonzo.Code.Interface.ComputationalRelation.du_compute_274
          (coe
-            MAlonzo.Code.Ledger.Conway.GovernanceActions.Properties.d_Computational'45'ENACT_1026
+            MAlonzo.Code.Ledger.Conway.Enact.Properties.d_Computational'45'ENACT_1024
             (coe
                MAlonzo.Code.Ledger.Conway.Transaction.d_govStructure_2404
                (coe
