@@ -1,14 +1,15 @@
-open import Ledger.Prelude hiding (fromList; ε; _/_); open Computational
-open import ScriptVerification.Prelude
+{-# OPTIONS --safe #-}
 
-module ScriptVerification.Lib (A D : Type)
+open import Ledger.Prelude hiding (fromList; ε; _/_); open Computational
+open import Ledger.Conway.Test.Prelude
+
+module Ledger.Conway.Test.Lib (A D : Type)
   (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
   where
 
-open import ScriptVerification.LedgerImplementation A D scriptImp
+open import Ledger.Conway.Test.LedgerImplementation A D scriptImp
 open import Ledger.Conway.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
-open import Ledger.Conway.Conformance.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Transaction
 open TransactionStructure SVTransactionStructure
 open import Ledger.Conway.Types.Epoch

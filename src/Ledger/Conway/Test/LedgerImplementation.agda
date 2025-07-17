@@ -1,7 +1,9 @@
-open import ScriptVerification.Prelude
+{-# OPTIONS --safe #-}
+
+open import Ledger.Conway.Test.Prelude
 open import Prelude using (Type)
 
-module ScriptVerification.LedgerImplementation
+module Ledger.Conway.Test.LedgerImplementation
   (T D : Type)
   (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
   where
@@ -14,8 +16,6 @@ open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
-open import Foreign.Convertible
-import Foreign.Haskell as F
 open import Ledger.Conway.Crypto
 open import Ledger.Conway.Transaction
 open import Ledger.Conway.Types.Epoch

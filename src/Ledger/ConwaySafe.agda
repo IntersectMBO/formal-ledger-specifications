@@ -40,6 +40,8 @@ import Ledger.Conway.Ratify.Properties
 import Ledger.Conway.Rewards
 import Ledger.Conway.Script
 import Ledger.Conway.Script.Validation
+import Ledger.Conway.Test.Examples
+import Ledger.Conway.Test.StructuredContracts
 import Ledger.Conway.TokenAlgebra.Base
 import Ledger.Conway.TokenAlgebra.Coin
 import Ledger.Conway.TokenAlgebra.ValueSet
