@@ -69,16 +69,12 @@ scriptsCost : (pp : PParams) → ℕ → Coin
 scriptsCost pp scriptSize
   = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte scriptSize
 ```
-
 <!--
 ```agda
-
                   (<′-wellFounded scriptSize)
 ```
 -->
-
 ```agda
-
   where
     minFeeRefScriptCoinsPerByte = PParams.minFeeRefScriptCoinsPerByte pp
     refScriptCostMultiplier = PParams.refScriptCostMultiplier pp
@@ -87,41 +83,31 @@ scriptsCost pp scriptSize
                    → ℚ        -- current tier price
                    → (n : ℕ)  -- remaining script size
 ```
-
-
 <!--
 ```agda
-
                    → Acc _<′_ n
 ```
 -->
-
 ```agda
 
                    → Coin
     scriptsCostAux acl curTierPrice n
 ```
-
 <!--
 ```agda
 
        (acc rs)
 ```
 -->
-
-
 ```agda
 
        = case  n ≤? fromℕ⁺ refScriptCostStride of
 ```
-
 <!--
 ```agda
-
                 λ where
 ```
 -->
-
 ```agda
 
                 (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
@@ -130,18 +116,14 @@ scriptsCost pp scriptSize
                              (refScriptCostMultiplier * curTierPrice)
                              (n - fromℕ⁺ refScriptCostStride)
 ```
-
-
 <!--
 ```agda
 
                              (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (ℕ⁺->0 refScriptCostStride)))
 ```
 -->
-
 <!--
 ```agda
-
       where
         suc∸≤ : ∀ {n m : ℕ} → n > 0 → m > 0 → n ∸ m < n
         suc∸≤ {n} {.suc m} p (s≤s q) = ≤-trans (+-monoʳ-≤ 1 (∸-monoʳ-≤ n (s<s q)))
