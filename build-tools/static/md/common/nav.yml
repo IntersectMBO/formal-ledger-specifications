@@ -142,6 +142,15 @@
         - Utxow: Ledger.Conway.Conformance.Utxow.md
         - Utxow/:
           - Properties: Ledger.Conway.Conformance.Utxow.Properties.md
+      - Test:
+        - Examples: Ledger.Conway.Test.Examples.md
+        - Examples/:
+          - HelloWorld: Ledger.Conway.Test.Examples.HelloWorld.md
+          - SucceedIfNumber: Ledger.Conway.Test.Examples.SucceedIfNumber.md
+        - LedgerImplementation: Ledger.Conway.Test.LedgerImplementation.md
+        - Lib: Ledger.Conway.Test.Lib.md
+        - Prelude:   Ledger.Conway.Test.Prelude.md
+        - StructuredContracts: Ledger.Conway.Test.StructuredContracts.md
     - ConwaySafe: Ledger.ConwaySafe.md
     - Interface:
       - HasCoin: Ledger.Interface.HasCoin.md
@@ -168,14 +177,6 @@
     - HaskellTypes: Foreign.HaskellTypes.md
     - HaskellTypes/:
       - Deriving: Foreign.HaskellTypes.Deriving.md
-  - ScriptVerification/:
-    - Examples: ScriptVerification.Examples.md
-    - HelloWorld: ScriptVerification.HelloWorld.md
-    - LedgerImplementation: ScriptVerification.LedgerImplementation.md
-    - Lib: ScriptVerification.Lib.md
-    - Prelude: ScriptVerification.Prelude.md
-    - StructuredContracts: ScriptVerification.StructuredContracts.md
-    - SucceedIfNumber: ScriptVerification.SucceedIfNumber.md
   - Appendix/:
     - EssentialAgda: EssentialAgda.md
     - Agda Prelude: Prelude.md
