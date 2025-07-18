@@ -19,15 +19,11 @@ the outstanding pieces in the near future.
 
 You can
 
-+  **read the formal specification**; the latest HTML version is at
++  read the [HTML version of the formal specification][fls-site]
 
-   <https://intersectmbo.github.io/formal-ledger-specifications/site/>
++  read the [HTML version of the Agda source code][fls-html]
 
-+  **read the Agda source code**; the latest HTML version of is at
-
-   <https://intersectmbo.github.io/formal-ledger-specifications/html/>
-
-+  **interact with and/or contribute to the formal specification**; instructions for
++  interact with and/or contribute to the formal specification; instructions for
    building the artifacts, generating Haskell source code for conformance testing, or
    exploring the literate Agda files in a development environment are available in
    the [Contributing Guide][].
@@ -61,11 +57,11 @@ If you encounter any issues, please check the [Troubleshooting Guide][] or [subm
 
 
 
-[fls-html]: https://IntersectMBO.github.io/formal-ledger-specifications/html
-[fls-site]: https://IntersectMBO.github.io/formal-ledger-specifications/site
 [cardano-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf
 [conway-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf
 [Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/CONTRIBUTING.md
+[fls-html]: https://IntersectMBO.github.io/formal-ledger-specifications/html
+[fls-site]: https://IntersectMBO.github.io/formal-ledger-specifications/site
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications/
 [literate]: https://en.wikipedia.org/wiki/Literate_programming
 [submit a new issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
