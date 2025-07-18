@@ -1,9 +1,8 @@
 /* docs/css/custom.css */
+
 /* ======================================================================= */
 /* PROJECT-SPECIFIC STYLES                                            */
 /* ======================================================================= */
-
-/* docs/css/custom.css */
 
 /* Base style for inline Agda terms (optional, theme might cover) */
 code {
@@ -18,6 +17,14 @@ span.highlight {
   background-color: yellow;
   padding: 0.1em 0.2em; /* Add slight padding */
   border-radius: 3px; /* Optional rounded corners */
+}
+
+/*
+ * Adjust the font size of Agda code blocks to be slightly smaller
+ * than the surrounding prose for better visual balance.
+ */
+pre.Agda {
+  font-size: 85%;
 }
 
 pre.Agda.hidden-source {
