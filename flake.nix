@@ -30,15 +30,24 @@
         };
 
         # Keep hydraJobs for CI
-        hydraJobs = {
-          inherit (pkgs)
-            agdaWithPackages
-            fls-shake
-            formal-ledger
-            hs-src
-            mkdocs
-            ;
-        };
+        hydraJobs =
+          let
+            jobs = {
+              inherit (pkgs)
+                agdaWithPackages
+                fls-shake
+                formal-ledger
+                hs-src
+                mkdocs
+                ;
+            };
+          in
+          jobs // {
+            required = nixpkgs.releaseTools.aggregate {
+              name = "${system}-required";
+              constituents = builtins.attrValues jobs;
+            };
+          };
       }
     );
 }
