@@ -9,21 +9,12 @@ let
     postInstall =
       (oldAttrs.postInstall or "")
       + ''
-        remove-references-to -t ${nixpkgs.haskellPackages.Agda}         $out/bin/fls-agda
-        remove-references-to -t ${nixpkgs.haskellPackages.blaze-html}   $out/bin/fls-agda
-        remove-references-to -t ${nixpkgs.haskellPackages.uri-encode}   $out/bin/fls-agda
-        mkdir -p $bin/bin
+        mkdir -p "$bin/bin"
         cp $out/bin/fls-agda $bin/bin/agda
+        remove-references-to -t ${nixpkgs.haskellPackages.Agda}         "$bin/bin/fls-agda"
+        remove-references-to -t ${nixpkgs.haskellPackages.blaze-html}   "$bin/bin/fls-agda"
+        remove-references-to -t ${nixpkgs.haskellPackages.uri-encode}   "$bin/bin/fls-agda"
       '';
   };
 in
 (nixpkgs.haskellPackages.callCabal2nix "fls-agda" ../. { }).overrideAttrs fls-agda-override
-
-# Errors:
-# remove-references-to -t ${nixpkgs.haskellPackages.containers}   $out/bin/agda
-# remove-references-to -t ${nixpkgs.haskellPackages.deepseq}      $out/bin/agda
-# remove-references-to -t ${nixpkgs.haskellPackages.filepath}     $out/bin/agda
-# remove-references-to -t ${nixpkgs.haskellPackages.split}        $out/bin/agda
-# remove-references-to -t ${nixpkgs.haskellPackages.text}         $out/bin/agda
-# remove-references-to -t ${nixpkgs.haskellPackages.mtl}          $out/bin/agda
-# remove-references-to -t ${nixpkgs.haskellPackages.transformers} $out/bin/agda
