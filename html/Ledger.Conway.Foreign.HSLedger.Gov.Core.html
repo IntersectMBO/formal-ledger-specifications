@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Conway.Foreign.HSLedger.Gov.Core</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Keyword">module</a> <a id="8" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html" class="Module">Ledger.Conway.Foreign.HSLedger.Gov.Core</a> <a id="48" class="Keyword">where</a>
+
+<a id="55" class="Keyword">open</a> <a id="60" class="Keyword">import</a> <a id="67" href="Ledger.Conway.Foreign.HSLedger.Address.html" class="Module">Ledger.Conway.Foreign.HSLedger.Address</a>
+<a id="106" class="Keyword">open</a> <a id="111" class="Keyword">import</a> <a id="118" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a>
+<a id="159" class="Keyword">open</a> <a id="164" class="Keyword">import</a> <a id="171" href="Ledger.Conway.Gov.Actions.html" class="Module">Ledger.Conway.Gov.Actions</a> <a id="197" href="Ledger.Conway.Transaction.html#1852" class="Function">govStructure</a> <a id="210" class="Keyword">using</a> <a id="216" class="Symbol">(</a><a id="217" href="Ledger.Conway.Gov.Actions.html#2294" class="Datatype">Vote</a><a id="221" class="Symbol">)</a>
+
+<a id="224" class="Keyword">instance</a>
+  <a id="HsTy-GovRole"></a><a id="235" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#235" class="Function">HsTy-GovRole</a> <a id="248" class="Symbol">=</a> <a id="250" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="261" href="Ledger.Conway.Gov.Actions.html#312" class="Datatype">GovRole</a>
+  <a id="Conv-GovRole"></a><a id="271" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#271" class="Function">Conv-GovRole</a> <a id="284" class="Symbol">=</a> <a id="286" href="Foreign.Convertible.Deriving.html#6819" class="Macro">autoConvert</a> <a id="298" href="Ledger.Conway.Gov.Actions.html#312" class="Datatype">GovRole</a>
+
+  <a id="HsTy-Anchor"></a><a id="309" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#309" class="Function">HsTy-Anchor</a> <a id="321" class="Symbol">=</a> <a id="323" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="334" href="Ledger.Conway.Gov.Actions.html#608" class="Record">Anchor</a>
+  <a id="Conv-Anchor"></a><a id="343" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#343" class="Function">Conv-Anchor</a> <a id="355" class="Symbol">=</a> <a id="357" href="Foreign.Convertible.Deriving.html#6819" class="Macro">autoConvert</a> <a id="369" href="Ledger.Conway.Gov.Actions.html#608" class="Record">Anchor</a>
+
+  <a id="HsTy-VDeleg"></a><a id="379" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#379" class="Function">HsTy-VDeleg</a> <a id="391" class="Symbol">=</a> <a id="393" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="404" href="Ledger.Conway.Gov.Actions.html#424" class="Datatype">VDeleg</a>
+  <a id="Conv-VDeleg"></a><a id="413" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#413" class="Function">Conv-VDeleg</a> <a id="425" class="Symbol">=</a> <a id="427" href="Foreign.Convertible.Deriving.html#6819" class="Macro">autoConvert</a> <a id="439" href="Ledger.Conway.Gov.Actions.html#424" class="Datatype">VDeleg</a>
+
+  <a id="HsTy-Vote"></a><a id="449" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#449" class="Function">HsTy-Vote</a> <a id="459" class="Symbol">=</a> <a id="461" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="472" href="Ledger.Conway.Gov.Actions.html#2294" class="Datatype">Vote</a>
+  <a id="Conv-Vote"></a><a id="479" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#479" class="Function">Conv-Vote</a> <a id="489" class="Symbol">=</a> <a id="491" href="Foreign.Convertible.Deriving.html#6819" class="Macro">autoConvert</a> <a id="503" href="Ledger.Conway.Gov.Actions.html#2294" class="Datatype">Vote</a>
+
+  <a id="HsTy-GovVote"></a><a id="511" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#511" class="Function">HsTy-GovVote</a> <a id="524" class="Symbol">=</a> <a id="526" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="537" href="Ledger.Conway.Gov.Actions.html#2345" class="Record">GovVote</a>
+  <a id="Conv-GovVote"></a><a id="547" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html#547" class="Function">Conv-GovVote</a> <a id="560" class="Symbol">=</a> <a id="562" href="Foreign.Convertible.Deriving.html#6819" class="Macro">autoConvert</a> <a id="574" href="Ledger.Conway.Gov.Actions.html#2345" class="Record">GovVote</a>
+
+</pre></body></html>
