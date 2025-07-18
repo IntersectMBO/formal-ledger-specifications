@@ -112,6 +112,10 @@ code.AgdaUnsolvedMeta {
 
 /* docs/css/custom.css */
 
+/* ======================================================================= */
+/* PROJECT-SPECIFIC STYLES                                            */
+/* ======================================================================= */
+
 /* Base style for inline Agda terms (optional, theme might cover) */
 code {
   /* font-family: 'Your Mono Font', monospace; */ /* Example if needed */
@@ -127,6 +131,14 @@ span.highlight {
   border-radius: 3px; /* Optional rounded corners */
 }
 
+/*
+ * Adjust the font size of Agda code blocks to be slightly smaller
+ * than the surrounding prose for better visual balance.
+ */
+pre.Agda {
+  font-size: 85%;
+}
+
 pre.Agda.hidden-source {
   display: none; /* Hidden by default */
 }
@@ -135,25 +147,85 @@ body.reveal-agda-source pre.Agda.hidden-source {
   display: block; /* Shown when body has the class */
 }
 
-/* docs/css/custom.css */
+
+
+/* Style for inline code snippets */
+:not(pre) > code {
+  background-color: rgba(245, 158, 11, 0.1); /* Light amber background */
+  color: #B45309; /* Darker amber text */
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+ }
+
+
+/* ======================================================================= */
+/* Style for the dynamically-injected 'Show more Agda' button in the header. */
+
+/*
+ * A more refined style for the 'Show Agda' toggle button in the header.
+ */
 #toggle-agda-source {
-  font-size: 1.2em; /* Adjust as needed - balances with theme */
-  padding: 0.4em 0.7em;
-  margin-left: 1em; /* Example margin */
-  cursor: pointer;
-  border: 1px solid var(--md-default-fg-color--light); /* Use theme variable for border */
-  border-radius: 3px;
-  background-color: var(--md-default-bg-color);
-  color: var(--md-default-fg-color);
-  /* Add transition for smoother hover effects if desired */
+  display: inline-flex; /* Use flexbox for robust vertical alignment of icon and text. */
+  align-items: center; /* Vertically centers the icon and text with each other. */
+
+  /* --- CONTROLS ICON POSITION --- */
+  /* This is the modern and reliable way to control space between flex items. */
+  /* Increase this value to add more space between the text and the icon. */
+  /* Try 0.5em for more space. */
+  gap: 0.4em;
+
+  /* --- CONTROLS BUTTON SIZE --- */
+  /* This is the primary control for the button's overall size. */
+  /* It sets the size of the text, and other elements scale relative to it. */
+  /* Try changing this to 0.7rem or 0.8rem to make the button smaller. */
+  font-size: 0.6rem;
+
+  /* --- CONTROLS BUTTON SIZE --- */
+  /* This controls the space around the text and icon, affecting button size. */
+  /* The first value is top/bottom padding, the second is left/right. */
+  /* Try changing this to "0.2rem 0.6rem" for a smaller button. */
+  padding: 0.2rem 0.6rem;
+
+  /* Sizing and Positioning */
+  margin-left: 0.8rem; /* Space between this button and the element to its left. */
+  border: 1px solid transparent; /* Transparent border prevents a size jump on hover. */
+  border-radius: 9999px; /* Creates the "pill" shape. */
+
+  /* Typography */
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif; /* Explicitly sets a clean, sans-serif font. */
+  font-weight: 500; /* A medium font weight. */
+  line-height: 1.25; /* Adjusts the space between lines of text if it wraps. */
+  color: var(--md-default-fg-color--light); /* Sets the text color using a theme variable. */
+  background-color: var(--md-default-bg-color--light); /* Sets the background color using a theme variable. */
+
+  /* Interactivity & Effects */
+  cursor: pointer; /* Shows a hand cursor on hover. */
+  transition: all 0.2s ease-in-out; /* Makes all property changes (like color, shadow) smooth. */
+  box-shadow: 0 6px 10px rgba(0,0,0,0.5); /* A subtle shadow to lift the button off the page. */
 }
 
+/* Hover state: subtle color change and lift */
 #toggle-agda-source:hover {
-  background-color: var(--md-default-fg-color--lighter);
+  /* color: var(--md-primary-fg-color); /\* Changes text color on hover. *\/ */
+  background-color: var(--md-primary-fg-color--lightest); /* Changes background on hover. */
+  border-color: var(--md-primary-fg-color--light); /* Makes the border visible on hover. */
+  transform: translateY(-1px); /* Lifts the button slightly. */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Increases the shadow on hover. */
 }
 
-#toggle-agda-source .material-icons {
-  vertical-align: middle; /* Aligns icon with text */
-  font-size: 1.2em; /* Make icon slightly larger than button text */
-  margin-right: 0.3em;
+/* Active/click state */
+#toggle-agda-source:active {
+  transform: translateY(0); /* Resets the lift effect when clicked. */
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Resets the shadow when clicked. */
+}
+/*
+ * Style for the SVG icon inside the Agda toggle button.
+ */
+.agda-logo-icon {
+  /* Sizing */
+  width: 1.1em; /* Icon width is relative to the button's font-size. */
+  height: 1.1em; /* Icon height is relative to the button's font-size. */
+  color: #888888;
+
+  /* The 'gap' property on the parent button now controls spacing, so no margin is needed here. */
 }
