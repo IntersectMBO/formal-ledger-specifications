@@ -39,13 +39,14 @@
                   formal-ledger
                   hs-src
                   mkdocs
+                  devShells
                   ;
               };
             in
             jobs // {
               required = nixpkgs.releaseTools.aggregate {
                 name = "${system}-required";
-                constituents = builtins.attrValues jobs;
+                constituents = with nixpkgs.lib; collect isDerivation jobs;
               };
             };
         }
