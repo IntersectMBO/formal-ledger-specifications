@@ -26,18 +26,18 @@ open Block
 
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{cs} and \ab{cs'} be \ChainState{}s and \ab{b} a \Block{}.
-      If \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'}
-      and if the enact states of \ab{cs} and \ab{cs'} differ, then
-      the epoch of the slot of \ab{b} is the successor of the last epoch of \ab{cs}.
+      Let \AgdaBound{cs} and \AgdaBound{cs'} be \ChainState{}s and \AgdaBound{b} a \Block{}.
+      If \AgdaBound{cs}~\AgdaDatatype{⇀⦇}~\AgdaBound{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaBound{cs'}
+      and if the enact states of \AgdaBound{cs} and \AgdaBound{cs'} differ, then
+      the epoch of the slot of \AgdaBound{b} is the successor of the last epoch of \AgdaBound{cs}.
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}
-enact-change⇒newEpoch : (b : Block) {cs cs'  : ChainState} 
+enact-change⇒newEpoch : (b : Block) {cs cs'  : ChainState}
   → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs' → EnactStateOf cs ≢ EnactStateOf cs'
   → Type
 
-enact-change⇒newEpoch b {cs} h es≢es' = epoch (b .slot) ≡ sucᵉ (LastEpochOf cs) 
+enact-change⇒newEpoch b {cs} h es≢es' = epoch (b .slot) ≡ sucᵉ (LastEpochOf cs)
 \end{code}
 \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the

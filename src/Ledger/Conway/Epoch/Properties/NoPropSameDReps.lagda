@@ -24,9 +24,9 @@ open import Ledger.Conway.Properties txs abs
   ]
   \begin{itemize}
     \item \textit{Informally}. 
-      If there are no governance proposals in the \GovState{} of \ab{es}, then the
-      \AgdaField{activeDReps} of \ab{es} in \Epoch{} \ab{e} are the same as the
-      \AgdaField{activeDReps} of \ab{es'} in the next epoch. 
+      If there are no governance proposals in the \GovState{} of \AgdaBound{es}, then the
+      \AgdaField{activeDReps} of \AgdaBound{es} in \Epoch{} \AgdaBound{e} are the same as the
+      \AgdaField{activeDReps} of \AgdaBound{es'} in the next epoch.
     \item \textit{Formally}.  
 \begin{code}
 prop≡∅⇒activeDReps-const : Epoch → (es es' : NewEpochState) → Type

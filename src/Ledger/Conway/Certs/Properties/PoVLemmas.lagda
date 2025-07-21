@@ -72,10 +72,10 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   ]
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{s}, \ab{s'} be \CertState{}s such that
-      \ab{s}~\AgdaDatatype{⇀⦇}~\ab{dcert}~\AgdaDatatype{,CERT⦈}~\ab{s'}
-      for some \ab{dcert}~:~\DCert{}.
-      Then, \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin} \ab{s'}.
+      Let \AgdaBound{s}, \AgdaBound{s'} be \CertState{}s such that
+      \AgdaBound{s}~\AgdaDatatype{⇀⦇}~\AgdaBound{dcert}~\AgdaDatatype{,CERT⦈}~\AgdaBound{s'}
+      for some \AgdaBound{dcert}~:~\DCert{}.
+      Then, \AgdaField{getCoin}~\AgdaBound{s} $≡$ \AgdaField{getCoin} \AgdaBound{s'}.
     \item \textit{Formally}.
 \begin{code}
   CERT-pov : {Γ : CertEnv} {s s'  : CertState}
@@ -143,14 +143,14 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   ]
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{Γ}~:~\CertEnv{} be a certificate environment, and let
-      \ab{s}, \ab{s'}~:~\CertState{} be certificate states such that
-      \ab{s}~\AgdaDatatype{⇀⦇}~\_~\AgdaDatatype{,CERTBASE⦈}~\ab{s'}.
-      Then, the value of \ab{s} is equal to the value of \ab{s'} plus the value of
-      the withdrawals in \ab{Γ}.  In other terms,
+      Let \AgdaBound{Γ}~:~\CertEnv{} be a certificate environment, and let
+      \AgdaBound{s}, \AgdaBound{s'}~:~\CertState{} be certificate states such that
+      \AgdaBound{s}~\AgdaDatatype{⇀⦇}~\_~\AgdaDatatype{,CERTBASE⦈}~\AgdaBound{s'}.
+      Then, the value of \AgdaBound{s} is equal to the value of \AgdaBound{s'} plus the value of
+      the withdrawals in \AgdaBound{Γ}.  In other terms,
       \\[4pt]
-      \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin}~\ab{s'}
-       + \AgdaField{getCoin}~(\ab{Γ} .\AgdaField{wdrls} ).
+      \AgdaField{getCoin}~\AgdaBound{s} $≡$ \AgdaField{getCoin}~\AgdaBound{s'}
+       + \AgdaField{getCoin}~(\AgdaBound{Γ} .\AgdaField{wdrls} ).
     \item \textit{Formally}.
 \begin{code}
     CERTBASE-pov : {Γ : CertEnv} {s s' : CertState}
@@ -221,10 +221,10 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   ]
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{l} be a list of \DCert{}s, and let \ab{s₁}, \ab{sₙ} be \CertState{}s such
-      that, starting with \ab{s₁} and successively applying the \CERT{} rule to
-      with \DCert{}s from the list \ab{l}, we obtain \ab{sₙ}.
-      Then, the value of \ab{s₁} is equal to the value of \ab{sₙ}.      
+      Let \AgdaBound{l} be a list of \DCert{}s, and let \AgdaBound{s₁}, \AgdaBound{sₙ} be \CertState{}s such
+      that, starting with \AgdaBound{s₁} and successively applying the \CERT{} rule to
+      with \DCert{}s from the list \AgdaBound{l}, we obtain \AgdaBound{sₙ}.
+      Then, the value of \AgdaBound{s₁} is equal to the value of \AgdaBound{sₙ}.
     \item \textit{Formally}.
 \begin{code}
     sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState}

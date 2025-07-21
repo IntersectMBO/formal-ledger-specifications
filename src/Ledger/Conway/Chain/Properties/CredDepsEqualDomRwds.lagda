@@ -24,13 +24,13 @@ open import Ledger.Conway.Properties txs abs
   ]
   \begin{itemize}
     \item \textit{Informally}.  This property concerns two quantities associated with
-    a given \ChainState{} \ab{cs},
+    a given \ChainState{} \AgdaBound{cs},
     \begin{itemize}
-      \item the credential deposits of the \UTxOState{} of \ab{cs} and
-      \item the credential deposits of the rewards in the ledger state of \ab{cs}.
+      \item the credential deposits of the \UTxOState{} of \AgdaBound{cs} and
+      \item the credential deposits of the rewards in the ledger state of \AgdaBound{cs}.
     \end{itemize}
-    The predicate \AgdaFunction{credDeposits≡dom-rwds}~\ab{cs} asserts that these
-    quantities are equal for \ab{cs}.  Formally,
+    The predicate \AgdaFunction{credDeposits≡dom-rwds}~\AgdaBound{cs} asserts that these
+    quantities are equal for \AgdaBound{cs}.  Formally,
 \begin{code}
 credDeposits≡dom-rwds : ChainState → Type
 credDeposits≡dom-rwds cs =  filter isCredDeposit (dom (DepositsOf cs))
@@ -38,13 +38,13 @@ credDeposits≡dom-rwds cs =  filter isCredDeposit (dom (DepositsOf cs))
 \end{code}
     The property
     \AgdaFunction{credDeposits≡dom-rwds-inv} asserts that
-    \AgdaFunction{credDeposits≡dom-rwds} is a chain invariant.  That is, if \ab{cs}
-    and \ab{cs'} are two \ChainState{}s such that
-    \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'},
-    then \AgdaFunction{credDeposits≡dom-rwds}~\ab{cs} only if
-    \AgdaFunction{credDeposits≡dom-rwds}~\ab{cs'}.
+    \AgdaFunction{credDeposits≡dom-rwds} is a chain invariant.  That is, if \AgdaBound{cs}
+    and \AgdaBound{cs'} are two \ChainState{}s such that
+    \AgdaBound{cs}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,CHAIN⦈}~\AgdaBound{cs'},
+    then \AgdaFunction{credDeposits≡dom-rwds}~\AgdaBound{cs} only if
+    \AgdaFunction{credDeposits≡dom-rwds}~\AgdaBound{cs'}.
     \item \textit{Formally}.
-\begin{code}    
+\begin{code}
 credDeposits≡dom-rwds-inv : Type
 credDeposits≡dom-rwds-inv = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ credDeposits≡dom-rwds
 \end{code}

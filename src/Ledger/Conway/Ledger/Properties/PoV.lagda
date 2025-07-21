@@ -54,11 +54,11 @@ module _
   \label{thm:LEDGER-PoV}
   \begin{itemize}
     \item \textit{Informally}.
-    Let \ab{s}, \ab{s'}~:~\LState{} be ledger states and let \ab{tx}~:~\Tx{} be a
+    Let \AgdaBound{s}, \AgdaBound{s'}~:~\LState{} be ledger states and let \AgdaBound{tx}~:~\Tx{} be a
     \textit{fresh} transaction, that is, a transaction that is not already part of the
-    \UTxOState{} of \ab{s}. If \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'},
-    then the coin values of \ab{s} and \ab{s'} are equal, that is,
-    \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin}~\ab{s'}.
+    \UTxOState{} of \AgdaBound{s}. If \AgdaBound{s}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,LEDGER⦈}~\AgdaBound{s'},
+    then the coin values of \AgdaBound{s} and \AgdaBound{s'} are equal, that is,
+    \AgdaField{getCoin}~\AgdaBound{s} $≡$ \AgdaField{getCoin}~\AgdaBound{s'}.
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
 \begin{code}

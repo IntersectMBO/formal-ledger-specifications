@@ -26,11 +26,11 @@ instance
   ]
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{p}~:~\GovProposal{} be a governance proposal and suppose the \GovActionType{} 
-      of \ab{p}~\AgdaField{.action} is \ChangePParams{}.  If the data
-      field of \ab{p}---that is \ab{pu} = \ab{p}~\AgdaField{.action}~\AgdaField{.gaData}---is
-      denoted by \ab{pu} (``parameter update''), then the set
-      \AgdaField{updateGroups}~\ab{pu} is nonempty.
+      Let \AgdaBound{p}~:~\GovProposal{} be a governance proposal and suppose the \GovActionType{}
+      of \AgdaBound{p}~\AgdaField{.action} is \ChangePParams{}.  If the data
+      field of \AgdaBound{p}---that is \AgdaBound{pu} = \AgdaBound{p}~\AgdaField{.action}~\AgdaField{.gaData}---is
+      denoted by \AgdaBound{pu} (``parameter update''), then the set
+      \AgdaField{updateGroups}~\AgdaBound{pu} is nonempty.
     \item \textit{Formally}.
 \begin{code}
 ChangePPHasGroup : {tx : Tx} {p : GovProposal} (pu : PParamsUpdate)

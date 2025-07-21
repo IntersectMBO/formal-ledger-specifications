@@ -25,14 +25,14 @@ open import Ledger.Conway.Gov.Actions gs
       interest to us here is \credVoter{}, which takes two arguments,
       a \GovRole{} and a \Credential{}.
 
-      Now suppose we have a collection \ab{C} of credentials---for instance, 
-      given \ab{d}~:~\DState{}, take \ab{C} to be the domain of the
-      \voteDelegs{} field of \ab{d}.  We could then obtain a set of \VDeleg{}s
-      by applying \credVoter{}~\DRep{} to each element of \ab{C}. 
+      Now suppose we have a collection \AgdaBound{C} of credentials---for instance,
+      given \AgdaBound{d}~:~\DState{}, take \AgdaBound{C} to be the domain of the
+      \voteDelegs{} field of \AgdaBound{d}.  We could then obtain a set of \VDeleg{}s
+      by applying \credVoter{}~\DRep{} to each element of \AgdaBound{C}.
 
       The present property asserts that the set of \VDeleg{}s that results from the
       application of \credVoter{}~\DRep{} to the domain of the \voteDelegs{} of
-      \ab{d} contains the range of the \voteDelegs{} of \ab{d}.
+      \AgdaBound{d} contains the range of the \voteDelegs{} of \AgdaBound{d}.
     \item \textit{Formally}.
 \begin{code}
 voteDelegsVDeleg :  DState → Type

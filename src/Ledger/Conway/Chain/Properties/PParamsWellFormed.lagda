@@ -32,10 +32,10 @@ pp-wellFormed : ChainState → Type
 pp-wellFormed = paramsWellFormed ∘ PParamsOf
 \end{code}
       This property asserts that \AgdaFunction{pp-wellFormed} is a chain invariant.
-      That is, if \ab{cs} and \ab{cs'} are chain states such that
-      \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,CHAIN⦈}~\ab{cs'}, and if
-      the \PParams{} of \ab{cs} are well-formed, then so are the \PParams{} of \ab{cs'}.
-    \item \textit{Formally}.  
+      That is, if \AgdaBound{cs} and \AgdaBound{cs'} are chain states such that
+      \AgdaBound{cs}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,CHAIN⦈}~\AgdaBound{cs'}, and if
+      the \PParams{} of \AgdaBound{cs} are well-formed, then so are the \PParams{} of \AgdaBound{cs'}.
+    \item \textit{Formally}.
 \begin{code}
 pp-wellFormed-invariant : Type
 pp-wellFormed-invariant = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ pp-wellFormed

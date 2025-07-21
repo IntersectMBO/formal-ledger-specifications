@@ -58,10 +58,10 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
   ]\label{thm:CERTS-PoV}
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{l} be a list of \DCert{}s, and let \ab{s₁}, \ab{sₙ} be \CertState{}s
-      such that \ab{s₁}~\AgdaDatatype{⇀⦇}~\ab{l}~\AgdaDatatype{,CERTS⦈}~\ab{sₙ}.
-      Then, the value of \ab{s₁} is equal to the value of \ab{sₙ} plus
-      the value of the withdrawals in \ab{Γ}.
+      Let \AgdaBound{l} be a list of \DCert{}s, and let \AgdaBound{s₁}, \AgdaBound{sₙ} be \CertState{}s
+      such that \AgdaBound{s₁}~\AgdaDatatype{⇀⦇}~\AgdaBound{l}~\AgdaDatatype{,CERTS⦈}~\AgdaBound{sₙ}.
+      Then, the value of \AgdaBound{s₁} is equal to the value of \AgdaBound{sₙ} plus
+      the value of the withdrawals in \AgdaBound{Γ}.
     \item \textit{Formally}.
 \begin{code}
     CERTS-pov :  {Γ : CertEnv} {s₁ sₙ  : CertState}

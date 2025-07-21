@@ -90,5 +90,6 @@ markdown_extensions:
   - pymdownx.arithmatex:
       generic: true
   - footnotes
+  - md_in_html
 hooks:
   - hooks/agda_hidden_code.py

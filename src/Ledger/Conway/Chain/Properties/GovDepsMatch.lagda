@@ -44,8 +44,8 @@ module _
 
   \begin{itemize}
     \item \textit{Informally}.
-      Fix a \Block{} \ab{b}, a \ChainState{} \ab{cs}, and a \NewEpochState{} \ab{nes}.
-      Let \AgdaFunction{csLState} be the ledger state of \ab{cs}.
+      Fix a \Block{} \AgdaBound{b}, a \ChainState{} \AgdaBound{cs}, and a \NewEpochState{} \AgdaBound{nes}.
+      Let \AgdaFunction{csLState} be the ledger state of \AgdaBound{cs}.
       Recall, a \ChainState{} has just one field, \AgdaField{newEpochState}~:~\NewEpochState{}.
       Consider the chain state \AgdaFunction{cs'} defined as follows:
 \begin{code}
@@ -55,12 +55,12 @@ module _
            ; epochState  = record (EpochStateOf cs) {ls = LStateOf nes}
            ; ru          = nes .ru }
 \end{code}
-      That is \AgdaFunction{cs'} is essentially \ab{nes}, but the \EpochState{} field is
-      set to the \AgdaField{epochState} of \ab{cs} with the exception of the
-      \LState{} field, which is set to that of \ab{nes}.
+      That is \AgdaFunction{cs'} is essentially \AgdaBound{nes}, but the \EpochState{} field is
+      set to the \AgdaField{epochState} of \AgdaBound{cs} with the exception of the
+      \LState{} field, which is set to that of \AgdaBound{nes}.
       \\[4pt]
-      Let \ab{utxoSt} and \ab{utxoSt'} be the respective \UTxOState{}s of the ledger
-      states of \ab{cs} and \AgdaFunction{cs'}, respectively, and let \ab{govSt} and \ab{govSt'}
+      Let \AgdaBound{utxoSt} and \AgdaBound{utxoSt'} be the respective \UTxOState{}s of the ledger
+      states of \AgdaBound{cs} and \AgdaFunction{cs'}, respectively, and let \AgdaBound{govSt} and \AgdaBound{govSt'}
       be their respective \GovState{}s.
       \\[4pt]
       Assume the following conditions hold:
@@ -69,21 +69,21 @@ module _
           be the union of
           \begin{itemize}
             \item the governance actions in the \AgdaField{removed} field of the ratify
-              state of \ab{eps}, and
-            \item the orphaned governance actions in the \GovState{} of \ab{eps}.
+              state of \AgdaBound{eps}, and
+            \item the orphaned governance actions in the \GovState{} of \AgdaBound{eps}.
           \end{itemize}
           Let $\mathcal{G}$ be the set
-          $\{\mbox{\GovActionDeposit{}~\ab{id}} : \mbox{\ab{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
-          $\mathcal{G}$ is a subset of the set of deposits of the chain state \ab{cs};
+          $\{\mbox{\GovActionDeposit{}~\AgdaBound{id}} : \mbox{\AgdaBound{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
+          $\mathcal{G}$ is a subset of the set of deposits of the chain state \AgdaBound{cs};
           that is,\\[4pt]
           \AgdaFunction{map}~(\AgdaInductiveConstructor{GovActionDeposit}~$∘$~\AgdaField{proj₁})~\AgdaFunction{removed'}~\AgdaField{$⊆$}~
-          \AgdaFunction{dom}~(\AgdaField{DepositsOf}~\ab{cs});
+          \AgdaFunction{dom}~(\AgdaField{DepositsOf}~\AgdaBound{cs});
         \item the total reference script size of \AgdaFunction{csLState} is not greater than the
           maximum allowed size per block (as specified in \PParams{});
-        \item \ab{cs}~\AgdaDatatype{⇀⦇}~\ab{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaFunction{cs'}. 
+        \item \AgdaBound{cs}~\AgdaDatatype{⇀⦇}~\AgdaBound{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaFunction{cs'}.
       \end{itemize}
-      Under these conditions, if the governance action deposits of \ab{utxoSt}
-      equal those of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
+      Under these conditions, if the governance action deposits of \AgdaBound{utxoSt}
+      equal those of \AgdaBound{govSt}, then the same holds for \AgdaBound{utxoSt'} and \AgdaBound{govSt'}.
       In other terms,
       \AgdaFunction{govDepsMatch}~\AgdaFunction{csLState} implies \AgdaFunction{govDepsMatch}~\AgdaFunction{nesState}.
     \item \textit{Formally}.

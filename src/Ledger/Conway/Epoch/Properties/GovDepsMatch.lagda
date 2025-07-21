@@ -65,19 +65,19 @@ module EPOCH-PROPS {eps : EpochState} where
 
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{eps}, \ab{eps'}~:~\EpochState{} be two epoch states and let
-      \ab{e}~:~\Epoch{} be an epoch.  Recall, \ab{eps}~\AgdaField{.ls} denotes the
-      ledger state of \ab{eps}.  If \ab{eps}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,EPOCH⦈}~\ab{eps'}, then
-      (under a certain special condition) \govDepsMatch{}~(\ab{eps}~\AgdaField{.ls})
-      implies \govDepsMatch{}~(\ab{eps'}~\AgdaField{.ls}). 
+      Let \AgdaBound{eps}, \AgdaBound{eps'}~:~\EpochState{} be two epoch states and let
+      \AgdaBound{e}~:~\Epoch{} be an epoch.  Recall, \AgdaBound{eps}~\AgdaField{.ls} denotes the
+      ledger state of \AgdaBound{eps}.  If \AgdaBound{eps}~\AgdaDatatype{⇀⦇}~\AgdaBound{e}~\AgdaDatatype{,EPOCH⦈}~\AgdaBound{eps'}, then
+      (under a certain special condition) \govDepsMatch{}~(\AgdaBound{eps}~\AgdaField{.ls})
+      implies \govDepsMatch{}~(\AgdaBound{eps'}~\AgdaField{.ls}).
     \\[4pt]
     The special condition under which the property holds is the same as the one in \cref{thm:ChainGovDepsMatch}:
     let \AgdaFunction{removed'} be the union of the governance actions in the \AgdaField{removed} field of the ratify
-    state of \ab{eps} and the orphaned governance actions in the \GovState{} of \ab{eps}.
+    state of \AgdaBound{eps} and the orphaned governance actions in the \GovState{} of \AgdaBound{eps}.
     Let $\mathcal{G}$ be the set
-    $\{\mbox{\GovActionDeposit{}~\ab{id}} : \mbox{\ab{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
+    $\{\mbox{\GovActionDeposit{}~\AgdaBound{id}} : \mbox{\AgdaBound{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
     Assume: $\mathcal{G}$ is a subset of the set of deposits
-    of (the governance state of) \ab{eps}.
+    of (the governance state of) \AgdaBound{eps}.
     \item \textit{Formally}.
 \begin{code}
   EPOCH-govDepsMatch :  {eps' : EpochState} {e : Epoch}
