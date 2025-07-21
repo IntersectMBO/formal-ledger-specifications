@@ -1,13 +1,13 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Types.GovStructure
+open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg (gs : _) (open GovStructure gs) where
 
 open import Ledger.Conway.Specification.Certs gs
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.GovernanceActions gs
+open import Ledger.Conway.Specification.Gov.Actions gs
 \end{code}
 % If the module name changes, change the following macro to match!
 \newcommand{\CertsVDelegs}{Conway/Certs/Properties/VoteDelegsVDeleg}

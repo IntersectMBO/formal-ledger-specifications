@@ -244,6 +244,8 @@ let
   mkdocs = mkDerivation {
     pname = "mkdocs";
     src = addToAgdaSrc [
+      ./README.md
+      ./CONTRIBUTING.md
       ./build-tools/scripts/md
       ./build-tools/static/md
       ./build-tools/static/latex
@@ -263,13 +265,17 @@ let
     ];
 
     buildPhase = ''
-      mkdir dist
+      runHook preBuild
+      mkdir -p dist
       python ./build-tools/scripts/md/build.py --run-agda
       (cd _build/md/mkdocs/; mkdocs build --site-dir ../../../dist/site)
+      runHook postBuild
     '';
     installPhase = ''
-      mkdir "$out"
+      runHook preInstall
+      mkdir -p "$out"
       cp -r "dist/site" "$out"
+      runHook postInstall
     '';
   };
 

@@ -23,7 +23,7 @@ for the purposes of enactment, earlier proposals take priority.  Note that
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Types.GovStructure
+open import Ledger.Conway.Specification.Gov.Base
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Specification.Gov (txs : _) (open TransactionStructure txs hiding (epoch)) where
@@ -32,7 +32,7 @@ open import Ledger.Prelude hiding (any?; Any; all?; All; Rel; lookup; ∈-filter
 
 open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
-open import Ledger.Conway.Specification.GovernanceActions govStructure using (Vote)
+open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ratify txs hiding (vote)
 open import Ledger.Conway.Specification.Certs govStructure

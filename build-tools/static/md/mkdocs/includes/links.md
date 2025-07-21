@@ -11,7 +11,7 @@
 [DELEG]: Ledger.Conway.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Enact.md#enact-transition-system
 [EPOCH]: Ledger.Conway.Epoch.md#epoch-transition-system
-[GOV]: Ledger.Conway.Gov.md#rules-for-the-gov-transition-system
+[GOV]: Ledger.Conway.Specification.Gov.md#rules-for-the-gov-transition-system
 [GOVCERT]: Ledger.Conway.Certs.md#auxiliary-govcert-transition-system
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Ledger.md#ledger-transition-system

@@ -4,10 +4,10 @@ module Ledger.Conway.Foreign.HSLedger.Enact where
 open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.PParams
-open import Ledger.Conway.Foreign.HSLedger.GovernanceActions
+open import Ledger.Conway.Foreign.HSLedger.Gov.Actions
 
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.GovernanceActions.Properties govStructure
+open import Ledger.Conway.Specification.Enact.Properties govStructure
 
 instance
   HsTy-EnactState = autoHsType EnactState ⊣ withConstructor "MkEnactState"

@@ -143,7 +143,7 @@ def copy_staged_to_mkdocs(config: BuildConfig) -> List[str]:
     staging_dir = config.build_paths.build_md_pp_dir
     target_dir = config.build_paths.mkdocs_docs_dir
 
-    logging.info(f"\n--- 🏗️  Copying staged content to MkDocs ---")
+    logging.info(f"♻️️  Copying staged content to MkDocs...")
     if not staging_dir.exists():
         logging.warning("Staging directory does not exist. Nothing to copy.")
         return []
@@ -159,7 +159,7 @@ def copy_staged_to_mkdocs(config: BuildConfig) -> List[str]:
 
 def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]:
     """Deploys all static and generated assets to the MkDocs source folder."""
-    logging.info("\n--- 🏗️  Deploying assets for MkDocs site ---")
+    logging.info("🏗️  Deploying assets for MkDocs site...")
 
     # 1. Deploy CSS
     agda_css_path = config.build_paths.build_md_pp_dir / "Agda.css"
@@ -169,12 +169,12 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
         final_css = generate_custom_css_from_agda(agda_css_content, template_css_content)
         (config.build_paths.mkdocs_css_dir / "custom.css").write_text(final_css, 'utf-8')
         shutil.copy2(agda_css_path, config.build_paths.mkdocs_css_dir)
-        logging.info("✅ Deployed generated custom.css and Agda.css")
+        logging.info("✅ Deployed generated custom.css and Agda.css.")
 
     # 2. Deploy JS
     shutil.copy2(config.source_paths.custom_js_path, config.build_paths.mkdocs_js_dir)
     shutil.copy2(config.source_paths.katex_js_path, config.build_paths.mkdocs_js_dir)
-    logging.info("✅ Deployed custom JS and KaTeX config")
+    logging.info("✅ Deployed custom.js and KaTeX config.")
 
     # 3. Deploy Bibliography
     bib_source = config.source_paths.references_bib_path
@@ -182,16 +182,34 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
     if bib_source.exists():
         bib_target_dir.mkdir(parents=True, exist_ok=True)
         shutil.copy2(bib_source, bib_target_dir)
-        logging.info(f"✅ Deployed bibliography: {bib_source.name}")
+        logging.info(f"✅ Deployed bibliography: {bib_source.name}.")
 
-    # 4. Handle index.md
+   # 4. Handle index.md and guide.md by copying from root repo files
     home_page = "index.md"
-    if not any(f.lower() == home_page.lower() for f in nav_files):
-        index_template = config.source_paths.mkdocs_static_docs_dir / home_page
-        if index_template.exists():
-            shutil.copy2(index_template, config.build_paths.mkdocs_docs_dir)
-            if home_page not in nav_files:
-                nav_files.append(home_page)
+    guide_page = "guide.md"
+    # Copy README.md to docs/index.md
+    readme_source_path = config.source_paths.readme_md_path
+    index_target_path = config.build_paths.mkdocs_docs_dir / home_page
+
+    if readme_source_path.exists():
+        shutil.copy2(readme_source_path, index_target_path)
+        # Ensure index.md is in the list of files for navigation generation
+        if home_page not in [f.lower() for f in nav_files]:
+            nav_files.append(home_page)
+        logging.info(f"✅ Deployed root {readme_source_path.name} as site index.")
+    else:
+        logging.warning(f"Root README.md not found at {readme_source_path}. Cannot create site index.")
+
+    # Copy CONTRIBUTING.md to docs/guide.md
+    contrib_source_path = config.source_paths.contributing_md_path
+    guide_target_path = config.build_paths.mkdocs_docs_dir / guide_page
+    if contrib_source_path.exists():
+        shutil.copy2(contrib_source_path, guide_target_path)
+        if guide_page not in [f.lower() for f in nav_files]:
+            nav_files.append(guide_page)
+        logging.info(f"✅ Deployed root {contrib_source_path.name} as interactive guide page.")
+    else:
+        logging.warning(f"Root CONTRIBUTING.md not found at {contrib_source_path}. Cannot create guide page.")
 
     return sorted(list(set(nav_files)), key=lambda f: (f.lower() != home_page.lower(), f.lower()))
 
@@ -225,8 +243,8 @@ def _build_nav_from_files(files: List[str]) -> List[Dict[str, Any]]:
 
 def generate_mkdocs_config(config: BuildConfig, nav_files: List[str]):
     """Generates the final mkdocs.yml by merging a template with dynamic data."""
-    logging.info("\n--- 🏗️  Generating mkdocs.yml configuration ---")
-    template_path = config.build_paths.mkdocs_src_dir / "mkdocs.yml"
+    logging.info("🏗️  Generating mkdocs.yml configuration...")
+    template_path = config.build_paths.mkdocs_dir / "mkdocs.yml"
 
     cfg = {}
     if template_path.exists() and HAS_YAML:
@@ -250,7 +268,7 @@ def generate_mkdocs_config(config: BuildConfig, nav_files: List[str]):
     # Build navigation
     nav_template_path = config.source_paths.mkdocs_nav_yml_path
     if nav_template_path.exists() and HAS_YAML:
-        logging.info(f"Loading navigation from template: {nav_template_path.name}")
+        logging.info(f"🏗️  Loading navigation from template: {nav_template_path.name}...")
         nav_structure = yaml.safe_load(nav_template_path.read_text('utf-8'))
     else:
         logging.info("Generating navigation from processed files.")

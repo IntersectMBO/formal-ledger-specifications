@@ -18,10 +18,10 @@ open import Ledger.Prelude renaming (filterᵐ to filter)
 
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Conway.Specification.Types.GovStructure
+open import Ledger.Conway.Specification.Gov.Base
 import Ledger.Conway.Specification.PParams
 import Ledger.Conway.Specification.Script.Base
-import Ledger.Conway.Specification.GovernanceActions
+import Ledger.Conway.Specification.Gov.Actions
 import Ledger.Conway.Specification.Certs
 import Ledger.Conway.Specification.TokenAlgebra.Base
 import Ledger.Core.Specification.Address
@@ -110,8 +110,8 @@ record TransactionStructure : Type₁ where
     ; globalConstants = globalConstants
     }
 
-  module GovernanceActions = Ledger.Conway.Specification.GovernanceActions govStructure
-  open GovernanceActions hiding (Vote; yes; no; abstain) public
+  module GovActions = Ledger.Conway.Specification.Gov.Actions govStructure
+  open GovActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Conway.Specification.Certs govStructure
 \end{code}

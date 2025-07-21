@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Specification.Types.GovStructure
+open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Certs.Properties (gs : _) (open GovStructure gs) where
 
@@ -11,7 +11,7 @@ open import Relation.Nullary.Decidable
 open import Tactic.ReduceDec
 
 open import Algebra using (CommutativeMonoid)
-open import Ledger.Conway.Specification.GovernanceActions gs hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Conway.Specification.Certs gs
 
 open import Data.Nat.Properties using (+-0-monoid; +-0-commutativeMonoid; +-identityʳ; +-identityˡ)

@@ -1,44 +1,68 @@
-# Formal Ledger Specifications
+# The Cardano Formal Ledger Specification
 
-This repository contains the formal ledger specifications that are intended to eventually replace the existing formal specifications of the Cardano ledger found [here](https://github.com/IntersectMBO/cardano-ledger). This project is currently incomplete and work in progress.
+This is the formal ledger specifications for the Cardano blockchain.
+It is written in [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php) and
+is executable; Haskell code can be extracted and run for conformance testing.
 
-This repository currently contains the work-in-progress specification for Cardano (up to and including the Conway era). The specification is executable and contains some documentation in the form of a PDF document. It can be built by following the steps in [Building](#building).
+The project consists entirely of [literate][] Agda code from which the HTML
+documentation is generated.  Thus the latest human-readable Cardano ledger
+specification is a collection of HTML files; these replace the PDF documents of
+previous eras.
 
-| Formal Specification | HTML Version |
-| -------------------- | ------------ |
-| [Full Cardano Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/index.html) |
-| [Conway](https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf) | [Ledger](https://IntersectMBO.github.io/formal-ledger-specifications/html/index.html) |
+[The formal ledger GitHub repository][formal-ledger-specifications] contains formal
+ledger specifications for all eras, starting with Shelley, up to and including the Conway era.
+While the Agda formalization of the Conway era is complete, some pieces of the
+ledgers from previous eras have yet to be formalized.  We hope to finish formalizing
+the outstanding pieces in the near future.
+
+## Where to go from here?
+
+You can
+
++  read the [HTML version of the formal specification][fls-site]
+
++  read the [HTML version of the Agda source code][fls-html]
+
++  interact with and/or contribute to the formal specification; instructions for
+   building the artifacts, generating Haskell source code for conformance testing, or
+   exploring the literate Agda files in a development environment are available in
+   the [Contributing Guide][].
 
 ---
 
-## Building
+## 📜 **Published Artifacts**
 
-### Clone this repository and enter its directory
+The table below provides links to the full formal ledger specification (as browsable HTML), as well as the legacy PDF artifacts.
 
-```
-git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
-cd formal-ledger-specifications
-```
+| Artifact | Link | Description |
+| :---- | :---- | :---- |
+| **Source Code** | [HTML][fls-html] | Interactive, hyperlinked version of the Agda source code |
+| **Formal Specification** | [HTML][fls-site] [cardano-ledger.pdf][]<sup>†</sup> | Complete specification of the Cardano Ledger |
+| **Conway-Era PDF** | [conway-ledger.pdf][]<sup>†</sup> | Covers what's new in the Conway era |
 
-### Using `nix-build`
+† As we are migrating from a LaTeX-based to a Markdown-based documentation workflow,
+*building PDFs from source is currently deprecated and unsupported*.  Please use the
+links above to access the pre-built PDF documents.
 
-Invoke the following `nix-build` commands from inside the
-`formal-ledger-specifications` directory:
+---
 
-```
-nix-build -A docs.conway.fullspec # generate the PDF spec of the Cardano ledger
-nix-build -A hs-src # extract the Haskell code of the Cardano ledger
-```
+## 🤝 **Contributions and Feedback**
 
-## Conformance-testing example
+We welcome contributions and feedback!
 
-For an example on how to use the Agda-generated Haskell code for conformance
-testing see [`conformance-example`](conformance-example)
+For detailed instructions on setting up a development environment, running tests, and
+understanding the project structure, please see our [Contributing Guide][].
 
-## Contributions and Feedback
+If you encounter any issues, please check the [Troubleshooting Guide][] or [submit a new issue][] in this repository.
 
-If you would like more detailed information and/or you want to contribute to the Agda formalization of the spec, please see the [CONTRIBUTING.md](CONTRIBUTING.md) file.
 
-Please [submit a new issue][] if you find problems with, and/or wish to comment on, this repository.
 
+[cardano-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/cardano-ledger.pdf
+[conway-ledger.pdf]: https://IntersectMBO.github.io/formal-ledger-specifications/conway-ledger.pdf
+[Contributing Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/CONTRIBUTING.md
+[fls-html]: https://IntersectMBO.github.io/formal-ledger-specifications/html
+[fls-site]: https://IntersectMBO.github.io/formal-ledger-specifications/site
+[formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications/
+[literate]: https://en.wikipedia.org/wiki/Literate_programming
 [submit a new issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
+[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md

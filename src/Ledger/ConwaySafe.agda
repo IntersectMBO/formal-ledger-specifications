@@ -15,6 +15,7 @@ import Ledger.Conway.Specification.Chain.Properties.EpochStep
 import Ledger.Conway.Specification.Chain.Properties.GovDepsMatch
 import Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed
 import Ledger.Conway.Specification.Enact
+import Ledger.Conway.Specification.Enact.Properties
 import Ledger.Conway.Specification.Epoch
 import Ledger.Conway.Specification.Epoch.Properties
 import Ledger.Conway.Specification.Epoch.Properties.ConstRwds
@@ -22,10 +23,9 @@ import Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
 import Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps
 import Ledger.Conway.Specification.Fees
 import Ledger.Conway.Specification.Gov
+import Ledger.Conway.Specification.Gov.Actions
 import Ledger.Conway.Specification.Gov.Properties
-import Ledger.Conway.Specification.GovernanceActions
-import Ledger.Conway.Specification.GovernanceActions.Properties
-import Ledger.Conway.Specification.GovernanceActions.Properties.ChangePPGroup
+import Ledger.Conway.Specification.Gov.Properties.ChangePPGroup
 import Ledger.Conway.Specification.Ledger
 import Ledger.Conway.Specification.Ledger.Properties
 import Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch
@@ -37,6 +37,7 @@ import Ledger.Conway.Specification.Ratify.Properties
 import Ledger.Conway.Specification.Rewards
 import Ledger.Conway.Specification.Script
 import Ledger.Conway.Specification.Script.Validation
+import Ledger.Conway.Specification.Test.Examples
 import Ledger.Conway.Specification.TokenAlgebra.Base
 import Ledger.Conway.Specification.TokenAlgebra.Coin
 import Ledger.Conway.Specification.TokenAlgebra.ValueSet

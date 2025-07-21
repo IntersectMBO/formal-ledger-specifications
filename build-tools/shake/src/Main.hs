@@ -1,5 +1,6 @@
 {-# LANGUAGE GeneralisedNewtypeDeriving #-}
 {-# LANGUAGE TypeFamilies               #-}
+{-# LANGUAGE RecordWildCards            #-}
 module Main where
 
 import Control.Monad (when, forM_, forever, void)
@@ -260,20 +261,31 @@ hsRule = phony "hs" $ do
 
 -- | Generate the index.html file
 -- For this:
--- 1. Get all lagda and agda files under src/ and depend on their pp form
--- 2. Write dummy index.agda and agda-lib files in _html
--- 3. Call agda on index.agda to generate the html in _htmlOut
-htmlIndex :: Rules ()
-htmlIndex =
-  htmlDist </> "index.html" %> \out -> do
+-- 1. Get all lagda, lagda.md, and agda files under src/
+-- 2. Illiterate the lagda and lagda.md files, copy agda files unchanged
+-- 3. Write a generated index.agda and agda-lib files in _html
+-- 4. Call agda on index.agda to generate the html in _htmlOut
+htmlRule :: Rules ()
+htmlRule =
+  phony "html" $ do
 
     -- declare dependencies on all agda files
     lagdafiles   <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.lagda" ]
+    lagdamdfiles <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.lagda.md" ]
     agdafiles    <- map ("src" </>) <$> getDirectoryFiles "src" [ "//*.agda"  ]
     agdalibfiles <- map ("src-lib-exts" </>) <$> getDirectoryFiles "src-lib-exts" [ "//*.agda"  ]
-    need . map (_htmlPP </>) $ map (`replaceExtension` "agda") lagdafiles
-                               ++ agdafiles
-                               ++ agdalibfiles
+
+    -- auxiliary function to illiterate literate files (TeX or Md)
+    let go :: CodeDelim -> FilePath -> Action ()
+        go cd file = do let out = _htmlPP </> replaceExtensions file "agda"
+                        putInfo $ mconcat ["Illiterating from ", file, " to ", out]
+                        lcontents <- readFileLines file
+                        let ilcontents = illiterate cd lcontents
+                        writeFileLines out ilcontents
+
+    forM_ lagdafiles $ go codeDelimTex
+    forM_ lagdamdfiles $ go codeDelimMd
+    forM_ (agdafiles ++ agdalibfiles) (\file -> copyFileChanged file (_htmlPP </> file))
 
         -- agda-lib file
     let agdaprojectfile =
@@ -291,7 +303,7 @@ htmlIndex =
           , "  ./"
           ]
         agdamodules = sort . map (agdafile2module . dropDirectory 1)
-                    $ agdafiles ++ lagdafiles
+                      $ agdafiles ++ lagdafiles ++ lagdamdfiles
         -- index file
         indexfile =
           [ "module index where"
@@ -307,42 +319,6 @@ htmlIndex =
              [ "--fls"
              , "--fls-html-dir=" ++ "../../" ++ htmlDist
              , "index.agda" ]
-
--- | Copy Agda files in src-lib-exts/ to generate the html.
-agdalibexts2htmlPP :: Rules ()
-agdalibexts2htmlPP =
-  _htmlPP </> "src-lib-exts" <//> "*.agda" %> \out -> do
-    let srcfile = dropDirectory 3 out
-    copyFileChanged srcfile out
-
--- | Preprocess Agda files in src/ to generate the html.
--- An input file is either:
--- - an agda file, in which case we copy it verbatim
--- - a lagda file, in which case we "illiterate" its contents
-agdasrc2htmlPP :: Rules ()
-agdasrc2htmlPP =
-  _htmlPP </> "src" <//> "*.agda" %> \out -> do
-    let srcfile = dropDirectory 3 out
-    isagdafile <- doesFileExist srcfile
-    if isagdafile
-      then copyFileChanged srcfile out
-      else do let lagdafile = replaceExtension srcfile "lagda"
-              putInfo $ mconcat ["Illiterating from ", lagdafile, " to ", out]
-              lcontents <- readFileLines lagdafile
-              let ilcontents = illiterate lcontents
-              writeFileLines out ilcontents
-
--- | html rule
-htmlRule :: Rules ()
-htmlRule = do
-  -- Auxiliary rules
-  htmlIndex
-  agdasrc2htmlPP
-  agdalibexts2htmlPP
-
-  -- Top level target
-  phony "html" $ do
-    need [ htmlDist </> "index.html" ]
 
 ------------------------------------------------------------------------------
 -- Markdown
@@ -466,7 +442,7 @@ addAgdaDataDirOracle = addOracle $ \(AgdaDataDir _) -> init . fromStdout <$> cmd
 -- The path is not prepended by extra directories
 agdafile2module :: FilePath -> String
 agdafile2module = map (\c -> if isPathSeparator c then '.' else c) -- turn path separators to '.'
-                  . dropExtension                                  -- remove the extension
+                  . dropExtensions                                 -- remove the extension
 
 -- | Reads the files imported via the macro \inputagda from a tex file given as
 -- a list of lines
@@ -489,22 +465,30 @@ readFileLinesUtf8 file = do
 -- discard and copy are mutually recursive:
 -- discard runs outside code blocks
 -- copy runs inside code blocks
-begincode, endcode :: String
-begincode = "\\begin{code}"
-endcode   = "\\end{code}"
+data CodeDelim = CodeDelim {
+    begincode :: String,
+    endcode   :: String
+  }
 
-discard, copy :: [String] -> [String]
-discard [] = []
-discard (xs:xss)
-  | take (length begincode) xs == begincode = "" : copy xss
-  | otherwise                               = discard xss
-copy [] = []
-copy (xs:xss)
-  | take (length endcode) xs == endcode = "" : discard xss
-  | otherwise                           = xs : copy xss
+codeDelimTex :: CodeDelim
+codeDelimTex = CodeDelim "\\begin{code}" "\\end{code}"
 
-illiterate :: [String] -> [String]
-illiterate = discard
+codeDelimMd :: CodeDelim
+codeDelimMd = CodeDelim "```agda" "```"
+
+illiterate :: CodeDelim -> [String] -> [String]
+illiterate CodeDelim{..} = discard
+  where
+    discard, copy :: [String] -> [String]
+    discard [] = []
+    discard (xs:xss)
+      | take (length begincode) xs == begincode = "" : copy xss
+      | otherwise                               = discard xss
+    copy [] = []
+    copy (xs:xss)
+      | take (length endcode) xs == endcode = "" : discard xss
+      | otherwise                           = xs : copy xss
+
 
 -- | Nary apply
 applyN :: Int -> (a -> a) -> (a -> a)

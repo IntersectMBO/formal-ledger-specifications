@@ -1,4 +1,4 @@
-module Ledger.Conway.Foreign.HSLedger.GovernanceActions where
+module Ledger.Conway.Foreign.HSLedger.Gov.Actions where
 
 open import Data.Rational using (ℚ)
 
@@ -6,8 +6,8 @@ open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
-open import Ledger.Conway.Specification.Types.GovStructure
-open import Ledger.Conway.Specification.GovernanceActions govStructure using (Vote) public
+open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote) public
 
 DocHash = GovStructure.DocHash govStructure 
 

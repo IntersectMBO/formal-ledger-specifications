@@ -1,7 +1,7 @@
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Types.GovStructure
+open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Certs.Properties.PoVLemmas (gs : _) (open GovStructure gs) where
 
@@ -11,7 +11,7 @@ module Ledger.Conway.Specification.Certs.Properties.PoVLemmas (gs : _) (open Gov
 
 \begin{code}[hide]
 open import Ledger.Conway.Specification.Certs gs
-open import Ledger.Conway.Specification.GovernanceActions gs hiding (yes; no)
+open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Prelude
 
 open import Axiom.Set.Properties th

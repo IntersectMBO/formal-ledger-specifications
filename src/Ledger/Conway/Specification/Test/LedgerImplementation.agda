@@ -1,7 +1,9 @@
-open import ScriptVerification.Prelude
+{-# OPTIONS --safe #-}
+
+open import Ledger.Conway.Specification.Test.Prelude
 open import Prelude using (Type)
 
-module ScriptVerification.LedgerImplementation
+module Ledger.Conway.Specification.Test.LedgerImplementation
   (T D : Type)
   (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
   where
@@ -14,12 +16,10 @@ open import Algebra.Morphism    using (module MonoidMorphisms)
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 open import Relation.Binary.Morphism.Structures
 open import Algebra.Construct.DirectProduct
-open import Foreign.Convertible
-import Foreign.Haskell as F
 open import Ledger.Core.Specification.Crypto
 open import Ledger.Conway.Specification.Transaction
 open import Ledger.Core.Specification.Epoch
-open import Ledger.Conway.Specification.Types.GovStructure
+open import Ledger.Conway.Specification.Gov.Base
 
 module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
@@ -149,7 +149,7 @@ SVGovStructure = record
   }
 instance _ = SVGovStructure
 
-open import Ledger.Conway.Specification.GovernanceActions it hiding (Vote; GovRole; VDeleg; Anchor)
+open import Ledger.Conway.Specification.Gov.Actions it hiding (Vote; GovRole; VDeleg; Anchor)
 open import Ledger.Conway.Conformance.Certs it hiding (PoolParams; DCert)
 
 SVTransactionStructure : TransactionStructure
