@@ -38,6 +38,7 @@ import Ledger.Conway.Specification.Rewards
 import Ledger.Conway.Specification.Script
 import Ledger.Conway.Specification.Script.Validation
 import Ledger.Conway.Specification.Test.Examples
+import Ledger.Conway.Specification.Test.StructuredContracts
 import Ledger.Conway.Specification.TokenAlgebra.Base
 import Ledger.Conway.Specification.TokenAlgebra.Coin
 import Ledger.Conway.Specification.TokenAlgebra.ValueSet
