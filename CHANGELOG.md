@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Implement the POOLREAP state transition relation from Shelley
 - Move `txsize` from `TxBody` to `Tx`.
 - Change the return type of `refScripts` to a set
 - Add `poolParameters` field to `Snapshot` and compute it in `SNAP`.
