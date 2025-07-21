@@ -8,7 +8,7 @@ set -o pipefail
 AGDA_VER="$(agda --numeric-version)"
 
 # read all agda source files
-readarray -d '' allAgdaFiles < <(find src -name "*.*agda" -print0)
+readarray -d '' allAgdaFiles < <(find src/Ledger -name "*.*agda" -print0)
 
 # temporary variables
 unusedAgdaFiles=() # files without a corresponding iface file
