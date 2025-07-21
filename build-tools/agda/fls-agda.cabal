@@ -17,7 +17,7 @@ executable fls-agda
   other-modules:       Paths_fls_agda
   autogen-modules:     Paths_fls_agda
   build-depends:       base >= 4.10 && < 4.22,
-                       Agda == 2.7.0.1,
+                       Agda == 2.8.0,
                        deepseq >= 1.4.4 && < 1.6,
                        blaze-html,
                        containers,
