@@ -36,6 +36,7 @@ open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
@@ -122,14 +123,15 @@ instance
   HasCertState-NewEpochState : HasCertState NewEpochState
   HasCertState-NewEpochState .CertStateOf = CertStateOf ∘ LStateOf
 
-  HasDReps-NewEpochState : HasDReps NewEpochState 
+  HasDReps-NewEpochState : HasDReps NewEpochState
   HasDReps-NewEpochState .DRepsOf = DRepsOf ∘ CertStateOf
 
   HasRewards-NewEpochState : HasRewards NewEpochState
   HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
 
-  unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
+  unquoteDecl HasCast-EpochState HasCast-NewEpochState HasCast-PlReapState = derive-HasCast
     ( (quote EpochState     , HasCast-EpochState)
+    ∷ (quote PlReapState    , HasCast-PlReapState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
 toRwdAddr : Credential → RwdAddr
@@ -342,9 +344,9 @@ private variable
   nes nes' : NewEpochState
   e lastEpoch : Epoch
   fut fut' : RatifyState
+  plReapState : PlReapState
   eps eps' eps'' : EpochState
   ls : LState
-  acnt : Acnt
   es₀ : EnactState
   mark set go : Snapshot
   feeSS : Coin
@@ -352,21 +354,107 @@ private variable
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
+  pp : PParams
+\end{code}
+
+Let m be a map on A × B; that is m ⊆ A × B and ∀ a : A, there is at most one b
+such that (a , b) ∈ m.  The Shelley ledger uses some special notation for such
+maps, which we review here, adding the more standard mathematical notation on
+the right-hand side.
+
+s ◃ m = { (k , v) ∈ m | k ∈ s } = m ∩ (s × B) = m ↾ s,
+s ⋪ m = { (k , v) ∈ m | k ∉ s } = m ∩ (sᶜ × B) = m ↾ sᶜ,
+m ▹ s = { (k , v) ∈ m | v ∈ s } = m ∩ (A × s),
+m ⋫ s = { (k , v) ∈ m | v ∉ s } = m ∩ (A × sᶜ).
+
+
+Recall, \PState{} is a record with two fields, \pools{} and \retiring{} (maps
+on \KeyHash{} with codomains \PoolParams{} and \Epoch{}, respe.)  \PoolParams{}
+is a record with just one field, the \rewardAddr{} credential.
+
+\begin{code}
+data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PlReapState → Epoch → PlReapState → Type where
+  REAP : let
+    -- open LState ls
+    open PlReapState plReapState
+    open RatifyState fut renaming (es to esW)
+    open UTxOState
+    open PState; open DState
+    open Acnt; open EnactState
+    open PParams
+
+    trWithdrawals : RwdAddr ⇀ Coin
+    trWithdrawals = esW .withdrawals
+
+    totWithdrawals : Coin
+    totWithdrawals = ∑[ x ← trWithdrawals ] x
+
+    -- retired := dom (retiring⁻¹ e) = { hk : (hk , e) ∈ retiring }  (Shelley Fig 41)
+    retired    = (pState .retiring) ⁻¹ e
+
+
+    -- pr = { hk ↦ (poolDeposit pp) | hk ∈ retired }
+    --    = { (hk , poolDeposit pp) ∈ KeyHash × Coin | hk ∈ retired }  (Shelley Fig 41)
+    pr = constMap retired  (pp .poolDeposit)
+
+    -- rewardAcnts := { (hk , poolRAcnt pool) ∈ KeyHash × Credential | (hk , pool) ∈ poolParams ↾ retired }  (Shelley Fig 41)
+    -- rewardAcnts : KeyHash ⇀ Credential
+    rewardAcnts = (pState .pools) ∣ retired
+
+    -- rewardAcnts' : RwdAddr ⇀ Coin
+    -- rewardAcnts' =?= constMap (range (rewardAcnts ˢ)) (pp .poolDeposit)
+
+
+
+    -- refunds := rewardAcnts' ↾ dom rewards         (recall, rewards : Credential ⇀ Coin is stored in DState))
+    refunds    = pullbackMap (esW .withdrawals) toRwdAddr (dom (dState .rewards))
+    --(recall, pullbackMap : (m : Map A B) → ⦃ ∀ {x} → (x ∈ dom (m ˢ)) ⁇ ⦄ → (A' → A) → Set A' → Map A' B)
+
+    -- refunds =?= rewardAcnts' ∣ (dom (dState .rewards))
+
+    -- mRefunds := rewardAcnts' ↾ (dom rewards)ᶜ
+
+    unclaimed  = getCoin (esW .withdrawals) - getCoin refunds
+    -- cf. Shelley Fig 41: unclaimed := ∑ {c | ∃ hk (hk , c) ∈ mRefunds }
+
+    utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits , 0 ⟧
+    -- cf. Shelley Fig 41: utxoSt' .deposits = utxoSt .deposits - (unclaimed + getCoin refunds)
+    --                                       = utxoSt .deposits - getCoin (esW .withdrawals)
+
+    acnt' = record acnt
+      { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
+    -- cf. Shelley spec fig 41: acnt' = acnt .treasury + utxoSt .donations + unclaimed
+
+    dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
+
+    pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
+
+    in
+    ────────────────────────────────
+    pp ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt' , acnt' , dState' , pState' ⟧
 \end{code}
 
 
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
+private variable
+  acnt acnt' : Acnt
+  utxoSt'    : UTxOState
+  dState'    : DState
+  gState'    : GState
+  pState'    : PState
+  govSt'     : GovState
+
+
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 \end{code}
 \end{figure*}
 \end{NoConway}
 
 \Cref{fig:epoch:sts} defines the EPOCH transition rule.
-Currently, this incorporates logic that was previously handled by
-POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec};
-POOLREAP is not implemented here.
+Previously, this incorporated the logic that is now handled by
+REAP (called POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
 
 The EPOCH rule now also needs to invoke RATIFIES and properly deal with
 its results by carrying out each of the following tasks.
