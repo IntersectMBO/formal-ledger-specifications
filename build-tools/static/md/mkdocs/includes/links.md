@@ -1,5 +1,5 @@
 [Agda documentation]: https://agda.readthedocs.io/en/
-[Agda Essentials]: EssentialAgda.md
+[Agda record types]: https://agda.readthedocs.io/en/stable/language/record-types.html
 [Agda Wiki]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Auxiliary DELEG transition system]: Ledger.Conway.Certs.md#auxiliary-deleg-transition-system
 [Auxiliary GOVCERT transition system]: Ledger.Conway.Certs.md#auxiliary-govcert-transition-system

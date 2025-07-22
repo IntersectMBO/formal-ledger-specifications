@@ -95,7 +95,6 @@
 
 ## Appendix
 
-- [Essentialagda](./EssentialAgda.md)
 - [Agda Prelude](./Prelude.md)
 
 ### Type Classes

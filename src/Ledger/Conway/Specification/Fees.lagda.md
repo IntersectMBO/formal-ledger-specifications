@@ -1,9 +1,8 @@
 # Fee Calculation {#sec:fees}
 
 This section is part of the
-[`Ledger.Conway.Fees`](https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Fees.lagda)
-module of the [formal ledger
-specification](https://github.com/IntersectMBO/formal-ledger-specifications),
+[`Ledger.Conway.Specification.Fees`](https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/ConwaySpecification/Fees.lagda.md)
+module of the [formal ledger specification](https://github.com/IntersectMBO/formal-ledger-specifications),
 where we define the functions used to compute the fees associated with
 reference scripts.
 
@@ -12,13 +11,13 @@ The function `scriptsCost`{.AgdaFunction}
 fee for reference scripts in a transaction. It takes as input the total
 size of the reference scripts in bytes—which can be calculated using
 `refScriptsSize`{.AgdaFunction}
-([Section 'Functions used in UTxO rules, continued'](Ledger.Conway.Utxo.md#functions-used-in-utxo-rules-continued))—and
+([Section 'Functions used in UTxO rules, continued'](Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules-continued))—and
 uses a function (`scriptsCostAux`{.AgdaFunction}) that is piece-wise
 linear in the size, where the linear constant multiple grows with each
 `refScriptCostStride`{.AgdaFunction} bytes. In addition,
 `scriptsCost`{.AgdaFunction} depends on the following constants (which
 are bundled with the protocol parameters; see
-[Section 'Protocol parameter definitions'](Ledger.Conway.PParams.md#protocol-parameter-definitions)):
+[Section 'Protocol parameter definitions'](Ledger.Conway.Specification.PParams.md#protocol-parameter-definitions)):
 
 - `refScriptCostMultiplier`{.AgdaFunction}, a rational number, the
   growth factor or step multiplier that determines how much the price
