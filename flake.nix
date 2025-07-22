@@ -39,7 +39,6 @@
                   formal-ledger
                   hs-src
                   mkdocs
-                  devShells
                   ;
               };
             in
