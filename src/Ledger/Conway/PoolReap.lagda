@@ -34,3 +34,5 @@ record PlReapState : Type where
     dState     : DState      -- delegation state
     pState     : PState      -- pool state
 \end{code}
+\end{AgdaMultiCode}
+\end{figure*}
