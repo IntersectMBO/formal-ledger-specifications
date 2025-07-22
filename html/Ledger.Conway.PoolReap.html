@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Conway.PoolReap</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda">
+<a id="2" class="Symbol">{-#</a> <a id="6" class="Keyword">OPTIONS</a> <a id="14" class="Pragma">--safe</a> <a id="21" class="Symbol">#-}</a>
+
+<a id="26" class="Keyword">open</a> <a id="31" class="Keyword">import</a> <a id="38" href="Ledger.Conway.Abstract.html" class="Module">Ledger.Conway.Abstract</a>
+<a id="61" class="Keyword">open</a> <a id="66" class="Keyword">import</a> <a id="73" href="Ledger.Conway.Transaction.html" class="Module">Ledger.Conway.Transaction</a>
+
+<a id="100" class="Keyword">module</a> <a id="107" href="Ledger.Conway.PoolReap.html" class="Module">Ledger.Conway.PoolReap</a>
+  <a id="132" class="Symbol">(</a><a id="133" href="Ledger.Conway.PoolReap.html#133" class="Bound">txs</a> <a id="137" class="Symbol">:</a> <a id="139" class="Symbol">_)</a> <a id="142" class="Symbol">(</a><a id="143" class="Keyword">open</a> <a id="148" href="Ledger.Conway.Transaction.html#872" class="Module">TransactionStructure</a> <a id="169" href="Ledger.Conway.PoolReap.html#133" class="Bound">txs</a><a id="172" class="Symbol">)</a>
+  <a id="176" class="Symbol">(</a><a id="177" href="Ledger.Conway.PoolReap.html#177" class="Bound">abs</a> <a id="181" class="Symbol">:</a> <a id="183" href="Ledger.Conway.Abstract.html#599" class="Record">AbstractFunctions</a> <a id="201" href="Ledger.Conway.PoolReap.html#133" class="Bound">txs</a><a id="204" class="Symbol">)</a>
+  <a id="208" class="Keyword">where</a>
+<a id="214" class="Keyword">open</a> <a id="219" class="Keyword">import</a> <a id="226" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="241" class="Keyword">open</a> <a id="246" class="Keyword">import</a> <a id="253" href="Ledger.Conway.Gov.html" class="Module">Ledger.Conway.Gov</a> <a id="271" href="Ledger.Conway.PoolReap.html#133" class="Bound">txs</a>
+<a id="275" class="Keyword">open</a> <a id="280" class="Keyword">import</a> <a id="287" href="Ledger.Conway.Utxo.html" class="Module">Ledger.Conway.Utxo</a> <a id="306" href="Ledger.Conway.PoolReap.html#133" class="Bound">txs</a> <a id="310" href="Ledger.Conway.PoolReap.html#177" class="Bound">abs</a>
+<a id="314" class="Keyword">open</a> <a id="319" class="Keyword">import</a> <a id="326" href="Ledger.Conway.Certs.html" class="Module">Ledger.Conway.Certs</a> <a id="346" href="Ledger.Conway.Transaction.html#1852" class="Function">govStructure</a>
+
+
+
+<a id="362" class="Keyword">record</a> <a id="PlReapState"></a><a id="369" href="Ledger.Conway.PoolReap.html#369" class="Record">PlReapState</a> <a id="381" class="Symbol">:</a> <a id="383" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="388" class="Keyword">where</a>
+
+
+  <a id="398" class="Keyword">constructor</a> <a id="⟦_,_,_,_⟧ᵖ"></a><a id="410" href="Ledger.Conway.PoolReap.html#410" class="InductiveConstructor Operator">⟦_,_,_,_⟧ᵖ</a>
+
+
+  <a id="425" class="Keyword">field</a>
+    <a id="PlReapState.utxoSt"></a><a id="435" href="Ledger.Conway.PoolReap.html#435" class="Field">utxoSt</a>     <a id="446" class="Symbol">:</a> <a id="448" href="Ledger.Conway.Utxo.html#1390" class="Record">UTxOState</a>   <a id="460" class="Comment">-- utxo state</a>
+    <a id="PlReapState.acnt"></a><a id="478" href="Ledger.Conway.PoolReap.html#478" class="Field">acnt</a>       <a id="489" class="Symbol">:</a> <a id="491" href="Ledger.Conway.PParams.html#686" class="Record">Acnt</a>        <a id="503" class="Comment">-- accounting</a>
+    <a id="PlReapState.dState"></a><a id="521" href="Ledger.Conway.PoolReap.html#521" class="Field">dState</a>     <a id="532" class="Symbol">:</a> <a id="534" href="Ledger.Conway.Certs.html#3151" class="Record">DState</a>      <a id="546" class="Comment">-- delegation state</a>
+    <a id="PlReapState.pState"></a><a id="570" href="Ledger.Conway.PoolReap.html#570" class="Field">pState</a>     <a id="581" class="Symbol">:</a> <a id="583" href="Ledger.Conway.Certs.html#3761" class="Record">PState</a>      <a id="595" class="Comment">-- pool state</a>
+
+</pre></body></html>
