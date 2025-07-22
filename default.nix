@@ -14,9 +14,17 @@ let
     LOCALE_ARCHIVE = lib.optionalString stdenv.isLinux "${glibcLocales}/lib/locale/locale-archive";
   };
 
-  our-agda = (
-    agdaPackages.override { Agda = import ./build-tools/agda/nix/fls-agda.nix { inherit nixpkgs; }; }
-  );
+  fls-agda = import ./build-tools/agda/nix/fls-agda.nix { inherit nixpkgs; };
+  our-agda =
+    agdaPackages.override {
+      Agda = fls-agda.overrideAttrs (oldAttrs: {
+        meta = (oldAttrs.meta or {}) // {
+          outputsToInstall = [ "out" ];
+        };
+      }) // {
+        bin = fls-agda;
+      };
+    };
 
   agda-stdlib = our-agda.mkDerivation {
     pname = "standard-library";
