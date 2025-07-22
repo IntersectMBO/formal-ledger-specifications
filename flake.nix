@@ -10,7 +10,7 @@
     let
       # reuse the dependencies pinned by niv
       sources = import ./build-tools/nix/sources.nix;
-      systems = [ "x86_64-linux" ];
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
 
       perSystem = flake-utils.lib.eachSystem systems (
         system:
