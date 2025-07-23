@@ -54,86 +54,6 @@ def generate_macros_json(sty_content: str) -> str:
     }
     return json.dumps(output_json, indent=2)
 
-def generate_custom_css_from_agda(
-    agda_css_content: str,
-    existing_custom_css: Optional[str] = None
-) -> str:
-    """
-    Generates custom.css content by extracting colors from Agda.css.
-    Args:
-        agda_css_content: The string content of the source Agda.css file.
-        existing_custom_css: Optional string content of an existing custom.css
-                             to be merged with the generated styles.
-    Returns:
-        The complete string content for the new custom.css file.
-    """
-    # Pattern to match .Agda .ClassName { properties }
-    pattern = r'\.Agda\s+\.(\w+)\s*\{\s*([^}]*)\s*\}'
-    color_mappings = {}
-    for match in re.finditer(pattern, agda_css_content):
-        class_name = match.group(1)
-        properties = match.group(2).strip()
-        properties = re.sub(r'\s+', ' ', properties).strip()
-        color_mappings[class_name] = properties
-
-    css_parts = [
-        "/*",
-        " * Custom CSS for Formal Ledger Specifications",
-        " *",
-        " * This file contains auto-generated Agda class styles (from Agda.css)",
-        " * and project-specific customizations.",
-        " */",
-        "",
-        "/* ======================================================================= */",
-        "/* AUTO-GENERATED AGDA CLASSES (from Agda.css)                        */",
-        "/* ======================================================================= */",
-        ""
-    ]
-
-    for class_name, properties in sorted(color_mappings.items()):
-        rule = f"code.Agda{class_name} {{\n    {properties}\n}}"
-        css_parts.append(rule)
-
-    css_parts.extend([
-        "",
-        "/* ======================================================================= */",
-        "/* PROJECT-SPECIFIC STYLES                                            */",
-        "/* ======================================================================= */",
-        ""
-    ])
-
-    if existing_custom_css and existing_custom_css.strip():
-        css_parts.append(existing_custom_css.strip())
-    else:
-        # Default project styles if no existing CSS is provided
-        default_styles = """
-/* Highlighting for \\hldiff{} content */
-.highlight {
-    background-color: yellow;
-    padding: 2px 4px;
-    border-radius: 3px;
-}
-
-/* Caption styling */
-.caption-text {
-    font-style: italic;
-    color: #666;
-    margin-top: 0.5em;
-}
-
-/* Conway admonition styling */
-.conway-specifics {
-    border-left: 4px solid #2196F3;
-    padding: 1em;
-    margin: 1em 0;
-    background-color: #f8f9fa;
-}
-        """
-        css_parts.append(default_styles.strip())
-
-    return "\n".join(css_parts) + "\n"
-
-
 #=======================================================================
 # Functions for site assembly
 #=======================================================================
@@ -162,16 +82,12 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
     logging.info("🏗️  Deploying assets for MkDocs site...")
 
     # 1. Deploy CSS
-    agda_css_path = config.build_paths.build_md_pp_dir / "Agda.css"
-    if config.run_agda_html and agda_css_path.exists():
-        agda_css_content = agda_css_path.read_text('utf-8')
-        template_css_content = config.source_paths.custom_css_path.read_text('utf-8')
-        final_css = generate_custom_css_from_agda(agda_css_content, template_css_content)
-        (config.build_paths.mkdocs_css_dir / "custom.css").write_text(final_css, 'utf-8')
-        shutil.copy2(agda_css_path, config.build_paths.mkdocs_css_dir)
-        logging.info("✅ Deployed generated custom.css and Agda.css.")
+    shutil.copy2(config.source_paths.agda_css_path, config.build_paths.mkdocs_css_dir)
+    shutil.copy2(config.source_paths.custom_css_path, config.build_paths.mkdocs_css_dir)
+    logging.info("✅ Deployed generated custom.css and Agda.css.")
 
     # 2. Deploy JS
+    shutil.copy2(config.source_paths.agda_js_path, config.build_paths.mkdocs_js_dir)
     shutil.copy2(config.source_paths.custom_js_path, config.build_paths.mkdocs_js_dir)
     shutil.copy2(config.source_paths.katex_js_path, config.build_paths.mkdocs_js_dir)
     logging.info("✅ Deployed custom.js and KaTeX config.")

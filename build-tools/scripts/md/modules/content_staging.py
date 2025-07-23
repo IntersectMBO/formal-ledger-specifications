@@ -59,6 +59,8 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
         logging.info(f"🐔 Running Agda --html on '{main_agda_file}', outputting to {staging_dir}...")
         agda_command = [
             "agda", "--fls",
+            f"--fls-css=css/Agda.css",
+            f"--fls-js=js/Agda.js",
             f"--fls-html-dir={staging_dir.resolve()}",
             main_agda_file
         ]

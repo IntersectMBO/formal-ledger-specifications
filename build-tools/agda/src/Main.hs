@@ -18,7 +18,7 @@ import Control.Monad.Trans.Reader ( ReaderT(runReaderT), ask )
 import Control.DeepSeq (NFData)
 
 import Data.Foldable (toList, concatMap)
-import Data.Maybe (isJust, fromMaybe)
+import Data.Maybe (isJust, isNothing, fromMaybe)
 import Data.Map (Map)
 import qualified Data.IntMap as IntMap
 import Data.List.Split (splitWhen)
@@ -76,9 +76,11 @@ main = runAgda [Backend flsBackend']
 -- | Options for HTML generation
 
 data FlsOpts = FlsOpts
-  { flsOptEnabled :: Bool
-  , flsOptHtmlDir :: FilePath
+  { flsOptEnabled  :: Bool
+  , flsOptHtmlDir  :: FilePath
   , flsOptMainOnly :: Bool
+  , flsOptCssFile  :: Maybe FilePath
+  , flsOptJsFile   :: Maybe FilePath
   } deriving (Eq, Generic)
 
 instance NFData FlsOpts
@@ -118,9 +120,11 @@ flsBackend' = Backend'
 
 initialFlsOpts :: FlsOpts
 initialFlsOpts = FlsOpts
-  { flsOptEnabled = False
-  , flsOptHtmlDir = defaultHTMLDir
+  { flsOptEnabled  = False
+  , flsOptHtmlDir  = defaultHTMLDir
   , flsOptMainOnly = False
+  , flsOptCssFile  = Nothing
+  , flsOptJsFile   = Nothing
   }
 
 -- | The default output directory for HTML.
@@ -135,8 +139,13 @@ flsOpts =
     , Option []     ["fls-html-dir"] (ReqArg flsHtmlDirOpt "DIR")
                     ("directory in which HTML files are placed (default: " ++
                      defaultHTMLDir ++ ")")
+    , Option []     ["fls-css"] (ReqArg flsCssFile "URL")
+                    "the CSS file used by the HTML files (can be relative)"
+    , Option []     ["fls-js"] (ReqArg flsJsFile "URL")
+                    "the JS file used by the HTML files (can be relative)"
     , Option []     ["fls-main-only"] (NoArg flsMainOnly)
                     "generate HTML for the main file ONLY"
+
     ]
 
 flsOpt :: Flag FlsOpts
@@ -147,6 +156,12 @@ flsHtmlDirOpt d o = return $ o { flsOptHtmlDir = d }
 
 flsMainOnly :: Flag FlsOpts
 flsMainOnly o = return $ o { flsOptMainOnly = True }
+
+flsCssFile :: FilePath -> Flag FlsOpts
+flsCssFile f o = return $ o { flsOptCssFile = Just f }
+
+flsJsFile :: FilePath -> Flag FlsOpts
+flsJsFile f o = return $ o { flsOptJsFile = Just f }
 
 runLogHtmlWithMonadDebug :: MonadDebug m => LogHtmlT m a -> m a
 runLogHtmlWithMonadDebug = runLogHtmlWith $ reportS "html" 1
@@ -211,8 +226,8 @@ defaultCSSFile :: FilePath
 defaultCSSFile = "Agda.css"
 
 -- | The name of the default Agda KaTeX JS file.
-defaultAgdaKaTeXJsFile :: FilePath
-defaultAgdaKaTeXJsFile = "AgdaKaTeX.js"
+defaultJSFile :: FilePath
+defaultJSFile = "Agda.js"
 
 -- | Determine the generated file extension
 
@@ -260,8 +275,10 @@ renderSourceFile :: FlsOpts -> FlsInputSourceFile -> Text
 renderSourceFile opts = renderSourcePage
   where
   renderSourcePage (FlsInputSourceFile moduleName fileType sourceCode hinfo) =
-    page fileType moduleName pageContents
+    page cssFile jsFile fileType moduleName pageContents
     where
+      cssFile = fromMaybe defaultCSSFile (flsOptCssFile opts)
+      jsFile = fromMaybe defaultJSFile (flsOptJsFile opts)
       tokens = tokenStream sourceCode hinfo
       pageContents = code fileType tokens
 
@@ -282,11 +299,13 @@ prepareCommonDestinationAssets options = liftIO $ do
 
   -- If the default CSS file should be used, then it is copied to
   -- the output directory.
-  defCssFile <- getDataFileName $ "data" </> defaultCSSFile
-  copyFile defCssFile (htmlDir </> defaultCSSFile)
+  when (isNothing $ flsOptCssFile options) $ do
+    defCssFile <- getDataFileName $ "data" </> defaultCSSFile
+    copyFile defCssFile (htmlDir </> defaultCSSFile)
 
-  defAgdaKaTeXJsFile <- getDataFileName $ "data" </> defaultAgdaKaTeXJsFile
-  copyFile defAgdaKaTeXJsFile (htmlDir </> defaultAgdaKaTeXJsFile)
+  when (isNothing $ flsOptJsFile options) $ do
+    defJsFile <- getDataFileName $ "data" </> defaultJSFile
+    copyFile defJsFile (htmlDir </> defaultJSFile)
 
 -- | Converts module names to the corresponding HTML file names.
 
@@ -310,11 +329,15 @@ h !! as = h ! mconcat as
 
 -- | Constructs the web page, including headers.
 
-page :: FileType              -- ^ Whether to reserve literate md
+page :: FilePath              -- ^ Path to css file
+     -> FilePath              -- ^ Path to js file
+     -> FileType              -- ^ Whether to reserve literate md
      -> TopLevelModuleName    -- ^ Module to be highlighted.
      -> Html
      -> Text
-page fileType
+page css
+     js
+     fileType
      modName
      pageContent =
   renderHtml $
@@ -330,11 +353,11 @@ page fileType
                       , Attr.href $ stringValue "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"
                       ]
       , Html5.link !! [ Attr.rel "stylesheet"
-                      , Attr.href $ stringValue defaultCSSFile
+                      , Attr.href $ stringValue css
                       ]
       , Html5.script mempty !! [ Attr.src "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js" ]
       , Html5.script mempty !! [ Attr.src "https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js" ]
-      , Html5.script mempty !! [ Attr.src $ stringValue defaultAgdaKaTeXJsFile
+      , Html5.script mempty !! [ Attr.src $ stringValue js
                                , Attr.defer mempty ]
       ]
 

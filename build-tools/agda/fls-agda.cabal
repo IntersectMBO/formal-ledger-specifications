@@ -9,7 +9,7 @@ synopsis:            Custom backend for formal-ledger-specifications
 
 extra-doc-files:    README.md
 data-files: data/Agda.css
-            data/AgdaKaTeX.js
+            data/Agda.js
 
 executable fls-agda
   hs-source-dirs:      src
