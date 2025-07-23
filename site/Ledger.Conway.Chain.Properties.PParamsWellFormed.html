@@ -5953,34 +5953,38 @@
 <a id="295" class="Keyword">open</a> <a id="300" class="Keyword">import</a> <a id="307" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 </pre>
 
-<div class="claim">
-
-- *Informally*. We say the `PParams`{.AgdaRecord} of a chain state are
-  *well-formed* if each of the following parameters is non-zero:
+<p><strong>Claim (Well-formedness of <code class="AgdaRecord">PParams</code> is a
+<code class="AgdaOperator">CHAIN</code> invariant).</strong></p>
+<ul>
+<li><em>Informally</em>. We say the <code class="AgdaRecord">PParams</code> of a chain state are
+  <em>well-formed</em> if each of the following parameters is non-zero:
   maxBlockSize, maxTxSize, maxHeaderSize, maxValSize,
   refScriptCostStride, coinsPerUTxOByte, poolDeposit,
   collateralPercentage, ccMaxTermLength, govActionLifetime,
-  govActionDeposit, drepDeposit. Formally, 
+  govActionDeposit, drepDeposit. Formally, </li>
+</ul>
 <pre class="Agda">
-<a id="pp-wellFormed"></a><a id="710" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#710" class="Function">pp-wellFormed</a> <a id="724" class="Symbol">:</a> <a id="726" href="Ledger.Conway.Chain.html#1030" class="Record">ChainState</a> <a id="737" class="Symbol">→</a> <a id="739" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="744" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#710" class="Function">pp-wellFormed</a> <a id="758" class="Symbol">=</a> <a id="760" href="Ledger.Conway.PParams.html#6054" class="Function">paramsWellFormed</a> <a id="777" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="779" href="Ledger.Conway.PParams.html#5150" class="Field">PParamsOf</a>
-</pre> This
-  property asserts that `pp-wellFormed`{.AgdaFunction} is a chain
+<a id="pp-wellFormed"></a><a id="783" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#783" class="Function">pp-wellFormed</a> <a id="797" class="Symbol">:</a> <a id="799" href="Ledger.Conway.Chain.html#1030" class="Record">ChainState</a> <a id="810" class="Symbol">→</a> <a id="812" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="817" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#783" class="Function">pp-wellFormed</a> <a id="831" class="Symbol">=</a> <a id="833" href="Ledger.Conway.PParams.html#6054" class="Function">paramsWellFormed</a> <a id="850" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="852" href="Ledger.Conway.PParams.html#5150" class="Field">PParamsOf</a>
+</pre>
+<p>This
+  property asserts that <code class="AgdaFunction">pp-wellFormed</code> is a chain
   invariant. That is, if and are chain states such that
-  `⇀⦇`{.AgdaDatatype} `,CHAIN⦈`{.AgdaDatatype} , and if the
-  `PParams`{.AgdaRecord} of are well-formed, then so are the
-  `PParams`{.AgdaRecord} of .
-
-- *Formally*. 
+  <code class="AgdaDatatype">⇀⦇</code> <code class="AgdaDatatype">,CHAIN⦈</code> , and if the
+  <code class="AgdaRecord">PParams</code> of are well-formed, then so are the
+  <code class="AgdaRecord">PParams</code> of .</p>
+<ul>
+<li><em>Formally</em>. </li>
+</ul>
 <pre class="Agda">
-<a id="pp-wellFormed-invariant"></a><a id="1097" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#1097" class="Function">pp-wellFormed-invariant</a> <a id="1121" class="Symbol">:</a> <a id="1123" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1128" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#1097" class="Function">pp-wellFormed-invariant</a> <a id="1152" class="Symbol">=</a> <a id="1154" href="Interface.STS.html#3236" class="Function">LedgerInvariant</a> <a id="1170" href="Ledger.Conway.Chain.html#4378" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1185" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#710" class="Function">pp-wellFormed</a>
+<a id="pp-wellFormed-invariant"></a><a id="1170" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#1170" class="Function">pp-wellFormed-invariant</a> <a id="1194" class="Symbol">:</a> <a id="1196" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1201" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#1170" class="Function">pp-wellFormed-invariant</a> <a id="1225" class="Symbol">=</a> <a id="1227" href="Interface.STS.html#3236" class="Function">LedgerInvariant</a> <a id="1243" href="Ledger.Conway.Chain.html#4378" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1258" href="Ledger.Conway.Chain.Properties.PParamsWellFormed.html#783" class="Function">pp-wellFormed</a>
 </pre>
 
-- *Proof*. *To appear* (in the module of the [formal ledger
-  repository](\repourl)).
-
-</div>
+<ul>
+<li><em>Proof</em>. <em>To appear</em> (in the module of the <a href="\repourl">formal ledger
+  repository</a>).</li>
+</ul>
 
 
 

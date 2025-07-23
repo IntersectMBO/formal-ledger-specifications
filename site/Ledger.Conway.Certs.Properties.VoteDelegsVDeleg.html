@@ -5950,45 +5950,44 @@
 <a id="232" class="Keyword">open</a> <a id="237" class="Keyword">import</a> <a id="244" href="Ledger.Conway.Gov.Actions.html" class="Module">Ledger.Conway.Gov.Actions</a> <a id="270" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#132" class="Bound">gs</a>
 </pre>
 
-<div class="claim">
-
-<span id="thm:VDelegsInRegDReps" label="thm:VDelegsInRegDReps"></span>
-
-- *Informally*. A `CertState`{.AgdaRecord} has a
-  `DState`{.AgdaDatatype}, `PState`{.AgdaDatatype}, and a
-  `GState`{.AgdaDatatype}. The `DState`{.AgdaDatatype} contains a field
-  `voteDelegs`{.AgdaField} which is a mapping from
-  `Credential`{.AgdaDatatype} to `VDeleg`{.AgdaDatatype}.
-
-  `VDeleg`{.AgdaDatatype} is a datatype with three constructors; the one
-  of interest to us here is `credVoter`{.AgdaInductiveConstructor},
-  which takes two arguments, a `GovRole`{.AgdaDatatype} and a
-  `Credential`{.AgdaDatatype}.
-
-  Now suppose we have a collection of credentials—for instance, given :
-  `DState`{.AgdaDatatype}, take to be the domain of the
-  `voteDelegs`{.AgdaField} field of . We could then obtain a set of
-  `VDeleg`{.AgdaDatatype}s by applying
-  `credVoter`{.AgdaInductiveConstructor}
-  `DRep`{.AgdaInductiveConstructor} to each element of .
-
-  The present property asserts that the set of `VDeleg`{.AgdaDatatype}s
+<p><a id="thm:VDelegsInRegDReps"></a>
+<strong>Claim (<code class="AgdaField">voteDelegs</code> by <code class="AgdaInductiveConstructor">credVoter</code>
+constructor).</strong></p>
+<ul>
+<li><em>Informally</em>. A <code class="AgdaRecord">CertState</code> has a
+  <code class="AgdaDatatype">DState</code>, <code class="AgdaDatatype">PState</code>, and a
+  <code class="AgdaDatatype">GState</code>. The <code class="AgdaDatatype">DState</code> contains a field
+  <code class="AgdaField">voteDelegs</code> which is a mapping from
+  <code class="AgdaDatatype">Credential</code> to <code class="AgdaDatatype">VDeleg</code>.</li>
+</ul>
+<p><code class="AgdaDatatype">VDeleg</code> is a datatype with three constructors; the one
+  of interest to us here is <code class="AgdaInductiveConstructor">credVoter</code>,
+  which takes two arguments, a <code class="AgdaDatatype">GovRole</code> and a
+  <code class="AgdaDatatype">Credential</code>.</p>
+<p>Now suppose we have a collection of credentials—for instance, given :
+  <code class="AgdaDatatype">DState</code>, take to be the domain of the
+  <code class="AgdaField">voteDelegs</code> field of . We could then obtain a set of
+  <code class="AgdaDatatype">VDeleg</code>s by applying
+  <code class="AgdaInductiveConstructor">credVoter</code>
+  <code class="AgdaInductiveConstructor">DRep</code> to each element of .</p>
+<p>The present property asserts that the set of <code class="AgdaDatatype">VDeleg</code>s
   that results from the application of
-  `credVoter`{.AgdaInductiveConstructor}
-  `DRep`{.AgdaInductiveConstructor} to the domain of the
-  `voteDelegs`{.AgdaField} of contains the range of the
-  `voteDelegs`{.AgdaField} of .
-
-- *Formally*. 
+  <code class="AgdaInductiveConstructor">credVoter</code>
+  <code class="AgdaInductiveConstructor">DRep</code> to the domain of the
+  <code class="AgdaField">voteDelegs</code> of contains the range of the
+  <code class="AgdaField">voteDelegs</code> of .</p>
+<ul>
+<li><em>Formally</em>. </li>
+</ul>
 <pre class="Agda">
-<a id="voteDelegsVDeleg"></a><a id="1556" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1556" class="Function">voteDelegsVDeleg</a> <a id="1573" class="Symbol">:</a>  <a id="1576" href="Ledger.Conway.Certs.html#3789" class="Record">DState</a> <a id="1583" class="Symbol">→</a> <a id="1585" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1590" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1556" class="Function">voteDelegsVDeleg</a> <a id="1607" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1607" class="Bound">d</a> <a id="1609" class="Symbol">=</a> <a id="1611" href="Class.IsSet.html#959" class="Function">range</a> <a id="1617" class="Symbol">(</a><a id="1618" href="Ledger.Conway.Certs.html#4181" class="Field">voteDelegsOf</a> <a id="1631" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1607" class="Bound">d</a><a id="1632" class="Symbol">)</a> <a id="1634" href="Interface.HasSubset.html#166" class="Field Operator">⊆</a> <a id="1636" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="1641" class="Symbol">(</a><a id="1642" href="Ledger.Conway.Gov.Actions.html#1156" class="InductiveConstructor">credVoter</a> <a id="1652" href="Ledger.Conway.Gov.Actions.html#1048" class="InductiveConstructor">DRep</a><a id="1656" class="Symbol">)</a> <a id="1658" class="Symbol">(</a><a id="1659" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1663" class="Symbol">(</a><a id="1664" href="Ledger.Conway.Certs.html#4181" class="Field">voteDelegsOf</a> <a id="1677" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1607" class="Bound">d</a><a id="1678" class="Symbol">))</a>
+<a id="voteDelegsVDeleg"></a><a id="1591" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1591" class="Function">voteDelegsVDeleg</a> <a id="1608" class="Symbol">:</a>  <a id="1611" href="Ledger.Conway.Certs.html#3789" class="Record">DState</a> <a id="1618" class="Symbol">→</a> <a id="1620" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1625" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1591" class="Function">voteDelegsVDeleg</a> <a id="1642" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1642" class="Bound">d</a> <a id="1644" class="Symbol">=</a> <a id="1646" href="Class.IsSet.html#959" class="Function">range</a> <a id="1652" class="Symbol">(</a><a id="1653" href="Ledger.Conway.Certs.html#4181" class="Field">voteDelegsOf</a> <a id="1666" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1642" class="Bound">d</a><a id="1667" class="Symbol">)</a> <a id="1669" href="Interface.HasSubset.html#166" class="Field Operator">⊆</a> <a id="1671" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="1676" class="Symbol">(</a><a id="1677" href="Ledger.Conway.Gov.Actions.html#1156" class="InductiveConstructor">credVoter</a> <a id="1687" href="Ledger.Conway.Gov.Actions.html#1048" class="InductiveConstructor">DRep</a><a id="1691" class="Symbol">)</a> <a id="1693" class="Symbol">(</a><a id="1694" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1698" class="Symbol">(</a><a id="1699" href="Ledger.Conway.Certs.html#4181" class="Field">voteDelegsOf</a> <a id="1712" href="Ledger.Conway.Certs.Properties.VoteDelegsVDeleg.html#1642" class="Bound">d</a><a id="1713" class="Symbol">))</a>
 </pre>
 
-- *Proof*. To appear in the module in the [formal ledger
-  repository](\repourl).
-
-</div>
+<ul>
+<li><em>Proof</em>. To appear in the module in the <a href="\repourl">formal ledger
+  repository</a>.</li>
+</ul>
 
 
 
