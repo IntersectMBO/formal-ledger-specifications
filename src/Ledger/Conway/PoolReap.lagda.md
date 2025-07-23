@@ -1,8 +1,7 @@
-\section{Reaping Transition}
-\label{sec:reaping-transition}
-\modulenote{\LedgerModule{Reap}}
+# Pool Reaping Transition {sec:pool-reaping-transition}
 
-\begin{code}[hide]
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Abstract
@@ -15,38 +14,38 @@ module Ledger.Conway.PoolReap
 open import Ledger.Prelude
 open import Ledger.Conway.Utxo txs abs
 open import Ledger.Conway.Certs govStructure
+```
+-->
 
-\end{code}
-
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+```agda
 record PoolReapState : Type where
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
   constructor ⟦_,_,_,_⟧ᵖ
-\end{code}
-\begin{code}
+```
+```agda
   field
     utxoSt     : UTxOState   -- utxo state
     acnt       : Acnt        -- accounting
     dState     : DState      -- delegation state
     pState     : PState      -- pool state
-\end{code}
-\end{AgdaMultiCode}
-\end{figure*}
+```
 
-\begin{code}[hide]
+<!--
+```agda
 instance
   unquoteDecl HasCast-PoolReapState = derive-HasCast
                 [ (quote PoolReapState , HasCast-PoolReapState) ]
-\end{code}
+```
 
-Recall, \PState{} is a record with two fields, \pools{} and \retiring{} (maps
-on \KeyHash{} with codomains \PoolParams{} and \Epoch{}, respe.)  \PoolParams{}
-is a record with just one field, the \rewardAddr{} credential.
+Recall, `PState`{.AgdaDatatype} is a record with two fields, `pools`{.AgdaField}
+and `retiring`{.AgdaField} (maps on `KeyHash`{.AgdaField} with codomains
+`PoolParams`{.AgdaRecord} and `Epoch`{.AgdaDatatype}, respectively).
+`PoolParams`{.AgdaRecord} is a record with just one field, the
+`rewardAddr`{.AgdaField} credential.
 
-\begin{code}
+```agda
 private variable
   e lastEpoch : Epoch
   poolReapState : PoolReapState
@@ -106,4 +105,4 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
     in
     ────────────────────────────────
     pp ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt' , acnt' , dState' , pState' ⟧
-\end{code}
+```
