@@ -119,7 +119,7 @@ class SourcePaths:
         katex_js_path = md_js_dir / "katex-config.js"
 
         # Navigation
-        mkdocs_nav_yml_path = md_common_dir / "nav.yml"
+        mkdocs_nav_yml_path = mkdocs_dir / "nav.yml"
         mdbook_summary_md_path = mdbook_src_dir / "SUMMARY.md"
 
         return cls(
