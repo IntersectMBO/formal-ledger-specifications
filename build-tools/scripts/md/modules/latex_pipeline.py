@@ -327,8 +327,10 @@ def extract_labels_from_temp_files(
         ))
 
 
-
-
+def replace_math_block(kind: str, label: str, title: str, body: str) -> str:
+    anchor = f'<a id="{label}"></a>\n' if label and label != "none" else ""
+    heading = f"**{kind.capitalize()} ({title.strip(': ').strip()}).**"
+    return f"{anchor}{heading}\n\n{body.strip()}\n"
 
 # =============================================================================
 # High-Level Pipeline Composition
@@ -349,6 +351,8 @@ def _apply_all_postprocessing(
         lambda c: re.sub(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
         lambda c: re.sub(r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
         lambda c: re.sub(r"@@CROSS_REF@@command=(.*?)@@targets=(.*?)@@", lambda m: replace_cross_ref_placeholder(m, label_map), c, flags=re.DOTALL),
+        lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@label=(.*?)@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)",lambda m: replace_math_block(m.group(1).lower(), m.group(2), m.group(3), m.group(4)), c, flags=re.DOTALL),
+        lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)",lambda m: replace_math_block(m.group(1).lower(), "none", m.group(2), m.group(3)), c, flags=re.DOTALL),
         process_admonitions
     ]
 
@@ -476,11 +480,23 @@ def process_latex_files(
 
         if post_process_result.is_err:
             error = post_process_result.unwrap_err()
-            if error.error_type == ErrorType.FILE_NOT_FOUND:
-                logging.warning(f"Skipping post-processing for {stage.relative_path}: {error.message}")
-                continue
+            if isinstance(error, PipelineError):
+                if error.error_type == ErrorType.FILE_NOT_FOUND:
+                    logging.warning(f"Skipping post-processing for {stage.relative_path}: {error.message}")
+                    continue
+                else:
+                    return Result.err(error)
             else:
-                return Result.err(error)
+                # Log unexpected errors more gracefully
+                logging.error(f"Unexpected error during post-processing of {stage.relative_path}: {error}")
+                return Result.err(PipelineError(
+                    error_type=ErrorType.UNKNOWN,
+                    message=f"Unexpected error: {error}",
+                    cause=error
+                ))
+
+
+
     logging.info("      ✔️️  Post-processing completed.")
 
     # STAGE 6: After all files are processed, generate the global bibliography

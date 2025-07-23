@@ -118,3 +118,4 @@ def get_flat_filename(relative_path: Path) -> str:
         flat_name = ".".join(parts)
 
     return f"{flat_name}.md"
+
