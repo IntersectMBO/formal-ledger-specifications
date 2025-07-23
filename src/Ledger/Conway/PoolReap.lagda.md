@@ -55,34 +55,29 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
   POOLREAP : let
     -- open LState ls
     open PoolReapState poolReapState
+    open PoolParams
     open UTxOState
     open PState
     open DState
     open Acnt
     open PParams
 
-    -- retired := dom (retiring⁻¹ e) = { hk : (hk , e) ∈ retiring }  (Shelley Fig 41)
     retired    = (pState .retiring) ⁻¹ e
-
-
-    -- pr = { hk ↦ (poolDeposit pp) | hk ∈ retired }
-    --    = { (hk , poolDeposit pp) ∈ KeyHash × Coin | hk ∈ retired }  (Shelley Fig 41)
     pr = constMap retired  (pp .poolDeposit)
+    rewardAcnts : KeyHash ⇀ Credential
+    rewardAcnts = mapValues rewardAccount $ (pState .pools) ∣ retired
 
-    -- rewardAcnts := { (hk , poolRAcnt pool) ∈ KeyHash × Credential | (hk , pool) ∈ poolParams ↾ retired }  (Shelley Fig 41)
-    -- rewardAcnts : KeyHash ⇀ Credential
-    rewardAcnts = (pState .pools) ∣ retired
+    rewardAcnts' : Credential ⇀ Coin
+    rewardAcnts' =
+      let raccounts = range rewardAcnts
+          combineDeposits : Credential → Coin
+          combineDeposits a = ∑ˢ[ _ ← (rewardAcnts ⁻¹ a) ] pp .poolDeposit
+          rewardAccountDeposits =
+            mapˢ (λ y → (y , combineDeposits y)) raccounts
+       in rewardAccountDeposits , left-unique-mapˢ raccounts
 
-    -- rewardAcnts' : RwdAddr ⇀ Coin
-    -- rewardAcnts' =?= constMap (range (rewardAcnts ˢ)) (pp .poolDeposit)
-
-
-
-    -- refunds := rewardAcnts' ↾ dom rewards         (recall, rewards : Credential ⇀ Coin is stored in DState))
-    refunds    = _ -- pullbackMap (esW .withdrawals) toRwdAddr (dom (dState .rewards))
-    --(recall, pullbackMap : (m : Map A B) → ⦃ ∀ {x} → (x ∈ dom (m ˢ)) ⁇ ⦄ → (A' → A) → Set A' → Map A' B)
-
-    -- refunds =?= rewardAcnts' ∣ (dom (dState .rewards))
+    refunds : Credential ⇀ Coin
+    refunds = rewardAcnts' ∣ dom (dState .rewards)
 
     -- mRefunds := rewardAcnts' ↾ (dom rewards)ᶜ
 
