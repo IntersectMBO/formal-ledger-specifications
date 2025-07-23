@@ -675,7 +675,7 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Agda literate markdown]: https://agda.readthedocs.io/en/v2.8.0/tools/literate-programming.html#literate-markdown-and-typst
-[Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
+[Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/doc/style-guide.md
 [Agda.css]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/Agda.css
 [AgdaKaTeX.js]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/AgdaKaTeX.js
 [agda-stdlib]: https://github.com/agda/agda-stdlib
