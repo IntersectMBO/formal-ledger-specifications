@@ -357,17 +357,6 @@ private variable
   pp : PParams
 \end{code}
 
-Let m be a map on A × B; that is m ⊆ A × B and ∀ a : A, there is at most one b
-such that (a , b) ∈ m.  The Shelley ledger uses some special notation for such
-maps, which we review here, adding the more standard mathematical notation on
-the right-hand side.
-
-s ◃ m = { (k , v) ∈ m | k ∈ s } = m ∩ (s × B) = m ↾ s,
-s ⋪ m = { (k , v) ∈ m | k ∉ s } = m ∩ (sᶜ × B) = m ↾ sᶜ,
-m ▹ s = { (k , v) ∈ m | v ∈ s } = m ∩ (A × s),
-m ⋫ s = { (k , v) ∈ m | v ∉ s } = m ∩ (A × sᶜ).
-
-
 Recall, \PState{} is a record with two fields, \pools{} and \retiring{} (maps
 on \KeyHash{} with codomains \PoolParams{} and \Epoch{}, respe.)  \PoolParams{}
 is a record with just one field, the \rewardAddr{} credential.
