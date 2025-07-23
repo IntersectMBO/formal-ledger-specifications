@@ -61,7 +61,9 @@ class SourcePaths:
     # CSS and JS assets
     md_css_dir: Path
     md_js_dir: Path
+    agda_css_path: Path
     custom_css_path: Path
+    agda_js_path: Path
     custom_js_path: Path
     katex_js_path: Path
 
@@ -110,7 +112,9 @@ class SourcePaths:
         # Assets
         md_css_dir = md_common_src_dir / "css"
         md_js_dir = md_common_src_dir / "js"
+        agda_css_path = md_css_dir / "Agda.css"
         custom_css_path = md_css_dir / "custom.css"
+        agda_js_path = md_js_dir / "Agda.js"
         custom_js_path = md_js_dir / "custom.js"
         katex_js_path = md_js_dir / "katex-config.js"
 
@@ -140,7 +144,9 @@ class SourcePaths:
             references_bib_path=references_bib_path,
             md_css_dir=md_css_dir,
             md_js_dir=md_js_dir,
+            agda_css_path=agda_css_path,
             custom_css_path=custom_css_path,
+            agda_js_path=agda_js_path,
             custom_js_path=custom_js_path,
             katex_js_path=katex_js_path,
             mkdocs_nav_yml_path=mkdocs_nav_yml_path,
@@ -185,7 +191,6 @@ class BuildPaths:
 
     # Key intermediate files
     macros_json_path: Path
-    agda_css_path: Path
     log_file_path: Path
 
     @classmethod
@@ -226,7 +231,6 @@ class BuildPaths:
 
         # Key files
         macros_json_path = build_md_aux_dir / "macros.json"
-        agda_css_path = build_md_aux_dir / "Agda.css"
         log_file_path = build_md_aux_dir / "build.log"
 
         return cls(
@@ -251,7 +255,6 @@ class BuildPaths:
             mdbook_css_dir=mdbook_css_dir,
             mdbook_js_dir=mdbook_js_dir,
             macros_json_path=macros_json_path,
-            agda_css_path=agda_css_path,
             log_file_path=log_file_path,
         )
 
@@ -344,7 +347,7 @@ class SiteConfig:
             generate_mkdocs=True,
             generate_mdbook=False,  # Not yet fully supported
             dynamic_css_files=("css/Agda.css", "css/custom.css"),
-            dynamic_js_files=("js/custom.js", "js/katex-config.js")
+            dynamic_js_files=("js/Agda.js", "js/custom.js", "js/katex-config.js")
         )
 
 

@@ -1,0 +1,45 @@
+/* Aspects. */
+.Agda .Comment, code.AgdaComment             { color: #B22222 }
+.Agda .Background, code.AgdaBackground       {}
+.Agda .Markup, code.AgdaMarkup               { color: #000000 }
+.Agda .Keyword, code.AgdaKeyword             { color: #CD6600 }
+.Agda .String, code.AgdaString               { color: #B22222 }
+.Agda .Number, code.AgdaNumber               { color: #A020F0 }
+.Agda .Symbol, code.AgdaSymbol               { color: #404040 }
+.Agda .PrimitiveType, code.AgdaPrimitiveType { color: #0000CD }
+.Agda .Pragma, code.AgdaPragma               { color: black   }
+.Agda .Operator, code.AgdaOperator           {}
+.Agda .Hole, code.AgdaHole                   { background: #B4EEB4 }
+
+/* NameKinds. */
+.Agda .Bound, code.AgdaBound                                   { color: black   }
+.Agda .Generalizable, code.AgdaGeneralizable                   { color: black   }
+.Agda .InductiveConstructor, code.AgdaInductiveConstructor     { color: #008B00 }
+.Agda .CoinductiveConstructor, code.AgdaCoinductiveConstructor { color: #8B7500 }
+.Agda .Datatype, code.AgdaDatatype                             { color: #0000CD }
+.Agda .Field, code.AgdaField                                   { color: #EE1289 }
+.Agda .Function, code.AgdaFunction                             { color: #0000CD }
+.Agda .Macro, code.AgdaMacro                                   { color: #0000CD }
+.Agda .Module, code.AgdaModule                                 { color: #A020F0 }
+.Agda .Postulate, code.AgdaPostulate                           { color: #0000CD }
+.Agda .Primitive, code.AgdaPrimitive                           { color: #0000CD }
+.Agda .Record, code.AgdaRecord                                 { color: #0000CD }
+
+/* OtherAspects. */
+.Agda .DottedPattern, code.AgdaDottedPattern               {}
+.Agda .UnsolvedMeta, code.AgdaUnsolvedMeta                 { color: black; background: yellow         }
+.Agda .UnsolvedConstraint, code.AgdaUnsolvedConstraint     { color: black; background: yellow         }
+.Agda .TerminationProblem, code.AgdaTerminationProblem     { color: black; background: #FFA07A        }
+.Agda .IncompletePattern, code.AgdaIncompletePattern       { color: black; background: #F5DEB3        }
+.Agda .Error, code.AgdaError                               { color: red;   text-decoration: underline }
+.Agda .TypeChecks, code.AgdaTypeChecks                     { color: black; background: #ADD8E6        }
+.Agda .Deadcode, code.AgdaDeadcode                         { color: black; background: #808080        }
+.Agda .ShadowingInTelescope, code.AgdaShadowingInTelescope { color: black; background: #808080        }
+
+/* Standard attributes. */
+.Agda a { text-decoration: none }
+.Agda a[href]:hover { background-color: #B4EEB4 }
+.Agda [href].hover-highlight { background-color: #B4EEB4; }
+
+/* KaTeX */
+.katex { font-family: inherit; font-size: inherit; font-weight: inherit;
