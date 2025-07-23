@@ -129,9 +129,8 @@ instance
   HasRewards-NewEpochState : HasRewards NewEpochState
   HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
 
-  unquoteDecl HasCast-EpochState HasCast-NewEpochState HasCast-PlReapState = derive-HasCast
+  unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
     ( (quote EpochState     , HasCast-EpochState)
-    ∷ (quote PlReapState    , HasCast-PlReapState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
 
 toRwdAddr : Credential → RwdAddr
@@ -341,7 +340,6 @@ opaque
 
 \begin{code}[hide]
 private variable
-  nes nes' : NewEpochState
   e lastEpoch : Epoch
   fut fut' : RatifyState
   plReapState : PlReapState
@@ -354,73 +352,6 @@ private variable
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
-  pp : PParams
-\end{code}
-
-Recall, \PState{} is a record with two fields, \pools{} and \retiring{} (maps
-on \KeyHash{} with codomains \PoolParams{} and \Epoch{}, respe.)  \PoolParams{}
-is a record with just one field, the \rewardAddr{} credential.
-
-\begin{code}
-data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PlReapState → Epoch → PlReapState → Type where
-  REAP : let
-    -- open LState ls
-    open PlReapState plReapState
-    open RatifyState fut renaming (es to esW)
-    open UTxOState
-    open PState; open DState
-    open Acnt; open EnactState
-    open PParams
-
-    trWithdrawals : RwdAddr ⇀ Coin
-    trWithdrawals = esW .withdrawals
-
-    totWithdrawals : Coin
-    totWithdrawals = ∑[ x ← trWithdrawals ] x
-
-    -- retired := dom (retiring⁻¹ e) = { hk : (hk , e) ∈ retiring }  (Shelley Fig 41)
-    retired    = (pState .retiring) ⁻¹ e
-
-
-    -- pr = { hk ↦ (poolDeposit pp) | hk ∈ retired }
-    --    = { (hk , poolDeposit pp) ∈ KeyHash × Coin | hk ∈ retired }  (Shelley Fig 41)
-    pr = constMap retired  (pp .poolDeposit)
-
-    -- rewardAcnts := { (hk , poolRAcnt pool) ∈ KeyHash × Credential | (hk , pool) ∈ poolParams ↾ retired }  (Shelley Fig 41)
-    -- rewardAcnts : KeyHash ⇀ Credential
-    rewardAcnts = (pState .pools) ∣ retired
-
-    -- rewardAcnts' : RwdAddr ⇀ Coin
-    -- rewardAcnts' =?= constMap (range (rewardAcnts ˢ)) (pp .poolDeposit)
-
-
-
-    -- refunds := rewardAcnts' ↾ dom rewards         (recall, rewards : Credential ⇀ Coin is stored in DState))
-    refunds    = pullbackMap (esW .withdrawals) toRwdAddr (dom (dState .rewards))
-    --(recall, pullbackMap : (m : Map A B) → ⦃ ∀ {x} → (x ∈ dom (m ˢ)) ⁇ ⦄ → (A' → A) → Set A' → Map A' B)
-
-    -- refunds =?= rewardAcnts' ∣ (dom (dState .rewards))
-
-    -- mRefunds := rewardAcnts' ↾ (dom rewards)ᶜ
-
-    unclaimed  = getCoin (esW .withdrawals) - getCoin refunds
-    -- cf. Shelley Fig 41: unclaimed := ∑ {c | ∃ hk (hk , c) ∈ mRefunds }
-
-    utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits , 0 ⟧
-    -- cf. Shelley Fig 41: utxoSt' .deposits = utxoSt .deposits - (unclaimed + getCoin refunds)
-    --                                       = utxoSt .deposits - getCoin (esW .withdrawals)
-
-    acnt' = record acnt
-      { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
-    -- cf. Shelley spec fig 41: acnt' = acnt .treasury + utxoSt .donations + unclaimed
-
-    dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
-
-    pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
-
-    in
-    ────────────────────────────────
-    pp ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt' , acnt' , dState' , pState' ⟧
 \end{code}
 
 
