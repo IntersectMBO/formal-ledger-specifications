@@ -96,7 +96,7 @@ module _
 \end{code}
     \item \textit{Proof}.  See the
       \LedgerMod{\ChainPropGov.lagda}{\AgdaModule{\ChainPropGov{}}}
-       module in the \href{\repourl}{formal ledger repository}.
+       module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
   CHAIN-govDepsMatch rrm rss (CHAIN (x , NEWEPOCH-New (_ , eps₁→eps₂) , ledgers)) =

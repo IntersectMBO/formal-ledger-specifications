@@ -84,7 +84,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{\repourl}{formal ledger repository}.
+      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
@@ -160,7 +160,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{\repourl}{formal ledger repository}.
+      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
     -- Proof.
     CERTBASE-pov  {Γ   = Γ}
@@ -233,7 +233,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{\repourl}{formal ledger repository}.
+      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
     -- Proof.
     sts-pov (BS-base Id-nop) = refl

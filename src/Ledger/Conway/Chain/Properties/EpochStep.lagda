@@ -42,6 +42,6 @@ enact-change⇒newEpoch b {cs} h es≢es' = epoch (b .slot) ≡ sucᵉ (LastEpoc
 \end{AgdaMultiCode}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropEpoch.lagda}{\AgdaModule{\ChainPropEpoch{}}}
-      module of the \href{\repourl}{formal ledger repository}).
+      module of the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}).
   \end{itemize}
 \end{claim}

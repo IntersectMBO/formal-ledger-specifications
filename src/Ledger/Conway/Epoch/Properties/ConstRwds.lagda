@@ -36,6 +36,6 @@ dom-rwds-const es es' step = dom (RewardsOf es) ≡ dom (RewardsOf es')
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}} module
-      of the \href{\repourl}{formal ledger repository}).
+      of the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}).
   \end{itemize}
 \end{claim}

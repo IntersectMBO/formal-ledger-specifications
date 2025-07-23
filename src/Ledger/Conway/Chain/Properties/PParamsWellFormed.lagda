@@ -42,6 +42,6 @@ pp-wellFormed-invariant = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ pp-wellFormed
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module
-      of the \href{\repourl}{formal ledger repository}).
+      of the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}).
   \end{itemize}
 \end{claim}

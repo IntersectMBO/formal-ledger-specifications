@@ -40,6 +40,6 @@ ChangePPHasGroup pu _ _ = updateGroups pu ≢ ∅
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\ChangePPGroup.lagda}{\AgdaModule{\ChangePPGroup{}}} module
-      of the \href{\repourl}{formal ledger repository}).
+      of the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}).
   \end{itemize}
 \end{claim}

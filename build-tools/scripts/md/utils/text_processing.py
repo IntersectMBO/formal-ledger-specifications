@@ -56,9 +56,9 @@ def replace_cross_ref_placeholder(match: re.Match, label_map: Dict) -> str:
             caption = target_info.get("caption_text", label_id)
             target_file = target_info.get("file", "")
             anchor = target_info.get("anchor", "")
-            prefix = "Figure" if label_id.startswith("fig:") else "Section"
+            #prefix = "Figure" if label_id.startswith("fig:") else "Section"
 
-            link_text = f"{prefix} '{caption}'"
+            link_text = f"{caption}"
             if target_file and anchor:
                 link_parts.append(f"[{link_text}]({target_file}{anchor})")
             else:

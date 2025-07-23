@@ -40,6 +40,6 @@ voteDelegsVDeleg d = range (voteDelegsOf d) ⊆ mapˢ (credVoter DRep) (dom (vot
 \end{code}
     \item \textit{Proof}. To appear in the
       \LedgerMod{\CertsVDelegs.lagda}{\AgdaModule{\CertsVDelegs{}}}
-      module in the \href{\repourl}{formal ledger repository}.
+      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
   \end{itemize}
 \end{claim}

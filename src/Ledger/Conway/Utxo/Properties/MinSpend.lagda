@@ -153,7 +153,7 @@ module _ -- ASSUMPTION --
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-      in the \href{\repourl}{formal ledger repository}.
+      in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
   utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
@@ -256,7 +256,7 @@ module _
 \end{code}
   \item \textit{Proof}. See the
     \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-    in the \href{\repourl}{formal ledger repository}.
+    in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
   propose-minSpend noRef valid = case valid of λ where
     (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → utxoMinSpend indexedSum-∪⁺-hom x noRef

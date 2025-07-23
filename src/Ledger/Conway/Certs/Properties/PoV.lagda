@@ -49,7 +49,7 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
     ( ≡ᵉ-getCoinˢ'     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
-    open CERTSpov indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'     
+    open CERTSpov indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'
 \end{code}
 
 \begin{theorem}[%
@@ -66,12 +66,12 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
 \begin{code}
     CERTS-pov :  {Γ : CertEnv} {s₁ sₙ  : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
-      →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ 
+      →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
       → getCoin s₁ ≡ getCoin sₙ + getCoin (wdrlsOf Γ)
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
-      module in the \href{\repourl}{formal ledger repository}.
+      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
     -- Proof.
     CERTS-pov validNetId (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov validNetId bsts

@@ -69,7 +69,7 @@ module _
 \end{AgdaMultiCode}
     \item \textit{Proof}. See the
       \LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}
-      module in the \href{\repourl}{formal ledger repository}.
+      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
   LEDGER-pov
