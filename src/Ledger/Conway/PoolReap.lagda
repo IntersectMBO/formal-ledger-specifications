@@ -21,7 +21,7 @@ open import Ledger.Conway.Certs govStructure
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
-record PlReapState : Type where
+record PoolReapState : Type where
 \end{code}
 \begin{code}[hide]
   constructor ⟦_,_,_,_⟧ᵖ
@@ -38,8 +38,8 @@ record PlReapState : Type where
 
 \begin{code}[hide]
 instance
-  unquoteDecl HasCast-PlReapState = derive-HasCast
-                [ (quote PlReapState , HasCast-PlReapState) ]
+  unquoteDecl HasCast-PoolReapState = derive-HasCast
+                [ (quote PoolReapState , HasCast-PoolReapState) ]
 \end{code}
 
 Recall, \PState{} is a record with two fields, \pools{} and \retiring{} (maps
@@ -49,13 +49,13 @@ is a record with just one field, the \rewardAddr{} credential.
 \begin{code}
 private variable
   e lastEpoch : Epoch
-  plReapState : PlReapState
+  poolReapState : PoolReapState
   pp : PParams
 
-data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PlReapState → Epoch → PlReapState → Type where
-  REAP : let
+data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolReapState → Type where
+  POOLREAP : let
     -- open LState ls
-    open PlReapState plReapState
+    open PoolReapState poolReapState
     open UTxOState
     open PState
     open DState
