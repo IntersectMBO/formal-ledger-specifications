@@ -36,6 +36,7 @@ open import Ledger.Conway.Certs govStructure
 open import Ledger.Conway.Enact govStructure
 open import Ledger.Conway.Gov txs
 open import Ledger.Conway.Ledger txs abs
+open import Ledger.Conway.PoolReap txs abs
 open import Ledger.Conway.Ratify txs
 open import Ledger.Conway.Rewards txs abs
 open import Ledger.Conway.Utxo txs abs
@@ -122,7 +123,7 @@ instance
   HasCertState-NewEpochState : HasCertState NewEpochState
   HasCertState-NewEpochState .CertStateOf = CertStateOf ∘ LStateOf
 
-  HasDReps-NewEpochState : HasDReps NewEpochState 
+  HasDReps-NewEpochState : HasDReps NewEpochState
   HasDReps-NewEpochState .DRepsOf = DRepsOf ∘ CertStateOf
 
   HasRewards-NewEpochState : HasRewards NewEpochState
@@ -339,12 +340,11 @@ opaque
 
 \begin{code}[hide]
 private variable
-  nes nes' : NewEpochState
   e lastEpoch : Epoch
   fut fut' : RatifyState
+  plReapState : PlReapState
   eps eps' eps'' : EpochState
   ls : LState
-  acnt : Acnt
   es₀ : EnactState
   mark set go : Snapshot
   feeSS : Coin
@@ -358,15 +358,23 @@ private variable
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{code}
+private variable
+  acnt acnt' : Acnt
+  utxoSt'    : UTxOState
+  dState'    : DState
+  gState'    : GState
+  pState'    : PState
+  govSt'     : GovState
+
+
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 \end{code}
 \end{figure*}
 \end{NoConway}
 
 \Cref{fig:epoch:sts} defines the EPOCH transition rule.
-Currently, this incorporates logic that was previously handled by
-POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec};
-POOLREAP is not implemented here.
+Previously, this incorporated the logic that is now handled by
+REAP (called POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
 
 The EPOCH rule now also needs to invoke RATIFIES and properly deal with
 its results by carrying out each of the following tasks.
