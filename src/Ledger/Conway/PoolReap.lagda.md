@@ -49,9 +49,8 @@ and `retiring`{.AgdaField} (maps on `KeyHash`{.AgdaField} with codomains
 private variable
   e lastEpoch : Epoch
   poolReapState : PoolReapState
-  pp : PParams
 
-data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolReapState → Type where
+data _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapState → Type where
   POOLREAP : let
     open PoolReapState poolReapState
     open PoolParams
@@ -62,14 +61,14 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
     open PParams
 
     retired    = pState .retiring ⁻¹ e
-    rewardAcnts : KeyHash ⇀ Credential
-    rewardAcnts = mapValues rewardAccount $ (pState .pools) ∣ retired
+    rewardAcnts : DepositPurpose ⇀ Credential
+    rewardAcnts =
+      mapKeys PoolDeposit $
+      mapValues rewardAccount $
+      pState .pools ∣ retired
 
     rewardAcnts' : Credential ⇀ Coin
-    rewardAcnts' =
-      let combineDeposits : Credential → Coin
-          combineDeposits a = ∑ˢ[ _ ← rewardAcnts ⁻¹ a ] pp .poolDeposit
-       in mapFromFun combineDeposits (range rewardAcnts)
+    rewardAcnts' = aggregateBy (rewardAcnts ˢ) (utxoSt .deposits)
 
     refunds : Credential ⇀ Coin
     refunds = rewardAcnts' ∣ dom (dState .rewards)
@@ -95,6 +94,6 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
 
     in
     ────────────────────────────────
-    pp ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
-         ⟦ utxoSt' , acnt' , dState' , pState' ⟧
+    _ ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
+        ⟦ utxoSt' , acnt' , dState' , pState' ⟧
 ```

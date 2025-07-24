@@ -342,7 +342,7 @@ opaque
 private variable
   e lastEpoch : Epoch
   fut fut' : RatifyState
-  plReapState : PlReapState
+  poolReapState : PoolReapState
   eps eps' eps'' : EpochState
   ls : LState
   es₀ : EnactState
@@ -374,7 +374,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
 \Cref{fig:epoch:sts} defines the EPOCH transition rule.
 Previously, this incorporated the logic that is now handled by
-REAP (called POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
+POOLREAP (Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
 
 The EPOCH rule now also needs to invoke RATIFIES and properly deal with
 its results by carrying out each of the following tasks.
@@ -414,27 +414,25 @@ its results by carrying out each of the following tasks.
       trWithdrawals   = esW .withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
-      retired    = (pState .retiring) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
       refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
       unclaimed  = getCoin payout - getCoin refunds
 
       govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
 
-      dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
-
-      pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
+      dState'' = record dState' { rewards =  dState' .rewards ∪⁺ refunds }
 
       gState' = ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
                 , gState .ccHotKeys ∣ ccCreds (es .cc) ⟧
 
       certState' : CertState
-      certState' = ⟦ dState' , pState' , gState' ⟧
+      certState' = ⟦ dState'' , pState' , gState' ⟧
 
-      utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+      utxoSt'' = ⟦ utxoSt' .utxo , utxoSt' .fees , utxoSt' .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
 
-      acnt' = record acnt
-        { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
+      acnt'' = record acnt'
+        { treasury  = acnt' .treasury ∸ totWithdrawals + utxoSt' .donations + unclaimed }
+
     in
     record { currentEpoch = e
            ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
@@ -443,9 +441,11 @@ its results by carrying out each of the following tasks.
            ; pools = pState .pools ; delegatees = dState .voteDelegs }
         ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+      → _ ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
+            ⟦ utxoSt' , acnt' , dState' , pState' ⟧
     ────────────────────────────────
     _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
-        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ , es , fut' ⟧
+        ⟦ acnt'' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ , es , fut' ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}
