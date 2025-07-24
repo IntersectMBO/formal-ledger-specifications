@@ -53,7 +53,6 @@ private variable
 
 data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolReapState → Type where
   POOLREAP : let
-    -- open LState ls
     open PoolReapState poolReapState
     open PoolParams
     open UTxOState
@@ -82,15 +81,9 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
     retiredDeposits : ℙ DepositPurpose
     retiredDeposits = mapˢ PoolDeposit retired
 
-    utxoSt' =
-      ⟦ utxoSt .utxo
-      , utxoSt .fees
-      , utxoSt .deposits ∣ retiredDeposits ᶜ
-      , 0
-      ⟧
+    utxoSt' = record utxoSt { deposits = utxoSt .deposits ∣ retiredDeposits ᶜ }
 
-    acnt' =
-      record acnt { treasury = acnt .treasury + utxoSt .donations + unclaimed }
+    acnt' = record acnt { treasury = acnt .treasury + unclaimed }
 
     dState' =
       ⟦ dState .voteDelegs
