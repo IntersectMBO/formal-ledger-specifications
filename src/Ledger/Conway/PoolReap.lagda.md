@@ -68,12 +68,9 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
 
     rewardAcnts' : Credential ⇀ Coin
     rewardAcnts' =
-      let raccounts = range rewardAcnts
-          combineDeposits : Credential → Coin
-          combineDeposits a = ∑ˢ[ _ ← (rewardAcnts ⁻¹ a) ] pp .poolDeposit
-          rewardAccountDeposits =
-            mapˢ (λ y → (y , combineDeposits y)) raccounts
-       in rewardAccountDeposits , left-unique-mapˢ raccounts
+      let combineDeposits : Credential → Coin
+          combineDeposits a = ∑ˢ[ _ ← rewardAcnts ⁻¹ a ] pp .poolDeposit
+       in mapFromFun combineDeposits (range rewardAcnts)
 
     refunds : Credential ⇀ Coin
     refunds = rewardAcnts' ∣ dom (dState .rewards)
