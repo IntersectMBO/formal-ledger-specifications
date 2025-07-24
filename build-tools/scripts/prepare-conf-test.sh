@@ -20,11 +20,7 @@ main () {
 
   printf "Commenting out SRP from cabal.project...\n"
   sed -i                                        \
-      -e 's/^source-repository-package/ -- \0/' \
-      -e 's/^[[:blank:]]*type/ -- \0/'          \
-      -e 's/^[[:blank:]]*location/ -- \0/'      \
-      -e 's/^[[:blank:]]*subdir/ -- \0/'        \
-      -e 's/^[[:blank:]]*tag/ -- \0/'           \
+      -e '13,19s/^/--/'                         \
       "$cardano_ledger_repo_dir/cabal.project"
 
   # if a package with /nix/store/* exists in the cabal.project file, remove it
