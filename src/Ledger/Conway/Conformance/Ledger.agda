@@ -4,21 +4,21 @@
 import Data.List as L
 
 open import Ledger.Prelude
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Ledger
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.Enact govStructure
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Gov txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 
-open import Ledger.Conway.Ledger txs abs public
+open import Ledger.Conway.Specification.Ledger txs abs public
   using (LEnv; HasCast-LEnv; allColdCreds; rmOrphanDRepVotes; txgov)
 
 open Tx

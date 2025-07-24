@@ -6,10 +6,10 @@ open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.PParams
 
-open import Ledger.Conway.Gov.Base
-open import Ledger.Conway.Gov.Actions govStructure using (Vote) public
+open import Ledger.Conway.Specification.Gov.Base
+open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote) public
 
-DocHash = GovStructure.DocHash govStructure 
+DocHash = GovStructure.DocHash govStructure
 
 -- nondependent version of GovAction
 data GovAction' : Type where

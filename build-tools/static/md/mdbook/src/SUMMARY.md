@@ -50,12 +50,11 @@
 
 - [Ledger.Conway.Fees](./Ledger.Conway.Fees.md)
 
-- [Ledger.Conway.Gov](./Ledger.Conway.Gov.md)
-- [Ledger.Conway.Gov.Properties](./Ledger.Conway.Gov.Properties.md)
+- [Ledger.Conway.Specification.Gov](./Ledger.Conway.Specification.Gov.md)
+- [Ledger.Conway.Specification.Gov.Actions](./Ledger.Conway.Specification.Gov.Actions.md)
+- [Ledger.Conway.Specification.Gov.Properties](./Ledger.Conway.Specification.Gov.Properties.md)
+- [Ledger.Conway.Specification.Gov.Properties.ChangePPGroup](./Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md)
 
-- [Ledger.Conway.GovernanceActions](./Ledger.Conway.GovernanceActions.md)
-- [Ledger.Conway.GovernanceActions.Properties](./Ledger.Conway.GovernanceActions.Properties.md)
-- [Ledger.Conway.GovernanceActions.Properties.ChangePPGroup](./Ledger.Conway.GovernanceActions.Properties.ChangePPGroup.md)
 
 - [Ledger.Conway.Ledger](./Ledger.Conway.Ledger.md)
 - [Ledger.Conway.Ledger.Properties](./Ledger.Conway.Ledger.Properties.md)
@@ -96,7 +95,6 @@
 
 ## Appendix
 
-- [Essentialagda](./EssentialAgda.md)
 - [Agda Prelude](./Prelude.md)
 
 ### Type Classes
