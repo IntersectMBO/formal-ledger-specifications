@@ -26,7 +26,7 @@ import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Data.Nat.Properties
 import qualified MAlonzo.Code.Interface.HasSubset
 import qualified MAlonzo.Code.Interface.HasSubtract
-import qualified MAlonzo.Code.Ledger.Interface.HasCoin
+import qualified MAlonzo.Code.Ledger.Prelude.HasCoin
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- Ledger.Prelude.Instances.CommMonoid-ℕ-+
@@ -39,14 +39,14 @@ d_CommMonoid'45'ℕ'45''43'_6
 d_HasCoin'45'Map_10 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
+  MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 d_HasCoin'45'Map_10 ~v0 v1 = du_HasCoin'45'Map_10 v1
 du_HasCoin'45'Map_10 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
+  MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 du_HasCoin'45'Map_10 v0
   = coe
-      MAlonzo.Code.Ledger.Interface.HasCoin.C_HasCoin'46'constructor_9
+      MAlonzo.Code.Ledger.Prelude.HasCoin.C_HasCoin'46'constructor_9
       (coe
          (\ v1 ->
             coe
@@ -64,14 +64,14 @@ du_HasCoin'45'Map_10 v0
 d_HasCoin'45'Set_18 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
+  MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 d_HasCoin'45'Set_18 ~v0 v1 = du_HasCoin'45'Set_18 v1
 du_HasCoin'45'Set_18 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Ledger.Interface.HasCoin.T_HasCoin_10
+  MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 du_HasCoin'45'Set_18 v0
   = coe
-      MAlonzo.Code.Ledger.Interface.HasCoin.C_HasCoin'46'constructor_9
+      MAlonzo.Code.Ledger.Prelude.HasCoin.C_HasCoin'46'constructor_9
       (coe
          (\ v1 ->
             coe

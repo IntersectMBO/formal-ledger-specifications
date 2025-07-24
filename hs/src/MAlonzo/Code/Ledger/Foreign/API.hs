@@ -3,7 +3,7 @@ module MAlonzo.Code.Ledger.Foreign.API
   , module MAlonzo.Code.Ledger.Foreign.API
   ) where
 
-import MAlonzo.Code.Ledger.Conway.Foreign.HSTypes                    as X
+import MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes                   as X
   (HSSet(..), HSMap(..), ComputationResult(..), Rational(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address           as X
   (Credential(..), BaseAddr(..), BootstrapAddr(..), RwdAddr(..), Addr, HSVKey (..))
@@ -28,7 +28,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core          as X
   (GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov               as X
   ( GovEnv(..), GovProposal(..), GovActionState(..), govStep, GovState, GovActionID, Voter)
-import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.GovernanceActions as X
+import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions       as X
   (GovAction (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger            as X
   (LEnv(..), LState(..), ledgerStep, ledgersStep)
