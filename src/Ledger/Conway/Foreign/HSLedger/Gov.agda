@@ -11,10 +11,10 @@ open import Ledger.Conway.Foreign.HSLedger.Gov.Actions
 open import Ledger.Conway.Foreign.HSLedger.Cert
 
 open import Ledger.Conway.Conformance.Certs govStructure
-open import Ledger.Conway.Enact govStructure
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Gov it it
-import Ledger.Conway.Gov it as L
-open import Ledger.Conway.Gov.Properties it
+import Ledger.Conway.Specification.Gov it as L
+open import Ledger.Conway.Specification.Gov.Properties it
 
 instance
 

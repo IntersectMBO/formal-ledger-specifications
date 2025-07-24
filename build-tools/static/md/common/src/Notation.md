@@ -50,7 +50,7 @@ to the values of the map
 
 ## Record types
 
-These are explained in [Agda Essentials](EssentialAgda.md#sec:appendix-agda-essentials).
+See the official documentation on [Agda record types][].
 
 ## Postfix Projections
 

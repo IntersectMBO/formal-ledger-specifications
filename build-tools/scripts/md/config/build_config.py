@@ -271,7 +271,7 @@ class AgdaConfig:
     lib_file_name: str
 
     @classmethod
-    def default(cls) -> AgdaConfig:
+    def default(cls: Type[AgdaConfig]) -> AgdaConfig:
         """Default Agda configuration."""
         return cls(
             dependencies=(
@@ -282,8 +282,7 @@ class AgdaConfig:
                 "iog-prelude"
             ),
             html_main_file="Ledger.lagda.md",
-            # Using EssentialAgda for now
-            html_test_file="EssentialAgda.lagda.md",
+            html_test_file="Ledger.lagda.md", # Using Ledger.lagda.md for now
             generate_html=True,
             html_backend_flags=("--fls","--fls-main-only"),
             lib_file_name="formal-ledger.agda-lib"

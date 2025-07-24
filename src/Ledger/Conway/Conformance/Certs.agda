@@ -1,16 +1,16 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Gov.Base
-import Ledger.Conway.Certs
+open import Ledger.Conway.Specification.Gov.Base
+import Ledger.Conway.Specification.Certs
 
 module Ledger.Conway.Conformance.Certs
   (gs : _) (open GovStructure gs)
   where
 
 
-open import Ledger.Conway.Gov.Actions gs
-private module Certs = Ledger.Conway.Certs gs
+open import Ledger.Conway.Specification.Gov.Actions gs
+private module Certs = Ledger.Conway.Specification.Certs gs
 open Certs public
   hiding (DState; GState; CertState; HasCast-DState; HasCast-GState; HasCast-CertState;
           _⊢_⇀⦇_,POOL⦈_; _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;

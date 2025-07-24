@@ -22,11 +22,11 @@
 \includeAgda{Ledger/Conway/Script/Timelock}
 \includeAgda{Ledger/Conway/PParams}
 \includeAgda{Ledger/Conway/Fees}
-\includeAgda{Ledger/Conway/GovernanceActions}
+\includeAgda{Ledger/Conway/Specification/Gov/Actions}
 \includeAgda{Ledger/Conway/Transaction}
 \includeAgda{Ledger/Conway/Utxo}
 \includeAgda{Ledger/Conway/Utxow}
-\includeAgda{Ledger/Conway/Gov}
+\includeAgda{Ledger/Conway/Specification/Gov}
 \includeAgda{Ledger/Conway/Certs}
 \includeAgda{Ledger/Conway/Ledger}
 \includeAgda{Ledger/Conway/Enact}
@@ -80,7 +80,7 @@ means the following:  if \govDepsMatch{}~\ab{s} and
 \inputAgda{Ledger/Conway/Utxo/Properties/MinSpend}
 
 \subsection{Miscellaneous Properties}
-\inputAgda{Ledger/Conway/GovernanceActions/Properties/ChangePPGroup}
+\inputAgda{Ledger/Conway/Specification/Gov/Properties/ChangePPGroup}
 \inputAgda{Ledger/Conway/Chain/Properties/EpochStep}
 \inputAgda{Ledger/Conway/Epoch/Properties/ConstRwds}
 \inputAgda{Ledger/Conway/Epoch/Properties/NoPropSameDReps}
@@ -97,7 +97,6 @@ means the following:  if \govDepsMatch{}~\ab{s} and
 \appendix
 
 \input{Definitions}
-\inputAgda{EssentialAgda}
 \input{ConwayBootstrapEnact}
 \input{ConwayBootstrap}
 
