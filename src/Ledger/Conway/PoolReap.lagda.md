@@ -62,8 +62,7 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
     open Acnt
     open PParams
 
-    retired    = (pState .retiring) ⁻¹ e
-    pr = constMap retired  (pp .poolDeposit)
+    retired    = pState .retiring ⁻¹ e
     rewardAcnts : KeyHash ⇀ Credential
     rewardAcnts = mapValues rewardAccount $ (pState .pools) ∣ retired
 
@@ -83,16 +82,29 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
 
     unclaimed  = getCoin mRefunds
 
-    utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits , 0 ⟧
+    retiredDeposits : ℙ DepositPurpose
+    retiredDeposits = mapˢ PoolDeposit retired
 
-    acnt' = record acnt { treasury = acnt .treasury + unclaimed }
-    -- cf. Shelley spec fig 41: acnt' = acnt .treasury + utxoSt .donations + unclaimed
+    utxoSt' =
+      ⟦ utxoSt .utxo
+      , utxoSt .fees
+      , utxoSt .deposits ∣ retiredDeposits ᶜ
+      , 0
+      ⟧
 
-    dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ∣^ retired ᶜ , dState .rewards ∪⁺ refunds ⟧
+    acnt' =
+      record acnt { treasury = acnt .treasury + utxoSt .donations + unclaimed }
+
+    dState' =
+      ⟦ dState .voteDelegs
+      , dState .stakeDelegs ∣^ retired ᶜ
+      , dState .rewards ∪⁺ refunds
+      ⟧
 
     pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
 
     in
     ────────────────────────────────
-    pp ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt' , acnt' , dState' , pState' ⟧
+    pp ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
+         ⟦ utxoSt' , acnt' , dState' , pState' ⟧
 ```
