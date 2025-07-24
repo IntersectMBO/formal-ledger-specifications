@@ -79,21 +79,16 @@ data _⊢_⇀⦇_,POOLREAP⦈_ : PParams → PoolReapState → Epoch → PoolRea
     refunds : Credential ⇀ Coin
     refunds = rewardAcnts' ∣ dom (dState .rewards)
 
-    -- mRefunds := rewardAcnts' ↾ (dom rewards)ᶜ
+    mRefunds = rewardAcnts' ∣ dom (dState .rewards) ᶜ
 
---    unclaimed  = getCoin (esW .withdrawals) - getCoin refunds
-    -- cf. Shelley Fig 41: unclaimed := ∑ {c | ∃ hk (hk , c) ∈ mRefunds }
+    unclaimed  = getCoin mRefunds
 
     utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits , 0 ⟧
-    -- cf. Shelley Fig 41: utxoSt' .deposits = utxoSt .deposits - (unclaimed + getCoin refunds)
-    --                                       = utxoSt .deposits - getCoin (esW .withdrawals)
 
-    acnt' = _
-    -- record acnt
---      { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
+    acnt' = record acnt { treasury = acnt .treasury + unclaimed }
     -- cf. Shelley spec fig 41: acnt' = acnt .treasury + utxoSt .donations + unclaimed
 
-    dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
+    dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ∣^ retired ᶜ , dState .rewards ∪⁺ refunds ⟧
 
     pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
 
