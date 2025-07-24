@@ -177,6 +177,7 @@
     - Convertible: Foreign.Convertible.md
     - Convertible/:
       - Deriving: Foreign.Convertible.Deriving.md
+      - DerivingTest: Foreign.Convertible.DerivingTest.md
     - HaskellTypes: Foreign.HaskellTypes.md
     - HaskellTypes/:
       - Deriving: Foreign.HaskellTypes.Deriving.md
