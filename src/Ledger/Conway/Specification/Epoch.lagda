@@ -359,12 +359,12 @@ private variable
 \begin{figure*}[h]
 \begin{code}
 private variable
-  acnt acnt' : Acnt
-  utxoSt'    : UTxOState
-  dState'    : DState
-  gState'    : GState
-  pState'    : PState
-  govSt'     : GovState
+  acnt acnt'' : Acnt
+  utxoSt''    : UTxOState
+  dState'     : DState
+  gState'     : GState
+  pState'     : PState
+  govSt'      : GovState
 
 
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
@@ -428,10 +428,13 @@ its results by carrying out each of the following tasks.
       certState' : CertState
       certState' = ⟦ dState'' , pState' , gState' ⟧
 
-      utxoSt'' = ⟦ utxoSt' .utxo , utxoSt' .fees , utxoSt' .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+      utxoSt' = record utxoSt
+        { deposits = utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
+        ; donations = 0
+        }
 
       acnt'' = record acnt'
-        { treasury  = acnt' .treasury ∸ totWithdrawals + utxoSt' .donations + unclaimed }
+        { treasury  = acnt' .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
 
     in
     record { currentEpoch = e
@@ -441,11 +444,11 @@ its results by carrying out each of the following tasks.
            ; pools = pState .pools ; delegatees = dState .voteDelegs }
         ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-      → _ ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
-            ⟦ utxoSt' , acnt' , dState' , pState' ⟧
+      → _ ⊢ ⟦ utxoSt' , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
+            ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
     ────────────────────────────────
     _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
-        ⟦ acnt'' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ , es , fut' ⟧
+        ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , certState' ⟧ , es , fut' ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}
