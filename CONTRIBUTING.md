@@ -266,6 +266,48 @@ First, build `agdaWithPackages` and create a stable symlink to it in your home d
 nix-build -A agdaWithPackages -o ~/ledger-agda
 ```
 
+### Setting up multiple versions with `update-alternatives` (OPTIONAL)
+
+**For Linux users**.
+
+If you have `update-alternatives` installed, then, instead of creating a symlink from
+your home directory (or some other directory that's in your `PATH`) to our version of
+agda in `~/ledger-agda/bin/agda`, you can configure multiple versions of `agda` and
+`agda-mode` as follows:
+
+```bash
+sudo update-alternatives --install /usr/bin/agda agda ~/ledger-agda/bin/agda 1
+```
+
+Do the same for any other versions of Agda that you have installed, and want to make
+available, on your system.
+
+For example,
+
+```bash
+sudo update-alternatives --install /usr/bin/agda agda ~/.cabal/bin/agda-2.8.0 10
+```
+
+Now, install the associated version of `agda-mode`, which is required for using Agda
+(versions < 2.8.0) in Emacs:
+
+```bash
+sudo update-alternatives --install /usr/bin/agda-mode agda-mode ~/ledger-agda/bin/agda-mode 1
+```
+
+Finally, choose which Agda version you want to use:
+
+```bash
+sudo update-alternatives --config agda
+```
+
+and, if you choose a version below 2.8.0, be sure to select the appropriate
+`agda-mode` version to accompany it!
+
+```bash
+sudo update-alternatives --config agda-mode
+```
+
 ### Emacs
 
 1.  **Configure Emacs for version switching**.
@@ -280,7 +322,7 @@ nix-build -A agdaWithPackages -o ~/ledger-agda
     ;; If there are two entries in `my/agda-versions', `my/switch-agda' toggles
     ;; between the two. If there are more entries, it will ask which one
     ;; to choose.
-    (setq my/agda-versions `(("System Agda"  "2.6.4" "agda")  ; Adjust version as needed
+    (setq my/agda-versions `(("System Agda"  "2.8.0" "agda")  ; Adjust version as needed
                              ("Ledger Agda"  "2.7.0.1" "~/ledger-agda/bin/agda")))
     (setq my/selected-agda (caar my/agda-versions))
 
