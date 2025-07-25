@@ -266,6 +266,8 @@ First, build `agdaWithPackages` and create a stable symlink to it in your home d
 nix-build -A agdaWithPackages -o ~/ledger-agda
 ```
 
+---
+
 ### Setting up multiple versions with `update-alternatives` (OPTIONAL)
 
 **For Linux users**.
@@ -308,7 +310,14 @@ and, if you choose a version below 2.8.0, be sure to select the appropriate
 sudo update-alternatives --config agda-mode
 ```
 
+---
+
 ### Emacs
+
+(This section does not assume you followed the optional `update-alternative`
+setup instructions above.  However, even if you did, you can still carry out
+the customization instructions in the present section, which do not conflict with
+the `update-alternatives` approach.)
 
 1.  **Configure Emacs for version switching**.
 
