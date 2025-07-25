@@ -14,6 +14,7 @@ module Ledger.Conway.Specification.Epoch.Properties
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Ratify.Properties txs
 open import Ledger.Conway.Specification.Rewards txs abs
@@ -30,6 +31,13 @@ module _ (lstate : LState) (ss : Snapshots) where
   SNAP-complete : ∀ ss' → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss' → proj₁ SNAP-total ≡ ss'
   SNAP-complete ss' SNAP = refl
 
+module _ {e : Epoch} (prs : PoolReapState) where
+  POOLREAP-total : ∃[ prs' ] _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
+  POOLREAP-total = -, POOLREAP
+
+  POOLREAP-complete : ∀ prs' → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs' → proj₁ POOLREAP-total ≡ prs'
+  POOLREAP-complete prs' POOLREAP = refl
+
 module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
@@ -39,11 +47,40 @@ module _ {eps : EpochState} {e : Epoch} where
   govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-  EPOCH-total = -, EPOCH (RATIFIES-total' .proj₂) (SNAP-total ls ss .proj₂)
+  EPOCH-total =
+    -, EPOCH
+        (RATIFIES-total' .proj₂)
+        (SNAP-total ls ss .proj₂)
+        (POOLREAP-total
+          ⟦ removeGovActionDepositsAndDonations fut govSt utxoSt
+          , acnt
+          , dState
+          , pState
+          ⟧ .proj₂
+        )
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
-  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut }) (SNAP-complete _ _ _ p₂)
-    (RATIFIES-complete' (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
+  EPOCH-complete eps' (EPOCH p₁ p₂ p₃) =
+    cong₂ _$_
+      (cong₂
+        (λ ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) → record
+          { acnt = treasuryEpochUpdate fut govSt certState utxoSt acnt'
+          ; ss = ss
+          ; ls = ⟦ utxoSt''
+                 , removeFromGovState fut govSt
+                 , ⟦ addRefundsToRewards fut govSt utxoSt dState'
+                   , pState'
+                   , updateGState fut govSt gState
+                   ⟧ᶜˢ
+                 ⟧ˡ
+          ; es = _
+          ; fut = fut'
+          })
+        (SNAP-complete _ _ _ p₂)
+        (RATIFIES-complete'
+          (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
+      )
+      (POOLREAP-complete _ _ p₃)
     where
       ty : Snapshot → Set
       ty x = record
