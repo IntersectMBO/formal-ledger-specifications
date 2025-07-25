@@ -54,9 +54,24 @@ def generate_macros_json(sty_content: str) -> str:
     }
     return json.dumps(output_json, indent=2)
 
+
+
+def extract_agda_class_rules(css_text: str) -> Dict[str, str]:
+    """
+    Extracts `.Agda .ClassName { ... }` rules from a CSS string.
+    Returns a dict: { ClassName: "property: value; ..." }
+    """
+    pattern = re.compile(r"\.Agda\s+\.([\w-]+)\s*\{\s*([^}]*)\}")
+    return {
+        match.group(1): re.sub(r'\s+', ' ', match.group(2).strip())
+        for match in pattern.finditer(css_text)
+    }
+
+
 def generate_custom_css_from_agda(
     agda_css_content: str,
-    existing_custom_css: Optional[str] = None
+    existing_custom_css: Optional[str] = None,
+    agda_dark_css_content: Optional[str] = None
 ) -> str:
     """
     Generates custom.css content by extracting colors from Agda.css.
@@ -93,6 +108,19 @@ def generate_custom_css_from_agda(
     for class_name, properties in sorted(color_mappings.items()):
         rule = f"code.Agda{class_name} {{\n    {properties}\n}}"
         css_parts.append(rule)
+
+    if agda_dark_css_content:
+        dark_rules = extract_agda_class_rules(agda_dark_css_content)
+        css_parts.extend([
+            "",
+            "/* ======================================================================= */",
+            "/* DARK MODE OVERRIDES (from Agda-conor.css)                              */",
+            "/* ======================================================================= */",
+            "@media (prefers-color-scheme: dark) {"
+        ])
+        for class_name, props in sorted(dark_rules.items()):
+            css_parts.append(f"  .Agda .{class_name} {{ {props} }}")
+        css_parts.append("}")
 
     css_parts.extend([
         "",
@@ -166,7 +194,13 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
     if config.run_agda_html and agda_css_path.exists():
         agda_css_content = agda_css_path.read_text('utf-8')
         template_css_content = config.source_paths.custom_css_path.read_text('utf-8')
-        final_css = generate_custom_css_from_agda(agda_css_content, template_css_content)
+        agda_conor_path = config.source_paths.md_css_dir / "Agda-conor.css"
+        agda_conor_css = agda_conor_path.read_text('utf-8') if agda_conor_path.exists() else None
+        final_css = generate_custom_css_from_agda(
+            agda_css_content=agda_css_content,
+            existing_custom_css=template_css_content,
+            agda_dark_css_content=agda_conor_css
+        )
         (config.build_paths.mkdocs_css_dir / "custom.css").write_text(final_css, 'utf-8')
         shutil.copy2(agda_css_path, config.build_paths.mkdocs_css_dir)
         logging.info("✅ Deployed generated custom.css and Agda.css.")
