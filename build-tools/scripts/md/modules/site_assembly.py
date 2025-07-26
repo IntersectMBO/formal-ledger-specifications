@@ -103,8 +103,9 @@ def generate_custom_css_from_agda(
     ]
 
     for class_name, properties in sorted(light_rules.items()):
-        rule = f"pre.Agda .{class_name} {{ {properties} }}"
+        rule = f"  pre.Agda .{class_name} {{ {properties} }}"
         css_parts.append(rule)
+    css_parts.append("}")
 
     # Optional dark-mode overrides
     if agda_dark_css_content:
@@ -119,14 +120,6 @@ def generate_custom_css_from_agda(
         for class_name, props in sorted(dark_rules.items()):
             css_parts.append(f"  pre.Agda .{class_name} {{ {props} }}")
         css_parts.append("}")
-
-    css_parts.extend([
-        "",
-        "/* ======================================================================= */",
-        "/* PROJECT-SPECIFIC STYLES                                                */",
-        "/* ======================================================================= */",
-        ""
-    ])
 
     if existing_custom_css and existing_custom_css.strip():
         css_parts.append(existing_custom_css.strip())

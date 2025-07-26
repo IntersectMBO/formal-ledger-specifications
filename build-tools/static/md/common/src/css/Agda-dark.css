@@ -22,10 +22,10 @@
 .Agda .CoinductiveConstructor { color: #ffcfaf }
 .Agda .Datatype               { color: #ADD8E6 }
 .Agda .Field                  { color: #ffcfaf }
-.Agda .Function               { color: #B4EEA1 }
-.Agda .Macro                  { color: #B4EEA1 }
-.Agda .Module                 { color: #B4EEA1 }
-.Agda .Postulate              { color: #B4EEA1 }
+.Agda .Function               { color: #B4EEB4 }
+.Agda .Macro                  { color: #B4EEB4 }
+.Agda .Module                 { color: #B4EEB4 }
+.Agda .Postulate              { color: #B4EEB4 }
 .Agda .Primitive              { color: #ADD8E6 }
 .Agda .Record                 { color: #ADD8E6 }
 
