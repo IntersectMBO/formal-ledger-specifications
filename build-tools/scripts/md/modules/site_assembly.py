@@ -102,7 +102,7 @@ def generate_custom_css_from_agda(
         "[data-md-color-scheme=\"default\"] {"
     ]
 
-    for class_name, properties in sorted(light_rules.items()):
+    for class_name, properties in light_rules.items():
         rule = f"  pre.Agda .{class_name} {{ {properties} }}"
         css_parts.append(rule)
     css_parts.append("}")
@@ -117,7 +117,7 @@ def generate_custom_css_from_agda(
             "/* ======================================================================= */",
             "[data-md-color-scheme=\"slate\"] {"
         ])
-        for class_name, props in sorted(dark_rules.items()):
+        for class_name, props in dark_rules.items():
             css_parts.append(f"  pre.Agda .{class_name} {{ {props} }}")
         css_parts.append("}")
 
