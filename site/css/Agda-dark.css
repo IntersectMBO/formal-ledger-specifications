@@ -1,0 +1,53 @@
+/* Agda-dark.css */
+/* Custom Agda highlighting for dark mode (optimized for MkDocs slate theme) */
+
+/* Aspects */
+.Agda .Comment       { color: #6A9955; }
+.Agda .Keyword       { color: #569CD6; }
+.Agda .String        { color: #CE9178; }
+.Agda .Number        { color: #B5CEA8; }
+.Agda .Symbol        { color: #D4D4D4; }
+.Agda .PrimitiveType { color: #4EC9B0; }
+.Agda .Pragma        { color: #808080; }
+.Agda .Operator      { color: #D4D4D4; }
+.Agda .Markup        { color: #CCCCCC; }
+.Agda .Background    { background: inherit; } /* fallback */
+
+/* NameKinds */
+.Agda .Bound,
+.Agda .Generalizable         { color: #9CDCFE; }
+
+.Agda .InductiveConstructor  { color: #DCDCAA; }
+.Agda .CoinductiveConstructor { color: #FFD700; }
+
+.Agda .Datatype,
+.Agda .Record                { color: #C586C0; }
+
+.Agda .Field                 { color: #E5C07B; }
+
+.Agda .Function,
+.Agda .Macro,
+.Agda .Module,
+.Agda .Postulate            { color: #61AFEF; }
+
+.Agda .Primitive             { color: #56B6C2; }
+
+/* OtherAspects */
+.Agda .Hole                  { background: #FF5F5F; color: black; }
+.Agda .DottedPattern         { color: #BBBBBB; }
+.Agda .UnsolvedMeta,
+.Agda .UnsolvedConstraint    { background: #FFCC00; color: black; }
+.Agda .TerminationProblem    { color: #FF8800; }
+.Agda .IncompletePattern     { color: #FFB86C; }
+.Agda .Error                 { color: #F44747; text-decoration: underline; }
+.Agda .TypeChecks            { background: #44475a; color: white; }
+.Agda .Deadcode              { color: #888888; background: #2E2E2E; }
+.Agda .ShadowingInTelescope  { color: #CCCCCC; background: #3B3B3B; }
+
+/* Links */
+.Agda a { text-decoration: none; }
+.Agda a[href]:hover { background-color: #333333; }
+.Agda [href].hover-highlight { background-color: #555555; }
+
+/* KaTeX */
+.katex { font-family: inherit; font-size: inherit; font-weight: inherit; }
