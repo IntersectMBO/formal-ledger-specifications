@@ -13,7 +13,7 @@
 .Agda .PrimitiveType { color: #ADD8E6 }
 .Agda .Pragma        { color: #dcdccc }
 .Agda .Operator      {}
-.Agda .Hole          { background: #B4EEB4 }
+.Agda .Hole          { background: #9fafaf }
 
 /* NameKinds. */
 .Agda .Bound                  { color: #dcdccc }
@@ -22,10 +22,10 @@
 .Agda .CoinductiveConstructor { color: #ffcfaf }
 .Agda .Datatype               { color: #ADD8E6 }
 .Agda .Field                  { color: #ffcfaf }
-.Agda .Function               { color: #B4EEB4 }
-.Agda .Macro                  { color: #B4EEB4 }
-.Agda .Module                 { color: #B4EEB4 }
-.Agda .Postulate              { color: #B4EEB4 }
+.Agda .Function               { color: #9fafaf }
+.Agda .Macro                  { color: #9fafaf }
+.Agda .Module                 { color: #9fafaf }
+.Agda .Postulate              { color: #9fafaf }
 .Agda .Primitive              { color: #ADD8E6 }
 .Agda .Record                 { color: #ADD8E6 }
 
