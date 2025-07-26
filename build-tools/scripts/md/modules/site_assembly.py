@@ -99,7 +99,7 @@ def generate_custom_css_from_agda(
         "/* ======================================================================= */",
         "/* AUTO-GENERATED AGDA CLASSES (from Agda.css)                            */",
         "/* ======================================================================= */",
-        ""
+        "[data-md-color-scheme=\"default\"] {"
     ]
 
     for class_name, properties in sorted(light_rules.items()):
@@ -114,7 +114,7 @@ def generate_custom_css_from_agda(
             "/* ======================================================================= */",
             "/* DARK MODE OVERRIDES (from Agda-dark.css)                              */",
             "/* ======================================================================= */",
-            "@media (prefers-color-scheme: dark) {"
+            "[data-md-color-scheme=\"slate\"] {"
         ])
         for class_name, props in sorted(dark_rules.items()):
             css_parts.append(f"  pre.Agda .{class_name} {{ {props} }}")
