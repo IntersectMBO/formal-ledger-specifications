@@ -8,7 +8,7 @@
 /* ======================================================================= */
 /* AUTO-GENERATED AGDA CLASSES (from Agda.css)                            */
 /* ======================================================================= */
-
+[data-md-color-scheme="default"] {
 pre.Agda .Background {  }
 pre.Agda .Bound { color: black }
 pre.Agda .CoinductiveConstructor { color: #8B7500 }
@@ -45,7 +45,7 @@ pre.Agda .UnsolvedMeta { color: black; background: yellow }
 /* ======================================================================= */
 /* DARK MODE OVERRIDES (from Agda-dark.css)                              */
 /* ======================================================================= */
-@media (prefers-color-scheme: dark) {
+[data-md-color-scheme="slate"] {
   pre.Agda .Background {  }
   pre.Agda .Bound { color: #dcdccc }
   pre.Agda .CoinductiveConstructor { color: #ffcfaf }
