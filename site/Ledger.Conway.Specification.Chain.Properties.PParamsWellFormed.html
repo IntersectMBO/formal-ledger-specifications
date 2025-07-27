@@ -54,8 +54,6 @@
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     
-      <link rel="stylesheet" href="Agda.css">
-    
       <link rel="stylesheet" href="css/custom.css">
     
       <link rel="stylesheet" href="css/Agda.css">
@@ -6102,38 +6100,28 @@
 <a id="351" class="Keyword">open</a> <a id="356" class="Keyword">import</a> <a id="363" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 </pre>
 
-<p><strong>Claim (Well-formedness of <code class="AgdaRecord">PParams</code> is a
-<code class="AgdaOperator">CHAIN</code> invariant).</strong></p>
-<ul>
-<li><em>Informally</em>. We say the <code class="AgdaRecord">PParams</code> of a chain state are
+<p><strong>Claim (Well-formedness of <code class="AgdaRecord">PParams</code> is a <code class="AgdaOperator">CHAIN</code> invariant).</strong></p>
+<p><em>Informally</em>.</p>
+<p>We say the <code class="AgdaRecord">PParams</code> of a chain state are
   <em>well-formed</em> if each of the following parameters is non-zero:
-  maxBlockSize, maxTxSize, maxHeaderSize, maxValSize,
-  refScriptCostStride, coinsPerUTxOByte, poolDeposit,
-  collateralPercentage, ccMaxTermLength, govActionLifetime,
-  govActionDeposit, drepDeposit. Formally, </li>
-</ul>
-<pre class="Agda">
-<a id="pp-wellFormed"></a><a id="839" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#839" class="Function">pp-wellFormed</a> <a id="853" class="Symbol">:</a> <a id="855" href="Ledger.Conway.Specification.Chain.html#1170" class="Record">ChainState</a> <a id="866" class="Symbol">→</a> <a id="868" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="873" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#839" class="Function">pp-wellFormed</a> <a id="887" class="Symbol">=</a> <a id="889" href="Ledger.Conway.Specification.PParams.html#6088" class="Function">paramsWellFormed</a> <a id="906" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="908" href="Ledger.Conway.Specification.PParams.html#5184" class="Field">PParamsOf</a>
-</pre>
-<p>This
-  property asserts that <code class="AgdaFunction">pp-wellFormed</code> is a chain
-  invariant. That is, if and are chain states such that
-  <code class="AgdaDatatype">⇀⦇</code> <code class="AgdaDatatype">,CHAIN⦈</code> , and if the
-  <code class="AgdaRecord">PParams</code> of are well-formed, then so are the
-  <code class="AgdaRecord">PParams</code> of .</p>
-<ul>
-<li><em>Formally</em>. </li>
-</ul>
-<pre class="Agda">
-<a id="pp-wellFormed-invariant"></a><a id="1226" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1226" class="Function">pp-wellFormed-invariant</a> <a id="1250" class="Symbol">:</a> <a id="1252" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1257" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1226" class="Function">pp-wellFormed-invariant</a> <a id="1281" class="Symbol">=</a> <a id="1283" href="Interface.STS.html#3236" class="Function">LedgerInvariant</a> <a id="1299" href="Ledger.Conway.Specification.Chain.html#4518" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1314" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#839" class="Function">pp-wellFormed</a>
+  <code class="AgdaField">maxBlockSize</code>, <code class="AgdaField">maxTxSize</code>, <code class="AgdaField">maxHeaderSize</code>, <code class="AgdaField">maxValSize</code>,
+  <code class="AgdaField">refScriptCostStride</code>, <code class="AgdaField">coinsPerUTxOByte</code>, <code class="AgdaField">poolDeposit</code>,
+  <code class="AgdaField">collateralPercentage</code>, <code class="AgdaField">ccMaxTermLength</code>, <code class="AgdaField">govActionLifetime</code>,
+  <code class="AgdaField">govActionDeposit</code>, <code class="AgdaField">drepDeposit</code>.</p>
+<p>This property asserts that <code class="AgdaFunction">pp-wellFormed</code> is a chain
+invariant. That is, if <code class="AgdaBound">cs</code> and <code class="AgdaBound">cs'</code> are chain states such that
+<code class="AgdaBound">cs</code> <code class="AgdaDatatype">⇀⦇</code> <code class="AgdaBound">tx</code> <code class="AgdaDatatype">,CHAIN⦈</code> <code class="AgdaBound">cs'</code>, and if the
+<code class="AgdaRecord">PParams</code> of <code class="AgdaBound">cs</code> are well-formed, then so are the
+<code class="AgdaRecord">PParams</code> of <code class="AgdaBound">cs'</code> .</p>
+<p><em>Formally</em>.</p>
+<pre class="Agda"><a id="pp-wellFormed"></a><a id="1398" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1398" class="Function">pp-wellFormed</a> <a id="1412" class="Symbol">:</a> <a id="1414" href="Ledger.Conway.Specification.Chain.html#1170" class="Record">ChainState</a> <a id="1425" class="Symbol">→</a> <a id="1427" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1432" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1398" class="Function">pp-wellFormed</a> <a id="1446" class="Symbol">=</a> <a id="1448" href="Ledger.Conway.Specification.PParams.html#6088" class="Function">paramsWellFormed</a> <a id="1465" href="Function.Base.html#1115" class="Function Operator">∘</a> <a id="1467" href="Ledger.Conway.Specification.PParams.html#5184" class="Field">PParamsOf</a>
+
+<a id="pp-wellFormed-invariant"></a><a id="1478" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1478" class="Function">pp-wellFormed-invariant</a> <a id="1502" class="Symbol">:</a> <a id="1504" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1509" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1478" class="Function">pp-wellFormed-invariant</a> <a id="1533" class="Symbol">=</a> <a id="1535" href="Interface.STS.html#3236" class="Function">LedgerInvariant</a> <a id="1551" href="Ledger.Conway.Specification.Chain.html#4518" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1566" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html#1398" class="Function">pp-wellFormed</a>
 </pre>
 
-<ul>
-<li><em>Proof</em>. <em>To appear</em> (in the module of the <a href="https://github.com/IntersectMBO/formal-ledger-specifications">formal ledger
-  repository</a>).</li>
-</ul>
+<p><em>Proof</em>. <em>To appear</em> (in the module of the <a href="https://github.com/IntersectMBO/formal-ledger-specifications">formal ledger repository</a>).</p>
 
 
 

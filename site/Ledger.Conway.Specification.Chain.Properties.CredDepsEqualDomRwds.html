@@ -54,8 +54,6 @@
     
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     
-      <link rel="stylesheet" href="Agda.css">
-    
       <link rel="stylesheet" href="css/custom.css">
     
       <link rel="stylesheet" href="css/Agda.css">
@@ -6104,46 +6102,36 @@
 <a id="495" class="Keyword">open</a> <a id="500" class="Keyword">import</a> <a id="507" href="Ledger.Conway.Specification.Properties.html" class="Module">Ledger.Conway.Specification.Properties</a> <a id="546" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#218" class="Bound">txs</a> <a id="550" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#262" class="Bound">abs</a>
 </pre>
 
-<p><strong>Claim (Equality of credential depsoits is a
-<code class="AgdaOperator">CHAIN</code> invariant).</strong></p>
+<p><strong>Claim (Equality of credential depsoits is a <code class="AgdaOperator">CHAIN</code> invariant).</strong></p>
+<p><em>Informally</em>.</p>
+<p>This property concerns two quantities associated with a given
+<code class="AgdaRecord">ChainState</code> <code class="AgdaBound">cs</code>,</p>
 <ul>
 <li>
-<p><em>Informally</em>. This property concerns two quantities associated with a
-  given <code class="AgdaRecord">ChainState</code> ,</p>
+<p>the credential deposits of the <code class="AgdaRecord">UTxOState</code> of <code class="AgdaBound">cs</code> and</p>
 </li>
 <li>
-<p>the credential deposits of the <code class="AgdaRecord">UTxOState</code> of and</p>
-</li>
-<li>
-<p>the credential deposits of the rewards in the ledger state of .</p>
+<p>the credential deposits of the rewards in the ledger state of <code class="AgdaBound">cs</code>.</p>
 </li>
 </ul>
-<p>The predicate <code class="AgdaFunction">credDeposits≡dom-rwds</code> asserts that
-  these quantities are equal for . Formally, </p>
-<pre class="Agda">
-<a id="credDeposits≡dom-rwds"></a><a id="1017" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1017" class="Function">credDeposits≡dom-rwds</a> <a id="1039" class="Symbol">:</a> <a id="1041" href="Ledger.Conway.Specification.Chain.html#1170" class="Record">ChainState</a> <a id="1052" class="Symbol">→</a> <a id="1054" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1059" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1017" class="Function">credDeposits≡dom-rwds</a> <a id="1081" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1081" class="Bound">cs</a> <a id="1084" class="Symbol">=</a>  <a id="1087" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#487" class="Function">filter</a> <a id="1094" href="Ledger.Conway.Specification.Properties.html#609" class="Function">isCredDeposit</a> <a id="1108" class="Symbol">(</a><a id="1109" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1113" class="Symbol">(</a><a id="1114" href="Ledger.Conway.Specification.Certs.html#1133" class="Field">DepositsOf</a> <a id="1125" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1081" class="Bound">cs</a><a id="1127" class="Symbol">))</a>
-                            <a id="1158" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1160" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#471" class="Function">map</a> <a id="1164" href="Ledger.Conway.Specification.Certs.html#748" class="InductiveConstructor">CredentialDeposit</a> <a id="1182" class="Symbol">(</a><a id="1183" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1187" class="Symbol">(</a><a id="1188" href="Ledger.Conway.Specification.Certs.html#1248" class="Field">RewardsOf</a> <a id="1198" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1081" class="Bound">cs</a><a id="1200" class="Symbol">))</a>
-</pre>
-<p>The
-  property <code class="AgdaFunction">credDeposits≡dom-rwds-inv</code> asserts that
-  <code class="AgdaFunction">credDeposits≡dom-rwds</code> is a chain invariant. That is,
-  if and are two <code class="AgdaRecord">ChainState</code>s such that
-  <code class="AgdaDatatype">⇀⦇</code> <code class="AgdaDatatype">,CHAIN⦈</code> , then
-  <code class="AgdaFunction">credDeposits≡dom-rwds</code> only if
-  <code class="AgdaFunction">credDeposits≡dom-rwds</code> .</p>
-<ul>
-<li><em>Formally</em>. </li>
-</ul>
-<pre class="Agda">
-<a id="credDeposits≡dom-rwds-inv"></a><a id="1576" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1576" class="Function">credDeposits≡dom-rwds-inv</a> <a id="1602" class="Symbol">:</a> <a id="1604" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1609" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1576" class="Function">credDeposits≡dom-rwds-inv</a> <a id="1635" class="Symbol">=</a> <a id="1637" href="Interface.STS.html#3236" class="Function">LedgerInvariant</a> <a id="1653" href="Ledger.Conway.Specification.Chain.html#4518" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1668" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1017" class="Function">credDeposits≡dom-rwds</a>
-</pre>
+<p>The predicate <code class="AgdaFunction">credDeposits≡dom-rwds</code> <code class="AgdaBound">cs</code> asserts that
+these quantities are equal for <code class="AgdaBound">cs</code>.</p>
+<p>The property <code class="AgdaFunction">credDeposits≡dom-rwds-inv</code> asserts that
+<code class="AgdaFunction">credDeposits≡dom-rwds</code> is a chain invariant. That is,
+if <code class="AgdaBound">cs</code> and <code class="AgdaBound">cs'</code> are two <code class="AgdaRecord">ChainState</code>s such
+that <code class="AgdaBound">cs</code> <code class="AgdaDatatype">⇀⦇</code> <code class="AgdaBound">tx</code> <code class="AgdaDatatype">,CHAIN⦈</code> <code class="AgdaBound">cs'</code>, then
+<code class="AgdaFunction">credDeposits≡dom-rwds</code> <code class="AgdaBound">cs</code> only if
+<code class="AgdaFunction">credDeposits≡dom-rwds</code> <code class="AgdaBound">cs'</code>.</p>
+<p><em>Formally</em>.</p>
+<pre class="Agda"><a id="credDeposits≡dom-rwds"></a><a id="1542" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1542" class="Function">credDeposits≡dom-rwds</a> <a id="1564" class="Symbol">:</a> <a id="1566" href="Ledger.Conway.Specification.Chain.html#1170" class="Record">ChainState</a> <a id="1577" class="Symbol">→</a> <a id="1579" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1584" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1542" class="Function">credDeposits≡dom-rwds</a> <a id="1606" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1606" class="Bound">cs</a> <a id="1609" class="Symbol">=</a>  <a id="1612" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#487" class="Function">filter</a> <a id="1619" href="Ledger.Conway.Specification.Properties.html#609" class="Function">isCredDeposit</a> <a id="1633" class="Symbol">(</a><a id="1634" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1638" class="Symbol">(</a><a id="1639" href="Ledger.Conway.Specification.Certs.html#1133" class="Field">DepositsOf</a> <a id="1650" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1606" class="Bound">cs</a><a id="1652" class="Symbol">))</a>
+                            <a id="1683" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1685" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#471" class="Function">map</a> <a id="1689" href="Ledger.Conway.Specification.Certs.html#748" class="InductiveConstructor">CredentialDeposit</a> <a id="1707" class="Symbol">(</a><a id="1708" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1712" class="Symbol">(</a><a id="1713" href="Ledger.Conway.Specification.Certs.html#1248" class="Field">RewardsOf</a> <a id="1723" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1606" class="Bound">cs</a><a id="1725" class="Symbol">))</a>
 
-<ul>
-<li><em>Proof</em>. <em>To appear</em> (in the module of the <a href="https://github.com/IntersectMBO/formal-ledger-specifications">formal ledger
-  repository</a>).</li>
-</ul>
+<a id="credDeposits≡dom-rwds-inv"></a><a id="1729" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1729" class="Function">credDeposits≡dom-rwds-inv</a> <a id="1755" class="Symbol">:</a> <a id="1757" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1762" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1729" class="Function">credDeposits≡dom-rwds-inv</a> <a id="1788" class="Symbol">=</a> <a id="1790" href="Interface.STS.html#3236" class="Function">LedgerInvariant</a> <a id="1806" href="Ledger.Conway.Specification.Chain.html#4518" class="Datatype Operator">_⊢_⇀⦇_,CHAIN⦈_</a> <a id="1821" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html#1542" class="Function">credDeposits≡dom-rwds</a>
+</pre>
+<p><em>Proof</em>. <em>To appear</em> (in the module of the <a href="https://github.com/IntersectMBO/formal-ledger-specifications">formal ledger
+  repository</a>).</p>
 
 
 
