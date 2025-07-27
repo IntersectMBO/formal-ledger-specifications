@@ -14,6 +14,22 @@ from collections import OrderedDict
 # Pure Helper Functions (Callbacks for re.sub)
 # =============================================================================
 
+def _process_theorem_like_environment(kind: str):
+    def _inner(match: re.Match) -> str:
+        title = match.group(1) or kind.capitalize()
+        content = match.group(2)
+
+        # Normalize whitespace and line continuation backslashes
+        #content = content.lstrip("\\").strip()
+
+        label_match = re.search(r"\\label\{(.*?)\}", content)
+        label = label_match.group(1) if label_match else ""
+        body = re.sub(r"\\label\{.*?\}", "", content).strip()
+
+        label_part = f"label={label}@@title={title}" if label else f"title={title}"
+        return f"\n@@{kind.upper()}_BLOCK@@{label_part}@@\n{body}\n"
+    return _inner
+
 def _replace_modulenote(match: re.Match) -> str:
     """Generates a sentence with a link to a specific Agda module on GitHub."""
     repo_url = "https://github.com/IntersectMBO/formal-ledger-specifications"
@@ -124,6 +140,11 @@ def process_latex_content(content: str, macro_definitions: Dict) -> Tuple[str, D
         (r'\\modulenote\{\s*\\(Conway|Ledger)Module\{(.*?)\}\s*\}', _replace_modulenote),
         (r"\\(Cref|cref)\s*\{(.*?)\}", _replace_cref_commands),
         (r"^\s*\\begin\{figure\*\}(\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\*\}\s*$", _process_figure_environment),
+
+        # Handle theorem environments with optional title and label
+        (r"\\begin{theorem}(?:\[(.*?)\])?\s*(.*?)\\end{theorem}", _process_theorem_like_environment("theorem")),
+        (r"\\begin{lemma}(?:\[(.*?)\])?\s*(.*?)\\end{lemma}", _process_theorem_like_environment("lemma")),
+        (r"\\begin{claim}(?:\[(.*?)\])?\s*(.*?)\\end{claim}", _process_theorem_like_environment("claim")),
 
         # Handle Agda term macros defined in macros.json. This is dynamically built.
         (r'\\(' + '|'.join(re.escape(k) for k in macro_definitions.get("agda_terms", {}).keys()) + r')\{\}',

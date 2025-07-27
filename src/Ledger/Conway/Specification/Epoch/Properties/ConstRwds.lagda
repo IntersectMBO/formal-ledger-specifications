@@ -24,9 +24,9 @@ open import Ledger.Prelude
   ]
   \begin{itemize}
     \item \textit{Informally}. Rewards are left unchanged by the \NEWEPOCH{}
-      rule.  That is, if \ab{es} and \ab{es'} are two \NewEpochState{}s such that
-      \ab{es}~\AgdaDatatype{⇀⦇}~\ab{e}~\AgdaDatatype{,NEWEPOCH⦈}~\ab{es'}, then the
-      rewards of \ab{es} and \ab{es'} are equal.
+      rule.  That is, if \AgdaBound{es} and \AgdaBound{es'} are two \NewEpochState{}s such that
+      \AgdaBound{es}~\AgdaDatatype{⇀⦇}~\AgdaBound{e}~\AgdaDatatype{,NEWEPOCH⦈}~\AgdaBound{es'}, then the
+      rewards of \AgdaBound{es} and \AgdaBound{es'} are equal.
     \item \textit{Formally}.  
 \begin{code}
 dom-rwds-const : {e : Epoch} (es es' : NewEpochState)
@@ -36,6 +36,6 @@ dom-rwds-const es es' step = dom (RewardsOf es) ≡ dom (RewardsOf es')
 \end{code}
     \item \textit{Proof}. \textit{To appear} (in the
       \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}} module
-      of the \href{\repourl}{formal ledger repository}).
+      of the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}).
   \end{itemize}
 \end{claim}

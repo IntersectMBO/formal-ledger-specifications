@@ -117,3 +117,32 @@ body.reveal-agda-source pre.Agda.hidden-source {
 
   /* The 'gap' property on the parent button now controls spacing, so no margin is needed here. */
 }
+
+/* ======================================================================= */
+/* Styles for Custom Theorem Environments                                */
+/* ======================================================================= */
+
+.theorem {
+  /* Box model */
+  display: block;
+  margin: 1.5em 0;
+  padding: 1.2em;
+  padding-left: 1.5em;
+
+  /* Appearance */
+  border-left: 5px solid var(--md-primary-fg-color); /* Use the theme's primary color for the border */
+  background-color: var(--md-default-bg-color--light);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Remove default list styling inside theorems for a cleaner look */
+.theorem ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0.5em;
+}
+
+.theorem ul > li {
+  margin-bottom: 0.8em;
+}

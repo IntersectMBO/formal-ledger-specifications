@@ -583,11 +583,11 @@ instance
 the stake distribution from the data contained in a ledger state.
 Here,
 \begin{itemize}
-  \item \AgdaFunction{aggregate₊} takes a relation \ab{R ⊂ A × V},
-    where \ab{V} is any monoid with operation \ab{+},
-    and returns a mapping \ab{A ⇀ B} such that any item \ab{a ∈ A}
-    is mapped to the sum (using the operation \ab{+})
-    of all \ab{b ∈ B} such that \ab{(a , b) ∈ R}.
+  \item \AgdaFunction{aggregate₊} takes a relation \AgdaBound{R ⊂ A × V},
+    where \AgdaBound{V} is any monoid with operation \AgdaBound{+},
+    and returns a mapping \AgdaBound{A ⇀ B} such that any item \AgdaBound{a ∈ A}
+    is mapped to the sum (using the operation \AgdaBound{+})
+    of all \AgdaBound{b ∈ B} such that \AgdaBound{(a , b) ∈ R}.
   \item \AgdaFunction{m}
     is the stake relation computed from the UTxO set.    
   \item \AgdaFunction{stakeRelation}

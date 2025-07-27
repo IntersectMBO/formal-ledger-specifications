@@ -49,7 +49,7 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
     ( ≡ᵉ-getCoinˢ'     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
-    open CERTSpov indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'     
+    open CERTSpov indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'
 \end{code}
 
 \begin{theorem}[%
@@ -58,20 +58,20 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
   ]\label{thm:CERTS-PoV}
   \begin{itemize}
     \item \textit{Informally}.
-      Let \ab{l} be a list of \DCert{}s, and let \ab{s₁}, \ab{sₙ} be \CertState{}s
-      such that \ab{s₁}~\AgdaDatatype{⇀⦇}~\ab{l}~\AgdaDatatype{,CERTS⦈}~\ab{sₙ}.
-      Then, the value of \ab{s₁} is equal to the value of \ab{sₙ} plus
-      the value of the withdrawals in \ab{Γ}.
+      Let \AgdaBound{l} be a list of \DCert{}s, and let \AgdaBound{s₁}, \AgdaBound{sₙ} be \CertState{}s
+      such that \AgdaBound{s₁}~\AgdaDatatype{⇀⦇}~\AgdaBound{l}~\AgdaDatatype{,CERTS⦈}~\AgdaBound{sₙ}.
+      Then, the value of \AgdaBound{s₁} is equal to the value of \AgdaBound{sₙ} plus
+      the value of the withdrawals in \AgdaBound{Γ}.
     \item \textit{Formally}.
 \begin{code}
     CERTS-pov :  {Γ : CertEnv} {s₁ sₙ  : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
-      →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ 
+      →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
       → getCoin s₁ ≡ getCoin sₙ + getCoin (wdrlsOf Γ)
 \end{code}
     \item \textit{Proof}. See the
       \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
-      module in the \href{\repourl}{formal ledger repository}.
+      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
     -- Proof.
     CERTS-pov validNetId (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov validNetId bsts
