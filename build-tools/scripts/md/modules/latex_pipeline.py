@@ -26,6 +26,7 @@ LaTeX(.lagda) → preprocess → LaTeX(.lagda.temp) with \textcite{shelley-ledge
 """
 
 from __future__ import annotations
+from functools import reduce
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Dict, Tuple, Optional
@@ -328,6 +329,7 @@ def extract_labels_from_temp_files(
 
 
 def replace_math_block(kind: str, label: str, title: str, body: str) -> str:
+    """Creates the Markdown for a theorem, lemma, or claim block."""
     anchor = f'<a id="{label}"></a>\n' if label and label != "none" else ""
     heading = f"**{kind.capitalize()} ({title.strip(': ').strip()}).**"
     return f"{anchor}{heading}\n\n{body.strip()}\n"
@@ -344,24 +346,18 @@ def _apply_all_postprocessing(
     """
     Applies a sequence of text transformations to the content in a pure functional style.
     """
-    # Define the sequence of transformations (functions) to apply.
-    # Each function takes the content string and returns a new one.
     transformations = [
         lambda c: re.sub(r'@@CODEBLOCK_ID_\d+@@', lambda m: replace_code_placeholder(m, code_blocks), c),
         lambda c: re.sub(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
         lambda c: re.sub(r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
         lambda c: re.sub(r"@@CROSS_REF@@command=(.*?)@@targets=(.*?)@@", lambda m: replace_cross_ref_placeholder(m, label_map), c, flags=re.DOTALL),
-        lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@label=(.*?)@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)",lambda m: replace_math_block(m.group(1).lower(), m.group(2), m.group(3), m.group(4)), c, flags=re.DOTALL),
-        lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)",lambda m: replace_math_block(m.group(1).lower(), "none", m.group(2), m.group(3)), c, flags=re.DOTALL),
+        lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@label=(.*?)@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)", lambda m: replace_math_block(m.group(1).lower(), m.group(2), m.group(3), m.group(4)), c, flags=re.DOTALL),
+        lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)", lambda m: replace_math_block(m.group(1).lower(), "none", m.group(2), m.group(3)), c, flags=re.DOTALL),
         process_admonitions
     ]
 
-    # Pipe the initial content through all the transformation functions.
-    processed_content = content
-    for func in transformations:
-        processed_content = func(processed_content)
-
-    return processed_content
+    # apply each transformation to the result of the previous one
+    return reduce(lambda current_content, func: func(current_content), transformations, content)
 
 def process_latex_files(
     latex_files: List[Path],
@@ -490,7 +486,7 @@ def process_latex_files(
                 # Log unexpected errors more gracefully
                 logging.error(f"Unexpected error during post-processing of {stage.relative_path}: {error}")
                 return Result.err(PipelineError(
-                    error_type=ErrorType.UNKNOWN,
+                    error_type=ErrorType.PARSING_ERROR,
                     message=f"Unexpected error: {error}",
                     cause=error
                 ))
