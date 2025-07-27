@@ -1,4 +1,7 @@
-\begin{code}[hide]
+
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
@@ -11,37 +14,36 @@ module Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed
 
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Prelude
-
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\ChainPropWF}{Conway/Chain/Properties/PParamsWellFormed}
+```
+-->
 
 
-\begin{claim}[%
-  \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}}:
-  Well-formedness of \PParams{} is a \CHAIN{} invariant%
-  ]
-  \begin{itemize}
-    \item \textit{Informally}. We say the \PParams{} of a chain state are \textit{well-formed} if
-    each of the following parameters is non-zero:
-    maxBlockSize, maxTxSize, maxHeaderSize, maxValSize, refScriptCostStride, coinsPerUTxOByte,
-    poolDeposit, collateralPercentage, ccMaxTermLength, govActionLifetime,
-    govActionDeposit, drepDeposit.  Formally,
-\begin{code}
+**Claim (Well-formedness of `PParams`{.AgdaRecord} is a `CHAIN`{.AgdaOperator} invariant).**
+
+*Informally*.
+
+We say the `PParams`{.AgdaRecord} of a chain state are
+  *well-formed* if each of the following parameters is non-zero:
+  `maxBlockSize`{.AgdaField}, `maxTxSize`{.AgdaField}, `maxHeaderSize`{.AgdaField}, `maxValSize`{.AgdaField},
+  `refScriptCostStride`{.AgdaField}, `coinsPerUTxOByte`{.AgdaField}, `poolDeposit`{.AgdaField},
+  `collateralPercentage`{.AgdaField}, `ccMaxTermLength`{.AgdaField}, `govActionLifetime`{.AgdaField},
+  `govActionDeposit`{.AgdaField}, `drepDeposit`{.AgdaField}.
+
+This property asserts that `pp-wellFormed`{.AgdaFunction} is a chain
+invariant. That is, if `cs`{.AgdaBound} and `cs'`{.AgdaBound} are chain states such that
+`cs`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,CHAIN⦈`{.AgdaDatatype} `cs'`{.AgdaBound}, and if the
+`PParams`{.AgdaRecord} of `cs`{.AgdaBound} are well-formed, then so are the
+`PParams`{.AgdaRecord} of `cs'`{.AgdaBound} .
+
+*Formally*.
+
+```agda
 pp-wellFormed : ChainState → Type
 pp-wellFormed = paramsWellFormed ∘ PParamsOf
-\end{code}
-      This property asserts that \AgdaFunction{pp-wellFormed} is a chain invariant.
-      That is, if \AgdaBound{cs} and \AgdaBound{cs'} are chain states such that
-      \AgdaBound{cs}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,CHAIN⦈}~\AgdaBound{cs'}, and if
-      the \PParams{} of \AgdaBound{cs} are well-formed, then so are the \PParams{} of \AgdaBound{cs'}.
-    \item \textit{Formally}.
-\begin{code}
+
 pp-wellFormed-invariant : Type
 pp-wellFormed-invariant = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ pp-wellFormed
-\end{code}
-    \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{\ChainPropWF.lagda}{\AgdaModule{\ChainPropWF{}}} module
-      of the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}).
-  \end{itemize}
-\end{claim}
+```
+
+
+*Proof*. *To appear* (in the module of the [formal ledger repository](https://github.com/IntersectMBO/formal-ledger-specifications)).

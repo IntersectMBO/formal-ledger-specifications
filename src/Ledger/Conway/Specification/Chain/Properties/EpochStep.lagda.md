@@ -1,4 +1,7 @@
-\begin{code}[hide]
+
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
@@ -14,34 +17,27 @@ open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Prelude
 open Block
+```
+-->
 
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\ChainPropEpoch}{Conway/Chain/Properties/EpochStep}
+**Claim (New enact state only if new epoch).**
 
-\begin{claim}[%
-  \LedgerMod{\ChainPropEpoch.lagda}{\AgdaModule{\ChainPropEpoch{}}}:
-  New enact state only if new epoch%
-  ]\
+*Informally*.
 
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \AgdaBound{cs} and \AgdaBound{cs'} be \ChainState{}s and \AgdaBound{b} a \Block{}.
-      If \AgdaBound{cs}~\AgdaDatatype{⇀⦇}~\AgdaBound{b}~\AgdaDatatype{,CHAIN⦈}~\AgdaBound{cs'}
-      and if the enact states of \AgdaBound{cs} and \AgdaBound{cs'} differ, then
-      the epoch of the slot of \AgdaBound{b} is the successor of the last epoch of \AgdaBound{cs}.
-    \item \textit{Formally}.
-\begin{AgdaMultiCode}
-\begin{code}
+Let `cs`{.AgdaBound} and `cs'`{.AgdaBound} be `ChainState`{.AgdaRecord}s
+and `b`{.AgdaBound} a `Block`{.AgdaRecord}.
+If `cs`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `b`{.AgdaBound} `,CHAIN⦈`{.AgdaDatatype} `cs'`{.AgdaBound} and
+if the enact states of `cs`{.AgdaBound} and `cs'`{.AgdaBound} differ, then
+the epoch of the slot of `b`{.AgdaBound} is the successor of the last epoch of `cs`{.AgdaBound}.
+
+*Formally*.
+
+```agda
 enact-change⇒newEpoch : (b : Block) {cs cs'  : ChainState}
   → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs' → EnactStateOf cs ≢ EnactStateOf cs'
   → Type
 
 enact-change⇒newEpoch b {cs} h es≢es' = epoch (b .slot) ≡ sucᵉ (LastEpochOf cs)
-\end{code}
-\end{AgdaMultiCode}
-    \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{\ChainPropEpoch.lagda}{\AgdaModule{\ChainPropEpoch{}}}
-      module of the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}).
-  \end{itemize}
-\end{claim}
+```
+
+*Proof*. *To appear* (in the module of the [formal ledger repository](https://github.com/IntersectMBO/formal-ledger-specifications)).
