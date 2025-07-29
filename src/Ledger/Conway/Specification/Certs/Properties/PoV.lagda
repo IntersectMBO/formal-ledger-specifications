@@ -69,11 +69,8 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
       →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
       → getCoin s₁ ≡ getCoin sₙ + getCoin (wdrlsOf Γ)
 \end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}
-      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
+    \item \textit{Proof}. \revealproofbutton{}
 \begin{code}[hide]
-    -- Proof.
     CERTS-pov validNetId (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov validNetId bsts
     CERTS-pov {Γ = Γ} validNetId (RTC (bsts , BS-ind x sts)) =
       trans  (CERTBASE-pov validNetId bsts)

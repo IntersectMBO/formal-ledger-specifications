@@ -85,11 +85,8 @@ module EPOCH-PROPS {eps : EpochState} where
     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
 \end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\EpochPropGov.lagda}{\AgdaModule{\EpochPropGov{}}}
-      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
+    \item \textit{Proof}. \revealproofbutton{}
 \begin{code}[hide]
-  -- Proof.
   EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
       ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'

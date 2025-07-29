@@ -82,11 +82,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
     → getCoin s ≡ getCoin s'
 \end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
+    \item \textit{Proof}.  \revealproofbutton{}
 \begin{code}[hide]
-  -- Proof.
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ}{⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
@@ -158,11 +155,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
       → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
       → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 \end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
+    \item \textit{Proof}.  \revealproofbutton{}
 \begin{code}[hide]
-    -- Proof.
     CERTBASE-pov  {Γ   = Γ}
                   {s   = cs}
                   {s'  = cs'}
@@ -231,11 +225,8 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
       → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
       → getCoin s₁ ≡ getCoin sₙ
 \end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
+    \item \textit{Proof}. \revealproofbutton{}
 \begin{code}[hide]
-    -- Proof.
     sts-pov (BS-base Id-nop) = refl
     sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
 \end{code}

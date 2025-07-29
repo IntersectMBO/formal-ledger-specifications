@@ -67,11 +67,8 @@ module _
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 \end{code}
 \end{AgdaMultiCode}
-    \item \textit{Proof}. See the
-      \LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}
-      module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
+    \item \textit{Proof}. \revealproofbutton{}
 \begin{code}[hide]
-  -- Proof.
   LEDGER-pov
     {s  = s}
     {s' = s'}

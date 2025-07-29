@@ -131,6 +131,13 @@ def process_latex_content(content: str, macro_definitions: Dict) -> Tuple[str, D
         (r'\\hrefAgdaDocs\{\}', r'\\href{https://agda.readthedocs.io/en/latest/}{Agda documentation}'),
         (r'\\hrefAgdaDocs\[([^\]]*)\]\[([^\]]*)\]', r'\\href{https://agda.readthedocs.io/en/latest/\1}{\2}'),
 
+        # Handle \ab shorthand for \AgdaBound
+        (r'\\ab\{(.*?)\}', r'\\AgdaBound{\1}'),
+
+        # UPDATED: Replace the button macro with a simple placeholder string.
+        # will be replaced with the actual HTML in the post-processing stage.
+        (r'\\revealproofbutton\{\}', r'@@REVEAL_PROOF_BUTTON@@'),
+
         # Environment wrappers and complex callbacks
         (r'^\s*\\begin\{(NoConway|AgdaMultiCode)\}\s*?\n', ''),
         (r'^\s*\\end\{(NoConway|AgdaMultiCode)\}\s*?\n?', ''),
@@ -157,10 +164,10 @@ def process_latex_content(content: str, macro_definitions: Dict) -> Tuple[str, D
         processed = re.sub(pattern, repl, processed, flags=flags | re.DOTALL)
 
     # --- STAGE 3: Handle Generic \Agda... Macros not defined in macros.sty ---
-    # This logic is restored from the original preprocess.py.
     agda_classes = [
         'AgdaFunction', 'AgdaField', 'AgdaDatatype', 'AgdaRecord',
-        'AgdaInductiveConstructor', 'AgdaModule', 'AgdaPrimitive'
+        'AgdaInductiveConstructor', 'AgdaModule', 'AgdaPrimitive',
+        'AgdaBound'
     ]
     generic_agda_pattern = r'\\(' + '|'.join(agda_classes) + r')\{([^}]+)\}'
     processed = re.sub(generic_agda_pattern,

@@ -151,9 +151,7 @@ module _ -- ASSUMPTION --
     → noRefundCert (txcertsOf tx)
     → coin (consumed _ s (TxBodyOf tx)) ≥ length (txpropOf tx) * govActionDepositOf Γ
 \end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-      in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
+    \item \textit{Proof}. \revealproofbutton{}
 \begin{code}[hide]
   utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin

@@ -44,7 +44,10 @@ def replace_figure_placeholder(match: re.Match) -> str:
     return f"\n### {caption_text_squashed}\n\n"
 
 def replace_cross_ref_placeholder(match: re.Match, label_map: Dict) -> str:
-    """Replaces a '@@CROSS_REF@@...' placeholder with a Markdown link."""
+    """
+    Replaces a '@@CROSS_REF@@...' placeholder with a Markdown link.
+    The link text has spaces, and the link is prefixed with 'Section'.
+    """
     command_name = match.group(1)
     targets_str = match.group(2).replace("@ @", "@@")
     labels = [t.strip() for t in targets_str.split(',') if t.strip()]
@@ -53,16 +56,22 @@ def replace_cross_ref_placeholder(match: re.Match, label_map: Dict) -> str:
     for i, label_id in enumerate(labels):
         target_info = label_map.get(label_id)
         if target_info:
-            caption = target_info.get("caption_text", label_id)
+            # caption_text from the map has hyphens, e.g., "My-Section-Title"
+            caption_from_map = target_info.get("caption_text", label_id)
+            # Create the display text by replacing hyphens with spaces
+            link_display_text = caption_from_map.replace('-', ' ')
+
             target_file = target_info.get("file", "")
             anchor = target_info.get("anchor", "")
             #prefix = "Figure" if label_id.startswith("fig:") else "Section"
+            prefix = "Section"
 
-            link_text = f"{caption}"
             if target_file and anchor:
-                link_parts.append(f"[{link_text}]({target_file}{anchor})")
+                # Format: Section [Visible Text](path#anchor)
+                link_parts.append(f"{prefix} [{link_display_text}]({target_file}{anchor})")
             else:
-                link_parts.append(f"*{link_text} (link generation error)*")
+                # Keep the prefix for error messages for consistency
+                link_parts.append(f"*{prefix} {link_display_text} (link generation error)*")
         else:
             link_parts.append(f"*'{label_id}' (unresolved reference)*")
 
@@ -118,4 +127,3 @@ def get_flat_filename(relative_path: Path) -> str:
         flat_name = ".".join(parts)
 
     return f"{flat_name}.md"
-

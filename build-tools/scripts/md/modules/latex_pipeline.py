@@ -29,7 +29,7 @@ from __future__ import annotations
 from functools import reduce
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple, Optional, Set
 import subprocess
 import json
 import logging
@@ -346,6 +346,9 @@ def _apply_all_postprocessing(
     """
     Applies a sequence of text transformations to the content in a pure functional style.
     """
+    # The full HTML for the button, to be inserted during post-processing.
+    reveal_button_html = r'<p style="text-align: center;"><button class="reveal-proof-button" onclick="toggleAgdaVisibility()">Reveal the proof</button></p>'
+
     transformations = [
         lambda c: re.sub(r'@@CODEBLOCK_ID_\d+@@', lambda m: replace_code_placeholder(m, code_blocks), c),
         lambda c: re.sub(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
@@ -353,6 +356,8 @@ def _apply_all_postprocessing(
         lambda c: re.sub(r"@@CROSS_REF@@command=(.*?)@@targets=(.*?)@@", lambda m: replace_cross_ref_placeholder(m, label_map), c, flags=re.DOTALL),
         lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@label=(.*?)@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)", lambda m: replace_math_block(m.group(1).lower(), m.group(2), m.group(3), m.group(4)), c, flags=re.DOTALL),
         lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)", lambda m: replace_math_block(m.group(1).lower(), "none", m.group(2), m.group(3)), c, flags=re.DOTALL),
+        # UPDATED: Add a rule to replace the button placeholder with the actual HTML.
+        lambda c: re.sub(r'@@REVEAL_PROOF_BUTTON@@', reveal_button_html, c),
         process_admonitions
     ]
 

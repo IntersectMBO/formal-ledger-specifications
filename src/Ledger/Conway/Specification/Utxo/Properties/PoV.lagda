@@ -42,11 +42,8 @@ UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
   → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
   → getCoin s + getCoin (wdrlsOf tx) * χ (tx .isValid) ≡ getCoin s'
 \end{code}
-  \item \textit{Proof}. See the
-  \LedgerMod{\UtxoPoV.lagda}{\AgdaModule{\UtxoPoV{}}} module
-  in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
+  \item \textit{Proof}. \revealproofbutton{}
 \begin{code}[hide]
--- Proof.
 UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
   = DepositHelpers.pov-scripts step h' refl valid
 

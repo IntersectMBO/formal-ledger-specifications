@@ -41,6 +41,7 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 \begin{code}
 LEDGER-govDepsMatch :  LedgerInvariant _⊢_⇀⦇_,LEDGER⦈_ govDepsMatch
 \end{code}
+  \item \textit{Proof}. \revealproofbutton{}
 \begin{code}[hide]
 LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
@@ -69,9 +70,5 @@ LEDGER-govDepsMatch {Γ}{s}{tx}{s'}
 
 LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
 \end{code}
-  \item \textit{Proof}. See the
-    \LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}
-    module in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
-
   \end{itemize}
 \end{lemma}
