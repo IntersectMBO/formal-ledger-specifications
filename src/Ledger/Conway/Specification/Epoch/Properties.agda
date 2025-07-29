@@ -52,30 +52,32 @@ module _ {eps : EpochState} {e : Epoch} where
         (RATIFIES-total' .proj₂)
         (SNAP-total ls ss .proj₂)
         (POOLREAP-total
-          ⟦ removeGovActionDepositsAndDonations fut govSt utxoSt
+          ⟦ U0.utxoSt'
           , acnt
           , dState
           , pState
           ⟧ .proj₂
         )
+    where
+      module U0 = EPOCH-updates0 fut ls
+
+  private
+    EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
+    EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
+      record
+        { acnt = U.acnt''
+        ; ss = ss
+        ; ls = ⟦ utxoSt'' , U.govSt' , U.certState' ⟧ˡ
+        ; es = _
+        ; fut = fut'
+        }
+      where
+        module U = EPOCH-updates fut ls acnt' dState' pState'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' (EPOCH p₁ p₂ p₃) =
     cong₂ _$_
-      (cong₂
-        (λ ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) → record
-          { acnt = treasuryEpochUpdate fut govSt certState utxoSt acnt'
-          ; ss = ss
-          ; ls = ⟦ utxoSt''
-                 , removeFromGovState fut govSt
-                 , ⟦ addRefundsToRewards fut govSt utxoSt dState'
-                   , pState'
-                   , updateGState fut govSt gState
-                   ⟧ᶜˢ
-                 ⟧ˡ
-          ; es = _
-          ; fut = fut'
-          })
+      (cong₂ EPOCH-state
         (SNAP-complete _ _ _ p₂)
         (RATIFIES-complete'
           (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))

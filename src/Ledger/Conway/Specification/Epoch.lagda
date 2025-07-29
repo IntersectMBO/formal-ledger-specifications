@@ -362,112 +362,110 @@ private variable
   acnt acnt' : Acnt
   utxoSt''   : UTxOState
   dState'    : DState
-  gState'    : GState
   pState'    : PState
-  govSt'     : GovState
+\end{code}
 
+\begin{code}[hide]
+-- All of these definitions are a copy of those used in the EPOCH transition.
+--
+-- We duplicate them in the EPOCH transition so they are visible when presenting
+-- the rule. We keep this module as its contents need to be brought in scope for some
+-- proofs.
+module EPOCH-updates0
+    (fut : RatifyState)
+    (ls : LState)
+    where
+  open LState ls
+  open CertState certState
+  open RatifyState fut hiding (es)
+  open UTxOState
+  open GState
+  open EnactState
+  open GovActionState
 
-resetWithdrawalsEnactState : RatifyState → EnactState
-resetWithdrawalsEnactState fut =
-  let esW = RatifyState.es fut
-   in record esW { withdrawals = ∅ }
+  esW : EnactState
+  esW = RatifyState.es fut
 
-getRemovedAndOrphans
-  : RatifyState → GovState → ℙ (GovActionID × GovActionState)
-getRemovedAndOrphans fut govSt =
-  let
-    es       = resetWithdrawalsEnactState fut
-    tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ (RatifyState.removed fut)) govSt
-    orphans  = fromList (getOrphans es tmpGovSt)
-   in
-    RatifyState.removed fut ∪ orphans
+  es : EnactState
+  es = record esW { withdrawals = ∅ }
 
-getRemovedGovActions
-  : RatifyState → GovState → UTxOState → ℙ (RwdAddr × DepositPurpose × Coin)
-getRemovedGovActions fut govSt utxoSt =
-  let
-    removed' = getRemovedAndOrphans fut govSt
-   in
+  tmpGovSt : GovState
+  tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
+
+  orphans : ℙ (GovActionID × GovActionState)
+  orphans  = fromList (getOrphans es tmpGovSt)
+
+  removed' : ℙ (GovActionID × GovActionState)
+  removed' = removed ∪ orphans
+
+  govSt' : List (GovActionID × GovActionState)
+  govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
+
+  removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
+  removedGovActions =
     flip concatMapˢ removed' λ (gaid , gaSt) →
       mapˢ
         (returnAddr gaSt ,_)
-        ((UTxOState.deposits utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+        ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
 
-removeGovActionDepositsAndDonations
-  : RatifyState → GovState → UTxOState → UTxOState
-removeGovActionDepositsAndDonations fut govSt utxoSt =
-  let
-    removedGovActions = getRemovedGovActions fut govSt utxoSt
-   in
-    record utxoSt
-      { deposits = UTxOState.deposits utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
-      ; donations = 0
-      }
+  govActionReturns : RwdAddr ⇀ Coin
+  govActionReturns =
+    aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-getGovActionReturns : RatifyState → GovState → UTxOState → RwdAddr ⇀ Coin
-getGovActionReturns fut govSt utxoSt =
-  let removedGovActions = getRemovedGovActions fut govSt utxoSt
-   in aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+  trWithdrawals : RwdAddr ⇀ Coin
+  trWithdrawals = EnactState.withdrawals esW
 
-getTotalWithdrawals : RatifyState → Coin
-getTotalWithdrawals fut =
-  let
-    esW = RatifyState.es fut
-    trWithdrawals = EnactState.withdrawals esW
-   in
-    ∑[ x ← trWithdrawals ] x
+  payout : RwdAddr ⇀ Coin
+  payout = govActionReturns ∪⁺ trWithdrawals
 
-treasuryEpochUpdate
-  : RatifyState → GovState → CertState → UTxOState → Acnt → Acnt
-treasuryEpochUpdate fut govSt certSt utxoSt acnt =
-  let
-    esW = RatifyState.es fut
-    trWithdrawals     = EnactState.withdrawals esW
-    totWithdrawals    = getTotalWithdrawals fut
-    removedGovActions = getRemovedGovActions fut govSt utxoSt
-    govActionReturns  = getGovActionReturns fut govSt utxoSt
-    payout            = govActionReturns ∪⁺ trWithdrawals
-    refunds           =
-      pullbackMap payout toRwdAddr (dom (DState.rewards (CertState.dState certSt)))
-    unclaimed         = getCoin payout - getCoin refunds
-   in
-    record acnt
-      { treasury =
-          Acnt.treasury acnt ∸ totWithdrawals + UTxOState.donations utxoSt + unclaimed
-      }
-
-removeFromGovState : RatifyState → GovState → List (GovActionID × GovActionState)
-removeFromGovState fut govSt =
-  let
-    removed' = getRemovedAndOrphans fut govSt
-   in
-    filter (λ x → proj₁ x ∉ mapˢ proj₁ (getRemovedAndOrphans fut govSt)) govSt
-
-updateGState : RatifyState → GovState → GState → GState
-updateGState fut govSt gState =
-  let
-    open GState gState
-    es = resetWithdrawalsEnactState fut
-    govSt' = removeFromGovState fut govSt
-   in
-    ⟦ (if null govSt' then mapValues (1 +_) dreps else dreps)
-    , ccHotKeys ∣ ccCreds (EnactState.cc es)
+  gState' : GState
+  gState' =
+    ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else gState .dreps)
+    , gState .ccHotKeys ∣ ccCreds (es .cc)
     ⟧
 
-addRefundsToRewards : RatifyState → GovState → UTxOState → DState → DState
-addRefundsToRewards fut govSt utxoSt dState =
-  let
-    open DState
-    esW               = RatifyState.es fut
-    trWithdrawals     = EnactState.withdrawals esW
-    removedGovActions = getRemovedGovActions fut govSt utxoSt
-    govActionReturns  = getGovActionReturns fut govSt utxoSt
-    payout            = govActionReturns ∪⁺ trWithdrawals
-    refunds           = pullbackMap payout toRwdAddr (dom (dState .rewards))
-   in
-    record dState { rewards =  dState .rewards ∪⁺ refunds }
+  utxoSt' : UTxOState
+  utxoSt' = record utxoSt
+    { deposits = utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
+    ; donations = 0
+    }
 
+  totWithdrawals : Coin
+  totWithdrawals = ∑[ x ← trWithdrawals ] x
 
+module EPOCH-updates
+    (fut : RatifyState)
+    (ls : LState)
+    (acnt' : Acnt)
+    (dState' : DState)
+    (pState' : PState)
+    where
+  open LState ls
+  open UTxOState
+  open EPOCH-updates0 fut ls public
+  open DState
+  open Acnt
+
+  refunds : Credential ⇀ Coin
+  refunds = pullbackMap payout toRwdAddr (dom (dState' .rewards))
+
+  dState'' : DState
+  dState'' = record dState' { rewards = dState' .rewards ∪⁺ refunds }
+
+  certState' : CertState
+  certState' = ⟦ dState'' , pState' , gState' ⟧
+
+  unclaimed : Coin
+  unclaimed = getCoin payout - getCoin refunds
+
+  acnt'' : Acnt
+  acnt'' = record acnt'
+    { treasury =
+        Acnt.treasury acnt' ∸ totWithdrawals + utxoSt .donations + unclaimed
+    }
+\end{code}
+
+\begin{code}
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 \end{code}
 \end{figure*}
@@ -503,16 +501,73 @@ its results by carrying out each of the following tasks.
       open Acnt; open EnactState; open GovActionState
 \end{code}
 \begin{code}
-      es         = resetWithdrawalsEnactState fut
-      govSt'     = removeFromGovState fut govSt
-      dState''   = addRefundsToRewards fut govSt utxoSt dState'
-      gState'    = updateGState fut govSt gState
+      esW : EnactState
+      esW = RatifyState.es fut
+
+      es : EnactState
+      es = record esW { withdrawals = ∅ }
+
+      tmpGovSt : GovState
+      tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
+
+      orphans : ℙ (GovActionID × GovActionState)
+      orphans  = fromList (getOrphans es tmpGovSt)
+
+      removed' : ℙ (GovActionID × GovActionState)
+      removed' = removed ∪ orphans
+
+      govSt' : List (GovActionID × GovActionState)
+      govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
+
+      removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
+      removedGovActions =
+        flip concatMapˢ removed' λ (gaid , gaSt) →
+          mapˢ
+            (returnAddr gaSt ,_)
+            ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+
+      govActionReturns : RwdAddr ⇀ Coin
+      govActionReturns =
+        aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+
+      trWithdrawals : RwdAddr ⇀ Coin
+      trWithdrawals = EnactState.withdrawals esW
+
+      payout : RwdAddr ⇀ Coin
+      payout = govActionReturns ∪⁺ trWithdrawals
+
+      refunds : Credential ⇀ Coin
+      refunds = pullbackMap payout toRwdAddr (dom (dState' .rewards))
+
+      dState'' : DState
+      dState'' = record dState' { rewards =  dState' .rewards ∪⁺ refunds }
+
+      gState' : GState
+      gState' =
+        ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else gState .dreps)
+        , gState .ccHotKeys ∣ ccCreds (es .cc)
+        ⟧
 
       certState' : CertState
       certState' = ⟦ dState'' , pState' , gState' ⟧
 
-      utxoSt'    = removeGovActionDepositsAndDonations fut govSt utxoSt
-      acnt''     = treasuryEpochUpdate fut govSt certState utxoSt acnt'
+      utxoSt' : UTxOState
+      utxoSt' = record utxoSt
+        { deposits = utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
+        ; donations = 0
+        }
+
+      unclaimed : Coin
+      unclaimed = getCoin payout - getCoin refunds
+
+      totWithdrawals : Coin
+      totWithdrawals = ∑[ x ← trWithdrawals ] x
+
+      acnt'' : Acnt
+      acnt'' = record acnt'
+        { treasury =
+            Acnt.treasury acnt' ∸ totWithdrawals + utxoSt .donations + unclaimed
+        }
 
     in
     record { currentEpoch = e
