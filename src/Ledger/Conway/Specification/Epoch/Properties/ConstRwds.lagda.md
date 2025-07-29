@@ -1,4 +1,6 @@
-\begin{code}[hide]
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -12,30 +14,26 @@ module Ledger.Conway.Specification.Epoch.Properties.ConstRwds
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Prelude
+```
+-->
 
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\EpochPropConstRwds}{Conway/Epoch/Properties/ConstRwds}
+**Claim (`NEWEPOCH`{.AgdaOperator} rule leaves rewards unchanged).**
 
+*Informally*.
 
-\begin{claim}[%
-  \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}}:
-  \NEWEPOCH{} rule leaves rewards unchanged%
-  ]
-  \begin{itemize}
-    \item \textit{Informally}. Rewards are left unchanged by the \NEWEPOCH{}
-      rule.  That is, if \AgdaBound{es} and \AgdaBound{es'} are two \NewEpochState{}s such that
-      \AgdaBound{es}~\AgdaDatatype{⇀⦇}~\AgdaBound{e}~\AgdaDatatype{,NEWEPOCH⦈}~\AgdaBound{es'}, then the
-      rewards of \AgdaBound{es} and \AgdaBound{es'} are equal.
-    \item \textit{Formally}.  
-\begin{code}
+Rewards are left unchanged by the `NEWEPOCH`{.AgdaOperator} rule.
+That is, if `es`{.AgdaBound} and `es'`{.AgdaBound} are two
+`NewEpochState`{.AgdaRecord}s such that
+`es`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `e`{.AgdaBound} `,NEWEPOCH⦈`{.AgdaDatatype} `es'`{.AgdaBound},
+then the rewards of `es`{.AgdaBound} and `es'`{.AgdaBound} are equal.
+
+*Formally*.
+
+```agda
 dom-rwds-const : {e : Epoch} (es es' : NewEpochState)
   → _ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es' → Type
 
 dom-rwds-const es es' step = dom (RewardsOf es) ≡ dom (RewardsOf es')
-\end{code}
-    \item \textit{Proof}. \textit{To appear} (in the
-      \LedgerMod{\EpochPropConstRwds.lagda}{\AgdaModule{\EpochPropConstRwds{}}} module
-      of the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}).
-  \end{itemize}
-\end{claim}
+```
+
+*Proof*. (coming soon)

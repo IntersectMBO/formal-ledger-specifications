@@ -1,4 +1,6 @@
-\begin{code}[hide]
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -8,11 +10,7 @@ module Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\EpochPropGov}{Conway/Epoch/Properties/GovDepsMatch}
 
-\begin{code}[hide]
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
@@ -55,38 +53,48 @@ module EPOCH-Body (eps : EpochState) where
 module EPOCH-PROPS {eps : EpochState} where
   open EPOCH-Body eps
   open EpochState
-\end{code}
+```
+-->
 
-\begin{lemma}[%
-  \LedgerMod{\EpochPropGov.lagda}{\AgdaModule{\EpochPropGov{}}}:
-  \AgdaFunction{govDepsMatch} is invariant of \EPOCH{} rule%
-  ]
-  \label{lem:EpochGovDepsMatch}
 
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \AgdaBound{eps}, \AgdaBound{eps'}~:~\EpochState{} be two epoch states and let
-      \AgdaBound{e}~:~\Epoch{} be an epoch.  Recall, \AgdaBound{eps}~\AgdaField{.ls} denotes the
-      ledger state of \AgdaBound{eps}.  If \AgdaBound{eps}~\AgdaDatatype{⇀⦇}~\AgdaBound{e}~\AgdaDatatype{,EPOCH⦈}~\AgdaBound{eps'}, then
-      (under a certain special condition) \govDepsMatch{}~(\AgdaBound{eps}~\AgdaField{.ls})
-      implies \govDepsMatch{}~(\AgdaBound{eps'}~\AgdaField{.ls}).
-    \\[4pt]
-    The special condition under which the property holds is the same as the one in \cref{thm:ChainGovDepsMatch}:
-    let \AgdaFunction{removed'} be the union of the governance actions in the \AgdaField{removed} field of the ratify
-    state of \AgdaBound{eps} and the orphaned governance actions in the \GovState{} of \AgdaBound{eps}.
-    Let $\mathcal{G}$ be the set
-    $\{\mbox{\GovActionDeposit{}~\AgdaBound{id}} : \mbox{\AgdaBound{id}} ∈ \mbox{proj}₁~\mbox{\AgdaFunction{removed'}}\}$.
-    Assume: $\mathcal{G}$ is a subset of the set of deposits
-    of (the governance state of) \AgdaBound{eps}.
-    \item \textit{Formally}.
-\begin{code}
+<a id="lem:EpochGovDepsMatch"></a>
+**Lemma (`govDepsMatch`{.AgdaFunction} is invariant of `EPOCH`{.AgdaOperator} rule).**
+
+*Informally*.
+
+Let `eps`{.AgdaBound}, `eps'`{.AgdaBound} : `EpochState`{.AgdaRecord} be two epoch
+states and let `e`{.AgdaBound} : `Epoch`{.AgdaDatatype} be an epoch. Recall,
+`eps`{.AgdaBound} `.ls`{.AgdaField} denotes the ledger state of `eps`{.AgdaBound}.
+If `eps`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `e`{.AgdaBound} `,EPOCH⦈`{.AgdaDatatype} `eps'`{.AgdaBound},
+then (under a certain special condition)
+`govDepsMatch`{.AgdaFunction} (`eps`{.AgdaBound} `.ls`{.AgdaField}) implies
+`govDepsMatch`{.AgdaFunction} (`eps'`{.AgdaBound} `.ls`{.AgdaField}).
+
+The special condition under which the property holds is the same as the one in
+[Chain.Properties.GovDepsMatch](Ledger.Conway.Specification.Chain.Properties.GovDepsMatch#thm:ChainGovDepsMatch):
+let `removed'`{.AgdaFunction} be the union of the governance actions in
+the `removed`{.AgdaField} field of the ratify state of `eps`{.AgdaBound} and the
+orphaned governance actions in the `GovState`{.AgdaFunction} of `eps`{.AgdaBound}.
+
+For the formal statement of the lemma,
+
++  let $𝒢$ be the set $\{$`GovActionDeposit`{.AgdaInductiveConstructor} `id`{.AgdaBound} : `id`{.AgdaBound} $∈$ `proj₁`{.AgdaFunction} `removed'`{.AgdaFunction}$\}$, and
+
++  assume $𝒢$ is a subset of the set of deposits of (the governance state of) `eps`{.AgdaBound}.
+
+*Formally*.
+
+```agda
   EPOCH-govDepsMatch :  {eps' : EpochState} {e : Epoch}
     → map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (DepositsOf eps)
     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
-\end{code}
-    \item \textit{Proof}. \revealproofbutton{}
-\begin{code}[hide]
+```
+
+*Proof*.
+
+```agda
+
   EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
       ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
@@ -172,6 +180,4 @@ module EPOCH-PROPS {eps : EpochState} where
       (a ∉ ΔΠ' × a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
-\end{code}
-  \end{itemize}
-\end{lemma}
+```

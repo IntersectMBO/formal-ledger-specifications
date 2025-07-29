@@ -1,4 +1,6 @@
-\begin{code}[hide]
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -8,11 +10,7 @@ module Ledger.Conway.Specification.Ledger.Properties.PoV
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\LedgerPoV}{Conway/Ledger/Properties/PoV}
 
-\begin{code}[hide]
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Certs.Properties govStructure
@@ -47,28 +45,33 @@ module _
   where
 
   pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
+```
+-->
 
-\end{code}
 
-\begin{theorem}[\LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}: \LEDGER{} rule preserves value]
-  \label{thm:LEDGER-PoV}
-  \begin{itemize}
-    \item \textit{Informally}.
-    Let \AgdaBound{s}, \AgdaBound{s'}~:~\LState{} be ledger states and let \AgdaBound{tx}~:~\Tx{} be a
-    \textit{fresh} transaction, that is, a transaction that is not already part of the
-    \UTxOState{} of \AgdaBound{s}. If \AgdaBound{s}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,LEDGER⦈}~\AgdaBound{s'},
-    then the coin values of \AgdaBound{s} and \AgdaBound{s'} are equal, that is,
-    \AgdaField{getCoin}~\AgdaBound{s} $≡$ \AgdaField{getCoin}~\AgdaBound{s'}.
-    \item \textit{Formally}.
-\begin{AgdaMultiCode}
-\begin{code}
+<a id="thm:LEDGER-PoV"></a>
+**Theorem (`LEDGER`{.AgdaOperator} rule preserves value).**
+
+*Informally*.
+
+ Let , : `LState`{.AgdaRecord} be ledger states and let :
+`Tx`{.AgdaRecord} be a *fresh* transaction, that is, a transaction
+that is not already part of the `UTxOState`{.AgdaRecord} of . If
+`⇀⦇`{.AgdaDatatype} `,LEDGER⦈`{.AgdaDatatype} , then the coin values
+of and are equal, that is, `getCoin`{.AgdaField} $≡$
+`getCoin`{.AgdaField} .
+
+*Formally*.
+
+```agda
   LEDGER-pov : {Γ : LEnv} {s s' : LState}
     → txid ∉ mapˢ proj₁ (dom (UTxOOf s))
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-\end{code}
-\end{AgdaMultiCode}
-    \item \textit{Proof}. \revealproofbutton{}
-\begin{code}[hide]
+```
+
+*Proof*.
+
+```agda
   LEDGER-pov
     {s  = s}
     {s' = s'}
@@ -120,6 +123,4 @@ module _
         ≡⟨ UTXOpov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning
-\end{code}
-  \end{itemize}
-\end{theorem}
+```

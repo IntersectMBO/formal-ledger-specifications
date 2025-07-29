@@ -1,15 +1,17 @@
-\begin{code}[hide]
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Certs.Properties.PoV (gs : _) (open GovStructure gs) where
+```
+-->
 
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\CertsPoV}{Conway/Specification/Certs/Properties/PoV}
+<!--
+```agda
 
-\begin{code}[hide]
 open import Ledger.Conway.Specification.Certs gs
 open import Ledger.Conway.Specification.Certs.Properties.PoVLemmas gs
 open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
@@ -50,32 +52,37 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
     open CERTSpov indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'
-\end{code}
+```
+-->
 
-\begin{theorem}[%
-  \LedgerMod{\CertsPoV.lagda}{\AgdaModule{\CertsPoV{}}}:
-  \CERTS{} rule preserves value%
-  ]\label{thm:CERTS-PoV}
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \AgdaBound{l} be a list of \DCert{}s, and let \AgdaBound{s₁}, \AgdaBound{sₙ} be \CertState{}s
-      such that \AgdaBound{s₁}~\AgdaDatatype{⇀⦇}~\AgdaBound{l}~\AgdaDatatype{,CERTS⦈}~\AgdaBound{sₙ}.
-      Then, the value of \AgdaBound{s₁} is equal to the value of \AgdaBound{sₙ} plus
-      the value of the withdrawals in \AgdaBound{Γ}.
-    \item \textit{Formally}.
-\begin{code}
+
+<a id="thm:CERTS-PoV"></a>
+**Theorem (`CERTS`{.AgdaOperator} rule preserves value).**
+
+*Informally*.
+
+Let `l`{.AgdaBound} be a list of `DCert`{.AgdaDatatype}s, and let `s₁`{.AgdaBound}, `sₙ`{.AgdaBound} be
+`CertState`{.AgdaRecord}s such that 
+`s₁`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `l`{.AgdaBound} `,CERTS⦈`{.AgdaDatatype} `sₙ`{.AgdaBound}. 
+Then, the value of `s₁`{.AgdaBound} is equal to the value of `sₙ`{.AgdaBound} plus
+the value of the withdrawals in `Γ`{.AgdaBound}.
+
+*Formally*.
+
+```agda
     CERTS-pov :  {Γ : CertEnv} {s₁ sₙ  : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
       →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
       → getCoin s₁ ≡ getCoin sₙ + getCoin (wdrlsOf Γ)
-\end{code}
-    \item \textit{Proof}. \revealproofbutton{}
-\begin{code}[hide]
+```
+
+*Proof*.
+
+```agda
+
     CERTS-pov validNetId (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov validNetId bsts
     CERTS-pov {Γ = Γ} validNetId (RTC (bsts , BS-ind x sts)) =
       trans  (CERTBASE-pov validNetId bsts)
              (cong  (_+ getCoin (CertEnv.wdrls Γ))
              (trans (CERT-pov indexedSumᵛ'-∪' x) (sts-pov sts)))
-\end{code}
-  \end{itemize}
-\end{theorem}
+```
