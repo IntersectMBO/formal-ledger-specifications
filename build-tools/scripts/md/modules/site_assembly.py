@@ -54,27 +54,39 @@ def generate_macros_json(sty_content: str) -> str:
     }
     return json.dumps(output_json, indent=2)
 
+
+
+def extract_agda_class_rules(css_text: str) -> Dict[str, str]:
+    """
+    Extracts `.Agda .ClassName { ... }` rules from a CSS string.
+    Returns a dict: { ClassName: "property: value; ..." }
+    """
+    pattern = re.compile(r"\.Agda\s+\.([\w-]+)\s*\{\s*([^}]*)\}")
+    return {
+        match.group(1): re.sub(r'\s+', ' ', match.group(2).strip())
+        for match in pattern.finditer(css_text)
+    }
+
+
 def generate_custom_css_from_agda(
     agda_css_content: str,
-    existing_custom_css: Optional[str] = None
+    existing_custom_css: Optional[str] = None,
+    agda_dark_css_content: Optional[str] = None
 ) -> str:
     """
     Generates custom.css content by extracting colors from Agda.css.
+    Supports optional dark-mode overrides from a second Agda-dark.css.
+
     Args:
-        agda_css_content: The string content of the source Agda.css file.
-        existing_custom_css: Optional string content of an existing custom.css
-                             to be merged with the generated styles.
+        agda_css_content: The string content of the light-theme Agda.css file.
+        existing_custom_css: Optional string content of an existing custom.css.
+        agda_dark_css_content: Optional string content of a dark-theme Agda-dark.css.
+
     Returns:
-        The complete string content for the new custom.css file.
+        A single CSS string containing all light/dark theme styles and project styles.
     """
-    # Pattern to match .Agda .ClassName { properties }
-    pattern = r'\.Agda\s+\.(\w+)\s*\{\s*([^}]*)\s*\}'
-    color_mappings = {}
-    for match in re.finditer(pattern, agda_css_content):
-        class_name = match.group(1)
-        properties = match.group(2).strip()
-        properties = re.sub(r'\s+', ' ', properties).strip()
-        color_mappings[class_name] = properties
+    # Light theme Agda styles
+    light_rules = extract_agda_class_rules(agda_css_content)
 
     css_parts = [
         "/*",
@@ -85,28 +97,35 @@ def generate_custom_css_from_agda(
         " */",
         "",
         "/* ======================================================================= */",
-        "/* AUTO-GENERATED AGDA CLASSES (from Agda.css)                        */",
+        "/* AUTO-GENERATED AGDA CLASSES (from Agda.css)                            */",
         "/* ======================================================================= */",
-        ""
+        "[data-md-color-scheme=\"default\"] {"
     ]
 
-    for class_name, properties in sorted(color_mappings.items()):
-        rule = f"code.Agda{class_name} {{\n    {properties}\n}}"
-        css_parts.append(rule)
+    for class_name, properties in light_rules.items():
+        css_parts.append(f"  pre.Agda .{class_name} {{ {properties} }}")
+        css_parts.append(f"  .Agda{class_name} {{ {properties} }}")
+    css_parts.append("}")
 
-    css_parts.extend([
-        "",
-        "/* ======================================================================= */",
-        "/* PROJECT-SPECIFIC STYLES                                            */",
-        "/* ======================================================================= */",
-        ""
-    ])
+    # Optional dark-mode overrides
+    if agda_dark_css_content:
+        dark_rules = extract_agda_class_rules(agda_dark_css_content)
+        css_parts.extend([
+            "",
+            "/* ======================================================================= */",
+            "/* DARK MODE OVERRIDES (from Agda-dark.css)                              */",
+            "/* ======================================================================= */",
+            "[data-md-color-scheme=\"slate\"] {"
+        ])
+        for class_name, props in dark_rules.items():
+            css_parts.append(f"  pre.Agda .{class_name} {{ {props} }}")
+            css_parts.append(f"  .Agda{class_name} {{ {props} }}")
+        css_parts.append("}")
 
     if existing_custom_css and existing_custom_css.strip():
         css_parts.append(existing_custom_css.strip())
     else:
-        # Default project styles if no existing CSS is provided
-        default_styles = """
+        css_parts.append("""
 /* Highlighting for \\hldiff{} content */
 .highlight {
     background-color: yellow;
@@ -128,8 +147,7 @@ def generate_custom_css_from_agda(
     margin: 1em 0;
     background-color: #f8f9fa;
 }
-        """
-        css_parts.append(default_styles.strip())
+""".strip())
 
     return "\n".join(css_parts) + "\n"
 
@@ -166,7 +184,13 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
     if config.run_agda_html and agda_css_path.exists():
         agda_css_content = agda_css_path.read_text('utf-8')
         template_css_content = config.source_paths.custom_css_path.read_text('utf-8')
-        final_css = generate_custom_css_from_agda(agda_css_content, template_css_content)
+        agda_dark_path = config.source_paths.md_css_dir / "Agda-dark.css"
+        agda_dark_css = agda_dark_path.read_text('utf-8') if agda_dark_path.exists() else None
+        final_css = generate_custom_css_from_agda(
+            agda_css_content=agda_css_content,
+            existing_custom_css=template_css_content,
+            agda_dark_css_content=agda_dark_css
+        )
         (config.build_paths.mkdocs_css_dir / "custom.css").write_text(final_css, 'utf-8')
         shutil.copy2(agda_css_path, config.build_paths.mkdocs_css_dir)
         logging.info("✅ Deployed generated custom.css and Agda.css.")
