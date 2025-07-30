@@ -41,10 +41,6 @@ module _ {e : Epoch} (prs : PoolReapState) where
 module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
-  open RatifyState fut using (removed) renaming (es to esW)
-  open LState ls; open CertState certState; open Acnt acnt
-  es         = record esW { withdrawals = ∅ }
-  govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total =
@@ -52,27 +48,25 @@ module _ {eps : EpochState} {e : Epoch} where
         (RATIFIES-total' .proj₂)
         (SNAP-total ls ss .proj₂)
         (POOLREAP-total
-          ⟦ U0.utxoSt'
+          ⟦ utxoSt'
           , acnt
           , dState
           , pState
           ⟧ .proj₂
         )
-    where
-      module U0 = EPOCH-updates0 fut ls
+    where open EPOCH-updates0 fut ls
 
   private
     EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
     EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
       record
-        { acnt = U.acnt''
+        { acnt = acnt''
         ; ss = ss
-        ; ls = ⟦ utxoSt'' , U.govSt' , U.certState' ⟧ˡ
-        ; es = U.es
+        ; ls = ⟦ utxoSt'' , govSt' , certState' ⟧ˡ
+        ; es = es
         ; fut = fut'
         }
-      where
-        module U = EPOCH-updates fut ls acnt' dState' pState'
+      where open EPOCH-updates fut ls acnt' dState' pState'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' (EPOCH p₁ p₂ p₃) =
