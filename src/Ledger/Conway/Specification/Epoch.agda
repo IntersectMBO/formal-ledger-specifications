@@ -1,8 +1,3 @@
-\section{Epoch Boundary}
-\label{sec:epoch-boundary}
-\modulenote{\ConwayModule{Epoch}}
-
-\begin{code}[hide]
 {-# OPTIONS --safe #-}
 
 open import Data.Integer using () renaming (+_ to pos)
@@ -40,17 +35,8 @@ open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 
-\end{code}
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
-
 record EpochState : Type where
-\end{code}
-\begin{code}[hide]
   constructor ⟦_,_,_,_,_⟧ᵉ'
-\end{code}
-\begin{code}
   field
     acnt       : Acnt
     ss         : Snapshots
@@ -58,8 +44,6 @@ record EpochState : Type where
     es         : EnactState
     fut        : RatifyState
 
-\end{code}
-\begin{code}[hide]
 record HasEpochState {a} (A : Type a) : Type a where
   field EpochStateOf : A → EpochState
 open HasEpochState ⦃...⦄ public
@@ -82,21 +66,13 @@ instance
 
   HasPParams-EpochState : HasPParams EpochState
   HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
-\end{code}
-\begin{NoConway}
-\begin{code}
 
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
     epochState  : EpochState
     ru          : Maybe RewardUpdate
-\end{code}
-\end{NoConway}
-\end{AgdaMultiCode}
-\caption{Definitions for the EPOCH and NEWEPOCH transition systems}
-\end{figure*}
-\begin{code}[hide]
+
 record HasNewEpochState {a} (A : Type a) : Type a where
   field NewEpochStateOf : A → NewEpochState
 open HasNewEpochState ⦃...⦄ public
@@ -139,63 +115,16 @@ getStakeCred : TxOut → Maybe Credential
 getStakeCred (a , _ , _ , _) = stakeCred a
 
 open GovActionState using (returnAddr)
-\end{code}
-\begin{NoConway}
-\Cref{fig:functions:createRUpd} defines
-the function \AgdaFunction{createRUpd}
-which creates a \AgdaRecord{RewardUpdate},
-i.e.\@ the net flow of Ada due to paying out rewards
-after an epoch.
-Relevant quantities are:
-\begin{itemize}
-  \item \AgdaFunction{prevPp}: Previous protocol parameters,
-    which correspond to the parameters during the epoch for which we are creating rewards.
-  \item \AgdaFunction{ActiveSlotCoeff}:
-    Global constant, equal to the probability
-    that a party holding all the stake will be selected to be a leader for given slot.
-    Equals $1/20$ during the Shelley era on the Cardano Mainnet.
-  \item \AgdaFunction{Δr₁}: Ada taken out of the reserves for paying rewards,
-    as determined by the \AgdaField{monetaryExpansion} protocol parameter.
-  \item \AgdaFunction{rewardPot}: Total amount of coin available for rewards this epoch, as
-described in \textcite[\sectionname~6.4]{shelley-delegation-design}.
-  \item \AgdaFunction{feeSS}: The fee pot which, together with the reserves,
-    funds the \AgdaFunction{rewardPot}.
-    We use the fee pot that accumulated during the epoch
-    for which we now compute block production rewards.
-    Note that fees are not explicitly removed from any account:
-    the fees come from transactions paying them and are accounted for whenever transactions are processed.
-  \item \AgdaFunction{Δt₁}: The proportion of the reward pot that will move to the treasury,
-    as determined by the \AgdaField{treasuryCut} protocol parameter.
-    The remaining pot is called the \AgdaFunction{R},
-    just as in \textcite[\sectionname~6.5]{shelley-delegation-design}.
-  \item \AgdaFunction{pstakego}:
-    Stake distribution used for calculating the rewards.
-    This is the oldest stake distribution snapshot, labeled \AgdaField{go}.
-  \item \AgdaFunction{rs}: The rewards,
-    as calculated by the function \AgdaFunction{reward}.
-  \item \AgdaFunction{Δr₂}: The difference between the maximal amount of rewards
-    that could have been paid out if pools had been optimal,
-    and the actual rewards paid out.
-    This difference is returned to the reserves.
-  \item \AgdaFunction{÷₀}: Division operator that returns zero when the denominator is zero.
-\end{itemize}
 
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
 createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
 createRUpd slotsPerEpoch b es total =
   record  { Δt = Δt₁
           ; Δr = 0 - Δr₁ + Δr₂
           ; Δf = 0 - pos feeSS
           ; rs = rs
-\end{code}
-\begin{code}[hide]
           ; flowConservation = flowConservation
           ; Δt-nonnegative = Δt-nonneg
           ; Δf-nonpositive = Δf-nonpos
-\end{code}
-\begin{code}
           }
   where
     prevPp       = PParamsOf es
@@ -217,8 +146,6 @@ createRUpd slotsPerEpoch b es total =
     rs           = reward prevPp b (posPart R) poolParams stake delegs circulation
     Δr₂          = R - pos (∑[ c ← rs ] c)
 
-\end{code}
-\begin{code}[hide]
     -- Proofs
     -- Note: Overloading of + and - seems to interfere with
     -- the ring solver.
@@ -261,17 +188,7 @@ createRUpd slotsPerEpoch b es total =
         ℤ.- pos feeSS ≤⟨ neg-mono-≤ (ℤ.+≤+ z≤n) ⟩
         0             ∎
       where open ≤-Reasoning
-\end{code}
-\end{AgdaMultiCode}
-\caption{RewardUpdate Creation}
-\label{fig:functions:createRUpd}
-\end{figure*}
-\end{NoConway}
 
-\begin{NoConway}
-\begin{figure*}[h]
-{\small
-\begin{code}
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd rewardUpdate
   ⟦ ⟦ treasury , reserves ⟧ᵃ
@@ -307,174 +224,130 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
           (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? (a .gaType) prev) govSt
       in
         (orps ++ orps' , govSt')
-\end{code}
-}
-\end{figure*}
-\end{NoConway}
 
-\begin{figure*}[ht]
-\begin{AgdaSuppressSpace}
-\begin{code}[hide]
 open RwdAddr using (stake)
-\end{code}
-\begin{code}
+
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
   (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
   (mapFromPartialFun (λ (gaid , _) → lookupᵐ? ds (GovActionDeposit gaid)) govSt')
   where govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
 
-\end{code}
-\begin{code}[hide]
 opaque
-\end{code}
-\begin{code}
   mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
     aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{Functions for computing stake distributions}
-\end{figure*}
 
-\begin{code}[hide]
 private variable
-  nes nes' : NewEpochState
-  e lastEpoch : Epoch
-  fut fut' : RatifyState
+  lastEpoch : Epoch
   eps eps' eps'' : EpochState
-  ls : LState
-  acnt : Acnt
   es₀ : EnactState
-  mark set go : Snapshot
-  feeSS : Coin
-  lstate : LState
+  mark : Snapshot
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
-\end{code}
+
+module EpochSetup₀ (ls : LState) (fut : RatifyState) where
+  open LState ls renaming (utxoSt to utxoSt₀; govSt to govSt₀; certState to certState₀) public
+  open CertState certState₀ renaming (dState to dState₀; pState to pState₀; gState to gState₀) public
+  open RatifyState fut renaming (es to esW; removed to removed₀) public
+  open EnactState esW renaming (cc to cc₀; constitution to constitution₀; pv to pv₀; pparams to pparams₀; withdrawals to withdrawals₀) public
+
+  orphans  = fromList (getOrphans ⟦ cc₀ , constitution₀ , pv₀ , pparams₀ , ∅ ⟧
+                         $ filter (λ x → proj₁ x ∉ mapˢ proj₁ removed₀) govSt₀)
+
+  removed₁ : ℙ (GovActionID × GovActionState)
+  removed₁ = removed₀ ∪ orphans
+
+  removedGovActions = flip concatMapˢ removed₁ λ (gaid , gaSt) →
+    mapˢ (returnAddr gaSt ,_) ((DepositsOf utxoSt₀ ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+
+  deposits₁ : Deposits
+  deposits₁ = DepositsOf utxoSt₀ ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
+
+  govSt₁ : GovState
+  govSt₁ = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed₁) govSt₀
+
+ratifyEnvFrom : Epoch → LState → RatifyState → Acnt → Snapshot → RatifyEnv
+ratifyEnvFrom e ls fut acnt mark  =
+  record { currentEpoch  = e
+         ; stakeDistrs   = mkStakeDistrs mark govSt₁ deposits₁ (voteDelegsOf dState₀)
+         ; treasury      = Acnt.treasury acnt
+         ; GState gState₀
+         ; pools         = PState.pools pState₀
+         ; delegatees    = voteDelegsOf dState₀
+         }
+  where open EpochSetup₀ ls fut
 
 
-\begin{NoConway}
-\begin{figure*}[h]
-\begin{code}
-data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
-\end{code}
-\end{figure*}
-\end{NoConway}
+module EpochSetup₁ (e : Epoch)(ls : LState)(fut fut' : RatifyState)(acnt : Acnt) where
+  open EpochSetup₀ ls fut
+  es : EnactState
+  es = record { cc = cc₀
+              ; constitution = constitution₀
+              ; pv = pv₀
+              ; pparams = pparams₀
+              ; withdrawals = ∅
+              }
+  open UTxOState utxoSt₀ renaming (utxo to utxo₀; fees to fees₀; deposits to deposits₀; donations to donations₀)
+  open PState pState₀ renaming (pools to pools₀; retiring to retiring₀)
+  open DState dState₀ renaming (voteDelegs to voteDelegs₀; stakeDelegs to stakeDelegs₀; rewards to rewards₀)
+  open GState gState₀ renaming (dreps to dreps₀; ccHotKeys to ccHotKeys₀)
 
-\Cref{fig:epoch:sts} defines the EPOCH transition rule.
-Currently, this incorporates logic that was previously handled by
-POOLREAP in the Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec};
-POOLREAP is not implemented here.
+  govActionReturns : RwdAddr ⇀ Coin
+  govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-The EPOCH rule now also needs to invoke RATIFIES and properly deal with
-its results by carrying out each of the following tasks.
-\begin{itemize}
-\item Pay out all the enacted treasury withdrawals.
-\item Remove expired and enacted governance actions \& refund deposits.
-\item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
-\item Remove all hot keys from the constitutional committee delegation map that
-  do not belong to currently elected members.
-\item Apply the resulting enact state from the previous epoch boundary \AgdaBound{fut} and
-  store the resulting enact state \AgdaBound{fut'}.
-\end{itemize}
+  refunds : Credential ⇀ Coin
+  refunds = pullbackMap (govActionReturns ∪⁺ withdrawals₀) toRwdAddr (dom rewards₀)
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
-  EPOCH : let
-\end{code}
-\begin{code}[hide]
-      open LState ls
-      open CertState certState
-      open RatifyState fut hiding (es)
-      open UTxOState
-      open PState; open DState; open GState
-      open Acnt; open EnactState; open GovActionState
-\end{code}
-\begin{code}
-      esW               = RatifyState.es fut
-      es                = record esW { withdrawals = ∅ }
-      tmpGovSt          = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
-      orphans           = fromList (getOrphans es tmpGovSt)
-      removed'          = removed ∪ orphans
-      removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
-        mapˢ (returnAddr gaSt ,_) ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
-      govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+  unclaimed : Coin
+  unclaimed = getCoin (govActionReturns ∪⁺ withdrawals₀) - getCoin refunds
 
-      trWithdrawals   = esW .withdrawals
-      totWithdrawals  = ∑[ x ← trWithdrawals ] x
+  dState₁ : DState
+  dState₁ = ⟦ voteDelegs₀ , stakeDelegs₀ ,  rewards₀ ∪⁺ refunds ⟧
 
-      retired    = (pState .retiring) ⁻¹ e
-      payout     = govActionReturns ∪⁺ trWithdrawals
-      refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
-      unclaimed  = getCoin payout - getCoin refunds
+  pState₁ : PState
+  pState₁ = ⟦ pools₀ ∣ (retiring₀ ⁻¹ e) ᶜ , retiring₀ ∣ (retiring₀ ⁻¹ e) ᶜ ⟧
 
-      govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
+  gState₁ : GState
+  gState₁ = ⟦ (if null govSt₁ then mapValues (1 +_) dreps₀ else dreps₀) , ccHotKeys₀ ∣ ccCreds cc₀ ⟧
 
-      dState' = ⟦ dState .voteDelegs , dState .stakeDelegs ,  dState .rewards ∪⁺ refunds ⟧
+  certState₁ : CertState
+  certState₁ = record { dState = dState₁ ; pState = pState₁ ; gState = gState₁ }
 
-      pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
+  utxoSt₁ : UTxOState
+  utxoSt₁ = ⟦ utxo₀ , fees₀ , deposits₀ ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
 
-      gState' = ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
-                , gState .ccHotKeys ∣ ccCreds (es .cc) ⟧
+  acnt₁ : Acnt
+  acnt₁ = ⟦ Acnt.treasury acnt ∸ (∑[ x ← withdrawals₀ ] x) +  donations₀ + unclaimed , Acnt.reserves acnt ⟧
 
-      certState' : CertState
-      certState' = ⟦ dState' , pState' , gState' ⟧
+  data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 
-      utxoSt' = ⟦ utxoSt .utxo , utxoSt .fees , utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
-
-      acnt' = record acnt
-        { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
-    in
-    record { currentEpoch = e
-           ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                          (utxoSt' .deposits) (voteDelegs dState)
-           ; treasury = acnt .treasury ; GState gState
-           ; pools = pState .pools ; delegatees = dState .voteDelegs }
-        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
+    EPOCH :
+      ratifyEnvFrom e ls fut acnt mark ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt₁ ,RATIFIES⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-    ────────────────────────────────
-    _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
-        ⟦ acnt' , ss' , ⟦ utxoSt' , govSt' , certState' ⟧ , es , fut' ⟧
-\end{code}
-\end{AgdaMultiCode}
-\caption{EPOCH transition system}
-\label{fig:epoch:sts}
-\end{figure*}
-
-\begin{NoConway}
-\begin{figure*}[ht]
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type
-\end{code}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{code}
-  NEWEPOCH-New : let
-      eps' = applyRUpd ru eps
-    in
-    ∙ e ≡ lastEpoch + 1
-    ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
+      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
+          ⟦ acnt₁ , ss' , ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ , es , fut' ⟧
 
-  NEWEPOCH-Not-New :
-    ∙ e ≢ lastEpoch + 1
-      ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
+  data
+    _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type
+    where
+    NEWEPOCH-New : let
+        eps' = applyRUpd ru eps
+      in
+      ∙ e ≡ lastEpoch + 1
+      ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
+        ────────────────────────────────
+        _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
 
-  NEWEPOCH-No-Reward-Update :
-    ∙ e ≡ lastEpoch + 1
-    ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-      ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
-\end{code}
-\caption{NEWEPOCH transition system}
-\end{figure*}
-\end{NoConway}
+    NEWEPOCH-Not-New :
+      ∙ e ≢ lastEpoch + 1
+        ────────────────────────────────
+        _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
+
+    NEWEPOCH-No-Reward-Update :
+      ∙ e ≡ lastEpoch + 1
+      ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+        ────────────────────────────────
+        _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧

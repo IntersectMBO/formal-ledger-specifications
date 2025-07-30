@@ -62,6 +62,9 @@ instance
   unquoteDecl HasCast-EnactEnv = derive-HasCast
     [ (quote EnactEnv , HasCast-EnactEnv) ]
 
+  unquoteDecl HasCast-EnactState = derive-HasCast
+    [ (quote EnactState , HasCast-EnactState) ]
+
 open EnactState
 \end{code}
 \begin{code}
