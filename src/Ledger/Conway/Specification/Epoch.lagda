@@ -366,10 +366,12 @@ private variable
 \end{code}
 
 \begin{code}[hide]
--- All of these definitions are a copy of those used in the EPOCH transition.
+-- All of these definitions are used in the EPOCH transition. Initially, they
+-- were meant to be a copy, so the EPOCH transition would show them immediately
+-- when presenting the rule. However, this made typechecking very slow in
+-- Epoch.Properties.
 --
--- We duplicate them in the EPOCH transition so they are visible when presenting
--- the rule. We keep this module as its contents need to be brought in scope for some
+-- We need this module since its contents need to be brought in scope for some
 -- proofs.
 module EPOCH-updates0
     (fut : RatifyState)
@@ -495,79 +497,13 @@ its results by carrying out each of the following tasks.
 \begin{code}[hide]
       open LState ls
       open CertState certState
-      open RatifyState fut hiding (es)
       open UTxOState
-      open PState; open DState; open GState
-      open Acnt; open EnactState; open GovActionState
+      open PState
+      open DState
+      open Acnt
 \end{code}
 \begin{code}
-      esW : EnactState
-      esW = RatifyState.es fut
-
-      es : EnactState
-      es = record esW { withdrawals = ∅ }
-
-      tmpGovSt : GovState
-      tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
-
-      orphans : ℙ (GovActionID × GovActionState)
-      orphans  = fromList (getOrphans es tmpGovSt)
-
-      removed' : ℙ (GovActionID × GovActionState)
-      removed' = removed ∪ orphans
-
-      govSt' : List (GovActionID × GovActionState)
-      govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
-
-      removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
-      removedGovActions =
-        flip concatMapˢ removed' λ (gaid , gaSt) →
-          mapˢ
-            (returnAddr gaSt ,_)
-            ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
-
-      govActionReturns : RwdAddr ⇀ Coin
-      govActionReturns =
-        aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
-
-      trWithdrawals : RwdAddr ⇀ Coin
-      trWithdrawals = EnactState.withdrawals esW
-
-      payout : RwdAddr ⇀ Coin
-      payout = govActionReturns ∪⁺ trWithdrawals
-
-      refunds : Credential ⇀ Coin
-      refunds = pullbackMap payout toRwdAddr (dom (dState' .rewards))
-
-      dState'' : DState
-      dState'' = record dState' { rewards =  dState' .rewards ∪⁺ refunds }
-
-      gState' : GState
-      gState' =
-        ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else gState .dreps)
-        , gState .ccHotKeys ∣ ccCreds (es .cc)
-        ⟧
-
-      certState' : CertState
-      certState' = ⟦ dState'' , pState' , gState' ⟧
-
-      utxoSt' : UTxOState
-      utxoSt' = record utxoSt
-        { deposits = utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
-        ; donations = 0
-        }
-
-      unclaimed : Coin
-      unclaimed = getCoin payout - getCoin refunds
-
-      totWithdrawals : Coin
-      totWithdrawals = ∑[ x ← trWithdrawals ] x
-
-      acnt'' : Acnt
-      acnt'' = record acnt'
-        { treasury =
-            Acnt.treasury acnt' ∸ totWithdrawals + utxoSt .donations + unclaimed
-        }
+      open module U = EPOCH-updates fut ls acnt' dState' pState'
 
     in
     record { currentEpoch = e
