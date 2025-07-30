@@ -54,13 +54,9 @@ module _ {e : Epoch} (prs : PoolReapState) where
 module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
-  open RatifyState fut using (removed) renaming (es to esW)
-  open LState ls; open CertState certState; open Acnt acnt
-  es         = record esW { withdrawals = ∅ }
-  govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   prs =
-    ⟦ U0.utxoSt' , acnt , dState , pState ⟧
+    ⟦ U0.utxoSt' , acnt , U0.dState , U0.pState ⟧
     where module U0 = EPOCH-updates0 fut ls
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
@@ -103,7 +99,7 @@ module _ {eps : EpochState} {e : Epoch} where
                                    }) ss'≡ss'')
                                    refl refl p₁ p₁'
 
-      prs'≡prs'' : ? ≡ ?
+      prs'≡prs'' : {!!} ≡ {!!}
       prs'≡prs'' = POOLREAP-deterministic prs p₃ p₃'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
