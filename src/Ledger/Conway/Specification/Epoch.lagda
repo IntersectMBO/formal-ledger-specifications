@@ -111,6 +111,9 @@ instance
   HasEpochState-NewEpochState : HasEpochState NewEpochState
   HasEpochState-NewEpochState .EpochStateOf = NewEpochState.epochState
 
+  HasEnactState-NewEpochState : HasEnactState NewEpochState
+  HasEnactState-NewEpochState .EnactStateOf = EnactStateOf ∘ EpochStateOf
+
   Hastreasury-NewEpochState : Hastreasury NewEpochState
   Hastreasury-NewEpochState .treasuryOf = treasuryOf ∘ EpochStateOf
 
@@ -128,6 +131,9 @@ instance
 
   HasRewards-NewEpochState : HasRewards NewEpochState
   HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
+
+  HasPParams-NewEpochState : HasPParams NewEpochState
+  HasPParams-NewEpochState .PParamsOf = PParamsOf ∘ EpochStateOf
 
   unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
     ( (quote EpochState     , HasCast-EpochState)
@@ -377,16 +383,9 @@ module EPOCH-updates0
     (fut : RatifyState)
     (ls : LState)
     where
-  open LState ls
-  open CertState certState
-  open RatifyState fut hiding (es)
-  open UTxOState
-  open GState
-  open EnactState
-  open GovActionState
-
-  esW : EnactState
-  esW = RatifyState.es fut
+  open LState ls public
+  open CertState certState public
+  open RatifyState fut renaming (es to esW)
 
   es : EnactState
   es = record esW { withdrawals = ∅ }
@@ -408,7 +407,7 @@ module EPOCH-updates0
     flip concatMapˢ removed' λ (gaid , gaSt) →
       mapˢ
         (returnAddr gaSt ,_)
-        ((utxoSt .deposits ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+        ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
 
   govActionReturns : RwdAddr ⇀ Coin
   govActionReturns =
@@ -422,13 +421,13 @@ module EPOCH-updates0
 
   gState' : GState
   gState' =
-    ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else gState .dreps)
-    , gState .ccHotKeys ∣ ccCreds (es .cc)
+    ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf gState) else DRepsOf gState)
+    , GState.ccHotKeys gState ∣ ccCreds (EnactState.cc es)
     ⟧
 
   utxoSt' : UTxOState
   utxoSt' = record utxoSt
-    { deposits = utxoSt .deposits ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
+    { deposits = DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
     ; donations = 0
     }
 
@@ -442,7 +441,6 @@ module EPOCH-updates
     (dState' : DState)
     (pState' : PState)
     where
-  open LState ls
   open UTxOState
   open EPOCH-updates0 fut ls public
   open DState
@@ -493,31 +491,27 @@ its results by carrying out each of the following tasks.
 \begin{AgdaMultiCode}
 \begin{code}
   EPOCH : let
-\end{code}
-\begin{code}[hide]
-      open LState ls
-      open CertState certState
-      open UTxOState
-      open PState
-      open DState
-      open Acnt
-\end{code}
-\begin{code}
-      open module U = EPOCH-updates fut ls acnt' dState' pState'
+    module U = EPOCH-updates fut ls acnt' dState' pState'
 
     in
-    record { currentEpoch = e
-           ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                          (utxoSt' .deposits) (voteDelegs dState)
-           ; treasury = acnt .treasury ; GState gState
-           ; pools = pState .pools ; delegatees = dState .voteDelegs }
-        ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
-      → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-      → _ ⊢ ⟦ utxoSt' , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
-            ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
-    ────────────────────────────────
-    _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
-        ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , certState' ⟧ , es , fut' ⟧
+      record { currentEpoch = e
+             ; stakeDistrs = mkStakeDistrs
+                               (Snapshots.mark ss')
+                               U.govSt'
+                               (DepositsOf U.utxoSt')
+                               (voteDelegsOf U.dState)
+             ; treasury = treasuryOf acnt
+             ; GState U.gState
+             ; pools = PState.pools U.pState
+             ; delegatees = voteDelegsOf U.dState
+             }
+          ⊢ ⟦ U.es , ∅ , false ⟧ ⇀⦇ U.govSt' ,RATIFIES⦈ fut'
+        → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+        → _ ⊢ ⟦ U.utxoSt' , acnt , U.dState , U.pState ⟧ ⇀⦇ e ,POOLREAP⦈
+              ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
+      ────────────────────────────────
+      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
+          ⟦ U.acnt'' , ss' , ⟦ utxoSt'' , U.govSt' , U.certState' ⟧ , U.es , fut' ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}
