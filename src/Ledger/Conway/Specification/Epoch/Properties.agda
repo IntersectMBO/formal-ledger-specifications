@@ -77,7 +77,7 @@ module _ {eps : EpochState} {e : Epoch} where
         { acnt = U.acnt''
         ; ss = ss
         ; ls = ⟦ utxoSt'' , U.govSt' , U.certState' ⟧ˡ
-        ; es = _
+        ; es = U.es
         ; fut = fut'
         }
       where module U = EPOCH-updates fut ls acnt' dState' pState'
