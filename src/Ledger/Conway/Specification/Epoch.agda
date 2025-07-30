@@ -238,20 +238,22 @@ opaque
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
     aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 
-private variable
-  lastEpoch : Epoch
-  eps eps' eps'' : EpochState
-  es₀ : EnactState
-  mark : Snapshot
-  ss ss' : Snapshots
-  ru : RewardUpdate
-  mru : Maybe RewardUpdate
 
-module EpochSetup₀ (ls : LState) (fut : RatifyState) where
-  open LState ls renaming (utxoSt to utxoSt₀; govSt to govSt₀; certState to certState₀) public
+-- record EpochState : Type where
+--   field
+--     acnt       : Acnt
+--     ss         : Snapshots
+--     ls         : LState
+--     es         : EnactState
+--     fut        : RatifyState
+
+
+module EpochRule (e₀ : Epoch) (eps₀ : EpochState) (ss₁ : Snapshots) (fut₁ : RatifyState) where
+  open EpochState eps₀ renaming (acnt to acnt₀; ss to ss₀; ls to ls₀; es to es₀; fut to fut₀) public
+  open LState ls₀ renaming (utxoSt to utxoSt₀; govSt to govSt₀; certState to certState₀) public
   open CertState certState₀ renaming (dState to dState₀; pState to pState₀; gState to gState₀) public
-  open RatifyState fut renaming (es to esW; removed to removed₀) public
-  open EnactState esW renaming (cc to cc₀; constitution to constitution₀; pv to pv₀; pparams to pparams₀; withdrawals to withdrawals₀) public
+  open RatifyState fut₀ renaming (es to esW; removed to removed₀) public
+  open EnactState es₀ renaming (cc to cc₀; constitution to constitution₀; pv to pv₀; pparams to pparams₀; withdrawals to withdrawals₀) public
 
   orphans  = fromList (getOrphans ⟦ cc₀ , constitution₀ , pv₀ , pparams₀ , ∅ ⟧
                          $ filter (λ x → proj₁ x ∉ mapˢ proj₁ removed₀) govSt₀)
@@ -268,31 +270,27 @@ module EpochSetup₀ (ls : LState) (fut : RatifyState) where
   govSt₁ : GovState
   govSt₁ = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed₁) govSt₀
 
-ratifyEnvFrom : Epoch → LState → RatifyState → Acnt → Snapshot → RatifyEnv
-ratifyEnvFrom e ls fut acnt mark  =
-  record { currentEpoch  = e
-         ; stakeDistrs   = mkStakeDistrs mark govSt₁ deposits₁ (voteDelegsOf dState₀)
-         ; treasury      = Acnt.treasury acnt
-         ; GState gState₀
-         ; pools         = PState.pools pState₀
-         ; delegatees    = voteDelegsOf dState₀
-         }
-  where open EpochSetup₀ ls fut
+  ratifyEnv : RatifyEnv
+  ratifyEnv =
+    record { currentEpoch  = e₀
+           ; stakeDistrs   = mkStakeDistrs (Snapshots.mark ss₁) govSt₁ deposits₁ (voteDelegsOf dState₀)
+           ; treasury      = Acnt.treasury acnt₀
+           ; GState gState₀
+           ; pools         = PState.pools pState₀
+           ; delegatees    = voteDelegsOf dState₀
+           }
 
-
-module EpochSetup₁ (e : Epoch)(ls : LState)(fut fut' : RatifyState)(acnt : Acnt) where
-  open EpochSetup₀ ls fut
-  es : EnactState
-  es = record { cc = cc₀
+  es₁ : EnactState
+  es₁ = record { cc = cc₀
               ; constitution = constitution₀
               ; pv = pv₀
               ; pparams = pparams₀
               ; withdrawals = ∅
               }
-  open UTxOState utxoSt₀ renaming (utxo to utxo₀; fees to fees₀; deposits to deposits₀; donations to donations₀)
-  open PState pState₀ renaming (pools to pools₀; retiring to retiring₀)
-  open DState dState₀ renaming (voteDelegs to voteDelegs₀; stakeDelegs to stakeDelegs₀; rewards to rewards₀)
-  open GState gState₀ renaming (dreps to dreps₀; ccHotKeys to ccHotKeys₀)
+  open UTxOState utxoSt₀ renaming (utxo to utxo₀; fees to fees₀; deposits to deposits₀; donations to donations₀) public
+  open PState pState₀ renaming (pools to pools₀; retiring to retiring₀) public
+  open DState dState₀ renaming (voteDelegs to voteDelegs₀; stakeDelegs to stakeDelegs₀; rewards to rewards₀) public
+  open GState gState₀ renaming (dreps to dreps₀; ccHotKeys to ccHotKeys₀) public
 
   govActionReturns : RwdAddr ⇀ Coin
   govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
@@ -304,50 +302,54 @@ module EpochSetup₁ (e : Epoch)(ls : LState)(fut fut' : RatifyState)(acnt : Acn
   unclaimed = getCoin (govActionReturns ∪⁺ withdrawals₀) - getCoin refunds
 
   dState₁ : DState
-  dState₁ = ⟦ voteDelegs₀ , stakeDelegs₀ ,  rewards₀ ∪⁺ refunds ⟧
+  dState₁ = ⟦ voteDelegs₀ , stakeDelegs₀ ,  rewards₀ ∪⁺ refunds ⟧ᵈ
 
   pState₁ : PState
-  pState₁ = ⟦ pools₀ ∣ (retiring₀ ⁻¹ e) ᶜ , retiring₀ ∣ (retiring₀ ⁻¹ e) ᶜ ⟧
+  pState₁ = record { pools = pools₀ ∣ (retiring₀ ⁻¹ e₀) ᶜ
+                   ; retiring = retiring₀ ∣ (retiring₀ ⁻¹ e₀) ᶜ
+                   }
 
   gState₁ : GState
-  gState₁ = ⟦ (if null govSt₁ then mapValues (1 +_) dreps₀ else dreps₀) , ccHotKeys₀ ∣ ccCreds cc₀ ⟧
+  gState₁ = ⟦ (if null govSt₁ then mapValues (1 +_) dreps₀ else dreps₀) , ccHotKeys₀ ∣ ccCreds cc₀ ⟧ᵛ
 
   certState₁ : CertState
   certState₁ = record { dState = dState₁ ; pState = pState₁ ; gState = gState₁ }
 
   utxoSt₁ : UTxOState
-  utxoSt₁ = ⟦ utxo₀ , fees₀ , deposits₀ ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+  utxoSt₁ = ⟦ utxo₀ , fees₀ , deposits₀ ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧ᵘ
 
   acnt₁ : Acnt
-  acnt₁ = ⟦ Acnt.treasury acnt ∸ (∑[ x ← withdrawals₀ ] x) +  donations₀ + unclaimed , Acnt.reserves acnt ⟧
+  acnt₁ = ⟦ Acnt.treasury acnt₀ ∸ (∑[ x ← withdrawals₀ ] x) +  donations₀ + unclaimed , Acnt.reserves acnt₀ ⟧ᵃ
 
   data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 
-    EPOCH :
-      ratifyEnvFrom e ls fut acnt mark ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt₁ ,RATIFIES⦈ fut'
-      → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+    EPOCH : ratifyEnv
+      ⊢ ⟦ es₀ , ∅ , false ⟧ ⇀⦇ govSt₁ ,RATIFIES⦈ fut₁
+      → ls₀ ⊢ ss₀ ⇀⦇ tt ,SNAP⦈ ss₁
       ────────────────────────────────
-      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
-          ⟦ acnt₁ , ss' , ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ , es , fut' ⟧
+      _ ⊢ eps₀ ⇀⦇ e₀ ,EPOCH⦈
+          ⟦ acnt₁ , ss₁ , ⟦ utxoSt₁ , govSt₁ , certState₁ ⟧ , es₁ , fut₁ ⟧
 
-  data
-    _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type
-    where
-    NEWEPOCH-New : let
-        eps' = applyRUpd ru eps
-      in
-      ∙ e ≡ lastEpoch + 1
-      ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
-        ────────────────────────────────
-        _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
+  module _ (e lastEpoch : Epoch) (eps' eps₂ : EpochState) (ru : RewardUpdate) (mru : Maybe RewardUpdate) where
 
-    NEWEPOCH-Not-New :
-      ∙ e ≢ lastEpoch + 1
-        ────────────────────────────────
-        _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
+    eps₁ : EpochState
+    eps₁ = applyRUpd ru eps₀
 
-    NEWEPOCH-No-Reward-Update :
-      ∙ e ≡ lastEpoch + 1
-      ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-        ────────────────────────────────
-        _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
+    data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where
+
+      NEWEPOCH-New :
+        ∙ e ≡ lastEpoch + 1
+        ∙ _ ⊢ eps₁ ⇀⦇ e ,EPOCH⦈ eps₂
+          ────────────────────────────────
+          _ ⊢ ⟦ lastEpoch , eps₀ , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps₂ , nothing ⟧
+
+      NEWEPOCH-Not-New :
+        ∙ e ≢ lastEpoch + 1
+          ────────────────────────────────
+          _ ⊢ ⟦ lastEpoch , eps₀ , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps₀ , mru ⟧
+
+      NEWEPOCH-No-Reward-Update :
+        ∙ e ≡ lastEpoch + 1
+        ∙ _ ⊢ eps₀ ⇀⦇ e ,EPOCH⦈ eps₁
+          ────────────────────────────────
+          _ ⊢ ⟦ lastEpoch , eps₀ , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
