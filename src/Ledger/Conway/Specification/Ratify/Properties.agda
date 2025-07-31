@@ -70,3 +70,18 @@ opaque
   RATIFIES-complete' : ∀ {Γ s sig s'} →
     Γ ⊢ s ⇀⦇ sig ,RATIFIES⦈ s' → RATIFIES-total' {Γ} {s} {sig} .proj₁ ≡ s'
   RATIFIES-complete' = RATIFIES-complete
+
+  RATIFIES-deterministic : ∀ {Γ s sig s' s''}
+    → Γ ⊢ s ⇀⦇ sig ,RATIFIES⦈ s'
+    → Γ ⊢ s ⇀⦇ sig ,RATIFIES⦈ s''
+    → s' ≡ s''
+  RATIFIES-deterministic p₁ p₂ = trans (sym (RATIFIES-complete' p₁)) (RATIFIES-complete' p₂)
+
+  RATIFIES-deterministic-≡ : ∀ {Γ Γ' s s' sig sig' s'' s'''}
+    → Γ ≡ Γ'
+    → s ≡ s'
+    → sig ≡ sig'
+    → Γ  ⊢ s  ⇀⦇ sig  ,RATIFIES⦈ s''
+    → Γ' ⊢ s' ⇀⦇ sig' ,RATIFIES⦈ s'''
+    → s'' ≡ s'''
+  RATIFIES-deterministic-≡ refl refl refl = RATIFIES-deterministic
