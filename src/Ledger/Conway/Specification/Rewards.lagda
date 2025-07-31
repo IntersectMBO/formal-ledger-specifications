@@ -621,8 +621,8 @@ opaque
       activeDelegs  : Credential ⇀ KeyHash
       activeRewards : Credential ⇀ Coin
       activeStake   : Credential ⇀ Coin
- \end{code}
- \begin{code}
+\end{code}
+\begin{code}
       poolParams     = pState .PState.pools
       open DState dState using (stakeDelegs; rewards)
       utxoBalance    = λ cred → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just cred)
