@@ -90,9 +90,8 @@ module EPOCH-PROPS {eps : EpochState} where
       module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
-  EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
-      ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
-      ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+  EPOCH-govDepsMatch {eps'} ratify-removed
+     (EPOCH x _ _) = poolReapMatch ∘ ratifiesSnapMatch
     where
 
     -- the combinator used in the EPOCH rule
@@ -175,6 +174,19 @@ module EPOCH-PROPS {eps : EpochState} where
       (a ∉ ΔΠ' × a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
+
+    module U = EPOCH-updates0 (eps .fut) (eps .ls)
+
+    ls₁ = record (eps' .ls) { utxoSt = U.utxoSt' }
+
+    ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
+    ratifiesSnapMatch =
+       ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
+       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+
+    poolReapMatch : govDepsMatch ls₁ → govDepsMatch (eps' .ls)
+    poolReapMatch = {!!}
+
 \end{code}
   \end{itemize}
 \end{lemma}

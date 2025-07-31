@@ -14,6 +14,7 @@ module Ledger.Conway.Specification.Epoch.Properties
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Ratify.Properties txs
 open import Ledger.Conway.Specification.Rewards txs abs
@@ -30,20 +31,52 @@ module _ (lstate : LState) (ss : Snapshots) where
   SNAP-complete : ∀ ss' → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss' → proj₁ SNAP-total ≡ ss'
   SNAP-complete ss' SNAP = refl
 
+module _ {e : Epoch} (prs : PoolReapState) where
+  POOLREAP-total : ∃[ prs' ] _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
+  POOLREAP-total = -, POOLREAP
+
+  POOLREAP-complete : ∀ prs' → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs' → proj₁ POOLREAP-total ≡ prs'
+  POOLREAP-complete prs' POOLREAP = refl
+
 module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
-  open RatifyState fut using (removed) renaming (es to esW)
-  open LState ls; open CertState certState; open Acnt acnt
-  es         = record esW { withdrawals = ∅ }
-  govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-  EPOCH-total = -, EPOCH (RATIFIES-total' .proj₂) (SNAP-total ls ss .proj₂)
+  EPOCH-total =
+    -, EPOCH
+        (RATIFIES-total' .proj₂)
+        (SNAP-total ls ss .proj₂)
+        (POOLREAP-total
+          ⟦ Local.utxoSt'
+          , acnt
+          , Local.dState
+          , Local.pState
+          ⟧ .proj₂
+        )
+    where module Local = EPOCH-updates0 fut ls
+
+  private
+    EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
+    EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
+      record
+        { acnt = Local.acnt''
+        ; ss = ss
+        ; ls = ⟦ utxoSt'' , Local.govSt' , Local.certState' ⟧ˡ
+        ; es = Local.es
+        ; fut = fut'
+        }
+      where module Local = EPOCH-updates fut ls acnt' dState' pState'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
-  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut }) (SNAP-complete _ _ _ p₂)
-    (RATIFIES-complete' (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
+  EPOCH-complete eps' (EPOCH p₁ p₂ p₃) =
+    cong₂ _$_
+      (cong₂ EPOCH-state
+        (SNAP-complete _ _ _ p₂)
+        (RATIFIES-complete'
+          (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
+      )
+      (POOLREAP-complete _ _ p₃)
     where
       ty : Snapshot → Set
       ty x = record
@@ -78,7 +111,7 @@ module _ {e : Epoch} where
 
   NEWEPOCH-complete : ∀ nes nes' → _ ⊢ nes ⇀⦇ e ,NEWEPOCH⦈ nes' → proj₁ (NEWEPOCH-total nes) ≡ nes'
   -- NEWEPOCH-complete nes nes' h with e ≟ NewEpochState.lastEpoch nes + 1 | NewEpochState.ru nes | h
-  NEWEPOCH-complete nes nes' h with e ≟ NewEpochState.lastEpoch nes + 1 | NewEpochState.ru nes | inspect NewEpochState.ru nes | h 
+  NEWEPOCH-complete nes nes' h with e ≟ NewEpochState.lastEpoch nes + 1 | NewEpochState.ru nes | inspect NewEpochState.ru nes | h
   ... | yes p | just ru | PE.[ refl ] | NEWEPOCH-New (x , x₁) rewrite EPOCH-complete' _ x₁ = refl
   ... | yes p | ru | PE.[ refl ] | NEWEPOCH-Not-New x = ⊥-elim $ x p
   ... | yes p | nothing | PE.[ refl ] | NEWEPOCH-No-Reward-Update (x , x₁) rewrite EPOCH-complete' _ x₁ = refl
