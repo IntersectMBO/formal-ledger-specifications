@@ -11,10 +11,12 @@ module Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Prelude using (mapˢ)
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties txs abs
+open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Prelude renaming (map to map'; mapˢ to map)
 open import Ledger.Conway.Specification.Ratify txs hiding (vote)
 open import Ledger.Conway.Specification.Utxo txs abs
@@ -39,6 +41,7 @@ module EPOCH-Body (eps : EpochState) where
   open EpochState eps hiding (es) renaming (ls to epsLState; fut to epsRState) public
   open RatifyState renaming (es to ensRState) public
   open LState epsLState public
+  open PState public
   open GovActionState public
   open UTxOState public
 
@@ -94,10 +97,8 @@ For the formal statement of the lemma,
 *Proof*.
 
 ```agda
-
-  EPOCH-govDepsMatch ratify-removed (EPOCH x _) =
-      ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
-      ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+  EPOCH-govDepsMatch {eps'} {e} ratify-removed (EPOCH x _ POOLREAP) =
+      poolReapMatch ∘ ratifiesSnapMatch
     where
 
     -- the combinator used in the EPOCH rule
@@ -180,4 +181,97 @@ For the formal statement of the lemma,
       (a ∉ ΔΠ' × a ∈ˡ map' (GovActionDeposit ∘ proj₁) govSt)            ∼⟨ map-filter-decomp a ⟩
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
+
+    module U = EPOCH-updates0 (eps .fut) (eps .ls)
+
+    ls₁ = record (eps' .ls) { utxoSt = U.utxoSt' }
+
+    mutual
+      retiredDeposits : ℙ DepositPurpose
+      retiredDeposits = mapˢ PoolDeposit (U.pState .retiring ⁻¹ e)
+
+      ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
+      ratifiesSnapMatch =
+         ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
+         ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+
+      poolReapMatch : govDepsMatch ls₁ → govDepsMatch (eps' .ls)
+      poolReapMatch = ≡ᵉ.trans dropRetiredDeposits
+
+      dropRetiredDeposits :
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ)) ≡ᵉ
+          filterˢ isGADeposit (dom (DepositsOf ls₁))
+      dropRetiredDeposits = begin
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))
+
+          ≈⟨ ∪-identityˡ _ ⟨
+
+        ∅ˢ ∪ filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))
+
+          ≈⟨ ∪-cong
+               (filter-∅ noGADepositIsRetired)
+               (IsEquivalence.refl ≡ᵉ-isEquivalence)
+           ⟨
+
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits))
+        ∪
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))
+
+          ≈⟨ filter-hom-∪ ⟨
+
+        filterˢ isGADeposit
+          (dom (DepositsOf ls₁ ∣ retiredDeposits)
+           ∪
+           dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ)
+          )
+
+          ≈⟨ filter-pres-≡ᵉ dom∪ ⟨
+
+        filterˢ isGADeposit
+          (dom
+            ((DepositsOf ls₁ ∣ retiredDeposits) ˢ
+              ∪
+             (DepositsOf ls₁ ∣ retiredDeposits ᶜ) ˢ
+            )
+          )
+
+          ≈⟨ IsEquivalence.refl ≡ᵉ-isEquivalence ⟩
+
+        filterˢ isGADeposit
+          (Rel.dom
+            (((DepositsOf ls₁ ˢ) ∣ʳ retiredDeposits)
+              ∪
+             ((DepositsOf ls₁ ˢ) ∣ʳ retiredDeposits ᶜ)
+            )
+          )
+
+          ≈⟨ filter-pres-≡ᵉ $ dom-cong (res-ex-∪ dec¹) ⟩
+
+        filterˢ isGADeposit (dom (DepositsOf ls₁))
+        ∎
+
+        where
+          open SetoidReasoning (≡ᵉ-Setoid {A = DepositPurpose})
+          open import Relation.Binary using (IsEquivalence)
+          import Axiom.Set.Rel th as Rel
+
+      noGADepositIsRetired
+        : (d : DepositPurpose)
+        → d ∈ dom (DepositsOf ls₁ ∣ retiredDeposits)
+        → ¬ isGADeposit d
+      noGADepositIsRetired d d∈res dIsGA
+       rewrite (proj₂ $ d≡PoolDepositA d d∈res)
+       with dIsGA
+      ... | ()
+
+      d≡PoolDepositA
+        : (d : DepositPurpose)
+        → d ∈ dom (DepositsOf ls₁ ∣ retiredDeposits)
+        → ∃[ kh ] d ≡ PoolDeposit kh
+      d≡PoolDepositA d d∈res =
+        Product.map₂ proj₁ $
+          ∈-map⁻' $       -- (∃[ a ] d ≡ PoolDeposit a × a ∈ _)
+           res-dom d∈res  -- d ∈ retiredDeposits
+
+        where import Data.Product.Base as Product using (map₂)
 ```
