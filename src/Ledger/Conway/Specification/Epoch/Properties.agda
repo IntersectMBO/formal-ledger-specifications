@@ -48,25 +48,25 @@ module _ {eps : EpochState} {e : Epoch} where
         (RATIFIES-total' .proj₂)
         (SNAP-total ls ss .proj₂)
         (POOLREAP-total
-          ⟦ utxoSt'
+          ⟦ Local.utxoSt'
           , acnt
-          , dState
-          , pState
+          , Local.dState
+          , Local.pState
           ⟧ .proj₂
         )
-    where open EPOCH-updates0 fut ls
+    where module Local = EPOCH-updates0 fut ls
 
   private
     EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
     EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
       record
-        { acnt = acnt''
+        { acnt = Local.acnt''
         ; ss = ss
-        ; ls = ⟦ utxoSt'' , govSt' , certState' ⟧ˡ
-        ; es = es
+        ; ls = ⟦ utxoSt'' , Local.govSt' , Local.certState' ⟧ˡ
+        ; es = Local.es
         ; fut = fut'
         }
-      where open EPOCH-updates fut ls acnt' dState' pState'
+      where module Local = EPOCH-updates fut ls acnt' dState' pState'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' (EPOCH p₁ p₂ p₃) =

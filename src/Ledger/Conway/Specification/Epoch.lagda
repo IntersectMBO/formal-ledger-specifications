@@ -491,21 +491,25 @@ its results by carrying out each of the following tasks.
 \begin{AgdaMultiCode}
 \begin{code}
   EPOCH : let
-    open EPOCH-updates fut ls acnt' dState' pState'
+    module U = EPOCH-updates fut ls acnt' dState' pState'
 
     in
       record { currentEpoch = e
-             ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                            (DepositsOf utxoSt') (voteDelegsOf dState)
-             ; treasury = treasuryOf acnt ; GState gState
-             ; pools = PState.pools pState ; delegatees = voteDelegsOf dState }
-          ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
+             ; stakeDistrs =
+                 mkStakeDistrs (Snapshots.mark ss') U.govSt'
+                               (DepositsOf U.utxoSt') (voteDelegsOf U.dState)
+             ; treasury = treasuryOf acnt
+             ; GState U.gState
+             ; pools = PState.pools U.pState
+             ; delegatees = voteDelegsOf U.dState
+             }
+          ⊢ ⟦ U.es , ∅ , false ⟧ ⇀⦇ U.govSt' ,RATIFIES⦈ fut'
         → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-        → _ ⊢ ⟦ utxoSt' , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
+        → _ ⊢ ⟦ U.utxoSt' , acnt , U.dState , U.pState ⟧ ⇀⦇ e ,POOLREAP⦈
               ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
       ────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈
-          ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , certState' ⟧ , es , fut' ⟧
+          ⟦ U.acnt'' , ss' , ⟦ utxoSt'' , U.govSt' , U.certState' ⟧ , U.es , fut' ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}
