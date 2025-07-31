@@ -4,16 +4,16 @@
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 
-module Ledger.Conway.PoolReap
+module Ledger.Conway.Specification.PoolReap
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs)
   where
 open import Ledger.Prelude
-open import Ledger.Conway.Utxo txs abs
-open import Ledger.Conway.Certs govStructure
+open import Ledger.Conway.Specification.Utxo txs abs
+open import Ledger.Conway.Specification.Certs govStructure
 ```
 -->
 
