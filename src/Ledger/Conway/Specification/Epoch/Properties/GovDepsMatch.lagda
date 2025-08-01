@@ -13,10 +13,12 @@ module Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
 \newcommand{\EpochPropGov}{Conway/Epoch/Properties/GovDepsMatch}
 
 \begin{code}[hide]
+open import Ledger.Prelude using (mapˢ)
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties txs abs
+open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Prelude renaming (map to map'; mapˢ to map)
 open import Ledger.Conway.Specification.Ratify txs hiding (vote)
 open import Ledger.Conway.Specification.Utxo txs abs
@@ -41,6 +43,7 @@ module EPOCH-Body (eps : EpochState) where
   open EpochState eps hiding (es) renaming (ls to epsLState; fut to epsRState) public
   open RatifyState renaming (es to ensRState) public
   open LState epsLState public
+  open PState public
   open GovActionState public
   open UTxOState public
 
@@ -90,8 +93,8 @@ module EPOCH-PROPS {eps : EpochState} where
       module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
-  EPOCH-govDepsMatch {eps'} ratify-removed
-     (EPOCH x _ _) = poolReapMatch ∘ ratifiesSnapMatch
+  EPOCH-govDepsMatch {eps'} {e} ratify-removed
+     (EPOCH x _ POOLREAP) = poolReapMatch ∘ ratifiesSnapMatch
     where
 
     -- the combinator used in the EPOCH rule
@@ -179,13 +182,49 @@ module EPOCH-PROPS {eps : EpochState} where
 
     ls₁ = record (eps' .ls) { utxoSt = U.utxoSt' }
 
-    ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
-    ratifiesSnapMatch =
-       ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
-       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+    mutual
+      retiredDeposits : ℙ DepositPurpose
+      retiredDeposits = mapˢ PoolDeposit (U.pState .retiring ⁻¹ e)
 
-    poolReapMatch : govDepsMatch ls₁ → govDepsMatch (eps' .ls)
-    poolReapMatch = {!!}
+      ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
+      ratifiesSnapMatch =
+         ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
+         ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+
+      poolReapMatch : govDepsMatch ls₁ → govDepsMatch (eps' .ls)
+      poolReapMatch = ≡ᵉ.trans dropRetiredDeposits
+
+      dropRetiredDeposits :
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ)) ≡ᵉ
+          filterˢ isGADeposit (dom (DepositsOf ls₁))
+      dropRetiredDeposits = {!!}
+      {-
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))
+             -- noGADepositIsRetired : ∅ ≡ filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits))
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits))
+        ∪
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))
+             -- filter-hom-∪ : filter sp-P (X ∪ Y) ≡ᵉ (filter sp-P X) ∪ (filter sp-P Y)
+        filterˢ isGADeposit
+          (dom (DepositsOf ls₁ ∣ retiredDeposits)
+           ∪
+           dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ)
+          )
+            -- dom∪ : dom (R ∪ R') ≡ᵉ dom R ∪ dom R'
+        filterˢ isGADeposit
+          (dom
+            ((DepositsOf ls₁ ∣ retiredDeposits)
+              ∪
+             (DepositsOf ls₁ ∣ retiredDeposits ᶜ)
+            )
+          )
+            -- res-ex-∪ : Decidable (_∈ X) → (R ∣ X) ∪ (R ∣ X ᶜ) ≡ᵉ R
+        filterˢ isGADeposit (dom (DepositsOf ls₁))
+      -}
+
+      noGADepositIsRetired
+        : ∅ ≡ᵉ filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits))
+      noGADepositIsRetired = {!!}
 
 \end{code}
   \end{itemize}
