@@ -3,6 +3,7 @@
 
 /* Aspects */
 /* Aspects. */
+.Agda .Argument      { color: #ffffff }
 .Agda .Comment       { color: #cc9393 }
 .Agda .Background    {}
 .Agda .Markup        { color: #dcdccc }

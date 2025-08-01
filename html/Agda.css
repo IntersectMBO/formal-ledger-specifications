@@ -1,4 +1,5 @@
 /* Aspects. */
+.Agda .Argument      { color: #404040 }
 .Agda .Comment       { color: #B22222 }
 .Agda .Background    {}
 .Agda .Markup        { color: #000000 }
