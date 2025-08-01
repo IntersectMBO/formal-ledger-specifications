@@ -444,3 +444,33 @@ d_RATIFIES'45'complete''_2146 ::
   MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__38 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_RATIFIES'45'complete''_2146 = erased
+-- Ledger.Conway.Specification.Ratify.Properties.RATIFIES-deterministic
+d_RATIFIES'45'deterministic_2158 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_2224 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254 ->
+  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__38 ->
+  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__38 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_RATIFIES'45'deterministic_2158 = erased
+-- Ledger.Conway.Specification.Ratify.Properties.RATIFIES-deterministic-≡
+d_RATIFIES'45'deterministic'45''8801'_2180 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_2224 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyEnv_2224 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
+  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__38 ->
+  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__38 ->
+  MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
+d_RATIFIES'45'deterministic'45''8801'_2180 = erased
