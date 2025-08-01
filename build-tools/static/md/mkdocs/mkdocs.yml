@@ -42,10 +42,8 @@ theme:
 
   # Font configuration (optional)
   font:
-    text: Cambria
-    code: Source Code Pro
-  #   text: Roboto
-  #   code: Roboto Mono # Or perhaps StrippedJuliaMono if available via CSS?
+    text: Open Sans        # Other options: Cambria, Lato, Roboto
+    code: Source Code Pro  # Other options: Roboto Mono, StrippedJuliaMono (if available via CSS)d?
 
 # Navigation structure
 nav:
