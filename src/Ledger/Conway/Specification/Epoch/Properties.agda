@@ -23,12 +23,18 @@ import Relation.Binary.PropositionalEquality as PE
 
 open Computational ⦃...⦄
 
-module _ (lstate : LState) (ss : Snapshots) where
+module _ {lstate : LState} {ss : Snapshots} where
   SNAP-total : ∃[ ss' ] lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
   SNAP-total = -, SNAP
 
   SNAP-complete : ∀ ss' → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss' → proj₁ SNAP-total ≡ ss'
   SNAP-complete ss' SNAP = refl
+
+  SNAP-deterministic : ∀ {ss' ss''}
+                     → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+                     → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
+  SNAP-deterministic SNAP SNAP = refl
+
 
 module _ {eps : EpochState} {e : Epoch} where
 
@@ -39,20 +45,34 @@ module _ {eps : EpochState} {e : Epoch} where
   govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-  EPOCH-total = -, EPOCH (RATIFIES-total' .proj₂) (SNAP-total ls ss .proj₂)
+  EPOCH-total = -, EPOCH (RATIFIES-total' .proj₂) (SNAP-total .proj₂)
+
+  EPOCH-deterministic : ∀ eps' eps''
+                      → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+                      → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps''
+                      → eps' ≡ eps''
+  EPOCH-deterministic eps' eps'' (EPOCH p₁ p₂) (EPOCH p₁' p₂') =
+    cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut })
+          ss'≡ss''
+          fut'≡fut''
+    where
+      ss'≡ss'' : EpochState.ss eps' ≡ EpochState.ss eps''
+      ss'≡ss'' = SNAP-deterministic p₂ p₂'
+
+      fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
+      fut'≡fut'' = RATIFIES-deterministic-≡
+                    (cong (λ x → record
+                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _
+                                   ; currentEpoch = _
+                                   ; dreps = _
+                                   ; ccHotKeys = _
+                                   ; treasury = _
+                                   }) ss'≡ss'')
+                                   refl refl p₁ p₁'
+ 
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
-  EPOCH-complete eps' (EPOCH p₁ p₂) = cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut }) (SNAP-complete _ _ _ p₂)
-    (RATIFIES-complete' (subst ty (cong Snapshots.mark (sym (SNAP-complete _ _ _ p₂))) p₁))
-    where
-      ty : Snapshot → Set
-      ty x = record
-        { stakeDistrs = mkStakeDistrs x _ _ _
-        ; currentEpoch = _
-        ; dreps = _
-        ; ccHotKeys = _
-        ; treasury = _
-        } ⊢ _ ⇀⦇ _ ,RATIFIES⦈ _
+  EPOCH-complete eps' p = EPOCH-deterministic (proj₁ EPOCH-total) eps' (proj₂ EPOCH-total) p
 
   abstract
     EPOCH-total' : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
