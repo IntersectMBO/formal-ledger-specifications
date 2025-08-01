@@ -13,10 +13,12 @@ module Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
 \newcommand{\EpochPropGov}{Conway/Epoch/Properties/GovDepsMatch}
 
 \begin{code}[hide]
+open import Ledger.Prelude using (mapˢ)
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties txs abs
+open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Prelude renaming (map to map'; mapˢ to map)
 open import Ledger.Conway.Specification.Ratify txs hiding (vote)
 open import Ledger.Conway.Specification.Utxo txs abs
@@ -41,6 +43,7 @@ module EPOCH-Body (eps : EpochState) where
   open EpochState eps hiding (es) renaming (ls to epsLState; fut to epsRState) public
   open RatifyState renaming (es to ensRState) public
   open LState epsLState public
+  open PState public
   open GovActionState public
   open UTxOState public
 
@@ -90,8 +93,8 @@ module EPOCH-PROPS {eps : EpochState} where
       module in the \href{\repourl}{formal ledger repository}.
 \begin{code}[hide]
   -- Proof.
-  EPOCH-govDepsMatch {eps'} ratify-removed
-     (EPOCH x _ _) = poolReapMatch ∘ ratifiesSnapMatch
+  EPOCH-govDepsMatch {eps'} {e} ratify-removed
+     (EPOCH x _ POOLREAP) = poolReapMatch ∘ ratifiesSnapMatch
     where
 
     -- the combinator used in the EPOCH rule
@@ -179,14 +182,104 @@ module EPOCH-PROPS {eps : EpochState} where
 
     ls₁ = record (eps' .ls) { utxoSt = U.utxoSt' }
 
-    ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
-    ratifiesSnapMatch =
-       ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
-       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+    mutual
+      retiredDeposits : ℙ DepositPurpose
+      retiredDeposits = mapˢ PoolDeposit (U.pState .retiring ⁻¹ e)
 
-    poolReapMatch : govDepsMatch ls₁ → govDepsMatch (eps' .ls)
-    poolReapMatch = {!!}
+      ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
+      ratifiesSnapMatch =
+         ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
+         ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
 
+      poolReapMatch : govDepsMatch ls₁ → govDepsMatch (eps' .ls)
+      poolReapMatch = ≡ᵉ.trans dropRetiredDeposits
+
+      dropRetiredDeposits :
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ)) ≡ᵉ
+          filterˢ isGADeposit (dom (DepositsOf ls₁))
+      dropRetiredDeposits = begin
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))
+
+          ≈⟨ ∪-identityˡ _ ⟨
+
+        ∅ˢ ∪ filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))
+
+          ≡⟨ cong
+               (_∪ (filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))))
+               noGADepositIsRetired
+           ⟩
+
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits))
+        ∪
+        filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ))
+
+          ≈⟨ filter-hom-∪ ⟨
+
+        filterˢ isGADeposit
+          (dom (DepositsOf ls₁ ∣ retiredDeposits)
+           ∪
+           dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ)
+          )
+
+          ≈⟨ filter-pres-≡ᵉ dom∪ ⟨
+
+        filterˢ isGADeposit
+          (dom
+            ((DepositsOf ls₁ ∣ retiredDeposits) ˢ
+              ∪
+             (DepositsOf ls₁ ∣ retiredDeposits ᶜ) ˢ
+            )
+          )
+
+          ≈⟨ filter-pres-≡ᵉ $
+             dom-cong $
+             ∪-cong
+               (local-res-toSet {m = DepositsOf ls₁})
+               {!!}
+           ⟩
+
+        filterˢ isGADeposit
+          (Rel.dom
+            (((DepositsOf ls₁ ˢ) ∣ʳ retiredDeposits)
+              ∪
+             ((DepositsOf ls₁ ˢ) ∣ʳ retiredDeposits ᶜ)
+            )
+          )
+
+          ≈⟨ filter-pres-≡ᵉ $ dom-cong (res-ex-∪ dec¹) ⟩
+
+        filterˢ isGADeposit (dom (DepositsOf ls₁))
+        ∎
+
+        where
+          open SetoidReasoning (≡ᵉ-Setoid {A = DepositPurpose})
+          import Relation.Binary
+          import Axiom.Set.Rel th as Rel
+
+      local-res-toSet
+        : {A B : Type} ⦃ _ : DecEq A ⦄ {m : A ⇀ B} {X : ℙ A}
+        → (m ∣ X) ˢ ≡ᵉ (m ˢ) ∣ʳ X
+      local-res-toSet {m = m} {X = X} = from ≡ᵉ⇔≡ᵉ' $ λ (a , b) →
+        (a , b) ∈ (m ∣ X) ˢ ∼⟨ local-res-dom∈ {m = m} ⟩
+        ((a , b) ∈ m ˢ × a ∈ X) ∼⟨ {!!} ⟩
+        ((a , b) ∈ ((m ˢ) ∣ʳ X)) ∎
+        where open R.EquationalReasoning
+
+      f = Dec-∈-singleton
+
+      -- TODO: Create PR generalize Map.res-dom∈
+      local-res-dom∈
+        : {A B : Type} {a : A} ⦃ _ : DecEq A ⦄ {b : B} {m : A ⇀ B} {X : ℙ A}
+        → (a , b) ∈ (m ∣ X) ˢ ⇔ ((a , b) ∈ m ˢ × a ∈ X)
+      local-res-dom∈ =
+        mk⇔ (λ ab∈ → (res-⊆ ab∈ , res-dom (to dom∈ (_ , ab∈))))
+            (to ∈-filter ∘ Data.Product.swap)
+        where
+          import Data.Product
+
+      noGADepositIsRetired
+        : ∅ ≡ filterˢ isGADeposit (dom (DepositsOf ls₁ ∣ retiredDeposits))
+      noGADepositIsRetired = {!!}
 \end{code}
   \end{itemize}
 \end{lemma}
