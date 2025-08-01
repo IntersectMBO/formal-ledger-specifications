@@ -167,7 +167,7 @@ def process_latex_content(content: str, macro_definitions: Dict) -> Tuple[str, D
     agda_classes = [
         'AgdaFunction', 'AgdaField', 'AgdaDatatype', 'AgdaRecord',
         'AgdaInductiveConstructor', 'AgdaModule', 'AgdaPrimitive',
-        'AgdaBound'
+        'AgdaBound', 'AgdaArgument'
     ]
     generic_agda_pattern = r'\\(' + '|'.join(agda_classes) + r')\{([^}]+)\}'
     processed = re.sub(generic_agda_pattern,

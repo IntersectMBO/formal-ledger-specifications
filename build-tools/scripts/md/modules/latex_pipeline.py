@@ -356,8 +356,6 @@ def _apply_all_postprocessing(
         lambda c: re.sub(r"@@CROSS_REF@@command=(.*?)@@targets=(.*?)@@", lambda m: replace_cross_ref_placeholder(m, label_map), c, flags=re.DOTALL),
         lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@label=(.*?)@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)", lambda m: replace_math_block(m.group(1).lower(), m.group(2), m.group(3), m.group(4)), c, flags=re.DOTALL),
         lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)", lambda m: replace_math_block(m.group(1).lower(), "none", m.group(2), m.group(3)), c, flags=re.DOTALL),
-        # UPDATED: Add a rule to replace the button placeholder with the actual HTML.
-        lambda c: re.sub(r'@@REVEAL_PROOF_BUTTON@@', reveal_button_html, c),
         process_admonitions
     ]
 
