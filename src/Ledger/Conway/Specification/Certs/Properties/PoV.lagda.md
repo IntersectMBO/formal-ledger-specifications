@@ -61,9 +61,9 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
 
 *Informally*.
 
-Let `l`{.AgdaBound} be a list of `DCert`{.AgdaDatatype}s, and let `s₁`{.AgdaBound}, `sₙ`{.AgdaBound} be
-`CertState`{.AgdaRecord}s such that 
-`s₁`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `l`{.AgdaBound} `,CERTS⦈`{.AgdaDatatype} `sₙ`{.AgdaBound}. 
+Let `l`{.AgdaBound} be a list of `DCert`{.AgdaDatatype}s, and let `s₁`{.AgdaBound},
+`sₙ`{.AgdaBound} be `CertState`{.AgdaRecord}s such that
+`s₁`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `l`{.AgdaBound} `,CERTS⦈`{.AgdaDatatype} `sₙ`{.AgdaBound}.
 Then, the value of `s₁`{.AgdaBound} is equal to the value of `sₙ`{.AgdaBound} plus
 the value of the withdrawals in `Γ`{.AgdaBound}.
 

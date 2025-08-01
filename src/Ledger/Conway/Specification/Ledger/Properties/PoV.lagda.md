@@ -48,18 +48,17 @@ module _
 ```
 -->
 
-
 <a id="thm:LEDGER-PoV"></a>
 **Theorem (`LEDGER`{.AgdaOperator} rule preserves value).**
 
 *Informally*.
 
- Let , : `LState`{.AgdaRecord} be ledger states and let :
-`Tx`{.AgdaRecord} be a *fresh* transaction, that is, a transaction
-that is not already part of the `UTxOState`{.AgdaRecord} of . If
-`⇀⦇`{.AgdaDatatype} `,LEDGER⦈`{.AgdaDatatype} , then the coin values
-of and are equal, that is, `getCoin`{.AgdaField} $≡$
-`getCoin`{.AgdaField} .
+ Let `s`{.AgdaBound} and `s'`{.AgdaBound} be ledger states and
+ let `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a *fresh* transaction, that is, a transaction
+that is not already part of the `UTxOState`{.AgdaRecord} of `s`{.AgdaBound}. If
+`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,LEDGER⦈`{.AgdaDatatype} `s'`{.AgdaBound},
+then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is, 
+`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
 
 *Formally*.
 

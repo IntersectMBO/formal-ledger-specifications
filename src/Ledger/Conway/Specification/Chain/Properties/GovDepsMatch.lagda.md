@@ -1,4 +1,3 @@
-
 <!--
 ```agda
 
@@ -11,13 +10,6 @@ module Ledger.Conway.Specification.Chain.Properties.GovDepsMatch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-```
--->
-
-
-
-<!--
-```agda
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
@@ -43,7 +35,6 @@ module _
 ```
 -->
 
-
 <a id="thm:ChainGovDepsMatch"></a>
 **Theorem (`govDepsMatch`{.AgdaFunction} is invariant of `CHAIN`{.AgdaOperator} rule)**.
 
@@ -64,6 +55,7 @@ Consider the chain state `cs'`{.AgdaFunction} defined as follows:
            ; epochState  = record (EpochStateOf cs) {ls = LStateOf nes}
            ; ru          = nes .ru }
 ```
+
 That is `cs'`{.AgdaFunction} is essentially `nes`{.AgdaBound}, but
 the `EpochState`{.AgdaRecord} field is set to the
 `epochState`{.AgdaField} of `cs`{.AgdaBound} with the exception of the
@@ -74,7 +66,7 @@ respective `UTxOState`{.AgdaRecord}s of the ledger states of `cs`{.AgdaBound} an
 `govSt'`{.AgdaBound} be their respective `GovState`{.AgdaFunction}s.
 Assume the following conditions hold:
 
-+  Let `removed’`{.AgdaFunction} : `ℙ`{.AgdaFunction}(`GovActionID`{.AgdaDatatype} × `GovActionState`{.AgdaDatatype}) be the union of
++  Let `removed'`{.AgdaFunction} : `ℙ`{.AgdaFunction}(`GovActionID`{.AgdaDatatype} × `GovActionState`{.AgdaDatatype}) be the union of
 
     + the governance actions in the `removed`{.AgdaField} field of the ratify state of `eps`{.AgdaBound}, and
 
@@ -88,7 +80,7 @@ Assume the following conditions hold:
     that is,
 
     `map`{.AgdaFunction} (`GovActionDeposit`{.AgdaInductiveConstructor} $∘$
-    `proj₁`{.AgdaField}) `removed’`{.AgdaFunction} ⊆ `dom`{.AgdaFunction} (`DepositsOf`{.AgdaField} `cs`{.AgdaBound}).
+    `proj₁`{.AgdaField}) `removed'`{.AgdaFunction} ⊆ `dom`{.AgdaFunction} (`DepositsOf`{.AgdaField} `cs`{.AgdaBound}).
 
 +  The total reference script size of `csLState`{.AgdaFunction} is not
    greater than the maximum allowed size per block (as specified in `PParams`{.AgdaRecord}).
@@ -111,14 +103,9 @@ In other terms,
     →  govDepsMatch csLState → govDepsMatch (LStateOf nes)
 ```
 
+*Proof*.
 
-*Proof*. See the module in the [formal ledger
-  repository](https://github.com/IntersectMBO/formal-ledger-specifications).
-
-<!--
 ```agda
-
-  -- Proof.
   CHAIN-govDepsMatch rrm rss (CHAIN (x , NEWEPOCH-New (_ , eps₁→eps₂) , ledgers)) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
@@ -130,5 +117,4 @@ In other terms,
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 ```
--->
 

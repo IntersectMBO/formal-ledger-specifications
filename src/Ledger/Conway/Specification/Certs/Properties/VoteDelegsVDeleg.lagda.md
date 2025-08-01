@@ -18,7 +18,7 @@ open import Ledger.Conway.Specification.Gov.Actions gs
 
 *Informally*.
 
-A `CertState`{.AgdaRecord} has a `DState`{.AgdaDatatype}, `PState`{.AgdaDatatype}, and a
+A `CertState`{.AgdaRecord} has a `DState`{.AgdaDatatype}, a `PState`{.AgdaDatatype}, and a
 `GState`{.AgdaDatatype}.  The `DState`{.AgdaDatatype} contains a field
 `voteDelegs`{.AgdaField} which is a mapping from `Credential`{.AgdaDatatype} to
 `VDeleg`{.AgdaDatatype}.

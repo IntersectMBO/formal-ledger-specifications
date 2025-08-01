@@ -1,4 +1,3 @@
-
 <!--
 ```agda
 
@@ -18,7 +17,6 @@ open import Ledger.Prelude hiding (map) renaming (mapˢ to map; filterˢ to filt
 open import Ledger.Conway.Specification.Properties txs abs
 ```
 -->
-
 
 **Claim (Equality of credential depsoits is a `CHAIN`{.AgdaOperator} invariant).**
 
@@ -52,5 +50,4 @@ credDeposits≡dom-rwds-inv : Type
 credDeposits≡dom-rwds-inv = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ credDeposits≡dom-rwds
 ```
 
-*Proof*. *To appear* (in the module of the [formal ledger
-  repository](https://github.com/IntersectMBO/formal-ledger-specifications)).
+*Proof*. (coming soon)

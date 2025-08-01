@@ -1,4 +1,3 @@
-
 <!--
 ```agda
 
@@ -40,4 +39,4 @@ enact-change⇒newEpoch : (b : Block) {cs cs'  : ChainState}
 enact-change⇒newEpoch b {cs} h es≢es' = epoch (b .slot) ≡ sucᵉ (LastEpochOf cs)
 ```
 
-*Proof*. *To appear* (in the module of the [formal ledger repository](https://github.com/IntersectMBO/formal-ledger-specifications)).
+*Proof*. (coming soon)

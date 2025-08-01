@@ -83,7 +83,7 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
     → getCoin s ≡ getCoin s'
 ```
 
-*Proof*. 
+*Proof*.
 
 ```agda
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
@@ -156,7 +156,7 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
       → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 ```
 
-*Proof*. 
+*Proof*.
 
 ```agda
 
