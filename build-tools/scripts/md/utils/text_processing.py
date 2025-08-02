@@ -3,6 +3,7 @@
 Pure text processing utilities for the documentation pipeline.
 """
 import re
+import logging
 from pathlib import Path
 from typing import Optional, Dict
 
@@ -72,8 +73,10 @@ def replace_cross_ref_placeholder(match: re.Match, label_map: Dict) -> str:
             else:
                 # Keep the prefix for error messages for consistency
                 link_parts.append(f"*{prefix} {link_display_text} (link generation error)*")
+                logging.warning(f"*Link generation error: {prefix} {link_display_text}*")
         else:
             link_parts.append(f"*'{label_id}' (unresolved reference)*")
+            logging.warning(f"*Unresolved reference: '{label_id}'*")
 
     return " and ".join(link_parts)
 
