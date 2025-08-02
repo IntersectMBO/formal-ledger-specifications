@@ -1,15 +1,12 @@
-\begin{code}[hide]
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Certs.Properties.PoVLemmas (gs : _) (open GovStructure gs) where
 
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\CertsPoVL}{Conway/Specifications/Certs/Properties/PoVLemmas}
-
-\begin{code}[hide]
 open import Ledger.Conway.Specification.Certs gs
 open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Prelude
@@ -65,28 +62,30 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
   ∪ˡsingleton0≡ m {a} with a ∈? dom m
   ... | yes a∈dom = ∪ˡsingleton∈dom m a∈dom
   ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
-\end{code}
+```
+-->
 
-\begin{lemma}[%
-  \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}: \CERT{} rule preserves value%
-  ]
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \ab{s}, \ab{s'} be \CertState{}s such that
-      \ab{s}~\AgdaDatatype{⇀⦇}~\ab{dcert}~\AgdaDatatype{,CERT⦈}~\ab{s'}
-      for some \ab{dcert}~:~\DCert{}.
-      Then, \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin} \ab{s'}.
-    \item \textit{Formally}.
-\begin{code}
+
+**Lemma (`CERT`{.AgdaOperator} rule preserves value).**
+
+*Informally*.
+
+Let `s`{.AgdaBound}, `s'`{.AgdaBound} be `CertState`{.AgdaRecord}s such that
+`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `dcert`{.AgdaBound} `,CERT⦈`{.AgdaDatatype} `s'`{.AgdaBound} for
+some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
+`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
+
+*Formally*.
+
+```agda
   CERT-pov : {Γ : CertEnv} {s s'  : CertState}
     → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
     → getCoin s ≡ getCoin s'
-\end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{\repourl}{formal ledger repository}.
-\begin{code}[hide]
-  -- Proof.
+```
+
+*Proof*.
+
+```agda
   CERT-pov (CERT-deleg (DELEG-delegate {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ}{⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
@@ -133,36 +132,34 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
     ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
-\end{code}
-  \end{itemize}
-\end{lemma}
+```
 
 
-\begin{lemma}[%
-  \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}: \CERTBASE{} rule preserves value%
-  ]
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \ab{Γ}~:~\CertEnv{} be a certificate environment, and let
-      \ab{s}, \ab{s'}~:~\CertState{} be certificate states such that
-      \ab{s}~\AgdaDatatype{⇀⦇}~\_~\AgdaDatatype{,CERTBASE⦈}~\ab{s'}.
-      Then, the value of \ab{s} is equal to the value of \ab{s'} plus the value of
-      the withdrawals in \ab{Γ}.  In other terms,
-      \\[4pt]
-      \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin}~\ab{s'}
-       + \AgdaField{getCoin}~(\ab{Γ} .\AgdaField{wdrls} ).
-    \item \textit{Formally}.
-\begin{code}
+**Lemma (`CERTBASE`{.AgdaOperator} rule preserves value).**
+
+*Informally*.
+
+Let `Γ`{.AgdaBound} : `CertEnv`{.AgdaRecord} be a certificate environment, and let
+`s`{.AgdaBound}, `s'`{.AgdaBound} : `CertState`{.AgdaRecord} be certificate states such that
+`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} \_ `,CERTBASE⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
+Then, the value of `s`{.AgdaBound} is equal to the value of `s'`{.AgdaBound} plus the
+value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
+
+`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound} + `getCoin`{.AgdaField} (`Γ`{.AgdaBound} .`wdrls`{.AgdaField} ).
+
+*Formally*.
+
+```agda
     CERTBASE-pov : {Γ : CertEnv} {s s' : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
       → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
       → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
-\end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{\repourl}{formal ledger repository}.
-\begin{code}[hide]
-    -- Proof.
+```
+
+*Proof*.
+
+```agda
+
     CERTBASE-pov  {Γ   = Γ}
                   {s   = cs}
                   {s'  = cs'}
@@ -211,35 +208,27 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
                     ∎ ) ⟩
           getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
             ∎
-\end{code}
-  \end{itemize}
-\end{lemma}
+```
 
+**Lemma (iteration of `CERT`{.AgdaOperator} rule preserves value).**
 
-\begin{lemma}[%
-  \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}: iteration of \CERT{} rule preserves value%
-  ]
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \ab{l} be a list of \DCert{}s, and let \ab{s₁}, \ab{sₙ} be \CertState{}s such
-      that, starting with \ab{s₁} and successively applying the \CERT{} rule to
-      with \DCert{}s from the list \ab{l}, we obtain \ab{sₙ}.
-      Then, the value of \ab{s₁} is equal to the value of \ab{sₙ}.      
-    \item \textit{Formally}.
-\begin{code}
+*Informally*. Let `l`{.AgdaBound} be a list of `DCert`{.AgdaDatatype}s, and let
+`s₁`{.AgdaBound}, `sₙ`{.AgdaBound} be `CertState`{.AgdaRecord}s such that, starting
+with `s₁`{.AgdaBound} and successively applying the `CERT`{.AgdaOperator} rule to with
+`DCert`{.AgdaDatatype}s from the list `l`{.AgdaBound}, we obtain `sₙ`{.AgdaBound}.
+Then, the value of `s₁`{.AgdaBound} is equal to the value of `sₙ`{.AgdaBound}.
+
+*Formally*.
+
+```agda
     sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState}
       → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
       → getCoin s₁ ≡ getCoin sₙ
-\end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\CertsPoVL.lagda}{\AgdaModule{\CertsPoVL{}}}
-      module in the \href{\repourl}{formal ledger repository}.
-\begin{code}[hide]
-    -- Proof.
+```
+
+*Proof*.
+
+```agda
     sts-pov (BS-base Id-nop) = refl
     sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
-\end{code}
-  \end{itemize}
-\end{lemma}
-
-
+```

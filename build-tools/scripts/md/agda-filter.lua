@@ -134,10 +134,26 @@ end
 
 --- Processes Div elements in the Pandoc AST.
 -- The main purpose now is to ensure that inline elements (Code, RawInline)
--- *within* any Div get processed by their respective handlers.
+-- *within* any Div get processed by their respective handlers; we also
+-- find any `div` created from a "theorem" environment and add the
+-- `markdown="1"` attribute to it, which tells the Markdown writer to
+-- process the content inside the div.
 -- @param div The Div element.
 -- @return table The potentially modified Div element (or original if no changes needed).
 function Div(div)
+  -- Check if this Div has the 'theorem' class
+  local has_theorem_class = false
+  for _, class in ipairs(div.classes) do
+    if class == 'theorem' then
+      has_theorem_class = true
+      break
+    end
+  end
+
+  if has_theorem_class then
+    div.attributes['markdown'] = '1'
+  end
+
   -- Define the inline walkers we care about applying within this Div
   local walkers = { Code = Code, RawInline = RawInline }
   -- Walk the div's content using these walkers. This processes any relevant

@@ -129,19 +129,19 @@ module _ -- ASSUMPTION --
   \label{thm:minspend}
 
   \begin{itemize}
-    \item \textit{Informally}.  
-      Let \ab{tx}~:~\Tx{} be a valid transaction and let \AgdaFunction{txcerts} be its
+    \item \textit{Informally}.
+      Let \AgdaBound{tx}~:~\Tx{} be a valid transaction and let \AgdaFunction{txcerts} be its
       list of \DCert{}s.
       Denote by
       \AgdaFunction{noRefundCert}~\AgdaFunction{txcerts} the assertion that no
       element in \AgdaFunction{txcerts} is one of the two refund types
-      (i.e., an element of \ab{l} is neither a \dereg{} nor a \deregdrep{}).
+      (i.e., an element of \AgdaBound{l} is neither a \dereg{} nor a \deregdrep{}).
       \\[4pt]
-      Let \ab{s}, \ab{s'}~:~\UTxOState{} be two UTxO states.
-      If \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,UTXO⦈}~\ab{s'}
+      Let \AgdaBound{s}, \AgdaBound{s'}~:~\UTxOState{} be two UTxO states.
+      If \AgdaBound{s}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,UTXO⦈}~\AgdaBound{s'}
       and if \AgdaFunction{noRefundCert}~\AgdaFunction{txcerts},
-      then the coin consumed by \ab{tx} is at least the sum of the governance action
-      deposits of the proposals in \ab{tx}.
+      then the coin consumed by \AgdaBound{tx} is at least the sum of the governance action
+      deposits of the proposals in \AgdaBound{tx}.
 
     \item \textit{Formally}.
 \begin{AgdaMultiCode}
@@ -151,9 +151,7 @@ module _ -- ASSUMPTION --
     → noRefundCert (txcertsOf tx)
     → coin (consumed _ s (TxBodyOf tx)) ≥ length (txpropOf tx) * govActionDepositOf Γ
 \end{code}
-    \item \textit{Proof}. See the
-      \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-      in the \href{\repourl}{formal ledger repository}.
+    \item \textit{Proof}. \revealproofbutton{}
 \begin{code}[hide]
   utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
@@ -206,10 +204,10 @@ module _ -- ASSUMPTION --
   \begin{itemize}
   \item \textit{Preliminary remarks}.
   \begin{enumerate}
-    \item Define \AgdaFunction{noRefundCert}~\ab{l} and \ab{pp} as in \cref{thm:minspend}.
-    \item Given a ledger state \ab{ls} and a transaction \ab{tx}, denote by
-      \AgdaFunction{validTxIn₂}~\ab{tx} the assertion that there exists ledger state
-      \ab{ls'} such that \ab{ls}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{ls'}.  
+    \item Define \AgdaFunction{noRefundCert}~\AgdaBound{l} and \AgdaBound{pp} as in \cref{thm:minspend}.
+    \item Given a ledger state \AgdaBound{ls} and a transaction \AgdaBound{tx}, denote by
+      \AgdaFunction{validTxIn₂}~\AgdaBound{tx} the assertion that there exists ledger state
+      \AgdaBound{ls'} such that \AgdaBound{ls}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,LEDGER⦈}~\AgdaBound{ls'}.
     \item Assume the following additive property of the \AgdaFunction{∪⁺} operator holds:
 \begin{code}[hide]
 module _
@@ -227,10 +225,10 @@ module _
 \end{code}
   \end{enumerate}
   \item \textit{Informally}.
-    Let \ab{tx}~:~\Tx{} be a valid transaction and let \ab{cs}~:~\ChainState{} be a chain state.
-    If the condition \AgdaFunction{validTxIn₂}~\ab{tx} (described above) holds,
-    then the coin consumed by \ab{tx} is at least the sum of the governance action
-    deposits of the proposals in \ab{tx}.
+    Let \AgdaBound{tx}~:~\Tx{} be a valid transaction and let \AgdaBound{cs}~:~\ChainState{} be a chain state.
+    If the condition \AgdaFunction{validTxIn₂}~\AgdaBound{tx} (described above) holds,
+    then the coin consumed by \AgdaBound{tx} is at least the sum of the governance action
+    deposits of the proposals in \AgdaBound{tx}.
 
   \item \textit{Formally}.
 \begin{code}[hide]
@@ -252,11 +250,11 @@ module _
 \begin{code}
     → noRefundCert txcerts
     → validTxIn₂ cs slot tx
-    → coin (consumed pp utxoSt body) ≥ length txprop * pp .govActionDeposit 
+    → coin (consumed pp utxoSt body) ≥ length txprop * pp .govActionDeposit
 \end{code}
   \item \textit{Proof}. See the
     \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-    in the \href{\repourl}{formal ledger repository}.
+    in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
 \begin{code}[hide]
   propose-minSpend noRef valid = case valid of λ where
     (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → utxoMinSpend indexedSum-∪⁺-hom x noRef

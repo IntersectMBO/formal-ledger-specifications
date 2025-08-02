@@ -48,9 +48,9 @@ not yet proved, while a ``Theorem'' is one for which we have a formal proof.
 \inputAgda{Ledger/Conway/Certs/Properties/PoVLemmas}
 
 \subsection{Invariance Properties}
-To say that a predicate \ab{P} is an \textit{invariant} of a transition rule
-means the following: if the transition rule relates states \ab{s} and \ab{s'} and if
-\ab{P} holds at state~\ab{s}, then \ab{P} holds at state \ab{s'}.
+To say that a predicate \AgdaBound{P} is an \textit{invariant} of a transition rule
+means the following: if the transition rule relates states \AgdaBound{s} and \AgdaBound{s'} and if
+\AgdaBound{P} holds at state~\AgdaBound{s}, then \AgdaBound{P} holds at state \AgdaBound{s'}.
 
 \inputAgda{Ledger/Conway/Chain/Properties/CredDepsEqualDomRwds}
 \inputAgda{Ledger/Conway/Chain/Properties/PParamsWellFormed}
@@ -58,19 +58,19 @@ means the following: if the transition rule relates states \ab{s} and \ab{s'} an
 \subsubsection{Governance Action Deposits Match}
 \Cref{thm:ChainGovDepsMatch,lem:LedgerGovDepsMatch,lem:EpochGovDepsMatch} assert that
 a certain predicate is an invariant of the \CHAIN{}, \LEDGER{}, and \EPOCH{} rules, respectively.
-Given a ledger state \ab{s}, we focus on deposits in the
-\UTxOState{} of \ab{s} that are \GovActionDeposit{}s and we compare that set of
-deposits with the \GovActionDeposit{}s of the \GovState{} of \ab{s}.
-When these two sets are the same, we write \AgdaFunction{govDepsMatch}~\ab{s} and say
-the \AgdaFunction{govDepsMatch} relation holds for \ab{s}.
+Given a ledger state \AgdaBound{s}, we focus on deposits in the
+\UTxOState{} of \AgdaBound{s} that are \GovActionDeposit{}s and we compare that set of
+deposits with the \GovActionDeposit{}s of the \GovState{} of \AgdaBound{s}.
+When these two sets are the same, we write \AgdaFunction{govDepsMatch}~\AgdaBound{s} and say
+the \AgdaFunction{govDepsMatch} relation holds for \AgdaBound{s}.
 Formally, the \AgdaFunction{govDepsMatch} predicate is defined as follows:
 \inputAgda{Ledger/Conway/Ledger/Properties}
 
 The assertion,
 ``the \AgdaFunction{govDepsMatch} relation is an invariant of the \LEDGER{} rule,''
-means the following:  if \govDepsMatch{}~\ab{s} and
-\ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}, then
-\govDepsMatch{}~\ab{s'}.
+means the following:  if \govDepsMatch{}~\AgdaBound{s} and
+\AgdaBound{s}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,LEDGER⦈}~\AgdaBound{s'}, then
+\govDepsMatch{}~\AgdaBound{s'}.
 
 \inputAgda{Ledger/Conway/Chain/Properties/GovDepsMatch}
 \inputAgda{Ledger/Conway/Ledger/Properties/GovDepsMatch}
