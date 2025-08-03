@@ -1,6 +1,6 @@
 \section{Enactment}
 \label{sec:enactment}
-\modulenote{\ConwayModule{Enact}}
+\modulenote{\ConwayModule{Enact}}.
 
 \begin{code}[hide]
 {-# OPTIONS --safe #-}

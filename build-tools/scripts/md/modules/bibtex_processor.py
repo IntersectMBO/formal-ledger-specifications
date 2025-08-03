@@ -1,4 +1,4 @@
-# modules/bibtex_processor.py
+# build-tools/scripts/md/modules/bibtex_processor.py
 """
 Functional BibTeX citation processor for the documentation pipeline.
 

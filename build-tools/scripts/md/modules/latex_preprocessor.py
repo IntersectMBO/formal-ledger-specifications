@@ -30,6 +30,16 @@ def _process_theorem_like_environment(kind: str):
         return f"\n@@{kind.upper()}_BLOCK@@{label_part}@@\n{body}\n"
     return _inner
 
+def get_module_repo_path(module_type: str, module_name: str) -> Tuple[str, str]:
+    """Returns (path, display_text) for use in _replace_modulenote."""
+    if module_type == "Conway":
+        agda_module = f"Ledger.Conway.Specification.{module_name}"
+        path = f"Ledger/Conway/Specification/{module_name}.lagda"
+    else:
+        agda_module = f"Ledger.{module_name}"
+        path = f"Ledger/{module_name}.lagda"
+    return path, agda_module
+
 def _replace_modulenote(match: re.Match) -> str:
     """Generates a sentence with a link to a specific Agda module on GitHub."""
     repo_url = "https://github.com/IntersectMBO/formal-ledger-specifications"
@@ -38,9 +48,14 @@ def _replace_modulenote(match: re.Match) -> str:
     module_type, module_name = match.group(1), match.group(2)
     base_path = f"Ledger/{module_type}" if module_type == "Conway" else "Ledger"
     module_text = f"{base_path.replace('/', '.')}.{module_name}"
-    module_url = f"{repo_url}/blob/master/src/{base_path}/{module_name}.lagda"
 
-    module_link = f"\\href{{{module_url}}}{{\\texttt{{{module_text}}}}}"
+    #module_url = f"{repo_url}/blob/master/src/{base_path}/{module_name}.lagda"
+    #module_link = f"\\href{{{module_url}}}{{\\texttt{{{module_text}}}}}"
+    # Now using helper function get_module_repo_path instead:
+    path, agda_module = get_module_repo_path(module_type, module_name)
+    module_url = f"{repo_url}/blob/master/src/{path}"
+    module_link = f"\\href{{{module_url}}}{{\\texttt{{{agda_module}}}}}"
+
     repo_link = f"\\href{{{repo_url}}}{{formal ledger specification}}"
 
     return f"This section is part of the {module_link} module of the {repo_link}"
