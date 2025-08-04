@@ -1,4 +1,6 @@
-\begin{code}[hide]
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
@@ -8,11 +10,7 @@ module Ledger.Conway.Specification.Utxo.Properties.MinSpend
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\themodpath}{Conway/Utxo/Properties/MinSpend}
 
-\begin{code}[hide]
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Enact govStructure
@@ -119,40 +117,39 @@ module _ -- ASSUMPTION --
   ≤updateCertDeps (retirepool _ _ ∷ cs)    (_ All.∷ nrf) = ≤updateCertDeps cs nrf
   ≤updateCertDeps (regdrep _ _ _ ∷ cs)     (_ All.∷ nrf) = ≤-trans ≤certDeps (≤updateCertDeps cs nrf)
   ≤updateCertDeps (ccreghot _ _ ∷ cs)      (_ All.∷ nrf) = ≤updateCertDeps cs nrf
+```
+-->
 
-\end{code}
 
-\begin{theorem}[%
-  \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}}:
-  general spend lower bound%
-  ]\
-  \label{thm:minspend}
+<a id="thm:minspend"></a>
+**Theorem (general spend lower bound)**.
 
-  \begin{itemize}
-    \item \textit{Informally}.
-      Let \AgdaBound{tx}~:~\Tx{} be a valid transaction and let \AgdaFunction{txcerts} be its
-      list of \DCert{}s.
-      Denote by
-      \AgdaFunction{noRefundCert}~\AgdaFunction{txcerts} the assertion that no
-      element in \AgdaFunction{txcerts} is one of the two refund types
-      (i.e., an element of \AgdaBound{l} is neither a \dereg{} nor a \deregdrep{}).
-      \\[4pt]
-      Let \AgdaBound{s}, \AgdaBound{s'}~:~\UTxOState{} be two UTxO states.
-      If \AgdaBound{s}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,UTXO⦈}~\AgdaBound{s'}
-      and if \AgdaFunction{noRefundCert}~\AgdaFunction{txcerts},
-      then the coin consumed by \AgdaBound{tx} is at least the sum of the governance action
-      deposits of the proposals in \AgdaBound{tx}.
+*Informally*.
 
-    \item \textit{Formally}.
-\begin{AgdaMultiCode}
-\begin{code}
+Let `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a valid transaction and let
+`txcerts`{.AgdaFunction} be its list of `DCert`{.AgdaDatatype}s.  Denote
+by `noRefundCert`{.AgdaFunction} `txcerts`{.AgdaFunction} the assertion that no
+element in `txcerts`{.AgdaFunction} is one of the two refund types (i.e., an
+element of `l`{.AgdaBound} is neither a `dereg`{.AgdaInductiveConstructor} nor a
+`deregdrep`{.AgdaInductiveConstructor}).  Let `s`{.AgdaBound},
+`s'`{.AgdaBound} : `UTxOState`{.AgdaRecord} be two UTxO states.
+If `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,UTXO⦈`{.AgdaDatatype} `s'`{.AgdaBound} and
+if `noRefundCert`{.AgdaFunction} `txcerts`{.AgdaFunction}, then the coin consumed by
+`tx`{.AgdaBound} is at least the sum of the governance action deposits of the
+proposals in `tx`{.AgdaBound}.
+
+*Formally*.
+
+```agda
   utxoMinSpend : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
     → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
     → noRefundCert (txcertsOf tx)
     → coin (consumed _ s (TxBodyOf tx)) ≥ length (txpropOf tx) * govActionDepositOf Γ
-\end{code}
-    \item \textit{Proof}. \revealproofbutton{}
-\begin{code}[hide]
+```
+
+*Proof*.
+
+```agda
   utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
     begin
     length txprop * govActionDepositOf Γ
@@ -191,76 +188,88 @@ module _ -- ASSUMPTION --
     balIn balOut : Value
     balIn = balance (utxo ∣ txins)
     balOut = balance (outs txb)
-\end{code}
-\end{AgdaMultiCode}
-  \end{itemize}
-\end{theorem}
+```
 
-\begin{theorem}[%
-  \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}}:
-  spend lower bound for proposals%
-  ]\
 
-  \begin{itemize}
-  \item \textit{Preliminary remarks}.
-  \begin{enumerate}
-    \item Define \AgdaFunction{noRefundCert}~\AgdaBound{l} and \AgdaBound{pp} as in \cref{thm:minspend}.
-    \item Given a ledger state \AgdaBound{ls} and a transaction \AgdaBound{tx}, denote by
-      \AgdaFunction{validTxIn₂}~\AgdaBound{tx} the assertion that there exists ledger state
-      \AgdaBound{ls'} such that \AgdaBound{ls}~\AgdaDatatype{⇀⦇}~\AgdaBound{tx}~\AgdaDatatype{,LEDGER⦈}~\AgdaBound{ls'}.
-    \item Assume the following additive property of the \AgdaFunction{∪⁺} operator holds:
-\begin{code}[hide]
+<a id="thm:spend-lower-bound"></a>
+**Theorem (spend lower bound for proposals)**.
+
+*Preliminary remarks*.
+
+1.  Define `noRefundCert`{.AgdaFunction} `l`{.AgdaBound} and
+    `pp`{.AgdaBound} as in the "min spend" theorem above.
+
+2.  Given a ledger state `ls`{.AgdaBound} and a transaction
+    `tx`{.AgdaBound}, denote by
+    `validTxIn₂`{.AgdaFunction} `tx`{.AgdaBound} the assertion that there exists
+    ledger state
+    `ls'`{.AgdaBound} such that `ls`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,LEDGER⦈`{.AgdaDatatype} `ls'`{.AgdaBound}.
+
+3.  Assume the following additive property of the `∪⁺`{.AgdaFunction} operator holds: 
+
+<!--
+```agda
+
 module _
     ( indexedSum-∪⁺-hom :  {A V : Type}
                            ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq V ⦄
                            ⦃ _ : CommutativeMonoid 0ℓ 0ℓ V ⦄
                            (d₁ d₂ : A ⇀ V)
        →
-\end{code}
-\begin{code}
-                           ∑[ x ← d₁ ∪⁺ d₂ ] x ≡ ∑[ x ← d₁ ] x ◇ ∑[ x ← d₂ ] x
-\end{code}
-\begin{code}[hide]
-    )
-\end{code}
-  \end{enumerate}
-  \item \textit{Informally}.
-    Let \AgdaBound{tx}~:~\Tx{} be a valid transaction and let \AgdaBound{cs}~:~\ChainState{} be a chain state.
-    If the condition \AgdaFunction{validTxIn₂}~\AgdaBound{tx} (described above) holds,
-    then the coin consumed by \AgdaBound{tx} is at least the sum of the governance action
-    deposits of the proposals in \AgdaBound{tx}.
+```
+-->
 
-  \item \textit{Formally}.
-\begin{code}[hide]
+```agda
+
+                           ∑[ x ← d₁ ∪⁺ d₂ ] x ≡ ∑[ x ← d₁ ] x ◇ ∑[ x ← d₂ ] x
+```
+<!--
+```agda
+
+    )
   where
   open import Ledger.Conway.Specification.Utxow txs abs
   open ChainState; open NewEpochState; open EpochState
   open LState; open EnactState;  open PParams
-\end{code}
-\begin{AgdaMultiCode}
-\begin{code}
+```
+-->
+
+*Informally*.
+
+Let `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a valid transaction and let
+`cs`{.AgdaBound} : `ChainState`{.AgdaRecord} be a  chain state. If the condition
+`validTxIn₂`{.AgdaFunction} `tx`{.AgdaBound} (described above) holds, then the coin
+consumed by `tx`{.AgdaBound} is at least the sum of the governance action deposits
+of the proposals in `tx`{.AgdaBound}.
+
+*Formally*.
+
+```agda
   propose-minSpend :  {slot : Slot} {tx : Tx} {cs : ChainState}
                       ( let  pp      = PParamsOf cs
                              utxoSt  = UTxOStateOf cs )
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
+
     ( open Tx tx )
     ( open TxBody body )
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
     → noRefundCert txcerts
     → validTxIn₂ cs slot tx
     → coin (consumed pp utxoSt body) ≥ length txprop * pp .govActionDeposit
-\end{code}
-  \item \textit{Proof}. See the
-    \LedgerMod{\themodpath.lagda}{\AgdaModule{\themodpath{}}} module
-    in the \href{https://github.com/IntersectMBO/formal-ledger-specifications}{formal ledger repository}.
-\begin{code}[hide]
+```
+
+
+*Proof*.
+
+```agda
   propose-minSpend noRef valid = case valid of λ where
     (_ , LEDGER-V (_ , UTXOW⇒UTXO x , _ , _)) → utxoMinSpend indexedSum-∪⁺-hom x noRef
     (_ , LEDGER-I (_ , UTXOW⇒UTXO x))         → utxoMinSpend indexedSum-∪⁺-hom x noRef
+```
 
-\end{code}
-\end{AgdaMultiCode}
-  \end{itemize}
-\end{theorem}
