@@ -13,7 +13,7 @@ current_dir = Path(__file__).parent.parent
 if str(current_dir) not in __import__('sys').path:
     __import__('sys').path.insert(0, str(current_dir))
 
-from utils.pipeline_types import Result, PipelineError, ErrorType
+from utils.pipeline_types import Result, PipelineError, ErrorType, FileMetadata
 
 def ensure_dir_exists(path: Path) -> Result[Path, PipelineError]:
     """Pure function: Creates a directory if it doesn't exist."""
