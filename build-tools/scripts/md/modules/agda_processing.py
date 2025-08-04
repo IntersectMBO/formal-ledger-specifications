@@ -23,7 +23,7 @@ if str(current_dir) not in sys.path:
 from config.build_config import BuildConfig
 from utils.file_ops import (
     rm_dir, cp_dir, ls_dir, write_text,
-    cp_file, rm_file, read_text
+    cp_file, rm_file, read_text, calculate_file_metadata
 )
 from utils.pipeline_types import (
     Result, PipelineError, ErrorType,
@@ -109,21 +109,6 @@ def discover_agda_source_files(src_dir: Path) -> Result[Dict[str, List[Path]], P
                 )
             )
         )
-    )
-
-def calculate_file_metadata(file_path: Path, stage: ProcessingStage) -> FileMetadata:
-    """
-    Calculates metadata for a processed file. This is a special case where a
-    try-except is pragmatic because a failure to get a file's size is not
-    a pipeline-halting error; we can simply default to 0.
-    """
-    try:
-        file_size = file_path.stat().st_size
-    except FileNotFoundError:
-        file_size = 0
-    return FileMetadata(
-        relative_path=Path(file_path.name), stage=stage,
-        processing_time=0.0, file_size=file_size, checksum=""
     )
 
 def collect_lagda_md_files(snapshot_dir: Path) -> Result[List[ProcessedFile], PipelineError]:

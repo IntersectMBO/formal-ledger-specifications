@@ -47,7 +47,7 @@ from config.build_config import BuildConfig
 from modules.latex_preprocessor import process_latex_content
 from modules.bibtex_processor import BibTeXProcessor, generate_global_bibliography_page, format_bibliography_entry
 from utils.command_runner import run_command
-from utils.file_ops import read_text, write_text, load_json, write_json
+from utils.file_ops import read_text, write_text, load_json, write_json, calculate_file_metadata
 from utils.pipeline_types import (
     Result, PipelineError, ErrorType,
     ProcessedFile, ProcessingStage
@@ -413,7 +413,7 @@ def extract_labels_from_temp_files(
                 full_title = f"{kind} ({title.strip(': ')})"
                 label_map[label_id] = {
                     "file": flat_filename,
-                    "anchor": f"#{slugify(full_title)}",
+                    "anchor": f"#{label_id}",
                     "caption_text": full_title,
                 }
 
@@ -425,7 +425,7 @@ def extract_labels_from_temp_files(
                 section_title = section_match[0].group(1).strip() if section_match else label_id
                 label_map[label_id] = {
                     "file": flat_filename,
-                    "anchor": f"#{slugify(label_id)}", # section_title
+                    "anchor": f"#{label_id}", # section_title
                     "caption_text": section_title,
                 }
 
@@ -695,35 +695,6 @@ def latex_pipeline_stage(
     logging.info(f"    📊  Statistics: {stats['files_processed']} files processed, {stats['labels_extracted']} labels extracted, {stats['total_stages']} processing stages")
 
     return Result.ok(list(latex_result.processed_files))
-
-
-# =============================================================================
-# Utility Functions
-# =============================================================================
-
-def calculate_file_metadata(file_path: Path, stage: ProcessingStage):
-    """Helper function to calculate file metadata."""
-    # Import from our types module
-    from utils.pipeline_types import FileMetadata
-
-    try:
-        file_size = file_path.stat().st_size if file_path.exists() else 0
-
-        return FileMetadata(
-            relative_path=Path(file_path.name),
-            stage=stage,
-            processing_time=0.0,
-            file_size=file_size,
-            checksum=""
-        )
-    except Exception:
-        return FileMetadata(
-            relative_path=Path(file_path.name),
-            stage=stage,
-            processing_time=0.0,
-            file_size=0,
-            checksum=""
-        )
 
 
 # =============================================================================

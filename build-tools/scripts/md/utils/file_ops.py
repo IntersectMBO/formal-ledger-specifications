@@ -160,3 +160,22 @@ def write_json(path: Path, data: Dict) -> Result[None, PipelineError]:
         return write_text(path, content)
     except TypeError as e:
         return Result.err(PipelineError(ErrorType.PARSING_ERROR, f"Failed to serialize JSON for: {path}", cause=e))
+
+# =============================================================================
+# Utility Functions
+# =============================================================================
+
+def calculate_file_metadata(file_path: Path, stage: ProcessingStage) -> FileMetadata:
+    """
+    Calculates metadata for a processed file. This is a special case where a
+    try-except is pragmatic because a failure to get a file's size is not
+    a pipeline-halting error; we can simply default to 0.
+    """
+    try:
+        file_size = file_path.stat().st_size
+    except FileNotFoundError:
+        file_size = 0
+    return FileMetadata(
+        relative_path=Path(file_path.name), stage=stage,
+        processing_time=0.0, file_size=file_size, checksum=""
+    )
