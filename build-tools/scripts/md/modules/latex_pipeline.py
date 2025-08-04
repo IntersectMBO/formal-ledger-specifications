@@ -352,7 +352,7 @@ def _extract_labels_from_markdown_file(md_file: Path, config: BuildConfig) -> Di
     for match in pattern.finditer(content):
         title, label_id = match.group(1).strip(), match.group(2)
         label_map[label_id] = {
-            "file": get_flat_filename(md_file.relative_to(config.source_paths.project_root)),
+            "file": get_flat_filename(md_file.relative_to(config.source_paths.md_common_src_dir)),
             "anchor": f"#{label_id}",
             "caption_text": title,
         }
@@ -425,7 +425,7 @@ def extract_labels_from_temp_files(
                 section_title = section_match[0].group(1).strip() if section_match else label_id
                 label_map[label_id] = {
                     "file": flat_filename,
-                    "anchor": f"#{slugify(section_title)}",
+                    "anchor": f"#{slugify(label_id)}", # section_title
                     "caption_text": section_title,
                 }
 
