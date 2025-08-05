@@ -73,7 +73,7 @@ def _convert_agda_to_lagda_md_in_dir(
             message=f"Conversion source directory not found: {root_dir}"
         ))
 
-    logging.info(f"Starting .agda to .lagda.md conversion in: {root_dir}")
+    logging.info(f"🔁 Converting .agda to .lagda.md... ")
     agda_files = list(root_dir.rglob('*.agda'))
     if not agda_files:
         logging.info("No .agda files found for conversion.")

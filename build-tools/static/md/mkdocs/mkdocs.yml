@@ -10,7 +10,8 @@ repo_url: https://github.com/IntersectMBO/formal-ledger-specifications
 # Theme configuration (using mkdocs-material)
 theme:
   name: material
-  # Optional features - see mkdocs-material docs for many more
+  favicon: img/iohk-symbol.svg
+    # Optional features - see mkdocs-material docs for many more
   features:
     # - navigation.tabs
     - navigation.sections
@@ -44,6 +45,8 @@ theme:
   font:
     text: Open Sans        # Other options: Cambria, Lato, Roboto
     code: Source Code Pro  # Other options: Roboto Mono, StrippedJuliaMono (if available via CSS)d?
+
+  logo: img/Cardano-RGB_Logo-Icon-Blue.svg
 
 # Navigation structure
 nav:
