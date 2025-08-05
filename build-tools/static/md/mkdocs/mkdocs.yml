@@ -10,7 +10,7 @@ repo_url: https://github.com/IntersectMBO/formal-ledger-specifications
 # Theme configuration (using mkdocs-material)
 theme:
   name: material
-  favicon: img/iohk-symbol.svg
+  favicon: img/Cardano-RGB_Logo-Icon-White.svg
     # Optional features - see mkdocs-material docs for many more
   features:
     # - navigation.tabs

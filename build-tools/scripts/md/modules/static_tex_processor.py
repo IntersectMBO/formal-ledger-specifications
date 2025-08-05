@@ -13,9 +13,9 @@ from typing import List
 from config.build_config import BuildConfig
 from utils.command_runner import run_command
 from utils.pipeline_types import (
-    Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage, calculate_file_metadata
+    Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage
 )
-from utils.file_ops import ls_dir
+from utils.file_ops import ls_dir, calculate_file_metadata
 
 
 def _convert_single_tex_to_md(tex_file: Path, output_dir: Path) -> Result[ProcessedFile, PipelineError]:
