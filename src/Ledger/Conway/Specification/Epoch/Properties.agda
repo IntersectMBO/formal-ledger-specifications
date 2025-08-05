@@ -82,7 +82,23 @@ module _ {eps : EpochState} {e : Epoch} where
                       → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
                       → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps''
                       → eps' ≡ eps''
-  EPOCH-deterministic eps' eps'' (EPOCH p₁ p₂ p₃) (EPOCH p₁' p₂' p₃') =
+  EPOCH-deterministic
+      eps'
+      eps''
+      (EPOCH
+        {utxoSt'' = utxoSt''₁}
+        {acnt' = acnt'₁}
+        {dState' = dState'₁}
+        {pState' = pState'₁}
+        p₁ p₂ p₃
+      )
+      (EPOCH
+        {utxoSt'' = utxoSt''₂}
+        {acnt' = acnt'₂}
+        {dState' = dState'₂}
+        {pState' = pState'₂}
+        p₁' p₂' p₃'
+      ) =
     cong₂ _$_ (cong₂ EPOCH-state ss'≡ss'' fut'≡fut'') prs'≡prs''
     where
       ss'≡ss'' : EpochState.ss eps' ≡ EpochState.ss eps''
@@ -99,7 +115,8 @@ module _ {eps : EpochState} {e : Epoch} where
                                    }) ss'≡ss'')
                                    refl refl p₁ p₁'
 
-      prs'≡prs'' : {!!} ≡ {!!}
+      prs'≡prs'' : ⟦ utxoSt''₁ , acnt'₁ , dState'₁ , pState'₁ ⟧ᵖ ≡
+                   ⟦ utxoSt''₂ , acnt'₂ , dState'₂ , pState'₂ ⟧
       prs'≡prs'' = POOLREAP-deterministic prs p₃ p₃'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'

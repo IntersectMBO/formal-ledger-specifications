@@ -363,14 +363,6 @@ private variable
 
 \begin{NoConway}
 \begin{figure*}[h]
-\begin{code}
-private variable
-  acnt acnt'  : Acnt
-  utxoSt''    : UTxOState
-  dState'     : DState
-  pState'     : PState
-\end{code}
-
 \begin{code}[hide]
 -- All of these definitions are used in the EPOCH transition. Initially, they
 -- were meant to be a copy, so the EPOCH transition would show them immediately
@@ -490,7 +482,8 @@ its results by carrying out each of the following tasks.
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
-  EPOCH : let
+  EPOCH : ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
+    let
     module U = EPOCH-updates fut ls acnt' dState' pState'
 
     in
