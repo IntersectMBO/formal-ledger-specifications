@@ -1,23 +1,26 @@
-\section{Bootstrapping the Governance System}
-\label{sec:conway-bootstrap-gov}
+# Bootstrapping the Governance System {#sec:conway-bootstrap-gov}
 
-As described in \hrefCIP{1694}, the governance system needs to be
-bootstrapped. During the bootstrap period, the following changes will
-be made to the ledger described in this document.
+As described in [CIP-1694](https://cips.cardano.org/cip/CIP-1694), the governance
+system needs to be bootstrapped.  During the bootstrap period, the following changes
+will be made to the ledger described in this document.
 
-\begin{itemize}
-\item Transactions containing any proposal except \TriggerHF{},
-      \ChangePParams{} or \Info{} will be rejected.
-\item Transactions containing a vote other than a \CC{} vote,
-      a \SPO{} vote on a \TriggerHF{} action or any vote on an \Info{}
-      action will be rejected.
-\item \Qfour{}, \Pfive{} and \Qfivee{} are set to $0$.
-\item An SPO that does not vote is assumed to have voted \abstain{}.
-\end{itemize}
++ Transactions containing any proposal except `TriggerHF`{.AgdaInductiveConstructor},
+`ChangePParams`{.AgdaInductiveConstructor}, or `Info`{.AgdaInductiveConstructor} will be rejected.
+
++ Transactions containing a vote other than a `CC`{.AgdaInductiveConstructor} vote, a `SPO`{.AgdaInductiveConstructor} vote on a `TriggerHF`{.AgdaInductiveConstructor} action, or any vote on an `Info`{.AgdaInductiveConstructor} action will be rejected.
+
++ `Q4`{.AgdaField}, `P5`{.AgdaField}, and `Q5e`{.AgdaField} are set to $0$.
+
+-   An SPO that does not vote is assumed to have voted `abstain`{.AgdaInductiveConstructor}.
 
 This allows for a governance mechanism similar to the old, Shelley-era
 governance during the bootstrap phase, where the constitutional
-committee is mostly in charge~\parencite{shelley-delegation-design}.
-These restrictions will be removed during a subsequent hard fork,
-once enough DRep stake is present in the system to properly govern
-and secure itself.
+committee is mostly in charge ([Team18, ](#shelley-delegation-design)). These
+restrictions will be removed during a subsequent hard fork, once enough
+DRep stake is present in the system to properly govern and secure
+itself.
+
+**\[Team18\]** <span id="shelley-delegation-design"
+label="shelley-delegation-design"></span> IOHK Formal Methods Team.
+*Design Specification for Delegation and Incentives in Cardano, IOHK
+Deliverable SL-D1*. 2018.
