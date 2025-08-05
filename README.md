@@ -19,9 +19,11 @@ the outstanding pieces in the near future.
 
 You can
 
-+  read the [HTML version of the formal specification][fls-site]
++  read the [Introduction module][Ledger.Introduction.html] of the [HTML version of the formal specification][fls-site]
 
-+  read the [HTML version of the Agda source code][fls-html]
++  dive into one of the modules in the **Conway/ > Specification/** section of the website; for instance, you can read about how rewards are calculated in the [Conway/Specification/Rewards][Ledger.Conway.Specification.Rewards.html] module
+
++  view the [HTML version of the Agda source code][fls-html]
 
 +  interact with and/or contribute to the formal specification; instructions for
    building the artifacts, generating Haskell source code for conformance testing, or
@@ -63,6 +65,8 @@ If you encounter any issues, please check the [Troubleshooting Guide][] or [subm
 [fls-html]: https://IntersectMBO.github.io/formal-ledger-specifications/html
 [fls-site]: https://IntersectMBO.github.io/formal-ledger-specifications/site
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications/
+[Ledger.Conway.Specification.Rewards.html]: https://intersectmbo.github.io/formal-ledger-specifications/site/Ledger.Conway.Specification.Rewards.html
+[Ledger.Introduction.html]: https://intersectmbo.github.io/formal-ledger-specifications/site/Ledger.Introduction.html
 [literate]: https://en.wikipedia.org/wiki/Literate_programming
 [submit a new issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md

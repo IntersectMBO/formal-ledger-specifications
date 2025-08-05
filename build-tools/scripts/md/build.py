@@ -33,6 +33,7 @@ sys.path.insert(0, str(SCRIPTS_MD_DIR))
 from config.build_config import load_build_config
 from modules.setup import setup_build_environment, cleanup_intermediate_artifacts
 from modules.agda_processing import process_agda_source_files
+from modules.static_tex_processor import convert_all_static_tex
 from modules.latex_pipeline import latex_pipeline_stage
 from modules.content_staging import stage_content
 from modules.site_assembly import (
@@ -59,13 +60,20 @@ def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None
     json_content = generate_macros_json(sty_content)
     config.build_paths.macros_json_path.write_text(json_content, 'utf-8')
 
-    # 3. Process Agda source files (.agda -> .lagda.md)
+    # 3. Convert static LaTeX files to Markdown
+    static_tex_result = convert_all_static_tex(config)
+    if static_tex_result.is_err:
+        logging.error(f"❌ Static LaTeX conversion failed: {static_tex_result.unwrap_err()}")
+        sys.exit(1)
+    logging.info(f"✅ Converted {len(static_tex_result.unwrap())} static .tex files to Markdown")
+
+    # 4. Process Agda source files (.agda -> .lagda.md)
     agda_result = process_agda_source_files(config)
     if agda_result.is_err:
         logging.error(f"❌ Agda processing failed: {agda_result.unwrap_err()}")
         sys.exit(1)
 
-    # 4. Process LaTeX files (.lagda -> .lagda.md)
+    # 5. Process LaTeX files (.lagda -> .lagda.md)
     latex_files = list(config.build_paths.agda_snapshot_src_dir.rglob("*.lagda"))
     if latex_files:
         latex_result = latex_pipeline_stage(latex_files, config)
@@ -73,16 +81,16 @@ def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None
             logging.error(f"❌ LaTeX processing failed: {latex_result.unwrap_err()}")
             sys.exit(1)
 
-    # 5. Stage content for site generation
+    # 6. Stage content for site generation
     all_processed_files = [f.current_path for f in agda_result.unwrap()]
     stage_content(config, all_processed_files)
 
-    # 6. Assemble the MkDocs site
+    # 7. Assemble the MkDocs site
     nav_files = copy_staged_to_mkdocs(config)
     final_nav_files = deploy_mkdocs_assets(config, nav_files)
     generate_mkdocs_config(config, final_nav_files)
 
-    # 7. Cleanup
+    # 8. Cleanup
     if config.cleanup_intermediates:
         cleanup_intermediate_artifacts(config)
 

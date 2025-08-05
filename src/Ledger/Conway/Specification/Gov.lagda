@@ -250,9 +250,10 @@ _⊢_⇀⦇_,GOVS⦈_   : GovEnv → GovState → List (GovVote ⊎ GovProposal)
 actions are enactable in a given state.  Specifically, \AgdaFunction{allEnactable} passes
 the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list of
 \AgdaFunction{GovActionID}-pairs which is then passed to \AgdaFunction{enactable}. The latter uses the
-\AgdaFunction{\AgdaUnderscore{}connects\AgdaUnderscore{}to\AgdaUnderscore{}} function to check
+\AgdaFunction{\_connects\_to\_} function to check
 whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
-enacted one.
+enacted one.\footnote{To see the definition of the \AgdaFunction{\_connects\_to\_}
+function, click the ``Show more Agda'' button.}
 
 The function \govActionPriority{} assigns a priority to the various types of governance actions.
 This is useful for ordering lists of governance actions (see \AgdaFunction{insertGovAction}

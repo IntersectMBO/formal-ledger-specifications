@@ -1,4 +1,6 @@
-\begin{code}[hide]
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -8,11 +10,7 @@ module Ledger.Conway.Specification.Ledger.Properties.PoV
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\LedgerPoV}{Conway/Ledger/Properties/PoV}
 
-\begin{code}[hide]
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Certs.Properties govStructure
@@ -47,31 +45,32 @@ module _
   where
 
   pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
+```
+-->
 
-\end{code}
+<a id="thm:LEDGER-PoV"></a>
+**Theorem (`LEDGER`{.AgdaOperator} rule preserves value).**
 
-\begin{theorem}[\LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}: \LEDGER{} rule preserves value]
-  \label{thm:LEDGER-PoV}
-  \begin{itemize}
-    \item \textit{Informally}.
-    Let \ab{s}, \ab{s'}~:~\LState{} be ledger states and let \ab{tx}~:~\Tx{} be a
-    \textit{fresh} transaction, that is, a transaction that is not already part of the
-    \UTxOState{} of \ab{s}. If \ab{s}~\AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'},
-    then the coin values of \ab{s} and \ab{s'} are equal, that is,
-    \AgdaField{getCoin}~\ab{s} $≡$ \AgdaField{getCoin}~\ab{s'}.
-    \item \textit{Formally}.
-\begin{AgdaMultiCode}
-\begin{code}
+*Informally*.
+
+ Let `s`{.AgdaBound} and `s'`{.AgdaBound} be ledger states and
+ let `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a *fresh* transaction, that is, a transaction
+that is not already part of the `UTxOState`{.AgdaRecord} of `s`{.AgdaBound}. If
+`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,LEDGER⦈`{.AgdaDatatype} `s'`{.AgdaBound},
+then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is, 
+`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
+
+*Formally*.
+
+```agda
   LEDGER-pov : {Γ : LEnv} {s s' : LState}
     → txid ∉ mapˢ proj₁ (dom (UTxOOf s))
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
-\end{code}
-\end{AgdaMultiCode}
-    \item \textit{Proof}. See the
-      \LedgerMod{\LedgerPoV.lagda}{\AgdaModule{\LedgerPoV{}}}
-      module in the \href{\repourl}{formal ledger repository}.
-\begin{code}[hide]
-  -- Proof.
+```
+
+*Proof*.
+
+```agda
   LEDGER-pov
     {s  = s}
     {s' = s'}
@@ -123,6 +122,4 @@ module _
         ≡⟨ UTXOpov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning
-\end{code}
-  \end{itemize}
-\end{theorem}
+```

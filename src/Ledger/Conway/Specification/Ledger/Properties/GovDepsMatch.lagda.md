@@ -1,4 +1,6 @@
-\begin{code}[hide]
+<!--
+```agda
+
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -8,11 +10,7 @@ module Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-\end{code}
-% If the module name changes, change the following macro to match!
-\newcommand{\LedgerPropGov}{Conway/Ledger/Properties/GovDepsMatch}
 
-\begin{code}[hide]
 open import Ledger.Conway.Specification.Certs govStructure using (DepositPurpose)
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties txs abs
@@ -23,25 +21,33 @@ open import Axiom.Set.Properties th
 import Relation.Binary.Reasoning.Setoid as SetoidReasoning
 
 open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
-\end{code}
+```
+-->
 
-\begin{lemma}[\LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}: \AgdaFunction{govDepsMatch} is invariant of \LEDGER{} rule%
-  ]\label{lem:LedgerGovDepsMatch}
-  \nopagebreak
-  \begin{itemize}
-    \item \textit{Informally}. 
-      Suppose \ab{s}, \ab{s'} are ledger states such that
-      \ab{s} \AgdaDatatype{⇀⦇}~\ab{tx}~\AgdaDatatype{,LEDGER⦈}~\ab{s'}.
-      Let \ab{utxoSt} and \ab{utxoSt'} be their respective \UTxOState{}s and let \ab{govSt}
-      and \ab{govSt'} be their respective \GovState{}s.
-      If the governance action deposits of \ab{utxoSt} are equal those
-      of \ab{govSt}, then the same holds for \ab{utxoSt'} and \ab{govSt'}.
-      In other terms, if \AgdaFunction{govDepsMatch}~\ab{s}, then \AgdaFunction{govDepsMatch}~\ab{s'}. 
-    \item \textit{Formally}.
-\begin{code}
+<a id="lem:LedgerGovDepsMatch"></a>
+**Lemma (`govDepsMatch`{.AgdaFunction} is invariant of `LEDGER`{.AgdaOperator} rule).**
+
+*Informally*.
+
+Suppose `s`{.AgdaBound} and `s'`{.AgdaBound} are ledger states such that
+`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,LEDGER⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
+Let `utxoSt`{.AgdaBound} and `utxoSt'`{.AgdaBound} be their respective
+`UTxOState`{.AgdaRecord}s and let `govSt`{.AgdaBound}  and
+`govSt'`{.AgdaBound} be their respective `GovState`{.AgdaFunction}s.
+If the governance action deposits of `utxoSt`{.AgdaBound} are equal to those of
+`govSt`{.AgdaBound}, then the same holds for `utxoSt'`{.AgdaBound} and `govSt'`{.AgdaBound}.
+In other terms, if `govDepsMatch`{.AgdaFunction} `s`{.AgdaBound}, then
+`govDepsMatch`{.AgdaFunction} `s'`{.AgdaBound}.
+
+*Formally*.
+
+```agda
 LEDGER-govDepsMatch :  LedgerInvariant _⊢_⇀⦇_,LEDGER⦈_ govDepsMatch
-\end{code}
-\begin{code}[hide]
+```
+
+*Proof*.
+
+```agda
 LEDGER-govDepsMatch (LEDGER-I⋯ refl (UTXOW-UTXOS (Scripts-No _))) aprioriMatch = aprioriMatch
 
 LEDGER-govDepsMatch {Γ}{s}{tx}{s'}
@@ -68,10 +74,4 @@ LEDGER-govDepsMatch {Γ}{s}{tx}{s'}
       fromList (dpMap govSt') ∎
 
 LEDGER-govDepsMatch {s' = s'} utxosts@(LEDGER-V (() , UTXOW-UTXOS (Scripts-No (_ , refl)) , _ , GOV-sts)) aprioriMatch
-\end{code}
-  \item \textit{Proof}. See the
-    \LedgerMod{\LedgerPropGov.lagda}{\AgdaModule{\LedgerPropGov{}}}
-    module in the \href{\repourl}{formal ledger repository}.
-
-  \end{itemize}
-\end{lemma}
+```

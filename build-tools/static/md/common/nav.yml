@@ -104,6 +104,9 @@
           - StructuredContracts: Ledger.Conway.Specification.Test.StructuredContracts.md
         - Types/:
           - GovStructure: Ledger.Conway.Specification.Types.GovStructure.md
+      - Bootstrap/:
+          - ConwayBootstrap : ConwayBootstrap.md
+          - ConwayBootstrapEnact : ConwayBootstrapEnact.md
       - Foreign/:
         - ExternalFunctions: Ledger.Conway.Foreign.ExternalFunctions.md
         - HSLedger: Ledger.Conway.Foreign.HSLedger.md

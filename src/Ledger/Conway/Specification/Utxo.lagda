@@ -444,7 +444,7 @@ difference is the identity function.
 
 \Cref{fig:functions:utxo} defines the function \minfee{}. In
 Conway, \minfee{} includes the cost for reference scripts. This is
-calculated using \scriptsCost{} (see \cref{fig:scriptsCost}).
+calculated using \scriptsCost{} (see \cref{scriptsCost}).
 
 \Cref{fig:functions:utxo} also shows the signature of \ValidCertDeposits{}.
 Inhabitants of this type are constructed in one of eight ways, corresponding to

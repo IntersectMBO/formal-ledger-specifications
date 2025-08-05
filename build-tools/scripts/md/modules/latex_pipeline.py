@@ -26,15 +26,17 @@ LaTeX(.lagda) → preprocess → LaTeX(.lagda.temp) with \textcite{shelley-ledge
 """
 
 from __future__ import annotations
+from functools import reduce
 from dataclasses import dataclass
 from pathlib import Path
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple, Optional, Set
 import subprocess
 import json
 import logging
 import re
 import sys
 import shutil
+#from markdownify import markdownify  # optionally for cleaning input
 
 # Add path for our functional imports
 current_dir = Path(__file__).parent.parent
@@ -45,7 +47,7 @@ from config.build_config import BuildConfig
 from modules.latex_preprocessor import process_latex_content
 from modules.bibtex_processor import BibTeXProcessor, generate_global_bibliography_page, format_bibliography_entry
 from utils.command_runner import run_command
-from utils.file_ops import read_text, write_text, load_json, write_json
+from utils.file_ops import read_text, write_text, load_json, write_json, calculate_file_metadata
 from utils.pipeline_types import (
     Result, PipelineError, ErrorType,
     ProcessedFile, ProcessingStage
@@ -58,6 +60,7 @@ from utils.text_processing import (
     slugify,
     get_flat_filename
 )
+
 
 # =============================================================================
 # Mathematical Types for LaTeX Processing
@@ -280,42 +283,154 @@ def cleanup_original_lagda_file(
 # Label Map Generation
 # =============================================================================
 
+
+def _convert_latex_to_markdown(
+    tex_file: Path,
+    output_dir: Path
+) -> Result[Path, PipelineError]:
+    """
+    Convert a LaTeX file to Markdown using Pandoc.
+
+    Args:
+        tex_file: Path to the LaTeX source file (.tex)
+        output_dir: Directory to store the converted .md file
+
+    Returns:
+        Result with path to generated Markdown file or error
+    """
+    try:
+        if not tex_file.exists():
+            return Result.err(PipelineError(
+                error_type=ErrorType.INPUT_ERROR,
+                message=f"LaTeX file does not exist: {tex_file}"
+            ))
+
+        output_file = output_dir / tex_file.with_suffix(".md").name
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        command = [
+            "pandoc",
+            str(tex_file),
+            "-f", "latex",
+            "-t", "gfm",  # GitHub-flavored Markdown
+            "-o", str(output_file),
+            "--wrap=preserve",
+            "--markdown-headings=atx"
+        ]
+
+        result = subprocess.run(
+            command,
+            check=True,
+            capture_output=True,
+            text=True
+        )
+
+        return Result.ok(output_file)
+
+    except subprocess.CalledProcessError as e:
+        return Result.err(PipelineError(
+            error_type=ErrorType.COMMAND_FAILED,
+            message=f"Pandoc failed to convert {tex_file}",
+            cause=e
+        ))
+
+    except Exception as e:
+        return Result.err(PipelineError(
+            error_type=ErrorType.UNEXPECTED_ERROR,
+            message=f"Unexpected error during LaTeX-to-Markdown conversion: {e}",
+            cause=e
+        ))
+
+def _extract_labels_from_markdown_file(md_file: Path, config: BuildConfig) -> Dict[str, Dict[str, str]]:
+    """
+    Extracts section labels from a markdown file using `{#label}` syntax.
+    """
+    label_map = {}
+    content = md_file.read_text(encoding="utf-8")
+    pattern = re.compile(r"^#+\s+(.+?)\s+\{#([^}]+)\}", re.MULTILINE)
+
+    for match in pattern.finditer(content):
+        title, label_id = match.group(1).strip(), match.group(2)
+        label_map[label_id] = {
+            "file": get_flat_filename(md_file.relative_to(config.source_paths.md_common_src_dir)),
+            "anchor": f"#{label_id}",
+            "caption_text": title,
+        }
+    return label_map
+
+
+def _handle_static_sources(config: BuildConfig) -> Dict[str, Dict[str, str]]:
+    label_map = {}
+    static_md_dir = config.source_paths.md_common_src_dir
+    if static_md_dir.exists():
+        for md_file in static_md_dir.rglob("*.md"):
+            label_map.update(_extract_labels_from_markdown_file(md_file, config))
+    return label_map
+
+
 def extract_labels_from_temp_files(
-    processing_stages: List[LaTeXProcessingStage]
+    processing_stages: List[LaTeXProcessingStage],
+    config: BuildConfig
 ) -> Result[Dict[str, Dict[str, str]], PipelineError]:
     """
-    Pure function: Extract global label mapping from temporary files.
+    Extracts global label mapping from temporary files.
 
-    Mathematical operation: [TempFile] → LabelMap
+    Handles:
+    - Figures
+    - Theorems, Lemmas, Claims
+    - Section labels (with manual association)
     """
-
     try:
-        import re
-
         label_map = {}
+
+        figure_pattern = re.compile(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", re.DOTALL)
+        theorem_pattern = re.compile(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@label=(.*?)@@title=(.*?)@@", re.DOTALL)
+        section_label_pattern = re.compile(r"\\label\{(.*?)\}")
+        section_heading_pattern = re.compile(r"\\section\*?\{(.+?)\}", re.DOTALL)
 
         for stage in processing_stages:
             if not stage.temp_file.exists():
                 continue
 
-            content = stage.temp_file.read_text(encoding='utf-8')
+            content = stage.temp_file.read_text(encoding="utf-8")
+            flat_filename = get_flat_filename(stage.relative_path)
 
-            # Extract figure block labels using regex
-            pattern = r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@"
-
-            for match in re.finditer(pattern, content, re.DOTALL):
+            # === FIGURES ===
+            for match in figure_pattern.finditer(content):
                 label_id = match.group(1).replace("@ @", "@@")
-                caption_text = match.group(2).replace("@ @", "@@")
-
-                # Calculate flat filename for this stage
-                flat_filename = get_flat_filename(stage.relative_path)
-                #               ^^^^^^^^^^^^^^^^^ the single, authoritative function
-
+                caption = match.group(2).replace("@ @", "@@")
                 label_map[label_id] = {
                     "file": flat_filename,
-                    "anchor": f"#{slugify(caption_text)}",
-                    "caption_text": caption_text
+                    "anchor": f"#{slugify(caption)}",
+                    "caption_text": caption,
                 }
+
+            # === THEOREM/LEMMA/CLAIM ===
+            for match in theorem_pattern.finditer(content):
+                kind = match.group(1).capitalize()
+                label_id = match.group(2).replace("@ @", "@@")
+                title = match.group(3).replace("@ @", "@@")
+                full_title = f"{kind} ({title.strip(': ')})"
+                label_map[label_id] = {
+                    "file": flat_filename,
+                    "anchor": f"#{label_id}",
+                    "caption_text": full_title,
+                }
+
+            # === SECTION LABELS ===
+            for match in section_label_pattern.finditer(content):
+                label_id = match.group(1).replace("@ @", "@@")
+                before = content[:match.start()]
+                section_match = list(section_heading_pattern.finditer(before))[-1:]
+                section_title = section_match[0].group(1).strip() if section_match else label_id
+                label_map[label_id] = {
+                    "file": flat_filename,
+                    "anchor": f"#{label_id}", # section_title
+                    "caption_text": section_title,
+                }
+
+        # Merge in static Markdown labels
+        label_map.update(_handle_static_sources(config))
 
         return Result.ok(label_map)
 
@@ -328,7 +443,11 @@ def extract_labels_from_temp_files(
 
 
 
-
+def replace_math_block(kind: str, label: str, title: str, body: str) -> str:
+    """Creates the Markdown for a theorem, lemma, or claim block."""
+    anchor = f'<a id="{label}"></a>\n' if label and label != "none" else ""
+    heading = f"**{kind.capitalize()} ({title.strip(': ').strip()}).**"
+    return f"{anchor}{heading}\n\n{body.strip()}\n"
 
 # =============================================================================
 # High-Level Pipeline Composition
@@ -342,22 +461,21 @@ def _apply_all_postprocessing(
     """
     Applies a sequence of text transformations to the content in a pure functional style.
     """
-    # Define the sequence of transformations (functions) to apply.
-    # Each function takes the content string and returns a new one.
+    # The full HTML for the button, to be inserted during post-processing.
+    reveal_button_html = r'<p style="text-align: center;"><button class="reveal-proof-button" onclick="toggleAgdaVisibility()">Reveal the proof</button></p>'
+
     transformations = [
         lambda c: re.sub(r'@@CODEBLOCK_ID_\d+@@', lambda m: replace_code_placeholder(m, code_blocks), c),
         lambda c: re.sub(r"@@FIGURE_BLOCK_TO_SUBSECTION@@label=(.*?)@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
         lambda c: re.sub(r"@@UNLABELLED_FIGURE_CAPTION@@caption=(.*?)@@", replace_figure_placeholder, c, flags=re.DOTALL),
         lambda c: re.sub(r"@@CROSS_REF@@command=(.*?)@@targets=(.*?)@@", lambda m: replace_cross_ref_placeholder(m, label_map), c, flags=re.DOTALL),
+        lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@label=(.*?)@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)", lambda m: replace_math_block(m.group(1).lower(), m.group(2), m.group(3), m.group(4)), c, flags=re.DOTALL),
+        lambda c: re.sub(r"@@(THEOREM|LEMMA|CLAIM)_BLOCK@@title=(.*?)@@\n(.*?)(?=\n@@|\Z)", lambda m: replace_math_block(m.group(1).lower(), "none", m.group(2), m.group(3)), c, flags=re.DOTALL),
         process_admonitions
     ]
 
-    # Pipe the initial content through all the transformation functions.
-    processed_content = content
-    for func in transformations:
-        processed_content = func(processed_content)
-
-    return processed_content
+    # apply each transformation to the result of the previous one
+    return reduce(lambda current_content, func: func(current_content), transformations, content)
 
 def process_latex_files(
     latex_files: List[Path],
@@ -439,7 +557,7 @@ def process_latex_files(
     # STAGE 3: Generate label map (from bibliography-processed temp files)
     # Extract cross-reference labels after bibliography processing adds section headers.
     logging.info("   🏳️  STAGE 3: Generating label map...")
-    label_map_result = extract_labels_from_temp_files(processing_stages)
+    label_map_result = extract_labels_from_temp_files(processing_stages, config)
     if label_map_result.is_err: return Result.err(label_map_result.unwrap_err())
     label_map = label_map_result.unwrap()
     logging.info(f"      ✔️  Label map generation completed: created {len(label_map)} labels.")
@@ -476,11 +594,23 @@ def process_latex_files(
 
         if post_process_result.is_err:
             error = post_process_result.unwrap_err()
-            if error.error_type == ErrorType.FILE_NOT_FOUND:
-                logging.warning(f"Skipping post-processing for {stage.relative_path}: {error.message}")
-                continue
+            if isinstance(error, PipelineError):
+                if error.error_type == ErrorType.FILE_NOT_FOUND:
+                    logging.warning(f"Skipping post-processing for {stage.relative_path}: {error.message}")
+                    continue
+                else:
+                    return Result.err(error)
             else:
-                return Result.err(error)
+                # Log unexpected errors more gracefully
+                logging.error(f"Unexpected error during post-processing of {stage.relative_path}: {error}")
+                return Result.err(PipelineError(
+                    error_type=ErrorType.PARSING_ERROR,
+                    message=f"Unexpected error: {error}",
+                    cause=error
+                ))
+
+
+
     logging.info("      ✔️️  Post-processing completed.")
 
     # STAGE 6: After all files are processed, generate the global bibliography
@@ -565,35 +695,6 @@ def latex_pipeline_stage(
     logging.info(f"    📊  Statistics: {stats['files_processed']} files processed, {stats['labels_extracted']} labels extracted, {stats['total_stages']} processing stages")
 
     return Result.ok(list(latex_result.processed_files))
-
-
-# =============================================================================
-# Utility Functions
-# =============================================================================
-
-def calculate_file_metadata(file_path: Path, stage: ProcessingStage):
-    """Helper function to calculate file metadata."""
-    # Import from our types module
-    from utils.pipeline_types import FileMetadata
-
-    try:
-        file_size = file_path.stat().st_size if file_path.exists() else 0
-
-        return FileMetadata(
-            relative_path=Path(file_path.name),
-            stage=stage,
-            processing_time=0.0,
-            file_size=file_size,
-            checksum=""
-        )
-    except Exception:
-        return FileMetadata(
-            relative_path=Path(file_path.name),
-            stage=stage,
-            processing_time=0.0,
-            file_size=0,
-            checksum=""
-        )
 
 
 # =============================================================================

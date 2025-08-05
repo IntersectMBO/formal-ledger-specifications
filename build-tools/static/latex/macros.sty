@@ -132,7 +132,7 @@ Scale=0.80 %% Alternatives: Scale=MatchUppercase, Scale=MatchLowercase
   \LedgerMod{#1.lagda}{\AgdaModule{Ledger.#1}}%
 }
 \NewDocumentCommand\ConwayModule{m}{% usage: \ConwayModule{Utxo}
-  \LedgerMod{Conway/#1.lagda}{\AgdaModule{Ledger.Conway.#1}}%
+  \LedgerMod{Conway/Specification/#1.lagda}{\AgdaModule{Ledger.Conway.Specification.#1}}%
 }
 \NewDocumentCommand\LedgerModText{mm}{% usage: \LedgerModText{Utxo}{UTXO}
   \LedgerMod{#1.lagda}{\texttt{#2}}%

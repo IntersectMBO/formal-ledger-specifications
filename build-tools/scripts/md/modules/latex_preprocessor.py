@@ -14,6 +14,32 @@ from collections import OrderedDict
 # Pure Helper Functions (Callbacks for re.sub)
 # =============================================================================
 
+def _process_theorem_like_environment(kind: str):
+    def _inner(match: re.Match) -> str:
+        title = match.group(1) or kind.capitalize()
+        content = match.group(2)
+
+        # Normalize whitespace and line continuation backslashes
+        #content = content.lstrip("\\").strip()
+
+        label_match = re.search(r"\\label\{(.*?)\}", content)
+        label = label_match.group(1) if label_match else ""
+        body = re.sub(r"\\label\{.*?\}", "", content).strip()
+
+        label_part = f"label={label}@@title={title}" if label else f"title={title}"
+        return f"\n@@{kind.upper()}_BLOCK@@{label_part}@@\n{body}\n"
+    return _inner
+
+def get_module_repo_path(module_type: str, module_name: str) -> Tuple[str, str]:
+    """Returns (path, display_text) for use in _replace_modulenote."""
+    if module_type == "Conway":
+        agda_module = f"Ledger.Conway.Specification.{module_name}"
+        path = f"Ledger/Conway/Specification/{module_name}.lagda"
+    else:
+        agda_module = f"Ledger.{module_name}"
+        path = f"Ledger/{module_name}.lagda"
+    return path, agda_module
+
 def _replace_modulenote(match: re.Match) -> str:
     """Generates a sentence with a link to a specific Agda module on GitHub."""
     repo_url = "https://github.com/IntersectMBO/formal-ledger-specifications"
@@ -22,9 +48,14 @@ def _replace_modulenote(match: re.Match) -> str:
     module_type, module_name = match.group(1), match.group(2)
     base_path = f"Ledger/{module_type}" if module_type == "Conway" else "Ledger"
     module_text = f"{base_path.replace('/', '.')}.{module_name}"
-    module_url = f"{repo_url}/blob/master/src/{base_path}/{module_name}.lagda"
 
-    module_link = f"\\href{{{module_url}}}{{\\texttt{{{module_text}}}}}"
+    #module_url = f"{repo_url}/blob/master/src/{base_path}/{module_name}.lagda"
+    #module_link = f"\\href{{{module_url}}}{{\\texttt{{{module_text}}}}}"
+    # Now using helper function get_module_repo_path instead:
+    path, agda_module = get_module_repo_path(module_type, module_name)
+    module_url = f"{repo_url}/blob/master/src/{path}"
+    module_link = f"\\href{{{module_url}}}{{\\texttt{{{agda_module}}}}}"
+
     repo_link = f"\\href{{{repo_url}}}{{formal ledger specification}}"
 
     return f"This section is part of the {module_link} module of the {repo_link}"
@@ -115,6 +146,13 @@ def process_latex_content(content: str, macro_definitions: Dict) -> Tuple[str, D
         (r'\\hrefAgdaDocs\{\}', r'\\href{https://agda.readthedocs.io/en/latest/}{Agda documentation}'),
         (r'\\hrefAgdaDocs\[([^\]]*)\]\[([^\]]*)\]', r'\\href{https://agda.readthedocs.io/en/latest/\1}{\2}'),
 
+        # Handle \ab shorthand for \AgdaBound
+        (r'\\ab\{(.*?)\}', r'\\AgdaBound{\1}'),
+
+        # UPDATED: Replace the button macro with a simple placeholder string.
+        # will be replaced with the actual HTML in the post-processing stage.
+        (r'\\revealproofbutton\{\}', r'@@REVEAL_PROOF_BUTTON@@'),
+
         # Environment wrappers and complex callbacks
         (r'^\s*\\begin\{(NoConway|AgdaMultiCode)\}\s*?\n', ''),
         (r'^\s*\\end\{(NoConway|AgdaMultiCode)\}\s*?\n?', ''),
@@ -124,6 +162,11 @@ def process_latex_content(content: str, macro_definitions: Dict) -> Tuple[str, D
         (r'\\modulenote\{\s*\\(Conway|Ledger)Module\{(.*?)\}\s*\}', _replace_modulenote),
         (r"\\(Cref|cref)\s*\{(.*?)\}", _replace_cref_commands),
         (r"^\s*\\begin\{figure\*\}(\[[^\]]*\])?\s*\n(.*?)\n\s*\\end\{figure\*\}\s*$", _process_figure_environment),
+
+        # Handle theorem environments with optional title and label
+        (r"\\begin{theorem}(?:\[(.*?)\])?\s*(.*?)\\end{theorem}", _process_theorem_like_environment("theorem")),
+        (r"\\begin{lemma}(?:\[(.*?)\])?\s*(.*?)\\end{lemma}", _process_theorem_like_environment("lemma")),
+        (r"\\begin{claim}(?:\[(.*?)\])?\s*(.*?)\\end{claim}", _process_theorem_like_environment("claim")),
 
         # Handle Agda term macros defined in macros.json. This is dynamically built.
         (r'\\(' + '|'.join(re.escape(k) for k in macro_definitions.get("agda_terms", {}).keys()) + r')\{\}',
@@ -136,10 +179,10 @@ def process_latex_content(content: str, macro_definitions: Dict) -> Tuple[str, D
         processed = re.sub(pattern, repl, processed, flags=flags | re.DOTALL)
 
     # --- STAGE 3: Handle Generic \Agda... Macros not defined in macros.sty ---
-    # This logic is restored from the original preprocess.py.
     agda_classes = [
         'AgdaFunction', 'AgdaField', 'AgdaDatatype', 'AgdaRecord',
-        'AgdaInductiveConstructor', 'AgdaModule', 'AgdaPrimitive'
+        'AgdaInductiveConstructor', 'AgdaModule', 'AgdaPrimitive',
+        'AgdaBound', 'AgdaArgument'
     ]
     generic_agda_pattern = r'\\(' + '|'.join(agda_classes) + r')\{([^}]+)\}'
     processed = re.sub(generic_agda_pattern,

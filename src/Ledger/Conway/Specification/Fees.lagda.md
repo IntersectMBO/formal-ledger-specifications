@@ -59,8 +59,8 @@ open Number number renaming (fromNat to fromℕ)
 ```
 -->
 
+<a id="scriptsCost"></a>
 ### Calculation of fees for reference scripts
-
 
 ```agda
 
