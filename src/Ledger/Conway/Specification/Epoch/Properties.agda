@@ -14,6 +14,7 @@ module Ledger.Conway.Specification.Epoch.Properties
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Ratify.Properties txs
 open import Ledger.Conway.Specification.Rewards txs abs
@@ -35,6 +36,20 @@ module _ {lstate : LState} {ss : Snapshots} where
                      → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
   SNAP-deterministic SNAP SNAP = refl
 
+module _ {e : Epoch} (prs : PoolReapState) where
+  POOLREAP-total : ∃[ prs' ] _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
+  POOLREAP-total = -, POOLREAP
+
+  POOLREAP-complete
+    : ∀ prs' → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs' → proj₁ POOLREAP-total ≡ prs'
+  POOLREAP-complete prs' POOLREAP = refl
+
+  POOLREAP-deterministic
+    : ∀ {prs' prs''}
+    → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
+    → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs''
+    → prs' ≡ prs''
+  POOLREAP-deterministic POOLREAP POOLREAP = refl
 
 module _ {eps : EpochState} {e : Epoch} where
 
@@ -44,17 +59,35 @@ module _ {eps : EpochState} {e : Epoch} where
   es         = record esW { withdrawals = ∅ }
   govSt'     = filter (λ x → ¿ ¬ proj₁ x ∈ mapˢ proj₁ removed ¿) govSt
 
+  prs =
+    ⟦ U0.utxoSt' , acnt , dState , pState ⟧
+    where module U0 = EPOCH-updates0 fut ls
+
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-  EPOCH-total = -, EPOCH (RATIFIES-total' .proj₂) (SNAP-total .proj₂)
+  EPOCH-total =
+    -, EPOCH
+         (RATIFIES-total' .proj₂)
+         (SNAP-total .proj₂)
+         (POOLREAP-total prs .proj₂)
+
+  private
+    EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
+    EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
+      record
+        { acnt = U.acnt''
+        ; ss = ss
+        ; ls = ⟦ utxoSt'' , U.govSt' , U.certState' ⟧ˡ
+        ; es = _
+        ; fut = fut'
+        }
+      where module U = EPOCH-updates fut ls acnt' dState' pState'
 
   EPOCH-deterministic : ∀ eps' eps''
                       → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
                       → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps''
                       → eps' ≡ eps''
-  EPOCH-deterministic eps' eps'' (EPOCH p₁ p₂) (EPOCH p₁' p₂') =
-    cong₂ (λ ss fut → record { acnt = _ ; ss = ss ; ls = _ ; es = _ ; fut = fut })
-          ss'≡ss''
-          fut'≡fut''
+  EPOCH-deterministic eps' eps'' (EPOCH p₁ p₂ p₃) (EPOCH p₁' p₂' p₃') =
+    cong₂ _$_ (cong₂ EPOCH-state ss'≡ss'' fut'≡fut'') prs'≡prs''
     where
       ss'≡ss'' : EpochState.ss eps' ≡ EpochState.ss eps''
       ss'≡ss'' = SNAP-deterministic p₂ p₂'
@@ -69,7 +102,9 @@ module _ {eps : EpochState} {e : Epoch} where
                                    ; treasury = _
                                    }) ss'≡ss'')
                                    refl refl p₁ p₁'
- 
+
+      prs'≡prs'' : ? ≡ ?
+      prs'≡prs'' = POOLREAP-deterministic prs p₃ p₃'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' p = EPOCH-deterministic (proj₁ EPOCH-total) eps' (proj₂ EPOCH-total) p
