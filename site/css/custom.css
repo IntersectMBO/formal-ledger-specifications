@@ -9,6 +9,8 @@
 /* AUTO-GENERATED AGDA CLASSES (from Agda.css)                            */
 /* ======================================================================= */
 [data-md-color-scheme="default"] {
+  pre.Agda .Argument { color: #404040 }
+  .AgdaArgument { color: #404040 }
   pre.Agda .Comment { color: #B22222 }
   .AgdaComment { color: #B22222 }
   pre.Agda .Background {  }
@@ -79,6 +81,8 @@
 /* DARK MODE OVERRIDES (from Agda-dark.css)                              */
 /* ======================================================================= */
 [data-md-color-scheme="slate"] {
+  pre.Agda .Argument { color: #ffffff }
+  .AgdaArgument { color: #ffffff }
   pre.Agda .Comment { color: #cc9393 }
   .AgdaComment { color: #cc9393 }
   pre.Agda .Background {  }
@@ -147,7 +151,7 @@
 /* docs/css/custom.css */
 
 /* ======================================================================= */
-/* PROJECT-SPECIFIC STYLES                                            */
+/* PROJECT-SPECIFIC STYLES                                                 */
 /* ======================================================================= */
 
 /* Base style for inline Agda terms (optional, theme might cover) */
@@ -180,8 +184,6 @@ pre.Agda.hidden-source {
 body.reveal-agda-source pre.Agda.hidden-source {
   display: block; /* Shown when body has the class */
 }
-
-
 
 /* Style for inline code snippets */
 :not(pre) > code {
@@ -252,6 +254,7 @@ body.reveal-agda-source pre.Agda.hidden-source {
   transform: translateY(0); /* Resets the lift effect when clicked. */
   box-shadow: 0 1px 2px rgba(0,0,0,0.05); /* Resets the shadow when clicked. */
 }
+
 /*
  * Style for the SVG icon inside the Agda toggle button.
  */
@@ -262,4 +265,28 @@ body.reveal-agda-source pre.Agda.hidden-source {
   color: #888888;
 
   /* The 'gap' property on the parent button now controls spacing, so no margin is needed here. */
+}
+
+/* ======================================================================= */
+/* Styles for Custom Theorem Environments                                  */
+/* ======================================================================= */
+.theorem {
+  display: block;
+  margin: 1.5em 0;
+  padding: 1.2em;
+  padding-left: 1.5em;
+  border-left: 5px solid var(--md-primary-fg-color);
+  background-color: var(--md-default-bg-color--light);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.theorem ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-top: 0.5em;
+}
+
+.theorem ul > li {
+  margin-bottom: 0.8em;
 }
