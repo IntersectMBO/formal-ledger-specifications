@@ -55,7 +55,7 @@ instance
 \begin{AgdaMultiCode}
 \begin{NoConway}
 \begin{code}
-record PoolParams : Type where
+record StakePoolParams : Type where
   field
     owners          : ℙ KeyHash
     cost            : Coin
@@ -74,7 +74,7 @@ record PoolParams : Type where
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
   dereg       : Credential → Maybe Coin → DCert
-  regpool     : KeyHash → PoolParams → DCert
+  regpool     : KeyHash → StakePoolParams → DCert
   retirepool  : KeyHash → Epoch → DCert
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → Coin → DCert
@@ -166,7 +166,7 @@ instance
 
 record PState : Type where
   field
-    pools     : KeyHash ⇀ PoolParams
+    pools     : KeyHash ⇀ StakePoolParams
     retiring  : KeyHash ⇀ Epoch
 \end{code}
 \begin{code}[hide]
@@ -235,7 +235,7 @@ instance
 record DelegEnv : Type where
   field
     pparams       : PParams
-    pools         : KeyHash ⇀ PoolParams
+    pools         : KeyHash ⇀ StakePoolParams
     delegatees    : ℙ Credential
 
 GovCertEnv  = CertEnv
@@ -270,7 +270,7 @@ private variable
   sDelegs stakeDelegs    : Credential ⇀ KeyHash
   ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
   vDelegs voteDelegs     : Credential ⇀ VDeleg
-  pools                  : KeyHash ⇀ PoolParams
+  pools                  : KeyHash ⇀ StakePoolParams
   retiring               : KeyHash ⇀ Epoch
   wdrls                  : RwdAddr ⇀ Coin
 
@@ -286,7 +286,7 @@ private variable
   vs          : List GovVote
   kh          : KeyHash
   mkh         : Maybe KeyHash
-  poolParams  : PoolParams
+  poolParams  : StakePoolParams
   pp          : PParams
   mv          : Maybe VDeleg
 
