@@ -260,28 +260,28 @@ Relevant quantities for the functions are:
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}
-rewardOwners : Coin → PoolParams → UnitInterval → UnitInterval → Coin
+rewardOwners : Coin → StakePoolParams → UnitInterval → UnitInterval → Coin
 rewardOwners rewards pool ownerStake stake = if rewards ≤ cost
   then rewards
   else cost + posPart (floor (
         (fromℕ rewards - fromℕ cost) * (margin + (1 - margin) * ratioStake)))
   where
     ratioStake  = fromUnitInterval ownerStake ÷₀ fromUnitInterval stake
-    cost        = pool .PoolParams.cost
-    margin      = fromUnitInterval (pool .PoolParams.margin)
+    cost        = pool .StakePoolParams.cost
+    margin      = fromUnitInterval (pool .StakePoolParams.margin)
 \end{code}
 \end{AgdaMultiCode}
 \begin{AgdaMultiCode}
 \begin{code}
-rewardMember : Coin → PoolParams → UnitInterval → UnitInterval → Coin
+rewardMember : Coin → StakePoolParams → UnitInterval → UnitInterval → Coin
 rewardMember rewards pool memberStake stake = if rewards ≤ cost
   then 0
   else posPart (floor (
          (fromℕ rewards - fromℕ cost) * ((1 - margin) * ratioStake)))
   where
     ratioStake  = fromUnitInterval memberStake ÷₀ fromUnitInterval stake
-    cost        = pool .PoolParams.cost
-    margin      = fromUnitInterval (pool .PoolParams.margin)
+    cost        = pool .StakePoolParams.cost
+    margin      = fromUnitInterval (pool .StakePoolParams.margin)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions rewardOwners and rewardMember}
@@ -313,14 +313,14 @@ Relevant quantities are:
 \begin{code}
 Stake = Credential ⇀ Coin
 
-rewardOnePool : PParams → Coin → ℕ → ℕ → PoolParams
+rewardOnePool : PParams → Coin → ℕ → ℕ → StakePoolParams
   → Stake → UnitInterval → UnitInterval → Coin → (Credential ⇀ Coin)
 rewardOnePool pparams rewardPot n N pool stakeDistr σ σa tot = rewards
   where
     mkRelativeStake = λ coin → clamp (coin /₀ tot)
-    owners = mapˢ KeyHashObj (pool .PoolParams.owners) 
+    owners = mapˢ KeyHashObj (pool .StakePoolParams.owners)
     ownerStake = ∑[ c ← stakeDistr ∣ owners ] c
-    pledge = pool .PoolParams.pledge
+    pledge = pool .StakePoolParams.pledge
     maxP = if pledge ≤ ownerStake
       then maxPool pparams rewardPot σ (mkRelativeStake pledge)
       else 0
@@ -330,7 +330,7 @@ rewardOnePool pparams rewardPot n N pool stakeDistr σ σa tot = rewards
       mapValues (λ coin → rewardMember poolReward pool (mkRelativeStake coin) σ)
         (stakeDistr ∣ owners ᶜ)
     ownersRewards  =
-      ❴ pool .PoolParams.rewardAccount
+      ❴ pool .StakePoolParams.rewardAccount
       , rewardOwners poolReward pool (mkRelativeStake ownerStake) σ ❵ᵐ
     rewards = memberRewards ∪⁺ ownersRewards
 \end{code}
@@ -411,7 +411,7 @@ uncurryᵐ {A} {B} {C} abc = mapFromPartialFun lookup' domain'
 \end{code}
 \begin{code}
 
-reward : PParams → BlocksMade → Coin → (KeyHash ⇀ PoolParams)
+reward : PParams → BlocksMade → Coin → (KeyHash ⇀ StakePoolParams)
   → Stake → Delegations → Coin → (Credential ⇀ Coin)
 reward pp blocks rewardPot poolParams stake delegs total = rewards
   where
@@ -567,7 +567,7 @@ record Snapshot : Set where
   field
     stake           : Credential ⇀ Coin
     delegations     : Credential ⇀ KeyHash
-    poolParameters  : KeyHash ⇀ PoolParams
+    poolParameters  : KeyHash ⇀ StakePoolParams
 
 \end{code}
 \caption{Definitions of the Snapshot type}
@@ -616,7 +616,7 @@ opaque
     where
 \end{code}
 \begin{code}[hide]
-      poolParams    : KeyHash ⇀ PoolParams
+      poolParams    : KeyHash ⇀ StakePoolParams
       utxoBalance   : Credential → Coin
       activeDelegs  : Credential ⇀ KeyHash
       activeRewards : Credential ⇀ Coin
