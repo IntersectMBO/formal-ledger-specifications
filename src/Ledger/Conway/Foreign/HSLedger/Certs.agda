@@ -15,8 +15,8 @@ open import Ledger.Conway.Conformance.Certs.Properties govStructure
         )
 
 instance
-  HsTy-PoolParams = autoHsType PoolParams
-  Conv-PoolParams = autoConvert PoolParams
+  HsTy-StakePoolParams = autoHsType StakePoolParams
+  Conv-StakePoolParams = autoConvert StakePoolParams
 
   HsTy-DepositPurpose = autoHsType DepositPurpose
   Conv-DepositPurpose = autoConvert DepositPurpose

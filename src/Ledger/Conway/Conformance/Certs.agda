@@ -76,7 +76,7 @@ private variable
   sDelegs stakeDelegs    : Credential ⇀ KeyHash
   ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
   vDelegs voteDelegs     : Credential ⇀ VDeleg
-  pools                  : KeyHash ⇀ PoolParams
+  pools                  : KeyHash ⇀ StakePoolParams
   retiring               : KeyHash ⇀ Epoch
   wdrls                  : RwdAddr ⇀ Coin
 
@@ -93,7 +93,7 @@ private variable
   vs             : List GovVote
   kh             : KeyHash
   mkh            : Maybe KeyHash
-  poolParams     : PoolParams
+  poolParams     : StakePoolParams
   pp             : PParams
   mv             : Maybe VDeleg
 
