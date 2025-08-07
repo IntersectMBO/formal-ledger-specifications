@@ -59,6 +59,13 @@ record Hasreserves {a} (A : Type a) : Type a where
   field reservesOf : A → Coin
 open Hasreserves ⦃...⦄ public
 
+instance
+  Hastreasury-Acnt : Hastreasury Acnt
+  Hastreasury-Acnt .treasuryOf = Acnt.treasury
+
+  Hasreserves-Acnt : Hasreserves Acnt
+  Hasreserves-Acnt .reservesOf = Acnt.reserves
+
 ProtVer : Type
 ProtVer = ℕ × ℕ
 
