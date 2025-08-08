@@ -11,6 +11,7 @@ functions and properties of this scheme.
 module Ledger.Core.Specification.Crypto where
 
 open import Ledger.Prelude hiding (T)
+open import Ledger.Prelude.Numeric.UnitInterval
 
 record isHashableSet (T : Type) : Type₁ where
   constructor mkIsHashableSet
@@ -72,4 +73,5 @@ record CryptoStructure : Type₁ where
   open isHashableSet khs renaming (THash to KeyHash) hiding (DecEq-T) public
 
 -- TODO: KES and VRF
+  PoolDistr = KeyHash ⇀ (UnitInterval × KeyHash)
 \end{code}
