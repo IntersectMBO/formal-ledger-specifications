@@ -85,12 +85,12 @@ instance
 \end{code}
 \begin{NoConway}
 \begin{code}
-
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
     epochState  : EpochState
     ru          : Maybe RewardUpdate
+    pd          : PoolDistr
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -352,6 +352,7 @@ private variable
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
+  pd : PoolDistr
 \end{code}
 
 
@@ -447,6 +448,21 @@ its results by carrying out each of the following tasks.
 \begin{NoConway}
 \begin{figure*}[ht]
 \begin{code}[hide]
+calculatePoolDistr : Snapshot → PoolDistr
+calculatePoolDistr ss =
+    zipWithᵐ (λ c pp → (? , ?) ) sd (poolParameters ss)
+  where
+    open Snapshot
+    totalStake = ∑[ c ← stake ss ] c
+
+    sd : KeyHash ⇀ Coin
+    sd = aggregateBy (delegations ss ˢ) (stake ss)
+
+    zipWithᵐ : {A B C D : Type} → (B → C → D) → A ⇀ B → A ⇀ C → A ⇀ D
+    zipWithᵐ = ?
+\end{code}
+
+\begin{code}[hide]
 data
 \end{code}
 \begin{code}
@@ -458,22 +474,30 @@ data
 \begin{code}
   NEWEPOCH-New : let
       eps' = applyRUpd ru eps
+      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps''
+      pd' = calculatePoolDistr (Snapshots.set ss)
     in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈
+          ⟦ e , eps'' , nothing , pd' ⟧
 
   NEWEPOCH-Not-New :
     ∙ e ≢ lastEpoch + 1
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
+      _ ⊢ ⟦ lastEpoch , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈
+          ⟦ lastEpoch , eps , mru , pd ⟧
 
-  NEWEPOCH-No-Reward-Update :
+  NEWEPOCH-No-Reward-Update : let
+      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps'
+      pd' = calculatePoolDistr (Snapshots.set ss)
+    in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈
+          ⟦ e , eps' , nothing , pd' ⟧
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}
