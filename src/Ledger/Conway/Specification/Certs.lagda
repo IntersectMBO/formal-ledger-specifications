@@ -62,6 +62,7 @@ record StakePoolParams : Type where
     margin          : UnitInterval
     pledge          : Coin
     rewardAccount   : Credential
+    VRF             : KeyHash
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
