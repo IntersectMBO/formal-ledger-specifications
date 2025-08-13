@@ -53,7 +53,9 @@ Consider the chain state `cs'`{.AgdaFunction} defined as follows:
   cs' .newEpochState =
     record { lastEpoch   = nes .lastEpoch
            ; epochState  = record (EpochStateOf cs) {ls = LStateOf nes}
-           ; ru          = nes .ru }
+           ; ru          = nes .ru
+           ; pd          = nes .pd
+           }
 ```
 
 That is `cs'`{.AgdaFunction} is essentially `nes`{.AgdaBound}, but
