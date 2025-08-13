@@ -69,7 +69,7 @@ module _ {eps : EpochState} {e : Epoch} where
                                    ; treasury = _
                                    }) ss'≡ss'')
                                    refl refl p₁ p₁'
- 
+
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' p = EPOCH-deterministic (proj₁ EPOCH-total) eps' (proj₂ EPOCH-total) p

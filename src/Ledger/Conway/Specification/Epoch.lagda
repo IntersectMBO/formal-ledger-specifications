@@ -122,7 +122,7 @@ instance
   HasCertState-NewEpochState : HasCertState NewEpochState
   HasCertState-NewEpochState .CertStateOf = CertStateOf ∘ LStateOf
 
-  HasDReps-NewEpochState : HasDReps NewEpochState 
+  HasDReps-NewEpochState : HasDReps NewEpochState
   HasDReps-NewEpochState .DRepsOf = DRepsOf ∘ CertStateOf
 
   HasRewards-NewEpochState : HasRewards NewEpochState
