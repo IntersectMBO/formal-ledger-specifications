@@ -448,26 +448,31 @@ its results by carrying out each of the following tasks.
 \begin{NoConway}
 \begin{figure*}[ht]
 \begin{code}[hide]
-calculatePoolDistr : Snapshot → PoolDistr
-calculatePoolDistr ss =
+-- the opaque block is necesary for performance of typechecking in
+-- Epoch.Properties
+opaque
+  calculatePoolDistr : Snapshot → PoolDistr
+  calculatePoolDistr ss =
     zipWithᵐ (λ c pp → (normalizeStake c , pp .VRF) ) sd (ss .poolParameters)
-  where
-    open Snapshot
-    open PoolParams
-    totalStake = ∑[ c ← ss .stake ] c
+    where
+      open Snapshot
+      open PoolParams
 
-    normalizeStake : Coin → UnitInterval
-    normalizeStake c = clamp $ case totalStake of λ where
-      zero → Data.Rational.normalize 0 (suc zero)
-      (suc n) → Data.Rational.normalize c (suc n)
+      totalStake : Coin
+      totalStake = ∑[ c ← ss .stake ] c
 
-    sd : KeyHash ⇀ Coin
-    sd = aggregateBy (ss .delegations ˢ) (ss .stake)
+      normalizeStake : Coin → UnitInterval
+      normalizeStake c = clamp $ case totalStake of λ where
+        zero → Data.Rational.normalize 0 (suc zero)
+        (suc n) → Data.Rational.normalize c (suc n)
 
-    -- TODO: Move to agda-sets
-    zipWithᵐ
-      : {A B C D : Type} ⦃ _ : DecEq A ⦄ → (B → C → D) → A ⇀ B → A ⇀ C → A ⇀ D
-    zipWithᵐ f m m' = mapMaybeWithKeyᵐ (λ a b → f b <$> lookupᵐ? m' a) m
+      sd : KeyHash ⇀ Coin
+      sd = aggregateBy (ss .delegations ˢ) (ss .stake)
+
+      -- TODO: Move to agda-sets
+      zipWithᵐ
+        : {A B C D : Type} ⦃ _ : DecEq A ⦄ → (B → C → D) → A ⇀ B → A ⇀ C → A ⇀ D
+      zipWithᵐ f m m' = mapMaybeWithKeyᵐ (λ a b → f b <$> lookupᵐ? m' a) m
 \end{code}
 
 \begin{code}[hide]
