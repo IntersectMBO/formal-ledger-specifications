@@ -98,10 +98,11 @@ applyRUpd ⟦ Δt , Δr , Δf , rs ⟧ʳᵘ
     unregRU'  = ∑[ x ← unregRU ] x
 
 stakeDistr : UTxO → DState → PState → Snapshot
-stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ (stakeRelation ᶠˢ) , stakeDelegs ⟧
+stakeDistr utxo ⟦ _ , stakeDelegs , rewards , _ ⟧ᵈ pState = ⟦ aggregate₊ activeStake ∪⁺ rewards , stakeDelegs ⟧
   where
-    m = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom rewards)
-    stakeRelation = m ∪ ∣ rewards ∣
+    open PState pState
+    activeDelegs = stakeDelegs ∣^ dom pools
+    activeStake = mapˢ (λ a → (a , cbalance (utxo ∣^' λ i → getStakeCred i ≡ just a))) (dom activeDelegs) ᶠˢ
 
 gaDepositStake : GovState → Deposits → Credential ⇀ Coin
 gaDepositStake govSt ds = aggregateBy
