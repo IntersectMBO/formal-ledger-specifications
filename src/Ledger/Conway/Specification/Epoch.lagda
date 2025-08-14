@@ -344,6 +344,20 @@ opaque
 \caption{Functions for computing stake distributions}
 \end{figure*}
 
+The \AgdaFunction{aggregateBy} function takes a relation
+\AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B}) and a map
+\AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
+and returns a function that maps each \AgdaBound{a} in the domain of
+\AgdaBound{m} to the sum of all \AgdaBound{b} such that
+(\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+
+In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
+\AgdaFunction{aggregateBy} are
+\AgdaFunction{∣} \AgdaBound{delegations} \AgdaFunction{∣} :
+ℙ \AgdaDatatype{Credential} \AgdaFunction{×} \AgdaDatatype{VDeleg} and
+\AgdaFunction{stakeOf} \AgdaBound{ss} \AgdaFunction{∪⁺}
+\AgdaFunction{gaDepositStake} \AgdaBound{govSt} \AgdaBound{ds}, respectively.
+
 \begin{code}[hide]
 private variable
   e lastEpoch : Epoch
