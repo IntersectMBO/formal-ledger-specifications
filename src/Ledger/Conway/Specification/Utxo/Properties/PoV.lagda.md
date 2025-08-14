@@ -48,7 +48,7 @@ which returns 0 for false and 1 for true.
 
 ```agda
 UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
-  → txidOf tx ∉ mapˢ proj₁ (dom (UTxOOf s))
+  → txidOf tx ∉ mapˢ proj₁ (dom (utxoOf s))
   → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
   → getCoin s + getCoin (wdrlsOf tx) * χ (tx .isValid) ≡ getCoin s'
 ```

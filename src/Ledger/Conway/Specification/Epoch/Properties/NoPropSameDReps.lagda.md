@@ -32,7 +32,7 @@ in `Epoch`{.AgdaDatatype} are the same as the
 ```agda
 prop≡∅⇒activeDReps-const : Epoch → (es es' : NewEpochState) → Type
 prop≡∅⇒activeDReps-const e es es' =
-  GovStateOf es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
+  govStOf es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
 ```
 
 *Proof*. (coming soon)

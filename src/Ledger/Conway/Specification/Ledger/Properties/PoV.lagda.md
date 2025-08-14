@@ -64,7 +64,7 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
 
 ```agda
   LEDGER-pov : {Γ : LEnv} {s s' : LState}
-    → txid ∉ mapˢ proj₁ (dom (UTxOOf s))
+    → txid ∉ mapˢ proj₁ (dom (utxoOf s))
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 ```
 

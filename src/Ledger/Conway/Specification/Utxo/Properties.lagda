@@ -103,7 +103,7 @@ instance
                           in
                             ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
                             +ˢ "\n  consumed =\t\t" +ˢ showValue con
-                            +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (UTxOOf s ∣ txb .TxBody.txins))
+                            +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (utxoOf s ∣ txb .TxBody.txins))
                             +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
                             +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
                             +ˢ "\n  produced =\t\t" +ˢ showValue prod
