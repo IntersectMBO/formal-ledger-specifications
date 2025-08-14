@@ -51,7 +51,11 @@ private variable
   e lastEpoch : Epoch
   poolReapState : PoolReapState
 
-data _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapState → Type where
+data 
+```
+-->
+```agda
+  _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapState → Type where
   POOLREAP : let
     open PoolReapState poolReapState
     open PoolParams
