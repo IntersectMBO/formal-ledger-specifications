@@ -52,7 +52,7 @@ module _ {eps : EpochState} {e : Epoch} where
         ; dreps = _
         ; ccHotKeys = _
         ; treasury = _
-        } ⊢ _ ⇀⦇ _ ,RATIFIES⦈ _
+        } ⊢ ? ⇀⦇ ? ,RATIFIES⦈ _
 
   abstract
     EPOCH-total' : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
