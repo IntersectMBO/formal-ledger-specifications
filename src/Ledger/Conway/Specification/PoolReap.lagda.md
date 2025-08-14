@@ -100,6 +100,6 @@ data
 
     in
     ────────────────────────────────
-    _ ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈
-        ⟦ utxoSt' , acnt' , dState' , pState' ⟧
+    _ ⊢ ⟦ utxoSt , acnt , dState , pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt' , acnt' , dState' , pState' ⟧
+
 ```
