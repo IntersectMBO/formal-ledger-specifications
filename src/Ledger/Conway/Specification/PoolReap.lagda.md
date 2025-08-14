@@ -24,6 +24,7 @@ record PoolReapState : Type where
 ```agda
   constructor ⟦_,_,_,_⟧ᵖ
 ```
+-->
 ```agda
   field
     utxoSt     : UTxOState   -- utxo state
