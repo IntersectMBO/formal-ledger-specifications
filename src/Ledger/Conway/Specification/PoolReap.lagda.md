@@ -38,6 +38,7 @@ instance
   unquoteDecl HasCast-PoolReapState = derive-HasCast
                 [ (quote PoolReapState , HasCast-PoolReapState) ]
 ```
+-->
 
 Recall, `PState`{.AgdaDatatype} is a record with two fields, `pools`{.AgdaField}
 and `retiring`{.AgdaField} (maps on `KeyHash`{.AgdaField} with codomains
