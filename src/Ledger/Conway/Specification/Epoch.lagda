@@ -85,12 +85,12 @@ instance
 \end{code}
 \begin{NoConway}
 \begin{code}
-
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
     epochState  : EpochState
     ru          : Maybe RewardUpdate
+    pd          : PoolDistr
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -122,7 +122,7 @@ instance
   HasCertState-NewEpochState : HasCertState NewEpochState
   HasCertState-NewEpochState .CertStateOf = CertStateOf ∘ LStateOf
 
-  HasDReps-NewEpochState : HasDReps NewEpochState 
+  HasDReps-NewEpochState : HasDReps NewEpochState
   HasDReps-NewEpochState .DRepsOf = DRepsOf ∘ CertStateOf
 
   HasRewards-NewEpochState : HasRewards NewEpochState
@@ -337,6 +337,20 @@ opaque
 \caption{Functions for computing stake distributions}
 \end{figure*}
 
+The \AgdaFunction{aggregateBy} function takes a relation
+\AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B}) and a map
+\AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
+and returns a function that maps each \AgdaBound{a} in the domain of
+\AgdaBound{m} to the sum of all \AgdaBound{b} such that
+(\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+
+In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
+\AgdaFunction{aggregateBy} are
+\AgdaFunction{∣} \AgdaBound{delegations} \AgdaFunction{∣} :
+ℙ \AgdaDatatype{Credential} \AgdaFunction{×} \AgdaDatatype{VDeleg} and
+\AgdaFunction{stakeOf} \AgdaBound{ss} \AgdaFunction{∪⁺}
+\AgdaFunction{gaDepositStake} \AgdaBound{govSt} \AgdaBound{ds}, respectively.
+
 \begin{code}[hide]
 private variable
   nes nes' : NewEpochState
@@ -352,6 +366,7 @@ private variable
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
+  pd : PoolDistr
 \end{code}
 
 
@@ -445,7 +460,38 @@ its results by carrying out each of the following tasks.
 \end{figure*}
 
 \begin{NoConway}
+The \AgdaFunction{calculatePoolDistr} produces a new pool distribution from the
+delegation map and stake allocation of the previous epoch.
+
 \begin{figure*}[ht]
+\begin{code}[hide]
+-- the opaque block is necesary for performance of typechecking in
+-- Epoch.Properties
+opaque
+  calculatePoolDistr : Snapshot → PoolDistr
+  calculatePoolDistr ss =
+    zipWithᵐ (λ c pp → (normalizeStake c , pp .VRF) ) sd (ss .poolParameters)
+    where
+      open Snapshot
+      open PoolParams
+
+      totalStake : Coin
+      totalStake = ∑[ c ← ss .stake ] c
+
+      normalizeStake : Coin → UnitInterval
+      normalizeStake c = clamp $ case totalStake of λ where
+        zero → Data.Rational.normalize 0 (suc zero)
+        (suc n) → Data.Rational.normalize c (suc n)
+
+      sd : KeyHash ⇀ Coin
+      sd = aggregateBy (ss .delegations ˢ) (ss .stake)
+
+      -- TODO: Move to agda-sets
+      zipWithᵐ
+        : {A B C D : Type} ⦃ _ : DecEq A ⦄ → (B → C → D) → A ⇀ B → A ⇀ C → A ⇀ D
+      zipWithᵐ f m m' = mapMaybeWithKeyᵐ (λ a b → f b <$> lookupᵐ? m' a) m
+\end{code}
+
 \begin{code}[hide]
 data
 \end{code}
@@ -458,22 +504,30 @@ data
 \begin{code}
   NEWEPOCH-New : let
       eps' = applyRUpd ru eps
+      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps''
+      pd' = calculatePoolDistr (Snapshots.set ss)
     in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈
+          ⟦ e , eps'' , nothing , pd' ⟧
 
   NEWEPOCH-Not-New :
     ∙ e ≢ lastEpoch + 1
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
+      _ ⊢ ⟦ lastEpoch , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈
+          ⟦ lastEpoch , eps , mru , pd ⟧
 
-  NEWEPOCH-No-Reward-Update :
+  NEWEPOCH-No-Reward-Update : let
+      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps'
+      pd' = calculatePoolDistr (Snapshots.set ss)
+    in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈
+          ⟦ e , eps' , nothing , pd' ⟧
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}
