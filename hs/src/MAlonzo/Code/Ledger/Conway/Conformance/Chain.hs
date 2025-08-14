@@ -567,7 +567,7 @@ d__'8866'_'8640''10631'_'44'CHAIN'10632'__2646 a0 a1 a2 a3 a4 a5
   = ()
 data T__'8866'_'8640''10631'_'44'CHAIN'10632'__2646
   = C_CHAIN_2690 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_2514
-                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__2832
+                 MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__2838
                  MAlonzo.Code.Interface.STS.T__'8866'_'8640''10214'_'10215''42'__38
 -- Ledger.Conway.Conformance.Chain._.newEpochState
 d_newEpochState_2650 ::

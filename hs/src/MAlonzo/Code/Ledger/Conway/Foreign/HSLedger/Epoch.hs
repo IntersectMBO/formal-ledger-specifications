@@ -136,7 +136,7 @@ d_gaDepositStake_50 ::
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gaDepositStake_50
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_gaDepositStake_2632
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_gaDepositStake_2638
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -158,7 +158,7 @@ d_mkStakeDistrs_54 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_StakeDistrs_2218
 d_mkStakeDistrs_54
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_mkStakeDistrs_2654
+      MAlonzo.Code.Ledger.Conway.Conformance.Epoch.du_mkStakeDistrs_2660
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_774
          (coe
@@ -342,7 +342,7 @@ d_EPOCH'45'complete_132 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_2490 ->
   Integer ->
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_2490 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__2740 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__2746 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_EPOCH'45'complete_132 = erased
 -- Ledger.Conway.Foreign.HSLedger.Epoch._.EPOCH-complete'
@@ -350,7 +350,7 @@ d_EPOCH'45'complete''_134 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_2490 ->
   Integer ->
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_EpochState_2490 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__2740 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'EPOCH'10632'__2746 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_EPOCH'45'complete''_134 = erased
 -- Ledger.Conway.Foreign.HSLedger.Epoch._.EPOCH-total
@@ -380,7 +380,7 @@ d_NEWEPOCH'45'complete_140 ::
   Integer ->
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_2514 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_2514 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__2832 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__2838 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_NEWEPOCH'45'complete_140 = erased
 -- Ledger.Conway.Foreign.HSLedger.Epoch._.NEWEPOCH-total
@@ -400,7 +400,7 @@ d_SNAP'45'complete_144 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2196 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_Snapshots_2472 ->
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_Snapshots_2472 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'SNAP'10632'__2708 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T__'8866'_'8640''10631'_'44'SNAP'10632'__2714 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_SNAP'45'complete_144 = erased
 -- Ledger.Conway.Foreign.HSLedger.Epoch._.SNAP-total
