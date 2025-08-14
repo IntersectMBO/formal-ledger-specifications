@@ -46,6 +46,7 @@ and `retiring`{.AgdaField} (maps on `KeyHash`{.AgdaField} with codomains
 `PoolParams`{.AgdaRecord} is a record with just one field, the
 `rewardAddr`{.AgdaField} credential.
 
+<!--
 ```agda
 private variable
   e lastEpoch : Epoch
