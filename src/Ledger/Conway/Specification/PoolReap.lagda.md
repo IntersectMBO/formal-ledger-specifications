@@ -38,17 +38,7 @@ record PoolReapState : Type where
 instance
   unquoteDecl HasCast-PoolReapState = derive-HasCast
                 [ (quote PoolReapState , HasCast-PoolReapState) ]
-```
--->
 
-Recall, `PState`{.AgdaDatatype} is a record with two fields, `pools`{.AgdaField}
-and `retiring`{.AgdaField} (maps on `KeyHash`{.AgdaField} with codomains
-`PoolParams`{.AgdaRecord} and `Epoch`{.AgdaDatatype}, respectively).
-`PoolParams`{.AgdaRecord} is a record with just one field, the
-`rewardAddr`{.AgdaField} credential.
-
-<!--
-```agda
 private variable
   e lastEpoch : Epoch
   poolReapState : PoolReapState
