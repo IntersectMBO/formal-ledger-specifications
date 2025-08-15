@@ -221,21 +221,24 @@ There are two ways to do this.
 1.  **With Nix**
 
     Enter the command `nix build .#mkdocs` (or `nix-build -A mkdocs`) then open the
-    file `result/site/index.html` in a browser.
+    file `result/site/index.html` in a browser. This method always type-checks the
+    Agda code, and generates the HTML documentation from documentation from scratch.
 
     **Note**. This currently works in Chrome but may not work in Brave or
     Firefox.  If you want to use one of those browsers to view the generated
     documentation, you can run a local server on the result,
-    `cd result/site; python3 -m http.server`, and then point your browser
+    `(cd result/site; python3 -m http.server)`, and then point your browser
     to <http://127.0.0.1:8000/>.
 
 2.  **Manually**
 
+    This method only type-checks the Agda code that has changed since last time and
+    then generates the HTML documentation.
+
     ```bash
     nix develop .#docs
     python build-tools/scripts/md/build.py --run-agda
-    cd _build/md/mkdocs
-    mkdocs serve
+    (cd _build/md/mkdocs; mkdocs serve)
     ```
 
     Then point your browser to  <http://127.0.0.1:8000/>.
