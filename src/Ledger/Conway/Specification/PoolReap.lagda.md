@@ -31,6 +31,10 @@ record PoolReapState : Type where
     acnt       : Acnt        -- accounting
     dState     : DState      -- delegation state
     pState     : PState      -- pool state
+
+-- This definition is here to aid the html generator that gets confused
+-- by ^ at the call site of correstrictionComp
+correstrictionComp = _∣^_ᶜ
 ```
 
 <!--
@@ -83,7 +87,7 @@ data
 
     dState' =
       ⟦ dState .voteDelegs
-      , dState .stakeDelegs ∣^ retired ᶜ
+      , correstrictionComp (dState .stakeDelegs) retired
       , dState .rewards ∪⁺ refunds
       ⟧
 
