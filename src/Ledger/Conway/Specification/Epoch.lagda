@@ -436,7 +436,6 @@ module EPOCH-updates
   open UTxOState
   open EPOCH-updates0 fut ls public
   open DState
-  open Acnt
 
   refunds : Credential ⇀ Coin
   refunds = pullbackMap payout toRwdAddr (dom (dState' .rewards))
