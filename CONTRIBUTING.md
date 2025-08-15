@@ -266,6 +266,8 @@ First, build `agdaWithPackages` and create a stable symlink to it in your home d
 nix-build -A agdaWithPackages -o ~/ledger-agda
 ```
 
+Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
+
 ---
 
 ### Setting up multiple versions with `update-alternatives` (OPTIONAL)
