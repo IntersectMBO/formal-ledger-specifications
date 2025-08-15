@@ -74,19 +74,19 @@ open HasLState ⦃...⦄ public
 
 instance
   HasUTxOState-LState : HasUTxOState LState
-  HasUTxOState-LState .UTxOStateOf = LState.utxoSt
+  HasUTxOState-LState .utxoStOf = LState.utxoSt
 
   HasUTxO-LState : HasUTxO LState
-  HasUTxO-LState .UTxOOf = UTxOOf ∘ UTxOStateOf
+  HasUTxO-LState .utxoOf = utxoOf ∘ utxoStOf
 
   HasGovState-LState : HasGovState LState
-  HasGovState-LState .GovStateOf = LState.govSt
+  HasGovState-LState .govStOf = LState.govSt
 
   HasCertState-LState : HasCertState LState
-  HasCertState-LState .CertStateOf = LState.certState
+  HasCertState-LState .certstateOf = LState.certState
 
   HasDeposits-LState : HasDeposits LState
-  HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
+  HasDeposits-LState .depositsOf = depositsOf ∘ utxoStOf
 
 open CertState
 open DState

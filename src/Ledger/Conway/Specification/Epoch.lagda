@@ -96,6 +96,7 @@ We omit the VRF key hashes in the codomain of \AgdaDatatype{PoolDelegatedStake}
 as they are not needed at the moment.
 
 \begin{code}
+PoolDelegatedStake : Type
 PoolDelegatedStake = KeyHash ⇀ Coin
 
 record NewEpochState : Type where
@@ -372,11 +373,13 @@ In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed t
 
 \begin{code}[hide]
 private variable
+  nes nes' : NewEpochState
   e lastEpoch : Epoch
   fut fut' : RatifyState
   poolReapState : PoolReapState
   eps eps' eps'' : EpochState
   ls : LState
+  acnt : Acnt
   es₀ : EnactState
   mark set go : Snapshot
   feeSS : Coin

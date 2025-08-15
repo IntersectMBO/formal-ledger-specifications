@@ -48,26 +48,26 @@ instance
   HasLastEpoch-ChainState : HasLastEpoch ChainState
   HasLastEpoch-ChainState .LastEpochOf = LastEpochOf ∘ NewEpochStateOf
 
-  HasEpochState-ChainState : HasEpochState ChainState 
+  HasEpochState-ChainState : HasEpochState ChainState
   HasEpochState-ChainState .EpochStateOf = EpochStateOf ∘ NewEpochStateOf
 
-  HasEnactState-ChainState : HasEnactState ChainState 
+  HasEnactState-ChainState : HasEnactState ChainState
   HasEnactState-ChainState .EnactStateOf = EnactStateOf ∘ EpochStateOf
 
   HasLState-ChainState : HasLState ChainState
   HasLState-ChainState .LStateOf = LStateOf ∘ EpochStateOf
 
   HasUTxOState-ChainState : HasUTxOState ChainState
-  HasUTxOState-ChainState .UTxOStateOf = UTxOStateOf ∘ LStateOf
+  HasUTxOState-ChainState .utxoStOf = utxoStOf ∘ LStateOf
 
   HasCertState-ChainState : HasCertState ChainState
-  HasCertState-ChainState .CertStateOf = CertStateOf ∘ LStateOf
+  HasCertState-ChainState .certstateOf = certstateOf ∘ LStateOf
 
   HasDeposits-ChainState : HasDeposits ChainState
-  HasDeposits-ChainState .DepositsOf = DepositsOf ∘ UTxOStateOf
+  HasDeposits-ChainState .depositsOf = depositsOf ∘ utxoStOf
 
   HasRewards-ChainState : HasRewards ChainState
-  HasRewards-ChainState .RewardsOf = RewardsOf ∘ CertStateOf
+  HasRewards-ChainState .rewardsOf = rewardsOf ∘ certstateOf
 
   HasPParams-ChainState : HasPParams ChainState
   HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf

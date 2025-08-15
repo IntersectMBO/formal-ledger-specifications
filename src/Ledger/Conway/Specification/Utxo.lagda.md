@@ -126,15 +126,29 @@ record UTxOState : Type where
 <!--
 ```agda
 record HasUTxOState {a} (A : Type a) : Type a where
-  field UTxOStateOf : A → UTxOState
+  field utxoStOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
 
-instance
-  HasDeposits-UTxOState : HasDeposits UTxOState
-  HasDeposits-UTxOState .DepositsOf = UTxOState.deposits
+record HasFees {a} (A : Type a) : Type a where
+  field feesOf : A → Coin
+open HasFees ⦃...⦄ public
 
+record HasDonations {a} (A : Type a) : Type a where
+  field donationsOf : A → Coin
+open HasDonations ⦃...⦄ public
+
+instance
   HasUTxO-UTxOState : HasUTxO UTxOState
-  HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
+  HasUTxO-UTxOState .utxoOf = UTxOState.utxo
+
+  HasFees-UTxOState : HasFees UTxOState
+  HasFees-UTxOState .feesOf = UTxOState.fees
+
+  HasDeposits-UTxOState : HasDeposits UTxOState
+  HasDeposits-UTxOState .depositsOf = UTxOState.deposits
+
+  HasDonations-UTxOState : HasDonations UTxOState
+  HasDonations-UTxOState .donationsOf = UTxOState.donations
 
   unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
     ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
