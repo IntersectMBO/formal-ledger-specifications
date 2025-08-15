@@ -247,7 +247,7 @@ of the proposals in `tx`{.AgdaBound}.
 ```agda
   propose-minSpend :  {slot : Slot} {tx : Tx} {cs : ChainState}
                       ( let  pp      = PParamsOf cs
-                             utxoSt  = UTxOStateOf cs )
+                             utxoSt  = utxoStOf cs )
 ```
 
 <!--

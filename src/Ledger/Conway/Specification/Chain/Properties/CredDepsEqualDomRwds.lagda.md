@@ -43,8 +43,8 @@ that `cs`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,CHAIN⦈`{.Agda
 
 ```agda
 credDeposits≡dom-rwds : ChainState → Type
-credDeposits≡dom-rwds cs =  filter isCredDeposit (dom (DepositsOf cs))
-                            ≡ map CredentialDeposit (dom (RewardsOf cs))
+credDeposits≡dom-rwds cs =  filter isCredDeposit (dom (depositsOf cs))
+                            ≡ map CredentialDeposit (dom (rewardsOf cs))
 
 credDeposits≡dom-rwds-inv : Type
 credDeposits≡dom-rwds-inv = LedgerInvariant _⊢_⇀⦇_,CHAIN⦈_ credDeposits≡dom-rwds

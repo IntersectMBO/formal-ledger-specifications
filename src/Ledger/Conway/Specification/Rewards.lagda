@@ -574,7 +574,14 @@ record Snapshot : Set where
 \label{fig:defs:Snapshot}
 \end{figure*}
 \begin{code}[hide]
+record HasStake {a} (A : Type a) : Type a where
+  field stakeOf : A → Credential ⇀ Coin
+open HasStake  ⦃...⦄ public
+
 instance
+  HasStake-Snapshot : HasStake Snapshot
+  HasStake-Snapshot .stakeOf = Snapshot.stake
+
   unquoteDecl HasCast-Snapshot =
     derive-HasCast [ (quote Snapshot , HasCast-Snapshot) ]
 \end{code}

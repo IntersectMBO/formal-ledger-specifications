@@ -67,7 +67,7 @@ instance
 \end{code}
 \begin{code}
 activeDReps : Epoch → NewEpochState → ℙ Credential
-activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (DRepsOf s))
+activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (dRepsOf s))
 \end{code}
 \begin{code}[hide]
 instance

@@ -129,7 +129,7 @@ record TransactionStructure : Type₁ where
 \end{code}
 \begin{code}[hide]
   record HasUTxO {a} (A : Type a) : Type a where
-    field UTxOOf : A → UTxO
+    field utxoOf : A → UTxO
   open HasUTxO ⦃...⦄ public
 \end{code}
 \end{NoConway}

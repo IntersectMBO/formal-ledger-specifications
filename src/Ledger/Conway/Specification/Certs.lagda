@@ -32,15 +32,15 @@ DReps     = Credential ⇀ Epoch
 \end{code}
 \begin{code}[hide]
 record HasDeposits {a} (A : Type a) : Type a where
-  field DepositsOf : A → Deposits
+  field depositsOf : A → Deposits
 open HasDeposits ⦃...⦄ public
 
 record HasRewards {a} (A : Type a) : Type a where
-  field RewardsOf : A → Rewards
+  field rewardsOf : A → Rewards
 open HasRewards  ⦃...⦄ public
 
 record HasDReps {a} (A : Type a) : Type a where
-  field DRepsOf : A → DReps
+  field dRepsOf : A → DReps
 open HasDReps    ⦃...⦄ public
 
 instance
@@ -147,19 +147,26 @@ record DState : Type where
 \end{code}
 \begin{code}[hide]
 record HasDState {a} (A : Type a) : Type a where
-  field DStateOf : A → DState
+  field dStateOf : A → DState
 open HasDState ⦃...⦄ public
 
 record HasVDelegs {a} (A : Type a) : Type a where
   field voteDelegsOf : A → Credential ⇀ VDeleg
 open HasVDelegs ⦃...⦄ public
 
+record HasStakeDelegs {a} (A : Type a) : Type a where
+  field stakeDelegsOf : A → Credential ⇀ KeyHash
+open HasStakeDelegs ⦃...⦄ public
+
 instance
   HasVDelegs-DState : HasVDelegs DState
   HasVDelegs-DState .voteDelegsOf = DState.voteDelegs
 
+  HasStakeDelegs-DState : HasStakeDelegs DState
+  HasStakeDelegs-DState .stakeDelegsOf = DState.stakeDelegs
+
   HasRewards-DState : HasRewards DState
-  HasRewards-DState .RewardsOf = DState.rewards
+  HasRewards-DState .rewardsOf = DState.rewards
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -171,8 +178,23 @@ record PState : Type where
 \end{code}
 \begin{code}[hide]
 record HasPState {a} (A : Type a) : Type a where
-  field PStateOf : A → PState
+  field pStateOf : A → PState
 open HasPState ⦃...⦄ public
+
+record HasPools {a} (A : Type a) : Type a where
+  field poolsOf : A → KeyHash ⇀ PoolParams
+open HasPools ⦃...⦄ public
+
+record HasRetiring {a} (A : Type a) : Type a where
+  field retiringOf : A → KeyHash ⇀ Epoch
+open HasRetiring ⦃...⦄ public
+
+instance
+  HasPools-PState : HasPools PState
+  HasPools-PState .poolsOf = PState.pools
+
+  HasRetiring-PState : HasRetiring PState
+  HasRetiring-PState .retiringOf = PState.retiring
 \end{code}
 \end{NoConway}
 \begin{code}
@@ -189,12 +211,19 @@ record GState : Type where
 \end{code}
 \begin{code}[hide]
 record HasGState {a} (A : Type a) : Type a where
-  field GStateOf : A → GState
+  field gStateOf : A → GState
 open HasGState ⦃...⦄ public
+
+record HasCCHotKeys {a} (A : Type a) : Type a where
+  field ccHotKeysOf : A → Credential ⇀ Maybe Credential
+open HasCCHotKeys ⦃...⦄ public
 
 instance
   HasDReps-GState : HasDReps GState
-  HasDReps-GState .DRepsOf = GState.dreps
+  HasDReps-GState .dRepsOf = GState.dreps
+
+  HasCCHotKeys-GState : HasCCHotKeys GState
+  HasCCHotKeys-GState .ccHotKeysOf = GState.ccHotKeys
 \end{code}
 \begin{code}
 
@@ -211,24 +240,24 @@ record CertState : Type where
 \end{code}
 \begin{code}[hide]
 record HasCertState {a} (A : Type a) : Type a where
-  field CertStateOf : A → CertState
+  field certstateOf : A → CertState
 open HasCertState ⦃...⦄ public
 
 instance
   HasDState-CertState : HasDState CertState
-  HasDState-CertState .DStateOf = CertState.dState
+  HasDState-CertState .dStateOf = CertState.dState
 
   HasPState-CertState : HasPState CertState
-  HasPState-CertState .PStateOf = CertState.pState
+  HasPState-CertState .pStateOf = CertState.pState
 
   HasGState-CertState : HasGState CertState
-  HasGState-CertState .GStateOf = CertState.gState
+  HasGState-CertState .gStateOf = CertState.gState
 
   HasRewards-CertState : HasRewards CertState
-  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf 
+  HasRewards-CertState .rewardsOf = rewardsOf ∘ dStateOf
 
   HasDReps-CertState : HasDReps CertState
-  HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf
+  HasDReps-CertState .dRepsOf = dRepsOf ∘ gStateOf
 \end{code}
 \begin{code}
 
@@ -247,11 +276,11 @@ PoolEnv     = PParams
 
 \begin{code}[hide]
 rewardsBalance : DState → Coin
-rewardsBalance ds = ∑[ x ← DState.rewards ds ] x
+rewardsBalance ds = ∑[ x ← rewardsOf ds ] x
 
 instance
   HasCoin-CertState : HasCoin CertState
-  HasCoin-CertState .getCoin = rewardsBalance ∘ CertState.dState
+  HasCoin-CertState .getCoin = rewardsBalance ∘ dStateOf
 \end{code}
 
 \begin{code}[hide]
