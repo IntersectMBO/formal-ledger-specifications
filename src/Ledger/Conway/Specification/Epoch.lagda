@@ -464,9 +464,7 @@ The \AgdaFunction{calculatePoolDistr} produces a new pool distribution from the
 delegation map and stake allocation of the previous epoch.
 
 \begin{figure*}[ht]
-\begin{code}[hide]
--- the opaque block is necesary for performance of typechecking in
--- Epoch.Properties
+\begin{code}
 opaque
   calculatePoolDistr : Snapshot → PoolDistr
   calculatePoolDistr ss =
