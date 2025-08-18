@@ -43,7 +43,7 @@ private variable
   e lastEpoch : Epoch
   poolReapState : PoolReapState
 
-data 
+data
 ```
 -->
 ```agda
