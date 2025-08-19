@@ -182,13 +182,16 @@ For the formal statement of the lemma,
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
 
-    module U = EPOCH-updates0 (eps .fut) (eps .ls)
+    u0 = EPOCH-updates0 (eps .fut) (eps .ls)
 
-    ls₁ = record (eps' .ls) { utxoSt = U.utxoSt' }
+    ls₁ = record (eps' .ls) { utxoSt = EPOCH-Updates0.utxoSt' u0 }
 
     mutual
+      open LState
+      open CertState
+
       retiredDeposits : ℙ DepositPurpose
-      retiredDeposits = mapˢ PoolDeposit (U.pState .retiring ⁻¹ e)
+      retiredDeposits = mapˢ PoolDeposit (eps .ls .certState .pState .retiring ⁻¹ e)
 
       ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
       ratifiesSnapMatch =

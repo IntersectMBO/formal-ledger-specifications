@@ -55,9 +55,13 @@ module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
 
-  prs =
-    ⟦ U0.utxoSt' , acnt , U0.dState , U0.pState ⟧
-    where module U0 = EPOCH-updates0 fut ls
+  prs = ⟦ u0 .utxoSt' , acnt , cs .dState , cs .pState ⟧
+    where
+      open LState
+      open CertState
+      open EPOCH-Updates0
+      cs = ls .certState
+      u0 = EPOCH-updates0 fut ls
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total =
@@ -69,14 +73,18 @@ module _ {eps : EpochState} {e : Epoch} where
   private
     EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
     EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
-      record
-        { acnt = U.acnt''
-        ; ss = ss
-        ; ls = ⟦ utxoSt'' , U.govSt' , U.certState' ⟧ˡ
-        ; es = U.es
-        ; fut = fut'
-        }
-      where module U = EPOCH-updates fut ls acnt' dState' pState'
+      let
+        EPOCHUpdates es govSt' dState'' gState' _ acnt'' =
+          EPOCH-updates fut ls dState' acnt'
+        certState' = ⟦ dState'' , pState' , gState' ⟧ᶜˢ
+       in
+          record
+            { acnt = acnt''
+            ; ss = ss
+            ; ls = ⟦ utxoSt'' , govSt' , certState' ⟧ˡ
+            ; es = es
+            ; fut = fut'
+            }
 
   EPOCH-deterministic : ∀ eps' eps''
                       → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
