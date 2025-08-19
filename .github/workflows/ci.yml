@@ -90,7 +90,7 @@ jobs:
     with:
       pdf_name: conway-ledger.pdf
 
-  upload-artifacts:
+  push-artifacts-to-branch:
     # This job runs only if the workflow has not been manually dispached,
     # and the origininating branch belongs to the repository
     if: ${{ github.event_name != 'workflow_dispatch' }} && ${{ github.repository == 'IntersectMBO/formal-ledger-specifications' }}
