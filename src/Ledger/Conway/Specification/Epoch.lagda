@@ -85,12 +85,16 @@ instance
 \end{code}
 \begin{NoConway}
 \begin{code}
+-- PoolDistr in the Shelley spec results from dividing the coins in
+-- PoolDelegatedStake by the total stake in PoolDelegatedStake.
+PoolDelegatedStake = KeyHash ⇀ (Coin × KeyHash)
+
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
     epochState  : EpochState
     ru          : Maybe RewardUpdate
-    pd          : PoolDistr
+    pd          : PoolDelegatedStake
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -366,7 +370,7 @@ private variable
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
-  pd : PoolDistr
+  pd : PoolDelegatedStake
 \end{code}
 
 
@@ -466,20 +470,12 @@ delegation map and stake allocation of the previous epoch.
 \begin{figure*}[ht]
 \begin{code}
 opaque
-  calculatePoolDistr : Snapshot → PoolDistr
+  calculatePoolDistr : Snapshot → PoolDelegatedStake
   calculatePoolDistr ss =
-    zipWithᵐ (λ c pp → (normalizeStake c , pp .VRF) ) sd (ss .poolParameters)
+    zipWithᵐ (λ c pp → (c , pp .VRF) ) sd (ss .poolParameters)
     where
       open Snapshot
       open PoolParams
-
-      totalStake : Coin
-      totalStake = ∑[ c ← ss .stake ] c
-
-      normalizeStake : Coin → UnitInterval
-      normalizeStake c = clamp $ case totalStake of λ where
-        zero → Data.Rational.normalize 0 (suc zero)
-        (suc n) → Data.Rational.normalize c (suc n)
 
       sd : KeyHash ⇀ Coin
       sd = aggregateBy (ss .delegations ˢ) (ss .stake)
