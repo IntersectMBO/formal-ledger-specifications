@@ -481,6 +481,7 @@ opaque
       sd = aggregateBy (ss .delegations ˢ) (ss .stake)
 
       -- TODO: Move to agda-sets
+      -- https://github.com/input-output-hk/agda-sets/pull/11
       intersectWith
         : {A B C D : Type} ⦃ _ : DecEq A ⦄ → (B → C → D) → A ⇀ B → A ⇀ C → A ⇀ D
       intersectWith f m m' = mapMaybeWithKeyᵐ (λ a b → f b <$> lookupᵐ? m' a) m
