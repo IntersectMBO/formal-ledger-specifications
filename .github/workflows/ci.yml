@@ -11,9 +11,6 @@ on:
   # which CI isn't run automatically
   workflow_dispatch:
 
-permissions:
-  contents: write
-
 jobs:
   formal-ledger-agda:
     runs-on: ubuntu-latest
@@ -93,9 +90,12 @@ jobs:
     with:
       pdf_name: conway-ledger.pdf
 
-  upload-artifacts:
-    # This job runs only if the workflow has not been manually dispached
-    if: ${{ github.event_name != 'workflow_dispatch' }}
+  push-artifacts-to-branch:
+    # This job runs only if the workflow has not been manually dispached,
+    # and the origininating branch belongs to the repository
+    if: ${{ github.event_name != 'workflow_dispatch' }} && ${{ github.repository == 'IntersectMBO/formal-ledger-specifications' }}
+    permissions:
+      contents: write
     needs: [formal-ledger-agda, hs, html, conway-ledger-pdf, cardano-ledger-pdf, mkdocs-site]
     runs-on: ubuntu-latest
     steps:
