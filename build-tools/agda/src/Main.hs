@@ -409,8 +409,8 @@ code fileType = mconcat .
     | s == ',' && p /= 0 = "," : goInline d p ts
 
     -- opening and closing parenthesis
-    | s == '(' = "(" : goInline d (p + 1) ts
-    | s == ')' = ")" : goInline d (p - 1) ts
+    | s `elem` [ '(', '❴' ] = makeInlineKaTeX t : goInline d (p + 1) ts
+    | s `elem` [ ')', '❵' ] = makeInlineKaTeX t : goInline d (p - 1) ts
 
     | otherwise = makeInlineKaTeX t : goInline d p ts
   goInline d p [] = []
