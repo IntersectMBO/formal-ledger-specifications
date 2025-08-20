@@ -421,8 +421,9 @@ code fileType = mconcat .
     | otherwise = toHtml . surroundingSpace . href . htmlId . htmlClasses . text $ concatMap fixChars (List1.toList s) -- remove this map fixChars, is too expensive
     where
 
-    fixChars :: Char -> [Char]
-    fixChars '_' = ['\\', '_']
+    fixChars :: Char -> String
+    fixChars '_' = "\\"
+    fixChars '^' = "\\^{}"
     fixChars c   = [c]
 
     mkTexMacro :: String -> String -> String
