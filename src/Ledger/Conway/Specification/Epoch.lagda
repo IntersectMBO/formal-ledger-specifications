@@ -472,7 +472,7 @@ delegation map and stake allocation of the previous epoch.
 opaque
   calculatePoolDistr : Snapshot → PoolDelegatedStake
   calculatePoolDistr ss =
-    zipWithᵐ (λ c pp → (c , pp .VRF) ) sd (ss .poolParameters)
+    intersectWith (λ c pp → (c , pp .VRF) ) sd (ss .poolParameters)
     where
       open Snapshot
       open PoolParams
@@ -481,9 +481,9 @@ opaque
       sd = aggregateBy (ss .delegations ˢ) (ss .stake)
 
       -- TODO: Move to agda-sets
-      zipWithᵐ
+      intersectWith
         : {A B C D : Type} ⦃ _ : DecEq A ⦄ → (B → C → D) → A ⇀ B → A ⇀ C → A ⇀ D
-      zipWithᵐ f m m' = mapMaybeWithKeyᵐ (λ a b → f b <$> lookupᵐ? m' a) m
+      intersectWith f m m' = mapMaybeWithKeyᵐ (λ a b → f b <$> lookupᵐ? m' a) m
 \end{code}
 
 \begin{code}[hide]
