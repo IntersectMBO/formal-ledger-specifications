@@ -475,6 +475,7 @@ EPOCH-updates fut ls dState' acnt' =
 \begin{code}
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 \end{code}
+\caption{EPOCH update functions}
 \end{figure*}
 \end{NoConway}
 
