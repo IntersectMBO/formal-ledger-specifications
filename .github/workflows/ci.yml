@@ -93,7 +93,7 @@ jobs:
   push-artifacts-to-branch:
     # This job runs only if the workflow has not been manually dispached,
     # and the origininating branch belongs to the repository
-    if: ${{ github.event_name != 'workflow_dispatch' }} && ${{ github.repository == 'IntersectMBO/formal-ledger-specifications' }}
+    if: ${{ github.event_name != 'workflow_dispatch' }} && ${{ !github.event.pull_request.head.repo.fork }}
     permissions:
       contents: write
     needs: [formal-ledger-agda, hs, html, conway-ledger-pdf, cardano-ledger-pdf, mkdocs-site]
