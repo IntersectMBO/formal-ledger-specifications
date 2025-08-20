@@ -331,6 +331,3 @@ d_T'45'Hashable_220 ::
   MAlonzo.Code.Interface.Hashable.T_Hashable_8
 d_T'45'Hashable_220 v0
   = coe d_T'45'Hashable_32 (coe d_khs_204 (coe v0))
--- Ledger.Core.Specification.Crypto.CryptoStructure.PoolDistr
-d_PoolDistr_222 :: T_CryptoStructure_138 -> ()
-d_PoolDistr_222 = erased
