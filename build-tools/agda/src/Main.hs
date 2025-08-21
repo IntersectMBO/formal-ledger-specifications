@@ -422,7 +422,7 @@ code fileType = mconcat .
     where
 
     fixChars :: Char -> String
-    fixChars '_' = "\\"
+    fixChars '_' = "\\_"
     fixChars '^' = "\\^{}"
     fixChars c   = [c]
 
