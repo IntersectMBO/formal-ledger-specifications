@@ -199,7 +199,7 @@ record RatifyEnv : Type where
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Coin
-    pools         : KeyHash ⇀ PoolParams
+    pools         : KeyHash ⇀ StakePoolParams
     delegatees    : Credential ⇀ VDeleg
 
 record RatifyState : Type where
@@ -295,7 +295,7 @@ actualVotes Γ pparams cc gaTy votes
 \end{code}
 \begin{code}
         nothing → Vote.no
-        (just  p) → case lookupᵐ? delegatees (PoolParams.rewardAccount p) , gaTy of
+        (just  p) → case lookupᵐ? delegatees (StakePoolParams.rewardAccount p) , gaTy of
 \end{code}
 \begin{code}[hide]
                λ where
