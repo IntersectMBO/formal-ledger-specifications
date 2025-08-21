@@ -50,7 +50,7 @@ def convert_all_static_tex(config: BuildConfig) -> Result[List[ProcessedFile], P
     logging.info("🔁 Converting static .tex files to Markdown...")
 
     # List of filename prefixes to exclude from conversion
-    excluded_prefixes = ["preamble"]
+    excluded_prefixes = ["preamble", "STS-Diagram"]
 
     discovery_result = ls_dir(config.source_paths.latex_dir, pattern="**/*.tex")
     if discovery_result.is_err:

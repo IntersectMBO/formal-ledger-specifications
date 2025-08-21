@@ -140,3 +140,25 @@ body.reveal-agda-source pre.Agda.hidden-source {
 .theorem ul > li {
   margin-bottom: 0.8em;
 }
+
+
+/* ======================================================================= */
+/* Tiny color swatch for figure legends                                    */
+/* ======================================================================= */
+.legend { display: flex; flex-wrap: wrap; gap: .5rem 1rem; align-items: center; }
+.legend-item { display: inline-flex; align-items: center; gap: .5rem; }
+.legend-box {
+  width: 0.9em; height: 0.9em;
+  border: 1px solid rgba(0,0,0,.2);
+  border-radius: 2px;
+  display: inline-block;
+  background: var(--legend-color, #ccc);
+}
+
+/* LaTeX-like colors with CSS color-mix */
+:root {
+  /* \ConwayColor = yellow!50 ≈ 50% yellow + 50% white */
+  --ConwayColor: color-mix(in srgb, yellow 50%, white 50%);
+  /* examples: \FooColor = red!30, \BarColor = blue!70 */
+  --BabbageColor:  color-mix(in srgb, tan 100%);
+}
