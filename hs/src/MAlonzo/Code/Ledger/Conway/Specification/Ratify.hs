@@ -486,42 +486,42 @@ d_treasuryCut_1110 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.PParams.d_treasuryCut_396
       (coe v0)
--- Ledger.Conway.Specification.Ratify._.PoolParams
-d_PoolParams_1738 a0 = ()
--- Ledger.Conway.Specification.Ratify._.PoolParams.cost
+-- Ledger.Conway.Specification.Ratify._.StakePoolParams
+d_StakePoolParams_1742 a0 = ()
+-- Ledger.Conway.Specification.Ratify._.StakePoolParams.cost
 d_cost_1922 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   Integer
 d_cost_1922 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_cost_1016 (coe v0)
--- Ledger.Conway.Specification.Ratify._.PoolParams.margin
+-- Ledger.Conway.Specification.Ratify._.StakePoolParams.margin
 d_margin_1924 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_margin_1924 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_margin_1018
       (coe v0)
--- Ledger.Conway.Specification.Ratify._.PoolParams.owners
+-- Ledger.Conway.Specification.Ratify._.StakePoolParams.owners
 d_owners_1926 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   [AgdaAny]
 d_owners_1926 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_owners_1014
       (coe v0)
--- Ledger.Conway.Specification.Ratify._.PoolParams.pledge
+-- Ledger.Conway.Specification.Ratify._.StakePoolParams.pledge
 d_pledge_1928 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   Integer
 d_pledge_1928 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pledge_1020
       (coe v0)
--- Ledger.Conway.Specification.Ratify._.PoolParams.rewardAccount
+-- Ledger.Conway.Specification.Ratify._.StakePoolParams.rewardAccount
 d_rewardAccount_1930 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_rewardAccount_1930 v0
   = coe

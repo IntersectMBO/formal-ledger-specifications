@@ -2353,7 +2353,7 @@ d_Computational'45'CERT_1834 v0
                                                                       (1002 :: Integer)
                                                                       (3005244792873517680 ::
                                                                          Integer)
-                                                                      "Ledger.Conway.Specification.Certs.PoolParams"
+                                                                      "Ledger.Conway.Specification.Certs.StakePoolParams"
                                                                       (MAlonzo.RTE.Fixity
                                                                          MAlonzo.RTE.NonAssoc
                                                                          MAlonzo.RTE.Unrelated)))

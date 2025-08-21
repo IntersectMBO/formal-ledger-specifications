@@ -772,45 +772,45 @@ d_DecEq'45'DepositPurpose_1000 v0
                                             (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8) erased)))
                           _ -> MAlonzo.RTE.mazUnreachableError)
               _ -> MAlonzo.RTE.mazUnreachableError))
--- Ledger.Conway.Specification.Certs.PoolParams
-d_PoolParams_1002 a0 = ()
-data T_PoolParams_1002
-  = C_PoolParams'46'constructor_13981 [AgdaAny] Integer
-                                      MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 Integer
-                                      MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
--- Ledger.Conway.Specification.Certs.PoolParams.owners
-d_owners_1014 :: T_PoolParams_1002 -> [AgdaAny]
+-- Ledger.Conway.Specification.Certs.StakePoolParams
+d_StakePoolParams_1002 a0 = ()
+data T_StakePoolParams_1002
+  = C_StakePoolParams'46'constructor_13981 [AgdaAny] Integer
+                                           MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 Integer
+                                           MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
+-- Ledger.Conway.Specification.Certs.StakePoolParams.owners
+d_owners_1014 :: T_StakePoolParams_1002 -> [AgdaAny]
 d_owners_1014 v0
   = case coe v0 of
-      C_PoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v1
+      C_StakePoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Specification.Certs.PoolParams.cost
-d_cost_1016 :: T_PoolParams_1002 -> Integer
+-- Ledger.Conway.Specification.Certs.StakePoolParams.cost
+d_cost_1016 :: T_StakePoolParams_1002 -> Integer
 d_cost_1016 v0
   = case coe v0 of
-      C_PoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v2
+      C_StakePoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Specification.Certs.PoolParams.margin
+-- Ledger.Conway.Specification.Certs.StakePoolParams.margin
 d_margin_1018 ::
-  T_PoolParams_1002 ->
+  T_StakePoolParams_1002 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_margin_1018 v0
   = case coe v0 of
-      C_PoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v3
+      C_StakePoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Specification.Certs.PoolParams.pledge
-d_pledge_1020 :: T_PoolParams_1002 -> Integer
+-- Ledger.Conway.Specification.Certs.StakePoolParams.pledge
+d_pledge_1020 :: T_StakePoolParams_1002 -> Integer
 d_pledge_1020 v0
   = case coe v0 of
-      C_PoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v4
+      C_StakePoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Specification.Certs.PoolParams.rewardAccount
+-- Ledger.Conway.Specification.Certs.StakePoolParams.rewardAccount
 d_rewardAccount_1022 ::
-  T_PoolParams_1002 ->
+  T_StakePoolParams_1002 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_rewardAccount_1022 v0
   = case coe v0 of
-      C_PoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v5
+      C_StakePoolParams'46'constructor_13981 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Certs.DCert
 d_DCert_1024 a0 = ()
@@ -821,7 +821,7 @@ data T_DCert_1024
                     (Maybe AgdaAny) Integer |
     C_dereg_1028 MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
                  (Maybe Integer) |
-    C_regpool_1030 AgdaAny T_PoolParams_1002 |
+    C_regpool_1030 AgdaAny T_StakePoolParams_1002 |
     C_retirepool_1032 AgdaAny AgdaAny |
     C_regdrep_1034 MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
                    Integer
@@ -3218,7 +3218,7 @@ du_HasCast'45'PState_1292
                                        (coe
                                           (MAlonzo.RTE.QName
                                              (1002 :: Integer) (3005244792873517680 :: Integer)
-                                             "Ledger.Conway.Specification.Certs.PoolParams"
+                                             "Ledger.Conway.Specification.Certs.StakePoolParams"
                                              (MAlonzo.RTE.Fixity
                                                 MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                        (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -4259,7 +4259,7 @@ du_HasCast'45'DelegEnv_1298
                                           (coe
                                              (MAlonzo.RTE.QName
                                                 (1002 :: Integer) (3005244792873517680 :: Integer)
-                                                "Ledger.Conway.Specification.Certs.PoolParams"
+                                                "Ledger.Conway.Specification.Certs.StakePoolParams"
                                                 (MAlonzo.RTE.Fixity
                                                    MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                                           (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))

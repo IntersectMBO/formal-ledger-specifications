@@ -339,19 +339,19 @@ d_PStateOf_162 v0
 -- Ledger.Conway.Foreign.HSLedger.Gov._.PoolEnv
 d_PoolEnv_166 :: ()
 d_PoolEnv_166 = erased
--- Ledger.Conway.Foreign.HSLedger.Gov._.PoolParams
-d_PoolParams_168 = ()
 -- Ledger.Conway.Foreign.HSLedger.Gov._.Rewards
-d_Rewards_170 :: ()
-d_Rewards_170 = erased
+d_Rewards_168 :: ()
+d_Rewards_168 = erased
 -- Ledger.Conway.Foreign.HSLedger.Gov._.RewardsOf
-d_RewardsOf_172 ::
+d_RewardsOf_170 ::
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasRewards_968 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RewardsOf_172 v0
+d_RewardsOf_170 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_RewardsOf_976
       (coe v0)
+-- Ledger.Conway.Foreign.HSLedger.Gov._.StakePoolParams
+d_StakePoolParams_172 = ()
 -- Ledger.Conway.Foreign.HSLedger.Gov._.certDeposit
 d_certDeposit_176 ::
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1024 ->
@@ -652,40 +652,40 @@ d_retiring_362 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1166
       (coe v0)
--- Ledger.Conway.Foreign.HSLedger.Gov._.PoolParams.cost
+-- Ledger.Conway.Foreign.HSLedger.Gov._.StakePoolParams.cost
 d_cost_366 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   Integer
 d_cost_366 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_cost_1016 (coe v0)
--- Ledger.Conway.Foreign.HSLedger.Gov._.PoolParams.margin
+-- Ledger.Conway.Foreign.HSLedger.Gov._.StakePoolParams.margin
 d_margin_368 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_margin_368 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_margin_1018
       (coe v0)
--- Ledger.Conway.Foreign.HSLedger.Gov._.PoolParams.owners
+-- Ledger.Conway.Foreign.HSLedger.Gov._.StakePoolParams.owners
 d_owners_370 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   [Integer]
 d_owners_370 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_owners_1014
       (coe v0)
--- Ledger.Conway.Foreign.HSLedger.Gov._.PoolParams.pledge
+-- Ledger.Conway.Foreign.HSLedger.Gov._.StakePoolParams.pledge
 d_pledge_372 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   Integer
 d_pledge_372 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pledge_1020
       (coe v0)
--- Ledger.Conway.Foreign.HSLedger.Gov._.PoolParams.rewardAccount
+-- Ledger.Conway.Foreign.HSLedger.Gov._.StakePoolParams.rewardAccount
 d_rewardAccount_374 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_rewardAccount_374 v0
   = coe
@@ -2272,7 +2272,7 @@ d_Conv'45'GovEnv_628
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62)))
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'StakePoolParams_62)))
                                  (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1164
@@ -4639,7 +4639,7 @@ d_Conv'45'GovEnv_628
                                                          (coe
                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62)))
+                                                            MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'StakePoolParams_62)))
                                                    (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pools_1164
@@ -4928,7 +4928,7 @@ d_Conv'45'GovEnv_628
                                                                            (coe
                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                                                            (coe
-                                                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62)))
+                                                                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'StakePoolParams_62)))
                                                                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                                         (coe v13))))
                                                                (coe
@@ -4961,7 +4961,7 @@ d_Conv'45'GovEnv_628
                                                                      (coe
                                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.BaseTypes.d_iConvNat_12)
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'PoolParams_62))
+                                                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.d_Conv'45'StakePoolParams_62))
                                                                   (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_24
                                                                      (coe v13)))
                                                                (coe

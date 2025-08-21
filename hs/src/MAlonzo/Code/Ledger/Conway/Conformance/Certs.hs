@@ -720,21 +720,21 @@ d_PoolEnv_1062 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   ()
 d_PoolEnv_1062 = erased
--- Ledger.Conway.Conformance.Certs.Certs.PoolParams
-d_PoolParams_1064 a0 = ()
 -- Ledger.Conway.Conformance.Certs.Certs.Rewards
-d_Rewards_1066 ::
+d_Rewards_1064 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   ()
-d_Rewards_1066 = erased
+d_Rewards_1064 = erased
 -- Ledger.Conway.Conformance.Certs.Certs.RewardsOf
-d_RewardsOf_1068 ::
+d_RewardsOf_1066 ::
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_HasRewards_968 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_RewardsOf_1068 v0
+d_RewardsOf_1066 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_RewardsOf_976
       (coe v0)
+-- Ledger.Conway.Conformance.Certs.Certs.StakePoolParams
+d_StakePoolParams_1068 a0 = ()
 -- Ledger.Conway.Conformance.Certs.Certs.cwitness
 d_cwitness_1072 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
@@ -969,40 +969,40 @@ d_retiring_1244 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1166
       (coe v0)
--- Ledger.Conway.Conformance.Certs.Certs.PoolParams.cost
+-- Ledger.Conway.Conformance.Certs.Certs.StakePoolParams.cost
 d_cost_1248 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   Integer
 d_cost_1248 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_cost_1016 (coe v0)
--- Ledger.Conway.Conformance.Certs.Certs.PoolParams.margin
+-- Ledger.Conway.Conformance.Certs.Certs.StakePoolParams.margin
 d_margin_1250 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_margin_1250 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_margin_1018
       (coe v0)
--- Ledger.Conway.Conformance.Certs.Certs.PoolParams.owners
+-- Ledger.Conway.Conformance.Certs.Certs.StakePoolParams.owners
 d_owners_1252 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   [AgdaAny]
 d_owners_1252 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_owners_1014
       (coe v0)
--- Ledger.Conway.Conformance.Certs.Certs.PoolParams.pledge
+-- Ledger.Conway.Conformance.Certs.Certs.StakePoolParams.pledge
 d_pledge_1254 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   Integer
 d_pledge_1254 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.d_pledge_1020
       (coe v0)
--- Ledger.Conway.Conformance.Certs.Certs.PoolParams.rewardAccount
+-- Ledger.Conway.Conformance.Certs.Certs.StakePoolParams.rewardAccount
 d_rewardAccount_1256 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PoolParams_1002 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_StakePoolParams_1002 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_rewardAccount_1256 v0
   = coe
