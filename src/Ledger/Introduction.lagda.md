@@ -166,17 +166,12 @@ balanced, and several other conditions.
 
 !!! note "**Figure: STS Diagram**"
 
-    State transition rules of the ledger specification,
-    presented as a directed graph; each node represents a transition rule;
-    an arrow from rule A to rule B indicates that B appears among the
-    premises of A; a dotted arrow represents a dependency in the sense that
-    the output of the target node is an input to the source node, either as
-    part of the source state, the environment or the event ( rules added in
-    Conway;  rules modified in Conway; dotted ellipses represent rules that
-    are not yet formalized in Agda).
+    State transition rules of the ledger specification, presented as a directed graph; each node represents a transition rule; an arrow from rule A to rule B indicates that B appears among the premises of A; a dotted arrow represents a dependency in the sense that the output of the target node is an input to the source node, either as part of the source state, the environment or the event.
 
-    ![STS Diagram](img/STS-diagram.png "STS Diagram")
+    <span class="legend-box legend-Conway"></span> Rules added in Conway;
+    <span class="legend-box legend-Babbage"></span> Rules modified in Conway
 
+    ![STS Diagram](img/STS-Diagram.svg "STS Diagram")
 </a>
 
 A brief description of each transition rule is provided below, with a

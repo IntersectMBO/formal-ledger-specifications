@@ -1,0 +1,66 @@
+\documentclass[border=2pt]{standalone}
+%%
+%% Use this file to regenerate tikz diagrams by building the pdf and
+%% then converting to SVG.
+%%
+%% ```bash
+%% lualatex -halt-on-error -interaction=batchmode STS-Diagram.tex
+%% dvisvgm --pdf --page=1 -n -a -o STS-Diagram.svg STS-Diagram.pdf
+%% cp STS-Diagram.svg ../md/common/src/img/
+%% ```
+%%
+%% * `--pdf` tells `dvisvgm` to read the PDF;
+%% * `-n` (no fonts) outlines text so the SVG is self‑contained;
+%% * `-a` preserves transparency.
+%%
+%% You can use `pdflatex` if you prefer; `lualatex` tends to be the most forgiving with modern packages.
+%%
+%% Use in Markdown:
+%%
+%% ```markdown
+%% ![Caption: …](img/STS-Diagram.svg)
+%% ```
+%%
+\usepackage{pgfplots}
+\usepackage[tikz]{bclogo}
+\usepackage{tikz-cd}
+\usetikzlibrary{ arrows.meta
+               , backgrounds
+               , calc
+               , decorations.pathreplacing
+               , fit
+               , positioning
+               , shadows
+               , shapes.geometric
+               , shapes.misc
+               }
+\usepackage[dvipsnames]{xcolor}
+\usepackage{caption}
+\def\AlonzoColor{Periwinkle}
+\def\BabbageColor{Tan}
+\def\ConwayColor{yellow!50}
+\def\ShelleyColor{lightgray}
+\newcommand{\legendbox}[1]{%
+  \textcolor{#1}{\rule{\fontcharht\font`X}{\fontcharht\font`X}}%
+}
+\begin{document}
+  \input{Diagrams/CardanoLedger}
+\end{document}
+
+
+%% Or, include the caption with the figure.
+%%
+%% \begin{figure}[h!]
+%%   \centering
+%%   \input{Diagrams/CardanoLedger}
+%%   \caption{State transition rules of the ledger specification, presented as a
+%%   directed graph; each node represents a transition rule; an arrow from rule A to
+%%   rule B indicates that B appears among the premises of A; a dotted arrow represents
+%%   a dependency in the sense that the output of the target node is an input to the
+%%   source node, either as part of the source state, the environment or the event
+%%     (\legendbox{\ConwayColor}~rules added in Conway;
+%%      \legendbox{\BabbageColor}~rules modified in Conway; dotted ellipses represent rules
+%%   that are not yet formalized in Agda).
+%%   }
+%%   \label{fig:latest-sts-diagram}
+%% \end{figure}
