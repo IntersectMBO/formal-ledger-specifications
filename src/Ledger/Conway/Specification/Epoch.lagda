@@ -90,6 +90,8 @@ instance
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
+    bprev       : BlocksMade
+    bcur        : BlocksMade
     epochState  : EpochState
     ru          : Maybe RewardUpdate
 \end{code}
@@ -546,24 +548,24 @@ data
   where
 \end{code}
 \begin{code}
-  NEWEPOCH-New : let
+  NEWEPOCH-New : ∀ {bprev bcur : BlocksMade} → let
       eps' = applyRUpd ru eps
     in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing ⟧
 
-  NEWEPOCH-Not-New :
+  NEWEPOCH-Not-New : ∀ {bprev bcur : BlocksMade} →
     ∙ e ≢ lastEpoch + 1
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru ⟧
 
-  NEWEPOCH-No-Reward-Update :
+  NEWEPOCH-No-Reward-Update : ∀ {bprev bcur : BlocksMade} →
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing ⟧
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}
