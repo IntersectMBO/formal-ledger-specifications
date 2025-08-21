@@ -67,3 +67,31 @@ data _⊢_⇀⦇_,RUPD⦈_
     ───────────────────────────────────────────
     (b , es) ⊢ nothing ⇀⦇ s ,RUPD⦈ nothing
 ```
+
+
+# Chain Tick Transition
+
+The Chain Tick Transition performs some chain level upkeep. The environment
+consists of a set of genesis keys, and the state is the epoch specific state
+necessary for the `NEWEPOCH`{.AgdaDatatype} transition.
+
+Two transitions are done:
+* The `NEWEPOCH`{.AgdaDatatype} transition performs any state change needed if
+  it is the first block of a new epoch.
+* The `RUPD`{.AgdaDatatype} creates the reward update if it is late enough in
+  the epoch. Note that for every block header, either `NEWEPOCH`{.AgdaDatatype}
+  or `RUPD`{.AgdaDatatype} will be the identity transition.
+
+```agda
+data _⊢_⇀⦇_,TICK⦈_
+  : ⊤ → NewEpochState → Slot → NewEpochState → Type where
+
+  TICK : ∀ {slot nes nes' ru''} →
+    let open NewEpochState in
+    -- TODO: Is this really how it should be?
+    -- We are skipping adoptGenesisDelegs here.
+    ∙ tt ⊢ nes ⇀⦇ epoch slot ,NEWEPOCH⦈ nes'
+    ∙ (nes' .bprev , nes .epochState) ⊢ (nes' .ru) ⇀⦇ slot ,RUPD⦈ ru''
+    → --  ────────────────────────────────────────────────────────────
+      tt ⊢ nes ⇀⦇ slot ,TICK⦈ record nes' { ru = ru'' }
+```
