@@ -221,8 +221,8 @@ There are two ways to do this.
 1.  **With Nix**
 
     Enter the command `nix build .#mkdocs` (or `nix-build -A mkdocs`) then open the
-    file `result/site/index.html` in a browser. This method always type-checks the
-    Agda code, and generates the HTML documentation from documentation from scratch.
+    file `result/site/index.html` in a browser. This type-checks the
+    Agda code, and generates the HTML documentation from scratch.
 
     **Note**. This currently works in Chrome but may not work in Brave or
     Firefox.  If you want to use one of those browsers to view the generated
