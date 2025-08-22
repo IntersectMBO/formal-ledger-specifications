@@ -238,7 +238,8 @@ There are two ways to do this.
     ```bash
     nix develop .#docs
     python build-tools/scripts/md/build.py --run-agda
-    (cd _build/md/mkdocs; mkdocs serve)
+    cd _build/md/mkdocs
+    mkdocs serve
     ```
 
     Then point your browser to  <http://127.0.0.1:8000/>.
