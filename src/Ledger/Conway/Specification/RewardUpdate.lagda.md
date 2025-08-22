@@ -1,5 +1,6 @@
 <!--
 ```agda
+{-# OPTIONS --allow-unsolved-metas #-}
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
