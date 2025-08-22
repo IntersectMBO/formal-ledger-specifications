@@ -227,7 +227,7 @@ There are two ways to do this.
     **Note**. This currently works in Chrome but may not work in Brave or
     Firefox.  If you want to use one of those browsers to view the generated
     documentation, you can run a local server on the result,
-    `(cd result/site; python3 -m http.server)`, and then point your browser
+    `cd result/site; python3 -m http.server`, and then point your browser
     to <http://127.0.0.1:8000/>.
 
 2.  **Manually**
