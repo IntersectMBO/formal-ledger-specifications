@@ -18,7 +18,7 @@ data GovAction' : Type where
   NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction'
   TriggerHF        : ProtVer                                  →  GovAction'
   ChangePParams    : PParamsUpdate                            →  GovAction'
-  TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction'
+  TreasuryWdrl     : (RwdAddr ⇀ Treasury)                     →  GovAction'
   Info             :                                             GovAction'
 
 instance

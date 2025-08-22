@@ -29,8 +29,10 @@ open import Algebra              using (CommutativeMonoid)
 open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
+
 import Data.Integer as ℤ
 import Data.Rational as ℚ
+
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Abstract
@@ -82,14 +84,26 @@ deposit.  Deposits are stored in the `deposits`{.AgdaField} field of the
 Types](Ledger.Conway.Specification.Certs.md#deposit-types) section of the
 `Certs`{.AgdaModule} module.)
 
-*UTxO environment*
-```agda
+The deposits have been reworked since the original Shelley design. We
+now track the amount of every deposit individually. This fixes an
+issue in the original design: An increase in deposit amounts would
+allow an attacker to make lots of deposits before that change and
+refund them after the change. The additional funds necessary would
+have been provided by the treasury. Since changes to protocol
+parameters were (and still are) known publicly and guaranteed before
+they are enacted, this comes at zero risk for an attacker. This means
+the deposit amounts could realistically never be increased. This issue
+is gone with the new design.
 
+
+*UTxO environment*
+
+```agda
 record UTxOEnv : Type where
   field
     slot      : Slot
     pparams   : PParams
-    treasury  : Coin
+    treasury  : Treasury
 ```
 
 <!--
@@ -118,37 +132,31 @@ record UTxOState : Type where
 ```agda
   field
     utxo       : UTxO
-    fees       : Coin
+    fees       : Fees
     deposits   : Deposits
-    donations  : Coin
+    donations  : Dontations
 ```
 
 <!--
 ```agda
 record HasUTxOState {a} (A : Type a) : Type a where
-  field utxoStOf : A → UTxOState
+  field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
 
-record HasFees {a} (A : Type a) : Type a where
-  field feesOf : A → Coin
-open HasFees ⦃...⦄ public
 
-record HasDonations {a} (A : Type a) : Type a where
-  field donationsOf : A → Coin
-open HasDonations ⦃...⦄ public
 
 instance
   HasUTxO-UTxOState : HasUTxO UTxOState
-  HasUTxO-UTxOState .utxoOf = UTxOState.utxo
+  HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
-  HasFees-UTxOState : HasFees UTxOState
-  HasFees-UTxOState .feesOf = UTxOState.fees
+  HasFee-UTxOState : HasFees UTxOState
+  HasFee-UTxOState .FeesOf = UTxOState.fees
 
   HasDeposits-UTxOState : HasDeposits UTxOState
-  HasDeposits-UTxOState .depositsOf = UTxOState.deposits
+  HasDeposits-UTxOState .DepositsOf = UTxOState.deposits
 
   HasDonations-UTxOState : HasDonations UTxOState
-  HasDonations-UTxOState .donationsOf = UTxOState.donations
+  HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
   unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
     ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
@@ -414,13 +422,13 @@ isAdaOnly v = policies v ≡ᵉ coinPolicies
 ```agda
 collateralCheck : PParams → Tx → UTxO → Type
 collateralCheck pp tx utxo =
-  All (λ (addr , _) → isVKeyAddr addr) (range (utxo ∣ collateral))
+  All (λ (addr , _) → isVKeyAddr addr) (range (utxo ∣ collateralInputs))
   × isAdaOnly balance′
-  × coin balance′ * 100 ≥ txfee * pp .collateralPercentage
-  × collateral ≢ ∅
+  × coin balance′ * 100 ≥ txFee * pp .collateralPercentage
+  × collateralInputs ≢ ∅
   where
     open Tx tx; open TxBody body
-    balance′ = balance (utxo ∣ collateral)
+    balance′ = balance (utxo ∣ collateralInputs)
 ```
 
 <!--
@@ -447,17 +455,21 @@ that their difference is the identity function.
 
   consumed : PParams → UTxOState → TxBody → Value
   consumed pp st txb
-    =  balance (st .utxo ∣ txb .txins)
+    =  balance (st .utxo ∣ txb .txIns)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
-    +  inject (getCoin (txb .txwdrls))
+    +  inject (getCoin (txb .txWithdrawals))
 
   produced : PParams → UTxOState → TxBody → Value
   produced pp st txb = balance (outs txb)
-                     + inject (txb .txfee)
+                     + inject (txb .txFee)
                      + inject (newDeposits pp st txb)
-                     + inject (txb .txdonation)
+                     + inject (txb .txDonation)
 ```
+<!--
+\caption{Functions used in UTxO rules, continued}
+\label{fig:functions:utxo-conway}
+-->
 
 
 ## The `UTXOS`{.AgdaDatatype} rule
@@ -470,7 +482,8 @@ private variable
   s s' : UTxOState
   tx : Tx
   utxo : UTxO
-  fees donations : Coin
+  fees : Fees
+  donations : Donations
   deposits : Deposits
 
 open UTxOEnv
@@ -491,11 +504,11 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 ```agda
          p2Scripts  = collectP2ScriptsWithContext pp tx utxo
       in
-        ∙ ValidCertDeposits pp deposits txcerts
+        ∙ ValidCertDeposits pp deposits txCerts
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (outs txb) , fees + txFee , updateDeposits pp txb deposits , donations + txDonation ⟧
   Scripts-No :
     let  pp         = Γ .pparams
 ```
@@ -510,7 +523,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations ⟧
 ```
 <!--
 ```agda
@@ -545,22 +558,22 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         txoutsʰ   = mapValues txOutHash txouts
         overhead  = 160
     in
-    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
-    ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ minfee pp utxo tx ≤ txfee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
+    ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
+    ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
+    ∙ minfee pp utxo tx ≤ txFee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
-    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
-    ∙ ∀[ a ∈ dom txwdrls ]          NetworkIdOf a ≡ NetworkId
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]  netId a        ≡ NetworkId
+    ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a  ≡ NetworkId
     ∙ txNetworkId  ~ just NetworkId
-    ∙ curTreasury  ~ just treasury
+    ∙ currentTreasury  ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

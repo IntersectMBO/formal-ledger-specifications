@@ -99,7 +99,7 @@ In other terms,
 
 ```agda
   CHAIN-govDepsMatch :
-    map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (depositsOf cs)
+    map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (DepositsOf cs)
     →  totalRefScriptsSize csLState ts ≤ maxRefScriptSizePerBlock
     →  _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
     →  govDepsMatch csLState → govDepsMatch (LStateOf nes)

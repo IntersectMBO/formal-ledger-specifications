@@ -82,12 +82,13 @@ instance
 open Computational ⦃...⦄
 
 private variable
-  tx                               : Tx
-  utxo utxo'                       : UTxO
-  Γ                                : UTxOEnv
-  utxoState utxoState'             : UTxOState
-  fees fees' donations donations'  : Coin
-  deposits deposits'               : DepositPurpose ⇀ Coin
+  tx                         : Tx
+  utxo utxo'                 : UTxO
+  Γ                          : UTxOEnv
+  utxoState utxoState'       : UTxOState
+  fees fees'                 : Fees
+  donations donations'       : Donations
+  deposits deposits'         : Deposits
 
 UTXO-step : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
 UTXO-step = compute ⦃ Computational-UTXO ⦄

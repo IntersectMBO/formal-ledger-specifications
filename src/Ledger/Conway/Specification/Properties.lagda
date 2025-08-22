@@ -67,7 +67,7 @@ instance
 \end{code}
 \begin{code}
 activeDReps : Epoch → NewEpochState → ℙ Credential
-activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (dRepsOf s))
+activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (DRepsOf s))
 \end{code}
 \begin{code}[hide]
 instance
@@ -75,7 +75,7 @@ instance
   _ = record { toSet = fromList ∘ Block.ts }
 
   _ : IsSet TxBody GovProposal
-  _ = record { toSet = fromList ∘ TxBody.txprop }
+  _ = record { toSet = fromList ∘ TxBody.txGovProposals }
 \end{code}
 \begin{code}
 validBlockIn : ChainState → Block → Type

@@ -29,13 +29,17 @@ module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) w
 data GovRole : Type where
   CC DRep SPO : GovRole
 
-Voter        = GovRole × Credential
-GovActionID  = TxId × ℕ
-
 data VDeleg : Type where
   credVoter        : GovRole → Credential →  VDeleg
   abstainRep       :                         VDeleg
   noConfidenceRep  :                         VDeleg
+
+
+GovActionID VoteDelegs Voter : Type
+GovActionID  = TxId × ℕ
+VoteDelegs   = Credential ⇀ VDeleg
+Voter        = GovRole × Credential
+
 
 record Anchor : Type where
   field
@@ -147,7 +151,7 @@ obtained by enacting the proposal is in fact the state that was intended when
 the proposal was submitted.  This
 is achieved by requiring actions to unambiguously link to the state
 they are modifying via a pointer to the previous modification. A
-proposal can only be enacted if it contains the \GovActionID{} of the
+proposal can only be enacted if it contains the \GovActionId{} of the
 previously enacted proposal modifying the same piece of
 state.  \NoConfidence{} and \UpdateCommittee{} modify the same state, while
 every other type of governance action has its own state that isn't

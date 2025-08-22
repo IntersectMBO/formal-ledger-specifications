@@ -62,11 +62,11 @@ LEDGER-govDepsMatch {Γ}{s}{tx}{s'}
     in
     begin
       filterˢ isGADeposit (dom (updateDeposits pp body utxoDeps))
-        ≈⟨ noGACerts txcerts (updateProposalDeposits txprop txid govActionDeposit utxoDeps) ⟩
-      filterˢ isGADeposit (dom (updateProposalDeposits txprop txid govActionDeposit utxoDeps))
-        ≈⟨ utxo-govst-connex txprop aprioriMatch ⟩
-      fromList (dpMap (updateGovStates (map inj₂ txprop) 0 govSt))
-        ≈˘⟨ props-dpMap-votes-invar txvote txprop ⟩
+        ≈⟨ noGACerts txCerts (updateProposalDeposits txGovProposals txId govActionDeposit utxoDeps) ⟩
+      filterˢ isGADeposit (dom (updateProposalDeposits txGovProposals txId govActionDeposit utxoDeps))
+        ≈⟨ utxo-govst-connex txGovProposals aprioriMatch ⟩
+      fromList (dpMap (updateGovStates (map inj₂ txGovProposals) 0 govSt))
+        ≈˘⟨ props-dpMap-votes-invar txGovVotes txGovProposals ⟩
       fromList (dpMap (updateGovStates (txgov body) 0 govSt ))
         ≈˘⟨ |ᵒ-GAs-pres 0 govSt certState' ⟩
       fromList (dpMap (updateGovStates (txgov body) 0 (rmOrphanDRepVotes certState' govSt)))

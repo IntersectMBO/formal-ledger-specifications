@@ -88,7 +88,7 @@ For the formal statement of the lemma,
 
 ```agda
   EPOCH-govDepsMatch :  {eps' : EpochState} {e : Epoch}
-    → map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (depositsOf eps)
+    → map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (DepositsOf eps)
     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
     → govDepsMatch (LStateOf eps) → govDepsMatch (LStateOf eps')
 ```

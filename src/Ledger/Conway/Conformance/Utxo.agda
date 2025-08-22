@@ -53,10 +53,10 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (L.outs txb)
-                              , fees + txfee
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (L.outs txb)
+                              , fees + txFee
                               , deposits
-                              , donations + txdonation
+                              , donations + txDonation
                               ⟧
 
   Scripts-No :
@@ -69,8 +69,8 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
-                              , fees + L.cbalance (utxo ∣ collateral)
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateralInputs ᶜ
+                              , fees + L.cbalance (utxo ∣ collateralInputs)
                               , deposits
                               , donations
                               ⟧
@@ -84,26 +84,26 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
-        txoutsʰ = (mapValues txOutHash txouts)
+        txOutsʰ = (mapValues txOutHash txOuts)
         overhead = 160
     in
-    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
-    ∙ txins ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txvldt
-    ∙ L.minfee pp utxo tx ≤ txfee            ∙ (txrdmrs ˢ ≢ ∅ → L.collateralCheck pp tx utxo)
+    ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
+    ∙ txIns ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txVldt
+    ∙ L.minfee pp utxo tx ≤ txFee            ∙ (txrdmrs ˢ ≢ ∅ → L.collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
-    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         inject ((overhead + L.utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
-    ∙ ∀[ a ∈ dom txwdrls ]          NetworkIdOf a   ≡ NetworkId
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]  netId a         ≡ NetworkId
+    ∙ ∀[ a ∈ dom txWdrls ]          NetworkIdOf a   ≡ NetworkId
     ∙ txNetworkId ~ just NetworkId
-    ∙ curTreasury ~ just treasury
+    ∙ currentTreasury ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

@@ -75,11 +75,11 @@ instance
   HasDeposits-EpochState : HasDeposits EpochState
   HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
 
-  Hastreasury-EpochState : Hastreasury EpochState
-  Hastreasury-EpochState .treasuryOf = Acnt.treasury ∘ EpochState.acnt
+  HasTreasury-EpochState : HasTreasury EpochState
+  HasTreasury-EpochState .TreasuryOf = Acnt.treasury ∘ EpochState.acnt
 
-  Hasreserves-EpochState : Hasreserves EpochState
-  Hasreserves-EpochState .reservesOf = Acnt.reserves ∘ EpochState.acnt
+  HasReserves-EpochState : HasReserves EpochState
+  HasReserves-EpochState .ReservesOf = Acnt.reserves ∘ EpochState.acnt
 
   HasPParams-EpochState : HasPParams EpochState
   HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
@@ -127,8 +127,8 @@ instance
   HasEnactState-NewEpochState : HasEnactState NewEpochState
   HasEnactState-NewEpochState .EnactStateOf = EnactStateOf ∘ EpochStateOf
 
-  Hastreasury-NewEpochState : Hastreasury NewEpochState
-  Hastreasury-NewEpochState .treasuryOf = treasuryOf ∘ EpochStateOf
+  Hastreasury-NewEpochState : HasTreasury NewEpochState
+  Hastreasury-NewEpochState .TreasuryOf = TreasuryOf ∘ EpochStateOf
 
   HasLState-NewEpochState : HasLState NewEpochState
   HasLState-NewEpochState .LStateOf = LStateOf ∘ EpochStateOf
@@ -219,7 +219,7 @@ createRUpd slotsPerEpoch b es total =
           }
   where
     prevPp       = PParamsOf es
-    reserves     = reservesOf es
+    reserves     = ReservesOf es
     pstakego     = es .EpochState.ss .Snapshots.go
     feeSS        = es .EpochState.ss .Snapshots.feeSS
     stake        = pstakego .Snapshot.stake
@@ -382,7 +382,7 @@ private variable
   acnt : Acnt
   es₀ : EnactState
   mark set go : Snapshot
-  feeSS : Coin
+  feeSS : Fees
   lstate : LState
   ss ss' : Snapshots
   ru : RewardUpdate

@@ -21,10 +21,10 @@ instance
     ⟦ NoConfidence , _ ⟧ᵍᵃ                → success (_ , Enact-NoConf)
     ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ →
       case ¿ ∀[ term ∈ range new ]
-               term ≤ ccMaxTermLengthOf s +ᵉ' e ¿ of λ where
+               term ≤ CCMaxTermLengthOf s +ᵉ' e ¿ of λ where
       (yes p) → success (-, Enact-UpdComm
         (subst (λ x → ∀[ term ∈ range new ] term ≤ x) (sym +ᵉ≡+ᵉ') p))
-      (no ¬p) → failure "ENACT failed at ∀[ term ∈ range new ] term ≤ (ccMaxTermLengthOf s +ᵉ e)"
+      (no ¬p) → failure "ENACT failed at ∀[ term ∈ range new ] term ≤ (CCMaxTermLengthOf s +ᵉ e)"
     ⟦ NewConstitution , _ ⟧ᵍᵃ → success (-, Enact-NewConst)
     ⟦ TriggerHF       , _ ⟧ᵍᵃ → success (-, Enact-HF)
     ⟦ ChangePParams   , _ ⟧ᵍᵃ → success (-, Enact-PParams)
@@ -39,7 +39,7 @@ instance
   ... | ⟦ .UpdateCommittee , (new , rem , q) ⟧ᵍᵃ | Enact-UpdComm p
     rewrite dec-yes
       (¿ ∀[ term ∈ range new ] term
-           ≤ ccMaxTermLengthOf s +ᵉ' EnactEnv.epoch Γᵉ ¿)
+           ≤ CCMaxTermLengthOf s +ᵉ' EnactEnv.epoch Γᵉ ¿)
       (subst (λ x → ∀[ term ∈ range new ] term ≤ x) +ᵉ≡+ᵉ' p) .proj₂
       = refl
   ... | ⟦ .NewConstitution , _ ⟧ᵍᵃ | Enact-NewConst = refl
