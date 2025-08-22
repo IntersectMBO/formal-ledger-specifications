@@ -63,7 +63,7 @@ GovState = List (GovActionID × GovActionState)
 \end{code}
 \begin{code}[hide]
 record HasGovState {a} (A : Type a) : Type a where
-  field govStOf : A → GovState
+  field GovStateOf : A → GovState
 open HasGovState ⦃...⦄ public
 \end{code}
 \begin{code}

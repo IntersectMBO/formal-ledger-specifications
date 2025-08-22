@@ -877,7 +877,7 @@ calculation, which is then subtracted from the fee pot on the epoch boundary.
 record Snapshots : Set where
   field
     mark set go  : Snapshot
-    feeSS        : Coin
+    feeSS        : Fees
 
 \end{code}
 \caption{Definitions for the SNAP transition system}
@@ -904,7 +904,7 @@ This transition has no preconditions and results in the following state change:
 private variable
   lstate : LState
   mark set go : Snapshot
-  feeSS : Coin
+  feeSS : Fees
 \end{code}
 \begin{figure*}[h]
 \begin{code}

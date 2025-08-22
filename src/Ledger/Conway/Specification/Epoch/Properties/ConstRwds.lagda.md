@@ -33,7 +33,7 @@ then the rewards of `es`{.AgdaBound} and `es'`{.AgdaBound} are equal.
 dom-rwds-const : {e : Epoch} (es es' : NewEpochState)
   → _ ⊢ es ⇀⦇ e ,NEWEPOCH⦈ es' → Type
 
-dom-rwds-const es es' step = dom (rewardsOf es) ≡ dom (rewardsOf es')
+dom-rwds-const es es' step = dom (RewardsOf es) ≡ dom (RewardsOf es')
 ```
 
 *Proof*. (coming soon)

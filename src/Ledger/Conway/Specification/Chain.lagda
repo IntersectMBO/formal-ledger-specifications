@@ -58,16 +58,16 @@ instance
   HasLState-ChainState .LStateOf = LStateOf ∘ EpochStateOf
 
   HasUTxOState-ChainState : HasUTxOState ChainState
-  HasUTxOState-ChainState .utxoStOf = utxoStOf ∘ LStateOf
+  HasUTxOState-ChainState .UTxOStateOf = UTxOStateOf ∘ LStateOf
 
   HasCertState-ChainState : HasCertState ChainState
-  HasCertState-ChainState .certstateOf = certstateOf ∘ LStateOf
+  HasCertState-ChainState .CertStateOf = CertStateOf ∘ LStateOf
 
   HasDeposits-ChainState : HasDeposits ChainState
-  HasDeposits-ChainState .depositsOf = depositsOf ∘ utxoStOf
+  HasDeposits-ChainState .DepositsOf = DepositsOf ∘ UTxOStateOf
 
   HasRewards-ChainState : HasRewards ChainState
-  HasRewards-ChainState .rewardsOf = rewardsOf ∘ certstateOf
+  HasRewards-ChainState .RewardsOf = RewardsOf ∘ CertStateOf
 
   HasPParams-ChainState : HasPParams ChainState
   HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf
@@ -150,7 +150,7 @@ data
     let  cs'  = record cs {  newEpochState
                              = record nes {  epochState
                                              = record epochState {ls = ls'} } }
-         Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , treasuryOf nes ⟧
+         Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , TreasuryOf nes ⟧
     in
     ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
     ∙ _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes

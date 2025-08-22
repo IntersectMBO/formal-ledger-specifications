@@ -119,16 +119,14 @@ record UTxOEnv : Type where
   field
     slot      : Slot
     pparams   : PParams
-    treasury  : Coin
+    treasury  : Treasury
 
+  open PParams pparams public
 \end{code}
 \begin{code}[hide]
 instance
   HasPParams-UTxOEnv : HasPParams UTxOEnv
   HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
-
-  HasgovActionDeposit-UTxOEnv : HasgovActionDeposit UTxOEnv
-  HasgovActionDeposit-UTxOEnv .govActionDepositOf = govActionDepositOf ∘ PParamsOf
 \end{code}
 
 \end{NoConway}
@@ -142,36 +140,28 @@ record UTxOState : Type where
 \begin{code}
   field
     utxo       : UTxO
-    fees       : Coin
+    fees       : Fees
     deposits   : Deposits
-    donations  : Coin
+    donations  : Donations
 
 \end{code}
 \begin{code}[hide]
 record HasUTxOState {a} (A : Type a) : Type a where
-  field utxoStOf : A → UTxOState
+  field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
-
-record HasFees {a} (A : Type a) : Type a where
-  field feesOf : A → Coin
-open HasFees ⦃...⦄ public
-
-record HasDonations {a} (A : Type a) : Type a where
-  field donationsOf : A → Coin
-open HasDonations ⦃...⦄ public
 
 instance
   HasUTxO-UTxOState : HasUTxO UTxOState
-  HasUTxO-UTxOState .utxoOf = UTxOState.utxo
+  HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 
-  HasFees-UTxOState : HasFees UTxOState
-  HasFees-UTxOState .feesOf = UTxOState.fees
+  HasFee-UTxOState : HasFees UTxOState
+  HasFee-UTxOState .FeesOf = UTxOState.fees
 
   HasDeposits-UTxOState : HasDeposits UTxOState
-  HasDeposits-UTxOState .depositsOf = UTxOState.deposits
+  HasDeposits-UTxOState .DepositsOf = UTxOState.deposits
 
   HasDonations-UTxOState : HasDonations UTxOState
-  HasDonations-UTxOState .donationsOf = UTxOState.donations
+  HasDonations-UTxOState .DonationsOf = UTxOState.donations
 
   unquoteDecl HasCast-UTxOEnv HasCast-UTxOState = derive-HasCast
     ( (quote UTxOEnv   , HasCast-UTxOEnv  ) ∷
@@ -201,7 +191,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 \begin{NoConway}
 \begin{code}
   outs : TxBody → UTxO
-  outs tx = mapKeys (tx .txid ,_) (tx .txouts)
+  outs tx = mapKeys (tx .txId ,_) (tx .txOuts)
 
   balance : UTxO → Value
   balance utxo = ∑[ x ← mapValues txOutHash utxo ] getValueʰ x
@@ -343,14 +333,14 @@ updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
 updateDeposits : PParams → TxBody → Deposits → Deposits
-updateDeposits pp txb = updateCertDeposits pp txcerts
-                        ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
+updateDeposits pp txb = updateCertDeposits pp txCerts
+                        ∘ updateProposalDeposits txGovProposals txId (pp .govActionDeposit)
 \end{code}
 \begin{code}[hide]
   where open TxBody txb
 
 proposalDepositsΔ : List GovProposal → PParams → TxBody → Deposits
-proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActionDeposit) ∅
+proposalDepositsΔ props pp txb = updateProposalDeposits props txId (pp .govActionDeposit) ∅
   where open TxBody txb
 \end{code}
 \begin{code}
@@ -405,13 +395,13 @@ isAdaOnly v = policies v ≡ᵉ coinPolicies
 \begin{code}
 collateralCheck : PParams → Tx → UTxO → Type
 collateralCheck pp tx utxo =
-  All (λ (addr , _) → isVKeyAddr addr) (range (utxo ∣ collateral))
+  All (λ (addr , _) → isVKeyAddr addr) (range (utxo ∣ collateralInputs))
   × isAdaOnly balance′
-  × coin balance′ * 100 ≥ txfee * pp .collateralPercentage
-  × collateral ≢ ∅
+  × coin balance′ * 100 ≥ txFee * pp .collateralPercentage
+  × collateralInputs ≢ ∅
   where
     open Tx tx; open TxBody body
-    balance′ = balance (utxo ∣ collateral)
+    balance′ = balance (utxo ∣ collateralInputs)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used in UTxO rules, continued}
@@ -432,16 +422,16 @@ module _ (let open UTxOState; open TxBody) where
 
   consumed : PParams → UTxOState → TxBody → Value
   consumed pp st txb
-    =  balance (st .utxo ∣ txb .txins)
+    =  balance (st .utxo ∣ txb .txIns)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
-    +  inject (getCoin (txb .txwdrls))
+    +  inject (getCoin (txb .txWdrls))
 
   produced : PParams → UTxOState → TxBody → Value
   produced pp st txb = balance (outs txb)
-                     + inject (txb .txfee)
+                     + inject (txb .txFee)
                      + inject (newDeposits pp st txb)
-                     + inject (txb .txdonation)
+                     + inject (txb .txDonation)
 \end{code}
 \caption{Functions used in UTxO rules, continued}
 \label{fig:functions:utxo-conway}
@@ -476,7 +466,8 @@ private variable
   s s' : UTxOState
   tx : Tx
   utxo : UTxO
-  fees donations : Coin
+  fees : Fees
+  donations : Donations
   deposits : Deposits
 
 open UTxOEnv
@@ -494,11 +485,11 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 \begin{code}
          p2Scripts  = collectP2ScriptsWithContext pp tx utxo
       in
-        ∙ ValidCertDeposits pp deposits txcerts
+        ∙ ValidCertDeposits pp deposits txCerts
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txins ᶜ) ∪ˡ (outs txb) , fees + txfee , updateDeposits pp txb deposits , donations + txdonation ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (outs txb) , fees + txFee , updateDeposits pp txb deposits , donations + txDonation ⟧
   Scripts-No :
     let  pp         = Γ .pparams
 \end{code}
@@ -511,7 +502,7 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
         ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateral ᶜ , fees + cbalance (utxo ∣ collateral) , deposits , donations ⟧
+          Γ ⊢ ⟦ utxo , fees , deposits , donations ⟧ ⇀⦇ tx ,UTXOS⦈ ⟦ utxo ∣ collateralInputs ᶜ , fees + cbalance (utxo ∣ collateralInputs) , deposits , donations ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{UTXOS rule}
@@ -539,25 +530,25 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         open TxWitnesses wits
 \end{code}
 \begin{code}
-        txoutsʰ   = mapValues txOutHash txouts
+        txOutsʰ   = mapValues txOutHash txOuts
         overhead  = 160
     in
-    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
-    ∙ txins ∩ refInputs ≡ ∅                  ∙ inInterval slot txvldt
-    ∙ minfee pp utxo tx ≤ txfee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
+    ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
+    ∙ txIns ∩ refInputs ≡ ∅                  ∙ inInterval slot txVldt
+    ∙ minfee pp utxo tx ≤ txFee              ∙ (txrdmrs ˢ ≢ ∅ → collateralCheck pp tx utxo)
     ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
     ∙ txsize ≤ maxTxSize pp
     ∙ refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
-    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         inject ((overhead + utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
-    ∙ ∀[ a ∈ dom txwdrls ]          NetworkIdOf a ≡ NetworkId
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]  netId a         ≡ NetworkId
+    ∙ ∀[ a ∈ dom txWdrls ]          NetworkIdOf a ≡ NetworkId
     ∙ txNetworkId  ~ just NetworkId
-    ∙ curTreasury  ~ just treasury
+    ∙ currentTreasury  ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

@@ -41,13 +41,13 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
         txdatsHashes        = mapˢ hash txdats
         inputsDataHashes    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
                                                      then txOutToDataHash txout
-                                                     else nothing) (range (utxo ∣ txins))
+                                                     else nothing) (range (utxo ∣ txIns))
         refInputsDataHashes = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
-        outputsDataHashes   = mapPartial txOutToDataHash (range txouts)
+        outputsDataHashes   = mapPartial txOutToDataHash (range txOuts)
         nativeScripts       = mapPartial toP1Script (txscripts tx utxo)
     in
-    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txvldt s)
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txId) σ
+    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputsDataHashes ⊆ txdatsHashes

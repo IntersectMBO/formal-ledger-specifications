@@ -45,7 +45,7 @@ record LEnv : Type where
     ppolicy     : Maybe ScriptHash
     pparams     : PParams
     enactState  : EnactState
-    treasury    : Coin
+    treasury    : Treasury
 \end{code}
 \begin{code}[hide]
 instance
@@ -74,19 +74,19 @@ open HasLState ⦃...⦄ public
 
 instance
   HasUTxOState-LState : HasUTxOState LState
-  HasUTxOState-LState .utxoStOf = LState.utxoSt
+  HasUTxOState-LState .UTxOStateOf = LState.utxoSt
 
   HasUTxO-LState : HasUTxO LState
-  HasUTxO-LState .utxoOf = utxoOf ∘ utxoStOf
+  HasUTxO-LState .UTxOOf = UTxOOf ∘ UTxOStateOf
 
   HasGovState-LState : HasGovState LState
-  HasGovState-LState .govStOf = LState.govSt
+  HasGovState-LState .GovStateOf = LState.govSt
 
   HasCertState-LState : HasCertState LState
-  HasCertState-LState .certstateOf = LState.certState
+  HasCertState-LState .CertStateOf = LState.certState
 
   HasDeposits-LState : HasDeposits LState
-  HasDeposits-LState .depositsOf = depositsOf ∘ utxoStOf
+  HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
 
 open CertState
 open DState
@@ -97,7 +97,7 @@ instance
 \end{code}
 \begin{code}
 txgov : TxBody → List (GovVote ⊎ GovProposal)
-txgov txb = map inj₂ txprop ++ map inj₁ txvote
+txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
   where open TxBody txb
 
 rmOrphanDRepVotes : CertState → GovState → GovState
@@ -128,7 +128,7 @@ private variable
   ppolicy : Maybe ScriptHash
   pp : PParams
   enactState : EnactState
-  treasury : Coin
+  treasury : Treasury
 \end{code}
 
 \begin{figure*}[ht]
@@ -147,8 +147,8 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
     in
     ∙ isValid tx ≡ true
     ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙ ⟦ epoch slot , pp , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙ ⟦ txid , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+    ∙ ⟦ epoch slot , pp , txGovVotes , txWdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+    ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 

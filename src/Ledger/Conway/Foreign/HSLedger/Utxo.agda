@@ -56,16 +56,16 @@ module _ (ext : ExternalFunctions) where
         open UTxOEnv (from env)
      in unlines $
           "Consumed:" ∷
-          ("\tInputs:      \t" +ˢ show (balance (utxo ∣ txins))) ∷
+          ("\tInputs:      \t" +ˢ show (balance (utxo ∣ txIns))) ∷
           ("\tMint:        \t" +ˢ show mint) ∷
           ("\tRefunds:     \t" +ˢ show (inject (depositRefunds pparams (from st) body))) ∷
-          ("\tWithdrawals: \t" +ˢ show (inject (getCoin txwdrls))) ∷
+          ("\tWithdrawals: \t" +ˢ show (inject (getCoin txWdrls))) ∷
           ("\tTotal:       \t" +ˢ show (consumed pparams (from st) body)) ∷
           "Produced:" ∷
           ("\tOutputs:     \t" +ˢ show (balance (outs body))) ∷
-          ("\tDonations:   \t" +ˢ show (inject txdonation)) ∷
+          ("\tDonations:   \t" +ˢ show (inject txDonation)) ∷
           ("\tDeposits:    \t" +ˢ show (inject (newDeposits pparams (from st) body))) ∷
-          ("\tFees:        \t" +ˢ show (inject txfee)) ∷
+          ("\tFees:        \t" +ˢ show (inject txFee)) ∷
           ("\tTotal:       \t" +ˢ show (produced pparams (from st) body)) ∷
           "" ∷
           "Reference Scripts Info:" ∷

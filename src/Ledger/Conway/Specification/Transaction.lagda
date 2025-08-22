@@ -37,10 +37,10 @@ unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 \begin{NoConway}
 Some key ingredients in the transaction body are:
 \begin{itemize}
-  \item A set \txins{} of transaction inputs, each of which identifies an output from
+  \item A set \txIns{} of transaction inputs, each of which identifies an output from
     a previous transaction.  A transaction input consists of a transaction id and an
     index to uniquely identify the output.
-  \item An indexed collection \txouts{} of transaction outputs.
+  \item An indexed collection \txOuts{} of transaction outputs.
     The \TxOut{} type is an address paired with a coin value.
   \item A transaction fee. This value will be added to the fee pot.
   \item The hash \txid{} of the serialized form of the
@@ -52,9 +52,9 @@ Ingredients of the transaction body introduced in the Conway era are the followi
 \begin{itemize}
   \item \txvote{}, the list of votes for goverance actions;
   \item \txprop{}, the list of governance proposals;
-  \item \txdonation{}, amount of \Coin{} to donate to treasury, e.g., to return money
+  \item \txDonation{}, amount of \Coin{} to donate to treasury, e.g., to return money
     to the treasury after a governance action;
-  \item \curTreasury{}, the current value of the treasury. This field serves as a
+  \item \currentTreasury{}, the current value of the treasury. This field serves as a
     precondition to executing Plutus scripts that access the value of the treasury.
 \end{itemize}
 \end{Conway}
@@ -118,18 +118,16 @@ record TransactionStructure : Type₁ where
 \begin{NoConway}
 \emph{Derived types}
 \begin{code}
-  TxIn     = TxId × Ix
-  TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
-  UTxO     = TxIn ⇀ TxOut
-  Wdrl     = RwdAddr ⇀ Coin
-  RdmrPtr  = Tag × Ix
-
+  TxIn               = TxId × Ix
+  TxOut              = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
+  UTxO               = TxIn ⇀ TxOut
+  RdmrPtr            = Tag × Ix
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
 \end{code}
 \begin{code}[hide]
   record HasUTxO {a} (A : Type a) : Type a where
-    field utxoOf : A → UTxO
+    field UTxOOf : A → UTxO
   open HasUTxO ⦃...⦄ public
 \end{code}
 \end{NoConway}
@@ -138,46 +136,42 @@ record TransactionStructure : Type₁ where
 \begin{code}
   record TxBody : Type where
     field
-      txins          : ℙ TxIn
-      refInputs      : ℙ TxIn
-      txouts         : Ix ⇀ TxOut
-      txfee          : Coin
-      mint           : Value
-      txvldt         : Maybe Slot × Maybe Slot
-      txcerts        : List DCert
-      txwdrls        : Wdrl
-      txvote         : List GovVote
-      txprop         : List GovProposal
-      txdonation     : Coin
-      txup           : Maybe Update
-      txADhash       : Maybe ADHash
-      txNetworkId    : Maybe Network
-      curTreasury    : Maybe Coin
-      txid           : TxId
-      collateral     : ℙ TxIn
-      reqSigHash     : ℙ KeyHash
-      scriptIntHash  : Maybe ScriptHash
+      txIns                : ℙ TxIn
+      refInputs            : ℙ TxIn
+      collateralInputs     : ℙ TxIn
+      txOuts               : Ix ⇀ TxOut
+      txId                 : TxId
+      txCerts              : List DCert
+      txFee                : Fees
+      txWdrls              : Withdrawals
+      txVldt               : Maybe Slot × Maybe Slot
+      txADhash             : Maybe ADHash
+      txDonation           : Donations
+      txGovVotes           : List GovVote
+      txGovProposals       : List GovProposal
+      txNetworkId          : Maybe Network
+      currentTreasury      : Maybe Treasury
+      mint                 : Value
+      reqSignerHashes      : ℙ KeyHash
+      scriptIntegrityHash  : Maybe ScriptHash
+      -- txup              : Maybe Update   -- deprecated; leave for now
 \end{code}
 \begin{code}[hide]
   record HasTxBody {a} (A : Type a) : Type a where
     field TxBodyOf : A → TxBody
   open HasTxBody  ⦃...⦄ public
 
-  record Hastxfee {a} (A : Type a) : Type a where
-    field txfeeOf : A → Coin
-  open Hastxfee   ⦃...⦄ public
+  record HasDCerts {a} (A : Type a) : Type a where
+    field DCertsOf : A → List DCert
+  open HasDCerts ⦃...⦄ public
 
-  record Hastxcerts {a} (A : Type a) : Type a where
-    field txcertsOf : A → List DCert
-  open Hastxcerts ⦃...⦄ public
+  record HasGovProposals {a} (A : Type a) : Type a where
+    field GovProposalsOf  : A → List GovProposal
+  open HasGovProposals ⦃...⦄ public
 
-  record Hastxprop {a} (A : Type a) : Type a where
-    field txpropOf  : A → List GovProposal
-  open Hastxprop  ⦃...⦄ public
-
-  record Hastxid    {a} (A : Type a) : Type a where
-    field txidOf    : A → TxId
-  open Hastxid    ⦃...⦄ public
+  record HasTxId {a} (A : Type a) : Type a where
+    field TxIdOf    : A → TxId
+  open HasTxId ⦃...⦄ public
 \end{code}
 
 \begin{NoConway}
@@ -205,23 +199,23 @@ record TransactionStructure : Type₁ where
     HasTxBody-Tx : HasTxBody Tx
     HasTxBody-Tx .TxBodyOf = Tx.body
 
-    Hastxfee-Tx : Hastxfee Tx
-    Hastxfee-Tx .txfeeOf = TxBody.txfee ∘ TxBodyOf
+    HasFees-Tx : HasFees Tx
+    HasFees-Tx .FeesOf = TxBody.txFee ∘ TxBodyOf
 
-    Hastxcerts-Tx : Hastxcerts Tx
-    Hastxcerts-Tx .txcertsOf = TxBody.txcerts ∘ TxBodyOf
+    HasDCerts-Tx : HasDCerts Tx
+    HasDCerts-Tx .DCertsOf = TxBody.txCerts ∘ TxBodyOf
 
-    Hastxprop-Tx : Hastxprop Tx
-    Hastxprop-Tx .txpropOf = TxBody.txprop ∘ TxBodyOf
+    HasGovProposals-Tx : HasGovProposals Tx
+    HasGovProposals-Tx .GovProposalsOf = TxBody.txGovProposals ∘ TxBodyOf
 
-    HasWdrls-TxBody : HasWdrls TxBody
-    HasWdrls-TxBody .wdrlsOf = TxBody.txwdrls
+    HasWithdrawals-TxBody : HasWithdrawals TxBody
+    HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWdrls
 
-    HasWdrls-Tx : HasWdrls Tx
-    HasWdrls-Tx .wdrlsOf = wdrlsOf ∘ TxBodyOf
+    HasWithdrawals-Tx : HasWithdrawals Tx
+    HasWithdrawals-Tx .WithdrawalsOf = WithdrawalsOf ∘ TxBodyOf
 
-    Hastxid-Tx : Hastxid Tx
-    Hastxid-Tx .txidOf = TxBody.txid ∘ TxBodyOf
+    HasTxId-Tx : HasTxId Tx
+    HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -244,18 +238,18 @@ record TransactionStructure : Type₁ where
   getValueʰ : TxOutʰ → Value
   getValueʰ (_ , v , _) = v
 
-  txinsVKey : ℙ TxIn → UTxO → ℙ TxIn
-  txinsVKey txins utxo = txins ∩ dom (utxo ∣^' (isVKeyAddr ∘ proj₁))
+  txInsVKey : ℙ TxIn → UTxO → ℙ TxIn
+  txInsVKey txIns utxo = txIns ∩ dom (utxo ∣^' (isVKeyAddr ∘ proj₁))
 
   scriptOuts : UTxO → UTxO
   scriptOuts utxo = filter (λ (_ , addr , _) → isScriptAddr addr) utxo
 
-  txinsScript : ℙ TxIn → UTxO → ℙ TxIn
-  txinsScript txins utxo = txins ∩ dom (proj₁ (scriptOuts utxo))
+  txInsScript : ℙ TxIn → UTxO → ℙ TxIn
+  txInsScript txIns utxo = txIns ∩ dom (proj₁ (scriptOuts utxo))
 
   refScripts : Tx → UTxO → ℙ Script
   refScripts tx utxo =
-    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txins ∪ refInputs)))
+    mapPartial (proj₂ ∘ proj₂ ∘ proj₂) (range (utxo ∣ (txIns ∪ refInputs)))
     where open Tx; open TxBody (tx .body)
 
   txscripts : Tx → UTxO → ℙ Script

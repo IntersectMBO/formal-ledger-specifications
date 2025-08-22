@@ -11,7 +11,6 @@ open import Ledger.Prelude.Numeric.UnitInterval
 
 module Ledger.Conway.Specification.Certs (gs : _) (open GovStructure gs) where
 
-
 open import Ledger.Conway.Specification.Gov.Actions gs
 open RwdAddr
 open PParams
@@ -26,22 +25,24 @@ data DepositPurpose : Type where
   DRepDeposit        : Credential   → DepositPurpose
   GovActionDeposit   : GovActionID  → DepositPurpose
 
-Deposits  = DepositPurpose ⇀ Coin
-Rewards   = Credential ⇀ Coin
-DReps     = Credential ⇀ Epoch
+Deposits DReps Rewards : Type
+Deposits     = DepositPurpose ⇀ Coin
+DReps        = Credential ⇀ Epoch
+Rewards      = Credential ⇀ Coin
+
 \end{code}
 \begin{code}[hide]
 record HasDeposits {a} (A : Type a) : Type a where
-  field depositsOf : A → Deposits
+  field DepositsOf : A → Deposits
 open HasDeposits ⦃...⦄ public
 
-record HasRewards {a} (A : Type a) : Type a where
-  field rewardsOf : A → Rewards
-open HasRewards  ⦃...⦄ public
-
 record HasDReps {a} (A : Type a) : Type a where
-  field dRepsOf : A → DReps
+  field DRepsOf : A → DReps
 open HasDReps    ⦃...⦄ public
+
+record HasRewards {a} (A : Type a) : Type a where
+  field RewardsOf : A → Rewards
+open HasRewards  ⦃...⦄ public
 
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
@@ -62,11 +63,21 @@ record PoolParams : Type where
     margin          : UnitInterval
     pledge          : Coin
     rewardAccount   : Credential
+
+Pools : Type
+Pools = KeyHash ⇀ PoolParams
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
 \caption{Stake pool parameter definitions}
 \end{figure*}
+
+\begin{code}[hide]
+record HasPools {a} (A : Type a) : Type a where
+  field PoolsOf : A → Pools
+open HasPools ⦃...⦄ public
+\end{code}
+
 
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
@@ -124,13 +135,10 @@ record CertEnv : Type where
     coldCreds : ℙ Credential
 \end{code}
 \begin{code}[hide]
-record HasWdrls {a} (A : Type a) : Type a where
-  field wdrlsOf : A → RwdAddr ⇀ Coin
-open HasWdrls ⦃...⦄ public
 
 instance
-  HasWdrls-CertEnv : HasWdrls CertEnv
-  HasWdrls-CertEnv .wdrlsOf = CertEnv.wdrls
+  HasWithdrawals-CertEnv : HasWithdrawals CertEnv
+  HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
 \end{code}
 \begin{code}
 
@@ -143,58 +151,54 @@ record DState : Type where
   field
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ KeyHash
-    rewards      : Credential ⇀ Coin
+    rewards      : Rewards
 \end{code}
 \begin{code}[hide]
 record HasDState {a} (A : Type a) : Type a where
-  field dStateOf : A → DState
+  field DStateOf : A → DState
 open HasDState ⦃...⦄ public
 
 record HasVDelegs {a} (A : Type a) : Type a where
-  field voteDelegsOf : A → Credential ⇀ VDeleg
+  field VDelegsOf : A → Credential ⇀ VDeleg
 open HasVDelegs ⦃...⦄ public
 
 record HasStakeDelegs {a} (A : Type a) : Type a where
-  field stakeDelegsOf : A → Credential ⇀ KeyHash
+  field StakeDelegsOf : A → Credential ⇀ KeyHash
 open HasStakeDelegs ⦃...⦄ public
 
 instance
   HasVDelegs-DState : HasVDelegs DState
-  HasVDelegs-DState .voteDelegsOf = DState.voteDelegs
+  HasVDelegs-DState .VDelegsOf = DState.voteDelegs
 
   HasStakeDelegs-DState : HasStakeDelegs DState
-  HasStakeDelegs-DState .stakeDelegsOf = DState.stakeDelegs
+  HasStakeDelegs-DState .StakeDelegsOf = DState.stakeDelegs
 
   HasRewards-DState : HasRewards DState
-  HasRewards-DState .rewardsOf = DState.rewards
+  HasRewards-DState .RewardsOf = DState.rewards
 \end{code}
 \begin{NoConway}
 \begin{code}
 
 record PState : Type where
   field
-    pools     : KeyHash ⇀ PoolParams
+    pools     : Pools
     retiring  : KeyHash ⇀ Epoch
 \end{code}
 \begin{code}[hide]
 record HasPState {a} (A : Type a) : Type a where
-  field pStateOf : A → PState
+  field PStateOf : A → PState
 open HasPState ⦃...⦄ public
 
-record HasPools {a} (A : Type a) : Type a where
-  field poolsOf : A → KeyHash ⇀ PoolParams
-open HasPools ⦃...⦄ public
-
 record HasRetiring {a} (A : Type a) : Type a where
-  field retiringOf : A → KeyHash ⇀ Epoch
+  field RetiringOf : A → KeyHash ⇀ Epoch
 open HasRetiring ⦃...⦄ public
 
 instance
   HasPools-PState : HasPools PState
-  HasPools-PState .poolsOf = PState.pools
+  HasPools-PState .PoolsOf = PState.pools
 
   HasRetiring-PState : HasRetiring PState
-  HasRetiring-PState .retiringOf = PState.retiring
+  HasRetiring-PState .RetiringOf = PState.retiring
 \end{code}
 \end{NoConway}
 \begin{code}
@@ -211,19 +215,19 @@ record GState : Type where
 \end{code}
 \begin{code}[hide]
 record HasGState {a} (A : Type a) : Type a where
-  field gStateOf : A → GState
+  field GStateOf : A → GState
 open HasGState ⦃...⦄ public
 
 record HasCCHotKeys {a} (A : Type a) : Type a where
-  field ccHotKeysOf : A → Credential ⇀ Maybe Credential
+  field CCHotKeysOf : A → Credential ⇀ Maybe Credential
 open HasCCHotKeys ⦃...⦄ public
 
 instance
   HasDReps-GState : HasDReps GState
-  HasDReps-GState .dRepsOf = GState.dreps
+  HasDReps-GState .DRepsOf = GState.dreps
 
   HasCCHotKeys-GState : HasCCHotKeys GState
-  HasCCHotKeys-GState .ccHotKeysOf = GState.ccHotKeys
+  HasCCHotKeys-GState .CCHotKeysOf = GState.ccHotKeys
 \end{code}
 \begin{code}
 
@@ -240,24 +244,24 @@ record CertState : Type where
 \end{code}
 \begin{code}[hide]
 record HasCertState {a} (A : Type a) : Type a where
-  field certstateOf : A → CertState
+  field CertStateOf : A → CertState
 open HasCertState ⦃...⦄ public
 
 instance
   HasDState-CertState : HasDState CertState
-  HasDState-CertState .dStateOf = CertState.dState
+  HasDState-CertState .DStateOf = CertState.dState
 
   HasPState-CertState : HasPState CertState
-  HasPState-CertState .pStateOf = CertState.pState
+  HasPState-CertState .PStateOf = CertState.pState
 
   HasGState-CertState : HasGState CertState
-  HasGState-CertState .gStateOf = CertState.gState
+  HasGState-CertState .GStateOf = CertState.gState
 
   HasRewards-CertState : HasRewards CertState
-  HasRewards-CertState .rewardsOf = rewardsOf ∘ dStateOf
+  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf
 
   HasDReps-CertState : HasDReps CertState
-  HasDReps-CertState .dRepsOf = dRepsOf ∘ gStateOf
+  HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf
 \end{code}
 \begin{code}
 
@@ -276,11 +280,11 @@ PoolEnv     = PParams
 
 \begin{code}[hide]
 rewardsBalance : DState → Coin
-rewardsBalance ds = ∑[ x ← rewardsOf ds ] x
+rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 
 instance
   HasCoin-CertState : HasCoin CertState
-  HasCoin-CertState .getCoin = rewardsBalance ∘ dStateOf
+  HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
 \end{code}
 
 \begin{code}[hide]
@@ -299,9 +303,9 @@ private variable
   sDelegs stakeDelegs    : Credential ⇀ KeyHash
   ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
   vDelegs voteDelegs     : Credential ⇀ VDeleg
-  pools                  : KeyHash ⇀ PoolParams
+  pools                  : Pools
   retiring               : KeyHash ⇀ Epoch
-  wdrls                  : RwdAddr ⇀ Coin
+  wdrls                  : Withdrawals
 
   an          : Anchor
   Γ           : CertEnv

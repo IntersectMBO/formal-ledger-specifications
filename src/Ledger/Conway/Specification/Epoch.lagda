@@ -72,13 +72,13 @@ instance
   HasEnactState-EpochState .EnactStateOf = EpochState.es
 
   HasDeposits-EpochState : HasDeposits EpochState
-  HasDeposits-EpochState .depositsOf = depositsOf ∘ LStateOf
+  HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
 
-  Hastreasury-EpochState : Hastreasury EpochState
-  Hastreasury-EpochState .treasuryOf = Acnt.treasury ∘ EpochState.acnt
+  HasTreasury-EpochState : HasTreasury EpochState
+  HasTreasury-EpochState .TreasuryOf = Acnt.treasury ∘ EpochState.acnt
 
-  Hasreserves-EpochState : Hasreserves EpochState
-  Hasreserves-EpochState .reservesOf = Acnt.reserves ∘ EpochState.acnt
+  HasReserves-EpochState : HasReserves EpochState
+  HasReserves-EpochState .ReservesOf = Acnt.reserves ∘ EpochState.acnt
 
   HasPParams-EpochState : HasPParams EpochState
   HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
@@ -110,23 +110,23 @@ instance
   HasEpochState-NewEpochState : HasEpochState NewEpochState
   HasEpochState-NewEpochState .EpochStateOf = NewEpochState.epochState
 
-  Hastreasury-NewEpochState : Hastreasury NewEpochState
-  Hastreasury-NewEpochState .treasuryOf = treasuryOf ∘ EpochStateOf
+  Hastreasury-NewEpochState : HasTreasury NewEpochState
+  Hastreasury-NewEpochState .TreasuryOf = TreasuryOf ∘ EpochStateOf
 
   HasLState-NewEpochState : HasLState NewEpochState
   HasLState-NewEpochState .LStateOf = LStateOf ∘ EpochStateOf
 
   HasGovState-NewEpochState : HasGovState NewEpochState
-  HasGovState-NewEpochState .govStOf = govStOf ∘ LStateOf
+  HasGovState-NewEpochState .GovStateOf = GovStateOf ∘ LStateOf
 
   HasCertState-NewEpochState : HasCertState NewEpochState
-  HasCertState-NewEpochState .certstateOf = certstateOf ∘ LStateOf
+  HasCertState-NewEpochState .CertStateOf = CertStateOf ∘ LStateOf
 
   HasDReps-NewEpochState : HasDReps NewEpochState
-  HasDReps-NewEpochState .dRepsOf = dRepsOf ∘ certstateOf
+  HasDReps-NewEpochState .DRepsOf = DRepsOf ∘ CertStateOf
 
   HasRewards-NewEpochState : HasRewards NewEpochState
-  HasRewards-NewEpochState .rewardsOf = rewardsOf ∘ certstateOf
+  HasRewards-NewEpochState .RewardsOf = RewardsOf ∘ CertStateOf
 
   unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
     ( (quote EpochState     , HasCast-EpochState)
@@ -199,7 +199,7 @@ createRUpd slotsPerEpoch b es total =
           }
   where
     prevPp       = PParamsOf es
-    reserves     = reservesOf es
+    reserves     = ReservesOf es
     pstakego     = es .EpochState.ss .Snapshots.go
     feeSS        = es .EpochState.ss .Snapshots.feeSS
     stake        = pstakego .Snapshot.stake
@@ -361,7 +361,7 @@ private variable
   acnt : Acnt
   es₀ : EnactState
   mark set go : Snapshot
-  feeSS : Coin
+  feeSS : Fees
   lstate : LState
   ss ss' : Snapshots
   ru : RewardUpdate
@@ -391,39 +391,39 @@ data
       orphans           = fromList (getOrphans es tmpGovSt)
       removed'          = removed ∪ orphans
       removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
-        mapˢ (returnAddr gaSt ,_) ((depositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+        mapˢ (returnAddr gaSt ,_) ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
       govActionReturns = aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
       trWithdrawals   = esW .withdrawals
       totWithdrawals  = ∑[ x ← trWithdrawals ] x
 
-      retired    = (retiringOf pState) ⁻¹ e
+      retired    = (RetiringOf pState) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
-      refunds    = pullbackMap payout toRwdAddr (dom (rewardsOf dState))
+      refunds    = pullbackMap payout toRwdAddr (dom (RewardsOf dState))
       unclaimed  = getCoin payout - getCoin refunds
 
       govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
 
-      dState' = ⟦ voteDelegsOf dState , stakeDelegsOf dState ,  rewardsOf dState ∪⁺ refunds ⟧
+      dState' = ⟦ VDelegsOf dState , StakeDelegsOf dState ,  RewardsOf dState ∪⁺ refunds ⟧
 
-      pState' = ⟦ poolsOf pState ∣ retired ᶜ , retiringOf pState ∣ retired ᶜ ⟧
+      pState' = ⟦ PoolsOf pState ∣ retired ᶜ , RetiringOf pState ∣ retired ᶜ ⟧
 
-      gState' = ⟦ (if null govSt' then mapValues (1 +_) (dRepsOf gState) else (dRepsOf gState))
-                , ccHotKeysOf gState ∣ ccCreds (es .cc) ⟧
+      gState' = ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf gState) else (DRepsOf gState))
+                , CCHotKeysOf gState ∣ ccCreds (es .cc) ⟧
 
       certState' : CertState
       certState' = ⟦ dState' , pState' , gState' ⟧
 
-      utxoSt' = ⟦ utxoOf utxoSt , feesOf utxoSt , depositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+      utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
 
       acnt' = record acnt
-        { treasury  = treasuryOf acnt ∸ totWithdrawals + donationsOf utxoSt + unclaimed }
+        { treasury  = TreasuryOf acnt ∸ totWithdrawals + DonationsOf utxoSt + unclaimed }
     in
     record { currentEpoch = e
            ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                          (depositsOf utxoSt') (voteDelegsOf dState)
-           ; treasury = treasuryOf acnt ; GState gState
-           ; pools = poolsOf pState ; delegatees = voteDelegsOf dState }
+                                          (DepositsOf utxoSt') (VDelegsOf dState)
+           ; treasury = TreasuryOf acnt ; GState gState
+           ; pools = PoolsOf pState ; delegatees = VDelegsOf dState }
         ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
     ────────────────────────────────

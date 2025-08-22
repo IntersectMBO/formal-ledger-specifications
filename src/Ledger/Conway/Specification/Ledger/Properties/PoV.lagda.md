@@ -64,7 +64,7 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
 
 ```agda
   LEDGER-pov : {Γ : LEnv} {s s' : LState}
-    → txid ∉ mapˢ proj₁ (dom (utxoOf s))
+    → txId ∉ mapˢ proj₁ (dom (UTxOOf s))
     → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 ```
 
@@ -82,20 +82,20 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
       open CertState certState'
       open ≡-Reasoning
       open CERTSpov indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ r
-      zeroMap    = constMap (mapˢ RwdAddr.stake (dom txwdrls)) 0
+      zeroMap    = constMap (mapˢ RwdAddr.stake (dom txWdrls)) 0
     in
     begin
       getCoin utxoSt + getCoin certState
         ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov h') ⟩
-      getCoin utxoSt + (getCoin certState' + getCoin txwdrls)
-        ≡˘⟨ cong (λ x → getCoin utxoSt + (getCoin certState' + x )) (*-identityʳ (getCoin txwdrls)) ⟩  -- cong (λ u → getCoin utxoSt + (getCoin certState' + getCoin txwdrls * χ u)) valid ⟩
-      getCoin utxoSt + (getCoin certState' + getCoin txwdrls * 1)
-        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + getCoin txwdrls * χ u)) valid ⟩
-      getCoin utxoSt + (getCoin certState' + getCoin txwdrls * χ isValid)
+      getCoin utxoSt + (getCoin certState' + getCoin txWdrls)
+        ≡˘⟨ cong (λ x → getCoin utxoSt + (getCoin certState' + x )) (*-identityʳ (getCoin txWdrls)) ⟩  -- cong (λ u → getCoin utxoSt + (getCoin certState' + getCoin txWdrls * χ u)) valid ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txWdrls * 1)
+        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + getCoin txWdrls * χ u)) valid ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txWdrls * χ isValid)
         ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
-      getCoin utxoSt + (getCoin txwdrls * χ isValid + getCoin certState')
-        ≡˘⟨ +-assoc (getCoin utxoSt) (getCoin txwdrls * χ isValid) (getCoin certState') ⟩
-      getCoin utxoSt + getCoin txwdrls * χ isValid + getCoin certState'
+      getCoin utxoSt + (getCoin txWdrls * χ isValid + getCoin certState')
+        ≡˘⟨ +-assoc (getCoin utxoSt) (getCoin txWdrls * χ isValid) (getCoin certState') ⟩
+      getCoin utxoSt + getCoin txWdrls * χ isValid + getCoin certState'
         ≡⟨ cong (_+ getCoin certState') (UTXOpov h st) ⟩
       getCoin utxoSt' + getCoin certState'
         ∎
@@ -115,10 +115,10 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
       getCoin ⟦ utxo , fees , deposits , donations ⟧
         ≡˘⟨ +-identityʳ (getCoin ⟦ utxo , fees , deposits , donations ⟧) ⟩
       getCoin ⟦ utxo , fees , deposits , donations ⟧ + 0
-        ≡˘⟨ cong (getCoin ⟦ utxo , fees , deposits , donations ⟧ +_) (*-zeroʳ (getCoin txwdrls)) ⟩
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txwdrls * 0
-        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txwdrls * χ x) invalid ⟩
-      getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txwdrls * χ isValid
+        ≡˘⟨ cong (getCoin ⟦ utxo , fees , deposits , donations ⟧ +_) (*-zeroʳ (getCoin txWdrls)) ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txWdrls * 0
+        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txWdrls * χ x) invalid ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txWdrls * χ isValid
         ≡⟨ UTXOpov h st ⟩
       getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning

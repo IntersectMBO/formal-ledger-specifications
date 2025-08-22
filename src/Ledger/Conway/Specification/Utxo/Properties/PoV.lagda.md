@@ -26,15 +26,15 @@ open UTxOState; open Tx; open TxBody
 
 Let `s`{.AgdaBound} and `s'`{.AgdaBound} be `UTxOState`{.AgdaRecord}s, let
 `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a fresh transaction with withdrawals
-`txwdrls`{.AgdaBound}, and suppose
+`txWdrls`{.AgdaBound}, and suppose
 `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,UTXO⦈`{.AgdaDatatype} `s'`{.AgdaBound}. If `tx`{.AgdaBound} is
 valid.  Then the coin value of `s'`{.AgdaBound} is equal to the sum of
-the coin values of `s`{.AgdaBound} and `txwdrls`{.AgdaBound}.
+the coin values of `s`{.AgdaBound} and `txWdrls`{.AgdaBound}.
 If `tx`{.AgdaBound} is not valid, then the coin values of `s`{.AgdaBound} and
 `s'`{.AgdaBound} are equal.  We can express this concisely as follows:
 
 <!--
-`getCoin`{.AgdaField} `s`{.AgdaBound} + `getCoin`{.AgdaField} `txwdrls`{.AgdaBound} ·
+`getCoin`{.AgdaField} `s`{.AgdaBound} + `getCoin`{.AgdaField} `txWdrls`{.AgdaBound} ·
 `χ`{.AgdaFunction} (`tx`{.AgdaBound} .`isValid`{.AgdaField}) `≡`{.AgdaSymbol} `getCoin`{.AgdaField} `s'`{.AgdaBound},
 -->
 
@@ -48,9 +48,9 @@ which returns 0 for false and 1 for true.
 
 ```agda
 UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
-  → txidOf tx ∉ mapˢ proj₁ (dom (utxoOf s))
+  → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s))
   → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-  → getCoin s + getCoin (wdrlsOf tx) * χ (tx .isValid) ≡ getCoin s'
+  → getCoin s + getCoin (WithdrawalsOf tx) * χ (tx .isValid) ≡ getCoin s'
 ```
 
 *Proof*.
