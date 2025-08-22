@@ -409,8 +409,8 @@ code fileType = mconcat .
     | s == ',' && p /= 0 = "," : goInline d p ts
 
     -- opening and closing parenthesis
-    | s == '(' = "(" : goInline d (p + 1) ts
-    | s == ')' = ")" : goInline d (p - 1) ts
+    | s `elem` [ '(', '❴' ] = makeInlineKaTeX t : goInline d (p + 1) ts
+    | s `elem` [ ')', '❵' ] = makeInlineKaTeX t : goInline d (p - 1) ts
 
     | otherwise = makeInlineKaTeX t : goInline d p ts
   goInline d p [] = []
@@ -421,8 +421,9 @@ code fileType = mconcat .
     | otherwise = toHtml . surroundingSpace . href . htmlId . htmlClasses . text $ concatMap fixChars (List1.toList s) -- remove this map fixChars, is too expensive
     where
 
-    fixChars :: Char -> [Char]
-    fixChars '_' = ['\\', '_']
+    fixChars :: Char -> String
+    fixChars '_' = "\\_"
+    fixChars '^' = "\\^{}"
     fixChars c   = [c]
 
     mkTexMacro :: String -> String -> String
