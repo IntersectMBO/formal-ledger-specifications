@@ -50,7 +50,7 @@ data
   _⊢_⇀⦇_,POOLREAP⦈_ : ⊤ → PoolReapState → Epoch → PoolReapState → Type where
   POOLREAP : let
     open PoolReapState poolReapState
-    open PoolParams
+    open StakePoolParams
     open UTxOState
     open PState
     open DState
