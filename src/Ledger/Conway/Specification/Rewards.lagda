@@ -482,7 +482,7 @@ The function \AgdaFunction{createRUpd} calculates the
 but requires the definition of the type \AgdaRecord{EpochState},
 so we have to defer the definition of this function to \cref{sec:epoch-boundary}.
 
-\Cref{fig:rewardPot} captures the potential movement of funds
+\Cref{sec:diagram-rewards} captures the potential movement of funds
 in the entire system
 that can happen during one transition step as described in this document.
 Exception: Withdrawals from the ``Treasury'' are not shown in this diagram,
@@ -498,49 +498,11 @@ data type.
 The blue arrows represent the movement of funds
 after they have passed through the \AgdaFunction{rewardPot}.
 
-\begin{figure}[htb]
-  \begin{center}
-    \begin{tikzpicture}
-      [ x=30mm, y=30mm
-      , direct/.style={black, draw}
-      , implied/.style={blue, draw}
-      , toTotPot/.style={red, draw}
-      ]
-    \node (C) at (3,2.5) {\LARGE Circulation};
-    \node (R) at (5, 1) {\LARGE Reserves};
-    \node (D) at (1, 2) {\LARGE Deposits};
-    \node (FR) at (1,1) {\LARGE Fees};
-    \node (RA) at (5, 2) {\LARGE Reward accounts};
-    \node (T) at (3,0.5) {\LARGE Treasury};
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Diagram: preservation of funds and rewards}
+\label{sec:diagram-rewards}
 
-    \draw[->, direct, ultra thick]
-    (C) edge (D)
-    (C) edge (FR)
-
-    (D) edge (C)
-
-    (RA) edge (C);
-
-    \draw[->, implied, ultra thick]
-    (FR) edge (T)
-    (FR) edge (RA)
-
-    (R) edge (T)
-    (R) edge (RA);
-
-    \node (TP) at (3, 1.15) {\LARGE rewardPot};
-
-    \draw[->, toTotPot, ultra thick]
-    (FR) edge node[below] {$-\Delta f$} (TP)
-    (R)  edge node[below] {$-\Delta r$} (TP)
-
-    (TP) edge node[below] {\textit{rs}} (RA)
-    (TP) edge node[right] {$\Delta t$} (T);
-    \end{tikzpicture}
-  \end{center}
-  \caption{Preservation of funds and rewards}
-  \label{fig:rewardPot}
-\end{figure}
+\input{Diagrams/Rewards}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Stake Distribution Calculation}
