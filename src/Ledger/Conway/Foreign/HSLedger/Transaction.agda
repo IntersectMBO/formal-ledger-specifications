@@ -47,4 +47,4 @@ unquoteDecl = do
   hsTypeAlias RdmrPtr
   hsTypeAlias ScriptHash
   hsTypeAlias AuxiliaryData
-  hsTypeAlias Wdrl
+  hsTypeAlias Withdrawals

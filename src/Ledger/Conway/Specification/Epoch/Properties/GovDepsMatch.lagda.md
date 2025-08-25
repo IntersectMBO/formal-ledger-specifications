@@ -52,7 +52,6 @@ module EPOCH-Body (eps : EpochState) where
 
 module EPOCH-PROPS {eps : EpochState} where
   open EPOCH-Body eps
-  open EpochState
 ```
 -->
 
@@ -88,7 +87,7 @@ For the formal statement of the lemma,
   EPOCH-govDepsMatch :  {eps' : EpochState} {e : Epoch}
     → map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (DepositsOf eps)
     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-    → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
+    → govDepsMatch (LStateOf eps) → govDepsMatch (LStateOf eps')
 ```
 
 *Proof*.

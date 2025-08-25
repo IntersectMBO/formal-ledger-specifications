@@ -51,13 +51,12 @@ record Acnt : Type where
   field
     treasury reserves : Coin
 
-record Hastreasury {a} (A : Type a) : Type a where
-  field treasuryOf : A → Coin
-open Hastreasury ⦃...⦄ public
+instance
+  Hastreasury-Acnt : HasTreasury Acnt
+  Hastreasury-Acnt .TreasuryOf = Acnt.treasury
 
-record Hasreserves {a} (A : Type a) : Type a where
-  field reservesOf : A → Coin
-open Hasreserves ⦃...⦄ public
+  Hasreserves-Acnt : HasReserves Acnt
+  Hasreserves-Acnt .ReservesOf = Acnt.reserves
 
 ProtVer : Type
 ProtVer = ℕ × ℕ
@@ -183,17 +182,11 @@ record PParams : Type where
 record HasPParams {a} (A : Type a) : Type a where
   field PParamsOf : A → PParams
 open HasPParams ⦃...⦄ public
-record HasgovActionDeposit {a} (A : Type a) : Type a where
-  field govActionDepositOf : A → Coin
-open HasgovActionDeposit ⦃...⦄ public
 
-record HasccMaxTermLength {a} (A : Type a) : Type a where
-  field ccMaxTermLengthOf : A → ℕ
-open HasccMaxTermLength ⦃...⦄ public
+record HasCCMaxTermLength {a} (A : Type a) : Type a where
+  field CCMaxTermLengthOf : A → ℕ
+open HasCCMaxTermLength ⦃...⦄ public
 
-instance
-  HasgovActionDeposit-PParams : HasgovActionDeposit PParams
-  HasgovActionDeposit-PParams .govActionDepositOf = PParams.govActionDeposit
 \end{code}
 \begin{figure*}
 \begin{AgdaMultiCode}

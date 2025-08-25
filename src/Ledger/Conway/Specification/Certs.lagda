@@ -11,7 +11,6 @@ open import Ledger.Prelude.Numeric.UnitInterval
 
 module Ledger.Conway.Specification.Certs (gs : _) (open GovStructure gs) where
 
-
 open import Ledger.Conway.Specification.Gov.Actions gs
 open RwdAddr
 open PParams
@@ -26,22 +25,24 @@ data DepositPurpose : Type where
   DRepDeposit        : Credential   → DepositPurpose
   GovActionDeposit   : GovActionID  → DepositPurpose
 
-Deposits  = DepositPurpose ⇀ Coin
-Rewards   = Credential ⇀ Coin
-DReps     = Credential ⇀ Epoch
+Deposits DReps Rewards : Type
+Deposits     = DepositPurpose ⇀ Coin
+DReps        = Credential ⇀ Epoch
+Rewards      = Credential ⇀ Coin
+
 \end{code}
 \begin{code}[hide]
 record HasDeposits {a} (A : Type a) : Type a where
   field DepositsOf : A → Deposits
 open HasDeposits ⦃...⦄ public
 
-record HasRewards {a} (A : Type a) : Type a where
-  field RewardsOf : A → Rewards
-open HasRewards  ⦃...⦄ public
-
 record HasDReps {a} (A : Type a) : Type a where
   field DRepsOf : A → DReps
 open HasDReps    ⦃...⦄ public
+
+record HasRewards {a} (A : Type a) : Type a where
+  field RewardsOf : A → Rewards
+open HasRewards  ⦃...⦄ public
 
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
@@ -62,11 +63,21 @@ record StakePoolParams : Type where
     margin          : UnitInterval
     pledge          : Coin
     rewardAccount   : Credential
+
+Pools : Type
+Pools = KeyHash ⇀ StakePoolParams
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
 \caption{Stake pool parameter definitions}
 \end{figure*}
+
+\begin{code}[hide]
+record HasPools {a} (A : Type a) : Type a where
+  field PoolsOf : A → Pools
+open HasPools ⦃...⦄ public
+\end{code}
+
 
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
@@ -124,13 +135,10 @@ record CertEnv : Type where
     coldCreds : ℙ Credential
 \end{code}
 \begin{code}[hide]
-record HasWdrls {a} (A : Type a) : Type a where
-  field wdrlsOf : A → RwdAddr ⇀ Coin
-open HasWdrls ⦃...⦄ public
 
 instance
-  HasWdrls-CertEnv : HasWdrls CertEnv
-  HasWdrls-CertEnv .wdrlsOf = CertEnv.wdrls
+  HasWithdrawals-CertEnv : HasWithdrawals CertEnv
+  HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
 \end{code}
 \begin{code}
 
@@ -143,7 +151,7 @@ record DState : Type where
   field
     voteDelegs   : Credential ⇀ VDeleg
     stakeDelegs  : Credential ⇀ KeyHash
-    rewards      : Credential ⇀ Coin
+    rewards      : Rewards
 \end{code}
 \begin{code}[hide]
 record HasDState {a} (A : Type a) : Type a where
@@ -151,12 +159,19 @@ record HasDState {a} (A : Type a) : Type a where
 open HasDState ⦃...⦄ public
 
 record HasVDelegs {a} (A : Type a) : Type a where
-  field voteDelegsOf : A → Credential ⇀ VDeleg
+  field VDelegsOf : A → Credential ⇀ VDeleg
 open HasVDelegs ⦃...⦄ public
+
+record HasStakeDelegs {a} (A : Type a) : Type a where
+  field StakeDelegsOf : A → Credential ⇀ KeyHash
+open HasStakeDelegs ⦃...⦄ public
 
 instance
   HasVDelegs-DState : HasVDelegs DState
-  HasVDelegs-DState .voteDelegsOf = DState.voteDelegs
+  HasVDelegs-DState .VDelegsOf = DState.voteDelegs
+
+  HasStakeDelegs-DState : HasStakeDelegs DState
+  HasStakeDelegs-DState .StakeDelegsOf = DState.stakeDelegs
 
   HasRewards-DState : HasRewards DState
   HasRewards-DState .RewardsOf = DState.rewards
@@ -166,13 +181,24 @@ instance
 
 record PState : Type where
   field
-    pools     : KeyHash ⇀ StakePoolParams
+    pools     : Pools
     retiring  : KeyHash ⇀ Epoch
 \end{code}
 \begin{code}[hide]
 record HasPState {a} (A : Type a) : Type a where
   field PStateOf : A → PState
 open HasPState ⦃...⦄ public
+
+record HasRetiring {a} (A : Type a) : Type a where
+  field RetiringOf : A → KeyHash ⇀ Epoch
+open HasRetiring ⦃...⦄ public
+
+instance
+  HasPools-PState : HasPools PState
+  HasPools-PState .PoolsOf = PState.pools
+
+  HasRetiring-PState : HasRetiring PState
+  HasRetiring-PState .RetiringOf = PState.retiring
 \end{code}
 \end{NoConway}
 \begin{code}
@@ -192,9 +218,16 @@ record HasGState {a} (A : Type a) : Type a where
   field GStateOf : A → GState
 open HasGState ⦃...⦄ public
 
+record HasCCHotKeys {a} (A : Type a) : Type a where
+  field CCHotKeysOf : A → Credential ⇀ Maybe Credential
+open HasCCHotKeys ⦃...⦄ public
+
 instance
   HasDReps-GState : HasDReps GState
   HasDReps-GState .DRepsOf = GState.dreps
+
+  HasCCHotKeys-GState : HasCCHotKeys GState
+  HasCCHotKeys-GState .CCHotKeysOf = GState.ccHotKeys
 \end{code}
 \begin{code}
 
@@ -225,7 +258,7 @@ instance
   HasGState-CertState .GStateOf = CertState.gState
 
   HasRewards-CertState : HasRewards CertState
-  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf 
+  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf
 
   HasDReps-CertState : HasDReps CertState
   HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf
@@ -235,7 +268,7 @@ instance
 record DelegEnv : Type where
   field
     pparams       : PParams
-    pools         : KeyHash ⇀ StakePoolParams
+    pools         : Pools
     delegatees    : ℙ Credential
 
 GovCertEnv  = CertEnv
@@ -247,11 +280,11 @@ PoolEnv     = PParams
 
 \begin{code}[hide]
 rewardsBalance : DState → Coin
-rewardsBalance ds = ∑[ x ← DState.rewards ds ] x
+rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 
 instance
   HasCoin-CertState : HasCoin CertState
-  HasCoin-CertState .getCoin = rewardsBalance ∘ CertState.dState
+  HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
 \end{code}
 
 \begin{code}[hide]
@@ -270,9 +303,9 @@ private variable
   sDelegs stakeDelegs    : Credential ⇀ KeyHash
   ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
   vDelegs voteDelegs     : Credential ⇀ VDeleg
-  pools                  : KeyHash ⇀ StakePoolParams
+  pools                  : Pools
   retiring               : KeyHash ⇀ Epoch
-  wdrls                  : RwdAddr ⇀ Coin
+  wdrls                  : Withdrawals
 
   an          : Anchor
   Γ           : CertEnv

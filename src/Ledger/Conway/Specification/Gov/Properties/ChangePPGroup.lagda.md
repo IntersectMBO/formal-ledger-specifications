@@ -14,7 +14,7 @@ open import Ledger.Prelude
 
 instance
   _ : IsSet TxBody GovProposal
-  _ = record { toSet = fromList ∘ TxBody.txprop }
+  _ = record { toSet = fromList ∘ TxBody.txGovProposals }
 ```
 -->
 

@@ -11,7 +11,7 @@ open import Ledger.Conway.Specification.Certs govStructure
 record indexOf : Type where
   field
     indexOfDCert    : DCert → List DCert → Maybe Ix
-    indexOfRwdAddr  : RwdAddr → Wdrl → Maybe Ix
+    indexOfRwdAddr  : RwdAddr → Withdrawals → Maybe Ix
     indexOfTxIn     : TxIn → ℙ TxIn → Maybe Ix
     indexOfPolicyId : ScriptHash → ℙ ScriptHash → Maybe Ix
     indexOfVote     : Voter → List Voter → Maybe Ix
