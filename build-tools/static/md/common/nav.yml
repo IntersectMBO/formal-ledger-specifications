@@ -128,6 +128,7 @@
           - NewEpoch: Ledger.Conway.Foreign.HSLedger.NewEpoch.md
           - PParams: Ledger.Conway.Foreign.HSLedger.PParams.md
           - Ratify: Ledger.Conway.Foreign.HSLedger.Ratify.md
+          - Rewards: Ledger.Conway.Foreign.HSLedger.Rewards.md
           - Transaction: Ledger.Conway.Foreign.HSLedger.Transaction.md
           - Utxo: Ledger.Conway.Foreign.HSLedger.Utxo.md
       - Conformance: Ledger.Conway.Conformance.md
@@ -154,6 +155,7 @@
         - Ledger/:
           - Properties: Ledger.Conway.Conformance.Ledger.Properties.md
         - Properties: Ledger.Conway.Conformance.Properties.md
+        - Rewards: Ledger.Conway.Conformance.Rewards.md
         - Script: Ledger.Conway.Conformance.Script.md
         - Utxo: Ledger.Conway.Conformance.Utxo.md
         - Utxo/:
