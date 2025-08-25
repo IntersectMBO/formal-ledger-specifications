@@ -110,24 +110,23 @@ The governance actions carry the following information:
   \item \ChangePParams{}: the updates to the parameters; and
   \item \TreasuryWdrl{}: a map of withdrawals.
 \end{itemize}
-\begin{figure*}[h]
-\begin{longtable}[]{@{}
- >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.2}}
- >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.75}}@{}}
+
+\subsubsection{Table: Types of governance actions}
+\label{fig:types-of-governance-actions}
+
+\begin{tabular}{ll}
 \textbf{Action}  & \textbf{Description}\\
 \hline
 \endhead{}
-\NoConfidence{}            & a motion to create a \emph{state of no-confidence} in the current constitutional committee \\[10pt]
-\UpdateCommittee{}         & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\[10pt]
-\NewConstitution{}         & a modification to the off-chain Constitution and the proposal policy script \\[10pt]
-\TriggerHF{}\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\[10pt]
-\ChangePParams{}           & a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\[10pt]
+\NoConfidence{}            & a motion to create a \emph{state of no-confidence} in the current constitutional committee \\
+\UpdateCommittee{}         & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\
+\NewConstitution{}         & a modification to the off-chain Constitution and the proposal policy script \\
+\TriggerHF{}\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\
+\ChangePParams{}           & a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\
 \TreasuryWdrl{}            & movements from the treasury\\
 \Info{}                    & an action that has no effect on-chain, other than an on-chain record
-\end{longtable}
-\caption{Types of governance actions}
-\label{fig:types-of-governance-actions}
-\end{figure*}
+\end{tabular}
+
 \footnotetext{There are many varying definitions of the term ``hard fork'' in the blockchain industry. Hard forks typically refer
   to non-backwards compatible updates of a network. In Cardano, we attach a bit more meaning to the definition by calling any upgrade that
   would lead to \emph{more blocks} being validated a ``hard fork'' and force nodes to comply with the new protocol version, effectively

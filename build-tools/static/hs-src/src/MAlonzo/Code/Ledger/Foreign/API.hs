@@ -23,7 +23,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs             as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact             as X
   (EnactState(..), EnactEnv(..), enactStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Epoch             as X
-  (Snapshot(..), Snapshots(..), EpochState(..), epochStep)
+  (EpochState(..), epochStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core          as X
   (GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov               as X
@@ -33,9 +33,11 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions       as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger            as X
   (LEnv(..), LState(..), ledgerStep, ledgersStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.NewEpoch          as X
-  (NewEpochState(..), newEpochStep, HsRewardUpdate(..))
+  (NewEpochState(..), newEpochStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify            as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep, ratifyDebug)
+import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards           as X
+  (HsRewardUpdate(..), Snapshot(..), Snapshots(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo              as X
   ( UTxOEnv(..), UTxOState(..), UTxO, utxoStep, utxowStep, Redeemer
   , utxoDebug, utxowDebug)
