@@ -125,6 +125,10 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Conformance.Rewards.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Conformance.Script.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -214,6 +218,10 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Ratify.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Foreign.HSLedger.Rewards.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
