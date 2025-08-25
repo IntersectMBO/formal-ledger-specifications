@@ -1,6 +1,5 @@
 module Ledger.Conway.Foreign.HSLedger.Epoch where
 
-open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.Ledger

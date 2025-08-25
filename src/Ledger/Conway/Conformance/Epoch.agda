@@ -1,4 +1,3 @@
-
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
@@ -18,7 +17,6 @@ open import Data.List using (filter)
 
 open import Agda.Builtin.FromNat
 
-open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Specification.Ratify txs
