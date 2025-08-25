@@ -3,7 +3,8 @@
 \modulenote{\ConwayModule{Chain}}
 
 \begin{code}[hide]
-{-# OPTIONS --safe #-}
+-- disabled to allow importing RewardUpdate
+{- OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
@@ -20,6 +21,7 @@ open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Conway.Specification.Ratify txs
+open import Ledger.Conway.Specification.RewardUpdate txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 
 open import Algebra
@@ -153,7 +155,7 @@ data
          Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , treasuryOf nes ⟧
     in
     ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
-    ∙ _ ⊢ newEpochState ⇀⦇ epoch slot ,NEWEPOCH⦈ nes
+    ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes
     ∙ Γ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
       ────────────────────────────────
       _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
