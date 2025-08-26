@@ -27,6 +27,27 @@ We adhere to the [Agda standard library style guide][] where practical.
 However, because we use [literate][] Agda to produce html documentation, readability
 of the latter takes precedence over code formatting.
 
+
+### Miscellaneous conventions
+
+1.  Type classes for accessing fields of records should be named after the *type* of the field and not the field name.
+
+    For example,
+
+    ```agda
+    record HasVDelegs {a} (A : Type a) : Type a where
+      field VDelegsOf : A → VDelegs
+    ```
+
+    and not, say,
+
+    ```agda
+    record HasgVoteDelegs {a} (A : Type a) : Type a where
+      field voteDelegsOf : A → VDelegs
+    ```
+
+2.  Use camel case for field names (e.g., `txNetworkId` instead of `txnetworkid`).
+
 ---
 
 <a id="project-overview"></a>

@@ -111,9 +111,6 @@ record UTxOEnv : Type where
 instance
   HasPParams-UTxOEnv : HasPParams UTxOEnv
   HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
-
-  HasgovActionDeposit-UTxOEnv : HasgovActionDeposit UTxOEnv
-  HasgovActionDeposit-UTxOEnv .govActionDepositOf = govActionDepositOf ∘ PParamsOf
 ```
 -->
 
@@ -555,7 +552,7 @@ data _⊢_⇀⦇_,UTXO⦈_ where
 ```
 -->
 ```agda
-        txoutsʰ   = mapValues txOutHash txouts
+        txOutsʰ   = mapValues txOutHash txOuts
         overhead  = 160
     in
     ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo

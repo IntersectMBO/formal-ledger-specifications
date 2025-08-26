@@ -83,6 +83,12 @@ instance
 
   HasPParams-EpochState : HasPParams EpochState
   HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
+
+  HasRatifyState-EpochState : HasRatifyState EpochState
+  HasRatifyState-EpochState .RatifyStateOf = EpochState.fut
+
+  HasPState-EpochState : HasPState EpochState
+  HasPState-EpochState .PStateOf = PStateOf ∘ CertStateOf ∘ LStateOf
 \end{code}
 \begin{NoConway}
 
@@ -530,15 +536,9 @@ its results by carrying out each of the following tasks.
 \begin{code}
   EPOCH : ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
     let
-      open LState
-      open CertState
 
-      cs = ls .certState
+      EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' = EPOCH-updates fut ls dState' acnt'
 
-      EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
-        EPOCH-updates fut ls dState' acnt'
-
-      certState' : CertState
       certState' = ⟦ dState'' , pState' , gState' ⟧ᶜˢ
 
     in
@@ -547,15 +547,15 @@ its results by carrying out each of the following tasks.
                                (Snapshots.mark ss')
                                govSt'
                                (DepositsOf utxoSt')
-                               (voteDelegsOf (cs .dState))
-             ; treasury = treasuryOf acnt
-             ; GState (cs .gState)
-             ; pools = PState.pools (cs .pState)
-             ; delegatees = voteDelegsOf (cs .dState)
+                               (VDelegsOf ls)
+             ; treasury = TreasuryOf acnt
+             ; GState (GStateOf ls)
+             ; pools = PoolsOf ls
+             ; delegatees = VDelegsOf ls
              }
           ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
         → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-        → _ ⊢ ⟦ utxoSt' , acnt , cs .dState , cs .pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
+        → _ ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
       ────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , certState' ⟧ , es , fut' ⟧
 \end{code}

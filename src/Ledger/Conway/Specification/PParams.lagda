@@ -52,11 +52,11 @@ record Acnt : Type where
     treasury reserves : Coin
 
 instance
-  Hastreasury-Acnt : HasTreasury Acnt
-  Hastreasury-Acnt .TreasuryOf = Acnt.treasury
+  HasTreasury-Acnt : HasTreasury Acnt
+  HasTreasury-Acnt .TreasuryOf = Acnt.treasury
 
-  Hasreserves-Acnt : HasReserves Acnt
-  Hasreserves-Acnt .ReservesOf = Acnt.reserves
+  HasReserves-Acnt : HasReserves Acnt
+  HasReserves-Acnt .ReservesOf = Acnt.reserves
 
 ProtVer : Type
 ProtVer = ℕ × ℕ

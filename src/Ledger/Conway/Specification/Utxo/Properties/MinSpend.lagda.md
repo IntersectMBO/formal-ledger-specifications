@@ -143,7 +143,9 @@ proposals in `tx`{.AgdaBound}.
 <!--
 ```agda
   module _ {Γ : UTxOEnv} where
-    module Γ = UTxOEnv Γ
+    open module Γ = UTxOEnv Γ
+    govActionDeps : Coin
+    govActionDeps = PParams.govActionDeposit Γ.pparams
 ```
 -->
 
@@ -151,7 +153,7 @@ proposals in `tx`{.AgdaBound}.
     utxoMinSpend : {tx : Tx} {s s' : UTxOState}
       → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
       → noRefundCert (DCertsOf tx)
-      → coin (consumed _ s (TxBodyOf tx)) ≥ length (GovProposalsOf tx) * Γ.govActionDeposit
+      → coin (consumed _ s (TxBodyOf tx)) ≥ length (GovProposalsOf tx) * govActionDeps
 ```
 
 *Proof*.
@@ -159,9 +161,9 @@ proposals in `tx`{.AgdaBound}.
 ```agda
     utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
       begin
-      length txGovProposals * Γ.govActionDeposit
+      length txGovProposals * govActionDeps
         ≡˘⟨ updatePropDeps≡ txGovProposals ⟩
-      getCoin (updateProposalDeposits txGovProposals txId (Γ.govActionDeposit) deposits) ∸ getCoin deposits
+      getCoin (updateProposalDeposits txGovProposals txId (govActionDeps) deposits) ∸ getCoin deposits
         ≤⟨ ∸-monoˡ-≤ (getCoin deposits) (≤updateCertDeps txCerts nrf) ⟩
       getCoin (updateDeposits (PParamsOf Γ) txb deposits) - getCoin deposits
         ≡⟨ ∸≡posPart⊖ {getCoin (updateDeposits (PParamsOf Γ) txb deposits)} {getCoin deposits} ⟩
