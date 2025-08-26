@@ -58,6 +58,13 @@ instance
   Hasreserves-Acnt : HasReserves Acnt
   Hasreserves-Acnt .ReservesOf = Acnt.reserves
 
+instance
+  Hastreasury-Acnt : Hastreasury Acnt
+  Hastreasury-Acnt .treasuryOf = Acnt.treasury
+
+  Hasreserves-Acnt : Hasreserves Acnt
+  Hasreserves-Acnt .reservesOf = Acnt.reserves
+
 ProtVer : Type
 ProtVer = ℕ × ℕ
 
