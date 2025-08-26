@@ -839,26 +839,26 @@ du_HasCast'45'Acnt_796
       MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasCast'45'Acnt_188
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasPParams
 d_HasPParams_798 a0 a1 a2 = ()
--- Ledger.Conway.Specification.Gov.Base.GovStructure._.Hasreserves-Acnt
-d_Hasreserves'45'Acnt_800 ::
+-- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasReserves-Acnt
+d_HasReserves'45'Acnt_800 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_56
-d_Hasreserves'45'Acnt_800 ~v0 = du_Hasreserves'45'Acnt_800
-du_Hasreserves'45'Acnt_800 ::
+d_HasReserves'45'Acnt_800 ~v0 = du_HasReserves'45'Acnt_800
+du_HasReserves'45'Acnt_800 ::
   MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_56
-du_Hasreserves'45'Acnt_800
+du_HasReserves'45'Acnt_800
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.PParams.du_Hasreserves'45'Acnt_176
--- Ledger.Conway.Specification.Gov.Base.GovStructure._.Hastreasury-Acnt
-d_Hastreasury'45'Acnt_802 ::
+      MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasReserves'45'Acnt_176
+-- Ledger.Conway.Specification.Gov.Base.GovStructure._.HasTreasury-Acnt
+d_HasTreasury'45'Acnt_802 ::
   T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_74
-d_Hastreasury'45'Acnt_802 ~v0 = du_Hastreasury'45'Acnt_802
-du_Hastreasury'45'Acnt_802 ::
+d_HasTreasury'45'Acnt_802 ~v0 = du_HasTreasury'45'Acnt_802
+du_HasTreasury'45'Acnt_802 ::
   MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_74
-du_Hastreasury'45'Acnt_802
+du_HasTreasury'45'Acnt_802
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.PParams.du_Hastreasury'45'Acnt_174
+      MAlonzo.Code.Ledger.Conway.Specification.PParams.du_HasTreasury'45'Acnt_174
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.PParamGroup
 d_PParamGroup_806 a0 = ()
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.PParams

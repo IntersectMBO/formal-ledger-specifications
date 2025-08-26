@@ -82,29 +82,29 @@ d_reserves_170 v0
   = case coe v0 of
       C_'10214'_'44'_'10215''7491'_172 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
--- Ledger.Conway.Specification.PParams.Hastreasury-Acnt
-d_Hastreasury'45'Acnt_174 ::
+-- Ledger.Conway.Specification.PParams.HasTreasury-Acnt
+d_HasTreasury'45'Acnt_174 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_270 ->
   MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_74
-d_Hastreasury'45'Acnt_174 ~v0 ~v1 ~v2 = du_Hastreasury'45'Acnt_174
-du_Hastreasury'45'Acnt_174 ::
+d_HasTreasury'45'Acnt_174 ~v0 ~v1 ~v2 = du_HasTreasury'45'Acnt_174
+du_HasTreasury'45'Acnt_174 ::
   MAlonzo.Code.Ledger.Prelude.Base.T_HasTreasury_74
-du_Hastreasury'45'Acnt_174
+du_HasTreasury'45'Acnt_174
   = coe
       MAlonzo.Code.Ledger.Prelude.Base.C_HasTreasury'46'constructor_171
       (coe (\ v0 -> d_treasury_168 (coe v0)))
--- Ledger.Conway.Specification.PParams.Hasreserves-Acnt
-d_Hasreserves'45'Acnt_176 ::
+-- Ledger.Conway.Specification.PParams.HasReserves-Acnt
+d_HasReserves'45'Acnt_176 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_138 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_270 ->
   MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_56
-d_Hasreserves'45'Acnt_176 ~v0 ~v1 ~v2 = du_Hasreserves'45'Acnt_176
-du_Hasreserves'45'Acnt_176 ::
+d_HasReserves'45'Acnt_176 ~v0 ~v1 ~v2 = du_HasReserves'45'Acnt_176
+du_HasReserves'45'Acnt_176 ::
   MAlonzo.Code.Ledger.Prelude.Base.T_HasReserves_56
-du_Hasreserves'45'Acnt_176
+du_HasReserves'45'Acnt_176
   = coe
       MAlonzo.Code.Ledger.Prelude.Base.C_HasReserves'46'constructor_117
       (coe (\ v0 -> d_reserves_170 (coe v0)))
