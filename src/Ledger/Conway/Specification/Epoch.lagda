@@ -75,14 +75,20 @@ instance
   HasDeposits-EpochState : HasDeposits EpochState
   HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
 
-  Hastreasury-EpochState : Hastreasury EpochState
-  Hastreasury-EpochState .treasuryOf = Acnt.treasury ∘ EpochState.acnt
+  HasTreasury-EpochState : HasTreasury EpochState
+  HasTreasury-EpochState .TreasuryOf = Acnt.treasury ∘ EpochState.acnt
 
-  Hasreserves-EpochState : Hasreserves EpochState
-  Hasreserves-EpochState .reservesOf = Acnt.reserves ∘ EpochState.acnt
+  HasReserves-EpochState : HasReserves EpochState
+  HasReserves-EpochState .ReservesOf = Acnt.reserves ∘ EpochState.acnt
 
   HasPParams-EpochState : HasPParams EpochState
   HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
+
+  HasRatifyState-EpochState : HasRatifyState EpochState
+  HasRatifyState-EpochState .RatifyStateOf = EpochState.fut
+
+  HasPState-EpochState : HasPState EpochState
+  HasPState-EpochState .PStateOf = PStateOf ∘ CertStateOf ∘ LStateOf
 \end{code}
 \begin{NoConway}
 \begin{code}
@@ -114,8 +120,8 @@ instance
   HasEnactState-NewEpochState : HasEnactState NewEpochState
   HasEnactState-NewEpochState .EnactStateOf = EnactStateOf ∘ EpochStateOf
 
-  Hastreasury-NewEpochState : Hastreasury NewEpochState
-  Hastreasury-NewEpochState .treasuryOf = treasuryOf ∘ EpochStateOf
+  Hastreasury-NewEpochState : HasTreasury NewEpochState
+  Hastreasury-NewEpochState .TreasuryOf = TreasuryOf ∘ EpochStateOf
 
   HasLState-NewEpochState : HasLState NewEpochState
   HasLState-NewEpochState .LStateOf = LStateOf ∘ EpochStateOf
@@ -206,7 +212,7 @@ createRUpd slotsPerEpoch b es total =
           }
   where
     prevPp       = PParamsOf es
-    reserves     = reservesOf es
+    reserves     = ReservesOf es
     pstakego     = es .EpochState.ss .Snapshots.go
     feeSS        = es .EpochState.ss .Snapshots.feeSS
     stake        = pstakego .Snapshot.stake
@@ -344,16 +350,32 @@ opaque
 \caption{Functions for computing stake distributions}
 \end{figure*}
 
+The \AgdaFunction{aggregateBy} function takes a relation
+\AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B})
+and a map
+\AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
+and returns a function that maps each \AgdaBound{a} in the domain of \AgdaBound{m} to
+the sum of all \AgdaBound{b} such that (\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+
+In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
+\AgdaFunction{aggregateBy} are
+\AgdaFunction{∣} \AgdaBound{delegations} \AgdaFunction{∣} :
+ℙ \AgdaDatatype{Credential} \AgdaFunction{×} \AgdaDatatype{VDeleg} and
+\AgdaFunction{stakeOf} \AgdaBound{ss} \AgdaFunction{∪⁺}
+\AgdaFunction{gaDepositStake} \AgdaBound{govSt} \AgdaBound{ds}, respectively.
+
 \begin{code}[hide]
 private variable
+  -- nes nes' : NewEpochState
   e lastEpoch : Epoch
   fut fut' : RatifyState
   poolReapState : PoolReapState
   eps eps' eps'' : EpochState
   ls : LState
+  -- acnt : Acnt
   es₀ : EnactState
   mark set go : Snapshot
-  feeSS : Coin
+  feeSS : Fees
   lstate : LState
   ss ss' : Snapshots
   ru : RewardUpdate
@@ -500,15 +522,9 @@ its results by carrying out each of the following tasks.
 \begin{code}
   EPOCH : ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
     let
-      open LState
-      open CertState
 
-      cs = ls .certState
+      EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' = EPOCH-updates fut ls dState' acnt'
 
-      EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
-        EPOCH-updates fut ls dState' acnt'
-
-      certState' : CertState
       certState' = ⟦ dState'' , pState' , gState' ⟧ᶜˢ
 
     in
@@ -517,15 +533,15 @@ its results by carrying out each of the following tasks.
                                (Snapshots.mark ss')
                                govSt'
                                (DepositsOf utxoSt')
-                               (voteDelegsOf (cs .dState))
-             ; treasury = treasuryOf acnt
-             ; GState (cs .gState)
-             ; pools = PState.pools (cs .pState)
-             ; delegatees = voteDelegsOf (cs .dState)
+                               (VDelegsOf ls)
+             ; treasury = TreasuryOf acnt
+             ; GState (GStateOf ls)
+             ; pools = PoolsOf ls
+             ; delegatees = VDelegsOf ls
              }
           ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
         → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-        → _ ⊢ ⟦ utxoSt' , acnt , cs .dState , cs .pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
+        → _ ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
       ────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , certState' ⟧ , es , fut' ⟧
 \end{code}

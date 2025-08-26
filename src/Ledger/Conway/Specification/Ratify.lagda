@@ -198,7 +198,7 @@ record RatifyEnv : Type where
     currentEpoch  : Epoch
     dreps         : Credential ⇀ Epoch
     ccHotKeys     : Credential ⇀ Maybe Credential
-    treasury      : Coin
+    treasury      : Treasury
     pools         : KeyHash ⇀ StakePoolParams
     delegatees    : Credential ⇀ VDeleg
 

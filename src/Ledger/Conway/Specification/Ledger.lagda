@@ -45,7 +45,7 @@ record LEnv : Type where
     ppolicy     : Maybe ScriptHash
     pparams     : PParams
     enactState  : EnactState
-    treasury    : Coin
+    treasury    : Treasury
 \end{code}
 \begin{code}[hide]
 instance
@@ -88,6 +88,21 @@ instance
   HasDeposits-LState : HasDeposits LState
   HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
 
+  HasPools-LState : HasPools LState
+  HasPools-LState .PoolsOf = PoolsOf ∘ CertStateOf
+
+  HasGState-LState : HasGState LState
+  HasGState-LState .GStateOf = GStateOf ∘ CertStateOf
+
+  HasDState-LState : HasDState LState
+  HasDState-LState .DStateOf = DStateOf ∘ CertStateOf
+
+  HasPState-LState : HasPState LState
+  HasPState-LState .PStateOf = PStateOf ∘ CertStateOf
+
+  HasVDelegs-LState : HasVDelegs LState
+  HasVDelegs-LState .VDelegsOf = VDelegsOf ∘ DStateOf ∘ CertStateOf
+
 open CertState
 open DState
 
@@ -97,7 +112,7 @@ instance
 \end{code}
 \begin{code}
 txgov : TxBody → List (GovVote ⊎ GovProposal)
-txgov txb = map inj₂ txprop ++ map inj₁ txvote
+txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
   where open TxBody txb
 
 rmOrphanDRepVotes : CertState → GovState → GovState
@@ -128,7 +143,7 @@ private variable
   ppolicy : Maybe ScriptHash
   pp : PParams
   enactState : EnactState
-  treasury : Coin
+  treasury : Treasury
 \end{code}
 
 \begin{figure*}[ht]
@@ -147,8 +162,8 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
     in
     ∙ isValid tx ≡ true
     ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙ ⟦ epoch slot , pp , txvote , txwdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txcerts ,CERTS⦈ certState'
-    ∙ ⟦ txid , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+    ∙ ⟦ epoch slot , pp , txGovVotes , txWdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+    ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 

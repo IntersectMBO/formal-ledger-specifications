@@ -574,7 +574,14 @@ record Snapshot : Set where
 \label{fig:defs:Snapshot}
 \end{figure*}
 \begin{code}[hide]
+record HasStake {a} (A : Type a) : Type a where
+  field stakeOf : A → Credential ⇀ Coin
+open HasStake  ⦃...⦄ public
+
 instance
+  HasStake-Snapshot : HasStake Snapshot
+  HasStake-Snapshot .stakeOf = Snapshot.stake
+
   unquoteDecl HasCast-Snapshot =
     derive-HasCast [ (quote Snapshot , HasCast-Snapshot) ]
 \end{code}
@@ -870,7 +877,7 @@ calculation, which is then subtracted from the fee pot on the epoch boundary.
 record Snapshots : Set where
   field
     mark set go  : Snapshot
-    feeSS        : Coin
+    feeSS        : Fees
 
 \end{code}
 \caption{Definitions for the SNAP transition system}
@@ -897,7 +904,7 @@ This transition has no preconditions and results in the following state change:
 private variable
   lstate : LState
   mark set go : Snapshot
-  feeSS : Coin
+  feeSS : Fees
 \end{code}
 \begin{figure*}[h]
 \begin{code}

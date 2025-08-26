@@ -65,8 +65,8 @@ instance
                     (let open L.UTxOEnv Γ using () renaming (pparams to pp)
                          open L.UTxOState s using (deposits)
                          open Tx tx renaming (body to txb)
-                         open TxBody txb using (txcerts))
-                → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txcerts)
+                         open TxBody txb using (txCerts))
+                → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txCerts)
                   ⊢ Γ C.⊢ s ⇀⦇ tx ,UTXOS⦈ s' ⭆ⁱ λ _ h →
                     Γ L.⊢ s ⇀⦇ tx ,UTXOS⦈ (setDeposits (utxoSDeposits h) s')
   UTXOSFromConf .convⁱ (inj₁ refl)       (C.Scripts-Yes (eval , ()))
@@ -86,8 +86,8 @@ instance
                    (let open L.UTxOEnv Γ using () renaming (pparams to pp)
                         open L.UTxOState s using (deposits)
                         open Tx tx renaming (body to txb)
-                        open TxBody txb using (txcerts))
-               → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txcerts)
+                        open TxBody txb using (txCerts))
+               → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txCerts)
                  ⊢ Γ C.⊢ s ⇀⦇ tx ,UTXO⦈ s' ⭆ⁱ λ _ h →
                    Γ L.⊢ s ⇀⦇ tx ,UTXO⦈ (setDeposits (utxoDeposits h) s')
   UTXOFromConf {s = s} {tx = tx} .convⁱ validCerts (C.UTXO-inductive (a , b , c , d , e , f , g , r , h , i , j , k , l , m , n , o , p , utxo)) =
@@ -101,8 +101,8 @@ instance
                     (let open L.UTxOEnv Γ using () renaming (pparams to pp)
                          open L.UTxOState s using (deposits)
                          open Tx tx renaming (body to txb)
-                         open TxBody txb using (txcerts))
-                → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txcerts)
+                         open TxBody txb using (txCerts))
+                → (isValid tx ≡ false ⊎ L.ValidCertDeposits pp deposits txCerts)
                   ⊢ Γ C.⊢ s ⇀⦇ tx ,UTXOW⦈ s' ⭆ⁱ λ _ h →
                     Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ (setDeposits (utxowDeposits h) s')  -- Conformance doesn't update deposits in UTXOW
   UTXOWFromConf .convⁱ validCerts (C.UTXOW-inductive⋯ a b c d e f g h utxo) =

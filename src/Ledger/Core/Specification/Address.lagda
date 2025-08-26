@@ -84,15 +84,23 @@ record BootstrapAddr : Type where
 record RwdAddr : Type where
   field net    : Network
         stake  : Credential
+
+Withdrawals : Type
+Withdrawals  = RwdAddr ⇀ Coin
+
 \end{code}
 \begin{code}[hide]
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
 
 record HasNetworkId {a} (A : Type a) : Type a where
-  field NetworkIdOf : A → Network 
+  field NetworkIdOf : A → Network
 open HasNetworkId ⦃...⦄ public
 
-instance 
+record HasWithdrawals {a} (A : Type a) : Type a where
+  field WithdrawalsOf : A → Withdrawals
+open HasWithdrawals ⦃...⦄ public
+
+instance
   HasNetworkId-BaseAddr : HasNetworkId BaseAddr
   HasNetworkId-BaseAddr .NetworkIdOf = BaseAddr.net
 

@@ -36,7 +36,7 @@ since they are \HashProtected{}.
 record EnactEnv : Type where
   field
     gid       : GovActionID
-    treasury  : Coin
+    treasury  : Treasury
     epoch     : Epoch
 
 record EnactState : Type where
@@ -45,7 +45,7 @@ record EnactState : Type where
     constitution  : HashProtected (DocHash × Maybe ScriptHash)
     pv            : HashProtected ProtVer
     pparams       : HashProtected PParams
-    withdrawals   : RwdAddr ⇀ Coin
+    withdrawals   : Withdrawals
 \end{code}
 \begin{code}[hide]
 record HasEnactState {a} (A : Type a) : Type a where
@@ -56,8 +56,8 @@ instance
   HasPParams-EnactState : HasPParams EnactState
   HasPParams-EnactState .PParamsOf = proj₁ ∘ EnactState.pparams
 
-  HasccMaxTermLength-EnactState : HasccMaxTermLength EnactState
-  HasccMaxTermLength-EnactState .ccMaxTermLengthOf = PParams.ccMaxTermLength ∘ PParamsOf
+  HasccMaxTermLength-EnactState : HasCCMaxTermLength EnactState
+  HasccMaxTermLength-EnactState .CCMaxTermLengthOf = PParams.ccMaxTermLength ∘ PParamsOf
 
   unquoteDecl HasCast-EnactEnv = derive-HasCast
     [ (quote EnactEnv , HasCast-EnactEnv) ]
@@ -111,8 +111,8 @@ private variable
   dh : DocHash
   sh : Maybe ScriptHash
   v : ProtVer
-  wdrl : RwdAddr ⇀ Coin
-  t : Coin
+  wdrl : Withdrawals
+  t : Treasury
   gid : GovActionID
   e : Epoch
 
@@ -142,7 +142,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ NoConfidence , _ ⟧ᵍᵃ ,ENACT⦈ record s { cc = nothing , gid }
 
   Enact-UpdComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
-                      maxTerm  = ccMaxTermLengthOf s +ᵉ e
+                      maxTerm  = CCMaxTermLengthOf s +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────

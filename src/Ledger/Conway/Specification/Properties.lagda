@@ -75,7 +75,7 @@ instance
   _ = record { toSet = fromList ∘ Block.ts }
 
   _ : IsSet TxBody GovProposal
-  _ = record { toSet = fromList ∘ TxBody.txprop }
+  _ = record { toSet = fromList ∘ TxBody.txGovProposals }
 \end{code}
 \begin{code}
 validBlockIn : ChainState → Block → Type
