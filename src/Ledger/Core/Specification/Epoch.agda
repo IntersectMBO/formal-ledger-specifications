@@ -77,6 +77,7 @@ record GlobalConstants : Type₁ where
          SlotsPerEpochᶜ   : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
          ActiveSlotCoeff  : ℚ; ⦃ Positive-ActiveSlotCoeff ⦄ : ℚ.Positive ActiveSlotCoeff
          StabilityWindowᶜ : ℕ
+         MaxLovelaceSupplyᶜ : Coin
          Quorum : ℕ
          NetworkId : Network
 
