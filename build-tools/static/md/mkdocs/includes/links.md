@@ -11,17 +11,19 @@
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Specification.Enact.md#enact-transition-system
 [EPOCH]: Ledger.Conway.Specification.Epoch.md#epoch-transition-system
+[formal ledger specification]: https://github.com/IntersectMBO/formal-ledger-specifications
 [GOV]: Ledger.Conway.Specification.Gov.md#rules-for-the-gov-transition-system
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
+[Ledger.Conway.Specification.Rewards]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
 [NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#newepoch-transition-system
 [Notation]: Notation.md
 [POOL]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
 [RATIFY]: Ledger.Conway.Specification.Ratify.md#the-ratify-transition-system
 [repourl]: https://github.com/IntersectMBO/formal-ledger-specifications
-[SNAP]: Ledger.Conway.Specification.Rewards.md#snap-transition-system
+[SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
 [UTXO]: Ledger.Conway.Specification.Utxo.md#utxo-inference-rules
 [UTXOS]: Ledger.Conway.Specification.Utxo.md#utxos-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#utxow-inference-rules

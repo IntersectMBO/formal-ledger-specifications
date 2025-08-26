@@ -1,0 +1,41 @@
+\documentclass[border=2pt]{standalone}
+%%
+%% Use this file to regenerate tikz diagrams by building the pdf and
+%% then converting to SVG.
+%%
+%% ```bash
+%% lualatex -halt-on-error -interaction=batchmode RewardsTiming-Diagram.tex
+%% dvisvgm --pdf --page=1 -n -a -o Rewards-Diagram.svg RewardsTiming-Diagram.pdf
+%% cp RewardsTiming-Diagram.svg ../md/common/src/img/
+%% ```
+%%
+%% * `--pdf` tells `dvisvgm` to read the PDF;
+%% * `-n` (no fonts) outlines text so the SVG is self‑contained;
+%% * `-a` preserves transparency.
+%%
+%% You can use `pdflatex` if you prefer; `lualatex` tends to be the most forgiving with modern packages.
+%%
+%% Use in Markdown:
+%%
+%% ```markdown
+%% ![Caption: …](img/RewardsTiming-Diagram.svg)
+%% ```
+%%
+\usepackage{pgfplots}
+\usepackage[tikz]{bclogo}
+\usepackage{tikz-cd}
+\usetikzlibrary{ arrows.meta
+               , backgrounds
+               , calc
+               , decorations.pathreplacing
+               , fit
+               , positioning
+               , shadows
+               , shapes.geometric
+               , shapes.misc
+               }
+\usepackage[dvipsnames]{xcolor}
+\usepackage{caption}
+\begin{document}
+  \input{Diagrams/RewardsTiming}
+\end{document}
