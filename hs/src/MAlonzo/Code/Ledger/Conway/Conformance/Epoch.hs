@@ -382,83 +382,83 @@ d_RewardUpdate_2322 a0 a1 = ()
 d_Snapshots_2330 a0 a1 = ()
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.flowConservation
 d_flowConservation_2364 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_flowConservation_2364 = erased
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.rs
 d_rs_2366 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_rs_2366 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_rs_2514 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_rs_2516 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δf
 d_Δf_2368 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   Integer
 d_Δf_2368 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf_2512 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf_2514 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δf-nonpositive
 d_Δf'45'nonpositive_2370 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   MAlonzo.Code.Data.Integer.Base.T__'8804'__26
 d_Δf'45'nonpositive_2370 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf'45'nonpositive_2522
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf'45'nonpositive_2524
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δr
 d_Δr_2372 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   Integer
 d_Δr_2372 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δr_2510 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δr_2512 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δt
 d_Δt_2374 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   Integer
 d_Δt_2374 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt_2508 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt_2510 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.RewardUpdate.Δt-nonnegative
 d_Δt'45'nonnegative_2376 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   MAlonzo.Code.Data.Integer.Base.T__'8804'__26
 d_Δt'45'nonnegative_2376 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt'45'nonnegative_2520
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt'45'nonnegative_2522
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.Snapshots.feeSS
 d_feeSS_2388 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582 ->
   Integer
 d_feeSS_2388 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_2596
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_feeSS_2598
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.Snapshots.go
 d_go_2390 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2524
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2526
 d_go_2390 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_2594 (coe v0)
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_go_2596 (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.Snapshots.mark
 d_mark_2392 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2524
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2526
 d_mark_2392 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_2590
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_mark_2592
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.Snapshots.set
 d_set_2394 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2524
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2526
 d_set_2394 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_2592
+      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_set_2594
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.getStakeCred
 d_getStakeCred_2398 ::
@@ -479,7 +479,7 @@ du_getStakeCred_2398
 d_mkStakeDistrs_2400 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_1958 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2524 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2526 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -487,7 +487,7 @@ d_mkStakeDistrs_2400 ::
 d_mkStakeDistrs_2400 v0 ~v1 = du_mkStakeDistrs_2400 v0
 du_mkStakeDistrs_2400 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2524 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2526 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -515,7 +515,7 @@ du_toRwdAddr_2402 v0
 d_EpochState_2404 a0 a1 = ()
 data T_EpochState_2404
   = C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_2426 MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_162
-                                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580
+                                                       MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582
                                                        MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2196
                                                        MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_944
                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254
@@ -531,7 +531,7 @@ d_acnt_2416 v0
 -- Ledger.Conway.Conformance.Epoch.EpochState.ss
 d_ss_2418 ::
   T_EpochState_2404 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582
 d_ss_2418 v0
   = case coe v0 of
       C_'10214'_'44'_'44'_'44'_'44'_'10215''7497'''_2426 v1 v2 v3 v4 v5
@@ -569,7 +569,7 @@ d_NewEpochState_2428 a0 a1 = ()
 data T_NewEpochState_2428
   = C_NewEpochState'46'constructor_6253 AgdaAny T_EpochState_2404
                                         (Maybe
-                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490)
+                                           MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492)
 -- Ledger.Conway.Conformance.Epoch.NewEpochState.lastEpoch
 d_lastEpoch_2436 :: T_NewEpochState_2428 -> AgdaAny
 d_lastEpoch_2436 v0
@@ -586,7 +586,7 @@ d_epochState_2438 v0
 d_ru_2440 ::
   T_NewEpochState_2428 ->
   Maybe
-    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490
+    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492
 d_ru_2440 v0
   = case coe v0 of
       C_NewEpochState'46'constructor_6253 v1 v2 v3 -> coe v3
@@ -960,12 +960,12 @@ du_HasCast'45'NewEpochState_2444
 d_applyRUpd_2446 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_1958 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   T_EpochState_2404 -> T_EpochState_2404
 d_applyRUpd_2446 v0 ~v1 v2 v3 = du_applyRUpd_2446 v0 v2 v3
 du_applyRUpd_2446 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   T_EpochState_2404 -> T_EpochState_2404
 du_applyRUpd_2446 v0 v1 v2
   = case coe v2 of
@@ -1369,7 +1369,7 @@ du_applyRUpd_2446 v0 v1 v2
                                                                   MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                   (coe v8)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt_2508
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δt_2510
                                                                      (coe v1)))
                                                                (coe
                                                                   du_unregRU''_2500 (coe v0)
@@ -1380,7 +1380,7 @@ du_applyRUpd_2446 v0 v1 v2
                                                                MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                (coe v9)
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δr_2510
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δr_2512
                                                                   (coe v1))))))
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -1788,7 +1788,7 @@ du_applyRUpd_2446 v0 v1 v2
                                                                               MAlonzo.Code.Data.Integer.Base.d__'43'__276
                                                                               (coe v14)
                                                                               (coe
-                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf_2512
+                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_Δf_2514
                                                                                  (coe v1))))
                                                                         (coe
                                                                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
@@ -3240,10 +3240,10 @@ du_applyRUpd_2446 v0 v1 v2
 d_regRU_2496 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_1958 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3263,7 +3263,7 @@ d_regRU_2496 v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
   = du_regRU_2496 v0 v2 v13
 du_regRU_2496 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_regRU_2496 v0 v1 v2
@@ -3292,7 +3292,7 @@ du_regRU_2496 v0 v1 v2
                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                   (coe v0)))))
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_rs_2514
+         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_rs_2516
          (coe v1))
       (coe
          MAlonzo.Code.Class.IsSet.du_dom_548
@@ -3305,10 +3305,10 @@ du_regRU_2496 v0 v1 v2
 d_unregRU_2498 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_1958 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3328,7 +3328,7 @@ d_unregRU_2498 v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
   = du_unregRU_2498 v0 v2 v13
 du_unregRU_2498 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_unregRU_2498 v0 v1 v2
@@ -3357,7 +3357,7 @@ du_unregRU_2498 v0 v1 v2
                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1270
                   (coe v0)))))
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_rs_2514
+         MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_rs_2516
          (coe v1))
       (coe
          MAlonzo.Code.Class.IsSet.du_dom_548
@@ -3370,10 +3370,10 @@ du_unregRU_2498 v0 v1 v2
 d_unregRU''_2500 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_1958 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   Integer ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
@@ -3393,7 +3393,7 @@ d_unregRU''_2500 v0 ~v1 v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11
   = du_unregRU''_2500 v0 v2 v13
 du_unregRU''_2500 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2490 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2492 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Integer
 du_unregRU''_2500 v0 v1 v2
   = coe
@@ -3613,7 +3613,7 @@ d_'46'generalizedField'45'acnt_39193 v0
 -- Ledger.Conway.Conformance.Epoch..generalizedField-ss'
 d_'46'generalizedField'45'ss''_39195 ::
   T_GeneralizeTel_39203 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582
 d_'46'generalizedField'45'ss''_39195 v0
   = case coe v0 of
       C_mkGeneralizeTel_39205 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v5
@@ -3629,7 +3629,7 @@ d_'46'generalizedField'45'fut''_39197 v0
 -- Ledger.Conway.Conformance.Epoch..generalizedField-ss
 d_'46'generalizedField'45'ss_39199 ::
   T_GeneralizeTel_39203 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580
+  MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582
 d_'46'generalizedField'45'ss_39199 v0
   = case coe v0 of
       C_mkGeneralizeTel_39205 v1 v2 v3 v4 v5 v6 v7 v8 -> coe v7
@@ -3648,7 +3648,7 @@ data T_GeneralizeTel_39203
   = C_mkGeneralizeTel_39205 MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2196
                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254
                             AgdaAny MAlonzo.Code.Ledger.Conway.Specification.PParams.T_Acnt_162
-                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580
+                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582
                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_RatifyState_2254
-                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2580
+                            MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2582
                             MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_944
