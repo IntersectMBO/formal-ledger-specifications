@@ -1,6 +1,6 @@
 # Rewards {#sec:rewards}
 
-This section is part of the [`Ledger.Conway.Specification.Rewards`][] module of the
+This section is part of the [Ledger.Conway.Specification.Rewards][] module of the
 [formal ledger specification][], where we define how rewards for stake pools and
 their delegators are calculated and paid out. This calculation has two main aspects.
 
@@ -137,7 +137,7 @@ This section defines the amount of rewards that are paid out to stake
 pools and their delegators.
 
 ### Function maxPool used for computing a Reward Update {#sec:maxpool}
-[Function maxPool used for computing a Reward Update]: Ledger.Conway.Specification.Rewards.md#sec:maxpool
+[Function maxPool used for computing a Reward Update]: #sec:maxpool
 
 This subsection defines the function `maxPool`{.AgdaFunction} which gives the maximum
 reward a stake pool can receive in an epoch. Relevant quantities are the following:
@@ -214,9 +214,11 @@ maxPool pparams rewardPot stake pledge = rewardℕ
 -->
 
 ```agda
-    rewardℚ =
-        fromℕ rewardPot ÷ 1+a0
-        * (stake' + pledge' * a0 * (stake' - pledge' * (z0 - stake') ÷ z0) ÷ z0)
+    rewardℚ =  fromℕ rewardPot ÷ 1+a0
+               *  (  stake' + pledge' * a0
+                    * ( stake' - pledge' * (z0 - stake') ÷ z0 )
+                    ÷ z0
+                  )
     rewardℕ = posPart (floor rewardℚ)
 ```
 
@@ -243,7 +245,6 @@ mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ stake'
 
 <!--
 ```agda
-
     instance
       nonZero-totalBlocks : NonZero (1 ⊔ totalBlocks)
       nonZero-totalBlocks = nonZero-max-1 totalBlocks
@@ -350,10 +351,10 @@ Relevant quantities are:
 Stake : Type
 Stake = Credential ⇀ Coin
 
-rewardOnePool : PParams → Coin → ℕ → ℕ → StakePoolParams
-  → Stake → UnitInterval → UnitInterval → Coin → Stake
-rewardOnePool pp rewardPot n N pool stakeDistr σ σa tot =
-  memberRewards ∪⁺ ownersRewards
+rewardOnePool :  PParams → Coin → ℕ → ℕ → StakePoolParams
+                 → Stake → UnitInterval → UnitInterval → Coin → Stake
+
+rewardOnePool pp rewardPot n N pool stakeDistr σ σa tot = memberRewards ∪⁺ ownersRewards
   where
   mkRelativeStake : Coin → UnitInterval
   mkRelativeStake = λ coin → clamp (coin /₀ tot)
@@ -689,9 +690,9 @@ More concretely:
 
 7.  Rewards are given out.
 
-<a id="fig:reward-timing">
+<a id="fig:reward-timing"></a>
 
-!!! note "**Timeline of the rewards calculation**"
+!!! note "Timeline of the rewards calculation"
 
     The snapshot taken at (A) is labeled “mark” during epoch $e_{i-1}$, “set” during
     epoch $e_i$ and “go” during epoch $e_{i+1}$.  At (G) the snapshot taken at (A) is
@@ -699,22 +700,18 @@ More concretely:
 
     ![Rewards timeline](img/RewardsTiming-Diagram.svg "Rewards timeline")
 
-    !!! note **An important note about the time intervals**
-
-        Between time D and E we are concerned with chain growth and stability.
-        Therefore this duration can be stated as 2k blocks (to state it in slots requires
-        details about the particular version of the Ouroboros protocol). The duration
-        between F and G is also 2k blocks. Between E and F a single honest block is
-        enough to ensure a random nonce.
-
-</a>
+    **N.B.**  Between time D and E we are concerned with chain growth and stability.
+    Therefore this duration can be stated as 2k blocks (to state it in slots requires
+    details about the particular version of the Ouroboros protocol). The duration
+    between F and G is also 2k blocks.  Between E and F a single honest block is
+    enough to ensure a random nonce.
 
 In order to specify this logic, we store the last three snapshots of the stake
 distributions.  The mnemonic “mark, set, go” will be used to keep track of the
 snapshots, where the label “mark” refers to the most recent snapshot, and “go” refers
-to the snapshot that is ready to be used in the reward calculation.
-Blocks will be produced using the snapshot labeled
-“set”, whereas rewards are computed from the snapshot labeled “go”.
+to the snapshot that is ready to be used in the reward calculation.  Blocks will be
+produced using the snapshot labeled “set”, whereas rewards are computed from the
+snapshot labeled “go”.
 
 
 ### Example Illustration of the Reward Cycle {#sec:illustration-reward-cycle}
