@@ -492,6 +492,7 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Base
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties
       MAlonzo.Code.Ledger.Conway.Specification.Ledger
+      MAlonzo.Code.Ledger.Conway.Specification.PoolReap
       MAlonzo.Code.Ledger.Conway.Specification.PParams
       MAlonzo.Code.Ledger.Conway.Specification.Ratify
       MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties

@@ -6280,14 +6280,14 @@ do not present any details of the Agda formalization.</p>
   <a id="1486" class="Keyword">field</a>
     <a id="LEnv.slot"></a><a id="1496" href="Ledger.Conway.Specification.Ledger.html#1496" class="Field">slot</a>        <a id="1508" class="Symbol">:</a> <a id="1510" href="Ledger.Core.Specification.Epoch.html#682" class="Function">Slot</a>
     <a id="LEnv.ppolicy"></a><a id="1519" href="Ledger.Conway.Specification.Ledger.html#1519" class="Field">ppolicy</a>     <a id="1531" class="Symbol">:</a> <a id="1533" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1539" href="Ledger.Core.Specification.Crypto.html#2042" class="Function">ScriptHash</a>
-    <a id="LEnv.pparams"></a><a id="1554" href="Ledger.Conway.Specification.Ledger.html#1554" class="Field">pparams</a>     <a id="1566" class="Symbol">:</a> <a id="1568" href="Ledger.Conway.Specification.PParams.html#2869" class="Record">PParams</a>
+    <a id="LEnv.pparams"></a><a id="1554" href="Ledger.Conway.Specification.Ledger.html#1554" class="Field">pparams</a>     <a id="1566" class="Symbol">:</a> <a id="1568" href="Ledger.Conway.Specification.PParams.html#3050" class="Record">PParams</a>
     <a id="LEnv.enactState"></a><a id="1580" href="Ledger.Conway.Specification.Ledger.html#1580" class="Field">enactState</a>  <a id="1592" class="Symbol">:</a> <a id="1594" href="Ledger.Conway.Specification.Enact.html#1972" class="Record">EnactState</a>
     <a id="LEnv.treasury"></a><a id="1609" href="Ledger.Conway.Specification.Ledger.html#1609" class="Field">treasury</a>    <a id="1621" class="Symbol">:</a> <a id="1623" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
 </pre>
 <pre class="Agda hidden-source">
 <a id="1648" class="Keyword">instance</a>
-  <a id="HasPParams-LEnv"></a><a id="1659" href="Ledger.Conway.Specification.Ledger.html#1659" class="Function">HasPParams-LEnv</a> <a id="1675" class="Symbol">:</a> <a id="1677" href="Ledger.Conway.Specification.PParams.html#5180" class="Record">HasPParams</a> <a id="1688" href="Ledger.Conway.Specification.Ledger.html#1466" class="Record">LEnv</a>
-  <a id="1695" href="Ledger.Conway.Specification.Ledger.html#1659" class="Function">HasPParams-LEnv</a> <a id="1711" class="Symbol">.</a><a id="1712" href="Ledger.Conway.Specification.PParams.html#5231" class="Field">PParamsOf</a> <a id="1722" class="Symbol">=</a> <a id="1724" href="Ledger.Conway.Specification.Ledger.html#1554" class="Field">LEnv.pparams</a>
+  <a id="HasPParams-LEnv"></a><a id="1659" href="Ledger.Conway.Specification.Ledger.html#1659" class="Function">HasPParams-LEnv</a> <a id="1675" class="Symbol">:</a> <a id="1677" href="Ledger.Conway.Specification.PParams.html#5361" class="Record">HasPParams</a> <a id="1688" href="Ledger.Conway.Specification.Ledger.html#1466" class="Record">LEnv</a>
+  <a id="1695" href="Ledger.Conway.Specification.Ledger.html#1659" class="Function">HasPParams-LEnv</a> <a id="1711" class="Symbol">.</a><a id="1712" href="Ledger.Conway.Specification.PParams.html#5412" class="Field">PParamsOf</a> <a id="1722" class="Symbol">=</a> <a id="1724" href="Ledger.Conway.Specification.Ledger.html#1554" class="Field">LEnv.pparams</a>
 </pre>
 
 <pre class="Agda">
@@ -6363,7 +6363,7 @@ do not present any details of the Agda formalization.</p>
   <a id="3507" href="Ledger.Conway.Specification.Ledger.html#3507" class="Generalizable">tx</a> <a id="3510" class="Symbol">:</a> <a id="3512" href="Ledger.Conway.Specification.Transaction.html#6436" class="Record">Tx</a>
   <a id="3517" href="Ledger.Conway.Specification.Ledger.html#3517" class="Generalizable">slot</a> <a id="3522" class="Symbol">:</a> <a id="3524" href="Ledger.Core.Specification.Epoch.html#682" class="Function">Slot</a>
   <a id="3531" href="Ledger.Conway.Specification.Ledger.html#3531" class="Generalizable">ppolicy</a> <a id="3539" class="Symbol">:</a> <a id="3541" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="3547" href="Ledger.Core.Specification.Crypto.html#2042" class="Function">ScriptHash</a>
-  <a id="3560" href="Ledger.Conway.Specification.Ledger.html#3560" class="Generalizable">pp</a> <a id="3563" class="Symbol">:</a> <a id="3565" href="Ledger.Conway.Specification.PParams.html#2869" class="Record">PParams</a>
+  <a id="3560" href="Ledger.Conway.Specification.Ledger.html#3560" class="Generalizable">pp</a> <a id="3563" class="Symbol">:</a> <a id="3565" href="Ledger.Conway.Specification.PParams.html#3050" class="Record">PParams</a>
   <a id="3575" href="Ledger.Conway.Specification.Ledger.html#3575" class="Generalizable">enactState</a> <a id="3586" class="Symbol">:</a> <a id="3588" href="Ledger.Conway.Specification.Enact.html#1972" class="Record">EnactState</a>
   <a id="3601" href="Ledger.Conway.Specification.Ledger.html#3601" class="Generalizable">treasury</a> <a id="3610" class="Symbol">:</a> <a id="3612" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a>
 </pre>
