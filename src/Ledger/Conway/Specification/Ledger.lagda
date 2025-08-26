@@ -88,6 +88,21 @@ instance
   HasDeposits-LState : HasDeposits LState
   HasDeposits-LState .DepositsOf = DepositsOf ∘ UTxOStateOf
 
+  HasPools-LState : HasPools LState
+  HasPools-LState .PoolsOf = PoolsOf ∘ CertStateOf
+
+  HasGState-LState : HasGState LState
+  HasGState-LState .GStateOf = GStateOf ∘ CertStateOf
+
+  HasDState-LState : HasDState LState
+  HasDState-LState .DStateOf = DStateOf ∘ CertStateOf
+
+  HasPState-LState : HasPState LState
+  HasPState-LState .PStateOf = PStateOf ∘ CertStateOf
+
+  HasVDelegs-LState : HasVDelegs LState
+  HasVDelegs-LState .VDelegsOf = VDelegsOf ∘ DStateOf ∘ CertStateOf
+
 open CertState
 open DState
 

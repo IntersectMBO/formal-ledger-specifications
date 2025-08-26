@@ -262,6 +262,9 @@ instance
 
   HasDReps-CertState : HasDReps CertState
   HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf
+
+  HasPools-CertState : HasPools CertState
+  HasPools-CertState .PoolsOf = PoolsOf ∘ PStateOf
 \end{code}
 \begin{code}
 
