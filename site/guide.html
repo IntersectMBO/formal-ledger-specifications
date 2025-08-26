@@ -6683,7 +6683,8 @@ fls-shake<span class="w"> </span>--help
 <li>
 <p><strong>With Nix</strong></p>
 <p>Enter the command <code>nix build .#mkdocs</code> (or <code>nix-build -A mkdocs</code>) then open the
-file <code>result/site/index.html</code> in a browser.</p>
+file <code>result/site/index.html</code> in a browser. This type-checks the
+Agda code, and generates the HTML documentation from scratch.</p>
 <p><strong>Note</strong>. This currently works in Chrome but may not work in Brave or
 Firefox.  If you want to use one of those browsers to view the generated
 documentation, you can run a local server on the result,
@@ -6692,6 +6693,8 @@ to <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>.</p>
 </li>
 <li>
 <p><strong>Manually</strong></p>
+<p>This method only type-checks the Agda code that has changed since last time and
+then generates the HTML documentation.</p>
 <div class="highlight"><pre><span></span><code>nix<span class="w"> </span>develop<span class="w"> </span>.#docs
 python<span class="w"> </span>build-tools/scripts/md/build.py<span class="w"> </span>--run-agda
 <span class="nb">cd</span><span class="w"> </span>_build/md/mkdocs
@@ -6715,6 +6718,7 @@ python3 -m http.server
 <p>First, build <code>agdaWithPackages</code> and create a stable symlink to it in your home directory. This prevents you from having to update your IDE settings every time the project's dependencies change.</p>
 <div class="highlight"><pre><span></span><code>nix-build<span class="w"> </span>-A<span class="w"> </span>agdaWithPackages<span class="w"> </span>-o<span class="w"> </span>~/ledger-agda
 </code></pre></div>
+<p>Then make sure that the <code>~/ledger-agda/bin</code> directory is in your <code>PATH</code> when starting your editor.</p>
 <hr />
 <h3 id="setting-up-multiple-versions-with-update-alternatives-optional">Setting up multiple versions with <code>update-alternatives</code> (OPTIONAL)<a class="headerlink" href="#setting-up-multiple-versions-with-update-alternatives-optional" title="Permanent link">&para;</a></h3>
 <p><strong>For Linux users</strong>.</p>
