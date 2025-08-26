@@ -221,7 +221,8 @@ There are two ways to do this.
 1.  **With Nix**
 
     Enter the command `nix build .#mkdocs` (or `nix-build -A mkdocs`) then open the
-    file `result/site/index.html` in a browser.
+    file `result/site/index.html` in a browser. This type-checks the
+    Agda code, and generates the HTML documentation from scratch.
 
     **Note**. This currently works in Chrome but may not work in Brave or
     Firefox.  If you want to use one of those browsers to view the generated
@@ -230,6 +231,9 @@ There are two ways to do this.
     to <http://127.0.0.1:8000/>.
 
 2.  **Manually**
+
+    This method only type-checks the Agda code that has changed since last time and
+    then generates the HTML documentation.
 
     ```bash
     nix develop .#docs
@@ -265,6 +269,8 @@ First, build `agdaWithPackages` and create a stable symlink to it in your home d
 ```bash
 nix-build -A agdaWithPackages -o ~/ledger-agda
 ```
+
+Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
 
 ---
 
