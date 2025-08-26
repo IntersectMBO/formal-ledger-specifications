@@ -1,4 +1,11 @@
-  \begin{tikzpicture} [
+\def\AlonzoColor{Periwinkle}
+\def\BabbageColor{Tan}
+\def\ConwayColor{yellow!50}
+\def\ShelleyColor{lightgray}
+\newcommand{\legendbox}[1]{%
+  \textcolor{#1}{\rule{\fontcharht\font`X}{\fontcharht\font`X}}%
+}
+\begin{tikzpicture} [
     conway/.style = {draw, minimum size=1cm, align=right, fill=\ConwayColor},
     shelley/.style = {draw, minimum size=1cm, align=right},
     modified/.style = {draw, minimum size=1cm, align=right, fill=\BabbageColor},

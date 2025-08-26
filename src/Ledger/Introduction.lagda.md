@@ -1,7 +1,5 @@
 # Introduction {#sec:introduction}
 
-
-
 <!--
 ```agda
 {-# OPTIONS --safe #-}

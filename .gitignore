@@ -1,7 +1,6 @@
 ## Ignore build products
 _build/
 dist
-latex/.auctex-auto
 
 ## Ignore shake folder
 .shake/
@@ -35,3 +34,10 @@ result*
 ## Python
 build-tools/scripts/md/__pycache__/
 __pycache__
+
+## LaTeX
+latex/.auctex-auto
+build-tools/static/latex/*.aux
+build-tools/static/latex/*.log
+build-tools/static/latex/*-Diagram.pdf
+build-tools/static/latex/*-Diagram.svg

@@ -244,6 +244,29 @@ There are two ways to do this.
 
     Then point your browser to  <http://127.0.0.1:8000/>.
 
+
+### Generating images
+
+The diagrams in our documentation come from legacy tikz code that is found in the
+`build-tools/static/latex/Diagrams` directory.  To generate svg images from a tikz
+source code file, we create a standalone LaTeX document for it (e.g.,
+`build-tools/static/latex/STS-Diagram.tex`) and run the following commands:
+
+```
+lualatex -halt-on-error -interaction=batchmode STS-Diagram.tex
+dvisvgm --pdf --page=1 -n -a -o STS-Diagram.svg STS-Diagram.pdf
+```
+
+We copy the resulting `.svg` file to the `build-tools/static/md/common/src/img/`
+directory.  To include the diagram in the markdown documentation, we add it to a
+`.lagda.md` file as follows: `![STS-Diagram](img/STS-Diagram.svg)`.
+
+**Important**.  If you create a new `.tex` file in `build-tools/static/latex/` that
+you do not want processed by the pipeline, be sure to add the name of that file (without the
+`.tex` extension) to the `excluded_prefixes` list in the `convert_all_static_tex`
+function of the Python script `build-tools/scripts/md/modules/static_tex_processor.py`.
+
+
 ### Browsing the source code
 
 After generating the HTML version of the source code with `nix build .#html` (or `nix-build -A html`), you can
