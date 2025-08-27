@@ -542,7 +542,9 @@ can move funds into “Reward accounts.”
 
 !!! note "**Potential flows of funds during one transition step**"
 
-    ![Rewards flowchart](img/Rewards-Diagram.svg "Rewards flowchart")
+    <figure class="svg-card">
+      <img src="img/Rewards-Diagram.svg" alt="Rewards flowchart">
+    </figure>
 
     Value flows between accounting pots, but the total amount of value in the system
     remains constant.  In particular, the red subgraph represents the inputs and outputs
@@ -698,7 +700,9 @@ More concretely:
     epoch $e_i$ and “go” during epoch $e_{i+1}$.  At (G) the snapshot taken at (A) is
     no longer needed and will be discarded.
 
-    ![Rewards timeline](img/RewardsTiming-Diagram.svg "Rewards timeline")
+    <figure class="svg-card">
+      <img src="img/RewardsTiming-Diagram.svg" alt="Rewards timeline">
+    </figure>
 
     **N.B.**  Between time D and E we are concerned with chain growth and stability.
     Therefore this duration can be stated as 2k blocks (to state it in slots requires

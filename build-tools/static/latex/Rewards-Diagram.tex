@@ -10,23 +10,10 @@
 %% self-contained, `-a` preserves transparency)
 %%
 %% Use the resulting .svg file in a Markdown file as follows:
-%% `![Rewards-Diagram](img/Rewards-Diagram.svg)`
 %%
-\usepackage{pgfplots}
-\usepackage[tikz]{bclogo}
-\usepackage{tikz-cd}
-\usetikzlibrary{ arrows.meta
-               , backgrounds
-               , calc
-               , decorations.pathreplacing
-               , fit
-               , positioning
-               , shadows
-               , shapes.geometric
-               , shapes.misc
-               }
-\usepackage[dvipsnames]{xcolor}
-\usepackage{caption}
+%%    ![Rewards-Diagram](img/Rewards-Diagram.svg)
+%%
+\include{tikzpreamble}
 \begin{document}
   \input{Diagrams/Rewards}
 \end{document}

@@ -1,3 +1,4 @@
+# flake.nix
 {
   description = "Formal Ledger Specifications (flake integration)";
 

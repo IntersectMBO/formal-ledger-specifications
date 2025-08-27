@@ -40,7 +40,8 @@ from modules.site_assembly import (
     generate_macros_json,
     copy_staged_to_mkdocs,
     deploy_mkdocs_assets,
-    generate_mkdocs_config
+    generate_mkdocs_config,
+    build_tikz_svgs
 )
 
 def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None:
@@ -84,6 +85,10 @@ def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None
     # 6. Stage content for site generation
     all_processed_files = [f.current_path for f in agda_result.unwrap()]
     stage_content(config, all_processed_files)
+
+    built_svgs = build_tikz_svgs(config)
+    if built_svgs:
+        logging.info(f"🧩 Built {len(built_svgs)} TikZ SVGs.")
 
     # 7. Assemble the MkDocs site
     nav_files = copy_staged_to_mkdocs(config)

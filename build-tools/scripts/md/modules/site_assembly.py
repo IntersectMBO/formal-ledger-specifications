@@ -20,6 +20,7 @@ if str(current_dir) not in __import__('sys').path:
     __import__('sys').path.insert(0, str(current_dir))
 
 from config.build_config import BuildConfig
+from utils.command_runner import run_command
 
 #=======================================================================
 # Functions for asset generation
@@ -53,7 +54,6 @@ def generate_macros_json(sty_content: str) -> str:
         "placeholders": {}
     }
     return json.dumps(output_json, indent=2)
-
 
 
 def extract_agda_class_rules(css_text: str) -> Dict[str, str]:
@@ -150,6 +150,91 @@ def generate_custom_css_from_agda(
 """.strip())
 
     return "\n".join(css_parts) + "\n"
+
+
+def build_tikz_svgs(config: BuildConfig) -> list[str]:
+    """
+    Compiles all *-Diagram.tex in build-tools/static/latex/ to SVG and
+    copies them into MkDocs docs/img/.
+    """
+    latex_root = config.source_paths.latex_dir                  # …/build-tools/static/latex
+    wrappers = sorted(latex_root.glob("*-Diagram.tex"))         # Rewards-Diagram.tex, etc.
+    out_dir = (config.build_paths.mkdocs_docs_dir / "img")      # …/_build/md/mkdocs/docs/img
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    built = []
+
+    for wrapper in wrappers:
+        name = wrapper.stem                                     # "Rewards-Diagram"
+        pdf = latex_root / f"{name}.pdf"
+        svg = latex_root / f"{name}.svg"
+
+        logging.info(f"🖼️  Building {name}.svg from {wrapper.name} …")
+
+        # 1) lualatex (quiet, error-on-fail) in latex_root
+        r1 = run_command(
+            [
+                "lualatex",
+                "-halt-on-error",
+                "-file-line-error",          # ← show file:line:error
+                "-interaction=nonstopmode",  # ← still writes .log fully
+                wrapper.name
+            ],
+            cwd=latex_root,
+            capture_output=True,
+            text=True
+        )
+        if r1.is_err:
+            # 1) dump the last lines of the .log
+            log_path = latex_root / f"{name}.log"
+            if log_path.exists():
+                tail = log_path.read_text(encoding="utf-8", errors="ignore").splitlines()[-120:]
+                logging.error("LaTeX log tail for %s:\n%s", wrapper.name, "\n".join(tail))
+            else:
+                # 2) fall back to process stderr/stdout
+                err = r1.unwrap_err()
+                logging.error("lualatex stderr/stdout for %s:\n%s\n%s",
+                              wrapper.name,
+                              err.context.get("stderr",""),
+                              err.context.get("stdout",""))
+            continue
+
+        # 2) dvisvgm (outline text, keep transparency)
+        r2 = run_command(
+            ["dvisvgm", "--pdf", "--page=1", "-n", "-a", "-o", svg.name, pdf.name],
+            cwd=latex_root,
+            capture_output=True,
+            text=True
+        )
+        if r2.is_err:
+            err = r2.unwrap_err()
+            logging.error("dvisvgm failed for %s:\nstderr:\n%s\nstdout:\n%s",
+                          pdf.name,
+                          err.context.get("stderr",""),
+                          err.context.get("stdout",""))
+            continue
+
+        # 3) Inject a white background rect to avoid dark-mode washout.
+        #    (Comment this block out to use the CSS wrapper approach instead.)
+        # try:
+        #     text = svg.read_text(encoding="utf-8")
+        #     m = re.search(r"<svg[^>]*>", text)
+        #     if m and 'rect' not in text[:m.end()+100].lower():
+        #         # Insert after the opening <svg …> tag
+        #         i = m.end()
+        #         bg_rect = '<rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>'
+        #         text = text[:i] + bg_rect + text[i:]
+        #         svg.write_text(text, encoding="utf-8")
+        # except Exception as e:
+        #     logging.warning(f"Could not inject background into {svg.name}: {e}")
+
+        # 4) copy to docs/img/
+        target = out_dir / svg.name
+        shutil.copy2(svg, target)
+        logging.info(f"✅  Wrote {target.relative_to(config.build_paths.mkdocs_docs_dir)}")
+        built.append(str(target.name))
+
+    return built
 
 
 #=======================================================================

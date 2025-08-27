@@ -247,24 +247,56 @@ There are two ways to do this.
 
 ### Generating images
 
-The diagrams in our documentation come from legacy tikz code that is found in the
-`build-tools/static/latex/Diagrams` directory.  To generate svg images from a tikz
+The diagrams in our documentation come from legacy tikz source code files that live
+in the `build-tools/static/latex/Diagrams` directory.  To generate svg images from a tikz
 source code file, we create a standalone LaTeX document for it (e.g.,
-`build-tools/static/latex/STS-Diagram.tex`) and run the following commands:
+`build-tools/static/latex/STS-Diagram.tex`) and
 
-```
-lualatex -halt-on-error -interaction=batchmode STS-Diagram.tex
-dvisvgm --pdf --page=1 -n -a -o STS-Diagram.svg STS-Diagram.pdf
-```
+1.  run the following commands:
 
-We copy the resulting `.svg` file to the `build-tools/static/md/common/src/img/`
-directory.  To include the diagram in the markdown documentation, we add it to a
+    ```
+    lualatex -halt-on-error -interaction=batchmode STS-Diagram.tex
+    dvisvgm --pdf --page=1 -n -a -o STS-Diagram.svg STS-Diagram.pdf
+    ```
+
+2.  copy the resulting `.svg` file into the `build-tools/static/md/common/src/img/` directory.
+
+To include the diagram in the markdown documentation, we add it to a
 `.lagda.md` file as follows: `![STS-Diagram](img/STS-Diagram.svg)`.
 
-**Important**.  If you create a new `.tex` file in `build-tools/static/latex/` that
-you do not want processed by the pipeline, be sure to add the name of that file (without the
-`.tex` extension) to the `excluded_prefixes` list in the `convert_all_static_tex`
-function of the Python script `build-tools/scripts/md/modules/static_tex_processor.py`.
+(The Python pipeline for markdown migration and mkdocs site generation
+can now handle steps 1 and 2 above.  Specifically, when you build the html
+documentation site using the second ("manual") method above, the program looks in the
+`build-tools/static/latex/` directory for LaTeX files with names matching the pattern
+`*-Diagram.tex`; it processes each such file with the `lualatex` and `dvisvgm`
+commands shown above and then copies the resulting `.svg` image file into the
+`build-tools/static/md/common/src/img` directory.)
+
+**Important Notes**
+
++  For each tikz source file in `build-tools/static/latex/Diagrams`, to generate the
+   corresponding svg image file, we must create a standalone LaTeX file
+   `*-Diagram.tex` file that `\include`s the tikz source file.  Also, we need to
+   include the svg image in the appropriate `.lagda.md` file by hand, either
+
+    +  using the standard Markdown syntax for including images, that is, `![...](...)`; e.g.,
+
+        `![Rewards flowchart](img/Rewards-Diagram.svg "Rewards flowchart")`
+
+        OR
+
+    +  using our custom `svg-card` css class; e.g.,
+
+        ````html
+        <figure class="svg-card">
+          <img src="img/RewardsTiming-Diagram.svg" alt="Rewards timeline">
+        </figure>
+        ````
+
++  Each `.tex` file in the `build-tools/static/latex/` directory that should not be
+   converted to Markdown by the pipeline must be added to the `excluded_prefixes`
+   list in the `convert_all_static_tex` function of the Python script
+   `build-tools/scripts/md/modules/static_tex_processor.py`.
 
 
 ### Browsing the source code

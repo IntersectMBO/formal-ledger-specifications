@@ -67,6 +67,7 @@
           - Properties/:
             - GovDepsMatch: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
             - PoV: Ledger.Conway.Specification.Ledger.Properties.PoV.md
+        - PoolReap: Ledger.Conway.Specification.PoolReap.md
         - PParams: Ledger.Conway.Specification.PParams.md
         - Properties: Ledger.Conway.Specification.Properties.md
         - Ratify: Ledger.Conway.Specification.Ratify.md

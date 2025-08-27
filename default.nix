@@ -1,3 +1,4 @@
+# default.nix
 {
   sources ? import ./build-tools/nix/sources.nix,
   nixpkgs ? import sources.nixpkgs {
@@ -132,6 +133,14 @@ let
       biblatex-software
       latexmk
       environ
+
+      # The following are needed for svg image generation:
+      luatex
+      luatex85
+      dvisvgm
+      standalone
+      tikz-cd
+      pgfplots
       ;
   };
 
@@ -270,6 +279,7 @@ let
           pyyaml
         ]
       ))
+      ghostscript
     ];
 
     buildPhase = ''
@@ -364,7 +374,8 @@ let
         # Additional tools
         coreutils
         hpack
-      ];
+        ghostscript
+    ];
 
       shellHook = ''
         export PATH="$HOME/.cargo/bin:$PATH"    # Ensure cargo tools are in PATH

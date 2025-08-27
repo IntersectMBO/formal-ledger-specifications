@@ -9,23 +9,11 @@
 %% (`--pdf` tells `dvisvgm` to read the PDF, `-n` outlines text so the svg file is
 %% self-contained, `-a` preserves transparency)
 %%
-%% Use the resulting .svg file in a Markdown file as follows: `![STS-Diagram](img/STS-Diagram.svg)`
+%% Use the resulting .svg file in a Markdown file as follows:
 %%
-\usepackage{pgfplots}
-\usepackage[tikz]{bclogo}
-\usepackage{tikz-cd}
-\usetikzlibrary{ arrows.meta
-               , backgrounds
-               , calc
-               , decorations.pathreplacing
-               , fit
-               , positioning
-               , shadows
-               , shapes.geometric
-               , shapes.misc
-               }
-\usepackage[dvipsnames]{xcolor}
-\usepackage{caption}
+%%     ![STS-Diagram](img/STS-Diagram.svg)
+%%
+\include{tikzpreamble}
 \begin{document}
   \input{Diagrams/CardanoLedger}
 \end{document}

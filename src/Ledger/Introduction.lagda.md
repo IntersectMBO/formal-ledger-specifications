@@ -169,7 +169,9 @@ balanced, and several other conditions.
     <span class="legend-box legend-Conway"></span> Rules added in Conway;
     <span class="legend-box legend-Babbage"></span> Rules modified in Conway
 
-    ![STS Diagram](img/STS-Diagram.svg "STS Diagram")
+    <figure class="svg-card">
+      <img src="img/STS-Diagram.svg"  alt="STS Diagram">
+    </figure>
 </a>
 
 A brief description of each transition rule is provided below, with a

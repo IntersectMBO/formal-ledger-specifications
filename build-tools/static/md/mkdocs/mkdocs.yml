@@ -31,15 +31,12 @@ theme:
         icon: material/weather-sunny
         name: Dark mode
       primary: black
-      accent: red
 
     # Light Mode
     - scheme: default
       toggle:
         icon: material/weather-night
         name: Light mode
-      primary: blue
-      accent: deep orange
 
   # Font configuration (optional)
   font:

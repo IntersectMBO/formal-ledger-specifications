@@ -172,3 +172,20 @@ body.reveal-agda-source pre.Agda.hidden-source {
     <span class="legend-box legend-Shelley"></span> Shelley
    ```
 */
+
+/* A soft panel behind transparent SVGs */
+.svg-card {
+  display: inline-block;
+  padding: .75rem;
+  border-radius: .5rem;
+  border: 1px solid rgba(0,0,0,.08);
+  background: #edf3ff;            /* light mode */
+}
+
+/* MkDocs Material dark theme */
+[data-md-color-scheme="slate"] .svg-card {
+  background: #9fafaf;    /* dark slate panel */
+  border-color: rgba(255,255,255,.08);
+}
+
+.svg-card img { display:block; max-width:100%; height:auto; }
