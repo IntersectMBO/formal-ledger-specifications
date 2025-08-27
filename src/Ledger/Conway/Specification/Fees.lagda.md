@@ -1,17 +1,13 @@
 # Fee Calculation {#sec:fees}
 
-This section is part of the
-[`Ledger.Conway.Specification.Fees`](https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/ConwaySpecification/Fees.lagda.md)
-module of the [formal ledger specification](https://github.com/IntersectMBO/formal-ledger-specifications),
-where we define the functions used to compute the fees associated with
-reference scripts.
+This section is part of the [Ledger.Conway.Specification.Fees][] module of the [formal ledger specification][]
+where we define the functions used to compute the fees associated with reference scripts.
 
-The function `scriptsCost`{.AgdaFunction}
-([Section 'Calculation of fees for reference scripts'](#calculation-of-fees-for-reference-scripts)) calculates the
+The function `scriptsCost`{.AgdaFunction},
+defined in the [Calculation of Fees for Reference Scripts][] section, calculates the
 fee for reference scripts in a transaction. It takes as input the total
-size of the reference scripts in bytes—which can be calculated using
-`refScriptsSize`{.AgdaFunction}
-([Section 'Functions used in UTxO rules, continued'](Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules-continued))—and
+size of the reference scripts in bytes---which can be calculated using
+the `refScriptsSize`{.AgdaFunction} (see [Functions used in UTxO rules, continued][])---and
 uses a function (`scriptsCostAux`{.AgdaFunction}) that is piece-wise
 linear in the size, where the linear constant multiple grows with each
 `refScriptCostStride`{.AgdaFunction} bytes. In addition,
@@ -35,7 +31,6 @@ For background on this particular choice of fee calculation, see
 
 <!--
 ```agda
-
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (_%_; _*_; ≤-trans; ∣_∣)
@@ -59,11 +54,9 @@ open Number number renaming (fromNat to fromℕ)
 ```
 -->
 
-<a id="scriptsCost"></a>
-### Calculation of fees for reference scripts
+### Calculation of Fees for Reference Scripts {#sec:calculation-of-fees}
 
 ```agda
-
 scriptsCost : (pp : PParams) → ℕ → Coin
 scriptsCost pp scriptSize
   = scriptsCostAux 0ℚ minFeeRefScriptCoinsPerByte scriptSize
@@ -88,18 +81,15 @@ scriptsCost pp scriptSize
 ```
 -->
 ```agda
-
                    → Coin
     scriptsCostAux acl curTierPrice n
 ```
 <!--
 ```agda
-
        (acc rs)
 ```
 -->
 ```agda
-
        = case  n ≤? fromℕ⁺ refScriptCostStride of
 ```
 <!--
@@ -108,7 +98,6 @@ scriptsCost pp scriptSize
 ```
 -->
 ```agda
-
                 (yes _)  → ∣ floor (acl + (fromℕ n * curTierPrice)) ∣
                 (no  p)  → scriptsCostAux
                              (acl + (fromℕ (fromℕ⁺ refScriptCostStride) * curTierPrice))
@@ -117,12 +106,7 @@ scriptsCost pp scriptSize
 ```
 <!--
 ```agda
-
                              (rs $ <⇒<′ (suc∸≤ (≤-trans (s<s z≤n) (≰⇒> p)) (ℕ⁺->0 refScriptCostStride)))
-```
--->
-<!--
-```agda
       where
         suc∸≤ : ∀ {n m : ℕ} → n > 0 → m > 0 → n ∸ m < n
         suc∸≤ {n} {.suc m} p (s≤s q) = ≤-trans (+-monoʳ-≤ 1 (∸-monoʳ-≤ n (s<s q)))

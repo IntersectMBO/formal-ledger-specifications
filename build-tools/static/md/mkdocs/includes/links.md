@@ -4,6 +4,7 @@
 [Auxiliary DELEG transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [Auxiliary GOVCERT transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [Auxiliary POOL transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
+[Calculation of Fees for Reference Scripts]: Ledger.Conway.Specification.Fees.md#sec:calculation-of-fees
 [CERT]: Ledger.Conway.Specification.Certs.md#certs-rules
 [CERTS]: Ledger.Conway.Specification.Certs.md#certs-rules
 [CERTS rules]: Ledger.Conway.Specification.Certs.md#certs-rules
@@ -11,20 +12,25 @@
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Specification.Enact.md#enact-transition-system
 [EPOCH]: Ledger.Conway.Specification.Epoch.md#epoch-transition-system
+[Fees]: Ledger.Conway.Specification.Fees.md
 [formal ledger specification]: https://github.com/IntersectMBO/formal-ledger-specifications
+[Functions used in UTxO rules]: Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules
 [GOV]: Ledger.Conway.Specification.Gov.md#rules-for-the-gov-transition-system
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
+[Ledger.Conway.Specification.Fees]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/ConwaySpecification/Fees.lagda.md
 [Ledger.Conway.Specification.Rewards]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda.md
+[Ledger.Conway.Specification.Utxo]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Utxo.lagda.md
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
 [NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#newepoch-transition-system
 [Notation]: Notation.md
 [POOL]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
 [RATIFY]: Ledger.Conway.Specification.Ratify.md#the-ratify-transition-system
 [repourl]: https://github.com/IntersectMBO/formal-ledger-specifications
+[scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
-[UTXO]: Ledger.Conway.Specification.Utxo.md#utxo-inference-rules
+[UTXO]: Ledger.Conway.Specification.Utxo.md#sec:utxo-inference-rule
 [UTXOS]: Ledger.Conway.Specification.Utxo.md#utxos-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#utxow-inference-rules
 [Shelley Ledger Spec (pdf)]: https://github.com/intersectmbo/cardano-ledger/releases/latest/download/shelley-ledger.pdf

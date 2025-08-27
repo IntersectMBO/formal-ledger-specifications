@@ -255,7 +255,7 @@ mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ stake'
     ratioBlocks = (pos poolBlocks) / (1 ⊔ totalBlocks)
 ```
 
-### Functions rewardOwners and rewardMember {#sec:rewardOwners-and-rewardMember}
+### Functions `rewardOwners`{.AgdaFunction} and `rewardMember`{.AgdaFunction} {#sec:rewardOwners-and-rewardMember}
 
 This subsection defines the functions `rewardOwners`{.AgdaFunction} and
 `rewardMember`{.AgdaFunction}.  Their purpose is to divide the reward for one pool
@@ -309,7 +309,7 @@ rewardMember rewards pool memberStake stake = if rewards ≤ cost
     margin      = fromUnitInterval (pool .StakePoolParams.margin)
 ```
 
-### Function `rewardOnePool`{.AgdaFunction} used for computing a Reward Update {#sec:rewardOnePool}
+### Function `rewardOnePool`{.AgdaFunction} for Computing a Reward Update {#sec:rewardOnePool}
 
 This subsection defines the function `rewardOnePool`{.AgdaFunction} which
 calculates the rewards given out to each member of a given pool.
@@ -538,10 +538,9 @@ entire system that can happen during one transition step as described in this do
 **Exception**. Withdrawals from the “Treasury” are not shown in the diagram; they
 can move funds into “Reward accounts.”
 
-<a id="fig:rewards-flowchart">
+!!! note "Potential flows of funds during one transition step"
 
-!!! note "**Potential flows of funds during one transition step**"
-
+    <a id="fig:rewards-flowchart"></a>
     <figure class="svg-card">
       <img src="img/Rewards-Diagram.svg" alt="Rewards flowchart">
     </figure>
@@ -552,7 +551,6 @@ can move funds into “Reward accounts.”
     calculation in the function `createRUpd`{.AgdaFunction}.  Each red arrow corresponds
     to one field of the `RewardUpdate`{.AgdaRecord} data type.  The blue arrows represent
     the flow of funds after they have passed through the `rewardPot`{.AgdaFunction}.
-</a>
 
 
 ## Stake Distribution Calculation {#sec:stake-distribution-calculation}
@@ -592,7 +590,7 @@ instance
 ```
 -->
 
-### Functions for computing stake distributions
+### Functions for Computing Stake Distributions
 
 This section defines the calculation of the stake distribution from the data
 contained in a ledger state.  Here,
@@ -651,10 +649,10 @@ opaque
 ## Timing of Rewards Payout {#sec:rewards-time}
 [Timing of Rewards Payout]: #sec:rewards-time
 
-### Timeline of the Rewards Calculation {#sec:rewards-timeline}
-[Timeline of the Rewards Calculation]: #sec:rewards-timeline
+### Rewards Calculation Timeline {#sec:rewards-timeline}
+[Rewards Calculation Timeline]: #sec:rewards-timeline
 
-As described in the [Motivation](#sec:rewards-motivation) section, the probability of
+As described in the [Rewards Motivation](#sec:rewards-motivation) section, the probability of
 producing a block depends on the stake delegated to the block producer.  However, the
 stake distribution changes over time, as funds are transferred between parties.  This
 raises the question: What is the point in time from which we take the stake
@@ -692,7 +690,6 @@ More concretely:
 
 7.  Rewards are given out.
 
-<a id="fig:reward-timing"></a>
 
 !!! note "Timeline of the rewards calculation"
 
@@ -700,6 +697,7 @@ More concretely:
     epoch $e_i$ and “go” during epoch $e_{i+1}$.  At (G) the snapshot taken at (A) is
     no longer needed and will be discarded.
 
+    <a id="fig:reward-timing"></a>
     <figure class="svg-card">
       <img src="img/RewardsTiming-Diagram.svg" alt="Rewards timeline">
     </figure>
@@ -750,7 +748,6 @@ performance during epoch $e_3$ (he produced 4 blocks) will be used with
 the darker blue snapshot for the rewards which will be handed out at the
 beginning of epoch $e_5$.
 
-<a id="sec:snap-transition-system"></a>
 ### Stake Distribution Snapshots {#sec:stake-distribution-snapshots}
 
 This section defines the SNAP transition rule for stake distribution
@@ -759,7 +756,7 @@ needs to be saved at the end of an epoch.  This relevant data are:
 
 - `mark`{.AgdaField}, `set`{.AgdaField}, `go`{.AgdaField}: Three stake
   distribution snapshots as explained in
-  Section [Rewards](Ledger.Conway.Specification.Rewards.md#sec:rewards-timeline).
+  the [Rewards Timeline][Rewards Calculation Timeline] section.
 
 - `feeSS`{.AgdaField}: stores the fees which are added to the reward pot
   during the next reward update calculation, which is then subtracted
@@ -800,6 +797,7 @@ private variable
 ```
 -->
 
+<a id="sec:snap-transition-system"></a>
 ```agda
 data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
   SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState

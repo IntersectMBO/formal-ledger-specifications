@@ -160,19 +160,23 @@ example, the UTXOW rule mentioned above requires the UTXO rule, which
 checks that the inputs to the transaction exist, that the transaction is
 balanced, and several other conditions.
 
-<a id="fig:latest-sts-diagram">
-
 !!! note "**Figure: STS Diagram**"
 
-    State transition rules of the ledger specification, presented as a directed graph; each node represents a transition rule; an arrow from rule A to rule B indicates that B appears among the premises of A; a dotted arrow represents a dependency in the sense that the output of the target node is an input to the source node, either as part of the source state, the environment or the event.
+    State transition rules of the ledger specification, presented as a
+    directed graph; each node represents a transition rule; an arrow
+    from rule A to rule B indicates that B appears among the premises
+    of A; a dotted arrow represents a dependency in the sense that the
+    output of the target node is an input to the source node, either as
+    part of the source state, the environment or the event.
 
     <span class="legend-box legend-Conway"></span> Rules added in Conway;
     <span class="legend-box legend-Babbage"></span> Rules modified in Conway
 
+    <a id="fig:latest-sts-diagram"></a>
     <figure class="svg-card">
       <img src="img/STS-Diagram.svg"  alt="STS Diagram">
     </figure>
-</a>
+
 
 A brief description of each transition rule is provided below, with a
 link to an Agda module and reference to a section where the rule is
