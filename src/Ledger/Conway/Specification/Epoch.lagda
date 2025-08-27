@@ -86,9 +86,11 @@ instance
 \end{code}
 \begin{NoConway}
 
-`PoolDistr`{.AgdaBound} in the Shelley spec results from dividing the coins in
-`PoolDelegatedStake`{.AgdaBound} by the total stake in
-`PoolDelegatedStake`{.AgdaBound}.
+\AgdaBound{PoolDistr}
+(Shelley specification~\parencite[\sectionname~3]{shelley-ledger-spec})
+results from dividing the coins in \AgdaBound{PoolDelegatedStake} by the total
+stake in \AgdaBound{PoolDelegatedStake}. We avoid dividing the coins here, in
+order to spare us the trouble of proving that the result is between 0 and 1.
 
 \begin{code}
 PoolDelegatedStake = KeyHash ⇀ (Coin × KeyHash)
