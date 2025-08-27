@@ -16,7 +16,7 @@
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
-[Ledger.Conway.Specification.Rewards]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda
+[Ledger.Conway.Specification.Rewards]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda.md
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
 [NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#newepoch-transition-system
 [Notation]: Notation.md

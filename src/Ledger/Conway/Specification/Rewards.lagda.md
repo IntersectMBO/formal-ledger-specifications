@@ -136,7 +136,7 @@ We use the following arithmetic operations besides basic arithmetic:
 This section defines the amount of rewards that are paid out to stake
 pools and their delegators.
 
-### Function maxPool used for computing a Reward Update {#sec:maxpool}
+### Function `maxPool`{.AgdaFunction} used for computing a Reward Update {#sec:maxpool}
 [Function maxPool used for computing a Reward Update]: #sec:maxpool
 
 This subsection defines the function `maxPool`{.AgdaFunction} which gives the maximum
@@ -222,7 +222,7 @@ maxPool pparams rewardPot stake pledge = rewardℕ
     rewardℕ = posPart (floor rewardℚ)
 ```
 
-### Function mkApparentPerformance {#sec:mkApparentPerformance}
+### Function `mkApparentPerformance`{.AgdaFunction} {#sec:mkApparentPerformance}
 
 This section defines the function `mkApparentPerformance`{.AgdaFunction} which is
 used for computing a Reward Update; it computes the apparent performance of a stake
@@ -309,7 +309,7 @@ rewardMember rewards pool memberStake stake = if rewards ≤ cost
     margin      = fromUnitInterval (pool .StakePoolParams.margin)
 ```
 
-### Function rewardOnePool used for computing a Reward Update {#sec:rewardOnePool}
+### Function `rewardOnePool`{.AgdaFunction} used for computing a Reward Update {#sec:rewardOnePool}
 
 This subsection defines the function `rewardOnePool`{.AgdaFunction} which
 calculates the rewards given out to each member of a given pool.
