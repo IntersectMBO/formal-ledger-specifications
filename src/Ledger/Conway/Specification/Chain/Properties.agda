@@ -13,6 +13,8 @@ open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Epoch.Properties txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties txs abs
+open import Ledger.Conway.Specification.RewardUpdate txs abs
+open import Ledger.Conway.Specification.RewardUpdate.Properties txs abs
 open import Ledger.Prelude
 
 open Computational ⦃...⦄
@@ -30,15 +32,15 @@ module _
 instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
   Computational-CHAIN .computeProof Γ s record { ts = ts } = do
-    nes , neStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,NEWEPOCH⦈_} _ _ _
+    nes , tickStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,TICK⦈_} _ _ _
     _ , lsStep ← computeProof _ (LStateOf nes) ts
     case refScriptSize≤?Bound nes ts of λ where
       (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
-      (yes p) → success (_ , CHAIN (p , neStep , lsStep))
+      (yes p) → success (_ , CHAIN (p , tickStep , lsStep))
 
-  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} (p , neStep , lsStep))
-    with recomputeProof neStep | completeness _ _ _ _ neStep
-  ... | _         | refl
+  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} (p , tickStep , lsStep))
+    with recomputeProof tickStep | completeness _ _ _ _ tickStep
+  ... | success _ | refl
     with recomputeProof lsStep | completeness _ _ _ _ lsStep
   ... | success _ | refl
     with refScriptSize≤?Bound nes (Block.ts b)
