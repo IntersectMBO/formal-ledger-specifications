@@ -192,84 +192,110 @@ described in \textcite[\sectionname~6.4]{shelley-delegation-design}.
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
-createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
-createRUpd slotsPerEpoch b es total =
-  record  { Δt = Δt₁
-          ; Δr = 0 - Δr₁ + Δr₂
-          ; Δf = 0 - pos feeSS
-          ; rs = rs
+opaque
+  createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
+  createRUpd slotsPerEpoch b es total =
+    record  { Δt = Δt₁
+            ; Δr = 0 - Δr₁ + Δr₂
+            ; Δf = 0 - pos feeSS
+            ; rs = rs
 \end{code}
 \begin{code}[hide]
-          ; flowConservation = flowConservation
-          ; Δt-nonnegative = Δt-nonneg
-          ; Δf-nonpositive = Δf-nonpos
+            ; flowConservation = flowConservation
+            ; Δt-nonnegative = Δt-nonneg
+            ; Δf-nonpositive = Δf-nonpos
 \end{code}
 \begin{code}
-          }
-  where
-    prevPp       = PParamsOf es
-    reserves     = reservesOf es
-    pstakego     = es .EpochState.ss .Snapshots.go
-    feeSS        = es .EpochState.ss .Snapshots.feeSS
-    stake        = pstakego .Snapshot.stake
-    delegs       = pstakego .Snapshot.delegations
-    poolParams   = pstakego .Snapshot.poolParameters
-    blocksMade   = ∑[ m ← b ] m
-    ρ            = fromUnitInterval (prevPp .PParams.monetaryExpansion)
-    η            = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
-    Δr₁          = floor (1 ⊓ η * ρ * fromℕ reserves)
-    rewardPot    = pos feeSS + Δr₁
-    τ            = fromUnitInterval (prevPp .PParams.treasuryCut)
-    Δt₁          = floor (fromℤ rewardPot * τ)
-    R            = rewardPot - Δt₁
-    circulation  = total - reserves
-    rs           = reward prevPp b (posPart R) poolParams stake delegs circulation
-    Δr₂          = R - pos (∑[ c ← rs ] c)
+            }
+    where
+      prevPp       : PParams
+      prevPp       = PParamsOf es
+      reserves     : Coin
+      reserves     = reservesOf es
+      pstakego     : Snapshot
+      pstakego     = es .EpochState.ss .Snapshots.go
+      feeSS        : Coin
+      feeSS        = es .EpochState.ss .Snapshots.feeSS
+      stake        : Credential ⇀ Coin
+      stake        = pstakego .Snapshot.stake
+      delegs       : Credential ⇀ KeyHash
+      delegs       = pstakego .Snapshot.delegations
+      poolParams   : KeyHash ⇀ StakePoolParams
+      poolParams   = pstakego .Snapshot.poolParameters
+      blocksMade   : ℕ
+      blocksMade   = ∑[ m ← b ] m
+      ρ            : ℚ
+      ρ            = fromUnitInterval (prevPp .PParams.monetaryExpansion)
+      η            : ℚ
+      η            = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
+      Δr₁          : ℤ
+      Δr₁          = floor (1 ⊓ η * ρ * fromℕ reserves)
+      rewardPot    : ℤ
+      rewardPot    = pos feeSS + Δr₁
+      τ            : ℚ
+      τ            = fromUnitInterval (prevPp .PParams.treasuryCut)
+      Δt₁          : ℤ
+      Δt₁          = floor (fromℤ rewardPot * τ)
+      R            : ℤ
+      R            = rewardPot - Δt₁
+      circulation  : Coin
+      circulation  = total - reserves
+      rs           : Credential ⇀ Coin
+      rs           = reward prevPp b (posPart R) poolParams stake delegs circulation
+      Δr₂          : ℤ
+      Δr₂          = R - pos (∑[ c ← rs ] c)
 
 \end{code}
 \begin{code}[hide]
-    -- Proofs
-    -- Note: Overloading of + and - seems to interfere with
-    -- the ring solver.
-    lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
-      → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
-    lemmaFlow = solve-∀
-    flowConservation = lemmaFlow Δt₁ Δr₁ (pos feeSS) (pos (∑[ c ← rs ] c))
+      -- Proofs
+      -- Note: Overloading of + and - seems to interfere with
+      -- the ring solver.
+      lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
+        → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
+      lemmaFlow = solve-∀
+      flowConservation :
+        let t₁ = Δt₁
+            r₁ = Δr₁
+            f  = pos feeSS
+            z  = pos (∑[ c ← rs ] c)
+         in
+            (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
+      flowConservation = lemmaFlow Δt₁ Δr₁ (pos feeSS) (pos (∑[ c ← rs ] c))
 
-    ÷₀-0≤⇒0≤ : ∀ (x y : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ (x ÷₀ y)
-    ÷₀-0≤⇒0≤ x y 0≤x 0≤y with y ≟ 0
-    ... | (yes y≡0) = nonNegative⁻¹ 0
-    ... | (no y≢0)  = ÷-0≤⇒0≤ x y {{≢-nonZero y≢0}} 0≤x 0≤y
+      ÷₀-0≤⇒0≤ : ∀ (x y : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ (x ÷₀ y)
+      ÷₀-0≤⇒0≤ x y 0≤x 0≤y with y ≟ 0
+      ... | (yes y≡0) = nonNegative⁻¹ 0
+      ... | (no y≢0)  = ÷-0≤⇒0≤ x y {{≢-nonZero y≢0}} 0≤x 0≤y
 
-    η-nonneg : 0 ≤ η
-    η-nonneg = ÷₀-0≤⇒0≤ _ _ (fromℕ-0≤ blocksMade)
-      (*-0≤⇒0≤ _ _
-        (fromℕ-0≤ slotsPerEpoch)
-        (nonNegative⁻¹ ActiveSlotCoeff {{pos⇒nonNeg ActiveSlotCoeff}}))
+      η-nonneg : 0 ≤ η
+      η-nonneg = ÷₀-0≤⇒0≤ _ _ (fromℕ-0≤ blocksMade)
+        (*-0≤⇒0≤ _ _
+          (fromℕ-0≤ slotsPerEpoch)
+          (nonNegative⁻¹ ActiveSlotCoeff {{pos⇒nonNeg ActiveSlotCoeff}}))
 
-    min1η-nonneg : 0 ≤ 1 ⊓ η
-    min1η-nonneg = ⊓-glb (nonNegative⁻¹ 1) η-nonneg
+      min1η-nonneg : 0 ≤ 1 ⊓ η
+      min1η-nonneg = ⊓-glb (nonNegative⁻¹ 1) η-nonneg
 
-    Δr₁-nonneg : 0 ≤ Δr₁
-    Δr₁-nonneg = 0≤⇒0≤floor _
-      (*-0≤⇒0≤ (1 ⊓ η * ρ) (fromℕ reserves)
-        (UnitInterval-*-0≤ (1 ⊓ η) (prevPp .PParams.monetaryExpansion) min1η-nonneg)
-        (fromℕ-0≤ reserves))
+      Δr₁-nonneg : 0 ≤ Δr₁
+      Δr₁-nonneg = 0≤⇒0≤floor _
+        (*-0≤⇒0≤ (1 ⊓ η * ρ) (fromℕ reserves)
+          (UnitInterval-*-0≤ (1 ⊓ η) (prevPp .PParams.monetaryExpansion) min1η-nonneg)
+          (fromℕ-0≤ reserves))
 
-    rewardPot-nonneg : 0 ≤ rewardPot
-    rewardPot-nonneg = +-mono-≤ (nonNegative⁻¹ℤ (pos feeSS)) Δr₁-nonneg
+      rewardPot-nonneg : 0 ≤ rewardPot
+      rewardPot-nonneg = +-mono-≤ (nonNegative⁻¹ℤ (pos feeSS)) Δr₁-nonneg
 
-    Δt-nonneg : 0 ≤ Δt₁
-    Δt-nonneg = 0≤⇒0≤floor _
-      (UnitInterval-*-0≤ (fromℤ rewardPot) (prevPp .PParams.treasuryCut)
-        (fromℤ-0≤ rewardPot rewardPot-nonneg))
+      Δt-nonneg : 0 ≤ Δt₁
+      Δt-nonneg = 0≤⇒0≤floor _
+        (UnitInterval-*-0≤ (fromℤ rewardPot) (prevPp .PParams.treasuryCut)
+          (fromℤ-0≤ rewardPot rewardPot-nonneg))
 
-    Δf-nonpos : (0 - pos feeSS) ≤ 0
-    Δf-nonpos = begin
-        0 - pos feeSS ≡⟨ +-identityˡ _ ⟩
-        ℤ.- pos feeSS ≤⟨ neg-mono-≤ (ℤ.+≤+ z≤n) ⟩
-        0             ∎
-      where open ≤-Reasoning
+      Δf-nonpos : (0 - pos feeSS) ≤ 0
+      Δf-nonpos = begin
+          0 - pos feeSS ≡⟨ +-identityˡ _ ⟩
+          ℤ.- pos feeSS ≤⟨ neg-mono-≤ (ℤ.+≤+ z≤n) ⟩
+          0             ∎
+        where open ≤-Reasoning
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate Creation}
