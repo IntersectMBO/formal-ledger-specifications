@@ -562,14 +562,18 @@ its results by carrying out each of the following tasks.
 \end{figure*}
 
 \begin{NoConway}
-The \AgdaFunction{calculatePoolDistr} produces a new pool distribution from the
-delegation map and stake allocation of the previous epoch.
+The \AgdaFunction{calculatePoolDelegatedState} produces a new pool distribution
+from the delegation map and stake allocation of the previous epoch.
+
+\AgdaFunction{calculatePoolDelegatedStake} performs the computation of
+\AgdaFunction{calculatePoolDistr} in the Shelley spec, without normalizing the
+stakes to be between 0 and 1.
 
 \begin{figure*}[ht]
 \begin{code}
 opaque
-  calculatePoolDistr : Snapshot → PoolDelegatedStake
-  calculatePoolDistr ss = sd ∣ dom (ss .poolParameters)
+  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
+  calculatePoolDelegatedStake ss = sd ∣ dom (ss .poolParameters)
     where
       open Snapshot
 
@@ -590,7 +594,7 @@ data
   NEWEPOCH-New : let
       eps' = applyRUpd ru eps
       ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps''
-      pd' = calculatePoolDistr (Snapshots.set ss)
+      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
     in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
@@ -604,7 +608,7 @@ data
 
   NEWEPOCH-No-Reward-Update : let
       ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps'
-      pd' = calculatePoolDistr (Snapshots.set ss)
+      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
     in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
