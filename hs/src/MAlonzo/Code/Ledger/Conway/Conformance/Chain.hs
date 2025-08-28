@@ -242,7 +242,7 @@ d_lastEpoch_2008 v0
 d_ru_2010 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_2432 ->
   Maybe
-    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2494
+    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2496
 d_ru_2010 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ru_2444 (coe v0)
