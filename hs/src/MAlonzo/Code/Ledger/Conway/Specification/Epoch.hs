@@ -7034,7 +7034,7 @@ du_sd_3286 v0 v1
       (coe
          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du__'7584''738'_1152
          (coe
-            du__'8728''738''7504'__3312
+            du__'8728''738'__3312
             (coe
                MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_190
                (coe
@@ -7057,8 +7057,10 @@ du_sd_3286 v0 v1
                      MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_delegations_2540
                      (coe v1))))
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_2538
-               (coe v1))))
+               MAlonzo.Code.Axiom.Set.Map.du__'738'_550
+               (coe
+                  MAlonzo.Code.Ledger.Conway.Specification.Rewards.d_stake_2538
+                  (coe v1)))))
 -- Ledger.Conway.Specification.Epoch._._._⁻¹ˢ
 d__'8315''185''738'_3296 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -7080,8 +7082,8 @@ du__'8315''185''738'_3296 v0
          (coe
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
       (coe MAlonzo.Code.Data.Product.Base.du_swap_370) v0
--- Ledger.Conway.Specification.Epoch._._._∘ˢᵐ_
-d__'8728''738''7504'__3312 ::
+-- Ledger.Conway.Specification.Epoch._._._∘ˢ_
+d__'8728''738'__3312 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_1962 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2530 ->
@@ -7090,52 +7092,51 @@ d__'8728''738''7504'__3312 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d__'8728''738''7504'__3312 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du__'8728''738''7504'__3312 v6 v7 v8
-du__'8728''738''7504'__3312 ::
+d__'8728''738'__3312 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du__'8728''738'__3312 v6 v7 v8
+du__'8728''738'__3312 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
-  MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-du__'8728''738''7504'__3312 v0 v1 v2
+du__'8728''738'__3312 v0 v1 v2
   = coe
-      MAlonzo.Code.Axiom.Set.Rel.du_mapMaybeWithKey_702
+      MAlonzo.Code.Axiom.Set.du_concatMap'738'_508
       (coe
          MAlonzo.Code.Axiom.Set.d_th_1470
          (coe
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
       (coe
-         (\ v3 v4 ->
+         (\ v3 ->
             coe
-              MAlonzo.Code.Axiom.Set.Map.du_lookup'7504''63'_1684
-              (coe
-                 MAlonzo.Code.Axiom.Set.d_th_1470
+              MAlonzo.Code.Axiom.Set.du_map_398
+              (MAlonzo.Code.Axiom.Set.d_th_1470
                  (coe
                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-              (coe v2) (coe v4)
+              (\ v4 ->
+                 coe
+                   MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v3))
+                   (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v4)))
               (coe
-                 MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
-                 (coe
-                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
-                 (coe v0) (coe v4)
-                 (let v5
-                        = MAlonzo.Code.Axiom.Set.d_th_1470
-                            (coe
-                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8) in
-                  coe
-                    (coe
-                       MAlonzo.Code.Axiom.Set.Rel.du_dom_344 v5
-                       (coe MAlonzo.Code.Axiom.Set.Map.du__'738'_550 (coe v2)))))))
+                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_filter'738'_1160
+                 (\ v4 ->
+                    coe
+                      MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__138
+                      (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
+                      (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))
+                      (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4)))
+                 v2)))
       (coe v1)
 -- Ledger.Conway.Specification.Epoch._⊢_⇀⦇_,NEWEPOCH⦈_
-d__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__3322 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__3328 a0 a1 a2 a3 a4 a5
   = ()
-data T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__3322
-  = C_NEWEPOCH'45'New_3330 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_NEWEPOCH'45'Not'45'New_3332 |
-    C_NEWEPOCH'45'No'45'Reward'45'Update_3338 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+data T__'8866'_'8640''10631'_'44'NEWEPOCH'10632'__3328
+  = C_NEWEPOCH'45'New_3336 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_NEWEPOCH'45'Not'45'New_3338 |
+    C_NEWEPOCH'45'No'45'Reward'45'Update_3344 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Epoch..generalizedField-ls
 d_'46'generalizedField'45'ls_90287 ::
   T_GeneralizeTel_90301 ->
