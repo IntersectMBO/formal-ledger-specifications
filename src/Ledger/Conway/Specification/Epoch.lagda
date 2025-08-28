@@ -578,7 +578,15 @@ opaque
       open Snapshot
 
       sd : KeyHash ⇀ Coin
-      sd = aggregateBy (ss .delegations ˢ) (ss .stake)
+      sd = aggregate₊ ((((ss .delegations ˢ) ⁻¹ˢ) ∘ˢᵐ ss .stake) ᶠˢ)
+        where
+          -- TODO: Move to agda-sets
+          _⁻¹ˢ : {A B : Type} → Rel A B → Rel B A
+          R ⁻¹ˢ = mapˢ swap R
+            where open import Data.Product using (swap)
+
+          _∘ˢᵐ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → B ⇀ C → Rel A C
+          R ∘ˢᵐ m = mapMaybeWithKey (λ _ b → lookupᵐ? m b) R
 \end{code}
 
 \begin{code}[hide]
