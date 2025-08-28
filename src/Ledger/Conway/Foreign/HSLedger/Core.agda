@@ -64,6 +64,7 @@ module Implementation where
   SlotsPerEpochᶜ   = 4320 -- TODO pass this externally instead of hardcoding
   ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20  
   StabilityWindowᶜ = 10
+  MaxLovelaceSupplyᶜ = 1
   Quorum           = 1
   NetworkId        = 0 -- Testnet
 

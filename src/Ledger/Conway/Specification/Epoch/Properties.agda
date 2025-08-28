@@ -146,9 +146,9 @@ module _ {e : Epoch} where
 
   NEWEPOCH-total : ∀ nes'' → ∃[ nes' ] _ ⊢ nes'' ⇀⦇ e ,NEWEPOCH⦈ nes'
   NEWEPOCH-total nes with e ≟ NewEpochState.lastEpoch nes + 1 | NewEpochState.ru nes | inspect NewEpochState.ru nes
-  ... | yes p | just ru | PE.[ refl ] =  ⟦ e , EPOCH-total' .proj₁ , nothing ⟧
+  ... | yes p | just ru | PE.[ refl ] =  ⟦ e , _ , _ , EPOCH-total' .proj₁ , nothing ⟧
                                       , NEWEPOCH-New (p , EPOCH-total' .proj₂)
-  ... | yes p | nothing | PE.[ refl ] = ⟦ e , proj₁ EPOCH-total' , nothing ⟧
+  ... | yes p | nothing | PE.[ refl ] = ⟦ e , _ , _ , proj₁ EPOCH-total' , nothing ⟧
                                       , NEWEPOCH-No-Reward-Update (p , EPOCH-total' .proj₂)
   ... | no ¬p | _ | _ = -, NEWEPOCH-Not-New ¬p
 
