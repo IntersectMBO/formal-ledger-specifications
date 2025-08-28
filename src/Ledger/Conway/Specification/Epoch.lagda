@@ -92,8 +92,11 @@ results from dividing the coins in \AgdaBound{PoolDelegatedStake} by the total
 stake in \AgdaBound{PoolDelegatedStake}. We avoid dividing the coins here, in
 order to spare us the trouble of proving that the result is between 0 and 1.
 
+We omit the VRF key hashes in the codomain of \AgdaDatatype{PoolDelegatedStake}
+as they are not needed at the moment.
+
 \begin{code}
-PoolDelegatedStake = KeyHash ⇀ (Coin × KeyHash)
+PoolDelegatedStake = KeyHash ⇀ Coin
 
 record NewEpochState : Type where
   field
@@ -566,20 +569,12 @@ delegation map and stake allocation of the previous epoch.
 \begin{code}
 opaque
   calculatePoolDistr : Snapshot → PoolDelegatedStake
-  calculatePoolDistr ss =
-    intersectionWith (λ c pp → (c , pp .VRF) ) sd (ss .poolParameters)
+  calculatePoolDistr ss = sd ∣ dom (ss .poolParameters)
     where
       open Snapshot
-      open StakePoolParams
 
       sd : KeyHash ⇀ Coin
       sd = aggregateBy (ss .delegations ˢ) (ss .stake)
-
-      -- TODO: Move to agda-sets
-      -- https://github.com/input-output-hk/agda-sets/pull/11
-      intersectionWith
-        : {A B C D : Type} ⦃ _ : DecEq A ⦄ → (B → C → D) → A ⇀ B → A ⇀ C → A ⇀ D
-      intersectionWith f m m' = mapMaybeWithKeyᵐ (λ a b → f b <$> lookupᵐ? m' a) m
 \end{code}
 
 \begin{code}[hide]
