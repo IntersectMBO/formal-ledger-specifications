@@ -29,7 +29,7 @@ let
 
   agda-stdlib = our-agda.mkDerivation {
     pname = "standard-library";
-    version = "2.2";
+    version = "2.3";
     src = sources.agda-stdlib;
     nativeBuildInputs = [ (haskellPackages.ghcWithPackages (self: [ self.filemanip ])) ];
     meta = { };
@@ -44,7 +44,7 @@ let
   agda-stdlib-classes = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-classes";
-    version = "2.2.+";
+    version = "2.3";
     src = sources.agda-stdlib-classes;
     meta = { };
     libraryFile = "agda-stdlib-classes.agda-lib";
@@ -55,7 +55,7 @@ let
   agda-stdlib-meta = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-meta";
-    version = "2.2.+";
+    version = "2.3";
     src = sources.agda-stdlib-meta;
     meta = { };
     libraryFile = "agda-stdlib-meta.agda-lib";
@@ -91,6 +91,7 @@ let
     buildInputs = [
       agda-stdlib
       agda-stdlib-classes
+      agda-stdlib-meta
     ];
   };
 

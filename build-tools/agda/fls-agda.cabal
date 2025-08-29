@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                fls-agda
-version:             2.7.0.1
+version:             2.8.0
 --^ same as Agda (see below)
 author:              Carlos Tomé Cortiñas
 category:            Language, Compiler
