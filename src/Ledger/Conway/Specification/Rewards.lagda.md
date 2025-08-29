@@ -565,10 +565,10 @@ distribution snapshot.  Such a snapshot contains the essential data needed to co
 rewards.
 
 - `stake`{.AgdaField} A stake distribution, that is a mapping from
-  credentials to coin.
+  stake credentials to the active stake that they own in coins.
 
 - `delegations`{.AgdaField}: A delegation map, that is a mapping from
-  credentials to the stake pools that they delegate to.
+  stake credentials to the stake pools that they delegate to.
 
 - `poolParameters`{.AgdaField}: A mapping that stores the pool
   parameters of each stake pool.
