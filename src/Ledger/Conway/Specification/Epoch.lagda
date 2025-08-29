@@ -573,20 +573,29 @@ stakes to be between 0 and 1.
 \begin{code}
 opaque
   calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
-  calculatePoolDelegatedStake ss = sd ∣ dom (ss .poolParameters)
+  calculatePoolDelegatedStake ss =
+      -- Shelley spec: the output map must contain keys appearing in both
+      -- sd and the pool parameters.
+      sd ∣ dom (ss .poolParameters)
     where
       open Snapshot
 
+      -- delegated stake per pool
       sd : KeyHash ⇀ Coin
-      sd = aggregate₊ ((((ss .delegations ˢ) ⁻¹ˢ) ∘ˢ (ss .stake ˢ)) ᶠˢ)
-        where
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (ss .stake ˢ)) ᶠˢ)
+        where mutual
+          -- stake credentials delegating to each pool
+          stakeCredentialsPerPool : Rel KeyHash Credential
+          stakeCredentialsPerPool = (ss .delegations ˢ) ⁻¹ʳ
+
           -- TODO: Move to agda-sets
-          _⁻¹ˢ : {A B : Type} → Rel A B → Rel B A
-          R ⁻¹ˢ = mapˢ swap R
+          -- https://github.com/input-output-hk/agda-sets/pull/13
+          _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
+          R ⁻¹ʳ = mapˢ swap R
             where open import Data.Product using (swap)
 
-          _∘ˢ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
-          R ∘ˢ S =
+          _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
+          R ∘ʳ S =
             concatMapˢ
               (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
               R
