@@ -31,8 +31,8 @@ open import Interface.HasSubtract.Instances public
 open import Ledger.Prelude.Instances public
 open import Ledger.Prelude.HasCoin public
 open import Tactic.Defaults public
-open import Tactic.Derive.DecEq hiding (map') public
-open import Tactic.Inline hiding (iTC; iTCE) public
+open import Tactic.Derive.DecEq public
+open import Tactic.Inline public
 open import MyDebugOptions public
 open import Prelude.STS.GenPremises public
 
