@@ -154,7 +154,7 @@ let
             --prefix PATH : ${
               lib.makeBinPath [
                 agdaWithPackages
-                python311
+                python3
                 hpack
                 latex
               ]
@@ -271,7 +271,7 @@ let
     buildInputs = [
       agdaWithPackages
       pandoc
-      (python311.withPackages (
+      (python3.withPackages (
         ps: with ps; [
           pip
           mkdocs
@@ -316,7 +316,7 @@ let
       packages = [
         agdaWithPackages # Agda 2.7.0.1 + all pinned libraries
         fls-shake # Build system for generating outputs
-        python311 # Python for basic scripting
+        python3 # Python for basic scripting
         hpack # Haskell package helper
         coreutils # Basic shell utilities
       ];
@@ -354,7 +354,7 @@ let
         dejavu_fonts
 
         # Python environment for mkdocs pipeline
-        (python311.withPackages (
+        (python3.withPackages (
           ps: with ps; [
             pip
             mkdocs
