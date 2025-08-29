@@ -132,7 +132,7 @@ doPatternLambda hole = patternLambda =<< initTCEnvWithGoal hole
 -- Deriving a Convertible instance. Usage
 --   unquoteDecl iName = deriveConvertible iName (quote AgdaTy) (quote HsTy)
 deriveConvertible : Name → Name → Name → R.TC ⊤
-deriveConvertible instName agdaName hsName = initUnquoteWithGoal ⦃ defaultTCOptions ⦄ (agda-sort (lit 0)) do
+deriveConvertible instName agdaName hsName = initUnquoteWithGoal ⦃ defaultTCOptions ⦄ (sort (lit 0)) do
   agdaDef ← getDefinition agdaName
   hsDef   ← getDefinition hsName
   -- instName ← freshName $ "Convertible" S.++ show hsName

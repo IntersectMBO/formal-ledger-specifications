@@ -198,8 +198,8 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   filterCR : (c : DCert) (deps : Deposits)
              → filterˢ isGADeposit (dom ( deps ∣ certRefund c ᶜ ˢ )) ≡ᵉ filterˢ isGADeposit (dom (deps ˢ))
   filterCR (dereg c _) deps = ≡ᵉ.sym $ begin
-    filterˢ isGADeposit (dom (deps ˢ)) ≈˘⟨ filter-pres-≡ᵉ $ dom-cong (res-ex-∪ Dec-∈-singleton) ⟩
-    filterˢ isGADeposit (dom ((deps ∣ cr)ˢ ∪ (deps ∣ cr ᶜ)ˢ)) ≈⟨ filter-pres-≡ᵉ dom∪ ⟩
+    filterˢ isGADeposit (dom (deps ˢ)) ≈˘⟨ filter-cong $ dom-cong (res-ex-∪ Dec-∈-singleton) ⟩
+    filterˢ isGADeposit (dom ((deps ∣ cr)ˢ ∪ (deps ∣ cr ᶜ)ˢ)) ≈⟨ filter-cong dom∪ ⟩
     filterˢ isGADeposit (dom ((deps ∣ cr) ˢ) ∪ dom ((deps ∣ cr ᶜ) ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom ((deps ∣ cr) ˢ)) ∪ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ≈⟨ ∪-cong filter0 ≡ᵉ.refl ⟩
     ∅ ∪ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ≈⟨ ∪-identityˡ $ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ⟩
@@ -208,8 +208,8 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     cr = ❴ CredentialDeposit c ❵
     filter0 = filter-∅ (λ _ → CredDepIsNotGADep ∘ (from ∈-singleton) ∘ res-dom)
   filterCR (deregdrep c _) deps = ≡ᵉ.sym $ begin
-    filterˢ isGADeposit (dom (deps ˢ)) ≈˘⟨ filter-pres-≡ᵉ $ dom-cong (res-ex-∪ Dec-∈-singleton) ⟩
-    filterˢ isGADeposit (dom ((deps ∣ cr)ˢ ∪ (deps ∣ cr ᶜ)ˢ)) ≈⟨ filter-pres-≡ᵉ dom∪ ⟩
+    filterˢ isGADeposit (dom (deps ˢ)) ≈˘⟨ filter-cong $ dom-cong (res-ex-∪ Dec-∈-singleton) ⟩
+    filterˢ isGADeposit (dom ((deps ∣ cr)ˢ ∪ (deps ∣ cr ᶜ)ˢ)) ≈⟨ filter-cong dom∪ ⟩
     filterˢ isGADeposit (dom ((deps ∣ cr) ˢ) ∪ dom ((deps ∣ cr ᶜ) ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom ((deps ∣ cr) ˢ)) ∪ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ≈⟨ ∪-cong filter0 ≡ᵉ.refl ⟩
     ∅ ∪ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ≈⟨ ∪-identityˡ $ filterˢ isGADeposit (dom ((deps ∣ cr ᶜ) ˢ )) ⟩
@@ -217,29 +217,29 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     where
     cr = ❴ DRepDeposit c ❵
     filter0 = filter-∅ (λ _ → DRepDepIsNotGADep ∘ (from ∈-singleton) ∘ res-dom)
-  filterCR (delegate _ _ _ _)  deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
-  filterCR (regpool _ _)       deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
-  filterCR (regdrep _ _ _)     deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
-  filterCR (retirepool _ _)    deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
-  filterCR (ccreghot _ _)      deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
-  filterCR (reg _ _)           deps = filter-pres-≡ᵉ (dom-cong (resᵐ-∅ᶜ {M = deps}))
+  filterCR (delegate _ _ _ _)  deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
+  filterCR (regpool _ _)       deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
+  filterCR (regdrep _ _ _)     deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
+  filterCR (retirepool _ _)    deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
+  filterCR (ccreghot _ _)      deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
+  filterCR (reg _ _)           deps = filter-cong (dom-cong (resᵐ-∅ᶜ {M = deps}))
 
   filterCD : (c : DCert) (deps : Deposits) → filterˢ isGADeposit (dom (certDeposit c pp ˢ)) ≡ᵉ ∅
   filterCD (delegate _ _ _ _)  deps = filter-∅ λ _ → CredDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
   filterCD (reg _ _)           deps = filter-∅ λ _ → CredDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
   filterCD (regpool _ _)       deps = filter-∅ λ _ → PoolDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
   filterCD (regdrep _ _ _)     deps = filter-∅ λ _ → DRepDepIsNotGADep ∘ from ∈-singleton ∘ dom-single→single
-  filterCD (dereg _ _)         deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
-  filterCD (retirepool _ _)    deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
-  filterCD (deregdrep _ _)     deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
-  filterCD (ccreghot _ _)      deps = ≡ᵉ.trans (filter-pres-≡ᵉ dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
+  filterCD (dereg _ _)         deps = ≡ᵉ.trans (filter-cong dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
+  filterCD (retirepool _ _)    deps = ≡ᵉ.trans (filter-cong dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
+  filterCD (deregdrep _ _)     deps = ≡ᵉ.trans (filter-cong dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
+  filterCD (ccreghot _ _)      deps = ≡ᵉ.trans (filter-cong dom∅) $ filter-∅ λ _ a∈ _ → ∉-∅ a∈
 
   noGACerts : (cs : List DCert) (deps : Deposits)
     → filterˢ isGADeposit (dom (updateCertDeposits pp cs deps)) ≡ᵉ filterˢ isGADeposit (dom deps)
-  noGACerts [] _ = filter-pres-≡ᵉ ≡ᵉ.refl
+  noGACerts [] _ = filter-cong ≡ᵉ.refl
   noGACerts (dcert@(delegate _ _ _ _) ∷ cs) deps = begin
     filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
-    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
+    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl $ filterCD dcert deps ⟩
     filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩
@@ -249,7 +249,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       filter0 = filterCD dcert deps
   noGACerts (dcert@(reg _ _) ∷ cs) deps = begin
     filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
-    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
+    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl $ filterCD dcert deps ⟩
     filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩
@@ -259,7 +259,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       filter0 = filterCD dcert deps
   noGACerts (dcert@(regpool _ _) ∷ cs) deps = begin
     filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
-    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
+    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl filter0 ⟩
     filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩
@@ -269,7 +269,7 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       filter0 = filterCD dcert deps
   noGACerts (dcert@(regdrep _ _ _) ∷ cs) deps = begin
     filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ certDeposit dcert pp))) ≈⟨ noGACerts cs _ ⟩
-    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
+    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl filter0 ⟩
     filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩
@@ -372,13 +372,13 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   utxo-govst-connex [] x = x
   utxo-govst-connex (p ∷ ps) {utxoDs} {gSt} {gad} x = begin
     filterˢ isGADeposit (dom (updateProposalDeposits (p ∷ ps) txid gad utxoDs))
-      ≈⟨ filter-pres-≡ᵉ dom∪⁺≡∪dom ⟩
+      ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
     filterˢ isGADeposit ((dom (updateProposalDeposits ps txid gad utxoDs))
       ∪ (dom{X = Deposits} ❴ GovActionDeposit (txid , length ps) , gad ❵))
       ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom (updateProposalDeposits ps txid gad utxoDs)) ∪ filterˢ isGADeposit
         (dom{X = Deposits} ❴ GovActionDeposit (txid , length ps) , gad ❵)
-      ≈⟨ ∪-cong (utxo-govst-connex ps x) (filter-pres-≡ᵉ dom-single≡single) ⟩
+      ≈⟨ ∪-cong (utxo-govst-connex ps x) (filter-cong dom-single≡single) ⟩
     fromList (dpMap (updateGovStates (map inj₂ ps) 0 gSt))
       ∪ filterˢ isGADeposit ❴ GovActionDeposit (txid , length ps) ❵
       ≈⟨ ∪-cong  ≡ᵉ.refl (filterGA txid _) ⟩

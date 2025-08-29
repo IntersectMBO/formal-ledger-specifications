@@ -29,7 +29,7 @@ let
 
   agda-stdlib = our-agda.mkDerivation {
     pname = "standard-library";
-    version = "2.2";
+    version = "2.3";
     src = sources.agda-stdlib;
     nativeBuildInputs = [ (haskellPackages.ghcWithPackages (self: [ self.filemanip ])) ];
     meta = { };
@@ -44,7 +44,7 @@ let
   agda-stdlib-classes = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-classes";
-    version = "2.2.+";
+    version = "2.3";
     src = sources.agda-stdlib-classes;
     meta = { };
     libraryFile = "agda-stdlib-classes.agda-lib";
@@ -55,7 +55,7 @@ let
   agda-stdlib-meta = our-agda.mkDerivation {
     inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
     pname = "agda-stdlib-meta";
-    version = "2.2.+";
+    version = "2.3";
     src = sources.agda-stdlib-meta;
     meta = { };
     libraryFile = "agda-stdlib-meta.agda-lib";
@@ -91,6 +91,7 @@ let
     buildInputs = [
       agda-stdlib
       agda-stdlib-classes
+      agda-stdlib-meta
     ];
   };
 
@@ -153,7 +154,7 @@ let
             --prefix PATH : ${
               lib.makeBinPath [
                 agdaWithPackages
-                python311
+                python3
                 hpack
                 latex
               ]
@@ -270,7 +271,7 @@ let
     buildInputs = [
       agdaWithPackages
       pandoc
-      (python311.withPackages (
+      (python3.withPackages (
         ps: with ps; [
           pip
           mkdocs
@@ -315,7 +316,7 @@ let
       packages = [
         agdaWithPackages # Agda 2.7.0.1 + all pinned libraries
         fls-shake # Build system for generating outputs
-        python311 # Python for basic scripting
+        python3 # Python for basic scripting
         hpack # Haskell package helper
         coreutils # Basic shell utilities
       ];
@@ -353,7 +354,7 @@ let
         dejavu_fonts
 
         # Python environment for mkdocs pipeline
-        (python311.withPackages (
+        (python3.withPackages (
           ps: with ps; [
             pip
             mkdocs

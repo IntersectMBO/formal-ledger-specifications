@@ -13,8 +13,7 @@ module Main where
 import Prelude hiding ((!!), concatMap)
 
 import Control.Monad (guard, when, unless)
-import Control.Monad.Trans ( MonadIO(..), lift )
-import Control.Monad.Trans.Reader ( ReaderT(runReaderT), ask )
+import Control.Monad.Trans ( MonadIO(..) )
 import Control.DeepSeq (NFData)
 
 import Data.Foldable (toList, concatMap)
@@ -68,6 +67,8 @@ import Agda.Utils.List1 (String1, pattern (:|))
 import qualified Agda.Utils.List1   as List1
 import qualified Agda.Utils.IO.UTF8 as UTF8
 import Agda.Utils.Impossible (__IMPOSSIBLE__)
+import Agda.Interaction.Highlighting.HTML.Base
+  (MonadLogHtml (..) , LogHtmlT , runLogHtmlWith)
 
 import Paths_fls_agda (getDataFileName)
 
@@ -114,6 +115,8 @@ flsBackend' = Backend'
   -- will not have their definition site populated.
   , scopeCheckingSuffices = True
   , mayEraseType          = const $ return False
+  , backendInteractHole   = Nothing
+  , backendInteractTop    = Nothing
   }
 
 initialFlsOpts :: FlsOpts
@@ -242,19 +245,6 @@ srcFileOfInterface m i = FlsInputSourceFile m (TCM.iFileType i) (TCM.iSource i) 
 
 type HtmlLogMessage = String
 type HtmlLogAction m = HtmlLogMessage -> m ()
-
-class MonadLogHtml m where
-  logHtml :: HtmlLogAction m
-
-type LogHtmlT m = ReaderT (HtmlLogAction m) m
-
-instance Monad m => MonadLogHtml (LogHtmlT m) where
-  logHtml message = do
-    doLog <- ask
-    lift $ doLog message
-
-runLogHtmlWith :: Monad m => HtmlLogAction m -> LogHtmlT m a -> m a
-runLogHtmlWith = flip runReaderT
 
 renderSourceFile :: FlsOpts -> FlsInputSourceFile -> Text
 renderSourceFile opts = renderSourcePage

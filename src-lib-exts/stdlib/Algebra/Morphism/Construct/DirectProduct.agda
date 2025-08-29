@@ -1,42 +1,22 @@
 {-# OPTIONS --safe --cubical-compatible #-}
 module stdlib.Algebra.Morphism.Construct.DirectProduct where
 
-open import Algebra.Bundles
-open import Algebra.Morphism.Bundles
-open import Algebra.Morphism.Structures
-  using ( module MagmaMorphisms
-        ; module MonoidMorphisms
-        )
-open import Data.Product
+open import Algebra.Bundles using (RawMonoid)
 open import Level using (Level)
-open import Relation.Binary.Morphism.Construct.Identity using (isRelHomomorphism)
 open import Relation.Binary.Definitions using (Reflexive)
-open import Algebra.Construct.DirectProduct
+
+open import Algebra.Morphism.Construct.DirectProduct hiding (module Monoid-Export) public
 
 private
   variable
-    c ℓ : Level
+    a b c ℓ₁ ℓ₂ ℓ₃ : Level
 
-------------------------------------------------------------------------
--- Magmas
+module Monoid-Export {M : RawMonoid a ℓ₁} {N : RawMonoid b ℓ₂} where
+  open Monoid
 
-module _ (M N : RawMagma c ℓ) (open RawMagma M) (refl : Reflexive _≈_) where
-  open MagmaMorphisms (rawMagma M N) M
+  private
+    module M = RawMonoid M
+    module N = RawMonoid N
 
-  isMagmaHomomorphism : IsMagmaHomomorphism proj₁
-  isMagmaHomomorphism = record
-    { isRelHomomorphism = record { cong = λ {x} {y} z → z .proj₁ }
-    ; homo              = λ _ _ → refl
-    }
-
-------------------------------------------------------------------------
--- Monoids
-
-module _ (M N : RawMonoid c ℓ) (open RawMonoid M) (refl : Reflexive _≈_) where
-  open MonoidMorphisms (rawMonoid M N) M
-
-  isMonoidHomomorphism : IsMonoidHomomorphism proj₁
-  isMonoidHomomorphism = record
-    { isMagmaHomomorphism = isMagmaHomomorphism _ _ refl
-    ; ε-homo = refl
-    }
+  module _ {refl : Reflexive M._≈_} where
+    proj₁ = Proj₁.isMonoidHomomorphism M N refl

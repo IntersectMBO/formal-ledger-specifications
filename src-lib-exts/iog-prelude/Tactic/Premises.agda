@@ -1,12 +1,12 @@
 {-# OPTIONS --safe #-}
 -- {-# OPTIONS -v tactic.premises:100 #-}
-module iog-prelude.Tactic.Premises where
+module Prelude.STS.GenPremises where
 
-open import iog-prelude.Prelude.Init
+open import Prelude.Init
   hiding (Type; pred)
   renaming (_∈_ to _∈ˡ_)
 
-open import iog-prelude.Prelude.InferenceRules
+open import Prelude.InferenceRules
 open import Class.Show
 open import Class.Foldable
 open import Class.Decidable

@@ -23,7 +23,4 @@ instance
     completeness : _
     completeness sig s' h with sig | h
     ... | nothing  | NEWPP-Reject   = refl
-    ... | just upd | NEWPP-Accept p
-      rewrite let newpp = applyUpdate pparams upd in
-              dec-yes (¿ viablePParams newpp ¿) p .proj₂
-              = refl
+    ... | just upd | NEWPP-Accept p = refl

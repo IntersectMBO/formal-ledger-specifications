@@ -4,7 +4,7 @@ module Interface.STS where
 
 open import Prelude
 
-open import iog-prelude.Prelude.InferenceRules public
+open import Prelude.InferenceRules public
 
 private
   variable C S Sig : Type
