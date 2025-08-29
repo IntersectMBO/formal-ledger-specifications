@@ -13,7 +13,7 @@ module Ledger.Prelude where
 
 open import Prelude public
   hiding (∃⁇)
-open import iog-prelude.Prelude.Init public
+open import Prelude.Init public
   using (∃⁇)
 
 open import Ledger.Prelude.Base public
@@ -34,7 +34,7 @@ open import Tactic.Defaults public
 open import Tactic.Derive.DecEq hiding (map') public
 open import Tactic.Inline hiding (iTC; iTCE) public
 open import MyDebugOptions public
-open import iog-prelude.Tactic.Premises public
+open import Prelude.STS.GenPremises public
 
 open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)
