@@ -108,6 +108,7 @@ instance
 
 open CertState
 open DState
+open GovVotes
 
 instance
   unquoteDecl HasCast-LEnv HasCast-LState = derive-HasCast
@@ -121,11 +122,11 @@ txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
 rmOrphanDRepVotes : CertState → GovState → GovState
 rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
   where
-   ifDRepRegistered : Voter → Type
-   ifDRepRegistered (r , c) = r ≡ DRep → c ∈ dom (DRepsOf cs)
+   ifDRepRegistered : Credential → Type
+   ifDRepRegistered c = c ∈ dom (DRepsOf cs)
 
    go : GovActionState → GovActionState
-   go gas = record gas { votes = filterKeys ifDRepRegistered (gas .votes) }
+   go gas = record gas { votes = record (gas .votes) { gvDRep = filterKeys ifDRepRegistered (gas .votes .gvDRep) } }
 
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =

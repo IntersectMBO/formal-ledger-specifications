@@ -101,6 +101,8 @@ private variable
   stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
 
+open GovVote
+
 data _⊢_⇀⦇_,POOL⦈_  : PoolEnv → PState → DCert → PState → Type
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type
 
@@ -119,11 +121,11 @@ data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in
     ∙ (c ∉ dom rwds → d ≡ keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
+    ∙ mv ∈ mapˢ (just ∘ vDelegCredential) delegatees ∪
         fromList
           ( nothing
-          ∷ just abstainRep
-          ∷ just noConfidenceRep
+          ∷ just vDelegAbstain
+          ∷ just vDelegNoConfidence
           ∷ []
           )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
@@ -199,10 +201,10 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → T
 data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
   CERT-base :
     let open PParams pp
-        refresh         = mapPartial getDRepVote (fromList vs)
+        refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dReps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
-        validVoteDelegs  = voteDelegs ∣^ (mapˢ (credVoter DRep) (dom dReps) ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []))
+        validVoteDelegs  = voteDelegs ∣^ (mapˢ vDelegCredential (dom dReps) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []))
     in
     ∙ filterˢ isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ

@@ -17,7 +17,7 @@ open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 open import Tactic.Derive.Show
 
-open import Ledger.Prelude hiding (yes; no)
+open import Ledger.Prelude as P hiding (yes; no)
 open import Ledger.Conway.Specification.Gov.Base
 
 module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) where
@@ -29,10 +29,27 @@ module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) w
 data GovRole : Type where
   CC DRep SPO : GovRole
 
+GovRoleCredential : GovRole → Type
+GovRoleCredential CC   = Credential
+GovRoleCredential DRep = Credential
+GovRoleCredential SPO  = KeyHash
+
+record GovVoter : Type where
+\end{code}
+\begin{code}[hide]
+  constructor ⟦_,_⟧ᵍᵛ
+\end{code}
+\begin{code}
+  field
+    gvRole       : GovRole
+    gvCredential : GovRoleCredential gvRole
+\end{code}
+\begin{code}
+
 data VDeleg : Type where
-  credVoter        : GovRole → Credential →  VDeleg
-  abstainRep       :                         VDeleg
-  noConfidenceRep  :                         VDeleg
+  vDelegCredential   : Credential → VDeleg
+  vDelegAbstain      : VDeleg
+  vDelegNoConfidence : VDeleg
 
 GovActionID VoteDelegs Voter : Type
 GovActionID  = TxId × ℕ
@@ -219,7 +236,7 @@ data Vote : Type where
 record GovVote : Type where
   field
     gid         : GovActionID
-    voter       : Voter
+    voter       : GovVoter
     vote        : Vote
     anchor      : Maybe Anchor
 
@@ -232,9 +249,15 @@ record GovProposal : Type where
     returnAddr  : RwdAddr
     anchor      : Anchor
 
+record GovVotes : Type where
+  field
+    gvCC   : Credential ⇀ Vote
+    gvDRep : Credential ⇀ Vote
+    gvSPO  : KeyHash ⇀ Vote
+
 record GovActionState : Type where
   field
-    votes       : Voter ⇀ Vote
+    votes       : GovVotes
     returnAddr  : RwdAddr
     expiresIn   : Epoch
     action      : GovAction
@@ -260,6 +283,26 @@ instance
   unquoteDecl DecEq-Vote          = derive-DecEq ((quote Vote    , DecEq-Vote)    ∷ [])
   unquoteDecl DecEq-VDeleg        = derive-DecEq ((quote VDeleg  , DecEq-VDeleg)  ∷ [])
 
+  DecEq-GovVoter : DecEq GovVoter
+  DecEq-GovVoter ._≟_ ⟦ CC   , c ⟧ᵍᵛ ⟦ CC   , c' ⟧ᵍᵛ
+    with c ≟ c'
+  ... | P.yes p = P.yes (cong ⟦ CC ,_⟧ᵍᵛ p)
+  ... | P.no ¬p = P.no (λ { refl → ¬p refl})
+  DecEq-GovVoter ._≟_ ⟦ CC   , c ⟧ᵍᵛ ⟦ DRep , c' ⟧ᵍᵛ = P.no λ ()
+  DecEq-GovVoter ._≟_ ⟦ CC   , c ⟧ᵍᵛ ⟦ SPO  , c' ⟧ᵍᵛ = P.no λ ()
+  DecEq-GovVoter ._≟_ ⟦ DRep , c ⟧ᵍᵛ ⟦ CC   , c' ⟧ᵍᵛ = P.no λ ()
+  DecEq-GovVoter ._≟_ ⟦ DRep , c ⟧ᵍᵛ ⟦ DRep , c' ⟧ᵍᵛ
+    with c ≟ c'
+  ... | P.yes p = P.yes (cong ⟦ DRep ,_⟧ᵍᵛ p)
+  ... | P.no ¬p = P.no (λ { refl → ¬p refl})
+  DecEq-GovVoter ._≟_ ⟦ DRep , c ⟧ᵍᵛ ⟦ SPO  , c' ⟧ᵍᵛ = P.no λ ()
+  DecEq-GovVoter ._≟_ ⟦ SPO  , c ⟧ᵍᵛ ⟦ CC   , c' ⟧ᵍᵛ = P.no λ ()
+  DecEq-GovVoter ._≟_ ⟦ SPO  , c ⟧ᵍᵛ ⟦ DRep , c' ⟧ᵍᵛ = P.no λ ()
+  DecEq-GovVoter ._≟_ ⟦ SPO  , c ⟧ᵍᵛ ⟦ SPO  , c' ⟧ᵍᵛ
+    with c ≟ c'
+  ... | P.yes p = P.yes (cong ⟦ SPO ,_⟧ᵍᵛ p)
+  ... | P.no ¬p = P.no (λ { refl → ¬p refl})
+
   unquoteDecl HasCast-GovVote = derive-HasCast [ (quote GovVote , HasCast-GovVote) ]
 \end{code}
 \end{AgdaMultiCode}
@@ -270,9 +313,26 @@ instance
 
 \begin{figure*}[htb]
 \begin{code}
-getDRepVote : GovVote → Maybe Credential
-getDRepVote record { voter = (DRep , credential) }  = just credential
-getDRepVote _                                       = nothing
+isVDelegCredential : VDeleg → Maybe Credential
+isVDelegCredential (vDelegCredential c) = just c
+isVDelegCredential _                    = nothing
+
+isGovVoterDRep : GovVoter → Maybe Credential
+isGovVoterDRep ⟦ DRep , c ⟧ᵍᵛ = just c
+isGovVoterDRep _                         = nothing
+
+isGovVoterCC : GovVoter → Maybe Credential
+isGovVoterCC ⟦ CC , c ⟧ᵍᵛ = just c
+isGovVoterCC _                       = nothing
+
+isGovVoterSPO : GovVoter → Maybe KeyHash
+isGovVoterSPO ⟦ SPO , c ⟧ᵍᵛ = just c
+isGovVoterSPO _                        = nothing
+
+isGovVoterCredential : GovVoter → Maybe Credential
+isGovVoterCredential ⟦ CC   , c ⟧ᵍᵛ = just c
+isGovVoterCredential ⟦ DRep , c ⟧ᵍᵛ = just c
+isGovVoterCredential _              = nothing
 
 proposedCC : GovAction → ℙ Credential
 proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ  = dom x

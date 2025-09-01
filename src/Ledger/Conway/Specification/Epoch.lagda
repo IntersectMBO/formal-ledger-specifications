@@ -356,8 +356,9 @@ opaque
 \end{code}
 \begin{code}
   mkStakeDistrs : Snapshot → GovState → Deposits → VoteDelegs → StakeDistrs
-  mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
+  mkStakeDistrs ss govSt ds delegations =
+    record { stakeDistrVDeleg = ∅ ; stakeDistrPools = ∅ }
+    -- aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}

@@ -315,7 +315,7 @@ private variable
   mkh         : Maybe KeyHash
   poolParams  : StakePoolParams
   pp          : PParams
-  mv          : Maybe VDeleg
+  mvd         : Maybe VDeleg
 
   stᵈ stᵈ' : DState
   stᵍ stᵍ' : GState
@@ -430,11 +430,11 @@ data _⊢_⇀⦇_,DELEG⦈_ -- : DelegEnv → DState → DCert → DState → Ty
     in
     ∙ (c ∉ dom rwds → d ≡ pp .keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
-    ∙ mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
-        fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
+    ∙ mvd ∈ mapˢ (just ∘ vDelegCredential) delegatees ∪
+            fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      Γ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mv mkh d ,DELEG⦈ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      Γ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mvd mkh d ,DELEG⦈ ⟦ insertIfJust c mvd vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
@@ -540,17 +540,21 @@ data _⊢_⇀⦇_,CERT⦈_  -- : CertEnv   → CertState  → DCert  → CertSta
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 
-
-data _⊢_⇀⦇_,CERTBASE⦈_   -- : CertEnv   → CertState  → ⊤      → CertState  → Type
-  where
-
+\end{code}
+\end{AgdaSuppressSpace}
+\emph{CERTBASE transition}
+\begin{AgdaSuppressSpace}
+\begin{code}[hide]
+open GovVote using (voter)
+data _⊢_⇀⦇_,CERTBASE⦈_ where
+\end{code}
+\begin{code}
   CERT-base :
-    let refresh          = mapPartial getDRepVote (fromList vs)
+    let refresh          = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
         refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
         wdrlCreds        = mapˢ stake (dom wdrls)
-        validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
-                                            ∪ fromList (noConfidenceRep ∷ abstainRep ∷ [])
-                                         )
+        validVoteDelegs  = voteDelegs ∣^ (  mapˢ vDelegCredential (dom dReps)
+                                        ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
