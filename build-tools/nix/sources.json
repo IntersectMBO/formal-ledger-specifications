@@ -53,10 +53,10 @@
         "homepage": "",
         "owner": "input-output-hk",
         "repo": "iog-agda-prelude",
-        "rev": "d6b9f4e21e953a97e7e84b0af9851a5765744fb5",
+        "rev": "e25670dcea694f321cbcd7a0bb704b82d5d7b266",
         "sha256": "1r2g7akia33yis8kgw398w0z484zry1q26739wcq6dfdyw7zb8v7",
         "type": "tarball",
-        "url": "https://github.com/input-output-hk/iog-agda-prelude/archive/d6b9f4e21e953a97e7e84b0af9851a5765744fb5.tar.gz",
+        "url": "https://github.com/input-output-hk/iog-agda-prelude/archive/e25670dcea694f321cbcd7a0bb704b82d5d7b266.tar.gz",
         "url_template": "https://github.com/<owner>/<repo>/archive/<rev>.tar.gz"
     },
     "nixpkgs": {
