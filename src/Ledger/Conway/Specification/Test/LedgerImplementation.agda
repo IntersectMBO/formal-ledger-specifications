@@ -37,6 +37,7 @@ module Implementation where
   SlotsPerEpochᶜ   = 100
   ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20
   StabilityWindowᶜ = 10
+  RandomnessStabilisationWindowᶜ = 10
   MaxLovelaceSupplyᶜ = 1
   Quorum           = 1
   NetworkId        = 0

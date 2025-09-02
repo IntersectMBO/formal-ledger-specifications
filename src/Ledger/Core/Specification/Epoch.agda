@@ -25,10 +25,11 @@ record EpochStructure : Type₁ where
   field ⦃ DecPo-Slot ⦄   : HasDecPartialOrder≡ {A = Slot}
         ⦃ DecEq-Slot ⦄   : DecEq Slot
 
-        epoch           : Slot → Epoch
-        firstSlot       : Epoch → Slot
-        StabilityWindow : Slot
-        sucᵉ            : Epoch → Epoch
+        epoch                         : Slot → Epoch
+        firstSlot                     : Epoch → Slot
+        RandomnessStabilisationWindow : Slot
+        StabilityWindow               : Slot
+        sucᵉ                          : Epoch → Epoch
 
   _+ᵉ_ = additionVia sucᵉ
 
@@ -76,6 +77,7 @@ record GlobalConstants : Type₁ where
   field  Network : Type; ⦃ DecEq-Netw ⦄ : DecEq Network; ⦃ Show-Network ⦄ : Show Network
          SlotsPerEpochᶜ   : ℕ; ⦃ NonZero-SlotsPerEpochᶜ ⦄ : NonZero SlotsPerEpochᶜ
          ActiveSlotCoeff  : ℚ; ⦃ Positive-ActiveSlotCoeff ⦄ : ℚ.Positive ActiveSlotCoeff
+         RandomnessStabilisationWindowᶜ : ℕ
          StabilityWindowᶜ : ℕ
          MaxLovelaceSupplyᶜ : Coin
          Quorum : ℕ
@@ -91,14 +93,15 @@ record GlobalConstants : Type₁ where
 
   ℕEpochStructure : EpochStructure
   ℕEpochStructure = λ where
-    .Slotʳ           → +-*-semiring
-    .Epoch           → ℕ
-    .epoch slot      → slot / SlotsPerEpochᶜ
-    .firstSlot e     → e * SlotsPerEpochᶜ
-    .StabilityWindow → StabilityWindowᶜ
-    .sucᵉ            → suc
-    ._+ᵉ'_           → _+_
-    .+ᵉ≡+ᵉ' {a} {b}  → ℕ+ᵉ≡+ᵉ' {a} {b}
+    .Slotʳ                         → +-*-semiring
+    .Epoch                         → ℕ
+    .epoch slot                    → slot / SlotsPerEpochᶜ
+    .firstSlot e                   → e * SlotsPerEpochᶜ
+    .RandomnessStabilisationWindow → RandomnessStabilisationWindowᶜ
+    .StabilityWindow               → StabilityWindowᶜ
+    .sucᵉ                          → suc
+    ._+ᵉ'_                         → _+_
+    .+ᵉ≡+ᵉ' {a} {b}                → ℕ+ᵉ≡+ᵉ' {a} {b}
 
    where open EpochStructure
 
