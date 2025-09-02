@@ -8,9 +8,6 @@ GovVoter' : Type
 GovVoter' = GovRole × Credential
 
 instance
-  HsTy-GovVoter : HasHsType GovVoter
-  HsTy-GovVoter .HasHsType.HsType = GovVoter'
-
   Conv-GovVoter : Convertible GovVoter GovVoter'
   Conv-GovVoter .to ⟦ CC   , c ⟧ᵍᵛ = CC   , c
   Conv-GovVoter .to ⟦ DRep , c ⟧ᵍᵛ = DRep , c
@@ -30,9 +27,6 @@ record GovVote' : Type where
     anchor      : Maybe Anchor
 
 instance
-  HsTy-GovVote : HasHsType GovVote
-  HsTy-GovVote .HasHsType.HsType = GovVote'
-  
   Conv-GovVote : Convertible GovVote GovVote'
   Conv-GovVote .to v = record { gid = v.gid ; voter = to v.voter  ; vote = v.vote ; anchor = v.anchor }
     where module v = GovVote v
@@ -54,3 +48,6 @@ instance
 
   HsTy-GovVotes = autoHsType GovVotes
   Conv-GovVotes = autoConvert GovVotes
+
+  HsTy-GovVote' = autoHsType GovVote' ⊣ withName "GovVote"
+  Conv-GovVote' = autoConvert GovVote'
