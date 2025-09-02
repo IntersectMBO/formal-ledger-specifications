@@ -358,6 +358,7 @@ opaque
   mkStakeDistrs : Snapshot → GovState → Deposits → VoteDelegs → StakeDistrs
   mkStakeDistrs ss govSt ds delegations =
     record { stakeDistrVDeleg = ∅ ; stakeDistrPools = ∅ }
+    -- FIXME
     -- aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 \end{code}
 \end{AgdaSuppressSpace}
