@@ -105,7 +105,7 @@ instance
 unquoteDecl = do
   hsTypeAlias GovActionID
   hsTypeAlias GovState
-  hsTypeAlias GovVoter
+  hsTypeAlias GovVoter'
 
 -- Computational function
 

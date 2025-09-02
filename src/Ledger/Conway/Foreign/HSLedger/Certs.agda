@@ -31,11 +31,29 @@ instance
     • fieldPrefix "ps"
   Conv-PState = autoConvert PState
 
-  HsTy-CertEnv = autoHsType CertEnv
+record CertEnv' : Type where
+  field
+    epoch     : Epoch
+    pp        : PParams
+    votes     : List GovVote'
+    wdrls     : RwdAddr ⇀ Coin
+    coldCreds : ℙ Credential
+
+instance
+  HsTy-CertEnv' = autoHsType CertEnv'
     ⊣ withConstructor "MkCertEnv"
     • fieldPrefix "ce"
-  Conv-CertEnv = autoConvert CertEnv
+  Conv-CertEnv' = autoConvert CertEnv'
 
+  mkCertEnv' : Convertible CertEnv CertEnv'
+  mkCertEnv' = λ where
+    .to   ce → let module ce = CertEnv ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = to ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds }
+    .from ce → let module ce = CertEnv' ce in record { epoch = ce.epoch ; pp = ce.pp ; votes = from ce.votes ; wdrls = ce.wdrls ; coldCreds = ce.coldCreds }
+
+  HsTy-CertEnv = MkHsType CertEnv (HsType CertEnv')
+  Conv-CertEnv = mkCertEnv' ⨾ Conv-CertEnv'
+
+instance
   HsTy-DState = autoHsType DState
     ⊣ withConstructor "MkDState"
     • withName "DState"
@@ -58,11 +76,6 @@ instance
   Conv-GState-GState' .to ⟦ dreps , ccHotKeys , deposits ⟧ᵛ = ⟦ dreps , ccHotKeys ⟧ᵛ'
   Conv-GState-GState' .from ⟦ dreps , ccHotKeys ⟧ᵛ'         = ⟦ dreps , ccHotKeys , ∅ ⟧ᵛ
 
--- deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
--- deleg-step = to (compute Computational-DELEG)
-
--- {-# COMPILE GHC deleg-step as delegStep #-}
-
 deleg-step : HsType (DelegEnv → DState → DCert → ComputationResult String DState)
 deleg-step = to (compute Computational-DELEG)
 
@@ -72,11 +85,6 @@ pool-step : HsType (PParams → PState → DCert → ComputationResult String PS
 pool-step = to (compute Computational-POOL)
 
 {-# COMPILE GHC pool-step as poolStep #-}
-
--- govcert-step : HsType (CertEnv → GState → DCert → ComputationResult String GState)
--- govcert-step = to (compute Computational-GOVCERT)
-
--- {-# COMPILE GHC govcert-step as govCertStep #-}
 
 govcert-step : HsType (CertEnv → GState → DCert → ComputationResult String GState)
 govcert-step = to (compute Computational-GOVCERT)

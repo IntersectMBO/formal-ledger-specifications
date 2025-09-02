@@ -27,11 +27,10 @@ record GovVote' : Type where
     anchor      : Maybe Anchor
 
 instance
-  Conv-GovVote : Convertible GovVote GovVote'
-  Conv-GovVote .to v = record { gid = v.gid ; voter = to v.voter  ; vote = v.vote ; anchor = v.anchor }
-    where module v = GovVote v
-  Conv-GovVote .from v = record { gid = v.gid ; voter = from v.voter ; vote = v.vote ; anchor = v.anchor }
-    where module v = GovVote' v
+  mkGovVote' : Convertible GovVote GovVote'
+  mkGovVote' = λ where
+    .to v   → let module v = GovVote v in record { gid = v.gid ; voter = to v.voter  ; vote = v.vote ; anchor = v.anchor }
+    .from v → let module v = GovVote' v in record { gid = v.gid ; voter = from v.voter ; vote = v.vote ; anchor = v.anchor }
 
 instance
   HsTy-GovRole = autoHsType GovRole
@@ -49,5 +48,8 @@ instance
   HsTy-GovVotes = autoHsType GovVotes
   Conv-GovVotes = autoConvert GovVotes
 
-  HsTy-GovVote' = autoHsType GovVote' ⊣ withName "GovVote"
+  HsTy-GovVote' = autoHsType GovVote'
   Conv-GovVote' = autoConvert GovVote'
+
+  HsTy-GovVote = MkHsType GovVote (HsType GovVote')
+  Conv-GovVote = mkGovVote' ⨾ Conv-GovVote'
