@@ -4,8 +4,8 @@ open import Ledger.Prelude hiding (_∙_; ε)
 module Ledger.Conway.Specification.TokenAlgebra.ValueVector (PolicyId : Type) (n : ℕ) where
 
 import Algebra as Alg
-open import stdlib.Algebra.Morphism.Construct.DirectProduct
 open import Algebra.Construct.DirectProduct
+open import stdlib.Algebra.Morphism.Construct.DirectProduct
 open import Data.Nat.Properties using (+-0-commutativeMonoid)
 import Data.Product.Relation.Binary.Pointwise.NonDependent as Product
 open import Data.Vec as Vec
@@ -44,7 +44,7 @@ module _ (Policies : Vec PolicyId n) where
         _≤ᵗ_                       = Product.Pointwise _≤_ (Vec.Pointwise _≤_)
 
         coin∘inject≗id             = λ _ → refl
-        coinIsMonoidHomomorphism   = isMonoidHomomorphism +-0-commutativeMonoid.rawMonoid Vec-commutativeMonoid.rawMonoid refl
+        coinIsMonoidHomomorphism   = Monoid-Export.proj₁ {refl = refl}
 
         Dec-≤ᵗ : _≤ᵗ_ ⁇²
         Dec-≤ᵗ {(c₁ , v₁)} {(c₂ , v₂)} = Dec-× ⦃ ℕ-Dec-≤ ⦄ ⦃ ⁇ Vec.decidable dec² v₁ v₂ ⦄

@@ -195,7 +195,7 @@ For the formal statement of the lemma,
 
       ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
       ratifiesSnapMatch =
-         ≡ᵉ.trans (filter-pres-≡ᵉ $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
+         ≡ᵉ.trans (filter-cong $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
          ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
 
       poolReapMatch : govDepsMatch ls₁ → govDepsMatch (eps' .ls)
@@ -228,7 +228,7 @@ For the formal statement of the lemma,
            dom (DepositsOf ls₁ ∣ retiredDeposits ᶜ)
           )
 
-          ≈⟨ filter-pres-≡ᵉ dom∪ ⟨
+          ≈⟨ filter-cong dom∪ ⟨
 
         filterˢ isGADeposit
           (dom
@@ -248,7 +248,7 @@ For the formal statement of the lemma,
             )
           )
 
-          ≈⟨ filter-pres-≡ᵉ $ dom-cong (res-ex-∪ dec¹) ⟩
+          ≈⟨ filter-cong $ dom-cong (res-ex-∪ dec¹) ⟩
 
         filterˢ isGADeposit (dom (DepositsOf ls₁))
         ∎
