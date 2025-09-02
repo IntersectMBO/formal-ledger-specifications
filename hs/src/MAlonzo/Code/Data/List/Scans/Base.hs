@@ -72,8 +72,13 @@ du_scanr_44 ::
   AgdaAny -> [AgdaAny] -> [AgdaAny]
 du_scanr_44 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.List.NonEmpty.Base.du_toList_60
-      (coe du_scanr'8314'_28 (coe v0) (coe v1) (coe v2))
+      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+      (coe
+         MAlonzo.Code.Data.List.NonEmpty.Base.d_head_30
+         (coe du_scanr'8314'_28 (coe v0) (coe v1) (coe v2)))
+      (coe
+         MAlonzo.Code.Data.List.NonEmpty.Base.d_tail_32
+         (coe du_scanr'8314'_28 (coe v0) (coe v1) (coe v2)))
 -- Data.List.Scans.Base._.scanl⁺
 d_scanl'8314'_58 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -127,5 +132,10 @@ du_scanl_78 ::
   AgdaAny -> [AgdaAny] -> [AgdaAny]
 du_scanl_78 v0 v1 v2
   = coe
-      MAlonzo.Code.Data.List.NonEmpty.Base.du_toList_60
-      (coe du_scanl'8314'_58 (coe v0) (coe v1) (coe v2))
+      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+      (coe
+         MAlonzo.Code.Data.List.NonEmpty.Base.d_head_30
+         (coe du_scanl'8314'_58 (coe v0) (coe v1) (coe v2)))
+      (coe
+         MAlonzo.Code.Data.List.NonEmpty.Base.d_tail_32
+         (coe du_scanl'8314'_58 (coe v0) (coe v1) (coe v2)))

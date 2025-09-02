@@ -43,18 +43,18 @@ d_unique'8743'set'8658'bag_64 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.T_AllPairs_20 ->
   MAlonzo.Code.Data.List.Relation.Unary.AllPairs.Core.T_AllPairs_20 ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810) ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858) ->
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_unique'8743'set'8658'bag_64 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7
   = du_unique'8743'set'8658'bag_64 v6 v7
 du_unique'8743'set'8658'bag_64 ::
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810) ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858) ->
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_unique'8743'set'8658'bag_64 v0 v1
   = coe
-      MAlonzo.Code.Function.Bundles.C_Inverse'46'constructor_39905
-      (coe MAlonzo.Code.Function.Bundles.d_to_1820 (coe v0 v1))
-      (coe MAlonzo.Code.Function.Bundles.d_from_1822 (coe v0 v1))
-      (coe MAlonzo.Code.Function.Bundles.d_to'45'cong_1824 (coe v0 v1))
-      (coe MAlonzo.Code.Function.Bundles.d_from'45'cong_1826 (coe v0 v1))
+      MAlonzo.Code.Function.Bundles.C_constructor_2220
+      (coe MAlonzo.Code.Function.Bundles.d_to_1868 (coe v0 v1))
+      (coe MAlonzo.Code.Function.Bundles.d_from_1870 (coe v0 v1))
+      (coe MAlonzo.Code.Function.Bundles.d_to'45'cong_1872 (coe v0 v1))
+      (coe MAlonzo.Code.Function.Bundles.d_from'45'cong_1874 (coe v0 v1))
       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 erased erased)

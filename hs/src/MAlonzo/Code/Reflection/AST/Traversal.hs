@@ -71,7 +71,7 @@ du__'43''43'cxt__64 v0 v1
         -> coe
              C__'44'__54
              (coe
-                addInt (coe MAlonzo.Code.Data.List.Base.du_length_284 v0) (coe v2))
+                addInt (coe MAlonzo.Code.Data.List.Base.du_length_268 v0) (coe v2))
              (coe
                 MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v0) (coe v3))
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -83,43 +83,43 @@ d_Action_72 = erased
 -- Reflection.AST.Traversal.Actions
 d_Actions_76 a0 a1 = ()
 data T_Actions_76
-  = C_Actions'46'constructor_1115 (T_Cxt_44 -> Integer -> AgdaAny)
-                                  (T_Cxt_44 -> AgdaAny -> AgdaAny) (T_Cxt_44 -> AgdaAny -> AgdaAny)
-                                  (T_Cxt_44 -> AgdaAny -> AgdaAny)
+  = C_constructor_94 (T_Cxt_44 -> Integer -> AgdaAny)
+                     (T_Cxt_44 -> AgdaAny -> AgdaAny) (T_Cxt_44 -> AgdaAny -> AgdaAny)
+                     (T_Cxt_44 -> AgdaAny -> AgdaAny)
 -- Reflection.AST.Traversal.Actions.onVar
 d_onVar_86 :: T_Actions_76 -> T_Cxt_44 -> Integer -> AgdaAny
 d_onVar_86 v0
   = case coe v0 of
-      C_Actions'46'constructor_1115 v1 v2 v3 v4 -> coe v1
+      C_constructor_94 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal.Actions.onMeta
 d_onMeta_88 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
 d_onMeta_88 v0
   = case coe v0 of
-      C_Actions'46'constructor_1115 v1 v2 v3 v4 -> coe v2
+      C_constructor_94 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal.Actions.onCon
 d_onCon_90 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
 d_onCon_90 v0
   = case coe v0 of
-      C_Actions'46'constructor_1115 v1 v2 v3 v4 -> coe v3
+      C_constructor_94 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal.Actions.onDef
 d_onDef_92 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
 d_onDef_92 v0
   = case coe v0 of
-      C_Actions'46'constructor_1115 v1 v2 v3 v4 -> coe v4
+      C_constructor_94 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal.defaultActions
-d_defaultActions_94 ::
+d_defaultActions_96 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 -> T_Actions_76
-d_defaultActions_94 ~v0 v1 = du_defaultActions_94 v1
-du_defaultActions_94 ::
+d_defaultActions_96 ~v0 v1 = du_defaultActions_96 v1
+du_defaultActions_96 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 -> T_Actions_76
-du_defaultActions_94 v0
+du_defaultActions_96 v0
   = coe
-      C_Actions'46'constructor_1115
+      C_constructor_94
       (coe
          (\ v1 -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased))
       (coe
@@ -129,32 +129,32 @@ du_defaultActions_94 v0
       (coe
          (\ v1 -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased))
 -- Reflection.AST.Traversal._._.onCon
-d_onCon_104 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
-d_onCon_104 v0 = coe d_onCon_90 (coe v0)
+d_onCon_106 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
+d_onCon_106 v0 = coe d_onCon_90 (coe v0)
 -- Reflection.AST.Traversal._._.onDef
-d_onDef_106 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
-d_onDef_106 v0 = coe d_onDef_92 (coe v0)
+d_onDef_108 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
+d_onDef_108 v0 = coe d_onDef_92 (coe v0)
 -- Reflection.AST.Traversal._._.onMeta
-d_onMeta_108 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
-d_onMeta_108 v0 = coe d_onMeta_88 (coe v0)
+d_onMeta_110 :: T_Actions_76 -> T_Cxt_44 -> AgdaAny -> AgdaAny
+d_onMeta_110 v0 = coe d_onMeta_88 (coe v0)
 -- Reflection.AST.Traversal._._.onVar
-d_onVar_110 :: T_Actions_76 -> T_Cxt_44 -> Integer -> AgdaAny
-d_onVar_110 v0 = coe d_onVar_86 (coe v0)
+d_onVar_112 :: T_Actions_76 -> T_Cxt_44 -> Integer -> AgdaAny
+d_onVar_112 v0 = coe d_onVar_86 (coe v0)
 -- Reflection.AST.Traversal._.traverseTerm
-d_traverseTerm_112 ::
+d_traverseTerm_114 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-d_traverseTerm_112 ~v0 v1 v2 v3 v4
-  = du_traverseTerm_112 v1 v2 v3 v4
-du_traverseTerm_112 ::
+d_traverseTerm_114 ~v0 v1 v2 v3 v4
+  = du_traverseTerm_114 v1 v2 v3 v4
+du_traverseTerm_114 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> AgdaAny
-du_traverseTerm_112 v0 v1 v2 v3
+du_traverseTerm_114 v0 v1 v2 v3
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_var_172 v4 v5
         -> coe
@@ -164,7 +164,7 @@ du_traverseTerm_112 v0 v1 v2 v3
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_var_172)
                 (coe d_onVar_86 v1 v2 v4))
-             (coe du_traverseArgs_118 (coe v0) (coe v1) (coe v2) (coe v5))
+             (coe du_traverseArgs_120 (coe v0) (coe v1) (coe v2) (coe v5))
       MAlonzo.Code.Agda.Builtin.Reflection.C_con_178 v4 v5
         -> coe
              MAlonzo.Code.Effect.Applicative.du__'8859'__70 v0
@@ -173,7 +173,7 @@ du_traverseTerm_112 v0 v1 v2 v3
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_con_178)
                 (coe d_onCon_90 v1 v2 v4))
-             (coe du_traverseArgs_118 (coe v0) (coe v1) (coe v2) (coe v5))
+             (coe du_traverseArgs_120 (coe v0) (coe v1) (coe v2) (coe v5))
       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184 v4 v5
         -> coe
              MAlonzo.Code.Effect.Applicative.du__'8859'__70 v0
@@ -182,7 +182,7 @@ du_traverseTerm_112 v0 v1 v2 v3
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_def_184)
                 (coe d_onDef_92 v1 v2 v4))
-             (coe du_traverseArgs_118 (coe v0) (coe v1) (coe v2) (coe v5))
+             (coe du_traverseArgs_120 (coe v0) (coe v1) (coe v2) (coe v5))
       MAlonzo.Code.Agda.Builtin.Reflection.C_lam_190 v4 v5
         -> coe
              MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
@@ -190,12 +190,12 @@ du_traverseTerm_112 v0 v1 v2 v3
              erased
              (coe MAlonzo.Code.Agda.Builtin.Reflection.C_lam_190 (coe v4))
              (coe
-                du_traverseAbs_124 (coe v0) (coe v1)
+                du_traverseAbs_126 (coe v0) (coe v1)
                 (coe
                    MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98
                    (coe
                       MAlonzo.Code.Agda.Builtin.Reflection.C_arg'45'info_82 (coe v4)
-                      (coe du_m_190))
+                      (coe du_m_192))
                    (coe MAlonzo.Code.Agda.Builtin.Reflection.C_unknown_216))
                 (coe v2) (coe v5))
       MAlonzo.Code.Agda.Builtin.Reflection.C_pat'45'lam_196 v4 v5
@@ -205,8 +205,8 @@ du_traverseTerm_112 v0 v1 v2 v3
                 MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_pat'45'lam_196)
-                (coe du_traverseClauses_126 (coe v0) (coe v1) (coe v2) (coe v4)))
-             (coe du_traverseArgs_118 (coe v0) (coe v1) (coe v2) (coe v5))
+                (coe du_traverseClauses_128 (coe v0) (coe v1) (coe v2) (coe v4)))
+             (coe du_traverseArgs_120 (coe v0) (coe v1) (coe v2) (coe v5))
       MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202 v4 v5
         -> coe
              MAlonzo.Code.Effect.Applicative.du__'8859'__70 v0
@@ -214,16 +214,16 @@ du_traverseTerm_112 v0 v1 v2 v3
                 MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202)
-                (coe du_traverseArg_120 (coe v0) (coe v1) (coe v2) (coe v4)))
+                (coe du_traverseArg_122 (coe v0) (coe v1) (coe v2) (coe v4)))
              (coe
-                du_traverseAbs_124 (coe v0) (coe v1) (coe v4) (coe v2) (coe v5))
+                du_traverseAbs_126 (coe v0) (coe v1) (coe v4) (coe v2) (coe v5))
       MAlonzo.Code.Agda.Builtin.Reflection.C_agda'45'sort_206 v4
         -> coe
              MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
              (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
              erased
              (coe MAlonzo.Code.Agda.Builtin.Reflection.C_agda'45'sort_206)
-             (coe du_traverseSort_114 (coe v0) (coe v1) (coe v2) (coe v4))
+             (coe du_traverseSort_116 (coe v0) (coe v1) (coe v2) (coe v4))
       MAlonzo.Code.Agda.Builtin.Reflection.C_lit_210 v4
         -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       MAlonzo.Code.Agda.Builtin.Reflection.C_meta_214 v4 v5
@@ -234,32 +234,32 @@ du_traverseTerm_112 v0 v1 v2 v3
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_meta_214)
                 (coe d_onMeta_88 v1 v2 v4))
-             (coe du_traverseArgs_118 (coe v0) (coe v1) (coe v2) (coe v5))
+             (coe du_traverseArgs_120 (coe v0) (coe v1) (coe v2) (coe v5))
       MAlonzo.Code.Agda.Builtin.Reflection.C_unknown_216
         -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traverseSort
-d_traverseSort_114 ::
+d_traverseSort_116 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Sort_156 -> AgdaAny
-d_traverseSort_114 ~v0 v1 v2 v3 v4
-  = du_traverseSort_114 v1 v2 v3 v4
-du_traverseSort_114 ::
+d_traverseSort_116 ~v0 v1 v2 v3 v4
+  = du_traverseSort_116 v1 v2 v3 v4
+du_traverseSort_116 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Sort_156 -> AgdaAny
-du_traverseSort_114 v0 v1 v2 v3
+du_traverseSort_116 v0 v1 v2 v3
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_set_220 v4
         -> coe
              MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
              (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
              erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_set_220)
-             (coe du_traverseTerm_112 (coe v0) (coe v1) (coe v2) (coe v4))
+             (coe du_traverseTerm_114 (coe v0) (coe v1) (coe v2) (coe v4))
       MAlonzo.Code.Agda.Builtin.Reflection.C_lit_224 v4
         -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       MAlonzo.Code.Agda.Builtin.Reflection.C_prop_228 v4
@@ -267,7 +267,7 @@ du_traverseSort_114 v0 v1 v2 v3
              MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
              (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
              erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_prop_228)
-             (coe du_traverseTerm_112 (coe v0) (coe v1) (coe v2) (coe v4))
+             (coe du_traverseTerm_114 (coe v0) (coe v1) (coe v2) (coe v4))
       MAlonzo.Code.Agda.Builtin.Reflection.C_propLit_232 v4
         -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       MAlonzo.Code.Agda.Builtin.Reflection.C_inf_236 v4
@@ -276,20 +276,20 @@ du_traverseSort_114 v0 v1 v2 v3
         -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traversePattern
-d_traversePattern_116 ::
+d_traversePattern_118 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158 -> AgdaAny
-d_traversePattern_116 ~v0 v1 v2 v3 v4
-  = du_traversePattern_116 v1 v2 v3 v4
-du_traversePattern_116 ::
+d_traversePattern_118 ~v0 v1 v2 v3 v4
+  = du_traversePattern_118 v1 v2 v3 v4
+du_traversePattern_118 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Pattern_158 -> AgdaAny
-du_traversePattern_116 v0 v1 v2 v3
+du_traversePattern_118 v0 v1 v2 v3
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_con_244 v4 v5
         -> coe
@@ -299,13 +299,13 @@ du_traversePattern_116 v0 v1 v2 v3
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_con_244)
                 (coe d_onCon_90 v1 v2 v4))
-             (coe du_traversePats_122 (coe v0) (coe v1) (coe v2) (coe v5))
+             (coe du_traversePats_124 (coe v0) (coe v1) (coe v2) (coe v5))
       MAlonzo.Code.Agda.Builtin.Reflection.C_dot_248 v4
         -> coe
              MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
              (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
              erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_dot_248)
-             (coe du_traverseTerm_112 (coe v0) (coe v1) (coe v2) (coe v4))
+             (coe du_traverseTerm_114 (coe v0) (coe v1) (coe v2) (coe v4))
       MAlonzo.Code.Agda.Builtin.Reflection.C_var_252 v4
         -> coe
              MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
@@ -324,20 +324,20 @@ du_traversePattern_116 v0 v1 v2 v3
              (coe d_onVar_86 v1 v2 v4)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traverseArgs
-d_traverseArgs_118 ::
+d_traverseArgs_120 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] -> AgdaAny
-d_traverseArgs_118 ~v0 v1 v2 v3 v4
-  = du_traverseArgs_118 v1 v2 v3 v4
-du_traverseArgs_118 ::
+d_traverseArgs_120 ~v0 v1 v2 v3 v4
+  = du_traverseArgs_120 v1 v2 v3 v4
+du_traverseArgs_120 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] -> AgdaAny
-du_traverseArgs_118 v0 v1 v2 v3
+du_traverseArgs_120 v0 v1 v2 v3
   = case coe v3 of
       [] -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       (:) v4 v5
@@ -347,46 +347,46 @@ du_traverseArgs_118 v0 v1 v2 v3
                 MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22)
-                (coe du_traverseArg_120 (coe v0) (coe v1) (coe v2) (coe v4)))
-             (coe du_traverseArgs_118 (coe v0) (coe v1) (coe v2) (coe v5))
+                (coe du_traverseArg_122 (coe v0) (coe v1) (coe v2) (coe v4)))
+             (coe du_traverseArgs_120 (coe v0) (coe v1) (coe v2) (coe v5))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traverseArg
-d_traverseArg_120 ::
+d_traverseArg_122 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 -> AgdaAny
-d_traverseArg_120 ~v0 v1 v2 v3 v4 = du_traverseArg_120 v1 v2 v3 v4
-du_traverseArg_120 ::
+d_traverseArg_122 ~v0 v1 v2 v3 v4 = du_traverseArg_122 v1 v2 v3 v4
+du_traverseArg_122 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 -> AgdaAny
-du_traverseArg_120 v0 v1 v2 v3
+du_traverseArg_122 v0 v1 v2 v3
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v4 v5
         -> coe
              MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
              (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
              erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 (coe v4))
-             (coe du_traverseTerm_112 (coe v0) (coe v1) (coe v2) (coe v5))
+             (coe du_traverseTerm_114 (coe v0) (coe v1) (coe v2) (coe v5))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traversePats
-d_traversePats_122 ::
+d_traversePats_124 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] -> AgdaAny
-d_traversePats_122 ~v0 v1 v2 v3 v4
-  = du_traversePats_122 v1 v2 v3 v4
-du_traversePats_122 ::
+d_traversePats_124 ~v0 v1 v2 v3 v4
+  = du_traversePats_124 v1 v2 v3 v4
+du_traversePats_124 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] -> AgdaAny
-du_traversePats_122 v0 v1 v2 v3
+du_traversePats_124 v0 v1 v2 v3
   = case coe v3 of
       [] -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       (:) v4 v5
@@ -403,27 +403,27 @@ du_traversePats_122 v0 v1 v2 v3
                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                             (coe
                                MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 (coe v6) (coe v8)))
-                       (coe du_traversePattern_116 (coe v0) (coe v1) (coe v2) (coe v7)))
-                    (coe du_traversePats_122 (coe v0) (coe v1) (coe v2) (coe v5))
+                       (coe du_traversePattern_118 (coe v0) (coe v1) (coe v2) (coe v7)))
+                    (coe du_traversePats_124 (coe v0) (coe v1) (coe v2) (coe v5))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traverseAbs
-d_traverseAbs_124 ::
+d_traverseAbs_126 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112 -> AgdaAny
-d_traverseAbs_124 ~v0 v1 v2 v3 v4 v5
-  = du_traverseAbs_124 v1 v2 v3 v4 v5
-du_traverseAbs_124 ::
+d_traverseAbs_126 ~v0 v1 v2 v3 v4 v5
+  = du_traverseAbs_126 v1 v2 v3 v4 v5
+du_traverseAbs_126 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112 -> AgdaAny
-du_traverseAbs_124 v0 v1 v2 v3 v4
+du_traverseAbs_126 v0 v1 v2 v3 v4
   = case coe v4 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122 v5 v6
         -> coe
@@ -432,7 +432,7 @@ du_traverseAbs_124 v0 v1 v2 v3 v4
              erased
              (coe MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122 (coe v5))
              (coe
-                du_traverseTerm_112 (coe v0) (coe v1)
+                du_traverseTerm_114 (coe v0) (coe v1)
                 (coe
                    du__'8759'cxt__56
                    (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v5) (coe v2))
@@ -440,20 +440,20 @@ du_traverseAbs_124 v0 v1 v2 v3 v4
                 (coe v6))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traverseClauses
-d_traverseClauses_126 ::
+d_traverseClauses_128 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160] -> AgdaAny
-d_traverseClauses_126 ~v0 v1 v2 v3 v4
-  = du_traverseClauses_126 v1 v2 v3 v4
-du_traverseClauses_126 ::
+d_traverseClauses_128 ~v0 v1 v2 v3 v4
+  = du_traverseClauses_128 v1 v2 v3 v4
+du_traverseClauses_128 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160] -> AgdaAny
-du_traverseClauses_126 v0 v1 v2 v3
+du_traverseClauses_128 v0 v1 v2 v3
   = case coe v3 of
       [] -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       (:) v4 v5
@@ -463,24 +463,24 @@ du_traverseClauses_126 v0 v1 v2 v3
                 MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased (coe MAlonzo.Code.Agda.Builtin.List.C__'8759'__22)
-                (coe du_traverseClause_128 (coe v0) (coe v1) (coe v2) (coe v4)))
-             (coe du_traverseClauses_126 (coe v0) (coe v1) (coe v2) (coe v5))
+                (coe du_traverseClause_130 (coe v0) (coe v1) (coe v2) (coe v4)))
+             (coe du_traverseClauses_128 (coe v0) (coe v1) (coe v2) (coe v5))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traverseClause
-d_traverseClause_128 ::
+d_traverseClause_130 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160 -> AgdaAny
-d_traverseClause_128 ~v0 v1 v2 v3 v4
-  = du_traverseClause_128 v1 v2 v3 v4
-du_traverseClause_128 ::
+d_traverseClause_130 ~v0 v1 v2 v3 v4
+  = du_traverseClause_130 v1 v2 v3 v4
+du_traverseClause_130 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Clause_160 -> AgdaAny
-du_traverseClause_128 v0 v1 v2 v3
+du_traverseClause_130 v0 v1 v2 v3
   = case coe v3 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_clause_272 v4 v5 v6
         -> coe
@@ -491,13 +491,13 @@ du_traverseClause_128 v0 v1 v2 v3
                    MAlonzo.Code.Effect.Functor.d__'60''36''62'__30
                    (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                    erased (coe MAlonzo.Code.Agda.Builtin.Reflection.C_clause_272)
-                   (coe du_traverseTel_130 (coe v0) (coe v1) (coe v2) (coe v4)))
+                   (coe du_traverseTel_132 (coe v0) (coe v1) (coe v2) (coe v4)))
                 (coe
-                   du_traversePats_122 (coe v0) (coe v1)
-                   (coe du_Γ'8242'_234 (coe v2) (coe v4)) (coe v5)))
+                   du_traversePats_124 (coe v0) (coe v1)
+                   (coe du_Γ'8242'_236 (coe v2) (coe v4)) (coe v5)))
              (coe
-                du_traverseTerm_112 (coe v0) (coe v1)
-                (coe du_Γ'8242'_234 (coe v2) (coe v4)) (coe v6))
+                du_traverseTerm_114 (coe v0) (coe v1)
+                (coe du_Γ'8242'_236 (coe v2) (coe v4)) (coe v6))
       MAlonzo.Code.Agda.Builtin.Reflection.C_absurd'45'clause_278 v4 v5
         -> coe
              MAlonzo.Code.Effect.Applicative.du__'8859'__70 v0
@@ -506,23 +506,23 @@ du_traverseClause_128 v0 v1 v2 v3
                 (MAlonzo.Code.Effect.Applicative.d_rawFunctor_30 (coe v0)) erased
                 erased
                 (coe MAlonzo.Code.Agda.Builtin.Reflection.C_absurd'45'clause_278)
-                (coe du_traverseTel_130 (coe v0) (coe v1) (coe v2) (coe v4)))
+                (coe du_traverseTel_132 (coe v0) (coe v1) (coe v2) (coe v4)))
              (coe
-                du_traversePats_122 (coe v0) (coe v1)
-                (coe du_Γ'8242'_246 (coe v2) (coe v4)) (coe v5))
+                du_traversePats_124 (coe v0) (coe v1)
+                (coe du_Γ'8242'_248 (coe v2) (coe v4)) (coe v5))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._.traverseTel
-d_traverseTel_130 ::
+d_traverseTel_132 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> AgdaAny
-d_traverseTel_130 ~v0 v1 v2 v3 v4 = du_traverseTel_130 v1 v2 v3 v4
-du_traverseTel_130 ::
+d_traverseTel_132 ~v0 v1 v2 v3 v4 = du_traverseTel_132 v1 v2 v3 v4
+du_traverseTel_132 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> AgdaAny
-du_traverseTel_130 v0 v1 v2 v3
+du_traverseTel_132 v0 v1 v2 v3
   = case coe v3 of
       [] -> coe MAlonzo.Code.Effect.Applicative.d_pure_32 v0 erased v3
       (:) v4 v5
@@ -539,14 +539,14 @@ du_traverseTel_130 v0 v1 v2 v3
                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                             (coe
                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v6) (coe v8)))
-                       (coe du_traverseArg_120 (coe v0) (coe v1) (coe v2) (coe v7)))
+                       (coe du_traverseArg_122 (coe v0) (coe v1) (coe v2) (coe v7)))
                     (coe
-                       du_traverseTel_130 (coe v0) (coe v1)
+                       du_traverseTel_132 (coe v0) (coe v1)
                        (coe du__'8759'cxt__56 (coe v4) (coe v2)) (coe v5))
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.AST.Traversal._._.m
-d_m_190 ::
+d_m_192 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
@@ -554,15 +554,15 @@ d_m_190 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Visibility_48 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Modality_68
-d_m_190 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_m_190
-du_m_190 :: MAlonzo.Code.Agda.Builtin.Reflection.T_Modality_68
-du_m_190
+d_m_192 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 = du_m_192
+du_m_192 :: MAlonzo.Code.Agda.Builtin.Reflection.T_Modality_68
+du_m_192
   = coe
       MAlonzo.Code.Agda.Builtin.Reflection.C_modality_74
       (coe MAlonzo.Code.Agda.Builtin.Reflection.C_relevant_58)
       (coe MAlonzo.Code.Agda.Builtin.Reflection.C_quantity'45'ω_66)
 -- Reflection.AST.Traversal._._.Γ′
-d_Γ'8242'_234 ::
+d_Γ'8242'_236 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
@@ -570,25 +570,25 @@ d_Γ'8242'_234 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 -> T_Cxt_44
-d_Γ'8242'_234 ~v0 ~v1 ~v2 v3 v4 ~v5 ~v6 = du_Γ'8242'_234 v3 v4
-du_Γ'8242'_234 ::
+d_Γ'8242'_236 ~v0 ~v1 ~v2 v3 v4 ~v5 ~v6 = du_Γ'8242'_236 v3 v4
+du_Γ'8242'_236 ::
   T_Cxt_44 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> T_Cxt_44
-du_Γ'8242'_234 v0 v1
+du_Γ'8242'_236 v0 v1
   = coe
       du__'43''43'cxt__64
-      (coe MAlonzo.Code.Data.List.Base.du_reverse_460 v1) (coe v0)
+      (coe MAlonzo.Code.Data.List.Base.du_reverse_444 v1) (coe v0)
 -- Reflection.AST.Traversal._._.Γ′
-d_Γ'8242'_246 ::
+d_Γ'8242'_248 ::
   (() -> ()) ->
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20 ->
   T_Actions_76 ->
   T_Cxt_44 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] -> T_Cxt_44
-d_Γ'8242'_246 ~v0 ~v1 ~v2 v3 v4 ~v5 = du_Γ'8242'_246 v3 v4
-du_Γ'8242'_246 ::
+d_Γ'8242'_248 ~v0 ~v1 ~v2 v3 v4 ~v5 = du_Γ'8242'_248 v3 v4
+du_Γ'8242'_248 ::
   T_Cxt_44 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> T_Cxt_44
-du_Γ'8242'_246 v0 v1
+du_Γ'8242'_248 v0 v1
   = coe
       du__'43''43'cxt__64
-      (coe MAlonzo.Code.Data.List.Base.du_reverse_460 v1) (coe v0)
+      (coe MAlonzo.Code.Data.List.Base.du_reverse_444 v1) (coe v0)

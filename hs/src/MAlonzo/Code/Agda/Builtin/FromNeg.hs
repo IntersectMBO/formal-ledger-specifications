@@ -22,7 +22,7 @@ import qualified MAlonzo.Code.Agda.Primitive
 -- Agda.Builtin.FromNeg.Negative
 d_Negative_10 a0 a1 = ()
 newtype T_Negative_10
-  = C_Negative'46'constructor_55 (Integer -> AgdaAny -> AgdaAny)
+  = C_constructor_32 (Integer -> AgdaAny -> AgdaAny)
 -- Agda.Builtin.FromNeg.Negative.Constraint
 d_Constraint_24 :: T_Negative_10 -> Integer -> ()
 d_Constraint_24 = erased
@@ -30,8 +30,8 @@ d_Constraint_24 = erased
 d_fromNeg_30 :: T_Negative_10 -> Integer -> AgdaAny -> AgdaAny
 d_fromNeg_30 v0
   = case coe v0 of
-      C_Negative'46'constructor_55 v2 -> coe v2
+      C_constructor_32 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Agda.Builtin.FromNeg._.fromNeg
-d_fromNeg_34 :: T_Negative_10 -> Integer -> AgdaAny -> AgdaAny
-d_fromNeg_34 v0 = coe d_fromNeg_30 (coe v0)
+d_fromNeg_36 :: T_Negative_10 -> Integer -> AgdaAny -> AgdaAny
+d_fromNeg_36 v0 = coe d_fromNeg_30 (coe v0)

@@ -30,13 +30,13 @@ d_fromℤ_6 v0
 d_number_10 :: MAlonzo.Code.Agda.Builtin.FromNat.T_Number_10
 d_number_10
   = coe
-      MAlonzo.Code.Agda.Builtin.FromNat.C_Number'46'constructor_55
+      MAlonzo.Code.Agda.Builtin.FromNat.C_constructor_32
       (\ v0 v1 -> d_fromℤ_6 (coe v0))
 -- Data.Rational.Literals.negative
 d_negative_16 :: MAlonzo.Code.Agda.Builtin.FromNeg.T_Negative_10
 d_negative_16
   = coe
-      MAlonzo.Code.Agda.Builtin.FromNeg.C_Negative'46'constructor_55
+      MAlonzo.Code.Agda.Builtin.FromNeg.C_constructor_32
       (\ v0 v1 ->
          d_fromℤ_6
-           (coe MAlonzo.Code.Data.Integer.Base.d_'45'__252 (coe v0)))
+           (coe MAlonzo.Code.Data.Integer.Base.d_'45'__260 (coe v0)))

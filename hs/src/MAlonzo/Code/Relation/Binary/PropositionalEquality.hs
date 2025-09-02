@@ -33,10 +33,10 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 d__'8594''45'setoid__26 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> () -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  () -> () -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 d__'8594''45'setoid__26 ~v0 ~v1 ~v2 ~v3 = du__'8594''45'setoid__26
 du__'8594''45'setoid__26 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 du__'8594''45'setoid__26
   = coe
       MAlonzo.Code.Function.Indexed.Relation.Binary.Equality.du_'8801''45'setoid_18
@@ -61,8 +61,7 @@ du_'58''8594''45'to'45'Π_38 ::
   MAlonzo.Code.Function.Dependent.Bundles.T_Func_42
 du_'58''8594''45'to'45'Π_38 v0 v1
   = coe
-      MAlonzo.Code.Function.Dependent.Bundles.C_Func'46'constructor_677
-      (coe v1)
+      MAlonzo.Code.Function.Dependent.Bundles.C_constructor_64 (coe v1)
       (\ v2 v3 v4 -> coe du_'46'extendedlambda0_44 (coe v0) (coe v1) v2)
 -- Relation.Binary.PropositionalEquality..extendedlambda0
 d_'46'extendedlambda0_44 ::
@@ -92,24 +91,24 @@ d_'8594''45'to'45''10230'_50 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Function.Dependent.Bundles.T_Func_42
 d_'8594''45'to'45''10230'_50 ~v0 ~v1 ~v2 ~v3 v4
   = du_'8594''45'to'45''10230'_50 v4
 du_'8594''45'to'45''10230'_50 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Function.Dependent.Bundles.T_Func_42
 du_'8594''45'to'45''10230'_50 v0
   = coe
       du_'58''8594''45'to'45'Π_38
       (coe
-         MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Bundles.C_IndexedSetoid'46'constructor_445
+         MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Bundles.C_constructor_50
          (coe
             MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Construct.Trivial.du_isIndexedEquivalence_32
             (coe
-               MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0))))
+               MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62 (coe v0))))
 -- Relation.Binary.PropositionalEquality.naturality
 d_naturality_66 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

@@ -20,7 +20,6 @@ import qualified Data.Text
 import qualified MAlonzo.Code.Agda.Builtin.Sigma
 import qualified MAlonzo.Code.Agda.Builtin.Unit
 import qualified MAlonzo.Code.Agda.Primitive
-import qualified MAlonzo.Code.Data.Empty
 import qualified MAlonzo.Code.Data.Fin.Base
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
@@ -28,6 +27,7 @@ import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Product.Base
 import qualified MAlonzo.Code.Data.Sum.Base
+import qualified MAlonzo.Code.Relation.Nullary.Negation.Core
 
 -- Data.List.Relation.Unary.First._.First
 d_First_26 a0 a1 a2 a3 a4 a5 a6 = ()
@@ -171,7 +171,9 @@ du_tail_158 :: T_First_26 -> T_First_26
 du_tail_158 v0
   = case coe v0 of
       C_'91'_'93'_32 v3
-        -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14
+        -> coe
+             MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+             erased
       C__'8759'__38 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.First._.index
@@ -233,7 +235,7 @@ du_satisfied_188 v0 v1
   = coe
       MAlonzo.Code.Data.Product.Base.du_'45''44'__92
       (coe
-         MAlonzo.Code.Data.List.Base.du_lookup_406 (coe v0)
+         MAlonzo.Code.Data.List.Base.du_lookup_390 (coe v0)
          (coe du_index_170 (coe v0) (coe v1)))
       (coe du_index'45'satisfied_180 (coe v0) (coe v1))
 -- Data.List.Relation.Unary.First._.satisfiable
@@ -256,7 +258,7 @@ du_satisfiable_192 v0
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v1 v2
         -> coe
              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-             (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v1))
+             (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v1))
              (coe C_'91'_'93'_32 v2)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Unary.First._.first

@@ -23,5 +23,4 @@ import qualified MAlonzo.Code.Agda.Builtin.FromNat
 d_number_6 :: MAlonzo.Code.Agda.Builtin.FromNat.T_Number_10
 d_number_6
   = coe
-      MAlonzo.Code.Agda.Builtin.FromNat.C_Number'46'constructor_55
-      (\ v0 v1 -> v0)
+      MAlonzo.Code.Agda.Builtin.FromNat.C_constructor_32 (\ v0 v1 -> v0)

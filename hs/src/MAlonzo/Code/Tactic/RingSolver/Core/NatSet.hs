@@ -68,18 +68,18 @@ du_f_42 ::
   [Integer] -> (Integer -> [Integer]) -> Integer -> [Integer]
 du_f_42 v0 v1 v2 v3
   = let v4
-          = MAlonzo.Code.Data.Nat.Base.d_compare_470 (coe v3) (coe v0) in
+          = MAlonzo.Code.Data.Nat.Base.d_compare_474 (coe v3) (coe v0) in
     coe
       (case coe v4 of
-         MAlonzo.Code.Data.Nat.Base.C_less_454 v6
+         MAlonzo.Code.Data.Nat.Base.C_less_458 v6
            -> coe
                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v3)
                 (coe
                    MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v6) (coe v1))
-         MAlonzo.Code.Data.Nat.Base.C_equal_458
+         MAlonzo.Code.Data.Nat.Base.C_equal_462
            -> coe
                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v0) (coe v1)
-         MAlonzo.Code.Data.Nat.Base.C_greater_464 v6
+         MAlonzo.Code.Data.Nat.Base.C_greater_468 v6
            -> coe
                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v0) (coe v2 v6)
          _ -> MAlonzo.RTE.mazUnreachableError)
@@ -103,15 +103,15 @@ du_f_102 ::
   [Integer] -> (Integer -> [Integer]) -> Integer -> [Integer]
 du_f_102 v0 v1 v2 v3
   = let v4
-          = MAlonzo.Code.Data.Nat.Base.d_compare_470 (coe v3) (coe v0) in
+          = MAlonzo.Code.Data.Nat.Base.d_compare_474 (coe v3) (coe v0) in
     coe
       (case coe v4 of
-         MAlonzo.Code.Data.Nat.Base.C_less_454 v6
+         MAlonzo.Code.Data.Nat.Base.C_less_458 v6
            -> coe
                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                 (coe addInt (coe addInt (coe (1 :: Integer)) (coe v3)) (coe v6))
                 (coe v1)
-         MAlonzo.Code.Data.Nat.Base.C_equal_458
+         MAlonzo.Code.Data.Nat.Base.C_equal_462
            -> case coe v1 of
                 [] -> coe v1
                 (:) v6 v7
@@ -120,7 +120,7 @@ du_f_102 v0 v1 v2 v3
                        (coe addInt (coe addInt (coe (1 :: Integer)) (coe v0)) (coe v6))
                        (coe v7)
                 _ -> MAlonzo.RTE.mazUnreachableError
-         MAlonzo.Code.Data.Nat.Base.C_greater_464 v6
+         MAlonzo.Code.Data.Nat.Base.C_greater_468 v6
            -> coe
                 MAlonzo.Code.Agda.Builtin.List.C__'8759'__22 (coe v0) (coe v2 v6)
          _ -> MAlonzo.RTE.mazUnreachableError)
@@ -148,14 +148,14 @@ du_f_162 ::
   Integer -> Integer -> Maybe Integer
 du_f_162 v0 v1 v2 v3
   = let v4
-          = MAlonzo.Code.Data.Nat.Base.d_compare_470 (coe v2) (coe v0) in
+          = MAlonzo.Code.Data.Nat.Base.d_compare_474 (coe v2) (coe v0) in
     coe
       (case coe v4 of
-         MAlonzo.Code.Data.Nat.Base.C_less_454 v6
+         MAlonzo.Code.Data.Nat.Base.C_less_458 v6
            -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18
-         MAlonzo.Code.Data.Nat.Base.C_equal_458
+         MAlonzo.Code.Data.Nat.Base.C_equal_462
            -> coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v3)
-         MAlonzo.Code.Data.Nat.Base.C_greater_464 v6
+         MAlonzo.Code.Data.Nat.Base.C_greater_468 v6
            -> coe v1 v6 (addInt (coe (1 :: Integer)) (coe v3))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Tactic.RingSolver.Core.NatSet.member
@@ -174,10 +174,10 @@ d_fromList_216
 d_toList_218 :: [Integer] -> [Integer]
 d_toList_218 v0
   = coe
-      MAlonzo.Code.Data.List.Base.du_drop_558 (coe (1 :: Integer))
+      MAlonzo.Code.Data.List.Base.du_drop_542 (coe (1 :: Integer))
       (coe
          MAlonzo.Code.Data.List.Base.du_map_22
-         (coe MAlonzo.Code.Data.Nat.Base.d_pred_192)
+         (coe MAlonzo.Code.Data.Nat.Base.d_pred_196)
          (coe
             MAlonzo.Code.Data.List.Scans.Base.du_scanl_78
             (coe

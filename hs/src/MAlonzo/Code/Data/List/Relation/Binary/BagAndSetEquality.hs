@@ -25,7 +25,6 @@ import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Algebra.Bundles
 import qualified MAlonzo.Code.Algebra.Structures
 import qualified MAlonzo.Code.Algebra.Structures.Biased
-import qualified MAlonzo.Code.Data.Empty
 import qualified MAlonzo.Code.Data.Fin.Base
 import qualified MAlonzo.Code.Data.Irrelevant
 import qualified MAlonzo.Code.Data.List.Base
@@ -54,16 +53,17 @@ import qualified MAlonzo.Code.Relation.Binary.Reasoning.Base.Single
 import qualified MAlonzo.Code.Relation.Binary.Reasoning.Syntax
 import qualified MAlonzo.Code.Relation.Binary.Structures
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
+import qualified MAlonzo.Code.Relation.Nullary.Negation.Core
 
 -- Data.List.Relation.Binary.BagAndSetEquality.[_]-Order
 d_'91'_'93''45'Order_30 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Function.Related.Propositional.T_Kind_6 ->
-  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 d_'91'_'93''45'Order_30 ~v0 v1 ~v2 = du_'91'_'93''45'Order_30 v1
 du_'91'_'93''45'Order_30 ::
   MAlonzo.Code.Function.Related.Propositional.T_Kind_6 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 du_'91'_'93''45'Order_30 v0
   = coe
       MAlonzo.Code.Function.Related.Propositional.du_InducedPreorder'8322'_392
@@ -72,12 +72,12 @@ du_'91'_'93''45'Order_30 v0
 d_'91'_'93''45'Equality_36 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Function.Related.Propositional.T_SymmetricKind_86 ->
-  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 d_'91'_'93''45'Equality_36 ~v0 v1 ~v2
   = du_'91'_'93''45'Equality_36 v1
 du_'91'_'93''45'Equality_36 ::
   MAlonzo.Code.Function.Related.Propositional.T_SymmetricKind_86 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 du_'91'_'93''45'Equality_36 v0
   = coe
       MAlonzo.Code.Function.Related.Propositional.du_InducedEquivalence'8322'_482
@@ -202,13 +202,13 @@ d_bag'45''61''8658'_234 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Function.Related.Propositional.T_Kind_6 ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny -> AgdaAny
 d_bag'45''61''8658'_234 ~v0 ~v1 ~v2 ~v3 v4 v5 v6
   = du_bag'45''61''8658'_234 v4 v5 v6
 du_bag'45''61''8658'_234 ::
   MAlonzo.Code.Function.Related.Propositional.T_Kind_6 ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny -> AgdaAny
 du_bag'45''61''8658'_234 v0 v1 v2
   = coe
@@ -232,10 +232,10 @@ du__'8718'_248
               MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_'8838''45'preorder_126 in
     coe
       (let v1
-             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0) in
+             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0) in
        coe
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
             (coe
                MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.du_stop_116
                (coe v1))))
@@ -283,7 +283,7 @@ du_begin__254
               MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_'8838''45'preorder_126 in
     coe
       (let v1
-             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0) in
+             = MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0) in
        coe
          (coe
             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -346,7 +346,7 @@ du_start_268
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.du_start_76
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0)))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning.Base.step-≡
 d_step'45''8801'_280 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -367,7 +367,7 @@ du_step'45''8801'_280 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.T__IsRelatedTo__62
 du_step'45''8801'_280
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801'_450
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801'_452
       (coe (\ v0 v1 v2 v3 v4 -> v4))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning.Base.step-≡-∣
 d_step'45''8801''45''8739'_282 ::
@@ -404,7 +404,7 @@ du_step'45''8801''45''10216'_284 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.T__IsRelatedTo__62
 du_step'45''8801''45''10216'_284
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10216'_448
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10216'_450
       (coe (\ v0 v1 v2 v3 v4 -> v4))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning.Base.step-≡-⟩
 d_step'45''8801''45''10217'_286 ::
@@ -427,7 +427,7 @@ du_step'45''8801''45''10217'_286 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.T__IsRelatedTo__62
 du_step'45''8801''45''10217'_286
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_436
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_438
       (coe (\ v0 v1 v2 v3 v4 -> v4))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning.Base.step-≡˘
 d_step'45''8801''728'_288 ::
@@ -449,7 +449,7 @@ du_step'45''8801''728'_288 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.T__IsRelatedTo__62
 du_step'45''8801''728'_288
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''728'_452
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''728'_454
       (coe (\ v0 v1 v2 v3 v4 -> v4))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning.Base.stop
 d_stop_292 ::
@@ -469,7 +469,7 @@ du_stop_292
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.du_stop_116
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0)))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning.Base.≈-go
 d_'8776''45'go_294 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -496,7 +496,7 @@ du_'8776''45'go_294
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.du_'8776''45'go_106
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0)))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning.Base.≡-go
 d_'8801''45'go_296 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -543,7 +543,7 @@ du_'8818''45'go_298
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.du_'8818''45'go_96
          (coe
-            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)))
+            MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0)))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning._.step-∈
 d_step'45''8712'_314 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -564,19 +564,16 @@ du_step'45''8712'_314 ::
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34
 du_step'45''8712'_314
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8712'_208
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8712'_210
       (coe
          (\ v0 v1 v2 v3 ->
-            let v4
-                  = coe
-                      MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_'8838''45'isPreorder_124 in
             coe
+              MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
               (coe
-                 MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
+                 MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.du_start_76
                  (coe
-                    MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.du_start_76
-                    (coe v4))
-                 v1 v2 v3 v0)))
+                    MAlonzo.Code.Data.List.Relation.Binary.Subset.Propositional.Properties.du_'8838''45'isPreorder_124))
+              v1 v2 v3 v0))
 -- Data.List.Relation.Binary.BagAndSetEquality.⊆-Reasoning._.step-⊆
 d_step'45''8838'_318 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -601,7 +598,7 @@ du_step'45''8838'_318 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.T__IsRelatedTo__62
 du_step'45''8838'_318
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8838'_316
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8838'_318
       (coe
          MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.du_'8818''45'go_96
          (coe
@@ -660,7 +657,7 @@ du_step'45''8764'_336 ::
   MAlonzo.Code.Relation.Binary.Reasoning.Base.Double.T__IsRelatedTo__62
 du_step'45''8764'_336 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
       (coe du_'8764''45'go_330 (coe v0))
 -- Data.List.Relation.Binary.BagAndSetEquality._.∷-cong
 d_'8759''45'cong_354 ::
@@ -683,7 +680,7 @@ du_'8759''45'cong_354 v0 v1 v2 v3
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v4 v5 v6 -> v6) erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v4 v5 v6 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -695,14 +692,14 @@ du_'8759''45'cong_354 v0 v1 v2 v3
                  (coe v0)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
             (\ v4 v5 v6 ->
                coe
                  MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                  (coe v0))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                (\ v4 v5 v6 ->
                   coe
                     MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -714,7 +711,7 @@ du_'8759''45'cong_354 v0 v1 v2 v3
                        (coe v0)))
                erased erased erased
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                   (\ v4 ->
                      coe
                        MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -759,7 +756,7 @@ du_map'45'cong_386 v0 v1 v2 v3
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v4 v5 v6 -> v6) erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v4 v5 v6 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -771,14 +768,14 @@ du_map'45'cong_386 v0 v1 v2 v3
                  (coe v0)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
             (\ v4 v5 v6 ->
                coe
                  MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                  (coe v0))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                (\ v4 v5 v6 ->
                   coe
                     MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -790,7 +787,7 @@ du_map'45'cong_386 v0 v1 v2 v3
                        (coe v0)))
                erased erased erased
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                   (\ v4 ->
                      coe
                        MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -827,13 +824,13 @@ d_helper_400 ::
   [AgdaAny] ->
   (AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->
   (AgdaAny -> AgdaAny) ->
-  AgdaAny -> AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  AgdaAny -> AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_helper_400 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 ~v10 ~v11 ~v12
   = du_helper_400
-du_helper_400 :: MAlonzo.Code.Function.Bundles.T_Inverse_2068
+du_helper_400 :: MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_helper_400
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2482 erased
+      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2542 erased
       erased
 -- Data.List.Relation.Binary.BagAndSetEquality._._..extendedlambda0
 d_'46'extendedlambda0_408 ::
@@ -893,7 +890,7 @@ du_'43''43''45'cong_432 v0 v1 v2 v3 v4 v5
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v6 v7 v8 -> v8) erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v6 v7 v8 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -905,14 +902,14 @@ du_'43''43''45'cong_432 v0 v1 v2 v3 v4 v5
                  (coe v0)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
             (\ v6 v7 v8 ->
                coe
                  MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                  (coe v0))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                (\ v6 v7 v8 ->
                   coe
                     MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -924,7 +921,7 @@ du_'43''43''45'cong_432 v0 v1 v2 v3 v4 v5
                        (coe v0)))
                erased erased erased
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                   (\ v6 ->
                      coe
                        MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -959,7 +956,7 @@ du_concat'45'cong_456 v0 v1 v2 v3
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v4 v5 v6 -> v6) erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v4 v5 v6 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -971,14 +968,14 @@ du_concat'45'cong_456 v0 v1 v2 v3
                  (coe v0)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
             (\ v4 v5 v6 ->
                coe
                  MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                  (coe v0))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                (\ v4 v5 v6 ->
                   coe
                     MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -990,7 +987,7 @@ du_concat'45'cong_456 v0 v1 v2 v3
                        (coe v0)))
                erased erased erased
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                   (\ v4 ->
                      coe
                        MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -1005,7 +1002,7 @@ du_concat'45'cong_456 v0 v1 v2 v3
                (coe
                   (\ v4 ->
                      coe
-                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                        (\ v5 ->
                           coe
                             MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -1045,7 +1042,7 @@ du_'62''62''61''45'cong_494 v0 v1 v2 v3 v4 v5 v6 v7
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v8 v9 v10 -> v10) erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v8 v9 v10 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1057,14 +1054,14 @@ du_'62''62''61''45'cong_494 v0 v1 v2 v3 v4 v5 v6 v7
                  (coe v0)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
             (\ v8 v9 v10 ->
                coe
                  MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                  (coe v0))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                (\ v8 v9 v10 ->
                   coe
                     MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1076,7 +1073,7 @@ du_'62''62''61''45'cong_494 v0 v1 v2 v3 v4 v5 v6 v7
                        (coe v0)))
                erased erased erased
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                   (\ v8 ->
                      coe
                        MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -1121,20 +1118,20 @@ du_'8859''45'cong_532 v0 v1 v2 v3 v4 v5 v6 v7
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
       (\ v8 v9 v10 -> v10) erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_436
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_438
          (\ v8 v9 v10 v11 v12 -> v12) erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
             (\ v8 v9 v10 ->
                coe
                  MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                  (coe v0))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10216'_448
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10216'_450
                (\ v8 v9 v10 v11 v12 -> v12) erased erased erased
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                   (\ v8 ->
                      coe
                        MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -1153,13 +1150,13 @@ du_'8859''45'cong_532 v0 v1 v2 v3 v4 v5 v6 v7
                           MAlonzo.Code.Data.List.Base.du_map_22
                           (coe
                              (\ v9 ->
-                                coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v8 v9)))
+                                coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v8 v9)))
                           (coe v3))))
                (coe
                   (\ v8 ->
                      let v9
                            = \ v9 ->
-                               coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v8 v9) in
+                               coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v8 v9) in
                      coe
                        (coe
                           MAlonzo.Code.Data.List.Base.du_concatMap_246 (coe v9) (coe v4))))
@@ -1170,10 +1167,10 @@ du_'8859''45'cong_532 v0 v1 v2 v3 v4 v5 v6 v7
                        du_'62''62''61''45'cong_494 (coe v0) (coe v3) (coe v4)
                        (coe
                           (\ v9 ->
-                             coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v8 v9)))
+                             coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v8 v9)))
                        (coe
                           (\ v9 ->
-                             coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v8 v9)))
+                             coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v8 v9)))
                        (coe v6)
                        (coe
                           (\ v9 v10 ->
@@ -1229,28 +1226,28 @@ du_'8855''45'cong_580 v0 v1 v2 v3 v4 v5 v6 v7
 d_commutativeMonoid_588 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Function.Related.Propositional.T_SymmetricKind_86 ->
-  () -> MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_966
+  () -> MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996
 d_commutativeMonoid_588 ~v0 v1 ~v2 = du_commutativeMonoid_588 v1
 du_commutativeMonoid_588 ::
   MAlonzo.Code.Function.Related.Propositional.T_SymmetricKind_86 ->
-  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_966
+  MAlonzo.Code.Algebra.Bundles.T_CommutativeMonoid_996
 du_commutativeMonoid_588 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.C_CommutativeMonoid'46'constructor_17975
+      MAlonzo.Code.Algebra.Bundles.C_constructor_1088
       (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
       (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
       (coe
-         MAlonzo.Code.Algebra.Structures.Biased.du_isCommutativeMonoid_2702
+         MAlonzo.Code.Algebra.Structures.Biased.du_isCommutativeMonoid_2788
          (coe MAlonzo.Code.Data.List.Base.du__'43''43'__32)
          (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
          (coe
-            MAlonzo.Code.Algebra.Structures.Biased.C_IsCommutativeMonoid'737''46'constructor_35015
+            MAlonzo.Code.Algebra.Structures.Biased.C_constructor_2820
             (coe
-               MAlonzo.Code.Algebra.Structures.C_IsSemigroup'46'constructor_10417
+               MAlonzo.Code.Algebra.Structures.C_constructor_522
                (coe
-                  MAlonzo.Code.Algebra.Structures.C_IsMagma'46'constructor_1867
+                  MAlonzo.Code.Algebra.Structures.C_constructor_210
                   (coe
-                     MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
+                     MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62
                      (coe du_'91'_'93''45'Equality_36 (coe v0)))
                   (\ v1 v2 v3 v4 v5 v6 v7 ->
                      coe
@@ -1262,9 +1259,9 @@ du_commutativeMonoid_588 v0
                (coe
                   (\ v1 v2 v3 ->
                      coe
-                       MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
+                       MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
                        (coe
-                          MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
+                          MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62
                           (coe du_'91'_'93''45'Equality_36 (coe v0)))
                        (coe
                           MAlonzo.Code.Data.List.Base.du__'43''43'__32
@@ -1301,35 +1298,35 @@ d_'43''43''45'idempotent_630 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858
 d_'43''43''45'idempotent_630 ~v0 ~v1 v2 ~v3
   = du_'43''43''45'idempotent_630 v2
 du_'43''43''45'idempotent_630 ::
-  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
+  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858
 du_'43''43''45'idempotent_630 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
       (\ v1 v2 v3 ->
          coe
            MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
            (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
       erased erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
          (\ v1 ->
             coe
               MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
               (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
          erased)
       (coe
-         MAlonzo.Code.Function.Bundles.du_mk'8660'_2414
+         MAlonzo.Code.Function.Bundles.du_mk'8660'_2474
          (coe
             (\ v1 ->
                coe
                  MAlonzo.Code.Data.Sum.Base.du_'91'_'44'_'93''8242'_66 (\ v2 -> v2)
                  (\ v2 -> v2)
                  (coe
-                    MAlonzo.Code.Function.Bundles.d_from_2082
+                    MAlonzo.Code.Function.Bundles.d_from_2136
                     (coe
                        MAlonzo.Code.Data.List.Relation.Unary.Any.Properties.du_'43''43''8596'_970
                        (coe v0))
@@ -1337,7 +1334,7 @@ du_'43''43''45'idempotent_630 v0
          (coe
             (\ v1 ->
                coe
-                 MAlonzo.Code.Function.Bundles.d_to_2080
+                 MAlonzo.Code.Function.Bundles.d_to_2134
                  (coe
                     MAlonzo.Code.Data.List.Relation.Unary.Any.Properties.du_'43''43''8596'_970
                     (coe v0))
@@ -1350,17 +1347,17 @@ d_'62''62''61''45'left'45'distributive_648 ::
   [AgdaAny] ->
   (AgdaAny -> [AgdaAny]) ->
   (AgdaAny -> [AgdaAny]) ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_'62''62''61''45'left'45'distributive_648 ~v0 ~v1 ~v2 v3 v4 v5 ~v6
   = du_'62''62''61''45'left'45'distributive_648 v3 v4 v5
 du_'62''62''61''45'left'45'distributive_648 ::
   [AgdaAny] ->
   (AgdaAny -> [AgdaAny]) ->
   (AgdaAny -> [AgdaAny]) ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_'62''62''61''45'left'45'distributive_648 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
       (\ v3 v4 v5 ->
          coe
            MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1372,7 +1369,7 @@ du_'62''62''61''45'left'45'distributive_648 v0 v1 v2
               (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
       erased erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v3 v4 v5 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1384,7 +1381,7 @@ du_'62''62''61''45'left'45'distributive_648 v0 v1 v2
                  (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
             (\ v3 v4 v5 ->
                coe
                  MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1396,7 +1393,7 @@ du_'62''62''61''45'left'45'distributive_648 v0 v1 v2
                     (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                (\ v3 v4 v5 ->
                   coe
                     MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1408,7 +1405,7 @@ du_'62''62''61''45'left'45'distributive_648 v0 v1 v2
                        (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
                erased erased erased
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                   (\ v3 v4 v5 ->
                      coe
                        MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1420,7 +1417,7 @@ du_'62''62''61''45'left'45'distributive_648 v0 v1 v2
                           (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
                   erased erased erased
                   (coe
-                     MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                     MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                      (\ v3 ->
                         coe
                           MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -1462,7 +1459,7 @@ du_'62''62''61''45'left'45'distributive_648 v0 v1 v2
                (coe
                   (\ v3 ->
                      coe
-                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                        (\ v4 ->
                           coe
                             MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -1487,14 +1484,14 @@ d_'8859''45'left'45'distributive_682 ::
   [AgdaAny -> AgdaAny] ->
   [AgdaAny] ->
   [AgdaAny] ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_'8859''45'left'45'distributive_682 ~v0 ~v1 ~v2 v3 v4 v5 v6
   = du_'8859''45'left'45'distributive_682 v3 v4 v5 v6
 du_'8859''45'left'45'distributive_682 ::
   [AgdaAny -> AgdaAny] ->
   [AgdaAny] ->
   [AgdaAny] ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_begin__46
@@ -1515,7 +1512,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
             MAlonzo.Code.Effect.Applicative.du__'8859'__70
             (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v2))
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_436
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_438
          (\ v4 v5 v6 v7 v8 -> v8)
          (coe
             MAlonzo.Code.Effect.Applicative.du__'8859'__70
@@ -1530,7 +1527,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                     MAlonzo.Code.Data.List.Base.du_concatMap_246
                     (coe
                        (\ v5 ->
-                          coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                          coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                     (coe
                        MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v1) (coe v2))))
             (coe v0))
@@ -1543,7 +1540,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                MAlonzo.Code.Effect.Applicative.du__'8859'__70
                (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v2))
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_436
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10217'_438
             (\ v4 v5 v6 v7 v8 -> v8)
             (coe
                MAlonzo.Code.Data.List.Base.du_concatMap_246
@@ -1553,7 +1550,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                        MAlonzo.Code.Data.List.Base.du_concatMap_246
                        (coe
                           (\ v5 ->
-                             coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                             coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                        (coe
                           MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v1) (coe v2))))
                (coe v0))
@@ -1567,13 +1564,13 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                           MAlonzo.Code.Data.List.Base.du_concatMap_246
                           (coe
                              (\ v5 ->
-                                coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                                coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                           (coe v1))
                        (coe
                           MAlonzo.Code.Data.List.Base.du_concatMap_246
                           (coe
                              (\ v5 ->
-                                coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                                coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                           (coe v2))))
                (coe v0))
             (coe
@@ -1585,13 +1582,13 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                   MAlonzo.Code.Effect.Applicative.du__'8859'__70
                   (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v2))
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_368
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8776''45''10217'_370
                (coe
                   MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_'8764''45'go_40
                   (coe
-                     MAlonzo.Code.Relation.Binary.Structures.d_trans_38
+                     MAlonzo.Code.Relation.Binary.Structures.d_trans_40
                      (coe
-                        MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
+                        MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62
                         (coe
                            du_'91'_'93''45'Equality_36
                            (coe
@@ -1606,13 +1603,13 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                              MAlonzo.Code.Data.List.Base.du_concatMap_246
                              (coe
                                 (\ v5 ->
-                                   coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                                   coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                              (coe v1))
                           (coe
                              MAlonzo.Code.Data.List.Base.du_concatMap_246
                              (coe
                                 (\ v5 ->
-                                   coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                                   coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                              (coe v2))))
                   (coe v0))
                (coe
@@ -1625,7 +1622,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                              MAlonzo.Code.Data.List.Base.du_concatMap_246
                              (coe
                                 (\ v5 ->
-                                   coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                                   coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                              (coe v1)))
                      (coe v0))
                   (coe
@@ -1636,7 +1633,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                              MAlonzo.Code.Data.List.Base.du_concatMap_246
                              (coe
                                 (\ v5 ->
-                                   coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                                   coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                              (coe v2)))
                      (coe v0)))
                (coe
@@ -1648,7 +1645,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                      MAlonzo.Code.Effect.Applicative.du__'8859'__70
                      (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v2))
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10216'_448
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8801''45''10216'_450
                   (\ v4 v5 v6 v7 v8 -> v8)
                   (coe
                      MAlonzo.Code.Data.List.Base.du__'43''43'__32
@@ -1660,7 +1657,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                                 MAlonzo.Code.Data.List.Base.du_concatMap_246
                                 (coe
                                    (\ v5 ->
-                                      coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                                      coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                                 (coe v1)))
                         (coe v0))
                      (coe
@@ -1671,7 +1668,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                                 MAlonzo.Code.Data.List.Base.du_concatMap_246
                                 (coe
                                    (\ v5 ->
-                                      coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v4 v5)))
+                                      coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v4 v5)))
                                 (coe v2)))
                         (coe v0)))
                   (coe
@@ -1690,28 +1687,26 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                      (coe
                         MAlonzo.Code.Effect.Applicative.du__'8859'__70
                         (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v2))
-                  (let v4
-                         = MAlonzo.Code.Relation.Binary.Structures.d_refl_34
-                             (coe
-                                MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60
-                                (coe
-                                   du_'91'_'93''45'Equality_36
-                                   (coe
-                                      MAlonzo.Code.Function.Related.Propositional.C_bijection_90))) in
-                   coe
+                  (coe
+                     MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                      (coe
-                        MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                        MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_stop_54
                         (coe
-                           MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_stop_54
-                           (coe v4))
+                           MAlonzo.Code.Relation.Binary.Structures.d_refl_36
+                           (coe
+                              MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62
+                              (coe
+                                 du_'91'_'93''45'Equality_36
+                                 (coe
+                                    MAlonzo.Code.Function.Related.Propositional.C_bijection_90)))))
+                     (coe
+                        MAlonzo.Code.Data.List.Base.du__'43''43'__32
                         (coe
-                           MAlonzo.Code.Data.List.Base.du__'43''43'__32
-                           (coe
-                              MAlonzo.Code.Effect.Applicative.du__'8859'__70
-                              (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v1)
-                           (coe
-                              MAlonzo.Code.Effect.Applicative.du__'8859'__70
-                              (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v2))))
+                           MAlonzo.Code.Effect.Applicative.du__'8859'__70
+                           (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v1)
+                        (coe
+                           MAlonzo.Code.Effect.Applicative.du__'8859'__70
+                           (coe MAlonzo.Code.Data.List.Effectful.du_applicative_12) v0 v2)))
                   erased)
                (\ v4 ->
                   coe
@@ -1722,7 +1717,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                             MAlonzo.Code.Data.List.Base.du_concatMap_246
                             (coe
                                (\ v6 ->
-                                  coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v5 v6)))
+                                  coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v5 v6)))
                             (coe v1)))
                     (coe
                        (\ v5 ->
@@ -1730,7 +1725,7 @@ du_'8859''45'left'45'distributive_682 v0 v1 v2 v3
                             MAlonzo.Code.Data.List.Base.du_concatMap_246
                             (coe
                                (\ v6 ->
-                                  coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286 (coe v5 v6)))
+                                  coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270 (coe v5 v6)))
                             (coe v2)))))
             erased)
          erased)
@@ -1742,14 +1737,14 @@ d_drop'45'cons_780 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_drop'45'cons_780 ~v0 ~v1 v2 ~v3 ~v4 v5 v6
   = du_drop'45'cons_780 v2 v5 v6
 du_drop'45'cons_780 ::
   AgdaAny ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_drop'45'cons_780 v0 v1 v2
   = coe
       du_'8846''45'left'45'cancellative_1038
@@ -1762,21 +1757,21 @@ d_'8712''45'index_800 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
-  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_'8712''45'index_800 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 ~v9 v10
   = du_'8712''45'index_800 v10
 du_'8712''45'index_800 ::
-  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_'8712''45'index_800 v0
   = case coe v0 of
       []
         -> coe
-             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
              (\ v1 v2 v3 ->
                 coe
                   MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1788,7 +1783,7 @@ du_'8712''45'index_800 v0
                      (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
              erased erased erased
              (coe
-                MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+                MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                 (\ v1 v2 v3 ->
                    coe
                      MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1800,14 +1795,14 @@ du_'8712''45'index_800 v0
                         (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
                 erased erased erased
                 (coe
-                   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                    (\ v1 ->
                       coe
                         MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
                         (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22))
                    erased)
                 (coe
-                   MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2482 erased
+                   MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2542 erased
                    erased))
              (coe
                 MAlonzo.Code.Function.Related.Propositional.du_SK'45'sym_168
@@ -1816,7 +1811,7 @@ du_'8712''45'index_800 v0
                    MAlonzo.Code.Data.List.Relation.Unary.Any.Properties.du_'8869''8596'Any'91''93'_336))
       (:) v1 v2
         -> coe
-             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
              (\ v3 v4 v5 ->
                 coe
                   MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1828,7 +1823,7 @@ du_'8712''45'index_800 v0
                      (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
              erased erased erased
              (coe
-                MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+                MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                 (\ v3 v4 v5 ->
                    coe
                      MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1840,7 +1835,7 @@ du_'8712''45'index_800 v0
                         (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
                 erased erased erased
                 (coe
-                   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+                   MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                    (\ v3 v4 v5 ->
                       coe
                         MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1852,14 +1847,14 @@ du_'8712''45'index_800 v0
                            (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
                    erased erased erased
                    (coe
-                      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                       (\ v3 ->
                          coe
                            MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
                            (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22))
                       erased)
                    (coe
-                      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2482
+                      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2542
                       (coe
                          (\ v3 ->
                             case coe v3 of
@@ -1897,7 +1892,7 @@ d_'46'extendedlambda1_836 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -1931,7 +1926,7 @@ d_'46'extendedlambda2_844 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -1948,7 +1943,7 @@ d_index'45'of_856 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -1966,7 +1961,7 @@ du_index'45'of_856 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
       (coe
-         MAlonzo.Code.Function.Bundles.d_to_2080
+         MAlonzo.Code.Function.Bundles.d_to_2134
          (coe du_'8712''45'index_800 (coe v0)) v1)
 -- Data.List.Relation.Binary.BagAndSetEquality._.Fin-length
 d_Fin'45'length_866 ::
@@ -1975,17 +1970,17 @@ d_Fin'45'length_866 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  () -> [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_Fin'45'length_866 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
   = du_Fin'45'length_866 v9
 du_Fin'45'length_866 ::
-  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_Fin'45'length_866 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
       (\ v1 v2 v3 ->
          coe
            MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -1997,7 +1992,7 @@ du_Fin'45'length_866 v0
               (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
       erased erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v1 v2 v3 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2009,7 +2004,7 @@ du_Fin'45'length_866 v0
                  (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
             (\ v1 v2 v3 ->
                coe
                  MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2021,7 +2016,7 @@ du_Fin'45'length_866 v0
                     (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
                (\ v1 v2 v3 ->
                   coe
                     MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2033,7 +2028,7 @@ du_Fin'45'length_866 v0
                        (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
                erased erased erased
                (coe
-                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                   (\ v1 ->
                      coe
                        MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -2042,7 +2037,7 @@ du_Fin'45'length_866 v0
                (coe
                   MAlonzo.Code.Function.Related.TypeIsomorphisms.du_'215''45'identity'691'_58))
             (coe
-               MAlonzo.Code.Data.Product.Function.Dependent.Propositional.du_cong_368
+               MAlonzo.Code.Data.Product.Function.Dependent.Propositional.du_cong_382
                (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)
                (coe
                   MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -2050,7 +2045,7 @@ du_Fin'45'length_866 v0
                (coe
                   (\ v1 ->
                      coe
-                       MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2482
+                       MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2542
                        (coe
                           (\ v2 ->
                              coe
@@ -2060,12 +2055,12 @@ du_Fin'45'length_866 v0
                           (\ v2 ->
                              coe
                                MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                               (coe MAlonzo.Code.Data.List.Base.du_lookup_406 (coe v0) (coe v1))
+                               (coe MAlonzo.Code.Data.List.Base.du_lookup_390 (coe v0) (coe v1))
                                erased))))))
          (coe
             MAlonzo.Code.Function.Related.TypeIsomorphisms.du_'8707''8707''8596''8707''8707'_444))
       (coe
-         MAlonzo.Code.Data.Product.Function.Dependent.Propositional.du_cong_368
+         MAlonzo.Code.Data.Product.Function.Dependent.Propositional.du_cong_382
          (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)
          (coe
             MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -2078,7 +2073,7 @@ d_'46'extendedlambda0_888 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -2094,25 +2089,25 @@ d_Fin'45'length'45'cong_898 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_Fin'45'length'45'cong_898 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 ~v8 v9
                             v10 v11
   = du_Fin'45'length'45'cong_898 v9 v10 v11
 du_Fin'45'length'45'cong_898 ::
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_Fin'45'length'45'cong_898 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
       (\ v3 v4 v5 ->
          coe
            MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2124,7 +2119,7 @@ du_Fin'45'length'45'cong_898 v0 v1 v2
               (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
       erased erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v3 v4 v5 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2136,7 +2131,7 @@ du_Fin'45'length'45'cong_898 v0 v1 v2
                  (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
             (\ v3 v4 v5 ->
                coe
                  MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2148,7 +2143,7 @@ du_Fin'45'length'45'cong_898 v0 v1 v2
                     (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                (\ v3 ->
                   coe
                     MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -2156,7 +2151,7 @@ du_Fin'45'length'45'cong_898 v0 v1 v2
                erased)
             (coe du_Fin'45'length_866 (coe v1)))
          (coe
-            MAlonzo.Code.Data.Product.Function.Dependent.Propositional.du_cong_368
+            MAlonzo.Code.Data.Product.Function.Dependent.Propositional.du_cong_382
             (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)
             (coe
                MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -2173,14 +2168,14 @@ d_index'45'of'45'commutes_928 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_index'45'of'45'commutes_928 = erased
@@ -2191,14 +2186,14 @@ d_lemma_948 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   AgdaAny ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
@@ -2211,7 +2206,7 @@ d_index'45'equality'45'preserved_976 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
@@ -2220,7 +2215,7 @@ d_index'45'equality'45'preserved_976 ::
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
 d_index'45'equality'45'preserved_976 = erased
@@ -2231,7 +2226,7 @@ d_inspect_998 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
@@ -2247,7 +2242,7 @@ d_Well'45'behaved_1014 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2266,7 +2261,7 @@ d_'8846''45'left'45'cancellative_1038 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2274,7 +2269,7 @@ d_'8846''45'left'45'cancellative_1038 ::
   () ->
   () ->
   () ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068 ->
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122 ->
   (AgdaAny ->
    AgdaAny ->
    AgdaAny ->
@@ -2287,20 +2282,20 @@ d_'8846''45'left'45'cancellative_1038 ::
    MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
    MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_'8846''45'left'45'cancellative_1038 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                       ~v7 ~v8 ~v9 ~v10 ~v11 ~v12 v13 ~v14 ~v15
   = du_'8846''45'left'45'cancellative_1038 v13
 du_'8846''45'left'45'cancellative_1038 ::
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068 ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122 ->
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_'8846''45'left'45'cancellative_1038 v0
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2482
+      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2542
       (coe
-         du_g_1066 (coe MAlonzo.Code.Function.Bundles.d_to_2080 (coe v0)))
+         du_g_1066 (coe MAlonzo.Code.Function.Bundles.d_to_2134 (coe v0)))
       (coe
-         du_g_1066 (coe MAlonzo.Code.Function.Bundles.d_from_2082 (coe v0)))
+         du_g_1066 (coe MAlonzo.Code.Function.Bundles.d_from_2136 (coe v0)))
 -- Data.List.Relation.Binary.BagAndSetEquality._._._.g
 d_g_1066 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2308,7 +2303,7 @@ d_g_1066 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2351,7 +2346,7 @@ d_g'8242'_1072 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2397,7 +2392,7 @@ d_g'8243'_1080 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2433,7 +2428,9 @@ du_g'8243'_1080 v0
       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v1 v2
         -> case coe v1 of
              MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v3
-               -> coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14
+               -> coe
+                    MAlonzo.Code.Relation.Nullary.Negation.Core.du_contradiction_44
+                    erased
              MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v3 -> coe v3
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -2444,7 +2441,7 @@ d_g'8728'g_1112 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2456,7 +2453,7 @@ d_g'8728'g_1112 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   () ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068 ->
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122 ->
   (AgdaAny ->
    AgdaAny ->
    AgdaAny ->
@@ -2478,7 +2475,7 @@ d_g'8728'g'8242'_1126 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2490,7 +2487,7 @@ d_g'8728'g'8242'_1126 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   () ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068 ->
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122 ->
   (AgdaAny ->
    AgdaAny ->
    AgdaAny ->
@@ -2512,25 +2509,25 @@ d_'8764''8594''8846''8596''8846'_1288 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_'8764''8594''8846''8596''8846'_1288 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6
                                       ~v7 ~v8 v9 ~v10 ~v11 v12 v13
   = du_'8764''8594''8846''8596''8846'_1288 v9 v12 v13
 du_'8764''8594''8846''8596''8846'_1288 ::
   AgdaAny ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_'8764''8594''8846''8596''8846'_1288 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+      MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
       (\ v3 v4 v5 ->
          coe
            MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2542,7 +2539,7 @@ du_'8764''8594''8846''8596''8846'_1288 v0 v1 v2
               (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
       erased erased erased
       (coe
-         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
          (\ v3 v4 v5 ->
             coe
               MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2554,7 +2551,7 @@ du_'8764''8594''8846''8596''8846'_1288 v0 v1 v2
                  (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
          erased erased erased
          (coe
-            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_410
+            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8596''45''10217'_412
             (\ v3 v4 v5 ->
                coe
                  MAlonzo.Code.Function.Base.du__'8728''8242'__216
@@ -2566,7 +2563,7 @@ du_'8764''8594''8846''8596''8846'_1288 v0 v1 v2
                     (coe MAlonzo.Code.Function.Related.Propositional.C_bijection_22)))
             erased erased erased
             (coe
-               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                (\ v3 ->
                   coe
                     MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -2589,11 +2586,11 @@ d_lemma_1312 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
@@ -2609,11 +2606,11 @@ d_contra_1332 ::
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   AgdaAny ->
   MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12 ->
@@ -2629,17 +2626,17 @@ d_'8621''8658''8764'bag_1342 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__34 ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_'8621''8658''8764'bag_1342 ~v0 ~v1 v2 v3 v4 ~v5
   = du_'8621''8658''8764'bag_1342 v2 v3 v4
 du_'8621''8658''8764'bag_1342 ::
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__34 ->
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_'8621''8658''8764'bag_1342 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2482
+      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2542
       (coe
          MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.Properties.du_'8712''45'resp'45''8621'_254
          v0 v1 v2)
@@ -2655,14 +2652,14 @@ d_'8764'bag'8658''8621'_1352 ::
   () ->
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__34
 d_'8764'bag'8658''8621'_1352 ~v0 ~v1 v2 v3 v4
   = du_'8764'bag'8658''8621'_1352 v2 v3 v4
 du_'8764'bag'8658''8621'_1352 ::
   [AgdaAny] ->
   [AgdaAny] ->
-  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2068) ->
+  (AgdaAny -> MAlonzo.Code.Function.Bundles.T_Inverse_2122) ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__34
 du_'8764'bag'8658''8621'_1352 v0 v1 v2
   = case coe v0 of
@@ -2677,7 +2674,7 @@ du_'8764'bag'8658''8621'_1352 v0 v1 v2
                         MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_setoid_402)
                      (coe v1)
                      (coe
-                        MAlonzo.Code.Function.Bundles.d_to_2080 (coe v2 v3)
+                        MAlonzo.Code.Function.Bundles.d_to_2134 (coe v2 v3)
                         (coe
                            MAlonzo.Code.Data.List.Relation.Unary.Any.C_here_46 erased)) in
            coe
@@ -2714,7 +2711,7 @@ du_'8764'bag'8658''8621'_1352 v0 v1 v2
                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                             (coe v3) (coe v15)))
                                                       (coe
-                                                         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''45''10217'_416
+                                                         MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''45''10217'_418
                                                          (coe
                                                             MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_'8764''45'go_40
                                                             (\ v17 v18 v19 v20 v21 ->
@@ -2735,7 +2732,7 @@ du_'8764'bag'8658''8621'_1352 v0 v1 v2
                                                                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                (coe v3) (coe v15)))
                                                          (coe
-                                                            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''45''10217'_416
+                                                            MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''45''10217'_418
                                                             (coe
                                                                MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_'8764''45'go_40
                                                                (\ v17 v18 v19 v20 v21 ->
@@ -2761,7 +2758,7 @@ du_'8764'bag'8658''8621'_1352 v0 v1 v2
                                                                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                   (coe v3) (coe v15)))
                                                             (coe
-                                                               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''45''10216'_418
+                                                               MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8621''45''10216'_420
                                                                (coe
                                                                   MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_'8764''45'go_40
                                                                   (\ v17 v18 v19 v20 v21 ->
@@ -2788,34 +2785,29 @@ du_'8764'bag'8658''8621'_1352 v0 v1 v2
                                                                   (coe
                                                                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                      (coe v3) (coe v15)))
-                                                               (let v17
-                                                                      = \ v17 ->
-                                                                          coe
-                                                                            MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.du_'8621''45'refl_50 in
-                                                                coe
+                                                               (coe
+                                                                  MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                                                                   (coe
-                                                                     MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                                                                     MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_stop_54
+                                                                     (\ v17 ->
+                                                                        coe
+                                                                          MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.du_'8621''45'refl_50))
+                                                                  (coe
+                                                                     MAlonzo.Code.Data.List.Base.du__'43''43'__32
+                                                                     (coe v13)
                                                                      (coe
-                                                                        MAlonzo.Code.Relation.Binary.Reasoning.Base.Single.du_stop_54
-                                                                        (coe v17))
-                                                                     (coe
-                                                                        MAlonzo.Code.Data.List.Base.du__'43''43'__32
-                                                                        (coe v13)
-                                                                        (coe
-                                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
-                                                                           (coe v3) (coe v15)))))
+                                                                        MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                                                                        (coe v3) (coe v15))))
                                                                (coe
                                                                   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.Properties.du_shift_466
                                                                   (coe v3) (coe v13) (coe v15)))
                                                             (coe
-                                                               MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.du_'8621''45'prep_54
-                                                               v3
+                                                               MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.C_prep_40
                                                                (coe
                                                                   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.Properties.du_'43''43''45'comm_738
                                                                   (coe v15) (coe v13))))
                                                          (coe
-                                                            MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.du_'8621''45'prep_54
-                                                            v3
+                                                            MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.C_prep_40
                                                             (coe
                                                                du_'8764'bag'8658''8621'_1352
                                                                (coe v4)
@@ -2849,91 +2841,91 @@ du_'8764'bag'8658''8621'_1352 v0 v1 v2
                 _ -> MAlonzo.RTE.mazUnreachableError)
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-A.a
-d_'46'generalizedField'45'A'46'a_4267 ::
-  T_GeneralizeTel_4271 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'A'46'a_4267 v0
+d_'46'generalizedField'45'A'46'a_4563 ::
+  T_GeneralizeTel_4567 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'A'46'a_4563 v0
   = case coe v0 of
-      C_mkGeneralizeTel_4273 v1 -> coe v1
+      C_mkGeneralizeTel_4569 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-A
-d_'46'generalizedField'45'A_4269 :: T_GeneralizeTel_4271 -> ()
-d_'46'generalizedField'45'A_4269 = erased
+d_'46'generalizedField'45'A_4565 :: T_GeneralizeTel_4567 -> ()
+d_'46'generalizedField'45'A_4565 = erased
 -- Data.List.Relation.Binary.BagAndSetEquality.GeneralizeTel
-d_GeneralizeTel_4271 = ()
-newtype T_GeneralizeTel_4271
-  = C_mkGeneralizeTel_4273 MAlonzo.Code.Agda.Primitive.T_Level_18
+d_GeneralizeTel_4567 = ()
+newtype T_GeneralizeTel_4567
+  = C_mkGeneralizeTel_4569 MAlonzo.Code.Agda.Primitive.T_Level_18
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-A.a
-d_'46'generalizedField'45'A'46'a_11313 ::
-  T_GeneralizeTel_11321 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'A'46'a_11313 v0
+d_'46'generalizedField'45'A'46'a_11647 ::
+  T_GeneralizeTel_11655 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'A'46'a_11647 v0
   = case coe v0 of
-      C_mkGeneralizeTel_11323 v1 v3 -> coe v1
+      C_mkGeneralizeTel_11657 v1 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-A
-d_'46'generalizedField'45'A_11315 :: T_GeneralizeTel_11321 -> ()
-d_'46'generalizedField'45'A_11315 = erased
+d_'46'generalizedField'45'A_11649 :: T_GeneralizeTel_11655 -> ()
+d_'46'generalizedField'45'A_11649 = erased
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-B.a
-d_'46'generalizedField'45'B'46'a_11317 ::
-  T_GeneralizeTel_11321 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'B'46'a_11317 v0
+d_'46'generalizedField'45'B'46'a_11651 ::
+  T_GeneralizeTel_11655 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'B'46'a_11651 v0
   = case coe v0 of
-      C_mkGeneralizeTel_11323 v1 v3 -> coe v3
+      C_mkGeneralizeTel_11657 v1 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-B
-d_'46'generalizedField'45'B_11319 :: T_GeneralizeTel_11321 -> ()
-d_'46'generalizedField'45'B_11319 = erased
+d_'46'generalizedField'45'B_11653 :: T_GeneralizeTel_11655 -> ()
+d_'46'generalizedField'45'B_11653 = erased
 -- Data.List.Relation.Binary.BagAndSetEquality.GeneralizeTel
-d_GeneralizeTel_11321 = ()
-data T_GeneralizeTel_11321
-  = C_mkGeneralizeTel_11323 MAlonzo.Code.Agda.Primitive.T_Level_18
+d_GeneralizeTel_11655 = ()
+data T_GeneralizeTel_11655
+  = C_mkGeneralizeTel_11657 MAlonzo.Code.Agda.Primitive.T_Level_18
                             MAlonzo.Code.Agda.Primitive.T_Level_18
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-A.a
-d_'46'generalizedField'45'A'46'a_31475 ::
-  T_GeneralizeTel_31479 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'A'46'a_31475 v0
+d_'46'generalizedField'45'A'46'a_32015 ::
+  T_GeneralizeTel_32019 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'A'46'a_32015 v0
   = case coe v0 of
-      C_mkGeneralizeTel_31481 v1 -> coe v1
+      C_mkGeneralizeTel_32021 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-A
-d_'46'generalizedField'45'A_31477 :: T_GeneralizeTel_31479 -> ()
-d_'46'generalizedField'45'A_31477 = erased
+d_'46'generalizedField'45'A_32017 :: T_GeneralizeTel_32019 -> ()
+d_'46'generalizedField'45'A_32017 = erased
 -- Data.List.Relation.Binary.BagAndSetEquality.GeneralizeTel
-d_GeneralizeTel_31479 = ()
-newtype T_GeneralizeTel_31479
-  = C_mkGeneralizeTel_31481 MAlonzo.Code.Agda.Primitive.T_Level_18
+d_GeneralizeTel_32019 = ()
+newtype T_GeneralizeTel_32019
+  = C_mkGeneralizeTel_32021 MAlonzo.Code.Agda.Primitive.T_Level_18
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-A.a
-d_'46'generalizedField'45'A'46'a_38899 ::
-  T_GeneralizeTel_38903 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'A'46'a_38899 v0
+d_'46'generalizedField'45'A'46'a_39481 ::
+  T_GeneralizeTel_39485 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'A'46'a_39481 v0
   = case coe v0 of
-      C_mkGeneralizeTel_38905 v1 -> coe v1
+      C_mkGeneralizeTel_39487 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-A
-d_'46'generalizedField'45'A_38901 :: T_GeneralizeTel_38903 -> ()
-d_'46'generalizedField'45'A_38901 = erased
+d_'46'generalizedField'45'A_39483 :: T_GeneralizeTel_39485 -> ()
+d_'46'generalizedField'45'A_39483 = erased
 -- Data.List.Relation.Binary.BagAndSetEquality.GeneralizeTel
-d_GeneralizeTel_38903 = ()
-newtype T_GeneralizeTel_38903
-  = C_mkGeneralizeTel_38905 MAlonzo.Code.Agda.Primitive.T_Level_18
+d_GeneralizeTel_39485 = ()
+newtype T_GeneralizeTel_39485
+  = C_mkGeneralizeTel_39487 MAlonzo.Code.Agda.Primitive.T_Level_18
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-a
-d_'46'generalizedField'45'a_44197 ::
-  T_GeneralizeTel_44199 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'a_44197 v0
+d_'46'generalizedField'45'a_44809 ::
+  T_GeneralizeTel_44811 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'a_44809 v0
   = case coe v0 of
-      C_mkGeneralizeTel_44201 v1 -> coe v1
+      C_mkGeneralizeTel_44813 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.BagAndSetEquality.GeneralizeTel
-d_GeneralizeTel_44199 = ()
-newtype T_GeneralizeTel_44199
-  = C_mkGeneralizeTel_44201 MAlonzo.Code.Agda.Primitive.T_Level_18
+d_GeneralizeTel_44811 = ()
+newtype T_GeneralizeTel_44811
+  = C_mkGeneralizeTel_44813 MAlonzo.Code.Agda.Primitive.T_Level_18
 -- Data.List.Relation.Binary.BagAndSetEquality..generalizedField-a
-d_'46'generalizedField'45'a_53143 ::
-  T_GeneralizeTel_53145 -> MAlonzo.Code.Agda.Primitive.T_Level_18
-d_'46'generalizedField'45'a_53143 v0
+d_'46'generalizedField'45'a_53801 ::
+  T_GeneralizeTel_53803 -> MAlonzo.Code.Agda.Primitive.T_Level_18
+d_'46'generalizedField'45'a_53801 v0
   = case coe v0 of
-      C_mkGeneralizeTel_53147 v1 -> coe v1
+      C_mkGeneralizeTel_53805 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Relation.Binary.BagAndSetEquality.GeneralizeTel
-d_GeneralizeTel_53145 = ()
-newtype T_GeneralizeTel_53145
-  = C_mkGeneralizeTel_53147 MAlonzo.Code.Agda.Primitive.T_Level_18
+d_GeneralizeTel_53803 = ()
+newtype T_GeneralizeTel_53803
+  = C_mkGeneralizeTel_53805 MAlonzo.Code.Agda.Primitive.T_Level_18

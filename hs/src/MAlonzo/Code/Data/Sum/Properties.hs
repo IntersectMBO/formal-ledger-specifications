@@ -80,7 +80,7 @@ du_'8801''45'dec_54 v0 v1 v2 v3
         -> case coe v3 of
              MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v5
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
                     erased erased (coe v0 v4 v5)
              MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v5
                -> coe
@@ -97,7 +97,7 @@ du_'8801''45'dec_54 v0 v1 v2 v3
                     (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
              MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v5
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
                     erased erased (coe v1 v4 v5)
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -115,13 +115,13 @@ d_swap'45''8596'_78 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  () -> MAlonzo.Code.Function.Bundles.T_Inverse_2122
 d_swap'45''8596'_78 ~v0 ~v1 ~v2 ~v3 = du_swap'45''8596'_78
 du_swap'45''8596'_78 ::
-  MAlonzo.Code.Function.Bundles.T_Inverse_2068
+  MAlonzo.Code.Function.Bundles.T_Inverse_2122
 du_swap'45''8596'_78
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2482
+      MAlonzo.Code.Function.Bundles.du_mk'8596''8347''8242'_2542
       (coe MAlonzo.Code.Data.Sum.Base.du_swap_78)
       (coe MAlonzo.Code.Data.Sum.Base.du_swap_78)
 -- Data.Sum.Properties.map-id

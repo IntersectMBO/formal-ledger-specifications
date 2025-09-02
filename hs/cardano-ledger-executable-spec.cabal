@@ -1,6 +1,6 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.36.1.
+-- This file has been generated from package.yaml by hpack version 0.37.0.
 --
 -- see: https://github.com/sol/hpack
 
@@ -129,6 +129,7 @@ library
       MAlonzo.Code.Class.Decidable
       MAlonzo.Code.Class.Decidable.Core
       MAlonzo.Code.Class.Decidable.Instances
+      MAlonzo.Code.Class.Decidable.WithoutK
       MAlonzo.Code.Class.Foldable
       MAlonzo.Code.Class.Foldable.Core
       MAlonzo.Code.Class.Foldable.Instances
@@ -137,15 +138,16 @@ library
       MAlonzo.Code.Class.Functor.Instances
       MAlonzo.Code.Class.HasAdd
       MAlonzo.Code.Class.HasAdd.Core
-      MAlonzo.Code.Class.HasAdd.Instance
+      MAlonzo.Code.Class.HasAdd.Instances
       MAlonzo.Code.Class.HasEmptySet
       MAlonzo.Code.Class.HasOrder
       MAlonzo.Code.Class.HasOrder.Core
-      MAlonzo.Code.Class.HasOrder.Instance
+      MAlonzo.Code.Class.HasOrder.Instances
       MAlonzo.Code.Class.HasSingleton
       MAlonzo.Code.Class.IsSet
       MAlonzo.Code.Class.Monad
       MAlonzo.Code.Class.Monad.Core
+      MAlonzo.Code.Class.Monad.Id
       MAlonzo.Code.Class.Monad.Instances
       MAlonzo.Code.Class.MonadError
       MAlonzo.Code.Class.MonadError.Instances
@@ -160,6 +162,8 @@ library
       MAlonzo.Code.Class.Semigroup
       MAlonzo.Code.Class.Semigroup.Core
       MAlonzo.Code.Class.Semigroup.Instances
+      MAlonzo.Code.Class.Setoid.Core
+      MAlonzo.Code.Class.Setoid.Instances
       MAlonzo.Code.Class.Show
       MAlonzo.Code.Class.Show.Core
       MAlonzo.Code.Class.Show.Instances
@@ -169,6 +173,7 @@ library
       MAlonzo.Code.Class.Traversable.Instances
       MAlonzo.Code.Data.Bool
       MAlonzo.Code.Data.Bool.Base
+      MAlonzo.Code.Data.Bool.ListAction
       MAlonzo.Code.Data.Bool.Properties
       MAlonzo.Code.Data.Bool.Show
       MAlonzo.Code.Data.Char
@@ -192,6 +197,8 @@ library
       MAlonzo.Code.Data.Fin
       MAlonzo.Code.Data.Fin.Base
       MAlonzo.Code.Data.Fin.Patterns
+      MAlonzo.Code.Data.Fin.Permutation
+      MAlonzo.Code.Data.Fin.Permutation.Components
       MAlonzo.Code.Data.Fin.Properties
       MAlonzo.Code.Data.Float
       MAlonzo.Code.Data.Float.Base
@@ -286,6 +293,8 @@ library
       MAlonzo.Code.Data.List.Sort
       MAlonzo.Code.Data.List.Sort.Base
       MAlonzo.Code.Data.List.Sort.MergeSort
+      MAlonzo.Code.Data.List.Sort.MergeSort.Base
+      MAlonzo.Code.Data.List.Sort.MergeSort.Properties
       MAlonzo.Code.Data.Maybe
       MAlonzo.Code.Data.Maybe.Base
       MAlonzo.Code.Data.Maybe.Effectful
@@ -309,6 +318,8 @@ library
       MAlonzo.Code.Data.Nat.GCD.Lemmas
       MAlonzo.Code.Data.Nat.GeneralisedArithmetic
       MAlonzo.Code.Data.Nat.Induction
+      MAlonzo.Code.Data.Nat.ListAction
+      MAlonzo.Code.Data.Nat.ListAction.Properties
       MAlonzo.Code.Data.Nat.Literals
       MAlonzo.Code.Data.Nat.Primality
       MAlonzo.Code.Data.Nat.Properties
@@ -525,11 +536,9 @@ library
       MAlonzo.Code.Prelude
       MAlonzo.Code.Prelude.InferenceRules
       MAlonzo.Code.Prelude.Init
+      MAlonzo.Code.Prelude.STS.GenPremises
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.Prelude
-      MAlonzo.Code.QiogZ45Zprelude.Prelude.InferenceRules
-      MAlonzo.Code.QiogZ45Zprelude.Prelude.Init
-      MAlonzo.Code.QiogZ45Zprelude.Tactic.Premises
       MAlonzo.Code.Qstdlib.Data.List.Relation.Unary.MOf
       MAlonzo.Code.Qstdlib.Data.List.Subpermutations
       MAlonzo.Code.Qstdlib.Data.List.Subpermutations.Properties
@@ -539,7 +548,6 @@ library
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Derive
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Instances
-      MAlonzo.Code.QstdlibZ45Zmeta.Reflection
       MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError
       MAlonzo.Code.Reflection
       MAlonzo.Code.Reflection.AST
@@ -561,6 +569,7 @@ library
       MAlonzo.Code.Reflection.AST.Term
       MAlonzo.Code.Reflection.AST.Traversal
       MAlonzo.Code.Reflection.Debug
+      MAlonzo.Code.Reflection.QQuotedDefinitions
       MAlonzo.Code.Reflection.Syntax
       MAlonzo.Code.Reflection.Tactic
       MAlonzo.Code.Reflection.TCI
@@ -589,7 +598,6 @@ library
       MAlonzo.Code.Relation.Binary.Construct.NonStrictToStrict
       MAlonzo.Code.Relation.Binary.Construct.On
       MAlonzo.Code.Relation.Binary.Construct.StrictToNonStrict
-      MAlonzo.Code.Relation.Binary.Construct.Subst.Equality
       MAlonzo.Code.Relation.Binary.Core
       MAlonzo.Code.Relation.Binary.Definitions
       MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous
@@ -636,9 +644,11 @@ library
       MAlonzo.Code.Relation.Nullary.Decidable
       MAlonzo.Code.Relation.Nullary.Decidable.Core
       MAlonzo.Code.Relation.Nullary.Indexed
+      MAlonzo.Code.Relation.Nullary.Irrelevant
       MAlonzo.Code.Relation.Nullary.Negation
       MAlonzo.Code.Relation.Nullary.Negation.Core
       MAlonzo.Code.Relation.Nullary.Recomputable
+      MAlonzo.Code.Relation.Nullary.Recomputable.Core
       MAlonzo.Code.Relation.Nullary.Reflects
       MAlonzo.Code.Relation.Unary
       MAlonzo.Code.Relation.Unary.PredicateTransformer

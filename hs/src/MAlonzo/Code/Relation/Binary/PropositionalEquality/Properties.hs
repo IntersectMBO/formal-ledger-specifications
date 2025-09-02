@@ -349,14 +349,14 @@ d_subst'45'application_394 = erased
 -- Relation.Binary.PropositionalEquality.Properties.isEquivalence
 d_isEquivalence_396 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
+  () -> MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 d_isEquivalence_396 ~v0 ~v1 = du_isEquivalence_396
 du_isEquivalence_396 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_26
+  MAlonzo.Code.Relation.Binary.Structures.T_IsEquivalence_28
 du_isEquivalence_396
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
-      erased erased erased
+      MAlonzo.Code.Relation.Binary.Structures.C_constructor_46 erased
+      erased erased
 -- Relation.Binary.PropositionalEquality.Properties.isDecEquivalence
 d_isDecEquivalence_398 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -364,26 +364,26 @@ d_isDecEquivalence_398 ::
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsDecEquivalence_44
+  MAlonzo.Code.Relation.Binary.Structures.T_IsDecEquivalence_48
 d_isDecEquivalence_398 ~v0 ~v1 v2 = du_isDecEquivalence_398 v2
 du_isDecEquivalence_398 ::
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsDecEquivalence_44
+  MAlonzo.Code.Relation.Binary.Structures.T_IsDecEquivalence_48
 du_isDecEquivalence_398 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsDecEquivalence'46'constructor_3083
+      MAlonzo.Code.Relation.Binary.Structures.C_constructor_70
       (coe du_isEquivalence_396) (coe v0)
 -- Relation.Binary.PropositionalEquality.Properties.setoid
 d_setoid_402 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 d_setoid_402 ~v0 ~v1 = du_setoid_402
-du_setoid_402 :: MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+du_setoid_402 :: MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 du_setoid_402
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
+      MAlonzo.Code.Relation.Binary.Bundles.C_constructor_84
       (coe du_isEquivalence_396)
 -- Relation.Binary.PropositionalEquality.Properties.decSetoid
 d_decSetoid_406 ::
@@ -392,24 +392,24 @@ d_decSetoid_406 ::
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_90
 d_decSetoid_406 ~v0 ~v1 v2 = du_decSetoid_406 v2
 du_decSetoid_406 ::
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_86
+  MAlonzo.Code.Relation.Binary.Bundles.T_DecSetoid_90
 du_decSetoid_406 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_DecSetoid'46'constructor_1435
+      MAlonzo.Code.Relation.Binary.Bundles.C_constructor_134
       (coe du_isDecEquivalence_398 (coe v0))
 -- Relation.Binary.PropositionalEquality.Properties.isPreorder
 d_isPreorder_410 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
+  () -> MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 d_isPreorder_410 ~v0 ~v1 = du_isPreorder_410
 du_isPreorder_410 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 du_isPreorder_410
   = coe
       MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'isPreorder_40
@@ -417,10 +417,10 @@ du_isPreorder_410
 -- Relation.Binary.PropositionalEquality.Properties.isPartialOrder
 d_isPartialOrder_412 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
+  () -> MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_248
 d_isPartialOrder_412 ~v0 ~v1 = du_isPartialOrder_412
 du_isPartialOrder_412 ::
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_236
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPartialOrder_248
 du_isPartialOrder_412
   = coe
       MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'isPartialOrder_42
@@ -428,10 +428,10 @@ du_isPartialOrder_412
 -- Relation.Binary.PropositionalEquality.Properties.preorder
 d_preorder_414 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 d_preorder_414 ~v0 ~v1 = du_preorder_414
 du_preorder_414 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 du_preorder_414
   = coe
       MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'preorder_50
@@ -439,9 +439,9 @@ du_preorder_414
 -- Relation.Binary.PropositionalEquality.Properties.poset
 d_poset_418 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
+  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Poset_492
 d_poset_418 ~v0 ~v1 = du_poset_418
-du_poset_418 :: MAlonzo.Code.Relation.Binary.Bundles.T_Poset_480
+du_poset_418 :: MAlonzo.Code.Relation.Binary.Bundles.T_Poset_492
 du_poset_418
   = coe
       MAlonzo.Code.Relation.Binary.Properties.Setoid.du_'8776''45'poset_52

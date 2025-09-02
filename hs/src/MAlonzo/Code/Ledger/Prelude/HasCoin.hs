@@ -21,14 +21,13 @@ import qualified MAlonzo.Code.Agda.Primitive
 
 -- Ledger.Prelude.HasCoin.HasCoin
 d_HasCoin_10 a0 a1 = ()
-newtype T_HasCoin_10
-  = C_HasCoin'46'constructor_9 (AgdaAny -> Integer)
+newtype T_HasCoin_10 = C_constructor_20 (AgdaAny -> Integer)
 -- Ledger.Prelude.HasCoin.HasCoin.getCoin
 d_getCoin_18 :: T_HasCoin_10 -> AgdaAny -> Integer
 d_getCoin_18 v0
   = case coe v0 of
-      C_HasCoin'46'constructor_9 v1 -> coe v1
+      C_constructor_20 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Prelude.HasCoin._.getCoin
-d_getCoin_22 :: T_HasCoin_10 -> AgdaAny -> Integer
-d_getCoin_22 v0 = coe d_getCoin_18 (coe v0)
+d_getCoin_24 :: T_HasCoin_10 -> AgdaAny -> Integer
+d_getCoin_24 v0 = coe d_getCoin_18 (coe v0)

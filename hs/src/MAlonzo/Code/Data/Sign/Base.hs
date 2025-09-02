@@ -38,22 +38,20 @@ d__'42'__14 v0 v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.Sign.Base.*-rawMagma
 d_'42''45'rawMagma_20 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_42
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44
 d_'42''45'rawMagma_20
-  = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMagma'46'constructor_487
-      d__'42'__14
+  = coe MAlonzo.Code.Algebra.Bundles.Raw.C_constructor_68 d__'42'__14
 -- Data.Sign.Base.*-1-rawMonoid
 d_'42''45'1'45'rawMonoid_22 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_70
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMonoid_74
 d_'42''45'1'45'rawMonoid_22
   = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawMonoid'46'constructor_857
-      d__'42'__14 (coe C_'43'_10)
+      MAlonzo.Code.Algebra.Bundles.Raw.C_constructor_102 d__'42'__14
+      (coe C_'43'_10)
 -- Data.Sign.Base.*-1-rawGroup
 d_'42''45'1'45'rawGroup_24 ::
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_102
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawGroup_108
 d_'42''45'1'45'rawGroup_24
   = coe
-      MAlonzo.Code.Algebra.Bundles.Raw.C_RawGroup'46'constructor_1319
-      d__'42'__14 (coe C_'43'_10) d_opposite_12
+      MAlonzo.Code.Algebra.Bundles.Raw.C_constructor_142 d__'42'__14
+      (coe C_'43'_10) d_opposite_12

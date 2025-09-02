@@ -23,13 +23,13 @@ import qualified MAlonzo.Code.Function.Base
 -- Effect.Comonad.RawComonad
 d_RawComonad_22 a0 a1 = ()
 data T_RawComonad_22
-  = C_RawComonad'46'constructor_293 (() -> AgdaAny -> AgdaAny)
-                                    (() -> () -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny)
+  = C_constructor_52 (() -> AgdaAny -> AgdaAny)
+                     (() -> () -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny)
 -- Effect.Comonad.RawComonad.extract
 d_extract_30 :: T_RawComonad_22 -> () -> AgdaAny -> AgdaAny
 d_extract_30 v0
   = case coe v0 of
-      C_RawComonad'46'constructor_293 v1 v2 -> coe v1
+      C_constructor_52 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Comonad.RawComonad.extend
 d_extend_32 ::
@@ -37,7 +37,7 @@ d_extend_32 ::
   () -> () -> (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
 d_extend_32 v0
   = case coe v0 of
-      C_RawComonad'46'constructor_293 v1 v2 -> coe v2
+      C_constructor_52 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Comonad.RawComonad.duplicate
 d_duplicate_34 ::

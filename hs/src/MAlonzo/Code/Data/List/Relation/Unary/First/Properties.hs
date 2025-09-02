@@ -331,7 +331,7 @@ du_first'63'_310 ::
   [AgdaAny] -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_first'63'_310 v0 v1
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_fromSum_116
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_fromSum_126
       (coe
          MAlonzo.Code.Data.Sum.Base.du_map'8322'_94 erased
          (coe
@@ -339,7 +339,7 @@ du_first'63'_310 v0 v1
             (coe
                (\ v2 ->
                   coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_toSum_110
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_toSum_120
                     (coe v0 v2)))
             (coe v1)))
 -- Data.List.Relation.Unary.First.Properties._.cofirst?
@@ -358,7 +358,7 @@ du_cofirst'63'_314 ::
   [AgdaAny] -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du_cofirst'63'_314 v0 v1
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_fromSum_116
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_fromSum_126
       (coe
          MAlonzo.Code.Data.Sum.Base.du_map'8322'_94 erased
          (coe
@@ -368,7 +368,7 @@ du_cofirst'63'_314 v0 v1
                   coe
                     MAlonzo.Code.Data.Sum.Base.du_swap_78
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_toSum_110
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du_toSum_120
                        (coe v0 v2))))
             (coe v1)))
 -- Data.List.Relation.Unary.First.Properties._.fromAny∘toAny≗id

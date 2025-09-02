@@ -46,19 +46,19 @@ du_HasCoin'45'Map_10 ::
   MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 du_HasCoin'45'Map_10 v0
   = coe
-      MAlonzo.Code.Ledger.Prelude.HasCoin.C_HasCoin'46'constructor_9
+      MAlonzo.Code.Ledger.Prelude.HasCoin.C_constructor_20
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1190
+              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1222
               (coe v0)
               (coe
-                 MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-                 (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710))
+                 MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+                 (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796))
               (coe
-                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
+                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                  (coe
-                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
+                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
               (coe (\ v2 -> v2)) (coe v1)))
 -- Ledger.Prelude.Instances.HasCoin-Set
 d_HasCoin'45'Set_18 ::
@@ -71,18 +71,18 @@ du_HasCoin'45'Set_18 ::
   MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
 du_HasCoin'45'Set_18 v0
   = coe
-      MAlonzo.Code.Ledger.Prelude.HasCoin.C_HasCoin'46'constructor_9
+      MAlonzo.Code.Ledger.Prelude.HasCoin.C_constructor_20
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum''_1196
+              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum''_1228
               (coe
                  MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 (coe v0)
                  (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
               (coe
-                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_62
+                 MAlonzo.Code.Class.CommutativeMonoid.Core.du_fromBundle_64
                  (coe
-                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3360))
+                    MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
               (coe (\ v2 -> MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v2)))
               (coe v1)))
 -- Ledger.Prelude.Instances.HasSubset-Set
@@ -100,17 +100,17 @@ du_HasSubtract'45'ℙ_34 ::
   MAlonzo.Code.Interface.HasSubtract.T_HasSubtract_8
 du_HasSubtract'45'ℙ_34 v0
   = coe
-      MAlonzo.Code.Interface.HasSubtract.C_HasSubtract'46'constructor_13
-      (let v1
-             = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-       coe
+      MAlonzo.Code.Interface.HasSubtract.C_constructor_18
+      (coe
+         MAlonzo.Code.Axiom.Set.du__'65340'__732
          (coe
-            MAlonzo.Code.Axiom.Set.du__'65340'__730
-            (coe MAlonzo.Code.Axiom.Set.d_th_1470 (coe v1))
+            MAlonzo.Code.Axiom.Set.d_th_1480
             (coe
-               MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1600
-               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-               erased v0)))
+               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+         (coe
+            MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1610
+            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+            erased v0))
 -- Ledger.Prelude.Instances.HasSubset-Map
 d_HasSubset'45'Map_42 ::
   () -> () -> MAlonzo.Code.Interface.HasSubset.T_HasSubset_8

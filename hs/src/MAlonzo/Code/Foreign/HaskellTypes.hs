@@ -21,60 +21,58 @@ import qualified MAlonzo.Code.Agda.Primitive
 
 -- Foreign.HaskellTypes.HasHsType
 d_HasHsType_14 a0 a1 = ()
-data T_HasHsType_14 = C_HasHsType'46'constructor_45
+data T_HasHsType_14 = C_constructor_22
 -- Foreign.HaskellTypes.HasHsType.HsType
 d_HsType_20 :: T_HasHsType_14 -> ()
 d_HsType_20 = erased
 -- Foreign.HaskellTypes.HsType
-d_HsType_24 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> T_HasHsType_14 -> ()
-d_HsType_24 = erased
+d_HsType_26 :: T_HasHsType_14 -> ()
+d_HsType_26 = erased
 -- Foreign.HaskellTypes.MkHsType
-d_MkHsType_32 ::
+d_MkHsType_34 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> () -> T_HasHsType_14
-d_MkHsType_32 = erased
+d_MkHsType_34 = erased
 -- Foreign.HaskellTypes.iHsTy-ℕ
-d_iHsTy'45'ℕ_38 :: T_HasHsType_14
-d_iHsTy'45'ℕ_38 = erased
+d_iHsTy'45'ℕ_40 :: T_HasHsType_14
+d_iHsTy'45'ℕ_40 = erased
 -- Foreign.HaskellTypes.iHsTy-Bool
-d_iHsTy'45'Bool_40 :: T_HasHsType_14
-d_iHsTy'45'Bool_40 = erased
+d_iHsTy'45'Bool_42 :: T_HasHsType_14
+d_iHsTy'45'Bool_42 = erased
 -- Foreign.HaskellTypes.iHsTy-⊤
-d_iHsTy'45''8868'_42 :: T_HasHsType_14
-d_iHsTy'45''8868'_42 = erased
+d_iHsTy'45''8868'_44 :: T_HasHsType_14
+d_iHsTy'45''8868'_44 = erased
 -- Foreign.HaskellTypes.iHsTy-String
-d_iHsTy'45'String_44 :: T_HasHsType_14
-d_iHsTy'45'String_44 = erased
+d_iHsTy'45'String_46 :: T_HasHsType_14
+d_iHsTy'45'String_46 = erased
 -- Foreign.HaskellTypes.iHsTy-List
-d_iHsTy'45'List_46 ::
+d_iHsTy'45'List_48 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_HasHsType_14 -> T_HasHsType_14
-d_iHsTy'45'List_46 = erased
+d_iHsTy'45'List_48 = erased
 -- Foreign.HaskellTypes.iHsTy-Maybe
-d_iHsTy'45'Maybe_50 ::
+d_iHsTy'45'Maybe_52 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_HasHsType_14 -> T_HasHsType_14
-d_iHsTy'45'Maybe_50 = erased
+d_iHsTy'45'Maybe_52 = erased
 -- Foreign.HaskellTypes.iHsTy-Fun
-d_iHsTy'45'Fun_54 ::
+d_iHsTy'45'Fun_56 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_HasHsType_14 -> T_HasHsType_14 -> T_HasHsType_14
-d_iHsTy'45'Fun_54 = erased
+d_iHsTy'45'Fun_56 = erased
 -- Foreign.HaskellTypes.iHsTy-Sum
-d_iHsTy'45'Sum_60 ::
+d_iHsTy'45'Sum_62 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_HasHsType_14 -> T_HasHsType_14 -> T_HasHsType_14
-d_iHsTy'45'Sum_60 = erased
+d_iHsTy'45'Sum_62 = erased
 -- Foreign.HaskellTypes.iHsTy-Pair
-d_iHsTy'45'Pair_66 ::
+d_iHsTy'45'Pair_68 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> T_HasHsType_14 -> T_HasHsType_14 -> T_HasHsType_14
-d_iHsTy'45'Pair_66 = erased
+d_iHsTy'45'Pair_68 = erased

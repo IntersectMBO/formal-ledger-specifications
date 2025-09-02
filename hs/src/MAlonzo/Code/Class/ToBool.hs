@@ -27,124 +27,124 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 import qualified MAlonzo.Code.Relation.Nullary.Reflects
 
 -- Class.ToBool.ToBool′
-d_ToBool'8242'_20 a0 a1 a2 a3 a4 a5 = ()
-newtype T_ToBool'8242'_20
-  = C_ToBool'8242''46'constructor_201 (AgdaAny ->
-                                       AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30)
+d_ToBool'8242'_16 a0 a1 a2 a3 a4 a5 = ()
+newtype T_ToBool'8242'_16
+  = C_constructor_60 (AgdaAny ->
+                      AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30)
 -- Class.ToBool.ToBool′.decide
-d_decide_36 ::
-  T_ToBool'8242'_20 ->
+d_decide_32 ::
+  T_ToBool'8242'_16 ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
-d_decide_36 v0
+d_decide_32 v0
   = case coe v0 of
-      C_ToBool'8242''46'constructor_201 v1 -> coe v1
+      C_constructor_60 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.ToBool.ToBool′.if_then_else_
-d_if_then_else__42 ::
+d_if_then_else__38 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) ->
-  T_ToBool'8242'_20 ->
+  T_ToBool'8242'_16 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny
-d_if_then_else__42 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 v9 v10 v11
+d_if_then_else__38 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 v9 v10 v11
                    v12
-  = du_if_then_else__42 v6 v9 v10 v11 v12
-du_if_then_else__42 ::
-  T_ToBool'8242'_20 ->
+  = du_if_then_else__38 v6 v9 v10 v11 v12
+du_if_then_else__38 ::
+  T_ToBool'8242'_16 ->
   AgdaAny ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny
-du_if_then_else__42 v0 v1 v2 v3 v4
-  = let v5 = coe d_decide_36 v0 v1 v2 in
+du_if_then_else__38 v0 v1 v2 v3 v4
+  = let v5 = coe d_decide_32 v0 v1 v2 in
     coe
       (case coe v5 of
          MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v6 -> coe v3 v6
          MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v6 -> coe v4 v6
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Class.ToBool.ToBool′.toBool
-d_toBool_60 ::
+d_toBool_56 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) ->
-  (AgdaAny -> ()) -> T_ToBool'8242'_20 -> AgdaAny -> AgdaAny -> Bool
-d_toBool_60 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
-  = du_toBool_60 v6 v7 v8
-du_toBool_60 :: T_ToBool'8242'_20 -> AgdaAny -> AgdaAny -> Bool
-du_toBool_60 v0 v1 v2
+  (AgdaAny -> ()) -> T_ToBool'8242'_16 -> AgdaAny -> AgdaAny -> Bool
+d_toBool_56 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 v8
+  = du_toBool_56 v6 v7 v8
+du_toBool_56 :: T_ToBool'8242'_16 -> AgdaAny -> AgdaAny -> Bool
+du_toBool_56 v0 v1 v2
   = coe
-      du_if_then_else__42 (coe v0) (coe v1) (coe v2)
+      du_if_then_else__38 (coe v0) (coe v1) (coe v2)
       (coe (\ v3 -> coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))
       (coe (\ v3 -> coe MAlonzo.Code.Agda.Builtin.Bool.C_false_8))
 -- Class.ToBool._.decide
-d_decide_66 ::
-  T_ToBool'8242'_20 ->
+d_decide_64 ::
+  T_ToBool'8242'_16 ->
   AgdaAny -> AgdaAny -> MAlonzo.Code.Data.Sum.Base.T__'8846'__30
-d_decide_66 v0 = coe d_decide_36 (coe v0)
+d_decide_64 v0 = coe d_decide_32 (coe v0)
 -- Class.ToBool._.if_then_else_
-d_if_then_else__68 ::
+d_if_then_else__66 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) ->
-  T_ToBool'8242'_20 ->
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  AgdaAny ->
-  AgdaAny -> (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny
-d_if_then_else__68 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
-  = du_if_then_else__68 v6
-du_if_then_else__68 ::
-  T_ToBool'8242'_20 ->
+  T_ToBool'8242'_16 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   AgdaAny ->
   AgdaAny -> (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny
-du_if_then_else__68 v0 v1 v2 v3 v4 v5 v6
-  = coe du_if_then_else__42 (coe v0) v3 v4 v5 v6
+d_if_then_else__66 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6
+  = du_if_then_else__66 v6
+du_if_then_else__66 ::
+  T_ToBool'8242'_16 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  AgdaAny ->
+  AgdaAny -> (AgdaAny -> AgdaAny) -> (AgdaAny -> AgdaAny) -> AgdaAny
+du_if_then_else__66 v0 v1 v2 v3 v4 v5 v6
+  = coe du_if_then_else__38 (coe v0) v3 v4 v5 v6
 -- Class.ToBool._.toBool
-d_toBool_70 ::
+d_toBool_68 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> ()) ->
   (AgdaAny -> ()) ->
-  (AgdaAny -> ()) -> T_ToBool'8242'_20 -> AgdaAny -> AgdaAny -> Bool
-d_toBool_70 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 = du_toBool_70 v6
-du_toBool_70 :: T_ToBool'8242'_20 -> AgdaAny -> AgdaAny -> Bool
-du_toBool_70 v0 = coe du_toBool_60 (coe v0)
+  (AgdaAny -> ()) -> T_ToBool'8242'_16 -> AgdaAny -> AgdaAny -> Bool
+d_toBool_68 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 = du_toBool_68 v6
+du_toBool_68 :: T_ToBool'8242'_16 -> AgdaAny -> AgdaAny -> Bool
+du_toBool_68 v0 = coe du_toBool_56 (coe v0)
 -- Class.ToBool.ToBool
-d_ToBool_78 ::
+d_ToBool_76 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> (AgdaAny -> ()) -> (AgdaAny -> ()) -> ()
-d_ToBool_78 = erased
+d_ToBool_76 = erased
 -- Class.ToBool.ToBool-Bool
-d_ToBool'45'Bool_90 :: T_ToBool'8242'_20
-d_ToBool'45'Bool_90
+d_ToBool'45'Bool_88 :: T_ToBool'8242'_16
+d_ToBool'45'Bool_88
   = coe
-      C_ToBool'8242''46'constructor_201
+      C_constructor_60
       (coe
          (\ v0 v1 ->
             if coe v0
               then coe MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 erased
               else coe MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 erased))
 -- Class.ToBool.ToBool-Dec
-d_ToBool'45'Dec_94 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> T_ToBool'8242'_20
-d_ToBool'45'Dec_94 ~v0 ~v1 = du_ToBool'45'Dec_94
-du_ToBool'45'Dec_94 :: T_ToBool'8242'_20
-du_ToBool'45'Dec_94
+d_ToBool'45'Dec_92 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> T_ToBool'8242'_16
+d_ToBool'45'Dec_92 ~v0 ~v1 = du_ToBool'45'Dec_92
+du_ToBool'45'Dec_92 :: T_ToBool'8242'_16
+du_ToBool'45'Dec_92
   = coe
-      C_ToBool'8242''46'constructor_201
+      C_constructor_60
       (coe
          (\ v0 v1 ->
             case coe v0 of
@@ -158,13 +158,13 @@ du_ToBool'45'Dec_94
                             seq (coe v3) (coe MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 erased)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Class.ToBool.ToBool-Maybe
-d_ToBool'45'Maybe_102 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> T_ToBool'8242'_20
-d_ToBool'45'Maybe_102 ~v0 ~v1 = du_ToBool'45'Maybe_102
-du_ToBool'45'Maybe_102 :: T_ToBool'8242'_20
-du_ToBool'45'Maybe_102
+d_ToBool'45'Maybe_100 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> T_ToBool'8242'_16
+d_ToBool'45'Maybe_100 ~v0 ~v1 = du_ToBool'45'Maybe_100
+du_ToBool'45'Maybe_100 :: T_ToBool'8242'_16
+du_ToBool'45'Maybe_100
   = coe
-      C_ToBool'8242''46'constructor_201
+      C_constructor_60
       (coe
          (\ v0 v1 ->
             case coe v0 of
@@ -176,13 +176,13 @@ du_ToBool'45'Maybe_102
                      (coe MAlonzo.Code.Data.Unit.Polymorphic.Base.du_tt_16)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Class.ToBool.ToBool-⁇
-d_ToBool'45''8263'_108 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 -> T_ToBool'8242'_20
-d_ToBool'45''8263'_108 ~v0 = du_ToBool'45''8263'_108
-du_ToBool'45''8263'_108 :: T_ToBool'8242'_20
-du_ToBool'45''8263'_108
+d_ToBool'45''8263'_106 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 -> T_ToBool'8242'_16
+d_ToBool'45''8263'_106 ~v0 = du_ToBool'45''8263'_106
+du_ToBool'45''8263'_106 :: T_ToBool'8242'_16
+du_ToBool'45''8263'_106
   = coe
-      C_ToBool'8242''46'constructor_201
+      C_constructor_60
       (coe
          (\ v0 v1 ->
             let v2 = MAlonzo.Code.Class.Decidable.Core.d_dec_16 (coe v1) in

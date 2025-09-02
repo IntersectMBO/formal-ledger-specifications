@@ -21,7 +21,7 @@ import qualified MAlonzo.Code.Agda.Primitive
 
 -- Data.Universe.Universe
 d_Universe_8 a0 a1 = ()
-data T_Universe_8 = C_Universe'46'constructor_23
+data T_Universe_8 = C_constructor_22
 -- Data.Universe.Universe.U
 d_U_18 :: T_Universe_8 -> ()
 d_U_18 = erased

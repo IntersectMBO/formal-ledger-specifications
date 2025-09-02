@@ -142,7 +142,7 @@ d_'96'AlmostCommutativeRing_56
       MAlonzo.Code.Agda.Builtin.Reflection.C_def_184
       (coe
          (MAlonzo.RTE.QName
-            (178 :: Integer) (11528919355260747559 :: Integer)
+            (180 :: Integer) (11528919355260747559 :: Integer)
             "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (let v0 = 2 :: Integer in
@@ -282,7 +282,7 @@ d_'96'Carrier_96 v0
       d__'36''691'__90 (coe v0)
       (coe
          (MAlonzo.RTE.QName
-            (204 :: Integer) (11528919355260747559 :: Integer)
+            (206 :: Integer) (11528919355260747559 :: Integer)
             "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing.Carrier"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
@@ -295,7 +295,7 @@ d_'96'refl_98 v0
       d__'36''691'__90 (coe v0)
       (coe
          (MAlonzo.RTE.QName
-            (358 :: Integer) (11528919355260747559 :: Integer)
+            (360 :: Integer) (11528919355260747559 :: Integer)
             "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing.refl"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (let v1 = 1 :: Integer in
@@ -331,7 +331,7 @@ d_'96'sym_100 v0 v1
       d__'36''691'__90 (coe v0)
       (coe
          (MAlonzo.RTE.QName
-            (316 :: Integer) (11528919355260747559 :: Integer)
+            (318 :: Integer) (11528919355260747559 :: Integer)
             "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing._.sym"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (let v2 = 2 :: Integer in
@@ -381,7 +381,7 @@ d_'96'trans_104 v0 v1 v2
       d__'36''691'__90 (coe v0)
       (coe
          (MAlonzo.RTE.QName
-            (318 :: Integer) (11528919355260747559 :: Integer)
+            (320 :: Integer) (11528919355260747559 :: Integer)
             "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing._.trans"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (let v3 = 3 :: Integer in
@@ -464,7 +464,7 @@ d_getRingOperatorTerms_110 v0
                              (coe v0)
                              (coe
                                 (MAlonzo.RTE.QName
-                                   (208 :: Integer) (11528919355260747559 :: Integer)
+                                   (210 :: Integer) (11528919355260747559 :: Integer)
                                    "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing._+_"
                                    (MAlonzo.RTE.Fixity
                                       MAlonzo.RTE.LeftAssoc (MAlonzo.RTE.Related (6.0 :: Double)))))
@@ -483,7 +483,7 @@ d_getRingOperatorTerms_110 v0
                           (coe v0)
                           (coe
                              (MAlonzo.RTE.QName
-                                (210 :: Integer) (11528919355260747559 :: Integer)
+                                (212 :: Integer) (11528919355260747559 :: Integer)
                                 "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing._*_"
                                 (MAlonzo.RTE.Fixity
                                    MAlonzo.RTE.LeftAssoc (MAlonzo.RTE.Related (7.0 :: Double)))))
@@ -502,7 +502,7 @@ d_getRingOperatorTerms_110 v0
                        (coe v0)
                        (coe
                           (MAlonzo.RTE.QName
-                             (348 :: Integer) (11528919355260747559 :: Integer)
+                             (350 :: Integer) (11528919355260747559 :: Integer)
                              "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing._^_"
                              (MAlonzo.RTE.Fixity
                                 MAlonzo.RTE.RightAssoc (MAlonzo.RTE.Related (8.0 :: Double)))))
@@ -521,7 +521,7 @@ d_getRingOperatorTerms_110 v0
                     (coe v0)
                     (coe
                        (MAlonzo.RTE.QName
-                          (212 :: Integer) (11528919355260747559 :: Integer)
+                          (214 :: Integer) (11528919355260747559 :: Integer)
                           "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing.-_"
                           (MAlonzo.RTE.Fixity
                              MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (8.0 :: Double)))))
@@ -540,7 +540,7 @@ d_getRingOperatorTerms_110 v0
                  (coe v0)
                  (coe
                     (MAlonzo.RTE.QName
-                       (350 :: Integer) (11528919355260747559 :: Integer)
+                       (352 :: Integer) (11528919355260747559 :: Integer)
                        "Tactic.RingSolver.Core.AlmostCommutativeRing.AlmostCommutativeRing._-_"
                        (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                  (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))
@@ -749,7 +749,7 @@ d__'96''8860'__148 v0 v1 v2 v3
       d__'36''691'__90 (coe v0)
       (coe
          (MAlonzo.RTE.QName
-            (476 :: Integer) (13355546136547469431 :: Integer)
+            (482 :: Integer) (13355546136547469431 :: Integer)
             "Tactic.RingSolver.NonReflective._\8860_"
             (MAlonzo.RTE.Fixity
                MAlonzo.RTE.LeftAssoc (MAlonzo.RTE.Related (6.0 :: Double)))))
@@ -808,7 +808,7 @@ du_'96'correct_154 v0 v1 v2
       d__'36''691'__90 (coe v0)
       (coe
          (MAlonzo.RTE.QName
-            (398 :: Integer) (13355546136547469431 :: Integer)
+            (404 :: Integer) (13355546136547469431 :: Integer)
             "Tactic.RingSolver.NonReflective.Ops.correct"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (let v3 = 1 :: Integer in
@@ -871,7 +871,7 @@ d_'96'solver_160 v0 v1 v2 v3
       d__'36''691'__90 (coe v0)
       (coe
          (MAlonzo.RTE.QName
-            (472 :: Integer) (13355546136547469431 :: Integer)
+            (478 :: Integer) (13355546136547469431 :: Integer)
             "Tactic.RingSolver.NonReflective.solve"
             (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
       (coe
@@ -1046,7 +1046,7 @@ d_convert_188 v0 v1 v2 v3 v4
                         (coe v0) (coe v1) (coe v2) (coe v3) (coe v6) (coe v7) in
               coe
                 (case coe v6 of
-                   MAlonzo.RTE.QName 208 11528919355260747559 _ _
+                   MAlonzo.RTE.QName 210 11528919355260747559 _ _
                      -> coe
                           d_convertOp'8322'_190 (coe v0) (coe v1) (coe v2) (coe v3)
                           (coe
@@ -1056,7 +1056,7 @@ d_convert_188 v0 v1 v2 v3 v4
                                 (MAlonzo.RTE.Fixity
                                    MAlonzo.RTE.LeftAssoc (MAlonzo.RTE.Related (6.0 :: Double)))))
                           (coe v7)
-                   MAlonzo.RTE.QName 210 11528919355260747559 _ _
+                   MAlonzo.RTE.QName 212 11528919355260747559 _ _
                      -> coe
                           d_convertOp'8322'_190 (coe v0) (coe v1) (coe v2) (coe v3)
                           (coe
@@ -1066,7 +1066,7 @@ d_convert_188 v0 v1 v2 v3 v4
                                 (MAlonzo.RTE.Fixity
                                    MAlonzo.RTE.LeftAssoc (MAlonzo.RTE.Related (7.0 :: Double)))))
                           (coe v7)
-                   MAlonzo.RTE.QName 212 11528919355260747559 _ _
+                   MAlonzo.RTE.QName 214 11528919355260747559 _ _
                      -> coe
                           d_convertOp'8321'_192 (coe v0) (coe v1) (coe v2) (coe v3)
                           (coe
@@ -1076,10 +1076,10 @@ d_convert_188 v0 v1 v2 v3 v4
                                 (MAlonzo.RTE.Fixity
                                    MAlonzo.RTE.NonAssoc (MAlonzo.RTE.Related (8.0 :: Double)))))
                           (coe v7)
-                   MAlonzo.RTE.QName 348 11528919355260747559 _ _
+                   MAlonzo.RTE.QName 350 11528919355260747559 _ _
                      -> coe
                           d_convertExp_194 (coe v0) (coe v1) (coe v2) (coe v3) (coe v7)
-                   MAlonzo.RTE.QName 350 11528919355260747559 _ _
+                   MAlonzo.RTE.QName 352 11528919355260747559 _ _
                      -> coe
                           d_convertSub_196 (coe v0) (coe v1) (coe v2) (coe v3) (coe v7)
                    _ -> coe v8)
@@ -1775,7 +1775,7 @@ d_numVars_314 ~v0 ~v1 v2 ~v3 ~v4 = du_numVars_314 v2
 du_numVars_314 ::
   [MAlonzo.Code.Agda.Builtin.String.T_String_6] -> Integer
 du_numVars_314 v0
-  = coe MAlonzo.Code.Data.List.Base.du_length_284 v0
+  = coe MAlonzo.Code.Data.List.Base.du_length_268 v0
 -- Tactic.RingSolver._.conv
 d_conv_316 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
@@ -2095,7 +2095,7 @@ d_numVars_404 ::
 d_numVars_404 ~v0 ~v1 v2 ~v3 ~v4 = du_numVars_404 v2
 du_numVars_404 :: [Integer] -> Integer
 du_numVars_404 v0
-  = coe MAlonzo.Code.Data.List.Base.du_length_284 v0
+  = coe MAlonzo.Code.Data.List.Base.du_length_268 v0
 -- Tactic.RingSolver._.varMap
 d_varMap_406 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->

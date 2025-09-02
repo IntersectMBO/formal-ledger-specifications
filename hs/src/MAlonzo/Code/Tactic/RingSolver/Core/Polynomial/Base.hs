@@ -38,8 +38,8 @@ import qualified MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters
 -- Tactic.RingSolver.Core.Polynomial.Base.InjectionOrdering
 d_InjectionOrdering_66 a0 a1 a2 a3 a4 a5 a6 a7 = ()
 data T_InjectionOrdering_66
-  = C_inj'45'lt_78 MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 |
-    C_inj'45'gt_88 MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 |
+  = C_inj'45'lt_78 MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 |
+    C_inj'45'gt_88 MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 |
     C_inj'45'eq_94
 -- Tactic.RingSolver.Core.Polynomial.Base.inj-compare
 d_inj'45'compare_106 ::
@@ -49,29 +49,29 @@ d_inj'45'compare_106 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_InjectionOrdering_66
 d_inj'45'compare_106 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7
   = du_inj'45'compare_106 v6 v7
 du_inj'45'compare_106 ::
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_InjectionOrdering_66
 du_inj'45'compare_106 v0 v1
   = case coe v0 of
-      MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'reflexive_344
+      MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'reflexive_348
         -> case coe v1 of
-             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'reflexive_344
+             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'reflexive_348
                -> coe C_inj'45'eq_94
-             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348 v5
+             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352 v5
                -> coe C_inj'45'gt_88 v5
              _ -> MAlonzo.RTE.mazUnreachableError
-      MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348 v3
+      MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352 v3
         -> case coe v1 of
-             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'reflexive_344
+             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'reflexive_348
                -> coe C_inj'45'lt_78 v3
-             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348 v5
+             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352 v5
                -> coe du_inj'45'compare_106 (coe v3) (coe v5)
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -83,8 +83,8 @@ d_'46'extendedlambda0_116 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_InjectionOrdering_66 -> T_InjectionOrdering_66
 d_'46'extendedlambda0_116 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 ~v6 ~v7 v8
   = du_'46'extendedlambda0_116 v8
@@ -128,19 +128,19 @@ d_space'8804''8242'n_150 ::
   MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.T_RawCoeff_14 ->
   Integer ->
   MAlonzo.Code.Data.Fin.Base.T_Fin_10 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342
 d_space'8804''8242'n_150 ~v0 ~v1 ~v2 ~v3 v4
   = du_space'8804''8242'n_150 v4
 du_space'8804''8242'n_150 ::
   MAlonzo.Code.Data.Fin.Base.T_Fin_10 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342
 du_space'8804''8242'n_150 v0
   = case coe v0 of
       MAlonzo.Code.Data.Fin.Base.C_zero_12
-        -> coe MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'reflexive_344
+        -> coe MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'reflexive_348
       MAlonzo.Code.Data.Fin.Base.C_suc_16 v2
         -> coe
-             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
              (coe du_space'8804''8242'n_150 (coe v2))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.RingSolver.Core.Polynomial.Base.PowInd
@@ -162,7 +162,7 @@ d_pow_170 v0
 d_Poly_176 a0 a1 a2 a3 = ()
 data T_Poly_176
   = C__'8848'__208 Integer T_FlatPoly_178
-                   MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338
+                   MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342
 -- Tactic.RingSolver.Core.Polynomial.Base.FlatPoly
 d_FlatPoly_178 a0 a1 a2 a3 = ()
 data T_FlatPoly_178
@@ -206,7 +206,7 @@ d_flat_204 v0
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.RingSolver.Core.Polynomial.Base.Poly.i≤n
 d_i'8804'n_206 ::
-  T_Poly_176 -> MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338
+  T_Poly_176 -> MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342
 d_i'8804'n_206 v0
   = case coe v0 of
       C__'8848'__208 v1 v2 v3 -> coe v3
@@ -398,12 +398,12 @@ d__'8848''8593'__296 ::
   Integer ->
   Integer ->
   T_Poly_176 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 -> T_Poly_176
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 -> T_Poly_176
 d__'8848''8593'__296 ~v0 ~v1 ~v2 ~v3 ~v4 v5 v6
   = du__'8848''8593'__296 v5 v6
 du__'8848''8593'__296 ::
   T_Poly_176 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 -> T_Poly_176
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 -> T_Poly_176
 du__'8848''8593'__296 v0 v1
   = case coe v0 of
       C__'8848'__208 v2 v3 v4
@@ -411,9 +411,9 @@ du__'8848''8593'__296 v0 v1
              C__'8848'__208 (coe v2) (coe v3)
              (coe
                 MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
-                (coe MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348 v4)
+                (coe MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352 v4)
                 (coe
-                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                 (coe v1))
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.RingSolver.Core.Polynomial.Base._⊐↓_
@@ -424,7 +424,7 @@ d__'8848''8595'__308 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'42'_30 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 -> T_Poly_176
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 -> T_Poly_176
 d__'8848''8595'__308 ~v0 ~v1 v2 v3 v4 v5 v6
   = du__'8848''8595'__308 v2 v3 v4 v5 v6
 du__'8848''8595'__308 ::
@@ -432,7 +432,7 @@ du__'8848''8595'__308 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'42'_30 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 -> T_Poly_176
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 -> T_Poly_176
 du__'8848''8595'__308 v0 v1 v2 v3 v4
   = case coe v3 of
       MAlonzo.Code.Data.List.Kleene.Base.C_'91''93'_46
@@ -441,12 +441,12 @@ du__'8848''8595'__308 v0 v1 v2 v3 v4
              (coe
                 C_Κ_210
                 (coe
-                   MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                   MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                    (coe
                       MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                       (coe v0))))
              (coe
-                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v2))
+                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v2))
       MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v5
         -> case coe v5 of
              MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v6 v7
@@ -464,10 +464,10 @@ du__'8848''8595'__308 v0 v1 v2 v3 v4
                                                        (coe
                                                           MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                           (coe
-                                                             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                              v14)
                                                           (coe
-                                                             MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                             MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                           (coe v4))
                                                 _ -> MAlonzo.RTE.mazUnreachableError
                                          MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v12
@@ -674,8 +674,8 @@ d_'8862''45'match_388 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_InjectionOrdering_66 ->
   T_FlatPoly_178 -> T_FlatPoly_178 -> T_Poly_176
 d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
@@ -697,12 +697,12 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                  (coe
                                     C_Κ_210
                                     (coe
-                                       MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                       MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                        (coe
                                           MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                           (coe v2))))
                                  (coe
-                                    MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v5))
+                                    MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v5))
                           MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v20
                             -> case coe v20 of
                                  MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v21 v22
@@ -721,10 +721,10 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                            (coe
                                                                               MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                 MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                  v29)
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                               (coe v7))
                                                                     _ -> MAlonzo.RTE.mazUnreachableError
                                                              MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v27
@@ -780,12 +780,12 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                  (coe
                                     C_Κ_210
                                     (coe
-                                       MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                       MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                        (coe
                                           MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                           (coe v2))))
                                  (coe
-                                    MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v5))
+                                    MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v5))
                           MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v20
                             -> case coe v20 of
                                  MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v21 v22
@@ -804,10 +804,10 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                            (coe
                                                                               MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                 MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                  v29)
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                               (coe v6))
                                                                     _ -> MAlonzo.RTE.mazUnreachableError
                                                              MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v27
@@ -856,7 +856,7 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                            (coe
                               C_Κ_210
                               (coe
-                                 MAlonzo.Code.Algebra.Bundles.Raw.d__'43'__300
+                                 MAlonzo.Code.Algebra.Bundles.Raw.d__'43'__314
                                  (MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                     (coe v2))
                                  v13 v14))
@@ -876,11 +876,11 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                               -> case coe v24 of
                                                    C__Δ__172 v26 v27
                                                      -> let v28
-                                                              = MAlonzo.Code.Data.Nat.Base.d_compare_470
+                                                              = MAlonzo.Code.Data.Nat.Base.d_compare_474
                                                                   (coe v20) (coe v27) in
                                                         coe
                                                           (case coe v28 of
-                                                             MAlonzo.Code.Data.Nat.Base.C_less_454 v30
+                                                             MAlonzo.Code.Data.Nat.Base.C_less_458 v30
                                                                -> let v31
                                                                         = d_'8862''45'zip'45'r_410
                                                                             (coe v0) (coe v1)
@@ -905,10 +905,10 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                                         MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                                          v36)
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                                         MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                                                       (coe
                                                                                                          v6))
                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
@@ -954,7 +954,7 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                                            MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
                                                                                      (coe v6)
                                                                        _ -> MAlonzo.RTE.mazUnreachableError)
-                                                             MAlonzo.Code.Data.Nat.Base.C_equal_458
+                                                             MAlonzo.Code.Data.Nat.Base.C_equal_462
                                                                -> let v30
                                                                         = let v30
                                                                                 = d_'8862''45'coeffs_398
@@ -1029,12 +1029,12 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                               (coe
                                                                                  C_Κ_210
                                                                                  (coe
-                                                                                    MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                                                                    MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                                                                     (coe
                                                                                        MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                                                                        (coe v2))))
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148
+                                                                                 MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
                                                                                  (coe v5))
                                                                        MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v31
                                                                          -> case coe v31 of
@@ -1061,10 +1061,10 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                                                                         (coe
                                                                                                                            MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                                                              MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                                                               v40)
                                                                                                                            (coe
-                                                                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                                                                            (coe
                                                                                                                               v6))
                                                                                                                  _ -> MAlonzo.RTE.mazUnreachableError
@@ -1117,7 +1117,7 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                                      _ -> MAlonzo.RTE.mazUnreachableError
                                                                               _ -> MAlonzo.RTE.mazUnreachableError
                                                                        _ -> MAlonzo.RTE.mazUnreachableError)
-                                                             MAlonzo.Code.Data.Nat.Base.C_greater_464 v30
+                                                             MAlonzo.Code.Data.Nat.Base.C_greater_468 v30
                                                                -> let v31
                                                                         = d_'8862''45'zip'45'r_410
                                                                             (coe v0) (coe v1)
@@ -1142,10 +1142,10 @@ d_'8862''45'match_388 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                                         MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                                          v36)
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                                         MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                                                       (coe
                                                                                                          v6))
                                                                                             _ -> MAlonzo.RTE.mazUnreachableError
@@ -1206,7 +1206,7 @@ d_'8862''45'inj_394 ::
   MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.T_RawCoeff_14 ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_FlatPoly_178 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'42'_30
@@ -1347,7 +1347,7 @@ d_'8862''45'zip_406 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.Base.T_Ordering_448 ->
+  MAlonzo.Code.Data.Nat.Base.T_Ordering_452 ->
   T_NonZero_184 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'42'_30 ->
   T_NonZero_184 ->
@@ -1355,7 +1355,7 @@ d_'8862''45'zip_406 ::
   MAlonzo.Code.Data.List.Kleene.Base.T__'42'_30
 d_'8862''45'zip_406 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
   = case coe v6 of
-      MAlonzo.Code.Data.Nat.Base.C_less_454 v12
+      MAlonzo.Code.Data.Nat.Base.C_less_458 v12
         -> coe
              MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48
              (coe
@@ -1364,7 +1364,7 @@ d_'8862''45'zip_406 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                 (coe
                    d_'8862''45'zip'45'r_410 (coe v0) (coe v1) (coe v2) (coe v5)
                    (coe v9) (coe v12) (coe v10) (coe v8)))
-      MAlonzo.Code.Data.Nat.Base.C_equal_458
+      MAlonzo.Code.Data.Nat.Base.C_equal_462
         -> let v12
                  = d_'8862''45'coeffs_398
                      (coe v0) (coe v1) (coe v2) (coe v5) (coe v8) (coe v10) in
@@ -1404,7 +1404,7 @@ d_'8862''45'zip_406 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                     (coe MAlonzo.Code.Relation.Nullary.Reflects.C_of'8319'_26)
                              _ -> MAlonzo.RTE.mazUnreachableError
                       _ -> MAlonzo.RTE.mazUnreachableError)))
-      MAlonzo.Code.Data.Nat.Base.C_greater_464 v12
+      MAlonzo.Code.Data.Nat.Base.C_greater_468 v12
         -> coe
              MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48
              (coe
@@ -1441,7 +1441,7 @@ d_'8862''45'zip'45'r_410 v0 v1 v2 v3 v4 v5 v6 v7
                       -> coe
                            d_'8862''45'zip_406 (coe v0) (coe v1) (coe v2) (coe v5) (coe v12)
                            (coe v3)
-                           (coe MAlonzo.Code.Data.Nat.Base.d_compare_470 (coe v5) (coe v12))
+                           (coe MAlonzo.Code.Data.Nat.Base.d_compare_474 (coe v5) (coe v12))
                            (coe v4) (coe v6) (coe v11) (coe v10)
                     _ -> MAlonzo.RTE.mazUnreachableError
              _ -> MAlonzo.RTE.mazUnreachableError
@@ -1469,7 +1469,7 @@ du_'8863''45'step_540 v0 v1 v2
                     (coe
                        C_Κ_210
                        (coe
-                          MAlonzo.Code.Algebra.Bundles.Raw.d_'45'__304
+                          MAlonzo.Code.Algebra.Bundles.Raw.d_'45'__318
                           (MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                              (coe v0))
                           v6))
@@ -1492,12 +1492,12 @@ du_'8863''45'step_540 v0 v1 v2
                                  (coe
                                     C_Κ_210
                                     (coe
-                                       MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                       MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                        (coe
                                           MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                           (coe v0))))
                                  (coe
-                                    MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v1))
+                                    MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v1))
                           MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v11
                             -> case coe v11 of
                                  MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v12 v13
@@ -1516,10 +1516,10 @@ du_'8863''45'step_540 v0 v1 v2
                                                                            (coe
                                                                               MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                 MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                  v20)
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                               (coe v5))
                                                                     _ -> MAlonzo.RTE.mazUnreachableError
                                                              MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v18
@@ -1599,7 +1599,7 @@ d_'8864''45'step_566 ::
   Integer ->
   MAlonzo.Code.Induction.WellFounded.T_Acc_42 ->
   T_FlatPoly_178 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_Poly_176 -> T_Poly_176
 d_'8864''45'step_566 v0 v1 v2 v3 v4 ~v5 v6
   = du_'8864''45'step_566 v0 v1 v2 v3 v4 v6
@@ -1610,7 +1610,7 @@ du_'8864''45'step_566 ::
   Integer ->
   Integer ->
   T_FlatPoly_178 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_Poly_176 -> T_Poly_176
 du_'8864''45'step_566 v0 v1 v2 v3 v4 v5
   = case coe v5 of
@@ -1626,7 +1626,7 @@ du_'8864''45'step_566 v0 v1 v2 v3 v4 v5
                                 (coe
                                    C_Κ_210
                                    (coe
-                                      MAlonzo.Code.Algebra.Bundles.Raw.d__'42'__302
+                                      MAlonzo.Code.Algebra.Bundles.Raw.d__'42'__316
                                       (MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                          (coe v2))
                                       v6 v12))
@@ -1646,12 +1646,12 @@ du_'8864''45'step_566 v0 v1 v2 v3 v4 v5
                                              (coe
                                                 C_Κ_210
                                                 (coe
-                                                   MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                                   MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                                    (coe
                                                       MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                                       (coe v2))))
                                              (coe
-                                                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148
+                                                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
                                                 (coe v4))
                                       MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v17
                                         -> case coe v17 of
@@ -1672,10 +1672,10 @@ du_'8864''45'step_566 v0 v1 v2 v3 v4 v5
                                                                                        (coe
                                                                                           MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                                           (coe
-                                                                                             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                             MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                              v26)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                             MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                                           (coe v11))
                                                                                 _ -> MAlonzo.RTE.mazUnreachableError
                                                                          MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v24
@@ -1753,7 +1753,7 @@ du_'8864''45'Κ_570 v0 v1 v2 v3 v4 v5
                     (coe
                        C_Κ_210
                        (coe
-                          MAlonzo.Code.Algebra.Bundles.Raw.d__'42'__302
+                          MAlonzo.Code.Algebra.Bundles.Raw.d__'42'__316
                           (MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                              (coe v2))
                           v4 v9))
@@ -1773,12 +1773,12 @@ du_'8864''45'Κ_570 v0 v1 v2 v3 v4 v5
                                  (coe
                                     C_Κ_210
                                     (coe
-                                       MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                       MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                        (coe
                                           MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                           (coe v2))))
                                  (coe
-                                    MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v3))
+                                    MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v3))
                           MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v14
                             -> case coe v14 of
                                  MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v15 v16
@@ -1797,10 +1797,10 @@ du_'8864''45'Κ_570 v0 v1 v2 v3 v4 v5
                                                                            (coe
                                                                               MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                 MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                  v23)
                                                                               (coe
-                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                 MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                               (coe v8))
                                                                     _ -> MAlonzo.RTE.mazUnreachableError
                                                              MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v21
@@ -1849,7 +1849,7 @@ d_'8864''45''8512'_576 ::
   Integer ->
   MAlonzo.Code.Induction.WellFounded.T_Acc_42 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_Poly_176 -> T_Poly_176
 d_'8864''45''8512'_576 v0 v1 v2 v3 v4 ~v5 v6 v7 v8
   = du_'8864''45''8512'_576 v0 v1 v2 v3 v4 v6 v7 v8
@@ -1860,7 +1860,7 @@ du_'8864''45''8512'_576 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_Poly_176 -> T_Poly_176
 du_'8864''45''8512'_576 v0 v1 v2 v3 v4 v5 v6 v7
   = case coe v7 of
@@ -1879,12 +1879,12 @@ du_'8864''45''8512'_576 v0 v1 v2 v3 v4 v5 v6 v7
                               (coe
                                  C_Κ_210
                                  (coe
-                                    MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                    MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                     (coe
                                        MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                        (coe v2))))
                               (coe
-                                 MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v4))
+                                 MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v4))
                        MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v13
                          -> case coe v13 of
                               MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v14 v15
@@ -1903,10 +1903,10 @@ du_'8864''45''8512'_576 v0 v1 v2 v3 v4 v5 v6 v7
                                                                         (coe
                                                                            MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                              MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                               v22)
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                            (coe v6))
                                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                                           MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v20
@@ -1992,7 +1992,7 @@ d_'8864''45''8512''45'inj_586 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Induction.WellFounded.T_Acc_42 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 ->
   T_Poly_176 -> T_Poly_176
 d_'8864''45''8512''45'inj_586 v0 v1 v2 v3 v4 ~v5 v6 v7 v8
@@ -2003,7 +2003,7 @@ du_'8864''45''8512''45'inj_586 ::
   MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.T_RawCoeff_14 ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 ->
   T_Poly_176 -> T_Poly_176
 du_'8864''45''8512''45'inj_586 v0 v1 v2 v3 v4 v5 v6 v7
@@ -2023,12 +2023,12 @@ du_'8864''45''8512''45'inj_586 v0 v1 v2 v3 v4 v5 v6 v7
                               (coe
                                  C_Κ_210
                                  (coe
-                                    MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                    MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                     (coe
                                        MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                        (coe v2))))
                               (coe
-                                 MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v4))
+                                 MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v4))
                        MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v13
                          -> case coe v13 of
                               MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v14 v15
@@ -2047,10 +2047,10 @@ du_'8864''45''8512''45'inj_586 v0 v1 v2 v3 v4 v5 v6 v7
                                                                         (coe
                                                                            MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                              MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                               v22)
                                                                            (coe
-                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                              MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                            (coe v5))
                                                                  _ -> MAlonzo.RTE.mazUnreachableError
                                                           MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v20
@@ -2109,8 +2109,8 @@ d_'8864''45'match_598 ::
   Integer ->
   Integer ->
   MAlonzo.Code.Induction.WellFounded.T_Acc_42 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_InjectionOrdering_66 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 -> T_Poly_176
@@ -2123,8 +2123,8 @@ du_'8864''45'match_598 ::
   Integer ->
   Integer ->
   Integer ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
-  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__338 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
+  MAlonzo.Code.Data.Nat.Base.T__'8804''8242'__342 ->
   T_InjectionOrdering_66 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 ->
   MAlonzo.Code.Data.List.Kleene.Base.T__'43'_24 -> T_Poly_176
@@ -2148,12 +2148,12 @@ du_'8864''45'match_598 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                        (coe
                           C_Κ_210
                           (coe
-                             MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                             MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                              (coe
                                 MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                 (coe v2))))
                        (coe
-                          MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v5))
+                          MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v5))
                 MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v16
                   -> case coe v16 of
                        MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v17 v18
@@ -2171,10 +2171,10 @@ du_'8864''45'match_598 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                  (coe
                                                                     MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                     (coe
-                                                                       MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                       MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                        v25)
                                                                     (coe
-                                                                       MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                       MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                     (coe v7))
                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                    MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v23
@@ -2229,12 +2229,12 @@ du_'8864''45'match_598 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                        (coe
                           C_Κ_210
                           (coe
-                             MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                             MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                              (coe
                                 MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                 (coe v2))))
                        (coe
-                          MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v5))
+                          MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v5))
                 MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v16
                   -> case coe v16 of
                        MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v17 v18
@@ -2252,10 +2252,10 @@ du_'8864''45'match_598 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                  (coe
                                                                     MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                     (coe
-                                                                       MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                       MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                        v25)
                                                                     (coe
-                                                                       MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                       MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                     (coe v6))
                                                           _ -> MAlonzo.RTE.mazUnreachableError
                                                    MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v23
@@ -2321,12 +2321,12 @@ du_'8864''45'match_598 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                    (coe
                                                       C_Κ_210
                                                       (coe
-                                                         MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                                         MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                                          (coe
                                                             MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                                             (coe v2))))
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148
+                                                      MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
                                                       (coe v5))
                                             MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v20
                                               -> case coe v20 of
@@ -2349,10 +2349,10 @@ du_'8864''45'match_598 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                                              (coe
                                                                                                 MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                                   MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                                    v29)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                                                 (coe
                                                                                                    v6))
                                                                                       _ -> MAlonzo.RTE.mazUnreachableError
@@ -2452,12 +2452,12 @@ du_'8864''45'match_598 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                    (coe
                                                       C_Κ_210
                                                       (coe
-                                                         MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                                         MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                                          (coe
                                                             MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                                             (coe v2))))
                                                    (coe
-                                                      MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148
+                                                      MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
                                                       (coe v5))
                                             MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v21
                                               -> case coe v21 of
@@ -2480,10 +2480,10 @@ du_'8864''45'match_598 v0 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10
                                                                                              (coe
                                                                                                 MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                                   MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                                    v30)
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                                   MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                                                 (coe
                                                                                                    v6))
                                                                                       _ -> MAlonzo.RTE.mazUnreachableError
@@ -2680,7 +2680,7 @@ du_κ_744 v0 v1
   = coe
       C__'8848'__208 (coe (0 :: Integer)) (coe C_Κ_210 (coe v1))
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v0))
+         MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v0))
 -- Tactic.RingSolver.Core.Polynomial.Base.ι
 d_ι_750 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -2703,12 +2703,12 @@ du_ι_750 v0 v1 v2
                             (coe
                                C_Κ_210
                                (coe
-                                  MAlonzo.Code.Algebra.Bundles.Raw.d_1'35'_308
+                                  MAlonzo.Code.Algebra.Bundles.Raw.d_1'35'_322
                                   (coe
                                      MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                      (coe v0))))
                             (coe
-                               MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148
+                               MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
                                (coe du_go_140 (coe v1) (coe v2))) in
                   coe
                     (let v6 = 1 :: Integer in
@@ -2716,7 +2716,7 @@ du_ι_750 v0 v1 v2
                        (coe
                           du_'46'extendedlambda1_286 (coe v5) (coe v6) (coe v4)
                           (let v7
-                                 = MAlonzo.Code.Algebra.Bundles.Raw.d_1'35'_308
+                                 = MAlonzo.Code.Algebra.Bundles.Raw.d_1'35'_322
                                      (coe
                                         MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                         (coe v0)) in
@@ -2748,12 +2748,12 @@ du_ι_750 v0 v1 v2
                       (coe
                          C_Κ_210
                          (coe
-                            MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                            MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                             (coe
                                MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                (coe v0))))
                       (coe
-                         MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v1))
+                         MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v1))
                MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v6
                  -> case coe v6 of
                       MAlonzo.Code.Data.List.Kleene.Base.C__'38'__42 v7 v8
@@ -2771,10 +2771,10 @@ du_ι_750 v0 v1 v2
                                                                 (coe
                                                                    MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                    (coe
-                                                                      MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                      MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                       v15)
                                                                    (coe
-                                                                      MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                      MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                    (coe v5))
                                                          _ -> MAlonzo.RTE.mazUnreachableError
                                                   MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v13
@@ -2843,18 +2843,18 @@ d__'8865'_'43'1_766 v0 v1 v2 v3 v4 v5
                        C_Κ_210
                        (let v10
                               = coe
-                                  MAlonzo.Code.Algebra.Bundles.Raw.du_'42''45'rawMonoid_222
+                                  MAlonzo.Code.Algebra.Bundles.Raw.du_'42''45'rawMonoid_232
                                   (coe
-                                     MAlonzo.Code.Algebra.Bundles.Raw.du_rawSemiring_310
+                                     MAlonzo.Code.Algebra.Bundles.Raw.du_rawSemiring_324
                                      (coe
                                         MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                         (coe v2))) in
                         coe
                           (let v11
                                  = coe
-                                     MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__88 v10
+                                     MAlonzo.Code.Algebra.Bundles.Raw.d__'8729'__92 v10
                                      (coe
-                                        MAlonzo.Code.Algebra.Definitions.RawMonoid.du__'215''8242'__68
+                                        MAlonzo.Code.Algebra.Definitions.RawMonoid.du__'215''8242'__76
                                         (coe v10) (coe v5) (coe v9))
                                      v9 in
                            coe
@@ -2924,12 +2924,12 @@ d__'8865'_'43'1_766 v0 v1 v2 v3 v4 v5
                                                       (coe
                                                          C_Κ_210
                                                          (coe
-                                                            MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_306
+                                                            MAlonzo.Code.Algebra.Bundles.Raw.d_0'35'_320
                                                             (coe
                                                                MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                                                                (coe v2))))
                                                       (coe
-                                                         MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148
+                                                         MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222
                                                          (coe v3))
                                                MAlonzo.Code.Data.List.Kleene.Base.C_'8761'__48 v18
                                                  -> case coe v18 of
@@ -2953,10 +2953,10 @@ d__'8865'_'43'1_766 v0 v1 v2 v3 v4 v5
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Function.Base.du__'10216'_'10217'__240
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_348
+                                                                                                      MAlonzo.Code.Data.Nat.Base.C_'8804''8242''45'step_352
                                                                                                       v27)
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6140)
+                                                                                                      MAlonzo.Code.Data.Nat.Properties.du_'8804''8242''45'trans_6214)
                                                                                                    (coe
                                                                                                       v8))
                                                                                          _ -> MAlonzo.RTE.mazUnreachableError
@@ -3029,12 +3029,12 @@ d__'8865'__790 v0 v1 v2 v3 v4 v5
              (coe
                 C_Κ_210
                 (coe
-                   MAlonzo.Code.Algebra.Bundles.Raw.d_1'35'_308
+                   MAlonzo.Code.Algebra.Bundles.Raw.d_1'35'_322
                    (coe
                       MAlonzo.Code.Tactic.RingSolver.Core.Polynomial.Parameters.d_rawRing_24
                       (coe v2))))
              (coe
-                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6148 (coe v3))
+                MAlonzo.Code.Data.Nat.Properties.d_z'8804''8242'n_6222 (coe v3))
       _ -> let v6 = subInt (coe v5) (coe (1 :: Integer)) in
            coe
              (coe

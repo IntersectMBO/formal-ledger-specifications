@@ -23,7 +23,7 @@ import qualified MAlonzo.Code.Relation.Binary.Bundles.Raw
 -- Algebra.Bundles.Raw.RawSuccessorSet
 d_RawSuccessorSet_10 a0 a1 = ()
 data T_RawSuccessorSet_10
-  = C_RawSuccessorSet'46'constructor_89 (AgdaAny -> AgdaAny) AgdaAny
+  = C_constructor_38 (AgdaAny -> AgdaAny) AgdaAny
 -- Algebra.Bundles.Raw.RawSuccessorSet.Carrier
 d_Carrier_24 :: T_RawSuccessorSet_10 -> ()
 d_Carrier_24 = erased
@@ -34,13 +34,13 @@ d__'8776'__26 = erased
 d_suc'35'_28 :: T_RawSuccessorSet_10 -> AgdaAny -> AgdaAny
 d_suc'35'_28 v0
   = case coe v0 of
-      C_RawSuccessorSet'46'constructor_89 v3 v4 -> coe v3
+      C_constructor_38 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawSuccessorSet.zero#
 d_zero'35'_30 :: T_RawSuccessorSet_10 -> AgdaAny
 d_zero'35'_30 v0
   = case coe v0 of
-      C_RawSuccessorSet'46'constructor_89 v3 v4 -> coe v4
+      C_constructor_38 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawSuccessorSet.rawSetoid
 d_rawSetoid_32 ::
@@ -56,774 +56,760 @@ d__'8777'__36 ::
   T_RawSuccessorSet_10 -> AgdaAny -> AgdaAny -> ()
 d__'8777'__36 = erased
 -- Algebra.Bundles.Raw.RawMagma
-d_RawMagma_42 a0 a1 = ()
-newtype T_RawMagma_42
-  = C_RawMagma'46'constructor_487 (AgdaAny -> AgdaAny -> AgdaAny)
+d_RawMagma_44 a0 a1 = ()
+newtype T_RawMagma_44
+  = C_constructor_68 (AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Bundles.Raw.RawMagma.Carrier
-d_Carrier_54 :: T_RawMagma_42 -> ()
-d_Carrier_54 = erased
+d_Carrier_56 :: T_RawMagma_44 -> ()
+d_Carrier_56 = erased
 -- Algebra.Bundles.Raw.RawMagma._≈_
-d__'8776'__56 :: T_RawMagma_42 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__56 = erased
+d__'8776'__58 :: T_RawMagma_44 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__58 = erased
 -- Algebra.Bundles.Raw.RawMagma._∙_
-d__'8729'__58 :: T_RawMagma_42 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8729'__58 v0
+d__'8729'__60 :: T_RawMagma_44 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8729'__60 v0
   = case coe v0 of
-      C_RawMagma'46'constructor_487 v3 -> coe v3
+      C_constructor_68 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawMagma.rawSetoid
-d_rawSetoid_60 ::
+d_rawSetoid_62 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawMagma_42 ->
+  T_RawMagma_44 ->
   MAlonzo.Code.Relation.Binary.Bundles.Raw.T_RawSetoid_12
-d_rawSetoid_60 = erased
+d_rawSetoid_62 = erased
 -- Algebra.Bundles.Raw.RawMagma._._≉_
-d__'8777'__64 ::
+d__'8777'__66 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawMagma_42 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__64 = erased
+  T_RawMagma_44 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__66 = erased
 -- Algebra.Bundles.Raw.RawMonoid
-d_RawMonoid_70 a0 a1 = ()
-data T_RawMonoid_70
-  = C_RawMonoid'46'constructor_857 (AgdaAny -> AgdaAny -> AgdaAny)
-                                   AgdaAny
+d_RawMonoid_74 a0 a1 = ()
+data T_RawMonoid_74
+  = C_constructor_102 (AgdaAny -> AgdaAny -> AgdaAny) AgdaAny
 -- Algebra.Bundles.Raw.RawMonoid.Carrier
-d_Carrier_84 :: T_RawMonoid_70 -> ()
-d_Carrier_84 = erased
+d_Carrier_88 :: T_RawMonoid_74 -> ()
+d_Carrier_88 = erased
 -- Algebra.Bundles.Raw.RawMonoid._≈_
-d__'8776'__86 :: T_RawMonoid_70 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__86 = erased
+d__'8776'__90 :: T_RawMonoid_74 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__90 = erased
 -- Algebra.Bundles.Raw.RawMonoid._∙_
-d__'8729'__88 :: T_RawMonoid_70 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8729'__88 v0
+d__'8729'__92 :: T_RawMonoid_74 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8729'__92 v0
   = case coe v0 of
-      C_RawMonoid'46'constructor_857 v3 v4 -> coe v3
+      C_constructor_102 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawMonoid.ε
-d_ε_90 :: T_RawMonoid_70 -> AgdaAny
-d_ε_90 v0
+d_ε_94 :: T_RawMonoid_74 -> AgdaAny
+d_ε_94 v0
   = case coe v0 of
-      C_RawMonoid'46'constructor_857 v3 v4 -> coe v4
+      C_constructor_102 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawMonoid.rawMagma
-d_rawMagma_92 ::
+d_rawMagma_96 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawMonoid_70 -> T_RawMagma_42
-d_rawMagma_92 ~v0 ~v1 v2 = du_rawMagma_92 v2
-du_rawMagma_92 :: T_RawMonoid_70 -> T_RawMagma_42
-du_rawMagma_92 v0
-  = coe C_RawMagma'46'constructor_487 (d__'8729'__88 (coe v0))
+  T_RawMonoid_74 -> T_RawMagma_44
+d_rawMagma_96 ~v0 ~v1 v2 = du_rawMagma_96 v2
+du_rawMagma_96 :: T_RawMonoid_74 -> T_RawMagma_44
+du_rawMagma_96 v0 = coe C_constructor_68 (d__'8729'__92 (coe v0))
 -- Algebra.Bundles.Raw.RawMonoid._._≉_
-d__'8777'__96 ::
+d__'8777'__100 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawMonoid_70 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__96 = erased
+  T_RawMonoid_74 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__100 = erased
 -- Algebra.Bundles.Raw.RawGroup
-d_RawGroup_102 a0 a1 = ()
-data T_RawGroup_102
-  = C_RawGroup'46'constructor_1319 (AgdaAny -> AgdaAny -> AgdaAny)
-                                   AgdaAny (AgdaAny -> AgdaAny)
+d_RawGroup_108 a0 a1 = ()
+data T_RawGroup_108
+  = C_constructor_142 (AgdaAny -> AgdaAny -> AgdaAny) AgdaAny
+                      (AgdaAny -> AgdaAny)
 -- Algebra.Bundles.Raw.RawGroup.Carrier
-d_Carrier_118 :: T_RawGroup_102 -> ()
-d_Carrier_118 = erased
+d_Carrier_124 :: T_RawGroup_108 -> ()
+d_Carrier_124 = erased
 -- Algebra.Bundles.Raw.RawGroup._≈_
-d__'8776'__120 :: T_RawGroup_102 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__120 = erased
+d__'8776'__126 :: T_RawGroup_108 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__126 = erased
 -- Algebra.Bundles.Raw.RawGroup._∙_
-d__'8729'__122 :: T_RawGroup_102 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8729'__122 v0
+d__'8729'__128 :: T_RawGroup_108 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8729'__128 v0
   = case coe v0 of
-      C_RawGroup'46'constructor_1319 v3 v4 v5 -> coe v3
+      C_constructor_142 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawGroup.ε
-d_ε_124 :: T_RawGroup_102 -> AgdaAny
-d_ε_124 v0
+d_ε_130 :: T_RawGroup_108 -> AgdaAny
+d_ε_130 v0
   = case coe v0 of
-      C_RawGroup'46'constructor_1319 v3 v4 v5 -> coe v4
+      C_constructor_142 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawGroup._⁻¹
-d__'8315''185'_126 :: T_RawGroup_102 -> AgdaAny -> AgdaAny
-d__'8315''185'_126 v0
+d__'8315''185'_132 :: T_RawGroup_108 -> AgdaAny -> AgdaAny
+d__'8315''185'_132 v0
   = case coe v0 of
-      C_RawGroup'46'constructor_1319 v3 v4 v5 -> coe v5
+      C_constructor_142 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawGroup.rawMonoid
-d_rawMonoid_128 ::
+d_rawMonoid_134 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawGroup_102 -> T_RawMonoid_70
-d_rawMonoid_128 ~v0 ~v1 v2 = du_rawMonoid_128 v2
-du_rawMonoid_128 :: T_RawGroup_102 -> T_RawMonoid_70
-du_rawMonoid_128 v0
+  T_RawGroup_108 -> T_RawMonoid_74
+d_rawMonoid_134 ~v0 ~v1 v2 = du_rawMonoid_134 v2
+du_rawMonoid_134 :: T_RawGroup_108 -> T_RawMonoid_74
+du_rawMonoid_134 v0
   = coe
-      C_RawMonoid'46'constructor_857 (d__'8729'__122 (coe v0))
-      (d_ε_124 (coe v0))
+      C_constructor_102 (d__'8729'__128 (coe v0)) (d_ε_130 (coe v0))
 -- Algebra.Bundles.Raw.RawGroup._._≉_
-d__'8777'__132 ::
+d__'8777'__138 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawGroup_102 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__132 = erased
+  T_RawGroup_108 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__138 = erased
 -- Algebra.Bundles.Raw.RawGroup._.rawMagma
-d_rawMagma_134 ::
+d_rawMagma_140 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawGroup_102 -> T_RawMagma_42
-d_rawMagma_134 ~v0 ~v1 v2 = du_rawMagma_134 v2
-du_rawMagma_134 :: T_RawGroup_102 -> T_RawMagma_42
-du_rawMagma_134 v0
-  = coe du_rawMagma_92 (coe du_rawMonoid_128 (coe v0))
+  T_RawGroup_108 -> T_RawMagma_44
+d_rawMagma_140 ~v0 ~v1 v2 = du_rawMagma_140 v2
+du_rawMagma_140 :: T_RawGroup_108 -> T_RawMagma_44
+du_rawMagma_140 v0
+  = coe du_rawMagma_96 (coe du_rawMonoid_134 (coe v0))
 -- Algebra.Bundles.Raw.RawNearSemiring
-d_RawNearSemiring_140 a0 a1 = ()
-data T_RawNearSemiring_140
-  = C_RawNearSemiring'46'constructor_1841 (AgdaAny ->
-                                           AgdaAny -> AgdaAny)
-                                          (AgdaAny -> AgdaAny -> AgdaAny) AgdaAny
+d_RawNearSemiring_148 a0 a1 = ()
+data T_RawNearSemiring_148
+  = C_constructor_184 (AgdaAny -> AgdaAny -> AgdaAny)
+                      (AgdaAny -> AgdaAny -> AgdaAny) AgdaAny
 -- Algebra.Bundles.Raw.RawNearSemiring.Carrier
-d_Carrier_156 :: T_RawNearSemiring_140 -> ()
-d_Carrier_156 = erased
+d_Carrier_164 :: T_RawNearSemiring_148 -> ()
+d_Carrier_164 = erased
 -- Algebra.Bundles.Raw.RawNearSemiring._≈_
-d__'8776'__158 :: T_RawNearSemiring_140 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__158 = erased
+d__'8776'__166 :: T_RawNearSemiring_148 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__166 = erased
 -- Algebra.Bundles.Raw.RawNearSemiring._+_
-d__'43'__160 ::
-  T_RawNearSemiring_140 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'43'__160 v0
+d__'43'__168 ::
+  T_RawNearSemiring_148 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'43'__168 v0
   = case coe v0 of
-      C_RawNearSemiring'46'constructor_1841 v3 v4 v5 -> coe v3
+      C_constructor_184 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawNearSemiring._*_
-d__'42'__162 ::
-  T_RawNearSemiring_140 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'42'__162 v0
+d__'42'__170 ::
+  T_RawNearSemiring_148 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'42'__170 v0
   = case coe v0 of
-      C_RawNearSemiring'46'constructor_1841 v3 v4 v5 -> coe v4
+      C_constructor_184 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawNearSemiring.0#
-d_0'35'_164 :: T_RawNearSemiring_140 -> AgdaAny
-d_0'35'_164 v0
+d_0'35'_172 :: T_RawNearSemiring_148 -> AgdaAny
+d_0'35'_172 v0
   = case coe v0 of
-      C_RawNearSemiring'46'constructor_1841 v3 v4 v5 -> coe v5
+      C_constructor_184 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawNearSemiring.+-rawMonoid
-d_'43''45'rawMonoid_166 ::
+d_'43''45'rawMonoid_174 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawNearSemiring_140 -> T_RawMonoid_70
-d_'43''45'rawMonoid_166 ~v0 ~v1 v2 = du_'43''45'rawMonoid_166 v2
-du_'43''45'rawMonoid_166 :: T_RawNearSemiring_140 -> T_RawMonoid_70
-du_'43''45'rawMonoid_166 v0
+  T_RawNearSemiring_148 -> T_RawMonoid_74
+d_'43''45'rawMonoid_174 ~v0 ~v1 v2 = du_'43''45'rawMonoid_174 v2
+du_'43''45'rawMonoid_174 :: T_RawNearSemiring_148 -> T_RawMonoid_74
+du_'43''45'rawMonoid_174 v0
   = coe
-      C_RawMonoid'46'constructor_857 (d__'43'__160 (coe v0))
-      (d_0'35'_164 (coe v0))
+      C_constructor_102 (d__'43'__168 (coe v0)) (d_0'35'_172 (coe v0))
 -- Algebra.Bundles.Raw.RawNearSemiring._._≉_
-d__'8777'__170 ::
+d__'8777'__178 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawNearSemiring_140 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__170 = erased
+  T_RawNearSemiring_148 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__178 = erased
 -- Algebra.Bundles.Raw.RawNearSemiring._.rawMagma
-d_rawMagma_172 ::
+d_rawMagma_180 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawNearSemiring_140 -> T_RawMagma_42
-d_rawMagma_172 ~v0 ~v1 v2 = du_rawMagma_172 v2
-du_rawMagma_172 :: T_RawNearSemiring_140 -> T_RawMagma_42
-du_rawMagma_172 v0
-  = coe du_rawMagma_92 (coe du_'43''45'rawMonoid_166 (coe v0))
+  T_RawNearSemiring_148 -> T_RawMagma_44
+d_rawMagma_180 ~v0 ~v1 v2 = du_rawMagma_180 v2
+du_rawMagma_180 :: T_RawNearSemiring_148 -> T_RawMagma_44
+du_rawMagma_180 v0
+  = coe du_rawMagma_96 (coe du_'43''45'rawMonoid_174 (coe v0))
 -- Algebra.Bundles.Raw.RawNearSemiring.*-rawMagma
-d_'42''45'rawMagma_174 ::
+d_'42''45'rawMagma_182 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawNearSemiring_140 -> T_RawMagma_42
-d_'42''45'rawMagma_174 ~v0 ~v1 v2 = du_'42''45'rawMagma_174 v2
-du_'42''45'rawMagma_174 :: T_RawNearSemiring_140 -> T_RawMagma_42
-du_'42''45'rawMagma_174 v0
-  = coe C_RawMagma'46'constructor_487 (d__'42'__162 (coe v0))
+  T_RawNearSemiring_148 -> T_RawMagma_44
+d_'42''45'rawMagma_182 ~v0 ~v1 v2 = du_'42''45'rawMagma_182 v2
+du_'42''45'rawMagma_182 :: T_RawNearSemiring_148 -> T_RawMagma_44
+du_'42''45'rawMagma_182 v0
+  = coe C_constructor_68 (d__'42'__170 (coe v0))
 -- Algebra.Bundles.Raw.RawSemiring
-d_RawSemiring_180 a0 a1 = ()
-data T_RawSemiring_180
-  = C_RawSemiring'46'constructor_2465 (AgdaAny -> AgdaAny -> AgdaAny)
-                                      (AgdaAny -> AgdaAny -> AgdaAny) AgdaAny AgdaAny
+d_RawSemiring_190 a0 a1 = ()
+data T_RawSemiring_190
+  = C_constructor_234 (AgdaAny -> AgdaAny -> AgdaAny)
+                      (AgdaAny -> AgdaAny -> AgdaAny) AgdaAny AgdaAny
 -- Algebra.Bundles.Raw.RawSemiring.Carrier
-d_Carrier_198 :: T_RawSemiring_180 -> ()
-d_Carrier_198 = erased
+d_Carrier_208 :: T_RawSemiring_190 -> ()
+d_Carrier_208 = erased
 -- Algebra.Bundles.Raw.RawSemiring._≈_
-d__'8776'__200 :: T_RawSemiring_180 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__200 = erased
+d__'8776'__210 :: T_RawSemiring_190 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__210 = erased
 -- Algebra.Bundles.Raw.RawSemiring._+_
-d__'43'__202 :: T_RawSemiring_180 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'43'__202 v0
+d__'43'__212 :: T_RawSemiring_190 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'43'__212 v0
   = case coe v0 of
-      C_RawSemiring'46'constructor_2465 v3 v4 v5 v6 -> coe v3
+      C_constructor_234 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawSemiring._*_
-d__'42'__204 :: T_RawSemiring_180 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'42'__204 v0
+d__'42'__214 :: T_RawSemiring_190 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'42'__214 v0
   = case coe v0 of
-      C_RawSemiring'46'constructor_2465 v3 v4 v5 v6 -> coe v4
+      C_constructor_234 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawSemiring.0#
-d_0'35'_206 :: T_RawSemiring_180 -> AgdaAny
-d_0'35'_206 v0
+d_0'35'_216 :: T_RawSemiring_190 -> AgdaAny
+d_0'35'_216 v0
   = case coe v0 of
-      C_RawSemiring'46'constructor_2465 v3 v4 v5 v6 -> coe v5
+      C_constructor_234 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawSemiring.1#
-d_1'35'_208 :: T_RawSemiring_180 -> AgdaAny
-d_1'35'_208 v0
+d_1'35'_218 :: T_RawSemiring_190 -> AgdaAny
+d_1'35'_218 v0
   = case coe v0 of
-      C_RawSemiring'46'constructor_2465 v3 v4 v5 v6 -> coe v6
+      C_constructor_234 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawSemiring.rawNearSemiring
-d_rawNearSemiring_210 ::
+d_rawNearSemiring_220 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawSemiring_180 -> T_RawNearSemiring_140
-d_rawNearSemiring_210 ~v0 ~v1 v2 = du_rawNearSemiring_210 v2
-du_rawNearSemiring_210 ::
-  T_RawSemiring_180 -> T_RawNearSemiring_140
-du_rawNearSemiring_210 v0
+  T_RawSemiring_190 -> T_RawNearSemiring_148
+d_rawNearSemiring_220 ~v0 ~v1 v2 = du_rawNearSemiring_220 v2
+du_rawNearSemiring_220 ::
+  T_RawSemiring_190 -> T_RawNearSemiring_148
+du_rawNearSemiring_220 v0
   = coe
-      C_RawNearSemiring'46'constructor_1841 (d__'43'__202 (coe v0))
-      (d__'42'__204 (coe v0)) (d_0'35'_206 (coe v0))
+      C_constructor_184 (d__'43'__212 (coe v0)) (d__'42'__214 (coe v0))
+      (d_0'35'_216 (coe v0))
 -- Algebra.Bundles.Raw.RawSemiring._._≉_
-d__'8777'__214 ::
+d__'8777'__224 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawSemiring_180 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__214 = erased
+  T_RawSemiring_190 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__224 = erased
 -- Algebra.Bundles.Raw.RawSemiring._.*-rawMagma
-d_'42''45'rawMagma_216 ::
+d_'42''45'rawMagma_226 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawSemiring_180 -> T_RawMagma_42
-d_'42''45'rawMagma_216 ~v0 ~v1 v2 = du_'42''45'rawMagma_216 v2
-du_'42''45'rawMagma_216 :: T_RawSemiring_180 -> T_RawMagma_42
-du_'42''45'rawMagma_216 v0
-  = coe du_'42''45'rawMagma_174 (coe du_rawNearSemiring_210 (coe v0))
+  T_RawSemiring_190 -> T_RawMagma_44
+d_'42''45'rawMagma_226 ~v0 ~v1 v2 = du_'42''45'rawMagma_226 v2
+du_'42''45'rawMagma_226 :: T_RawSemiring_190 -> T_RawMagma_44
+du_'42''45'rawMagma_226 v0
+  = coe du_'42''45'rawMagma_182 (coe du_rawNearSemiring_220 (coe v0))
 -- Algebra.Bundles.Raw.RawSemiring._.rawMagma
-d_rawMagma_218 ::
+d_rawMagma_228 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawSemiring_180 -> T_RawMagma_42
-d_rawMagma_218 ~v0 ~v1 v2 = du_rawMagma_218 v2
-du_rawMagma_218 :: T_RawSemiring_180 -> T_RawMagma_42
-du_rawMagma_218 v0
-  = let v1 = coe du_rawNearSemiring_210 (coe v0) in
-    coe (coe du_rawMagma_92 (coe du_'43''45'rawMonoid_166 (coe v1)))
+  T_RawSemiring_190 -> T_RawMagma_44
+d_rawMagma_228 ~v0 ~v1 v2 = du_rawMagma_228 v2
+du_rawMagma_228 :: T_RawSemiring_190 -> T_RawMagma_44
+du_rawMagma_228 v0
+  = let v1 = coe du_rawNearSemiring_220 (coe v0) in
+    coe (coe du_rawMagma_96 (coe du_'43''45'rawMonoid_174 (coe v1)))
 -- Algebra.Bundles.Raw.RawSemiring._.+-rawMonoid
-d_'43''45'rawMonoid_220 ::
+d_'43''45'rawMonoid_230 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawSemiring_180 -> T_RawMonoid_70
-d_'43''45'rawMonoid_220 ~v0 ~v1 v2 = du_'43''45'rawMonoid_220 v2
-du_'43''45'rawMonoid_220 :: T_RawSemiring_180 -> T_RawMonoid_70
-du_'43''45'rawMonoid_220 v0
+  T_RawSemiring_190 -> T_RawMonoid_74
+d_'43''45'rawMonoid_230 ~v0 ~v1 v2 = du_'43''45'rawMonoid_230 v2
+du_'43''45'rawMonoid_230 :: T_RawSemiring_190 -> T_RawMonoid_74
+du_'43''45'rawMonoid_230 v0
   = coe
-      du_'43''45'rawMonoid_166 (coe du_rawNearSemiring_210 (coe v0))
+      du_'43''45'rawMonoid_174 (coe du_rawNearSemiring_220 (coe v0))
 -- Algebra.Bundles.Raw.RawSemiring.*-rawMonoid
-d_'42''45'rawMonoid_222 ::
+d_'42''45'rawMonoid_232 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawSemiring_180 -> T_RawMonoid_70
-d_'42''45'rawMonoid_222 ~v0 ~v1 v2 = du_'42''45'rawMonoid_222 v2
-du_'42''45'rawMonoid_222 :: T_RawSemiring_180 -> T_RawMonoid_70
-du_'42''45'rawMonoid_222 v0
+  T_RawSemiring_190 -> T_RawMonoid_74
+d_'42''45'rawMonoid_232 ~v0 ~v1 v2 = du_'42''45'rawMonoid_232 v2
+du_'42''45'rawMonoid_232 :: T_RawSemiring_190 -> T_RawMonoid_74
+du_'42''45'rawMonoid_232 v0
   = coe
-      C_RawMonoid'46'constructor_857 (d__'42'__204 (coe v0))
-      (d_1'35'_208 (coe v0))
+      C_constructor_102 (d__'42'__214 (coe v0)) (d_1'35'_218 (coe v0))
 -- Algebra.Bundles.Raw.RawRingWithoutOne
-d_RawRingWithoutOne_228 a0 a1 = ()
-data T_RawRingWithoutOne_228
-  = C_RawRingWithoutOne'46'constructor_3217 (AgdaAny ->
-                                             AgdaAny -> AgdaAny)
-                                            (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny)
-                                            AgdaAny
+d_RawRingWithoutOne_240 a0 a1 = ()
+data T_RawRingWithoutOne_240
+  = C_constructor_284 (AgdaAny -> AgdaAny -> AgdaAny)
+                      (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny) AgdaAny
 -- Algebra.Bundles.Raw.RawRingWithoutOne.Carrier
-d_Carrier_246 :: T_RawRingWithoutOne_228 -> ()
-d_Carrier_246 = erased
+d_Carrier_258 :: T_RawRingWithoutOne_240 -> ()
+d_Carrier_258 = erased
 -- Algebra.Bundles.Raw.RawRingWithoutOne._≈_
-d__'8776'__248 ::
-  T_RawRingWithoutOne_228 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__248 = erased
+d__'8776'__260 ::
+  T_RawRingWithoutOne_240 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__260 = erased
 -- Algebra.Bundles.Raw.RawRingWithoutOne._+_
-d__'43'__250 ::
-  T_RawRingWithoutOne_228 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'43'__250 v0
+d__'43'__262 ::
+  T_RawRingWithoutOne_240 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'43'__262 v0
   = case coe v0 of
-      C_RawRingWithoutOne'46'constructor_3217 v3 v4 v5 v6 -> coe v3
+      C_constructor_284 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRingWithoutOne._*_
-d__'42'__252 ::
-  T_RawRingWithoutOne_228 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'42'__252 v0
+d__'42'__264 ::
+  T_RawRingWithoutOne_240 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'42'__264 v0
   = case coe v0 of
-      C_RawRingWithoutOne'46'constructor_3217 v3 v4 v5 v6 -> coe v4
+      C_constructor_284 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRingWithoutOne.-_
-d_'45'__254 :: T_RawRingWithoutOne_228 -> AgdaAny -> AgdaAny
-d_'45'__254 v0
+d_'45'__266 :: T_RawRingWithoutOne_240 -> AgdaAny -> AgdaAny
+d_'45'__266 v0
   = case coe v0 of
-      C_RawRingWithoutOne'46'constructor_3217 v3 v4 v5 v6 -> coe v5
+      C_constructor_284 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRingWithoutOne.0#
-d_0'35'_256 :: T_RawRingWithoutOne_228 -> AgdaAny
-d_0'35'_256 v0
+d_0'35'_268 :: T_RawRingWithoutOne_240 -> AgdaAny
+d_0'35'_268 v0
   = case coe v0 of
-      C_RawRingWithoutOne'46'constructor_3217 v3 v4 v5 v6 -> coe v6
+      C_constructor_284 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRingWithoutOne.rawNearSemiring
-d_rawNearSemiring_258 ::
+d_rawNearSemiring_270 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRingWithoutOne_228 -> T_RawNearSemiring_140
-d_rawNearSemiring_258 ~v0 ~v1 v2 = du_rawNearSemiring_258 v2
-du_rawNearSemiring_258 ::
-  T_RawRingWithoutOne_228 -> T_RawNearSemiring_140
-du_rawNearSemiring_258 v0
+  T_RawRingWithoutOne_240 -> T_RawNearSemiring_148
+d_rawNearSemiring_270 ~v0 ~v1 v2 = du_rawNearSemiring_270 v2
+du_rawNearSemiring_270 ::
+  T_RawRingWithoutOne_240 -> T_RawNearSemiring_148
+du_rawNearSemiring_270 v0
   = coe
-      C_RawNearSemiring'46'constructor_1841 (d__'43'__250 (coe v0))
-      (d__'42'__252 (coe v0)) (d_0'35'_256 (coe v0))
+      C_constructor_184 (d__'43'__262 (coe v0)) (d__'42'__264 (coe v0))
+      (d_0'35'_268 (coe v0))
 -- Algebra.Bundles.Raw.RawRingWithoutOne._._≉_
-d__'8777'__262 ::
+d__'8777'__274 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRingWithoutOne_228 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__262 = erased
+  T_RawRingWithoutOne_240 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__274 = erased
 -- Algebra.Bundles.Raw.RawRingWithoutOne._.*-rawMagma
-d_'42''45'rawMagma_264 ::
+d_'42''45'rawMagma_276 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRingWithoutOne_228 -> T_RawMagma_42
-d_'42''45'rawMagma_264 ~v0 ~v1 v2 = du_'42''45'rawMagma_264 v2
-du_'42''45'rawMagma_264 :: T_RawRingWithoutOne_228 -> T_RawMagma_42
-du_'42''45'rawMagma_264 v0
-  = coe du_'42''45'rawMagma_174 (coe du_rawNearSemiring_258 (coe v0))
+  T_RawRingWithoutOne_240 -> T_RawMagma_44
+d_'42''45'rawMagma_276 ~v0 ~v1 v2 = du_'42''45'rawMagma_276 v2
+du_'42''45'rawMagma_276 :: T_RawRingWithoutOne_240 -> T_RawMagma_44
+du_'42''45'rawMagma_276 v0
+  = coe du_'42''45'rawMagma_182 (coe du_rawNearSemiring_270 (coe v0))
 -- Algebra.Bundles.Raw.RawRingWithoutOne._.rawMagma
-d_rawMagma_266 ::
+d_rawMagma_278 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRingWithoutOne_228 -> T_RawMagma_42
-d_rawMagma_266 ~v0 ~v1 v2 = du_rawMagma_266 v2
-du_rawMagma_266 :: T_RawRingWithoutOne_228 -> T_RawMagma_42
-du_rawMagma_266 v0
-  = let v1 = coe du_rawNearSemiring_258 (coe v0) in
-    coe (coe du_rawMagma_92 (coe du_'43''45'rawMonoid_166 (coe v1)))
+  T_RawRingWithoutOne_240 -> T_RawMagma_44
+d_rawMagma_278 ~v0 ~v1 v2 = du_rawMagma_278 v2
+du_rawMagma_278 :: T_RawRingWithoutOne_240 -> T_RawMagma_44
+du_rawMagma_278 v0
+  = let v1 = coe du_rawNearSemiring_270 (coe v0) in
+    coe (coe du_rawMagma_96 (coe du_'43''45'rawMonoid_174 (coe v1)))
 -- Algebra.Bundles.Raw.RawRingWithoutOne._.+-rawMonoid
-d_'43''45'rawMonoid_268 ::
+d_'43''45'rawMonoid_280 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRingWithoutOne_228 -> T_RawMonoid_70
-d_'43''45'rawMonoid_268 ~v0 ~v1 v2 = du_'43''45'rawMonoid_268 v2
-du_'43''45'rawMonoid_268 ::
-  T_RawRingWithoutOne_228 -> T_RawMonoid_70
-du_'43''45'rawMonoid_268 v0
+  T_RawRingWithoutOne_240 -> T_RawMonoid_74
+d_'43''45'rawMonoid_280 ~v0 ~v1 v2 = du_'43''45'rawMonoid_280 v2
+du_'43''45'rawMonoid_280 ::
+  T_RawRingWithoutOne_240 -> T_RawMonoid_74
+du_'43''45'rawMonoid_280 v0
   = coe
-      du_'43''45'rawMonoid_166 (coe du_rawNearSemiring_258 (coe v0))
+      du_'43''45'rawMonoid_174 (coe du_rawNearSemiring_270 (coe v0))
 -- Algebra.Bundles.Raw.RawRingWithoutOne.+-rawGroup
-d_'43''45'rawGroup_270 ::
+d_'43''45'rawGroup_282 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRingWithoutOne_228 -> T_RawGroup_102
-d_'43''45'rawGroup_270 ~v0 ~v1 v2 = du_'43''45'rawGroup_270 v2
-du_'43''45'rawGroup_270 ::
-  T_RawRingWithoutOne_228 -> T_RawGroup_102
-du_'43''45'rawGroup_270 v0
+  T_RawRingWithoutOne_240 -> T_RawGroup_108
+d_'43''45'rawGroup_282 ~v0 ~v1 v2 = du_'43''45'rawGroup_282 v2
+du_'43''45'rawGroup_282 ::
+  T_RawRingWithoutOne_240 -> T_RawGroup_108
+du_'43''45'rawGroup_282 v0
   = coe
-      C_RawGroup'46'constructor_1319 (d__'43'__250 (coe v0))
-      (d_0'35'_256 (coe v0)) (d_'45'__254 (coe v0))
+      C_constructor_142 (d__'43'__262 (coe v0)) (d_0'35'_268 (coe v0))
+      (d_'45'__266 (coe v0))
 -- Algebra.Bundles.Raw.RawRing
-d_RawRing_276 a0 a1 = ()
-data T_RawRing_276
-  = C_RawRing'46'constructor_3989 (AgdaAny -> AgdaAny -> AgdaAny)
-                                  (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny) AgdaAny
-                                  AgdaAny
+d_RawRing_290 a0 a1 = ()
+data T_RawRing_290
+  = C_constructor_344 (AgdaAny -> AgdaAny -> AgdaAny)
+                      (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny) AgdaAny
+                      AgdaAny
 -- Algebra.Bundles.Raw.RawRing.Carrier
-d_Carrier_296 :: T_RawRing_276 -> ()
-d_Carrier_296 = erased
+d_Carrier_310 :: T_RawRing_290 -> ()
+d_Carrier_310 = erased
 -- Algebra.Bundles.Raw.RawRing._≈_
-d__'8776'__298 :: T_RawRing_276 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__298 = erased
+d__'8776'__312 :: T_RawRing_290 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__312 = erased
 -- Algebra.Bundles.Raw.RawRing._+_
-d__'43'__300 :: T_RawRing_276 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'43'__300 v0
+d__'43'__314 :: T_RawRing_290 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'43'__314 v0
   = case coe v0 of
-      C_RawRing'46'constructor_3989 v3 v4 v5 v6 v7 -> coe v3
+      C_constructor_344 v3 v4 v5 v6 v7 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRing._*_
-d__'42'__302 :: T_RawRing_276 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'42'__302 v0
+d__'42'__316 :: T_RawRing_290 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'42'__316 v0
   = case coe v0 of
-      C_RawRing'46'constructor_3989 v3 v4 v5 v6 v7 -> coe v4
+      C_constructor_344 v3 v4 v5 v6 v7 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRing.-_
-d_'45'__304 :: T_RawRing_276 -> AgdaAny -> AgdaAny
-d_'45'__304 v0
+d_'45'__318 :: T_RawRing_290 -> AgdaAny -> AgdaAny
+d_'45'__318 v0
   = case coe v0 of
-      C_RawRing'46'constructor_3989 v3 v4 v5 v6 v7 -> coe v5
+      C_constructor_344 v3 v4 v5 v6 v7 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRing.0#
-d_0'35'_306 :: T_RawRing_276 -> AgdaAny
-d_0'35'_306 v0
+d_0'35'_320 :: T_RawRing_290 -> AgdaAny
+d_0'35'_320 v0
   = case coe v0 of
-      C_RawRing'46'constructor_3989 v3 v4 v5 v6 v7 -> coe v6
+      C_constructor_344 v3 v4 v5 v6 v7 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRing.1#
-d_1'35'_308 :: T_RawRing_276 -> AgdaAny
-d_1'35'_308 v0
+d_1'35'_322 :: T_RawRing_290 -> AgdaAny
+d_1'35'_322 v0
   = case coe v0 of
-      C_RawRing'46'constructor_3989 v3 v4 v5 v6 v7 -> coe v7
+      C_constructor_344 v3 v4 v5 v6 v7 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawRing.rawSemiring
-d_rawSemiring_310 ::
+d_rawSemiring_324 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRing_276 -> T_RawSemiring_180
-d_rawSemiring_310 ~v0 ~v1 v2 = du_rawSemiring_310 v2
-du_rawSemiring_310 :: T_RawRing_276 -> T_RawSemiring_180
-du_rawSemiring_310 v0
+  T_RawRing_290 -> T_RawSemiring_190
+d_rawSemiring_324 ~v0 ~v1 v2 = du_rawSemiring_324 v2
+du_rawSemiring_324 :: T_RawRing_290 -> T_RawSemiring_190
+du_rawSemiring_324 v0
   = coe
-      C_RawSemiring'46'constructor_2465 (d__'43'__300 (coe v0))
-      (d__'42'__302 (coe v0)) (d_0'35'_306 (coe v0))
-      (d_1'35'_308 (coe v0))
+      C_constructor_234 (d__'43'__314 (coe v0)) (d__'42'__316 (coe v0))
+      (d_0'35'_320 (coe v0)) (d_1'35'_322 (coe v0))
 -- Algebra.Bundles.Raw.RawRing._._≉_
-d__'8777'__314 ::
+d__'8777'__328 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRing_276 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__314 = erased
+  T_RawRing_290 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__328 = erased
 -- Algebra.Bundles.Raw.RawRing._.*-rawMagma
-d_'42''45'rawMagma_316 ::
+d_'42''45'rawMagma_330 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRing_276 -> T_RawMagma_42
-d_'42''45'rawMagma_316 ~v0 ~v1 v2 = du_'42''45'rawMagma_316 v2
-du_'42''45'rawMagma_316 :: T_RawRing_276 -> T_RawMagma_42
-du_'42''45'rawMagma_316 v0
-  = let v1 = coe du_rawSemiring_310 (coe v0) in
+  T_RawRing_290 -> T_RawMagma_44
+d_'42''45'rawMagma_330 ~v0 ~v1 v2 = du_'42''45'rawMagma_330 v2
+du_'42''45'rawMagma_330 :: T_RawRing_290 -> T_RawMagma_44
+du_'42''45'rawMagma_330 v0
+  = let v1 = coe du_rawSemiring_324 (coe v0) in
     coe
-      (coe du_'42''45'rawMagma_174 (coe du_rawNearSemiring_210 (coe v1)))
+      (coe du_'42''45'rawMagma_182 (coe du_rawNearSemiring_220 (coe v1)))
 -- Algebra.Bundles.Raw.RawRing._.*-rawMonoid
-d_'42''45'rawMonoid_318 ::
+d_'42''45'rawMonoid_332 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRing_276 -> T_RawMonoid_70
-d_'42''45'rawMonoid_318 ~v0 ~v1 v2 = du_'42''45'rawMonoid_318 v2
-du_'42''45'rawMonoid_318 :: T_RawRing_276 -> T_RawMonoid_70
-du_'42''45'rawMonoid_318 v0
-  = coe du_'42''45'rawMonoid_222 (coe du_rawSemiring_310 (coe v0))
+  T_RawRing_290 -> T_RawMonoid_74
+d_'42''45'rawMonoid_332 ~v0 ~v1 v2 = du_'42''45'rawMonoid_332 v2
+du_'42''45'rawMonoid_332 :: T_RawRing_290 -> T_RawMonoid_74
+du_'42''45'rawMonoid_332 v0
+  = coe du_'42''45'rawMonoid_232 (coe du_rawSemiring_324 (coe v0))
 -- Algebra.Bundles.Raw.RawRing._.rawMagma
-d_rawMagma_320 ::
+d_rawMagma_334 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRing_276 -> T_RawMagma_42
-d_rawMagma_320 ~v0 ~v1 v2 = du_rawMagma_320 v2
-du_rawMagma_320 :: T_RawRing_276 -> T_RawMagma_42
-du_rawMagma_320 v0
-  = let v1 = coe du_rawSemiring_310 (coe v0) in
+  T_RawRing_290 -> T_RawMagma_44
+d_rawMagma_334 ~v0 ~v1 v2 = du_rawMagma_334 v2
+du_rawMagma_334 :: T_RawRing_290 -> T_RawMagma_44
+du_rawMagma_334 v0
+  = let v1 = coe du_rawSemiring_324 (coe v0) in
     coe
-      (let v2 = coe du_rawNearSemiring_210 (coe v1) in
-       coe (coe du_rawMagma_92 (coe du_'43''45'rawMonoid_166 (coe v2))))
+      (let v2 = coe du_rawNearSemiring_220 (coe v1) in
+       coe (coe du_rawMagma_96 (coe du_'43''45'rawMonoid_174 (coe v2))))
 -- Algebra.Bundles.Raw.RawRing._.+-rawMonoid
-d_'43''45'rawMonoid_322 ::
+d_'43''45'rawMonoid_336 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRing_276 -> T_RawMonoid_70
-d_'43''45'rawMonoid_322 ~v0 ~v1 v2 = du_'43''45'rawMonoid_322 v2
-du_'43''45'rawMonoid_322 :: T_RawRing_276 -> T_RawMonoid_70
-du_'43''45'rawMonoid_322 v0
-  = let v1 = coe du_rawSemiring_310 (coe v0) in
+  T_RawRing_290 -> T_RawMonoid_74
+d_'43''45'rawMonoid_336 ~v0 ~v1 v2 = du_'43''45'rawMonoid_336 v2
+du_'43''45'rawMonoid_336 :: T_RawRing_290 -> T_RawMonoid_74
+du_'43''45'rawMonoid_336 v0
+  = let v1 = coe du_rawSemiring_324 (coe v0) in
     coe
       (coe
-         du_'43''45'rawMonoid_166 (coe du_rawNearSemiring_210 (coe v1)))
+         du_'43''45'rawMonoid_174 (coe du_rawNearSemiring_220 (coe v1)))
 -- Algebra.Bundles.Raw.RawRing.rawRingWithoutOne
-d_rawRingWithoutOne_324 ::
+d_rawRingWithoutOne_338 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRing_276 -> T_RawRingWithoutOne_228
-d_rawRingWithoutOne_324 ~v0 ~v1 v2 = du_rawRingWithoutOne_324 v2
-du_rawRingWithoutOne_324 ::
-  T_RawRing_276 -> T_RawRingWithoutOne_228
-du_rawRingWithoutOne_324 v0
+  T_RawRing_290 -> T_RawRingWithoutOne_240
+d_rawRingWithoutOne_338 ~v0 ~v1 v2 = du_rawRingWithoutOne_338 v2
+du_rawRingWithoutOne_338 ::
+  T_RawRing_290 -> T_RawRingWithoutOne_240
+du_rawRingWithoutOne_338 v0
   = coe
-      C_RawRingWithoutOne'46'constructor_3217 (d__'43'__300 (coe v0))
-      (d__'42'__302 (coe v0)) (d_'45'__304 (coe v0))
-      (d_0'35'_306 (coe v0))
+      C_constructor_284 (d__'43'__314 (coe v0)) (d__'42'__316 (coe v0))
+      (d_'45'__318 (coe v0)) (d_0'35'_320 (coe v0))
 -- Algebra.Bundles.Raw.RawRing._.+-rawGroup
-d_'43''45'rawGroup_328 ::
+d_'43''45'rawGroup_342 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawRing_276 -> T_RawGroup_102
-d_'43''45'rawGroup_328 ~v0 ~v1 v2 = du_'43''45'rawGroup_328 v2
-du_'43''45'rawGroup_328 :: T_RawRing_276 -> T_RawGroup_102
-du_'43''45'rawGroup_328 v0
+  T_RawRing_290 -> T_RawGroup_108
+d_'43''45'rawGroup_342 ~v0 ~v1 v2 = du_'43''45'rawGroup_342 v2
+du_'43''45'rawGroup_342 :: T_RawRing_290 -> T_RawGroup_108
+du_'43''45'rawGroup_342 v0
   = coe
-      du_'43''45'rawGroup_270 (coe du_rawRingWithoutOne_324 (coe v0))
+      du_'43''45'rawGroup_282 (coe du_rawRingWithoutOne_338 (coe v0))
 -- Algebra.Bundles.Raw.RawQuasigroup
-d_RawQuasigroup_334 a0 a1 = ()
-data T_RawQuasigroup_334
-  = C_RawQuasigroup'46'constructor_4863 (AgdaAny ->
-                                         AgdaAny -> AgdaAny)
-                                        (AgdaAny -> AgdaAny -> AgdaAny)
-                                        (AgdaAny -> AgdaAny -> AgdaAny)
+d_RawQuasigroup_350 a0 a1 = ()
+data T_RawQuasigroup_350
+  = C_constructor_386 (AgdaAny -> AgdaAny -> AgdaAny)
+                      (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny -> AgdaAny)
 -- Algebra.Bundles.Raw.RawQuasigroup.Carrier
-d_Carrier_350 :: T_RawQuasigroup_334 -> ()
-d_Carrier_350 = erased
+d_Carrier_366 :: T_RawQuasigroup_350 -> ()
+d_Carrier_366 = erased
 -- Algebra.Bundles.Raw.RawQuasigroup._≈_
-d__'8776'__352 :: T_RawQuasigroup_334 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__352 = erased
+d__'8776'__368 :: T_RawQuasigroup_350 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__368 = erased
 -- Algebra.Bundles.Raw.RawQuasigroup._∙_
-d__'8729'__354 ::
-  T_RawQuasigroup_334 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8729'__354 v0
+d__'8729'__370 ::
+  T_RawQuasigroup_350 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8729'__370 v0
   = case coe v0 of
-      C_RawQuasigroup'46'constructor_4863 v3 v4 v5 -> coe v3
+      C_constructor_386 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawQuasigroup._\\_
-d__'92''92'__356 ::
-  T_RawQuasigroup_334 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'92''92'__356 v0
+d__'92''92'__372 ::
+  T_RawQuasigroup_350 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'92''92'__372 v0
   = case coe v0 of
-      C_RawQuasigroup'46'constructor_4863 v3 v4 v5 -> coe v4
+      C_constructor_386 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawQuasigroup._//_
-d__'47''47'__358 ::
-  T_RawQuasigroup_334 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'47''47'__358 v0
+d__'47''47'__374 ::
+  T_RawQuasigroup_350 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'47''47'__374 v0
   = case coe v0 of
-      C_RawQuasigroup'46'constructor_4863 v3 v4 v5 -> coe v5
+      C_constructor_386 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawQuasigroup.∙-rawMagma
-d_'8729''45'rawMagma_360 ::
+d_'8729''45'rawMagma_376 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawQuasigroup_334 -> T_RawMagma_42
-d_'8729''45'rawMagma_360 ~v0 ~v1 v2 = du_'8729''45'rawMagma_360 v2
-du_'8729''45'rawMagma_360 :: T_RawQuasigroup_334 -> T_RawMagma_42
-du_'8729''45'rawMagma_360 v0
-  = coe C_RawMagma'46'constructor_487 (d__'8729'__354 (coe v0))
+  T_RawQuasigroup_350 -> T_RawMagma_44
+d_'8729''45'rawMagma_376 ~v0 ~v1 v2 = du_'8729''45'rawMagma_376 v2
+du_'8729''45'rawMagma_376 :: T_RawQuasigroup_350 -> T_RawMagma_44
+du_'8729''45'rawMagma_376 v0
+  = coe C_constructor_68 (d__'8729'__370 (coe v0))
 -- Algebra.Bundles.Raw.RawQuasigroup.\\-rawMagma
-d_'92''92''45'rawMagma_362 ::
+d_'92''92''45'rawMagma_378 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawQuasigroup_334 -> T_RawMagma_42
-d_'92''92''45'rawMagma_362 ~v0 ~v1 v2
-  = du_'92''92''45'rawMagma_362 v2
-du_'92''92''45'rawMagma_362 :: T_RawQuasigroup_334 -> T_RawMagma_42
-du_'92''92''45'rawMagma_362 v0
-  = coe C_RawMagma'46'constructor_487 (d__'92''92'__356 (coe v0))
+  T_RawQuasigroup_350 -> T_RawMagma_44
+d_'92''92''45'rawMagma_378 ~v0 ~v1 v2
+  = du_'92''92''45'rawMagma_378 v2
+du_'92''92''45'rawMagma_378 :: T_RawQuasigroup_350 -> T_RawMagma_44
+du_'92''92''45'rawMagma_378 v0
+  = coe C_constructor_68 (d__'92''92'__372 (coe v0))
 -- Algebra.Bundles.Raw.RawQuasigroup.//-rawMagma
-d_'47''47''45'rawMagma_364 ::
+d_'47''47''45'rawMagma_380 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawQuasigroup_334 -> T_RawMagma_42
-d_'47''47''45'rawMagma_364 ~v0 ~v1 v2
-  = du_'47''47''45'rawMagma_364 v2
-du_'47''47''45'rawMagma_364 :: T_RawQuasigroup_334 -> T_RawMagma_42
-du_'47''47''45'rawMagma_364 v0
-  = coe C_RawMagma'46'constructor_487 (d__'47''47'__358 (coe v0))
+  T_RawQuasigroup_350 -> T_RawMagma_44
+d_'47''47''45'rawMagma_380 ~v0 ~v1 v2
+  = du_'47''47''45'rawMagma_380 v2
+du_'47''47''45'rawMagma_380 :: T_RawQuasigroup_350 -> T_RawMagma_44
+du_'47''47''45'rawMagma_380 v0
+  = coe C_constructor_68 (d__'47''47'__374 (coe v0))
 -- Algebra.Bundles.Raw.RawQuasigroup._._≉_
-d__'8777'__368 ::
+d__'8777'__384 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawQuasigroup_334 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__368 = erased
+  T_RawQuasigroup_350 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__384 = erased
 -- Algebra.Bundles.Raw.RawLoop
-d_RawLoop_374 a0 a1 = ()
-data T_RawLoop_374
-  = C_RawLoop'46'constructor_5597 (AgdaAny -> AgdaAny -> AgdaAny)
-                                  (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny -> AgdaAny)
-                                  AgdaAny
+d_RawLoop_392 a0 a1 = ()
+data T_RawLoop_392
+  = C_constructor_434 (AgdaAny -> AgdaAny -> AgdaAny)
+                      (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny -> AgdaAny)
+                      AgdaAny
 -- Algebra.Bundles.Raw.RawLoop.Carrier
-d_Carrier_392 :: T_RawLoop_374 -> ()
-d_Carrier_392 = erased
+d_Carrier_410 :: T_RawLoop_392 -> ()
+d_Carrier_410 = erased
 -- Algebra.Bundles.Raw.RawLoop._≈_
-d__'8776'__394 :: T_RawLoop_374 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__394 = erased
+d__'8776'__412 :: T_RawLoop_392 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__412 = erased
 -- Algebra.Bundles.Raw.RawLoop._∙_
-d__'8729'__396 :: T_RawLoop_374 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'8729'__396 v0
+d__'8729'__414 :: T_RawLoop_392 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'8729'__414 v0
   = case coe v0 of
-      C_RawLoop'46'constructor_5597 v3 v4 v5 v6 -> coe v3
+      C_constructor_434 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawLoop._\\_
-d__'92''92'__398 :: T_RawLoop_374 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'92''92'__398 v0
+d__'92''92'__416 :: T_RawLoop_392 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'92''92'__416 v0
   = case coe v0 of
-      C_RawLoop'46'constructor_5597 v3 v4 v5 v6 -> coe v4
+      C_constructor_434 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawLoop._//_
-d__'47''47'__400 :: T_RawLoop_374 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'47''47'__400 v0
+d__'47''47'__418 :: T_RawLoop_392 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'47''47'__418 v0
   = case coe v0 of
-      C_RawLoop'46'constructor_5597 v3 v4 v5 v6 -> coe v5
+      C_constructor_434 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawLoop.ε
-d_ε_402 :: T_RawLoop_374 -> AgdaAny
-d_ε_402 v0
+d_ε_420 :: T_RawLoop_392 -> AgdaAny
+d_ε_420 v0
   = case coe v0 of
-      C_RawLoop'46'constructor_5597 v3 v4 v5 v6 -> coe v6
+      C_constructor_434 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawLoop.rawQuasigroup
-d_rawQuasigroup_404 ::
+d_rawQuasigroup_422 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawLoop_374 -> T_RawQuasigroup_334
-d_rawQuasigroup_404 ~v0 ~v1 v2 = du_rawQuasigroup_404 v2
-du_rawQuasigroup_404 :: T_RawLoop_374 -> T_RawQuasigroup_334
-du_rawQuasigroup_404 v0
+  T_RawLoop_392 -> T_RawQuasigroup_350
+d_rawQuasigroup_422 ~v0 ~v1 v2 = du_rawQuasigroup_422 v2
+du_rawQuasigroup_422 :: T_RawLoop_392 -> T_RawQuasigroup_350
+du_rawQuasigroup_422 v0
   = coe
-      C_RawQuasigroup'46'constructor_4863 (d__'8729'__396 (coe v0))
-      (d__'92''92'__398 (coe v0)) (d__'47''47'__400 (coe v0))
+      C_constructor_386 (d__'8729'__414 (coe v0))
+      (d__'92''92'__416 (coe v0)) (d__'47''47'__418 (coe v0))
 -- Algebra.Bundles.Raw.RawLoop._._≉_
-d__'8777'__408 ::
+d__'8777'__426 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawLoop_374 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__408 = erased
+  T_RawLoop_392 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__426 = erased
 -- Algebra.Bundles.Raw.RawLoop._.//-rawMagma
-d_'47''47''45'rawMagma_410 ::
+d_'47''47''45'rawMagma_428 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawLoop_374 -> T_RawMagma_42
-d_'47''47''45'rawMagma_410 ~v0 ~v1 v2
-  = du_'47''47''45'rawMagma_410 v2
-du_'47''47''45'rawMagma_410 :: T_RawLoop_374 -> T_RawMagma_42
-du_'47''47''45'rawMagma_410 v0
+  T_RawLoop_392 -> T_RawMagma_44
+d_'47''47''45'rawMagma_428 ~v0 ~v1 v2
+  = du_'47''47''45'rawMagma_428 v2
+du_'47''47''45'rawMagma_428 :: T_RawLoop_392 -> T_RawMagma_44
+du_'47''47''45'rawMagma_428 v0
   = coe
-      du_'47''47''45'rawMagma_364 (coe du_rawQuasigroup_404 (coe v0))
+      du_'47''47''45'rawMagma_380 (coe du_rawQuasigroup_422 (coe v0))
 -- Algebra.Bundles.Raw.RawLoop._.\\-rawMagma
-d_'92''92''45'rawMagma_412 ::
+d_'92''92''45'rawMagma_430 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawLoop_374 -> T_RawMagma_42
-d_'92''92''45'rawMagma_412 ~v0 ~v1 v2
-  = du_'92''92''45'rawMagma_412 v2
-du_'92''92''45'rawMagma_412 :: T_RawLoop_374 -> T_RawMagma_42
-du_'92''92''45'rawMagma_412 v0
+  T_RawLoop_392 -> T_RawMagma_44
+d_'92''92''45'rawMagma_430 ~v0 ~v1 v2
+  = du_'92''92''45'rawMagma_430 v2
+du_'92''92''45'rawMagma_430 :: T_RawLoop_392 -> T_RawMagma_44
+du_'92''92''45'rawMagma_430 v0
   = coe
-      du_'92''92''45'rawMagma_362 (coe du_rawQuasigroup_404 (coe v0))
+      du_'92''92''45'rawMagma_378 (coe du_rawQuasigroup_422 (coe v0))
 -- Algebra.Bundles.Raw.RawLoop._.∙-rawMagma
-d_'8729''45'rawMagma_414 ::
+d_'8729''45'rawMagma_432 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawLoop_374 -> T_RawMagma_42
-d_'8729''45'rawMagma_414 ~v0 ~v1 v2 = du_'8729''45'rawMagma_414 v2
-du_'8729''45'rawMagma_414 :: T_RawLoop_374 -> T_RawMagma_42
-du_'8729''45'rawMagma_414 v0
-  = coe du_'8729''45'rawMagma_360 (coe du_rawQuasigroup_404 (coe v0))
+  T_RawLoop_392 -> T_RawMagma_44
+d_'8729''45'rawMagma_432 ~v0 ~v1 v2 = du_'8729''45'rawMagma_432 v2
+du_'8729''45'rawMagma_432 :: T_RawLoop_392 -> T_RawMagma_44
+du_'8729''45'rawMagma_432 v0
+  = coe du_'8729''45'rawMagma_376 (coe du_rawQuasigroup_422 (coe v0))
 -- Algebra.Bundles.Raw.RawKleeneAlgebra
-d_RawKleeneAlgebra_420 a0 a1 = ()
-data T_RawKleeneAlgebra_420
-  = C_RawKleeneAlgebra'46'constructor_6285 (AgdaAny ->
-                                            AgdaAny -> AgdaAny)
-                                           (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny)
-                                           AgdaAny AgdaAny
+d_RawKleeneAlgebra_440 a0 a1 = ()
+data T_RawKleeneAlgebra_440
+  = C_constructor_488 (AgdaAny -> AgdaAny -> AgdaAny)
+                      (AgdaAny -> AgdaAny -> AgdaAny) (AgdaAny -> AgdaAny) AgdaAny
+                      AgdaAny
 -- Algebra.Bundles.Raw.RawKleeneAlgebra.Carrier
-d_Carrier_440 :: T_RawKleeneAlgebra_420 -> ()
-d_Carrier_440 = erased
+d_Carrier_460 :: T_RawKleeneAlgebra_440 -> ()
+d_Carrier_460 = erased
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._≈_
-d__'8776'__442 ::
-  T_RawKleeneAlgebra_420 -> AgdaAny -> AgdaAny -> ()
-d__'8776'__442 = erased
+d__'8776'__462 ::
+  T_RawKleeneAlgebra_440 -> AgdaAny -> AgdaAny -> ()
+d__'8776'__462 = erased
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._+_
-d__'43'__444 ::
-  T_RawKleeneAlgebra_420 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'43'__444 v0
+d__'43'__464 ::
+  T_RawKleeneAlgebra_440 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'43'__464 v0
   = case coe v0 of
-      C_RawKleeneAlgebra'46'constructor_6285 v3 v4 v5 v6 v7 -> coe v3
+      C_constructor_488 v3 v4 v5 v6 v7 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._*_
-d__'42'__446 ::
-  T_RawKleeneAlgebra_420 -> AgdaAny -> AgdaAny -> AgdaAny
-d__'42'__446 v0
+d__'42'__466 ::
+  T_RawKleeneAlgebra_440 -> AgdaAny -> AgdaAny -> AgdaAny
+d__'42'__466 v0
   = case coe v0 of
-      C_RawKleeneAlgebra'46'constructor_6285 v3 v4 v5 v6 v7 -> coe v4
+      C_constructor_488 v3 v4 v5 v6 v7 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._⋆
-d__'8902'_448 :: T_RawKleeneAlgebra_420 -> AgdaAny -> AgdaAny
-d__'8902'_448 v0
+d__'8902'_468 :: T_RawKleeneAlgebra_440 -> AgdaAny -> AgdaAny
+d__'8902'_468 v0
   = case coe v0 of
-      C_RawKleeneAlgebra'46'constructor_6285 v3 v4 v5 v6 v7 -> coe v5
+      C_constructor_488 v3 v4 v5 v6 v7 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawKleeneAlgebra.0#
-d_0'35'_450 :: T_RawKleeneAlgebra_420 -> AgdaAny
-d_0'35'_450 v0
+d_0'35'_470 :: T_RawKleeneAlgebra_440 -> AgdaAny
+d_0'35'_470 v0
   = case coe v0 of
-      C_RawKleeneAlgebra'46'constructor_6285 v3 v4 v5 v6 v7 -> coe v6
+      C_constructor_488 v3 v4 v5 v6 v7 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawKleeneAlgebra.1#
-d_1'35'_452 :: T_RawKleeneAlgebra_420 -> AgdaAny
-d_1'35'_452 v0
+d_1'35'_472 :: T_RawKleeneAlgebra_440 -> AgdaAny
+d_1'35'_472 v0
   = case coe v0 of
-      C_RawKleeneAlgebra'46'constructor_6285 v3 v4 v5 v6 v7 -> coe v7
+      C_constructor_488 v3 v4 v5 v6 v7 -> coe v7
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Algebra.Bundles.Raw.RawKleeneAlgebra.rawSemiring
-d_rawSemiring_454 ::
+d_rawSemiring_474 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawKleeneAlgebra_420 -> T_RawSemiring_180
-d_rawSemiring_454 ~v0 ~v1 v2 = du_rawSemiring_454 v2
-du_rawSemiring_454 :: T_RawKleeneAlgebra_420 -> T_RawSemiring_180
-du_rawSemiring_454 v0
+  T_RawKleeneAlgebra_440 -> T_RawSemiring_190
+d_rawSemiring_474 ~v0 ~v1 v2 = du_rawSemiring_474 v2
+du_rawSemiring_474 :: T_RawKleeneAlgebra_440 -> T_RawSemiring_190
+du_rawSemiring_474 v0
   = coe
-      C_RawSemiring'46'constructor_2465 (d__'43'__444 (coe v0))
-      (d__'42'__446 (coe v0)) (d_0'35'_450 (coe v0))
-      (d_1'35'_452 (coe v0))
+      C_constructor_234 (d__'43'__464 (coe v0)) (d__'42'__466 (coe v0))
+      (d_0'35'_470 (coe v0)) (d_1'35'_472 (coe v0))
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._._≉_
-d__'8777'__458 ::
+d__'8777'__478 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawKleeneAlgebra_420 -> AgdaAny -> AgdaAny -> ()
-d__'8777'__458 = erased
+  T_RawKleeneAlgebra_440 -> AgdaAny -> AgdaAny -> ()
+d__'8777'__478 = erased
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._.*-rawMagma
-d_'42''45'rawMagma_460 ::
+d_'42''45'rawMagma_480 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawKleeneAlgebra_420 -> T_RawMagma_42
-d_'42''45'rawMagma_460 ~v0 ~v1 v2 = du_'42''45'rawMagma_460 v2
-du_'42''45'rawMagma_460 :: T_RawKleeneAlgebra_420 -> T_RawMagma_42
-du_'42''45'rawMagma_460 v0
-  = let v1 = coe du_rawSemiring_454 (coe v0) in
+  T_RawKleeneAlgebra_440 -> T_RawMagma_44
+d_'42''45'rawMagma_480 ~v0 ~v1 v2 = du_'42''45'rawMagma_480 v2
+du_'42''45'rawMagma_480 :: T_RawKleeneAlgebra_440 -> T_RawMagma_44
+du_'42''45'rawMagma_480 v0
+  = let v1 = coe du_rawSemiring_474 (coe v0) in
     coe
-      (coe du_'42''45'rawMagma_174 (coe du_rawNearSemiring_210 (coe v1)))
+      (coe du_'42''45'rawMagma_182 (coe du_rawNearSemiring_220 (coe v1)))
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._.*-rawMonoid
-d_'42''45'rawMonoid_462 ::
+d_'42''45'rawMonoid_482 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawKleeneAlgebra_420 -> T_RawMonoid_70
-d_'42''45'rawMonoid_462 ~v0 ~v1 v2 = du_'42''45'rawMonoid_462 v2
-du_'42''45'rawMonoid_462 ::
-  T_RawKleeneAlgebra_420 -> T_RawMonoid_70
-du_'42''45'rawMonoid_462 v0
-  = coe du_'42''45'rawMonoid_222 (coe du_rawSemiring_454 (coe v0))
+  T_RawKleeneAlgebra_440 -> T_RawMonoid_74
+d_'42''45'rawMonoid_482 ~v0 ~v1 v2 = du_'42''45'rawMonoid_482 v2
+du_'42''45'rawMonoid_482 ::
+  T_RawKleeneAlgebra_440 -> T_RawMonoid_74
+du_'42''45'rawMonoid_482 v0
+  = coe du_'42''45'rawMonoid_232 (coe du_rawSemiring_474 (coe v0))
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._.rawMagma
-d_rawMagma_464 ::
+d_rawMagma_484 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawKleeneAlgebra_420 -> T_RawMagma_42
-d_rawMagma_464 ~v0 ~v1 v2 = du_rawMagma_464 v2
-du_rawMagma_464 :: T_RawKleeneAlgebra_420 -> T_RawMagma_42
-du_rawMagma_464 v0
-  = let v1 = coe du_rawSemiring_454 (coe v0) in
+  T_RawKleeneAlgebra_440 -> T_RawMagma_44
+d_rawMagma_484 ~v0 ~v1 v2 = du_rawMagma_484 v2
+du_rawMagma_484 :: T_RawKleeneAlgebra_440 -> T_RawMagma_44
+du_rawMagma_484 v0
+  = let v1 = coe du_rawSemiring_474 (coe v0) in
     coe
-      (let v2 = coe du_rawNearSemiring_210 (coe v1) in
-       coe (coe du_rawMagma_92 (coe du_'43''45'rawMonoid_166 (coe v2))))
+      (let v2 = coe du_rawNearSemiring_220 (coe v1) in
+       coe (coe du_rawMagma_96 (coe du_'43''45'rawMonoid_174 (coe v2))))
 -- Algebra.Bundles.Raw.RawKleeneAlgebra._.+-rawMonoid
-d_'43''45'rawMonoid_466 ::
+d_'43''45'rawMonoid_486 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  T_RawKleeneAlgebra_420 -> T_RawMonoid_70
-d_'43''45'rawMonoid_466 ~v0 ~v1 v2 = du_'43''45'rawMonoid_466 v2
-du_'43''45'rawMonoid_466 ::
-  T_RawKleeneAlgebra_420 -> T_RawMonoid_70
-du_'43''45'rawMonoid_466 v0
-  = let v1 = coe du_rawSemiring_454 (coe v0) in
+  T_RawKleeneAlgebra_440 -> T_RawMonoid_74
+d_'43''45'rawMonoid_486 ~v0 ~v1 v2 = du_'43''45'rawMonoid_486 v2
+du_'43''45'rawMonoid_486 ::
+  T_RawKleeneAlgebra_440 -> T_RawMonoid_74
+du_'43''45'rawMonoid_486 v0
+  = let v1 = coe du_rawSemiring_474 (coe v0) in
     coe
       (coe
-         du_'43''45'rawMonoid_166 (coe du_rawNearSemiring_210 (coe v1)))
+         du_'43''45'rawMonoid_174 (coe du_rawNearSemiring_220 (coe v1)))

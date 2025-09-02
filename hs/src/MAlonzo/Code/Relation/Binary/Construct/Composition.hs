@@ -384,9 +384,9 @@ d_isPreorder_286 ::
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   (AgdaAny -> AgdaAny -> ()) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 d_isPreorder_286 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 v9 v10
   = du_isPreorder_286 v6 v9 v10
 du_isPreorder_286 ::
@@ -394,24 +394,24 @@ du_isPreorder_286 ::
    AgdaAny ->
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 du_isPreorder_286 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Binary.Structures.C_IsPreorder'46'constructor_4003
+      MAlonzo.Code.Relation.Binary.Structures.C_constructor_126
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_80
+         MAlonzo.Code.Relation.Binary.Structures.d_isEquivalence_86
          (coe v1))
       (coe
          du_implies'737'_194
-         (coe MAlonzo.Code.Relation.Binary.Structures.du_refl_98 (coe v2))
+         (coe MAlonzo.Code.Relation.Binary.Structures.du_refl_104 (coe v2))
          (coe
-            MAlonzo.Code.Relation.Binary.Structures.d_reflexive_82 (coe v1)))
+            MAlonzo.Code.Relation.Binary.Structures.d_reflexive_88 (coe v1)))
       (coe
          du_transitive_254 (coe v0)
-         (coe MAlonzo.Code.Relation.Binary.Structures.d_trans_84 (coe v1))
-         (coe MAlonzo.Code.Relation.Binary.Structures.d_trans_84 (coe v2)))
+         (coe MAlonzo.Code.Relation.Binary.Structures.d_trans_90 (coe v1))
+         (coe MAlonzo.Code.Relation.Binary.Structures.d_trans_90 (coe v2)))
 -- Relation.Binary.Construct.Composition.transitive⇒≈;≈⊆≈
 d_transitive'8658''8776''894''8776''8838''8776'_366 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

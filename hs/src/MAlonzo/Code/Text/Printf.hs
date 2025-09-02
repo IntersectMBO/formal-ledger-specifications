@@ -32,7 +32,7 @@ import qualified MAlonzo.Code.Text.Printf.Generic
 d_printfSpec_4 :: MAlonzo.Code.Text.Printf.Generic.T_PrintfSpec_18
 d_printfSpec_4
   = coe
-      MAlonzo.Code.Text.Printf.Generic.C_PrintfSpec'46'constructor_113
+      MAlonzo.Code.Text.Printf.Generic.C_constructor_54
       (coe
          (\ v0 ->
             case coe v0 of
@@ -50,46 +50,46 @@ d_printfSpec_4
 -- Text.Printf.Printf.Error
 d_Error_8 a0 a1 = ()
 -- Text.Printf.Printf.Printf
-d_Printf_10 ::
+d_Printf_12 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> () -> ()
-d_Printf_10 = erased
+d_Printf_12 = erased
 -- Text.Printf.Printf.map
-d_map_12 ::
+d_map_14 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 ->
   (AgdaAny -> AgdaAny) -> AgdaAny -> AgdaAny
-d_map_12 v0 v1 v2 v3 v4 v5 v6
-  = coe MAlonzo.Code.Text.Printf.Generic.du_map_118 v4 v5 v6
+d_map_14 v0 v1 v2 v3 v4 v5 v6
+  = coe MAlonzo.Code.Text.Printf.Generic.du_map_122 v4 v5 v6
 -- Text.Printf._.assemble
-d_assemble_18 ::
-  [MAlonzo.Code.Text.Format.Generic.T_Chunk_60] ->
+d_assemble_20 ::
+  [MAlonzo.Code.Text.Format.Generic.T_Chunk_62] ->
   AgdaAny -> [MAlonzo.Code.Agda.Builtin.String.T_String_6]
-d_assemble_18
+d_assemble_20
   = coe
-      MAlonzo.Code.Text.Printf.Generic.du_assemble_198
+      MAlonzo.Code.Text.Printf.Generic.du_assemble_204
       (coe d_printfSpec_4)
 -- Text.Printf._.printf
-d_printf_20 ::
+d_printf_22 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 -> AgdaAny
-d_printf_20
+d_printf_22
   = coe
-      MAlonzo.Code.Text.Printf.Generic.du_printf_226
+      MAlonzo.Code.Text.Printf.Generic.du_printf_232
       (coe MAlonzo.Code.Text.Format.d_formatSpec_22) (coe d_printfSpec_4)
 -- Text.Printf.printf
-d_printf_24 ::
+d_printf_26 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 -> AgdaAny
-d_printf_24 v0
+d_printf_26 v0
   = coe
-      MAlonzo.Code.Text.Printf.Generic.du_map_118
+      MAlonzo.Code.Text.Printf.Generic.du_map_122
       (coe
-         MAlonzo.Code.Text.Format.Generic.d_lexer_88
+         MAlonzo.Code.Text.Format.Generic.d_lexer_90
          (coe MAlonzo.Code.Text.Format.d_formatSpec_22) (coe v0))
       (coe MAlonzo.Code.Data.String.Base.d_concat_28)
       (coe
-         MAlonzo.Code.Text.Printf.Generic.du_printf_226
+         MAlonzo.Code.Text.Printf.Generic.du_printf_232
          (coe MAlonzo.Code.Text.Format.d_formatSpec_22) (coe d_printfSpec_4)
          (coe v0))

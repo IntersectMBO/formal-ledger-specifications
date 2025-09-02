@@ -27,12 +27,12 @@ d_isMagma_14 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Structures.T_IsMagma_176
+  MAlonzo.Code.Algebra.Structures.T_IsMagma_178
 d_isMagma_14 ~v0 ~v1 ~v2 = du_isMagma_14
-du_isMagma_14 :: MAlonzo.Code.Algebra.Structures.T_IsMagma_176
+du_isMagma_14 :: MAlonzo.Code.Algebra.Structures.T_IsMagma_178
 du_isMagma_14
   = coe
-      MAlonzo.Code.Algebra.Structures.C_IsMagma'46'constructor_1867
+      MAlonzo.Code.Algebra.Structures.C_constructor_210
       (coe
          MAlonzo.Code.Relation.Binary.PropositionalEquality.Properties.du_isEquivalence_396)
       erased
@@ -41,12 +41,12 @@ d_magma_20 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Bundles.T_Magma_72
+  MAlonzo.Code.Algebra.Bundles.T_Magma_74
 d_magma_20 ~v0 ~v1 v2 = du_magma_20 v2
 du_magma_20 ::
   (AgdaAny -> AgdaAny -> AgdaAny) ->
-  MAlonzo.Code.Algebra.Bundles.T_Magma_72
+  MAlonzo.Code.Algebra.Bundles.T_Magma_74
 du_magma_20 v0
   = coe
-      MAlonzo.Code.Algebra.Bundles.C_Magma'46'constructor_1323 v0
+      MAlonzo.Code.Algebra.Bundles.C_constructor_124 v0
       (coe du_isMagma_14)

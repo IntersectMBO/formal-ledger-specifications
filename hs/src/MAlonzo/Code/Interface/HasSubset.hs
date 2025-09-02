@@ -21,10 +21,10 @@ import qualified MAlonzo.Code.Agda.Primitive
 
 -- Interface.HasSubset.HasSubset
 d_HasSubset_8 a0 a1 = ()
-data T_HasSubset_8 = C_HasSubset'46'constructor_11
+data T_HasSubset_8 = C_constructor_18
 -- Interface.HasSubset.HasSubset._⊆_
 d__'8838'__16 :: T_HasSubset_8 -> AgdaAny -> AgdaAny -> ()
 d__'8838'__16 = erased
 -- Interface.HasSubset._._⊆_
-d__'8838'__20 :: T_HasSubset_8 -> AgdaAny -> AgdaAny -> ()
-d__'8838'__20 = erased
+d__'8838'__22 :: T_HasSubset_8 -> AgdaAny -> AgdaAny -> ()
+d__'8838'__22 = erased

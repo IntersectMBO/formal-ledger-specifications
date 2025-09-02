@@ -21,14 +21,13 @@ import qualified MAlonzo.Code.Agda.Primitive
 
 -- stdlib-classes.Class.HasCast.Base.HasCast
 d_HasCast_16 a0 a1 a2 a3 = ()
-newtype T_HasCast_16
-  = C_HasCast'46'constructor_29 (AgdaAny -> AgdaAny)
+newtype T_HasCast_16 = C_constructor_30 (AgdaAny -> AgdaAny)
 -- stdlib-classes.Class.HasCast.Base.HasCast.cast
 d_cast_28 :: T_HasCast_16 -> AgdaAny -> AgdaAny
 d_cast_28 v0
   = case coe v0 of
-      C_HasCast'46'constructor_29 v1 -> coe v1
+      C_constructor_30 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- stdlib-classes.Class.HasCast.Base._.cast
-d_cast_32 :: T_HasCast_16 -> AgdaAny -> AgdaAny
-d_cast_32 v0 = coe d_cast_28 (coe v0)
+d_cast_34 :: T_HasCast_16 -> AgdaAny -> AgdaAny
+d_cast_34 v0 = coe d_cast_28 (coe v0)

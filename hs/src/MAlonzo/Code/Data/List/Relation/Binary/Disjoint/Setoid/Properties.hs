@@ -31,14 +31,14 @@ import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
 d__'8777'__26 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   AgdaAny -> AgdaAny -> ()
 d__'8777'__26 = erased
 -- Data.List.Relation.Binary.Disjoint.Setoid.Properties._.sym
 d_sym_32 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   [AgdaAny] ->
   [AgdaAny] ->
   (AgdaAny ->
@@ -52,7 +52,7 @@ d_sym_32 = erased
 d_Disjoint'8658'AllAll_48 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   [AgdaAny] ->
   [AgdaAny] ->
   (AgdaAny ->
@@ -62,7 +62,7 @@ d_Disjoint'8658'AllAll_48 ::
 d_Disjoint'8658'AllAll_48 ~v0 ~v1 v2 v3 v4 v5
   = du_Disjoint'8658'AllAll_48 v2 v3 v4 v5
 du_Disjoint'8658'AllAll_48 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   [AgdaAny] ->
   [AgdaAny] ->
   (AgdaAny ->
@@ -89,9 +89,9 @@ du_Disjoint'8658'AllAll_48 v0 v1 v2 v3
                     MAlonzo.Code.Data.List.Relation.Unary.Any.du_map_76
                     (\ v7 v8 ->
                        coe
-                         MAlonzo.Code.Relation.Binary.Structures.du_reflexive_40
+                         MAlonzo.Code.Relation.Binary.Structures.du_reflexive_42
                          (coe
-                            MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_60 (coe v0))
+                            MAlonzo.Code.Relation.Binary.Bundles.d_isEquivalence_62 (coe v0))
                          (coe v4))
                     (coe v1) (coe v5))
                  (coe v6))))
@@ -99,7 +99,7 @@ du_Disjoint'8658'AllAll_48 v0 v1 v2 v3
 d_concat'8314''691'_60 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   [AgdaAny] ->
   [[AgdaAny]] ->
   MAlonzo.Code.Data.List.Relation.Unary.All.T_All_44 ->
@@ -111,7 +111,7 @@ d_concat'8314''691'_60 = erased
 d_deduplicate'8314'_116 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   (AgdaAny ->
    AgdaAny ->
    MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20) ->

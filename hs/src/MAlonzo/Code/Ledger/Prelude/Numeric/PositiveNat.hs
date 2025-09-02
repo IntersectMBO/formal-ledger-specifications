@@ -52,7 +52,7 @@ d_toPosNat_18 ::
   Integer -> Maybe MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 d_toPosNat_18 v0
   = let v1
-          = MAlonzo.Code.Data.Nat.Properties.d_nonZero'63'_2674 (coe v0) in
+          = MAlonzo.Code.Data.Nat.Properties.d_nonZero'63'_2760 (coe v0) in
     coe
       (case coe v1 of
          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v2 v3
@@ -74,7 +74,7 @@ du_mkPosNat_36 ::
   Integer -> MAlonzo.Code.Data.Refinement.Base.T_Refinement_28
 du_mkPosNat_36 v0
   = let v1
-          = MAlonzo.Code.Data.Nat.Properties.d_nonZero'63'_2674 (coe v0) in
+          = MAlonzo.Code.Data.Nat.Properties.d_nonZero'63'_2760 (coe v0) in
     coe
       (case coe v1 of
          MAlonzo.Code.Relation.Nullary.Decidable.Core.C__because__32 v2 v3
@@ -82,7 +82,7 @@ du_mkPosNat_36 v0
                 then coe
                        seq (coe v3) (coe MAlonzo.Code.Data.Refinement.Base.C__'44'__42 v0)
                 else coe
-                       seq (coe v3) (coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_14)
+                       seq (coe v3) (coe MAlonzo.Code.Data.Empty.du_'8869''45'elim_12)
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Prelude.Numeric.PositiveNat.PosNat-IsNonZero
 d_PosNat'45'IsNonZero_60 ::
@@ -90,7 +90,7 @@ d_PosNat'45'IsNonZero_60 ::
   MAlonzo.Code.Data.Nat.Base.T_NonZero_112
 d_PosNat'45'IsNonZero_60 v0
   = coe
-      MAlonzo.Code.Data.Nat.Base.C_NonZero'46'constructor_3575
+      MAlonzo.Code.Data.Nat.Base.C_constructor_120
       (coe seq (coe v0) (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
 -- Ledger.Prelude.Numeric.PositiveNat.PosNat-Is>0
 d_PosNat'45'Is'62'0_68 ::
@@ -107,5 +107,5 @@ d_Number'45'PosNat_74 ::
   MAlonzo.Code.Agda.Builtin.FromNat.T_Number_10
 d_Number'45'PosNat_74
   = coe
-      MAlonzo.Code.Agda.Builtin.FromNat.C_Number'46'constructor_55
+      MAlonzo.Code.Agda.Builtin.FromNat.C_constructor_32
       (\ v0 v1 -> coe MAlonzo.Code.Data.Refinement.Base.C__'44'__42 v0)

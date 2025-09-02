@@ -30,17 +30,17 @@ d_'8801''45'setoid_18 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Bundles.T_IndexedSetoid_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 d_'8801''45'setoid_18 ~v0 ~v1 ~v2 ~v3 v4
   = du_'8801''45'setoid_18 v4
 du_'8801''45'setoid_18 ::
   MAlonzo.Code.Relation.Binary.Indexed.Heterogeneous.Bundles.T_IndexedSetoid_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 du_'8801''45'setoid_18 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
+      MAlonzo.Code.Relation.Binary.Bundles.C_constructor_84
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
+         MAlonzo.Code.Relation.Binary.Structures.C_constructor_46
          (coe
             (\ v1 v2 ->
                coe

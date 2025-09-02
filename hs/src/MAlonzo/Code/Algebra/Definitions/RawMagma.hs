@@ -39,7 +39,7 @@ d_equality_40 v0
 d__'8740''737'__44 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_42 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   AgdaAny -> AgdaAny -> ()
 d__'8740''737'__44 = erased
 -- Algebra.Definitions.RawMagma._∣ʳ_
@@ -61,34 +61,48 @@ d_equality_66 v0
 d__'8740''691'__70 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_42 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   AgdaAny -> AgdaAny -> ()
 d__'8740''691'__70 = erased
 -- Algebra.Definitions.RawMagma._∣_
 d__'8739'__76 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_42 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   AgdaAny -> AgdaAny -> ()
 d__'8739'__76 = erased
 -- Algebra.Definitions.RawMagma._∤_
 d__'8740'__78 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_42 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   AgdaAny -> AgdaAny -> ()
 d__'8740'__78 = erased
+-- Algebra.Definitions.RawMagma._∥_
+d__'8741'__84 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
+  AgdaAny -> AgdaAny -> ()
+d__'8741'__84 = erased
+-- Algebra.Definitions.RawMagma._∦_
+d__'8742'__90 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
+  AgdaAny -> AgdaAny -> ()
+d__'8742'__90 = erased
 -- Algebra.Definitions.RawMagma._∣∣_
-d__'8739''8739'__84 ::
+d__'8739''8739'__96 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_42 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   AgdaAny -> AgdaAny -> ()
-d__'8739''8739'__84 = erased
+d__'8739''8739'__96 = erased
 -- Algebra.Definitions.RawMagma._∤∤_
-d__'8740''8740'__90 ::
+d__'8740''8740'__98 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_42 ->
+  MAlonzo.Code.Algebra.Bundles.Raw.T_RawMagma_44 ->
   AgdaAny -> AgdaAny -> ()
-d__'8740''8740'__90 = erased
+d__'8740''8740'__98 = erased

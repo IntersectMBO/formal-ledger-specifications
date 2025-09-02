@@ -673,7 +673,7 @@ du_count'7495'_434 v0
       du_count_424
       (coe
          (\ v1 ->
-            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_66
+            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
               (coe v0 v1)))
 -- Data.Vec.Base.[_]
 d_'91'_'93'_438 ::

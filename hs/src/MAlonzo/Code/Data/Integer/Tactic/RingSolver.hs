@@ -25,12 +25,12 @@ import qualified MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing
 
 -- Data.Integer.Tactic.RingSolver.ring
 d_ring_8 ::
-  MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.T_AlmostCommutativeRing_178
+  MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.T_AlmostCommutativeRing_180
 d_ring_8
   = coe
-      MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.du_fromCommutativeRing_1350
+      MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing.du_fromCommutativeRing_1356
       (coe
-         MAlonzo.Code.Data.Integer.Properties.d_'43''45''42''45'commutativeRing_5668)
+         MAlonzo.Code.Data.Integer.Properties.d_'43''45''42''45'commutativeRing_5712)
       (coe
          (\ v0 ->
             let v1 = coe MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18 in

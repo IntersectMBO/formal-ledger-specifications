@@ -21,13 +21,12 @@ import qualified MAlonzo.Code.Agda.Primitive
 
 -- Effect.Empty.RawEmpty
 d_RawEmpty_16 a0 a1 a2 = ()
-newtype T_RawEmpty_16
-  = C_RawEmpty'46'constructor_129 (() -> AgdaAny)
+newtype T_RawEmpty_16 = C_constructor_26 (() -> AgdaAny)
 -- Effect.Empty.RawEmpty.empty
 d_empty_22 :: T_RawEmpty_16 -> () -> AgdaAny
 d_empty_22 v0
   = case coe v0 of
-      C_RawEmpty'46'constructor_129 v1 -> coe v1
+      C_constructor_26 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Empty.RawEmpty.∅
 d_'8709'_24 ::

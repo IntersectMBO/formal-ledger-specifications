@@ -26,19 +26,19 @@ d_HasSubtract'45'ℕ_6 ::
   MAlonzo.Code.Interface.HasSubtract.T_HasSubtract_8
 d_HasSubtract'45'ℕ_6
   = coe
-      MAlonzo.Code.Interface.HasSubtract.C_HasSubtract'46'constructor_13
+      MAlonzo.Code.Interface.HasSubtract.C_constructor_18
       (coe MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22)
 -- Interface.HasSubtract.Instances.HasSubtract-ℤ
 d_HasSubtract'45'ℤ_8 ::
   MAlonzo.Code.Interface.HasSubtract.T_HasSubtract_8
 d_HasSubtract'45'ℤ_8
   = coe
-      MAlonzo.Code.Interface.HasSubtract.C_HasSubtract'46'constructor_13
-      (coe MAlonzo.Code.Data.Integer.Base.d__'45'__294)
+      MAlonzo.Code.Interface.HasSubtract.C_constructor_18
+      (coe MAlonzo.Code.Data.Integer.Base.d__'45'__302)
 -- Interface.HasSubtract.Instances.HasSubtract-ℕ-ℤ
 d_HasSubtract'45'ℕ'45'ℤ_10 ::
   MAlonzo.Code.Interface.HasSubtract.T_HasSubtract_8
 d_HasSubtract'45'ℕ'45'ℤ_10
   = coe
-      MAlonzo.Code.Interface.HasSubtract.C_HasSubtract'46'constructor_13
-      (coe MAlonzo.Code.Data.Integer.Base.d__'8854'__258)
+      MAlonzo.Code.Interface.HasSubtract.C_constructor_18
+      (coe MAlonzo.Code.Data.Integer.Base.d__'8854'__266)
