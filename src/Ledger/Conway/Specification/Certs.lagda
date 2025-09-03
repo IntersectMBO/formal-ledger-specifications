@@ -225,7 +225,7 @@ instance
   HasGState-CertState .GStateOf = CertState.gState
 
   HasRewards-CertState : HasRewards CertState
-  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf 
+  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf
 
   HasDReps-CertState : HasDReps CertState
   HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf

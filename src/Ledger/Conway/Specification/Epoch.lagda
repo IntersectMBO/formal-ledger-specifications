@@ -23,7 +23,7 @@ open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
 open Filter using (filter)
 open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
-open import Ledger.Prelude.Numeric.UnitInterval
+open import Ledger.Prelude.Numeric.UnitInterval using (fromUnitInterval; UnitInterval-*-0≤)
 
 open Number number renaming (fromNat to fromℕ)
 
@@ -85,13 +85,25 @@ instance
   HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
 \end{code}
 \begin{NoConway}
+
+\AgdaBound{PoolDistr}
+(Shelley specification~\parencite[\sectionname~3]{shelley-ledger-spec})
+results from dividing the coins in \AgdaBound{PoolDelegatedStake} by the total
+stake in \AgdaBound{PoolDelegatedStake}. We avoid dividing the coins here, in
+order to spare us the trouble of proving that the result is between 0 and 1.
+
+We omit the VRF key hashes in the codomain of \AgdaDatatype{PoolDelegatedStake}
+as they are not needed at the moment.
+
 \begin{code}
+PoolDelegatedStake = KeyHash ⇀ Coin
 
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
     epochState  : EpochState
     ru          : Maybe RewardUpdate
+    pd          : PoolDelegatedStake
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -344,6 +356,20 @@ opaque
 \caption{Functions for computing stake distributions}
 \end{figure*}
 
+The \AgdaFunction{aggregateBy} function takes a relation
+\AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B}) and a map
+\AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
+and returns a function that maps each \AgdaBound{a} in the domain of
+\AgdaBound{m} to the sum of all \AgdaBound{b} such that
+(\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+
+In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
+\AgdaFunction{aggregateBy} are
+\AgdaFunction{∣} \AgdaBound{delegations} \AgdaFunction{∣} :
+ℙ \AgdaDatatype{Credential} \AgdaFunction{×} \AgdaDatatype{VDeleg} and
+\AgdaFunction{stakeOf} \AgdaBound{ss} \AgdaFunction{∪⁺}
+\AgdaFunction{gaDepositStake} \AgdaBound{govSt} \AgdaBound{ds}, respectively.
+
 \begin{code}[hide]
 private variable
   e lastEpoch : Epoch
@@ -358,6 +384,7 @@ private variable
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
+  pd : PoolDelegatedStake
 \end{code}
 
 
@@ -535,7 +562,45 @@ its results by carrying out each of the following tasks.
 \end{figure*}
 
 \begin{NoConway}
+The \AgdaFunction{calculatePoolDelegatedState} produces a new pool distribution
+from the delegation map and stake allocation of the previous epoch.
+
+\AgdaFunction{calculatePoolDelegatedStake} performs the computation of
+\AgdaFunction{calculatePoolDistr} in the Shelley spec, without normalizing the
+stakes to be between 0 and 1.
+
 \begin{figure*}[ht]
+\begin{code}
+opaque
+  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
+  calculatePoolDelegatedStake ss =
+      -- Shelley spec: the output map must contain keys appearing in both
+      -- sd and the pool parameters.
+      sd ∣ dom (ss .poolParameters)
+    where
+      open Snapshot
+
+      -- delegated stake per pool
+      sd : KeyHash ⇀ Coin
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (ss .stake ˢ)) ᶠˢ)
+        where mutual
+          -- stake credentials delegating to each pool
+          stakeCredentialsPerPool : Rel KeyHash Credential
+          stakeCredentialsPerPool = (ss .delegations ˢ) ⁻¹ʳ
+
+          -- TODO: Move to agda-sets
+          -- https://github.com/input-output-hk/agda-sets/pull/13
+          _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
+          R ⁻¹ʳ = mapˢ swap R
+            where open import Data.Product using (swap)
+
+          _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
+          R ∘ʳ S =
+            concatMapˢ
+              (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
+              R
+\end{code}
+
 \begin{code}[hide]
 data
 \end{code}
@@ -548,22 +613,27 @@ data
 \begin{code}
   NEWEPOCH-New : let
       eps' = applyRUpd ru eps
+      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps''
+      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
     in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing , pd' ⟧
 
   NEWEPOCH-Not-New :
     ∙ e ≢ lastEpoch + 1
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru ⟧
+      _ ⊢ ⟦ lastEpoch , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru , pd ⟧
 
-  NEWEPOCH-No-Reward-Update :
+  NEWEPOCH-No-Reward-Update : let
+      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps'
+      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
+    in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing , pd' ⟧
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}
