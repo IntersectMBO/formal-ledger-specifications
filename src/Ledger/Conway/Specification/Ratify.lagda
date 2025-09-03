@@ -241,6 +241,16 @@ instance
     [ (quote RatifyState , HasCast-RatifyState) ]
 \end{code}
 
+\subsection{Vote Counting}
+
+\Cref{fig:defs:ratify-acceptedbycc,fig:defs:ratify-acceptedbydrep,fig:defs:ratify-acceptedbyspo}
+define the \acceptedBy{} predicate for each of the governance
+bodies. Given the current state about votes and other parts of the
+system these functions calculate whether a governance action is
+ratified by the corresponding body.
+
+\subsubsection{SPO}
+
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \begin{code}
@@ -294,44 +304,69 @@ acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting for SPOs}
-\label{fig:defs:ratify-actualvotes-spo}
+\label{fig:defs:ratify-acceptedbyspo}
 \end{figure*}
 
-\Cref{fig:defs:ratify-actualvotes-spo} defines the \acceptedBySPO{}
-predicate. Given the current state about votes and other parts of the
-system it calculates whether a governance action is ratified by the
-SPO body.
+Cref{fig:defs:ratify-acceptedbyspo}, defines the predicate
+\AgdaFunction{acceptedBySPO}, which uses the following auxiliary
+definitions:
+%
+\begin{itemize}
+  \item \AgdaFunction{castedVotes}: This map contains the votes that
+  have been casted by members of the SPO body and have been collected
+  as part of the \AgdaDatatype{GovActionState}~\AgdaBound{gaSt}.
 
-The map \AgdaFunction{defaultVote} adds a default vote to all SPOs who
-didn't vote, with the default depending on the given action. The map
-\AgdaFunction{actualVotes} combines the votes casted by SPOs with the
-default votes.
+  \item \AgdaFunction{defaultVote}: This map sets a default vote to
+  all SPOs who didn't vote, with the default depending on the given
+  action, and whether the SPO has delegated their vote to one of the
+  default DReps.
 
-Let us discuss the way SPO votes are counted, as the ledger
-specification's handling of this has evolved in response to community
-feedback. Previously, if an SPO did not vote, then it would be counted
-as having voted \abstain{} by default. Members of the SPO community
-found this behavior counterintuitive and requested that non-voters be
-assigned a \no{} vote by default, with the caveat that an SPO could
-change its default setting by delegating its reward account credential
-to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain}
-DRep. (This change applies only after the bootstrap period; during the
-bootstrap period the logic is unchanged; see
-\cref{sec:conway-bootstrap-gov}.)  To be precise, the agreed upon
+  \item \AgdaFunction{actualVotes}: This map combines the votes casted
+  by SPOs with \AgdaBound{defaultVote} using a left-biased union
+  making casted votes take precedence over default votes.
+
+  \item \AgdaFunction{t}: This rational is the threshold used to
+  calculate if the action is ratified by the SPO body.
+
+  \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
+  These amounts correspond to the portion of the stake from the SPOs
+  that has voted \yes{} and that which has voted \yes{} or \no{}. Note
+  that it uses the stake distribution \AgdaField{stakeDistrPools} as
+  provided in the environment.
+\end{itemize}
+
+Let us discuss in more detail the way SPO votes are counted, as the
+ledger specification's handling of this has evolved in response to
+community feedback. Previously, if an SPO did not vote, then it would
+be counted as having voted \abstain{} by default. Members of the SPO
+community found this behavior counterintuitive and requested that
+non-voters be assigned a \no{} vote by default, with the caveat that
+an SPO could change its default setting by delegating its reward
+account credential to an \texttt{AlwaysNoConfidence} DRep or an
+\texttt{AlwaysAbstain} DRep. (This change applies only after the
+bootstrap period; during the bootstrap period the logic is unchanged;
+see \cref{sec:conway-bootstrap-gov}.)  To be precise, the agreed upon
 specification is the following: an SPO that did not vote is assumed to
 have voted \no{}, except under the following circumstances:
+%
 \begin{itemize}
-\item if the SPO has delegated its reward credential to an
-  \texttt{AlwaysNoConfidence} DRep, then their default vote is \yes{} for
-  \NoConfidence{} proposals and \no{} for other proposals;
-\item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain}
-  DRep, then its default vote is \abstain{} for all proposals.
+  \item if the SPO has delegated its reward credential to an
+    \texttt{AlwaysNoConfidence} DRep, then their default vote is
+    \yes{} for \NoConfidence{} proposals and \no{} for other
+    proposals;
+  \item if the SPO has delegated its reward credential to an
+    \texttt{AlwaysAbstain} DRep, then its default vote is \abstain{}
+    for all proposals.
 \end{itemize}
-It is important to note that the credential that can now be used to set a default
-voting behavior is the credential used to withdraw staking rewards, which is not
-(in general) the same as the credential used for voting.
+
+It is important to note that the credential that can now be used to
+set a default voting behavior is the credential used to withdraw
+staking rewards, which is not (in general) the same as the credential
+used for voting.
 %% And as a second layer, this means that if that credential is a script, it may need
 %% to have explicit logic written to be able to set a default at all.
+
+\subsubsection{CC}
 
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
@@ -357,15 +392,17 @@ acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
     castedVotes = gvCC
 
     getCCHotCred : Credential × Epoch → Maybe Credential
-    getCCHotCred (c , e) = if currentEpoch > e then nothing
-      else case lookupᵐ? ccHotKeys c of
+    getCCHotCred (c , e) =
+      if currentEpoch > e
+        then nothing -- credential has expired
+        else case lookupᵐ? ccHotKeys c of
 \end{code}
 \begin{code}[hide]
-      λ where
+          λ where
 \end{code}
 \begin{code}
-        (just (just c'))  → just c'
-        _                 → nothing -- no hot key or resigned
+          (just (just c'))  → just c'
+          _                 → nothing -- hot key not registered or resigned
 
     actualVote : Credential → Epoch → Vote
     actualVote c e = case getCCHotCred (c , e) of
@@ -385,7 +422,7 @@ acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 \end{code}
 \begin{code}
         nothing         →  ∅
-        (just (m , q))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
+        (just (m , _))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
                            then mapWithKey actualVote m
                            else constMap (dom m) Vote.no
 
@@ -404,22 +441,70 @@ acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting for CC}
-\label{fig:defs:ratify-actualvotes-cc}
+\label{fig:defs:ratify-acceptedbycc}
 \end{figure*}
 
-\Cref{fig:defs:ratify-actualvotes-spo} defines the \acceptedBySPO{}
-predicate. Given the current state about votes and other parts of the
-system it calculates whether a governance action is ratified by the
-CC body.
-
-The function \actualVote{} handles the logic for CC members.
-If a \CC{} member has not yet registered a hot key, has \expired{},
-or has resigned, then \actualVote{} returns \abstain{}; if none
-of these conditions is met, then
+\Cref{fig:defs:ratify-acceptedbycc} defines the \acceptedByCC{}
+predicate. This predicate utilizes the following auxiliary
+definitions:
+%
 \begin{itemize}
-  \item if the \CC{} member has voted, then that vote is returned;
-  \item if the \CC{} member has not voted, then the default value of \no{} is returned.
+  \item \AgdaFunction{castedVotes}: This map contains the votes that
+    have been casted by members of the \CC{} body and are part of the
+    \AgdaDatatype{GovActionState}~\AgdaBound{gaSt}.
+
+  \item \AgdaFunction{getCCHotCred}: This function maps a
+    \Credential{} and an \Epoch{} to the hot key corresponding with
+    the given credential, in case this has not expired.
+
+  \item \AgdaFunction{actualVote}: This function sets the default vote
+    for \CC{} members. If the given \CC{} member term has expired, they
+    have not yet registered a hot key, or they have resigned, then
+    \actualVote{} returns \abstain{}; if none of these conditions is
+    met, then
+    %
+    \begin{itemize}
+      \item if the \CC{} member has voted, then that vote is returned;
+      \item if the \CC{} member has not voted, then the default value
+        of \no{} is returned.
+    \end{itemize}
+
+  \item \AgdaFunction{actualVotes}: This map contains the actual votes
+    of the \CC{} body. If the commitee does not exists then it is the
+    empty map, otherwise if
+    %
+    \begin{itemize}
+      \item The number of \CC{} members with a registered hot key is
+      greater than the protocol parameter \AgdaBound{ccMinSize}, then
+      \AgdaFunction{actualVote} is returned (as a map), otherwise;
+      \item All commitee members vote \no{}
+    \end{itemize}
+
+  \item \AgdaFunction{mT}: This is the threshold of the \CC{}. It may
+  be \AgdaInductiveConstructor{nothing}.
+
+  \item \AgdaFunction{stakeDistr} computes the stake
+    distribution. Note that every constitutional committe member has a
+    stake of 1, giving them equal voting power. However, just as with
+    other delegation, multiple \CC{} members can delegate to the same hot
+    key, giving that hot key the power of those multiple votes with a
+    single actual vote.
+
+  \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
+  These amounts correspond to the portion of the stake from the \CC{}
+  members that has voted \yes{} and that which has voted \yes{} or
+  \no{}.
 \end{itemize}
+
+In addition, it has to be also the case that either
+%
+\begin{itemize}
+  \item The size of the \CC{} is greater than \AgdaBound{ccMinSize}, or
+  \item the threshold function returns \AgdaInductiveConstructor{nothing}
+  %% TODO: Explain this?
+\end{itemize}
+
+\subsubsection{DRep}
 
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
@@ -468,11 +553,11 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
     totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 \end{code}
 \end{AgdaMultiCode}
-\caption{Vote counting}
+\caption{Vote counting for DRep}
 \label{fig:defs:ratify-actualvotes}
 \end{figure*}
 
-\Cref{fig:defs:ratify-actualvotes} defines the \actualVotes{}
+\Cref{fig:defs:ratify-acceptedbydrep} defines the \actualVotes{}
 function. Given the current state about votes and other parts of the
 system it calculates a new mapping of votes, which is the mapping that
 will actually be used during ratification. Things such as default
@@ -484,13 +569,6 @@ DReps, regular DReps and SPOs.
 \begin{itemize}
 \item \roleVotes{} filters the votes based on the given governance role
   and is a helper for definitions further down.
-\item if a \CC{} member has not yet registered a hot key, has \expired{},
-  or has resigned, then \actualCCVote{} returns \abstain{}; if none
-  of these conditions is met, then
-  \begin{itemize}
-    \item if the \CC{} member has voted, then that vote is returned;
-    \item if the \CC{} member has not voted, then the default value of \no{} is returned.
-  \end{itemize}
 \item \actualDRepVotes{} adds a default vote of \no{} to all active DReps
   that didn't vote.
 \item \actualSPOVotes{} adds a default vote to all SPOs who didn't vote,
@@ -538,12 +616,6 @@ abstract
 functions (together with some helpers) that are used in the rules of
 RATIFY.
 \begin{itemize}
-  \item \getStakeDist{} computes the stake distribution based on the
-    given governance role and the corresponding delegations. Note that
-    every constitutional committe member has a stake of 1, giving them
-    equal voting power. However, just as with other delegation, multiple
-    CC members can delegate to the same hot key, giving that hot key
-    the power of those multiple votes with a single actual vote.
   \item \acceptedStakeRatio{} is the ratio of accepted stake. It is
     computed as the ratio of \yes{} votes over the votes that didn't
     \abstain{}. The latter is equivalent to the sum of \yes{} and \no{} votes.
