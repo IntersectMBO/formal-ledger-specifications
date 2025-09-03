@@ -628,7 +628,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                             (coe
-                                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                             (coe v2)
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -943,7 +943,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                       (coe
                                                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                          (coe v2)
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -1209,7 +1209,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                              (coe
                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                                 (coe
                                                                                                    v2)
                                                                                                 (coe
@@ -1462,7 +1462,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                      (coe v2)
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -1781,7 +1781,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                             (coe
-                                                                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                             (coe v2)
                                                                             (coe
                                                                                MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -2052,7 +2052,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                                    (coe
                                                                                                       v2)
                                                                                                    (coe
@@ -2307,7 +2307,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                         (coe v2)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -2636,7 +2636,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                           (coe
                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                              (coe
                                                                                                 v2)
                                                                                              (coe
@@ -2926,7 +2926,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                                                  (coe
                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                                                     (coe
                                                                                                                        v2)
                                                                                                                     (coe
@@ -3182,7 +3182,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                       (coe
                                                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                          (coe v2)
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -3373,7 +3373,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                               MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_'46'generalizedField'45'fut_39785
                                                               (coe v5)))))))))))
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRwdAddr_2996
+                                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRwdAddr_3002
                                  (coe v0))
                               (coe
                                  MAlonzo.Code.Class.IsSet.du_dom_562
@@ -3415,7 +3415,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                         (coe v2)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -3661,7 +3661,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -3900,7 +3900,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                      (coe v2)
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -4114,7 +4114,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                         (coe v2)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -4348,7 +4348,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                  (coe v2)
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -4590,7 +4590,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                             (coe
                                                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                (coe v2)
                                                                                (coe
                                                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -4871,7 +4871,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                                       (coe
                                                                                                          v2)
                                                                                                       (coe
@@ -5160,7 +5160,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                       (coe
                                                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                          (coe v2)
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -5385,7 +5385,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                   (coe
-                                                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                   (coe v2)
                                                   (coe
                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -5599,7 +5599,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                         (coe v2)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -5815,7 +5815,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                         (coe v2)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -6048,7 +6048,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                            (coe v2)
                                                            (coe
                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -6348,7 +6348,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                   (coe
                                                                                      MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                      (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                      (coe v2)
                                                                                      (coe
                                                                                         MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -6635,7 +6635,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                                             (coe
                                                                                                                v2)
                                                                                                             (coe
@@ -6891,7 +6891,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                  (coe v2)
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -7232,7 +7232,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                                    (coe
                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                                       (coe
                                                                                                          v2)
                                                                                                       (coe
@@ -7527,7 +7527,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                                                           (coe
                                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                                                              (coe
-                                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                                                              (coe
                                                                                                                                 v2)
                                                                                                                              (coe
@@ -7786,7 +7786,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                (coe
                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                   (coe v2)
                                                                                   (coe
                                                                                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -7989,7 +7989,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_'46'generalizedField'45'fut_39785
                                                                        (coe v5)))))))))))
                                        (coe
-                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRwdAddr_2996
+                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRwdAddr_3002
                                           (coe v0))
                                        (coe
                                           MAlonzo.Code.Class.IsSet.du_dom_562
@@ -8031,7 +8031,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                  (coe v2)
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -8252,7 +8252,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                      (coe
                                                         MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                         (coe v2)
                                                         (coe
                                                            MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -8492,7 +8492,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                  (coe v2)
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -8729,7 +8729,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                        (coe v2)
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -8972,7 +8972,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                  (coe v2)
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -9209,7 +9209,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                        (coe v2)
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -9481,7 +9481,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                                         (coe
                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                                            (coe v2)
                                                                                            (coe
                                                                                               MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -9722,7 +9722,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                     (coe v2)
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -9967,7 +9967,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                       (coe
                                                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                          (coe v2)
                                                                          (coe
                                                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -10193,7 +10193,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                    (coe
                                                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                       (coe v2)
                                                                       (coe
                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -10444,7 +10444,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                  (coe
                                                                     MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                       MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                     (coe v2)
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -10667,7 +10667,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                                     (coe
                                                                        MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                          MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                                        (coe v2)
                                                                        (coe
                                                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -10889,7 +10889,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                            (coe
                                                               MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                               (coe
-                                                                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                               (coe v2)
                                                               (coe
                                                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -11113,7 +11113,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -11323,7 +11323,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -11533,7 +11533,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -11743,7 +11743,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -11936,7 +11936,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                            (coe
                               MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                 MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                               (coe v2)
                               (coe
                                  MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -12099,7 +12099,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                (coe
                   MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                   (coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                     MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                   (coe v2)
                   (let v3
                          = coe
@@ -12129,7 +12129,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                    (coe
                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                       (coe v2)
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -12331,7 +12331,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                    (coe
                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                       (coe v2)
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -12540,7 +12540,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                          (coe v2)
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -12745,7 +12745,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                          (coe
-                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                            MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                          (coe v2)
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -12960,7 +12960,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -13170,7 +13170,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -13380,7 +13380,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -13590,7 +13590,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                             (coe
                                                MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                (coe
-                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                  MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                (coe v2)
                                                (coe
                                                   MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -13843,7 +13843,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                                           (coe
                                                              MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                                                MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                                              (coe v2)
                                                              (coe
                                                                 MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400
@@ -14057,7 +14057,7 @@ du_EPOCH'45'total_2620 v0 v1 v2
                                    (coe
                                       MAlonzo.Code.Ledger.Conway.Specification.Ratify.C_constructor_2448
                                       (coe
-                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3236)
+                                         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3242)
                                       (coe v2)
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_dreps_1400

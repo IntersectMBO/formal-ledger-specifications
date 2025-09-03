@@ -229,7 +229,7 @@ d_Is'45'nothing'63'_110 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_Is'45'nothing'63'_110 v0 v1
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_Is'45'nothing'63'_3056
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_Is'45'nothing'63'_3054
       v1
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.RatifyEnv
 d_RatifyEnv_118 = ()
@@ -267,7 +267,7 @@ d_accepted'63'_136 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_accepted'63'_136
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_accepted'63'_3070
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_accepted'63'_3068
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_806
          (coe
@@ -319,7 +319,7 @@ d_delayed'63'_150 ::
   Bool -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_delayed'63'_150
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delayed'63'_3040
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delayed'63'_3038
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_806
          (coe
@@ -330,7 +330,7 @@ d_delayingAction_152 ::
   Bool
 d_delayingAction_152
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_delayingAction_2930
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_delayingAction_2928
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.expired
 d_expired_154 ::
   Integer ->
@@ -344,7 +344,7 @@ d_expired'63'_156 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_expired'63'_156
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_3110
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_expired'63'_3108
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_806
          (coe
@@ -385,7 +385,7 @@ d_verifyPrev'63'_164 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_verifyPrev'63'_164
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_verifyPrev'63'_3002
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_verifyPrev'63'_3000
       (coe
          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.ExternalStructures.d_HSTransactionStructure_806
          (coe
