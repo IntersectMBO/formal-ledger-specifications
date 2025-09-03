@@ -164,3 +164,33 @@ Also, non-letter superscripts do carry meaning.
 non-essential superscripts. Since we prefer doing this by changing the Agda
 source code instead of via hiding them in this document, this is a non-trivial
 problem that will take some time to address.)
+
+
+## Tables of Variable Names and Name Changes
+
+### Renamed Fields of `TxBody`{.AgdaRecord}
+
+| Old Name                    | New Name                          | Old Type     |  New Type         |
+| --------------------------- | --------------------------------- | ------------ | ----------------- |
+| `txins`{.AgdaField}         | `txIns`{.AgdaField}               | (no change)  |                   |
+| `txouts`{.AgdaField}        | `txOuts`{.AgdaField}              | (no change)  |                   |
+| `txfee`{.AgdaField}         | `txFee`{.AgdaField}               | `Coin`       | `Fees`            |
+| `txwdrls`{.AgdaField}       | `txWithdrawals`{.AgdaField}       | `Wdrl`       | `Withdrawals`     |
+| `txvldt`{.AgdaField}        | `txVldt`{.AgdaField}              | (no change)  |                   |
+| `txcerts`{.AgdaField}       | `txCerts`{.AgdaField}             | (no change)  |                   |
+| `txvote`{.AgdaField}        | `txGovVotes`{.AgdaField}          | (no change)  |                   |
+| `txprop`{.AgdaField}        | `txGovProposals`{.AgdaField}      | (no change)  |                   |
+| `txdonation`{.AgdaField}    | `txDonation`{.AgdaField}          | `Coin`       | `Donations`       |
+| `curTreasury`{.AgdaField}   | `currentTreasury`{.AgdaField}     | `Maybe Coin` | `Maybe Treasury`  |
+| `txid`{.AgdaField}          | `txId`{.AgdaField}                | (no change)  |                   |
+| `collateral`{.AgdaField}    | `collateralInputs`{.AgdaField}    | (no change)  |                   |
+| `reqSigHash`{.AgdaField}    | `reqSignerHashes`{.AgdaField}     | (no change)  |                   |
+| `scriptIntHash`{.AgdaField} | `scriptIntegrityHash`{.AgdaField} | (no change)  |                   |
+
+
+### Renamed Contructors of `GovActionType`{.AgdaDataType}
+
+| Old Name                    | New Name                          |
+| --------------------------- | --------------------------------- |
+| `TriggerHF`{.AgdaField}     | `TriggerHardFork`{.AgdaField}     |
+| `TreasuryWdrl`{.AgdaField}  | `TreasuryWithdrawal`{.AgdaField}  |

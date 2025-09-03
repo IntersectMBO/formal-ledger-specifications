@@ -60,7 +60,7 @@ succeedTx = record { body = record
                          ; mint = 0
                          ; txVldt = nothing , nothing
                          ; txCerts = []
-                         ; txWdrls = ∅
+                         ; txWithdrawals = ∅
                          ; txGovVotes = []
                          ; txGovProposals = []
                          ; txDonation = 0
@@ -91,7 +91,7 @@ failTx = record { body = record
                          ; mint = 0
                          ; txVldt = nothing , nothing
                          ; txCerts = []
-                         ; txWdrls = ∅
+                         ; txWithdrawals = ∅
                          ; txGovVotes = []
                          ; txGovProposals = []
                          ; txDonation = 0

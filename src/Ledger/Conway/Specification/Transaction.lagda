@@ -143,7 +143,7 @@ record TransactionStructure : Type₁ where
       txId                 : TxId
       txCerts              : List DCert
       txFee                : Fees
-      txWdrls              : Withdrawals
+      txWithdrawals        : Withdrawals
       txVldt               : Maybe Slot × Maybe Slot
       txADhash             : Maybe ADHash
       txDonation           : Donations
@@ -172,6 +172,10 @@ record TransactionStructure : Type₁ where
   record HasTxId {a} (A : Type a) : Type a where
     field TxIdOf    : A → TxId
   open HasTxId ⦃...⦄ public
+
+  instance
+    HasDonations-TxBody : HasDonations TxBody
+    HasDonations-TxBody .DonationsOf = TxBody.txDonation
 \end{code}
 
 \begin{NoConway}
@@ -209,13 +213,16 @@ record TransactionStructure : Type₁ where
     HasGovProposals-Tx .GovProposalsOf = TxBody.txGovProposals ∘ TxBodyOf
 
     HasWithdrawals-TxBody : HasWithdrawals TxBody
-    HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWdrls
+    HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals
 
     HasWithdrawals-Tx : HasWithdrawals Tx
     HasWithdrawals-Tx .WithdrawalsOf = WithdrawalsOf ∘ TxBodyOf
 
     HasTxId-Tx : HasTxId Tx
     HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
+
+    HasDonations-Tx : HasDonations Tx
+    HasDonations-Tx .DonationsOf = DonationsOf ∘ TxBodyOf
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}

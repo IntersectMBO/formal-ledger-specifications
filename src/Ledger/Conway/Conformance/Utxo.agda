@@ -101,7 +101,7 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
     ∙ ∀[ (a , _) ∈ range txOutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
     ∙ ∀[ (a , _) ∈ range txOutsʰ ]  netId a         ≡ NetworkId
-    ∙ ∀[ a ∈ dom txWdrls ]          NetworkIdOf a   ≡ NetworkId
+    ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a   ≡ NetworkId
     ∙ txNetworkId ~ just NetworkId
     ∙ currentTreasury ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'

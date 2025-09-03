@@ -31,6 +31,6 @@
 [scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
 [UTXO]: Ledger.Conway.Specification.Utxo.md#sec:utxo-inference-rule
-[UTXOS]: Ledger.Conway.Specification.Utxo.md#utxos-rule
+[UTXOS]: Ledger.Conway.Specification.Utxo.md#sec:utxos-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#utxow-inference-rules
 [Shelley Ledger Spec (pdf)]: https://github.com/intersectmbo/cardano-ledger/releases/latest/download/shelley-ledger.pdf

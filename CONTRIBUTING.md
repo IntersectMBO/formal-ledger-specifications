@@ -30,21 +30,41 @@ of the latter takes precedence over code formatting.
 
 ### Miscellaneous conventions
 
-1.  Type classes for accessing fields of records should be named after the *type* of the field and not the field name.
-
-    For example,
-
+1.  Type classes for accessing fields of records should be named after the *type* of
+    the field and not the field name.  For example, suppose
     ```agda
-    record HasVDelegs {a} (A : Type a) : Type a where
-      field VDelegsOf : A → VDelegs
+    Fees : Type
+    Fees = ℕ
     ```
-
-    and not, say,
-
+    and suppose we have a record type `A` with a field called `fee`:
     ```agda
-    record HasgVoteDelegs {a} (A : Type a) : Type a where
-      field voteDelegsOf : A → VDelegs
+    record A : Type where
+      field
+        fee : Fees
+        ...
     ```
+    Then we would make a type class called `HasFees` (since the **type** is called `Fees`)
+    ```agda
+    record HasFees {a} (A : Type a) : Type a where
+      field FeesOf : A → Fees
+    open HasFees ⦃...⦄ public
+    ```
+    and define the following instance of the `HasFees` type class for the type `A`:
+    ```agda
+      instance
+        HasFees-A : HasFees A
+        HasFees-A .FeesOf = A.fee
+    ```
+    then, if `a : A`, we can access the `fee` field of `a` via `FeesOf a`.  From this
+    contrived example, type classes may seem like this is overkill here, but they can
+    be quite useful in practice when we have many different types that have fees or
+    donations associated with them, and we want to be able to access those values in
+    a consistent way.  Moreover, we have many examples of nested records that contain
+    fees or donations, and this allows us to access those values without having to
+    remember the specific paths to the field names of those record types.
+
+    For another example of the [getter type class pattern](#example-getter-type-class),
+    see the [🗃️ Miscellanea][] section below.
 
 2.  Use camel case for field names (e.g., `txNetworkId` instead of `txnetworkid`).
 
@@ -714,6 +734,55 @@ Frome the git repository, run,
 python scripts/plot_typecheck_time.py > index.html
 ```
 and open `index.html` in your browser.
+
+---
+
+<a id="example-getter-type-class"></a>
+### Another Example of the Getter Type Class Pattern
+
+Here's a more realistic example of how we use type classes to make accessing fields
+of records easier and more consistent.
+
+Let
+
+```agda
+VoteDelegs : Type
+VoteDelegs = Credential ⇀ VDeleg
+
+record HasVoteDelegs {a} (A : Type a) : Type a where
+  field VoteDelegsOf : A → VoteDelegs
+open HasVoteDelegs ⦃...⦄ public
+
+record DState : Type where
+  field
+    voteDelegs   : VoteDelegs
+    ...
+
+record HasDState {a} (A : Type a) : Type a where
+  field DStateOf : A → DState
+open HasDState ⦃...⦄ public
+
+record CertState : Type where
+  field
+    dState : DState
+    ...
+
+instance
+  HasVoteDelegs-DState : HasVoteDelegs DState
+  HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
+
+  HasDState-CertState : HasDState CertState
+  HasDState-CertState .DStateOf = CertState.dState
+
+  HasVoteDelegs-CertState : HasVoteDelegs CertState
+  HasVoteDelegs-CertState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf
+```
+
+Now, if we have `cs : CertState`, we can fetch the `voteDelegs` field of (the
+`dState` of) `cs` as follows: `VoteDelegsOf cs`.
+
+Without type classes we would have to `open DState` and `open CertState` and then
+write `cs .dState .voteDelegs`, or, if we want to avoid `open` clutter, `DState.voteDelegs CertState.dState cs`.
 
 ---
 

@@ -85,7 +85,7 @@ instance
         genErr  ¬p = case dec-de-morgan ¬p of λ where
           (inj₁ a) → "¬ TxBody.txIns (Tx.body tx) ≢ ∅"
           (inj₂ b) → case dec-de-morgan b of λ where
-            (inj₁ a₁) → "¬ TxBody.txIns (Tx.body tx) ⊆ dom (UTxOState.utxo s)"
+            (inj₁ a₁) → "¬ TxBody.txIns (Tx.body tx) ⊆ dom (UTxOOf s)"
             (inj₂ b₁) → case dec-de-morgan b₁ of λ where
                 (inj₁ a₁') → "¬ refInputs ⊆ dom utxo "
                 (inj₂ b₂') → case dec-de-morgan b₂' of λ where
@@ -95,22 +95,22 @@ instance
                     (inj₂ b₃) → case dec-de-morgan b₃ of λ where
                         (inj₁ a₄) →
                           let
-                            pp = UTxOEnv.pparams Γ
-                            txb = Tx.body tx
+                            pp = PParamsOf Γ
+                            txb = TxBodyOf tx
                             con = consumed pp s txb
                             prod = produced pp s txb
                             showValue = show ∘ coin
                           in
-                            ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (UTxOEnv.pparams Γ) s (Tx.body tx)"
+                            ( "¬consumed (UTxOEnv.pparams Γ) s (Tx.body tx) ≡ produced (PParamsOf Γ) s (Tx.body tx)"
                             +ˢ "\n  consumed =\t\t" +ˢ showValue con
                             +ˢ "\n    ins  =\t\t" +ˢ showValue (balance (UTxOOf s ∣ txb .TxBody.txIns))
                             +ˢ "\n    mint =\t\t" +ˢ showValue (TxBody.mint txb)
                             +ˢ "\n    depositRefunds =\t" +ˢ showValue (inject (depositRefunds pp s txb))
                             +ˢ "\n  produced =\t\t" +ˢ showValue prod
                             +ˢ "\n    outs =\t\t" +ˢ showValue (balance $ outs txb)
-                            +ˢ "\n    fee  =\t\t" +ˢ show (txb .TxBody.txFee)
+                            +ˢ "\n    fee  =\t\t" +ˢ show (FeesOf tx)
                             +ˢ "\n    newDeposits  =\t" +ˢ show (newDeposits pp s txb)
-                            +ˢ "\n    donation  =\t\t" +ˢ show (txb .TxBody.txDonation)
+                            +ˢ "\n    donation  =\t\t" +ˢ show (DonationsOf txb)
                             )
                         (inj₂ b₄) → case dec-de-morgan b₄ of λ where
                           (inj₁ a₅) → "¬ coin (TxBody.mint (Tx.body tx)) ≡ 0"
@@ -199,11 +199,11 @@ module _ {txb : _} (open TxBody txb) where opaque
   consumedCoinEquality : ∀ {pp}
     → coin mint ≡ 0
     → coin (consumed pp utxoState txb)
-    ≡ cbalance ((UTxOState.utxo utxoState) ∣ txIns) + depositRefunds pp utxoState txb + getCoin txWdrls
+    ≡ cbalance ((UTxOState.utxo utxoState) ∣ txIns) + depositRefunds pp utxoState txb + getCoin txWithdrawals
   consumedCoinEquality {utxoState} {pp} h =
     let  utxo = UTxOState.utxo utxoState
          dRefs = depositRefunds pp utxoState txb
-         sWdls = getCoin txWdrls
+         sWdls = getCoin txWithdrawals
     in begin
     coin (balance (utxo ∣ txIns) + mint + inject dRefs + inject sWdls)
       ≡⟨ ∙-homo-Coin _ _ ⟩
@@ -265,10 +265,10 @@ module _ {txb : _} (open TxBody txb) where opaque
     → coin mint ≡ 0
     → consumed pp utxoState txb ≡ produced pp utxoState txb
     → cbalance ((UTxOState.utxo utxoState) ∣ txIns)
-    + depositRefunds pp utxoState txb + getCoin txWdrls
+    + depositRefunds pp utxoState txb + getCoin txWithdrawals
     ≡ cbalance (outs txb) + txFee + newDeposits pp utxoState txb + txDonation
   balValueToCoin {utxoState} {pp} h h' = begin
-    cbalance ((UTxOState.utxo utxoState) ∣ txIns) + depositRefunds pp utxoState txb + getCoin txWdrls
+    cbalance ((UTxOState.utxo utxoState) ∣ txIns) + depositRefunds pp utxoState txb + getCoin txWithdrawals
       ≡˘⟨ consumedCoinEquality {utxoState} {pp} h ⟩
     coin (consumed pp utxoState txb)
       ≡⟨ cong! h' ⟩
@@ -316,7 +316,7 @@ module DepositHelpers
     utxoSt = ⟦ utxo , fees , deposits , donations ⟧
     ref tot : Coin
     ref = depositRefunds pp utxoSt txb
-    wdls = getCoin txWdrls
+    wdls = getCoin txWithdrawals
     tot = newDeposits    pp utxoSt txb
     h : disjoint (dom (utxo ∣ txIns ᶜ)) (dom (outs txb))
     h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {txb} {utxo} h')
@@ -702,7 +702,7 @@ module _ -- ASSUMPTION --
     newDeps refunds wdrls : Coin
     newDeps = newDeposits pp utxoState txb
     refunds = depositRefunds pp utxoState txb
-    wdrls = getCoin txWdrls
+    wdrls = getCoin txWithdrawals
 
     balIn balOut : Value
     balIn = balance (st ∣ txIns)

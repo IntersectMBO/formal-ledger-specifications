@@ -64,7 +64,7 @@ instance
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
-      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txGovVotes , txWdrls , _ ⟧
+      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txGovVotes , txWithdrawals , _ ⟧
       govΓ : CertState → GovEnv
       govΓ certState = ⟦ txId , epoch slot , pparams , ppolicy , enactState , conv certState , _ ⟧
 

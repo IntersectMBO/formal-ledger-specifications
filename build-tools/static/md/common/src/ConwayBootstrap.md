@@ -4,10 +4,10 @@ As described in [CIP-1694](https://cips.cardano.org/cip/CIP-1694), the governanc
 system needs to be bootstrapped.  During the bootstrap period, the following changes
 will be made to the ledger described in this document.
 
-+ Transactions containing any proposal except `TriggerHF`{.AgdaInductiveConstructor},
++ Transactions containing any proposal except `TriggerHardFork`{.AgdaInductiveConstructor},
 `ChangePParams`{.AgdaInductiveConstructor}, or `Info`{.AgdaInductiveConstructor} will be rejected.
 
-+ Transactions containing a vote other than a `CC`{.AgdaInductiveConstructor} vote, a `SPO`{.AgdaInductiveConstructor} vote on a `TriggerHF`{.AgdaInductiveConstructor} action, or any vote on an `Info`{.AgdaInductiveConstructor} action will be rejected.
++ Transactions containing a vote other than a `CC`{.AgdaInductiveConstructor} vote, a `SPO`{.AgdaInductiveConstructor} vote on a `TriggerHardFork`{.AgdaInductiveConstructor} action, or any vote on an `Info`{.AgdaInductiveConstructor} action will be rejected.
 
 + `Q4`{.AgdaField}, `P5`{.AgdaField}, and `Q5e`{.AgdaField} are set to $0$.
 

@@ -1,7 +1,7 @@
-\AgdaField{txvote}
-\AgdaField{txprop}
-\AgdaField{txdonation}
-\AgdaFunction{txdonation}
+\AgdaField{txGovVotes}
+\AgdaField{txGovProposals}
+\AgdaField{txDonation}
+\AgdaFunction{txDonation}
 \AgdaField{currentTreasury}
 \AgdaFunction{currentTreasury}
 \AgdaFunction{treasury}

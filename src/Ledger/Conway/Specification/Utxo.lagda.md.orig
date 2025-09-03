@@ -29,8 +29,10 @@ open import Algebra              using (CommutativeMonoid)
 open import Data.Nat.Properties  using (+-0-monoid)
 import Data.Maybe as M
 import Data.Sum.Relation.Unary.All as Sum
+
 import Data.Integer as ℤ
 import Data.Rational as ℚ
+
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Abstract
@@ -95,8 +97,8 @@ is gone with the new design.
 
 
 *UTxO environment*
-```agda
 
+```agda
 record UTxOEnv : Type where
   field
     slot      : Slot
@@ -129,7 +131,7 @@ record UTxOState : Type where
     utxo       : UTxO
     fees       : Fees
     deposits   : Deposits
-    donations  : Donations
+    donations  : Dontations
 ```
 
 <!--
@@ -137,6 +139,8 @@ record UTxOState : Type where
 record HasUTxOState {a} (A : Type a) : Type a where
   field UTxOStateOf : A → UTxOState
 open HasUTxOState ⦃...⦄ public
+
+
 
 instance
   HasUTxO-UTxOState : HasUTxO UTxOState
@@ -166,7 +170,6 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 (The main constructor of this type, `UTXO-inductive`{.AgdaInductiveConstructor},
 is defined in the [UTXO Inference Rule][UTXO] subsection below.)
 
-<a id="fig:functions:utxo-conway"></a>
 ## Functions used in the UTxO rules
 
 Here we define, among other things,
@@ -189,7 +192,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 
 ```agda
   outs : TxBody → UTxO
-  outs tx = mapKeys (tx .txId ,_) (tx .txOuts)
+  outs tx = mapKeys (tx .txid ,_) (tx .txouts)
 
   balance : UTxO → Value
   balance utxo = ∑[ x ← mapValues txOutHash utxo ] getValueʰ x
@@ -356,8 +359,8 @@ updateProposalDeposits (_ ∷ ps)  txid  gaDep  deposits  =
   ∪⁺ ❴ GovActionDeposit (txid , length ps) , gaDep ❵
 
 updateDeposits : PParams → TxBody → Deposits → Deposits
-updateDeposits pp txb = updateCertDeposits pp txCerts
-                        ∘ updateProposalDeposits txGovProposals txId (pp .govActionDeposit)
+updateDeposits pp txb = updateCertDeposits pp txcerts
+                        ∘ updateProposalDeposits txprop txid (pp .govActionDeposit)
 ```
 
 <!--
@@ -365,7 +368,7 @@ updateDeposits pp txb = updateCertDeposits pp txCerts
   where open TxBody txb
 
 proposalDepositsΔ : List GovProposal → PParams → TxBody → Deposits
-proposalDepositsΔ props pp txb = updateProposalDeposits props txId (pp .govActionDeposit) ∅
+proposalDepositsΔ props pp txb = updateProposalDeposits props txid (pp .govActionDeposit) ∅
   where open TxBody txb
 ```
 -->
@@ -466,7 +469,7 @@ that their difference is the identity function.
 -->
 
 
-## The `UTXOS`{.AgdaDatatype} rule {#sec:utxos-rule}
+## The `UTXOS`{.AgdaDatatype} rule
 
 <!--
 ```agda
@@ -564,8 +567,13 @@ data _⊢_⇀⦇_,UTXO⦈_ where
         serSize (getValueʰ txout) ≤ maxValSize pp
     ∙ ∀[ (a , _) ∈ range txOutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
+<<<<<<< HEAD
     ∙ ∀[ (a , _) ∈ range txOutsʰ ]  netId a        ≡ NetworkId
     ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a  ≡ NetworkId
+=======
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]  netId a         ≡ NetworkId
+    ∙ ∀[ a ∈ dom txWithdrawals ]          NetworkIdOf a ≡ NetworkId
+>>>>>>> e0cd16a5 (rename two constructors of `GovActionType`)
     ∙ txNetworkId  ~ just NetworkId
     ∙ currentTreasury  ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'

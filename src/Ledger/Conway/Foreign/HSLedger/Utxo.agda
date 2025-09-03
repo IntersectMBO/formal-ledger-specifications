@@ -59,7 +59,7 @@ module _ (ext : ExternalFunctions) where
           ("\tInputs:      \t" +ˢ show (balance (utxo ∣ txIns))) ∷
           ("\tMint:        \t" +ˢ show mint) ∷
           ("\tRefunds:     \t" +ˢ show (inject (depositRefunds pparams (from st) body))) ∷
-          ("\tWithdrawals: \t" +ˢ show (inject (getCoin txWdrls))) ∷
+          ("\tWithdrawals: \t" +ˢ show (inject (getCoin txWithdrawals))) ∷
           ("\tTotal:       \t" +ˢ show (consumed pparams (from st) body)) ∷
           "Produced:" ∷
           ("\tOutputs:     \t" +ˢ show (balance (outs body))) ∷

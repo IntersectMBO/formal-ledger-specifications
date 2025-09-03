@@ -214,14 +214,14 @@ getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-vdel
 
 getValidCertDepositsC : ∀ Γ s {s'} tx
                      → (let open C.LEnv Γ using (pparams; slot; enactState)
-                            open TxBody (tx .Tx.body) using (txCerts; txGovVotes; txWdrls)
+                            open TxBody (tx .Tx.body) using (txCerts; txGovVotes; txWithdrawals)
                             open C.LState s
                             open C.UTxOState utxoSt using (deposits)
                             cc = C.allColdCreds govSt enactState
                        )
                      → WellformedLState s
                      → isValid tx ≡ true
-                     → ⟦ epoch slot , pparams , txGovVotes , txWdrls , cc ⟧ C.⊢ certState ⇀⦇ txCerts ,CERTS⦈ s'
+                     → ⟦ epoch slot , pparams , txGovVotes , txWithdrawals , cc ⟧ C.⊢ certState ⇀⦇ txCerts ,CERTS⦈ s'
                      → L.ValidCertDeposits pparams deposits txCerts
 getValidCertDepositsC Γ s tx wf refl (RTC (C.CERT-base _ , step)) =
   getValidCertDepositsCERTS (C.UTxOState.deposits (C.LState.utxoSt s)) wf step

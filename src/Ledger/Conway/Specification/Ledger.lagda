@@ -100,8 +100,11 @@ instance
   HasPState-LState : HasPState LState
   HasPState-LState .PStateOf = PStateOf ∘ CertStateOf
 
-  HasVDelegs-LState : HasVDelegs LState
-  HasVDelegs-LState .VDelegsOf = VDelegsOf ∘ DStateOf ∘ CertStateOf
+  HasVoteDelegs-LState : HasVoteDelegs LState
+  HasVoteDelegs-LState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf ∘ CertStateOf
+
+  HasDonations-LState : HasDonations LState
+  HasDonations-LState .DonationsOf = DonationsOf ∘ UTxOStateOf
 
 open CertState
 open DState
@@ -119,14 +122,14 @@ rmOrphanDRepVotes : CertState → GovState → GovState
 rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
   where
    ifDRepRegistered : Voter → Type
-   ifDRepRegistered (r , c) = r ≡ DRep → c ∈ dom (cs .gState .dreps)
+   ifDRepRegistered (r , c) = r ≡ DRep → c ∈ dom (DRepsOf cs)
 
    go : GovActionState → GovActionState
    go gas = record gas { votes = filterKeys ifDRepRegistered (gas .votes) }
 
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
-  ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (st .action)) (fromList govSt)
+  ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types and functions for the LEDGER transition system}
@@ -158,12 +161,11 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
          open TxBody txb
 \end{code}
 \begin{code}
-         rewards     = certState .dState .rewards
     in
     ∙ isValid tx ≡ true
     ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙ ⟦ epoch slot , pp , txGovVotes , txWdrls , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
-    ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom rewards ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+    ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+    ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 

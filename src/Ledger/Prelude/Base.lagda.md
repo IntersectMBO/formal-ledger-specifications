@@ -41,11 +41,11 @@ record HasFees {a} (A : Type a) : Type a where
 open HasFees ⦃...⦄ public
 
 record HasReserves {a} (A : Type a) : Type a where
-  field ReservesOf : A → Coin
+  field ReservesOf : A → Reserves
 open HasReserves ⦃...⦄ public
 
 record HasTreasury {a} (A : Type a) : Type a where
-  field TreasuryOf : A → Coin
+  field TreasuryOf : A → Treasury
 open HasTreasury ⦃...⦄ public
 
 {- For instance, we have record types representing entities that have fees or

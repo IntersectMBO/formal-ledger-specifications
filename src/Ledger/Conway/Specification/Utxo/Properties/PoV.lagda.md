@@ -26,15 +26,15 @@ open UTxOState; open Tx; open TxBody
 
 Let `s`{.AgdaBound} and `s'`{.AgdaBound} be `UTxOState`{.AgdaRecord}s, let
 `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a fresh transaction with withdrawals
-`txWdrls`{.AgdaBound}, and suppose
+`txWithdrawals`{.AgdaBound}, and suppose
 `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,UTXO⦈`{.AgdaDatatype} `s'`{.AgdaBound}. If `tx`{.AgdaBound} is
 valid.  Then the coin value of `s'`{.AgdaBound} is equal to the sum of
-the coin values of `s`{.AgdaBound} and `txWdrls`{.AgdaBound}.
+the coin values of `s`{.AgdaBound} and `txWithdrawals`{.AgdaBound}.
 If `tx`{.AgdaBound} is not valid, then the coin values of `s`{.AgdaBound} and
 `s'`{.AgdaBound} are equal.  We can express this concisely as follows:
 
 <!--
-`getCoin`{.AgdaField} `s`{.AgdaBound} + `getCoin`{.AgdaField} `txWdrls`{.AgdaBound} ·
+`getCoin`{.AgdaField} `s`{.AgdaBound} + `getCoin`{.AgdaField} `txWithdrawals`{.AgdaBound} ·
 `χ`{.AgdaFunction} (`tx`{.AgdaBound} .`isValid`{.AgdaField}) `≡`{.AgdaSymbol} `getCoin`{.AgdaField} `s'`{.AgdaBound},
 -->
 

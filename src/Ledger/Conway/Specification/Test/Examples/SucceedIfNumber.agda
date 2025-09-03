@@ -81,7 +81,7 @@ succeedTx = record { body = record
                          ; txId = 7
                          ; txCerts = []
                          ; txFee = 10000000000
-                         ; txWdrls = ∅
+                         ; txWithdrawals = ∅
                          ; txVldt = nothing , nothing
                          ; txADhash = nothing
                          ; txDonation = 0
@@ -116,7 +116,7 @@ failTx = record { body = record
                          ; txId = 7
                          ; txCerts = []
                          ; txFee = 10
-                         ; txWdrls = ∅
+                         ; txWithdrawals = ∅
                          ; txVldt = nothing , nothing
                          ; txADhash = nothing
                          ; txDonation = 0

@@ -398,9 +398,6 @@ to one stake pool. Relevant quantities are:
   `Credential`{.AgdaDatatype}s.
 
 ```agda
-Delegations : Type
-Delegations = Credential ⇀ KeyHash
-
 poolStake  : KeyHash → Delegations → Stake → Stake
 poolStake hk delegs stake = stake ∣ dom (delegs ∣^ ❴ hk ❵)
 ```
@@ -630,7 +627,7 @@ opaque
 ```agda
       poolParams    : KeyHash ⇀ StakePoolParams
       utxoBalance   : Credential → Coin
-      activeDelegs  : Credential ⇀ KeyHash
+      activeDelegs  : Delegations
       activeRewards : Credential ⇀ Coin
       activeStake   : Credential ⇀ Coin
 ```

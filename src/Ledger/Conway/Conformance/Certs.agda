@@ -20,9 +20,9 @@ open RwdAddr
 record DState : Type where
   constructor ⟦_,_,_,_⟧ᵈ
   field
-    voteDelegs   : Credential ⇀ VDeleg
+    voteDelegs   : VoteDelegs
     stakeDelegs  : Credential ⇀ KeyHash
-    rewards      : Credential ⇀ Coin
+    rewards      : Rewards
     deposits     : Deposits
 
 record GState : Type where
@@ -71,14 +71,14 @@ updateCertDeposit _ (ccreghot _ _)      deposits = deposits
 --   = (deposits ∪⁺ certDeposit cert pp) ∣ certRefund cert ᶜ
 
 private variable
-  rwds rewards           : Credential ⇀ Coin
+  rwds rewards           : Rewards
   dReps                  : Credential ⇀ Epoch
   sDelegs stakeDelegs    : Credential ⇀ KeyHash
   ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
-  vDelegs voteDelegs     : Credential ⇀ VDeleg
-  pools                  : KeyHash ⇀ StakePoolParams
+  vDelegs voteDelegs     : VoteDelegs
+  pools                  : Pools
   retiring               : KeyHash ⇀ Epoch
-  wdrls                  : RwdAddr ⇀ Coin
+  wdrls                  : Withdrawals
 
   an             : Anchor
   Γ              : CertEnv

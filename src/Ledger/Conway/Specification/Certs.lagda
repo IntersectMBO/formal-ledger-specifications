@@ -16,58 +16,6 @@ open RwdAddr
 open PParams
 \end{code}
 
-\begin{figure*}[ht]
-\emph{Derived types}
-\begin{code}
-data DepositPurpose : Type where
-  CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : KeyHash      → DepositPurpose
-  DRepDeposit        : Credential   → DepositPurpose
-  GovActionDeposit   : GovActionID  → DepositPurpose
-
-CCHotKeys Deposits DReps Pools Rewards StakeDelegs : Type
-CCHotKeys    = Credential ⇀ Maybe Credential
-Deposits     = DepositPurpose ⇀ Coin
-DReps        = Credential ⇀ Epoch
-Rewards      = Credential ⇀ Coin
-Pools        = KeyHash ⇀ StakePoolParams
-StakeDelegs  = Credential ⇀ KeyHash
-
-\end{code}
-\begin{code}[hide]
-record HasDeposits {a} (A : Type a) : Type a where
-  field DepositsOf : A → Deposits
-open HasDeposits ⦃...⦄ public
-
-record HasDReps {a} (A : Type a) : Type a where
-  field DRepsOf : A → DReps
-open HasDReps    ⦃...⦄ public
-
-record HasPools {a} (A : Type a) : Type a where
-  field PoolsOf : A → Pools
-open HasPools ⦃...⦄ public
-
-
-record HasRewards {a} (A : Type a) : Type a where
-  field RewardsOf : A → Rewards
-open HasRewards  ⦃...⦄ public
-
-record HasStakeDelegs {a} (A : Type a) : Type a where
-  field StakeDelegsOf : A -> StakeDelegs
-open HasStakeDelegs ⦃...⦄ public
-
-record HasVoteDelegs {a} (A : Type a) : Type a where
-  field VoteDelegsOf : A → VoteDelegs
-open HasVoteDelegs ⦃...⦄ public
-
-instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
-\end{code}
-\caption{Deposit types}
-\label{fig:certs:deposit-types}
-\end{figure*}
-
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{NoConway}
@@ -83,6 +31,63 @@ record StakePoolParams : Type where
 \end{NoConway}
 \end{AgdaMultiCode}
 \caption{Stake pool parameter definitions}
+\end{figure*}
+
+\begin{figure*}[ht]
+\emph{Derived types}
+\begin{code}
+data DepositPurpose : Type where
+  CredentialDeposit  : Credential   → DepositPurpose
+  PoolDeposit        : KeyHash      → DepositPurpose
+  DRepDeposit        : Credential   → DepositPurpose
+  GovActionDeposit   : GovActionID  → DepositPurpose
+
+CCHotKeys Deposits DReps Pools Retiring Rewards StakeDelegs : Type
+CCHotKeys    = Credential ⇀ Maybe Credential
+Deposits     = DepositPurpose ⇀ Coin
+DReps        = Credential ⇀ Epoch
+Pools        = KeyHash ⇀ StakePoolParams
+Retiring     = KeyHash ⇀ Epoch
+Rewards      = Credential ⇀ Coin
+StakeDelegs  = Credential ⇀ KeyHash
+
+
+\end{code}
+\begin{code}[hide]
+record HasCCHotKeys {a} (A : Type a) : Type a where
+  field CCHotKeysOf : A → Credential ⇀ Maybe Credential
+open HasCCHotKeys ⦃...⦄ public
+
+record HasDeposits {a} (A : Type a) : Type a where
+  field DepositsOf : A → Deposits
+open HasDeposits ⦃...⦄ public
+
+record HasDReps {a} (A : Type a) : Type a where
+  field DRepsOf : A → DReps
+open HasDReps    ⦃...⦄ public
+
+record HasPools {a} (A : Type a) : Type a where
+  field PoolsOf : A → Pools
+open HasPools ⦃...⦄ public
+
+record HasRetiring {a} (A : Type a) : Type a where
+  field RetiringOf : A → KeyHash ⇀ Epoch
+open HasRetiring ⦃...⦄ public
+
+record HasRewards {a} (A : Type a) : Type a where
+  field RewardsOf : A → Rewards
+open HasRewards  ⦃...⦄ public
+
+record HasStakeDelegs {a} (A : Type a) : Type a where
+  field StakeDelegsOf : A -> StakeDelegs
+open HasStakeDelegs ⦃...⦄ public
+
+instance
+  unquoteDecl DecEq-DepositPurpose = derive-DecEq
+    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
+\end{code}
+\caption{Deposit types}
+\label{fig:certs:deposit-types}
 \end{figure*}
 
 \begin{figure*}[h!]
@@ -141,13 +146,10 @@ record CertEnv : Type where
     coldCreds : ℙ Credential
 \end{code}
 \begin{code}[hide]
-record HasWithdrawals {a} (A : Type a) : Type a where
-  field WithdrawalsOf : A → Withdrawals
-open HasWithdrawals ⦃...⦄ public
 
 instance
-  HasWithdrawals CertEnv : HasWithdrawals CertEnv
-  HasWdrls-CertEnv .WithdrawalsOf = CertEnv.wdrls
+  HasWithdrawals-CertEnv : HasWithdrawals CertEnv
+  HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
 \end{code}
 \begin{code}
 
@@ -167,13 +169,9 @@ record HasDState {a} (A : Type a) : Type a where
   field DStateOf : A → DState
 open HasDState ⦃...⦄ public
 
-
-
-
-
 instance
-  HasVDelegs-DState : HasVDelegs DState
-  HasVDelegs-DState .VoteDelegsOf = DState.voteDelegs
+  HasVoteDelegs-DState : HasVoteDelegs DState
+  HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
 
   HasStakeDelegs-DState : HasStakeDelegs DState
   HasStakeDelegs-DState .StakeDelegsOf = DState.stakeDelegs
@@ -198,8 +196,8 @@ instance
   HasPools-PState : HasPools PState
   HasPools-PState .PoolsOf = PState.pools
 
---  HasRetiring-PState : HasRetiring PState
---  HasRetiring-PState .RetiringOf = PState.retiring
+  HasRetiring-PState : HasRetiring PState
+  HasRetiring-PState .RetiringOf = PState.retiring
 \end{code}
 \end{NoConway}
 \begin{code}
@@ -212,16 +210,12 @@ record GState : Type where
 \begin{code}
   field
     dreps      : DReps
-    ccHotKeys  : CCHotKeys
+    ccHotKeys  : Credential ⇀ Maybe Credential
 \end{code}
 \begin{code}[hide]
 record HasGState {a} (A : Type a) : Type a where
   field GStateOf : A → GState
 open HasGState ⦃...⦄ public
-
-record HasCCHotKeys {a} (A : Type a) : Type a where
-  field CCHotKeysOf : A → CCHotKeys
-open HasCCHotKeys ⦃...⦄ public
 
 instance
   HasDReps-GState : HasDReps GState
@@ -258,14 +252,17 @@ instance
   HasGState-CertState : HasGState CertState
   HasGState-CertState .GStateOf = CertState.gState
 
- -- HasRewards-CertState : HasRewards CertState
- -- HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf 
+  HasRewards-CertState : HasRewards CertState
+  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf
 
   HasDReps-CertState : HasDReps CertState
   HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf
 
   HasPools-CertState : HasPools CertState
   HasPools-CertState .PoolsOf = PoolsOf ∘ PStateOf
+
+  HasVoteDelegs-CertState : HasVoteDelegs CertState
+  HasVoteDelegs-CertState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf
 \end{code}
 \begin{code}
 
@@ -308,7 +305,7 @@ private variable
   ccKeys ccHotKeys       : CCHotKeys
   vDelegs voteDelegs     : VoteDelegs
   pools                  : Pools
-  retiring               : KeyHash ⇀ Epoch
+  retiring               : Retiring
   wdrls                  : Withdrawals
 
   an          : Anchor
@@ -359,7 +356,7 @@ functionality has been retired. So all funds locked behind pointer
 addresses are still accessible, they just don't count towards the
 stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
-the \TreasuryWdrl{} governance action in case of the MIR certificates.
+the \TreasuryWithdrawal{} governance action in case of the MIR certificates.
 
 \subsubsection{Explicit Deposits}
 

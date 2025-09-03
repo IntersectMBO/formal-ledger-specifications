@@ -126,9 +126,9 @@ threshold pp ccThreshold ga =
         (NoConfidence     , _) → ∣ ─   ∣ vote P1      ∣ vote Q1  ∣
         (UpdateCommittee  , _) → ∣ ─   ∥ P/Q2a/b                 ∣
         (NewConstitution  , _) → ∣ ✓   ∣ vote P3      ∣ ─        ∣
-        (TriggerHF        , _) → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
+        (TriggerHardFork        , _) → ∣ ✓   ∣ vote P4      ∣ vote Q4  ∣
         (ChangePParams    , x) → ∣ ✓   ∥ P/Q5 x                  ∣
-        (TreasuryWdrl     , _) → ∣ ✓   ∣ vote P6      ∣ ─        ∣
+        (TreasuryWithdrawal     , _) → ∣ ✓   ∣ vote P6      ∣ ─        ∣
         (Info             , _) → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
           where
 \end{code}
@@ -200,7 +200,7 @@ record RatifyEnv : Type where
     ccHotKeys     : Credential ⇀ Maybe Credential
     treasury      : Treasury
     pools         : KeyHash ⇀ StakePoolParams
-    delegatees    : Credential ⇀ VDeleg
+    delegatees    : VoteDelegs
 
 record RatifyState : Type where
   field
@@ -216,6 +216,9 @@ open HasRatifyState ⦃...⦄ public
 instance
   HasEnactState-RatifyState : HasEnactState RatifyState
   HasEnactState-RatifyState .EnactStateOf = RatifyState.es
+
+  HasTreasury-RatifyEnv : HasTreasury RatifyEnv
+  HasTreasury-RatifyEnv .TreasuryOf = RatifyEnv.treasury
 \end{code}
 \begin{code}
 
@@ -301,7 +304,7 @@ actualVotes Γ pparams cc gaTy votes
                λ where
 \end{code}
 \begin{code}
-               (_                     , TriggerHF)     → Vote.no
+               (_                     , TriggerHardFork)     → Vote.no
                (just noConfidenceRep  , NoConfidence)  → Vote.yes
                (just abstainRep       , _           )  → Vote.abstain
                _                                       → Vote.no
@@ -472,22 +475,22 @@ open EnactState
 \end{code}
 \begin{code}
 verifyPrev : (a : GovActionType) → NeedsHash a → EnactState → Type
-verifyPrev NoConfidence     h es  = h ≡ es .cc .proj₂
-verifyPrev UpdateCommittee  h es  = h ≡ es .cc .proj₂
-verifyPrev NewConstitution  h es  = h ≡ es .constitution .proj₂
-verifyPrev TriggerHF        h es  = h ≡ es .pv .proj₂
-verifyPrev ChangePParams    h es  = h ≡ es .pparams .proj₂
-verifyPrev TreasuryWdrl     _ _   = ⊤
-verifyPrev Info             _ _   = ⊤
+verifyPrev NoConfidence        h es  = h ≡ es .cc .proj₂
+verifyPrev UpdateCommittee     h es  = h ≡ es .cc .proj₂
+verifyPrev NewConstitution     h es  = h ≡ es .constitution .proj₂
+verifyPrev TriggerHardFork     h es  = h ≡ es .pv .proj₂
+verifyPrev ChangePParams       h es  = h ≡ es .pparams .proj₂
+verifyPrev TreasuryWithdrawal  _ _   = ⊤
+verifyPrev Info                _ _   = ⊤
 
 delayingAction : GovActionType → Bool
-delayingAction NoConfidence     = true
-delayingAction UpdateCommittee  = true
-delayingAction NewConstitution  = true
-delayingAction TriggerHF        = true
-delayingAction ChangePParams    = false
-delayingAction TreasuryWdrl     = false
-delayingAction Info             = false
+delayingAction NoConfidence        = true
+delayingAction UpdateCommittee     = true
+delayingAction NewConstitution     = true
+delayingAction TriggerHardFork     = true
+delayingAction ChangePParams       = false
+delayingAction TreasuryWithdrawal  = false
+delayingAction Info                = false
 
 delayed : (a : GovActionType) → NeedsHash a → EnactState → Bool → Type
 delayed gaTy h es d = ¬ verifyPrev gaTy h es ⊎ d ≡ true
@@ -504,13 +507,13 @@ acceptConds Γ stʳ (id , st) =
           open GovActionState st
 abstract
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
-  verifyPrev? NoConfidence              h es = dec
-  verifyPrev? UpdateCommittee h es = dec
-  verifyPrev? NewConstitution h es = dec
-  verifyPrev? TriggerHF       h es = dec
-  verifyPrev? ChangePParams   h es = dec
-  verifyPrev? TreasuryWdrl    h es = dec
-  verifyPrev? Info            h es = dec
+  verifyPrev? NoConfidence        h es = dec
+  verifyPrev? UpdateCommittee     h es = dec
+  verifyPrev? NewConstitution     h es = dec
+  verifyPrev? TriggerHardFork     h es = dec
+  verifyPrev? ChangePParams       h es = dec
+  verifyPrev? TreasuryWithdrawal  h es = dec
+  verifyPrev? Info                h es = dec
 
   delayed? : ∀ a h es d → Dec (delayed a h es d)
   delayed? a h es d = let instance _ = ⁇ verifyPrev? a h es in dec
@@ -581,10 +584,10 @@ data _⊢_⇀⦇_,RATIFY⦈_ where
 \end{code}
 \begin{code}
   RATIFY-Accept :
-    let treasury       = Γ .treasury
+    let treasury       = TreasuryOf Γ
         e              = Γ .currentEpoch
         (gaId , gaSt)  = a
-        action         = gaSt .action
+        action         = GovActionOf gaSt
     in
     ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
     ∙ ⟦ gaId , treasury , e ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
