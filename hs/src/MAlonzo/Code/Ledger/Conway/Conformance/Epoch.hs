@@ -475,7 +475,7 @@ du_getStakeCred_2554 ::
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 du_getStakeCred_2554
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getStakeCred_2958
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getStakeCred_2964
 -- Ledger.Conway.Conformance.Epoch._.mkStakeDistrs
 d_mkStakeDistrs_2556 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -495,7 +495,7 @@ du_mkStakeDistrs_2556 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_StakeDistrs_2352
 du_mkStakeDistrs_2556 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3194
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3200
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.toRwdAddr
 d_toRwdAddr_2558 ::
@@ -510,7 +510,7 @@ du_toRwdAddr_2558 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
 du_toRwdAddr_2558 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRwdAddr_2954
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRwdAddr_2960
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch.EpochState
 d_EpochState_2560 a0 a1 = ()
