@@ -81,99 +81,99 @@ d_Value_562 ::
   ()
 d_Value_562 = erased
 -- Ledger.Conway.Specification.Abstract._.Withdrawals
-d_Withdrawals_572 ::
+d_Withdrawals_570 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   ()
-d_Withdrawals_572 = erased
+d_Withdrawals_570 = erased
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovProposal
-d_GovProposal_900 a0 = ()
+d_GovProposal_898 a0 = ()
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovVoter
-d_GovVoter_912 a0 = ()
+d_GovVoter_910 a0 = ()
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovProposal.action
-d_action_1006 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_876
-d_action_1006 v0
+d_action_1002 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_874
+d_action_1002 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_964
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_962
       (coe v0)
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovProposal.anchor
-d_anchor_1008 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Anchor_810
-d_anchor_1008 v0
+d_anchor_1004 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Anchor_808
+d_anchor_1004 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_anchor_974
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_anchor_972
       (coe v0)
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovProposal.deposit
-d_deposit_1010 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950 ->
+d_deposit_1006 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948 ->
   Integer
-d_deposit_1010 v0
+d_deposit_1006 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_deposit_970
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_deposit_968
       (coe v0)
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovProposal.policy
-d_policy_1012 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950 ->
+d_policy_1008 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948 ->
   Maybe AgdaAny
-d_policy_1012 v0
+d_policy_1008 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_policy_968
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_policy_966
       (coe v0)
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovProposal.prevAction
-d_prevAction_1014 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950 ->
+d_prevAction_1010 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948 ->
   AgdaAny
-d_prevAction_1014 v0
+d_prevAction_1010 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_prevAction_966
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_prevAction_964
       (coe v0)
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovProposal.returnAddr
-d_returnAddr_1016 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950 ->
+d_returnAddr_1012 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104
-d_returnAddr_1016 v0
+d_returnAddr_1012 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_972
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_returnAddr_970
       (coe v0)
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovVoter.gvCredential
-d_gvCredential_1038 ::
+d_gvCredential_1034 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_784 ->
   AgdaAny
-d_gvCredential_1038 v0
+d_gvCredential_1034 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvCredential_792
       (coe v0)
 -- Ledger.Conway.Specification.Abstract._.GovActions.GovVoter.gvRole
-d_gvRole_1040 ::
+d_gvRole_1036 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_784 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovRole_774
-d_gvRole_1040 v0
+d_gvRole_1036 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvRole_790
       (coe v0)
 -- Ledger.Conway.Specification.Abstract._.RwdAddr.net
-d_net_1488 ::
+d_net_1484 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
   AgdaAny
-d_net_1488 v0
+d_net_1484 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_net_110 (coe v0)
 -- Ledger.Conway.Specification.Abstract._.RwdAddr.stake
-d_stake_1490 ::
+d_stake_1486 ::
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
-d_stake_1490 v0
+d_stake_1486 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_112 (coe v0)
 -- Ledger.Conway.Specification.Abstract._.DCert
-d_DCert_1826 a0 = ()
+d_DCert_1822 a0 = ()
 -- Ledger.Conway.Specification.Abstract.indexOf
-d_indexOf_2188 a0 = ()
-data T_indexOf_2188
-  = C_constructor_2214 (MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1222 ->
-                        [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1222] ->
+d_indexOf_2184 a0 = ()
+data T_indexOf_2184
+  = C_constructor_2210 (MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1220 ->
+                        [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1220] ->
                         Maybe AgdaAny)
                        (MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
                         MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny)
@@ -183,103 +183,103 @@ data T_indexOf_2188
                        (MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_784 ->
                         [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_784] ->
                         Maybe AgdaAny)
-                       (MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950 ->
-                        [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950] ->
+                       (MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948 ->
+                        [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948] ->
                         Maybe AgdaAny)
 -- Ledger.Conway.Specification.Abstract.indexOf.indexOfDCert
-d_indexOfDCert_2202 ::
-  T_indexOf_2188 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1222 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1222] ->
+d_indexOfDCert_2198 ::
+  T_indexOf_2184 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1220 ->
+  [MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DCert_1220] ->
   Maybe AgdaAny
-d_indexOfDCert_2202 v0
+d_indexOfDCert_2198 v0
   = case coe v0 of
-      C_constructor_2214 v1 v2 v3 v4 v5 v6 -> coe v1
+      C_constructor_2210 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.indexOf.indexOfRwdAddr
-d_indexOfRwdAddr_2204 ::
-  T_indexOf_2188 ->
+d_indexOfRwdAddr_2200 ::
+  T_indexOf_2184 ->
   MAlonzo.Code.Ledger.Core.Specification.Address.T_RwdAddr_104 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 -> Maybe AgdaAny
-d_indexOfRwdAddr_2204 v0
+d_indexOfRwdAddr_2200 v0
   = case coe v0 of
-      C_constructor_2214 v1 v2 v3 v4 v5 v6 -> coe v2
+      C_constructor_2210 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.indexOf.indexOfTxIn
-d_indexOfTxIn_2206 ::
-  T_indexOf_2188 ->
+d_indexOfTxIn_2202 ::
+  T_indexOf_2184 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> Maybe AgdaAny
-d_indexOfTxIn_2206 v0
+d_indexOfTxIn_2202 v0
   = case coe v0 of
-      C_constructor_2214 v1 v2 v3 v4 v5 v6 -> coe v3
+      C_constructor_2210 v1 v2 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.indexOf.indexOfPolicyId
-d_indexOfPolicyId_2208 ::
-  T_indexOf_2188 -> AgdaAny -> [AgdaAny] -> Maybe AgdaAny
-d_indexOfPolicyId_2208 v0
+d_indexOfPolicyId_2204 ::
+  T_indexOf_2184 -> AgdaAny -> [AgdaAny] -> Maybe AgdaAny
+d_indexOfPolicyId_2204 v0
   = case coe v0 of
-      C_constructor_2214 v1 v2 v3 v4 v5 v6 -> coe v4
+      C_constructor_2210 v1 v2 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.indexOf.indexOfVote
-d_indexOfVote_2210 ::
-  T_indexOf_2188 ->
+d_indexOfVote_2206 ::
+  T_indexOf_2184 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_784 ->
   [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_784] ->
   Maybe AgdaAny
-d_indexOfVote_2210 v0
+d_indexOfVote_2206 v0
   = case coe v0 of
-      C_constructor_2214 v1 v2 v3 v4 v5 v6 -> coe v5
+      C_constructor_2210 v1 v2 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.indexOf.indexOfProposal
-d_indexOfProposal_2212 ::
-  T_indexOf_2188 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_950] ->
+d_indexOfProposal_2208 ::
+  T_indexOf_2184 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948 ->
+  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_948] ->
   Maybe AgdaAny
-d_indexOfProposal_2212 v0
+d_indexOfProposal_2208 v0
   = case coe v0 of
-      C_constructor_2214 v1 v2 v3 v4 v5 v6 -> coe v6
+      C_constructor_2210 v1 v2 v3 v4 v5 v6 -> coe v6
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.AbstractFunctions
-d_AbstractFunctions_2216 a0 = ()
-data T_AbstractFunctions_2216
-  = C_constructor_2238 (AgdaAny -> AgdaAny -> Integer)
-                       (AgdaAny -> Integer) T_indexOf_2188
+d_AbstractFunctions_2212 a0 = ()
+data T_AbstractFunctions_2212
+  = C_constructor_2234 (AgdaAny -> AgdaAny -> Integer)
+                       (AgdaAny -> Integer) T_indexOf_2184
                        (AgdaAny -> AgdaAny -> AgdaAny -> [AgdaAny] -> Bool)
                        (MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer)
 -- Ledger.Conway.Specification.Abstract.AbstractFunctions.txscriptfee
-d_txscriptfee_2228 ::
-  T_AbstractFunctions_2216 -> AgdaAny -> AgdaAny -> Integer
-d_txscriptfee_2228 v0
+d_txscriptfee_2224 ::
+  T_AbstractFunctions_2212 -> AgdaAny -> AgdaAny -> Integer
+d_txscriptfee_2224 v0
   = case coe v0 of
-      C_constructor_2238 v1 v2 v3 v4 v5 -> coe v1
+      C_constructor_2234 v1 v2 v3 v4 v5 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.AbstractFunctions.serSize
-d_serSize_2230 :: T_AbstractFunctions_2216 -> AgdaAny -> Integer
-d_serSize_2230 v0
+d_serSize_2226 :: T_AbstractFunctions_2212 -> AgdaAny -> Integer
+d_serSize_2226 v0
   = case coe v0 of
-      C_constructor_2238 v1 v2 v3 v4 v5 -> coe v2
+      C_constructor_2234 v1 v2 v3 v4 v5 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.AbstractFunctions.indexOfImp
-d_indexOfImp_2232 :: T_AbstractFunctions_2216 -> T_indexOf_2188
-d_indexOfImp_2232 v0
+d_indexOfImp_2228 :: T_AbstractFunctions_2212 -> T_indexOf_2184
+d_indexOfImp_2228 v0
   = case coe v0 of
-      C_constructor_2238 v1 v2 v3 v4 v5 -> coe v3
+      C_constructor_2234 v1 v2 v3 v4 v5 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.AbstractFunctions.runPLCScript
-d_runPLCScript_2234 ::
-  T_AbstractFunctions_2216 ->
+d_runPLCScript_2230 ::
+  T_AbstractFunctions_2212 ->
   AgdaAny -> AgdaAny -> AgdaAny -> [AgdaAny] -> Bool
-d_runPLCScript_2234 v0
+d_runPLCScript_2230 v0
   = case coe v0 of
-      C_constructor_2238 v1 v2 v3 v4 v5 -> coe v4
+      C_constructor_2234 v1 v2 v3 v4 v5 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Specification.Abstract.AbstractFunctions.scriptSize
-d_scriptSize_2236 ::
-  T_AbstractFunctions_2216 ->
+d_scriptSize_2232 ::
+  T_AbstractFunctions_2212 ->
   MAlonzo.Code.Data.Sum.Base.T__'8846'__30 -> Integer
-d_scriptSize_2236 v0
+d_scriptSize_2232 v0
   = case coe v0 of
-      C_constructor_2238 v1 v2 v3 v4 v5 -> coe v5
+      C_constructor_2234 v1 v2 v3 v4 v5 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
