@@ -438,9 +438,9 @@ acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 \label{fig:defs:ratify-acceptedbycc}
 \end{figure*}
 
-\Cref{fig:defs:ratify-acceptedbycc} defines the \acceptedByCC{}
-predicate. This predicate utilizes the following auxiliary
-definitions:
+\Cref{fig:defs:ratify-acceptedbycc} defines the
+\AgdaFunction{acceptedByCC} predicate. This predicate utilizes the
+following auxiliary definitions:
 %
 \begin{itemize}
   \item \AgdaFunction{castedVotes}: This map contains the votes that
@@ -468,14 +468,14 @@ definitions:
     empty map, otherwise if
     %
     \begin{itemize}
-      \item The number of \CC{} members with a registered hot key is
+      \item the number of \CC{} members with a registered hot key is
       greater than the protocol parameter \AgdaBound{ccMinSize}, then
       \AgdaFunction{actualVote} is returned (as a map), otherwise;
-      \item All commitee members vote \no{}
+      \item all commitee members vote \no{}
     \end{itemize}
 
   \item \AgdaFunction{mT}: This is the threshold of the \CC{}. It may
-  be \AgdaInductiveConstructor{nothing}.
+    be \AgdaInductiveConstructor{nothing}.
 
   \item \AgdaFunction{stakeDistr} computes the stake
     distribution. Note that every constitutional committe member has a
@@ -490,10 +490,10 @@ definitions:
   \no{}.
 \end{itemize}
 
-In addition, it has to be also the case that either
+In addition, it has to be the case that either
 %
 \begin{itemize}
-  \item The size of the \CC{} is greater than \AgdaBound{ccMinSize}, or
+  \item the size of the \CC{} is greater than \AgdaBound{ccMinSize}, or
   \item the threshold function returns \AgdaInductiveConstructor{nothing}
   %% TODO: Explain this?
 \end{itemize}
@@ -526,8 +526,8 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
     activeDReps : ℙ Credential
     activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
 
-    actualPDRepVotes : VDeleg ⇀ Vote
-    actualPDRepVotes = case gaType action of
+    predeterminedDRepVotes : VDeleg ⇀ Vote
+    predeterminedDRepVotes = case gaType action of
 \end{code}
 \begin{code}[hide]
       λ where
@@ -536,8 +536,12 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
         NoConfidence → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.yes ❵
         _            → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.no  ❵
 
+    defaultDRepCredentialVotes : VDeleg ⇀ Vote
+    defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
+
     actualVotes : VDeleg ⇀ Vote
-    actualVotes  = castedVotes ∪ˡ constMap (mapˢ vDelegCredential activeDReps) Vote.no ∪ˡ actualPDRepVotes
+    actualVotes  = castedVotes ∪ˡ defaultDRepCredentialVotes
+                               ∪ˡ predeterminedDRepVotes
 
     t : ℚ
     t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action DRep)
@@ -548,56 +552,40 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting for DRep}
-\label{fig:defs:ratify-actualvotes}
+\label{fig:defs:ratify-acceptedbydrep}
 \end{figure*}
 
-\Cref{fig:defs:ratify-acceptedbydrep} defines the \actualVotes{}
-function. Given the current state about votes and other parts of the
-system it calculates a new mapping of votes, which is the mapping that
-will actually be used during ratification. Things such as default
-votes or resignation/expiry are implemented in this way.
+\Cref{fig:defs:ratify-acceptedbydrep} defines the predicate
+\AgdaFunction{acceptedByDRep}. This predicate is defined using some
+auxiliary definitions:
+%
+\begin{itemize}
+  \item \AgdaFunction{activeDReps}: This set contains all \DRep{}s
+    whose term has not expired.
 
-\actualVotes{} is defined as the union of four voting maps,
-corresponding to the constitutional committee, predefined (or auto)
-DReps, regular DReps and SPOs.
-\begin{itemize}
-\item \roleVotes{} filters the votes based on the given governance role
-  and is a helper for definitions further down.
-\item \actualDRepVotes{} adds a default vote of \no{} to all active DReps
-  that didn't vote.
-\item \actualSPOVotes{} adds a default vote to all SPOs who didn't vote,
-  with the default depending on the action.
+  \item \AgdaFunction{predeterminedDRepVotes}: This map collects the
+    predetermined votes for the \AgdaDatatype{VDeleg}. It depends on the
+    governance action at hand.
+
+  \item \AgdaFunction{defaultDRepCredentialVote}: This map sets the default
+    vote to \no{} for all the active \DRep{}s.
+
+  \item \AgdaFunction{actualVotes}: This map joins together in order of preference:
+    the casted votes, the default votes and the predetermined votes.
+
+  \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
+    These amounts correspond to the portion of the stake from the
+    \DRep{} members that has voted \yes{} and that which has voted
+    \yes{} or \no{}.
 \end{itemize}
-Let us discuss the last item above---the way SPO votes are counted---as the ledger
-specification's handling of this has evolved in response to community feedback.
-Previously, if an SPO did not vote, then it would be counted as having voted
-\abstain{} by default.  Members of the SPO community found this behavior counterintuitive
-and requested that non-voters be assigned a \no{} vote by default, with the caveat that
-an SPO could change its default setting by delegating its reward account credential
-to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
-(This change applies only after the bootstrap period; during the bootstrap period
-the logic is unchanged; see \cref{sec:conway-bootstrap-gov}.)
-To be precise, the agreed upon specification is the following: an SPO that did
-not vote is assumed to have vote \no{}, except under the following circumstances:
-\begin{itemize}
-\item if the SPO has delegated its reward credential to an
-  \texttt{AlwaysNoConfidence} DRep, then their default vote is \yes{} for
-  \NoConfidence{} proposals and \no{} for other proposals;
-\item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain}
-  DRep, then its default vote is \abstain{} for all proposals.
-\end{itemize}
-It is important to note that the credential that can now be used to set a default
-voting behavior is the credential used to withdraw staking rewards, which is not
-(in general) the same as the credential used for voting.
-%% And as a second layer, this means that if that credential is a script, it may need
-%% to have explicit logic written to be able to set a default at all.
 
 \begin{figure*}[!ht]
-\begin{code}
-
+\begin{code}[hide]
 abstract
+\end{code}
+\begin{code}
   accepted : RatifyEnv → EnactState → GovActionState → Type
-  accepted Γ es gs = acceptedByCC Γ es gs ∧ acceptedByDRep Γ es gs ∧ acceptedBySPO Γ es gs
+  accepted Γ es gs = acceptedByCC Γ es gs × acceptedByDRep Γ es gs × acceptedBySPO Γ es gs
 
   expired : Epoch → GovActionState → Type
   expired current record { expiresIn = expiresIn } = expiresIn < current
@@ -607,21 +595,8 @@ abstract
 \end{figure*}
 
 \Cref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
-functions (together with some helpers) that are used in the rules of
-RATIFY.
-\begin{itemize}
-  \item \acceptedStakeRatio{} is the ratio of accepted stake. It is
-    computed as the ratio of \yes{} votes over the votes that didn't
-    \abstain{}. The latter is equivalent to the sum of \yes{} and \no{} votes.
-    The special division symbol \AgdaFunction{/₀} indicates that in case
-    of a division by 0, the numbers 0 should be returned. This implies
-    that in the absence of stake, an action can only pass if the
-    threshold is also set to 0.
-  \item \acceptedBy{} looks up the threshold in the \threshold{} table and
-    compares it to the result of \acceptedStakeRatio{}.
-  \item \accepted{} then checks if an action is accepted by all roles; and
-  \item \expired{} checks whether a governance action is expired in a given epoch.
-\end{itemize}
+functions that are used in the rules of RATIFY.
+
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
@@ -698,17 +673,17 @@ abstract
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
 
-\Cref{fig:defs:ratify-defs-ii} defines functions that deal with
-delays and the acceptance criterion for ratification.  A given action
-can either be delayed if the action contained in \EnactState{} isn't the
+\Cref{fig:defs:ratify-defs-ii} defines functions that deal with delays
+and the acceptance criterion for ratification.  A given action can
+either be delayed if the action contained in \EnactState{} isn't the
 one the given action is building on top of, which is checked by
-\verifyPrev{}, or if a previous action was a \delayingAction{}.  Note that
-\delayingAction{} affects the future: whenever a \delayingAction{} is
-accepted all future actions are delayed.  \delayed{} then expresses the
-condition whether an action is delayed. This happens either because
-the previous action doesn't match the current one, or because the
-previous action was a delaying one. This information is passed in as
-an argument.
+\verifyPrev{}, or if a previous action was a \delayingAction{}.  Note
+that \delayingAction{} affects the future: whenever a
+\delayingAction{} is accepted all future actions are delayed.
+\delayed{} then expresses the condition whether an action is
+delayed. This happens either because the previous action doesn't match
+the current one, or because the previous action was a delaying
+one. This information is passed in as an argument.
 
 \begin{code}[hide]
 private variable

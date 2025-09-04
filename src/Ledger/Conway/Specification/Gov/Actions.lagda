@@ -132,8 +132,11 @@ different purpose.
     \TxId{} of the proposing transaction and an index to identify a proposal within a transaction;
   \item \GovRole{} (\defn{governance role}): one of three available voter roles
     defined above (\CC{}, \DRep{}, \SPO{});
-  \item \VDeleg{} (\defn{voter delegation}): one of three ways to delegate votes: by credential,
-    abstention, or no confidence (\credVoter{}, \abstainRep{}, or \noConfidenceRep{});
+  \item \VDeleg{} (\defn{voter delegation}): one of three ways to
+    delegate votes: by credential
+    (\AgdaInductiveConstructor{vDelegCredential}), abstention
+    (\AgdaInductiveConstructor{vDelegAbstain}), or no confidence
+    (\AgdaInductiveConstructor{vDelegNoConfidence});
   \item \Anchor{}: a url and a document hash;
   \item \GovAction{} (\defn{governance action}): one of seven possible actions
     (see \cref{fig:types-of-governance-actions} for definitions);
