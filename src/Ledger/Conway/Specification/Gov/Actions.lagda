@@ -315,15 +315,7 @@ instance
 \begin{code}
 isGovVoterDRep : GovVoter → Maybe Credential
 isGovVoterDRep ⟦ DRep , c ⟧ᵍᵛ = just c
-isGovVoterDRep _                         = nothing
-
-isGovVoterCC : GovVoter → Maybe Credential
-isGovVoterCC ⟦ CC , c ⟧ᵍᵛ = just c
-isGovVoterCC _                       = nothing
-
-isGovVoterSPO : GovVoter → Maybe KeyHash
-isGovVoterSPO ⟦ SPO , c ⟧ᵍᵛ = just c
-isGovVoterSPO _                        = nothing
+isGovVoterDRep _              = nothing
 
 isGovVoterCredential : GovVoter → Maybe Credential
 isGovVoterCredential ⟦ CC   , c ⟧ᵍᵛ = just c
