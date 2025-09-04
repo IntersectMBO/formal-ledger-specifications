@@ -395,7 +395,6 @@ opaque
            }
 
     where
-      module ss = Snapshot ss
 
       stakeFromGADeposits : Credential ⇀ Coin
       stakeFromGADeposits = aggregateBy
