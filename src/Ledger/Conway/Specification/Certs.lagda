@@ -66,13 +66,14 @@ instance
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
 \begin{code}
-CCHotKeys DReps PoolEnv Pools Retiring Rewards StakeDelegs : Type
+CCHotKeys DReps PoolEnv Pools Retiring Rewards Stake StakeDelegs : Type
 CCHotKeys    = Credential ⇀ Maybe Credential
 DReps        = Credential ⇀ Epoch
 PoolEnv      = PParams
 Pools        = KeyHash ⇀ StakePoolParams
 Retiring     = KeyHash ⇀ Epoch
 Rewards      = Credential ⇀ Coin
+Stake        = Credential ⇀ Coin
 StakeDelegs  = Credential ⇀ KeyHash
 \end{code}
 \begin{code}[hide]
@@ -91,6 +92,9 @@ record HasRetiring {a} (A : Type a) : Type a where
 record HasRewards {a} (A : Type a) : Type a where
   field RewardsOf : A → Rewards
 
+record HasStake {a} (A : Type a) : Type a where
+  field StakeOf : A -> Stake
+
 record HasStakeDelegs {a} (A : Type a) : Type a where
   field StakeDelegsOf : A -> StakeDelegs
 
@@ -99,6 +103,7 @@ open HasDReps ⦃...⦄ public
 open HasPools ⦃...⦄ public
 open HasRetiring ⦃...⦄ public
 open HasRewards ⦃...⦄ public
+open HasStake ⦃...⦄ public
 open HasStakeDelegs ⦃...⦄ public
 \end{code}
 \end{AgdaMultiCode}

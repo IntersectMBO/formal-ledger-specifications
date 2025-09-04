@@ -348,9 +348,6 @@ Relevant quantities are:
   pool.
 
 ```agda
-Stake : Type
-Stake = Credential ⇀ Coin
-
 rewardOnePool :  PParams → Coin → ℕ → ℕ → StakePoolParams
                  → Stake → UnitInterval → UnitInterval → Coin → Stake
 
@@ -567,7 +564,7 @@ rewards.
 - `delegations`{.AgdaField}: A delegation map, that is a mapping from
   stake credentials to the stake pools that they delegate to.
 
-- `poolParameters`{.AgdaField}: A mapping that stores the pool
+- `pools`{.AgdaField}: A mapping that stores the pool
   parameters of each stake pool.
 
 ```agda
@@ -575,12 +572,21 @@ record Snapshot : Set where
   field
     stake           : Stake
     delegations     : StakeDelegs
-    poolParameters  : KeyHash ⇀ StakePoolParams
+    pools  : KeyHash ⇀ StakePoolParams
 ```
 
 <!--
 ```agda
 instance
+  HasStake-Snapshot : HasStake Snapshot
+  HasStake-Snapshot .StakeOf = Snapshot.stake
+
+  HasStakeDelegs-Snapshot : HasStakeDelegs Snapshot
+  HasStakeDelegs-Snapshot .StakeDelegsOf = Snapshot.delegations
+
+  HasPools-Snapshot : HasPools Snapshot
+  HasPools-Snapshot .PoolsOf = Snapshot.pools
+
   unquoteDecl HasCast-Snapshot =
     derive-HasCast [ (quote Snapshot , HasCast-Snapshot) ]
 ```

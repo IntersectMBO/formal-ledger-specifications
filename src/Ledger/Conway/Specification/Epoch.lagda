@@ -228,9 +228,9 @@ createRUpd slotsPerEpoch b es total =
     reserves     = ReservesOf es
     pstakego     = es .EpochState.ss .Snapshots.go
     feeSS        = es .EpochState.ss .Snapshots.feeSS
-    stake        = pstakego .Snapshot.stake
-    delegs       = pstakego .Snapshot.delegations
-    poolParams   = pstakego .Snapshot.poolParameters
+    stake        = StakeOf pstakego
+    delegs       = StakeDelegsOf pstakego
+    poolParams   = PoolsOf pstakego
     blocksMade   = ∑[ m ← b ] m
     ρ            = fromUnitInterval (prevPp .PParams.monetaryExpansion)
     η            = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
@@ -367,17 +367,15 @@ opaque
   calculatePoolDelegatedStake ss =
       -- Shelley spec: the output map must contain keys appearing in both
       -- sd and the pool parameters.
-      sd ∣ dom (ss .poolParameters)
+      sd ∣ dom (PoolsOf ss)
     where
-      open Snapshot
-
       -- delegated stake per pool
       sd : KeyHash ⇀ Coin
-      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (ss .stake ˢ)) ᶠˢ)
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
         where mutual
           -- stake credentials delegating to each pool
           stakeCredentialsPerPool : Rel KeyHash Credential
-          stakeCredentialsPerPool = (ss .delegations ˢ) ⁻¹ʳ
+          stakeCredentialsPerPool = (StakeDelegsOf ss ˢ) ⁻¹ʳ
 \end{code}
 
 \begin{figure*}[ht]
