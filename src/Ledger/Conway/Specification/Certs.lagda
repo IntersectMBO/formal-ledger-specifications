@@ -16,6 +16,7 @@ open RwdAddr
 open PParams
 \end{code}
 
+
 \begin{figure*}
 \begin{AgdaMultiCode}
 \begin{NoConway}
@@ -30,10 +31,12 @@ record StakePoolParams : Type where
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
-\caption{Stake pool parameter definitions}
+\caption{Stake Pool Parameter Definitions}
 \end{figure*}
 
+
 \begin{figure*}[ht]
+\begin{AgdaMultiCode}
 \emph{Derived types}
 \begin{code}
 data DepositPurpose : Type where
@@ -42,53 +45,69 @@ data DepositPurpose : Type where
   DRepDeposit        : Credential   → DepositPurpose
   GovActionDeposit   : GovActionID  → DepositPurpose
 
-CCHotKeys Deposits DReps Pools Retiring Rewards StakeDelegs : Type
-CCHotKeys    = Credential ⇀ Maybe Credential
-Deposits     = DepositPurpose ⇀ Coin
-DReps        = Credential ⇀ Epoch
-Pools        = KeyHash ⇀ StakePoolParams
-Retiring     = KeyHash ⇀ Epoch
-Rewards      = Credential ⇀ Coin
-StakeDelegs  = Credential ⇀ KeyHash
-
-
+Deposits : Type
+Deposits = DepositPurpose ⇀ Coin
 \end{code}
-\begin{code}[hide]
-record HasCCHotKeys {a} (A : Type a) : Type a where
-  field CCHotKeysOf : A → Credential ⇀ Maybe Credential
-open HasCCHotKeys ⦃...⦄ public
 
+\begin{code}[hide]
 record HasDeposits {a} (A : Type a) : Type a where
   field DepositsOf : A → Deposits
 open HasDeposits ⦃...⦄ public
-
-record HasDReps {a} (A : Type a) : Type a where
-  field DRepsOf : A → DReps
-open HasDReps    ⦃...⦄ public
-
-record HasPools {a} (A : Type a) : Type a where
-  field PoolsOf : A → Pools
-open HasPools ⦃...⦄ public
-
-record HasRetiring {a} (A : Type a) : Type a where
-  field RetiringOf : A → KeyHash ⇀ Epoch
-open HasRetiring ⦃...⦄ public
-
-record HasRewards {a} (A : Type a) : Type a where
-  field RewardsOf : A → Rewards
-open HasRewards  ⦃...⦄ public
-
-record HasStakeDelegs {a} (A : Type a) : Type a where
-  field StakeDelegsOf : A -> StakeDelegs
-open HasStakeDelegs ⦃...⦄ public
 
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
     ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
 \end{code}
-\caption{Deposit types}
+\end{AgdaMultiCode}
+\caption{Deposit Types}
 \label{fig:certs:deposit-types}
 \end{figure*}
+
+
+\begin{figure*}[h!]
+\begin{AgdaMultiCode}
+\emph{Derived types}
+\begin{code}
+CCHotKeys DReps PoolEnv Pools Retiring Rewards StakeDelegs : Type
+CCHotKeys    = Credential ⇀ Maybe Credential
+DReps        = Credential ⇀ Epoch
+PoolEnv      = PParams
+Pools        = KeyHash ⇀ StakePoolParams
+Retiring     = KeyHash ⇀ Epoch
+Rewards      = Credential ⇀ Coin
+StakeDelegs  = Credential ⇀ KeyHash
+\end{code}
+\begin{code}[hide]
+record HasCCHotKeys {a} (A : Type a) : Type a where
+  field CCHotKeysOf : A → CCHotKeys
+
+record HasDReps {a} (A : Type a) : Type a where
+  field DRepsOf : A → DReps
+
+record HasPools {a} (A : Type a) : Type a where
+  field PoolsOf : A → Pools
+
+record HasRetiring {a} (A : Type a) : Type a where
+  field RetiringOf : A → Retiring
+
+record HasRewards {a} (A : Type a) : Type a where
+  field RewardsOf : A → Rewards
+
+record HasStakeDelegs {a} (A : Type a) : Type a where
+  field StakeDelegsOf : A -> StakeDelegs
+
+open HasCCHotKeys ⦃...⦄ public
+open HasDReps ⦃...⦄ public
+open HasPools ⦃...⦄ public
+open HasRetiring ⦃...⦄ public
+open HasRewards ⦃...⦄ public
+open HasStakeDelegs ⦃...⦄ public
+\end{code}
+\end{AgdaMultiCode}
+\caption{Miscellaneous Type Aliases}
+\label{fig:certs:misc-type-aliases}
+\end{figure*}
+
 
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
@@ -131,8 +150,9 @@ cwitness (reg c (suc _))     = just c
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
-\caption{Delegation definitions}
+\caption{Delegation Definitions}
 \end{figure*}
+
 
 \begin{figure*}[htb]
 \begin{AgdaMultiCode}
@@ -144,14 +164,6 @@ record CertEnv : Type where
     votes     : List GovVote
     wdrls     : Withdrawals
     coldCreds : ℙ Credential
-\end{code}
-\begin{code}[hide]
-
-instance
-  HasWithdrawals-CertEnv : HasWithdrawals CertEnv
-  HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
-\end{code}
-\begin{code}
 
 record DState : Type where
 \end{code}
@@ -163,44 +175,11 @@ record DState : Type where
     voteDelegs   : VoteDelegs
     stakeDelegs  : StakeDelegs
     rewards      : Rewards
-\end{code}
-\begin{code}[hide]
-record HasDState {a} (A : Type a) : Type a where
-  field DStateOf : A → DState
-open HasDState ⦃...⦄ public
-
-instance
-  HasVoteDelegs-DState : HasVoteDelegs DState
-  HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
-
-  HasStakeDelegs-DState : HasStakeDelegs DState
-  HasStakeDelegs-DState .StakeDelegsOf = DState.stakeDelegs
-
-  HasRewards-DState : HasRewards DState
-  HasRewards-DState .RewardsOf = DState.rewards
-\end{code}
-\begin{NoConway}
-\begin{code}
 
 record PState : Type where
   field
     pools     : Pools
     retiring  : KeyHash ⇀ Epoch
-\end{code}
-\begin{code}[hide]
-record HasPState {a} (A : Type a) : Type a where
-  field PStateOf : A → PState
-open HasPState ⦃...⦄ public
-
-instance
-  HasPools-PState : HasPools PState
-  HasPools-PState .PoolsOf = PState.pools
-
-  HasRetiring-PState : HasRetiring PState
-  HasRetiring-PState .RetiringOf = PState.retiring
-\end{code}
-\end{NoConway}
-\begin{code}
 
 record GState : Type where
 \end{code}
@@ -211,20 +190,6 @@ record GState : Type where
   field
     dreps      : DReps
     ccHotKeys  : Credential ⇀ Maybe Credential
-\end{code}
-\begin{code}[hide]
-record HasGState {a} (A : Type a) : Type a where
-  field GStateOf : A → GState
-open HasGState ⦃...⦄ public
-
-instance
-  HasDReps-GState : HasDReps GState
-  HasDReps-GState .DRepsOf = GState.dreps
-
-  HasCCHotKeys-GState : HasCCHotKeys GState
-  HasCCHotKeys-GState .CCHotKeysOf = GState.ccHotKeys
-\end{code}
-\begin{code}
 
 record CertState : Type where
 \end{code}
@@ -236,13 +201,62 @@ record CertState : Type where
     dState : DState
     pState : PState
     gState : GState
+
+record DelegEnv : Type where
+  field
+    pparams       : PParams
+    pools         : Pools
+    delegatees    : ℙ Credential
 \end{code}
+\end{AgdaMultiCode}
+\caption{Types Used for CERTS Transition System}
+\end{figure*}
+
 \begin{code}[hide]
+record HasDState {a} (A : Type a) : Type a where
+  field DStateOf : A → DState
+open HasDState ⦃...⦄ public
+
+record HasPState {a} (A : Type a) : Type a where
+  field PStateOf : A → PState
+open HasPState ⦃...⦄ public
+
+record HasGState {a} (A : Type a) : Type a where
+  field GStateOf : A → GState
+open HasGState ⦃...⦄ public
+
 record HasCertState {a} (A : Type a) : Type a where
   field CertStateOf : A → CertState
 open HasCertState ⦃...⦄ public
 
 instance
+  HasPParams-CertEnv : HasPParams CertEnv
+  HasPParams-CertEnv .PParamsOf = CertEnv.pp
+
+  HasWithdrawals-CertEnv : HasWithdrawals CertEnv
+  HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
+
+  HasVoteDelegs-DState : HasVoteDelegs DState
+  HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
+
+  HasStakeDelegs-DState : HasStakeDelegs DState
+  HasStakeDelegs-DState .StakeDelegsOf = DState.stakeDelegs
+
+  HasRewards-DState : HasRewards DState
+  HasRewards-DState .RewardsOf = DState.rewards
+
+  HasPools-PState : HasPools PState
+  HasPools-PState .PoolsOf = PState.pools
+
+  HasRetiring-PState : HasRetiring PState
+  HasRetiring-PState .RetiringOf = PState.retiring
+
+  HasDReps-GState : HasDReps GState
+  HasDReps-GState .DRepsOf = GState.dreps
+
+  HasCCHotKeys-GState : HasCCHotKeys GState
+  HasCCHotKeys-GState .CCHotKeysOf = GState.ccHotKeys
+
   HasDState-CertState : HasDState CertState
   HasDState-CertState .DStateOf = CertState.dState
 
@@ -263,33 +277,14 @@ instance
 
   HasVoteDelegs-CertState : HasVoteDelegs CertState
   HasVoteDelegs-CertState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf
-\end{code}
-\begin{code}
 
-record DelegEnv : Type where
-  field
-    pparams       : PParams
-    pools         : Pools
-    delegatees    : ℙ Credential
-
-GovCertEnv  = CertEnv
-PoolEnv     = PParams
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types used for CERTS transition system}
-\end{figure*}
-
-\begin{code}[hide]
 rewardsBalance : DState → Coin
 rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 
 instance
   HasCoin-CertState : HasCoin CertState
   HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
-\end{code}
 
-\begin{code}[hide]
-instance
   unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv = derive-HasCast
     (   (quote CertEnv , HasCast-CertEnv)
     ∷   (quote DState , HasCast-DState)
@@ -423,7 +418,7 @@ data
 data
 \end{code}
 \begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv  → GState     → DCert       → GState     → Type
+  _⊢_⇀⦇_,GOVCERT⦈_   : CertEnv  → GState     → DCert       → GState     → Type
 \end{code}
 \begin{code}[hide]
 data
@@ -588,7 +583,8 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
         refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
         wdrlCreds        = mapˢ stake (dom wdrls)
         validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
-                                        ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []) )
+                                            ∪ fromList (noConfidenceRep ∷ abstainRep ∷ [])
+                                         )
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ

@@ -31,7 +31,7 @@ of the latter takes precedence over code formatting.
 ### Miscellaneous conventions
 
 1.  Type classes for accessing fields of records should be named after the *type* of
-    the field and not the field name.  For example, suppose
+    the field and not the name of the field.  For example, suppose
     ```agda
     Fees : Type
     Fees = ℕ
@@ -56,15 +56,15 @@ of the latter takes precedence over code formatting.
         HasFees-A .FeesOf = A.fee
     ```
     then, if `a : A`, we can access the `fee` field of `a` via `FeesOf a`.  From this
-    contrived example, type classes may seem like this is overkill here, but they can
-    be quite useful in practice when we have many different types that have fees or
-    donations associated with them, and we want to be able to access those values in
-    a consistent way.  Moreover, we have many examples of nested records that contain
-    fees or donations, and this allows us to access those values without having to
-    remember the specific paths to the field names of those record types.
-
-    For another example of the [getter type class pattern](#example-getter-type-class),
-    see the [🗃️ Miscellanea][] section below.
+    contrived example, you might think type classes are overkill here, and you're not
+    all wrong.  However, they can come in handy in practice, expecially when we have
+    many different types that have, say, fees or donations associated with them, and
+    we want to be able to access those values in a consistent way.  Moreover, we have
+    many examples of nested records that contain fees or donations, and the "getter type
+    class" instances allow us to access those values without having to remember the
+    specific paths to the field names of those record types.  Another example of the
+    [getter type class pattern](#example-getter-type-class) is given in the
+    [🗃️ Miscellanea][] section below.
 
 2.  Use camel case for field names (e.g., `txNetworkId` instead of `txnetworkid`).
 

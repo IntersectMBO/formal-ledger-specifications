@@ -82,17 +82,6 @@ deposit.  Deposits are stored in the `deposits`{.AgdaField} field of the
 Types](Ledger.Conway.Specification.Certs.md#deposit-types) section of the
 `Certs`{.AgdaModule} module.)
 
-The deposits have been reworked since the original Shelley design. We
-now track the amount of every deposit individually. This fixes an
-issue in the original design: An increase in deposit amounts would
-allow an attacker to make lots of deposits before that change and
-refund them after the change. The additional funds necessary would
-have been provided by the treasury. Since changes to protocol
-parameters were (and still are) known publicly and guaranteed before
-they are enacted, this comes at zero risk for an attacker. This means
-the deposit amounts could realistically never be increased. This issue
-is gone with the new design.
-
 
 *UTxO environment*
 ```agda
@@ -104,26 +93,16 @@ record UTxOEnv : Type where
     treasury  : Treasury
 ```
 
-<!--
-```agda
-instance
-  HasPParams-UTxOEnv : HasPParams UTxOEnv
-  HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
-```
--->
-
 *UTxO states*
 ```agda
 
 record UTxOState : Type where
 ```
-
 <!--
 ```agda
   constructor ⟦_,_,_,_⟧ᵘ
 ```
 -->
-
 ```agda
   field
     utxo       : UTxO
@@ -139,6 +118,9 @@ record HasUTxOState {a} (A : Type a) : Type a where
 open HasUTxOState ⦃...⦄ public
 
 instance
+  HasPParams-UTxOEnv : HasPParams UTxOEnv
+  HasPParams-UTxOEnv .PParamsOf = UTxOEnv.pparams
+
   HasUTxO-UTxOState : HasUTxO UTxOState
   HasUTxO-UTxOState .UTxOOf = UTxOState.utxo
 

@@ -154,7 +154,7 @@ data _⊢_⇀⦇_,DELEG⦈_ where
         ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵
         , updateCertDeposit pp (reg c d) dep ⟧
 
-data _⊢_⇀⦇_,GOVCERT⦈_ : GovCertEnv → GState → DCert → GState → Type where
+data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type where
   GOVCERT-regdrep : ∀ {pp} → let open PParams pp in
     ∙ (d ≡ drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────

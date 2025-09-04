@@ -398,7 +398,7 @@ to one stake pool. Relevant quantities are:
   `Credential`{.AgdaDatatype}s.
 
 ```agda
-poolStake  : KeyHash → Delegations → Stake → Stake
+poolStake  : KeyHash → StakeDelegs → Stake → Stake
 poolStake hk delegs stake = stake ∣ dom (delegs ∣^ ❴ hk ❵)
 ```
 
@@ -470,7 +470,7 @@ uncurryᵐ {A} {B} {C} abc = mapFromPartialFun lookup' domain'
 
 ```agda
 reward :  PParams → BlocksMade → Coin → (KeyHash ⇀ StakePoolParams)
-          → Stake → Delegations → Coin → Stake
+          → Stake → StakeDelegs → Coin → Stake
 reward pp blocks rewardPot poolParams stake delegs total = rewards
   where
     active      = ∑[ c ← stake ] c
@@ -574,13 +574,12 @@ rewards.
 record Snapshot : Set where
   field
     stake           : Stake
-    delegations     : Delegations
+    delegations     : StakeDelegs
     poolParameters  : KeyHash ⇀ StakePoolParams
 ```
 
 <!--
 ```agda
-
 instance
   unquoteDecl HasCast-Snapshot =
     derive-HasCast [ (quote Snapshot , HasCast-Snapshot) ]
@@ -627,9 +626,9 @@ opaque
 ```agda
       poolParams    : KeyHash ⇀ StakePoolParams
       utxoBalance   : Credential → Coin
-      activeDelegs  : Delegations
-      activeRewards : Credential ⇀ Coin
-      activeStake   : Credential ⇀ Coin
+      activeDelegs  : StakeDelegs
+      activeRewards : Rewards
+      activeStake   : Stake
 ```
 -->
 

@@ -85,8 +85,7 @@ record RwdAddr : Type where
   field net    : Network
         stake  : Credential
 
-Delegations Withdrawals : Type
-Delegations  = Credential ⇀ KeyHash
+Withdrawals : Type
 Withdrawals  = RwdAddr ⇀ Coin
 
 \end{code}
