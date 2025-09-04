@@ -37,7 +37,6 @@ record StakePoolParams : Type where
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
-\emph{Derived types}
 \begin{code}
 data DepositPurpose : Type where
   CredentialDeposit  : Credential   → DepositPurpose
@@ -66,7 +65,6 @@ instance
 
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
-\emph{Derived types}
 \begin{code}
 CCHotKeys DReps PoolEnv Pools Retiring Rewards StakeDelegs : Type
 CCHotKeys    = Credential ⇀ Maybe Credential
@@ -402,44 +400,19 @@ constitutional committee.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
-\begin{code}[hide]
-data
-\end{code}
 \begin{code}
-  _⊢_⇀⦇_,DELEG⦈_     : DelegEnv    → DState     → DCert       → DState     → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,POOL⦈_      : PoolEnv     → PState     → DCert       → PState     → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_   : CertEnv  → GState     → DCert       → GState     → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CERT⦈_      : CertEnv     → CertState  → DCert       → CertState  → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv     → CertState  → ⊤           → CertState  → Type
-\end{code}
-\begin{code}[hide]
-module _ where  -- achieves uniform (but perhaps misleading) alignment of type signatures in fig
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CERTS⦈_     : CertEnv     → CertState  → List DCert  → CertState  → Type
-\end{code}
-\begin{code}[hide]
-  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
+data _⊢_⇀⦇_,DELEG⦈_     : DelegEnv  → DState     → DCert  → DState     → Type
+
+data _⊢_⇀⦇_,POOL⦈_      : PoolEnv   → PState     → DCert  → PState     → Type
+
+data _⊢_⇀⦇_,GOVCERT⦈_   : CertEnv   → GState     → DCert  → GState     → Type
+
+data _⊢_⇀⦇_,CERT⦈_      : CertEnv   → CertState  → DCert  → CertState  → Type
+
+data _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv   → CertState  → ⊤      → CertState  → Type
+
+_⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}
@@ -448,10 +421,10 @@ module _ where  -- achieves uniform (but perhaps misleading) alignment of type s
 
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,DELEG⦈_ where
-\end{code}
 \begin{code}
+data _⊢_⇀⦇_,DELEG⦈_ -- : DelegEnv → DState → DCert → DState → Type
+  where
+
   DELEG-delegate :
     let Γ = ⟦ pp , pools , delegatees ⟧
     in
@@ -461,22 +434,19 @@ data _⊢_⇀⦇_,DELEG⦈_ where
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      Γ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mv mkh d ,DELEG⦈
-           ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      Γ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mv mkh d ,DELEG⦈ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈
-        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
 
   DELEG-reg :
     ∙ c ∉ dom rwds
     ∙ d ≡ pp .keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈
-        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈ ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}
@@ -486,15 +456,14 @@ data _⊢_⇀⦇_,DELEG⦈_ where
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,POOL⦈_ where
-\end{code}
 \begin{code}
+data _⊢_⇀⦇_,POOL⦈_ -- : PoolEnv → PState → DCert → PState → Type
+  where
+
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
+      pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
@@ -508,17 +477,16 @@ data _⊢_⇀⦇_,POOL⦈_ where
 
 \begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,GOVCERT⦈_ where
-\end{code}
 \begin{code}
+data _⊢_⇀⦇_,GOVCERT⦈_ -- : CertEnv → GState → DCert → GState → Type
+  where
+
   GOVCERT-regdrep :
     let Γ = ⟦ e , pp , vs , wdrls , cc ⟧
     in
     ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
-          ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
@@ -530,6 +498,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
     ∙ c ∈ cc
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
+
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
@@ -552,10 +521,10 @@ CERTBASE as the base case. CERTBASE does the following:
 \begin{figure*}[htbp]
 \emph{CERT transitions}
 \begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,CERT⦈_ where
-\end{code}
 \begin{code}
+data _⊢_⇀⦇_,CERT⦈_  -- : CertEnv   → CertState  → DCert  → CertState  → Type
+  where
+
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
@@ -570,14 +539,11 @@ data _⊢_⇀⦇_,CERT⦈_ where
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
-\end{code}
-\end{AgdaSuppressSpace}
-\emph{CERTBASE transition}
-\begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,CERTBASE⦈_ where
-\end{code}
-\begin{code}
+
+
+data _⊢_⇀⦇_,CERTBASE⦈_   -- : CertEnv   → CertState  → ⊤      → CertState  → Type
+  where
+
   CERT-base :
     let refresh          = mapPartial getDRepVote (fromList vs)
         refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
@@ -589,15 +555,7 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
-        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧
-        , stᵖ
-        , ⟦ dReps , ccHotKeys ⟧
-        ⟧ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧
-        , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧
-        ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧ ⇀⦇ _ ,CERTBASE⦈ ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}
