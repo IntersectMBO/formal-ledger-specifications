@@ -42,6 +42,7 @@ record CertEnv' : Type where
 instance
   HsTy-CertEnv' = autoHsType CertEnv'
     ⊣ withConstructor "MkCertEnv"
+    • withName "CertEnv"
     • fieldPrefix "ce"
   Conv-CertEnv' = autoConvert CertEnv'
 
@@ -52,9 +53,6 @@ instance
 
   HsTy-CertEnv = MkHsType CertEnv (HsType CertEnv')
   Conv-CertEnv = mkCertEnv' ⨾ Conv-CertEnv'
-
-unquoteDecl = do
-  hsTypeAlias CertEnv
 
 instance
   HsTy-DState = autoHsType DState

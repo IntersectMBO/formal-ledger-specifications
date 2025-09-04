@@ -39,6 +39,9 @@ instance
   Conv-GovVoter : Convertible GovVoter (HsType GovVoter')
   Conv-GovVoter = mkGovVoter' ⨾ Convertible-Pair
 
+unquoteDecl = do
+  hsTypeAlias GovVoter
+
 record GovVote' : Type where
   field
     gid         : GovActionID
@@ -51,12 +54,10 @@ instance
   mkGovVote' = λ where
     .to v   → let module v = GovVote v in record { gid = v.gid ; voter = to v.voter  ; vote = v.vote ; anchor = v.anchor }
     .from v → let module v = GovVote' v in record { gid = v.gid ; voter = from v.voter ; vote = v.vote ; anchor = v.anchor }
-  HsTy-GovVote' = autoHsType GovVote'
+
+  HsTy-GovVote' = autoHsType GovVote' ⊣ withConstructor "MkGovVote"
+                                      • withName "GovVote"
   Conv-GovVote' = autoConvert GovVote'
 
   HsTy-GovVote = MkHsType GovVote (HsType GovVote')
   Conv-GovVote = mkGovVote' ⨾ Conv-GovVote'
-
-unquoteDecl = do
-  hsTypeAlias GovVote
-  hsTypeAlias GovVoter
