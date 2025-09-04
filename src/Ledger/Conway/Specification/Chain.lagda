@@ -13,6 +13,7 @@ module Ledger.Conway.Specification.Chain
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Conway.Specification.BlockBody txs abs public
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
@@ -33,10 +34,6 @@ record ChainState : Type where
   field
     newEpochState  : NewEpochState
 
-record Block : Type where
-  field
-    ts    : List Tx
-    slot  : Slot
 \end{code}
 \end{AgdaMultiCode}
 \caption{Definitions CHAIN transition system}
@@ -143,7 +140,8 @@ data
   CHAIN : {b : Block} {nes : NewEpochState} {cs : ChainState}
 \end{code}
 \begin{code}[hide]
-    → let open ChainState cs; open Block b; open NewEpochState nes
+    → let open ChainState cs; open Block b; open BHeader bheader
+          open BHBody bhbody; open NewEpochState nes
           open EpochState epochState; open EnactState es renaming (pparams to pp)
           open PParams ∣ pp ∣ using (maxRefScriptSizePerBlock) in
 \end{code}
