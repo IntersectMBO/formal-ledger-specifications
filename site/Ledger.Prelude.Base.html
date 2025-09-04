@@ -83,6 +83,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#base-types-of-the-cardano-ledger" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -631,6 +636,21 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Base
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="Ledger.Prelude.Base.html" class="md-nav__link md-nav__link--active">
         
@@ -643,6 +663,34 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#basic-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic Types
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -6495,15 +6543,61 @@
   
 
 
-  <h1>Base</h1>
+<h1 id="base-types-of-the-cardano-ledger">Base Types of the Cardano Ledger<a class="headerlink" href="#base-types-of-the-cardano-ledger" title="Permanent link">&para;</a></h1>
+<pre class="Agda hidden-source"><a id="51" class="Symbol">{-#</a> <a id="55" class="Keyword">OPTIONS</a> <a id="63" class="Pragma">--safe</a> <a id="70" class="Symbol">#-}</a>
 
-<pre class="Agda"><a id="9" class="Symbol">{-#</a> <a id="13" class="Keyword">OPTIONS</a> <a id="21" class="Pragma">--safe</a> <a id="28" class="Symbol">#-}</a>
+<a id="75" class="Keyword">module</a> <a id="82" href="Ledger.Prelude.Base.html" class="Module">Ledger.Prelude.Base</a> <a id="102" class="Keyword">where</a>
 
-<a id="33" class="Keyword">module</a> <a id="40" href="Ledger.Prelude.Base.html" class="Module">Ledger.Prelude.Base</a> <a id="60" class="Keyword">where</a>
+<a id="109" class="Keyword">open</a> <a id="114" class="Keyword">import</a> <a id="121" href="Agda.Primitive.html" class="Module">Agda.Primitive</a> <a id="136" class="Keyword">using</a> <a id="142" class="Symbol">(</a><a id="143" href="Agda.Primitive.html#915" class="Primitive">lzero</a><a id="148" class="Symbol">)</a> <a id="150" class="Keyword">renaming</a> <a id="159" class="Symbol">(</a><a id="160" href="Agda.Primitive.html#388" class="Primitive">Set</a> <a id="164" class="Symbol">to</a> <a id="167" class="Primitive">Type</a><a id="171" class="Symbol">)</a> <a id="173" class="Keyword">public</a>
+<a id="180" class="Keyword">open</a> <a id="185" class="Keyword">import</a> <a id="192" href="Data.Nat.html" class="Module">Data.Nat</a>
+</pre>
 
-<a id="67" class="Keyword">open</a> <a id="72" class="Keyword">import</a> <a id="79" href="Data.Nat.html" class="Module">Data.Nat</a>
+<h2 id="basic-types">Basic Types<a class="headerlink" href="#basic-types" title="Permanent link">&para;</a></h2>
+<pre class="Agda"><a id="Coin"></a><a id="234" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a> <a id="239" class="Symbol">:</a> <a id="241" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a>
+<a id="246" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a> <a id="251" class="Symbol">=</a> <a id="253" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
 
-<a id="Coin"></a><a id="89" href="Ledger.Prelude.Base.html#89" class="Function">Coin</a> <a id="94" class="Symbol">=</a> <a id="96" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+<a id="Donations"></a><a id="256" href="Ledger.Prelude.Base.html#256" class="Function">Donations</a> <a id="Fees"></a><a id="266" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a> <a id="Reserves"></a><a id="271" href="Ledger.Prelude.Base.html#271" class="Function">Reserves</a> <a id="Treasury"></a><a id="280" href="Ledger.Prelude.Base.html#280" class="Function">Treasury</a> <a id="289" class="Symbol">:</a> <a id="291" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a>
+<a id="296" href="Ledger.Prelude.Base.html#256" class="Function">Donations</a>         <a id="314" class="Symbol">=</a> <a id="316" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+<a id="321" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a>              <a id="339" class="Symbol">=</a> <a id="341" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+<a id="346" href="Ledger.Prelude.Base.html#271" class="Function">Reserves</a>          <a id="364" class="Symbol">=</a> <a id="366" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+<a id="371" href="Ledger.Prelude.Base.html#280" class="Function">Treasury</a>          <a id="389" class="Symbol">=</a> <a id="391" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+</pre>
+<pre class="Agda hidden-source"><a id="414" class="Comment">{- Type classes
+   These provide a handy mechanism for associating a Coin value with a type and
+   provide a consistent way to access that value via a type class instance.
+-}</a>
+
+<a id="590" class="Keyword">record</a> <a id="HasDonations"></a><a id="597" href="Ledger.Prelude.Base.html#597" class="Record">HasDonations</a> <a id="610" class="Symbol">{</a><a id="611" href="Ledger.Prelude.Base.html#611" class="Bound">a</a><a id="612" class="Symbol">}</a> <a id="614" class="Symbol">(</a><a id="615" href="Ledger.Prelude.Base.html#615" class="Bound">A</a> <a id="617" class="Symbol">:</a> <a id="619" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a> <a id="624" href="Ledger.Prelude.Base.html#611" class="Bound">a</a><a id="625" class="Symbol">)</a> <a id="627" class="Symbol">:</a> <a id="629" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a> <a id="634" href="Ledger.Prelude.Base.html#611" class="Bound">a</a> <a id="636" class="Keyword">where</a>
+  <a id="644" class="Keyword">field</a> <a id="HasDonations.DonationsOf"></a><a id="650" href="Ledger.Prelude.Base.html#650" class="Field">DonationsOf</a> <a id="662" class="Symbol">:</a> <a id="664" href="Ledger.Prelude.Base.html#615" class="Bound">A</a> <a id="666" class="Symbol">→</a> <a id="668" href="Ledger.Prelude.Base.html#256" class="Function">Donations</a>
+<a id="678" class="Keyword">open</a> <a id="683" href="Ledger.Prelude.Base.html#597" class="Module">HasDonations</a> <a id="696" class="Symbol">⦃...⦄</a> <a id="702" class="Keyword">public</a>
+
+<a id="710" class="Keyword">record</a> <a id="HasFees"></a><a id="717" href="Ledger.Prelude.Base.html#717" class="Record">HasFees</a> <a id="725" class="Symbol">{</a><a id="726" href="Ledger.Prelude.Base.html#726" class="Bound">a</a><a id="727" class="Symbol">}</a> <a id="729" class="Symbol">(</a><a id="730" href="Ledger.Prelude.Base.html#730" class="Bound">A</a> <a id="732" class="Symbol">:</a> <a id="734" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a> <a id="739" href="Ledger.Prelude.Base.html#726" class="Bound">a</a><a id="740" class="Symbol">)</a> <a id="742" class="Symbol">:</a> <a id="744" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a> <a id="749" href="Ledger.Prelude.Base.html#726" class="Bound">a</a> <a id="751" class="Keyword">where</a>
+  <a id="759" class="Keyword">field</a> <a id="HasFees.FeesOf"></a><a id="765" href="Ledger.Prelude.Base.html#765" class="Field">FeesOf</a> <a id="772" class="Symbol">:</a> <a id="774" href="Ledger.Prelude.Base.html#730" class="Bound">A</a> <a id="776" class="Symbol">→</a> <a id="778" href="Ledger.Prelude.Base.html#266" class="Function">Fees</a>
+<a id="783" class="Keyword">open</a> <a id="788" href="Ledger.Prelude.Base.html#717" class="Module">HasFees</a> <a id="796" class="Symbol">⦃...⦄</a> <a id="802" class="Keyword">public</a>
+
+<a id="810" class="Keyword">record</a> <a id="HasReserves"></a><a id="817" href="Ledger.Prelude.Base.html#817" class="Record">HasReserves</a> <a id="829" class="Symbol">{</a><a id="830" href="Ledger.Prelude.Base.html#830" class="Bound">a</a><a id="831" class="Symbol">}</a> <a id="833" class="Symbol">(</a><a id="834" href="Ledger.Prelude.Base.html#834" class="Bound">A</a> <a id="836" class="Symbol">:</a> <a id="838" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a> <a id="843" href="Ledger.Prelude.Base.html#830" class="Bound">a</a><a id="844" class="Symbol">)</a> <a id="846" class="Symbol">:</a> <a id="848" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a> <a id="853" href="Ledger.Prelude.Base.html#830" class="Bound">a</a> <a id="855" class="Keyword">where</a>
+  <a id="863" class="Keyword">field</a> <a id="HasReserves.ReservesOf"></a><a id="869" href="Ledger.Prelude.Base.html#869" class="Field">ReservesOf</a> <a id="880" class="Symbol">:</a> <a id="882" href="Ledger.Prelude.Base.html#834" class="Bound">A</a> <a id="884" class="Symbol">→</a> <a id="886" href="Ledger.Prelude.Base.html#271" class="Function">Reserves</a>
+<a id="895" class="Keyword">open</a> <a id="900" href="Ledger.Prelude.Base.html#817" class="Module">HasReserves</a> <a id="912" class="Symbol">⦃...⦄</a> <a id="918" class="Keyword">public</a>
+
+<a id="926" class="Keyword">record</a> <a id="HasTreasury"></a><a id="933" href="Ledger.Prelude.Base.html#933" class="Record">HasTreasury</a> <a id="945" class="Symbol">{</a><a id="946" href="Ledger.Prelude.Base.html#946" class="Bound">a</a><a id="947" class="Symbol">}</a> <a id="949" class="Symbol">(</a><a id="950" href="Ledger.Prelude.Base.html#950" class="Bound">A</a> <a id="952" class="Symbol">:</a> <a id="954" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a> <a id="959" href="Ledger.Prelude.Base.html#946" class="Bound">a</a><a id="960" class="Symbol">)</a> <a id="962" class="Symbol">:</a> <a id="964" href="Ledger.Prelude.Base.html#167" class="Primitive">Type</a> <a id="969" href="Ledger.Prelude.Base.html#946" class="Bound">a</a> <a id="971" class="Keyword">where</a>
+  <a id="979" class="Keyword">field</a> <a id="HasTreasury.TreasuryOf"></a><a id="985" href="Ledger.Prelude.Base.html#985" class="Field">TreasuryOf</a> <a id="996" class="Symbol">:</a> <a id="998" href="Ledger.Prelude.Base.html#950" class="Bound">A</a> <a id="1000" class="Symbol">→</a> <a id="1002" href="Ledger.Prelude.Base.html#280" class="Function">Treasury</a>
+<a id="1011" class="Keyword">open</a> <a id="1016" href="Ledger.Prelude.Base.html#933" class="Module">HasTreasury</a> <a id="1028" class="Symbol">⦃...⦄</a> <a id="1034" class="Keyword">public</a>
+
+<a id="1042" class="Comment">{- For instance, we have record types representing entities that have fees or
+   donations associated with them.  If `A` is such a type with a field called `fees`,
+   then we would define the following instance of the `HasFees` type class:
+
+       HasFees-A : HasFees A
+       HasFees-A .FeesOf = A.fees
+
+   then, if `a : A`, we can access the fees of `a` via `FeesOf a`.  From this
+   contrived example, it may seem like this is overkill, but it can be quite useful
+   in practice when we have many different types that have fees or donations
+   associated with them, and we want to be able to access those values in a
+   consistent way.  Moreover, we have many examples of nested records that
+   contain fees or donations, and this allows us to access those values without
+   having to remember the specific paths to the field names of those record types.
+-}</a>
 </pre>
 
 

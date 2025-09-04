@@ -424,6 +424,21 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="🖊️️ Style Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#miscellaneous-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      Miscellaneous conventions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -710,6 +725,15 @@
   <a href="#plotting-typechecking-times" class="md-nav__link">
     <span class="md-ellipsis">
       Plotting typechecking times
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#another-example-of-the-getter-type-class-pattern" class="md-nav__link">
+    <span class="md-ellipsis">
+      Another Example of the Getter Type Class Pattern
     </span>
   </a>
   
@@ -6873,6 +6897,45 @@
 <p>We adhere to the <a href="https://github.com/agda/agda-stdlib/blob/master/doc/style-guide.md">Agda standard library style guide</a> where practical.
 However, because we use <a href="https://en.wikipedia.org/wiki/Literate_programming">literate</a> Agda to produce html documentation, readability
 of the latter takes precedence over code formatting.</p>
+<h3 id="miscellaneous-conventions">Miscellaneous conventions<a class="headerlink" href="#miscellaneous-conventions" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Type classes for accessing fields of records should be named after the <em>type</em> of
+    the field and not the name of the field.  For example, suppose
+    <div class="highlight"><pre><span></span><code><span class="nf">Fees</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type
+Fees<span class="w"> </span><span class="ow">=</span><span class="w"> </span>ℕ
+</code></pre></div>
+    and suppose we have a record type <code>A</code> with a field called <code>fee</code>:
+    <div class="highlight"><pre><span></span><code><span class="kr">record</span><span class="w"> </span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span>
+<span class="w">    </span><span class="nf">fee</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Fees
+<span class="w">    </span><span class="ow">...</span>
+</code></pre></div>
+    Then we would make a type class called <code>HasFees</code> (since the <strong>type</strong> is called <code>Fees</code>)
+    <div class="highlight"><pre><span></span><code><span class="kr">record</span><span class="w"> </span>HasFees<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="o">)</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span><span class="w"> </span>FeesOf<span class="w"> </span><span class="ow">:</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Fees
+<span class="kr">open</span><span class="w"> </span>HasFees<span class="w"> </span>⦃...⦄<span class="w"> </span>public
+</code></pre></div>
+    and define the following instance of the <code>HasFees</code> type class for the type <code>A</code>:
+    <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kr">instance</span>
+<span class="w">    </span><span class="nf">HasFees-A</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasFees<span class="w"> </span>A
+<span class="w">    </span>HasFees-A<span class="w"> </span><span class="ow">.</span>FeesOf<span class="w"> </span><span class="ow">=</span><span class="w"> </span>A.fee
+</code></pre></div>
+    then, if <code>a : A</code>, we can access the <code>fee</code> field of <code>a</code> via <code>FeesOf a</code>.  From this
+    contrived example, you might think type classes are overkill here, and you're not
+    all wrong.  However, they can come in handy in practice, expecially when we have
+    many different types that have, say, fees or donations associated with them, and
+    we want to be able to access those values in a consistent way.  Moreover, we have
+    many examples of nested records that contain fees or donations, and the "getter type
+    class" instances allow us to access those values without having to remember the
+    specific paths to the field names of those record types.  Another example of the
+    <a href="#example-getter-type-class">getter type class pattern</a> is given in the
+    <a href="#miscellanea">🗃️ Miscellanea</a> section below.</p>
+</li>
+<li>
+<p>Use camel case for field names (e.g., <code>txNetworkId</code> instead of <code>txnetworkid</code>).</p>
+</li>
+</ol>
 <hr />
 <p><a id="project-overview"></a></p>
 <h2 id="project-overview">🗺️ Project Overview<a class="headerlink" href="#project-overview" title="Permanent link">&para;</a></h2>
@@ -7415,6 +7478,47 @@ for plotting.</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>scripts/plot_typecheck_time.py<span class="w"> </span>&gt;<span class="w"> </span>index.html
 </code></pre></div>
 and open <code>index.html</code> in your browser.</p>
+<hr />
+<p><a id="example-getter-type-class"></a></p>
+<h3 id="another-example-of-the-getter-type-class-pattern">Another Example of the Getter Type Class Pattern<a class="headerlink" href="#another-example-of-the-getter-type-class-pattern" title="Permanent link">&para;</a></h3>
+<p>Here's a more realistic example of how we use type classes to make accessing fields
+of records easier and more consistent.</p>
+<p>Let</p>
+<div class="highlight"><pre><span></span><code><span class="nf">VoteDelegs</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type
+VoteDelegs<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Credential<span class="w"> </span>⇀<span class="w"> </span>VDeleg
+
+<span class="kr">record</span><span class="w"> </span>HasVoteDelegs<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="o">)</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span><span class="w"> </span>VoteDelegsOf<span class="w"> </span><span class="ow">:</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>VoteDelegs
+<span class="kr">open</span><span class="w"> </span>HasVoteDelegs<span class="w"> </span>⦃...⦄<span class="w"> </span>public
+
+<span class="kr">record</span><span class="w"> </span>DState<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span>
+<span class="w">    </span><span class="nf">voteDelegs</span><span class="w">   </span><span class="ow">:</span><span class="w"> </span>VoteDelegs
+<span class="w">    </span><span class="ow">...</span>
+
+<span class="kr">record</span><span class="w"> </span>HasDState<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="o">)</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span><span class="w"> </span>DStateOf<span class="w"> </span><span class="ow">:</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>DState
+<span class="kr">open</span><span class="w"> </span>HasDState<span class="w"> </span>⦃...⦄<span class="w"> </span>public
+
+<span class="kr">record</span><span class="w"> </span>CertState<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span>
+<span class="w">    </span><span class="nf">dState</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>DState
+<span class="w">    </span><span class="ow">...</span>
+
+<span class="kr">instance</span>
+<span class="w">  </span><span class="nf">HasVoteDelegs-DState</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasVoteDelegs<span class="w"> </span>DState
+<span class="w">  </span>HasVoteDelegs-DState<span class="w"> </span><span class="ow">.</span>VoteDelegsOf<span class="w"> </span><span class="ow">=</span><span class="w"> </span>DState.voteDelegs
+
+<span class="w">  </span><span class="nf">HasDState-CertState</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasDState<span class="w"> </span>CertState
+<span class="w">  </span>HasDState-CertState<span class="w"> </span><span class="ow">.</span>DStateOf<span class="w"> </span><span class="ow">=</span><span class="w"> </span>CertState.dState
+
+<span class="w">  </span><span class="nf">HasVoteDelegs-CertState</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasVoteDelegs<span class="w"> </span>CertState
+<span class="w">  </span>HasVoteDelegs-CertState<span class="w"> </span><span class="ow">.</span>VoteDelegsOf<span class="w"> </span><span class="ow">=</span><span class="w"> </span>VoteDelegsOf<span class="w"> </span>∘<span class="w"> </span>DStateOf
+</code></pre></div>
+<p>Now, if we have <code>cs : CertState</code>, we can fetch the <code>voteDelegs</code> field of (the
+<code>dState</code> of) <code>cs</code> as follows: <code>VoteDelegsOf cs</code>.</p>
+<p>Without type classes we would have to <code>open DState</code> and <code>open CertState</code> and then
+write <code>cs .dState .voteDelegs</code>, or, if we want to avoid <code>open</code> clutter, <code>DState.voteDelegs CertState.dState cs</code>.</p>
 <hr />
 <h3 id="build-tools">Build-tools<a class="headerlink" href="#build-tools" title="Permanent link">&para;</a></h3>
 <p>Here is the complete annotated subtree of the <code>build-tools</code> directory.</p>

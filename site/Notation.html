@@ -614,6 +614,39 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#tables-of-variable-names-and-name-changes" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tables of Variable Names and Name Changes
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tables of Variable Names and Name Changes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#renamed-fields-of-txbody" class="md-nav__link">
+    <span class="md-ellipsis">
+      Renamed Fields of TxBody
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#renamed-contructors-of-govactiontype" class="md-nav__link">
+    <span class="md-ellipsis">
+      Renamed Contructors of GovActionType
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -6790,6 +6823,123 @@ and can safely be ignored. However there are the two exceptions:</p>
 non-essential superscripts. Since we prefer doing this by changing the Agda
 source code instead of via hiding them in this document, this is a non-trivial
 problem that will take some time to address.)</p>
+<h2 id="tables-of-variable-names-and-name-changes">Tables of Variable Names and Name Changes<a class="headerlink" href="#tables-of-variable-names-and-name-changes" title="Permanent link">&para;</a></h2>
+<h3 id="renamed-fields-of-txbody">Renamed Fields of <code class="AgdaRecord">TxBody</code><a class="headerlink" href="#renamed-fields-of-txbody" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Old Name</th>
+<th>New Name</th>
+<th>Old Type</th>
+<th>New Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="AgdaField">txins</code></td>
+<td><code class="AgdaField">txIns</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txouts</code></td>
+<td><code class="AgdaField">txOuts</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txfee</code></td>
+<td><code class="AgdaField">txFee</code></td>
+<td><code>Coin</code></td>
+<td><code>Fees</code></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txwdrls</code></td>
+<td><code class="AgdaField">txWithdrawals</code></td>
+<td><code>Wdrl</code></td>
+<td><code>Withdrawals</code></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txvldt</code></td>
+<td><code class="AgdaField">txVldt</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txcerts</code></td>
+<td><code class="AgdaField">txCerts</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txvote</code></td>
+<td><code class="AgdaField">txGovVotes</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txprop</code></td>
+<td><code class="AgdaField">txGovProposals</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txdonation</code></td>
+<td><code class="AgdaField">txDonation</code></td>
+<td><code>Coin</code></td>
+<td><code>Donations</code></td>
+</tr>
+<tr>
+<td><code class="AgdaField">curTreasury</code></td>
+<td><code class="AgdaField">currentTreasury</code></td>
+<td><code>Maybe Coin</code></td>
+<td><code>Maybe Treasury</code></td>
+</tr>
+<tr>
+<td><code class="AgdaField">txid</code></td>
+<td><code class="AgdaField">txId</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">collateral</code></td>
+<td><code class="AgdaField">collateralInputs</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">reqSigHash</code></td>
+<td><code class="AgdaField">reqSignerHashes</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+<tr>
+<td><code class="AgdaField">scriptIntHash</code></td>
+<td><code class="AgdaField">scriptIntegrityHash</code></td>
+<td>(no change)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<h3 id="renamed-contructors-of-govactiontype">Renamed Contructors of <code class="AgdaDataType">GovActionType</code><a class="headerlink" href="#renamed-contructors-of-govactiontype" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Old Name</th>
+<th>New Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code class="AgdaField">TriggerHF</code></td>
+<td><code class="AgdaField">TriggerHardFork</code></td>
+</tr>
+<tr>
+<td><code class="AgdaField">TreasuryWdrl</code></td>
+<td><code class="AgdaField">TreasuryWithdrawal</code></td>
+</tr>
+</tbody>
+</table>
 
 
 
