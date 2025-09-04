@@ -243,7 +243,7 @@ bodies. Given the current state about votes and other parts of the
 system these functions calculate whether a governance action is
 ratified by the corresponding body.
 
-\subsubsection{CC}
+\subsubsection{Constitutional Commitee}
 
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
@@ -381,7 +381,7 @@ In addition, it has to be the case that either
   %% TODO: Explain this?
 \end{itemize}
 
-\subsubsection{DRep}
+\subsubsection{Delegated Representatives}
 
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
@@ -434,7 +434,7 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
     totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 \end{code}
 \end{AgdaMultiCode}
-\caption{Vote counting for DRep}
+\caption{Vote counting for DReps}
 \label{fig:defs:ratify-acceptedbydrep}
 \end{figure*}
 
@@ -461,7 +461,8 @@ auxiliary definitions:
     \DRep{} members that has voted \yes{} and that which has voted
     \yes{} or \no{}.
 \end{itemize}
-\subsubsection{SPO}
+
+\subsubsection{Stake Pool Operators}
 
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
