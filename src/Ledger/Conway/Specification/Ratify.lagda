@@ -243,123 +243,6 @@ bodies. Given the current state about votes and other parts of the
 system these functions calculate whether a governance action is
 ratified by the corresponding body.
 
-\subsubsection{SPO}
-
-\begin{figure*}[!ht]
-\begin{AgdaMultiCode}
-\begin{code}
-acceptedBySPO
-  : RatifyEnv
-  → EnactState
-  → GovActionState
-  → Type
-acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
-  where
-\end{code}
-\begin{code}[hide]
-    open EnactState eSt using (cc; pparams)
-    open RatifyEnv Γ
-    open StakeDistrs stakeDistrs
-    open GovActionState gaSt
-    open GovVotes votes using (gvSPO)
-\end{code}
-\begin{code}
-    castedVotes : KeyHash ⇀ Vote
-    castedVotes = gvSPO
-
-    defaultVote : KeyHash → Vote
-    defaultVote kh = case lookupᵐ? pools kh of
-\end{code}
-\begin{code}[hide]
-      λ where
-\end{code}
-\begin{code}
-      nothing   → Vote.no
-      (just  p) → case lookupᵐ? delegatees (StakePoolParams.rewardAccount p) , gaType action of
-\end{code}
-\begin{code}[hide]
-             λ where
-\end{code}
-\begin{code}
-             (_                       , TriggerHardFork)  → Vote.no
-             (just vDelegNoConfidence , NoConfidence   )  → Vote.yes
-             (just vDelegAbstain      , _              )  → Vote.abstain
-             _                                            → Vote.no
-
-    actualVotes : KeyHash ⇀ Vote
-    actualVotes = castedVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
-
-    t : ℚ
-    t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action SPO)
-
-    acceptedStake totalStake : Coin
-    acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes                          ] x
-    totalStake     = ∑[ x ← stakeDistrPools ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
-\end{code}
-\end{AgdaMultiCode}
-\caption{Vote counting for SPOs}
-\label{fig:defs:ratify-acceptedbyspo}
-\end{figure*}
-
-Cref{fig:defs:ratify-acceptedbyspo}, defines the predicate
-\AgdaFunction{acceptedBySPO}, which uses the following auxiliary
-definitions:
-%
-\begin{itemize}
-  \item \AgdaFunction{castedVotes}: This map contains the votes that
-  have been casted by members of the SPO body and have been collected
-  as part of the \AgdaDatatype{GovActionState}~\AgdaBound{gaSt}.
-
-  \item \AgdaFunction{defaultVote}: This map sets a default vote to
-  all SPOs who didn't vote, with the default depending on the given
-  action, and whether the SPO has delegated their vote to one of the
-  default DReps.
-
-  \item \AgdaFunction{actualVotes}: This map combines the votes casted
-  by SPOs with \AgdaBound{defaultVote} using a left-biased union
-  making casted votes take precedence over default votes.
-
-  \item \AgdaFunction{t}: This rational is the threshold used to
-  calculate if the action is ratified by the SPO body.
-
-  \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
-  These amounts correspond to the portion of the stake from the SPOs
-  that has voted \yes{} and that which has voted \yes{} or \no{}. Note
-  that it uses the stake distribution \AgdaField{stakeDistrPools} as
-  provided in the environment.
-\end{itemize}
-
-Let us discuss in more detail the way SPO votes are counted, as the
-ledger specification's handling of this has evolved in response to
-community feedback. Previously, if an SPO did not vote, then it would
-be counted as having voted \abstain{} by default. Members of the SPO
-community found this behavior counterintuitive and requested that
-non-voters be assigned a \no{} vote by default, with the caveat that
-an SPO could change its default setting by delegating its reward
-account credential to an \texttt{AlwaysNoConfidence} DRep or an
-\texttt{AlwaysAbstain} DRep. (This change applies only after the
-bootstrap period; during the bootstrap period the logic is unchanged;
-see \cref{sec:conway-bootstrap-gov}.)  To be precise, the agreed upon
-specification is the following: an SPO that did not vote is assumed to
-have voted \no{}, except under the following circumstances:
-%
-\begin{itemize}
-  \item if the SPO has delegated its reward credential to an
-    \texttt{AlwaysNoConfidence} DRep, then their default vote is
-    \yes{} for \NoConfidence{} proposals and \no{} for other
-    proposals;
-  \item if the SPO has delegated its reward credential to an
-    \texttt{AlwaysAbstain} DRep, then its default vote is \abstain{}
-    for all proposals.
-\end{itemize}
-
-It is important to note that the credential that can now be used to
-set a default voting behavior is the credential used to withdraw
-staking rewards, which is not (in general) the same as the credential
-used for voting.
-%% And as a second layer, this means that if that credential is a script, it may need
-%% to have explicit logic written to be able to set a default at all.
-
 \subsubsection{CC}
 
 \begin{figure*}[!ht]
@@ -578,6 +461,123 @@ auxiliary definitions:
     \DRep{} members that has voted \yes{} and that which has voted
     \yes{} or \no{}.
 \end{itemize}
+\subsubsection{SPO}
+
+\begin{figure*}[!ht]
+\begin{AgdaMultiCode}
+\begin{code}
+acceptedBySPO
+  : RatifyEnv
+  → EnactState
+  → GovActionState
+  → Type
+acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
+  where
+\end{code}
+\begin{code}[hide]
+    open EnactState eSt using (cc; pparams)
+    open RatifyEnv Γ
+    open StakeDistrs stakeDistrs
+    open GovActionState gaSt
+    open GovVotes votes using (gvSPO)
+\end{code}
+\begin{code}
+    castedVotes : KeyHash ⇀ Vote
+    castedVotes = gvSPO
+
+    defaultVote : KeyHash → Vote
+    defaultVote kh = case lookupᵐ? pools kh of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+      nothing   → Vote.no
+      (just  p) → case lookupᵐ? delegatees (StakePoolParams.rewardAccount p) , gaType action of
+\end{code}
+\begin{code}[hide]
+             λ where
+\end{code}
+\begin{code}
+             (_                       , TriggerHardFork)  → Vote.no
+             (just vDelegNoConfidence , NoConfidence   )  → Vote.yes
+             (just vDelegAbstain      , _              )  → Vote.abstain
+             _                                            → Vote.no
+
+    actualVotes : KeyHash ⇀ Vote
+    actualVotes = castedVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
+
+    t : ℚ
+    t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action SPO)
+
+    acceptedStake totalStake : Coin
+    acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes                          ] x
+    totalStake     = ∑[ x ← stakeDistrPools ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+\end{code}
+\end{AgdaMultiCode}
+\caption{Vote counting for SPOs}
+\label{fig:defs:ratify-acceptedbyspo}
+\end{figure*}
+
+\Cref{fig:defs:ratify-acceptedbyspo}, defines the predicate
+\AgdaFunction{acceptedBySPO}, which uses the following auxiliary
+definitions:
+%
+\begin{itemize}
+  \item \AgdaFunction{castedVotes}: This map contains the votes that
+  have been casted by members of the SPO body and have been collected
+  as part of the \AgdaDatatype{GovActionState}~\AgdaBound{gaSt}.
+
+  \item \AgdaFunction{defaultVote}: This map sets a default vote to
+  all SPOs who didn't vote, with the default depending on the given
+  action, and whether the SPO has delegated their vote to one of the
+  default DReps.
+
+  \item \AgdaFunction{actualVotes}: This map combines the votes casted
+  by SPOs with \AgdaBound{defaultVote} using a left-biased union
+  making casted votes take precedence over default votes.
+
+  \item \AgdaFunction{t}: This rational is the threshold used to
+  calculate if the action is ratified by the SPO body.
+
+  \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
+  These amounts correspond to the portion of the stake from the SPOs
+  that has voted \yes{} and that which has voted \yes{} or \no{}. Note
+  that it uses the stake distribution \AgdaField{stakeDistrPools} as
+  provided in the environment.
+\end{itemize}
+
+Let us discuss in more detail the way SPO votes are counted, as the
+ledger specification's handling of this has evolved in response to
+community feedback. Previously, if an SPO did not vote, then it would
+be counted as having voted \abstain{} by default. Members of the SPO
+community found this behavior counterintuitive and requested that
+non-voters be assigned a \no{} vote by default, with the caveat that
+an SPO could change its default setting by delegating its reward
+account credential to an \texttt{AlwaysNoConfidence} DRep or an
+\texttt{AlwaysAbstain} DRep. (This change applies only after the
+bootstrap period; during the bootstrap period the logic is unchanged;
+see \cref{sec:conway-bootstrap-gov}.)  To be precise, the agreed upon
+specification is the following: an SPO that did not vote is assumed to
+have voted \no{}, except under the following circumstances:
+%
+\begin{itemize}
+  \item if the SPO has delegated its reward credential to an
+    \texttt{AlwaysNoConfidence} DRep, then their default vote is
+    \yes{} for \NoConfidence{} proposals and \no{} for other
+    proposals;
+  \item if the SPO has delegated its reward credential to an
+    \texttt{AlwaysAbstain} DRep, then its default vote is \abstain{}
+    for all proposals.
+\end{itemize}
+
+It is important to note that the credential that can now be used to
+set a default voting behavior is the credential used to withdraw
+staking rewards, which is not (in general) the same as the credential
+used for voting.
+%% And as a second layer, this means that if that credential is a script, it may need
+%% to have explicit logic written to be able to set a default at all.
+
 
 \begin{figure*}[!ht]
 \begin{code}[hide]
