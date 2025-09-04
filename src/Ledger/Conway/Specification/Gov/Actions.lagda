@@ -51,10 +51,9 @@ data VDeleg : Type where
   vDelegAbstain      : VDeleg
   vDelegNoConfidence : VDeleg
 
-GovActionID VoteDelegs Voter : Type
+GovActionID VoteDelegs : Type
 GovActionID  = TxId × ℕ
 VoteDelegs   = Credential ⇀ VDeleg
-Voter        = GovRole × Credential
 
 record Anchor : Type where
   field
