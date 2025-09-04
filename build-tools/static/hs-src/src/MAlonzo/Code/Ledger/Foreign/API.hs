@@ -27,7 +27,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Epoch             as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core          as X
   (GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov               as X
-  ( GovEnv(..), GovProposal(..), GovActionState(..), govStep, GovState, GovActionID, Voter)
+  ( GovEnv(..), GovProposal(..), GovActionState(..), govStep, GovState, GovActionID, GovVoter)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions       as X
   (GovAction (..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger            as X

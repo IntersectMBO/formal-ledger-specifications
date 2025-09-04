@@ -53,6 +53,9 @@ instance
   HsTy-CertEnv = MkHsType CertEnv (HsType CertEnv')
   Conv-CertEnv = mkCertEnv' ⨾ Conv-CertEnv'
 
+unquoteDecl = do
+  hsTypeAlias CertEnv
+
 instance
   HsTy-DState = autoHsType DState
     ⊣ withConstructor "MkDState"

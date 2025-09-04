@@ -8,7 +8,6 @@
 import Data.Integer as ℤ
 open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
-import Relation.Nullary.Decidable as Dec
 
 open import Ledger.Prelude hiding (_∧_; _⊔_) renaming (filterᵐ to filter; ∣_∣ to _↓)
 open import Ledger.Conway.Specification.Transaction hiding (Vote)
@@ -18,13 +17,8 @@ module Ledger.Conway.Specification.Ratify (txs : _) (open TransactionStructure t
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
-
-infixr 2 _∧_
-_∧_ = _×_
-
-instance
-  _ = +-0-commutativeMonoid
 \end{code}
+
 Governance actions are \defn{ratified} through on-chain votes.
 Different kinds of governance actions have different ratification requirements
 but always involve at least two of the three governance bodies.
@@ -377,7 +371,7 @@ acceptedByCC
   → GovActionState
   → Type
 acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
-  ∧ (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
+  × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
   where
 \end{code}
 \begin{code}[hide]
