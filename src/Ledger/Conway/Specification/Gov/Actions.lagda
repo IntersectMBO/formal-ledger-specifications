@@ -313,10 +313,6 @@ instance
 
 \begin{figure*}[htb]
 \begin{code}
-isVDelegCredential : VDeleg → Maybe Credential
-isVDelegCredential (vDelegCredential c) = just c
-isVDelegCredential _                    = nothing
-
 isGovVoterDRep : GovVoter → Maybe Credential
 isGovVoterDRep ⟦ DRep , c ⟧ᵍᵛ = just c
 isGovVoterDRep _                         = nothing
