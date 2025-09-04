@@ -59,7 +59,7 @@ data HSPlutusScript = MkHSPlutusScript {psScriptHash :: Integer, psScriptSize ::
   deriving (Show, Eq, Generic)
 data TxWitnesses = MkTxWitnesses {vkSigs :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.HSVKey Integer), scripts :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HSTimelock MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HSPlutusScript)), txdats :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet Integer), txrdmrs :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.Tag, Integer) (Integer, (Integer, Integer)))}
   deriving (Show, Eq, Generic)
-data TxBody = MkTxBody {txIns :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet (Integer, Integer)), refInputs :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet (Integer, Integer)), collateralInputs :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet (Integer, Integer)), txOuts :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap Integer ((Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr), (Integer, ((Maybe (Either Integer Integer)), (Maybe (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HSTimelock MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HSPlutusScript)))))), txId :: Integer, txCerts :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.DCert], txFee :: Integer, txWithdrawals :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr Integer), txVldt :: ((Maybe Integer), (Maybe Integer)), txADhash :: (Maybe Integer), txDonation :: Integer, txGovVotes :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote'], txGovProposals :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.GovProposal], txNetworkId :: (Maybe Integer), currentTreasury :: (Maybe Integer), mint :: Integer, reqSignerHashes :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet Integer), scriptIntegrityHash :: (Maybe Integer)}
+data TxBody = MkTxBody {txIns :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet (Integer, Integer)), refInputs :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet (Integer, Integer)), collateralInputs :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet (Integer, Integer)), txOuts :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap Integer ((Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BaseAddr MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.BootstrapAddr), (Integer, ((Maybe (Either Integer Integer)), (Maybe (Either MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HSTimelock MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.HSPlutusScript)))))), txId :: Integer, txCerts :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.DCert], txFee :: Integer, txWithdrawals :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.RwdAddr Integer), txVldt :: ((Maybe Integer), (Maybe Integer)), txADhash :: (Maybe Integer), txDonation :: Integer, txGovVotes :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote], txGovProposals :: [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.GovProposal], txNetworkId :: (Maybe Integer), currentTreasury :: (Maybe Integer), mint :: Integer, reqSignerHashes :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSSet Integer), scriptIntegrityHash :: (Maybe Integer)}
   deriving (Show, Eq, Generic)
 data Tx = MkTx {body :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.TxBody, wits :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Transaction.TxWitnesses, txsize :: Integer, isValid :: Bool, txAD :: (Maybe Integer)}
   deriving (Show, Eq, Generic)
@@ -1892,7 +1892,7 @@ check_MkTxBody_12017 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16519 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16463 ->
   Integer ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_HSMap_16
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_RwdAddr_4499
@@ -1904,7 +1904,7 @@ check_MkTxBody_12017 ::
   Integer ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovVote''_5299 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.T_GovVote_5373 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.T_GovProposal_7757 ->

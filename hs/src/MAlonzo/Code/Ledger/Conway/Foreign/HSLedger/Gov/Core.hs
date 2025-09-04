@@ -49,10 +49,9 @@ data Vote = Yes  | No  | Abstain
   deriving (Show, Eq, Generic)
 data GovVotes = GovVotes {gvCC :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote), gvDRep :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote), gvSPO :: (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.HSMap Integer MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote)}
   deriving (Show, Eq, Generic)
-data GovVote' = GovVote' {gid :: (Integer, Integer), voter :: (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole, MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential), vote :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote, anchor :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Anchor)}
-  deriving (Show, Eq, Generic)
-type GovVote = MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote'
 type GovVoter = (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole, MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential)
+data GovVote = MkGovVote {gid :: (Integer, Integer), voter :: (MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole, MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.Credential), vote :: MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Vote, anchor :: (Maybe MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.Anchor)}
+  deriving (Show, Eq, Generic)
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core._.Vote
 d_Vote_14 = ()
 -- Ledger.Conway.Foreign.HSLedger.Gov.Core.GovRole
@@ -610,7 +609,7 @@ d_Conv'45'GovVote''_118
             case coe v0 of
               C_constructor_86 v1 v2 v3 v4
                 -> coe
-                     C_GovVote''_5301
+                     C_MkGovVote_5375
                      (coe
                         MAlonzo.Code.Foreign.Haskell.Coerce.d_coerce_44 () erased () erased
                         (coe MAlonzo.Code.Foreign.Haskell.Coerce.du_pair'45'toFFI_92)
@@ -679,7 +678,7 @@ d_Conv'45'GovVote''_118
       (coe
          (\ v0 ->
             case coe v0 of
-              C_GovVote''_5301 v1 v2 v3 v4
+              C_MkGovVote_5375 v1 v2 v3 v4
                 -> coe
                      C_constructor_86
                      (coe
@@ -825,11 +824,11 @@ cover_GovVotes_1261 :: GovVotes -> ()
 cover_GovVotes_1261 x
   = case x of
       GovVotes _ _ _ -> ()
--- Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote'
-d_GovVote''_5299 = ()
-type T_GovVote''_5299 = GovVote'
-pattern C_GovVote''_5301 a0 a1 a2 a3 = GovVote' a0 a1 a2 a3
-check_GovVote''_5301 ::
+-- Ledger.Conway.Foreign.HSLedger.Gov.Core.GovVote
+d_GovVote_5373 = ()
+type T_GovVote_5373 = GovVote
+pattern C_MkGovVote_5375 a0 a1 a2 a3 = MkGovVote a0 a1 a2 a3
+check_MkGovVote_5375 ::
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
     () () Integer Integer ->
   MAlonzo.Code.Foreign.Haskell.Pair.T_Pair_22
@@ -837,9 +836,9 @@ check_GovVote''_5301 ::
     MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.T_Credential_589 ->
   T_Vote_1131 ->
   MAlonzo.Code.Agda.Builtin.Maybe.T_Maybe_10 () T_Anchor_147 ->
-  T_GovVote''_5299
-check_GovVote''_5301 = GovVote'
-cover_GovVote''_5299 :: GovVote' -> ()
-cover_GovVote''_5299 x
+  T_GovVote_5373
+check_MkGovVote_5375 = MkGovVote
+cover_GovVote_5373 :: GovVote -> ()
+cover_GovVote_5373 x
   = case x of
-      GovVote' _ _ _ _ -> ()
+      MkGovVote _ _ _ _ -> ()
