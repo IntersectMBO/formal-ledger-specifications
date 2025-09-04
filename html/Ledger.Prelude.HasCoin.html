@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Prelude.HasCoin</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--safe</a> <a id="20" class="Symbol">#-}</a>
+
+<a id="25" class="Keyword">module</a> <a id="32" href="Ledger.Prelude.HasCoin.html" class="Module">Ledger.Prelude.HasCoin</a> <a id="55" class="Keyword">where</a>
+
+<a id="62" class="Keyword">open</a> <a id="67" class="Keyword">import</a> <a id="74" href="Prelude.html" class="Module">Prelude</a>
+<a id="82" class="Keyword">open</a> <a id="87" class="Keyword">import</a> <a id="94" href="Ledger.Prelude.Base.html" class="Module">Ledger.Prelude.Base</a>
+
+<a id="115" class="Keyword">record</a> <a id="HasCoin"></a><a id="122" href="Ledger.Prelude.HasCoin.html#122" class="Record">HasCoin</a> <a id="130" class="Symbol">{</a><a id="131" href="Ledger.Prelude.HasCoin.html#131" class="Bound">a</a><a id="132" class="Symbol">}</a> <a id="134" class="Symbol">(</a><a id="135" href="Ledger.Prelude.HasCoin.html#135" class="Bound">A</a> <a id="137" class="Symbol">:</a> <a id="139" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="144" href="Ledger.Prelude.HasCoin.html#131" class="Bound">a</a><a id="145" class="Symbol">)</a> <a id="147" class="Symbol">:</a> <a id="149" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="154" href="Ledger.Prelude.HasCoin.html#131" class="Bound">a</a> <a id="156" class="Keyword">where</a>
+  <a id="164" class="Keyword">field</a> <a id="HasCoin.getCoin"></a><a id="170" href="Ledger.Prelude.HasCoin.html#170" class="Field">getCoin</a> <a id="178" class="Symbol">:</a> <a id="180" href="Ledger.Prelude.HasCoin.html#135" class="Bound">A</a> <a id="182" class="Symbol">→</a> <a id="184" href="Ledger.Prelude.Base.html#154" class="Function">Coin</a>
+
+<a id="190" class="Keyword">open</a> <a id="195" href="Ledger.Prelude.HasCoin.html#122" class="Module">HasCoin</a> <a id="203" class="Symbol">⦃...⦄</a> <a id="209" class="Keyword">public</a>
+</pre></body></html>
