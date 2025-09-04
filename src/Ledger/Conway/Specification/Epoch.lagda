@@ -390,7 +390,7 @@ opaque
 \begin{code}
   mkStakeDistrs : Snapshot → GovState → Deposits → VoteDelegs → StakeDistrs
   mkStakeDistrs ss govSt deposits voteDelegs =
-    record { stakeDistrVDeleg = aggregate₊ ((((voteDelegs ˢ) ⁻¹ʳ) ∘ʳ ((ss.stake ∪⁺ stakeFromGADeposits)ˢ)) ᶠˢ)
+    record { stakeDistrVDeleg = aggregate₊ ((((voteDelegs ˢ) ⁻¹ʳ) ∘ʳ ((StakeOf ss ∪⁺ stakeFromGADeposits)ˢ)) ᶠˢ)
            ; stakeDistrPools  = calculatePoolDelegatedStake ss
            }
 
