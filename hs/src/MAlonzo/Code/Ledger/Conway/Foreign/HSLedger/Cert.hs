@@ -782,7 +782,7 @@ d_Conv'45'CertState_456
                 -> coe
                      C_MkCertState_677
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_11911
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_11973
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_26
                            (coe
@@ -794,7 +794,7 @@ d_Conv'45'CertState_456
                                     (coe
                                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16)
                                     (coe
-                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'VDeleg_102)))
+                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'VDeleg_34)))
                               (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Conformance.Certs.d_voteDelegs_1440
@@ -882,7 +882,7 @@ d_Conv'45'CertState_456
                                     MAlonzo.Code.Ledger.Conway.Specification.Certs.d_retiring_1306
                                     (coe v2))))))
                      (coe
-                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_23591
+                        MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_23653
                         (coe
                            MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_26
                            (coe
@@ -949,7 +949,7 @@ d_Conv'45'CertState_456
                                  case coe v4 of
                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1448 v5 v6 v7 v8
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_11911
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_11973
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_26
                                              (coe
@@ -961,7 +961,7 @@ d_Conv'45'CertState_456
                                                       (coe
                                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16)
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'VDeleg_102)))
+                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'VDeleg_34)))
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
                                                    (coe v5))))
                                           (coe
@@ -1010,7 +1010,7 @@ d_Conv'45'CertState_456
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_11911 v5 v6 v7 v8
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkDState_11973 v5 v6 v7 v8
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1448
                                           (coe
@@ -1041,7 +1041,7 @@ d_Conv'45'CertState_456
                                                 (coe
                                                    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Address.d_Conv'45'Credential_16)
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'VDeleg_102))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'VDeleg_34))
                                              (MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.d_assocList_24
                                                 (coe v5)))
                                           (coe
@@ -1208,7 +1208,7 @@ d_Conv'45'CertState_456
                                  case coe v4 of
                                    MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1464 v5 v6 v7
                                      -> coe
-                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_23591
+                                          MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_23653
                                           (coe
                                              MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.C_MkHSMap_26
                                              (coe
@@ -1257,7 +1257,7 @@ d_Conv'45'CertState_456
                            (coe
                               (\ v4 ->
                                  case coe v4 of
-                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_23591 v5 v6 v7
+                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.C_MkGState_23653 v5 v6 v7
                                      -> coe
                                           MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1464
                                           (coe
@@ -1424,14 +1424,14 @@ certsStep ::
   T_CertState_675 ->
   MAlonzo.Code.Agda.Builtin.List.T_List_10
     ()
-    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16457 ->
+    MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16519 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_ComputationResult_44
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_CertState_675
 certsStep = coe d_certs'45'step_472
 d_certs'45'step_472 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_CertEnv''_7757 ->
   T_CertState_675 ->
-  [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16457] ->
+  [MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16519] ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_ComputationResult_44
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_CertState_675
 d_certs'45'step_472 v0
@@ -1469,14 +1469,14 @@ d_certs'45'step_472 v0
 certStep ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_CertEnv''_7757 ->
   T_CertState_675 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16457 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16519 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_ComputationResult_44
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_CertState_675
 certStep = coe d_cert'45'step_474
 d_cert'45'step_474 ::
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_CertEnv''_7757 ->
   T_CertState_675 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16457 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DCert_16519 ->
   MAlonzo.Code.Ledger.Prelude.Foreign.HSTypes.T_ComputationResult_44
     MAlonzo.Code.Agda.Builtin.String.T_String_6 T_CertState_675
 d_cert'45'step_474 v0
@@ -1513,9 +1513,9 @@ d_CertState_675 = ()
 type T_CertState_675 = CertState
 pattern C_MkCertState_677 a0 a1 a2 = MkCertState a0 a1 a2
 check_MkCertState_677 ::
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DState_11909 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_DState_11971 ->
   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_PState_6125 ->
-  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_GState_23589 ->
+  MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs.T_GState_23651 ->
   T_CertState_675
 check_MkCertState_677 = MkCertState
 cover_CertState_675 :: CertState -> ()

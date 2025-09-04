@@ -792,7 +792,7 @@ d_withdrawals_1882 v0
 d__'8866'_'8640''10631'_'44'GOVS'10632'__1892 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2216 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_GovEnv_2430 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_GovEnv_2428 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> ()
@@ -805,11 +805,11 @@ d_GovState_1906 ::
 d_GovState_1906 = erased
 -- Ledger.Conway.Specification.Ledger._.GovStateOf
 d_GovStateOf_1908 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2414 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2412 ->
   AgdaAny -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_GovStateOf_1908 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.d_GovStateOf_2422
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.d_GovStateOf_2420
       (coe v0)
 -- Ledger.Conway.Specification.Ledger._.HasCast-GovEnv
 d_HasCast'45'GovEnv_1910 ::
@@ -821,16 +821,16 @@ du_HasCast'45'GovEnv_1910 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovEnv_1910
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.du_HasCast'45'GovEnv_2468
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.du_HasCast'45'GovEnv_2466
 -- Ledger.Conway.Specification.Ledger._.HasGovState
 d_HasGovState_1916 a0 a1 a2 a3 = ()
 -- Ledger.Conway.Specification.Ledger._.HasGovState.GovStateOf
 d_GovStateOf_2020 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2414 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2412 ->
   AgdaAny -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 d_GovStateOf_2020 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.d_GovStateOf_2422
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.d_GovStateOf_2420
       (coe v0)
 -- Ledger.Conway.Specification.Ledger._.HasCast-UTxOEnv
 d_HasCast'45'UTxOEnv_2040 ::
@@ -1298,14 +1298,14 @@ du_HasUTxO'45'LState_2736
 d_HasGovState'45'LState_2738 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2216 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2414
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2412
 d_HasGovState'45'LState_2738 ~v0 ~v1
   = du_HasGovState'45'LState_2738
 du_HasGovState'45'LState_2738 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2414
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.T_HasGovState_2412
 du_HasGovState'45'LState_2738
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.C_constructor_2424
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.C_constructor_2422
       (coe (\ v0 -> d_govSt_2708 (coe v0)))
 -- Ledger.Conway.Specification.Ledger.HasCertState-LState
 d_HasCertState'45'LState_2740 ::

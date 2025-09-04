@@ -4453,7 +4453,7 @@ du_utxo'45'debug_2428 v0 v1 v2
                                                                                        erased
                                                                                        (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_118))
+                                                                                             MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_122))
                                                                                        (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txGovVotes_3234
                                                                                           (coe v4)))
                                                                                     (coe
@@ -4770,7 +4770,7 @@ du_utxo'45'debug_2428 v0 v1 v2
                                                                                                          erased
                                                                                                          (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_118))
+                                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_122))
                                                                                                          v21)
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -5027,7 +5027,7 @@ du_utxo'45'debug_2428 v0 v1 v2
                                                                                                          erased
                                                                                                          (MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_118))
+                                                                                                               MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_122))
                                                                                                          v21)
                                                                                                       (coe
                                                                                                          MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -5637,7 +5637,7 @@ du_utxow'45'debug_2504 v0 v1 v2
                                                                                  () erased () erased
                                                                                  (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_118))
+                                                                                       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_122))
                                                                                  (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txGovVotes_3234
                                                                                     (coe v4)))
                                                                               (coe
@@ -5949,7 +5949,7 @@ du_utxow'45'debug_2504 v0 v1 v2
                                                                                                    erased
                                                                                                    (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_118))
+                                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_122))
                                                                                                    v21)
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
@@ -6206,7 +6206,7 @@ du_utxow'45'debug_2504 v0 v1 v2
                                                                                                    erased
                                                                                                    (MAlonzo.Code.Foreign.Convertible.d_from_20
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_118))
+                                                                                                         MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core.d_Conv'45'GovVote_122))
                                                                                                    v21)
                                                                                                 (coe
                                                                                                    MAlonzo.Code.Class.Functor.Core.du_fmap_22
