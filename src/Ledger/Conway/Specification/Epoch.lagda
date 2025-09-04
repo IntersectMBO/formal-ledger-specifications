@@ -338,28 +338,72 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \end{figure*}
 \end{NoConway}
 
+\begin{NoConway}
+The \AgdaFunction{calculatePoolDelegatedState} produces a new pool distribution
+from the delegation map and stake allocation of the previous epoch.
+
+\AgdaFunction{calculatePoolDelegatedStake} performs the computation of
+\AgdaFunction{calculatePoolDistr} in the Shelley spec, without normalizing the
+stakes to be between 0 and 1.
+
+\begin{figure*}[ht]
+\begin{code}[hide]
+-- TODO: Move to agda-sets
+-- https://github.com/input-output-hk/agda-sets/pull/13
+_⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
+R ⁻¹ʳ = mapˢ swap R
+  where open import Data.Product using (swap)
+
+_∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
+R ∘ʳ S =
+  concatMapˢ
+    (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
+    R
+
+opaque
+\end{code}
+\begin{code}
+  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
+  calculatePoolDelegatedStake ss =
+      -- Shelley spec: the output map must contain keys appearing in both
+      -- sd and the pool parameters.
+      sd ∣ dom (ss .poolParameters)
+    where
+      open Snapshot
+
+      -- delegated stake per pool
+      sd : KeyHash ⇀ Coin
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (ss .stake ˢ)) ᶠˢ)
+        where mutual
+          -- stake credentials delegating to each pool
+          stakeCredentialsPerPool : Rel KeyHash Credential
+          stakeCredentialsPerPool = (ss .delegations ˢ) ⁻¹ʳ
+\end{code}
+
 \begin{figure*}[ht]
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
 open RwdAddr using (stake)
-\end{code}
-\begin{code}
-gaDepositStake : GovState → Deposits → Credential ⇀ Coin
-gaDepositStake govSt ds = aggregateBy
-  (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
-  (mapFromPartialFun (λ (gaid , _) → lookupᵐ? ds (GovActionDeposit gaid)) govSt')
-  where govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
 
-\end{code}
-\begin{code}[hide]
 opaque
 \end{code}
 \begin{code}
   mkStakeDistrs : Snapshot → GovState → Deposits → VoteDelegs → StakeDistrs
-  mkStakeDistrs ss govSt ds delegations =
-    record { stakeDistrVDeleg = ∅ ; stakeDistrPools = ∅ }
-    -- FIXME
-    -- aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
+  mkStakeDistrs ss govSt deposits voteDelegs =
+    record { stakeDistrVDeleg = aggregate₊ ((((voteDelegs ˢ) ⁻¹ʳ) ∘ʳ ((ss.stake ∪⁺ stakeFromGADeposits)ˢ)) ᶠˢ)
+           ; stakeDistrPools  = calculatePoolDelegatedStake ss
+           }
+
+    where
+      module ss = Snapshot ss
+
+      stakeFromGADeposits : Credential ⇀ Coin
+      stakeFromGADeposits = aggregateBy
+        (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
+        (mapFromPartialFun (λ (gaid , _) → lookupᵐ? deposits (GovActionDeposit gaid)) govSt')
+        where
+          govSt' : ℙ (GovActionID × RwdAddr)
+          govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}
@@ -557,46 +601,6 @@ its results by carrying out each of the following tasks.
 \caption{EPOCH transition system}
 \label{fig:epoch:sts}
 \end{figure*}
-
-\begin{NoConway}
-The \AgdaFunction{calculatePoolDelegatedState} produces a new pool distribution
-from the delegation map and stake allocation of the previous epoch.
-
-\AgdaFunction{calculatePoolDelegatedStake} performs the computation of
-\AgdaFunction{calculatePoolDistr} in the Shelley spec, without normalizing the
-stakes to be between 0 and 1.
-
-\begin{figure*}[ht]
-\begin{code}
-opaque
-  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
-  calculatePoolDelegatedStake ss =
-      -- Shelley spec: the output map must contain keys appearing in both
-      -- sd and the pool parameters.
-      sd ∣ dom (ss .poolParameters)
-    where
-      open Snapshot
-
-      -- delegated stake per pool
-      sd : KeyHash ⇀ Coin
-      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (ss .stake ˢ)) ᶠˢ)
-        where mutual
-          -- stake credentials delegating to each pool
-          stakeCredentialsPerPool : Rel KeyHash Credential
-          stakeCredentialsPerPool = (ss .delegations ˢ) ⁻¹ʳ
-
-          -- TODO: Move to agda-sets
-          -- https://github.com/input-output-hk/agda-sets/pull/13
-          _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
-          R ⁻¹ʳ = mapˢ swap R
-            where open import Data.Product using (swap)
-
-          _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
-          R ∘ʳ S =
-            concatMapˢ
-              (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
-              R
-\end{code}
 
 \begin{code}[hide]
 data
