@@ -15,7 +15,8 @@ theme:
   features:
     # - navigation.tabs
     - navigation.sections
-    - toc.integrate # Integrate table of contents into left sidebar
+    # - toc.integrate # <-- integrates toc into left sidebar
+    - toc.follow      # <-- keeps the right toc aligned with your position
     - content.tooltips
     - navigation.footer
     - navigation.tabs
