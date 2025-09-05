@@ -265,8 +265,8 @@ acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
     open GovVotes votes using (gvCC)
 \end{code}
 \begin{code}
-    castedVotes : Credential ⇀ Vote
-    castedVotes = gvCC
+    castVotes : Credential ⇀ Vote
+    castVotes = gvCC
 
     getCCHotCred : Credential × Epoch → Maybe Credential
     getCCHotCred (c , e) =
@@ -288,7 +288,7 @@ acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
       λ where
 \end{code}
 \begin{code}
-        (just c')  → maybe id Vote.no (lookupᵐ? castedVotes c')
+        (just c')  → maybe id Vote.no (lookupᵐ? castVotes c')
         _          → Vote.abstain
 
     actualVotes : Credential ⇀ Vote
@@ -326,8 +326,8 @@ acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 following auxiliary definitions:
 %
 \begin{itemize}
-  \item \AgdaFunction{castedVotes}: This map contains the votes that
-    have been casted by members of the \CC{} body and are part of the
+  \item \AgdaFunction{castVotes}: This map contains the votes that
+    have been cast by members of the \CC{} body and are part of the
     \AgdaDatatype{GovActionState}~\AgdaBound{gaSt}.
 
   \item \AgdaFunction{getCCHotCred}: This function maps a
@@ -403,8 +403,8 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
     open GovVotes votes using (gvDRep)
 \end{code}
 \begin{code}
-    castedVotes : VDeleg ⇀ Vote
-    castedVotes = mapKeys vDelegCredential gvDRep
+    castVotes : VDeleg ⇀ Vote
+    castVotes = mapKeys vDelegCredential gvDRep
 
     activeDReps : ℙ Credential
     activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
@@ -423,7 +423,7 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
     defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
 
     actualVotes : VDeleg ⇀ Vote
-    actualVotes  = castedVotes ∪ˡ defaultDRepCredentialVotes
+    actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes
                                ∪ˡ predeterminedDRepVotes
 
     t : ℚ
@@ -454,7 +454,7 @@ auxiliary definitions:
     vote to \no{} for all the active \DRep{}s.
 
   \item \AgdaFunction{actualVotes}: This map joins together in order of preference:
-    the casted votes, the default votes and the predetermined votes.
+    the cast votes, the default votes and the predetermined votes.
 
   \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
     These amounts correspond to the portion of the stake from the
@@ -483,8 +483,8 @@ acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
     open GovVotes votes using (gvSPO)
 \end{code}
 \begin{code}
-    castedVotes : KeyHash ⇀ Vote
-    castedVotes = gvSPO
+    castVotes : KeyHash ⇀ Vote
+    castVotes = gvSPO
 
     defaultVote : KeyHash → Vote
     defaultVote kh = case lookupᵐ? pools kh of
@@ -506,7 +506,7 @@ acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
              _                                            → Vote.no
 
     actualVotes : KeyHash ⇀ Vote
-    actualVotes = castedVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
+    actualVotes = castVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
 
     t : ℚ
     t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action SPO)
@@ -525,8 +525,8 @@ acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 definitions:
 %
 \begin{itemize}
-  \item \AgdaFunction{castedVotes}: This map contains the votes that
-  have been casted by members of the SPO body and have been collected
+  \item \AgdaFunction{castVotes}: This map contains the votes that
+  have been cast by members of the SPO body and have been collected
   as part of the \AgdaDatatype{GovActionState}~\AgdaBound{gaSt}.
 
   \item \AgdaFunction{defaultVote}: This map sets a default vote to
@@ -534,9 +534,9 @@ definitions:
   action, and whether the SPO has delegated their vote to one of the
   default DReps.
 
-  \item \AgdaFunction{actualVotes}: This map combines the votes casted
+  \item \AgdaFunction{actualVotes}: This map combines the votes cast
   by SPOs with \AgdaBound{defaultVote} using a left-biased union
-  making casted votes take precedence over default votes.
+  making cast votes take precedence over default votes.
 
   \item \AgdaFunction{t}: This rational is the threshold used to
   calculate if the action is ratified by the SPO body.
