@@ -180,7 +180,7 @@ du_HasCast'45'LEnv_1890 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'LEnv_1890
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_2764
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_2766
 -- Ledger.Conway.Conformance.Chain._.LState
 d_LState_1902 a0 a1 = ()
 -- Ledger.Conway.Conformance.Chain._.LState.certState
@@ -231,7 +231,7 @@ d_lastEpoch_2200 v0
 d_ru_2202 ::
   MAlonzo.Code.Ledger.Conway.Conformance.Epoch.T_NewEpochState_2712 ->
   Maybe
-    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2778
+    MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_RewardUpdate_2780
 d_ru_2202 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Conformance.Epoch.d_ru_2724 (coe v0)

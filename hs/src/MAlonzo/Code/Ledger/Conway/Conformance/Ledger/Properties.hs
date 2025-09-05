@@ -1907,7 +1907,7 @@ d_computeProof_3358 v0 v1 v2 v3 v4
                                                             du_govΓ_3352 (coe v0) (coe v2) (coe v3)
                                                             (coe v4) (coe v13))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_rmOrphanDRepVotes_2814
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_rmOrphanDRepVotes_2816
                                                             (coe v0)
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Conformance.Equivalence.Convert.du_conv_86
@@ -1918,7 +1918,7 @@ d_computeProof_3358 v0 v1 v2 v3 v4
                                                                MAlonzo.Code.Ledger.Conway.Conformance.Ledger.d_govSt_2486
                                                                (coe v3)))
                                                          (coe
-                                                            MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_txgov_2768
+                                                            MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_txgov_2770
                                                             (coe
                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3376
                                                                (coe v4))))

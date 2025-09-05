@@ -95,7 +95,7 @@ d_wits_1714 v0
 d__'8866'_'8640''10631'_'44'GOVS'10632'__1886 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2224 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_2716 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Gov.T_GovEnv_2718 ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] -> ()
@@ -116,7 +116,7 @@ du_HasCast'45'GovEnv_1894 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'GovEnv_1894
   = coe
-      MAlonzo.Code.Ledger.Conway.Conformance.Gov.du_HasCast'45'GovEnv_2748
+      MAlonzo.Code.Ledger.Conway.Conformance.Gov.du_HasCast'45'GovEnv_2750
 -- Ledger.Conway.Conformance.Ledger._.UTxOState
 d_UTxOState_1936 a0 a1 = ()
 -- Ledger.Conway.Conformance.Ledger._.updateDeposits
@@ -224,7 +224,7 @@ du_HasCast'45'LEnv_2452 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
 du_HasCast'45'LEnv_2452
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_2764
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_HasCast'45'LEnv_2766
 -- Ledger.Conway.Conformance.Ledger._.LEnv
 d_LEnv_2454 a0 a1 = ()
 -- Ledger.Conway.Conformance.Ledger._.allColdCreds
@@ -241,7 +241,7 @@ du_allColdCreds_2458 ::
   [MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20]
 du_allColdCreds_2458
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_allColdCreds_2832
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_allColdCreds_2834
 -- Ledger.Conway.Conformance.Ledger._.rmOrphanDRepVotes
 d_rmOrphanDRepVotes_2460 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -257,7 +257,7 @@ du_rmOrphanDRepVotes_2460 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_rmOrphanDRepVotes_2460 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_rmOrphanDRepVotes_2814
+      MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_rmOrphanDRepVotes_2816
       (coe v0)
 -- Ledger.Conway.Conformance.Ledger._.txgov
 d_txgov_2462 ::
@@ -270,7 +270,7 @@ du_txgov_2462 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3184 ->
   [MAlonzo.Code.Data.Sum.Base.T__'8846'__30]
 du_txgov_2462
-  = coe MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_txgov_2768
+  = coe MAlonzo.Code.Ledger.Conway.Specification.Ledger.du_txgov_2770
 -- Ledger.Conway.Conformance.Ledger._.LEnv.enactState
 d_enactState_2466 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ledger.T_LEnv_2680 ->
