@@ -369,13 +369,13 @@ opaque
       -- sd and the pool parameters.
       sd ∣ dom (PoolsOf ss)
     where
+      -- stake credentials delegating to each pool
+      stakeCredentialsPerPool : Rel KeyHash Credential
+      stakeCredentialsPerPool = (StakeDelegsOf ss ˢ) ⁻¹ʳ
+
       -- delegated stake per pool
       sd : KeyHash ⇀ Coin
-      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
-        where mutual
-          -- stake credentials delegating to each pool
-          stakeCredentialsPerPool : Rel KeyHash Credential
-          stakeCredentialsPerPool = (StakeDelegsOf ss ˢ) ⁻¹ʳ
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)          
 \end{code}
 
 \begin{figure*}[ht]
