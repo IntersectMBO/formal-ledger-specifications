@@ -1,13 +1,15 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import ScriptVerification.MultiSig.Datum
+open import Ledger.Conway.Specification.Test.Examples.MultiSig.Datum
 open import Relation.Binary using (REL; Decidable)
 open import Level using (Level; _⊔_; suc)
 open import Data.Maybe renaming (map to maybeMap)
 open import Data.List using (filter)
 
-open import ScriptVerification.Prelude MultiSigData
+open import Ledger.Conway.Specification.Test.Prelude MultiSigData
 
-module ScriptVerification.MultiSig.Validator where
+module Ledger.Conway.Specification.Test.Examples.MultiSig.Validator where
 
 PubKeyHash = ℕ
 
@@ -16,21 +18,27 @@ record MultiSig : Set where
     signatories : List PubKeyHash
     minNumSignatures : ℕ
 
-open import ScriptVerification.SymbolicData MultiSigData
-open import ScriptVerification.LedgerImplementation SData SData
-open import Ledger.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Test.SymbolicData MultiSigData
+
+--TODO: Implement show properly
+instance
+  ShowMultiSigData : Show MultiSigData
+  ShowMultiSigData = mkShow (λ x → "")
+
+open import Ledger.Conway.Specification.Test.LedgerImplementation SData SData
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure
-open import ScriptVerification.AbstractImplementation SData SData valContext
-open import ScriptVerification.Lib SData SData valContext
-open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Test.AbstractImplementation SData SData valContext
+open import Ledger.Conway.Specification.Test.Lib SData SData valContext
+open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
-open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Transaction
-open import Ledger.Types.Epoch
+open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
-open import Ledger.Utxow.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxow.Properties SVTransactionStructure SVAbstractFunctions
 
 -- Make this get all output datums
 getInlineOutputDatum : STxOut → List MultiSigData → Maybe Datum
@@ -48,10 +56,10 @@ newLabel (record { realizedInputs = realizedInputs ; txouts = txouts ; fee = fee
 
 -- TODO: Look into this
 getPaymentCredential : STxOut → ℕ
-getPaymentCredential (inj₁ record { net = net ; pay = (inj₁ x) ; stake = stake } , snd) = x
-getPaymentCredential (inj₁ record { net = net ; pay = (inj₂ y) ; stake = stake } , snd) = y
-getPaymentCredential (inj₂ record { net = net ; pay = (inj₁ x) ; attrsSize = attrsSize } , snd) = x
-getPaymentCredential (inj₂ record { net = net ; pay = (inj₂ y) ; attrsSize = attrsSize } , snd) = y
+getPaymentCredential (inj₁ record { net = net ; pay = (KeyHashObj x) ; stake = stake } , snd) = x
+getPaymentCredential (inj₁ record { net = net ; pay = (ScriptObj x) ; stake = stake } , snd) = x
+getPaymentCredential (inj₂ record { net = net ; pay = (KeyHashObj x) ; attrsSize = attrsSize } , snd) = x
+getPaymentCredential (inj₂ record { net = net ; pay = (ScriptObj x) ; attrsSize = attrsSize } , snd) = x
 
 -- TODO: look into Ledger.address version of getscripthash
 getScriptCredential' : ℕ → SUTxO → Maybe ℕ
@@ -71,17 +79,16 @@ balanceSTxOut : List STxOut → Value
 balanceSTxOut txout = foldr (_+_ {{addValue}}) 0 (map (λ {(_ , v , _) → v}) txout)
 
 matchIx : ℕ → SAddr → Set
-matchIx n (inj₁ record { net = net ; pay = (inj₁ x) ; stake = stake }) = n ≡ x
-matchIx n (inj₁ record { net = net ; pay = (inj₂ y) ; stake = stake }) = n ≡ y
-matchIx n (inj₂ record { net = net ; pay = (inj₁ x) ; attrsSize = attrsSize }) = n ≡ x
-matchIx n (inj₂ record { net = net ; pay = (inj₂ y) ; attrsSize = attrsSize }) = n ≡ y
+matchIx n (inj₁ record { net = net ; pay = (KeyHashObj x) ; stake = stake }) = n ≡ x
+matchIx n (inj₁ record { net = net ; pay = (ScriptObj y) ; stake = stake }) = n ≡ y
+matchIx n (inj₂ record { net = net ; pay = (KeyHashObj x) ; attrsSize = attrsSize }) = n ≡ x
+matchIx n (inj₂ record { net = net ; pay = (ScriptObj y) ; attrsSize = attrsSize }) = n ≡ y
 
 matchIx? : (n : ℕ) → (a : SAddr) → Dec (matchIx n a)
-matchIx? n (inj₁ record { net = net ; pay = (inj₁ x) ; stake = stake }) = n ≟ x
-matchIx? n (inj₁ record { net = net ; pay = (inj₂ y) ; stake = stake }) = n ≟ y
-matchIx? n (inj₂ record { net = net ; pay = (inj₁ x) ; attrsSize = attrsSize }) = n ≟ x
-matchIx? n (inj₂ record { net = net ; pay = (inj₂ y) ; attrsSize = attrsSize }) = n ≟ y
-
+matchIx? n (inj₁ record { net = net ; pay = (KeyHashObj x) ; stake = stake }) = n ≟ x
+matchIx? n (inj₁ record { net = net ; pay = (ScriptObj y) ; stake = stake }) = n ≟ y
+matchIx? n (inj₂ record { net = net ; pay = (KeyHashObj x) ; attrsSize = attrsSize }) = n ≟ x
+matchIx? n (inj₂ record { net = net ; pay = (ScriptObj y) ; attrsSize = attrsSize }) = n ≟ y
 
 totalOuts : ScriptContext → PubKeyHash → Value
 totalOuts (txinfo , _) ph  = balanceSTxOut (filter (λ { (fst , snd) → matchIx? ph fst}) (map proj₂ (STxInfo.txouts txinfo)))
@@ -104,7 +111,6 @@ compareScriptValues : {ℓ : Level}{r : REL ℕ ℕ ℓ} → Decidable r → May
 compareScriptValues r (just ov) (just nv) = ⌊ r ov nv ⌋
 compareScriptValues r _ _ = false
 
-
 open import Relation.Nullary.Decidable
 
 -- I think the signatories should just contain the signature
@@ -122,11 +128,6 @@ expired : ℕ -> ScriptContext -> Bool
 expired slot (txinfo , _) = maybe (λ deadline →  ⌊ slot >? deadline ⌋)
                                      false
                                      (proj₂ (STxInfo.txvldt txinfo))
-
-{-
-_<_ : Value -> Value -> Bool
-a < b = ?
--}
 
 multiSigValidator' : MultiSig → Label → Input → ScriptContext → Bool
 
@@ -162,7 +163,7 @@ multiSigValidator' param (Collecting v pkh slot sigs) (Add sig) ctx =
         ∧ (sigs' == sig ∷ sigs)) -- Make this an order agnostic comparison?
 
 multiSigValidator' param (Collecting v pkh slot sigs) Pay ctx =
- (length sigs) ≥ᵇ MultiSig.minNumSignatures param
+ ⌊ (length sigs) ≥? MultiSig.minNumSignatures param ⌋
    ∧ (case (newLabel ctx) of λ where
       nothing → false
       (just Holding) → checkPayment pkh v ctx
@@ -182,3 +183,5 @@ multiSigValidator : MultiSig → Maybe SData → Maybe SData → List SData → 
 multiSigValidator m (just (inj₁ (inj₁ x))) (just (inj₁ (inj₂ y))) (inj₂ y₁ ∷ []) =
   multiSigValidator' m x y y₁
 multiSigValidator _ _ _ _ = false
+
+

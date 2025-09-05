@@ -1,25 +1,27 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import ScriptVerification.MultiSig.Datum
-open import ScriptVerification.MultiSig.Validator
-open import ScriptVerification.Prelude MultiSigData
-open import ScriptVerification.SymbolicData MultiSigData
-open import ScriptVerification.LedgerImplementation SData SData
-open import Ledger.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Test.Examples.MultiSig.Datum
+open import Ledger.Conway.Specification.Test.Examples.MultiSig.Validator
+open import Ledger.Conway.Specification.Test.Prelude MultiSigData
+open import Ledger.Conway.Specification.Test.SymbolicData MultiSigData
+open import Ledger.Conway.Specification.Test.LedgerImplementation SData SData
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure
-open import ScriptVerification.AbstractImplementation SData SData valContext
-open import ScriptVerification.Lib SData SData valContext
-open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Test.AbstractImplementation SData SData valContext
+open import Ledger.Conway.Specification.Test.Lib SData SData valContext
+open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
-open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Transaction
-open import Ledger.Types.Epoch
+open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 open import Data.List using (filter)
-open import ScriptVerification.MultiSig.OffChain.Lib
+open import Ledger.Conway.Specification.Test.Examples.MultiSig.OffChain.Lib
 
-module ScriptVerification.MultiSig.OffChain.Pay where
+module Ledger.Conway.Specification.Test.Examples.MultiSig.OffChain.Pay where
 
 payScriptTxOut : TxOut → (value : ℕ) → TxOut
 payScriptTxOut (fst , txValue , snd) v = fst , txValue - v , just (inj₁ (inj₁ (inj₁ Holding))) , nothing
@@ -31,7 +33,7 @@ makePayTxOut Holding ix txo = []
 makePayTxOut (Collecting vl pkh x₂ x₃) ix txo =
             (ix , payScriptTxOut txo vl)
             ∷
-             (2 , ((inj₁ (record { net = tt ; pay = inj₁ pkh ; stake = inj₁ pkh })) ,
+             (2 , ((inj₁ (record { net = 0 ; pay = KeyHashObj pkh ; stake = just (KeyHashObj pkh) })) ,
               (vl , nothing , nothing))) ∷ []
 
 makePayTx : (id : ℕ) → UTxOState → PlutusScript → (w : ℕ) → Maybe Tx
@@ -55,6 +57,7 @@ makePayTx id state script@(sh , _) w =
                                           txrdmrs = fromListᵐ (((Spend , proj₂ scIn) ,
                                                                 inj₁ (inj₂ Pay) ,
                                                                 ((getTxId wutxo) , w)) ∷ []) } ;
+                          txsize = 10 ;
                           isValid = true ;
                           txAD = nothing }
                           ))

@@ -1,6 +1,8 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
-module ScriptVerification.MultiSig.Datum where
+module Ledger.Conway.Specification.Test.Examples.MultiSig.Datum where
 
 open import Tactic.Derive.DecEq
 

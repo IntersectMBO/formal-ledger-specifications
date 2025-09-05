@@ -1,3 +1,5 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Prelude  hiding (fromList; ε; _/_); open Computational
 open import Ledger.Conway.Specification.Test.Prelude
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)

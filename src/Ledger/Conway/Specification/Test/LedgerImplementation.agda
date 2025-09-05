@@ -1,3 +1,5 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
 module Ledger.Conway.Specification.Test.LedgerImplementation

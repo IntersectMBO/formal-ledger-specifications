@@ -1,30 +1,32 @@
+{-# OPTIONS --safe #-}
+
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import ScriptVerification.MultiSig.Datum
-open import ScriptVerification.MultiSig.Validator
-open import ScriptVerification.Prelude MultiSigData
-open import ScriptVerification.SymbolicData MultiSigData
-open import ScriptVerification.LedgerImplementation SData SData
-open import Ledger.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Test.Examples.MultiSig.Datum
+open import Ledger.Conway.Specification.Test.Examples.MultiSig.Validator
+open import Ledger.Conway.Specification.Test.Prelude MultiSigData
+open import Ledger.Conway.Specification.Test.SymbolicData MultiSigData
+open import Ledger.Conway.Specification.Test.LedgerImplementation SData SData
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure
-open import ScriptVerification.AbstractImplementation SData SData valContext
-open import ScriptVerification.Lib SData SData valContext
-open import Ledger.ScriptValidation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Test.AbstractImplementation SData SData valContext
+open import Ledger.Conway.Specification.Test.Lib SData SData valContext
+open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
-open import Ledger.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Transaction
-open import Ledger.Types.Epoch
+open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo.Properties SVTransactionStructure SVAbstractFunctions
 open import Data.List using (filter)
-open import ScriptVerification.MultiSig.OffChain.Lib
+open import Ledger.Conway.Specification.Test.Examples.MultiSig.OffChain.Lib
 
-module ScriptVerification.MultiSig.OffChain.Open where
+module Ledger.Conway.Specification.Test.Examples.MultiSig.OffChain.Open where
 
 openTxOut : Value → PlutusScript → TxOut
-openTxOut v script = inj₁ (record { net = tt ;
-                           pay = inj₂ (proj₁ script) ;
-                           stake = inj₂ (proj₁ script) })
+openTxOut v script = inj₁ (record { net = 0 ;
+                           pay = ScriptObj (proj₁ script) ;
+                           stake = just (ScriptObj (proj₁ script)) })
                            , v
                            , just (inj₁ (inj₁ (inj₁ Holding))) , nothing
 
@@ -34,9 +36,9 @@ openTx id w v tw script = record { body = record defaultTxBody
                          { txins = Ledger.Prelude.fromList ((w , w) ∷ [])
                          ; txouts = fromListIx ((tw , openTxOut v script)
                                                ∷ (w
-                                                 , ((inj₁ (record { net = tt ;
-                                                                    pay = inj₁ w ;
-                                                                    stake = inj₁ w }))
+                                                 , ((inj₁ (record { net = 0 ;
+                                                                    pay = KeyHashObj w ;
+                                                                    stake = just (KeyHashObj w) }))
                                                -- , 10000000000 , nothing , nothing))
                                                , ((1000000000000 - 10000000000) - v) , nothing , nothing))
                                                ∷ [])
@@ -53,5 +55,7 @@ openTx id w v tw script = record { body = record defaultTxBody
                                   ; --  fromListᵐ (((Propose , (proj₁ script)) ,
                                                  --                inj₁ (inj₂ Pay) ,
                                                     --            (5 , w)) ∷ []) } ; -}
+                txsize = 10 ; 
                 isValid = true ;
                 txAD = nothing }
+                
