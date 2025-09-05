@@ -674,7 +674,7 @@ abstract
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
 
-\Cref{fig:defs:ratify-defs-ii} defines functions that deal with delays
+The functions defined above deal with delays
 and the acceptance criterion for ratification.  A given action can
 either be delayed if the action contained in \EnactState{} isn't the
 one the given action is building on top of, which is checked by
