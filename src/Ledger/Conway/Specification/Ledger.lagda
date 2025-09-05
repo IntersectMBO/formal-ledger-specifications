@@ -106,6 +106,9 @@ instance
   HasDonations-LState : HasDonations LState
   HasDonations-LState .DonationsOf = DonationsOf ∘ UTxOStateOf
 
+  HasFees-LState : HasFees LState
+  HasFees-LState .FeesOf = FeesOf ∘ UTxOStateOf
+
 open CertState
 open DState
 open GovVotes

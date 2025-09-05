@@ -274,7 +274,7 @@ Relevant quantities for these functions are the following:
 
 - `rewards`{.AgdaArgument}: Rewards paid out to this pool.
 
-- `pool`{.AgdaArgument}: Pool parameters, such as cost and margin.
+- `poolParams`{.AgdaArgument}: Pool parameters, such as cost and margin.
 
 - `ownerStake`{.AgdaArgument}: Stake of the pool owners relative to the
   total amount of Ada.
@@ -287,26 +287,26 @@ Relevant quantities for these functions are the following:
 
 ```agda
 rewardOwners : Coin → StakePoolParams → UnitInterval → UnitInterval → Coin
-rewardOwners rewards pool ownerStake stake = if rewards ≤ cost
+rewardOwners rewards poolParams ownerStake stake = if rewards ≤ cost
   then rewards
   else cost + posPart (floor (
         (fromℕ rewards - fromℕ cost) * (margin + (1 - margin) * ratioStake)))
   where
     ratioStake  = fromUnitInterval ownerStake ÷₀ fromUnitInterval stake
-    cost        = pool .StakePoolParams.cost
-    margin      = fromUnitInterval (pool .StakePoolParams.margin)
+    cost        = poolParams .StakePoolParams.cost
+    margin      = fromUnitInterval (poolParams .StakePoolParams.margin)
 ```
 
 ```agda
 rewardMember : Coin → StakePoolParams → UnitInterval → UnitInterval → Coin
-rewardMember rewards pool memberStake stake = if rewards ≤ cost
+rewardMember rewards poolParams memberStake stake = if rewards ≤ cost
   then 0
   else posPart (floor (
          (fromℕ rewards - fromℕ cost) * ((1 - margin) * ratioStake)))
   where
     ratioStake  = fromUnitInterval memberStake ÷₀ fromUnitInterval stake
-    cost        = pool .StakePoolParams.cost
-    margin      = fromUnitInterval (pool .StakePoolParams.margin)
+    cost        = poolParams .StakePoolParams.cost
+    margin      = fromUnitInterval (poolParams .StakePoolParams.margin)
 ```
 
 ### Function `rewardOnePool`{.AgdaFunction} for Computing a Reward Update {#sec:rewardOnePool}
@@ -351,17 +351,17 @@ Relevant quantities are:
 rewardOnePool :  PParams → Coin → ℕ → ℕ → StakePoolParams
                  → Stake → UnitInterval → UnitInterval → Coin → Stake
 
-rewardOnePool pp rewardPot n N pool stakeDistr σ σa tot = memberRewards ∪⁺ ownersRewards
+rewardOnePool pp rewardPot n N poolParams stakeDistr σ σa tot = memberRewards ∪⁺ ownersRewards
   where
   mkRelativeStake : Coin → UnitInterval
   mkRelativeStake = λ coin → clamp (coin /₀ tot)
 
   owners : ℙ Credential
-  owners = mapˢ KeyHashObj (pool .StakePoolParams.owners)
+  owners = mapˢ KeyHashObj (poolParams .StakePoolParams.owners)
 
   ownerStake pledge maxP poolReward : Coin
   ownerStake  = ∑[ c ← stakeDistr ∣ owners ] c
-  pledge      = pool .StakePoolParams.pledge
+  pledge      = poolParams .StakePoolParams.pledge
   maxP        =  if pledge ≤ ownerStake
                  then maxPool pp rewardPot σ (mkRelativeStake pledge)
                  else 0
@@ -369,14 +369,14 @@ rewardOnePool pp rewardPot n N pool stakeDistr σ σa tot = memberRewards ∪⁺
 
   stakeMap[_] :  (Coin → StakePoolParams → UnitInterval → UnitInterval → Coin)
                  → Coin → UnitInterval → Coin
-  stakeMap[ f ] = (f poolReward pool) ∘ mkRelativeStake
+  stakeMap[ f ] = (f poolReward poolParams) ∘ mkRelativeStake
 
   memberRewards : Stake
   memberRewards = mapValues (λ coin → stakeMap[ rewardMember ] coin σ)
                             (stakeDistr ∣ owners ᶜ)
 
   ownersRewards : Stake
-  ownersRewards =  ❴ pool .StakePoolParams.rewardAccount
+  ownersRewards =  ❴ poolParams .StakePoolParams.rewardAccount
                    , stakeMap[ rewardOwners ] ownerStake σ ❵ᵐ
 ```
 
@@ -466,9 +466,8 @@ uncurryᵐ {A} {B} {C} abc = mapFromPartialFun lookup' domain'
 -->
 
 ```agda
-reward :  PParams → BlocksMade → Coin → (KeyHash ⇀ StakePoolParams)
-          → Stake → StakeDelegs → Coin → Stake
-reward pp blocks rewardPot poolParams stake delegs total = rewards
+reward :  PParams → BlocksMade → Coin → Pools → Stake → StakeDelegs → Coin → Stake
+reward pp blocks rewardPot pools stake delegs total = rewards
   where
     active      = ∑[ c ← stake ] c
     Σ_/total    = λ st → clamp ((∑[ c ← st ] c) /₀ total)
@@ -476,7 +475,7 @@ reward pp blocks rewardPot poolParams stake delegs total = rewards
     N           = ∑[ m ← blocks ] m
     mkPoolData  = λ hk p → map  (λ n → (n , p , poolStake hk delegs stake))
                                 (lookupᵐ? blocks hk)
-    pdata       = mapMaybeWithKeyᵐ mkPoolData poolParams
+    pdata       = mapMaybeWithKeyᵐ mkPoolData pools
 
     f : ℕ × StakePoolParams × Stake → Stake
     f = (λ (n , p , s) → rewardOnePool pp rewardPot n N p s (Σ s /total) (Σ s /active) total)
@@ -570,9 +569,9 @@ rewards.
 ```agda
 record Snapshot : Set where
   field
-    stake           : Stake
-    delegations     : StakeDelegs
-    pools  : KeyHash ⇀ StakePoolParams
+    stake        : Stake
+    delegations  : StakeDelegs
+    pools        : Pools
 ```
 
 <!--
@@ -624,13 +623,13 @@ opaque
 ```agda
   stakeDistr : UTxO → DState → PState → Snapshot
   stakeDistr utxo dState pState =
-      ⟦ activeStake , stakeDelegs , poolParams ⟧
+      ⟦ activeStake , StakeDelegsOf dState , pools ⟧
     where
 ```
 
 <!--
 ```agda
-      poolParams    : KeyHash ⇀ StakePoolParams
+      pools         : Pools
       utxoBalance   : Credential → Coin
       activeDelegs  : StakeDelegs
       activeRewards : Rewards
@@ -639,20 +638,17 @@ opaque
 -->
 
 ```agda
-      poolParams     = pState .PState.pools
-      open DState dState using (stakeDelegs; rewards)
+      pools          = PoolsOf pState
       utxoBalance    = λ cred → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just cred)
-      activeDelegs   = (stakeDelegs ∣ dom rewards) ∣^ dom poolParams
-      activeRewards  = rewards ∣ dom activeDelegs
+      activeDelegs   = (StakeDelegsOf dState ∣ dom (RewardsOf dState)) ∣^ dom pools
+      activeRewards  = RewardsOf dState ∣ dom activeDelegs
       activeStake    =
         mapWithKey (λ c rewardBalance → utxoBalance c + rewardBalance) activeRewards
 ```
 
 ## Timing of Rewards Payout {#sec:rewards-time}
-[Timing of Rewards Payout]: #sec:rewards-time
 
 ### Rewards Calculation Timeline {#sec:rewards-timeline}
-[Rewards Calculation Timeline]: #sec:rewards-timeline
 
 As described in the [Rewards Motivation](#sec:rewards-motivation) section, the probability of
 producing a block depends on the stake delegated to the block producer.  However, the
@@ -793,7 +789,7 @@ The snapshot transition rule has no preconditions and results in the following s
 <!--
 ```agda
 private variable
-  lstate : LState
+  ls : LState
   mark set go : Snapshot
   feeSS : Coin
 ```
@@ -802,10 +798,9 @@ private variable
 <a id="sec:snap-transition-system"></a>
 ```agda
 data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
-  SNAP : let open LState lstate; open UTxOState utxoSt; open CertState certState
-             stake = stakeDistr utxo dState pState
-    in
-    lstate ⊢ ⟦ mark , set , go , feeSS ⟧ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , fees ⟧
+  SNAP :
+    let stake = stakeDistr (UTxOOf ls) (DStateOf ls) (PStateOf ls) in
+    ls ⊢ ⟦ mark , set , go , feeSS ⟧ ⇀⦇ tt ,SNAP⦈ ⟦ stake , mark , set , FeesOf ls ⟧
 ```
 
 # References {#references .unnumbered}
