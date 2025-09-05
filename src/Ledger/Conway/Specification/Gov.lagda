@@ -101,7 +101,7 @@ private variable
   Γ : GovEnv
   s s' : GovState
   aid : GovActionID
-  voter : Voter
+  voter : GovVoter
   vote : GovVote
   v : Vote
   d : Coin
@@ -197,7 +197,7 @@ insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
 mkGovStatePair : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
                  → GovActionID × GovActionState
 mkGovStatePair e aid addr a prev = (aid , record
-  { votes = ∅ ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+  { votes = record { gvCC = ∅ ; gvDRep = ∅ ; gvSPO = ∅ } ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
 
 addAction : GovState
           → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
@@ -208,22 +208,26 @@ addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a p
 opaque
 \end{code}
 \begin{code}
-  addVote : GovState → GovActionID → Voter → Vote → GovState
-  addVote s aid voter v = map modifyVotes s
+  addVote : GovState → GovActionID → GovVoter → Vote → GovState
+  addVote gSt aid voter v = map modifyVotes gSt
     where modifyVotes : GovActionID × GovActionState → GovActionID × GovActionState
-          modifyVotes = λ (gid , s') → gid , record s'
-            { votes = if gid ≡ aid then insert (votes s') voter v else votes s'}
+          modifyVotes (gid , gaSt) = gid , (if gid ≡ aid then record gaSt { votes = votes' voter } else gaSt)
+            where open GovVotes (votes gaSt)
+                  votes' : GovVoter → GovVotes
+                  votes' ⟦ CC   , c  ⟧ᵍᵛ = record { gvCC = insert gvCC c v ; gvDRep = gvDRep            ; gvSPO = gvSPO             }
+                  votes' ⟦ DRep , c  ⟧ᵍᵛ = record { gvCC = gvCC            ; gvDRep = insert gvDRep c v ; gvSPO = gvSPO             }
+                  votes' ⟦ SPO  , kh ⟧ᵍᵛ = record { gvCC = gvCC            ; gvDRep = gvDRep            ; gvSPO = insert gvSPO kh v }
 
-  isRegistered : GovEnv → Voter → Type
-  isRegistered Γ (r , c) = case r of
+  isRegistered : GovEnv → GovVoter → Type
+  isRegistered Γ v = case v of
 \end{code}
 \begin{code}[hide]
     λ where
 \end{code}
 \begin{code}
-      CC    → just c ∈ range (gState .ccHotKeys)
-      DRep  → c ∈ dom (gState .dreps)
-      SPO   → c ∈ mapˢ KeyHashObj (dom (pState .pools))
+      ⟦ CC   , c  ⟧ᵍᵛ → just c ∈ range (gState .ccHotKeys)
+      ⟦ DRep , c  ⟧ᵍᵛ → c ∈ dom (gState .dreps)
+      ⟦ SPO  , kh ⟧ᵍᵛ → kh ∈ dom (pState .pools)
         where
           open CertState (GovEnv.certState Γ) using (gState; pState)
 
@@ -476,6 +480,7 @@ actionWellFormed? {⟦ Info            , _ ⟧ᵍᵃ} = it
 \begin{code}[hide]
 open GovEnv
 open PParams hiding (a)
+open GovVoter
 
 variable
   machr : Maybe Anchor
@@ -490,7 +495,7 @@ data _⊢_⇀⦇_,GOV⦈_ where
 \begin{code}
   GOV-Vote :
     ∙ (aid , ast) ∈ fromList s
-    ∙ canVote (PParamsOf Γ) (action ast) (proj₁ voter)
+    ∙ canVote (PParamsOf Γ) (action ast) (gvRole voter)
     ∙ isRegistered Γ voter
     ∙ ¬ expired (Γ .epoch) ast
       ───────────────────────────────────────

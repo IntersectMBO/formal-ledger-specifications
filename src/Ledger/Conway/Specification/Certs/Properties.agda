@@ -22,6 +22,7 @@ open Computational ⦃...⦄
 open import stdlib-meta.Tactic.GenError using (genErrors)
 
 open CertState
+open GovVote using (voter)
 
 instance
   Computational-DELEG : Computational _⊢_⇀⦇_,DELEG⦈_ String
@@ -30,8 +31,8 @@ instance
     λ where
     (delegate c mv mc d) → case ¿ (c ∉ dom rewards → d ≡ pparams .PParams.keyDeposit)
                                 × (c ∈ dom rewards → d ≡ 0)
-                                × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
-                                    fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
+                                × mv ∈ mapˢ (just ∘ vDelegCredential) delegatees ∪
+                                    fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                 × mc ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
                                 ¿ of λ where
       (yes p) → success (-, DELEG-delegate p)
@@ -48,7 +49,7 @@ instance
   Computational-DELEG .completeness de stᵈ (delegate c mv mc d)
     s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom (DState.rewards stᵈ) → d ≡ DelegEnv.pparams de .PParams.keyDeposit)
                                 × (c ∈ dom (DState.rewards stᵈ) → d ≡ 0)
-                                × mv ∈ mapˢ (just ∘ credVoter DRep) (DelegEnv.delegatees de) ∪ fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
+                                × mv ∈ mapˢ (just ∘ vDelegCredential) (DelegEnv.delegatees de) ∪ fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                 × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵
                                            ¿) p .proj₂ = refl
   Computational-DELEG .completeness de stᵈ (dereg c d) _ (DELEG-dereg p)
@@ -146,7 +147,7 @@ instance
   Computational-CERTBASE .computeProof ce cs _ =
     let open CertEnv ce; open PParams pp
         open GState (gState cs); open DState (dState cs)
-        refresh = mapPartial getDRepVote (fromList votes)
+        refresh = mapPartial (isGovVoterDRep ∘ voter) (fromList votes)
         refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
     in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
               × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
