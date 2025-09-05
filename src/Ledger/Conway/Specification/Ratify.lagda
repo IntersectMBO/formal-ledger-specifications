@@ -239,7 +239,7 @@ instance
 
 \Cref{fig:defs:ratify-acceptedbycc,fig:defs:ratify-acceptedbydrep,fig:defs:ratify-acceptedbyspo}
 define the \acceptedBy{} predicate for each of the governance
-bodies. Given the current state about votes and other parts of the
+bodies. Given the current state of the votes and other parts of the
 system these functions calculate whether a governance action is
 ratified by the corresponding body.
 
