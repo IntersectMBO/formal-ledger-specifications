@@ -30,6 +30,7 @@ result*
 ## git-merge conflict resolution artifacts
 *.agda.orig
 *.lagda.orig
+*.agdai
 
 ## Python
 build-tools/scripts/md/__pycache__/
