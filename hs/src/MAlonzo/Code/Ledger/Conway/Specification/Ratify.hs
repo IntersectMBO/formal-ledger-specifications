@@ -1470,18 +1470,18 @@ d_treasury_2604 ::
 d_treasury_2604 v0 ~v1 ~v2 = du_treasury_2604 v0
 du_treasury_2604 :: T_RatifyEnv_2498 -> Integer
 du_treasury_2604 v0 = coe d_treasury_2522 (coe v0)
--- Ledger.Conway.Specification.Ratify._.castedVotes
-d_castedVotes_2694 ::
+-- Ledger.Conway.Specification.Ratify._.castVotes
+d_castVotes_2694 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   T_RatifyEnv_2498 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1044 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_992 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_castedVotes_2694 ~v0 ~v1 ~v2 v3 = du_castedVotes_2694 v3
-du_castedVotes_2694 ::
+d_castVotes_2694 ~v0 ~v1 ~v2 v3 = du_castVotes_2694 v3
+du_castVotes_2694 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_992 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_castedVotes_2694 v0
+du_castVotes_2694 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvCC_984
       (coe
@@ -1615,7 +1615,7 @@ du_actualVote_2706 v0 v1 v2 v3 v4
                       MAlonzo.Code.Axiom.Set.d_th_1480
                       (coe
                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                   (coe du_castedVotes_2694 (coe v2)) (coe v6)
+                   (coe du_castVotes_2694 (coe v2)) (coe v6)
                    (coe
                       MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
                       (coe
@@ -1646,7 +1646,7 @@ du_actualVote_2706 v0 v1 v2 v3 v4
                             MAlonzo.Code.Axiom.Set.Rel.du_dom_344 v7
                             (coe
                                MAlonzo.Code.Axiom.Set.Map.du__'738'_554
-                               (coe du_castedVotes_2694 (coe v2)))))))
+                               (coe du_castVotes_2694 (coe v2)))))))
          _ -> coe
                 MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_abstain_926)
 -- Ledger.Conway.Specification.Ratify._.actualVotes
@@ -2099,18 +2099,18 @@ du_stakeDistrVDeleg_2850 ::
   T_RatifyEnv_2498 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_stakeDistrVDeleg_2850 v0
   = coe d_stakeDistrVDeleg_2492 (coe d_stakeDistrs_2514 (coe v0))
--- Ledger.Conway.Specification.Ratify._.castedVotes
-d_castedVotes_2868 ::
+-- Ledger.Conway.Specification.Ratify._.castVotes
+d_castVotes_2868 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   T_RatifyEnv_2498 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1044 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_992 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_castedVotes_2868 ~v0 ~v1 ~v2 v3 = du_castedVotes_2868 v3
-du_castedVotes_2868 ::
+d_castVotes_2868 ~v0 ~v1 ~v2 v3 = du_castVotes_2868 v3
+du_castVotes_2868 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_992 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_castedVotes_2868 v0
+du_castVotes_2868 v0
   = coe
       MAlonzo.Code.Axiom.Set.Map.du_mapKeys_872
       (coe
@@ -2339,7 +2339,7 @@ du_actualVotes_2882 v0 v1 v2
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_govStructure_2482
                (coe v0))))
-      (coe du_castedVotes_2868 (coe v2))
+      (coe du_castVotes_2868 (coe v2))
       (coe
          MAlonzo.Code.Axiom.Set.Map.du__'8746''737'__902
          (coe
@@ -2632,18 +2632,18 @@ du_stakeDistrVDeleg_2932 ::
   T_RatifyEnv_2498 -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 du_stakeDistrVDeleg_2932 v0
   = coe d_stakeDistrVDeleg_2492 (coe d_stakeDistrs_2514 (coe v0))
--- Ledger.Conway.Specification.Ratify._.castedVotes
-d_castedVotes_2950 ::
+-- Ledger.Conway.Specification.Ratify._.castVotes
+d_castVotes_2950 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   T_RatifyEnv_2498 ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1044 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_992 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_castedVotes_2950 ~v0 ~v1 ~v2 v3 = du_castedVotes_2950 v3
-du_castedVotes_2950 ::
+d_castVotes_2950 ~v0 ~v1 ~v2 v3 = du_castVotes_2950 v3
+du_castVotes_2950 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_992 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_castedVotes_2950 v0
+du_castVotes_2950 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvSPO_988
       (coe
@@ -2813,7 +2813,7 @@ du_actualVotes_2962 v0 v1 v2
                (coe
                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1308
                   (coe v0)))))
-      (coe du_castedVotes_2950 (coe v2))
+      (coe du_castVotes_2950 (coe v2))
       (coe
          MAlonzo.Code.Axiom.Set.Map.du_mapFromFun_1082
          (coe
