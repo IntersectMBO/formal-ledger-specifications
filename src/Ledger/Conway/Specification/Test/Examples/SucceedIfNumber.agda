@@ -1,17 +1,17 @@
-{-# OPTIONS --safe #-}
-
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import Ledger.Conway.Specification.Test.Prelude
 
 module Ledger.Conway.Specification.Test.Examples.SucceedIfNumber where
+open import Ledger.Conway.Specification.Test.LedgerImplementation ℕ ℕ 
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open TransactionStructure SVTransactionStructure using (Data)
+open import Ledger.Conway.Specification.ScriptPurpose SVTransactionStructure
 
-scriptImp : ScriptImplementation ℕ ℕ
-scriptImp = record { serialise = id ;
-                     deserialise = λ x → just x ;
-                     toData' = λ x → 9999999 }
+valContext : TxInfo → ScriptPurpose → Data
+valContext x x₁ = 0
 
-open import Ledger.Conway.Specification.Test.LedgerImplementation ℕ ℕ scriptImp
-open import Ledger.Conway.Specification.Test.Lib ℕ ℕ scriptImp
+open import Ledger.Conway.Specification.Test.AbstractImplementation ℕ ℕ valContext
+open import Ledger.Conway.Specification.Test.Lib ℕ ℕ valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Transaction
@@ -196,3 +196,4 @@ opaque
 
   _ : failExampleU ≡ false
   _ = refl
+

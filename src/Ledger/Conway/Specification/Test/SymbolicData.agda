@@ -1,8 +1,8 @@
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
-module ScriptVerification.SymbolicData (SD : Set) {{DecEq-Data : DecEq SD}} {{Show-Data : Show SD}} where
+module Ledger.Conway.Specification.Test.SymbolicData (SD : Set) {{DecEq-Data : DecEq SD}} {{Show-Data : Show SD}} where
 
-open import ScriptVerification.Prelude SD
+open import Ledger.Conway.Specification.Test.Prelude SD
 
 ScriptContext = STxInfo × SScriptPurpose
 SData = SDatum ⊎ ScriptContext
@@ -10,7 +10,7 @@ SData = SDatum ⊎ ScriptContext
 instance asdf : Show SData
          asdf = mkShow (λ x → "")
 
-open import ScriptVerification.LedgerImplementation SData SData
+open import Ledger.Conway.Specification.Test.LedgerImplementation SData SData
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 open import Ledger.Conway.Specification.ScriptPurpose SVTransactionStructure
 open TransactionStructure SVTransactionStructure 
