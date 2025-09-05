@@ -137,7 +137,7 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  CHAIN : {b : Block} {nes : NewEpochState} {cs : ChainState}
+  CHAIN : ∀ {bcur'} {b : Block} {nes : NewEpochState} {cs : ChainState}
 \end{code}
 \begin{code}[hide]
     → let open ChainState cs; open Block b; open BHeader bheader
@@ -147,13 +147,13 @@ data
 \end{code}
 \begin{code}
     let  cs'  = record cs {  newEpochState
-                             = record nes {  epochState
+                             = record nes {  bcur = bcur';
+                                             epochState
                                              = record epochState {ls = ls'} } }
-         Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , treasuryOf nes ⟧
     in
     ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
     ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes
-    ∙ Γ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+    ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
       _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 \end{code}
