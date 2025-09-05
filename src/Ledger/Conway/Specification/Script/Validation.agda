@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
-open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Abstract using (AbstractFunctions; indexOf)
 
 module Ledger.Conway.Specification.Script.Validation
   (txs : _) (open TransactionStructure txs)
@@ -10,14 +10,8 @@ module Ledger.Conway.Specification.Script.Validation
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Certs govStructure
-
-data ScriptPurpose : Type where
-  Cert     : DCert        → ScriptPurpose
-  Rwrd     : RwdAddr      → ScriptPurpose
-  Mint     : ScriptHash   → ScriptPurpose
-  Spend    : TxIn         → ScriptPurpose
-  Vote     : Voter        → ScriptPurpose
-  Propose  : GovProposal  → ScriptPurpose
+open import Ledger.Conway.Specification.Abstract txs
+open import Ledger.Conway.Specification.ScriptPurpose txs
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
@@ -44,18 +38,6 @@ getDatum tx utxo (Spend txin) =
      where
        m = setToMap (mapˢ < hash , id > (TxWitnesses.txdats (Tx.wits tx)))
 getDatum tx utxo _ = nothing
-
-record TxInfo : Type where
-  field realizedInputs : UTxO
-        txouts  : Ix ⇀ TxOut
-        fee     : Value
-        mint    : Value
-        txcerts : List DCert
-        txwdrls : Wdrl
-        txvldt  : Maybe Slot × Maybe Slot
-        vkKey   : ℙ KeyHash
-        txdats  : ℙ Datum
-        txid    : TxId
 
 txInfo : Language → PParams
                   → UTxO
@@ -85,8 +67,8 @@ credsNeeded utxo txb
     open RwdAddr
     open GovProposal
 
-valContext : TxInfo → ScriptPurpose → Data
-valContext txinfo sp = toData (txinfo , sp)
+-- valContext : TxInfo → ScriptPurpose → Data
+-- valContext txinfo sp = toData (txinfo , sp)
 
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂
