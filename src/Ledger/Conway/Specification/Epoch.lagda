@@ -394,7 +394,7 @@ opaque
 
     where
 
-      stakeFromGADeposits : Credential ⇀ Coin
+      stakeFromGADeposits : Stake
       stakeFromGADeposits = aggregateBy
         (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
         (mapFromPartialFun (λ (gaid , _) → lookupᵐ? deposits (GovActionDeposit gaid)) govSt')
