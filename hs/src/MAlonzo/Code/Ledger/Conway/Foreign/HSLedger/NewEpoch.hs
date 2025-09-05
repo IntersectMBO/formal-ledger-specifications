@@ -127,7 +127,7 @@ d_mkStakeDistrs_40
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3384
+         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3380
          (coe v0))
 -- Ledger.Conway.Foreign.HSLedger.NewEpoch._.toRwdAddr
 d_toRwdAddr_42 ::
