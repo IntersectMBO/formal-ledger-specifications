@@ -595,7 +595,7 @@ abstract
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 
-\Cref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
+The \accepted{} and \expired{} functions just defined
 functions that are used in the rules of RATIFY.
 
 \begin{figure*}[ht]
