@@ -4,6 +4,7 @@
 
 ### WIP
 
+- Add the BBODY transition relation from Shelley
 - Add the RUPD and TICK transition relations
 - Implement the POOLREAP state transition relation from Shelley
 - Move `txsize` from `TxBody` to `Tx`.

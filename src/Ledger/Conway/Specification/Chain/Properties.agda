@@ -7,12 +7,12 @@ module Ledger.Conway.Specification.Chain.Properties
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+open import Ledger.Conway.Specification.BlockBody.Properties txs abs
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Enact govStructure using (EnactState)
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Epoch.Properties txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
-open import Ledger.Conway.Specification.Ledger.Properties txs abs
 open import Ledger.Conway.Specification.RewardUpdate txs abs
 open import Ledger.Conway.Specification.RewardUpdate.Properties txs abs
 open import Ledger.Prelude
@@ -31,17 +31,17 @@ module _
 
 instance
   Computational-CHAIN : Computational _⊢_⇀⦇_,CHAIN⦈_ String
-  Computational-CHAIN .computeProof Γ s record { ts = ts } = do
+  Computational-CHAIN .computeProof Γ s b = do
     nes , tickStep ← map₁ ⊥-elim $ computeProof {STS = _⊢_⇀⦇_,TICK⦈_} _ _ _
-    _ , lsStep ← computeProof _ (LStateOf nes) ts
-    case refScriptSize≤?Bound nes ts of λ where
+    (_ , _) , bbStep ← computeProof _ (LStateOf nes , nes .NewEpochState.bcur) b
+    case refScriptSize≤?Bound nes (b .Block.ts) of λ where
       (no ¬p) → failure "totalRefScriptsSize > maxRefScriptSizePerBlock"
-      (yes p) → success (_ , CHAIN (p , tickStep , lsStep))
+      (yes p) → success (_ , CHAIN (p , tickStep , bbStep))
 
-  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} (p , tickStep , lsStep))
+  Computational-CHAIN .completeness _ s b _ (CHAIN {nes = nes} (p , tickStep , bbStep))
     with recomputeProof tickStep | completeness _ _ _ _ tickStep
   ... | success _ | refl
-    with recomputeProof lsStep | completeness _ _ _ _ lsStep
+    with recomputeProof bbStep | completeness _ _ _ _ bbStep
   ... | success _ | refl
     with refScriptSize≤?Bound nes (Block.ts b)
   ... | yes p = refl

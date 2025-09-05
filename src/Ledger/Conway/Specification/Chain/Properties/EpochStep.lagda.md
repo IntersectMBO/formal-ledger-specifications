@@ -36,7 +36,12 @@ enact-change⇒newEpoch : (b : Block) {cs cs'  : ChainState}
   → _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs' → EnactStateOf cs ≢ EnactStateOf cs'
   → Type
 
-enact-change⇒newEpoch b {cs} h es≢es' = epoch (b .slot) ≡ sucᵉ (LastEpochOf cs)
+enact-change⇒newEpoch b {cs} h es≢es' =
+  epoch (b .bheader .bhbody .slot) ≡ sucᵉ (LastEpochOf cs)
+  where
+    open Block
+    open BHeader
+    open BHBody
 ```
 
 *Proof*. (coming soon)
