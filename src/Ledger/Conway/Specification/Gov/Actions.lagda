@@ -119,6 +119,8 @@ instance
 instance
   HasCast-GovAction-Sigma : HasCast GovAction (Σ GovActionType GovActionData)
   HasCast-GovAction-Sigma .cast x = x .gaType , x .gaData
+
+  unquoteDecl Show-GovRole = derive-Show [ (quote GovRole , Show-GovRole) ]
 \end{code}
 \Cref{defs:governance} defines several data types used to represent
 governance actions. The type \DocHash{} is abstract but in the
@@ -306,6 +308,9 @@ instance
   ... | P.no ¬p = P.no (λ { refl → ¬p refl})
 
   unquoteDecl HasCast-GovVote = derive-HasCast [ (quote GovVote , HasCast-GovVote) ]
+
+  unquoteDecl Show-VDeleg = derive-Show [ (quote VDeleg , Show-VDeleg) ]
+
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote and proposal types}

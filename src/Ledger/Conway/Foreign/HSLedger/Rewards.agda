@@ -1,12 +1,24 @@
 module Ledger.Conway.Foreign.HSLedger.Rewards where
 
 import Data.Integer as ℤ
+import Data.String as S
 
 open import Ledger.Conway.Foreign.HSLedger.Address
 open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Certs
 
 open import Ledger.Conway.Conformance.Rewards it it
+
+instance
+  Show-SNAP : ∀ {ls ss ss'} → Show (ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss')
+  Show-SNAP {ls} {ss} {ss'} .show SNAP =
+    "SNAP:"
+    -- S.++
+    -- "\t" S.++ show-Snapshot (Snapshots.mark ss') S.++ "\n"
+    --   where show-Snapshot : Snapshot → String
+    --         show-Snapshot ss =
+    --           let open Snapshot ss
+    --           in show (proj₁ stake)
 
 instance
   HsTy-Snapshot = autoHsType Snapshot ⊣ withConstructor "MkSnapshot"

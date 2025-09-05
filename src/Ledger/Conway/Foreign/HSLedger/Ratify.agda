@@ -57,3 +57,8 @@ ratify-step : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActi
 ratify-step = to (compute Computational-RATIFIES)
 
 {-# COMPILE GHC ratify-step as ratifyStep #-}
+
+instance
+  Show-RATIFIES : ∀ {Γ s sig s'}
+    → Show (Γ ⊢ s ⇀⦇ sig  ,RATIFIES⦈ s')
+  Show-RATIFIES {Γ} {s} {sig} .show r = ratify-debug (to Γ) (to s) (to sig)
