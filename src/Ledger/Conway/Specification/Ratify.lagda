@@ -596,7 +596,7 @@ abstract
 \end{figure*}
 
 The \accepted{} and \expired{} functions just defined
-functions that are used in the rules of RATIFY.
+are used in the rules of RATIFY.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
