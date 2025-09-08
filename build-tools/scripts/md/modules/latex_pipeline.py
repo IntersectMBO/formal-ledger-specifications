@@ -46,6 +46,7 @@ if str(current_dir) not in sys.path:
 from config.build_config import BuildConfig
 from modules.latex_preprocessor import process_latex_content
 from modules.bibtex_processor import BibTeXProcessor, generate_global_bibliography_page, format_bibliography_entry
+from modules.source_headers import ensure_source_header_str
 from utils.command_runner import run_command
 from utils.file_ops import read_text, write_text, load_json, write_json, calculate_file_metadata
 from utils.pipeline_types import (
@@ -189,6 +190,28 @@ def run_pandoc_stage(
 
     result = run_command(command)
     return result.map(lambda _: None)
+
+
+# =============================================================================
+# Headers (e.g., add `source_path` for link to original source code)
+# =============================================================================
+
+_FRONT_MATTER_RE = re.compile(r"^(---\s*\n.*?\n---\s*\n)", re.DOTALL)
+def _add_or_update_source_header(content: str, source_path_value: str) -> str:
+    """
+    Ensure a YAML front matter exists and contains `source_path: <value>`.
+    If front matter exists, update or insert the key; otherwise create it.
+    """
+    m = _FRONT_MATTER_RE.match(content)
+    if m:
+        fm, rest = m.group(1), content[m.end():]
+        if re.search(r"^source_path\s*:", fm, flags=re.MULTILINE):
+            fm = re.sub(r"^source_path\s*:.*$", f"source_path: {source_path_value}", fm, flags=re.MULTILINE)
+        else:
+            fm = fm.replace("---\n", f"---\nsource_path: {source_path_value}\n", 1)
+        return fm + rest
+    else:
+        return f"---\nsource_path: {source_path_value}\n---\n\n" + content
 
 
 # =============================================================================
@@ -580,15 +603,21 @@ def process_latex_files(
     logging.info("   🏳️  STAGE 5: Running post-processing...")
     for stage in processing_stages:
         post_process_result = (
-            # 1. Load the necessary data for this file
+            # 5.1. Load the necessary data for this file
             load_json(stage.code_blocks_file)
             .and_then(lambda code_blocks:
                 read_text(stage.intermediate_file)
                 .map(lambda content: (content, code_blocks))
             )
-            # 2. Apply all transformations in a single, pure step
+            # 5.2. Apply all transformations in a single, pure step
             .map(lambda data: _apply_all_postprocessing(data[0], data[1], label_map))
-            # 3. Write the final result to disk
+            # 5.3. Add header that points to the original source file in repo
+            .map(lambda final_md: ensure_source_header_str(
+                final_md,
+                source_path=f"src/{stage.relative_path.as_posix()}",  # .lagda path (repo-relative)
+                source_branch="master"                                # optional
+            ))
+            # 5.4. Write the final result to disk
             .and_then(lambda final_content: write_text(stage.final_file, final_content))
         )
 
