@@ -74,6 +74,9 @@
         - Ratify/:
           - Properties: Ledger.Conway.Specification.Ratify.Properties.md
         - Rewards: Ledger.Conway.Specification.Rewards.md
+        - RewardUpdate: Ledger.Conway.Specification.RewardUpdate.md
+        - RewardUpdate/:
+            - Properties: Ledger.Conway.Specification.RewardUpdate.Properties.md
         - Script: Ledger.Conway.Specification.Script.md
         - Script/:
           - Base: Ledger.Conway.Specification.Script.Base.md
