@@ -259,9 +259,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="." title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
       
@@ -6485,6 +6483,22 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
@@ -6493,82 +6507,90 @@
                   
 
 
-  
-  
+
+
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Prelude/Foreign/HSTypes.agda"
+     class="md-content__button md-icon"
+     title="View the source of this page"
+     aria-label="View the source of this page">
+    
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </a>
 
 
   <h1>HSTypes</h1>
 
-<pre class="Agda"><a id="9" class="Keyword">module</a> <a id="16" href="Ledger.Prelude.Foreign.HSTypes.html" class="Module">Ledger.Prelude.Foreign.HSTypes</a> <a id="47" class="Keyword">where</a>
+<pre class="Agda"><a id="93" class="Keyword">module</a> <a id="100" href="Ledger.Prelude.Foreign.HSTypes.html" class="Module">Ledger.Prelude.Foreign.HSTypes</a> <a id="131" class="Keyword">where</a>
 
-<a id="54" class="Symbol">{-#</a> <a id="58" class="Keyword">FOREIGN</a> <a id="66" class="Pragma">GHC</a>
-  <a id="72" class="Symbol">{-#</a> <a id="76" class="Pragma">LANGUAGE</a> <a id="85" class="Pragma">DeriveGeneric</a> <a id="99" class="Symbol">#-}</a>
-  <a id="105" class="Symbol">{-#</a> <a id="109" class="Pragma">LANGUAGE</a> <a id="118" class="Pragma">DeriveFunctor</a> <a id="132" class="Symbol">#-}</a>
-<a id="136" class="Symbol">#-}</a>
+<a id="138" class="Symbol">{-#</a> <a id="142" class="Keyword">FOREIGN</a> <a id="150" class="Pragma">GHC</a>
+  <a id="156" class="Symbol">{-#</a> <a id="160" class="Pragma">LANGUAGE</a> <a id="169" class="Pragma">DeriveGeneric</a> <a id="183" class="Symbol">#-}</a>
+  <a id="189" class="Symbol">{-#</a> <a id="193" class="Pragma">LANGUAGE</a> <a id="202" class="Pragma">DeriveFunctor</a> <a id="216" class="Symbol">#-}</a>
+<a id="220" class="Symbol">#-}</a>
 
-<a id="141" class="Keyword">open</a> <a id="146" class="Keyword">import</a> <a id="153" href="Prelude.html" class="Module">Prelude</a>
+<a id="225" class="Keyword">open</a> <a id="230" class="Keyword">import</a> <a id="237" href="Prelude.html" class="Module">Prelude</a>
 
-<a id="162" class="Keyword">open</a> <a id="167" class="Keyword">import</a> <a id="174" href="Foreign.Haskell.html" class="Module">Foreign.Haskell</a>
-<a id="190" class="Keyword">open</a> <a id="195" class="Keyword">import</a> <a id="202" href="stdlib.Foreign.Haskell.Empty.html" class="Module">stdlib.Foreign.Haskell.Empty</a> <a id="231" class="Keyword">public</a>
-<a id="238" class="Keyword">open</a> <a id="243" class="Keyword">import</a> <a id="250" href="Foreign.Haskell.Coerce.html" class="Module">Foreign.Haskell.Coerce</a>
-<a id="273" class="Keyword">open</a> <a id="278" class="Keyword">import</a> <a id="285" href="Data.Rational.Base.html" class="Module">Data.Rational.Base</a>
+<a id="246" class="Keyword">open</a> <a id="251" class="Keyword">import</a> <a id="258" href="Foreign.Haskell.html" class="Module">Foreign.Haskell</a>
+<a id="274" class="Keyword">open</a> <a id="279" class="Keyword">import</a> <a id="286" href="stdlib.Foreign.Haskell.Empty.html" class="Module">stdlib.Foreign.Haskell.Empty</a> <a id="315" class="Keyword">public</a>
+<a id="322" class="Keyword">open</a> <a id="327" class="Keyword">import</a> <a id="334" href="Foreign.Haskell.Coerce.html" class="Module">Foreign.Haskell.Coerce</a>
+<a id="357" class="Keyword">open</a> <a id="362" class="Keyword">import</a> <a id="369" href="Data.Rational.Base.html" class="Module">Data.Rational.Base</a>
 
-<a id="305" class="Symbol">{-#</a> <a id="309" class="Keyword">FOREIGN</a> <a id="317" class="Pragma">GHC</a>
-  <a id="323" class="Pragma">import</a> <a id="330" class="Pragma">GHC.Generics</a> <a id="343" class="Pragma">(Generic)</a>
-  <a id="355" class="Pragma">import</a> <a id="362" class="Pragma">Prelude</a> <a id="370" class="Pragma">hiding</a> <a id="377" class="Pragma">(Rational)</a>
-  <a id="390" class="Pragma">import</a> <a id="397" class="Pragma">GHC.Real</a> <a id="406" class="Pragma">(Ratio(..))</a>
-<a id="418" class="Symbol">#-}</a>
+<a id="389" class="Symbol">{-#</a> <a id="393" class="Keyword">FOREIGN</a> <a id="401" class="Pragma">GHC</a>
+  <a id="407" class="Pragma">import</a> <a id="414" class="Pragma">GHC.Generics</a> <a id="427" class="Pragma">(Generic)</a>
+  <a id="439" class="Pragma">import</a> <a id="446" class="Pragma">Prelude</a> <a id="454" class="Pragma">hiding</a> <a id="461" class="Pragma">(Rational)</a>
+  <a id="474" class="Pragma">import</a> <a id="481" class="Pragma">GHC.Real</a> <a id="490" class="Pragma">(Ratio(..))</a>
+<a id="502" class="Symbol">#-}</a>
 
-<a id="423" class="Comment">-- * Rational</a>
+<a id="507" class="Comment">-- * Rational</a>
 
-<a id="438" class="Keyword">data</a> <a id="Rational"></a><a id="443" href="Ledger.Prelude.Foreign.HSTypes.html#443" class="Datatype">Rational</a> <a id="452" class="Symbol">:</a> <a id="454" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="459" class="Keyword">where</a>
-  <a id="Rational._,_"></a><a id="467" href="Ledger.Prelude.Foreign.HSTypes.html#467" class="InductiveConstructor Operator">_,_</a> <a id="471" class="Symbol">:</a> <a id="473" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a> <a id="475" class="Symbol">→</a> <a id="477" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="479" class="Symbol">→</a> <a id="481" href="Ledger.Prelude.Foreign.HSTypes.html#443" class="Datatype">Rational</a>
-<a id="490" class="Symbol">{-#</a> <a id="494" class="Keyword">COMPILE</a> <a id="502" class="Keyword">GHC</a> <a id="506" href="Ledger.Prelude.Foreign.HSTypes.html#443" class="Datatype">Rational</a> <a id="515" class="Pragma">=</a> <a id="517" class="Pragma">data</a> <a id="522" class="Pragma">Rational</a> <a id="531" class="Pragma">((:%))</a> <a id="538" class="Symbol">#-}</a>
+<a id="522" class="Keyword">data</a> <a id="Rational"></a><a id="527" href="Ledger.Prelude.Foreign.HSTypes.html#527" class="Datatype">Rational</a> <a id="536" class="Symbol">:</a> <a id="538" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="543" class="Keyword">where</a>
+  <a id="Rational._,_"></a><a id="551" href="Ledger.Prelude.Foreign.HSTypes.html#551" class="InductiveConstructor Operator">_,_</a> <a id="555" class="Symbol">:</a> <a id="557" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a> <a id="559" class="Symbol">→</a> <a id="561" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="563" class="Symbol">→</a> <a id="565" href="Ledger.Prelude.Foreign.HSTypes.html#527" class="Datatype">Rational</a>
+<a id="574" class="Symbol">{-#</a> <a id="578" class="Keyword">COMPILE</a> <a id="586" class="Keyword">GHC</a> <a id="590" href="Ledger.Prelude.Foreign.HSTypes.html#527" class="Datatype">Rational</a> <a id="599" class="Pragma">=</a> <a id="601" class="Pragma">data</a> <a id="606" class="Pragma">Rational</a> <a id="615" class="Pragma">((:%))</a> <a id="622" class="Symbol">#-}</a>
 
-<a id="543" class="Comment">-- We&#39;ll generate code with qualified references to Rational in this</a>
-<a id="612" class="Comment">-- module, so make sure to define it.</a>
-<a id="650" class="Symbol">{-#</a> <a id="654" class="Keyword">FOREIGN</a> <a id="662" class="Pragma">GHC</a> <a id="666" class="Pragma">type</a> <a id="671" class="Pragma">Rational</a> <a id="680" class="Pragma">=</a> <a id="682" class="Pragma">Ratio</a> <a id="688" class="Pragma">Integer</a> <a id="696" class="Symbol">#-}</a>
+<a id="627" class="Comment">-- We&#39;ll generate code with qualified references to Rational in this</a>
+<a id="696" class="Comment">-- module, so make sure to define it.</a>
+<a id="734" class="Symbol">{-#</a> <a id="738" class="Keyword">FOREIGN</a> <a id="746" class="Pragma">GHC</a> <a id="750" class="Pragma">type</a> <a id="755" class="Pragma">Rational</a> <a id="764" class="Pragma">=</a> <a id="766" class="Pragma">Ratio</a> <a id="772" class="Pragma">Integer</a> <a id="780" class="Symbol">#-}</a>
 
-<a id="701" class="Comment">-- * Maps and Sets</a>
+<a id="785" class="Comment">-- * Maps and Sets</a>
 
-<a id="721" class="Keyword">record</a> <a id="HSMap"></a><a id="728" href="Ledger.Prelude.Foreign.HSTypes.html#728" class="Record">HSMap</a> <a id="734" href="Ledger.Prelude.Foreign.HSTypes.html#734" class="Bound">K</a> <a id="736" href="Ledger.Prelude.Foreign.HSTypes.html#736" class="Bound">V</a> <a id="738" class="Symbol">:</a> <a id="740" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="745" class="Keyword">where</a>
-  <a id="753" class="Keyword">constructor</a> <a id="MkHSMap"></a><a id="765" href="Ledger.Prelude.Foreign.HSTypes.html#765" class="InductiveConstructor">MkHSMap</a>
-  <a id="775" class="Keyword">field</a> <a id="HSMap.assocList"></a><a id="781" href="Ledger.Prelude.Foreign.HSTypes.html#781" class="Field">assocList</a> <a id="791" class="Symbol">:</a> <a id="793" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="798" class="Symbol">(</a><a id="799" href="Foreign.Haskell.Pair.html#553" class="Record">Pair</a> <a id="804" href="Ledger.Prelude.Foreign.HSTypes.html#734" class="Bound">K</a> <a id="806" href="Ledger.Prelude.Foreign.HSTypes.html#736" class="Bound">V</a><a id="807" class="Symbol">)</a>
+<a id="805" class="Keyword">record</a> <a id="HSMap"></a><a id="812" href="Ledger.Prelude.Foreign.HSTypes.html#812" class="Record">HSMap</a> <a id="818" href="Ledger.Prelude.Foreign.HSTypes.html#818" class="Bound">K</a> <a id="820" href="Ledger.Prelude.Foreign.HSTypes.html#820" class="Bound">V</a> <a id="822" class="Symbol">:</a> <a id="824" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="829" class="Keyword">where</a>
+  <a id="837" class="Keyword">constructor</a> <a id="MkHSMap"></a><a id="849" href="Ledger.Prelude.Foreign.HSTypes.html#849" class="InductiveConstructor">MkHSMap</a>
+  <a id="859" class="Keyword">field</a> <a id="HSMap.assocList"></a><a id="865" href="Ledger.Prelude.Foreign.HSTypes.html#865" class="Field">assocList</a> <a id="875" class="Symbol">:</a> <a id="877" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="882" class="Symbol">(</a><a id="883" href="Foreign.Haskell.Pair.html#553" class="Record">Pair</a> <a id="888" href="Ledger.Prelude.Foreign.HSTypes.html#818" class="Bound">K</a> <a id="890" href="Ledger.Prelude.Foreign.HSTypes.html#820" class="Bound">V</a><a id="891" class="Symbol">)</a>
 
-<a id="810" class="Keyword">record</a> <a id="HSSet"></a><a id="817" href="Ledger.Prelude.Foreign.HSTypes.html#817" class="Record">HSSet</a> <a id="823" href="Ledger.Prelude.Foreign.HSTypes.html#823" class="Bound">A</a> <a id="825" class="Symbol">:</a> <a id="827" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="832" class="Keyword">where</a>
-  <a id="840" class="Keyword">constructor</a> <a id="MkHSSet"></a><a id="852" href="Ledger.Prelude.Foreign.HSTypes.html#852" class="InductiveConstructor">MkHSSet</a>
-  <a id="862" class="Keyword">field</a> <a id="HSSet.elems"></a><a id="868" href="Ledger.Prelude.Foreign.HSTypes.html#868" class="Field">elems</a> <a id="874" class="Symbol">:</a> <a id="876" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="881" href="Ledger.Prelude.Foreign.HSTypes.html#823" class="Bound">A</a>
+<a id="894" class="Keyword">record</a> <a id="HSSet"></a><a id="901" href="Ledger.Prelude.Foreign.HSTypes.html#901" class="Record">HSSet</a> <a id="907" href="Ledger.Prelude.Foreign.HSTypes.html#907" class="Bound">A</a> <a id="909" class="Symbol">:</a> <a id="911" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="916" class="Keyword">where</a>
+  <a id="924" class="Keyword">constructor</a> <a id="MkHSSet"></a><a id="936" href="Ledger.Prelude.Foreign.HSTypes.html#936" class="InductiveConstructor">MkHSSet</a>
+  <a id="946" class="Keyword">field</a> <a id="HSSet.elems"></a><a id="952" href="Ledger.Prelude.Foreign.HSTypes.html#952" class="Field">elems</a> <a id="958" class="Symbol">:</a> <a id="960" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="965" href="Ledger.Prelude.Foreign.HSTypes.html#907" class="Bound">A</a>
 
-<a id="884" class="Symbol">{-#</a> <a id="888" class="Keyword">FOREIGN</a> <a id="896" class="Pragma">GHC</a>
-  <a id="902" class="Pragma">newtype</a> <a id="910" class="Pragma">HSMap</a> <a id="916" class="Pragma">k</a> <a id="918" class="Pragma">v</a> <a id="920" class="Pragma">=</a> <a id="922" class="Pragma">MkHSMap</a> <a id="930" class="Pragma">[(k,</a> <a id="935" class="Pragma">v)]</a>
-    <a id="943" class="Pragma">deriving</a> <a id="952" class="Pragma">(Generic,</a> <a id="962" class="Pragma">Show,</a> <a id="968" class="Pragma">Eq,</a> <a id="972" class="Pragma">Ord)</a>
-  <a id="979" class="Pragma">newtype</a> <a id="987" class="Pragma">HSSet</a> <a id="993" class="Pragma">a</a> <a id="995" class="Pragma">=</a> <a id="997" class="Pragma">MkHSSet</a> <a id="1005" class="Pragma">[a]</a>
-    <a id="1013" class="Pragma">deriving</a> <a id="1022" class="Pragma">(Generic,</a> <a id="1032" class="Pragma">Show,</a> <a id="1038" class="Pragma">Eq,</a> <a id="1042" class="Pragma">Ord)</a>
-<a id="1047" class="Symbol">#-}</a>
-<a id="1051" class="Symbol">{-#</a> <a id="1055" class="Keyword">COMPILE</a> <a id="1063" class="Keyword">GHC</a> <a id="1067" href="Ledger.Prelude.Foreign.HSTypes.html#728" class="Record">HSMap</a> <a id="1073" class="Pragma">=</a> <a id="1075" class="Pragma">data</a> <a id="1080" class="Pragma">HSMap</a> <a id="1086" class="Pragma">(MkHSMap)</a> <a id="1096" class="Symbol">#-}</a>
-<a id="1100" class="Symbol">{-#</a> <a id="1104" class="Keyword">COMPILE</a> <a id="1112" class="Keyword">GHC</a> <a id="1116" href="Ledger.Prelude.Foreign.HSTypes.html#817" class="Record">HSSet</a> <a id="1122" class="Pragma">=</a> <a id="1124" class="Pragma">data</a> <a id="1129" class="Pragma">HSSet</a> <a id="1135" class="Pragma">(MkHSSet)</a> <a id="1145" class="Symbol">#-}</a>
+<a id="968" class="Symbol">{-#</a> <a id="972" class="Keyword">FOREIGN</a> <a id="980" class="Pragma">GHC</a>
+  <a id="986" class="Pragma">newtype</a> <a id="994" class="Pragma">HSMap</a> <a id="1000" class="Pragma">k</a> <a id="1002" class="Pragma">v</a> <a id="1004" class="Pragma">=</a> <a id="1006" class="Pragma">MkHSMap</a> <a id="1014" class="Pragma">[(k,</a> <a id="1019" class="Pragma">v)]</a>
+    <a id="1027" class="Pragma">deriving</a> <a id="1036" class="Pragma">(Generic,</a> <a id="1046" class="Pragma">Show,</a> <a id="1052" class="Pragma">Eq,</a> <a id="1056" class="Pragma">Ord)</a>
+  <a id="1063" class="Pragma">newtype</a> <a id="1071" class="Pragma">HSSet</a> <a id="1077" class="Pragma">a</a> <a id="1079" class="Pragma">=</a> <a id="1081" class="Pragma">MkHSSet</a> <a id="1089" class="Pragma">[a]</a>
+    <a id="1097" class="Pragma">deriving</a> <a id="1106" class="Pragma">(Generic,</a> <a id="1116" class="Pragma">Show,</a> <a id="1122" class="Pragma">Eq,</a> <a id="1126" class="Pragma">Ord)</a>
+<a id="1131" class="Symbol">#-}</a>
+<a id="1135" class="Symbol">{-#</a> <a id="1139" class="Keyword">COMPILE</a> <a id="1147" class="Keyword">GHC</a> <a id="1151" href="Ledger.Prelude.Foreign.HSTypes.html#812" class="Record">HSMap</a> <a id="1157" class="Pragma">=</a> <a id="1159" class="Pragma">data</a> <a id="1164" class="Pragma">HSMap</a> <a id="1170" class="Pragma">(MkHSMap)</a> <a id="1180" class="Symbol">#-}</a>
+<a id="1184" class="Symbol">{-#</a> <a id="1188" class="Keyword">COMPILE</a> <a id="1196" class="Keyword">GHC</a> <a id="1200" href="Ledger.Prelude.Foreign.HSTypes.html#901" class="Record">HSSet</a> <a id="1206" class="Pragma">=</a> <a id="1208" class="Pragma">data</a> <a id="1213" class="Pragma">HSSet</a> <a id="1219" class="Pragma">(MkHSSet)</a> <a id="1229" class="Symbol">#-}</a>
 
-<a id="1150" class="Comment">-- * ComputationResult</a>
+<a id="1234" class="Comment">-- * ComputationResult</a>
 
-<a id="1174" class="Keyword">data</a> <a id="ComputationResult"></a><a id="1179" href="Ledger.Prelude.Foreign.HSTypes.html#1179" class="Datatype">ComputationResult</a> <a id="1197" href="Ledger.Prelude.Foreign.HSTypes.html#1197" class="Bound">E</a> <a id="1199" href="Ledger.Prelude.Foreign.HSTypes.html#1199" class="Bound">A</a> <a id="1201" class="Symbol">:</a> <a id="1203" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1208" class="Keyword">where</a>
-  <a id="ComputationResult.Success"></a><a id="1216" href="Ledger.Prelude.Foreign.HSTypes.html#1216" class="InductiveConstructor">Success</a> <a id="1224" class="Symbol">:</a> <a id="1226" href="Ledger.Prelude.Foreign.HSTypes.html#1199" class="Bound">A</a> <a id="1228" class="Symbol">→</a> <a id="1230" href="Ledger.Prelude.Foreign.HSTypes.html#1179" class="Datatype">ComputationResult</a> <a id="1248" href="Ledger.Prelude.Foreign.HSTypes.html#1197" class="Bound">E</a> <a id="1250" href="Ledger.Prelude.Foreign.HSTypes.html#1199" class="Bound">A</a>
-  <a id="ComputationResult.Failure"></a><a id="1254" href="Ledger.Prelude.Foreign.HSTypes.html#1254" class="InductiveConstructor">Failure</a> <a id="1262" class="Symbol">:</a> <a id="1264" href="Ledger.Prelude.Foreign.HSTypes.html#1197" class="Bound">E</a> <a id="1266" class="Symbol">→</a> <a id="1268" href="Ledger.Prelude.Foreign.HSTypes.html#1179" class="Datatype">ComputationResult</a> <a id="1286" href="Ledger.Prelude.Foreign.HSTypes.html#1197" class="Bound">E</a> <a id="1288" href="Ledger.Prelude.Foreign.HSTypes.html#1199" class="Bound">A</a>
+<a id="1258" class="Keyword">data</a> <a id="ComputationResult"></a><a id="1263" href="Ledger.Prelude.Foreign.HSTypes.html#1263" class="Datatype">ComputationResult</a> <a id="1281" href="Ledger.Prelude.Foreign.HSTypes.html#1281" class="Bound">E</a> <a id="1283" href="Ledger.Prelude.Foreign.HSTypes.html#1283" class="Bound">A</a> <a id="1285" class="Symbol">:</a> <a id="1287" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1292" class="Keyword">where</a>
+  <a id="ComputationResult.Success"></a><a id="1300" href="Ledger.Prelude.Foreign.HSTypes.html#1300" class="InductiveConstructor">Success</a> <a id="1308" class="Symbol">:</a> <a id="1310" href="Ledger.Prelude.Foreign.HSTypes.html#1283" class="Bound">A</a> <a id="1312" class="Symbol">→</a> <a id="1314" href="Ledger.Prelude.Foreign.HSTypes.html#1263" class="Datatype">ComputationResult</a> <a id="1332" href="Ledger.Prelude.Foreign.HSTypes.html#1281" class="Bound">E</a> <a id="1334" href="Ledger.Prelude.Foreign.HSTypes.html#1283" class="Bound">A</a>
+  <a id="ComputationResult.Failure"></a><a id="1338" href="Ledger.Prelude.Foreign.HSTypes.html#1338" class="InductiveConstructor">Failure</a> <a id="1346" class="Symbol">:</a> <a id="1348" href="Ledger.Prelude.Foreign.HSTypes.html#1281" class="Bound">E</a> <a id="1350" class="Symbol">→</a> <a id="1352" href="Ledger.Prelude.Foreign.HSTypes.html#1263" class="Datatype">ComputationResult</a> <a id="1370" href="Ledger.Prelude.Foreign.HSTypes.html#1281" class="Bound">E</a> <a id="1372" href="Ledger.Prelude.Foreign.HSTypes.html#1283" class="Bound">A</a>
 
-<a id="1291" class="Symbol">{-#</a> <a id="1295" class="Keyword">FOREIGN</a> <a id="1303" class="Pragma">GHC</a>
-  <a id="1309" class="Pragma">data</a> <a id="1314" class="Pragma">ComputationResult</a> <a id="1332" class="Pragma">e</a> <a id="1334" class="Pragma">a</a> <a id="1336" class="Pragma">=</a> <a id="1338" class="Pragma">Success</a> <a id="1346" class="Pragma">a</a> <a id="1348" class="Pragma">|</a> <a id="1350" class="Pragma">Failure</a> <a id="1358" class="Pragma">e</a>
-    <a id="1364" class="Pragma">deriving</a> <a id="1373" class="Pragma">(Functor,</a> <a id="1383" class="Pragma">Eq,</a> <a id="1387" class="Pragma">Show,</a> <a id="1393" class="Pragma">Generic)</a>
+<a id="1375" class="Symbol">{-#</a> <a id="1379" class="Keyword">FOREIGN</a> <a id="1387" class="Pragma">GHC</a>
+  <a id="1393" class="Pragma">data</a> <a id="1398" class="Pragma">ComputationResult</a> <a id="1416" class="Pragma">e</a> <a id="1418" class="Pragma">a</a> <a id="1420" class="Pragma">=</a> <a id="1422" class="Pragma">Success</a> <a id="1430" class="Pragma">a</a> <a id="1432" class="Pragma">|</a> <a id="1434" class="Pragma">Failure</a> <a id="1442" class="Pragma">e</a>
+    <a id="1448" class="Pragma">deriving</a> <a id="1457" class="Pragma">(Functor,</a> <a id="1467" class="Pragma">Eq,</a> <a id="1471" class="Pragma">Show,</a> <a id="1477" class="Pragma">Generic)</a>
 
-  <a id="1405" class="Pragma">instance</a> <a id="1414" class="Pragma">Applicative</a> <a id="1426" class="Pragma">(ComputationResult</a> <a id="1445" class="Pragma">e)</a> <a id="1448" class="Pragma">where</a>
-    <a id="1458" class="Pragma">pure</a> <a id="1463" class="Pragma">=</a> <a id="1465" class="Pragma">Success</a>
-    <a id="1477" class="Pragma">(Success</a> <a id="1486" class="Pragma">f)</a> <a id="1489" class="Pragma">&lt;*&gt;</a> <a id="1493" class="Pragma">x</a> <a id="1495" class="Pragma">=</a> <a id="1497" class="Pragma">f</a> <a id="1499" class="Pragma">&lt;$&gt;</a> <a id="1503" class="Pragma">x</a>
-    <a id="1509" class="Pragma">(Failure</a> <a id="1518" class="Pragma">e)</a> <a id="1521" class="Pragma">&lt;*&gt;</a> <a id="1525" class="Pragma">_</a> <a id="1527" class="Pragma">=</a> <a id="1529" class="Pragma">Failure</a> <a id="1537" class="Pragma">e</a>
+  <a id="1489" class="Pragma">instance</a> <a id="1498" class="Pragma">Applicative</a> <a id="1510" class="Pragma">(ComputationResult</a> <a id="1529" class="Pragma">e)</a> <a id="1532" class="Pragma">where</a>
+    <a id="1542" class="Pragma">pure</a> <a id="1547" class="Pragma">=</a> <a id="1549" class="Pragma">Success</a>
+    <a id="1561" class="Pragma">(Success</a> <a id="1570" class="Pragma">f)</a> <a id="1573" class="Pragma">&lt;*&gt;</a> <a id="1577" class="Pragma">x</a> <a id="1579" class="Pragma">=</a> <a id="1581" class="Pragma">f</a> <a id="1583" class="Pragma">&lt;$&gt;</a> <a id="1587" class="Pragma">x</a>
+    <a id="1593" class="Pragma">(Failure</a> <a id="1602" class="Pragma">e)</a> <a id="1605" class="Pragma">&lt;*&gt;</a> <a id="1609" class="Pragma">_</a> <a id="1611" class="Pragma">=</a> <a id="1613" class="Pragma">Failure</a> <a id="1621" class="Pragma">e</a>
 
-  <a id="1542" class="Pragma">instance</a> <a id="1551" class="Pragma">Monad</a> <a id="1557" class="Pragma">(ComputationResult</a> <a id="1576" class="Pragma">e)</a> <a id="1579" class="Pragma">where</a>
-    <a id="1589" class="Pragma">return</a> <a id="1596" class="Pragma">=</a> <a id="1598" class="Pragma">pure</a>
-    <a id="1607" class="Pragma">(Success</a> <a id="1616" class="Pragma">a)</a> <a id="1619" class="Pragma">&gt;&gt;=</a> <a id="1623" class="Pragma">m</a> <a id="1625" class="Pragma">=</a> <a id="1627" class="Pragma">m</a> <a id="1629" class="Pragma">a</a>
-    <a id="1635" class="Pragma">(Failure</a> <a id="1644" class="Pragma">e)</a> <a id="1647" class="Pragma">&gt;&gt;=</a> <a id="1651" class="Pragma">_</a> <a id="1653" class="Pragma">=</a> <a id="1655" class="Pragma">Failure</a> <a id="1663" class="Pragma">e</a>
-<a id="1665" class="Symbol">#-}</a>
-<a id="1669" class="Symbol">{-#</a> <a id="1673" class="Keyword">COMPILE</a> <a id="1681" class="Keyword">GHC</a> <a id="1685" href="Ledger.Prelude.Foreign.HSTypes.html#1179" class="Datatype">ComputationResult</a> <a id="1703" class="Pragma">=</a> <a id="1705" class="Pragma">data</a> <a id="1710" class="Pragma">ComputationResult</a> <a id="1728" class="Pragma">(Success</a> <a id="1737" class="Pragma">|</a> <a id="1739" class="Pragma">Failure)</a> <a id="1748" class="Symbol">#-}</a>
+  <a id="1626" class="Pragma">instance</a> <a id="1635" class="Pragma">Monad</a> <a id="1641" class="Pragma">(ComputationResult</a> <a id="1660" class="Pragma">e)</a> <a id="1663" class="Pragma">where</a>
+    <a id="1673" class="Pragma">return</a> <a id="1680" class="Pragma">=</a> <a id="1682" class="Pragma">pure</a>
+    <a id="1691" class="Pragma">(Success</a> <a id="1700" class="Pragma">a)</a> <a id="1703" class="Pragma">&gt;&gt;=</a> <a id="1707" class="Pragma">m</a> <a id="1709" class="Pragma">=</a> <a id="1711" class="Pragma">m</a> <a id="1713" class="Pragma">a</a>
+    <a id="1719" class="Pragma">(Failure</a> <a id="1728" class="Pragma">e)</a> <a id="1731" class="Pragma">&gt;&gt;=</a> <a id="1735" class="Pragma">_</a> <a id="1737" class="Pragma">=</a> <a id="1739" class="Pragma">Failure</a> <a id="1747" class="Pragma">e</a>
+<a id="1749" class="Symbol">#-}</a>
+<a id="1753" class="Symbol">{-#</a> <a id="1757" class="Keyword">COMPILE</a> <a id="1765" class="Keyword">GHC</a> <a id="1769" href="Ledger.Prelude.Foreign.HSTypes.html#1263" class="Datatype">ComputationResult</a> <a id="1787" class="Pragma">=</a> <a id="1789" class="Pragma">data</a> <a id="1794" class="Pragma">ComputationResult</a> <a id="1812" class="Pragma">(Success</a> <a id="1821" class="Pragma">|</a> <a id="1823" class="Pragma">Failure)</a> <a id="1832" class="Symbol">#-}</a>
 </pre>
 
 
@@ -6576,6 +6598,9 @@
 
 
 
+
+  
+  
 
 
 
@@ -6658,7 +6683,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "toc.integrate", "content.tooltips", "navigation.footer", "navigation.tabs", "content.code.copy"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.92b07e13.min.js"></script>

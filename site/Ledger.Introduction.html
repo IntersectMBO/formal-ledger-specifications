@@ -264,9 +264,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="." title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
       
@@ -6622,6 +6620,134 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec:overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-note-on-agda" class="md-nav__link">
+    <span class="md-ellipsis">
+      A Note on Agda
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#separation-of-concerns" class="md-nav__link">
+    <span class="md-ellipsis">
+      Separation of Concerns
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec:ledger-state-transition-rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ledger State Transition Rules
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reflexive-transitive-closure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reflexive-transitive Closure
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Reflexive-transitive Closure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reflexive-transitive-closure_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Reflexive transitive closure
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#computational" class="md-nav__link">
+    <span class="md-ellipsis">
+      Computational
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Computational">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#computational-relations" class="md-nav__link">
+    <span class="md-ellipsis">
+      Computational relations
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec:sets-maps" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sets &amp; Maps
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec:prop-as-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Propositions as Types, Properties and Relations
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
@@ -6630,30 +6756,38 @@
                   
 
 
-  
-  
+
+
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Introduction.lagda.md"
+     class="md-content__button md-icon"
+     title="View the source of this page"
+     aria-label="View the source of this page">
+    
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </a>
 
 
 <h1 id="sec:introduction">Introduction<a class="headerlink" href="#sec:introduction" title="Permanent link">&para;</a></h1>
-<pre class="Agda hidden-source"><a id="50" class="Symbol">{-#</a> <a id="54" class="Keyword">OPTIONS</a> <a id="62" class="Pragma">--safe</a> <a id="69" class="Symbol">#-}</a>
+<pre class="Agda hidden-source"><a id="105" class="Symbol">{-#</a> <a id="109" class="Keyword">OPTIONS</a> <a id="117" class="Pragma">--safe</a> <a id="124" class="Symbol">#-}</a>
 
-<a id="74" class="Keyword">open</a> <a id="79" class="Keyword">import</a> <a id="86" href="Axiom.Set.html" class="Module">Axiom.Set</a> <a id="96" class="Keyword">using</a> <a id="102" class="Symbol">(</a><a id="103" href="Axiom.Set.html#1616" class="Record">Theory</a><a id="109" class="Symbol">)</a>
+<a id="129" class="Keyword">open</a> <a id="134" class="Keyword">import</a> <a id="141" href="Axiom.Set.html" class="Module">Axiom.Set</a> <a id="151" class="Keyword">using</a> <a id="157" class="Symbol">(</a><a id="158" href="Axiom.Set.html#1616" class="Record">Theory</a><a id="164" class="Symbol">)</a>
 
-<a id="112" class="Keyword">module</a> <a id="119" href="Ledger.Introduction.html" class="Module">Ledger.Introduction</a> <a id="139" class="Symbol">(</a><a id="140" href="Ledger.Introduction.html#140" class="Bound">th</a> <a id="143" class="Symbol">:</a> <a id="145" href="Axiom.Set.html#1616" class="Record">Theory</a><a id="151" class="Symbol">)</a> <a id="153" class="Keyword">where</a>
+<a id="167" class="Keyword">module</a> <a id="174" href="Ledger.Introduction.html" class="Module">Ledger.Introduction</a> <a id="194" class="Symbol">(</a><a id="195" href="Ledger.Introduction.html#195" class="Bound">th</a> <a id="198" class="Symbol">:</a> <a id="200" href="Axiom.Set.html#1616" class="Record">Theory</a><a id="206" class="Symbol">)</a> <a id="208" class="Keyword">where</a>
 
-<a id="160" class="Keyword">open</a> <a id="165" class="Keyword">import</a> <a id="172" href="Prelude.html" class="Module">Prelude</a>
+<a id="215" class="Keyword">open</a> <a id="220" class="Keyword">import</a> <a id="227" href="Prelude.html" class="Module">Prelude</a>
 
-<a id="181" class="Keyword">import</a> <a id="188" href="Data.Maybe.html" class="Module">Data.Maybe</a> <a id="199" class="Symbol">as</a> <a id="202" class="Module">Maybe</a>
-<a id="208" class="Keyword">open</a> <a id="213" class="Keyword">import</a> <a id="220" href="Data.Maybe.Properties.html" class="Module">Data.Maybe.Properties</a>
-<a id="242" class="Keyword">open</a> <a id="247" class="Keyword">import</a> <a id="254" href="Interface.STS.html" class="Module">Interface.STS</a> <a id="268" class="Keyword">hiding</a> <a id="275" class="Symbol">(</a><a id="276" href="Interface.STS.html#398" class="Datatype Operator">_⊢_⇀⟦_⟧*_</a><a id="285" class="Symbol">)</a>
-<a id="287" class="Keyword">open</a> <a id="292" class="Keyword">import</a> <a id="299" href="Relation.Binary.PropositionalEquality.html" class="Module">Relation.Binary.PropositionalEquality</a>
+<a id="236" class="Keyword">import</a> <a id="243" href="Data.Maybe.html" class="Module">Data.Maybe</a> <a id="254" class="Symbol">as</a> <a id="257" class="Module">Maybe</a>
+<a id="263" class="Keyword">open</a> <a id="268" class="Keyword">import</a> <a id="275" href="Data.Maybe.Properties.html" class="Module">Data.Maybe.Properties</a>
+<a id="297" class="Keyword">open</a> <a id="302" class="Keyword">import</a> <a id="309" href="Interface.STS.html" class="Module">Interface.STS</a> <a id="323" class="Keyword">hiding</a> <a id="330" class="Symbol">(</a><a id="331" href="Interface.STS.html#465" class="Datatype Operator">_⊢_⇀⟦_⟧*_</a><a id="340" class="Symbol">)</a>
+<a id="342" class="Keyword">open</a> <a id="347" class="Keyword">import</a> <a id="354" href="Relation.Binary.PropositionalEquality.html" class="Module">Relation.Binary.PropositionalEquality</a>
 
-<a id="338" class="Keyword">private</a> <a id="346" class="Keyword">variable</a>
-  <a id="357" href="Ledger.Introduction.html#357" class="Generalizable">C</a> <a id="359" href="Ledger.Introduction.html#359" class="Generalizable">S</a> <a id="361" href="Ledger.Introduction.html#361" class="Generalizable">Sig</a> <a id="365" class="Symbol">:</a> <a id="367" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-  <a id="374" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="376" class="Symbol">:</a> <a id="378" href="Ledger.Introduction.html#357" class="Generalizable">C</a>
-  <a id="382" href="Ledger.Introduction.html#382" class="Generalizable">s</a> <a id="384" href="Ledger.Introduction.html#384" class="Generalizable">s&#39;</a> <a id="387" href="Ledger.Introduction.html#387" class="Generalizable">s&#39;&#39;</a> <a id="391" class="Symbol">:</a> <a id="393" href="Ledger.Introduction.html#359" class="Generalizable">S</a>
-  <a id="397" href="Ledger.Introduction.html#397" class="Generalizable">b</a> <a id="399" href="Ledger.Introduction.html#399" class="Generalizable">sig</a> <a id="403" class="Symbol">:</a> <a id="405" href="Ledger.Introduction.html#361" class="Generalizable">Sig</a>
-  <a id="411" href="Ledger.Introduction.html#411" class="Generalizable">sigs</a> <a id="416" class="Symbol">:</a> <a id="418" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="423" href="Ledger.Introduction.html#361" class="Generalizable">Sig</a>
+<a id="393" class="Keyword">private</a> <a id="401" class="Keyword">variable</a>
+  <a id="412" href="Ledger.Introduction.html#412" class="Generalizable">C</a> <a id="414" href="Ledger.Introduction.html#414" class="Generalizable">S</a> <a id="416" href="Ledger.Introduction.html#416" class="Generalizable">Sig</a> <a id="420" class="Symbol">:</a> <a id="422" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+  <a id="429" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="431" class="Symbol">:</a> <a id="433" href="Ledger.Introduction.html#412" class="Generalizable">C</a>
+  <a id="437" href="Ledger.Introduction.html#437" class="Generalizable">s</a> <a id="439" href="Ledger.Introduction.html#439" class="Generalizable">s&#39;</a> <a id="442" href="Ledger.Introduction.html#442" class="Generalizable">s&#39;&#39;</a> <a id="446" class="Symbol">:</a> <a id="448" href="Ledger.Introduction.html#414" class="Generalizable">S</a>
+  <a id="452" href="Ledger.Introduction.html#452" class="Generalizable">b</a> <a id="454" href="Ledger.Introduction.html#454" class="Generalizable">sig</a> <a id="458" class="Symbol">:</a> <a id="460" href="Ledger.Introduction.html#416" class="Generalizable">Sig</a>
+  <a id="466" href="Ledger.Introduction.html#466" class="Generalizable">sigs</a> <a id="471" class="Symbol">:</a> <a id="473" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="478" href="Ledger.Introduction.html#416" class="Generalizable">Sig</a>
 </pre>
 
 <details class="note">
@@ -6909,23 +7043,23 @@ remainder of the text, the closure operation is called
 <code class="AgdaFunction">RTC</code>.</p>
 <h3 id="reflexive-transitive-closure_1">Reflexive transitive closure<a class="headerlink" href="#reflexive-transitive-closure_1" title="Permanent link">&para;</a></h3>
 <pre class="Agda hidden-source">
-<a id="9713" class="Keyword">module</a> <a id="9720" href="Ledger.Introduction.html#9720" class="Module">_</a> <a id="9722" class="Symbol">(</a><a id="9723" href="Ledger.Introduction.html#9723" class="Bound Operator">_⊢_⇀⟦_⟧_</a> <a id="9732" class="Symbol">:</a> <a id="9734" href="Ledger.Introduction.html#357" class="Generalizable">C</a> <a id="9736" class="Symbol">→</a> <a id="9738" href="Ledger.Introduction.html#359" class="Generalizable">S</a> <a id="9740" class="Symbol">→</a> <a id="9742" href="Ledger.Introduction.html#361" class="Generalizable">Sig</a> <a id="9746" class="Symbol">→</a> <a id="9748" href="Ledger.Introduction.html#359" class="Generalizable">S</a> <a id="9750" class="Symbol">→</a> <a id="9752" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="9756" class="Symbol">)</a> <a id="9758" class="Keyword">where</a>
+<a id="9768" class="Keyword">module</a> <a id="9775" href="Ledger.Introduction.html#9775" class="Module">_</a> <a id="9777" class="Symbol">(</a><a id="9778" href="Ledger.Introduction.html#9778" class="Bound Operator">_⊢_⇀⟦_⟧_</a> <a id="9787" class="Symbol">:</a> <a id="9789" href="Ledger.Introduction.html#412" class="Generalizable">C</a> <a id="9791" class="Symbol">→</a> <a id="9793" href="Ledger.Introduction.html#414" class="Generalizable">S</a> <a id="9795" class="Symbol">→</a> <a id="9797" href="Ledger.Introduction.html#416" class="Generalizable">Sig</a> <a id="9801" class="Symbol">→</a> <a id="9803" href="Ledger.Introduction.html#414" class="Generalizable">S</a> <a id="9805" class="Symbol">→</a> <a id="9807" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="9811" class="Symbol">)</a> <a id="9813" class="Keyword">where</a>
 </pre>
 
 <p><em>Closure type</em></p>
 <pre class="Agda">
-  <a id="9801" class="Keyword">data</a> <a id="9806" href="Ledger.Introduction.html#9806" class="Datatype Operator">_⊢_⇀⟦_⟧*_</a> <a id="9816" class="Symbol">:</a> <a id="9818" href="Ledger.Introduction.html#9734" class="Bound">C</a> <a id="9820" class="Symbol">→</a> <a id="9822" href="Ledger.Introduction.html#9738" class="Bound">S</a> <a id="9824" class="Symbol">→</a> <a id="9826" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="9831" href="Ledger.Introduction.html#9742" class="Bound">Sig</a> <a id="9835" class="Symbol">→</a> <a id="9837" href="Ledger.Introduction.html#9738" class="Bound">S</a> <a id="9839" class="Symbol">→</a> <a id="9841" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="9846" class="Keyword">where</a>
+  <a id="9856" class="Keyword">data</a> <a id="9861" href="Ledger.Introduction.html#9861" class="Datatype Operator">_⊢_⇀⟦_⟧*_</a> <a id="9871" class="Symbol">:</a> <a id="9873" href="Ledger.Introduction.html#9789" class="Bound">C</a> <a id="9875" class="Symbol">→</a> <a id="9877" href="Ledger.Introduction.html#9793" class="Bound">S</a> <a id="9879" class="Symbol">→</a> <a id="9881" href="Agda.Builtin.List.html#147" class="Datatype">List</a> <a id="9886" href="Ledger.Introduction.html#9797" class="Bound">Sig</a> <a id="9890" class="Symbol">→</a> <a id="9892" href="Ledger.Introduction.html#9793" class="Bound">S</a> <a id="9894" class="Symbol">→</a> <a id="9896" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="9901" class="Keyword">where</a>
 </pre>
 <p><em>Closure rules</em></p>
 <pre class="Agda">
-    <a id="9886" href="Ledger.Introduction.html#9886" class="InductiveConstructor">RTC-base</a> <a id="9895" class="Symbol">:</a>
-      <a id="9903" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="9905" href="Ledger.Introduction.html#9806" class="Datatype Operator">⊢</a> <a id="9907" href="Ledger.Introduction.html#382" class="Generalizable">s</a> <a id="9909" href="Ledger.Introduction.html#9806" class="Datatype Operator">⇀⟦</a> <a id="9912" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a> <a id="9915" href="Ledger.Introduction.html#9806" class="Datatype Operator">⟧*</a> <a id="9918" href="Ledger.Introduction.html#382" class="Generalizable">s</a>
+    <a id="9941" href="Ledger.Introduction.html#9941" class="InductiveConstructor">RTC-base</a> <a id="9950" class="Symbol">:</a>
+      <a id="9958" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="9960" href="Ledger.Introduction.html#9861" class="Datatype Operator">⊢</a> <a id="9962" href="Ledger.Introduction.html#437" class="Generalizable">s</a> <a id="9964" href="Ledger.Introduction.html#9861" class="Datatype Operator">⇀⟦</a> <a id="9967" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a> <a id="9970" href="Ledger.Introduction.html#9861" class="Datatype Operator">⟧*</a> <a id="9973" href="Ledger.Introduction.html#437" class="Generalizable">s</a>
 
-    <a id="9925" href="Ledger.Introduction.html#9925" class="InductiveConstructor">RTC-ind</a> <a id="9933" class="Symbol">:</a>
-      <a id="9941" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="9943" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="9945" href="Ledger.Introduction.html#9723" class="Bound Operator">⊢</a> <a id="9947" href="Ledger.Introduction.html#382" class="Generalizable">s</a>  <a id="9950" href="Ledger.Introduction.html#9723" class="Bound Operator">⇀⟦</a> <a id="9953" href="Ledger.Introduction.html#399" class="Generalizable">sig</a>  <a id="9958" href="Ledger.Introduction.html#9723" class="Bound Operator">⟧</a>  <a id="9961" href="Ledger.Introduction.html#384" class="Generalizable">s&#39;</a>
-      <a id="9970" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="9972" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="9974" href="Ledger.Introduction.html#9806" class="Datatype Operator">⊢</a> <a id="9976" href="Ledger.Introduction.html#384" class="Generalizable">s&#39;</a> <a id="9979" href="Ledger.Introduction.html#9806" class="Datatype Operator">⇀⟦</a> <a id="9982" href="Ledger.Introduction.html#411" class="Generalizable">sigs</a> <a id="9987" href="Ledger.Introduction.html#9806" class="Datatype Operator">⟧*</a> <a id="9990" href="Ledger.Introduction.html#387" class="Generalizable">s&#39;&#39;</a>
-      <a id="10000" href="Prelude.InferenceRules.html#13407" class="Function Operator">───────────────────────────────────────</a>
-      <a id="10046" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="10048" href="Ledger.Introduction.html#9806" class="Datatype Operator">⊢</a> <a id="10050" href="Ledger.Introduction.html#382" class="Generalizable">s</a> <a id="10052" href="Ledger.Introduction.html#9806" class="Datatype Operator">⇀⟦</a> <a id="10055" href="Ledger.Introduction.html#399" class="Generalizable">sig</a> <a id="10059" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="10061" href="Ledger.Introduction.html#411" class="Generalizable">sigs</a> <a id="10066" href="Ledger.Introduction.html#9806" class="Datatype Operator">⟧*</a> <a id="10069" href="Ledger.Introduction.html#387" class="Generalizable">s&#39;&#39;</a>
+    <a id="9980" href="Ledger.Introduction.html#9980" class="InductiveConstructor">RTC-ind</a> <a id="9988" class="Symbol">:</a>
+      <a id="9996" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="9998" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="10000" href="Ledger.Introduction.html#9778" class="Bound Operator">⊢</a> <a id="10002" href="Ledger.Introduction.html#437" class="Generalizable">s</a>  <a id="10005" href="Ledger.Introduction.html#9778" class="Bound Operator">⇀⟦</a> <a id="10008" href="Ledger.Introduction.html#454" class="Generalizable">sig</a>  <a id="10013" href="Ledger.Introduction.html#9778" class="Bound Operator">⟧</a>  <a id="10016" href="Ledger.Introduction.html#439" class="Generalizable">s&#39;</a>
+      <a id="10025" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="10027" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="10029" href="Ledger.Introduction.html#9861" class="Datatype Operator">⊢</a> <a id="10031" href="Ledger.Introduction.html#439" class="Generalizable">s&#39;</a> <a id="10034" href="Ledger.Introduction.html#9861" class="Datatype Operator">⇀⟦</a> <a id="10037" href="Ledger.Introduction.html#466" class="Generalizable">sigs</a> <a id="10042" href="Ledger.Introduction.html#9861" class="Datatype Operator">⟧*</a> <a id="10045" href="Ledger.Introduction.html#442" class="Generalizable">s&#39;&#39;</a>
+      <a id="10055" href="Prelude.InferenceRules.html#13407" class="Function Operator">───────────────────────────────────────</a>
+      <a id="10101" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="10103" href="Ledger.Introduction.html#9861" class="Datatype Operator">⊢</a> <a id="10105" href="Ledger.Introduction.html#437" class="Generalizable">s</a> <a id="10107" href="Ledger.Introduction.html#9861" class="Datatype Operator">⇀⟦</a> <a id="10110" href="Ledger.Introduction.html#454" class="Generalizable">sig</a> <a id="10114" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="10116" href="Ledger.Introduction.html#466" class="Generalizable">sigs</a> <a id="10121" href="Ledger.Introduction.html#9861" class="Datatype Operator">⟧*</a> <a id="10124" href="Ledger.Introduction.html#442" class="Generalizable">s&#39;&#39;</a>
 </pre>
 <h2 id="computational">Computational<a class="headerlink" href="#computational" title="Permanent link">&para;</a></h2>
 <p>Since all such state machines need to be evaluated by the nodes and all
@@ -6935,16 +7069,16 @@ definition in <a href="Ledger.Introduction.html#computational-relations">Computa
 which is parametrized over the state transition relation.</p>
 <h3 id="computational-relations">Computational relations<a class="headerlink" href="#computational-relations" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
-<a id="10487" class="Keyword">record</a> <a id="Computational"></a><a id="10494" href="Ledger.Introduction.html#10494" class="Record">Computational</a> <a id="10508" class="Symbol">(</a><a id="10509" href="Ledger.Introduction.html#10509" class="Bound Operator">_⊢_⇀⦇_,X⦈_</a> <a id="10520" class="Symbol">:</a> <a id="10522" href="Ledger.Introduction.html#357" class="Generalizable">C</a> <a id="10524" class="Symbol">→</a> <a id="10526" href="Ledger.Introduction.html#359" class="Generalizable">S</a> <a id="10528" class="Symbol">→</a> <a id="10530" href="Ledger.Introduction.html#361" class="Generalizable">Sig</a> <a id="10534" class="Symbol">→</a> <a id="10536" href="Ledger.Introduction.html#359" class="Generalizable">S</a> <a id="10538" class="Symbol">→</a> <a id="10540" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="10544" class="Symbol">)</a> <a id="10546" class="Symbol">:</a> <a id="10548" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="10553" class="Keyword">where</a>
-  <a id="10561" class="Keyword">field</a>
-    <a id="Computational.compute"></a><a id="10571" href="Ledger.Introduction.html#10571" class="Field">compute</a>     <a id="10583" class="Symbol">:</a> <a id="10585" href="Ledger.Introduction.html#10522" class="Bound">C</a> <a id="10587" class="Symbol">→</a> <a id="10589" href="Ledger.Introduction.html#10526" class="Bound">S</a> <a id="10591" class="Symbol">→</a> <a id="10593" href="Ledger.Introduction.html#10530" class="Bound">Sig</a> <a id="10597" class="Symbol">→</a> <a id="10599" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="10605" href="Ledger.Introduction.html#10526" class="Bound">S</a>
-    <a id="Computational.≡-just⇔STS"></a><a id="10611" href="Ledger.Introduction.html#10611" class="Field">≡-just⇔STS</a>  <a id="10623" class="Symbol">:</a> <a id="10625" href="Ledger.Introduction.html#10571" class="Field">compute</a> <a id="10633" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="10635" href="Ledger.Introduction.html#382" class="Generalizable">s</a> <a id="10637" href="Ledger.Introduction.html#397" class="Generalizable">b</a> <a id="10639" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="10641" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="10646" href="Ledger.Introduction.html#384" class="Generalizable">s&#39;</a> <a id="10649" href="Function.Bundles.html#12398" class="Function Operator">⇔</a> <a id="10651" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="10653" href="Ledger.Introduction.html#10509" class="Bound Operator">⊢</a> <a id="10655" href="Ledger.Introduction.html#382" class="Generalizable">s</a> <a id="10657" href="Ledger.Introduction.html#10509" class="Bound Operator">⇀⦇</a> <a id="10660" href="Ledger.Introduction.html#397" class="Generalizable">b</a> <a id="10662" href="Ledger.Introduction.html#10509" class="Bound Operator">,X⦈</a> <a id="10666" href="Ledger.Introduction.html#384" class="Generalizable">s&#39;</a>
+<a id="10542" class="Keyword">record</a> <a id="Computational"></a><a id="10549" href="Ledger.Introduction.html#10549" class="Record">Computational</a> <a id="10563" class="Symbol">(</a><a id="10564" href="Ledger.Introduction.html#10564" class="Bound Operator">_⊢_⇀⦇_,X⦈_</a> <a id="10575" class="Symbol">:</a> <a id="10577" href="Ledger.Introduction.html#412" class="Generalizable">C</a> <a id="10579" class="Symbol">→</a> <a id="10581" href="Ledger.Introduction.html#414" class="Generalizable">S</a> <a id="10583" class="Symbol">→</a> <a id="10585" href="Ledger.Introduction.html#416" class="Generalizable">Sig</a> <a id="10589" class="Symbol">→</a> <a id="10591" href="Ledger.Introduction.html#414" class="Generalizable">S</a> <a id="10593" class="Symbol">→</a> <a id="10595" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="10599" class="Symbol">)</a> <a id="10601" class="Symbol">:</a> <a id="10603" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="10608" class="Keyword">where</a>
+  <a id="10616" class="Keyword">field</a>
+    <a id="Computational.compute"></a><a id="10626" href="Ledger.Introduction.html#10626" class="Field">compute</a>     <a id="10638" class="Symbol">:</a> <a id="10640" href="Ledger.Introduction.html#10577" class="Bound">C</a> <a id="10642" class="Symbol">→</a> <a id="10644" href="Ledger.Introduction.html#10581" class="Bound">S</a> <a id="10646" class="Symbol">→</a> <a id="10648" href="Ledger.Introduction.html#10585" class="Bound">Sig</a> <a id="10652" class="Symbol">→</a> <a id="10654" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="10660" href="Ledger.Introduction.html#10581" class="Bound">S</a>
+    <a id="Computational.≡-just⇔STS"></a><a id="10666" href="Ledger.Introduction.html#10666" class="Field">≡-just⇔STS</a>  <a id="10678" class="Symbol">:</a> <a id="10680" href="Ledger.Introduction.html#10626" class="Field">compute</a> <a id="10688" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="10690" href="Ledger.Introduction.html#437" class="Generalizable">s</a> <a id="10692" href="Ledger.Introduction.html#452" class="Generalizable">b</a> <a id="10694" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="10696" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="10701" href="Ledger.Introduction.html#439" class="Generalizable">s&#39;</a> <a id="10704" href="Function.Bundles.html#12398" class="Function Operator">⇔</a> <a id="10706" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="10708" href="Ledger.Introduction.html#10564" class="Bound Operator">⊢</a> <a id="10710" href="Ledger.Introduction.html#437" class="Generalizable">s</a> <a id="10712" href="Ledger.Introduction.html#10564" class="Bound Operator">⇀⦇</a> <a id="10715" href="Ledger.Introduction.html#452" class="Generalizable">b</a> <a id="10717" href="Ledger.Introduction.html#10564" class="Bound Operator">,X⦈</a> <a id="10721" href="Ledger.Introduction.html#439" class="Generalizable">s&#39;</a>
 
-  <a id="Computational.nothing⇒∀¬STS"></a><a id="10672" href="Ledger.Introduction.html#10672" class="Function">nothing⇒∀¬STS</a> <a id="10686" class="Symbol">:</a> <a id="10688" href="Ledger.Introduction.html#10571" class="Field">compute</a> <a id="10696" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="10698" href="Ledger.Introduction.html#382" class="Generalizable">s</a> <a id="10700" href="Ledger.Introduction.html#397" class="Generalizable">b</a> <a id="10702" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="10704" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="10712" class="Symbol">→</a> <a id="10714" class="Symbol">∀</a> <a id="10716" href="Ledger.Introduction.html#10716" class="Bound">s&#39;</a> <a id="10719" class="Symbol">→</a> <a id="10721" href="Relation.Nullary.Negation.Core.html#677" class="Function Operator">¬</a> <a id="10723" href="Ledger.Introduction.html#374" class="Generalizable">Γ</a> <a id="10725" href="Ledger.Introduction.html#10509" class="Bound Operator">⊢</a> <a id="10727" href="Ledger.Introduction.html#382" class="Generalizable">s</a> <a id="10729" href="Ledger.Introduction.html#10509" class="Bound Operator">⇀⦇</a> <a id="10732" href="Ledger.Introduction.html#397" class="Generalizable">b</a> <a id="10734" href="Ledger.Introduction.html#10509" class="Bound Operator">,X⦈</a> <a id="10738" href="Ledger.Introduction.html#10716" class="Bound">s&#39;</a>
+  <a id="Computational.nothing⇒∀¬STS"></a><a id="10727" href="Ledger.Introduction.html#10727" class="Function">nothing⇒∀¬STS</a> <a id="10741" class="Symbol">:</a> <a id="10743" href="Ledger.Introduction.html#10626" class="Field">compute</a> <a id="10751" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="10753" href="Ledger.Introduction.html#437" class="Generalizable">s</a> <a id="10755" href="Ledger.Introduction.html#452" class="Generalizable">b</a> <a id="10757" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="10759" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="10767" class="Symbol">→</a> <a id="10769" class="Symbol">∀</a> <a id="10771" href="Ledger.Introduction.html#10771" class="Bound">s&#39;</a> <a id="10774" class="Symbol">→</a> <a id="10776" href="Relation.Nullary.Negation.Core.html#677" class="Function Operator">¬</a> <a id="10778" href="Ledger.Introduction.html#429" class="Generalizable">Γ</a> <a id="10780" href="Ledger.Introduction.html#10564" class="Bound Operator">⊢</a> <a id="10782" href="Ledger.Introduction.html#437" class="Generalizable">s</a> <a id="10784" href="Ledger.Introduction.html#10564" class="Bound Operator">⇀⦇</a> <a id="10787" href="Ledger.Introduction.html#452" class="Generalizable">b</a> <a id="10789" href="Ledger.Introduction.html#10564" class="Bound Operator">,X⦈</a> <a id="10793" href="Ledger.Introduction.html#10771" class="Bound">s&#39;</a>
 </pre>
 <pre class="Agda hidden-source">
-  <a id="10762" href="Ledger.Introduction.html#10672" class="Function">nothing⇒∀¬STS</a> <a id="10776" href="Ledger.Introduction.html#10776" class="Bound">comp≡nothing</a> <a id="10789" href="Ledger.Introduction.html#10789" class="Bound">s&#39;</a> <a id="10792" href="Ledger.Introduction.html#10792" class="Bound">h</a> <a id="10794" class="Keyword">rewrite</a> <a id="10802" href="Ledger.Introduction.html#10611" class="Field">≡-just⇔STS</a> <a id="10813" class="Symbol">.</a><a id="10814" href="Function.Bundles.html#4832" class="Field">Equivalence.from</a> <a id="10831" href="Ledger.Introduction.html#10792" class="Bound">h</a> <a id="10833" class="Symbol">=</a>
-    <a id="10839" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="10844" href="Ledger.Introduction.html#10776" class="Bound">comp≡nothing</a> <a id="10857" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="10860" class="Symbol">λ</a> <a id="10862" class="Symbol">()</a>
+  <a id="10817" href="Ledger.Introduction.html#10727" class="Function">nothing⇒∀¬STS</a> <a id="10831" href="Ledger.Introduction.html#10831" class="Bound">comp≡nothing</a> <a id="10844" href="Ledger.Introduction.html#10844" class="Bound">s&#39;</a> <a id="10847" href="Ledger.Introduction.html#10847" class="Bound">h</a> <a id="10849" class="Keyword">rewrite</a> <a id="10857" href="Ledger.Introduction.html#10666" class="Field">≡-just⇔STS</a> <a id="10868" class="Symbol">.</a><a id="10869" href="Function.Bundles.html#4832" class="Field">Equivalence.from</a> <a id="10886" href="Ledger.Introduction.html#10847" class="Bound">h</a> <a id="10888" class="Symbol">=</a>
+    <a id="10894" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="10899" href="Ledger.Introduction.html#10831" class="Bound">comp≡nothing</a> <a id="10912" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="10915" class="Symbol">λ</a> <a id="10917" class="Symbol">()</a>
 </pre>
 
 <p>Unpacking this, we have a <code class="AgdaField">compute</code> function that computes a
@@ -6992,30 +7126,30 @@ relation and the equality relation for sets.</p>
 <p>When we need to convert a list to its set of elements, we write
 <code class="AgdaFunction">fromList</code> .</p>
 <pre class="Agda hidden-source">
-<a id="13253" class="Keyword">open</a> <a id="13258" href="Axiom.Set.html#1616" class="Module">Theory</a> <a id="13265" href="Ledger.Introduction.html#140" class="Bound">th</a> <a id="13268" class="Keyword">using</a> <a id="13274" class="Symbol">(</a><a id="13275" href="Axiom.Set.html#1730" class="Field Operator">_∈_</a><a id="13278" class="Symbol">)</a> <a id="13280" class="Keyword">renaming</a> <a id="13289" class="Symbol">(</a><a id="13290" href="Axiom.Set.html#1700" class="Field">Set</a> <a id="13294" class="Symbol">to</a> <a id="13297" class="Field">ℙ</a><a id="13298" class="Symbol">)</a>
-<a id="13300" class="Keyword">private</a> <a id="13308" class="Keyword">variable</a>
-  <a id="13319" href="Ledger.Introduction.html#13319" class="Generalizable">a</a> <a id="13321" href="Ledger.Introduction.html#13321" class="Generalizable">c</a> <a id="13323" class="Symbol">:</a> <a id="13325" href="Agda.Primitive.html#742" class="Postulate">Level</a>
-  <a id="13333" href="Ledger.Introduction.html#13333" class="Generalizable">A</a> <a id="13335" class="Symbol">:</a> <a id="13337" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13342" href="Ledger.Introduction.html#13319" class="Generalizable">a</a>
-<a id="Σ-syntax&#39;"></a><a id="13344" href="Ledger.Introduction.html#13344" class="Function">Σ-syntax&#39;</a> <a id="13354" class="Symbol">:</a> <a id="13356" class="Symbol">(</a><a id="13357" href="Ledger.Introduction.html#13357" class="Bound">A</a> <a id="13359" class="Symbol">:</a> <a id="13361" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13366" href="Ledger.Introduction.html#13319" class="Generalizable">a</a><a id="13367" class="Symbol">)</a> <a id="13369" class="Symbol">→</a> <a id="13371" class="Symbol">(</a><a id="13372" href="Ledger.Introduction.html#13357" class="Bound">A</a> <a id="13374" class="Symbol">→</a> <a id="13376" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13381" href="Ledger.Introduction.html#13321" class="Generalizable">c</a><a id="13382" class="Symbol">)</a> <a id="13384" class="Symbol">→</a> <a id="13386" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13391" class="Symbol">_</a>
-<a id="13393" href="Ledger.Introduction.html#13344" class="Function">Σ-syntax&#39;</a> <a id="13403" class="Symbol">=</a> <a id="13405" href="Agda.Builtin.Sigma.html#165" class="Record">Σ</a>
-<a id="13407" class="Keyword">syntax</a> <a id="13414" href="Ledger.Introduction.html#13344" class="Function">Σ-syntax&#39;</a> <a id="13424" class="Bound">A</a> <a id="13426" class="Symbol">(λ</a> <a id="13429" class="Bound">x</a> <a id="13431" class="Symbol">→</a> <a id="13433" class="Bound">B</a><a id="13434" class="Symbol">)</a> <a id="13436" class="Symbol">=</a> <a id="13438" class="Bound">x</a> <a id="13440" class="Function">∈</a> <a id="13442" class="Bound">A</a> <a id="13444" class="Function">﹐</a> <a id="13446" class="Bound">B</a>
+<a id="13308" class="Keyword">open</a> <a id="13313" href="Axiom.Set.html#1616" class="Module">Theory</a> <a id="13320" href="Ledger.Introduction.html#195" class="Bound">th</a> <a id="13323" class="Keyword">using</a> <a id="13329" class="Symbol">(</a><a id="13330" href="Axiom.Set.html#1730" class="Field Operator">_∈_</a><a id="13333" class="Symbol">)</a> <a id="13335" class="Keyword">renaming</a> <a id="13344" class="Symbol">(</a><a id="13345" href="Axiom.Set.html#1700" class="Field">Set</a> <a id="13349" class="Symbol">to</a> <a id="13352" class="Field">ℙ</a><a id="13353" class="Symbol">)</a>
+<a id="13355" class="Keyword">private</a> <a id="13363" class="Keyword">variable</a>
+  <a id="13374" href="Ledger.Introduction.html#13374" class="Generalizable">a</a> <a id="13376" href="Ledger.Introduction.html#13376" class="Generalizable">c</a> <a id="13378" class="Symbol">:</a> <a id="13380" href="Agda.Primitive.html#742" class="Postulate">Level</a>
+  <a id="13388" href="Ledger.Introduction.html#13388" class="Generalizable">A</a> <a id="13390" class="Symbol">:</a> <a id="13392" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13397" href="Ledger.Introduction.html#13374" class="Generalizable">a</a>
+<a id="Σ-syntax&#39;"></a><a id="13399" href="Ledger.Introduction.html#13399" class="Function">Σ-syntax&#39;</a> <a id="13409" class="Symbol">:</a> <a id="13411" class="Symbol">(</a><a id="13412" href="Ledger.Introduction.html#13412" class="Bound">A</a> <a id="13414" class="Symbol">:</a> <a id="13416" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13421" href="Ledger.Introduction.html#13374" class="Generalizable">a</a><a id="13422" class="Symbol">)</a> <a id="13424" class="Symbol">→</a> <a id="13426" class="Symbol">(</a><a id="13427" href="Ledger.Introduction.html#13412" class="Bound">A</a> <a id="13429" class="Symbol">→</a> <a id="13431" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13436" href="Ledger.Introduction.html#13376" class="Generalizable">c</a><a id="13437" class="Symbol">)</a> <a id="13439" class="Symbol">→</a> <a id="13441" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13446" class="Symbol">_</a>
+<a id="13448" href="Ledger.Introduction.html#13399" class="Function">Σ-syntax&#39;</a> <a id="13458" class="Symbol">=</a> <a id="13460" href="Agda.Builtin.Sigma.html#165" class="Record">Σ</a>
+<a id="13462" class="Keyword">syntax</a> <a id="13469" href="Ledger.Introduction.html#13399" class="Function">Σ-syntax&#39;</a> <a id="13479" class="Bound">A</a> <a id="13481" class="Symbol">(λ</a> <a id="13484" class="Bound">x</a> <a id="13486" class="Symbol">→</a> <a id="13488" class="Bound">B</a><a id="13489" class="Symbol">)</a> <a id="13491" class="Symbol">=</a> <a id="13493" class="Bound">x</a> <a id="13495" class="Function">∈</a> <a id="13497" class="Bound">A</a> <a id="13499" class="Function">﹐</a> <a id="13501" class="Bound">B</a>
 </pre>
 
 <pre class="Agda">
-<a id="_⊆_"></a><a id="13466" href="Ledger.Introduction.html#13466" class="Function Operator">_⊆_</a> <a id="13470" class="Symbol">:</a> <a id="13472" class="Symbol">{</a><a id="13473" href="Ledger.Introduction.html#13473" class="Bound">A</a> <a id="13475" class="Symbol">:</a> <a id="13477" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="13481" class="Symbol">}</a> <a id="13483" class="Symbol">→</a> <a id="13485" href="Ledger.Introduction.html#13297" class="Field">ℙ</a> <a id="13487" href="Ledger.Introduction.html#13473" class="Bound">A</a> <a id="13489" class="Symbol">→</a> <a id="13491" href="Ledger.Introduction.html#13297" class="Field">ℙ</a> <a id="13493" href="Ledger.Introduction.html#13473" class="Bound">A</a> <a id="13495" class="Symbol">→</a> <a id="13497" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="13502" href="Ledger.Introduction.html#13502" class="Bound">X</a> <a id="13504" href="Ledger.Introduction.html#13466" class="Function Operator">⊆</a> <a id="13506" href="Ledger.Introduction.html#13506" class="Bound">Y</a> <a id="13508" class="Symbol">=</a> <a id="13510" class="Symbol">∀</a> <a id="13512" class="Symbol">{</a><a id="13513" href="Ledger.Introduction.html#13513" class="Bound">x</a><a id="13514" class="Symbol">}</a> <a id="13516" class="Symbol">→</a> <a id="13518" href="Ledger.Introduction.html#13513" class="Bound">x</a> <a id="13520" href="Axiom.Set.html#1730" class="Field Operator">∈</a> <a id="13522" href="Ledger.Introduction.html#13502" class="Bound">X</a> <a id="13524" class="Symbol">→</a> <a id="13526" href="Ledger.Introduction.html#13513" class="Bound">x</a> <a id="13528" href="Axiom.Set.html#1730" class="Field Operator">∈</a> <a id="13530" href="Ledger.Introduction.html#13506" class="Bound">Y</a>
+<a id="_⊆_"></a><a id="13521" href="Ledger.Introduction.html#13521" class="Function Operator">_⊆_</a> <a id="13525" class="Symbol">:</a> <a id="13527" class="Symbol">{</a><a id="13528" href="Ledger.Introduction.html#13528" class="Bound">A</a> <a id="13530" class="Symbol">:</a> <a id="13532" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="13536" class="Symbol">}</a> <a id="13538" class="Symbol">→</a> <a id="13540" href="Ledger.Introduction.html#13352" class="Field">ℙ</a> <a id="13542" href="Ledger.Introduction.html#13528" class="Bound">A</a> <a id="13544" class="Symbol">→</a> <a id="13546" href="Ledger.Introduction.html#13352" class="Field">ℙ</a> <a id="13548" href="Ledger.Introduction.html#13528" class="Bound">A</a> <a id="13550" class="Symbol">→</a> <a id="13552" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="13557" href="Ledger.Introduction.html#13557" class="Bound">X</a> <a id="13559" href="Ledger.Introduction.html#13521" class="Function Operator">⊆</a> <a id="13561" href="Ledger.Introduction.html#13561" class="Bound">Y</a> <a id="13563" class="Symbol">=</a> <a id="13565" class="Symbol">∀</a> <a id="13567" class="Symbol">{</a><a id="13568" href="Ledger.Introduction.html#13568" class="Bound">x</a><a id="13569" class="Symbol">}</a> <a id="13571" class="Symbol">→</a> <a id="13573" href="Ledger.Introduction.html#13568" class="Bound">x</a> <a id="13575" href="Axiom.Set.html#1730" class="Field Operator">∈</a> <a id="13577" href="Ledger.Introduction.html#13557" class="Bound">X</a> <a id="13579" class="Symbol">→</a> <a id="13581" href="Ledger.Introduction.html#13568" class="Bound">x</a> <a id="13583" href="Axiom.Set.html#1730" class="Field Operator">∈</a> <a id="13585" href="Ledger.Introduction.html#13561" class="Bound">Y</a>
 
-<a id="_≡ᵉ_"></a><a id="13533" href="Ledger.Introduction.html#13533" class="Function Operator">_≡ᵉ_</a> <a id="13538" class="Symbol">:</a> <a id="13540" class="Symbol">{</a><a id="13541" href="Ledger.Introduction.html#13541" class="Bound">A</a> <a id="13543" class="Symbol">:</a> <a id="13545" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="13549" class="Symbol">}</a> <a id="13551" class="Symbol">→</a> <a id="13553" href="Ledger.Introduction.html#13297" class="Field">ℙ</a> <a id="13555" href="Ledger.Introduction.html#13541" class="Bound">A</a> <a id="13557" class="Symbol">→</a> <a id="13559" href="Ledger.Introduction.html#13297" class="Field">ℙ</a> <a id="13561" href="Ledger.Introduction.html#13541" class="Bound">A</a> <a id="13563" class="Symbol">→</a> <a id="13565" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="13570" href="Ledger.Introduction.html#13570" class="Bound">X</a> <a id="13572" href="Ledger.Introduction.html#13533" class="Function Operator">≡ᵉ</a> <a id="13575" href="Ledger.Introduction.html#13575" class="Bound">Y</a> <a id="13577" class="Symbol">=</a> <a id="13579" href="Ledger.Introduction.html#13570" class="Bound">X</a> <a id="13581" href="Ledger.Introduction.html#13466" class="Function Operator">⊆</a> <a id="13583" href="Ledger.Introduction.html#13575" class="Bound">Y</a> <a id="13585" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="13587" href="Ledger.Introduction.html#13575" class="Bound">Y</a> <a id="13589" href="Ledger.Introduction.html#13466" class="Function Operator">⊆</a> <a id="13591" href="Ledger.Introduction.html#13570" class="Bound">X</a>
+<a id="_≡ᵉ_"></a><a id="13588" href="Ledger.Introduction.html#13588" class="Function Operator">_≡ᵉ_</a> <a id="13593" class="Symbol">:</a> <a id="13595" class="Symbol">{</a><a id="13596" href="Ledger.Introduction.html#13596" class="Bound">A</a> <a id="13598" class="Symbol">:</a> <a id="13600" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="13604" class="Symbol">}</a> <a id="13606" class="Symbol">→</a> <a id="13608" href="Ledger.Introduction.html#13352" class="Field">ℙ</a> <a id="13610" href="Ledger.Introduction.html#13596" class="Bound">A</a> <a id="13612" class="Symbol">→</a> <a id="13614" href="Ledger.Introduction.html#13352" class="Field">ℙ</a> <a id="13616" href="Ledger.Introduction.html#13596" class="Bound">A</a> <a id="13618" class="Symbol">→</a> <a id="13620" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="13625" href="Ledger.Introduction.html#13625" class="Bound">X</a> <a id="13627" href="Ledger.Introduction.html#13588" class="Function Operator">≡ᵉ</a> <a id="13630" href="Ledger.Introduction.html#13630" class="Bound">Y</a> <a id="13632" class="Symbol">=</a> <a id="13634" href="Ledger.Introduction.html#13625" class="Bound">X</a> <a id="13636" href="Ledger.Introduction.html#13521" class="Function Operator">⊆</a> <a id="13638" href="Ledger.Introduction.html#13630" class="Bound">Y</a> <a id="13640" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="13642" href="Ledger.Introduction.html#13630" class="Bound">Y</a> <a id="13644" href="Ledger.Introduction.html#13521" class="Function Operator">⊆</a> <a id="13646" href="Ledger.Introduction.html#13625" class="Bound">X</a>
 
-<a id="Rel"></a><a id="13594" href="Ledger.Introduction.html#13594" class="Function">Rel</a> <a id="13598" class="Symbol">:</a> <a id="13600" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13605" class="Symbol">→</a> <a id="13607" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13612" class="Symbol">→</a> <a id="13614" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="13619" href="Ledger.Introduction.html#13594" class="Function">Rel</a> <a id="13623" href="Ledger.Introduction.html#13623" class="Bound">A</a> <a id="13625" href="Ledger.Introduction.html#13625" class="Bound">B</a> <a id="13627" class="Symbol">=</a> <a id="13629" href="Ledger.Introduction.html#13297" class="Field">ℙ</a> <a id="13631" class="Symbol">(</a><a id="13632" href="Ledger.Introduction.html#13623" class="Bound">A</a> <a id="13634" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="13636" href="Ledger.Introduction.html#13625" class="Bound">B</a><a id="13637" class="Symbol">)</a>
+<a id="Rel"></a><a id="13649" href="Ledger.Introduction.html#13649" class="Function">Rel</a> <a id="13653" class="Symbol">:</a> <a id="13655" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13660" class="Symbol">→</a> <a id="13662" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13667" class="Symbol">→</a> <a id="13669" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="13674" href="Ledger.Introduction.html#13649" class="Function">Rel</a> <a id="13678" href="Ledger.Introduction.html#13678" class="Bound">A</a> <a id="13680" href="Ledger.Introduction.html#13680" class="Bound">B</a> <a id="13682" class="Symbol">=</a> <a id="13684" href="Ledger.Introduction.html#13352" class="Field">ℙ</a> <a id="13686" class="Symbol">(</a><a id="13687" href="Ledger.Introduction.html#13678" class="Bound">A</a> <a id="13689" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="13691" href="Ledger.Introduction.html#13680" class="Bound">B</a><a id="13692" class="Symbol">)</a>
 
-<a id="left-unique"></a><a id="13640" href="Ledger.Introduction.html#13640" class="Function">left-unique</a> <a id="13652" class="Symbol">:</a> <a id="13654" class="Symbol">{</a><a id="13655" href="Ledger.Introduction.html#13655" class="Bound">A</a> <a id="13657" href="Ledger.Introduction.html#13657" class="Bound">B</a> <a id="13659" class="Symbol">:</a> <a id="13661" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="13665" class="Symbol">}</a> <a id="13667" class="Symbol">→</a> <a id="13669" href="Ledger.Introduction.html#13594" class="Function">Rel</a> <a id="13673" href="Ledger.Introduction.html#13655" class="Bound">A</a> <a id="13675" href="Ledger.Introduction.html#13657" class="Bound">B</a> <a id="13677" class="Symbol">→</a> <a id="13679" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="13684" href="Ledger.Introduction.html#13640" class="Function">left-unique</a> <a id="13696" href="Ledger.Introduction.html#13696" class="Bound">R</a> <a id="13698" class="Symbol">=</a> <a id="13700" class="Symbol">∀</a> <a id="13702" class="Symbol">{</a><a id="13703" href="Ledger.Introduction.html#13703" class="Bound">a</a> <a id="13705" href="Ledger.Introduction.html#13705" class="Bound">b</a> <a id="13707" href="Ledger.Introduction.html#13707" class="Bound">b&#39;</a><a id="13709" class="Symbol">}</a> <a id="13711" class="Symbol">→</a> <a id="13713" class="Symbol">(</a><a id="13714" href="Ledger.Introduction.html#13703" class="Bound">a</a> <a id="13716" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="13718" href="Ledger.Introduction.html#13705" class="Bound">b</a><a id="13719" class="Symbol">)</a> <a id="13721" href="Axiom.Set.html#1730" class="Field Operator">∈</a> <a id="13723" href="Ledger.Introduction.html#13696" class="Bound">R</a> <a id="13725" class="Symbol">→</a> <a id="13727" class="Symbol">(</a><a id="13728" href="Ledger.Introduction.html#13703" class="Bound">a</a> <a id="13730" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="13732" href="Ledger.Introduction.html#13707" class="Bound">b&#39;</a><a id="13734" class="Symbol">)</a> <a id="13736" href="Axiom.Set.html#1730" class="Field Operator">∈</a> <a id="13738" href="Ledger.Introduction.html#13696" class="Bound">R</a> <a id="13740" class="Symbol">→</a> <a id="13742" href="Ledger.Introduction.html#13705" class="Bound">b</a> <a id="13744" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="13746" href="Ledger.Introduction.html#13707" class="Bound">b&#39;</a>
+<a id="left-unique"></a><a id="13695" href="Ledger.Introduction.html#13695" class="Function">left-unique</a> <a id="13707" class="Symbol">:</a> <a id="13709" class="Symbol">{</a><a id="13710" href="Ledger.Introduction.html#13710" class="Bound">A</a> <a id="13712" href="Ledger.Introduction.html#13712" class="Bound">B</a> <a id="13714" class="Symbol">:</a> <a id="13716" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="13720" class="Symbol">}</a> <a id="13722" class="Symbol">→</a> <a id="13724" href="Ledger.Introduction.html#13649" class="Function">Rel</a> <a id="13728" href="Ledger.Introduction.html#13710" class="Bound">A</a> <a id="13730" href="Ledger.Introduction.html#13712" class="Bound">B</a> <a id="13732" class="Symbol">→</a> <a id="13734" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="13739" href="Ledger.Introduction.html#13695" class="Function">left-unique</a> <a id="13751" href="Ledger.Introduction.html#13751" class="Bound">R</a> <a id="13753" class="Symbol">=</a> <a id="13755" class="Symbol">∀</a> <a id="13757" class="Symbol">{</a><a id="13758" href="Ledger.Introduction.html#13758" class="Bound">a</a> <a id="13760" href="Ledger.Introduction.html#13760" class="Bound">b</a> <a id="13762" href="Ledger.Introduction.html#13762" class="Bound">b&#39;</a><a id="13764" class="Symbol">}</a> <a id="13766" class="Symbol">→</a> <a id="13768" class="Symbol">(</a><a id="13769" href="Ledger.Introduction.html#13758" class="Bound">a</a> <a id="13771" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="13773" href="Ledger.Introduction.html#13760" class="Bound">b</a><a id="13774" class="Symbol">)</a> <a id="13776" href="Axiom.Set.html#1730" class="Field Operator">∈</a> <a id="13778" href="Ledger.Introduction.html#13751" class="Bound">R</a> <a id="13780" class="Symbol">→</a> <a id="13782" class="Symbol">(</a><a id="13783" href="Ledger.Introduction.html#13758" class="Bound">a</a> <a id="13785" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="13787" href="Ledger.Introduction.html#13762" class="Bound">b&#39;</a><a id="13789" class="Symbol">)</a> <a id="13791" href="Axiom.Set.html#1730" class="Field Operator">∈</a> <a id="13793" href="Ledger.Introduction.html#13751" class="Bound">R</a> <a id="13795" class="Symbol">→</a> <a id="13797" href="Ledger.Introduction.html#13760" class="Bound">b</a> <a id="13799" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="13801" href="Ledger.Introduction.html#13762" class="Bound">b&#39;</a>
 
-<a id="_⇀_"></a><a id="13750" href="Ledger.Introduction.html#13750" class="Function Operator">_⇀_</a> <a id="13754" class="Symbol">:</a> <a id="13756" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13761" class="Symbol">→</a> <a id="13763" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13768" class="Symbol">→</a> <a id="13770" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="13775" href="Ledger.Introduction.html#13775" class="Bound">A</a> <a id="13777" href="Ledger.Introduction.html#13750" class="Function Operator">⇀</a> <a id="13779" href="Ledger.Introduction.html#13779" class="Bound">B</a> <a id="13781" class="Symbol">=</a> <a id="13783" href="Ledger.Introduction.html#13783" class="Bound">r</a> <a id="13785" href="Ledger.Introduction.html#13344" class="Function">∈</a> <a id="13787" href="Ledger.Introduction.html#13594" class="Function">Rel</a> <a id="13791" href="Ledger.Introduction.html#13775" class="Bound">A</a> <a id="13793" href="Ledger.Introduction.html#13779" class="Bound">B</a> <a id="13795" href="Ledger.Introduction.html#13344" class="Function">﹐</a> <a id="13797" href="Ledger.Introduction.html#13640" class="Function">left-unique</a> <a id="13809" href="Ledger.Introduction.html#13783" class="Bound">r</a>
+<a id="_⇀_"></a><a id="13805" href="Ledger.Introduction.html#13805" class="Function Operator">_⇀_</a> <a id="13809" class="Symbol">:</a> <a id="13811" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13816" class="Symbol">→</a> <a id="13818" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="13823" class="Symbol">→</a> <a id="13825" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="13830" href="Ledger.Introduction.html#13830" class="Bound">A</a> <a id="13832" href="Ledger.Introduction.html#13805" class="Function Operator">⇀</a> <a id="13834" href="Ledger.Introduction.html#13834" class="Bound">B</a> <a id="13836" class="Symbol">=</a> <a id="13838" href="Ledger.Introduction.html#13838" class="Bound">r</a> <a id="13840" href="Ledger.Introduction.html#13399" class="Function">∈</a> <a id="13842" href="Ledger.Introduction.html#13649" class="Function">Rel</a> <a id="13846" href="Ledger.Introduction.html#13830" class="Bound">A</a> <a id="13848" href="Ledger.Introduction.html#13834" class="Bound">B</a> <a id="13850" href="Ledger.Introduction.html#13399" class="Function">﹐</a> <a id="13852" href="Ledger.Introduction.html#13695" class="Function">left-unique</a> <a id="13864" href="Ledger.Introduction.html#13838" class="Bound">r</a>
 </pre>
 <h2 id="sec:prop-as-types">Propositions as Types, Properties and Relations<a class="headerlink" href="#sec:prop-as-types" title="Permanent link">&para;</a></h2>
 <p>In type theory we represent propositions as types and proofs of a
@@ -7039,6 +7173,9 @@ of predicates simply returning a boolean value instead.</p>
 
 
 
+
+  
+  
 
 
 
@@ -7121,7 +7258,7 @@ of predicates simply returning a boolean value instead.</p>
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "toc.integrate", "content.tooltips", "navigation.footer", "navigation.tabs", "content.code.copy"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.92b07e13.min.js"></script>

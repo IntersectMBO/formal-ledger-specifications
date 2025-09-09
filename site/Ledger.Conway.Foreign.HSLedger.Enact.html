@@ -259,9 +259,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="." title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
       
@@ -6487,6 +6485,22 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
@@ -6495,36 +6509,44 @@
                   
 
 
-  
-  
+
+
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Foreign/HSLedger/Enact.agda"
+     class="md-content__button md-icon"
+     title="View the source of this page"
+     aria-label="View the source of this page">
+    
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </a>
 
 
   <h1>Enact</h1>
 
-<pre class="Agda"><a id="9" class="Keyword">open</a> <a id="14" class="Keyword">import</a> <a id="21" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="35" class="Keyword">using</a> <a id="41" class="Symbol">(</a><a id="42" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="43" class="Symbol">)</a>
-<a id="45" class="Keyword">module</a> <a id="52" href="Ledger.Conway.Foreign.HSLedger.Enact.html" class="Module">Ledger.Conway.Foreign.HSLedger.Enact</a> <a id="89" class="Keyword">where</a>
+<pre class="Agda"><a id="99" class="Keyword">open</a> <a id="104" class="Keyword">import</a> <a id="111" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="125" class="Keyword">using</a> <a id="131" class="Symbol">(</a><a id="132" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="133" class="Symbol">)</a>
+<a id="135" class="Keyword">module</a> <a id="142" href="Ledger.Conway.Foreign.HSLedger.Enact.html" class="Module">Ledger.Conway.Foreign.HSLedger.Enact</a> <a id="179" class="Keyword">where</a>
 
-<a id="96" class="Keyword">open</a> <a id="101" class="Keyword">import</a> <a id="108" href="Ledger.Conway.Foreign.HSLedger.Address.html" class="Module">Ledger.Conway.Foreign.HSLedger.Address</a>
-<a id="147" class="Keyword">open</a> <a id="152" class="Keyword">import</a> <a id="159" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a>
-<a id="200" class="Keyword">open</a> <a id="205" class="Keyword">import</a> <a id="212" href="Ledger.Conway.Foreign.HSLedger.PParams.html" class="Module">Ledger.Conway.Foreign.HSLedger.PParams</a>
-<a id="251" class="Keyword">open</a> <a id="256" class="Keyword">import</a> <a id="263" href="Ledger.Conway.Foreign.HSLedger.Gov.Actions.html" class="Module">Ledger.Conway.Foreign.HSLedger.Gov.Actions</a>
+<a id="186" class="Keyword">open</a> <a id="191" class="Keyword">import</a> <a id="198" href="Ledger.Conway.Foreign.HSLedger.Address.html" class="Module">Ledger.Conway.Foreign.HSLedger.Address</a>
+<a id="237" class="Keyword">open</a> <a id="242" class="Keyword">import</a> <a id="249" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a>
+<a id="290" class="Keyword">open</a> <a id="295" class="Keyword">import</a> <a id="302" href="Ledger.Conway.Foreign.HSLedger.PParams.html" class="Module">Ledger.Conway.Foreign.HSLedger.PParams</a>
+<a id="341" class="Keyword">open</a> <a id="346" class="Keyword">import</a> <a id="353" href="Ledger.Conway.Foreign.HSLedger.Gov.Actions.html" class="Module">Ledger.Conway.Foreign.HSLedger.Gov.Actions</a>
 
-<a id="307" class="Keyword">open</a> <a id="312" class="Keyword">import</a> <a id="319" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="353" href="Ledger.Conway.Specification.Transaction.html#3807" class="Function">govStructure</a>
-<a id="366" class="Keyword">open</a> <a id="371" class="Keyword">import</a> <a id="378" href="Ledger.Conway.Specification.Enact.Properties.html" class="Module">Ledger.Conway.Specification.Enact.Properties</a> <a id="423" href="Ledger.Conway.Specification.Transaction.html#3807" class="Function">govStructure</a>
+<a id="397" class="Keyword">open</a> <a id="402" class="Keyword">import</a> <a id="409" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="443" href="Ledger.Conway.Specification.Transaction.html#3901" class="Function">govStructure</a>
+<a id="456" class="Keyword">open</a> <a id="461" class="Keyword">import</a> <a id="468" href="Ledger.Conway.Specification.Enact.Properties.html" class="Module">Ledger.Conway.Specification.Enact.Properties</a> <a id="513" href="Ledger.Conway.Specification.Transaction.html#3901" class="Function">govStructure</a>
 
-<a id="437" class="Keyword">instance</a>
-  <a id="HsTy-EnactState"></a><a id="448" href="Ledger.Conway.Foreign.HSLedger.Enact.html#448" class="Function">HsTy-EnactState</a> <a id="464" class="Symbol">=</a> <a id="466" href="Foreign.HaskellTypes.Deriving.html#11538" class="Macro Operator">autoHsType</a> <a id="477" href="Ledger.Conway.Specification.Enact.html#1988" class="Record">EnactState</a> <a id="488" href="Foreign.HaskellTypes.Deriving.html#11538" class="Macro Operator">⊣</a> <a id="490" href="Foreign.HaskellTypes.Deriving.html#3245" class="Function">withConstructor</a> <a id="506" class="String">&quot;MkEnactState&quot;</a>
-                                          <a id="563" href="Foreign.HaskellTypes.Deriving.html#3531" class="Function Operator">•</a> <a id="565" href="Foreign.HaskellTypes.Deriving.html#3427" class="Function">fieldPrefix</a> <a id="577" class="String">&quot;es&quot;</a>
-  <a id="Conv-EnactState"></a><a id="584" href="Ledger.Conway.Foreign.HSLedger.Enact.html#584" class="Function">Conv-EnactState</a> <a id="600" class="Symbol">=</a> <a id="602" href="Foreign.Convertible.Deriving.html#6822" class="Macro">autoConvert</a> <a id="614" href="Ledger.Conway.Specification.Enact.html#1988" class="Record">EnactState</a>
+<a id="527" class="Keyword">instance</a>
+  <a id="HsTy-EnactState"></a><a id="538" href="Ledger.Conway.Foreign.HSLedger.Enact.html#538" class="Function">HsTy-EnactState</a> <a id="554" class="Symbol">=</a> <a id="556" href="Foreign.HaskellTypes.Deriving.html#11621" class="Macro Operator">autoHsType</a> <a id="567" href="Ledger.Conway.Specification.Enact.html#2076" class="Record">EnactState</a> <a id="578" href="Foreign.HaskellTypes.Deriving.html#11621" class="Macro Operator">⊣</a> <a id="580" href="Foreign.HaskellTypes.Deriving.html#3328" class="Function">withConstructor</a> <a id="596" class="String">&quot;MkEnactState&quot;</a>
+                                          <a id="653" href="Foreign.HaskellTypes.Deriving.html#3614" class="Function Operator">•</a> <a id="655" href="Foreign.HaskellTypes.Deriving.html#3510" class="Function">fieldPrefix</a> <a id="667" class="String">&quot;es&quot;</a>
+  <a id="Conv-EnactState"></a><a id="674" href="Ledger.Conway.Foreign.HSLedger.Enact.html#674" class="Function">Conv-EnactState</a> <a id="690" class="Symbol">=</a> <a id="692" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="704" href="Ledger.Conway.Specification.Enact.html#2076" class="Record">EnactState</a>
 
-  <a id="HsTy-EnactEnv"></a><a id="628" href="Ledger.Conway.Foreign.HSLedger.Enact.html#628" class="Function">HsTy-EnactEnv</a> <a id="642" class="Symbol">=</a> <a id="644" href="Foreign.HaskellTypes.Deriving.html#11538" class="Macro Operator">autoHsType</a> <a id="655" href="Ledger.Conway.Specification.Enact.html#1875" class="Record">EnactEnv</a> <a id="664" href="Foreign.HaskellTypes.Deriving.html#11538" class="Macro Operator">⊣</a> <a id="666" href="Foreign.HaskellTypes.Deriving.html#3245" class="Function">withConstructor</a> <a id="682" class="String">&quot;MkEnactEnv&quot;</a>
-                                      <a id="733" href="Foreign.HaskellTypes.Deriving.html#3531" class="Function Operator">•</a> <a id="735" href="Foreign.HaskellTypes.Deriving.html#3427" class="Function">fieldPrefix</a> <a id="747" class="String">&quot;ee&quot;</a>
-  <a id="Conv-EnactEnv"></a><a id="754" href="Ledger.Conway.Foreign.HSLedger.Enact.html#754" class="Function">Conv-EnactEnv</a> <a id="768" class="Symbol">=</a> <a id="770" href="Foreign.Convertible.Deriving.html#6822" class="Macro">autoConvert</a> <a id="782" href="Ledger.Conway.Specification.Enact.html#1875" class="Record">EnactEnv</a>
+  <a id="HsTy-EnactEnv"></a><a id="718" href="Ledger.Conway.Foreign.HSLedger.Enact.html#718" class="Function">HsTy-EnactEnv</a> <a id="732" class="Symbol">=</a> <a id="734" href="Foreign.HaskellTypes.Deriving.html#11621" class="Macro Operator">autoHsType</a> <a id="745" href="Ledger.Conway.Specification.Enact.html#1963" class="Record">EnactEnv</a> <a id="754" href="Foreign.HaskellTypes.Deriving.html#11621" class="Macro Operator">⊣</a> <a id="756" href="Foreign.HaskellTypes.Deriving.html#3328" class="Function">withConstructor</a> <a id="772" class="String">&quot;MkEnactEnv&quot;</a>
+                                      <a id="823" href="Foreign.HaskellTypes.Deriving.html#3614" class="Function Operator">•</a> <a id="825" href="Foreign.HaskellTypes.Deriving.html#3510" class="Function">fieldPrefix</a> <a id="837" class="String">&quot;ee&quot;</a>
+  <a id="Conv-EnactEnv"></a><a id="844" href="Ledger.Conway.Foreign.HSLedger.Enact.html#844" class="Function">Conv-EnactEnv</a> <a id="858" class="Symbol">=</a> <a id="860" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="872" href="Ledger.Conway.Specification.Enact.html#1963" class="Record">EnactEnv</a>
 
-<a id="enact-step"></a><a id="792" href="Ledger.Conway.Foreign.HSLedger.Enact.html#792" class="Function">enact-step</a> <a id="803" class="Symbol">:</a> <a id="805" href="Foreign.HaskellTypes.html#601" class="Function">HsType</a> <a id="812" class="Symbol">(</a><a id="813" href="Ledger.Conway.Specification.Enact.html#1875" class="Record">EnactEnv</a> <a id="822" class="Symbol">→</a> <a id="824" href="Ledger.Conway.Specification.Enact.html#1988" class="Record">EnactState</a> <a id="835" class="Symbol">→</a> <a id="837" href="Ledger.Conway.Specification.Gov.Actions.html#2504" class="Record">GovAction</a> <a id="847" class="Symbol">→</a> <a id="849" href="Interface.ComputationalRelation.html#243" class="Datatype">ComputationResult</a> <a id="867" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="874" href="Ledger.Conway.Specification.Enact.html#1988" class="Record">EnactState</a><a id="884" class="Symbol">)</a>
-<a id="886" href="Ledger.Conway.Foreign.HSLedger.Enact.html#792" class="Function">enact-step</a> <a id="897" class="Symbol">=</a> <a id="899" href="Foreign.Convertible.html#157" class="Field">to</a> <a id="902" class="Symbol">(</a><a id="903" href="Interface.ComputationalRelation.html#2984" class="Function">compute</a> <a id="911" href="Ledger.Conway.Specification.Enact.Properties.html#378" class="Function">Computational-ENACT</a><a id="930" class="Symbol">)</a>
+<a id="enact-step"></a><a id="882" href="Ledger.Conway.Foreign.HSLedger.Enact.html#882" class="Function">enact-step</a> <a id="893" class="Symbol">:</a> <a id="895" href="Foreign.HaskellTypes.html#675" class="Function">HsType</a> <a id="902" class="Symbol">(</a><a id="903" href="Ledger.Conway.Specification.Enact.html#1963" class="Record">EnactEnv</a> <a id="912" class="Symbol">→</a> <a id="914" href="Ledger.Conway.Specification.Enact.html#2076" class="Record">EnactState</a> <a id="925" class="Symbol">→</a> <a id="927" href="Ledger.Conway.Specification.Gov.Actions.html#2598" class="Record">GovAction</a> <a id="937" class="Symbol">→</a> <a id="939" href="Interface.ComputationalRelation.html#328" class="Datatype">ComputationResult</a> <a id="957" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="964" href="Ledger.Conway.Specification.Enact.html#2076" class="Record">EnactState</a><a id="974" class="Symbol">)</a>
+<a id="976" href="Ledger.Conway.Foreign.HSLedger.Enact.html#882" class="Function">enact-step</a> <a id="987" class="Symbol">=</a> <a id="989" href="Foreign.Convertible.html#230" class="Field">to</a> <a id="992" class="Symbol">(</a><a id="993" href="Interface.ComputationalRelation.html#3069" class="Function">compute</a> <a id="1001" href="Ledger.Conway.Specification.Enact.Properties.html#476" class="Function">Computational-ENACT</a><a id="1020" class="Symbol">)</a>
 
-<a id="933" class="Symbol">{-#</a> <a id="937" class="Keyword">COMPILE</a> <a id="945" class="Keyword">GHC</a> <a id="949" href="Ledger.Conway.Foreign.HSLedger.Enact.html#792" class="Function">enact-step</a> <a id="960" class="Pragma">as</a> <a id="963" class="Pragma">enactStep</a> <a id="973" class="Symbol">#-}</a>
+<a id="1023" class="Symbol">{-#</a> <a id="1027" class="Keyword">COMPILE</a> <a id="1035" class="Keyword">GHC</a> <a id="1039" href="Ledger.Conway.Foreign.HSLedger.Enact.html#882" class="Function">enact-step</a> <a id="1050" class="Pragma">as</a> <a id="1053" class="Pragma">enactStep</a> <a id="1063" class="Symbol">#-}</a>
 </pre>
 
 
@@ -6532,6 +6554,9 @@
 
 
 
+
+  
+  
 
 
 
@@ -6614,7 +6639,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "toc.integrate", "content.tooltips", "navigation.footer", "navigation.tabs", "content.code.copy"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.92b07e13.min.js"></script>

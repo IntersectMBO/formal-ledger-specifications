@@ -264,9 +264,7 @@
   
 
 
-  
-
-<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navigation" data-md-level="0">
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
     <a href="." title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
       
@@ -6540,6 +6538,50 @@
               </div>
             
             
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#types-and-functions-for-the-newpp-transition-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      Types and functions for the NEWPP transition system
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#newpp-transition-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      NEWPP transition system
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
           
           
             <div class="md-content" data-md-component="content">
@@ -6548,75 +6590,83 @@
                   
 
 
-  
-  
+
+
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/PreConway/NewPP.lagda"
+     class="md-content__button md-icon"
+     title="View the source of this page"
+     aria-label="View the source of this page">
+    
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </a>
 
 
 <h1 id="protocol-parameters-update">Protocol Parameters Update<a class="headerlink" href="#protocol-parameters-update" title="Permanent link">&para;</a></h1>
 <pre class="Agda hidden-source">
-<a id="46" class="Symbol">{-#</a> <a id="50" class="Keyword">OPTIONS</a> <a id="58" class="Pragma">--safe</a> <a id="65" class="Symbol">#-}</a>
+<a id="123" class="Symbol">{-#</a> <a id="127" class="Keyword">OPTIONS</a> <a id="135" class="Pragma">--safe</a> <a id="142" class="Symbol">#-}</a>
 
-<a id="70" class="Keyword">open</a> <a id="75" class="Keyword">import</a> <a id="82" href="Relation.Nullary.Decidable.html" class="Module">Relation.Nullary.Decidable</a>
+<a id="147" class="Keyword">open</a> <a id="152" class="Keyword">import</a> <a id="159" href="Relation.Nullary.Decidable.html" class="Module">Relation.Nullary.Decidable</a>
 
-<a id="110" class="Keyword">open</a> <a id="115" class="Keyword">import</a> <a id="122" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="137" class="Keyword">open</a> <a id="142" class="Keyword">import</a> <a id="149" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<a id="187" class="Keyword">open</a> <a id="192" class="Keyword">import</a> <a id="199" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="214" class="Keyword">open</a> <a id="219" class="Keyword">import</a> <a id="226" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<a id="190" class="Keyword">module</a> <a id="197" href="Ledger.PreConway.NewPP.html" class="Module">Ledger.PreConway.NewPP</a> <a id="220" class="Symbol">(</a><a id="221" href="Ledger.PreConway.NewPP.html#221" class="Bound">txs</a> <a id="225" class="Symbol">:</a> <a id="227" class="Symbol">_)</a> <a id="230" class="Symbol">(</a><a id="231" class="Keyword">open</a> <a id="236" href="Ledger.Conway.Specification.Transaction.html#2677" class="Module">TransactionStructure</a> <a id="257" href="Ledger.PreConway.NewPP.html#221" class="Bound">txs</a><a id="260" class="Symbol">)</a> <a id="262" class="Keyword">where</a>
+<a id="267" class="Keyword">module</a> <a id="274" href="Ledger.PreConway.NewPP.html" class="Module">Ledger.PreConway.NewPP</a> <a id="297" class="Symbol">(</a><a id="298" href="Ledger.PreConway.NewPP.html#298" class="Bound">txs</a> <a id="302" class="Symbol">:</a> <a id="304" class="Symbol">_)</a> <a id="307" class="Symbol">(</a><a id="308" class="Keyword">open</a> <a id="313" href="Ledger.Conway.Specification.Transaction.html#2771" class="Module">TransactionStructure</a> <a id="334" href="Ledger.PreConway.NewPP.html#298" class="Bound">txs</a><a id="337" class="Symbol">)</a> <a id="339" class="Keyword">where</a>
 
-<a id="269" class="Keyword">open</a> <a id="274" class="Keyword">import</a> <a id="281" href="Ledger.PreConway.PPUp.html" class="Module">Ledger.PreConway.PPUp</a> <a id="303" href="Ledger.PreConway.NewPP.html#221" class="Bound">txs</a>
+<a id="346" class="Keyword">open</a> <a id="351" class="Keyword">import</a> <a id="358" href="Ledger.PreConway.PPUp.html" class="Module">Ledger.PreConway.PPUp</a> <a id="380" href="Ledger.PreConway.NewPP.html#298" class="Bound">txs</a>
 
-<a id="308" class="Keyword">record</a> <a id="NewPParamEnv"></a><a id="315" href="Ledger.PreConway.NewPP.html#315" class="Record">NewPParamEnv</a> <a id="328" class="Symbol">:</a> <a id="330" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="335" class="Keyword">where</a>
-<a id="341" class="Comment">--  field</a>
+<a id="385" class="Keyword">record</a> <a id="NewPParamEnv"></a><a id="392" href="Ledger.PreConway.NewPP.html#392" class="Record">NewPParamEnv</a> <a id="405" class="Symbol">:</a> <a id="407" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="412" class="Keyword">where</a>
+<a id="418" class="Comment">--  field</a>
 </pre>
 
 <h3 id="types-and-functions-for-the-newpp-transition-system">Types and functions for the NEWPP transition system<a class="headerlink" href="#types-and-functions-for-the-newpp-transition-system" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
-<a id="430" class="Keyword">record</a> <a id="NewPParamState"></a><a id="437" href="Ledger.PreConway.NewPP.html#437" class="Record">NewPParamState</a> <a id="452" class="Symbol">:</a> <a id="454" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="459" class="Keyword">where</a>
-  <a id="467" class="Keyword">field</a>
-    <a id="NewPParamState.pparams"></a><a id="477" href="Ledger.PreConway.NewPP.html#477" class="Field">pparams</a>  <a id="486" class="Symbol">:</a> <a id="488" href="Ledger.Conway.Specification.PParams.html#2826" class="Record">PParams</a>
-    <a id="NewPParamState.ppup"></a><a id="500" href="Ledger.PreConway.NewPP.html#500" class="Field">ppup</a>     <a id="509" class="Symbol">:</a> <a id="511" href="Ledger.PreConway.PPUp.html#599" class="Record">PPUpdateState</a>
+<a id="507" class="Keyword">record</a> <a id="NewPParamState"></a><a id="514" href="Ledger.PreConway.NewPP.html#514" class="Record">NewPParamState</a> <a id="529" class="Symbol">:</a> <a id="531" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="536" class="Keyword">where</a>
+  <a id="544" class="Keyword">field</a>
+    <a id="NewPParamState.pparams"></a><a id="554" href="Ledger.PreConway.NewPP.html#554" class="Field">pparams</a>  <a id="563" class="Symbol">:</a> <a id="565" href="Ledger.Conway.Specification.PParams.html#2916" class="Record">PParams</a>
+    <a id="NewPParamState.ppup"></a><a id="577" href="Ledger.PreConway.NewPP.html#577" class="Field">ppup</a>     <a id="586" class="Symbol">:</a> <a id="588" href="Ledger.PreConway.PPUp.html#675" class="Record">PPUpdateState</a>
 
-<a id="updatePPUp"></a><a id="526" href="Ledger.PreConway.NewPP.html#526" class="Function">updatePPUp</a> <a id="537" class="Symbol">:</a> <a id="539" href="Ledger.Conway.Specification.PParams.html#2826" class="Record">PParams</a> <a id="547" class="Symbol">→</a> <a id="549" href="Ledger.PreConway.PPUp.html#599" class="Record">PPUpdateState</a> <a id="563" class="Symbol">→</a> <a id="565" href="Ledger.PreConway.PPUp.html#599" class="Record">PPUpdateState</a>
-<a id="579" href="Ledger.PreConway.NewPP.html#526" class="Function">updatePPUp</a> <a id="590" href="Ledger.PreConway.NewPP.html#590" class="Bound">pparams</a> <a id="598" class="Keyword">record</a> <a id="605" class="Symbol">{</a> <a id="607" href="Ledger.PreConway.PPUp.html#668" class="Field">fpup</a> <a id="612" class="Symbol">=</a> <a id="614" href="Ledger.PreConway.NewPP.html#614" class="Bound">fpup</a> <a id="619" class="Symbol">}</a>
-  <a id="623" class="Keyword">with</a> <a id="628" href="Axiom.Set.html#11302" class="Function">allᵇ</a> <a id="633" href="Class.Decidable.Core.html#783" class="Function Operator">¿</a> <a id="635" href="Ledger.PreConway.PPUp.html#940" class="Function">isViableUpdate</a> <a id="650" href="Ledger.PreConway.NewPP.html#590" class="Bound">pparams</a> <a id="658" href="Class.Decidable.Core.html#783" class="Function Operator">¿¹</a> <a id="661" class="Symbol">(</a><a id="662" href="Class.IsSet.html#959" class="Function">range</a> <a id="668" href="Ledger.PreConway.NewPP.html#614" class="Bound">fpup</a><a id="672" class="Symbol">)</a>
-<a id="674" class="Symbol">...</a> <a id="678" class="Symbol">|</a> <a id="680" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a>  <a id="687" class="Symbol">=</a> <a id="689" class="Keyword">record</a> <a id="696" class="Symbol">{</a> <a id="698" href="Ledger.PreConway.PPUp.html#638" class="Field">pup</a> <a id="702" class="Symbol">=</a> <a id="704" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a>    <a id="710" class="Symbol">;</a> <a id="712" href="Ledger.PreConway.PPUp.html#668" class="Field">fpup</a> <a id="717" class="Symbol">=</a> <a id="719" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a> <a id="722" class="Symbol">}</a>
-<a id="724" class="Symbol">...</a> <a id="728" class="Symbol">|</a> <a id="730" href="Agda.Builtin.Bool.html#198" class="InductiveConstructor">true</a>   <a id="737" class="Symbol">=</a> <a id="739" class="Keyword">record</a> <a id="746" class="Symbol">{</a> <a id="748" href="Ledger.PreConway.PPUp.html#638" class="Field">pup</a> <a id="752" class="Symbol">=</a> <a id="754" class="Bound">fpup</a>  <a id="760" class="Symbol">;</a> <a id="762" href="Ledger.PreConway.PPUp.html#668" class="Field">fpup</a> <a id="767" class="Symbol">=</a> <a id="769" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a> <a id="772" class="Symbol">}</a>
+<a id="updatePPUp"></a><a id="603" href="Ledger.PreConway.NewPP.html#603" class="Function">updatePPUp</a> <a id="614" class="Symbol">:</a> <a id="616" href="Ledger.Conway.Specification.PParams.html#2916" class="Record">PParams</a> <a id="624" class="Symbol">→</a> <a id="626" href="Ledger.PreConway.PPUp.html#675" class="Record">PPUpdateState</a> <a id="640" class="Symbol">→</a> <a id="642" href="Ledger.PreConway.PPUp.html#675" class="Record">PPUpdateState</a>
+<a id="656" href="Ledger.PreConway.NewPP.html#603" class="Function">updatePPUp</a> <a id="667" href="Ledger.PreConway.NewPP.html#667" class="Bound">pparams</a> <a id="675" class="Keyword">record</a> <a id="682" class="Symbol">{</a> <a id="684" href="Ledger.PreConway.PPUp.html#744" class="Field">fpup</a> <a id="689" class="Symbol">=</a> <a id="691" href="Ledger.PreConway.NewPP.html#691" class="Bound">fpup</a> <a id="696" class="Symbol">}</a>
+  <a id="700" class="Keyword">with</a> <a id="705" href="Axiom.Set.html#11302" class="Function">allᵇ</a> <a id="710" href="Class.Decidable.Core.html#783" class="Function Operator">¿</a> <a id="712" href="Ledger.PreConway.PPUp.html#1016" class="Function">isViableUpdate</a> <a id="727" href="Ledger.PreConway.NewPP.html#667" class="Bound">pparams</a> <a id="735" href="Class.Decidable.Core.html#783" class="Function Operator">¿¹</a> <a id="738" class="Symbol">(</a><a id="739" href="Class.IsSet.html#959" class="Function">range</a> <a id="745" href="Ledger.PreConway.NewPP.html#691" class="Bound">fpup</a><a id="749" class="Symbol">)</a>
+<a id="751" class="Symbol">...</a> <a id="755" class="Symbol">|</a> <a id="757" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a>  <a id="764" class="Symbol">=</a> <a id="766" class="Keyword">record</a> <a id="773" class="Symbol">{</a> <a id="775" href="Ledger.PreConway.PPUp.html#714" class="Field">pup</a> <a id="779" class="Symbol">=</a> <a id="781" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a>    <a id="787" class="Symbol">;</a> <a id="789" href="Ledger.PreConway.PPUp.html#744" class="Field">fpup</a> <a id="794" class="Symbol">=</a> <a id="796" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a> <a id="799" class="Symbol">}</a>
+<a id="801" class="Symbol">...</a> <a id="805" class="Symbol">|</a> <a id="807" href="Agda.Builtin.Bool.html#198" class="InductiveConstructor">true</a>   <a id="814" class="Symbol">=</a> <a id="816" class="Keyword">record</a> <a id="823" class="Symbol">{</a> <a id="825" href="Ledger.PreConway.PPUp.html#714" class="Field">pup</a> <a id="829" class="Symbol">=</a> <a id="831" class="Bound">fpup</a>  <a id="837" class="Symbol">;</a> <a id="839" href="Ledger.PreConway.PPUp.html#744" class="Field">fpup</a> <a id="844" class="Symbol">=</a> <a id="846" href="Axiom.Set.Map.html#2671" class="Function">∅ᵐ</a> <a id="849" class="Symbol">}</a>
 
-<a id="votedValue"></a><a id="775" href="Ledger.PreConway.NewPP.html#775" class="Function">votedValue</a> <a id="786" class="Symbol">:</a> <a id="788" href="Ledger.Conway.Specification.Transaction.html#4547" class="Function">ProposedPPUpdates</a> <a id="806" class="Symbol">→</a> <a id="808" href="Ledger.Conway.Specification.PParams.html#2826" class="Record">PParams</a> <a id="816" class="Symbol">→</a> <a id="818" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="820" class="Symbol">→</a> <a id="822" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="828" href="Ledger.Conway.Specification.PParams.html#20177" class="Function">PParamsUpdate</a>
-<a id="842" href="Ledger.PreConway.NewPP.html#775" class="Function">votedValue</a> <a id="853" href="Ledger.PreConway.NewPP.html#853" class="Bound">pup</a> <a id="857" href="Ledger.PreConway.NewPP.html#857" class="Bound">pparams</a> <a id="865" href="Ledger.PreConway.NewPP.html#865" class="Bound">quorum</a> <a id="872" class="Symbol">=</a>
-  <a id="876" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="881" href="Axiom.Set.html#10977" class="Function">any?</a> <a id="886" class="Symbol">(λ</a> <a id="889" href="Ledger.PreConway.NewPP.html#889" class="Bound">u</a> <a id="891" class="Symbol">→</a> <a id="893" href="abstract-set-theory.FiniteSetTheory.html#2063" class="Function">lengthˢ</a> <a id="901" class="Symbol">(</a><a id="902" href="Ledger.PreConway.NewPP.html#853" class="Bound">pup</a> <a id="906" href="Axiom.Set.Map.html#14434" class="Function Operator">∣^</a> <a id="909" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="918" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="920" href="Ledger.PreConway.NewPP.html#889" class="Bound">u</a> <a id="922" href="Data.List.Base.html#4907" class="Function Operator">]</a><a id="923" class="Symbol">)</a> <a id="925" href="Data.Nat.Properties.html#6984" class="Function Operator">≥?</a> <a id="928" href="Ledger.PreConway.NewPP.html#865" class="Bound">quorum</a><a id="934" class="Symbol">)</a> <a id="936" class="Symbol">(</a><a id="937" href="Class.IsSet.html#959" class="Function">range</a> <a id="943" href="Ledger.PreConway.NewPP.html#853" class="Bound">pup</a><a id="946" class="Symbol">)</a> <a id="948" href="Function.Base.html#4061" class="Function Operator">of</a>
+<a id="votedValue"></a><a id="852" href="Ledger.PreConway.NewPP.html#852" class="Function">votedValue</a> <a id="863" class="Symbol">:</a> <a id="865" href="Ledger.Conway.Specification.Transaction.html#4641" class="Function">ProposedPPUpdates</a> <a id="883" class="Symbol">→</a> <a id="885" href="Ledger.Conway.Specification.PParams.html#2916" class="Record">PParams</a> <a id="893" class="Symbol">→</a> <a id="895" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="897" class="Symbol">→</a> <a id="899" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="905" href="Ledger.Conway.Specification.PParams.html#20267" class="Function">PParamsUpdate</a>
+<a id="919" href="Ledger.PreConway.NewPP.html#852" class="Function">votedValue</a> <a id="930" href="Ledger.PreConway.NewPP.html#930" class="Bound">pup</a> <a id="934" href="Ledger.PreConway.NewPP.html#934" class="Bound">pparams</a> <a id="942" href="Ledger.PreConway.NewPP.html#942" class="Bound">quorum</a> <a id="949" class="Symbol">=</a>
+  <a id="953" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="958" href="Axiom.Set.html#10977" class="Function">any?</a> <a id="963" class="Symbol">(λ</a> <a id="966" href="Ledger.PreConway.NewPP.html#966" class="Bound">u</a> <a id="968" class="Symbol">→</a> <a id="970" href="abstract-set-theory.FiniteSetTheory.html#2063" class="Function">lengthˢ</a> <a id="978" class="Symbol">(</a><a id="979" href="Ledger.PreConway.NewPP.html#930" class="Bound">pup</a> <a id="983" href="Axiom.Set.Map.html#14434" class="Function Operator">∣^</a> <a id="986" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="995" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="997" href="Ledger.PreConway.NewPP.html#966" class="Bound">u</a> <a id="999" href="Data.List.Base.html#4907" class="Function Operator">]</a><a id="1000" class="Symbol">)</a> <a id="1002" href="Data.Nat.Properties.html#6984" class="Function Operator">≥?</a> <a id="1005" href="Ledger.PreConway.NewPP.html#942" class="Bound">quorum</a><a id="1011" class="Symbol">)</a> <a id="1013" class="Symbol">(</a><a id="1014" href="Class.IsSet.html#959" class="Function">range</a> <a id="1020" href="Ledger.PreConway.NewPP.html#930" class="Bound">pup</a><a id="1023" class="Symbol">)</a> <a id="1025" href="Function.Base.html#4061" class="Function Operator">of</a>
 </pre>
 <pre class="Agda hidden-source">
-    <a id="975" class="Symbol">λ</a>  <a id="978" class="Keyword">where</a>
+    <a id="1052" class="Symbol">λ</a>  <a id="1055" class="Keyword">where</a>
 </pre>
 
 <pre class="Agda">
-       <a id="1010" class="Symbol">(</a><a id="1011" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a>  <a id="1015" class="Symbol">_)</a>        <a id="1025" class="Symbol">→</a> <a id="1027" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-       <a id="1042" class="Symbol">(</a><a id="1043" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1047" class="Symbol">(</a><a id="1048" href="Ledger.PreConway.NewPP.html#1048" class="Bound">u</a> <a id="1050" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1052" class="Symbol">_))</a>  <a id="1057" class="Symbol">→</a> <a id="1059" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1064" href="Ledger.PreConway.NewPP.html#1048" class="Bound">u</a>
+       <a id="1087" class="Symbol">(</a><a id="1088" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a>  <a id="1092" class="Symbol">_)</a>        <a id="1102" class="Symbol">→</a> <a id="1104" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
+       <a id="1119" class="Symbol">(</a><a id="1120" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1124" class="Symbol">(</a><a id="1125" href="Ledger.PreConway.NewPP.html#1125" class="Bound">u</a> <a id="1127" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1129" class="Symbol">_))</a>  <a id="1134" class="Symbol">→</a> <a id="1136" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1141" href="Ledger.PreConway.NewPP.html#1125" class="Bound">u</a>
 </pre>
 
 <pre class="Agda hidden-source">
-<a id="1086" class="Keyword">instance</a>
-  <a id="1097" class="Keyword">unquoteDecl</a> <a id="HasCast-NewPParamState"></a><a id="1109" href="Ledger.PreConway.NewPP.html#1109" class="Function">HasCast-NewPParamState</a> <a id="1132" class="Symbol">=</a> <a id="1134" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
-    <a id="1153" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="1155" class="Symbol">(</a><a id="1156" class="Keyword">quote</a> <a id="1162" href="Ledger.PreConway.NewPP.html#437" class="Record">NewPParamState</a> <a id="1177" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1179" href="Ledger.PreConway.NewPP.html#1109" class="Function">HasCast-NewPParamState</a><a id="1201" class="Symbol">)</a> <a id="1203" href="Data.List.Base.html#4907" class="Function Operator">]</a>
+<a id="1163" class="Keyword">instance</a>
+  <a id="1174" class="Keyword">unquoteDecl</a> <a id="HasCast-NewPParamState"></a><a id="1186" href="Ledger.PreConway.NewPP.html#1186" class="Function">HasCast-NewPParamState</a> <a id="1209" class="Symbol">=</a> <a id="1211" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
+    <a id="1230" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="1232" class="Symbol">(</a><a id="1233" class="Keyword">quote</a> <a id="1239" href="Ledger.PreConway.NewPP.html#514" class="Record">NewPParamState</a> <a id="1254" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1256" href="Ledger.PreConway.NewPP.html#1186" class="Function">HasCast-NewPParamState</a><a id="1278" class="Symbol">)</a> <a id="1280" href="Data.List.Base.html#4907" class="Function Operator">]</a>
 
-<a id="1206" class="Keyword">private</a> <a id="1214" class="Keyword">variable</a>
-  <a id="1225" href="Ledger.PreConway.NewPP.html#1225" class="Generalizable">Γ</a> <a id="1227" class="Symbol">:</a> <a id="1229" href="Ledger.PreConway.NewPP.html#315" class="Record">NewPParamEnv</a>
-  <a id="1244" href="Ledger.PreConway.NewPP.html#1244" class="Generalizable">s</a> <a id="1246" href="Ledger.PreConway.NewPP.html#1246" class="Generalizable">s&#39;</a> <a id="1249" class="Symbol">:</a> <a id="1251" href="Ledger.PreConway.NewPP.html#437" class="Record">NewPParamState</a>
-  <a id="1268" href="Ledger.PreConway.NewPP.html#1268" class="Generalizable">upd</a> <a id="1272" class="Symbol">:</a> <a id="1274" href="Ledger.Conway.Specification.PParams.html#20177" class="Function">PParamsUpdate</a>
+<a id="1283" class="Keyword">private</a> <a id="1291" class="Keyword">variable</a>
+  <a id="1302" href="Ledger.PreConway.NewPP.html#1302" class="Generalizable">Γ</a> <a id="1304" class="Symbol">:</a> <a id="1306" href="Ledger.PreConway.NewPP.html#392" class="Record">NewPParamEnv</a>
+  <a id="1321" href="Ledger.PreConway.NewPP.html#1321" class="Generalizable">s</a> <a id="1323" href="Ledger.PreConway.NewPP.html#1323" class="Generalizable">s&#39;</a> <a id="1326" class="Symbol">:</a> <a id="1328" href="Ledger.PreConway.NewPP.html#514" class="Record">NewPParamState</a>
+  <a id="1345" href="Ledger.PreConway.NewPP.html#1345" class="Generalizable">upd</a> <a id="1349" class="Symbol">:</a> <a id="1351" href="Ledger.Conway.Specification.PParams.html#20267" class="Function">PParamsUpdate</a>
 
-<a id="1289" class="Keyword">data</a> <a id="_⊢_⇀⦇_,NEWPP⦈_"></a><a id="1294" href="Ledger.PreConway.NewPP.html#1294" class="Datatype Operator">_⊢_⇀⦇_,NEWPP⦈_</a> <a id="1309" class="Symbol">:</a> <a id="1311" href="Ledger.PreConway.NewPP.html#315" class="Record">NewPParamEnv</a> <a id="1324" class="Symbol">→</a> <a id="1326" href="Ledger.PreConway.NewPP.html#437" class="Record">NewPParamState</a> <a id="1341" class="Symbol">→</a> <a id="1343" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1349" href="Ledger.Conway.Specification.PParams.html#20177" class="Function">PParamsUpdate</a> <a id="1363" class="Symbol">→</a> <a id="1365" href="Ledger.PreConway.NewPP.html#437" class="Record">NewPParamState</a> <a id="1380" class="Symbol">→</a> <a id="1382" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1387" class="Keyword">where</a>
+<a id="1366" class="Keyword">data</a> <a id="_⊢_⇀⦇_,NEWPP⦈_"></a><a id="1371" href="Ledger.PreConway.NewPP.html#1371" class="Datatype Operator">_⊢_⇀⦇_,NEWPP⦈_</a> <a id="1386" class="Symbol">:</a> <a id="1388" href="Ledger.PreConway.NewPP.html#392" class="Record">NewPParamEnv</a> <a id="1401" class="Symbol">→</a> <a id="1403" href="Ledger.PreConway.NewPP.html#514" class="Record">NewPParamState</a> <a id="1418" class="Symbol">→</a> <a id="1420" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1426" href="Ledger.Conway.Specification.PParams.html#20267" class="Function">PParamsUpdate</a> <a id="1440" class="Symbol">→</a> <a id="1442" href="Ledger.PreConway.NewPP.html#514" class="Record">NewPParamState</a> <a id="1457" class="Symbol">→</a> <a id="1459" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1464" class="Keyword">where</a>
 </pre>
 
 <h3 id="newpp-transition-system">NEWPP transition system<a class="headerlink" href="#newpp-transition-system" title="Permanent link">&para;</a></h3>
 <pre class="Agda">
-  <a id="_⊢_⇀⦇_,NEWPP⦈_.NEWPP-Accept"></a><a id="1446" href="Ledger.PreConway.NewPP.html#1446" class="InductiveConstructor">NEWPP-Accept</a> <a id="1459" class="Symbol">:</a> <a id="1461" class="Symbol">∀</a> <a id="1463" class="Symbol">{</a><a id="1464" href="Ledger.PreConway.NewPP.html#1464" class="Bound">Γ</a><a id="1465" class="Symbol">}</a> <a id="1467" class="Symbol">→</a> <a id="1469" class="Keyword">let</a> <a id="1473" class="Keyword">open</a> <a id="1478" href="Ledger.PreConway.NewPP.html#437" class="Module">NewPParamState</a> <a id="1493" href="Ledger.PreConway.NewPP.html#1244" class="Generalizable">s</a><a id="1494" class="Symbol">;</a> <a id="1496" href="Ledger.PreConway.NewPP.html#1496" class="Bound">newpp</a> <a id="1502" class="Symbol">=</a> <a id="1504" href="Ledger.Conway.Specification.PParams.html#19663" class="Function">applyUpdate</a> <a id="1516" href="Ledger.PreConway.NewPP.html#477" class="Function">pparams</a> <a id="1524" href="Ledger.PreConway.NewPP.html#1268" class="Generalizable">upd</a> <a id="1528" class="Keyword">in</a>
-    <a id="1535" href="Ledger.PreConway.PPUp.html#861" class="Function">viablePParams</a> <a id="1549" href="Ledger.PreConway.NewPP.html#1496" class="Bound">newpp</a>
-    <a id="1559" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
-    <a id="1596" href="Ledger.PreConway.NewPP.html#1464" class="Bound">Γ</a> <a id="1598" href="Ledger.PreConway.NewPP.html#1294" class="Datatype Operator">⊢</a> <a id="1600" href="Ledger.PreConway.NewPP.html#1244" class="Generalizable">s</a> <a id="1602" href="Ledger.PreConway.NewPP.html#1294" class="Datatype Operator">⇀⦇</a> <a id="1605" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1610" href="Ledger.PreConway.NewPP.html#1268" class="Generalizable">upd</a> <a id="1614" href="Ledger.PreConway.NewPP.html#1294" class="Datatype Operator">,NEWPP⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.PreConway.NewPP.html#1496}{\htmlId{1624}{\htmlClass{Bound}{\text{newpp}}}}\, \\ \,\href{Ledger.PreConway.NewPP.html#526}{\htmlId{1632}{\htmlClass{Function}{\text{updatePPUp}}}}\, \,\href{Ledger.PreConway.NewPP.html#1496}{\htmlId{1643}{\htmlClass{Bound}{\text{newpp}}}}\, \,\href{Ledger.PreConway.NewPP.html#500}{\htmlId{1649}{\htmlClass{Function}{\text{ppup}}}}\, \end{pmatrix}$</a>
+  <a id="_⊢_⇀⦇_,NEWPP⦈_.NEWPP-Accept"></a><a id="1523" href="Ledger.PreConway.NewPP.html#1523" class="InductiveConstructor">NEWPP-Accept</a> <a id="1536" class="Symbol">:</a> <a id="1538" class="Symbol">∀</a> <a id="1540" class="Symbol">{</a><a id="1541" href="Ledger.PreConway.NewPP.html#1541" class="Bound">Γ</a><a id="1542" class="Symbol">}</a> <a id="1544" class="Symbol">→</a> <a id="1546" class="Keyword">let</a> <a id="1550" class="Keyword">open</a> <a id="1555" href="Ledger.PreConway.NewPP.html#514" class="Module">NewPParamState</a> <a id="1570" href="Ledger.PreConway.NewPP.html#1321" class="Generalizable">s</a><a id="1571" class="Symbol">;</a> <a id="1573" href="Ledger.PreConway.NewPP.html#1573" class="Bound">newpp</a> <a id="1579" class="Symbol">=</a> <a id="1581" href="Ledger.Conway.Specification.PParams.html#19753" class="Function">applyUpdate</a> <a id="1593" href="Ledger.PreConway.NewPP.html#554" class="Function">pparams</a> <a id="1601" href="Ledger.PreConway.NewPP.html#1345" class="Generalizable">upd</a> <a id="1605" class="Keyword">in</a>
+    <a id="1612" href="Ledger.PreConway.PPUp.html#937" class="Function">viablePParams</a> <a id="1626" href="Ledger.PreConway.NewPP.html#1573" class="Bound">newpp</a>
+    <a id="1636" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
+    <a id="1673" href="Ledger.PreConway.NewPP.html#1541" class="Bound">Γ</a> <a id="1675" href="Ledger.PreConway.NewPP.html#1371" class="Datatype Operator">⊢</a> <a id="1677" href="Ledger.PreConway.NewPP.html#1321" class="Generalizable">s</a> <a id="1679" href="Ledger.PreConway.NewPP.html#1371" class="Datatype Operator">⇀⦇</a> <a id="1682" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="1687" href="Ledger.PreConway.NewPP.html#1345" class="Generalizable">upd</a> <a id="1691" href="Ledger.PreConway.NewPP.html#1371" class="Datatype Operator">,NEWPP⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.PreConway.NewPP.html#1573}{\htmlId{1701}{\htmlClass{Bound}{\text{newpp}}}}\, \\ \,\href{Ledger.PreConway.NewPP.html#603}{\htmlId{1709}{\htmlClass{Function}{\text{updatePPUp}}}}\, \,\href{Ledger.PreConway.NewPP.html#1573}{\htmlId{1720}{\htmlClass{Bound}{\text{newpp}}}}\, \,\href{Ledger.PreConway.NewPP.html#577}{\htmlId{1726}{\htmlClass{Function}{\text{ppup}}}}\, \end{pmatrix}$</a>
 
-  <a id="_⊢_⇀⦇_,NEWPP⦈_.NEWPP-Reject"></a><a id="1659" href="Ledger.PreConway.NewPP.html#1659" class="InductiveConstructor">NEWPP-Reject</a> <a id="1672" class="Symbol">:</a> <a id="1674" class="Symbol">∀</a> <a id="1676" class="Symbol">{</a><a id="1677" href="Ledger.PreConway.NewPP.html#1677" class="Bound">Γ</a><a id="1678" class="Symbol">}</a> <a id="1680" class="Symbol">→</a>
-    <a id="1686" href="Ledger.PreConway.NewPP.html#1677" class="Bound">Γ</a> <a id="1688" href="Ledger.PreConway.NewPP.html#1294" class="Datatype Operator">⊢</a> <a id="1690" href="Ledger.PreConway.NewPP.html#1244" class="Generalizable">s</a> <a id="1692" href="Ledger.PreConway.NewPP.html#1294" class="Datatype Operator">⇀⦇</a> <a id="1695" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="1703" href="Ledger.PreConway.NewPP.html#1294" class="Datatype Operator">,NEWPP⦈</a> <a id="1711" href="Ledger.PreConway.NewPP.html#1244" class="Generalizable">s</a>
+  <a id="_⊢_⇀⦇_,NEWPP⦈_.NEWPP-Reject"></a><a id="1736" href="Ledger.PreConway.NewPP.html#1736" class="InductiveConstructor">NEWPP-Reject</a> <a id="1749" class="Symbol">:</a> <a id="1751" class="Symbol">∀</a> <a id="1753" class="Symbol">{</a><a id="1754" href="Ledger.PreConway.NewPP.html#1754" class="Bound">Γ</a><a id="1755" class="Symbol">}</a> <a id="1757" class="Symbol">→</a>
+    <a id="1763" href="Ledger.PreConway.NewPP.html#1754" class="Bound">Γ</a> <a id="1765" href="Ledger.PreConway.NewPP.html#1371" class="Datatype Operator">⊢</a> <a id="1767" href="Ledger.PreConway.NewPP.html#1321" class="Generalizable">s</a> <a id="1769" href="Ledger.PreConway.NewPP.html#1371" class="Datatype Operator">⇀⦇</a> <a id="1772" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="1780" href="Ledger.PreConway.NewPP.html#1371" class="Datatype Operator">,NEWPP⦈</a> <a id="1788" href="Ledger.PreConway.NewPP.html#1321" class="Generalizable">s</a>
 </pre>
 
 
@@ -6624,6 +6674,9 @@
 
 
 
+
+  
+  
 
 
 
@@ -6706,7 +6759,7 @@
     
     
       
-      <script id="__config" type="application/json">{"base": ".", "features": ["navigation.sections", "toc.integrate", "content.tooltips", "navigation.footer", "navigation.tabs", "content.code.copy"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
