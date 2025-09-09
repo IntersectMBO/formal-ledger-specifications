@@ -13,6 +13,7 @@ module Ledger.Conway.Specification.Chain
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Conway.Specification.BlockBody txs abs public
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
@@ -33,10 +34,6 @@ record ChainState : Type where
   field
     newEpochState  : NewEpochState
 
-record Block : Type where
-  field
-    ts    : List Tx
-    slot  : Slot
 \end{code}
 \end{AgdaMultiCode}
 \caption{Definitions CHAIN transition system}
@@ -140,22 +137,23 @@ data
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
 \begin{code}
-  CHAIN : {b : Block} {nes : NewEpochState} {cs : ChainState}
+  CHAIN : ∀ {bcur'} {b : Block} {nes : NewEpochState} {cs : ChainState}
 \end{code}
 \begin{code}[hide]
-    → let open ChainState cs; open Block b; open NewEpochState nes
+    → let open ChainState cs; open Block b; open BHeader bheader
+          open BHBody bhbody; open NewEpochState nes
           open EpochState epochState; open EnactState es renaming (pparams to pp)
           open PParams ∣ pp ∣ using (maxRefScriptSizePerBlock) in
 \end{code}
 \begin{code}
     let  cs'  = record cs {  newEpochState
-                             = record nes {  epochState
+                             = record nes {  bcur = bcur';
+                                             epochState
                                              = record epochState {ls = ls'} } }
-         Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , TreasuryOf nes ⟧
     in
     ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
     ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes
-    ∙ Γ ⊢ ls ⇀⦇ ts ,LEDGERS⦈ ls'
+    ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
       _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
 \end{code}

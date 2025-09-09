@@ -105,16 +105,28 @@ In other terms,
 
 ```agda
   CHAIN-govDepsMatch rrm rss
-      (CHAIN (x , TICK ((NEWEPOCH-New (_ , eps₁→eps₂)) , _) , ledgers)) =
+      ( CHAIN ( x
+              , TICK ((NEWEPOCH-New (_ , eps₁→eps₂)) , _)
+              , BBODY-Block-Body (_ , _ , ledgers)
+              )
+      ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 
   CHAIN-govDepsMatch rrm rss
-      (CHAIN (x , TICK (NEWEPOCH-Not-New _ , _) , ledgers)) =
+      ( CHAIN ( x
+              , TICK (NEWEPOCH-Not-New _ , _)
+              , BBODY-Block-Body (_ , _ , ledgers)
+              )
+      ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
 
   CHAIN-govDepsMatch rrm rss
-      (CHAIN (x , TICK (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂) , _) , ledgers)) =
+      ( CHAIN ( x
+              , TICK (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂) , _)
+              , BBODY-Block-Body (_ , _ , ledgers)
+              )
+      ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 ```
