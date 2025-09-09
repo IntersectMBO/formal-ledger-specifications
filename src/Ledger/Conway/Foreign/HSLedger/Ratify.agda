@@ -61,4 +61,4 @@ ratify-step = to (compute Computational-RATIFIES)
 instance
   Show-RATIFIES : ∀ {Γ s sig s'}
     → Show (Γ ⊢ s ⇀⦇ sig  ,RATIFIES⦈ s')
-  Show-RATIFIES {Γ} {s} {sig} .show r = ratify-debug (to Γ) (to s) (to sig)
+  Show-RATIFIES {Γ} {s} {sig} .show r = "" -- ratify-debug (to Γ) (to s) (to sig)

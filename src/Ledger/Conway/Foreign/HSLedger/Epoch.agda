@@ -14,7 +14,7 @@ import Data.String as S
 
 instance
   Show-EPOCH : ∀ {eps e eps'} → Show (_ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps')
-  Show-EPOCH .show (EPOCH e s) = ? -- "EPOCH\n" S.++ show s S.++ " " S.++ show e 
+  Show-EPOCH .show (EPOCH e s) = "EPOCH\n" S.++ show s S.++ " " S.++ show e 
 
     -- record { currentEpoch = e
     --        ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'

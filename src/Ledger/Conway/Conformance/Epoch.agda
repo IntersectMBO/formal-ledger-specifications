@@ -24,7 +24,7 @@ open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Rewards txs abs
 open import Ledger.Conway.Specification.Epoch txs abs
-  using (getStakeCred; mkStakeDistrs; toRwdAddr) public
+  using (getStakeCred; calculateVDelegDelegatedStake; calculatePoolDelegatedStake; toRwdAddr) public
 
 record EpochState : Type where
   constructor ⟦_,_,_,_,_⟧ᵉ'
@@ -132,10 +132,12 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
       acnt' = record acnt
         { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
+
+      stakeDistrs : StakeDistrs
+      stakeDistrs = record { stakeDistrVDeleg = ∅ ; stakeDistrPools = ∅ }
     in
     record { currentEpoch = e
-           ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                          (utxoSt' .deposits) (voteDelegs dState)
+           ; stakeDistrs = stakeDistrs
            ; treasury = acnt .treasury ; GState gState
            ; pools = pState .pools ; delegatees = dState .voteDelegs }
         ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'

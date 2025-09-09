@@ -342,16 +342,16 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \begin{code}[hide]
 -- TODO: Move to agda-sets
 -- https://github.com/input-output-hk/agda-sets/pull/13
-_⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
-R ⁻¹ʳ = mapˢ swap R
-  where open import Data.Product using (swap)
+opaque
+  _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
+  R ⁻¹ʳ = mapˢ swap R
+    where open import Data.Product using (swap)
 
-_∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
-R ∘ʳ S =
-  concatMapˢ
-    (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
-    R
-
+  _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
+  R ∘ʳ S =
+    concatMapˢ
+      (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
+      R
 opaque
 \end{code}
 \begin{code}
@@ -370,8 +370,7 @@ opaque
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)          
 \end{code}
 \begin{code}[hide]
-open RwdAddr using (stake)
-opaque
+  open RwdAddr using (stake)
 \end{code}
 \begin{code}
   calculateVDelegDelegatedStake
@@ -414,7 +413,6 @@ opaque
       stakeFromRewards : Stake
       stakeFromRewards = RewardsOf dState
 \end{code}
-\end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}
 \end{figure*}
 
@@ -490,6 +488,7 @@ We need these functions to bring them in scope for some proofs about
 \begin{figure*}[h]
 \begin{code}
 record EPOCH-Updates0 : Type where
+  no-eta-equality
   constructor EPOCHUpdates0
   field
     es             : EnactState
@@ -637,6 +636,8 @@ its results by carrying out each of the following tasks.
 \label{fig:epoch:sts}
 \end{figure*}
 
+\begin{NoConway}
+\begin{figure*}[ht]
 \begin{code}[hide]
 data
 \end{code}

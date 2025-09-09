@@ -66,9 +66,9 @@ module _ {eps : EpochState} {e : Epoch} where
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total =
     -, EPOCH
-         (RATIFIES-total' .proj₂)
-         (SNAP-total .proj₂)
-         (POOLREAP-total prs .proj₂)
+         ( RATIFIES-total' .proj₂
+         , SNAP-total .proj₂
+         , POOLREAP-total prs .proj₂)
 
   private
     EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
@@ -98,14 +98,14 @@ module _ {eps : EpochState} {e : Epoch} where
         {acnt' = acnt'₁}
         {dState' = dState'₁}
         {pState' = pState'₁}
-        p₁ p₂ p₃
+        (p₁ , p₂ , p₃)
       )
       (EPOCH
         {utxoSt'' = utxoSt''₂}
         {acnt' = acnt'₂}
         {dState' = dState'₂}
         {pState' = pState'₂}
-        p₁' p₂' p₃'
+        (p₁' , p₂' , p₃')
       ) =
     cong₂ _$_ (cong₂ EPOCH-state ss'≡ss'' fut'≡fut'') prs'≡prs''
     where
@@ -115,7 +115,7 @@ module _ {eps : EpochState} {e : Epoch} where
       fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
       fut'≡fut'' = RATIFIES-deterministic-≡
                     (cong (λ x → record
-                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _
+                                   { stakeDistrs = _
                                    ; currentEpoch = _
                                    ; dreps = _
                                    ; ccHotKeys = _
