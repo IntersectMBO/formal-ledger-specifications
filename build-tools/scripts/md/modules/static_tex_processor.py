@@ -11,6 +11,7 @@ import logging
 from typing import List
 
 from config.build_config import BuildConfig
+from modules.source_headers import ensure_source_header_file
 from utils.command_runner import run_command
 from utils.pipeline_types import (
     Result, PipelineError, ErrorType, ProcessedFile, ProcessingStage
@@ -75,5 +76,12 @@ def convert_all_static_tex(config: BuildConfig) -> Result[List[ProcessedFile], P
 
     if final_result.is_ok:
         logging.info(f"✅ Converted {len(final_result.unwrap())} static .tex files to Markdown")
+        # ⬇️ Inject headers now that we know both paths and have config
+        for pf in final_result.unwrap():
+            ensure_source_header_file(
+                pf.current_path,                                        # the new .md
+                source_path=str(pf.source_path.relative_to(config.source_paths.project_root)),  # repo-relative .tex
+                source_branch="master"
+            )
 
     return final_result

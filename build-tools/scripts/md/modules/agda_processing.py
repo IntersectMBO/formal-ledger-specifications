@@ -21,6 +21,7 @@ if str(current_dir) not in sys.path:
     sys.path.insert(0, str(current_dir))
 
 from config.build_config import BuildConfig
+from modules.source_headers import ensure_source_header_str
 from utils.file_ops import (
     rm_dir, cp_dir, ls_dir, write_text,
     cp_file, rm_file, read_text, calculate_file_metadata
@@ -44,6 +45,21 @@ def _wrap_content_in_agda_fence(content: str) -> str:
     new_content += "```\n"
     return new_content
 
+
+def _repo_rel_from_snapshot(p: Path, anchor: str = "src") -> str:
+    """
+    Given a path inside the snapshot tree (…/_build/md/md.in/src/…),
+    return a repo-relative path starting at `anchor`, e.g. "src/Ledger/Foo.agda".
+    """
+    parts = p.resolve().parts
+    try:
+        i = parts.index(anchor)
+        return str(Path(*parts[i:]))
+    except ValueError:
+        # Fallback: just prefix with anchor
+        return f"{anchor}/{p.name}"
+
+
 def _convert_single_agda_file(agda_path: Path) -> Result[Path, PipelineError]:
     """
     Converts a single .agda file to .lagda.md using a functional chain.
@@ -53,9 +69,14 @@ def _convert_single_agda_file(agda_path: Path) -> Result[Path, PipelineError]:
     return (
         read_text(agda_path)
         .map(_wrap_content_in_agda_fence)
+        # Add front matter pointing to original .agda file (used for generating links).
+        .map(lambda new_content: ensure_source_header_str(
+            new_content,
+            source_path=_repo_rel_from_snapshot(agda_path),  # e.g., "src/Ledger/Prelude.agda"
+            source_branch="master"
+        ))
         .and_then(lambda new_content: write_text(literate_path, new_content))
         .and_then(lambda _: rm_file(agda_path))
-        # On success, return the path of the new file
         .map(lambda _: literate_path)
     )
 

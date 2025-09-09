@@ -7,19 +7,29 @@ site_description: Formal ledger specification and documentation.
 site_author: Formal Methods Ledger Team
 repo_url: https://github.com/IntersectMBO/formal-ledger-specifications
 
+# Use edit_uri_template to build file URLs (GitHub "blob" view)
+edit_uri_template: 'blob/main/docs/{path}'
+
 # Theme configuration (using mkdocs-material)
 theme:
   name: material
+  custom_dir: overrides
   favicon: img/Cardano-RGB_Logo-Icon-White.svg
     # Optional features - see mkdocs-material docs for many more
   features:
-    # - navigation.tabs
-    - navigation.sections
-    - toc.integrate # Integrate table of contents into left sidebar
+    - toc.follow      # <-- keeps the right toc aligned with your position
     - content.tooltips
+    - content.code.copy      # Adds copy buttons to code blocks
+    # - content.action.edit    # Adds "Edit source" button (links to blobs)
+    - content.action.view  # Adds "View source" button (links to raw files)
     - navigation.footer
+    - navigation.sections
     - navigation.tabs
-    - content.code.copy # Adds copy buttons to code blocks
+    # - navigation.tabs
+    # - toc.integrate # <-- integrates toc into left sidebar
+    # - navigation.expand # <-- all sections in the left-hand navigation are
+    #                     #     expanded by default (their children are visible),
+    #                     #     instead of collapsing siblings as you drill down.
 
   # palette: # Optional: color scheme
   #   primary: indigo
@@ -37,6 +47,12 @@ theme:
       toggle:
         icon: material/weather-night
         name: Light mode
+
+  icon:
+    edit: fontawesome/brands/github    # <- octocat icon (link to file)
+    view: fontawesome/brands/github    #
+    repo: fontawesome/brands/git-alt   # <- git icon (link to repo)
+
 
   # Font configuration (optional)
   font:
@@ -91,3 +107,13 @@ markdown_extensions:
   - md_in_html
 hooks:
   - hooks/agda_hidden_code.py
+  - hooks/agda_source_link.py
+extra:
+  source_branch: master
+  source_overrides:
+    # Special cases in which source file name is hard to infer from doc file name.
+    # Syntax/Usage:
+    #   doc file name: source file name
+    index.md: README.md
+    guide.md: CONTRIBUTING.md
+    Notation.md: build-tools/static/md/common/src/Notation.md
