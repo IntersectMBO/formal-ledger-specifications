@@ -35,6 +35,7 @@ from modules.setup import setup_build_environment, cleanup_intermediate_artifact
 from modules.agda_processing import process_agda_source_files
 from modules.static_tex_processor import convert_all_static_tex
 from modules.latex_pipeline import latex_pipeline_stage
+from modules.source_headers import ensure_headers_for_docs_dir
 from modules.content_staging import stage_content
 from modules.site_assembly import (
     generate_macros_json,
@@ -93,6 +94,21 @@ def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None
     # 7. Assemble the MkDocs site
     nav_files = copy_staged_to_mkdocs(config)
     final_nav_files = deploy_mkdocs_assets(config, nav_files)
+    # Ensure every page under mkdocs/docs has a source header.
+    # - infers src paths by existence under config.source_paths.src_dir
+    # - preserves any author-supplied source_path already present
+    # - optionally skip specific files (e.g., index.md) if desired
+    header_result = ensure_headers_for_docs_dir(
+        docs_dir=config.build_paths.mkdocs_docs_dir,
+        src_root=config.source_paths.src_dir,
+        branch="master",                 # or hoist to config if you prefer
+        preserve_existing=True,
+        skip_names=set()                 # e.g., {"index.md"} if you want to skip it
+    )
+    if header_result.is_ok:
+        logging.info(f"📝 Ensured source headers in {header_result.unwrap()} pages.")
+    else:
+        logging.warning(f"⚠️ Source header pass skipped: {header_result.unwrap_err()}")
     generate_mkdocs_config(config, final_nav_files)
 
     # 8. Cleanup
