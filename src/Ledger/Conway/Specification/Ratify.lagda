@@ -231,8 +231,10 @@ system.
 
 \begin{code}[hide]
 instance
-  unquoteDecl HasCast-RatifyState = derive-HasCast
-    [ (quote RatifyState , HasCast-RatifyState) ]
+  unquoteDecl HasCast-StakeDistrs HasCast-RatifyEnv HasCast-RatifyState = derive-HasCast
+    (   (quote StakeDistrs , HasCast-StakeDistrs)
+    ∷   (quote RatifyEnv , HasCast-RatifyEnv)
+    ∷ [ (quote RatifyState , HasCast-RatifyState) ])
 \end{code}
 
 \subsection{Vote Counting}

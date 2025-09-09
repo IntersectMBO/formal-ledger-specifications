@@ -382,18 +382,37 @@ opaque
 \begin{AgdaSuppressSpace}
 \begin{code}[hide]
 open RwdAddr using (stake)
-
 opaque
 \end{code}
 \begin{code}
-  mkStakeDistrs : Snapshot → GovState → Deposits → VoteDelegs → StakeDistrs
-  mkStakeDistrs ss govSt deposits voteDelegs =
-    record { stakeDistrVDeleg = aggregate₊ ((((voteDelegs ˢ) ⁻¹ʳ) ∘ʳ ((StakeOf ss ∪⁺ stakeFromGADeposits)ˢ)) ᶠˢ)
-           ; stakeDistrPools  = calculatePoolDelegatedStake ss
-           }
-
+  calculateVDelegDelegatedStake
+    : Epoch
+    → UTxOState
+    → GovState
+    → GState
+    → DState
+    → VDeleg ⇀ Coin
+  calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
+    = aggregate₊ ((((activeVoteDelegs ˢ) ⁻¹ʳ) ∘ʳ ((stakePerCredential ∪⁺ stakeFromRewards ∪⁺ stakeFromGADeposits)ˢ)) ᶠˢ)
     where
+      open UTxOState utxoSt
+      open DState dState
+      open GState gState
 
+      -- active DReps
+      activeDReps : ℙ Credential
+      activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
+
+      -- active vote delegations
+      activeVoteDelegs : VoteDelegs
+      activeVoteDelegs = voteDelegs ∣^ ((mapˢ vDelegCredential activeDReps) ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵)
+
+      -- stake per delegated credential
+      stakePerCredential : Stake
+      stakePerCredential = mapFromFun (λ c → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c))
+                                      (dom activeVoteDelegs)
+
+      -- stake from governance action deposits
       stakeFromGADeposits : Stake
       stakeFromGADeposits = aggregateBy
         (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
@@ -401,6 +420,10 @@ opaque
         where
           govSt' : ℙ (GovActionID × RwdAddr)
           govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
+
+      -- stake from rewards
+      stakeFromRewards : Stake
+      stakeFromRewards = RewardsOf dState
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}
@@ -576,21 +599,16 @@ its results by carrying out each of the following tasks.
       EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
         EPOCH-updates fut ls dState' acnt'
 
+      stakeDistrs : StakeDistrs
+      stakeDistrs = ⟦ calculateVDelegDelegatedStake e utxoSt' govSt' gState' dState'' , calculatePoolDelegatedStake (Snapshots.mark ss') ⟧
+
+      Γ : RatifyEnv
+      Γ = ⟦ stakeDistrs , e , GState.dreps (GStateOf ls) , GState.ccHotKeys (GStateOf ls) , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
+
     in
-      record { currentEpoch = e
-             ; stakeDistrs = mkStakeDistrs
-                               (Snapshots.mark ss')
-                               govSt'
-                               (DepositsOf utxoSt')
-                               (VoteDelegsOf ls)
-             ; treasury = TreasuryOf acnt
-             ; GState (GStateOf ls)
-             ; pools = PoolsOf ls
-             ; delegatees = VoteDelegsOf ls
-             }
-          ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
-        → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-        → _ ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
+        Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
+      ∙ ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+      ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
       ────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 \end{code}
