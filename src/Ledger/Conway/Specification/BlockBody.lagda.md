@@ -50,20 +50,21 @@ record Block : Type where
 
 The Block Body Transition updates the block body state which comprises the
 ledger state and the map describing the produced blocks. The environment of the
-`BBODY`{.AgdaDatatype} transition are the protocol parameters and the accounting
+`BBODY`{.AgdaDatatype} transition includes the protocol parameters and the accounting
 state.
 
-The helper function `incrBlocks`{.AgdaFunction}, which counts the number of
+The helper function `incrBlocks`{.AgdaFunction} counts the number of
 non-overlay blocks produced by each stake pool.
 
-The signal is a block from which we extract:
-* The sequence of transactions txs of the block.
-* The block header body bhb.
-* The verification key vk of the issuer of the block and its hash hk. The
-  transition is executed if the following preconditions are met:
+The signal of the `BBODY`{.AgdaDatatype} rule is a block from which we extract:
+* the sequence of transactions, `txs`{.AgdaBound} = `block`{.AgdaBound} .`ts`{.AgdaField}, of the block;
+* the block header body `bhb`{.AgdaBound} = `block`{.AgdaBound} .`bheader`{.AgdaField} .`bhbody`{.AgdaField};
+* the hash of the verification key of the issuer of the block, `hk`{.AgdaBound} = `hash`{.AgdaFunction} (`bhb`{.AgdaBound} .`bvkcold`{.AgdaField}).
+
+The transition is executed if the following preconditions are met:
 * The size of the block body matches the value given in the block header body.
 * The hash of the block body matches the value given in the block header body.
-* The `LEDGERS`{.AgdaBound} transition succeeds.
+* The `LEDGERS`{.AgdaDatatype} transition succeeds.
 
 After this, the transition system updates the mapping of the hashed stake pool
 keys to the incremented value of produced blocks `n + 1`, provided the current
