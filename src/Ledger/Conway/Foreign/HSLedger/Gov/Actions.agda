@@ -13,31 +13,31 @@ DocHash = GovStructure.DocHash govStructure
 
 -- nondependent version of GovAction
 data GovAction' : Type where
-  NoConfidence     :                                             GovAction'
-  UpdateCommittee  : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction'
-  NewConstitution  : DocHash → Maybe ScriptHash               →  GovAction'
-  TriggerHF        : ProtVer                                  →  GovAction'
-  ChangePParams    : PParamsUpdate                            →  GovAction'
-  TreasuryWdrl     : (RwdAddr ⇀ Coin)                         →  GovAction'
-  Info             :                                             GovAction'
+  NoConfidence        :                                             GovAction'
+  UpdateCommittee     : (Credential ⇀ Epoch) → ℙ Credential → ℚ  →  GovAction'
+  NewConstitution     : DocHash → Maybe ScriptHash               →  GovAction'
+  TriggerHardFork     : ProtVer                                  →  GovAction'
+  ChangePParams       : PParamsUpdate                            →  GovAction'
+  TreasuryWithdrawal  : (RwdAddr ⇀ Treasury)                     →  GovAction'
+  Info                :                                             GovAction'
 
 instance
   mkGovAction' : Convertible GovAction GovAction'
   mkGovAction' = λ where
-    .to ⟦ NoConfidence    , _           ⟧ᵍᵃ → NoConfidence
-    .to ⟦ UpdateCommittee , (m , p , q) ⟧ᵍᵃ → (UpdateCommittee m p q)
-    .to ⟦ NewConstitution , (dh , s )   ⟧ᵍᵃ → (NewConstitution dh s)
-    .to ⟦ TriggerHF       , p           ⟧ᵍᵃ → (TriggerHF p)
-    .to ⟦ ChangePParams   , pu          ⟧ᵍᵃ → (ChangePParams pu)
-    .to ⟦ TreasuryWdrl    , m           ⟧ᵍᵃ → ((TreasuryWdrl m))
-    .to ⟦ Info            , _           ⟧ᵍᵃ → Info
-    .from NoConfidence                → ⟦ NoConfidence    , tt          ⟧ᵍᵃ
-    .from (UpdateCommittee m p q)     → ⟦ UpdateCommittee , (m , p , q) ⟧ᵍᵃ
-    .from (NewConstitution dh s)      → ⟦ NewConstitution , (dh , s)    ⟧ᵍᵃ
-    .from (TriggerHF p)               → ⟦ TriggerHF       , p           ⟧ᵍᵃ
-    .from (ChangePParams pu)          → ⟦ ChangePParams   , pu          ⟧ᵍᵃ
-    .from (TreasuryWdrl m)            → ⟦ TreasuryWdrl    , m           ⟧ᵍᵃ
-    .from Info                        → ⟦ Info , tt ⟧ᵍᵃ
+    .to ⟦ NoConfidence        , _           ⟧ᵍᵃ → NoConfidence
+    .to ⟦ UpdateCommittee     , (m , p , q) ⟧ᵍᵃ → (UpdateCommittee m p q)
+    .to ⟦ NewConstitution     , (dh , s )   ⟧ᵍᵃ → (NewConstitution dh s)
+    .to ⟦ TriggerHardFork     , p           ⟧ᵍᵃ → (TriggerHardFork p)
+    .to ⟦ ChangePParams       , pu          ⟧ᵍᵃ → (ChangePParams pu)
+    .to ⟦ TreasuryWithdrawal  , m           ⟧ᵍᵃ → ((TreasuryWithdrawal m))
+    .to ⟦ Info                , _           ⟧ᵍᵃ → Info
+    .from NoConfidence              → ⟦ NoConfidence        , tt          ⟧ᵍᵃ
+    .from (UpdateCommittee m p q)   → ⟦ UpdateCommittee     , (m , p , q) ⟧ᵍᵃ
+    .from (NewConstitution dh s)    → ⟦ NewConstitution     , (dh , s)    ⟧ᵍᵃ
+    .from (TriggerHardFork p)       → ⟦ TriggerHardFork     , p           ⟧ᵍᵃ
+    .from (ChangePParams pu)        → ⟦ ChangePParams       , pu          ⟧ᵍᵃ
+    .from (TreasuryWithdrawal m)    → ⟦ TreasuryWithdrawal  , m           ⟧ᵍᵃ
+    .from Info                      → ⟦ Info                , tt          ⟧ᵍᵃ
 
   HsTy-GovAction' = autoHsType GovAction' ⊣ withName "GovAction"
   Conv-GovAction' = autoConvert GovAction'

@@ -68,31 +68,30 @@ initStateRedeemer = fromList' (scriptRedeemer ∷ (createInitUtxoState 5 1000000
 
 succeedTx : Tx
 succeedTx = record { body = record
-                         { txins = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
+                         { txIns = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
                          ; refInputs = ∅
-                         ; txouts = fromListIx ((6 , initTxOut)
+                         ; collateralInputs = Ledger.Prelude.fromList ((5 , 5) ∷ [])
+                         ; txOuts = fromListIx ((6 , initTxOut)
                                                 ∷ (5
                                                   , ((inj₁ (record { net = 0 ;
                                                                      pay = KeyHashObj 5 ;
                                                                      stake = just (KeyHashObj 5) }))
                                                   , (1000000000000 - 10000000000) , nothing , nothing))
                                                 ∷ [])
-                         ; txfee = 10000000000
-                         ; mint = 0
-                         ; txvldt = nothing , nothing
-                         ; txcerts = []
-                         ; txwdrls = ∅
-                         ; txvote = []
-                         ; txprop = []
-                         ; txdonation = 0
-                         ; txup = nothing
+                         ; txId = 7
+                         ; txCerts = []
+                         ; txFee = 10000000000
+                         ; txWithdrawals = ∅
+                         ; txVldt = nothing , nothing
                          ; txADhash = nothing
+                         ; txDonation = 0
+                         ; txGovVotes = []
+                         ; txGovProposals = []
                          ; txNetworkId = just 0
-                         ; curTreasury = nothing
-                         ; txid = 7
-                         ; collateral = Ledger.Prelude.fromList ((5 , 5) ∷ [])
-                         ; reqSigHash = ∅
-                         ; scriptIntHash = nothing
+                         ; currentTreasury = nothing
+                         ; mint = 0
+                         ; reqSignerHashes = ∅
+                         ; scriptIntegrityHash = nothing
                          } ;
                 wits = record { vkSigs = fromListᵐ ((5 , 12) ∷ []) ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ succeedIf1Datum) ∷ []) ;
@@ -110,25 +109,24 @@ exampleDatum = getDatum succeedTx initStateDatum (Spend (6 , 6))
 
 failTx : Tx
 failTx = record { body = record
-                         { txins = Ledger.Prelude.fromList ((6 , 6) ∷ [])
+                         { txIns = Ledger.Prelude.fromList ((6 , 6) ∷ [])
                          ; refInputs = ∅
-                         ; txouts = ∅
-                         ; txfee = 10
-                         ; mint = 0
-                         ; txvldt = nothing , nothing
-                         ; txcerts = []
-                         ; txwdrls = ∅
-                         ; txvote = []
-                         ; txprop = []
-                         ; txdonation = 0
-                         ; txup = nothing
+                         ; collateralInputs = ∅
+                         ; txOuts = ∅
+                         ; txId = 7
+                         ; txCerts = []
+                         ; txFee = 10
+                         ; txWithdrawals = ∅
+                         ; txVldt = nothing , nothing
                          ; txADhash = nothing
+                         ; txDonation = 0
+                         ; txGovVotes = []
+                         ; txGovProposals = []
                          ; txNetworkId = just 0
-                         ; curTreasury = nothing
-                         ; txid = 7
-                         ; collateral = ∅
-                         ; reqSigHash = ∅
-                         ; scriptIntHash = nothing
+                         ; currentTreasury = nothing
+                         ; mint = 0
+                         ; reqSignerHashes = ∅
+                         ; scriptIntegrityHash = nothing
                          } ;
                 wits = record { vkSigs = ∅ ;
                                 scripts = Ledger.Prelude.fromList ((inj₂ succeedIf1Redeemer) ∷ []) ;

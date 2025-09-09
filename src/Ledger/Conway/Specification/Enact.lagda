@@ -19,9 +19,9 @@ open import Ledger.Conway.Specification.Gov.Actions gs
 \Cref{fig:enact-defs} contains some definitions required to
 define the ENACT transition system.  \EnactEnv{} is the environment and
 \EnactState{} the state of ENACT, which enacts a governance action. All
-governance actions except \TreasuryWdrl{} and \Info{} modify \EnactState{}
+governance actions except \TreasuryWithdrawal{} and \Info{} modify \EnactState{}
 permanently, which of course can have further
-consequences.  \TreasuryWdrl{} accumulates withdrawal temporarily in the
+consequences.  \TreasuryWithdrawal{} accumulates withdrawal temporarily in the
 \withdrawals{} field of \EnactState{},
 but this information is applied and reset in EPOCH (see \cref{fig:epoch:sts}).
 Also, enacting these governance actions is the
@@ -36,7 +36,7 @@ since they are \HashProtected{}.
 record EnactEnv : Type where
   field
     gid       : GovActionID
-    treasury  : Coin
+    treasury  : Treasury
     epoch     : Epoch
 
 record EnactState : Type where
@@ -45,7 +45,7 @@ record EnactState : Type where
     constitution  : HashProtected (DocHash × Maybe ScriptHash)
     pv            : HashProtected ProtVer
     pparams       : HashProtected PParams
-    withdrawals   : RwdAddr ⇀ Coin
+    withdrawals   : Withdrawals
 \end{code}
 \begin{code}[hide]
 record HasEnactState {a} (A : Type a) : Type a where
@@ -56,8 +56,11 @@ instance
   HasPParams-EnactState : HasPParams EnactState
   HasPParams-EnactState .PParamsOf = proj₁ ∘ EnactState.pparams
 
-  HasccMaxTermLength-EnactState : HasccMaxTermLength EnactState
-  HasccMaxTermLength-EnactState .ccMaxTermLengthOf = PParams.ccMaxTermLength ∘ PParamsOf
+  HasccMaxTermLength-EnactState : HasCCMaxTermLength EnactState
+  HasccMaxTermLength-EnactState .CCMaxTermLengthOf = PParams.ccMaxTermLength ∘ PParamsOf
+
+  HasWithdrawals-EnactState : HasWithdrawals EnactState
+  HasWithdrawals-EnactState .WithdrawalsOf = EnactState.withdrawals
 
   unquoteDecl HasCast-EnactEnv = derive-HasCast
     [ (quote EnactEnv , HasCast-EnactEnv) ]
@@ -71,22 +74,22 @@ ccCreds (just x   , _)  = dom (x .proj₁)
 ccCreds (nothing  , _)  = ∅
 
 getHash : ∀ {a} → NeedsHash a → Maybe GovActionID
-getHash {NoConfidence}     h = just h
-getHash {UpdateCommittee}  h = just h
-getHash {NewConstitution}  h = just h
-getHash {TriggerHF}        h = just h
-getHash {ChangePParams}    h = just h
-getHash {TreasuryWdrl}     _ = nothing
-getHash {Info}             _ = nothing
+getHash {NoConfidence}        h = just h
+getHash {UpdateCommittee}     h = just h
+getHash {NewConstitution}     h = just h
+getHash {TriggerHardFork}     h = just h
+getHash {ChangePParams}       h = just h
+getHash {TreasuryWithdrawal}  _ = nothing
+getHash {Info}                _ = nothing
 
 getHashES : EnactState → GovActionType → Maybe GovActionID
-getHashES es NoConfidence       = just (es .cc .proj₂)
-getHashES es (UpdateCommittee)  = just (es .cc .proj₂)
-getHashES es (NewConstitution)  = just (es .constitution .proj₂)
-getHashES es (TriggerHF)        = just (es .pv .proj₂)
-getHashES es (ChangePParams)    = just (es .pparams .proj₂)
-getHashES es (TreasuryWdrl)     = nothing
-getHashES es Info               = nothing
+getHashES es NoConfidence          = just (es .cc .proj₂)
+getHashES es (UpdateCommittee)     = just (es .cc .proj₂)
+getHashES es (NewConstitution)     = just (es .constitution .proj₂)
+getHashES es (TriggerHardFork)     = just (es .pv .proj₂)
+getHashES es (ChangePParams)       = just (es .pparams .proj₂)
+getHashES es (TreasuryWithdrawal)  = nothing
+getHashES es Info                  = nothing
 \end{code}
 \emph{Type of the ENACT transition system}
 \begin{code}[hide]
@@ -111,8 +114,8 @@ private variable
   dh : DocHash
   sh : Maybe ScriptHash
   v : ProtVer
-  wdrl : RwdAddr ⇀ Coin
-  t : Coin
+  wdrl : Withdrawals
+  t : Treasury
   gid : GovActionID
   e : Epoch
 
@@ -123,10 +126,10 @@ instance
 \Cref{fig:sts:enact,fig:sts:enact-cont} define the rules of the ENACT transition
 system. Usually no preconditions are checked and the state is simply
 updated (including the \GovActionID{} for the hash protection scheme, if
-required). The exceptions are \UpdateCommittee{} and \TreasuryWdrl{}:
+required). The exceptions are \UpdateCommittee{} and \TreasuryWithdrawal{}:
 \begin{itemize}
   \item \UpdateCommittee{} requires that maximum terms are respected, and
-  \item \TreasuryWdrl{} requires that the treasury is able to cover the sum of all withdrawals (old and new).
+  \item \TreasuryWithdrawal{} requires that the treasury is able to cover the sum of all withdrawals (old and new).
 \end{itemize}
 
 \begin{figure*}[ht]
@@ -142,7 +145,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
     ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ NoConfidence , _ ⟧ᵍᵃ ,ENACT⦈ record s { cc = nothing , gid }
 
   Enact-UpdComm : let old      = maybe proj₁ ∅ (s .cc .proj₁)
-                      maxTerm  = ccMaxTermLengthOf s +ᵉ e
+                      maxTerm  = CCMaxTermLengthOf s +ᵉ e
                   in
     ∀[ term ∈ range new ] term ≤ maxTerm
     ───────────────────────────────────────
@@ -162,7 +165,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
 \begin{code}
   Enact-HF :
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ TriggerHF , v ⟧ᵍᵃ ,ENACT⦈ record s { pv = v , gid }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ TriggerHardFork , v ⟧ᵍᵃ ,ENACT⦈ record s { pv = v , gid }
 
   Enact-PParams :
     ───────────────────────────────────────
@@ -172,7 +175,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
   Enact-Wdrl : let newWdrls = s .withdrawals ∪⁺ wdrl in
     ∑[ x ← newWdrls ] x ≤ t
     ───────────────────────────────────────
-    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ TreasuryWdrl , wdrl ⟧ᵍᵃ ,ENACT⦈ record s { withdrawals = newWdrls }
+    ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ TreasuryWithdrawal , wdrl ⟧ᵍᵃ ,ENACT⦈ record s { withdrawals = newWdrls }
 
   Enact-Info :
     ───────────────────────────────────────

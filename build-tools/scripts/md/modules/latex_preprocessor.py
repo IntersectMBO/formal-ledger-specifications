@@ -49,8 +49,6 @@ def _replace_modulenote(match: re.Match) -> str:
     base_path = f"Ledger/{module_type}" if module_type == "Conway" else "Ledger"
     module_text = f"{base_path.replace('/', '.')}.{module_name}"
 
-    #module_url = f"{repo_url}/blob/master/src/{base_path}/{module_name}.lagda"
-    #module_link = f"\\href{{{module_url}}}{{\\texttt{{{module_text}}}}}"
     # Now using helper function get_module_repo_path instead:
     path, agda_module = get_module_repo_path(module_type, module_name)
     module_url = f"{repo_url}/blob/master/src/{path}"
@@ -66,7 +64,7 @@ def _replace_cip_href(match: re.Match) -> str:
     return f"\\href{{{cip_url}}}{{CIP-{cip_number}}}"
 
 def _replace_cref_commands(match: re.Match) -> str:
-    """Replaces \Cref{...} and \cref{...} with a CROSS_REF placeholder."""
+    """Replaces Cref{...} and cref{...} with a CROSS_REF placeholder."""
     command_name, targets_str = match.group(1), match.group(2)
     return f"@@CROSS_REF@@command={command_name}@@targets={targets_str.replace('@@', '@ @')}@@"
 

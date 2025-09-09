@@ -15,8 +15,8 @@ for the purposes of enactment, earlier proposals take priority.  Note that
     \addAction{} adds a new proposed action at the end of a given \GovState{}.
   \item
     The \validHFAction{} property indicates whether a given proposal, if it is a
-    \TriggerHF{} action, can potentially be enacted in the future. For this to be the
-    case, its \prevAction{} needs to exist, be another \TriggerHF{} action and have a
+    \TriggerHardFork{} action, can potentially be enacted in the future. For this to be the
+    case, its \prevAction{} needs to exist, be another \TriggerHardFork{} action and have a
     compatible version.
 \end{itemize}
 
@@ -85,6 +85,15 @@ record GovEnv : Type where
 
 \begin{code}[hide]
 instance
+  HasPParams-GovEnv : HasPParams GovEnv
+  HasPParams-GovEnv .PParamsOf = GovEnv.pparams
+
+  HasEnactState-GovEnv : HasEnactState GovEnv
+  HasEnactState-GovEnv .EnactStateOf = GovEnv.enactState
+
+  HasCertState-GovEnv : HasCertState GovEnv
+  HasCertState-GovEnv .CertStateOf = GovEnv.certState
+
   unquoteDecl HasCast-GovEnv = derive-HasCast
     [ (quote GovEnv , HasCast-GovEnv) ]
 
@@ -113,9 +122,9 @@ govActionPriority : GovActionType → ℕ
 govActionPriority NoConfidence     = 0
 govActionPriority UpdateCommittee  = 1
 govActionPriority NewConstitution  = 2
-govActionPriority TriggerHF        = 3
+govActionPriority TriggerHardFork        = 3
 govActionPriority ChangePParams    = 4
-govActionPriority TreasuryWdrl     = 5
+govActionPriority TreasuryWithdrawal     = 5
 govActionPriority Info             = 6
 
 Overlap : GovActionType → GovActionType → Type
@@ -130,50 +139,50 @@ Overlap? NoConfidence    UpdateCommittee  = Dec-⊤ .dec
 Overlap? UpdateCommittee NoConfidence     = Dec-⊤ .dec
 Overlap? NoConfidence NoConfidence = yes refl
 Overlap? NoConfidence NewConstitution = no (λ ())
-Overlap? NoConfidence TriggerHF = no (λ ())
+Overlap? NoConfidence TriggerHardFork = no (λ ())
 Overlap? NoConfidence ChangePParams = no (λ ())
-Overlap? NoConfidence TreasuryWdrl = no (λ ())
+Overlap? NoConfidence TreasuryWithdrawal = no (λ ())
 Overlap? NoConfidence Info = no (λ ())
 Overlap? UpdateCommittee UpdateCommittee = yes refl
 Overlap? UpdateCommittee NewConstitution = no (λ ())
-Overlap? UpdateCommittee TriggerHF = no (λ ())
+Overlap? UpdateCommittee TriggerHardFork = no (λ ())
 Overlap? UpdateCommittee ChangePParams = no (λ ())
-Overlap? UpdateCommittee TreasuryWdrl = no (λ ())
+Overlap? UpdateCommittee TreasuryWithdrawal = no (λ ())
 Overlap? UpdateCommittee Info = no (λ ())
 Overlap? NewConstitution NoConfidence = no (λ ())
 Overlap? NewConstitution UpdateCommittee = no (λ ())
 Overlap? NewConstitution NewConstitution = yes refl
-Overlap? NewConstitution TriggerHF = no (λ ())
+Overlap? NewConstitution TriggerHardFork = no (λ ())
 Overlap? NewConstitution ChangePParams = no (λ ())
-Overlap? NewConstitution TreasuryWdrl = no (λ ())
+Overlap? NewConstitution TreasuryWithdrawal = no (λ ())
 Overlap? NewConstitution Info = no (λ ())
-Overlap? TriggerHF NoConfidence = no (λ ())
-Overlap? TriggerHF UpdateCommittee = no (λ ())
-Overlap? TriggerHF NewConstitution = no (λ ())
-Overlap? TriggerHF TriggerHF = yes refl
-Overlap? TriggerHF ChangePParams = no (λ ())
-Overlap? TriggerHF TreasuryWdrl = no (λ ())
-Overlap? TriggerHF Info = no (λ ())
+Overlap? TriggerHardFork NoConfidence = no (λ ())
+Overlap? TriggerHardFork UpdateCommittee = no (λ ())
+Overlap? TriggerHardFork NewConstitution = no (λ ())
+Overlap? TriggerHardFork TriggerHardFork = yes refl
+Overlap? TriggerHardFork ChangePParams = no (λ ())
+Overlap? TriggerHardFork TreasuryWithdrawal = no (λ ())
+Overlap? TriggerHardFork Info = no (λ ())
 Overlap? ChangePParams NoConfidence = no (λ ())
 Overlap? ChangePParams UpdateCommittee = no (λ ())
 Overlap? ChangePParams NewConstitution = no (λ ())
-Overlap? ChangePParams TriggerHF = no (λ ())
+Overlap? ChangePParams TriggerHardFork = no (λ ())
 Overlap? ChangePParams ChangePParams = yes refl
-Overlap? ChangePParams TreasuryWdrl = no (λ ())
+Overlap? ChangePParams TreasuryWithdrawal = no (λ ())
 Overlap? ChangePParams Info = no (λ ())
-Overlap? TreasuryWdrl NoConfidence = no (λ ())
-Overlap? TreasuryWdrl UpdateCommittee = no (λ ())
-Overlap? TreasuryWdrl NewConstitution = no (λ ())
-Overlap? TreasuryWdrl TriggerHF = no (λ ())
-Overlap? TreasuryWdrl ChangePParams = no (λ ())
-Overlap? TreasuryWdrl TreasuryWdrl = yes refl
-Overlap? TreasuryWdrl Info = no (λ ())
+Overlap? TreasuryWithdrawal NoConfidence = no (λ ())
+Overlap? TreasuryWithdrawal UpdateCommittee = no (λ ())
+Overlap? TreasuryWithdrawal NewConstitution = no (λ ())
+Overlap? TreasuryWithdrawal TriggerHardFork = no (λ ())
+Overlap? TreasuryWithdrawal ChangePParams = no (λ ())
+Overlap? TreasuryWithdrawal TreasuryWithdrawal = yes refl
+Overlap? TreasuryWithdrawal Info = no (λ ())
 Overlap? Info NoConfidence = no (λ ())
 Overlap? Info UpdateCommittee = no (λ ())
 Overlap? Info NewConstitution = no (λ ())
-Overlap? Info TriggerHF = no (λ ())
+Overlap? Info TriggerHardFork = no (λ ())
 Overlap? Info ChangePParams = no (λ ())
-Overlap? Info TreasuryWdrl = no (λ ())
+Overlap? Info TreasuryWithdrawal = no (λ ())
 Overlap? Info Info = yes refl
 \end{code}
 \begin{code}
@@ -219,9 +228,9 @@ opaque
           open CertState (GovEnv.certState Γ) using (gState; pState)
 
   validHFAction : GovProposal → GovState → EnactState → Type
-  validHFAction (record { action = ⟦ TriggerHF , v ⟧ᵍᵃ ; prevAction = prev }) s e =
+  validHFAction (record { action = ⟦ TriggerHardFork , v ⟧ᵍᵃ ; prevAction = prev }) s e =
     (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
-    ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ ⟦ TriggerHF , v' ⟧ᵍᵃ × pvCanFollow v' v
+    ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × pvCanFollow v' v
   validHFAction _ _ _ = ⊤
 \end{code}
 \end{AgdaMultiCode}
@@ -311,7 +320,7 @@ hasParent e s gaTy aid = case getHash aid of
 \begin{code}
     nothing      → ⊤
     (just aid')  → hasParentE e aid' gaTy
-                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × Overlap (gas .action .gaType) gaTy) s
+                   ⊎ Any (λ (gid , gas) → gid ≡ aid' × Overlap (GovActionTypeOf gas) gaTy) s
 \end{code}
 \begin{code}[hide]
 open Equivalence
@@ -324,7 +333,7 @@ hasParentE? e aid gaTy with getHashES e gaTy
 hasParent? : ∀ e s a aid → Dec (hasParent e s a aid)
 hasParent? e s gaTy aid with getHash aid
 ... | just aid' = hasParentE? e aid' gaTy
-                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec Overlap? (gas .action .gaType) gaTy) s
+                  ⊎-dec any? (λ (gid , gas) → gid ≟ aid' ×-dec Overlap? (GovActionTypeOf gas) gaTy) s
 ... | nothing = yes _
 
 -- newtype to make the instance resolution work
@@ -351,7 +360,7 @@ any?-connecting-subperm {u} {v} L = any? (λ l → unique? _≟_ l ×-dec [ l co
 ∃?-connecting-subset L = map-Dec (sym-Equiv ∃uniqueSubset⇔∃uniqueSubperm) (∃?-connecting-subperm L)
 
 enactable? : ∀ eState aidPairs aidNew×st → Dec (enactable eState aidPairs aidNew×st)
-enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionState.action as .gaType)
+enactable? eState aidPairs (aidNew , as) with getHashES eState (GovActionTypeOf as)
 ... | nothing = yes tt
 ... | just aidOld = map-Dec (sym-Equiv ∃-sublist-⇔) (∃?-connecting-subset aidPairs)
 
@@ -371,7 +380,7 @@ instance
 -- list (`aid×states : List (GovActionID × GovActionState)`) such that
 --    (i) each sublist `l ∈ ls` satisfies `allEnactable e l` and
 --   (ii) each sublist `l ∈ ls` is of maximal length among sublists of `aid×states` satisfying `allEnactable`.
-maxAllEnactable : EnactState → List (GovActionID × GovActionState) → List (List (GovActionID × GovActionState))
+maxAllEnactable : EnactState → GovState → List GovState
 maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 
 -- Every sublist returned by `maxAllEnactable` satisfies (i).
@@ -404,7 +413,7 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
 actionValid : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
 actionValid rewardCreds p ppolicy epoch ⟦ ChangePParams , _ ⟧ᵍᵃ =
   p ≡ ppolicy
-actionValid rewardCreds p ppolicy epoch ⟦ TreasuryWdrl  , x ⟧ᵍᵃ =
+actionValid rewardCreds p ppolicy epoch ⟦ TreasuryWithdrawal  , x ⟧ᵍᵃ =
   p ≡ ppolicy × mapˢ RwdAddr.stake (dom x) ⊆ rewardCreds
 actionValid rewardCreds p ppolicy epoch ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ =
   p ≡ nothing × (∀[ e ∈ range new ]  epoch < e) × (dom new ∩ rem ≡ᵉ ∅)
@@ -413,7 +422,7 @@ actionValid rewardCreds p ppolicy epoch _ =
 
 actionWellFormed : GovAction → Type
 actionWellFormed ⟦ ChangePParams , x ⟧ᵍᵃ = ppdWellFormed x
-actionWellFormed ⟦ TreasuryWdrl  , x ⟧ᵍᵃ =
+actionWellFormed ⟦ TreasuryWithdrawal  , x ⟧ᵍᵃ =
   (∀[ a ∈ dom x ] NetworkIdOf a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
 actionWellFormed _                 = ⊤
 \end{code}
@@ -427,7 +436,7 @@ of the GOV rule to ensure that a governance action is valid and well-formed.
   \item \actionValid{} ensures that the proposed action is valid given the current state of the system:
         \begin{itemize}
           \item a \ChangePParams{} action is valid if the proposal policy is provided;
-          \item a \TreasuryWdrl{} action is valid if the proposal policy is provided and the reward stake
+          \item a \TreasuryWithdrawal{} action is valid if the proposal policy is provided and the reward stake
                 credential is registered;
           \item an \UpdateCommittee{} action is valid if credentials of proposed candidates
                 have not expired, and the action does not propose to both add and
@@ -436,7 +445,7 @@ of the GOV rule to ensure that a governance action is valid and well-formed.
   \item \actionWellFormed{} ensures that the proposed action is well-formed:
         \begin{itemize}
           \item a \ChangePParams{} action must preserves well-formedness of the protocol parameters;
-          \item a \TreasuryWdrl{} action is well-formed if the network ID is correct and
+          \item a \TreasuryWithdrawal{} action is well-formed if the network ID is correct and
                 there is at least one non-zero withdrawal amount in the given \RwdAddrToCoinMap{} map.
         \end{itemize}
 \end{itemize}
@@ -447,18 +456,18 @@ actionValid? : ∀ {rewardCreds p ppolicy epoch a} → actionValid rewardCreds p
 actionValid? {a = ⟦ NoConfidence    , _ ⟧ᵍᵃ} = it
 actionValid? {a = ⟦ UpdateCommittee , _ ⟧ᵍᵃ} = it
 actionValid? {a = ⟦ NewConstitution , _ ⟧ᵍᵃ} = it
-actionValid? {a = ⟦ TriggerHF       , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ TriggerHardFork       , _ ⟧ᵍᵃ} = it
 actionValid? {a = ⟦ ChangePParams   , _ ⟧ᵍᵃ} = it
-actionValid? {a = ⟦ TreasuryWdrl    , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ TreasuryWithdrawal    , _ ⟧ᵍᵃ} = it
 actionValid? {a = ⟦ Info            , _ ⟧ᵍᵃ} = it
 
 actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
 actionWellFormed? {⟦ NoConfidence    , _ ⟧ᵍᵃ} = it
 actionWellFormed? {⟦ UpdateCommittee , _ ⟧ᵍᵃ} = it
 actionWellFormed? {⟦ NewConstitution , _ ⟧ᵍᵃ} = it
-actionWellFormed? {⟦ TriggerHF       , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ TriggerHardFork       , _ ⟧ᵍᵃ} = it
 actionWellFormed? {⟦ ChangePParams   , _ ⟧ᵍᵃ} = it
-actionWellFormed? {⟦ TreasuryWdrl    , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ TreasuryWithdrawal    , _ ⟧ᵍᵃ} = it
 actionWellFormed? {⟦ Info            , _ ⟧ᵍᵃ} = it
 \end{code}
 
@@ -481,16 +490,16 @@ data _⊢_⇀⦇_,GOV⦈_ where
 \begin{code}
   GOV-Vote :
     ∙ (aid , ast) ∈ fromList s
-    ∙ canVote (Γ .pparams) (action ast) (proj₁ voter)
+    ∙ canVote (PParamsOf Γ) (action ast) (proj₁ voter)
     ∙ isRegistered Γ voter
     ∙ ¬ expired (Γ .epoch) ast
       ───────────────────────────────────────
       (Γ , k) ⊢ s ⇀⦇ inj₁ ⟦ aid , voter , v , machr ⟧ ,GOV⦈ addVote s aid voter v
 
   GOV-Propose :
-    let pp           = Γ .pparams
+    let pp           = PParamsOf Γ
         e            = Γ .epoch
-        enactState   = Γ .enactState
+        enactState   = EnactStateOf Γ
         rewardCreds  = Γ .rewardCreds
         prop         = record { returnAddr = addr ; action = a ; anchor = achr
                               ; policy = p ; deposit = d ; prevAction = prev }
@@ -499,7 +508,7 @@ data _⊢_⇀⦇_,GOV⦈_ where
     ∙ actionValid rewardCreds p (Γ .ppolicy) e a
     ∙ d ≡ pp .govActionDeposit
     ∙ validHFAction prop s enactState
-    ∙ hasParent enactState s (a .gaType) prev
+    ∙ hasParent enactState s (GovActionTypeOf a) prev
     ∙ NetworkIdOf addr ≡ NetworkId
     ∙ CredentialOf addr ∈ rewardCreds
       ───────────────────────────────────────

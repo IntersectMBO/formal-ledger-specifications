@@ -23,7 +23,7 @@ open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
 open Filter using (filter)
 open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
-open import Ledger.Prelude.Numeric.UnitInterval
+open import Ledger.Prelude.Numeric.UnitInterval using (fromUnitInterval; UnitInterval-*-0≤)
 
 open Number number renaming (fromNat to fromℕ)
 
@@ -75,17 +75,35 @@ instance
   HasDeposits-EpochState : HasDeposits EpochState
   HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
 
-  Hastreasury-EpochState : Hastreasury EpochState
-  Hastreasury-EpochState .treasuryOf = Acnt.treasury ∘ EpochState.acnt
+  HasTreasury-EpochState : HasTreasury EpochState
+  HasTreasury-EpochState .TreasuryOf = Acnt.treasury ∘ EpochState.acnt
 
-  Hasreserves-EpochState : Hasreserves EpochState
-  Hasreserves-EpochState .reservesOf = Acnt.reserves ∘ EpochState.acnt
+  HasReserves-EpochState : HasReserves EpochState
+  HasReserves-EpochState .ReservesOf = Acnt.reserves ∘ EpochState.acnt
 
   HasPParams-EpochState : HasPParams EpochState
   HasPParams-EpochState .PParamsOf = PParamsOf ∘ EnactStateOf
+
+  HasRatifyState-EpochState : HasRatifyState EpochState
+  HasRatifyState-EpochState .RatifyStateOf = EpochState.fut
+
+  HasPState-EpochState : HasPState EpochState
+  HasPState-EpochState .PStateOf = PStateOf ∘ CertStateOf ∘ LStateOf
 \end{code}
 \begin{NoConway}
+
+\AgdaBound{PoolDistr}
+(Shelley specification~\parencite[\sectionname~3]{shelley-ledger-spec})
+results from dividing the coins in \AgdaBound{PoolDelegatedStake} by the total
+stake in \AgdaBound{PoolDelegatedStake}. We avoid dividing the coins here, in
+order to spare us the trouble of proving that the result is between 0 and 1.
+
+We omit the VRF key hashes in the codomain of \AgdaDatatype{PoolDelegatedStake}
+as they are not needed at the moment.
+
 \begin{code}
+PoolDelegatedStake : Type
+PoolDelegatedStake = KeyHash ⇀ Coin
 
 record NewEpochState : Type where
   field
@@ -94,6 +112,7 @@ record NewEpochState : Type where
     bcur        : BlocksMade
     epochState  : EpochState
     ru          : Maybe RewardUpdate
+    pd          : PoolDelegatedStake
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
@@ -116,8 +135,8 @@ instance
   HasEnactState-NewEpochState : HasEnactState NewEpochState
   HasEnactState-NewEpochState .EnactStateOf = EnactStateOf ∘ EpochStateOf
 
-  Hastreasury-NewEpochState : Hastreasury NewEpochState
-  Hastreasury-NewEpochState .treasuryOf = treasuryOf ∘ EpochStateOf
+  Hastreasury-NewEpochState : HasTreasury NewEpochState
+  Hastreasury-NewEpochState .TreasuryOf = TreasuryOf ∘ EpochStateOf
 
   HasLState-NewEpochState : HasLState NewEpochState
   HasLState-NewEpochState .LStateOf = LStateOf ∘ EpochStateOf
@@ -211,7 +230,7 @@ opaque
       prevPp       : PParams
       prevPp       = PParamsOf es
       reserves     : Coin
-      reserves     = reservesOf es
+      reserves     = ReservesOf es
       pstakego     : Snapshot
       pstakego     = es .EpochState.ss .Snapshots.go
       feeSS        : Coin
@@ -364,13 +383,27 @@ gaDepositStake govSt ds = aggregateBy
 opaque
 \end{code}
 \begin{code}
-  mkStakeDistrs : Snapshot → GovState → Deposits → (Credential ⇀ VDeleg) → StakeDistrs
+  mkStakeDistrs : Snapshot → GovState → Deposits → VoteDelegs → StakeDistrs
   mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
     aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Functions for computing stake distributions}
 \end{figure*}
+
+The \AgdaFunction{aggregateBy} function takes a relation
+\AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B}) and a map
+\AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
+and returns a function that maps each \AgdaBound{a} in the domain of
+\AgdaBound{m} to the sum of all \AgdaBound{b} such that
+(\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+
+In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
+\AgdaFunction{aggregateBy} are
+\AgdaFunction{∣} \AgdaBound{delegations} \AgdaFunction{∣} :
+ℙ \AgdaDatatype{Credential} \AgdaFunction{×} \AgdaDatatype{VDeleg} and
+\AgdaFunction{stakeOf} \AgdaBound{ss} \AgdaFunction{∪⁺}
+\AgdaFunction{gaDepositStake} \AgdaBound{govSt} \AgdaBound{ds}, respectively.
 
 \begin{code}[hide]
 private variable
@@ -381,11 +414,12 @@ private variable
   ls : LState
   es₀ : EnactState
   mark set go : Snapshot
-  feeSS : Coin
+  feeSS : Fees
   lstate : LState
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
+  pd : PoolDelegatedStake
 \end{code}
 
 
@@ -401,8 +435,8 @@ record EPOCH-Updates0 : Type where
   constructor EPOCHUpdates0
   field
     es             : EnactState
-    govSt'         : List (GovActionID × GovActionState)
-    payout         : RwdAddr ⇀ Coin
+    govSt'         : GovState
+    payout         : Withdrawals
     gState'        : GState
     utxoSt'        : UTxOState
     totWithdrawals : Coin
@@ -427,7 +461,7 @@ EPOCH-updates0 fut ls =
     removed' : ℙ (GovActionID × GovActionState)
     removed' = removed ∪ orphans
 
-    govSt' : List (GovActionID × GovActionState)
+    govSt' : GovState
     govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
 
     removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
@@ -441,16 +475,13 @@ EPOCH-updates0 fut ls =
     govActionReturns =
       aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-    trWithdrawals : RwdAddr ⇀ Coin
-    trWithdrawals = EnactState.withdrawals esW
-
     payout : RwdAddr ⇀ Coin
-    payout = govActionReturns ∪⁺ trWithdrawals
+    payout = govActionReturns ∪⁺ WithdrawalsOf esW
 
     gState' : GState
     gState' =
       ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf gState) else DRepsOf gState)
-      , GState.ccHotKeys gState ∣ ccCreds (EnactState.cc es)
+      , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
       ⟧
 
     utxoSt' : UTxOState
@@ -460,7 +491,7 @@ EPOCH-updates0 fut ls =
       }
 
     totWithdrawals : Coin
-    totWithdrawals = ∑[ x ← trWithdrawals ] x
+    totWithdrawals = ∑[ x ← WithdrawalsOf esW ] x
 
 record EPOCH-Updates : Type where
   constructor EPOCHUpdates
@@ -478,17 +509,15 @@ EPOCH-updates fut ls dState' acnt' =
     EPOCHUpdates (u0 .es) (u0 .govSt') dState'' (u0 .gState') (u0 .utxoSt') acnt''
   where
     open LState
-    open UTxOState
-    open DState
     open EPOCH-Updates0
 
     u0 = EPOCH-updates0 fut ls
 
     refunds : Credential ⇀ Coin
-    refunds = pullbackMap (u0 .payout) toRwdAddr (dom (dState' .rewards))
+    refunds = pullbackMap (u0 .payout) toRwdAddr (dom (RewardsOf dState'))
 
     dState'' : DState
-    dState'' = record dState' { rewards = dState' .rewards ∪⁺ refunds }
+    dState'' = record dState' { rewards = RewardsOf dState' ∪⁺ refunds }
 
     unclaimed : Coin
     unclaimed = getCoin (u0 .payout) - getCoin refunds
@@ -496,7 +525,7 @@ EPOCH-updates fut ls dState' acnt' =
     acnt'' : Acnt
     acnt'' = record acnt'
       { treasury =
-          Acnt.treasury acnt' ∸ u0 .totWithdrawals + ls .utxoSt .donations + unclaimed
+          TreasuryOf acnt' ∸ u0 .totWithdrawals + DonationsOf ls + unclaimed
       }
 \end{code}
 
@@ -528,16 +557,9 @@ its results by carrying out each of the following tasks.
 \begin{code}
   EPOCH : ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
     let
-      open LState
-      open CertState
-
-      cs = ls .certState
 
       EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
         EPOCH-updates fut ls dState' acnt'
-
-      certState' : CertState
-      certState' = ⟦ dState'' , pState' , gState' ⟧ᶜˢ
 
     in
       record { currentEpoch = e
@@ -545,17 +567,17 @@ its results by carrying out each of the following tasks.
                                (Snapshots.mark ss')
                                govSt'
                                (DepositsOf utxoSt')
-                               (voteDelegsOf (cs .dState))
-             ; treasury = treasuryOf acnt
-             ; GState (cs .gState)
-             ; pools = PState.pools (cs .pState)
-             ; delegatees = voteDelegsOf (cs .dState)
+                               (VoteDelegsOf ls)
+             ; treasury = TreasuryOf acnt
+             ; GState (GStateOf ls)
+             ; pools = PoolsOf ls
+             ; delegatees = VoteDelegsOf ls
              }
           ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
         → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-        → _ ⊢ ⟦ utxoSt' , acnt , cs .dState , cs .pState ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
+        → _ ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
       ────────────────────────────────
-      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , certState' ⟧ , es , fut' ⟧
+      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 \end{code}
 \end{AgdaMultiCode}
 \caption{EPOCH transition system}
@@ -563,7 +585,45 @@ its results by carrying out each of the following tasks.
 \end{figure*}
 
 \begin{NoConway}
+The \AgdaFunction{calculatePoolDelegatedState} produces a new pool distribution
+from the delegation map and stake allocation of the previous epoch.
+
+\AgdaFunction{calculatePoolDelegatedStake} performs the computation of
+\AgdaFunction{calculatePoolDistr} in the Shelley spec, without normalizing the
+stakes to be between 0 and 1.
+
 \begin{figure*}[ht]
+\begin{code}
+opaque
+  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
+  calculatePoolDelegatedStake ss =
+      -- Shelley spec: the output map must contain keys appearing in both
+      -- sd and the pool parameters.
+      sd ∣ dom (ss .poolParameters)
+    where
+      open Snapshot
+
+      -- delegated stake per pool
+      sd : KeyHash ⇀ Coin
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (ss .stake ˢ)) ᶠˢ)
+        where mutual
+          -- stake credentials delegating to each pool
+          stakeCredentialsPerPool : Rel KeyHash Credential
+          stakeCredentialsPerPool = (ss .delegations ˢ) ⁻¹ʳ
+
+          -- TODO: Move to agda-sets
+          -- https://github.com/input-output-hk/agda-sets/pull/13
+          _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
+          R ⁻¹ʳ = mapˢ swap R
+            where open import Data.Product using (swap)
+
+          _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
+          R ∘ʳ S =
+            concatMapˢ
+              (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
+              R
+\end{code}
+
 \begin{code}[hide]
 data
 \end{code}
@@ -576,22 +636,28 @@ data
 \begin{code}
   NEWEPOCH-New : ∀ {bprev bcur : BlocksMade} → let
       eps' = applyRUpd ru eps
+      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps''
+      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
     in
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' ⟧
 
   NEWEPOCH-Not-New : ∀ {bprev bcur : BlocksMade} →
     ∙ e ≢ lastEpoch + 1
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
 
-  NEWEPOCH-No-Reward-Update : ∀ {bprev bcur : BlocksMade} →
+  NEWEPOCH-No-Reward-Update : let
+      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps'
+      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
+    in
+    ∀ {bprev bcur : BlocksMade} →
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' ⟧
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}

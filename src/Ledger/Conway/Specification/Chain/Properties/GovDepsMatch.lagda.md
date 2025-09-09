@@ -39,7 +39,7 @@ module _
 <a id="thm:ChainGovDepsMatch"></a>
 **Theorem (`govDepsMatch`{.AgdaFunction} is invariant of `CHAIN`{.AgdaOperator} rule)**.
 
-*Informally*. 
+*Informally*.
 
 Fix a `Block`{.AgdaRecord} `b`{.AgdaBound}, a `ChainState`{.AgdaRecord} `cs`{.AgdaBound},
 and a `NewEpochState`{.AgdaRecord} `nes`{.AgdaBound}.
@@ -51,7 +51,11 @@ Consider the chain state `cs'`{.AgdaFunction} defined as follows:
 ```agda
   cs' : ChainState
   cs' .newEpochState =
-    record nes {epochState  = record (EpochStateOf cs) {ls = LStateOf nes}}
+    record { lastEpoch   = nes .lastEpoch
+           ; epochState  = record (EpochStateOf cs) {ls = LStateOf nes}
+           ; ru          = nes .ru
+           ; pd          = nes .pd
+           }
 ```
 
 That is `cs'`{.AgdaFunction} is essentially `nes`{.AgdaBound}, but
@@ -91,7 +95,7 @@ In other terms,
 
 `govDepsMatch`{.AgdaFunction} `csLState`{.AgdaFunction} implies `govDepsMatch`{.AgdaFunction} `nesState`{.AgdaFunction}.
 
-*Formally*. 
+*Formally*.
 
 ```agda
   CHAIN-govDepsMatch :

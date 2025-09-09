@@ -49,10 +49,10 @@ instance
   HasLastEpoch-ChainState : HasLastEpoch ChainState
   HasLastEpoch-ChainState .LastEpochOf = LastEpochOf ∘ NewEpochStateOf
 
-  HasEpochState-ChainState : HasEpochState ChainState 
+  HasEpochState-ChainState : HasEpochState ChainState
   HasEpochState-ChainState .EpochStateOf = EpochStateOf ∘ NewEpochStateOf
 
-  HasEnactState-ChainState : HasEnactState ChainState 
+  HasEnactState-ChainState : HasEnactState ChainState
   HasEnactState-ChainState .EnactStateOf = EnactStateOf ∘ EpochStateOf
 
   HasLState-ChainState : HasLState ChainState
@@ -151,7 +151,7 @@ data
     let  cs'  = record cs {  newEpochState
                              = record nes {  epochState
                                              = record epochState {ls = ls'} } }
-         Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , treasuryOf nes ⟧
+         Γ    = ⟦ slot , ∣ constitution ∣ , ∣ pp ∣ , es , TreasuryOf nes ⟧
     in
     ∙ totalRefScriptsSize ls ts ≤ maxRefScriptSizePerBlock
     ∙ tt ⊢ newEpochState ⇀⦇ slot ,TICK⦈ nes

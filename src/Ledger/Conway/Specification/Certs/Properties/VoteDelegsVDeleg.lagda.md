@@ -44,7 +44,7 @@ of the `voteDelegs`{.AgdaField} of `d`{.AgdaBound}.
 
 ```agda
 voteDelegsVDeleg :  DState → Type
-voteDelegsVDeleg d = range (voteDelegsOf d) ⊆ mapˢ (credVoter DRep) (dom (voteDelegsOf d))
+voteDelegsVDeleg d = range (VoteDelegsOf d) ⊆ mapˢ (credVoter DRep) (dom (VoteDelegsOf d))
 ```
 
 *Proof*. (coming soon)

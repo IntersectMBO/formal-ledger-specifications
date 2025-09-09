@@ -53,24 +53,24 @@ instance
 
 module _ (txb : TxBody) (let open TxBody txb) where
   data UsesV3Features : Set where
-    HasVotes : txvote ≢ [] → UsesV3Features
-    HasProps : txprop ≢ [] → UsesV3Features
-    HasDonation : txdonation ≢ 0 → UsesV3Features
-    HasTreasury : curTreasury ≢ nothing → UsesV3Features
+    HasVotes : txGovVotes ≢ [] → UsesV3Features
+    HasProps : txGovProposals ≢ [] → UsesV3Features
+    HasDonation : txDonation ≢ 0 → UsesV3Features
+    HasTreasure : currentTreasury ≢ nothing → UsesV3Features
 
 instance
   Dec-UsesV3Features : ∀ {txb} → UsesV3Features txb ⁇
-  Dec-UsesV3Features {record { txvote = [] ; txprop = [] ; txdonation = zero ; curTreasury = nothing }}
+  Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = [] ; txDonation = zero ; currentTreasury = nothing }}
     = ⁇ no λ where (HasVotes x)    → x refl
                    (HasProps x)    → x refl
                    (HasDonation x) → x refl
-                   (HasTreasury x) → x refl
-  Dec-UsesV3Features {record { txvote = [] ; txprop = [] ; txdonation = zero ; curTreasury = just x }}
-    = ⁇ yes (HasTreasury (λ ()))
-  Dec-UsesV3Features {record { txvote = [] ; txprop = [] ; txdonation = suc txdonation }}
+                   (HasTreasure x) → x refl
+  Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = [] ; txDonation = zero ; currentTreasury = just x }}
+    = ⁇ yes (HasTreasure (λ ()))
+  Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = [] ; txDonation = suc txDonation }}
     = ⁇ yes (HasDonation (λ ()))
-  Dec-UsesV3Features {record { txvote = [] ; txprop = x ∷ txprop }} = ⁇ yes (HasProps (λ ()))
-  Dec-UsesV3Features {record { txvote = x ∷ txvote }} = ⁇ yes (HasVotes (λ ()))
+  Dec-UsesV3Features {record { txGovVotes = [] ; txGovProposals = x ∷ txGovProposals }} = ⁇ yes (HasProps (λ ()))
+  Dec-UsesV3Features {record { txGovVotes = x ∷ txGovVotes }} = ⁇ yes (HasVotes (λ ()))
 
 languages : Tx → UTxO → ℙ Language
 languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
@@ -93,7 +93,7 @@ allowedLanguages tx utxo =
     fromList (PlutusV1 ∷ PlutusV2 ∷ PlutusV3 ∷ [])
   where
     txb = tx .Tx.body; open TxBody txb
-    os = range (outs txb) ∪ range (utxo ∣ (txins ∪ refInputs))
+    os = range (outs txb) ∪ range (utxo ∣ (txIns ∪ refInputs))
 \end{code}
 \end{AgdaMultiCode}
 \caption{Functions used for witnessing}
@@ -139,15 +139,15 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
          txdatsHashes                        = mapˢ hash txdats
          inputsDataHashes                    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
                                                                       then txOutToDataHash txout
-                                                                      else nothing) (range (utxo ∣ txins))
+                                                                      else nothing) (range (utxo ∣ txIns))
          refInputsDataHashes                 = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
-         outputsDataHashes                   = mapPartial txOutToDataHash (range txouts)
+         outputsDataHashes                   = mapPartial txOutToDataHash (range txOuts)
          nativeScripts                       = mapPartial toP1Script (txscripts tx utxo)
 \end{code}
 \begin{code}
     in
-    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txvldt s)
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txId) σ
+    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
     ∙  neededVKeyHashes ⊆ witsKeyHashes
     ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
     ∙  inputsDataHashes ⊆ txdatsHashes

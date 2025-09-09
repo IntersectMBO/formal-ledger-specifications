@@ -73,7 +73,7 @@ the value of the withdrawals in `Γ`{.AgdaBound}.
     CERTS-pov :  {Γ : CertEnv} {s₁ sₙ  : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
       →  Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
-      → getCoin s₁ ≡ getCoin sₙ + getCoin (wdrlsOf Γ)
+      → getCoin s₁ ≡ getCoin sₙ + getCoin (WithdrawalsOf Γ)
 ```
 
 *Proof*.

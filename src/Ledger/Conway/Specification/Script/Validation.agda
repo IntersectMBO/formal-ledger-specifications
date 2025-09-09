@@ -21,12 +21,12 @@ data ScriptPurpose : Type where
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
-  (Cert h)     → map (Cert    ,_) $ indexOfDCert    h txcerts
-  (Rwrd h)     → map (Rewrd   ,_) $ indexOfRwdAddr  h txwdrls
+  (Cert h)     → map (Cert    ,_) $ indexOfDCert    h txCerts
+  (Rwrd h)     → map (Rewrd   ,_) $ indexOfRwdAddr  h txWithdrawals
   (Mint h)     → map (Mint    ,_) $ indexOfPolicyId h (policies mint)
-  (Spend h)    → map (Spend   ,_) $ indexOfTxIn     h txins
-  (Vote h)     → map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txvote)
-  (Propose h)  → map (Propose ,_) $ indexOfProposal h txprop
+  (Spend h)    → map (Spend   ,_) $ indexOfTxIn     h txIns
+  (Vote h)     → map (Vote    ,_) $ indexOfVote     h (map GovVote.voter txGovVotes)
+  (Propose h)  → map (Propose ,_) $ indexOfProposal h txGovProposals
  where open TxBody txb
 
 indexedRdmrs : Tx → ScriptPurpose → Maybe (Redeemer × ExUnits)
@@ -47,15 +47,15 @@ getDatum tx utxo _ = nothing
 
 record TxInfo : Type where
   field realizedInputs : UTxO
-        txouts  : Ix ⇀ TxOut
-        fee     : Value
-        mint    : Value
-        txcerts : List DCert
-        txwdrls : Wdrl
-        txvldt  : Maybe Slot × Maybe Slot
-        vkKey   : ℙ KeyHash
-        txdats  : ℙ Datum
-        txid    : TxId
+        txOuts         : Ix ⇀ TxOut
+        fee            : Value
+        mint           : Value
+        txCerts        : List DCert
+        txWithdrawals  : Withdrawals
+        txVldt         : Maybe Slot × Maybe Slot
+        vkKey          : ℙ KeyHash
+        txdats         : ℙ Datum
+        txId           : TxId
 
 txInfo : Language → PParams
                   → UTxO
@@ -64,21 +64,21 @@ txInfo : Language → PParams
 txInfo l pp utxo tx = record
   { TxBody body
   ; TxWitnesses wits
-  ; realizedInputs = utxo ∣ txins
-  ; fee = inject txfee
+  ; realizedInputs = utxo ∣ txIns
+  ; fee = inject txFee
   ; mint = mint
-  ; vkKey = reqSigHash
+  ; vkKey = reqSignerHashes
   } where open Tx tx; open TxBody body
 
 credsNeeded : UTxO → TxBody → ℙ (ScriptPurpose × Credential)
 credsNeeded utxo txb
-  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txins ∪ collateral)) ˢ)
-  ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom ∣ txwdrls ∣)
-  ∪  mapPartial (λ c  → (Cert   c ,_) <$> cwitness c) (fromList txcerts)
+  =  mapˢ (λ (i , o)  → (Spend  i , payCred (proj₁ o))) ((utxo ∣ (txIns ∪ collateralInputs)) ˢ)
+  ∪  mapˢ (λ a        → (Rwrd   a , stake a)) (dom ∣ txWithdrawals ∣)
+  ∪  mapPartial (λ c  → (Cert   c ,_) <$> cwitness c) (fromList txCerts)
   ∪  mapˢ (λ x        → (Mint   x , ScriptObj x)) (policies mint)
-  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList (map voter txvote))
+  ∪  mapˢ (λ v        → (Vote   v , proj₂ v)) (fromList (map voter txGovVotes))
   ∪  mapPartial (λ p → if p .policy then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
-                (fromList txprop)
+                (fromList txGovProposals)
   where
     open TxBody txb
     open GovVote

@@ -5,6 +5,8 @@
 ### WIP
 
 - Add the RUPD and TICK transition relations
+- Change two constructor names of `GovActionType` data type
+- Change 14 field names of `TxBody` record type
 - Implement the POOLREAP state transition relation from Shelley
 - Move `txsize` from `TxBody` to `Tx`.
 - Change the return type of `refScripts` to a set

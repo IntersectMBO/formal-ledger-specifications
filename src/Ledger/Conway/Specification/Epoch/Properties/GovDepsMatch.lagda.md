@@ -43,7 +43,6 @@ module EPOCH-Body (eps : EpochState) where
   open LState epsLState public
   open PState public
   open GovActionState public
-  open UTxOState public
 
   ens      = record (epsRState .ensRState) { withdrawals = ∅ }
   tmpGovSt = filter (λ x → ¿ proj₁ x ∉ map proj₁ (epsRState .removed) ¿) govSt
@@ -51,11 +50,10 @@ module EPOCH-Body (eps : EpochState) where
   removed' : ℙ (GovActionID × GovActionState)
   removed' = (epsRState .removed) ∪ orphans
   removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
-    map (returnAddr gaSt ,_) ((deposits utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+    map (returnAddr gaSt ,_) ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
 
 module EPOCH-PROPS {eps : EpochState} where
   open EPOCH-Body eps
-  open EpochState
 ```
 -->
 
@@ -66,12 +64,12 @@ module EPOCH-PROPS {eps : EpochState} where
 *Informally*.
 
 Let `eps`{.AgdaBound}, `eps'`{.AgdaBound} : `EpochState`{.AgdaRecord} be two epoch
-states and let `e`{.AgdaBound} : `Epoch`{.AgdaDatatype} be an epoch. Recall,
-`eps`{.AgdaBound} `.ls`{.AgdaField} denotes the ledger state of `eps`{.AgdaBound}.
+states and let `e`{.AgdaBound} : `Epoch`{.AgdaDatatype} be an epoch.
+Recall, `LStateOf` `eps`{.AgdaBound} gives the ledger state of `eps`{.AgdaBound}.
 If `eps`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `e`{.AgdaBound} `,EPOCH⦈`{.AgdaDatatype} `eps'`{.AgdaBound},
 then (under a certain special condition)
-`govDepsMatch`{.AgdaFunction} (`eps`{.AgdaBound} `.ls`{.AgdaField}) implies
-`govDepsMatch`{.AgdaFunction} (`eps'`{.AgdaBound} `.ls`{.AgdaField}).
+`govDepsMatch`{.AgdaFunction} (`LStateOf` `eps`{.AgdaBound}) implies
+`govDepsMatch`{.AgdaFunction} (`LStateOf` `eps'`{.AgdaBound}).
 
 The special condition under which the property holds is the same as the one in
 [Chain.Properties.GovDepsMatch](Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md#thm:ChainGovDepsMatch):
@@ -91,7 +89,7 @@ For the formal statement of the lemma,
   EPOCH-govDepsMatch :  {eps' : EpochState} {e : Epoch}
     → map (GovActionDeposit ∘ proj₁) removed' ⊆ dom (DepositsOf eps)
     → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-    → govDepsMatch (eps .ls) → govDepsMatch (eps' .ls)
+    → govDepsMatch (LStateOf eps) → govDepsMatch (LStateOf eps')
 ```
 
 *Proof*.
@@ -182,23 +180,23 @@ For the formal statement of the lemma,
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
 
-    u0 = EPOCH-updates0 (eps .fut) (eps .ls)
+    u0 = EPOCH-updates0 (RatifyStateOf eps) (LStateOf eps)
 
-    ls₁ = record (eps' .ls) { utxoSt = EPOCH-Updates0.utxoSt' u0 }
+    ls₁ = record (LStateOf eps') { utxoSt = EPOCH-Updates0.utxoSt' u0 }
 
     mutual
       open LState
       open CertState
 
       retiredDeposits : ℙ DepositPurpose
-      retiredDeposits = mapˢ PoolDeposit (eps .ls .certState .pState .retiring ⁻¹ e)
+      retiredDeposits = mapˢ PoolDeposit ((PStateOf eps) .retiring ⁻¹ e)
 
-      ratifiesSnapMatch : govDepsMatch (eps .ls) → govDepsMatch ls₁
+      ratifiesSnapMatch : govDepsMatch (LStateOf eps) → govDepsMatch ls₁
       ratifiesSnapMatch =
          ≡ᵉ.trans (filter-cong $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
          ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
 
-      poolReapMatch : govDepsMatch ls₁ → govDepsMatch (eps' .ls)
+      poolReapMatch : govDepsMatch ls₁ → govDepsMatch (LStateOf eps')
       poolReapMatch = ≡ᵉ.trans dropRetiredDeposits
 
       dropRetiredDeposits :
