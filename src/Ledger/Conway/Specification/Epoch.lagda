@@ -338,14 +338,6 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \end{figure*}
 \end{NoConway}
 
-\begin{NoConway}
-The \AgdaFunction{calculatePoolDelegatedState} produces a new pool distribution
-from the delegation map and stake allocation of the previous epoch.
-
-\AgdaFunction{calculatePoolDelegatedStake} performs the computation of
-\AgdaFunction{calculatePoolDistr} in the Shelley spec, without normalizing the
-stakes to be between 0 and 1.
-
 \begin{figure*}[ht]
 \begin{code}[hide]
 -- TODO: Move to agda-sets
@@ -377,9 +369,6 @@ opaque
       sd : KeyHash ⇀ Coin
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)          
 \end{code}
-
-\begin{figure*}[ht]
-\begin{AgdaSuppressSpace}
 \begin{code}[hide]
 open RwdAddr using (stake)
 opaque
@@ -429,19 +418,51 @@ opaque
 \caption{Functions for computing stake distributions}
 \end{figure*}
 
-The \AgdaFunction{aggregateBy} function takes a relation
-\AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B}) and a map
-\AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
-and returns a function that maps each \AgdaBound{a} in the domain of
-\AgdaBound{m} to the sum of all \AgdaBound{b} such that
-(\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+The function \AgdaFunction{calculatePoolDelegatedState} computes a
+stake pool distribution, that is, a map from stake pool credentials
+(keyhash) to coin, from the stake delegation map and the stake
+allocation of the previous epoch.
 
-In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
-\AgdaFunction{aggregateBy} are
-\AgdaFunction{∣} \AgdaBound{delegations} \AgdaFunction{∣} :
-ℙ \AgdaDatatype{Credential} \AgdaFunction{×} \AgdaDatatype{VDeleg} and
-\AgdaFunction{stakeOf} \AgdaBound{ss} \AgdaFunction{∪⁺}
-\AgdaFunction{gaDepositStake} \AgdaBound{govSt} \AgdaBound{ds}, respectively.
+Note that \AgdaFunction{calculatePoolDelegatedStake} performs the
+computation of \AgdaFunction{calculatePoolDistr} in the Shelley spec,
+without normalizing the stakes to be between 0 and 1.
+
+The function \AgdaFunction{calculateVDelegDelegatedStake} computes the
+stake distribution for \AgdaDatatype{VDeleg}. To compute the stake
+distribution, we take into account:
+%
+\begin{enumerate}
+  \item the stake associated with each staking credential;
+  \item the stake associated with deposits on governance actions; and,
+  \item the stake associated with rewards.
+\end{enumerate}
+%
+To compute the stake distribution, this function uses the following
+auxiliary definitions:
+%
+\begin{itemize}
+  \item \AgdaFunction{activeDReps}: The set of active \DRep{}s. This
+    consists of all \DRep{}s belonging to the \AgdaDatatype{GState}
+    whose term has not expired.
+
+  \item \AgdaFunction{activeVoteDelegs}: The map containing the vote
+    delegations from credentials to active
+    \AgdaDatatype{VDeleg}s. Note that the
+    \AgdaInductiveConstructor{vDelegNoConfidence} and
+    \AgdaInductiveConstructor{vDelegAbstain} \AgdaDatatype{VDeleg}s
+    are considered always active.
+
+  \item \AgdaFunction{stakePerCredential}: The stake for each
+    credential that delegates to an active \AgdaDatatype{VDeleg}.
+
+  \item \AgdaFunction{stakeFromGADeposits}: This map contains the
+    stake associated to governance action deposits. For each
+    governance action, the map contains its deposit associated to its
+    \AgdaField{returnAddr} (as a staking credential).
+
+  \item \AgdaFunction{stakeFromRewards}: The map that contains the
+  rewards.
+\end{itemize}
 
 \begin{code}[hide]
 private variable
@@ -461,7 +482,6 @@ private variable
 \end{code}
 
 
-\begin{NoConway}
 The \AgdaDatatype{EPOCH} transition has a few updates that are encapsulated in
 the following functions.
 We need these functions to bring them in scope for some proofs about
