@@ -227,43 +227,49 @@ opaque
 \begin{code}
             }
     where
-      prevPp       : PParams
-      prevPp       = PParamsOf es
-      reserves     : Coin
-      reserves     = ReservesOf es
-      pstakego     : Snapshot
-      pstakego     = es .EpochState.ss .Snapshots.go
-      feeSS        : Coin
-      feeSS        = es .EpochState.ss .Snapshots.feeSS
-      stake        : Credential ⇀ Coin
-      stake        = pstakego .Snapshot.stake
-      delegs       : Credential ⇀ KeyHash
-      delegs       = pstakego .Snapshot.delegations
-      poolParams   : KeyHash ⇀ StakePoolParams
-      poolParams   = pstakego .Snapshot.poolParameters
-      blocksMade   : ℕ
-      blocksMade   = ∑[ m ← b ] m
-      ρ            : ℚ
-      ρ            = fromUnitInterval (prevPp .PParams.monetaryExpansion)
-      η            : ℚ
-      η            = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
-      Δr₁          : ℤ
-      Δr₁          = floor (1 ⊓ η * ρ * fromℕ reserves)
-      rewardPot    : ℤ
-      rewardPot    = pos feeSS + Δr₁
-      τ            : ℚ
-      τ            = fromUnitInterval (prevPp .PParams.treasuryCut)
-      Δt₁          : ℤ
-      Δt₁          = floor (fromℤ rewardPot * τ)
-      R            : ℤ
-      R            = rewardPot - Δt₁
-      circulation  : Coin
-      circulation  = total - reserves
-      rs           : Credential ⇀ Coin
-      rs           = reward prevPp b (posPart R) poolParams stake delegs circulation
-      Δr₂          : ℤ
-      Δr₂          = R - pos (∑[ c ← rs ] c)
+      prevPp : PParams
+      prevPp = PParamsOf es
 
+      reserves : Reserves
+      reserves = ReservesOf es
+
+      pstakego : Snapshot
+      pstakego = es .EpochState.ss .Snapshots.go
+
+      feeSS : Fees
+      feeSS = es .EpochState.ss .Snapshots.feeSS
+
+      stake : Stake
+      stake = pstakego .Snapshot.stake
+
+      delegs : StakeDelegs
+      delegs = pstakego .Snapshot.delegations
+
+      poolParams : Pools
+      poolParams = pstakego .Snapshot.poolParameters
+
+      blocksMade : ℕ
+      blocksMade = ∑[ m ← b ] m
+
+      ρ η τ : ℚ
+      ρ = fromUnitInterval (prevPp .PParams.monetaryExpansion)
+      η = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
+      τ = fromUnitInterval (prevPp .PParams.treasuryCut)
+
+      Δr₁ rewardPot Δt₁ R : ℤ
+      Δr₁ = floor (1 ⊓ η * ρ * fromℕ reserves)
+      rewardPot = pos feeSS + Δr₁
+      Δt₁ = floor (fromℤ rewardPot * τ)
+      R = rewardPot - Δt₁
+
+      circulation : Coin
+      circulation = total - reserves
+
+      rs : Rewards
+      rs = reward prevPp b (posPart R) poolParams stake delegs circulation
+
+      Δr₂ : ℤ
+      Δr₂ = R - pos (∑[ c ← rs ] c)
 \end{code}
 \begin{code}[hide]
       -- Proofs
