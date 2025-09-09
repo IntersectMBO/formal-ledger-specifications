@@ -23,8 +23,8 @@ apply in an epoch transition.
 The environment consists of the produced blocks and the epoch state. The state
 is an optional reward update.
 
-There are three transition cases, one which computes a new reward update, one
-which leaves the rewards update unchanged as it has not yet been applied and
+There are three transition cases, one that computes a new reward update, one
+that leaves the rewards update unchanged as it has not yet been applied and
 finally one that leaves the reward update unchanged as the transition was
 started too early.
 
