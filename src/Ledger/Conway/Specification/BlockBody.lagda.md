@@ -98,7 +98,7 @@ data _⊢_⇀⦇_,BBODY⦈_
       bhb = block .bheader .bhbody
       hk = hash (bhb .bvkcold)
       pp = PParamsOf es
-      Γ  = ⟦ bhb .slot , ∣ es .constitution ∣ , pp , es , treasuryOf acnt ⟧
+      Γ  = ⟦ bhb .slot , ∣ es .constitution ∣ , pp , es , TreasuryOf acnt ⟧
 
      in
     ∙ block .bBodySize ≡ bhb .hBbsize

@@ -116,7 +116,7 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
   CERT-pov (CERT-pool x) = refl
   CERT-pov (CERT-vdel x) = refl
 
-  injOn : (wdls : RwdAddr ⇀ Coin)
+  injOn : (wdls : Withdrawals)
           → ∀[ a ∈ dom (wdls ˢ) ] NetworkIdOf a ≡ NetworkId
           → InjectiveOn (dom (wdls ˢ)) RwdAddr.stake
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =

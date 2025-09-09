@@ -79,10 +79,10 @@ lemUpdateDeposits refl
 getValidCertDeposits : ∀ {Γ s tx s'}
                      → (let open L.UTxOEnv Γ using (pparams)
                             open L.UTxOState s using (deposits)
-                            open TxBody (tx .Tx.body) using (txcerts))
+                            open TxBody (tx .Tx.body) using (txCerts))
                      → isValid tx ≡ true
                      → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-                     → L.ValidCertDeposits pparams deposits txcerts
+                     → L.ValidCertDeposits pparams deposits txCerts
 getValidCertDeposits refl
   (L.UTXOW⇒UTXO
     (L.UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
@@ -91,10 +91,10 @@ getValidCertDeposits refl
 makeCertDeps* : ∀ {Γ s tx s'}
               → (let open L.UTxOEnv Γ using (pparams)
                      open L.UTxOState s using (deposits)
-                     open TxBody (tx .Tx.body) using (txcerts))
+                     open TxBody (tx .Tx.body) using (txCerts))
               → isValid tx ≡ true
               → Γ L.⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-              → CertDeps* pparams txcerts
+              → CertDeps* pparams txCerts
 makeCertDeps* {s = s} valid r = ⟦ certDDeps deposits , certGDeps deposits , validDDeps validDeps , validGDeps validDeps ⟧*
   where
     open L.UTxOState s using (deposits)
@@ -146,15 +146,15 @@ instance
       open L.LEnv Γ
       open L.LState s
       open L.LState s' renaming (utxoSt to utxoSt'; certState to certState'; govSt to govSt')
-      open TxBody (body tx) using (txcerts)
+      open TxBody (body tx) using (txCerts)
       deposits = L.UTxOState.deposits utxoSt
       utxow' : _ C.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ setDeposits deposits utxoSt'
       utxow' = conv utxow
       utxoStC'    = setDeposits (L.updateDeposits pparams (body tx) deposits) utxoSt'
       cdeposits  = makeCertDeps* refl utxow
-      cdeposits' = updateCertDeps* txcerts cdeposits
+      cdeposits' = updateCertDeps* txCerts cdeposits
       certStateC' = getCertDeps* cdeposits' ⊢conv certState'
-      certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txcerts ,CERTS⦈ certStateC'
+      certs' : _ C.⊢ (getCertDeps* cdeposits ⊢conv certState) ⇀⦇ txCerts ,CERTS⦈ certStateC'
       certs' = cdeposits ⊢conv certs
       ledger' : Γ C.⊢ (getCertDeps* cdeposits ⊢conv s) ⇀⦇ tx ,LEDGER⦈ C.⟦ utxoStC' , govSt' , certStateC' ⟧ˡ
       ledger' = C.LEDGER-V⋯ refl utxow' certs' gov
@@ -163,7 +163,7 @@ instance
                      (lemUpdateDeposits refl utxow)
       ddeps = getCertDeps* cdeposits .proj₁
       gdeps = getCertDeps* cdeposits .proj₂
-      certsEq : certStateC' ≡ (updateDDeps pparams txcerts ddeps , updateGDeps pparams txcerts gdeps) ⊢conv certState'
+      certsEq : certStateC' ≡ (updateDDeps pparams txCerts ddeps , updateGDeps pparams txCerts gdeps) ⊢conv certState'
       certsEq = cong₂ (λ • ◆ → ⟦ ⟦ _ , _ , _ , • ⟧ , _ , ⟦ _ , _ , ◆ ⟧ ⟧)
                      (lem-ddeps cdeposits)
                      (lem-gdeps cdeposits)
@@ -214,15 +214,15 @@ getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (BS-ind (C.CERT-vdel
 
 getValidCertDepositsC : ∀ Γ s {s'} tx
                      → (let open C.LEnv Γ using (pparams; slot; enactState)
-                            open TxBody (tx .Tx.body) using (txcerts; txvote; txwdrls)
+                            open TxBody (tx .Tx.body) using (txCerts; txGovVotes; txWithdrawals)
                             open C.LState s
                             open C.UTxOState utxoSt using (deposits)
                             cc = C.allColdCreds govSt enactState
                        )
                      → WellformedLState s
                      → isValid tx ≡ true
-                     → ⟦ epoch slot , pparams , txvote , txwdrls , cc ⟧ C.⊢ certState ⇀⦇ txcerts ,CERTS⦈ s'
-                     → L.ValidCertDeposits pparams deposits txcerts
+                     → ⟦ epoch slot , pparams , txGovVotes , txWithdrawals , cc ⟧ C.⊢ certState ⇀⦇ txCerts ,CERTS⦈ s'
+                     → L.ValidCertDeposits pparams deposits txCerts
 getValidCertDepositsC Γ s tx wf refl (RTC (C.CERT-base _ , step)) =
   getValidCertDepositsCERTS (C.UTxOState.deposits (C.LState.utxoSt s)) wf step
 
@@ -253,7 +253,7 @@ instance
       open TxBody (body tx)
       open C.UTxOState utxoSt using (deposits)
 
-      valid-deps : L.ValidCertDeposits pparams deposits txcerts
+      valid-deps : L.ValidCertDeposits pparams deposits txCerts
       valid-deps = getValidCertDepositsC Γ s tx wf refl certs
 
       utxow' : _ L.⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ (setDeposits (utxowDeposits utxow) utxoSt')
@@ -282,9 +282,9 @@ lemCERTS'DepositsC (BS-ind (C.CERT-vdel (C.GOVCERT-regdrep   _)) rs) = lemCERTS'
 lemCERTS'DepositsC (BS-ind (C.CERT-vdel (C.GOVCERT-deregdrep _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (BS-ind (C.CERT-vdel (C.GOVCERT-ccreghot  _)) rs) = lemCERTS'DepositsC rs
 
-lemCERTSDepositsC : ∀ {Γ s txcerts s'} (open C.CertEnv Γ using (pp))
-                  → Γ C.⊢ s ⇀⦇ txcerts ,CERTS⦈ s'
-                  → certDepositsC s' ≡ ⟨ updateDDeps pp txcerts , updateGDeps pp txcerts ⟩ (certDepositsC s)
+lemCERTSDepositsC : ∀ {Γ s txCerts s'} (open C.CertEnv Γ using (pp))
+                  → Γ C.⊢ s ⇀⦇ txCerts ,CERTS⦈ s'
+                  → certDepositsC s' ≡ ⟨ updateDDeps pp txCerts , updateGDeps pp txCerts ⟩ (certDepositsC s)
 lemCERTSDepositsC (RTC (C.CERT-base _ , step)) = lemCERTS'DepositsC step
 
 lemWellformed : ∀ {Γ s tx s'} → WellformedLState s → Γ C.⊢ s ⇀⦇ tx ,LEDGER⦈ s' → WellformedLState s'
@@ -309,20 +309,20 @@ lemWellformed {Γ} {s = ls} {tx} {s' = ls'} wf (C.LEDGER-V⋯ refl utxo certs go
     lem : deposits' ≡ depositsL'
     lem rewrite lemDepositsC utxo = refl
 
-    lem₁ : (ddeps' , gdeps') ≡ (updateDDeps pparams txcerts ddeps , updateGDeps pparams txcerts gdeps)
+    lem₁ : (ddeps' , gdeps') ≡ (updateDDeps pparams txCerts ddeps , updateGDeps pparams txCerts gdeps)
     lem₁ = lemCERTSDepositsC certs
 
-    lem₂ :  (updateDDeps pparams txcerts (certDDeps deposits) , updateGDeps pparams txcerts (certGDeps deposits))
+    lem₂ :  (updateDDeps pparams txCerts (certDDeps deposits) , updateGDeps pparams txCerts (certGDeps deposits))
          ≡ᵈ (certDDeps deposits' , certGDeps deposits')
     lem₂ rewrite lem = lem-upd-ddeps pparams deposits tx , lem-upd-gdeps pparams deposits tx
 
-    lem₃ :  (updateDDeps pparams txcerts ddeps , updateGDeps pparams txcerts gdeps)
-         ≡ᵈ (updateDDeps pparams txcerts (certDDeps deposits) , updateGDeps pparams txcerts (certGDeps deposits))
-    lem₃ = ⟨ cong-updateDDeps txcerts , cong-updateGDeps txcerts ⟩ wf
+    lem₃ :  (updateDDeps pparams txCerts ddeps , updateGDeps pparams txCerts gdeps)
+         ≡ᵈ (updateDDeps pparams txCerts (certDDeps deposits) , updateGDeps pparams txCerts (certGDeps deposits))
+    lem₃ = ⟨ cong-updateDDeps txCerts , cong-updateGDeps txCerts ⟩ wf
 
     goal : (ddeps' , gdeps') ≡ᵈ (certDDeps deposits' , certGDeps deposits')
     goal with refl ← lem₁ = ≡ᵈ-trans {ddeps' , gdeps'}
-                                     {updateDDeps pparams txcerts (certDDeps deposits) , updateGDeps pparams txcerts (certGDeps deposits)}
+                                     {updateDDeps pparams txCerts (certDDeps deposits) , updateGDeps pparams txCerts (certGDeps deposits)}
                                      {certDDeps deposits' , certGDeps deposits'}
                               lem₃
                               lem₂

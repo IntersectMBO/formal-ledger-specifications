@@ -39,34 +39,34 @@ lookupActionId pparams role aid epoch =
 
 private
   isUpdateCommittee : (a : GovAction) → Dec (∃[ new ] ∃[ rem ] ∃[ q ] a ≡ ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ)
-  isUpdateCommittee ⟦ NoConfidence    , _               ⟧ᵍᵃ = no λ()
-  isUpdateCommittee ⟦ UpdateCommittee , (new , rem , q) ⟧ᵍᵃ = yes (new , rem , q , refl)
-  isUpdateCommittee ⟦ NewConstitution , _               ⟧ᵍᵃ = no λ()
-  isUpdateCommittee ⟦ TriggerHF       , _               ⟧ᵍᵃ = no λ()
-  isUpdateCommittee ⟦ ChangePParams   , _               ⟧ᵍᵃ = no λ()
-  isUpdateCommittee ⟦ TreasuryWdrl    , _               ⟧ᵍᵃ = no λ()
-  isUpdateCommittee ⟦ Info            , _               ⟧ᵍᵃ = no λ()
+  isUpdateCommittee ⟦ NoConfidence       , _                ⟧ᵍᵃ = no λ()
+  isUpdateCommittee ⟦ UpdateCommittee    , (new , rem , q)  ⟧ᵍᵃ = yes (new , rem , q , refl)
+  isUpdateCommittee ⟦ NewConstitution    , _                ⟧ᵍᵃ = no λ()
+  isUpdateCommittee ⟦ TriggerHardFork    , _                ⟧ᵍᵃ = no λ()
+  isUpdateCommittee ⟦ ChangePParams      , _                ⟧ᵍᵃ = no λ()
+  isUpdateCommittee ⟦ TreasuryWithdrawal , _                ⟧ᵍᵃ = no λ()
+  isUpdateCommittee ⟦ Info               , _                ⟧ᵍᵃ = no λ()
 
-  hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHF , v' ⟧ᵍᵃ × pvCanFollow v' v)
-  hasPrev record { action = ⟦ NoConfidence    , _  ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ UpdateCommittee , _  ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ NewConstitution , _  ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ TriggerHF       , v' ⟧ᵍᵃ} v = case pvCanFollow? {v'} {v} of λ where
+  hasPrev : ∀ x v → Dec (∃[ v' ] x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × pvCanFollow v' v)
+  hasPrev record { action = ⟦ NoConfidence        , _   ⟧ᵍᵃ} v = no λ ()
+  hasPrev record { action = ⟦ UpdateCommittee     , _   ⟧ᵍᵃ} v = no λ ()
+  hasPrev record { action = ⟦ NewConstitution     , _   ⟧ᵍᵃ} v = no λ ()
+  hasPrev record { action = ⟦ TriggerHardFork     , v'  ⟧ᵍᵃ} v = case pvCanFollow? {v'} {v} of λ where
     (yes p) → yes (-, refl , p)
     (no ¬p) → no  (λ where (_ , refl , h) → ¬p h)
-  hasPrev record { action = ⟦ ChangePParams , _ ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ TreasuryWdrl  , _ ⟧ᵍᵃ} v = no λ ()
-  hasPrev record { action = ⟦ Info          , _ ⟧ᵍᵃ} v = no λ ()
+  hasPrev record { action = ⟦ ChangePParams       , _   ⟧ᵍᵃ} v = no λ ()
+  hasPrev record { action = ⟦ TreasuryWithdrawal  , _   ⟧ᵍᵃ} v = no λ ()
+  hasPrev record { action = ⟦ Info                , _   ⟧ᵍᵃ} v = no λ ()
 
 opaque
   unfolding validHFAction isRegistered
 
   instance
     validHFAction? : ∀ {p s e} → validHFAction p s e ⁇
-    validHFAction? {record { action = ⟦ NoConfidence    , _  ⟧ᵍᵃ}} = Dec-⊤
-    validHFAction? {record { action = ⟦ UpdateCommittee , _  ⟧ᵍᵃ}} = Dec-⊤
-    validHFAction? {record { action = ⟦ NewConstitution , _  ⟧ᵍᵃ}} = Dec-⊤
-    validHFAction? {record { action = ⟦ TriggerHF       , v  ⟧ᵍᵃ ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
+    validHFAction? {record { action = ⟦ NoConfidence        , _ ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ UpdateCommittee     , _ ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ NewConstitution     , _ ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ TriggerHardFork     , v ⟧ᵍᵃ ; prevAction = prev }} {s} {record { pv = (v' , aid') }}
       with aid' ≟ prev ×-dec pvCanFollow? {v'} {v} | any? (λ (aid , x) → aid ≟ prev ×-dec hasPrev x v) s
     ... | yes p | _ = ⁇ yes (inj₁ p)
     ... | no _ | yes p with ((aid , x) , x∈xs , (refl , v , h)) ← P.find p = ⁇ yes (inj₂
@@ -75,9 +75,9 @@ opaque
       { (inj₁ x) → ¬p₁ x
       ; (inj₂ (s , v , (h₁ , h₂ , h₃))) → ¬p₂ $
         ∃∈-Any ((prev , s) , (from ∈-fromList h₁ , refl , (v , h₂ , h₃))) }
-    validHFAction? {record { action = ⟦ ChangePParams , _  ⟧ᵍᵃ}} = Dec-⊤
-    validHFAction? {record { action = ⟦ TreasuryWdrl  , _  ⟧ᵍᵃ}} = Dec-⊤
-    validHFAction? {record { action = ⟦ Info          , _  ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ ChangePParams       , _ ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ TreasuryWithdrawal  , _ ⟧ᵍᵃ}} = Dec-⊤
+    validHFAction? {record { action = ⟦ Info                , _ ⟧ᵍᵃ}} = Dec-⊤
 
   isRegistered? : ∀ Γ v → Dec (isRegistered Γ v)
   isRegistered? _ (CC   , _) = ¿ _ ∈ _ ¿
@@ -155,14 +155,14 @@ instance
 Computational-GOVS : Computational _⊢_⇀⦇_,GOVS⦈_ String
 Computational-GOVS = it
 
-allEnactable-singleton : ∀ {aid s es} → getHash (s .prevAction) ≡ getHashES es (s .action .gaType)
+allEnactable-singleton : ∀ {aid s es} → getHash (s .prevAction) ≡ getHashES es (GovActionTypeOf s)
   → allEnactable es [ (aid , s) ]
 allEnactable-singleton {aid} {s} {es} eq = helper All.∷ All.[]
   where
     module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence th)
 
     helper : enactable es (getAidPairsList [ (aid , s) ]) (aid , s)
-    helper with getHashES es (s .action .gaType) | getHash (s .prevAction)
+    helper with getHashES es (GovActionTypeOf s) | getHash (s .prevAction)
     ... | just x | just x' with refl <- just-injective eq =
       [ (aid , x) ] , proj₁ ≡ᵉ.refl , All.[] ∷ [] , inj₁ (refl , refl)
     ... | just x | nothing = case eq of λ ()

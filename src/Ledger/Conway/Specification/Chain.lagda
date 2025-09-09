@@ -46,10 +46,10 @@ instance
   HasLastEpoch-ChainState : HasLastEpoch ChainState
   HasLastEpoch-ChainState .LastEpochOf = LastEpochOf ∘ NewEpochStateOf
 
-  HasEpochState-ChainState : HasEpochState ChainState 
+  HasEpochState-ChainState : HasEpochState ChainState
   HasEpochState-ChainState .EpochStateOf = EpochStateOf ∘ NewEpochStateOf
 
-  HasEnactState-ChainState : HasEnactState ChainState 
+  HasEnactState-ChainState : HasEnactState ChainState
   HasEnactState-ChainState .EnactStateOf = EnactStateOf ∘ EpochStateOf
 
   HasLState-ChainState : HasLState ChainState

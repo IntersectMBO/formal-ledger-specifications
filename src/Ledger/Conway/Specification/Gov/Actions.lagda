@@ -29,13 +29,15 @@ module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) w
 data GovRole : Type where
   CC DRep SPO : GovRole
 
-Voter        = GovRole × Credential
-GovActionID  = TxId × ℕ
-
 data VDeleg : Type where
   credVoter        : GovRole → Credential →  VDeleg
   abstainRep       :                         VDeleg
   noConfidenceRep  :                         VDeleg
+
+GovActionID VoteDelegs Voter : Type
+GovActionID  = TxId × ℕ
+VoteDelegs   = Credential ⇀ VDeleg
+Voter        = GovRole × Credential
 
 record Anchor : Type where
   field
@@ -43,22 +45,34 @@ record Anchor : Type where
     hash  : DocHash
 
 data GovActionType : Type where
-  NoConfidence     : GovActionType
-  UpdateCommittee  : GovActionType
-  NewConstitution  : GovActionType
-  TriggerHF        : GovActionType
-  ChangePParams    : GovActionType
-  TreasuryWdrl     : GovActionType
-  Info             : GovActionType
+  NoConfidence        : GovActionType
+  UpdateCommittee     : GovActionType
+  NewConstitution     : GovActionType
+  TriggerHardFork     : GovActionType
+  ChangePParams       : GovActionType
+  TreasuryWithdrawal  : GovActionType
+  Info                : GovActionType
+
+\end{code}
+\begin{code}[hide]
+record HasVoteDelegs {a} (A : Type a) : Type a where
+  field VoteDelegsOf : A → VoteDelegs
+open HasVoteDelegs ⦃...⦄ public
+
+record HasGovActionType (A : Type) : Type where
+  field GovActionTypeOf : A → GovActionType
+open HasGovActionType ⦃...⦄ public
+\end{code}
+\begin{code}
 
 GovActionData : GovActionType → Type
-GovActionData NoConfidence     = ⊤
-GovActionData UpdateCommittee  = (Credential ⇀ Epoch) × ℙ Credential × ℚ
-GovActionData NewConstitution  = DocHash × Maybe ScriptHash
-GovActionData TriggerHF        = ProtVer
-GovActionData ChangePParams    = PParamsUpdate
-GovActionData TreasuryWdrl     = RwdAddr ⇀ Coin
-GovActionData Info             = ⊤
+GovActionData NoConfidence        = ⊤
+GovActionData UpdateCommittee     = (Credential ⇀ Epoch) × ℙ Credential × ℚ
+GovActionData NewConstitution     = DocHash × Maybe ScriptHash
+GovActionData TriggerHardFork     = ProtVer
+GovActionData ChangePParams       = PParamsUpdate
+GovActionData TreasuryWithdrawal  = Withdrawals
+GovActionData Info                = ⊤
 
 record GovAction : Type where
 \end{code}
@@ -72,6 +86,14 @@ record GovAction : Type where
 \end{code}
 \begin{code}[hide]
 open GovAction public
+
+record HasGovAction (A : Type) : Type where
+  field GovActionOf : A → GovAction
+open HasGovAction ⦃...⦄ public
+
+instance
+  HasGovActionType-GovAction : HasGovActionType GovAction
+  HasGovActionType-GovAction .GovActionTypeOf = GovAction.gaType
 \end{code}
 \end{AgdaMultiCode}
 \caption{Gov actions}
@@ -106,9 +128,9 @@ The governance actions carry the following information:
   \item \UpdateCommittee{}: a map of credentials and terms to add and a set of
     credentials to remove from the committee;
   \item \NewConstitution{}: a hash of the new constitution document and an optional proposal policy;
-  \item \TriggerHF{}: the protocol version of the epoch to hard fork into;
+  \item \TriggerHardFork{}: the protocol version of the epoch to hard fork into;
   \item \ChangePParams{}: the updates to the parameters; and
-  \item \TreasuryWdrl{}: a map of withdrawals.
+  \item \TreasuryWithdrawal{}: a map of withdrawals.
 \end{itemize}
 
 \subsubsection{Table: Types of governance actions}
@@ -121,9 +143,9 @@ The governance actions carry the following information:
 \NoConfidence{}            & a motion to create a \emph{state of no-confidence} in the current constitutional committee \\
 \UpdateCommittee{}         & changes to the members of the constitutional committee and/or to its signature threshold and/or terms \\
 \NewConstitution{}         & a modification to the off-chain Constitution and the proposal policy script \\
-\TriggerHF{}\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\
+\TriggerHardFork{}\footnotemark  & triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade  \\
 \ChangePParams{}           & a change to \emph{one or more} updatable protocol parameters, excluding changes to major protocol versions (``hard forks'')\\
-\TreasuryWdrl{}            & movements from the treasury\\
+\TreasuryWithdrawal{}            & movements from the treasury\\
 \Info{}                    & an action that has no effect on-chain, other than an on-chain record
 \end{tabular}
 
@@ -147,7 +169,7 @@ obtained by enacting the proposal is in fact the state that was intended when
 the proposal was submitted.  This
 is achieved by requiring actions to unambiguously link to the state
 they are modifying via a pointer to the previous modification. A
-proposal can only be enacted if it contains the \GovActionID{} of the
+proposal can only be enacted if it contains the \GovActionId{} of the
 previously enacted proposal modifying the same piece of
 state.  \NoConfidence{} and \UpdateCommittee{} modify the same state, while
 every other type of governance action has its own state that isn't
@@ -155,7 +177,7 @@ shared with any other action. This means that the enactibility of a
 proposal can change when other proposals are enacted.
 
 However, not all types of governance actions require this strict
-protection.  For \TreasuryWdrl{} and \Info{}, enacting them does not change
+protection.  For \TreasuryWithdrawal{} and \Info{}, enacting them does not change
 the state in non-commutative ways, so they can always be enacted.
 
 Types related to this hash protection scheme are defined
@@ -164,13 +186,13 @@ in \cref{fig:needshash-and-hashprotected-types}.
 \begin{figure*}[h]
 \begin{code}
 NeedsHash : GovActionType → Type
-NeedsHash NoConfidence     = GovActionID
-NeedsHash UpdateCommittee  = GovActionID
-NeedsHash NewConstitution  = GovActionID
-NeedsHash TriggerHF        = GovActionID
-NeedsHash ChangePParams    = GovActionID
-NeedsHash TreasuryWdrl     = ⊤
-NeedsHash Info             = ⊤
+NeedsHash NoConfidence        = GovActionID
+NeedsHash UpdateCommittee     = GovActionID
+NeedsHash NewConstitution     = GovActionID
+NeedsHash TriggerHardFork     = GovActionID
+NeedsHash ChangePParams       = GovActionID
+NeedsHash TreasuryWithdrawal  = ⊤
+NeedsHash Info                = ⊤
 
 HashProtected : Type → Type
 HashProtected A = A × GovActionID
@@ -219,6 +241,19 @@ record GovActionState : Type where
     prevAction  : NeedsHash (gaType action)
 \end{code}
 \begin{code}[hide]
+instance
+  HasGovAction-GovProposal : HasGovAction GovProposal
+  HasGovAction-GovProposal .GovActionOf = GovProposal.action
+
+  HasGovAction-GovActionState : HasGovAction GovActionState
+  HasGovAction-GovActionState .GovActionOf = GovActionState.action
+
+  HasGovActionType-GovProposal : HasGovActionType GovProposal
+  HasGovActionType-GovProposal .GovActionTypeOf = GovActionTypeOf ∘ GovActionOf
+
+  HasGovActionType-GovActionState : HasGovActionType GovActionState
+  HasGovActionType-GovActionState .GovActionTypeOf = GovActionTypeOf ∘ GovActionOf
+
 instance
   unquoteDecl DecEq-GovActionType = derive-DecEq ((quote GovActionType , DecEq-GovActionType) ∷ [])
   unquoteDecl DecEq-GovRole       = derive-DecEq ((quote GovRole , DecEq-GovRole) ∷ [])

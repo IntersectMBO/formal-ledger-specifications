@@ -1,9 +1,9 @@
-\AgdaField{txvote}
-\AgdaField{txprop}
-\AgdaField{txdonation}
-\AgdaFunction{txdonation}
-\AgdaField{curTreasury}
-\AgdaFunction{curTreasury}
+\AgdaField{txGovVotes}
+\AgdaField{txGovProposals}
+\AgdaField{txDonation}
+\AgdaFunction{txDonation}
+\AgdaField{currentTreasury}
+\AgdaFunction{currentTreasury}
 \AgdaFunction{treasury}
 \AgdaBound{inputHashes}
 \AgdaBound{txdatsHashes}

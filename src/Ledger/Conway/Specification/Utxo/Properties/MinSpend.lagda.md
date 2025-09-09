@@ -127,67 +127,76 @@ module _ -- ASSUMPTION --
 *Informally*.
 
 Let `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a valid transaction and let
-`txcerts`{.AgdaFunction} be its list of `DCert`{.AgdaDatatype}s.  Denote
-by `noRefundCert`{.AgdaFunction} `txcerts`{.AgdaFunction} the assertion that no
-element in `txcerts`{.AgdaFunction} is one of the two refund types (i.e., an
+`txCerts`{.AgdaFunction} be its list of `DCert`{.AgdaDatatype}s.  Denote
+by `noRefundCert`{.AgdaFunction} `txCerts`{.AgdaFunction} the assertion that no
+element in `txCerts`{.AgdaFunction} is one of the two refund types (i.e., an
 element of `l`{.AgdaBound} is neither a `dereg`{.AgdaInductiveConstructor} nor a
 `deregdrep`{.AgdaInductiveConstructor}).  Let `s`{.AgdaBound},
 `s'`{.AgdaBound} : `UTxOState`{.AgdaRecord} be two UTxO states.
 If `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,UTXO⦈`{.AgdaDatatype} `s'`{.AgdaBound} and
-if `noRefundCert`{.AgdaFunction} `txcerts`{.AgdaFunction}, then the coin consumed by
+if `noRefundCert`{.AgdaFunction} `txCerts`{.AgdaFunction}, then the coin consumed by
 `tx`{.AgdaBound} is at least the sum of the governance action deposits of the
 proposals in `tx`{.AgdaBound}.
 
 *Formally*.
 
+<!--
 ```agda
-  utxoMinSpend : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
-    → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-    → noRefundCert (txcertsOf tx)
-    → coin (consumed _ s (TxBodyOf tx)) ≥ length (txpropOf tx) * govActionDepositOf Γ
+  module _ {Γ : UTxOEnv} where
+    open module Γ = UTxOEnv Γ
+    govActionDeps : Coin
+    govActionDeps = PParams.govActionDeposit Γ.pparams
+```
+-->
+
+```agda
+    utxoMinSpend : {tx : Tx} {s s' : UTxOState}
+      → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
+      → noRefundCert (DCertsOf tx)
+      → coin (consumed _ s (TxBodyOf tx)) ≥ length (GovProposalsOf tx) * govActionDeps
 ```
 
 *Proof*.
 
 ```agda
-  utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
-    begin
-    length txprop * govActionDepositOf Γ
-      ≡˘⟨ updatePropDeps≡ txprop ⟩
-    getCoin (updateProposalDeposits txprop txid (govActionDepositOf Γ) deposits) ∸ getCoin deposits
-      ≤⟨ ∸-monoˡ-≤ (getCoin deposits) (≤updateCertDeps txcerts nrf) ⟩
-    getCoin (updateDeposits (PParamsOf Γ) txb deposits) - getCoin deposits
-      ≡⟨ ∸≡posPart⊖ {getCoin (updateDeposits (PParamsOf Γ) txb deposits)} {getCoin deposits} ⟩
-    newDeps
-      ≤⟨ m≤n+m newDeps (coin balOut + txfee + txdonation) ⟩
-    coin balOut + txfee + txdonation + newDeps
-      ≡⟨ +-assoc (coin balOut + txfee) txdonation newDeps ⟩
-    coin balOut + txfee + (txdonation + newDeps)
-      ≡⟨ cong (coin balOut + txfee +_) (+-comm txdonation newDeps) ⟩
-    coin balOut + txfee + (newDeps + txdonation)
-      ≡˘⟨ +-assoc (coin balOut + txfee) newDeps txdonation ⟩
-    coin balOut + txfee + newDeps + txdonation
-      ≡˘⟨ cong (λ x → x + newDeps + txdonation) coin-inject-lemma ⟩
-    coin (balOut + inject txfee) + newDeps + txdonation
-      ≡˘⟨ cong (_+ txdonation) coin-inject-lemma ⟩
-    coin (balOut + inject txfee + inject newDeps) + txdonation
-      ≡˘⟨ coin-inject-lemma ⟩
-    coin (balOut + inject txfee + inject newDeps + inject txdonation)
-      ≡˘⟨ cong coin c≡p ⟩
-    coin (balIn + mint + inject refunds + inject wdrls) ∎
-    where
-    open ≤-Reasoning
-    open Tx tx renaming (body to txb); open TxBody txb
-    open UTxOState utxoSt
+    utxoMinSpend step@(UTXO-inductive⋯ tx Γ utxoSt _ _ _ _ _ _ c≡p cmint≡0 _ _ _ _ _ _ _ _ _ _) nrf =
+      begin
+      length txGovProposals * govActionDeps
+        ≡˘⟨ updatePropDeps≡ txGovProposals ⟩
+      getCoin (updateProposalDeposits txGovProposals txId (govActionDeps) deposits) ∸ getCoin deposits
+        ≤⟨ ∸-monoˡ-≤ (getCoin deposits) (≤updateCertDeps txCerts nrf) ⟩
+      getCoin (updateDeposits (PParamsOf Γ) txb deposits) - getCoin deposits
+        ≡⟨ ∸≡posPart⊖ {getCoin (updateDeposits (PParamsOf Γ) txb deposits)} {getCoin deposits} ⟩
+      newDeps
+        ≤⟨ m≤n+m newDeps (coin balOut + txFee + txDonation) ⟩
+      coin balOut + txFee + txDonation + newDeps
+        ≡⟨ +-assoc (coin balOut + txFee) txDonation newDeps ⟩
+      coin balOut + txFee + (txDonation + newDeps)
+        ≡⟨ cong (coin balOut + txFee +_) (+-comm txDonation newDeps) ⟩
+      coin balOut + txFee + (newDeps + txDonation)
+        ≡˘⟨ +-assoc (coin balOut + txFee) newDeps txDonation ⟩
+      coin balOut + txFee + newDeps + txDonation
+        ≡˘⟨ cong (λ x → x + newDeps + txDonation) coin-inject-lemma ⟩
+      coin (balOut + inject txFee) + newDeps + txDonation
+        ≡˘⟨ cong (_+ txDonation) coin-inject-lemma ⟩
+      coin (balOut + inject txFee + inject newDeps) + txDonation
+        ≡˘⟨ coin-inject-lemma ⟩
+      coin (balOut + inject txFee + inject newDeps + inject txDonation)
+        ≡˘⟨ cong coin c≡p ⟩
+      coin (balIn + mint + inject refunds + inject wdrls) ∎
+      where
+      open ≤-Reasoning
+      open Tx tx renaming (body to txb); open TxBody txb
+      open UTxOState utxoSt
 
-    newDeps refunds wdrls : Coin
-    newDeps = newDeposits (PParamsOf Γ) utxoSt txb
-    refunds = depositRefunds (PParamsOf Γ) utxoSt txb
-    wdrls = getCoin (wdrlsOf tx)
+      newDeps refunds wdrls : Coin
+      newDeps = newDeposits (PParamsOf Γ) utxoSt txb
+      refunds = depositRefunds (PParamsOf Γ) utxoSt txb
+      wdrls = getCoin (WithdrawalsOf tx)
 
-    balIn balOut : Value
-    balIn = balance (utxo ∣ txins)
-    balOut = balance (outs txb)
+      balIn balOut : Value
+      balIn = balance (utxo ∣ txIns)
+      balOut = balance (outs txb)
 ```
 
 
@@ -259,9 +268,9 @@ of the proposals in `tx`{.AgdaBound}.
 -->
 
 ```agda
-    → noRefundCert txcerts
+    → noRefundCert txCerts
     → validTxIn₂ cs slot tx
-    → coin (consumed pp utxoSt body) ≥ length txprop * pp .govActionDeposit
+    → coin (consumed pp utxoSt body) ≥ length txGovProposals * pp .govActionDeposit
 ```
 
 

@@ -398,10 +398,7 @@ to one stake pool. Relevant quantities are:
   `Credential`{.AgdaDatatype}s.
 
 ```agda
-Delegations : Type
-Delegations = Credential ⇀ KeyHash
-
-poolStake  : KeyHash → Delegations → Stake → Stake
+poolStake  : KeyHash → StakeDelegs → Stake → Stake
 poolStake hk delegs stake = stake ∣ dom (delegs ∣^ ❴ hk ❵)
 ```
 
@@ -473,7 +470,7 @@ uncurryᵐ {A} {B} {C} abc = mapFromPartialFun lookup' domain'
 
 ```agda
 reward :  PParams → BlocksMade → Coin → (KeyHash ⇀ StakePoolParams)
-          → Stake → Delegations → Coin → Stake
+          → Stake → StakeDelegs → Coin → Stake
 reward pp blocks rewardPot poolParams stake delegs total = rewards
   where
     active      = ∑[ c ← stake ] c
@@ -565,10 +562,10 @@ distribution snapshot.  Such a snapshot contains the essential data needed to co
 rewards.
 
 - `stake`{.AgdaField} A stake distribution, that is a mapping from
-  credentials to coin.
+  stake credentials to the active stake that they own in coins.
 
 - `delegations`{.AgdaField}: A delegation map, that is a mapping from
-  credentials to the stake pools that they delegate to.
+  stake credentials to the stake pools that they delegate to.
 
 - `poolParameters`{.AgdaField}: A mapping that stores the pool
   parameters of each stake pool.
@@ -577,13 +574,12 @@ rewards.
 record Snapshot : Set where
   field
     stake           : Stake
-    delegations     : Delegations
+    delegations     : StakeDelegs
     poolParameters  : KeyHash ⇀ StakePoolParams
 ```
 
 <!--
 ```agda
-
 instance
   unquoteDecl HasCast-Snapshot =
     derive-HasCast [ (quote Snapshot , HasCast-Snapshot) ]
@@ -630,9 +626,9 @@ opaque
 ```agda
       poolParams    : KeyHash ⇀ StakePoolParams
       utxoBalance   : Credential → Coin
-      activeDelegs  : Credential ⇀ KeyHash
-      activeRewards : Credential ⇀ Coin
-      activeStake   : Credential ⇀ Coin
+      activeDelegs  : StakeDelegs
+      activeRewards : Rewards
+      activeStake   : Stake
 ```
 -->
 

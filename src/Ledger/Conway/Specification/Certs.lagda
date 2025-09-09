@@ -11,45 +11,11 @@ open import Ledger.Prelude.Numeric.UnitInterval
 
 module Ledger.Conway.Specification.Certs (gs : _) (open GovStructure gs) where
 
-
 open import Ledger.Conway.Specification.Gov.Actions gs
 open RwdAddr
 open PParams
 \end{code}
 
-\begin{figure*}[ht]
-\emph{Derived types}
-\begin{code}
-data DepositPurpose : Type where
-  CredentialDeposit  : Credential   → DepositPurpose
-  PoolDeposit        : KeyHash      → DepositPurpose
-  DRepDeposit        : Credential   → DepositPurpose
-  GovActionDeposit   : GovActionID  → DepositPurpose
-
-Deposits  = DepositPurpose ⇀ Coin
-Rewards   = Credential ⇀ Coin
-DReps     = Credential ⇀ Epoch
-\end{code}
-\begin{code}[hide]
-record HasDeposits {a} (A : Type a) : Type a where
-  field DepositsOf : A → Deposits
-open HasDeposits ⦃...⦄ public
-
-record HasRewards {a} (A : Type a) : Type a where
-  field RewardsOf : A → Rewards
-open HasRewards  ⦃...⦄ public
-
-record HasDReps {a} (A : Type a) : Type a where
-  field DRepsOf : A → DReps
-open HasDReps    ⦃...⦄ public
-
-instance
-  unquoteDecl DecEq-DepositPurpose = derive-DecEq
-    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
-\end{code}
-\caption{Deposit types}
-\label{fig:certs:deposit-types}
-\end{figure*}
 
 \begin{figure*}
 \begin{AgdaMultiCode}
@@ -65,8 +31,81 @@ record StakePoolParams : Type where
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
-\caption{Stake pool parameter definitions}
+\caption{Stake Pool Parameter Definitions}
 \end{figure*}
+
+
+\begin{figure*}[ht]
+\begin{AgdaMultiCode}
+\begin{code}
+data DepositPurpose : Type where
+  CredentialDeposit  : Credential   → DepositPurpose
+  PoolDeposit        : KeyHash      → DepositPurpose
+  DRepDeposit        : Credential   → DepositPurpose
+  GovActionDeposit   : GovActionID  → DepositPurpose
+
+Deposits : Type
+Deposits = DepositPurpose ⇀ Coin
+\end{code}
+
+\begin{code}[hide]
+record HasDeposits {a} (A : Type a) : Type a where
+  field DepositsOf : A → Deposits
+open HasDeposits ⦃...⦄ public
+
+instance
+  unquoteDecl DecEq-DepositPurpose = derive-DecEq
+    ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
+\end{code}
+\end{AgdaMultiCode}
+\caption{Deposit Types}
+\label{fig:certs:deposit-types}
+\end{figure*}
+
+
+\begin{figure*}[h!]
+\begin{AgdaMultiCode}
+\begin{code}
+CCHotKeys DReps PoolEnv Pools Retiring Rewards StakeDelegs : Type
+CCHotKeys    = Credential ⇀ Maybe Credential
+DReps        = Credential ⇀ Epoch
+PoolEnv      = PParams
+Pools        = KeyHash ⇀ StakePoolParams
+Retiring     = KeyHash ⇀ Epoch
+Rewards      = Credential ⇀ Coin
+StakeDelegs  = Credential ⇀ KeyHash
+\end{code}
+\begin{code}[hide]
+record HasCCHotKeys {a} (A : Type a) : Type a where
+  field CCHotKeysOf : A → CCHotKeys
+
+record HasDReps {a} (A : Type a) : Type a where
+  field DRepsOf : A → DReps
+
+record HasPools {a} (A : Type a) : Type a where
+  field PoolsOf : A → Pools
+
+record HasRetiring {a} (A : Type a) : Type a where
+  field RetiringOf : A → Retiring
+
+record HasRewards {a} (A : Type a) : Type a where
+  field RewardsOf : A → Rewards
+
+record HasStakeDelegs {a} (A : Type a) : Type a where
+  field StakeDelegsOf : A -> StakeDelegs
+
+open HasCCHotKeys ⦃...⦄ public
+open HasDReps ⦃...⦄ public
+open HasPools ⦃...⦄ public
+open HasRetiring ⦃...⦄ public
+open HasRewards ⦃...⦄ public
+open HasStakeDelegs ⦃...⦄ public
+\end{code}
+\end{AgdaMultiCode}
+\caption{Miscellaneous Type Aliases}
+\label{fig:certs:misc-type-aliases}
+\end{figure*}
+
 
 \begin{figure*}[h!]
 \begin{AgdaMultiCode}
@@ -109,8 +148,9 @@ cwitness (reg c (suc _))     = just c
 \end{code}
 \end{NoConway}
 \end{AgdaMultiCode}
-\caption{Delegation definitions}
+\caption{Delegation Definitions}
 \end{figure*}
+
 
 \begin{figure*}[htb]
 \begin{AgdaMultiCode}
@@ -120,19 +160,8 @@ record CertEnv : Type where
     epoch     : Epoch
     pp        : PParams
     votes     : List GovVote
-    wdrls     : RwdAddr ⇀ Coin
+    wdrls     : Withdrawals
     coldCreds : ℙ Credential
-\end{code}
-\begin{code}[hide]
-record HasWdrls {a} (A : Type a) : Type a where
-  field wdrlsOf : A → RwdAddr ⇀ Coin
-open HasWdrls ⦃...⦄ public
-
-instance
-  HasWdrls-CertEnv : HasWdrls CertEnv
-  HasWdrls-CertEnv .wdrlsOf = CertEnv.wdrls
-\end{code}
-\begin{code}
 
 record DState : Type where
 \end{code}
@@ -141,41 +170,14 @@ record DState : Type where
 \end{code}
 \begin{code}
   field
-    voteDelegs   : Credential ⇀ VDeleg
-    stakeDelegs  : Credential ⇀ KeyHash
-    rewards      : Credential ⇀ Coin
-\end{code}
-\begin{code}[hide]
-record HasDState {a} (A : Type a) : Type a where
-  field DStateOf : A → DState
-open HasDState ⦃...⦄ public
-
-record HasVDelegs {a} (A : Type a) : Type a where
-  field voteDelegsOf : A → Credential ⇀ VDeleg
-open HasVDelegs ⦃...⦄ public
-
-instance
-  HasVDelegs-DState : HasVDelegs DState
-  HasVDelegs-DState .voteDelegsOf = DState.voteDelegs
-
-  HasRewards-DState : HasRewards DState
-  HasRewards-DState .RewardsOf = DState.rewards
-\end{code}
-\begin{NoConway}
-\begin{code}
+    voteDelegs   : VoteDelegs
+    stakeDelegs  : StakeDelegs
+    rewards      : Rewards
 
 record PState : Type where
   field
-    pools     : KeyHash ⇀ StakePoolParams
+    pools     : Pools
     retiring  : KeyHash ⇀ Epoch
-\end{code}
-\begin{code}[hide]
-record HasPState {a} (A : Type a) : Type a where
-  field PStateOf : A → PState
-open HasPState ⦃...⦄ public
-\end{code}
-\end{NoConway}
-\begin{code}
 
 record GState : Type where
 \end{code}
@@ -186,17 +188,6 @@ record GState : Type where
   field
     dreps      : DReps
     ccHotKeys  : Credential ⇀ Maybe Credential
-\end{code}
-\begin{code}[hide]
-record HasGState {a} (A : Type a) : Type a where
-  field GStateOf : A → GState
-open HasGState ⦃...⦄ public
-
-instance
-  HasDReps-GState : HasDReps GState
-  HasDReps-GState .DRepsOf = GState.dreps
-\end{code}
-\begin{code}
 
 record CertState : Type where
 \end{code}
@@ -208,13 +199,62 @@ record CertState : Type where
     dState : DState
     pState : PState
     gState : GState
+
+record DelegEnv : Type where
+  field
+    pparams       : PParams
+    pools         : Pools
+    delegatees    : ℙ Credential
 \end{code}
+\end{AgdaMultiCode}
+\caption{Types Used for CERTS Transition System}
+\end{figure*}
+
 \begin{code}[hide]
+record HasDState {a} (A : Type a) : Type a where
+  field DStateOf : A → DState
+open HasDState ⦃...⦄ public
+
+record HasPState {a} (A : Type a) : Type a where
+  field PStateOf : A → PState
+open HasPState ⦃...⦄ public
+
+record HasGState {a} (A : Type a) : Type a where
+  field GStateOf : A → GState
+open HasGState ⦃...⦄ public
+
 record HasCertState {a} (A : Type a) : Type a where
   field CertStateOf : A → CertState
 open HasCertState ⦃...⦄ public
 
 instance
+  HasPParams-CertEnv : HasPParams CertEnv
+  HasPParams-CertEnv .PParamsOf = CertEnv.pp
+
+  HasWithdrawals-CertEnv : HasWithdrawals CertEnv
+  HasWithdrawals-CertEnv .WithdrawalsOf = CertEnv.wdrls
+
+  HasVoteDelegs-DState : HasVoteDelegs DState
+  HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
+
+  HasStakeDelegs-DState : HasStakeDelegs DState
+  HasStakeDelegs-DState .StakeDelegsOf = DState.stakeDelegs
+
+  HasRewards-DState : HasRewards DState
+  HasRewards-DState .RewardsOf = DState.rewards
+
+  HasPools-PState : HasPools PState
+  HasPools-PState .PoolsOf = PState.pools
+
+  HasRetiring-PState : HasRetiring PState
+  HasRetiring-PState .RetiringOf = PState.retiring
+
+  HasDReps-GState : HasDReps GState
+  HasDReps-GState .DRepsOf = GState.dreps
+
+  HasCCHotKeys-GState : HasCCHotKeys GState
+  HasCCHotKeys-GState .CCHotKeysOf = GState.ccHotKeys
+
   HasDState-CertState : HasDState CertState
   HasDState-CertState .DStateOf = CertState.dState
 
@@ -225,37 +265,24 @@ instance
   HasGState-CertState .GStateOf = CertState.gState
 
   HasRewards-CertState : HasRewards CertState
-  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf 
+  HasRewards-CertState .RewardsOf = RewardsOf ∘ DStateOf
 
   HasDReps-CertState : HasDReps CertState
   HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf
-\end{code}
-\begin{code}
 
-record DelegEnv : Type where
-  field
-    pparams       : PParams
-    pools         : KeyHash ⇀ StakePoolParams
-    delegatees    : ℙ Credential
+  HasPools-CertState : HasPools CertState
+  HasPools-CertState .PoolsOf = PoolsOf ∘ PStateOf
 
-GovCertEnv  = CertEnv
-PoolEnv     = PParams
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types used for CERTS transition system}
-\end{figure*}
+  HasVoteDelegs-CertState : HasVoteDelegs CertState
+  HasVoteDelegs-CertState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf
 
-\begin{code}[hide]
 rewardsBalance : DState → Coin
-rewardsBalance ds = ∑[ x ← DState.rewards ds ] x
+rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 
 instance
   HasCoin-CertState : HasCoin CertState
-  HasCoin-CertState .getCoin = rewardsBalance ∘ CertState.dState
-\end{code}
+  HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
 
-\begin{code}[hide]
-instance
   unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv = derive-HasCast
     (   (quote CertEnv , HasCast-CertEnv)
     ∷   (quote DState , HasCast-DState)
@@ -267,12 +294,12 @@ instance
 private variable
   rwds rewards           : Rewards
   dReps                  : DReps
-  sDelegs stakeDelegs    : Credential ⇀ KeyHash
-  ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
-  vDelegs voteDelegs     : Credential ⇀ VDeleg
-  pools                  : KeyHash ⇀ StakePoolParams
-  retiring               : KeyHash ⇀ Epoch
-  wdrls                  : RwdAddr ⇀ Coin
+  sDelegs stakeDelegs    : StakeDelegs
+  ccKeys ccHotKeys       : CCHotKeys
+  vDelegs voteDelegs     : VoteDelegs
+  pools                  : Pools
+  retiring               : Retiring
+  wdrls                  : Withdrawals
 
   an          : Anchor
   Γ           : CertEnv
@@ -322,7 +349,7 @@ functionality has been retired. So all funds locked behind pointer
 addresses are still accessible, they just don't count towards the
 stake distribution anymore. Genesis delegations and MIR certificates
 have been superceded by the new governance mechanisms, in particular
-the \TreasuryWdrl{} governance action in case of the MIR certificates.
+the \TreasuryWithdrawal{} governance action in case of the MIR certificates.
 
 \subsubsection{Explicit Deposits}
 
@@ -373,44 +400,19 @@ constitutional committee.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
-\begin{code}[hide]
-data
-\end{code}
 \begin{code}
-  _⊢_⇀⦇_,DELEG⦈_     : DelegEnv    → DState     → DCert       → DState     → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,POOL⦈_      : PoolEnv     → PState     → DCert       → PState     → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,GOVCERT⦈_   : GovCertEnv  → GState     → DCert       → GState     → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CERT⦈_      : CertEnv     → CertState  → DCert       → CertState  → Type
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv     → CertState  → ⊤           → CertState  → Type
-\end{code}
-\begin{code}[hide]
-module _ where  -- achieves uniform (but perhaps misleading) alignment of type signatures in fig
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,CERTS⦈_     : CertEnv     → CertState  → List DCert  → CertState  → Type
-\end{code}
-\begin{code}[hide]
-  _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
+data _⊢_⇀⦇_,DELEG⦈_     : DelegEnv  → DState     → DCert  → DState     → Type
+
+data _⊢_⇀⦇_,POOL⦈_      : PoolEnv   → PState     → DCert  → PState     → Type
+
+data _⊢_⇀⦇_,GOVCERT⦈_   : CertEnv   → GState     → DCert  → GState     → Type
+
+data _⊢_⇀⦇_,CERT⦈_      : CertEnv   → CertState  → DCert  → CertState  → Type
+
+data _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv   → CertState  → ⊤      → CertState  → Type
+
+_⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}
@@ -419,10 +421,10 @@ module _ where  -- achieves uniform (but perhaps misleading) alignment of type s
 
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,DELEG⦈_ where
-\end{code}
 \begin{code}
+data _⊢_⇀⦇_,DELEG⦈_ -- : DelegEnv → DState → DCert → DState → Type
+  where
+
   DELEG-delegate :
     let Γ = ⟦ pp , pools , delegatees ⟧
     in
@@ -432,22 +434,19 @@ data _⊢_⇀⦇_,DELEG⦈_ where
         fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      Γ ⊢  ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mv mkh d ,DELEG⦈
-           ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      Γ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mv mkh d ,DELEG⦈ ⟦ insertIfJust c mv vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈
-        ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ dereg c md ,DELEG⦈ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧
 
   DELEG-reg :
     ∙ c ∉ dom rwds
     ∙ d ≡ pp .keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
-      ⟦ pp , pools , delegatees ⟧ ⊢
-        ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈
-        ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈ ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary DELEG transition system}
@@ -457,15 +456,14 @@ data _⊢_⇀⦇_,DELEG⦈_ where
 \begin{NoConway}
 \begin{figure*}[h]
 \begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,POOL⦈_ where
-\end{code}
 \begin{code}
+data _⊢_⇀⦇_,POOL⦈_ -- : PoolEnv → PState → DCert → PState → Type
+  where
+
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
+      pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
@@ -479,17 +477,16 @@ data _⊢_⇀⦇_,POOL⦈_ where
 
 \begin{figure*}[htb]
 \begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,GOVCERT⦈_ where
-\end{code}
 \begin{code}
+data _⊢_⇀⦇_,GOVCERT⦈_ -- : CertEnv → GState → DCert → GState → Type
+  where
+
   GOVCERT-regdrep :
     let Γ = ⟦ e , pp , vs , wdrls , cc ⟧
     in
     ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈
-          ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
@@ -501,6 +498,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ where
     ∙ c ∈ cc
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
+
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{Auxiliary GOVCERT transition system}
@@ -523,10 +521,10 @@ CERTBASE as the base case. CERTBASE does the following:
 \begin{figure*}[htbp]
 \emph{CERT transitions}
 \begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,CERT⦈_ where
-\end{code}
 \begin{code}
+data _⊢_⇀⦇_,CERT⦈_  -- : CertEnv   → CertState  → DCert  → CertState  → Type
+  where
+
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
       ────────────────────────────────
@@ -541,33 +539,23 @@ data _⊢_⇀⦇_,CERT⦈_ where
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
-\end{code}
-\end{AgdaSuppressSpace}
-\emph{CERTBASE transition}
-\begin{AgdaSuppressSpace}
-\begin{code}[hide]
-data _⊢_⇀⦇_,CERTBASE⦈_ where
-\end{code}
-\begin{code}
+
+
+data _⊢_⇀⦇_,CERTBASE⦈_   -- : CertEnv   → CertState  → ⊤      → CertState  → Type
+  where
+
   CERT-base :
     let refresh          = mapPartial getDRepVote (fromList vs)
         refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
         wdrlCreds        = mapˢ stake (dom wdrls)
         validVoteDelegs  = voteDelegs ∣^ (  mapˢ (credVoter DRep) (dom dReps)
-                                        ∪ fromList (noConfidenceRep ∷ abstainRep ∷ []) )
+                                            ∪ fromList (noConfidenceRep ∷ abstainRep ∷ [])
+                                         )
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢
-        ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧
-        , stᵖ
-        , ⟦ dReps , ccHotKeys ⟧
-        ⟧ ⇀⦇ _ ,CERTBASE⦈
-        ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧
-        , stᵖ
-        , ⟦ refreshedDReps , ccHotKeys ⟧
-        ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧ ⇀⦇ _ ,CERTBASE⦈ ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
 \end{code}
 \end{AgdaSuppressSpace}
 \caption{CERTS rules}
