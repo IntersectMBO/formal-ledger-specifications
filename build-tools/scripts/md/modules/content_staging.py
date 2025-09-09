@@ -8,14 +8,14 @@ files into a flat staging directory in preparation for site assembly.
 import logging
 import shutil
 from pathlib import Path
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 current_dir = Path(__file__).parent.parent
 if str(current_dir) not in __import__('sys').path:
     __import__('sys').path.insert(0, str(current_dir))
 
 from config.build_config import BuildConfig
-from modules.source_headers import ensure_source_header_file
+from modules.source_headers import ensure_source_header_file, infer_repo_source_from_flat
 from utils.command_runner import run_command
 from utils.text_processing import get_flat_filename
 
@@ -56,6 +56,14 @@ def _resolve_repo_source_for_flat(md_file: Path, src_dir: Path) -> str:
     return f"src/{candidates[0]}"
 
 
+def _override_for_name(name: str, overrides: Dict[str, str]) -> Optional[str]:
+    stem = Path(name).stem
+    candidates = (name, f"{stem}.md", f"{stem}.html")
+    for k in candidates:
+        if k in overrides:
+            return overrides[k]
+    return None
+
 def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path]:
     """
     Populates the staging directory, running Agda if requested.
@@ -95,13 +103,41 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
     staged_files = sorted(list(staging_dir.glob("*.md")))
     logging.info(f"✅ Staging complete. Found {len(staged_files)} files.")
 
-    # ⬇️ Ensure each staged file has a correct source_path header
-    src_dir = config.source_paths.src_dir
+    overrides: Dict[str, str] = {
+        # keep this single source of truth in code, or load from a small JSON,
+        # or pass through from BuildConfig if you wire mkdocs extras through.
+        "index.md": "README.md",
+        "guide.md": "CONTRIBUTING.md",
+        "Notation.md": "build-tools/static/md/common/src/Notation.md",
+    }
+
+    # Ensure each staged file has a correct source_path header
+    for md in staged_files:
+        # Infer a header for files that lack one, but preserve any existing source_path.
+        # If there’s an explicit mapping, write that exact header.
+        ensure_source_header_file(
+            md,
+            source_path=_override_for_name(md.name, overrides),
+            source_branch="master",
+            preserve_existing=True
+        ) if _override_for_name(md.name, overrides) else \
+        ensure_source_header_file( # Otherwise infer from src/ with existence checks.
+            md,
+            source_path=infer_repo_source_from_flat(md, config.source_paths.src_dir),
+            source_branch="master",
+            preserve_existing=True
+        )
+
     for md in staged_files:
         ensure_source_header_file(
             md,
-            source_path=_resolve_repo_source_for_flat(md, src_dir),
-            source_branch="master"
+            source_path=_resolve_repo_source_for_flat(md, config.source_paths.src_dir),
+            source_branch="master", preserve_existing=True
         )
+
+    # To be absolutely sure, we could write the correct header for special cases "by hand";
+    # for `index.md` and `guide.md`, e.g.,
+    #   ensure_source_header_file(mkdocs_docs_dir / "index.md", "README.md", "master", preserve_existing=True)
+    #   ensure_source_header_file(mkdocs_docs_dir / "guide.md", "CONTRIBUTING.md", "master", preserve_existing=True)
 
     return staged_files

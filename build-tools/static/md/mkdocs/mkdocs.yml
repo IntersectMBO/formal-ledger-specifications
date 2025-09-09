@@ -110,3 +110,10 @@ hooks:
   - hooks/agda_source_link.py
 extra:
   source_branch: master
+  source_overrides:
+    # Special cases in which source file name is hard to infer from doc file name.
+    # Syntax/Usage:
+    #   doc file name: source file name
+    index.md: README.md
+    guide.md: CONTRIBUTING.md
+    Notation.md: build-tools/static/md/common/src/Notation.md
