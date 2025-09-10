@@ -619,7 +619,7 @@ its results by carrying out each of the following tasks.
         EPOCH-updates fut ls dState' acnt'
 
       stakeDistrs : StakeDistrs
-      stakeDistrs = ⟦ calculateVDelegDelegatedStake e utxoSt' govSt' gState' dState'' , calculatePoolDelegatedStake (Snapshots.mark ss') ⟧
+      stakeDistrs = ⟦ calculateVDelegDelegatedStake e utxoSt' govSt' (GStateOf ls) (DStateOf ls) , calculatePoolDelegatedStake (Snapshots.mark ss') ⟧
 
       Γ : RatifyEnv
       Γ = ⟦ stakeDistrs , e , GState.dreps (GStateOf ls) , GState.ccHotKeys (GStateOf ls) , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧

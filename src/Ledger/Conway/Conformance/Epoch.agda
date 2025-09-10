@@ -134,7 +134,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
         { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
 
       stakeDistrs : StakeDistrs
-      stakeDistrs = record { stakeDistrVDeleg = ∅ ; stakeDistrPools = ∅ }
+      stakeDistrs = ⟦ calculateVDelegDelegatedStake e utxoSt' govSt' (record { GState (CertState.gState (LState.certState ls)) })
+                                                                     (record { DState (CertState.dState (LState.certState ls)) })
+                    , calculatePoolDelegatedStake (Snapshots.mark ss') ⟧
+
     in
     record { currentEpoch = e
            ; stakeDistrs = stakeDistrs
