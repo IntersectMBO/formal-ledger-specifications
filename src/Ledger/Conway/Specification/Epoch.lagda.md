@@ -1,8 +1,15 @@
-\section{Epoch Boundary}
-\label{sec:epoch-boundary}
-\modulenote{\ConwayModule{Epoch}}
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Epoch.lagda.md
+---
 
-\begin{code}[hide]
+# Epoch Boundary {#sec:epoch-boundary}
+
+This module introduces the epoch boundary transition system and the related
+reward calculation.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Data.Integer using () renaming (+_ to pos)
@@ -40,27 +47,32 @@ open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
+```
+-->
 
-\end{code}
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+## <span class="AgdaDatatype">EPOCH</span> and <span class="AgdaDatatype">NEWEPOCH</span> Transition System Types
 
+```agda
 record EpochState : Type where
-\end{code}
-\begin{code}[hide]
+```
+ 
+<!--
+```agda
   constructor ⟦_,_,_,_,_⟧ᵉ'
-\end{code}
-\begin{code}
+```
+-->
+ 
+```agda
   field
     acnt       : Acnt
     ss         : Snapshots
     ls         : LState
     es         : EnactState
     fut        : RatifyState
+```
 
-\end{code}
-\begin{code}[hide]
+<!--
+```agda
 record HasEpochState {a} (A : Type a) : Type a where
   field EpochStateOf : A → EpochState
 open HasEpochState ⦃...⦄ public
@@ -92,19 +104,10 @@ instance
 
   HasPState-EpochState : HasPState EpochState
   HasPState-EpochState .PStateOf = PStateOf ∘ CertStateOf ∘ LStateOf
-\end{code}
-\begin{NoConway}
+```
+-->
 
-\AgdaBound{PoolDistr}
-(Shelley specification~\parencite[\sectionname~3]{shelley-ledger-spec})
-results from dividing the coins in \AgdaBound{PoolDelegatedStake} by the total
-stake in \AgdaBound{PoolDelegatedStake}. We avoid dividing the coins here, in
-order to spare us the trouble of proving that the result is between 0 and 1.
-
-We omit the VRF key hashes in the codomain of \AgdaDatatype{PoolDelegatedStake}
-as they are not needed at the moment.
-
-\begin{code}
+```agda
 PoolDelegatedStake : Type
 PoolDelegatedStake = KeyHash ⇀ Coin
 
@@ -116,12 +119,22 @@ record NewEpochState : Type where
     epochState  : EpochState
     ru          : Maybe RewardUpdate
     pd          : PoolDelegatedStake
-\end{code}
-\end{NoConway}
-\end{AgdaMultiCode}
-\caption{Definitions for the EPOCH and NEWEPOCH transition systems}
-\end{figure*}
-\begin{code}[hide]
+```
+
+??? info "Differences with the Shelley Specification"
+
+    The formal specification utilizes the type `PoolDelegatedStake`{.AgdaDatatype}
+    in lieu of the derived type `PoolDistr`{.AgdaDatatype} (Figure 5, Shelley
+    specification [CVG19](#shelley-ledger-spec)). The latter can be computed from the
+    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype} 
+    by the total stake in the map.
+
+    In addition, the formal specification omits the VRF key hashes in the
+    codomain of `PoolDelegatedStake`{.AgdaDatatype} as they are not implemented at
+    the moment.
+ 
+<!--
+```agda
 record HasNewEpochState {a} (A : Type a) : Type a where
   field NewEpochStateOf : A → NewEpochState
 open HasNewEpochState ⦃...⦄ public
@@ -170,64 +183,36 @@ getStakeCred : TxOut → Maybe Credential
 getStakeCred (a , _ , _ , _) = stakeCred a
 
 open GovActionState using (returnAddr)
-\end{code}
-\begin{NoConway}
-\Cref{fig:functions:createRUpd} defines
-the function \AgdaFunction{createRUpd}
-which creates a \AgdaRecord{RewardUpdate},
-i.e.\@ the net flow of Ada due to paying out rewards
-after an epoch.
-Relevant quantities are:
-\begin{itemize}
-  \item \AgdaFunction{prevPp}: Previous protocol parameters,
-    which correspond to the parameters during the epoch for which we are creating rewards.
-  \item \AgdaFunction{ActiveSlotCoeff}:
-    Global constant, equal to the probability
-    that a party holding all the stake will be selected to be a leader for given slot.
-    Equals $1/20$ during the Shelley era on the Cardano Mainnet.
-  \item \AgdaFunction{Δr₁}: Ada taken out of the reserves for paying rewards,
-    as determined by the \AgdaField{monetaryExpansion} protocol parameter.
-  \item \AgdaFunction{rewardPot}: Total amount of coin available for rewards this epoch, as
-described in \textcite[\sectionname~6.4]{shelley-delegation-design}.
-  \item \AgdaFunction{feeSS}: The fee pot which, together with the reserves,
-    funds the \AgdaFunction{rewardPot}.
-    We use the fee pot that accumulated during the epoch
-    for which we now compute block production rewards.
-    Note that fees are not explicitly removed from any account:
-    the fees come from transactions paying them and are accounted for whenever transactions are processed.
-  \item \AgdaFunction{Δt₁}: The proportion of the reward pot that will move to the treasury,
-    as determined by the \AgdaField{treasuryCut} protocol parameter.
-    The remaining pot is called the \AgdaFunction{R},
-    just as in \textcite[\sectionname~6.5]{shelley-delegation-design}.
-  \item \AgdaFunction{pstakego}:
-    Stake distribution used for calculating the rewards.
-    This is the oldest stake distribution snapshot, labeled \AgdaField{go}.
-  \item \AgdaFunction{rs}: The rewards,
-    as calculated by the function \AgdaFunction{reward}.
-  \item \AgdaFunction{Δr₂}: The difference between the maximal amount of rewards
-    that could have been paid out if pools had been optimal,
-    and the actual rewards paid out.
-    This difference is returned to the reserves.
-  \item \AgdaFunction{÷₀}: Division operator that returns zero when the denominator is zero.
-\end{itemize}
 
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
 opaque
+```
+-->
+
+## <span class="AgdaDatatype">RewardUpdate</span>
+
+### Computing <span class="AgdaDatatype">RewardUpdate</span>
+
+This section defines the function `createRUpd`{.AgdaFunction} which creates a
+`RewardUpdate`{.AgdaRecord}, i.e. the net flow of Ada due to paying out rewards
+after an epoch:
+
+```agda
   createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
   createRUpd slotsPerEpoch b es total =
     record  { Δt = Δt₁
             ; Δr = 0 - Δr₁ + Δr₂
             ; Δf = 0 - pos feeSS
             ; rs = rs
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
+
             ; flowConservation = flowConservation
             ; Δt-nonnegative = Δt-nonneg
             ; Δf-nonpositive = Δf-nonpos
-\end{code}
-\begin{code}
+```
+-->
+```agda
             }
     where
       prevPp : PParams
@@ -273,8 +258,9 @@ opaque
 
       Δr₂ : ℤ
       Δr₂ = R - pos (∑[ c ← rs ] c)
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
       -- Proofs
       -- Note: Overloading of + and - seems to interfere with
       -- the ring solver.
@@ -324,80 +310,105 @@ opaque
           ℤ.- pos feeSS ≤⟨ neg-mono-≤ (ℤ.+≤+ z≤n) ⟩
           0             ∎
         where open ≤-Reasoning
-\end{code}
-\end{AgdaMultiCode}
-\caption{RewardUpdate Creation}
-\label{fig:functions:createRUpd}
-\end{figure*}
-\end{NoConway}
+```
+-->
 
-\begin{NoConway}
-\begin{figure*}[h]
-{\small
-\begin{code}
+Relevant quantities are:
+
+- `prevPp`{.AgdaFunction}: Previous protocol parameters, which
+  correspond to the parameters during the epoch for which we are
+  creating rewards.
+
+- `ActiveSlotCoeff`{.AgdaFunction}: Global constant, equal to the
+  probability that a party holding all the stake will be selected to be
+  a leader for given slot. Equals $1/20$ during the Shelley era on the
+  Cardano Mainnet.
+
+- `Δr₁`{.AgdaFunction}: Ada taken out of the reserves for paying
+  rewards, as determined by the `monetaryExpansion`{.AgdaField} protocol
+  parameter.
+
+- `rewardPot`{.AgdaFunction}: Total amount of coin available for rewards
+  this epoch, as described in [Team18](#shelley-delegation-design).
+
+- `feeSS`{.AgdaFunction}: The fee pot which, together with the reserves,
+  funds the `rewardPot`{.AgdaFunction}. We use the fee pot that
+  accumulated during the epoch for which we now compute block production
+  rewards. Note that fees are not explicitly removed from any account:
+  the fees come from transactions paying them and are accounted for
+  whenever transactions are processed.
+
+- `Δt₁`{.AgdaFunction}: The proportion of the reward pot that will move
+  to the treasury, as determined by the `treasuryCut`{.AgdaField}
+  protocol parameter. The remaining pot is called the
+  `R`{.AgdaFunction}, just as in [Team18](#shelley-delegation-design).
+
+- `pstakego`{.AgdaFunction}: Stake distribution used for calculating the
+  rewards. This is the oldest stake distribution snapshot, labeled
+  `go`{.AgdaField}.
+
+- `rs`{.AgdaFunction}: The rewards, as calculated by the function
+  `reward`{.AgdaFunction}.
+
+- `Δr₂`{.AgdaFunction}: The difference between the maximal amount of
+  rewards that could have been paid out if pools had been optimal, and
+  the actual rewards paid out. This difference is returned to the
+  reserves.
+
+- `÷₀`{.AgdaFunction}: Division operator that returns zero when the
+  denominator is zero.
+
+### Applying <span class="AgdaDatatype">RewardUpdate</span>
+
+This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
+`RewardUpdate`{.AgdaDatatype} to the `EpochState`{.AgdaFunction}.
+
+```agda
 applyRUpd : RewardUpdate → EpochState → EpochState
-applyRUpd rewardUpdate
-  ⟦ ⟦ treasury , reserves ⟧ᵃ
-  , ss
-  , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
-    , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
-  , es
-  , fut
-  ⟧ᵉ' =
-  ⟦ ⟦ posPart (pos treasury + Δt + pos unregRU')
-    , posPart (pos reserves + Δr) ⟧
-  , ss
-  , ⟦ ⟦ utxo , posPart (pos fees + Δf) , deposits , donations ⟧
-    , govSt
-    , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ ⟧
-  , es
-  , fut ⟧
+applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
+                       , ss
+                       , ⟦ ⟦ utxo , fees , deposits , donations ⟧ᵘ
+                         , govSt
+                         , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ᵈ , pState , gState ⟧ᶜˢ ⟧ˡ
+                       , es
+                       , fut
+                       ⟧ᵉ' = ⟦ ⟦ posPart (pos treasury + Δt + pos unregRU')
+                               , posPart (pos reserves + Δr) ⟧
+                             , ss
+                             , ⟦ ⟦ utxo , posPart (pos fees + Δf) , deposits , donations ⟧
+                               , govSt
+                               , ⟦ ⟦ voteDelegs , stakeDelegs , rewards ∪⁺ regRU ⟧ , pState , gState ⟧ ⟧
+                             , es
+                             , fut ⟧
   where
     open RewardUpdate rewardUpdate using (Δt; Δr; Δf; rs)
     regRU     = rs ∣ dom rewards
     unregRU   = rs ∣ dom rewards ᶜ
     unregRU'  = ∑[ x ← unregRU ] x
+```
 
-getOrphans : EnactState → GovState → GovState
-getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
-  where
-    step : GovState × GovState → GovState × GovState
-    step (orps , govSt) =
-      let
-        isOrphan? a prev = ¬? (hasParent? es govSt a prev)
-        (orps' , govSt') = partition
-          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? (a .gaType) prev) govSt
-      in
-        (orps ++ orps' , govSt')
-\end{code}
-}
-\end{figure*}
-\end{NoConway}
+## Stake Distributions
 
-\begin{figure*}[ht]
-\begin{code}[hide]
--- TODO: Move to agda-sets
--- https://github.com/input-output-hk/agda-sets/pull/13
+This section defines the functions
+`calculatePoolDelegatedState`{.AgdaFunction},
+`calculateVDelegDelegatedStake`{.AgdaFunction}, and
+`mkStakeDistrs`{.AgdaFunction}.
+
+<!--
+```agda
+open RwdAddr using (stake)
 opaque
-  _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
-  R ⁻¹ʳ = mapˢ swap R
-    where open import Data.Product using (swap)
-
-  _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
-  R ∘ʳ S =
-    concatMapˢ
-      (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
-      R
-opaque
-\end{code}
-\begin{code}
+```
+-->
+```agda
   calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
   calculatePoolDelegatedStake ss =
       -- Shelley spec: the output map must contain keys appearing in both
       -- sd and the pool parameters.
-      sd ∣ dom (PoolsOf ss)
+      sd ∣ dom (ss .pools)
     where
+      open Snapshot
+
       -- stake credentials delegating to each pool
       stakeCredentialsPerPool : Rel KeyHash Credential
       stakeCredentialsPerPool = (StakeDelegsOf ss ˢ) ⁻¹ʳ
@@ -405,11 +416,7 @@ opaque
       -- delegated stake per pool
       sd : KeyHash ⇀ Coin
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
-\end{code}
-\begin{code}[hide]
-  open RwdAddr using (stake)
-\end{code}
-\begin{code}
+
   calculateVDelegDelegatedStake
     : Epoch
     → UTxOState
@@ -459,94 +466,61 @@ opaque
     → DState
     → StakeDistrs
   mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
-    ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-    , poolDelegatedStake ⟧
+    ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState , poolDelegatedStake ⟧
     where
       poolDelegatedStake : PoolDelegatedStake
       poolDelegatedStake = mapWithKey (λ kh c → maybe (c +_) c (lookupᵐ? (RewardsOf dState) (KeyHashObj kh)))
                                       (calculatePoolDelegatedStake ss)
-\end{code}
-\caption{Functions for computing stake distributions}
-\end{figure*}
+```
+
+The function `mkStakeDistrs`{.AgdaFunction} calculates the stake distributions
+for voting purposes.
+
 
 <!--
-The \AgdaFunction{aggregateBy} function takes a relation
-\AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B}) and a map
-\AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
-and returns a function that maps each \AgdaBound{a} in the domain of
-\AgdaBound{m} to the sum of all \AgdaBound{b} such that
-(\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+```agda
+private variable
+  e lastEpoch : Epoch
+  fut fut' : RatifyState
+  poolReapState : PoolReapState
+  eps eps' eps'' : EpochState
+  ls : LState
+  es₀ : EnactState
+  mark set go : Snapshot
+  feeSS : Fees
+  lstate : LState
+  ss ss' : Snapshots
+  ru : RewardUpdate
+  mru : Maybe RewardUpdate
+  pd : PoolDelegatedStake
+```
 -->
 
-The function \AgdaFunction{calculatePoolDelegatedState} computes a
-stake pool distribution, that is, a map from stake pool credentials
-(keyhash) to coin, from the stake delegation map and the stake
-allocation of the previous epoch.
+## <span class="AgdaDatatype">EPOCH</span> Transition System
 
-Note that \AgdaFunction{calculatePoolDelegatedStake} performs the
-computation of \AgdaFunction{calculatePoolDistr} in the Shelley spec,
-without normalizing the stakes to be between 0 and 1.
+The `EPOCH`{.AgdaDatatype} transition has a few updates that are encapsulated
+in the following functions. We need these functions to bring them in scope for
+some proofs about `EPOCH`{.AgdaDatatype}.
 
-The function \AgdaFunction{calculateVDelegDelegatedStake} computes the
-stake distribution for \AgdaDatatype{VDeleg}. To compute the stake
-distribution, we take into account:
-%
-\begin{enumerate}
-  \item the stake associated with each staking credential;
-  \item the stake associated with deposits on governance actions; and,
-  \item the stake associated with rewards.
-\end{enumerate}
-%
-To compute the stake distribution, this function uses the following
-auxiliary definitions:
-%
-\begin{itemize}
-  \item \AgdaFunction{activeDReps}: The set of active \DRep{}s. This
-    consists of all \DRep{}s belonging to the \AgdaDatatype{GState}
-    whose term has not expired.
+### Helper Functions
 
-  \item \AgdaFunction{activeVoteDelegs}: The map containing the vote
-    delegations from credentials to active
-    \AgdaDatatype{VDeleg}s. Note that the
-    \AgdaInductiveConstructor{vDelegNoConfidence} and
-    \AgdaInductiveConstructor{vDelegAbstain} \AgdaDatatype{VDeleg}s
-    are considered always active.
+```agda
+getOrphans : EnactState → GovState → GovState
+getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
+  where
+    step : GovState × GovState → GovState × GovState
+    step (orps , govSt) =
+      let
+        isOrphan? a prev = ¬? (hasParent? es govSt a prev)
+        (orps' , govSt') = partition
+          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? (a .gaType) prev) govSt
+      in
+        (orps ++ orps' , govSt')
+```
 
-  \item \AgdaFunction{stakePerCredential}: The stake for each
-    credential that delegates to an active \AgdaDatatype{VDeleg}.
+### Update Functions
 
-  \item \AgdaFunction{stakeFromGADeposits}: This map contains the
-    stake associated to governance action deposits. For each
-    governance action, the map contains its deposit associated to its
-    \AgdaField{returnAddr} (as a staking credential).
-
-  \item \AgdaFunction{stakeFromRewards}: The map that contains the
-  rewards.
-\end{itemize}
-
-In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
-\AgdaFunction{aggregateBy} are
-\AgdaFunction{∣} \AgdaBound{delegations} \AgdaFunction{∣} :
-ℙ \AgdaDatatype{Credential} \AgdaFunction{×} \AgdaDatatype{VDeleg} and
-\AgdaFunction{stakeOf} \AgdaBound{ss} \AgdaFunction{∪⁺}
-\AgdaFunction{gaDepositStake} \AgdaBound{govSt} \AgdaBound{ds}, respectively.
-
-\begin{code}[hide]
-private variable
-  e lastEpoch     : Epoch
-  fut fut'        : RatifyState
-  eps eps' eps''  : EpochState
-  ls              : LState
-  es₀             : EnactState
-  ss ss'          : Snapshots
-  ru              : RewardUpdate
-  mru             : Maybe RewardUpdate
-  pd              : PoolDelegatedStake
-\end{code}
-
-
-\begin{figure*}[h]
-\begin{code}
+```agda
 record EPOCH-Updates0 : Type where
   no-eta-equality
   constructor EPOCHUpdates0
@@ -644,24 +618,41 @@ EPOCH-updates fut ls dState' acnt' =
       { treasury =
           TreasuryOf acnt' ∸ u0 .totWithdrawals + DonationsOf ls + unclaimed
       }
-\end{code}
+```
 
-\begin{code}
+### Transition Rule
+
+This section defines the `EPOCH`{.AgdaDatatype} transition rule. 
+
+In Conway, the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
+and carries out the following tasks:
+
+- Payout all the enacted treasury withdrawals.
+
+- Remove expired and enacted governance actions, and refund deposits.
+
+- If `govSt’`{.AgdaBound} is empty, increment the activity counter for
+  `DRep`{.AgdaInductiveConstructor}s.
+
+- Remove all hot keys from the constitutional committee delegation map
+  that do not belong to currently elected members.
+
+- Apply the resulting enact state from the previous epoch boundary
+  `fut`{.AgdaBound} and store the resulting enact state
+  `fut’`{.AgdaBound}.
+
+```agda
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
-\end{code}
-\caption{EPOCH update functions}
-\end{figure*}
-\end{NoConway}
-
-The \AgdaDatatype{EPOCH} transition has a few updates that are encapsulated in
-the following functions.
-We need these functions to bring them in scope for some proofs about
-\AgdaDatatype{EPOCH}.
-
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
-  EPOCH : ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
+```
+```agda
+  EPOCH :
+```
+<!--
+```agda
+    ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
+```
+-->
+```agda
     let
       EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
         EPOCH-updates fut ls dState' acnt'
@@ -678,48 +669,42 @@ We need these functions to bring them in scope for some proofs about
       ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
       ────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
-\end{code}
-\end{AgdaMultiCode}
-\caption{EPOCH transition system}
-\label{fig:epoch:sts}
-\end{figure*}
+```
 
-The \AgdaDatatype{EPOCH} transition rule defined above had previously incorporated
-the logic that is now handled by \AgdaDatatype{POOLREAP}
-(Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
+## <span class="AgdaDatatype">NEWEPOCH</span> Transition System
 
-The \AgdaDatatype{EPOCH} rule now also needs to invoke the \AgdaDatatype{RATIFIES}
-rule and properly deal with its results by carrying out each of the following tasks.
-\begin{itemize}
-\item Pay out all the enacted treasury withdrawals.
-\item Remove expired and enacted governance actions \& refund deposits.
-\item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
-\item Remove all hot keys from the constitutional committee delegation map that
-  do not belong to currently elected members.
-\item Apply the resulting enact state from the previous epoch boundary \AgdaBound{fut} and
-  store the resulting enact state \AgdaBound{fut'}.
-\end{itemize}
+This section defines the `NEWEPOCH`{.AgdaDatatype} transition system.
 
-
-\begin{NoConway}
-\begin{figure*}[ht]
-\begin{code}[hide]
+### Transition Rule
+<!--
+```agda
 data
-\end{code}
-\begin{code}
+```
+-->
+```agda
   _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
   where
-\end{code}
-\begin{code}
-  NEWEPOCH-New : ∀ {bprev bcur : BlocksMade} → let
+```
+-->
+```agda
+  NEWEPOCH-New : 
+```
+<!--
+```agda
+    ∀ {bprev bcur : BlocksMade} →
+```
+-->
+```agda
+    let
       eps' = applyRUpd ru eps
-      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps''
-      pd' = calculatePoolDelegatedStake (Snapshots.set ss)
+      ss   = EpochState.ss eps''
+      pd'  = calculatePoolDelegatedStake (Snapshots.set ss)
     in
-    ∙ e ≡ lastEpoch + 1
-    ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
+      ∙ e ≡ lastEpoch + 1
+      ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' ⟧
 
@@ -728,16 +713,32 @@ data
       ────────────────────────────────
       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
 
-  NEWEPOCH-No-Reward-Update : let
-      ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps'
+  NEWEPOCH-No-Reward-Update : 
+```
+<!--
+```agda
+    ∀ {bprev bcur : BlocksMade} →
+```
+-->
+```agda
+    let
+      ss  = EpochState.ss eps'
       pd' = calculatePoolDelegatedStake (Snapshots.set ss)
     in
-    ∀ {bprev bcur : BlocksMade} →
-    ∙ e ≡ lastEpoch + 1
-    ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+      ∙ e ≡ lastEpoch + 1
+      ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' ⟧
-\end{code}
-\caption{NEWEPOCH transition system}
-\end{figure*}
-\end{NoConway}
+```
+
+# References {#references .unnumbered}
+
+**\[CVG19\]** <span id="shelley-ledger-spec"
+label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
+and Matthias Güdemann. *A Formal Specification of the Cardano Ledger*.
+2019.
+
+**\[Team18\]** <span id="shelley-delegation-design"
+label="shelley-delegation-design"></span> IOHK Formal Methods Team.
+*Design Specification for Delegation and Incentives in Cardano, IOHK
+Deliverable SL-D1*. 2018.
