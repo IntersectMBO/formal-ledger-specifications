@@ -66,6 +66,9 @@ record HasEpochState {a} (A : Type a) : Type a where
 open HasEpochState ⦃...⦄ public
 
 instance
+  HasSnapshots-EpochState : HasSnapshots EpochState
+  HasSnapshots-EpochState .SnapshotsOf = EpochState.ss
+
   HasLState-EpochState : HasLState EpochState
   HasLState-EpochState .LStateOf = EpochState.ls
 
@@ -234,19 +237,19 @@ opaque
       reserves = ReservesOf es
 
       pstakego : Snapshot
-      pstakego = es .EpochState.ss .Snapshots.go
+      pstakego = (SnapshotsOf es) .Snapshots.go
 
       feeSS : Fees
-      feeSS = es .EpochState.ss .Snapshots.feeSS
+      feeSS = FeesOf (SnapshotsOf es)
 
       stake : Stake
-      stake = pstakego .Snapshot.stake
+      stake = StakeOf pstakego
 
       delegs : StakeDelegs
-      delegs = pstakego .Snapshot.delegations
+      delegs = StakeDelegsOf pstakego
 
       poolParams : Pools
-      poolParams = pstakego .Snapshot.poolParameters
+      poolParams = PoolsOf pstakego
 
       blocksMade : ℕ
       blocksMade = ∑[ m ← b ] m
@@ -401,7 +404,7 @@ opaque
 
       -- delegated stake per pool
       sd : KeyHash ⇀ Coin
-      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)          
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 \end{code}
 \begin{code}[hide]
   open RwdAddr using (stake)
@@ -530,26 +533,17 @@ In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed t
 
 \begin{code}[hide]
 private variable
-  e lastEpoch : Epoch
-  fut fut' : RatifyState
-  poolReapState : PoolReapState
-  eps eps' eps'' : EpochState
-  ls : LState
-  es₀ : EnactState
-  mark set go : Snapshot
-  feeSS : Fees
-  lstate : LState
-  ss ss' : Snapshots
-  ru : RewardUpdate
-  mru : Maybe RewardUpdate
-  pd : PoolDelegatedStake
+  e lastEpoch     : Epoch
+  fut fut'        : RatifyState
+  eps eps' eps''  : EpochState
+  ls              : LState
+  es₀             : EnactState
+  ss ss'          : Snapshots
+  ru              : RewardUpdate
+  mru             : Maybe RewardUpdate
+  pd              : PoolDelegatedStake
 \end{code}
 
-
-The \AgdaDatatype{EPOCH} transition has a few updates that are encapsulated in
-the following functions.
-We need these functions to bring them in scope for some proofs about
-\AgdaDatatype{EPOCH}.
 
 \begin{figure*}[h]
 \begin{code}
@@ -569,7 +563,7 @@ EPOCH-updates0 fut ls =
     EPOCHUpdates0 es govSt' payout gState' utxoSt' totWithdrawals
   where
     open LState ls public
-    open CertState certState public
+    open CertState certState using (gState) public
     open RatifyState fut renaming (es to esW)
 
     es : EnactState
@@ -659,21 +653,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 \end{figure*}
 \end{NoConway}
 
-\Cref{fig:epoch:sts} defines the EPOCH transition rule.
-Previously, this incorporated the logic that is now handled by
-POOLREAP (Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
-
-The EPOCH rule now also needs to invoke RATIFIES and properly deal with
-its results by carrying out each of the following tasks.
-\begin{itemize}
-\item Pay out all the enacted treasury withdrawals.
-\item Remove expired and enacted governance actions \& refund deposits.
-\item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
-\item Remove all hot keys from the constitutional committee delegation map that
-  do not belong to currently elected members.
-\item Apply the resulting enact state from the previous epoch boundary \AgdaBound{fut} and
-  store the resulting enact state \AgdaBound{fut'}.
-\end{itemize}
+The \AgdaDatatype{EPOCH} transition has a few updates that are encapsulated in
+the following functions.
+We need these functions to bring them in scope for some proofs about
+\AgdaDatatype{EPOCH}.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
@@ -687,7 +670,7 @@ its results by carrying out each of the following tasks.
       stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt' govSt' (GStateOf ls) (DStateOf ls)
 
       Γ : RatifyEnv
-      Γ = ⟦ stakeDistrs , e , GState.dreps (GStateOf ls) , GState.ccHotKeys (GStateOf ls) , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
+      Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
 
     in
         ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
@@ -700,6 +683,23 @@ its results by carrying out each of the following tasks.
 \caption{EPOCH transition system}
 \label{fig:epoch:sts}
 \end{figure*}
+
+The \AgdaDatatype{EPOCH} transition rule defined above had previously incorporated
+the logic that is now handled by \AgdaDatatype{POOLREAP}
+(Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
+
+The \AgdaDatatype{EPOCH} rule now also needs to invoke the \AgdaDatatype{RATIFIES}
+rule and properly deal with its results by carrying out each of the following tasks.
+\begin{itemize}
+\item Pay out all the enacted treasury withdrawals.
+\item Remove expired and enacted governance actions \& refund deposits.
+\item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
+\item Remove all hot keys from the constitutional committee delegation map that
+  do not belong to currently elected members.
+\item Apply the resulting enact state from the previous epoch boundary \AgdaBound{fut} and
+  store the resulting enact state \AgdaBound{fut'}.
+\end{itemize}
+
 
 \begin{NoConway}
 \begin{figure*}[ht]
