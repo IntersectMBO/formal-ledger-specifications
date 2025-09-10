@@ -66,9 +66,9 @@ module _ {eps : EpochState} {e : Epoch} where
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total =
     -, EPOCH
-         (RATIFIES-total' .proj₂)
-         (SNAP-total .proj₂)
-         (POOLREAP-total prs .proj₂)
+         ( SNAP-total .proj₂
+         , RATIFIES-total' .proj₂
+         , POOLREAP-total prs .proj₂)
 
   private
     EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
@@ -98,30 +98,30 @@ module _ {eps : EpochState} {e : Epoch} where
         {acnt' = acnt'₁}
         {dState' = dState'₁}
         {pState' = pState'₁}
-        p₁ p₂ p₃
+        (p₁ , p₂ , p₃)
       )
       (EPOCH
         {utxoSt'' = utxoSt''₂}
         {acnt' = acnt'₂}
         {dState' = dState'₂}
         {pState' = pState'₂}
-        p₁' p₂' p₃'
+        (p₁' , p₂' , p₃')
       ) =
     cong₂ _$_ (cong₂ EPOCH-state ss'≡ss'' fut'≡fut'') prs'≡prs''
     where
       ss'≡ss'' : EpochState.ss eps' ≡ EpochState.ss eps''
-      ss'≡ss'' = SNAP-deterministic p₂ p₂'
+      ss'≡ss'' = SNAP-deterministic p₁ p₁'
 
       fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
       fut'≡fut'' = RATIFIES-deterministic-≡
                     (cong (λ x → record
-                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _
+                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _ _ _
                                    ; currentEpoch = _
                                    ; dreps = _
                                    ; ccHotKeys = _
                                    ; treasury = _
                                    }) ss'≡ss'')
-                                   refl refl p₁ p₁'
+                                   refl refl p₂ p₂'
 
       prs'≡prs'' : ⟦ utxoSt''₁ , acnt'₁ , dState'₁ , pState'₁ ⟧ᵖ ≡
                    ⟦ utxoSt''₂ , acnt'₂ , dState'₂ , pState'₂ ⟧

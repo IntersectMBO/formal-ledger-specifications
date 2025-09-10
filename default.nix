@@ -365,13 +365,6 @@ let
           ]
         ))
 
-        # mdbook ecosystem
-        mdbook
-        chromium # Required by mdbook-pdf for rendering
-        cargo # For installing mdbook extensions
-        pkg-config # For building cargo packages
-        openssl # For building cargo packages
-
         # Additional tools
         coreutils
         hpack

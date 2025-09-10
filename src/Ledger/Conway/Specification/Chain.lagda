@@ -72,51 +72,6 @@ instance
   HasPParams-ChainState : HasPParams ChainState
   HasPParams-ChainState .PParamsOf = PParamsOf ∘ EnactStateOf
 
-instance _ = +-0-monoid
-
--- TODO: do we still need this for anything?
-maybePurpose : DepositPurpose → (DepositPurpose × Credential) → Coin → Maybe Coin
-maybePurpose prps (prps' , _) c with prps ≟ prps'
-... | yes _ = just c
-... | no _ = nothing
-
-maybePurpose-prop : ∀ {prps} {x} {y}
-  → (m : (DepositPurpose × Credential) ⇀ Coin)
-  → (x , y) ∈ dom ((mapMaybeWithKeyᵐ (maybePurpose prps) m) ˢ)
-  → x ≡ prps
-maybePurpose-prop {prps = prps} {x} {y} _ xy∈dom with from dom∈ xy∈dom
-... | z , ∈mmwk with prps ≟ x | ∈-mapMaybeWithKey {f = maybePurpose prps} ∈mmwk
-... | yes refl | _ = refl
-
-filterPurpose : DepositPurpose → (DepositPurpose × Credential) ⇀ Coin → Credential ⇀ Coin
-filterPurpose prps m = mapKeys proj₂ (mapMaybeWithKeyᵐ (maybePurpose prps) m)
-  {λ where x∈dom y∈dom refl → cong (_, _)
-                            $ trans (maybePurpose-prop {prps = prps} m x∈dom)
-                            $ sym   (maybePurpose-prop {prps = prps} m y∈dom)}
-
-govActionDeposits : LState → VDeleg ⇀ Coin
-govActionDeposits ls =
-  let open LState ls; open CertState certState; open PState pState
-      open UTxOState utxoSt; open DState dState
-   in foldl _∪⁺_ ∅ $ setToList $
-    mapPartial
-      (λ where (gaid , record { returnAddr = record {stake = c} }) → do
-        vd ← lookupᵐ? voteDelegs c
-        dep ← lookupᵐ? deposits (GovActionDeposit gaid)
-        just ❴ vd , dep ❵ )
-      (fromList govSt)
-
-calculateStakeDistrs : LState → StakeDistrs
-calculateStakeDistrs ls =
-  let open LState ls; open CertState certState; open PState pState
-      open UTxOState utxoSt; open DState dState
-      spoDelegs = ∅ -- TODO
-      drepDelegs = ∅ -- TODO
-  in
-  record
-    { stakeDistr = govActionDeposits ls
-    }
-
 totalRefScriptsSize : LState → List Tx → ℕ
 totalRefScriptsSize lst txs = sum $ map (refScriptsSize utxo) txs
   where open UTxOState (LState.utxoSt lst)

@@ -14,7 +14,7 @@ record indexOf : Type where
     indexOfRwdAddr  : RwdAddr → Withdrawals → Maybe Ix
     indexOfTxIn     : TxIn → ℙ TxIn → Maybe Ix
     indexOfPolicyId : ScriptHash → ℙ ScriptHash → Maybe Ix
-    indexOfVote     : Voter → List Voter → Maybe Ix
+    indexOfVote     : GovVoter → List GovVoter → Maybe Ix
     indexOfProposal : GovProposal → List GovProposal → Maybe Ix
 
 record AbstractFunctions : Type where
