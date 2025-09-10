@@ -28,6 +28,9 @@
       - Specification: Ledger.Conway.Specification.md
       - Specification/:
         - Abstract: Ledger.Conway.Specification.Abstract.md
+        - BlockBody: Ledger.Conway.Specification.BlockBody.md
+        - BlockBody/:
+            - Properties: Ledger.Conway.Specification.BlockBody.Properties.md
         - Certs: Ledger.Conway.Specification.Certs.md
         - Certs/:
           - Properties: Ledger.Conway.Specification.Certs.Properties.md

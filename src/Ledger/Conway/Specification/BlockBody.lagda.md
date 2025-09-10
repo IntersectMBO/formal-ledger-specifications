@@ -57,11 +57,13 @@ The helper function `incrBlocks`{.AgdaFunction} counts the number of
 non-overlay blocks produced by each stake pool.
 
 The signal of the `BBODY`{.AgdaDatatype} rule is a block from which we extract:
+
 * the sequence of transactions, `txs`{.AgdaBound} = `block`{.AgdaBound} .`ts`{.AgdaField}, of the block;
 * the block header body `bhb`{.AgdaBound} = `block`{.AgdaBound} .`bheader`{.AgdaField} .`bhbody`{.AgdaField};
 * the hash of the verification key of the issuer of the block, `hk`{.AgdaBound} = `hash`{.AgdaFunction} (`bhb`{.AgdaBound} .`bvkcold`{.AgdaField}).
 
 The transition is executed if the following preconditions are met:
+
 * The size of the block body matches the value given in the block header body.
 * The hash of the block body matches the value given in the block header body.
 * The `LEDGERS`{.AgdaDatatype} transition succeeds.
@@ -71,6 +73,7 @@ keys to the incremented value of produced blocks `n + 1`, provided the current
 slot is not an overlay slot.
 
 The `BBODY`{.AgdaDatatype} rule has two predicate failures:
+
 * if the size of the block body in the header is not equal to the real size of
   the block body, there is a WrongBlockBodySize failure.
 * if the hash of the block body is not also the hash of transactions, there is

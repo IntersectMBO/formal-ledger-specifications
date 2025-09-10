@@ -77,6 +77,7 @@ consists of a set of genesis keys, and the state is the epoch specific state
 necessary for the `NEWEPOCH`{.AgdaDatatype} transition.
 
 Two transitions are done:
+
 * The `NEWEPOCH`{.AgdaDatatype} transition performs any state change needed if
   it is the first block of a new epoch.
 * The `RUPD`{.AgdaDatatype} creates the reward update if it is late enough in
