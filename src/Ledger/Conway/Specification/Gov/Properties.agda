@@ -80,9 +80,11 @@ opaque
     validHFAction? {record { action = ⟦ Info                , _ ⟧ᵍᵃ}} = Dec-⊤
 
   isRegistered? : ∀ Γ v → Dec (isRegistered Γ v)
-  isRegistered? _ (CC   , _) = ¿ _ ∈ _ ¿
-  isRegistered? _ (DRep , _) = ¿ _ ∈ _ ¿
-  isRegistered? _ (SPO  , _) = ¿ _ ∈ _ ¿
+  isRegistered? _ ⟦ CC   , _ ⟧ᵍᵛ = ¿ _ ∈ _ ¿
+  isRegistered? _ ⟦ DRep , _ ⟧ᵍᵛ = ¿ _ ∈ _ ¿
+  isRegistered? _ ⟦ SPO  , _ ⟧ᵍᵛ = ¿ _ ∈ _ ¿
+
+open GovVoter
 
 instance
   Computational-GOV : Computational _⊢_⇀⦇_,GOV⦈_ String
@@ -94,7 +96,7 @@ instance
       module GoVote sig where
         open GovVote sig
 
-        computeProof = case lookupActionId pparams (proj₁ voter) gid epoch s ,′ isRegistered? (proj₁ Γ) voter of λ where
+        computeProof = case lookupActionId pparams (gvRole voter) gid epoch s ,′ isRegistered? (proj₁ Γ) voter of λ where
             (yes p , yes p') → case Any↔ .from p of λ where
               (_ , mem , refl , cV , ¬exp) → success (_ , GOV-Vote (∈-fromList .to mem , cV , p' , ¬exp))
             (yes _ , no ¬p) → failure (genErrors ¬p)
@@ -102,7 +104,7 @@ instance
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ inj₁ sig ,GOV⦈ s' → map proj₁ computeProof ≡ success s'
         completeness s' (GOV-Vote {ast = ast} (mem , cV , reg , ¬expired))
-          with lookupActionId pparams (proj₁ voter) gid epoch s | isRegistered? (proj₁ Γ) voter
+          with lookupActionId pparams (gvRole voter) gid epoch s | isRegistered? (proj₁ Γ) voter
         ... | no ¬p | _ = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV , ¬expired)))
         ... | yes _ | no ¬p = ⊥-elim $ ¬p reg
         ... | yes p | yes q with Any↔ .from p 

@@ -62,7 +62,7 @@ module _ {eps : EpochState} {e : Epoch} where
       fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
       fut'≡fut'' = RATIFIES-deterministic-≡
                     (cong (λ x → record
-                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _
+                                   { stakeDistrs = _
                                    ; currentEpoch = _
                                    ; dreps = _
                                    ; ccHotKeys = _

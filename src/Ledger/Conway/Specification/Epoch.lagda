@@ -373,36 +373,153 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 \end{NoConway}
 
 \begin{figure*}[ht]
-\begin{AgdaSuppressSpace}
 \begin{code}[hide]
-open RwdAddr using (stake)
-\end{code}
-\begin{code}
-gaDepositStake : GovState → Deposits → Credential ⇀ Coin
-gaDepositStake govSt ds = aggregateBy
-  (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
-  (mapFromPartialFun (λ (gaid , _) → lookupᵐ? ds (GovActionDeposit gaid)) govSt')
-  where govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
+-- TODO: Move to agda-sets
+-- https://github.com/input-output-hk/agda-sets/pull/13
+opaque
+  _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
+  R ⁻¹ʳ = mapˢ swap R
+    where open import Data.Product using (swap)
 
-\end{code}
-\begin{code}[hide]
+  _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
+  R ∘ʳ S =
+    concatMapˢ
+      (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
+      R
 opaque
 \end{code}
 \begin{code}
-  mkStakeDistrs : Snapshot → GovState → Deposits → VoteDelegs → StakeDistrs
-  mkStakeDistrs ss govSt ds delegations .StakeDistrs.stakeDistr =
-    aggregateBy ∣ delegations ∣ (Snapshot.stake ss ∪⁺ gaDepositStake govSt ds)
+  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
+  calculatePoolDelegatedStake ss =
+      -- Shelley spec: the output map must contain keys appearing in both
+      -- sd and the pool parameters.
+      sd ∣ dom (PoolsOf ss)
+    where
+      -- stake credentials delegating to each pool
+      stakeCredentialsPerPool : Rel KeyHash Credential
+      stakeCredentialsPerPool = (StakeDelegsOf ss ˢ) ⁻¹ʳ
+
+      -- delegated stake per pool
+      sd : KeyHash ⇀ Coin
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)          
 \end{code}
-\end{AgdaSuppressSpace}
+\begin{code}[hide]
+  open RwdAddr using (stake)
+\end{code}
+\begin{code}
+  calculateVDelegDelegatedStake
+    : Epoch
+    → UTxOState
+    → GovState
+    → GState
+    → DState
+    → VDeleg ⇀ Coin
+  calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
+    = aggregate₊ ((((activeVoteDelegs ˢ) ⁻¹ʳ) ∘ʳ ((stakePerCredential ∪⁺ stakeFromRewards ∪⁺ stakeFromGADeposits)ˢ)) ᶠˢ)
+    where
+      open UTxOState utxoSt
+      open DState dState
+      open GState gState
+
+      -- active DReps
+      activeDReps : ℙ Credential
+      activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
+
+      -- active vote delegations
+      activeVoteDelegs : VoteDelegs
+      activeVoteDelegs = voteDelegs ∣^ ((mapˢ vDelegCredential activeDReps) ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵)
+
+      -- stake per delegated credential
+      stakePerCredential : Stake
+      stakePerCredential = mapFromFun (λ c → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c))
+                                      (dom activeVoteDelegs)
+
+      -- stake from governance action deposits
+      stakeFromGADeposits : Stake
+      stakeFromGADeposits = aggregateBy
+        (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
+        (mapFromPartialFun (λ (gaid , _) → lookupᵐ? deposits (GovActionDeposit gaid)) govSt')
+        where
+          govSt' : ℙ (GovActionID × RwdAddr)
+          govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
+
+      -- stake from rewards
+      stakeFromRewards : Stake
+      stakeFromRewards = RewardsOf dState
+
+  mkStakeDistrs
+    : Snapshot
+    → Epoch
+    → UTxOState
+    → GovState
+    → GState
+    → DState
+    → StakeDistrs
+  mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
+    ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
+    , poolDelegatedStake ⟧
+    where
+      poolDelegatedStake : PoolDelegatedStake
+      poolDelegatedStake = mapWithKey (λ kh c → maybe (c +_) c (lookupᵐ? (RewardsOf dState) (KeyHashObj kh)))
+                                      (calculatePoolDelegatedStake ss)
+\end{code}
 \caption{Functions for computing stake distributions}
 \end{figure*}
 
+<!--
 The \AgdaFunction{aggregateBy} function takes a relation
 \AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B}) and a map
 \AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
 and returns a function that maps each \AgdaBound{a} in the domain of
 \AgdaBound{m} to the sum of all \AgdaBound{b} such that
 (\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+-->
+
+The function \AgdaFunction{calculatePoolDelegatedState} computes a
+stake pool distribution, that is, a map from stake pool credentials
+(keyhash) to coin, from the stake delegation map and the stake
+allocation of the previous epoch.
+
+Note that \AgdaFunction{calculatePoolDelegatedStake} performs the
+computation of \AgdaFunction{calculatePoolDistr} in the Shelley spec,
+without normalizing the stakes to be between 0 and 1.
+
+The function \AgdaFunction{calculateVDelegDelegatedStake} computes the
+stake distribution for \AgdaDatatype{VDeleg}. To compute the stake
+distribution, we take into account:
+%
+\begin{enumerate}
+  \item the stake associated with each staking credential;
+  \item the stake associated with deposits on governance actions; and,
+  \item the stake associated with rewards.
+\end{enumerate}
+%
+To compute the stake distribution, this function uses the following
+auxiliary definitions:
+%
+\begin{itemize}
+  \item \AgdaFunction{activeDReps}: The set of active \DRep{}s. This
+    consists of all \DRep{}s belonging to the \AgdaDatatype{GState}
+    whose term has not expired.
+
+  \item \AgdaFunction{activeVoteDelegs}: The map containing the vote
+    delegations from credentials to active
+    \AgdaDatatype{VDeleg}s. Note that the
+    \AgdaInductiveConstructor{vDelegNoConfidence} and
+    \AgdaInductiveConstructor{vDelegAbstain} \AgdaDatatype{VDeleg}s
+    are considered always active.
+
+  \item \AgdaFunction{stakePerCredential}: The stake for each
+    credential that delegates to an active \AgdaDatatype{VDeleg}.
+
+  \item \AgdaFunction{stakeFromGADeposits}: This map contains the
+    stake associated to governance action deposits. For each
+    governance action, the map contains its deposit associated to its
+    \AgdaField{returnAddr} (as a staking credential).
+
+  \item \AgdaFunction{stakeFromRewards}: The map that contains the
+  rewards.
+\end{itemize}
 
 In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
 \AgdaFunction{aggregateBy} are
@@ -429,7 +546,6 @@ private variable
 \end{code}
 
 
-\begin{NoConway}
 The \AgdaDatatype{EPOCH} transition has a few updates that are encapsulated in
 the following functions.
 We need these functions to bring them in scope for some proofs about
@@ -438,6 +554,7 @@ We need these functions to bring them in scope for some proofs about
 \begin{figure*}[h]
 \begin{code}
 record EPOCH-Updates0 : Type where
+  no-eta-equality
   constructor EPOCHUpdates0
   field
     es             : EnactState
@@ -563,25 +680,19 @@ its results by carrying out each of the following tasks.
 \begin{code}
   EPOCH : ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
     let
-
       EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
         EPOCH-updates fut ls dState' acnt'
 
+      stakeDistrs : StakeDistrs
+      stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt' govSt' (GStateOf ls) (DStateOf ls)
+
+      Γ : RatifyEnv
+      Γ = ⟦ stakeDistrs , e , GState.dreps (GStateOf ls) , GState.ccHotKeys (GStateOf ls) , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
+
     in
-      record { currentEpoch = e
-             ; stakeDistrs = mkStakeDistrs
-                               (Snapshots.mark ss')
-                               govSt'
-                               (DepositsOf utxoSt')
-                               (VoteDelegsOf ls)
-             ; treasury = TreasuryOf acnt
-             ; GState (GStateOf ls)
-             ; pools = PoolsOf ls
-             ; delegatees = VoteDelegsOf ls
-             }
-          ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
-        → ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-        → _ ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
+        ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+      ∙ Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
+      ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
       ────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 \end{code}
@@ -591,45 +702,7 @@ its results by carrying out each of the following tasks.
 \end{figure*}
 
 \begin{NoConway}
-The \AgdaFunction{calculatePoolDelegatedState} produces a new pool distribution
-from the delegation map and stake allocation of the previous epoch.
-
-\AgdaFunction{calculatePoolDelegatedStake} performs the computation of
-\AgdaFunction{calculatePoolDistr} in the Shelley spec, without normalizing the
-stakes to be between 0 and 1.
-
 \begin{figure*}[ht]
-\begin{code}
-opaque
-  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
-  calculatePoolDelegatedStake ss =
-      -- Shelley spec: the output map must contain keys appearing in both
-      -- sd and the pool parameters.
-      sd ∣ dom (ss .poolParameters)
-    where
-      open Snapshot
-
-      -- delegated stake per pool
-      sd : KeyHash ⇀ Coin
-      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (ss .stake ˢ)) ᶠˢ)
-        where mutual
-          -- stake credentials delegating to each pool
-          stakeCredentialsPerPool : Rel KeyHash Credential
-          stakeCredentialsPerPool = (ss .delegations ˢ) ⁻¹ʳ
-
-          -- TODO: Move to agda-sets
-          -- https://github.com/input-output-hk/agda-sets/pull/13
-          _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
-          R ⁻¹ʳ = mapˢ swap R
-            where open import Data.Product using (swap)
-
-          _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
-          R ∘ʳ S =
-            concatMapˢ
-              (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
-              R
-\end{code}
-
 \begin{code}[hide]
 data
 \end{code}

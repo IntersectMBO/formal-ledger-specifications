@@ -73,18 +73,6 @@ govActionDeposits ls =
         just ❴ vd , dep ❵ )
       (fromList govSt)
 
-calculateStakeDistrs : LState → StakeDistrs
-calculateStakeDistrs ls =
-  let open LState ls; open CertState certState; open PState pState
-      open UTxOState utxoSt; open DState dState
-      spoDelegs = ∅ -- TODO
-      drepDelegs = ∅ -- TODO
-  in
-  record
-    { stakeDistr = govActionDeposits ls
-    }
-
-
 data
 
   _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type

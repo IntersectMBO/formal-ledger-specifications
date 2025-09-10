@@ -60,7 +60,7 @@ record GovProposal' : Type where
 
 record GovActionState' : Type where
   field
-    votes       : Voter ⇀ Vote
+    votes       : GovVotes
     returnAddr  : RwdAddr
     expiresIn   : Epoch
     action      : GovAction'
@@ -105,7 +105,7 @@ instance
 unquoteDecl = do
   hsTypeAlias GovActionID
   hsTypeAlias GovState
-  hsTypeAlias Voter
+  hsTypeAlias GovVoter'
 
 -- Computational function
 

@@ -16,7 +16,7 @@ open Computational ⦃...⦄
 open import stdlib-meta.Tactic.GenError using (genErrors)
 
 open DCert ; open PState
-
+open GovVote
 
 lookupDeposit :
   (dep : DepositPurpose ⇀ Coin) (c : DepositPurpose) →
@@ -30,8 +30,8 @@ instance
     λ where
     (delegate c mv mc d) → case ¿ (c ∉ dom rewards → d ≡ pparams .PParams.keyDeposit)
                                 × (c ∈ dom rewards → d ≡ 0)
-                                × mv ∈ mapˢ (just ∘ credVoter DRep) delegatees ∪
-                                    fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
+                                × mv ∈ mapˢ (just ∘ vDelegCredential) delegatees ∪
+                                    fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                 × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿ of λ where
       (yes p) → success (-, DELEG-delegate p )
       (no ¬p) → failure (genErrors ¬p)
@@ -53,8 +53,8 @@ instance
   Computational-DELEG .completeness de ds (delegate c mv mc d)
     s' (DELEG-delegate p) rewrite dec-yes (¿ (c ∉ dom (DState.rewards ds) → d ≡ DelegEnv.pparams de .PParams.keyDeposit)
                                            × (c ∈ dom (DState.rewards ds) → d ≡ 0)
-                                           × mv ∈ mapˢ (just ∘ credVoter DRep) (DelegEnv.delegatees de) ∪
-                                               fromList ( nothing ∷ just abstainRep ∷ just noConfidenceRep ∷ [] )
+                                           × mv ∈ mapˢ (just ∘ vDelegCredential) (DelegEnv.delegatees de) ∪
+                                               fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
                                            × mc ∈ mapˢ just (dom (DelegEnv.pools de)) ∪ ❴ nothing ❵ ¿) p .proj₂ = refl
   Computational-DELEG .completeness _ ds (dereg c nothing) _ (DELEG-dereg h@(p , q , r))
     with lookupDeposit (DState.deposits ds) (CredentialDeposit c)
@@ -175,7 +175,7 @@ instance
     open GState gState; open DState dState
     sep : String
     sep = " | "
-    refresh = mapPartial getDRepVote (fromList votes)
+    refresh = mapPartial (isGovVoterDRep ∘ voter) (fromList votes)
 
     genErr : ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
                  × mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards)

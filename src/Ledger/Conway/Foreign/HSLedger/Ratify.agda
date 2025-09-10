@@ -29,31 +29,36 @@ instance
                                             • RatifyState.es ↦ "rsEnactState"
   Conv-RatifyState = autoConvert RatifyState
 
-ratify-debug : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → String)
-ratify-debug env st sig =
-  "Number of govactions: " +ˢ show (length sig) +ˢ "\n" +ˢ
-  foldr (λ x s → s +ˢ govActionInfo x) "" sig
-  where
-    open RatifyEnv (from env)
-    govActionInfo : HsType (GovActionID × GovActionState) → String
-    govActionInfo (gaId F., gas) =
-      let
-        open GovActionState (from gas)
-        open RatifyState (from st)
-        open EnactState es
-        votes'  = actualVotes (from env) (proj₁ pparams) (proj₁ cc) (action .gaType) votes
-        showAcceptedStakeRatio role = Rational.show (acceptedStakeRatio role (dom votes') stakeDistrs votes')
-        showIsAccepted role = case acceptedBy? (from env) es (from gas) role of λ where
-          (yes _) → "✓"
-          (no  _) → "×"
-      in
-        "SPO: \t"  +ˢ showAcceptedStakeRatio SPO  +ˢ "\t" +ˢ showIsAccepted SPO  +ˢ "\n" +ˢ
-        "DRep: \t" +ˢ showAcceptedStakeRatio DRep +ˢ "\t" +ˢ showIsAccepted DRep +ˢ "\n" +ˢ
-        "CC: \t"   +ˢ showAcceptedStakeRatio CC   +ˢ "\t" +ˢ showIsAccepted CC   +ˢ "\n"
+-- ratify-debug : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → String)
+-- ratify-debug env st sig =
+--   "Number of govactions: " +ˢ show (length sig) +ˢ "\n" +ˢ
+--   foldr (λ x s → s +ˢ govActionInfo x) "" sig
+--   where
+--     open RatifyEnv (from env)
+--     govActionInfo : HsType (GovActionID × GovActionState) → String
+--     govActionInfo (gaId F., gas) =
+--       let
+--         open GovActionState (from gas)
+--         open RatifyState (from st)
+--         open EnactState es
+--         votes'  = actualVotes (from env) (proj₁ pparams) (proj₁ cc) (action .gaType) votes
+--         showAcceptedStakeRatio role = Rational.show (acceptedStakeRatio role (dom votes') stakeDistrs votes')
+--         showIsAccepted role = case acceptedBy? (from env) es (from gas) role of λ where
+--           (yes _) → "✓"
+--           (no  _) → "×"
+--       in
+--         "SPO: \t"  +ˢ showAcceptedStakeRatio SPO  +ˢ "\t" +ˢ showIsAccepted SPO  +ˢ "\n" +ˢ
+--         "DRep: \t" +ˢ showAcceptedStakeRatio DRep +ˢ "\t" +ˢ showIsAccepted DRep +ˢ "\n" +ˢ
+--         "CC: \t"   +ˢ showAcceptedStakeRatio CC   +ˢ "\t" +ˢ showIsAccepted CC   +ˢ "\n"
 
-{-# COMPILE GHC ratify-debug as ratifyDebug #-}
+-- {-# COMPILE GHC ratify-debug as ratifyDebug #-}
 
 ratify-step : HsType (RatifyEnv → RatifyState → List (GovActionID × GovActionState) → ComputationResult ⊥ RatifyState)
 ratify-step = to (compute Computational-RATIFIES)
 
 {-# COMPILE GHC ratify-step as ratifyStep #-}
+
+instance
+  Show-RATIFIES : ∀ {Γ s sig s'}
+    → Show (Γ ⊢ s ⇀⦇ sig  ,RATIFIES⦈ s')
+  Show-RATIFIES {Γ} {s} {sig} .show r = "" -- ratify-debug (to Γ) (to s) (to sig)

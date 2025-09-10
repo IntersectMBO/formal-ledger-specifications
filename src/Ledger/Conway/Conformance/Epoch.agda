@@ -132,10 +132,14 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 
       acnt' = record acnt
         { treasury  = acnt .treasury ∸ totWithdrawals + utxoSt .donations + unclaimed }
+
+      stakeDistrs : StakeDistrs
+      stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt' govSt' (record { GState (CertState.gState (LState.certState ls)) })
+                                                                        (record { DState (CertState.dState (LState.certState ls)) })
+
     in
     record { currentEpoch = e
-           ; stakeDistrs = mkStakeDistrs  (Snapshots.mark ss') govSt'
-                                          (utxoSt' .deposits) (voteDelegs dState)
+           ; stakeDistrs = stakeDistrs
            ; treasury = acnt .treasury ; GState gState
            ; pools = pState .pools ; delegatees = dState .voteDelegs }
         ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'

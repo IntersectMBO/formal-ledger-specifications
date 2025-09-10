@@ -17,13 +17,8 @@ module Ledger.Conway.Specification.Ratify (txs : _) (open TransactionStructure t
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
-
-infixr 2 _∧_
-_∧_ = _×_
-
-instance
-  _ = +-0-commutativeMonoid
 \end{code}
+
 Governance actions are \defn{ratified} through on-chain votes.
 Different kinds of governance actions have different ratification requirements
 but always involve at least two of the three governance bodies.
@@ -190,7 +185,8 @@ by at least half of the SPO stake.
 \begin{code}
 record StakeDistrs : Type where
   field
-    stakeDistr  : VDeleg ⇀ Coin
+    stakeDistrVDeleg  : VDeleg  ⇀ Coin
+    stakeDistrPools   : KeyHash ⇀ Coin
 
 record RatifyEnv : Type where
   field
@@ -220,21 +216,6 @@ instance
   HasTreasury-RatifyEnv : HasTreasury RatifyEnv
   HasTreasury-RatifyEnv .TreasuryOf = RatifyEnv.treasury
 \end{code}
-\begin{code}
-
-CCData : Type
-CCData = Maybe ((Credential ⇀ Epoch) × ℚ)
-
-govRole : VDeleg → GovRole
-govRole (credVoter gv _)  = gv
-govRole abstainRep        = DRep
-govRole noConfidenceRep   = DRep
-
-IsCC IsDRep IsSPO : VDeleg → Type
-IsCC    v = govRole v ≡ CC
-IsDRep  v = govRole v ≡ DRep
-IsSPO   v = govRole v ≡ SPO
-\end{code}
 \end{AgdaMultiCode}
 \caption{Types and functions for the RATIFY transition system}
 \label{fig:types-and-functions-for-the-ratify-transition-system}
@@ -246,198 +227,368 @@ designed to do so.
 
 \Cref{fig:types-and-functions-for-the-ratify-transition-system}
 defines some types and functions used in the RATIFY transition
-system. \CCData{} is simply an alias to define some functions more
-easily.
+system.
+
+\begin{code}[hide]
+instance
+  unquoteDecl HasCast-StakeDistrs HasCast-RatifyEnv HasCast-RatifyState = derive-HasCast
+    (   (quote StakeDistrs , HasCast-StakeDistrs)
+    ∷   (quote RatifyEnv , HasCast-RatifyEnv)
+    ∷ [ (quote RatifyState , HasCast-RatifyState) ])
+\end{code}
+
+\subsection{Vote Counting}
+
+\Cref{fig:defs:ratify-acceptedbycc,fig:defs:ratify-acceptedbydrep,fig:defs:ratify-acceptedbyspo}
+define the \acceptedBy{} predicate for each of the governance
+bodies. Given the current state of the votes and other parts of the
+system these functions calculate whether a governance action is
+ratified by the corresponding body.
+
+\subsubsection{Constitutional Commitee}
 
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
-\begin{code}[hide]
-instance
-  unquoteDecl HasCast-RatifyState = derive-HasCast
-    [ (quote RatifyState , HasCast-RatifyState) ]
-
-open StakeDistrs
-\end{code}
 \begin{code}
-actualVotes  : RatifyEnv → PParams → CCData → GovActionType
-             → (GovRole × Credential ⇀ Vote) → (VDeleg ⇀ Vote)
-actualVotes Γ pparams cc gaTy votes
-  =   mapKeys (credVoter CC) actualCCVotes  ∪ˡ actualPDRepVotes gaTy
-  ∪ˡ  actualDRepVotes                       ∪ˡ actualSPOVotes gaTy
+acceptedByCC
+  : RatifyEnv
+  → EnactState
+  → GovActionState
+  → Type
+acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
+  × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
   where
 \end{code}
 \begin{code}[hide]
-  open RatifyEnv Γ
-  open PParams pparams
+    open EnactState eSt using (cc; pparams)
+    open RatifyEnv Γ
+    open PParams (proj₁ pparams)
+    open GovActionState gaSt
+    open GovVotes votes using (gvCC)
 \end{code}
 \begin{code}
-  roleVotes : GovRole → VDeleg ⇀ Vote
-  roleVotes r = mapKeys (uncurry credVoter) (filter (λ (x , _) → r ≡ proj₁ x) votes)
+    castVotes : Credential ⇀ Vote
+    castVotes = gvCC
 
-  activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
-  spos  = filterˢ IsSPO (dom (stakeDistr stakeDistrs))
+    getCCHotCred : Credential × Epoch → Maybe Credential
+    getCCHotCred (c , e) =
+      if currentEpoch > e
+        then nothing -- credential has expired
+        else case lookupᵐ? ccHotKeys c of
+\end{code}
+\begin{code}[hide]
+          λ where
 \end{code}
 \begin{code}
+          (just (just c'))  → just c'
+          _                 → nothing -- hot key not registered or resigned
 
-  getCCHotCred : Credential × Epoch → Maybe Credential
-  getCCHotCred (c , e) = if currentEpoch > e then nothing
-    else case lookupᵐ? ccHotKeys c of
+    actualVote : Credential → Epoch → Vote
+    actualVote c e = case getCCHotCred (c , e) of
 \end{code}
 \begin{code}[hide]
       λ where
 \end{code}
 \begin{code}
-        (just (just c'))  → just c'
-        _                 → nothing -- no hot key or resigned
-
-  SPODefaultVote : GovActionType → VDeleg → Vote
-  SPODefaultVote gaT (credVoter SPO (KeyHashObj kh)) = case lookupᵐ? pools kh of
-\end{code}
-\begin{code}[hide]
-      λ where
-\end{code}
-\begin{code}
-        nothing → Vote.no
-        (just  p) → case lookupᵐ? delegatees (StakePoolParams.rewardAccount p) , gaTy of
-\end{code}
-\begin{code}[hide]
-               λ where
-\end{code}
-\begin{code}
-               (_                     , TriggerHardFork)     → Vote.no
-               (just noConfidenceRep  , NoConfidence)  → Vote.yes
-               (just abstainRep       , _           )  → Vote.abstain
-               _                                       → Vote.no
-  SPODefaultVote _ _ = Vote.no
-
-  actualCCVote : Credential → Epoch → Vote
-  actualCCVote c e = case getCCHotCred (c , e) of
-\end{code}
-\begin{code}[hide]
-      λ where
-\end{code}
-\begin{code}
-        (just c')  → maybe id Vote.no (lookupᵐ? votes (CC , c'))
+        (just c')  → maybe id Vote.no (lookupᵐ? castVotes c')
         _          → Vote.abstain
 
-  actualCCVotes : Credential ⇀ Vote
-  actualCCVotes = case cc of
+    actualVotes : Credential ⇀ Vote
+    actualVotes = case proj₁ cc of
 \end{code}
 \begin{code}[hide]
       λ where
 \end{code}
 \begin{code}
         nothing         →  ∅
-        (just (m , q))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
-                           then mapWithKey actualCCVote m
+        (just (m , _))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
+                           then mapWithKey actualVote m
                            else constMap (dom m) Vote.no
 
-  actualPDRepVotes : GovActionType → VDeleg ⇀ Vote
-  actualPDRepVotes NoConfidence
-                      = ❴ abstainRep , Vote.abstain ❵ ∪ˡ ❴ noConfidenceRep , Vote.yes ❵
-  actualPDRepVotes _  = ❴ abstainRep , Vote.abstain ❵ ∪ˡ ❴ noConfidenceRep , Vote.no ❵
+    mT : Maybe ℚ
+    mT = threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action CC
 
-  actualDRepVotes : VDeleg ⇀ Vote
-  actualDRepVotes  =   roleVotes DRep
-                   ∪ˡ  constMap (mapˢ (credVoter DRep) activeDReps) Vote.no
+    t : ℚ
+    t = maybe id 0ℚ mT
 
-  actualSPOVotes : GovActionType → VDeleg ⇀ Vote
-  actualSPOVotes gaTy = roleVotes SPO ∪ˡ mapFromFun (SPODefaultVote gaTy) spos
+    stakeDistr : Credential ⇀ Coin
+    stakeDistr = constMap (dom actualVotes) 1
+
+    acceptedStake totalStake : Coin
+    acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes                           ] x
+    totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵))  ] x
 \end{code}
 \end{AgdaMultiCode}
-\caption{Vote counting}
-\label{fig:defs:ratify-actualvotes}
+\caption{Vote counting for CC}
+\label{fig:defs:ratify-acceptedbycc}
 \end{figure*}
 
-\Cref{fig:defs:ratify-actualvotes} defines the \actualVotes{}
-function. Given the current state about votes and other parts of the
-system it calculates a new mapping of votes, which is the mapping that
-will actually be used during ratification. Things such as default
-votes or resignation/expiry are implemented in this way.
+\Cref{fig:defs:ratify-acceptedbycc} defines the
+\AgdaFunction{acceptedByCC} predicate. This predicate utilizes the
+following auxiliary definitions:
+%
+\begin{itemize}
+  \item \AgdaFunction{castVotes}: This map contains the votes that
+    have been cast by members of the \CC{} body and are part of the
+    \AgdaDatatype{GovActionState}~\AgdaBound{gaSt}.
 
-\actualVotes{} is defined as the union of four voting maps,
-corresponding to the constitutional committee, predefined (or auto)
-DReps, regular DReps and SPOs.
-\begin{itemize}
-\item \roleVotes{} filters the votes based on the given governance role
-  and is a helper for definitions further down.
-\item if a \CC{} member has not yet registered a hot key, has \expired{},
-  or has resigned, then \actualCCVote{} returns \abstain{}; if none
-  of these conditions is met, then
-  \begin{itemize}
-    \item if the \CC{} member has voted, then that vote is returned;
-    \item if the \CC{} member has not voted, then the default value of \no{} is returned.
-  \end{itemize}
-\item \actualDRepVotes{} adds a default vote of \no{} to all active DReps
-  that didn't vote.
-\item \actualSPOVotes{} adds a default vote to all SPOs who didn't vote,
-  with the default depending on the action.
+  \item \AgdaFunction{getCCHotCred}: This function maps a
+    \Credential{} and an \Epoch{} to the hot key corresponding with
+    the given credential, in case this has not expired.
+
+  \item \AgdaFunction{actualVote}: This function sets the default vote
+    for \CC{} members. If the given \CC{} member term has expired, they
+    have not yet registered a hot key, or they have resigned, then
+    \actualVote{} returns \abstain{}; if none of these conditions is
+    met, then
+    %
+    \begin{itemize}
+      \item if the \CC{} member has voted, then that vote is returned;
+      \item if the \CC{} member has not voted, then the default value
+        of \no{} is returned.
+    \end{itemize}
+
+  \item \AgdaFunction{actualVotes}: This map contains the actual votes
+    of the \CC{} body. If the commitee does not exists then it is the
+    empty map, otherwise if
+    %
+    \begin{itemize}
+      \item the number of \CC{} members with a registered hot key is
+      greater than the protocol parameter \AgdaBound{ccMinSize}, then
+      \AgdaFunction{actualVote} is returned (as a map), otherwise;
+      \item all commitee members vote \no{}
+    \end{itemize}
+
+  \item \AgdaFunction{mT}: This is the threshold of the \CC{}. It may
+    be \AgdaInductiveConstructor{nothing}.
+
+  \item \AgdaFunction{stakeDistr} computes the stake
+    distribution. Note that every constitutional committe member has a
+    stake of 1, giving them equal voting power. However, just as with
+    other delegation, multiple \CC{} members can delegate to the same hot
+    key, giving that hot key the power of those multiple votes with a
+    single actual vote.
+
+  \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
+  These amounts correspond to the portion of the stake from the \CC{}
+  members that has voted \yes{} and that which has voted \yes{} or
+  \no{}.
 \end{itemize}
-Let us discuss the last item above---the way SPO votes are counted---as the ledger
-specification's handling of this has evolved in response to community feedback.
-Previously, if an SPO did not vote, then it would be counted as having voted
-\abstain{} by default.  Members of the SPO community found this behavior counterintuitive
-and requested that non-voters be assigned a \no{} vote by default, with the caveat that
-an SPO could change its default setting by delegating its reward account credential
-to an \texttt{AlwaysNoConfidence} DRep or an \texttt{AlwaysAbstain} DRep.
-(This change applies only after the bootstrap period; during the bootstrap period
-the logic is unchanged; see \cref{sec:conway-bootstrap-gov}.)
-To be precise, the agreed upon specification is the following: an SPO that did
-not vote is assumed to have vote \no{}, except under the following circumstances:
+
+In addition, it has to be the case that either
+%
 \begin{itemize}
-\item if the SPO has delegated its reward credential to an
-  \texttt{AlwaysNoConfidence} DRep, then their default vote is \yes{} for
-  \NoConfidence{} proposals and \no{} for other proposals;
-\item if the SPO has delegated its reward credential to an \texttt{AlwaysAbstain}
-  DRep, then its default vote is \abstain{} for all proposals.
+  \item the size of the \CC{} is greater than \AgdaBound{ccMinSize}, or
+  \item the threshold function returns \AgdaInductiveConstructor{nothing}
+  %% TODO: Explain this?
 \end{itemize}
-It is important to note that the credential that can now be used to set a default
-voting behavior is the credential used to withdraw staking rewards, which is not
-(in general) the same as the credential used for voting.
+
+\subsubsection{Delegated Representatives}
+
+\begin{figure*}[!ht]
+\begin{AgdaMultiCode}
+\begin{code}
+acceptedByDRep
+  : RatifyEnv
+  → EnactState
+  → GovActionState
+  → Type
+acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
+  where
+\end{code}
+\begin{code}[hide]
+    open EnactState eSt using (cc; pparams)
+    open RatifyEnv Γ
+    open PParams (proj₁ pparams)
+    open StakeDistrs stakeDistrs
+    open GovActionState gaSt
+    open GovVotes votes using (gvDRep)
+\end{code}
+\begin{code}
+    castVotes : VDeleg ⇀ Vote
+    castVotes = mapKeys vDelegCredential gvDRep
+
+    activeDReps : ℙ Credential
+    activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
+
+    predeterminedDRepVotes : VDeleg ⇀ Vote
+    predeterminedDRepVotes = case gaType action of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+        NoConfidence → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.yes ❵
+        _            → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.no  ❵
+
+    defaultDRepCredentialVotes : VDeleg ⇀ Vote
+    defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
+
+    actualVotes : VDeleg ⇀ Vote
+    actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes
+                               ∪ˡ predeterminedDRepVotes
+
+    t : ℚ
+    t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action DRep)
+
+    acceptedStake totalStake : Coin
+    acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes                          ] x
+    totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+\end{code}
+\end{AgdaMultiCode}
+\caption{Vote counting for DReps}
+\label{fig:defs:ratify-acceptedbydrep}
+\end{figure*}
+
+\Cref{fig:defs:ratify-acceptedbydrep} defines the predicate
+\AgdaFunction{acceptedByDRep}. This predicate is defined using some
+auxiliary definitions:
+%
+\begin{itemize}
+  \item \AgdaFunction{activeDReps}: This set contains all \DRep{}s
+    whose term has not expired.
+
+  \item \AgdaFunction{predeterminedDRepVotes}: This map collects the
+    predetermined votes for the \AgdaDatatype{VDeleg}. It depends on the
+    governance action at hand.
+
+  \item \AgdaFunction{defaultDRepCredentialVote}: This map sets the default
+    vote to \no{} for all the active \DRep{}s.
+
+  \item \AgdaFunction{actualVotes}: This map joins together in order of preference:
+    the cast votes, the default votes and the predetermined votes.
+
+  \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
+    These amounts correspond to the portion of the stake from the
+    \DRep{} members that has voted \yes{} and that which has voted
+    \yes{} or \no{}.
+\end{itemize}
+
+\subsubsection{Stake Pool Operators}
+
+\begin{figure*}[!ht]
+\begin{AgdaMultiCode}
+\begin{code}
+acceptedBySPO
+  : RatifyEnv
+  → EnactState
+  → GovActionState
+  → Type
+acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
+  where
+\end{code}
+\begin{code}[hide]
+    open EnactState eSt using (cc; pparams)
+    open RatifyEnv Γ
+    open StakeDistrs stakeDistrs
+    open GovActionState gaSt
+    open GovVotes votes using (gvSPO)
+\end{code}
+\begin{code}
+    castVotes : KeyHash ⇀ Vote
+    castVotes = gvSPO
+
+    defaultVote : KeyHash → Vote
+    defaultVote kh = case lookupᵐ? pools kh of
+\end{code}
+\begin{code}[hide]
+      λ where
+\end{code}
+\begin{code}
+      nothing   → Vote.no
+      (just  p) → case lookupᵐ? delegatees (StakePoolParams.rewardAccount p) , gaType action of
+\end{code}
+\begin{code}[hide]
+             λ where
+\end{code}
+\begin{code}
+             (_                       , TriggerHardFork)  → Vote.no
+             (just vDelegNoConfidence , NoConfidence   )  → Vote.yes
+             (just vDelegAbstain      , _              )  → Vote.abstain
+             _                                            → Vote.no
+
+    actualVotes : KeyHash ⇀ Vote
+    actualVotes = castVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
+
+    t : ℚ
+    t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action SPO)
+
+    acceptedStake totalStake : Coin
+    acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes                          ] x
+    totalStake     = ∑[ x ← stakeDistrPools ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+\end{code}
+\end{AgdaMultiCode}
+\caption{Vote counting for SPOs}
+\label{fig:defs:ratify-acceptedbyspo}
+\end{figure*}
+
+\Cref{fig:defs:ratify-acceptedbyspo}, defines the predicate
+\AgdaFunction{acceptedBySPO}, which uses the following auxiliary
+definitions:
+%
+\begin{itemize}
+  \item \AgdaFunction{castVotes}: This map contains the votes that
+  have been cast by members of the SPO body and have been collected
+  as part of the \AgdaDatatype{GovActionState}~\AgdaBound{gaSt}.
+
+  \item \AgdaFunction{defaultVote}: This map sets a default vote to
+  all SPOs who didn't vote, with the default depending on the given
+  action, and whether the SPO has delegated their vote to one of the
+  default DReps.
+
+  \item \AgdaFunction{actualVotes}: This map combines the votes cast
+  by SPOs with \AgdaBound{defaultVote} using a left-biased union
+  making cast votes take precedence over default votes.
+
+  \item \AgdaFunction{t}: This rational is the threshold used to
+  calculate if the action is ratified by the SPO body.
+
+  \item \AgdaFunction{acceptedStake} and \AgdaFunction{totalStake}:
+  These amounts correspond to the portion of the stake from the SPOs
+  that has voted \yes{} and that which has voted \yes{} or \no{}. Note
+  that it uses the stake distribution \AgdaField{stakeDistrPools} as
+  provided in the environment.
+\end{itemize}
+
+Let us discuss in more detail the way SPO votes are counted, as the
+ledger specification's handling of this has evolved in response to
+community feedback. Previously, if an SPO did not vote, then it would
+be counted as having voted \abstain{} by default. Members of the SPO
+community found this behavior counterintuitive and requested that
+non-voters be assigned a \no{} vote by default, with the caveat that
+an SPO could change its default setting by delegating its reward
+account credential to an \texttt{AlwaysNoConfidence} DRep or an
+\texttt{AlwaysAbstain} DRep. (This change applies only after the
+bootstrap period; during the bootstrap period the logic is unchanged;
+see \cref{sec:conway-bootstrap-gov}.)  To be precise, the agreed upon
+specification is the following: an SPO that did not vote is assumed to
+have voted \no{}, except under the following circumstances:
+%
+\begin{itemize}
+  \item if the SPO has delegated its reward credential to an
+    \texttt{AlwaysNoConfidence} DRep, then their default vote is
+    \yes{} for \NoConfidence{} proposals and \no{} for other
+    proposals;
+  \item if the SPO has delegated its reward credential to an
+    \texttt{AlwaysAbstain} DRep, then its default vote is \abstain{}
+    for all proposals.
+\end{itemize}
+
+It is important to note that the credential that can now be used to
+set a default voting behavior is the credential used to withdraw
+staking rewards, which is not (in general) the same as the credential
+used for voting.
 %% And as a second layer, this means that if that credential is a script, it may need
 %% to have explicit logic written to be able to set a default at all.
 
+
 \begin{figure*}[!ht]
 \begin{code}[hide]
-open RatifyEnv using (stakeDistrs)
-
 abstract
-  -- unused, keep until we know for sure that there'll be no minimum AVS
-  -- activeVotingStake : ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → Coin
-  -- activeVotingStake cc dists votes =
-  --   ∑[ x  ← getStakeDist DRep cc dists ∣ dom votes ᶜ ᶠᵐ ] x
-
---  _/₀_ : ℕ → ℕ → ℚ
---  x /₀ 0 = 0ℚ
---  x /₀ y@(suc _) = ℤ.+ x ℚ./ y
 \end{code}
 \begin{code}
-
-  getStakeDist : GovRole → ℙ VDeleg → StakeDistrs → VDeleg ⇀ Coin
-  getStakeDist CC    cc  sd  = constMap (filterˢ IsCC cc) 1
-  getStakeDist DRep  _   sd  = filterKeys IsDRep  (sd .stakeDistr)
-  getStakeDist SPO   _   sd  = filterKeys IsSPO   (sd .stakeDistr)
-
-  acceptedStakeRatio : GovRole → ℙ VDeleg → StakeDistrs → (VDeleg ⇀ Vote) → ℚ
-  acceptedStakeRatio r cc dists votes = acceptedStake /₀ totalStake
-    where
-      dist : VDeleg ⇀ Coin
-      dist = getStakeDist r cc dists
-      acceptedStake totalStake : Coin
-      acceptedStake  = ∑[ x ← dist ∣ votes ⁻¹ Vote.yes                              ] x
-      totalStake     = ∑[ x ← dist ∣ dom (votes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵))  ] x
-
-  acceptedBy : RatifyEnv → EnactState → GovActionState → GovRole → Type
-  acceptedBy Γ (record { cc = cc , _; pparams = pparams , _ }) gs role =
-    let open GovActionState gs; open PParams pparams
-        votes'  = actualVotes Γ pparams cc (gaType action) votes
-        mbyT    = threshold pparams (proj₂ <$> cc) action role
-        t       = maybe id 0ℚ mbyT
-    in acceptedStakeRatio role (dom votes') (stakeDistrs Γ) votes' ≥ t
-     ∧ (role ≡ CC → maybe (λ (m , _) → lengthˢ m) 0 cc ≥ ccMinSize ⊎ Is-nothing mbyT)
-
   accepted : RatifyEnv → EnactState → GovActionState → Type
-  accepted Γ es gs = acceptedBy Γ es gs CC ∧ acceptedBy Γ es gs DRep ∧ acceptedBy Γ es gs SPO
+  accepted Γ es gs = acceptedByCC Γ es gs × acceptedByDRep Γ es gs × acceptedBySPO Γ es gs
 
   expired : Epoch → GovActionState → Type
   expired current record { expiresIn = expiresIn } = expiresIn < current
@@ -446,28 +597,9 @@ abstract
 \label{fig:defs:ratify-defs-i}
 \end{figure*}
 
-\Cref{fig:defs:ratify-defs-i} defines the \accepted{} and \expired{}
-functions (together with some helpers) that are used in the rules of
-RATIFY.
-\begin{itemize}
-  \item \getStakeDist{} computes the stake distribution based on the
-    given governance role and the corresponding delegations. Note that
-    every constitutional committe member has a stake of 1, giving them
-    equal voting power. However, just as with other delegation, multiple
-    CC members can delegate to the same hot key, giving that hot key
-    the power of those multiple votes with a single actual vote.
-  \item \acceptedStakeRatio{} is the ratio of accepted stake. It is
-    computed as the ratio of \yes{} votes over the votes that didn't
-    \abstain{}. The latter is equivalent to the sum of \yes{} and \no{} votes.
-    The special division symbol \AgdaFunction{/₀} indicates that in case
-    of a division by 0, the numbers 0 should be returned. This implies
-    that in the absence of stake, an action can only pass if the
-    threshold is also set to 0.
-  \item \acceptedBy{} looks up the threshold in the \threshold{} table and
-    compares it to the result of \acceptedStakeRatio{}.
-  \item \accepted{} then checks if an action is accepted by all roles; and
-  \item \expired{} checks whether a governance action is expired in a given epoch.
-\end{itemize}
+The \accepted{} and \expired{} functions just defined
+are used in the rules of RATIFY.
+
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
 \begin{code}[hide]
@@ -505,6 +637,7 @@ acceptConds Γ stʳ (id , st) =
     where open RatifyEnv Γ
           open RatifyState stʳ
           open GovActionState st
+
 abstract
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
   verifyPrev? NoConfidence        h es = dec
@@ -523,13 +656,17 @@ abstract
     where
         import Data.Maybe.Relation.Unary.All as All
 
-  acceptedBy? : ∀ Γ es st role → Dec (acceptedBy Γ es st role)
-  acceptedBy? _ _ _ _ = _ ℚ.≤? _ ×-dec _ ≟ _ →-dec (_ ≥? _ ⊎-dec Is-nothing?)
-    where
-      import Relation.Nullary.Decidable as Dec
-
   accepted? : ∀ Γ es st → Dec (accepted Γ es st)
-  accepted? Γ es st = let a = λ {x} → acceptedBy? Γ es st x in a ×-dec a ×-dec a
+  accepted? Γ es st = acceptedByCC? Γ es st ×-dec acceptedByDRep? Γ es st ×-dec acceptedBySPO? Γ es st
+    where
+     acceptedByCC? : ∀ Γ es st → Dec (acceptedByCC Γ es st)
+     acceptedByCC? _ _ _ = _ ℚ.≤? _ ×-dec (_ ≥? _ ⊎-dec Is-nothing?)
+
+     acceptedByDRep? : ∀ Γ es st → Dec (acceptedByDRep Γ es st)
+     acceptedByDRep? _ _ _ = _ ℚ.≤? _
+
+     acceptedBySPO? : ∀ Γ es st → Dec (acceptedBySPO Γ es st)
+     acceptedBySPO? _ _ _ = _ ℚ.≤? _
 
   expired? : ∀ e st → Dec (expired e st)
   expired? e st = ¿ expired e st ¿
@@ -539,17 +676,17 @@ abstract
 \label{fig:defs:ratify-defs-ii}
 \end{figure*}
 
-\Cref{fig:defs:ratify-defs-ii} defines functions that deal with
-delays and the acceptance criterion for ratification.  A given action
-can either be delayed if the action contained in \EnactState{} isn't the
+The functions defined above deal with delays
+and the acceptance criterion for ratification.  A given action can
+either be delayed if the action contained in \EnactState{} isn't the
 one the given action is building on top of, which is checked by
-\verifyPrev{}, or if a previous action was a \delayingAction{}.  Note that
-\delayingAction{} affects the future: whenever a \delayingAction{} is
-accepted all future actions are delayed.  \delayed{} then expresses the
-condition whether an action is delayed. This happens either because
-the previous action doesn't match the current one, or because the
-previous action was a delaying one. This information is passed in as
-an argument.
+\verifyPrev{}, or if a previous action was a \delayingAction{}.  Note
+that \delayingAction{} affects the future: whenever a
+\delayingAction{} is accepted all future actions are delayed.
+\delayed{} then expresses the condition whether an action is
+delayed. This happens either because the previous action doesn't match
+the current one, or because the previous action was a delaying
+one. This information is passed in as an argument.
 
 \begin{code}[hide]
 private variable
