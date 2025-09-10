@@ -72,7 +72,7 @@ then (under a certain special condition)
 `govDepsMatch`{.AgdaFunction} (`LStateOf` `eps'`{.AgdaBound}).
 
 The special condition under which the property holds is the same as the one in
-[Chain.Properties.GovDepsMatch](Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md#thm:ChainGovDepsMatch):
+[Chain.Properties.GovDepsMatch][]:
 let `removed'`{.AgdaFunction} be the union of the governance actions in
 the `removed`{.AgdaField} field of the ratify state of `eps`{.AgdaBound} and the
 orphaned governance actions in the `GovState`{.AgdaFunction} of `eps`{.AgdaBound}.
