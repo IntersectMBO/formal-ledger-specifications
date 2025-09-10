@@ -412,6 +412,22 @@ opaque
       -- stake from rewards
       stakeFromRewards : Stake
       stakeFromRewards = RewardsOf dState
+
+  mkStakeDistrs
+    : Snapshot
+    → Epoch
+    → UTxOState
+    → GovState
+    → GState
+    → DState
+    → StakeDistrs
+  mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
+    ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
+    , poolDelegatedStake ⟧
+    where
+      poolDelegatedStake : PoolDelegatedStake
+      poolDelegatedStake = mapWithKey (λ kh c → maybe (c +_) c (lookupᵐ? (RewardsOf dState) (KeyHashObj kh)))
+                                      (calculatePoolDelegatedStake ss)
 \end{code}
 \caption{Functions for computing stake distributions}
 \end{figure*}
@@ -614,19 +630,18 @@ its results by carrying out each of the following tasks.
 \begin{code}
   EPOCH : ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
     let
-
       EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
         EPOCH-updates fut ls dState' acnt'
 
       stakeDistrs : StakeDistrs
-      stakeDistrs = ⟦ calculateVDelegDelegatedStake e utxoSt' govSt' (GStateOf ls) (DStateOf ls) , calculatePoolDelegatedStake (Snapshots.mark ss') ⟧
+      stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt' govSt' (GStateOf ls) (DStateOf ls)
 
       Γ : RatifyEnv
       Γ = ⟦ stakeDistrs , e , GState.dreps (GStateOf ls) , GState.ccHotKeys (GStateOf ls) , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
 
     in
-        Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
-      ∙ ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+        ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
+      ∙ Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
       ────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
