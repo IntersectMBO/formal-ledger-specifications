@@ -241,6 +241,14 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.BlockBody.Properties.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.BlockBody.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Certs.Properties.PoV.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -370,6 +378,14 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ratify.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.RewardUpdate.Properties.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.RewardUpdate.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
