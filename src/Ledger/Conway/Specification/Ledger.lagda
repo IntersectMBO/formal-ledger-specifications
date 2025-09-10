@@ -109,6 +109,12 @@ instance
   HasFees-LState : HasFees LState
   HasFees-LState .FeesOf = FeesOf ∘ UTxOStateOf
 
+  HasCCHotKeys-LState : HasCCHotKeys LState
+  HasCCHotKeys-LState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
+
+  HasDReps-LState : HasDReps LState
+  HasDReps-LState .DRepsOf = DRepsOf ∘ CertStateOf
+
 open CertState
 open DState
 open GovVotes

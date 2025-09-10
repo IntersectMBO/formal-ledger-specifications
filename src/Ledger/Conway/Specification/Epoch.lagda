@@ -66,6 +66,9 @@ record HasEpochState {a} (A : Type a) : Type a where
 open HasEpochState ⦃...⦄ public
 
 instance
+  HasSnapshots-EpochState : HasSnapshots EpochState
+  HasSnapshots-EpochState .SnapshotsOf = EpochState.ss
+
   HasLState-EpochState : HasLState EpochState
   HasLState-EpochState .LStateOf = EpochState.ls
 
@@ -108,6 +111,8 @@ PoolDelegatedStake = KeyHash ⇀ Coin
 record NewEpochState : Type where
   field
     lastEpoch   : Epoch
+    bprev       : BlocksMade
+    bcur        : BlocksMade
     epochState  : EpochState
     ru          : Maybe RewardUpdate
     pd          : PoolDelegatedStake
@@ -209,84 +214,116 @@ described in \textcite[\sectionname~6.4]{shelley-delegation-design}.
 \begin{figure*}[h]
 \begin{AgdaMultiCode}
 \begin{code}
-createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
-createRUpd slotsPerEpoch b es total =
-  record  { Δt = Δt₁
-          ; Δr = 0 - Δr₁ + Δr₂
-          ; Δf = 0 - pos feeSS
-          ; rs = rs
+opaque
+  createRUpd : ℕ → BlocksMade → EpochState → Coin → RewardUpdate
+  createRUpd slotsPerEpoch b es total =
+    record  { Δt = Δt₁
+            ; Δr = 0 - Δr₁ + Δr₂
+            ; Δf = 0 - pos feeSS
+            ; rs = rs
 \end{code}
 \begin{code}[hide]
-          ; flowConservation = flowConservation
-          ; Δt-nonnegative = Δt-nonneg
-          ; Δf-nonpositive = Δf-nonpos
+            ; flowConservation = flowConservation
+            ; Δt-nonnegative = Δt-nonneg
+            ; Δf-nonpositive = Δf-nonpos
 \end{code}
 \begin{code}
-          }
-  where
-    prevPp       = PParamsOf es
-    reserves     = ReservesOf es
-    pstakego     = es .EpochState.ss .Snapshots.go
-    feeSS        = es .EpochState.ss .Snapshots.feeSS
-    stake        = StakeOf pstakego
-    delegs       = StakeDelegsOf pstakego
-    poolParams   = PoolsOf pstakego
-    blocksMade   = ∑[ m ← b ] m
-    ρ            = fromUnitInterval (prevPp .PParams.monetaryExpansion)
-    η            = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
-    Δr₁          = floor (1 ⊓ η * ρ * fromℕ reserves)
-    rewardPot    = pos feeSS + Δr₁
-    τ            = fromUnitInterval (prevPp .PParams.treasuryCut)
-    Δt₁          = floor (fromℤ rewardPot * τ)
-    R            = rewardPot - Δt₁
-    circulation  = total - reserves
-    rs           = reward prevPp b (posPart R) poolParams stake delegs circulation
-    Δr₂          = R - pos (∑[ c ← rs ] c)
+            }
+    where
+      prevPp : PParams
+      prevPp = PParamsOf es
 
+      reserves : Reserves
+      reserves = ReservesOf es
+
+      pstakego : Snapshot
+      pstakego = (SnapshotsOf es) .Snapshots.go
+
+      feeSS : Fees
+      feeSS = FeesOf (SnapshotsOf es)
+
+      stake : Stake
+      stake = StakeOf pstakego
+
+      delegs : StakeDelegs
+      delegs = StakeDelegsOf pstakego
+
+      poolParams : Pools
+      poolParams = PoolsOf pstakego
+
+      blocksMade : ℕ
+      blocksMade = ∑[ m ← b ] m
+
+      ρ η τ : ℚ
+      ρ = fromUnitInterval (prevPp .PParams.monetaryExpansion)
+      η = fromℕ blocksMade ÷₀ (fromℕ slotsPerEpoch * ActiveSlotCoeff)
+      τ = fromUnitInterval (prevPp .PParams.treasuryCut)
+
+      Δr₁ rewardPot Δt₁ R : ℤ
+      Δr₁ = floor (1 ⊓ η * ρ * fromℕ reserves)
+      rewardPot = pos feeSS + Δr₁
+      Δt₁ = floor (fromℤ rewardPot * τ)
+      R = rewardPot - Δt₁
+
+      circulation : Coin
+      circulation = total - reserves
+
+      rs : Rewards
+      rs = reward prevPp b (posPart R) poolParams stake delegs circulation
+
+      Δr₂ : ℤ
+      Δr₂ = R - pos (∑[ c ← rs ] c)
 \end{code}
 \begin{code}[hide]
-    -- Proofs
-    -- Note: Overloading of + and - seems to interfere with
-    -- the ring solver.
-    lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
-      → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
-    lemmaFlow = solve-∀
-    flowConservation = lemmaFlow Δt₁ Δr₁ (pos feeSS) (pos (∑[ c ← rs ] c))
+      -- Proofs
+      -- Note: Overloading of + and - seems to interfere with
+      -- the ring solver.
+      lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
+        → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
+      lemmaFlow = solve-∀
+      flowConservation :
+        let t₁ = Δt₁
+            r₁ = Δr₁
+            f  = pos feeSS
+            z  = pos (∑[ c ← rs ] c)
+         in
+            (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
+      flowConservation = lemmaFlow Δt₁ Δr₁ (pos feeSS) (pos (∑[ c ← rs ] c))
 
-    ÷₀-0≤⇒0≤ : ∀ (x y : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ (x ÷₀ y)
-    ÷₀-0≤⇒0≤ x y 0≤x 0≤y with y ≟ 0
-    ... | (yes y≡0) = nonNegative⁻¹ 0
-    ... | (no y≢0)  = ÷-0≤⇒0≤ x y {{≢-nonZero y≢0}} 0≤x 0≤y
+      ÷₀-0≤⇒0≤ : ∀ (x y : ℚ) → 0 ≤ x → 0 ≤ y → 0 ≤ (x ÷₀ y)
+      ÷₀-0≤⇒0≤ x y 0≤x 0≤y with y ≟ 0
+      ... | (yes y≡0) = nonNegative⁻¹ 0
+      ... | (no y≢0)  = ÷-0≤⇒0≤ x y {{≢-nonZero y≢0}} 0≤x 0≤y
 
-    η-nonneg : 0 ≤ η
-    η-nonneg = ÷₀-0≤⇒0≤ _ _ (fromℕ-0≤ blocksMade)
-      (*-0≤⇒0≤ _ _
-        (fromℕ-0≤ slotsPerEpoch)
-        (nonNegative⁻¹ ActiveSlotCoeff {{pos⇒nonNeg ActiveSlotCoeff}}))
+      η-nonneg : 0 ≤ η
+      η-nonneg = ÷₀-0≤⇒0≤ _ _ (fromℕ-0≤ blocksMade)
+        (*-0≤⇒0≤ _ _
+          (fromℕ-0≤ slotsPerEpoch)
+          (nonNegative⁻¹ ActiveSlotCoeff {{pos⇒nonNeg ActiveSlotCoeff}}))
 
-    min1η-nonneg : 0 ≤ 1 ⊓ η
-    min1η-nonneg = ⊓-glb (nonNegative⁻¹ 1) η-nonneg
+      min1η-nonneg : 0 ≤ 1 ⊓ η
+      min1η-nonneg = ⊓-glb (nonNegative⁻¹ 1) η-nonneg
 
-    Δr₁-nonneg : 0 ≤ Δr₁
-    Δr₁-nonneg = 0≤⇒0≤floor _
-      (*-0≤⇒0≤ (1 ⊓ η * ρ) (fromℕ reserves)
-        (UnitInterval-*-0≤ (1 ⊓ η) (prevPp .PParams.monetaryExpansion) min1η-nonneg)
-        (fromℕ-0≤ reserves))
+      Δr₁-nonneg : 0 ≤ Δr₁
+      Δr₁-nonneg = 0≤⇒0≤floor _
+        (*-0≤⇒0≤ (1 ⊓ η * ρ) (fromℕ reserves)
+          (UnitInterval-*-0≤ (1 ⊓ η) (prevPp .PParams.monetaryExpansion) min1η-nonneg)
+          (fromℕ-0≤ reserves))
 
-    rewardPot-nonneg : 0 ≤ rewardPot
-    rewardPot-nonneg = +-mono-≤ (nonNegative⁻¹ℤ (pos feeSS)) Δr₁-nonneg
+      rewardPot-nonneg : 0 ≤ rewardPot
+      rewardPot-nonneg = +-mono-≤ (nonNegative⁻¹ℤ (pos feeSS)) Δr₁-nonneg
 
-    Δt-nonneg : 0 ≤ Δt₁
-    Δt-nonneg = 0≤⇒0≤floor _
-      (UnitInterval-*-0≤ (fromℤ rewardPot) (prevPp .PParams.treasuryCut)
-        (fromℤ-0≤ rewardPot rewardPot-nonneg))
+      Δt-nonneg : 0 ≤ Δt₁
+      Δt-nonneg = 0≤⇒0≤floor _
+        (UnitInterval-*-0≤ (fromℤ rewardPot) (prevPp .PParams.treasuryCut)
+          (fromℤ-0≤ rewardPot rewardPot-nonneg))
 
-    Δf-nonpos : (0 - pos feeSS) ≤ 0
-    Δf-nonpos = begin
-        0 - pos feeSS ≡⟨ +-identityˡ _ ⟩
-        ℤ.- pos feeSS ≤⟨ neg-mono-≤ (ℤ.+≤+ z≤n) ⟩
-        0             ∎
-      where open ≤-Reasoning
+      Δf-nonpos : (0 - pos feeSS) ≤ 0
+      Δf-nonpos = begin
+          0 - pos feeSS ≡⟨ +-identityˡ _ ⟩
+          ℤ.- pos feeSS ≤⟨ neg-mono-≤ (ℤ.+≤+ z≤n) ⟩
+          0             ∎
+        where open ≤-Reasoning
 \end{code}
 \end{AgdaMultiCode}
 \caption{RewardUpdate Creation}
@@ -367,7 +404,7 @@ opaque
 
       -- delegated stake per pool
       sd : KeyHash ⇀ Coin
-      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)          
+      sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 \end{code}
 \begin{code}[hide]
   open RwdAddr using (stake)
@@ -432,6 +469,15 @@ opaque
 \caption{Functions for computing stake distributions}
 \end{figure*}
 
+<!--
+The \AgdaFunction{aggregateBy} function takes a relation
+\AgdaBound{R} : ℙ(\AgdaBound{A} × \AgdaBound{B}) and a map
+\AgdaBound{m} : \AgdaBound{A} \AgdaFunction{⇀} \AgdaBound{C}
+and returns a function that maps each \AgdaBound{a} in the domain of
+\AgdaBound{m} to the sum of all \AgdaBound{b} such that
+(\AgdaBound{a}, \AgdaBound{b}) ∈ \AgdaBound{R}.
+-->
+
 The function \AgdaFunction{calculatePoolDelegatedState} computes a
 stake pool distribution, that is, a map from stake pool credentials
 (keyhash) to coin, from the stake delegation map and the stake
@@ -478,28 +524,26 @@ auxiliary definitions:
   rewards.
 \end{itemize}
 
+In the definition of \AgdaFunction{mkStakeDistrs}, the relation and map passed to
+\AgdaFunction{aggregateBy} are
+\AgdaFunction{∣} \AgdaBound{delegations} \AgdaFunction{∣} :
+ℙ \AgdaDatatype{Credential} \AgdaFunction{×} \AgdaDatatype{VDeleg} and
+\AgdaFunction{stakeOf} \AgdaBound{ss} \AgdaFunction{∪⁺}
+\AgdaFunction{gaDepositStake} \AgdaBound{govSt} \AgdaBound{ds}, respectively.
+
 \begin{code}[hide]
 private variable
-  e lastEpoch : Epoch
-  fut fut' : RatifyState
-  poolReapState : PoolReapState
-  eps eps' eps'' : EpochState
-  ls : LState
-  es₀ : EnactState
-  mark set go : Snapshot
-  feeSS : Fees
-  lstate : LState
-  ss ss' : Snapshots
-  ru : RewardUpdate
-  mru : Maybe RewardUpdate
-  pd : PoolDelegatedStake
+  e lastEpoch     : Epoch
+  fut fut'        : RatifyState
+  eps eps' eps''  : EpochState
+  ls              : LState
+  es₀             : EnactState
+  ss ss'          : Snapshots
+  ru              : RewardUpdate
+  mru             : Maybe RewardUpdate
+  pd              : PoolDelegatedStake
 \end{code}
 
-
-The \AgdaDatatype{EPOCH} transition has a few updates that are encapsulated in
-the following functions.
-We need these functions to bring them in scope for some proofs about
-\AgdaDatatype{EPOCH}.
 
 \begin{figure*}[h]
 \begin{code}
@@ -519,7 +563,7 @@ EPOCH-updates0 fut ls =
     EPOCHUpdates0 es govSt' payout gState' utxoSt' totWithdrawals
   where
     open LState ls public
-    open CertState certState public
+    open CertState certState using (gState) public
     open RatifyState fut renaming (es to esW)
 
     es : EnactState
@@ -609,21 +653,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 \end{figure*}
 \end{NoConway}
 
-\Cref{fig:epoch:sts} defines the EPOCH transition rule.
-Previously, this incorporated the logic that is now handled by
-POOLREAP (Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
-
-The EPOCH rule now also needs to invoke RATIFIES and properly deal with
-its results by carrying out each of the following tasks.
-\begin{itemize}
-\item Pay out all the enacted treasury withdrawals.
-\item Remove expired and enacted governance actions \& refund deposits.
-\item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
-\item Remove all hot keys from the constitutional committee delegation map that
-  do not belong to currently elected members.
-\item Apply the resulting enact state from the previous epoch boundary \AgdaBound{fut} and
-  store the resulting enact state \AgdaBound{fut'}.
-\end{itemize}
+The \AgdaDatatype{EPOCH} transition has a few updates that are encapsulated in
+the following functions.
+We need these functions to bring them in scope for some proofs about
+\AgdaDatatype{EPOCH}.
 
 \begin{figure*}[ht]
 \begin{AgdaMultiCode}
@@ -637,7 +670,7 @@ its results by carrying out each of the following tasks.
       stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt' govSt' (GStateOf ls) (DStateOf ls)
 
       Γ : RatifyEnv
-      Γ = ⟦ stakeDistrs , e , GState.dreps (GStateOf ls) , GState.ccHotKeys (GStateOf ls) , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
+      Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
 
     in
         ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
@@ -651,6 +684,23 @@ its results by carrying out each of the following tasks.
 \label{fig:epoch:sts}
 \end{figure*}
 
+The \AgdaDatatype{EPOCH} transition rule defined above had previously incorporated
+the logic that is now handled by \AgdaDatatype{POOLREAP}
+(Shelley specification~\parencite[\sectionname~11.6]{shelley-ledger-spec}).
+
+The \AgdaDatatype{EPOCH} rule now also needs to invoke the \AgdaDatatype{RATIFIES}
+rule and properly deal with its results by carrying out each of the following tasks.
+\begin{itemize}
+\item Pay out all the enacted treasury withdrawals.
+\item Remove expired and enacted governance actions \& refund deposits.
+\item If \AgdaBound{govSt'} is empty, increment the activity counter for DReps.
+\item Remove all hot keys from the constitutional committee delegation map that
+  do not belong to currently elected members.
+\item Apply the resulting enact state from the previous epoch boundary \AgdaBound{fut} and
+  store the resulting enact state \AgdaBound{fut'}.
+\end{itemize}
+
+
 \begin{NoConway}
 \begin{figure*}[ht]
 \begin{code}[hide]
@@ -663,7 +713,7 @@ data
   where
 \end{code}
 \begin{code}
-  NEWEPOCH-New : let
+  NEWEPOCH-New : ∀ {bprev bcur : BlocksMade} → let
       eps' = applyRUpd ru eps
       ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps''
       pd' = calculatePoolDelegatedStake (Snapshots.set ss)
@@ -671,21 +721,22 @@ data
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps'' , nothing , pd' ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' ⟧
 
-  NEWEPOCH-Not-New :
+  NEWEPOCH-Not-New : ∀ {bprev bcur : BlocksMade} →
     ∙ e ≢ lastEpoch + 1
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , eps , mru , pd ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
 
   NEWEPOCH-No-Reward-Update : let
       ⟦ _ , ss , _ , _ , _ ⟧ᵉ' = eps'
       pd' = calculatePoolDelegatedStake (Snapshots.set ss)
     in
+    ∀ {bprev bcur : BlocksMade} →
     ∙ e ≡ lastEpoch + 1
     ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
       ────────────────────────────────
-      _ ⊢ ⟦ lastEpoch , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , eps' , nothing , pd' ⟧
+      _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' ⟧
 \end{code}
 \caption{NEWEPOCH transition system}
 \end{figure*}

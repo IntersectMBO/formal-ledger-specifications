@@ -764,12 +764,19 @@ needs to be saved at the end of an epoch.  This relevant data are:
 record Snapshots : Set where
   field
     mark set go  : Snapshot
-    feeSS        : Coin
+    feeSS        : Fees
 ```
 
 <!--
 ```agda
+record HasSnapshots {a} (A : Type a) : Type a where
+  field SnapshotsOf : A → Snapshots
+open HasSnapshots ⦃...⦄ public
+
 instance
+  HasFees-Snapshots : HasFees Snapshots
+  HasFees-Snapshots .FeesOf = Snapshots.feeSS
+
   unquoteDecl HasCast-Snapshots =
     derive-HasCast [ (quote Snapshots , HasCast-Snapshots) ]
 ```
