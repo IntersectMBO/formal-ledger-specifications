@@ -37,7 +37,7 @@ Examples of invariance properties are found in
 
 ### Matching Governance Action Deposits
 
-[thm:ChainGovDepsMatch][], [lem:LedgerGovDepsMatch][], and [lem:EpochGovDepsMatch][]
+[ChainGovDepsMatch][thm:ChainGovDepsMatch], [LedgerGovDepsMatch][lem:LedgerGovDepsMatch], and [EpochGovDepsMatch][lem:EpochGovDepsMatch]
 assert that a certain predicate is an invariant of the `CHAIN`{.AgdaDatatype},
 `LEDGER`{.AgdaDatatype}, and `EPOCH`{.AgdaDatatype} rules, respectively.
 
@@ -60,24 +60,35 @@ then `govDepsMatch`{.AgdaFunction} `s'`{.AgdaBound}.
 
 The following are examples of this assertion:
 
-+ [Ledger.Conway.Chain.Properties.GovDepsMatch][]
-+ [Ledger.Conway.Ledger.Properties.GovDepsMatch][]
-+ [Ledger.Conway.Epoch.Properties.GovDepsMatch][]
++ [Chain.Properties.GovDepsMatch][]
++ [Ledger.Properties.GovDepsMatch][]
++ [Epoch.Properties.GovDepsMatch][]
 
 
 ### Minimum Spending Conditions
 
-A "minimum spending condition" is proved in
-[Ledger.Conway.Utxo.Properties.MinSpend][]
-
+A *minimum spending condition* is proved in [Utxo.Properties.MinSpend][].
 
 ### Other Miscellaneous Properties
 
-+ [Certs.Properties.VoteDelegsVDeleg][]
-+ [Chain.Properties.EpochStep][]
-+ [Epoch.Properties.ConstRwds][]
-+ [Epoch.Properties.NoPropSameDReps][]
-+ [Gov.Properties.ChangePPGroup][]
++  [Certs.Properties.VoteDelegsVDeleg][]: The set of `VDeleg`{.AgdaDatatype}s
+   resulting from the application of
+   `credVoter`{.AgdaInductiveConstructor} `DRep`{.AgdaInductiveConstructor} to the
+   domain of the `voteDelegs`{.AgdaField} of a `DState`{.AgdaRecord} contains the
+   range of the `voteDelegs`{.AgdaField} of that `DState`{.AgdaRecord}.
 
++  [Chain.Properties.EpochStep][]:
+   If `cs`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `b`{.AgdaBound} `,CHAIN⦈`{.AgdaDatatype} `cs'`{.AgdaBound} and
+   if the enact states of `cs`{.AgdaBound} and `cs'`{.AgdaBound} differ, then the
+   epoch of the slot of `b`{.AgdaBound} is the successor of the last epoch of `cs`{.AgdaBound}.
 
++  [Epoch.Properties.ConstRwds][]: The `NEWEPOCH`{.AgdaOperator} rule leaves rewards unchanged.
 
++  [Epoch.Properties.NoPropSameDReps][]:
+   If `es`{.AgdaBound} is a `NewEpochState`{.AgdaRecord}, and if the
+   `GovState`{.AgdaFunction} of `es`{.AgdaBound} contains no governance proposals,
+   then the set of `activeDReps`{.AgdaField} of `es`{.AgdaBound} in
+   `Epoch`{.AgdaDatatype} `e`{.AgdaBound} is equal to the set of
+   `activeDReps`{.AgdaField} of `es` in the next epoch.
+
++  [Gov.Properties.ChangePPGroup][]: `PParam`{.AgdaRecord} updates have non-empty groups.

@@ -27,7 +27,7 @@ A `CertState`{.AgdaRecord} has a `DState`{.AgdaDatatype}, a `PState`{.AgdaDataty
 us here is `credVoter`{.AgdaInductiveConstructor}, which takes two arguments, a
 `GovRole`{.AgdaDatatype} and a `Credential`{.AgdaDatatype}.
 
-Now suppose we have a collection `C`{.AgdaBound} of credentials—for
+Now suppose we have a collection `C`{.AgdaBound} of credentials---for
 instance, given `d`{.AgdaBound} : `DState`{.AgdaDatatype}, take
 `C`{.AgdaBound} to be the domain of the `voteDelegs`{.AgdaField} field
 of `d`{.AgdaBound}. We could then obtain a set of `VDeleg`{.AgdaDatatype}s

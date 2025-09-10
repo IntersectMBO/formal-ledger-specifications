@@ -57,7 +57,7 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
 
 
 <a id="thm:CERTS-PoV"></a>
-**Theorem (`CERTS`{.AgdaOperator} rule preserves value).**
+**Theorem (The `CERTS`{.AgdaOperator} rule preserves value).**
 
 *Informally*.
 

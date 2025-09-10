@@ -17,7 +17,7 @@ open import Ledger.Prelude
 ```
 -->
 
-**Claim (`NEWEPOCH`{.AgdaOperator} rule leaves rewards unchanged).**
+**Claim (The `NEWEPOCH`{.AgdaOperator} rule leaves rewards unchanged).**
 
 *Informally*.
 
