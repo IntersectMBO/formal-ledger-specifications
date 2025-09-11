@@ -4,6 +4,8 @@
 
 ### WIP
 
+- Add the BBODY transition relation from Shelley
+- Add the RUPD and TICK transition relations
 - Change two constructor names of `GovActionType` data type
 - Change 14 field names of `TxBody` record type
 - Implement the POOLREAP state transition relation from Shelley

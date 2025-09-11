@@ -117,3 +117,4 @@ extra:
     index.md: README.md
     guide.md: CONTRIBUTING.md
     Notation.md: build-tools/static/md/common/src/Notation.md
+    Properties.md: build-tools/static/md/common/src/Properties.md

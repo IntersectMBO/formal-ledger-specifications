@@ -275,6 +275,9 @@ instance
   HasDReps-CertState : HasDReps CertState
   HasDReps-CertState .DRepsOf = DRepsOf ∘ GStateOf
 
+  HasCCHotKeys-CertState : HasCCHotKeys CertState
+  HasCCHotKeys-CertState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
+
   HasPools-CertState : HasPools CertState
   HasPools-CertState .PoolsOf = PoolsOf ∘ PStateOf
 

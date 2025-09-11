@@ -1,16 +1,15 @@
-\section{Ledger}
-\label{sec:ledger}
-\modulenote{\ConwayModule{Ledger}}, where the entire state transformation of the
-ledger state caused by a valid transaction can now be given as a combination of the
-previously defined transition systems.
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Ledger.lagda
+---
 
-\begin{Conway}
-As there is nothing new to the Conway era in this part of the ledger, we do not
-present any details of the Agda formalization.
-%% TODO: we need a way to reference the latest full spec
-\end{Conway}
+# Ledger {#sec:ledger}
 
-\begin{code}[hide]
+This module defines the ledger transition system where valid transactions
+transform the ledger state.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 import Data.List as L
@@ -34,11 +33,12 @@ open Tx
 open GState
 open GovActionState
 open EnactState using (cc)
-\end{code}
+```
+-->
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+## <span class="AgdaDatatype">LEDGER</span> Transition System Types
+
+```agda
 record LEnv : Type where
   field
     slot        : Slot
@@ -46,28 +46,30 @@ record LEnv : Type where
     pparams     : PParams
     enactState  : EnactState
     treasury    : Treasury
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
 instance
   HasPParams-LEnv : HasPParams LEnv
   HasPParams-LEnv .PParamsOf = LEnv.pparams
-\end{code}
-\begin{code}
-
-
+```
+-->
+```agda
 record LState : Type where
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
   constructor ⟦_,_,_⟧ˡ
-\end{code}
-\begin{code}
+```
+-->
+```agda
   field
     utxoSt     : UTxOState
     govSt      : GovState
     certState  : CertState
-
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
 record HasLState {a} (A : Type a) : Type a where
   field LStateOf : A → LState
 open HasLState ⦃...⦄ public
@@ -109,6 +111,12 @@ instance
   HasFees-LState : HasFees LState
   HasFees-LState .FeesOf = FeesOf ∘ UTxOStateOf
 
+  HasCCHotKeys-LState : HasCCHotKeys LState
+  HasCCHotKeys-LState .CCHotKeysOf = CCHotKeysOf ∘ GStateOf
+
+  HasDReps-LState : HasDReps LState
+  HasDReps-LState .DRepsOf = DRepsOf ∘ CertStateOf
+
 open CertState
 open DState
 open GovVotes
@@ -116,8 +124,12 @@ open GovVotes
 instance
   unquoteDecl HasCast-LEnv HasCast-LState = derive-HasCast
     ((quote LEnv , HasCast-LEnv) ∷ (quote LState , HasCast-LState) ∷ [])
-\end{code}
-\begin{code}
+```
+-->
+
+## Helper Functions
+
+```agda
 txgov : TxBody → List (GovVote ⊎ GovProposal)
 txgov txb = map inj₂ txGovProposals ++ map inj₁ txGovVotes
   where open TxBody txb
@@ -134,11 +146,12 @@ rmOrphanDRepVotes cs govSt = L.map (map₂ go) govSt
 allColdCreds : GovState → EnactState → ℙ Credential
 allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types and functions for the LEDGER transition system}
-\end{figure*}
-\begin{code}[hide]
+```
+
+## <span class="AgdaDatatype">LEDGER</span> Transition System
+ 
+<!--
+```agda
 private variable
   Γ : LEnv
   s s' s'' : LState
@@ -151,48 +164,62 @@ private variable
   pp : PParams
   enactState : EnactState
   treasury : Treasury
-\end{code}
+```
+-->
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+```agda
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
-
   LEDGER-V :
     let  txb         = tx .body
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
          open TxBody txb
-\end{code}
-\begin{code}
+```
+-->
+```agda
     in
-    ∙ isValid tx ≡ true
-    ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
-    ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+      ∙ isValid tx ≡ true
+      ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+      ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 
   LEDGER-I :
-    ∙ isValid tx ≡ false
-    ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+      ∙ isValid tx ≡ false
+      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
-\end{code}
-\end{AgdaMultiCode}
-\caption{LEDGER transition system}
-\end{figure*}
-\begin{code}[hide]
+```
+
+The rule `LEDGER`{.AgdaDatatype} invokes the `GOVS`{.AgdaDatatype} rule to
+process governance action proposals and votes.
+
+??? note
+
+    The governance state used as input to `GOVS`{.AgdaDatatype} is filtered to
+    remove votes from `DRep`{.AgdaInductiveConstructor}s that are no longer
+    registered (see function `rmOrphanDRepVotes`{.AgdaFunction}).
+
+    This mechanism serves to prevent attacks where malicious adversaries could
+    submit transactions that:
+
+    1. register a fraudulent `DRep`{.AgdaInductiveConstructor}
+    1. cast numerous votes utilizing that `DRep`{.AgdaInductiveConstructor}
+    1. deregisters the `DRep`{.AgdaInductiveConstructor}, thereby recovering
+    the deposit
+
+<!--
+```agda
 pattern LEDGER-V⋯ w x y z = LEDGER-V (w , x , y , z)
 pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
-\end{code}
+```
+-->
 
-\begin{NoConway}
-\begin{figure*}[h]
-\begin{code}
+## <span class="AgdaDatatype">LEDGERS</span> Transition System
+
+```agda
 _⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
 _⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
-\end{code}
-\caption{LEDGERS transition system}
-\end{figure*}
-\end{NoConway}
+```

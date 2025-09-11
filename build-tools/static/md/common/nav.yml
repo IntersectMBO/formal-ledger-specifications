@@ -7,6 +7,7 @@
   - Ledger/:
     - Prelude: Ledger.Prelude.md
     - Introduction: Ledger.Introduction.md
+    - Properties: Properties.md
     - Prelude/:
       - Base: Ledger.Prelude.Base.md
       - Foreign/:
@@ -28,6 +29,9 @@
       - Specification: Ledger.Conway.Specification.md
       - Specification/:
         - Abstract: Ledger.Conway.Specification.Abstract.md
+        - BlockBody: Ledger.Conway.Specification.BlockBody.md
+        - BlockBody/:
+            - Properties: Ledger.Conway.Specification.BlockBody.Properties.md
         - Certs: Ledger.Conway.Specification.Certs.md
         - Certs/:
           - Properties: Ledger.Conway.Specification.Certs.Properties.md
@@ -74,6 +78,9 @@
         - Ratify/:
           - Properties: Ledger.Conway.Specification.Ratify.Properties.md
         - Rewards: Ledger.Conway.Specification.Rewards.md
+        - RewardUpdate: Ledger.Conway.Specification.RewardUpdate.md
+        - RewardUpdate/:
+            - Properties: Ledger.Conway.Specification.RewardUpdate.Properties.md
         - Script: Ledger.Conway.Specification.Script.md
         - Script/:
           - Base: Ledger.Conway.Specification.Script.Base.md

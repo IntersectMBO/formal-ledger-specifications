@@ -22,17 +22,18 @@ open import Ledger.Conway.Specification.Properties txs abs
 
 *Informally*.
 
-If there are no governance proposals in the
-`GovState`{.AgdaFunction} of , then the `activeDReps`{.AgdaField} of
-in `Epoch`{.AgdaDatatype} are the same as the
-`activeDReps`{.AgdaField} of in the next epoch.
+If `es`{.AgdaBound} is a `NewEpochState`{.AgdaRecord}, and if the
+`GovState`{.AgdaFunction} of `es`{.AgdaBound} contains no governance proposals,
+then the set of `activeDReps`{.AgdaField} of `es`{.AgdaBound} in
+`Epoch`{.AgdaDatatype} `e`{.AgdaBound} is equal to the set of
+`activeDReps`{.AgdaField} of `es` in the next epoch.
 
 *Formally*.
 
 ```agda
-prop≡∅⇒activeDReps-const : Epoch → (es es' : NewEpochState) → Type
-prop≡∅⇒activeDReps-const e es es' =
-  GovStateOf es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es'
+prop≡∅⇒activeDReps-const : Epoch → NewEpochState → Type
+prop≡∅⇒activeDReps-const e es =
+  GovStateOf es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es
 ```
 
 *Proof*. (coming soon)

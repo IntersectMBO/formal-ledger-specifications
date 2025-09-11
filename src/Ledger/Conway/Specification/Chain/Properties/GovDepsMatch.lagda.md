@@ -20,6 +20,7 @@ open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch txs abs
 open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
+open import Ledger.Conway.Specification.RewardUpdate txs abs
 
 module _
   {b   : Block }
@@ -48,14 +49,9 @@ Recall, a `ChainState`{.AgdaRecord} has just one field,
 Consider the chain state `cs'`{.AgdaFunction} defined as follows:
 
 ```agda
-
   cs' : ChainState
   cs' .newEpochState =
-    record { lastEpoch   = nes .lastEpoch
-           ; epochState  = record (EpochStateOf cs) {ls = LStateOf nes}
-           ; ru          = nes .ru
-           ; pd          = nes .pd
-           }
+    record nes {epochState  = record (EpochStateOf cs) {ls = LStateOf nes}}
 ```
 
 That is `cs'`{.AgdaFunction} is essentially `nes`{.AgdaBound}, but
@@ -108,14 +104,30 @@ In other terms,
 *Proof*.
 
 ```agda
-  CHAIN-govDepsMatch rrm rss (CHAIN (x , NEWEPOCH-New (_ , eps₁→eps₂) , ledgers)) =
+  CHAIN-govDepsMatch rrm rss
+      ( CHAIN ( x
+              , TICK ((NEWEPOCH-New (_ , eps₁→eps₂)) , _)
+              , BBODY-Block-Body (_ , _ , ledgers)
+              )
+      ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 
-  CHAIN-govDepsMatch rrm rss (CHAIN (x , NEWEPOCH-Not-New _ , ledgers)) =
+  CHAIN-govDepsMatch rrm rss
+      ( CHAIN ( x
+              , TICK (NEWEPOCH-Not-New _ , _)
+              , BBODY-Block-Body (_ , _ , ledgers)
+              )
+      ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
 
-  CHAIN-govDepsMatch rrm rss (CHAIN (x , NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂) , ledgers)) =
+  CHAIN-govDepsMatch rrm rss
+      ( CHAIN ( x
+              , TICK (NEWEPOCH-No-Reward-Update (_ , eps₁→eps₂) , _)
+              , BBODY-Block-Body (_ , _ , ledgers)
+              )
+      ) =
     RTC-preserves-inv LEDGER-govDepsMatch ledgers
      ∘ EPOCH-PROPS.EPOCH-govDepsMatch rrm eps₁→eps₂
 ```
+

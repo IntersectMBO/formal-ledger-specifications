@@ -66,7 +66,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 -->
 
 
-**Lemma (`CERT`{.AgdaOperator} rule preserves value).**
+**Lemma (The `CERT`{.AgdaOperator} rule preserves value).**
 
 *Informally*.
 
