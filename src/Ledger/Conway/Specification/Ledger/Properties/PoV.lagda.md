@@ -49,7 +49,7 @@ module _
 -->
 
 <a id="thm:LEDGER-PoV"></a>
-**Theorem (`LEDGER`{.AgdaOperator} rule preserves value).**
+**Theorem (The `LEDGER`{.AgdaOperator} rule preserves value).**
 
 *Informally*.
 

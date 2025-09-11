@@ -7,6 +7,7 @@
   - Ledger/:
     - Prelude: Ledger.Prelude.md
     - Introduction: Ledger.Introduction.md
+    - Properties: Properties.md
     - Prelude/:
       - Base: Ledger.Prelude.Base.md
       - Foreign/:
