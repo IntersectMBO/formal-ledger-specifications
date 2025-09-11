@@ -26,6 +26,7 @@
 [NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#newepoch-transition-system
 [Notation]: Notation.md
 [POOL]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
+[Protocol Parameter Declarations]: Ledger.Conway.Specification.PParams.md#protocol-parameter-declarations
 [RATIFY]: Ledger.Conway.Specification.Ratify.md#the-ratify-transition-system
 [repourl]: https://github.com/IntersectMBO/formal-ledger-specifications
 [scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
