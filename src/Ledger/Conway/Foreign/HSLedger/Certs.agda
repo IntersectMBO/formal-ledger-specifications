@@ -23,6 +23,7 @@ instance
 
   HsTy-DelegEnv = autoHsType DelegEnv
     ⊣ withConstructor "MkDelegEnv"
+    • fieldPrefix "de"
     • withName "DelegEnv"
   Conv-DelegEnv = autoConvert DelegEnv
 
