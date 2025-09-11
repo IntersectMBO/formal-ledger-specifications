@@ -425,7 +425,8 @@ opaque
     → DState
     → VDeleg ⇀ Coin
   calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-    = aggregate₊ ((((activeVoteDelegs ˢ) ⁻¹ʳ) ∘ʳ ((stakePerCredential ∪⁺ stakeFromRewards ∪⁺ stakeFromGADeposits)ˢ)) ᶠˢ)
+    = aggregate₊ (((activeVoteDelegs ˢ) ⁻¹ʳ
+                  ∘ʳ (stakePerCredential ∪⁺ stakeFromRewards ∪⁺ stakeFromGADeposits) ˢ) ᶠˢ)
     where
       open UTxOState utxoSt
       open DState dState
@@ -437,7 +438,8 @@ opaque
 
       -- active vote delegations
       activeVoteDelegs : VoteDelegs
-      activeVoteDelegs = voteDelegs ∣^ ((mapˢ vDelegCredential activeDReps) ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵)
+      activeVoteDelegs = voteDelegs ∣^ ((mapˢ vDelegCredential activeDReps)
+                                        ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵)
 
       -- stake per delegated credential
       stakePerCredential : Stake
@@ -469,8 +471,9 @@ opaque
     ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState , poolDelegatedStake ⟧
     where
       poolDelegatedStake : PoolDelegatedStake
-      poolDelegatedStake = mapWithKey (λ kh c → maybe (c +_) c (lookupᵐ? (RewardsOf dState) (KeyHashObj kh)))
-                                      (calculatePoolDelegatedStake ss)
+      poolDelegatedStake =
+        mapWithKey (λ kh c → maybe (c +_) c (lookupᵐ? (RewardsOf dState) (KeyHashObj kh)))
+                   (calculatePoolDelegatedStake ss)
 ```
 
 The function `mkStakeDistrs`{.AgdaFunction} calculates the stake distributions
@@ -513,7 +516,8 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
       let
         isOrphan? a prev = ¬? (hasParent? es govSt a prev)
         (orps' , govSt') = partition
-          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? (a .gaType) prev) govSt
+          (λ (_ , record {action = a ; prevAction = prev}) → isOrphan? (a .gaType) prev)
+          govSt
       in
         (orps ++ orps' , govSt')
 ```
@@ -522,7 +526,6 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
 
 ```agda
 record EPOCH-Updates0 : Type where
-  no-eta-equality
   constructor EPOCHUpdates0
   field
     es             : EnactState
@@ -658,7 +661,8 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
         EPOCH-updates fut ls dState' acnt'
 
       stakeDistrs : StakeDistrs
-      stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt' govSt' (GStateOf ls) (DStateOf ls)
+      stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt'
+                                  govSt' (GStateOf ls) (DStateOf ls)
 
       Γ : RatifyEnv
       Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
@@ -667,7 +671,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
         ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
       ∙ Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
-      ────────────────────────────────
+      ──────────────────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 ```
 
@@ -705,12 +709,12 @@ data
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps' ⇀⦇ e ,EPOCH⦈ eps''
-      ────────────────────────────────
+      ──────────────────────────────────────────────
       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , just ru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ  , eps'' , nothing , pd' ⟧
 
   NEWEPOCH-Not-New : ∀ {bprev bcur : BlocksMade} →
     ∙ e ≢ lastEpoch + 1
-      ────────────────────────────────
+      ──────────────────────────────────────────────
       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
 
   NEWEPOCH-No-Reward-Update : 
@@ -727,7 +731,7 @@ data
     in
       ∙ e ≡ lastEpoch + 1
       ∙ _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
-      ────────────────────────────────
+      ──────────────────────────────────────────────
       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , nothing , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ e , bcur , ∅ᵐ , eps' , nothing , pd' ⟧
 ```
 
