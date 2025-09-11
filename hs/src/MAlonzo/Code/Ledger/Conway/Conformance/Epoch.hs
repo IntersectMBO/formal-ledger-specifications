@@ -499,7 +499,7 @@ du_mkStakeDistrs_2716 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_StakeDistrs_2502
 du_mkStakeDistrs_2716 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3510
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3442
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.toRwdAddr
 d_toRwdAddr_2718 ::
