@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Conway.Specification</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--safe</a> <a id="20" class="Symbol">#-}</a>
+<a id="24" class="Keyword">module</a> <a id="31" href="Ledger.Conway.Specification.html" class="Module">Ledger.Conway.Specification</a> <a id="59" class="Keyword">where</a>
+
+<a id="66" class="Keyword">import</a> <a id="73" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a>
+<a id="107" class="Keyword">import</a> <a id="114" href="Ledger.Conway.Specification.Certs.Properties.html" class="Module">Ledger.Conway.Specification.Certs.Properties</a>
+<a id="159" class="Keyword">import</a> <a id="166" href="Ledger.Conway.Specification.Certs.Properties.PoV.html" class="Module">Ledger.Conway.Specification.Certs.Properties.PoV</a>
+<a id="215" class="Keyword">import</a> <a id="222" href="Ledger.Conway.Specification.Certs.Properties.PoVLemmas.html" class="Module">Ledger.Conway.Specification.Certs.Properties.PoVLemmas</a>
+<a id="277" class="Keyword">import</a> <a id="284" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html" class="Module">Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg</a>
+<a id="346" class="Keyword">import</a> <a id="353" href="Ledger.Conway.Specification.Chain.html" class="Module">Ledger.Conway.Specification.Chain</a>
+<a id="387" class="Keyword">import</a> <a id="394" href="Ledger.Conway.Specification.Chain.Properties.html" class="Module">Ledger.Conway.Specification.Chain.Properties</a>
+<a id="439" class="Keyword">import</a> <a id="446" href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html" class="Module">Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds</a>
+<a id="512" class="Keyword">import</a> <a id="519" href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html" class="Module">Ledger.Conway.Specification.Chain.Properties.EpochStep</a>
+<a id="574" class="Keyword">import</a> <a id="581" href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Specification.Chain.Properties.GovDepsMatch</a>
+<a id="639" class="Keyword">import</a> <a id="646" href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html" class="Module">Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed</a>
+<a id="709" class="Keyword">import</a> <a id="716" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a>
+<a id="750" class="Keyword">import</a> <a id="757" href="Ledger.Conway.Specification.Enact.Properties.html" class="Module">Ledger.Conway.Specification.Enact.Properties</a>
+<a id="802" class="Keyword">import</a> <a id="809" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a>
+<a id="843" class="Keyword">import</a> <a id="850" href="Ledger.Conway.Specification.Epoch.Properties.html" class="Module">Ledger.Conway.Specification.Epoch.Properties</a>
+<a id="895" class="Keyword">import</a> <a id="902" href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.ConstRwds</a>
+<a id="957" class="Keyword">import</a> <a id="964" href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch</a>
+<a id="1022" class="Keyword">import</a> <a id="1029" href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html" class="Module">Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps</a>
+<a id="1090" class="Keyword">import</a> <a id="1097" href="Ledger.Conway.Specification.Fees.html" class="Module">Ledger.Conway.Specification.Fees</a>
+<a id="1130" class="Keyword">import</a> <a id="1137" href="Ledger.Conway.Specification.Gov.html" class="Module">Ledger.Conway.Specification.Gov</a>
+<a id="1169" class="Keyword">import</a> <a id="1176" href="Ledger.Conway.Specification.Gov.Actions.html" class="Module">Ledger.Conway.Specification.Gov.Actions</a>
+<a id="1216" class="Keyword">import</a> <a id="1223" href="Ledger.Conway.Specification.Gov.Properties.html" class="Module">Ledger.Conway.Specification.Gov.Properties</a>
+<a id="1266" class="Keyword">import</a> <a id="1273" href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html" class="Module">Ledger.Conway.Specification.Gov.Properties.ChangePPGroup</a>
+<a id="1330" class="Keyword">import</a> <a id="1337" href="Ledger.Conway.Specification.Ledger.html" class="Module">Ledger.Conway.Specification.Ledger</a>
+<a id="1372" class="Keyword">import</a> <a id="1379" href="Ledger.Conway.Specification.Ledger.Properties.html" class="Module">Ledger.Conway.Specification.Ledger.Properties</a>
+<a id="1425" class="Keyword">import</a> <a id="1432" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch</a>
+<a id="1491" class="Keyword">import</a> <a id="1498" href="Ledger.Conway.Specification.Ledger.Properties.PoV.html" class="Module">Ledger.Conway.Specification.Ledger.Properties.PoV</a>
+<a id="1548" class="Keyword">import</a> <a id="1555" href="Ledger.Conway.Specification.PParams.html" class="Module">Ledger.Conway.Specification.PParams</a>
+<a id="1591" class="Keyword">import</a> <a id="1598" href="Ledger.Conway.Specification.Properties.html" class="Module">Ledger.Conway.Specification.Properties</a>
+<a id="1637" class="Keyword">import</a> <a id="1644" href="Ledger.Conway.Specification.Ratify.html" class="Module">Ledger.Conway.Specification.Ratify</a>
+<a id="1679" class="Keyword">import</a> <a id="1686" href="Ledger.Conway.Specification.Ratify.Properties.html" class="Module">Ledger.Conway.Specification.Ratify.Properties</a>
+<a id="1732" class="Keyword">import</a> <a id="1739" href="Ledger.Conway.Specification.Rewards.html" class="Module">Ledger.Conway.Specification.Rewards</a>
+<a id="1775" class="Keyword">import</a> <a id="1782" href="Ledger.Conway.Specification.Script.html" class="Module">Ledger.Conway.Specification.Script</a>
+<a id="1817" class="Keyword">import</a> <a id="1824" href="Ledger.Conway.Specification.Script.Validation.html" class="Module">Ledger.Conway.Specification.Script.Validation</a>
+<a id="1870" class="Keyword">import</a> <a id="1877" href="Ledger.Conway.Specification.Test.Examples.html" class="Module">Ledger.Conway.Specification.Test.Examples</a>
+<a id="1919" class="Keyword">import</a> <a id="1926" href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="Module">Ledger.Conway.Specification.Test.StructuredContracts</a>
+<a id="1979" class="Keyword">import</a> <a id="1986" href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Conway.Specification.TokenAlgebra.Base</a>
+<a id="2032" class="Keyword">import</a> <a id="2039" href="Ledger.Conway.Specification.TokenAlgebra.Coin.html" class="Module">Ledger.Conway.Specification.TokenAlgebra.Coin</a>
+<a id="2085" class="Keyword">import</a> <a id="2092" href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="Module">Ledger.Conway.Specification.TokenAlgebra.ValueSet</a>
+<a id="2142" class="Keyword">import</a> <a id="2149" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html" class="Module">Ledger.Conway.Specification.TokenAlgebra.ValueVector</a>
+<a id="2202" class="Keyword">import</a> <a id="2209" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<a id="2249" class="Keyword">import</a> <a id="2256" href="Ledger.Conway.Specification.Types.GovStructure.html" class="Module">Ledger.Conway.Specification.Types.GovStructure</a>
+<a id="2303" class="Keyword">import</a> <a id="2310" href="Ledger.Conway.Specification.Utxo.html" class="Module">Ledger.Conway.Specification.Utxo</a>
+<a id="2343" class="Keyword">import</a> <a id="2350" href="Ledger.Conway.Specification.Utxo.Properties.html" class="Module">Ledger.Conway.Specification.Utxo.Properties</a>
+<a id="2394" class="Keyword">import</a> <a id="2401" href="Ledger.Conway.Specification.Utxo.Properties.MinSpend.html" class="Module">Ledger.Conway.Specification.Utxo.Properties.MinSpend</a>
+<a id="2454" class="Keyword">import</a> <a id="2461" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html" class="Module">Ledger.Conway.Specification.Utxo.Properties.PoV</a>
+<a id="2509" class="Keyword">import</a> <a id="2516" href="Ledger.Conway.Specification.Utxow.html" class="Module">Ledger.Conway.Specification.Utxow</a>
+<a id="2550" class="Keyword">import</a> <a id="2557" href="Ledger.Conway.Specification.Utxow.Properties.html" class="Module">Ledger.Conway.Specification.Utxow.Properties</a>
+</pre></body></html>
