@@ -179,25 +179,36 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
 -->
 ```agda
     in
-    ∙ isValid tx ≡ true
-    ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-    ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
-    ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+      ∙ isValid tx ≡ true
+      ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
+      ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 
   LEDGER-I :
-    ∙ isValid tx ≡ false
-    ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
+      ∙ isValid tx ≡ false
+      ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
 ```
 
 The rule `LEDGER`{.AgdaDatatype} invokes the `GOVS`{.AgdaDatatype} rule to
-process governance action proposals and votes. Note that the governance state
-used as input to `GOVS`{.AgdaDatatype} is filtered to remove votes from
-`DRep`{.AgdaInductiveConstructor}s that are no longer registered (see function
-`rmOrphanDRepVotes`{.AgdaFunction}).
+process governance action proposals and votes.
+
+??? note
+
+    The governance state used as input to `GOVS`{.AgdaDatatype} is filtered to
+    remove votes from `DRep`{.AgdaInductiveConstructor}s that are no longer
+    registered (see function `rmOrphanDRepVotes`{.AgdaFunction}).
+
+    This mechanism serves to prevent attacks where malicious adversaries could
+    submit transactions that:
+
+    1. register a fraudulent `DRep`{.AgdaInductiveConstructor}
+    1. cast numerous votes utilizing that `DRep`{.AgdaInductiveConstructor}
+    1. deregisters the `DRep`{.AgdaInductiveConstructor}, thereby recovering
+    the deposit
 
 <!--
 ```agda
