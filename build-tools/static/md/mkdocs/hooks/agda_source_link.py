@@ -127,11 +127,30 @@ def _pick_override(overrides: Mapping[str, str], keys: Sequence[str]) -> Optiona
     """Return the first overrides[key] that exists, else None."""
     return next((overrides[k] for k in keys if k in overrides), None)
 
+def _is_markdown_like(path: str) -> bool:
+    p = path.lower()
+    return p.endswith(".md") or p.endswith(".markdown") or p.endswith(".lagda.md")
+
+def _add_plain_param(url: str) -> str:
+    # Append ?plain=1 (or &plain=1) before any fragment
+    if "?plain=1" in url:
+        return url
+    parts = url.split("#", 1)
+    base = parts[0]
+    frag = "#" + parts[1] if len(parts) == 2 else ""
+    sep = "&" if "?" in base else "?"
+    return f"{base}{sep}plain=1{frag}"
+
 def _blob(repo_root: str, branch: str, rel_path_or_url: str) -> str:
-    """Build a blob URL unless the override is already absolute."""
-    if rel_path_or_url.startswith("http://") or rel_path_or_url.startswith("https://"):
+    """Build a blob URL unless the override is already absolute; add ?plain=1 for Markdown."""
+    if rel_path_or_url.startswith(("http://", "https://")):
+        # Optional: also force Code view for absolute GitHub blob URLs
+        if "/blob/" in rel_path_or_url and _is_markdown_like(rel_path_or_url):
+            return _add_plain_param(rel_path_or_url)
         return rel_path_or_url
-    return f"{repo_root.rstrip('/')}/blob/{branch}/{quote(rel_path_or_url)}"
+
+    url = f"{repo_root.rstrip('/')}/blob/{branch}/{quote(rel_path_or_url)}"
+    return _add_plain_param(url) if _is_markdown_like(rel_path_or_url) else url
 
 # --- Hook entrypoint ---
 
