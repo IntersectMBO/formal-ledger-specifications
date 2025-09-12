@@ -16,12 +16,15 @@
 [Fees]: Ledger.Conway.Specification.Fees.md
 [formal ledger specification]: https://github.com/IntersectMBO/formal-ledger-specifications
 [Functions used in UTxO rules]: Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules
+[Functions of the GOV Transition System]: Ledger.Conway.Specification.Gov.md#functions-of-the-gov-transition-system
+[Functions related to voting]: Ledger.Conway.Specification.Ratify.md#functions-related-to-voting
 [GOV]: Ledger.Conway.Specification.Gov.md#rules-for-the-gov-transition-system
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
 [Ledger.Conway.Specification.Enact]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Enact.lagda.md
 [Ledger.Conway.Specification.Fees]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Fees.lagda.md
+[Ledger.Conway.Specification.Gov]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Gov.lagda.md
 [Ledger.Conway.Specification.Rewards]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda.md
 [Ledger.Conway.Specification.Utxo]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Utxo.lagda.md
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
@@ -36,9 +39,11 @@
 [scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
 [Time handling on Cardano]: https://docs.cardano.org/about-cardano/explore-more/time
+[Type signature of the GOV transition relation]: Ledger.Conway.Specification.Gov.md#type-signature-of-the-gov-transition-relation
 [UTXO]: Ledger.Conway.Specification.Utxo.md#sec:utxo-inference-rule
 [UTXOS]: Ledger.Conway.Specification.Utxo.md#sec:utxos-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#utxow-inference-rules
+[Validity and wellformedness predicates]: Ledger.Conway.Specification.Gov.md#validity-and-wellformedness-predicates
 [Shelley Ledger Spec (pdf)]: https://github.com/intersectmbo/cardano-ledger/releases/latest/download/shelley-ledger.pdf
 
 <!-- Properties -->

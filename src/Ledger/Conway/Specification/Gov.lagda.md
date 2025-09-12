@@ -1,26 +1,37 @@
-\section{Governance}
-\label{sec:governance}
-\modulenote{\ConwayModule{Gov}}, where we define the types required for ledger governance.
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Gov.lagda.md
+---
 
-The behavior of \GovState{} is similar to that of a queue.  New proposals are
-appended at the end, but any proposal can be removed at the epoch boundary.  However,
-for the purposes of enactment, earlier proposals take priority.  Note that
-\EnactState{} used in \GovEnv{} is defined in \cref{sec:enactment}.
+# Governance {#sec:governance}
 
-\begin{itemize}
-  \item
-    \addVote{} inserts (and potentially overrides) a vote made for a
-    particular governance action (identified by its ID) by a credential with a role.
-  \item
-    \addAction{} adds a new proposed action at the end of a given \GovState{}.
-  \item
-    The \validHFAction{} property indicates whether a given proposal, if it is a
-    \TriggerHardFork{} action, can potentially be enacted in the future. For this to be the
-    case, its \prevAction{} needs to exist, be another \TriggerHardFork{} action and have a
-    compatible version.
-\end{itemize}
+This section is part of the [Ledger.Conway.Specification.Gov][] module of the
+[formal ledger specification][], where we define the types required for ledger
+governance.
 
-\begin{code}[hide]
+The behavior of `GovState`{.AgdaFunction} is similar to that of a queue.
+New proposals are appended at the end, but any proposal can be removed
+at the epoch boundary. However, for the purposes of enactment, earlier
+proposals take priority. Note that `EnactState`{.AgdaRecord} used in
+`GovEnv`{.AgdaRecord} is defined in
+the [Enact][Ledger.Conway.Specification.Enact] module.
+
+- `addVote`{.AgdaFunction} inserts (and potentially overrides) a vote
+  made for a particular governance action (identified by its ID) by a
+  credential with a role.
+
+- `addAction`{.AgdaFunction} adds a new proposed action at the end of a
+  given `GovState`{.AgdaFunction}.
+
+- The `validHFAction`{.AgdaFunction} property indicates whether a given
+  proposal, if it is a `TriggerHardFork`{.AgdaInductiveConstructor}
+  action, can potentially be enacted in the future. For this to be the
+  case, its `prevAction`{.AgdaField} needs to exist, be another
+  `TriggerHardFork`{.AgdaInductiveConstructor} action and have a
+  compatible version.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Gov.Base
@@ -50,24 +61,27 @@ open import Function.Properties.Equivalence using () renaming (sym to sym-Equiv)
 open import Function.Related.Propositional using (↔⇒)
 
 open GovActionState
-\end{code}
+```
+-->
 
-\begin{figure*}
-\emph{Derived types}
-\begin{AgdaMultiCode}
-\begin{code}[hide]
+## Types of the <span class="AgdaDatatype">GOV</span> Transition System {#types-of-the-gov-transition-system}
+
+*Derived types*
+
+```agda
 GovState : Type
-\end{code}
-\begin{code}
 GovState = List (GovActionID × GovActionState)
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 record HasGovState {a} (A : Type a) : Type a where
   field GovStateOf : A → GovState
 open HasGovState ⦃...⦄ public
-\end{code}
-\begin{code}
+```
+-->
 
+```agda
 record GovEnv : Type where
   field
     txid        : TxId
@@ -77,13 +91,10 @@ record GovEnv : Type where
     enactState  : EnactState
     certState   : CertState
     rewardCreds : ℙ Credential
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types used in the GOV transition system}
-\label{defs:gov-derived-types}
-\end{figure*}
+```
 
-\begin{code}[hide]
+<!--
+```agda
 instance
   HasPParams-GovEnv : HasPParams GovEnv
   HasPParams-GovEnv .PParamsOf = GovEnv.pparams
@@ -98,41 +109,45 @@ instance
     [ (quote GovEnv , HasCast-GovEnv) ]
 
 private variable
-  Γ : GovEnv
-  s s' : GovState
-  aid : GovActionID
-  voter : GovVoter
-  vote : GovVote
-  v : Vote
-  d : Coin
-  addr : RwdAddr
-  a : GovAction
-  prev : NeedsHash (gaType a)
-  k : ℕ
-  p : Maybe ScriptHash
+  Γ      : GovEnv
+  s s'   : GovState
+  aid    : GovActionID
+  voter  : GovVoter
+  vote   : GovVote
+  v      : Vote
+  d      : Coin
+  addr   : RwdAddr
+  a      : GovAction
+  prev   : NeedsHash (gaType a)
+  k      : ℕ
+  p      : Maybe ScriptHash
 
 open GState
 open PState
-\end{code}
+```
+-->
 
-\begin{figure*}
-\begin{AgdaMultiCode}
-\begin{code}
+
+## Functions of the  <span class="AgdaDatatype">GOV</span> Transition System {#functions-of-the-gov-transition-system}
+
+```agda
 govActionPriority : GovActionType → ℕ
-govActionPriority NoConfidence     = 0
-govActionPriority UpdateCommittee  = 1
-govActionPriority NewConstitution  = 2
-govActionPriority TriggerHardFork        = 3
-govActionPriority ChangePParams    = 4
-govActionPriority TreasuryWithdrawal     = 5
-govActionPriority Info             = 6
+govActionPriority NoConfidence        = 0
+govActionPriority UpdateCommittee     = 1
+govActionPriority NewConstitution     = 2
+govActionPriority TriggerHardFork     = 3
+govActionPriority ChangePParams       = 4
+govActionPriority TreasuryWithdrawal  = 5
+govActionPriority Info                = 6
 
 Overlap : GovActionType → GovActionType → Type
-Overlap NoConfidence    UpdateCommittee  = ⊤
-Overlap UpdateCommittee NoConfidence     = ⊤
-Overlap a               a'               = a ≡ a'
-\end{code}
-\begin{code}[hide]
+Overlap NoConfidence     UpdateCommittee  = ⊤
+Overlap UpdateCommittee  NoConfidence     = ⊤
+Overlap a                a'               = a ≡ a'
+```
+
+<!--
+```agda
 -- TODO: cleanup this
 Overlap? : (a a' : GovActionType) → Dec (Overlap a a')
 Overlap? NoConfidence    UpdateCommittee  = Dec-⊤ .dec
@@ -184,9 +199,10 @@ Overlap? Info TriggerHardFork = no (λ ())
 Overlap? Info ChangePParams = no (λ ())
 Overlap? Info TreasuryWithdrawal = no (λ ())
 Overlap? Info Info = yes refl
-\end{code}
-\begin{code}
+```
+-->
 
+```agda
 insertGovAction : GovState → GovActionID × GovActionState → GovState
 insertGovAction [] gaPr = [ gaPr ]
 insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
@@ -194,90 +210,92 @@ insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
-mkGovStatePair : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
-                 → GovActionID × GovActionState
-mkGovStatePair e aid addr a prev = (aid , record
-  { votes = record { gvCC = ∅ ; gvDRep = ∅ ; gvSPO = ∅ } ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+mkGovStatePair :  Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
+                  → GovActionID × GovActionState
+mkGovStatePair e aid addr a prev = (aid , gas)
+  where
+  gas : GovActionState
+  gas = record  { votes = record { gvCC = ∅ ; gvDRep = ∅ ; gvSPO = ∅ }
+                ; returnAddr = addr
+                ; expiresIn = e
+                ; action = a
+                ; prevAction = prev
+                }
 
-addAction : GovState
-          → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
-          → GovState
+addAction :  GovState → Epoch → GovActionID → RwdAddr
+             → (a : GovAction) → NeedsHash (a .gaType)
+             → GovState
 addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 opaque
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
   addVote : GovState → GovActionID → GovVoter → Vote → GovState
   addVote gSt aid voter v = map modifyVotes gSt
-    where modifyVotes : GovActionID × GovActionState → GovActionID × GovActionState
-          modifyVotes (gid , gaSt) = gid , (if gid ≡ aid then record gaSt { votes = votes' voter } else gaSt)
-            where open GovVotes (votes gaSt)
-                  votes' : GovVoter → GovVotes
-                  votes' ⟦ CC   , c  ⟧ᵍᵛ = record { gvCC = insert gvCC c v ; gvDRep = gvDRep            ; gvSPO = gvSPO             }
-                  votes' ⟦ DRep , c  ⟧ᵍᵛ = record { gvCC = gvCC            ; gvDRep = insert gvDRep c v ; gvSPO = gvSPO             }
-                  votes' ⟦ SPO  , kh ⟧ᵍᵛ = record { gvCC = gvCC            ; gvDRep = gvDRep            ; gvSPO = insert gvSPO kh v }
+    where
+    modifyVotes : GovActionID × GovActionState → GovActionID × GovActionState
+    modifyVotes (gid , gaSt) = gid , (if gid ≡ aid then record gaSt { votes = votes' voter } else gaSt)
+      where
+      open GovVotes (votes gaSt)
+      votes' : GovVoter → GovVotes
+      votes' ⟦ CC , c ⟧ᵍᵛ = record { gvCC = insert gvCC c v ; gvDRep = gvDRep ; gvSPO = gvSPO }
+      votes' ⟦ DRep , c ⟧ᵍᵛ = record { gvCC = gvCC ; gvDRep = insert gvDRep c v ; gvSPO = gvSPO }
+      votes' ⟦ SPO , kh ⟧ᵍᵛ = record { gvCC = gvCC ; gvDRep = gvDRep ; gvSPO = insert gvSPO kh v }
 
   isRegistered : GovEnv → GovVoter → Type
   isRegistered Γ v = case v of
-\end{code}
-\begin{code}[hide]
     λ where
-\end{code}
-\begin{code}
-      ⟦ CC   , c  ⟧ᵍᵛ → just c ∈ range (gState .ccHotKeys)
-      ⟦ DRep , c  ⟧ᵍᵛ → c ∈ dom (gState .dreps)
-      ⟦ SPO  , kh ⟧ᵍᵛ → kh ∈ dom (pState .pools)
-        where
-          open CertState (GovEnv.certState Γ) using (gState; pState)
+      ⟦ CC   , c  ⟧ᵍᵛ → just c ∈ range (CCHotKeysOf (CertStateOf Γ))
+      ⟦ DRep , c  ⟧ᵍᵛ → c ∈ dom (DRepsOf (CertStateOf Γ))
+      ⟦ SPO  , kh ⟧ᵍᵛ → kh ∈ dom (PoolsOf (CertStateOf Γ))
 
   validHFAction : GovProposal → GovState → EnactState → Type
   validHFAction (record { action = ⟦ TriggerHardFork , v ⟧ᵍᵃ ; prevAction = prev }) s e =
-    (let (v' , aid) = EnactState.pv e in aid ≡ prev × pvCanFollow v' v)
-    ⊎ ∃₂[ x , v' ] (prev , x) ∈ fromList s × x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ × pvCanFollow v' v
+    (aid' ≡ prev × pvCanFollow ver v) ⊎ ∃₂[ x , v' ]  (prev , x) ∈ fromList s
+                                                      × x .action ≡ ⟦ TriggerHardFork , v' ⟧ᵍᵃ
+                                                      × pvCanFollow v' v
+    where
+      ver : ProtVer
+      ver = EnactState.pv e .proj₁
+      aid' : GovActionID
+      aid' = EnactState.pv e .proj₂
+
   validHFAction _ _ _ = ⊤
-\end{code}
-\end{AgdaMultiCode}
-\caption{Functions used in the GOV transition system}
-\label{defs:gov-functions}
-\end{figure*}
+```
 
-\begin{figure*}
-\begin{AgdaMultiCode}
-\emph{Transition relation types}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,GOV⦈_  : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
-\end{code}
-\begin{code}
-_⊢_⇀⦇_,GOVS⦈_   : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
-\end{code}
-\end{AgdaMultiCode}
-\caption{Type signature of the transition relation of the GOV transition system}
-\label{defs:gov-defs}
-\end{figure*}
+## Type signature of the <span class="AgdaDatatype">GOV</span> transition relation {#type-signature-of-the-gov-transition-relation}
 
-\Cref{defs:enactable} shows some of the functions used to determine whether certain
-actions are enactable in a given state.  Specifically, \AgdaFunction{allEnactable} passes
-the \AgdaFunction{GovState} to \AgdaFunction{getAidPairsList} to obtain a list of
-\AgdaFunction{GovActionID}-pairs which is then passed to \AgdaFunction{enactable}. The latter uses the
-\AgdaFunction{\_connects\_to\_} function to check
-whether the list of \AgdaFunction{GovActionID}-pairs connects the proposed action to a previously
-enacted one.\footnote{To see the definition of the \AgdaFunction{\_connects\_to\_}
-function, click the ``Show more Agda'' button.}
+The `GOV`{.AgdaDatatype} transition rule has the following type signature:
 
-The function \govActionPriority{} assigns a priority to the various types of governance actions.
-This is useful for ordering lists of governance actions (see \AgdaFunction{insertGovAction}
-in \cref{defs:gov-functions}).
-%
-Priority is also used to check if two actions \AgdaFunction{Overlap}; that is,
-they would modify the same piece of \AgdaDatatype{EnactState}.
+```agda
+data _⊢_⇀⦇_,GOV⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
+```
 
-\begin{figure*}
-\begin{AgdaMultiCode}
-\begin{code}[hide]
+## Enactability Predicate
+
+This section contains some of the functions used to determine whether certain actions
+are enactable in a given state.  Specifically, `allEnactable`{.AgdaFunction} passes
+the `GovState`{.AgdaFunction} to `getAidPairsList`{.AgdaFunction} to obtain a list of
+`GovActionID`{.AgdaFunction}-pairs which is then passed to `enactable`{.AgdaFunction}.
+The latter uses the `_connects_to_`{.AgdaFunction} function to check whether the list
+of `GovActionID`{.AgdaFunction}-pairs connects the proposed action to a previously
+enacted one.[^1]
+
+The function `govActionPriority`{.AgdaFunction} assigns a priority to
+the various types of governance actions. This is useful for ordering
+lists of governance actions (see the definition of the
+`insertGovAction`{.AgdaFunction} function in the section on
+[Functions of the GOV Transition System][]
+Priority is also used to check if two actions `Overlap`{.AgdaFunction}; that is,
+they would modify the same piece of `EnactState`{.AgdaDatatype}.
+
+<!--
+```agda
 -- Convert list of (GovActionID,GovActionState)-pairs to list of GovActionID pairs.
 getAidPairsList : GovState → List (GovActionID × GovActionID)
 getAidPairsList aid×states =
@@ -288,16 +306,14 @@ _connects_to_ : List (GovActionID × GovActionID) → GovActionID → GovActionI
 [] connects aidNew to aidOld = aidNew ≡ aidOld
 ((aid , aidPrev) ∷ s) connects aidNew to aidOld  =
   aid ≡ aidNew × s connects aidPrev to aidOld ⊎ s connects aidNew to aidOld
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
 enactable  : EnactState → List (GovActionID × GovActionID)
            → GovActionID × GovActionState → Type
 enactable e aidPairs = λ (aidNew , as) → case getHashES e (action as .gaType) of
-\end{code}
-\begin{code}[hide]
   λ where
-\end{code}
-\begin{code}
    nothing        → ⊤
    (just aidOld)  → ∃[ t ]  fromList t ⊆ fromList aidPairs
                             × Unique t × t connects aidNew to aidOld
@@ -307,26 +323,20 @@ allEnactable e aid×states = All (enactable e (getAidPairsList aid×states)) aid
 
 hasParentE : EnactState → GovActionID → GovActionType → Type
 hasParentE e aid gaTy = case getHashES e gaTy of
-\end{code}
-\begin{code}[hide]
   λ where
-\end{code}
-\begin{code}
-   nothing    → ⊤
-   (just id)  → id ≡ aid
+    nothing    → ⊤
+    (just id)  → id ≡ aid
 
 hasParent : EnactState → GovState → (gaTy : GovActionType) → NeedsHash gaTy → Type
 hasParent e s gaTy aid = case getHash aid of
-\end{code}
-\begin{code}[hide]
   λ where
-\end{code}
-\begin{code}
     nothing      → ⊤
     (just aid')  → hasParentE e aid' gaTy
                    ⊎ Any (λ (gid , gas) → gid ≡ aid' × Overlap (GovActionTypeOf gas) gaTy) s
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 open Equivalence
 
 hasParentE? : ∀ e aid a → Dec (hasParentE e aid a)
@@ -404,16 +414,17 @@ maxAllEnactable e = maxsublists⊧P (allEnactable? e)
     subst (length l ≤_)
           (sym (proj₂ (∈-filter⁻ (λ l → length l ≟ maxlen ls) {xs = ls} l'∈)))
           (∈-maxlen-≤ l (∈-filter⁺ (allEnactable? e) l∈ el))
-\end{code}
-\end{AgdaMultiCode}
-\caption{Enactability predicate}
-\label{defs:enactable}
-\end{figure*}
+```
+-->
 
-\clearpage
 
-\begin{figure*}
-\begin{code}
+
+## Validity and Wellformedness Predicates {#validity-and-wellformedness-predicates}
+
+This section defines predicates used in the `GOVPropose`{.AgdaInductiveConstructor} case
+of the GOV rule to ensure that a governance action is valid and well-formed.
+
+```agda
 actionValid : ℙ Credential → Maybe ScriptHash → Maybe ScriptHash → Epoch → GovAction → Type
 actionValid rewardCreds p ppolicy epoch ⟦ ChangePParams , _ ⟧ᵍᵃ =
   p ≡ ppolicy
@@ -429,55 +440,52 @@ actionWellFormed ⟦ ChangePParams , x ⟧ᵍᵃ = ppdWellFormed x
 actionWellFormed ⟦ TreasuryWithdrawal  , x ⟧ᵍᵃ =
   (∀[ a ∈ dom x ] NetworkIdOf a ≡ NetworkId) × (∃[ v ∈ range x ] ¬ (v ≡ 0))
 actionWellFormed _                 = ⊤
-\end{code}
-\caption{Validity and wellformedness predicates}
-\label{fig:valid-and-wellformed}
-\end{figure*}
+```
 
-\Cref{fig:valid-and-wellformed} defines predicates used in the \GOVPropose{} case
-of the GOV rule to ensure that a governance action is valid and well-formed.
-\begin{itemize}
-  \item \actionValid{} ensures that the proposed action is valid given the current state of the system:
-        \begin{itemize}
-          \item a \ChangePParams{} action is valid if the proposal policy is provided;
-          \item a \TreasuryWithdrawal{} action is valid if the proposal policy is provided and the reward stake
-                credential is registered;
-          \item an \UpdateCommittee{} action is valid if credentials of proposed candidates
-                have not expired, and the action does not propose to both add and
-                remove the same candidate.
-        \end{itemize}
-  \item \actionWellFormed{} ensures that the proposed action is well-formed:
-        \begin{itemize}
-          \item a \ChangePParams{} action must preserves well-formedness of the protocol parameters;
-          \item a \TreasuryWithdrawal{} action is well-formed if the network ID is correct and
-                there is at least one non-zero withdrawal amount in the given \RwdAddrToCoinMap{} map.
-        \end{itemize}
-\end{itemize}
++  `actionValid`{.AgdaFunction} ensures that the proposed action is valid
+   given the current state of the system:
+
+    -  a `ChangePParams`{.AgdaInductiveConstructor} action is valid if the
+       proposal policy is provided;
+
+    -  a `TreasuryWithdrawal`{.AgdaInductiveConstructor} action is valid if
+       the proposal policy is provided and the reward stake credential is
+       registered;
+
+    -  an `UpdateCommittee`{.AgdaInductiveConstructor} action is valid if
+       credentials of proposed candidates have not expired, and the action
+       does not propose to both add and remove the same candidate.
+
++  `actionWellFormed`{.AgdaFunction} ensures that the proposed action is
+    well-formed:
+
+   -  a `ChangePParams`{.AgdaInductiveConstructor} action must preserves well-formedness of the protocol parameters;
+
+   -  a `TreasuryWithdrawal`{.AgdaInductiveConstructor} action is well-formed if the
+      network ID is correct and there is at least one non-zero withdrawal amount in
+      the given `RwdAddrToCoinMap`{.AgdaRecord} map.
 
 
-\begin{code}[hide]
+<!--
+```agda
 actionValid? : ∀ {rewardCreds p ppolicy epoch a} → actionValid rewardCreds p ppolicy epoch a ⁇
-actionValid? {a = ⟦ NoConfidence    , _ ⟧ᵍᵃ} = it
-actionValid? {a = ⟦ UpdateCommittee , _ ⟧ᵍᵃ} = it
-actionValid? {a = ⟦ NewConstitution , _ ⟧ᵍᵃ} = it
-actionValid? {a = ⟦ TriggerHardFork       , _ ⟧ᵍᵃ} = it
-actionValid? {a = ⟦ ChangePParams   , _ ⟧ᵍᵃ} = it
-actionValid? {a = ⟦ TreasuryWithdrawal    , _ ⟧ᵍᵃ} = it
-actionValid? {a = ⟦ Info            , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ NoConfidence        , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ UpdateCommittee     , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ NewConstitution     , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ TriggerHardFork     , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ ChangePParams       , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ TreasuryWithdrawal  , _ ⟧ᵍᵃ} = it
+actionValid? {a = ⟦ Info                , _ ⟧ᵍᵃ} = it
 
 actionWellFormed? : ∀ {a} → actionWellFormed a ⁇
-actionWellFormed? {⟦ NoConfidence    , _ ⟧ᵍᵃ} = it
-actionWellFormed? {⟦ UpdateCommittee , _ ⟧ᵍᵃ} = it
-actionWellFormed? {⟦ NewConstitution , _ ⟧ᵍᵃ} = it
-actionWellFormed? {⟦ TriggerHardFork       , _ ⟧ᵍᵃ} = it
-actionWellFormed? {⟦ ChangePParams   , _ ⟧ᵍᵃ} = it
-actionWellFormed? {⟦ TreasuryWithdrawal    , _ ⟧ᵍᵃ} = it
-actionWellFormed? {⟦ Info            , _ ⟧ᵍᵃ} = it
-\end{code}
+actionWellFormed? {⟦ NoConfidence        , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ UpdateCommittee     , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ NewConstitution     , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ TriggerHardFork     , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ ChangePParams       , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ TreasuryWithdrawal  , _ ⟧ᵍᵃ} = it
+actionWellFormed? {⟦ Info                , _ ⟧ᵍᵃ} = it
 
-\clearpage
-
-\begin{code}[hide]
 open GovEnv
 open PParams hiding (a)
 open GovVoter
@@ -486,13 +494,15 @@ variable
   machr : Maybe Anchor
   achr : Anchor
   ast  : GovActionState
-\end{code}
-\begin{figure*}
-\begin{AgdaMultiCode}
-\begin{code}
+```
+-->
+
+
+## Rules for the <span class="AgdaDatatype">GOV</span> Transition System {#rules-for-the-gov-transition-system}
+
+```agda
 data _⊢_⇀⦇_,GOV⦈_ where
-\end{code}
-\begin{code}
+
   GOV-Vote :
     ∙ (aid , ast) ∈ fromList s
     ∙ canVote (PParamsOf Γ) (action ast) (gvRole voter)
@@ -520,23 +530,35 @@ data _⊢_⇀⦇_,GOV⦈_ where
       (Γ , k) ⊢ s ⇀⦇ inj₂ prop ,GOV⦈ addAction s (pp .govActionLifetime +ᵉ e)
                                                  (Γ .txid , k) addr a prev
 
+```
+
+The `GOVS`{.AgdaDatatype} transition rule is actually a function with following signature:
+
+```agda
+_⊢_⇀⦇_,GOVS⦈_ : GovEnv → GovState → List (GovVote ⊎ GovProposal) → GovState → Type
+```
+
+Specifically, it is defined as a reduction combinator that applies the
+`GOV`{.AgdaDatatype} rule at each step.[^2]
+
+```agda
 _⊢_⇀⦇_,GOVS⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV⦈_}
-\end{code}
-\end{AgdaMultiCode}
-\caption{Rules for the GOV transition system}
-\label{defs:gov-rules}
-\end{figure*}
+```
 
-The GOVS transition system is now given as the reflexitive-transitive
-closure of the system GOV, described in \Cref{defs:gov-rules}.
+For `GOVVote`{.AgdaInductiveConstructor}, we check that the governance
+action being voted on exists; that the voter’s role is allowed to vote
+(see `canVote`{.AgdaFunction} in Section [Functions related to voting][]; and
+that the voter’s credential is actually associated with their role (see
+`isRegistered`{.AgdaFunction} in the section on the
+[Type signature of the GOV transition relation][].
 
-For \GOVVote{}, we check that the governance action being voted on
-exists; that the voter's role is allowed to vote (see \canVote{} in
-\cref{fig:ratification-requirements}); and that the voter's
-credential is actually associated with their role (see
-\isRegistered{} in \cref{defs:gov-defs}).
+For `GOVPropose`{.AgdaInductiveConstructor}, we check the correctness of
+the deposit along with some and some conditions that ensure the action
+is well-formed and valid; naturally, these checks depend on the type of
+action being proposed (see
+the section on [Validity and Wellformedness Predicates][].
 
-For \GOVPropose{}, we check the correctness of the deposit along with some
-and some conditions that ensure the action is well-formed and valid;
-naturally, these checks depend on the type of action being proposed
-(see \cref{fig:valid-and-wellformed}).
+[^1]:  To see the definition of the `_connects_to_`{.AgdaFunction} function, click the “Show more Agda” button.
+
+[^2]:  The Agda code defining various versions of the `ReflexiveTransitiveClosure`{.AgdaFunction}
+       type is not yet documented as we are in the process of refactoring it.
