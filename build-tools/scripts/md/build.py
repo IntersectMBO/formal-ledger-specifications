@@ -101,9 +101,9 @@ def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None
     header_result = ensure_headers_for_docs_dir(
         docs_dir=config.build_paths.mkdocs_docs_dir,
         src_root=config.source_paths.src_dir,
-        branch="master",                 # or hoist to config if you prefer
+        branch="master",                 # or hoist to config
         preserve_existing=True,
-        skip_names=set()                 # e.g., {"index.md"} if you want to skip it
+        skip_names=set()                 # e.g., {"index.md"} to skip index.md
     )
     if header_result.is_ok:
         logging.info(f"📝 Ensured source headers in {header_result.unwrap()} pages.")
