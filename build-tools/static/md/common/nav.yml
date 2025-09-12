@@ -195,6 +195,7 @@
     - HaskellTypes/:
       - Deriving: Foreign.HaskellTypes.Deriving.md
   - Appendix/:
+    - Definitions: Definitions.md
     - Agda Prelude: Prelude.md
     - Type Classes:
       - Interface:
