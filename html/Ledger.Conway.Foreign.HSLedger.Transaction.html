@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Conway.Foreign.HSLedger.Transaction</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Keyword">module</a> <a id="8" href="Ledger.Conway.Foreign.HSLedger.Transaction.html" class="Module">Ledger.Conway.Foreign.HSLedger.Transaction</a> <a id="51" class="Keyword">where</a>
+
+<a id="58" class="Keyword">open</a> <a id="63" class="Keyword">import</a> <a id="70" href="Ledger.Conway.Foreign.HSLedger.Address.html" class="Module">Ledger.Conway.Foreign.HSLedger.Address</a>
+<a id="109" class="Keyword">open</a> <a id="114" class="Keyword">import</a> <a id="121" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a>
+<a id="162" class="Keyword">open</a> <a id="167" class="Keyword">import</a> <a id="174" href="Ledger.Conway.Foreign.HSLedger.Certs.html" class="Module">Ledger.Conway.Foreign.HSLedger.Certs</a>
+<a id="211" class="Keyword">open</a> <a id="216" class="Keyword">import</a> <a id="223" href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html" class="Module">Ledger.Conway.Foreign.HSLedger.Gov.Core</a>
+<a id="263" class="Keyword">open</a> <a id="268" class="Keyword">import</a> <a id="275" href="Ledger.Conway.Foreign.HSLedger.Gov.html" class="Module">Ledger.Conway.Foreign.HSLedger.Gov</a>
+<a id="310" class="Keyword">open</a> <a id="315" class="Keyword">import</a> <a id="322" href="Ledger.Conway.Foreign.HSLedger.PParams.html" class="Module">Ledger.Conway.Foreign.HSLedger.PParams</a>
+
+<a id="362" class="Keyword">instance</a>
+  <a id="HsTy-Tag"></a><a id="373" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#373" class="Function">HsTy-Tag</a> <a id="382" class="Symbol">=</a> <a id="384" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="395" href="Ledger.Conway.Specification.Transaction.html#862" class="Datatype">Tag</a>
+  <a id="Conv-Tag"></a><a id="401" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#401" class="Function">Conv-Tag</a> <a id="410" class="Symbol">=</a> <a id="412" href="Foreign.Convertible.Deriving.html#6814" class="Macro">autoConvert</a> <a id="424" href="Ledger.Conway.Specification.Transaction.html#862" class="Datatype">Tag</a>
+
+  <a id="HsTy-Timelock"></a><a id="431" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#431" class="Function">HsTy-Timelock</a> <a id="445" class="Symbol">=</a> <a id="447" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="458" href="Ledger.Conway.Specification.Script.Timelock.html#931" class="Datatype">Timelock</a>
+  <a id="469" class="Comment">-- The termination checker doesn&#39;t like recursion through lists of recursive structures, or that</a>
+  <a id="568" class="Comment">-- we do all the matching in a rhs pattern lambda. Telling the termination checker to go away does</a>
+  <a id="669" class="Comment">-- work though.</a>
+  <a id="687" class="Symbol">{-#</a> <a id="691" class="Keyword">TERMINATING</a> <a id="703" class="Symbol">#-}</a>
+  <a id="Conv-Timelock"></a><a id="709" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#709" class="Function">Conv-Timelock</a> <a id="723" class="Symbol">=</a> <a id="725" href="Foreign.Convertible.Deriving.html#6814" class="Macro">autoConvert</a> <a id="737" href="Ledger.Conway.Specification.Script.Timelock.html#931" class="Datatype">Timelock</a>
+
+  <a id="HsTy-HSTimelock"></a><a id="749" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#749" class="Function">HsTy-HSTimelock</a> <a id="765" class="Symbol">=</a> <a id="767" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="778" href="Ledger.Conway.Conformance.Script.html#685" class="Record">HSTimelock</a>
+  <a id="Conv-HSTimelock"></a><a id="791" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#791" class="Function">Conv-HSTimelock</a> <a id="807" class="Symbol">=</a> <a id="809" href="Foreign.Convertible.Deriving.html#6814" class="Macro">autoConvert</a> <a id="821" href="Ledger.Conway.Conformance.Script.html#685" class="Record">HSTimelock</a>
+
+  <a id="HsTy-HSPlutusScript"></a><a id="835" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#835" class="Function">HsTy-HSPlutusScript</a> <a id="855" class="Symbol">=</a> <a id="857" href="Foreign.HaskellTypes.Deriving.html#11415" class="Macro">autoHsType</a> <a id="868" href="Ledger.Conway.Conformance.Script.html#1013" class="Record">HSPlutusScript</a>
+  <a id="Conv-HSPlutusScript"></a><a id="885" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#885" class="Function">Conv-HSPlutusScript</a> <a id="905" class="Symbol">=</a> <a id="907" href="Foreign.Convertible.Deriving.html#6814" class="Macro">autoConvert</a> <a id="919" href="Ledger.Conway.Conformance.Script.html#1013" class="Record">HSPlutusScript</a>
+
+  <a id="HsTy-TxWitnessess"></a><a id="937" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#937" class="Function">HsTy-TxWitnessess</a> <a id="955" class="Symbol">=</a> <a id="957" href="Foreign.HaskellTypes.Deriving.html#11530" class="Macro Operator">autoHsType</a> <a id="968" href="Ledger.Conway.Specification.Transaction.html#4439" class="Record">TxWitnesses</a> <a id="980" href="Foreign.HaskellTypes.Deriving.html#11530" class="Macro Operator">⊣</a> <a id="982" href="Foreign.HaskellTypes.Deriving.html#3237" class="Function">withConstructor</a> <a id="998" class="String">&quot;MkTxWitnesses&quot;</a>
+  <a id="Conv-TxWitnessess"></a><a id="1016" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#1016" class="Function">Conv-TxWitnessess</a> <a id="1034" class="Symbol">=</a> <a id="1036" href="Foreign.Convertible.Deriving.html#6814" class="Macro">autoConvert</a> <a id="1048" href="Ledger.Conway.Specification.Transaction.html#4439" class="Record">TxWitnesses</a>
+
+  <a id="HsTy-TxBody"></a><a id="1063" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#1063" class="Function">HsTy-TxBody</a> <a id="1075" class="Symbol">=</a> <a id="1077" href="Foreign.HaskellTypes.Deriving.html#11530" class="Macro Operator">autoHsType</a> <a id="1088" href="Ledger.Conway.Specification.Transaction.html#2998" class="Record">TxBody</a> <a id="1095" href="Foreign.HaskellTypes.Deriving.html#11530" class="Macro Operator">⊣</a> <a id="1097" href="Foreign.HaskellTypes.Deriving.html#3237" class="Function">withConstructor</a> <a id="1113" class="String">&quot;MkTxBody&quot;</a>
+  <a id="Conv-TxBody"></a><a id="1126" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#1126" class="Function">Conv-TxBody</a> <a id="1138" class="Symbol">=</a> <a id="1140" href="Foreign.Convertible.Deriving.html#6814" class="Macro">autoConvert</a> <a id="1152" href="Ledger.Conway.Specification.Transaction.html#2998" class="Record">TxBody</a>
+
+  <a id="HsTy-Tx"></a><a id="1162" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#1162" class="Function">HsTy-Tx</a> <a id="1170" class="Symbol">=</a> <a id="1172" href="Foreign.HaskellTypes.Deriving.html#11530" class="Macro Operator">autoHsType</a> <a id="1183" href="Ledger.Conway.Specification.Transaction.html#4684" class="Record">Tx</a> <a id="1186" href="Foreign.HaskellTypes.Deriving.html#11530" class="Macro Operator">⊣</a> <a id="1188" href="Foreign.HaskellTypes.Deriving.html#3237" class="Function">withConstructor</a> <a id="1204" class="String">&quot;MkTx&quot;</a>
+  <a id="Conv-Tx"></a><a id="1213" href="Ledger.Conway.Foreign.HSLedger.Transaction.html#1213" class="Function">Conv-Tx</a> <a id="1221" class="Symbol">=</a> <a id="1223" href="Foreign.Convertible.Deriving.html#6814" class="Macro">autoConvert</a> <a id="1235" href="Ledger.Conway.Specification.Transaction.html#4684" class="Record">Tx</a>
+
+<a id="1239" class="Keyword">unquoteDecl</a> <a id="1251" class="Symbol">=</a> <a id="1253" class="Keyword">do</a>
+  hsTypeAlias TxId
+  hsTypeAlias Ix
+  hsTypeAlias TxIn
+  hsTypeAlias P1Script
+  hsTypeAlias P2Script ⊣ withName <a id="1368" class="String">&quot;P2Script&quot;</a>
+  hsTypeAlias Script
+  hsTypeAlias Datum
+  hsTypeAlias DataHash ⊣ withName <a id="1454" class="String">&quot;DataHash&quot;</a>
+  hsTypeAlias Value
+  hsTypeAlias TxOut
+  hsTypeAlias RdmrPtr
+  hsTypeAlias ScriptHash
+  hsTypeAlias AuxiliaryData
+  hsTypeAlias Withdrawals
+</pre></body></html>
