@@ -5,6 +5,7 @@
 [Auxiliary GOVCERT transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [Auxiliary POOL transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
 [Calculation of Fees for Reference Scripts]: Ledger.Conway.Specification.Fees.md#sec:calculation-of-fees
+[Cardano Staking: How To Stake ADA]: https://www.ledger.com/academy/cardano-staking-how-to-stake-ada
 [CERT]: Ledger.Conway.Specification.Certs.md#certs-rules
 [CERTS]: Ledger.Conway.Specification.Certs.md#certs-rules
 [CERTS rules]: Ledger.Conway.Specification.Certs.md#certs-rules
@@ -19,17 +20,20 @@
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
-[Ledger.Conway.Specification.Fees]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/ConwaySpecification/Fees.lagda.md
+[Ledger.Conway.Specification.Fees]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Fees.lagda.md
 [Ledger.Conway.Specification.Rewards]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda.md
 [Ledger.Conway.Specification.Utxo]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Utxo.lagda.md
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
 [NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#newepoch-transition-system
 [Notation]: Notation.md
+[Ouroboros Chronos blog post]: https://iohk.io/en/blog/posts/2021/10/27/ouroboros-chronos-provides-the-first-high-resilience-cryptographic-time-source-based-on-blockchain/
 [POOL]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
 [RATIFY]: Ledger.Conway.Specification.Ratify.md#the-ratify-transition-system
+[(Re)introduction to Cardano]: https://developers.cardano.org/docs/operate-a-stake-pool/introduction-to-cardano/
 [repourl]: https://github.com/IntersectMBO/formal-ledger-specifications
 [scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
+[Time handling on Cardano]: https://docs.cardano.org/about-cardano/explore-more/time
 [UTXO]: Ledger.Conway.Specification.Utxo.md#sec:utxo-inference-rule
 [UTXOS]: Ledger.Conway.Specification.Utxo.md#sec:utxos-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#utxow-inference-rules
