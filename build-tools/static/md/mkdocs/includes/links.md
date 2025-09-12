@@ -19,7 +19,7 @@
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
-[Ledger.Conway.Specification.Fees]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/ConwaySpecification/Fees.lagda.md
+[Ledger.Conway.Specification.Fees]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Fees.lagda.md
 [Ledger.Conway.Specification.Rewards]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda.md
 [Ledger.Conway.Specification.Utxo]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Utxo.lagda.md
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
