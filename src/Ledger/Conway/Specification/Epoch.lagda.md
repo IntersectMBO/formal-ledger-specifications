@@ -499,7 +499,6 @@ private variable
 ```
 -->
 
-<a id="fig:epoch:sts"></a>
 ## <span class="AgdaDatatype">EPOCH</span> Transition System
 
 The `EPOCH`{.AgdaDatatype} transition has a few updates that are encapsulated
