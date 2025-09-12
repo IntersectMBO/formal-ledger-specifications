@@ -1,8 +1,15 @@
-\section{Enactment}
-\label{sec:enactment}
-\modulenote{\ConwayModule{Enact}}.
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Enact.lagda.md
+---
 
-\begin{code}[hide]
+# Enactment {#sec:enactment}
+
+This section is part of the [Ledger.Conway.Specification.Enact][] module of the
+[formal ledger specification][].
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Data.Nat.Properties using (+-0-monoid)
@@ -14,25 +21,30 @@ open import Ledger.Conway.Specification.Gov.Base
 module Ledger.Conway.Specification.Enact (gs : _) (open GovStructure gs) where
 
 open import Ledger.Conway.Specification.Gov.Actions gs
-\end{code}
+```
+-->
 
-\Cref{fig:enact-defs} contains some definitions required to
-define the ENACT transition system.  \EnactEnv{} is the environment and
-\EnactState{} the state of ENACT, which enacts a governance action. All
-governance actions except \TreasuryWithdrawal{} and \Info{} modify \EnactState{}
-permanently, which of course can have further
-consequences.  \TreasuryWithdrawal{} accumulates withdrawal temporarily in the
-\withdrawals{} field of \EnactState{},
-but this information is applied and reset in EPOCH (see \cref{fig:epoch:sts}).
-Also, enacting these governance actions is the
-\emph{only} way of modifying \EnactState{}.
 
-Note that all other fields of \EnactState{} also contain a \GovActionID{}
-since they are \HashProtected{}.
+## Types and functions of the <span class="AgdaDatatype">ENACT</span> transition system
+{#types-and-function-of-the-enact-transition-system}
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+This section contains some definitions required to define the
+`ENACT`{.AgdaDatatype} transition system.  `EnactEnv`{.AgdaRecord} is the environment
+and `EnactState`{.AgdaRecord} the state of `ENACT`{.AgdaDatatype}, which enacts a
+governance action.  All governance actions except
+`TreasuryWithdrawal`{.AgdaInductiveConstructor} and
+`Info`{.AgdaInductiveConstructor} modify `EnactState`{.AgdaRecord} permanently,
+which of course can have further consequences.
+`TreasuryWithdrawal`{.AgdaInductiveConstructor} accumulates withdrawal temporarily in
+the `withdrawals`{.AgdaField} field of `EnactState`{.AgdaRecord}, but this information
+is applied and reset in `EPOCH`{.AgdaDatatype} (see [EPOCH Transition System][EPOCH]).
+Also, enacting these governance actions is the *only* way of modifying
+`EnactState`{.AgdaRecord}.
+
+Note that all other fields of `EnactState`{.AgdaRecord} also contain a
+`GovActionID`{.AgdaDatatype} since they are `HashProtected`{.AgdaFunction}.
+
+```agda
 record EnactEnv : Type where
   field
     gid       : GovActionID
@@ -46,8 +58,10 @@ record EnactState : Type where
     pv            : HashProtected ProtVer
     pparams       : HashProtected PParams
     withdrawals   : Withdrawals
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 record HasEnactState {a} (A : Type a) : Type a where
   field EnactStateOf : A → EnactState
 open HasEnactState ⦃...⦄ public
@@ -66,9 +80,10 @@ instance
     [ (quote EnactEnv , HasCast-EnactEnv) ]
 
 open EnactState
-\end{code}
-\begin{code}
+```
+-->
 
+```agda
 ccCreds : HashProtected (Maybe ((Credential ⇀ Epoch) × ℚ)) → ℙ Credential
 ccCreds (just x   , _)  = dom (x .proj₁)
 ccCreds (nothing  , _)  = ∅
@@ -90,21 +105,16 @@ getHashES es (TriggerHardFork)     = just (es .pv .proj₂)
 getHashES es (ChangePParams)       = just (es .pparams .proj₂)
 getHashES es (TreasuryWithdrawal)  = nothing
 getHashES es Info                  = nothing
-\end{code}
-\emph{Type of the ENACT transition system}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types and function used for the ENACT transition system}
-\label{fig:enact-defs}
-\end{figure*}
-\begin{code}[hide]
-open EnactState
+```
 
+*Type of the ENACT transition system*
+
+```agda
+data _⊢_⇀⦇_,ENACT⦈_ : EnactEnv → EnactState → GovAction → EnactState → Type
+```
+
+<!--
+```agda
 private variable
   s : EnactState
   up : PParamsUpdate
@@ -121,25 +131,33 @@ private variable
 
 instance
   _ = +-0-monoid
-\end{code}
+```
+-->
 
-\Cref{fig:sts:enact,fig:sts:enact-cont} define the rules of the ENACT transition
-system. Usually no preconditions are checked and the state is simply
-updated (including the \GovActionID{} for the hash protection scheme, if
-required). The exceptions are \UpdateCommittee{} and \TreasuryWithdrawal{}:
-\begin{itemize}
-  \item \UpdateCommittee{} requires that maximum terms are respected, and
-  \item \TreasuryWithdrawal{} requires that the treasury is able to cover the sum of all withdrawals (old and new).
-\end{itemize}
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
+## <span class="AgdaDatatype">ENACT</span> transition system {#enact-transition-system}
+
+This section defines the rules of the `ENACT`{.AgdaDatatype} transition system.
+Usually no preconditions are checked and the state is simply updated (including the
+`GovActionID`{.AgdaDatatype} for the hash protection scheme, if
+required).  The exceptions are `UpdateCommittee`{.AgdaInductiveConstructor} and
+`TreasuryWithdrawal`{.AgdaInductiveConstructor}:
+
+- `UpdateCommittee`{.AgdaInductiveConstructor} requires that maximum
+  terms are respected, and
+
+- `TreasuryWithdrawal`{.AgdaInductiveConstructor} requires that the
+  treasury is able to cover the sum of all withdrawals (old and new).
+
+<!--
+```agda
 open PParams using (ccMaxTermLength)
 open EnactState using (cc)
 data _⊢_⇀⦇_,ENACT⦈_ where
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
   Enact-NoConf :
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ NoConfidence , _ ⟧ᵍᵃ ,ENACT⦈ record s { cc = nothing , gid }
@@ -155,14 +173,7 @@ data _⊢_⇀⦇_,ENACT⦈_ where
   Enact-NewConst :
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ NewConstitution , (dh , sh) ⟧ᵍᵃ ,ENACT⦈ record s { constitution = (dh , sh) , gid }
-\end{code}
-\end{AgdaMultiCode}
-\caption{ENACT transition system}
-\label{fig:sts:enact}
-\end{figure*}
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+
   Enact-HF :
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ TriggerHardFork , v ⟧ᵍᵃ ,ENACT⦈ record s { pv = v , gid }
@@ -180,8 +191,5 @@ data _⊢_⇀⦇_,ENACT⦈_ where
   Enact-Info :
     ───────────────────────────────────────
     ⟦ gid , t , e ⟧ ⊢ s ⇀⦇ ⟦ Info , _ ⟧ᵍᵃ ,ENACT⦈ s
-\end{code}
-\end{AgdaMultiCode}
-\caption{ENACT transition system (continued)}
-\label{fig:sts:enact-cont}
-\end{figure*}
+```
+
