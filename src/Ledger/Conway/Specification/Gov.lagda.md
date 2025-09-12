@@ -210,14 +210,21 @@ insertGovAction ((gaID₀ , gaSt₀) ∷ gaPrs) (gaID₁ , gaSt₁)
      then (gaID₀ , gaSt₀) ∷ insertGovAction gaPrs (gaID₁ , gaSt₁)
      else (gaID₁ , gaSt₁) ∷ (gaID₀ , gaSt₀) ∷ gaPrs
 
-mkGovStatePair : Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
-                 → GovActionID × GovActionState
-mkGovStatePair e aid addr a prev = (aid , record
-  { votes = record { gvCC = ∅ ; gvDRep = ∅ ; gvSPO = ∅ } ; returnAddr = addr ; expiresIn = e ; action = a ; prevAction = prev })
+mkGovStatePair :  Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
+                  → GovActionID × GovActionState
+mkGovStatePair e aid addr a prev = (aid , gas)
+  where
+  gas : GovActionState
+  gas = record  { votes = record { gvCC = ∅ ; gvDRep = ∅ ; gvSPO = ∅ }
+                ; returnAddr = addr
+                ; expiresIn = e
+                ; action = a
+                ; prevAction = prev
+                }
 
-addAction : GovState
-          → Epoch → GovActionID → RwdAddr → (a : GovAction) → NeedsHash (a .gaType)
-          → GovState
+addAction :  GovState → Epoch → GovActionID → RwdAddr
+             → (a : GovAction) → NeedsHash (a .gaType)
+             → GovState
 addAction s e aid addr a prev = insertGovAction s (mkGovStatePair e aid addr a prev)
 ```
 
@@ -236,9 +243,9 @@ opaque
       where
       open GovVotes (votes gaSt)
       votes' : GovVoter → GovVotes
-      votes' ⟦ CC , c ⟧ᵍᵛ    = record { gvCC = insert gvCC c v  ; gvDRep = gvDRep             ; gvSPO = gvSPO             }
-      votes' ⟦ DRep , c ⟧ᵍᵛ  = record { gvCC = gvCC             ; gvDRep = insert gvDRep c v  ; gvSPO = gvSPO             }
-      votes' ⟦ SPO , kh ⟧ᵍᵛ  = record { gvCC = gvCC             ; gvDRep = gvDRep             ; gvSPO = insert gvSPO kh v }
+      votes' ⟦ CC , c ⟧ᵍᵛ = record { gvCC = insert gvCC c v ; gvDRep = gvDRep ; gvSPO = gvSPO }
+      votes' ⟦ DRep , c ⟧ᵍᵛ = record { gvCC = gvCC ; gvDRep = insert gvDRep c v ; gvSPO = gvSPO }
+      votes' ⟦ SPO , kh ⟧ᵍᵛ = record { gvCC = gvCC ; gvDRep = gvDRep ; gvSPO = insert gvSPO kh v }
 
   isRegistered : GovEnv → GovVoter → Type
   isRegistered Γ v = case v of
