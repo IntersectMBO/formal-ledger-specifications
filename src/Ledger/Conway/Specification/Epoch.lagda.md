@@ -55,13 +55,13 @@ open import Ledger.Conway.Specification.Utxo txs abs
 ```agda
 record EpochState : Type where
 ```
- 
+
 <!--
 ```agda
   constructor ⟦_,_,_,_,_⟧ᵉ'
 ```
 -->
- 
+
 ```agda
   field
     acnt       : Acnt
@@ -126,7 +126,7 @@ record NewEpochState : Type where
     The formal specification utilizes the type `PoolDelegatedStake`{.AgdaDatatype}
     in lieu of the derived type `PoolDistr`{.AgdaDatatype} (Figure 5, Shelley
     specification [CVG19](#shelley-ledger-spec)). The latter can be computed from the
-    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype} 
+    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype}
     by the total stake in the map.
 
     In addition, the formal specification omits the VRF key hashes in the
@@ -206,7 +206,6 @@ after an epoch:
 ```
 <!--
 ```agda
-
             ; flowConservation = flowConservation
             ; Δt-nonnegative = Δt-nonneg
             ; Δf-nonpositive = Δf-nonpos
@@ -499,7 +498,7 @@ private variable
 ```
 -->
 
-## <span class="AgdaDatatype">EPOCH</span> Transition System
+## <span class="AgdaDatatype">EPOCH</span> Transition System {#epoch-transition-system}
 
 The `EPOCH`{.AgdaDatatype} transition has a few updates that are encapsulated
 in the following functions. We need these functions to bring them in scope for
@@ -675,7 +674,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 ```
 
-## <span class="AgdaDatatype">NEWEPOCH</span> Transition System
+## <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#newepoch-transistion-system}
 
 This section defines the `NEWEPOCH`{.AgdaDatatype} transition system.
 
