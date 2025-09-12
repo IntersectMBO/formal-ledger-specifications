@@ -55,13 +55,11 @@ open import Ledger.Conway.Specification.Utxo txs abs
 ```agda
 record EpochState : Type where
 ```
- 
 <!--
 ```agda
   constructor ⟦_,_,_,_,_⟧ᵉ'
 ```
 -->
- 
 ```agda
   field
     acnt       : Acnt
@@ -126,7 +124,7 @@ record NewEpochState : Type where
     The formal specification utilizes the type `PoolDelegatedStake`{.AgdaDatatype}
     in lieu of the derived type `PoolDistr`{.AgdaDatatype} (Figure 5, Shelley
     specification [CVG19](#shelley-ledger-spec)). The latter can be computed from the
-    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype} 
+    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype}
     by the total stake in the map.
 
     In addition, the formal specification omits the VRF key hashes in the
@@ -206,7 +204,6 @@ after an epoch:
 ```
 <!--
 ```agda
-
             ; flowConservation = flowConservation
             ; Δt-nonnegative = Δt-nonneg
             ; Δf-nonpositive = Δf-nonpos
@@ -358,7 +355,8 @@ Relevant quantities are:
 - `÷₀`{.AgdaFunction}: Division operator that returns zero when the
   denominator is zero.
 
-### Applying <span class="AgdaDatatype">RewardUpdate</span>
+
+## Applying <span class="AgdaDatatype">RewardUpdate</span> {#applying-rewardupdate}
 
 This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
 `RewardUpdate`{.AgdaDatatype} to the `EpochState`{.AgdaFunction}.
@@ -387,12 +385,12 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
     unregRU'  = ∑[ x ← unregRU ] x
 ```
 
-## Stake Distributions
+## Stake Distributions {#stake-distributions}
 
 This section defines the functions
 `calculatePoolDelegatedState`{.AgdaFunction},
 `calculateVDelegDelegatedStake`{.AgdaFunction}, and
-`mkStakeDistrs`{.AgdaFunction}.
+`mkStakeDistrs`{.AgdaFunction}, which calculate stake distributions for voting purposes.
 
 <!--
 ```agda
@@ -476,10 +474,6 @@ opaque
                    (calculatePoolDelegatedStake ss)
 ```
 
-The function `mkStakeDistrs`{.AgdaFunction} calculates the stake distributions
-for voting purposes.
-
-
 <!--
 ```agda
 private variable
@@ -499,7 +493,7 @@ private variable
 ```
 -->
 
-## <span class="AgdaDatatype">EPOCH</span> Transition System
+## <span class="AgdaDatatype">EPOCH</span> Transition System {#epoch-transition-system}
 
 The `EPOCH`{.AgdaDatatype} transition has a few updates that are encapsulated
 in the following functions. We need these functions to bring them in scope for
@@ -675,33 +669,14 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 ```
 
-## <span class="AgdaDatatype">NEWEPOCH</span> Transition System
+## <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#newepoch-transition-system}
 
 This section defines the `NEWEPOCH`{.AgdaDatatype} transition system.
 
-### Transition Rule
-<!--
 ```agda
-data
-```
--->
-```agda
-  _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type
-```
-<!--
-```agda
-  where
-```
--->
-```agda
-  NEWEPOCH-New : 
-```
-<!--
-```agda
-    ∀ {bprev bcur : BlocksMade} →
-```
--->
-```agda
+data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where
+
+  NEWEPOCH-New : ∀ {bprev bcur : BlocksMade} →
     let
       eps' = applyRUpd ru eps
       ss   = EpochState.ss eps''
@@ -717,14 +692,7 @@ data
       ──────────────────────────────────────────────
       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
 
-  NEWEPOCH-No-Reward-Update : 
-```
-<!--
-```agda
-    ∀ {bprev bcur : BlocksMade} →
-```
--->
-```agda
+  NEWEPOCH-No-Reward-Update : ∀ {bprev bcur : BlocksMade} →
     let
       ss  = EpochState.ss eps'
       pd' = calculatePoolDelegatedStake (Snapshots.set ss)
