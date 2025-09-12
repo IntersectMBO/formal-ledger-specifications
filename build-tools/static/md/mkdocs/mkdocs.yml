@@ -8,7 +8,7 @@ site_author: Formal Methods Ledger Team
 repo_url: https://github.com/IntersectMBO/formal-ledger-specifications
 
 # Use edit_uri_template to build file URLs (GitHub "blob" view)
-edit_uri_template: 'blob/main/docs/{path}'
+edit_uri_template: 'blob/main/docs/{path}?plain=1'
 
 # Theme configuration (using mkdocs-material)
 theme:
