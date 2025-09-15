@@ -46,6 +46,26 @@ jobs:
     with:
       target: hs
 
+  hs-build:
+    needs: [hs]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download extracted Haskell code
+        uses: actions/download-artifact@v4
+        with:
+          name: hs
+          path: dist
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          nix_path: nixpkgs=https://github.com/NixOS/nixpkgs/archive/6c5963357f3c1c840201eda129a99d455074db04.tar.gz
+          extra_nix_config: |
+            trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+            substituters = https://cache.iog.io https://cache.nixos.org/
+      - name: Build the extracted Haskell code
+        run: |
+          nix-shell -p haskell.compiler.ghc96 cabal-install --run "cd dist/hs; cabal update && cabal build"
+
   html:
     needs: [formal-ledger-agda]
     uses: ./.github/workflows/build_artifact.yml
@@ -97,7 +117,7 @@ jobs:
     # This job runs only if the workflow has not been manually dispached,
     # and the origininating branch belongs to the repository
     if: ${{ github.event_name != 'workflow_dispatch' && ! github.event.pull_request.head.repo.fork }}
-    needs: [formal-ledger-agda, hs, html, conway-ledger-pdf, cardano-ledger-pdf, mkdocs-site]
+    needs: [formal-ledger-agda, hs, hs-build, html, conway-ledger-pdf, cardano-ledger-pdf, mkdocs-site]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
