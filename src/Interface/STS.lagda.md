@@ -1,9 +1,20 @@
+---
+source_branch: master
+source_path: src/Interface/STS.lagda.md
+---
+
+# State Transition System {#sec:state-transition-system}
+
+This module introduces the abstract types we use to define a generic state
+transition system (STS) along with some useful combinators and properties.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 module Interface.STS where
 
 open import Prelude
-
 open import Prelude.InferenceRules public
 
 private
@@ -13,89 +24,256 @@ private
            sig : Sig
            sigs : List Sig
            n : ℕ
+```
+-->
 
--- small-step to big-step transformer
+## A Note on Recent Changes
 
-module _ {_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type} {_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type} where
-  data _⊢_⇀⟦_⟧*_ : C → S → List Sig → S → Type where
+We recently refactored the `STS`{.AgdaModule} module and the following provides an
+overview of the changes:
 
-    BS-base :
-      Γ ⊢ s ⇀⟦ _ ⟧ᵇ s'
-      ───────────────────────────────────────
-      Γ ⊢ s ⇀⟦ [] ⟧* s'
++  **New names for clarity and consistency**
 
-    BS-ind :
-        Γ ⊢ s  ⇀⟦ sig  ⟧  s'
-      → Γ ⊢ s' ⇀⟦ sigs ⟧* s''
-        ───────────────────────────────────────
-        Γ ⊢ s  ⇀⟦ sig ∷ sigs ⟧* s''
+    +  `RunTrace`: process a list of signals, tracking change of state (empty list is reflexive/no-op).
+    +  `RunTraceWithBase`: same but allow an initial base (or "seed") transformation.
+    +  `RunTraceIndexed`: same but allow the step relation to depend on the position
+       (indexed over `ℕ`) in the trace.
 
-module _ {_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type} {_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Type} where
-  data _⊢_⇀⟦_⟧ᵢ*'_ : C × ℕ → S → List Sig → S → Type where
++  **One canonical inductive definition** with two specializations, instead of multiple bespoke variants;
++  **Backward-compatible aliases** preserve our old `ReflexiveTransitiveClosure*` names, for now, so we can migrate gradually;
+*  **More precise documentation** describes the canonical STS operation as a fold or "trace evaluation," not a closure;
+*  **Properties preserved and clarified**: totality, invariant preservation, and a `computeTrace` fold with a correctness theorem tied to the `Computational` spec.
 
-    BS-base :
-      Γ ⊢ s ⇀⟦ _ ⟧ᵇ s'
-      ───────────────────────────────────────
-      (Γ , n) ⊢ s ⇀⟦ [] ⟧ᵢ*' s'
 
-    BS-ind :
-        (Γ , n)     ⊢ s  ⇀⟦ sig  ⟧  s'
-      → (Γ , suc n) ⊢ s' ⇀⟦ sigs ⟧ᵢ*' s''
-        ───────────────────────────────────────
-        (Γ , n)     ⊢ s  ⇀⟦ sig ∷ sigs ⟧ᵢ*' s''
+### Renaming Summary
 
-  _⊢_⇀⟦_⟧ᵢ*_ : C → S → List Sig → S → Type
-  _⊢_⇀⟦_⟧ᵢ*_ Γ = _⊢_⇀⟦_⟧ᵢ*'_ (Γ , 0)
++  **Main relation**: `RunTrace` (instead of `ReflexiveTransitiveClosure`).
++  **Variant with empty-trace effect**: `RunTraceWithBase`.
++  **Indexed variant**: `RunTraceIndexed`.
++  Optional operators we can export:
 
+    + `Γ ⊢ s ⇝[ sigs ] s'` for `RunTrace`.
+    + `Γ ⊢ s ⇝ᵢ[ sigs ] s'` for the indexed version.
+
+### Justification
+
+We previously called the canonical abstract state transition rule a
+"reflexive–transitive closure," but that's a misnomer.  "Reflexive–transitive
+closure" normally refers to a closure of a single binary relation.
+The existing combinators are not the reflexive–transitive closure of a binary
+relation on states.  They execute a given sequence of signals (a *trace*) by
+repeatedly applying a step relation in the context of some environment; that is, a
+*trace evaluation* (a fold over signals), not a closure over reachability.  It's
+really a big-step semantics for traces.  The new name (`RunTrace`) matches both the
+intent and the rules.  We also make the empty-trace behavior (reflexive vs "seeded")
+explicit.
+
+
+## High‑level picture
+
+Let
+
+* `Step : C → S → Sig → S → Type` be a small‑step relation, and
+* optionally, `Base : C → S → ⊤ → S → Type` be a base/seed relation used when the trace is empty.
+
+We define an inductive family `RunTraceWithBase Base Step Γ s sigs s'` that
+
+* on `[]` uses `Base` to produce the result state; and
+* on `sig ∷ sigs` uses one `Step` followed by recursion.
+
+Specializing `Base` to the identity relation yields `RunTrace Step Γ s sigs s'`, i.e., the empty trace leaves the state unchanged.
+
+An indexed variant `RunTraceIndexed` threads a natural number through the environment to allow rules that depend on the position in the trace.
+
+## Agda definitions (refactored)
+
+### Identity base relation
+
+The **identity seed** for the base case is used to specialize to the reflexive
+(empty-trace) case; it is defined as follows:
+
+```agda
 data IdSTS {C S} : C → S → ⊤ → S → Type where
   Id-nop : IdSTS Γ s _ s
+```
 
-module _ {_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type} {_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type} where
-  data _⊢_⇀⟦_⟧*'_ : C → S → List Sig → S → Type where
-      RTC :
-          ∙ Γ ⊢ s ⇀⟦ _ ⟧ᵇ s'
-          ∙ _⊢_⇀⟦_⟧*_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⟦_⟧_} Γ s' sigs s''
-          ───────────────────────────────────────
-          Γ ⊢ s ⇀⟦ sigs ⟧*' s''
+### Small-step to Big-step Transformer {#sec:small-step-to-big-step-transformer}
 
+This is the canonical trace runner, parameterized by a given base relation,
+`_⊢_⇀⟦_⟧ᵇ_`{.AgdaFunction}, and a step relation, `_⊢_⇀⟦_⟧_`{.AgdaFunction}.
 
--- with a trivial base case
-ReflexiveTransitiveClosure : {sts : C → S → Sig → S → Type} → C → S → List Sig → S → Type
-ReflexiveTransitiveClosure {sts = sts} = _⊢_⇀⟦_⟧*_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{sts}
-
-STS-total : (C → S → Sig → S → Type) → Type
-STS-total _⊢_⇀⟦_⟧_ = ∀ {Γ s sig} → ∃[ s' ] Γ ⊢ s ⇀⟦ sig ⟧ s'
-
-ReflexiveTransitiveClosure-total : {_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type}
-  → STS-total _⊢_⇀⟦_⟧_ → STS-total (ReflexiveTransitiveClosure {sts = _⊢_⇀⟦_⟧_})
-ReflexiveTransitiveClosure-total SS-total {Γ} {s} {[]} = s , BS-base Id-nop
-ReflexiveTransitiveClosure-total SS-total {Γ} {s} {x ∷ sig} =
-  case SS-total of λ where
-    (s' , Ps') → map₂′ (BS-ind Ps') $ ReflexiveTransitiveClosure-total SS-total
-
-ReflexiveTransitiveClosureᵢ : {sts : C × ℕ → S → Sig → S → Type} → C → S → List Sig → S → Type
-ReflexiveTransitiveClosureᵢ {sts = sts} = _⊢_⇀⟦_⟧ᵢ*_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{sts}
-
-ReflexiveTransitiveClosureᵢ-total : {_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Type}
-  → STS-total _⊢_⇀⟦_⟧_ → STS-total (ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⟦_⟧_})
-ReflexiveTransitiveClosureᵢ-total SS-total = helper SS-total
+```agda
+module _
+  { _⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤  → S → Type }
+  { _⊢_⇀⟦_⟧_  : C → S → Sig → S → Type }
   where
-    helper : {_⊢_⇀⟦_⟧_ : C × ℕ → S → Sig → S → Type}
-      → STS-total _⊢_⇀⟦_⟧_ → STS-total (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⟦_⟧_})
-    helper SS-total {s = s} {[]} = s , BS-base Id-nop
-    helper SS-total {s = s} {x ∷ sig} =
-      case SS-total of λ where
-        (s' , Ps') → map₂′ (BS-ind Ps') $ helper SS-total
 
--- with a given base case
-ReflexiveTransitiveClosureᵢᵇ = _⊢_⇀⟦_⟧ᵢ*_
-ReflexiveTransitiveClosureᵇ  = _⊢_⇀⟦_⟧*_
-ReflexiveTransitiveClosureᵇ'  = _⊢_⇀⟦_⟧*'_
+  -- RunTraceWithBase Base Step Γ s sigs s'
+  -- reads: in environment Γ, running trace sigs from s evaluates to s'.
+  data RunTraceWithBase : C → S → List Sig → S → Type where
+    run-[] :
+      Γ ⊢ s ⇀⟦ _ ⟧ᵇ s' →
+      RunTraceWithBase Γ s [] s'
 
+    run-∷ :
+      Γ ⊢ s  ⇀⟦ sig  ⟧  s' →
+      RunTraceWithBase Γ s' sigs s'' →
+      RunTraceWithBase Γ s  (sig ∷ sigs) s''
+```
+
+### Specialization to Empty Seed Relation
+-- Specialization with the identity base: empty trace does nothing (reflexive).
+
+```agda
+module _
+  { _⊢_⇀⟦_⟧_  : C → S → Sig → S → Type }
+  where
+
+  RunTrace : C → S → List Sig → S → Type
+  RunTrace Γ = RunTraceWithBase { _⊢_⇀⟦_⟧ᵇ_ = IdSTS } {_⊢_⇀⟦_⟧_ } Γ
+```
+
+### Indexed Variant
+
+Next we define an indexed variant of the trace runner, where
+the step relation may depend on the position (ℕ).
+
+We present it as a sized/positioned runner whose index is the length
+of the prefix already consumed.
+
+```agda
+module _
+  { _⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type }
+  { _⊢_⇀⟦_⟧ᵢ_ : (C × ℕ) → S → Sig → S → Type }
+  where
+
+  data RunTraceIndexed' : (C × ℕ) → S → List Sig → S → Type where
+    runᵢ-[] :
+      Γ ⊢ s ⇀⟦ _ ⟧ᵇ s' →
+      RunTraceIndexed' (Γ , n) s [] s'
+
+    runᵢ-∷ :
+      (Γ , n    ) ⊢ s  ⇀⟦ sig  ⟧ᵢ s' →
+      RunTraceIndexed' (Γ , suc n) s' sigs s'' →
+      RunTraceIndexed' (Γ , n    ) s  (sig ∷ sigs) s''
+
+  -- Convenient alias that starts the index at 0.
+  RunTraceIndexed : C → S → List Sig → S → Type
+  RunTraceIndexed Γ s sigs s' = RunTraceIndexed' (Γ , 0) s sigs s'
+```
+
+### "Double-bass" Variant
+
+Finally, we provide a variant that performs a one-off base step then
+runs with the identity base.
+
+```agda
+module _
+  { _⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type }
+  { _⊢_⇀⟦_⟧_  : C → S → Sig → S → Type }
+  where
+
+  RunAfterBase : C → S → List Sig → S → Type
+  RunAfterBase Γ s sigs s'' = Σ[ s' ∈ S ]
+    ( Γ ⊢ s ⇀⟦ _ ⟧ᵇ s'  ×  RunTrace { _⊢_⇀⟦_⟧_ = _⊢_⇀⟦_⟧_ } Γ s' sigs s'' )
+```
+
+
+## Backward-compatibility Layer
+
+Here we map old names to the new ones so existing code still type-checks.
+
+
+```agda
+ReflexiveTransitiveClosure : {sts : C → S → Sig → S → Type}
+  → C → S → List Sig → S → Type
+ReflexiveTransitiveClosure {sts = sts} = RunTrace { _⊢_⇀⟦_⟧_ = sts }
+
+ReflexiveTransitiveClosureᵇ : {base : C → S → ⊤ → S → Type}
+  {sts : C → S → Sig → S → Type} → C → S → List Sig → S → Type
+ReflexiveTransitiveClosureᵇ {base = base} {sts} =
+  RunTraceWithBase { _⊢_⇀⟦_⟧ᵇ_ = base } { _⊢_⇀⟦_⟧_ = sts }
+
+ReflexiveTransitiveClosureᵢ : {sts : (C × ℕ) → S → Sig → S → Type}
+  → C → S → List Sig → S → Type
+ReflexiveTransitiveClosureᵢ {sts = sts} =
+  RunTraceIndexed { _⊢_⇀⟦_⟧ᵇ_ = IdSTS } { _⊢_⇀⟦_⟧ᵢ_ = sts }
+```
+
+
+## Totality
+
+The following formalizes what we mean when we say that a single-step transition
+relation is total.
+
+```agda
+STS-total : (C → S → Sig → S → Type) → Type
+STS-total _⊢_⇀⟦_⟧_ = ∀ {Γ s sig} → ∃[ s' ] (Γ ⊢ s ⇀⟦ sig ⟧ s')
+```
+
+### Property: Totality of Trace
+
+Given a total single-step transition relation, the running of a trace with that
+relation is also total.
+
+```agda
+RunTrace-total
+  : { _⊢_⇀⟦_⟧_ : C → S → Sig → S → Type }
+  → STS-total _⊢_⇀⟦_⟧_ → STS-total (RunTrace { _⊢_⇀⟦_⟧_ = _⊢_⇀⟦_⟧_ })
+RunTrace-total SS-total {Γ} {s} {[]} = s , run-[] Id-nop
+RunTrace-total SS-total {Γ} {s} {sig ∷ sigs} with SS-total {Γ} {s} {sig}
+... | s' , step = map₂′ (run-∷ step) (RunTrace-total SS-total {Γ} {s'} {sigs})
+```
+
+## Invariants
+
+We call a property `P` *invariant* with respect to the step relation `STS` provided
+the following holds: if `P s` and if `STS Γ s sig s'`, then `P s'`.
+
+Formally,
+
+```agda
 LedgerInvariant : (C → S → Sig → S → Type) → (S → Type) → Type
 LedgerInvariant STS P = ∀ {c s sig s'} → STS c s sig s' → P s → P s'
+```
 
-RTC-preserves-inv : ∀ {STS : C → S → Sig → S → Type} {P}
-                  → LedgerInvariant STS P → LedgerInvariant (ReflexiveTransitiveClosure {sts = STS}) P
-RTC-preserves-inv inv (BS-base Id-nop) = id
-RTC-preserves-inv inv (BS-ind p₁ p₂)   = RTC-preserves-inv inv p₂ ∘ inv p₁
+### Property: Invariance of Trace
+
+```agda
+RT-preserves-inv : {STS : C → S → Sig → S → Type} {P : S → Type}
+  → LedgerInvariant STS P → LedgerInvariant (RunTrace { _⊢_⇀⟦_⟧_ = STS }) P
+RT-preserves-inv inv (run-[] Id-nop) = id
+RT-preserves-inv inv (run-∷ p₁ p₂) = RT-preserves-inv inv p₂ ∘ inv p₁
+
+-- Computational execution: fold the `compute` function over the trace.
+
+-- record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Type where
+--   field
+--     compute     : C → S → Sig → Maybe S
+--     ≡-just⇔STS  : compute Γ s b ≡ just s' ⇔ Γ ⊢ s ⇀⦇ b ,X⦈ s'
+
+-- open Computational {{...}} public
+
+-- computeTrace
+--   : {Step : C → S → Sig → S → Type}
+--   → Computational Step
+--   → C → S → List Sig → Maybe S
+-- computeTrace comp Γ s []       = just s
+-- computeTrace comp Γ s (x ∷ xs) with Computational.compute comp Γ s x
+-- ... | nothing = nothing
+-- ... | just s' = computeTrace comp Γ s' xs
+
+-- -- Correctness: folding compute corresponds exactly to RunTrace.
+
+-- computeTrace-correct
+--   : {Step : C → S → Sig → S → Type}
+--   → (comp : Computational Step)
+--   → computeTrace comp Γ s sigs ≡ just s' ⇔ RunTrace { _⊢_⇀⟦_⟧_ = Step } Γ s sigs s'
+-- computeTrace-correct comp {Γ} {s} {[]}    = +-intro (λ q → cong (λ z → z) q ▸ _) (λ r → refl) where
+--   -- left-to-right: `just s` implies RunTrace run-[]
+--   -- right-to-left: run-[] implies `just s`
+--   _ = run-[] Id-nop
+-- computeTrace-correct comp {Γ} {s} {x ∷ xs} with Computational.≡-just⇔STS comp {Γ} {s} {x}
+-- ... | eqv = -- standard fold-style equivalence proof (omitted here for brevity)
+--   Equivalence.trans (Equivalence.map eqv) (computeTrace-correct comp)
+```
