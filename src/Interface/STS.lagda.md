@@ -99,8 +99,9 @@ data IdSTS {C S} : C → S → ⊤ → S → Type where
 
 ### Small-step to Big-step Transformer {#sec:small-step-to-big-step-transformer}
 
-This is the canonical trace runner, parameterized by a given base relation,
-`_⊢_⇀⟦_⟧ᵇ_`{.AgdaFunction}, and a step relation, `_⊢_⇀⟦_⟧_`{.AgdaFunction}.
+This is the canonical trace runner, parameterized by a given base relation
+and step relation, denoted by `_⊢_⇀⟦_⟧ᵇ_`{.AgdaFunction} and
+`_⊢_⇀⟦_⟧_`{.AgdaFunction}, respectively.
 
 ```agda
 module _
@@ -122,7 +123,8 @@ module _
 ```
 
 ### Specialization to Empty Seed Relation
--- Specialization with the identity base: empty trace does nothing (reflexive).
+
+With the identity as base relation, the empty trace does nothing (reflexive).
 
 ```agda
 module _
@@ -136,7 +138,7 @@ module _
 ### Indexed Variant
 
 Next we define an indexed variant of the trace runner, where
-the step relation may depend on the position (ℕ).
+the step relation may depend on the position.
 
 We present it as a sized/positioned runner whose index is the length
 of the prefix already consumed.
@@ -244,36 +246,4 @@ RT-preserves-inv : {STS : C → S → Sig → S → Type} {P : S → Type}
   → LedgerInvariant STS P → LedgerInvariant (RunTrace { _⊢_⇀⟦_⟧_ = STS }) P
 RT-preserves-inv inv (run-[] Id-nop) = id
 RT-preserves-inv inv (run-∷ p₁ p₂) = RT-preserves-inv inv p₂ ∘ inv p₁
-
--- Computational execution: fold the `compute` function over the trace.
-
--- record Computational (_⊢_⇀⦇_,X⦈_ : C → S → Sig → S → Type) : Type where
---   field
---     compute     : C → S → Sig → Maybe S
---     ≡-just⇔STS  : compute Γ s b ≡ just s' ⇔ Γ ⊢ s ⇀⦇ b ,X⦈ s'
-
--- open Computational {{...}} public
-
--- computeTrace
---   : {Step : C → S → Sig → S → Type}
---   → Computational Step
---   → C → S → List Sig → Maybe S
--- computeTrace comp Γ s []       = just s
--- computeTrace comp Γ s (x ∷ xs) with Computational.compute comp Γ s x
--- ... | nothing = nothing
--- ... | just s' = computeTrace comp Γ s' xs
-
--- -- Correctness: folding compute corresponds exactly to RunTrace.
-
--- computeTrace-correct
---   : {Step : C → S → Sig → S → Type}
---   → (comp : Computational Step)
---   → computeTrace comp Γ s sigs ≡ just s' ⇔ RunTrace { _⊢_⇀⟦_⟧_ = Step } Γ s sigs s'
--- computeTrace-correct comp {Γ} {s} {[]}    = +-intro (λ q → cong (λ z → z) q ▸ _) (λ r → refl) where
---   -- left-to-right: `just s` implies RunTrace run-[]
---   -- right-to-left: run-[] implies `just s`
---   _ = run-[] Id-nop
--- computeTrace-correct comp {Γ} {s} {x ∷ xs} with Computational.≡-just⇔STS comp {Γ} {s} {x}
--- ... | eqv = -- standard fold-style equivalence proof (omitted here for brevity)
---   Equivalence.trans (Equivalence.map eqv) (computeTrace-correct comp)
 ```

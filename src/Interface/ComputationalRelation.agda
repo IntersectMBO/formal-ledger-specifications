@@ -187,15 +187,6 @@ instance
   Computational-Id .computeProof _ s _ = success (s , Id-nop)
   Computational-Id .completeness _ _ _ _ Id-nop = refl
 
--- computeTrace
---   : {Step : C → S → Sig → S → Type}
---   → Computational Step
---   → C → S → List Sig → Maybe S
--- computeTrace comp Γ s []       = just s
--- computeTrace comp Γ s (x ∷ xs) with Computational.compute comp Γ s x
--- ... | nothing = nothing
--- ... | just s' = computeTrace comp Γ s' xs
-
 module _ {BSTS : C → S → ⊤ → S → Type} ⦃ _ : Computational BSTS Err₁ ⦄ where
   module _ {STS : C → S → Sig → S → Type} ⦃ _ : Computational STS Err₂ ⦄
      ⦃ _ : InjectError Err₁ Err ⦄ ⦃ _ : InjectError Err₂ Err ⦄ where instance
