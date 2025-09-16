@@ -96,43 +96,34 @@ data IdSTS {C S} : C → S → ⊤ → S → Type where
   Id-nop : IdSTS Γ s _ s
 ```
 
-### Small-step to Big-step Transformer {#sec:small-step-to-big-step-transformer}
+### Iterating Transformer {#sec:iterating-transformer}
 
-This is the canonical trace runner, parameterized by a given base relation
-and step relation, denoted by `_⊢_⇀⟦_⟧ᵇ_`{.AgdaFunction} and
-`_⊢_⇀⟦_⟧_`{.AgdaFunction}, respectively.
+This is the canonical trace runner, parameterized by step relation `_⊢_⇀⟦_⟧_`{.AgdaFunction}.
 
 ```agda
-module _
-  { _⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤  → S → Type }
-  { _⊢_⇀⟦_⟧_  : C → S → Sig → S → Type }
-  where
+-- RunTrace Γ s sigs s'
+-- reads: in environment Γ, starting in state s, and running trace on the list sigs
+-- results in state s'.
+data RunTrace (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) : C → S → List Sig → S → Type where
 
-  -- RunTraceWithBase Base Step Γ s sigs s'
-  -- reads: in environment Γ, running trace sigs from s evaluates to s'.
-  data RunTraceWithBase : C → S → List Sig → S → Type where
-    run-[] :
-      Γ ⊢ s ⇀⟦ _ ⟧ᵇ s' →
-      RunTraceWithBase Γ s [] s'
+  run-[] : RunTrace _⊢_⇀⟦_⟧_ Γ s [] s
 
-    run-∷ :
-      Γ ⊢ s  ⇀⟦ sig  ⟧  s' →
-      RunTraceWithBase Γ s' sigs s'' →
-      RunTraceWithBase Γ s  (sig ∷ sigs) s''
+  run-∷ : Γ ⊢ s ⇀⟦ sig ⟧ s' → RunTrace _⊢_⇀⟦_⟧_ Γ s' sigs s''
+    → RunTrace _⊢_⇀⟦_⟧_ Γ s  (sig ∷ sigs) s''
 ```
 
-### Specialization to Empty Seed Relation
+### Iterating Transformer with Base Step
 
-With the identity as base relation, the empty trace does nothing (reflexive).
+This variant performs a one-off base step then runs the iterator.
 
 ```agda
-module _
-  { _⊢_⇀⟦_⟧_  : C → S → Sig → S → Type }
-  where
-
-  RunTrace : C → S → List Sig → S → Type
-  RunTrace Γ = RunTraceWithBase { _⊢_⇀⟦_⟧ᵇ_ = IdSTS } {_⊢_⇀⟦_⟧_ } Γ
+⟪_AndThenRunTrace_⟫ : (C → S → S → Type) → (C → S → Sig → S → Type)
+  → C → S → List Sig → S → Type
+⟪ _⊢_⇀⟦⟧ᵇ_ AndThenRunTrace _⊢_⇀⟦_⟧_ ⟫ Γ s sigs s'' =
+  ∃[ s' ] (Γ ⊢ s ⇀⟦⟧ᵇ s'  ×  RunTrace _⊢_⇀⟦_⟧_ Γ s' sigs s'')
 ```
+
+
 
 ### Indexed Variant
 
@@ -143,62 +134,51 @@ We present it as a sized/positioned runner whose index is the length
 of the prefix already consumed.
 
 ```agda
-module _
-  { _⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type }
-  { _⊢_⇀⟦_⟧ᵢ_ : (C × ℕ) → S → Sig → S → Type }
-  where
 
-  data RunTraceIndexed' : (C × ℕ) → S → List Sig → S → Type where
-    runᵢ-[] :
-      Γ ⊢ s ⇀⟦ _ ⟧ᵇ s' →
-      RunTraceIndexed' (Γ , n) s [] s'
-
+data RunIndexedTrace'
+  (_⊢_⇀⟦_⟧ᵢ_ : (C × ℕ) → S → Sig → S → Type) : (C × ℕ) → S → List Sig → S → Type where
+    runᵢ-[] : RunIndexedTrace' _ (Γ , n) s [] s
     runᵢ-∷ :
-      (Γ , n    ) ⊢ s  ⇀⟦ sig  ⟧ᵢ s' →
-      RunTraceIndexed' (Γ , suc n) s' sigs s'' →
-      RunTraceIndexed' (Γ , n    ) s  (sig ∷ sigs) s''
+      (Γ , n) ⊢ s ⇀⟦ sig ⟧ᵢ s'
+      → RunIndexedTrace' _⊢_⇀⟦_⟧ᵢ_ (Γ , suc n) s' sigs s''
+      → RunIndexedTrace' _⊢_⇀⟦_⟧ᵢ_ (Γ , n ) s (sig ∷ sigs) s''
 
-  -- Convenient alias that starts the index at 0.
-  RunTraceIndexed : C → S → List Sig → S → Type
-  RunTraceIndexed Γ s sigs s' = RunTraceIndexed' (Γ , 0) s sigs s'
+-- Convenient alias that starts the index at 0.
+RunIndexedTrace : ((C × ℕ) → S → Sig → S → Type) → C → S → List Sig → S → Type
+RunIndexedTrace _⊢_⇀⟦_⟧ᵢ_ Γ s sigs s' = RunIndexedTrace' _⊢_⇀⟦_⟧ᵢ_ (Γ , 0) s sigs s'
+
+⟪_AndThenRunIndexedTrace_⟫ : (C → S → S → Type) → ((C × ℕ) → S → Sig → S → Type)
+  → C → S → List Sig → S → Type
+⟪ _⊢_⇀⟦⟧ᵇ_ AndThenRunIndexedTrace _⊢_⇀⟦_⟧ᵢ_ ⟫ Γ s sigs s'' =
+  ∃[ s' ] (Γ ⊢ s ⇀⟦⟧ᵇ s'  ×  RunIndexedTrace _⊢_⇀⟦_⟧ᵢ_ Γ s' sigs s'')
 ```
-
-### "Double-bass" Variant
-
-Finally, we provide a variant that performs a one-off base step then
-runs with the identity base.
-
-```agda
-module _
-  { _⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type }
-  { _⊢_⇀⟦_⟧_  : C → S → Sig → S → Type }
-  where
-
-  RunAfterBase : C → S → List Sig → S → Type
-  RunAfterBase Γ s sigs s'' = Σ[ s' ∈ S ]
-    ( Γ ⊢ s ⇀⟦ _ ⟧ᵇ s'  ×  RunTrace { _⊢_⇀⟦_⟧_ = _⊢_⇀⟦_⟧_ } Γ s' sigs s'' )
-```
-
 
 ## Backward-compatibility Layer
 
 Here we map old names to the new ones so existing code still type-checks.
 
-
 ```agda
-ReflexiveTransitiveClosure : {sts : C → S → Sig → S → Type}
-  → C → S → List Sig → S → Type
-ReflexiveTransitiveClosure {sts = sts} = RunTrace { _⊢_⇀⟦_⟧_ = sts }
-
-ReflexiveTransitiveClosureᵇ : {base : C → S → ⊤ → S → Type}
+ReflexiveTransitiveClosure :
   {sts : C → S → Sig → S → Type} → C → S → List Sig → S → Type
-ReflexiveTransitiveClosureᵇ {base = base} {sts} =
-  RunTraceWithBase { _⊢_⇀⟦_⟧ᵇ_ = base } { _⊢_⇀⟦_⟧_ = sts }
+ReflexiveTransitiveClosure {sts = sts} = RunTrace sts
 
-ReflexiveTransitiveClosureᵢ : {sts : (C × ℕ) → S → Sig → S → Type}
+baseDrop : (C → S → ⊤ → S → Type) → C → S → S → Type
+baseDrop base Γ s s' = base Γ s tt s'
+
+ReflexiveTransitiveClosureᵇ :
+  {base : C → S → ⊤ → S → Type}
+  {sts : C → S → Sig → S → Type}
   → C → S → List Sig → S → Type
-ReflexiveTransitiveClosureᵢ {sts = sts} =
-  RunTraceIndexed { _⊢_⇀⟦_⟧ᵇ_ = IdSTS } { _⊢_⇀⟦_⟧ᵢ_ = sts }
+ReflexiveTransitiveClosureᵇ {base = b} {sts} = ⟪ (baseDrop b) AndThenRunTrace sts ⟫
+
+ReflexiveTransitiveClosureᵢ : {sts : C × ℕ → S → Sig → S → Type} → C → S → List Sig → S → Type
+ReflexiveTransitiveClosureᵢ {sts = sts} = RunIndexedTrace sts
+
+ReflexiveTransitiveClosureᵢᵇ :
+  {base : C → S → ⊤ → S → Type}
+  {sts : (C × ℕ) → S → Sig → S → Type}
+  → C → S → List Sig → S → Type
+ReflexiveTransitiveClosureᵢᵇ {base = b} {sts} = ⟪ (baseDrop b) AndThenRunIndexedTrace sts ⟫
 ```
 
 
@@ -218,10 +198,10 @@ Given a total single-step transition relation, the running of a trace with that
 relation is also total.
 
 ```agda
-RunTrace-total
-  : { _⊢_⇀⟦_⟧_ : C → S → Sig → S → Type }
-  → STS-total _⊢_⇀⟦_⟧_ → STS-total (RunTrace { _⊢_⇀⟦_⟧_ = _⊢_⇀⟦_⟧_ })
-RunTrace-total SS-total {Γ} {s} {[]} = s , run-[] Id-nop
+RunTrace-total :
+  {_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type}
+  → STS-total _⊢_⇀⟦_⟧_ → STS-total (RunTrace _⊢_⇀⟦_⟧_)
+RunTrace-total SS-total {Γ} {s} {[]} = s , run-[]
 RunTrace-total SS-total {Γ} {s} {sig ∷ sigs} with SS-total {Γ} {s} {sig}
 ... | s' , step = map₂′ (run-∷ step) (RunTrace-total SS-total {Γ} {s'} {sigs})
 ```
@@ -242,7 +222,7 @@ LedgerInvariant STS P = ∀ {c s sig s'} → STS c s sig s' → P s → P s'
 
 ```agda
 RT-preserves-inv : {STS : C → S → Sig → S → Type} {P : S → Type}
-  → LedgerInvariant STS P → LedgerInvariant (RunTrace { _⊢_⇀⟦_⟧_ = STS }) P
-RT-preserves-inv inv (run-[] Id-nop) = id
+  → LedgerInvariant STS P → LedgerInvariant (RunTrace STS) P
+RT-preserves-inv inv run-[] = id
 RT-preserves-inv inv (run-∷ p₁ p₂) = RT-preserves-inv inv p₂ ∘ inv p₁
 ```
