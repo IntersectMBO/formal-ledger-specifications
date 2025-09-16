@@ -63,10 +63,9 @@ closure" normally refers to a closure of a single binary relation.
 The existing combinators are not the reflexive–transitive closure of a binary
 relation on states.  They execute a given sequence of signals (a *trace*) by
 repeatedly applying a step relation in the context of some environment; that is, a
-*trace evaluation* (a fold over signals), not a closure over reachability.  It's
-really a big-step semantics for traces.  The new name (`RunTrace`) matches both the
-intent and the rules.  We also make the empty-trace behavior (reflexive vs "seeded")
-explicit.
+*trace evaluation* (a fold over signals), not a closure over reachability. The new 
+name (`RunTrace`) matches both the intent and the rules.  We also make the 
+empty-trace behavior (reflexive vs "seeded") explicit.
 
 
 ## High‑level picture
