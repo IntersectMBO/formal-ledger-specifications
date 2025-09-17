@@ -10,17 +10,17 @@ module Ledger.PreConway.Conformance.NewPP.Properties (txs : _) (open Transaction
 open import Ledger.PreConway.Conformance.PPUp txs
 open import Ledger.PreConway.Conformance.NewPP txs
 
-instance
-  Computational-NEWPP : Computational _⊢_⇀⦇_,NEWPP⦈_ String
-  Computational-NEWPP = record {M} where module M Γ s (open NewPParamState s) where
-    computeProof = λ where
-      nothing → success (_ , NEWPP-Reject)
-      (just upd) → let newpp = applyUpdate pparams upd in
-        case ¿ viablePParams newpp ¿ of λ where
-          (yes p) → success (_ , NEWPP-Accept p)
-          (no _)  → failure "Failed in NEWPP"
+-- instance
+--   Computational-NEWPP : Computational _⊢_⇀⦇_,NEWPP⦈_ String
+--   Computational-NEWPP = record {M} where module M Γ s (open NewPParamState s) where
+--     computeProof = λ where
+--       nothing → success (_ , NEWPP-Reject)
+--       (just upd) → let newpp = applyUpdate pparams upd in
+--         case ¿ viablePParams newpp ¿ of λ where
+--           (yes p) → success (_ , NEWPP-Accept p)
+--           (no _)  → failure "Failed in NEWPP"
 
-    completeness : _
-    completeness sig s' h with sig | h
-    ... | nothing  | NEWPP-Reject   = refl
-    ... | just upd | NEWPP-Accept p = refl
+--     completeness : _
+--     completeness sig s' h with sig | h
+--     ... | nothing  | NEWPP-Reject   = refl
+--     ... | just upd | NEWPP-Accept p = refl
