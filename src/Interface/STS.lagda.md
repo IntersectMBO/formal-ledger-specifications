@@ -32,7 +32,7 @@ private
 ## A Note on Recent Changes
 
 We refactored the `STS`{.AgdaModule} module to reflect what the code actually
-does---run a trace of signals---rather than compute a closure.
+does---it processes a list of signals, transforming state; it does not compute a closure.
 
 - **Clearer names**
   - `RunTrace`: run on a list of signals; empty list is reflexive (no-op).
