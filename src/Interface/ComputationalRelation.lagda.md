@@ -542,11 +542,10 @@ index and starts from `0`.
 But first, we some prove helper lemmas for showing completeness using an explicit dictionary.
 
 ```agda
-
-success-injective : ∀ {E A} {x y : A} → success {Err = E} x ≡ success y → x ≡ y
+success-injective : ∀ {a} {A : Type a} {E : Type} {x y : A}
+  → success {Err = E} x ≡ success y → x ≡ y
 success-injective refl = refl
 
--- Helpers are parameterized by an explicit Computational dictionary 'compᵢ'
 -- Helpers are parameterized by an explicit Computational dictionary 'compᵢ'
 module helpers {Stepᵢ : (C × ℕ) → S → Sig → S → Type}
                (compᵢ : Computational Stepᵢ Err) where
