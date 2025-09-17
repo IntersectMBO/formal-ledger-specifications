@@ -234,6 +234,7 @@ module _ ⦃ compDELEG : Computational _⊢_⇀⦇_,DELEG⦈_  String ⦄
                 × mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
+-- TODO: fix this
 -- Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 -- Computational-CERTS = it
 
