@@ -83,6 +83,10 @@ This is the canonical trace runner, parameterized by a single-step relation
 `_⊢_⇀⟦_⟧_`{.AgdaFunction}.
 
 ```agda
+data IdSTS {C S} : C → S → ⊤ → S → Type where
+  Id-nop : IdSTS Γ s _ s
+
+
 -- RunTrace _⊢_⇀⟦_⟧_ Γ s sigs s'
 -- Read: in environment Γ, running the trace `sigs` from `s` yields `s'`.
 data RunTrace (_⊢_⇀⟦_⟧_ : C → S → Sig → S → Type) :
