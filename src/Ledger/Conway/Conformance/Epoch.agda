@@ -135,8 +135,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       pState' : PState
       pState' = ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧
 
+      nonExpiredGovActions = filter (λ gs → ¬? (expired? e (proj₂ gs))) govSt'
+
       gState' : GState
-      gState' = ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
+      gState' = ⟦ (if null nonExpiredGovActions then mapValues (1 +_) (gState .dreps) else (gState .dreps))
                 , (gState .ccHotKeys) ∣ ccCreds (es .cc)
                 , vDeposits
                 ⟧

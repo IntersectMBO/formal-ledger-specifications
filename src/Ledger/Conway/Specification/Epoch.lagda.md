@@ -496,6 +496,9 @@ private variable
   ru : RewardUpdate
   mru : Maybe RewardUpdate
   pd : PoolDelegatedStake
+
+instance
+  _ = λ {e} {gst} → ⁇ expired? e gst
 ```
 -->
 
@@ -535,8 +538,8 @@ record EPOCH-Updates0 : Type where
     utxoSt'        : UTxOState
     totWithdrawals : Coin
 
-EPOCH-updates0 : RatifyState → LState → EPOCH-Updates0
-EPOCH-updates0 fut ls =
+EPOCH-updates0 : Epoch → RatifyState → LState → EPOCH-Updates0
+EPOCH-updates0 e fut ls =
     EPOCHUpdates0 es govSt' payout gState' utxoSt' totWithdrawals
   where
     open LState ls public
@@ -572,9 +575,12 @@ EPOCH-updates0 fut ls =
     payout : RwdAddr ⇀ Coin
     payout = govActionReturns ∪⁺ WithdrawalsOf esW
 
+    nonExpiredGovActions : GovState
+    nonExpiredGovActions = filter (λ gs → ¬ (expired e (proj₂ gs))) govSt'
+
     gState' : GState
     gState' =
-      ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf gState) else DRepsOf gState)
+      ⟦ (if null nonExpiredGovActions then mapValues (1 +_) (DRepsOf gState) else DRepsOf gState)
       , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
       ⟧
 
@@ -598,14 +604,14 @@ record EPOCH-Updates : Type where
     acnt''         : Acnt
 
 EPOCH-updates
-  : RatifyState → LState → DState → Acnt → EPOCH-Updates
-EPOCH-updates fut ls dState' acnt' =
+  : Epoch → RatifyState → LState → DState → Acnt → EPOCH-Updates
+EPOCH-updates e fut ls dState' acnt' =
     EPOCHUpdates (u0 .es) (u0 .govSt') dState'' (u0 .gState') (u0 .utxoSt') acnt''
   where
     open LState
     open EPOCH-Updates0
 
-    u0 = EPOCH-updates0 fut ls
+    u0 = EPOCH-updates0 e fut ls
 
     refunds : Credential ⇀ Coin
     refunds = pullbackMap (u0 .payout) toRwdAddr (dom (RewardsOf dState'))
@@ -658,7 +664,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 ```agda
     let
       EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
-        EPOCH-updates fut ls dState' acnt'
+        EPOCH-updates e fut ls dState' acnt'
 
       stakeDistrs : StakeDistrs
       stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt'
