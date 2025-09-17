@@ -547,21 +547,17 @@ success-injective : ∀ {E A} {x y : A} → success {Err = E} x ≡ success y �
 success-injective refl = refl
 
 -- Helpers are parameterized by an explicit Computational dictionary 'compᵢ'
+-- Helpers are parameterized by an explicit Computational dictionary 'compᵢ'
 module helpers {Stepᵢ : (C × ℕ) → S → Sig → S → Type}
-         (compᵢ : Computational Stepᵢ Err) where
-  -- Give the projections a qualified name to avoid ambiguity
+               (compᵢ : Computational Stepᵢ Err) where
   module Cᵢ = Computational compᵢ
 
-
-
-  -- Carry the index explicitly and return a RunIndexedTrace' proof at (Γ , n).
   _computeProofᵢ :
     (Γ : C) → (n : ℕ) → (s : S) → (xs : List Sig)
     → ComputationResult Err (∃[ s' ]
          RunIndexedTrace' Stepᵢ (Γ , n) s xs s')
 
-  _computeProofᵢ Γ n s [] =
-    success (s , runᵢ-[])
+  _computeProofᵢ Γ n s [] = success (s , runᵢ-[])
 
   _computeProofᵢ Γ n s (x ∷ xs)
     with Cᵢ.computeProof (Γ , n) s x
@@ -571,23 +567,24 @@ module helpers {Stepᵢ : (C × ℕ) → S → Sig → S → Type}
   ...     | failure e            = failure e
   ...     | success (s₂ , rest)  = success (s₂ , runᵢ-∷ step rest)
 
-  -- Completeness at an arbitrary index: return the *same* proof p.
+  -- Completeness at an arbitrary index: produce *some* proof shape q.
   completenessᵢ :
     ∀ {Γ n s xs s'}
-    → (p : RunIndexedTrace' Stepᵢ (Γ , n) s xs s')
-    → _computeProofᵢ Γ n s xs ≡ success (s' , p)
+    → RunIndexedTrace' Stepᵢ (Γ , n) s xs s'
+    → ∃[ q ] (_computeProofᵢ Γ n s xs ≡ success (s' , q))
 
-  completenessᵢ runᵢ-[] = refl
+  completenessᵢ runᵢ-[] = runᵢ-[] , refl
 
-  -- Bind the head 'sig' and intermediate state 's₁' from the constructor,
-  -- then pin success shapes via dot-patterns so each equality is definitional.
   completenessᵢ {Γ} {n} {s} {xs = sig ∷ sigs} {s'}
                  (runᵢ-∷ {sig = sig} {s' = s₁} p ps)
-    with Cᵢ.computeProof (Γ , n) s sig | Cᵢ.completeness (Γ , n) s sig s₁ p
-  ... | success (.s₁ , snd) | refl
+    with Cᵢ.computeProof (Γ , n) s sig
+       | Cᵢ.completeness (Γ , n) s sig s₁ p
+  ... | success (s₁ , step) | refl
     with _computeProofᵢ Γ (suc n) s₁ sigs
        | completenessᵢ ps
-  ...   | success (.s' , .ps) | refl = {!!}
+  ...   | success (t , rest) | (q , eq)
+        with success-injective eq
+  ...     | refl = runᵢ-∷ step rest , refl
 ```
 
 
@@ -606,14 +603,17 @@ module _ {Stepᵢ : (C × ℕ) → S → Sig → S → Type}
       H._computeProofᵢ Γ 0 s xs
 
     Computational-RunIndexedTrace .completeness Γ s xs s' prf
-      with H._computeProofᵢ Γ 0 s xs | H.completenessᵢ prf
-    ... | success (.s' , .prf) | refl = refl
+      with H.completenessᵢ prf
+    ... | (q , eq)
+      -- compute Γ s xs is map proj₁ (computeProof Γ s xs)
+      -- and computeProof = _computeProofᵢ Γ 0 s xs; rewrite by eq:
+      rewrite eq = refl
 ```
 
 ## Convenience exports
 
 For projects that still use the historical names, the following shims maintain
-compatibility with the new definitions in `Interface.STS`:
+compatibility with the new definitions in `Interface.STS`{.AgdaModule}:
 
 ```agda
 Computational-ReflexiveTransitiveClosure
