@@ -28,6 +28,7 @@
 [Notation]: Notation.md
 [Ouroboros Chronos blog post]: https://iohk.io/en/blog/posts/2021/10/27/ouroboros-chronos-provides-the-first-high-resilience-cryptographic-time-source-based-on-blockchain/
 [POOL]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
+[Protocol Parameter Declarations]: Ledger.Conway.Specification.PParams.md#protocol-parameter-declarations
 [RATIFY]: Ledger.Conway.Specification.Ratify.md#the-ratify-transition-system
 [(Re)introduction to Cardano]: https://developers.cardano.org/docs/operate-a-stake-pool/introduction-to-cardano/
 [repourl]: https://github.com/IntersectMBO/formal-ledger-specifications

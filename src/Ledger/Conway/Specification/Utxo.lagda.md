@@ -148,8 +148,8 @@ data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
 (The main constructor of this type, `UTXO-inductive`{.AgdaInductiveConstructor},
 is defined in the [UTXO Inference Rule][UTXO] subsection below.)
 
-<a id="fig:functions:utxo-conway"></a>
-## Functions used in the UTxO rules
+
+## Functions used in UTxO rules
 
 Here we define, among other things,
 
@@ -442,10 +442,6 @@ that their difference is the identity function.
                      + inject (newDeposits pp st txb)
                      + inject (txb .txDonation)
 ```
-<!--
-\caption{Functions used in UTxO rules, continued}
-\label{fig:functions:utxo-conway}
--->
 
 
 ## The `UTXOS`{.AgdaDatatype} rule {#sec:utxos-rule}
