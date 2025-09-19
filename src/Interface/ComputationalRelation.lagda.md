@@ -47,14 +47,8 @@ open import Interface.STS public
 private variable
   a : Level
   C S : Type
-  B Sig : Type
+  Sig : Type
   Err Err₁ Err₂ : Type
-  Γ : C
-  s s' s'' : S
-  b : B
-  sig : Sig
-  sigs : List Sig
-  n : ℕ
 ```
 -->
 
@@ -324,22 +318,23 @@ module _ {B : Type} (STS : C → S → B → S → Type) where
     constructor MkComputational
     field
       computeProof : (Γ : C) (s : S) (b : B)
-                   → ComputationResult Err (∃[ s' ] STS Γ s b s')
+        → ComputationResult Err (∃[ s' ] STS Γ s b s')
 
     compute : C → S → B → ComputationResult Err S
     compute Γ s b = map proj₁ (computeProof Γ s b)
 
     field
       completeness : (Γ : C) (s : S) (b : B) (s' : S)
-                   → STS Γ s b s' → compute Γ s b ≡ success s'
+        → STS Γ s b s' → compute Γ s b ≡ success s'
 
     open ≡-Reasoning
 
     computeFail : C → S → B → Type
     computeFail Γ s b = isFailure (compute Γ s b)
 
-    ≡-success⇔STS : compute Γ s b ≡ success s' ⇔ STS Γ s b s'
-    ≡-success⇔STS {Γ} {s} {b} {s'} with computeProof Γ s b in eq
+    ≡-success⇔STS : {Γ : C} {s : S} {b : B} {s' : S}
+      → compute Γ s b ≡ success s' ⇔ STS Γ s b s'
+    ≡-success⇔STS {Γ}{s}{b}{s'} with computeProof Γ s b in eq
     ... | success (t , h) = mk⇔ (λ where refl → h) λ h' →
       begin
         success t         ≡˘⟨ completeness _ _ _ _ h ⟩
@@ -351,16 +346,19 @@ module _ {B : Type} (STS : C → S → B → S → Type) where
         compute Γ s b     ≡⟨ completeness _ _ _ _ h ⟩
         success s'        ∎
 
-    failure⇒∀¬STS : computeFail Γ s b → ∀ s' → ¬ STS Γ s b s'
+    failure⇒∀¬STS : {Γ : C} {s : S} {b : B}
+      → computeFail Γ s b → ∀ s' → ¬ STS Γ s b s'
     failure⇒∀¬STS comp≡fail s' h rewrite ≡-success⇔STS .Equivalence.from h =
       case comp≡fail of λ ()
 
-    ∀¬STS⇒failure : (∀ s' → ¬ STS Γ s b s') → computeFail Γ s b
-    ∀¬STS⇒failure {Γ} {s} {b} ¬sts with computeProof Γ s b
+    ∀¬STS⇒failure : {Γ : C} {s : S} {b : B}
+      → (∀ s' → ¬ STS Γ s b s') → computeFail Γ s b
+    ∀¬STS⇒failure {Γ}{s}{b} ¬sts with computeProof Γ s b
     ... | success (x , y) = ⊥-elim (¬sts x y)
     ... | failure y       = (y , refl)
 
-    failure⇔∀¬STS : computeFail Γ s b ⇔ ∀ s' → ¬ STS Γ s b s'
+    failure⇔∀¬STS : {Γ : C} {s : S} {b : B}
+      → computeFail Γ s b ⇔ ∀ s' → ¬ STS Γ s b s'
     failure⇔∀¬STS = mk⇔ failure⇒∀¬STS ∀¬STS⇒failure
 
     recomputeProof : ∀ {Γ s b s'}
@@ -380,15 +378,16 @@ module _ {B : Type} {STS : C → S → B → S → Type}
 
   ExtendedRelSTS = ExtendedRel STS
 
-  ExtendedRel-compute : ExtendedRelSTS Γ s b (compute Γ s b)
-  ExtendedRel-compute {Γ} {s} {b} with compute Γ s b in eq
+  ExtendedRel-compute : {Γ : C} {s : S} {b : B}
+    → ExtendedRelSTS Γ s b (compute Γ s b)
+  ExtendedRel-compute {Γ}{s}{b} with compute Γ s b in eq
   ... | success s' = Equivalence.to ≡-success⇔STS eq
   ... | failure _  = λ s' h → case trans (sym (Equivalence.from ≡-success⇔STS h)) eq of λ ()
 
   open ≡-Reasoning
 
-  ExtendedRel-rightUnique
-    : ExtendedRelSTS Γ s b s' → ExtendedRelSTS Γ s b s''
+  ExtendedRel-rightUnique : {Γ : C} {s : S} {b : B} {s' s'' : ComputationResult Err S}
+    → ExtendedRelSTS Γ s b s' → ExtendedRelSTS Γ s b s''
     → _≈ᶜʳ_ {Err = Err} s' s''
   ExtendedRel-rightUnique {s' = success x} {success x'} h h'
     with trans (sym (Equivalence.from ≡-success⇔STS h)) (Equivalence.from ≡-success⇔STS h')
@@ -397,11 +396,13 @@ module _ {B : Type} {STS : C → S → B → S → Type}
   ExtendedRel-rightUnique {s' = failure _} {success x'} h h' = ⊥-elim (h x' h')
   ExtendedRel-rightUnique {s' = failure _} {failure _}  h h' = refl
 
-  computational⇒rightUnique : STS Γ s b s' → STS Γ s b s'' → s' ≡ s''
+  computational⇒rightUnique : {Γ : C} {s : S} {b : B} {s' s'' : S}
+    → STS Γ s b s' → STS Γ s b s'' → s' ≡ s''
   computational⇒rightUnique h h' with ExtendedRel-rightUnique h h'
   ... | refl = refl
 
-  Computational⇒Dec : ⦃ _ : DecEq S ⦄ → Dec (STS Γ s b s')
+  Computational⇒Dec : {Γ : C} {s : S} {b : B} {s' : S} ⦃ _ : DecEq S ⦄
+    → Dec (STS Γ s b s')
   Computational⇒Dec {Γ} {s} {b} {s'}
     with compute Γ s b | ExtendedRel-compute {Γ} {s} {b}
   ... | failure _ | ExSTS = no (ExSTS s')
@@ -420,9 +421,12 @@ module _ {B : Type} {STS : C → S → B → S → Type}
   open Computational comp  renaming (compute to compute₁)
   open Computational comp' renaming (compute to compute₂)
 
-  compute-ext≡ : compute₁ Γ s b ≈ᶜʳ compute₂ Γ s b
+  compute-ext≡ : {Γ : C} {s : S} {b : B} {s' : S}
+    → compute₁ Γ s b ≈ᶜʳ compute₂ Γ s b
   compute-ext≡ = ExtendedRel-rightUnique comp (ExtendedRel-compute comp)
                                            (ExtendedRel-compute comp')
+
+open Computational ⦃...⦄
 ```
 
 ## Error Injection Helper
@@ -452,8 +456,6 @@ succeeds with the input state.
 
 ```agda
 instance
-  open Computational ⦃...⦄ public
-
   Computational-Id
     : {C S : Type} → Computational (IdSTS {C} {S}) ⊥
   Computational-Id .computeProof _ s _ = success (s , Id-nop)

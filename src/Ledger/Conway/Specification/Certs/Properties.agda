@@ -102,10 +102,6 @@ instance
 
 
 -- Needs instances in scope:
--- ⦃ Computational _⊢_⇀⦇_,DELEG⦈_  String ⦄
--- ⦃ Computational _⊢_⇀⦇_,POOL⦈_   String ⦄
--- ⦃ Computational _⊢_⇀⦇_,GOVCERT⦈_ String ⦄
-
 module _ ⦃ compDELEG : Computational _⊢_⇀⦇_,DELEG⦈_  String ⦄
          ⦃ compPOOL  : Computational _⊢_⇀⦇_,POOL⦈_   String ⦄
          ⦃ compGOV   : Computational _⊢_⇀⦇_,GOVCERT⦈_ String ⦄ where
