@@ -190,22 +190,22 @@ instance
   CERTToConf .convⁱ deposits@(ccreghot* _ _)    (L.CERT-vdel govcert) = C.CERT-vdel (deposits ⊢conv govcert)
   CERTToConf .convⁱ deposits@(reg* _ _)         (L.CERT-deleg deleg)  = C.CERT-deleg (deposits ⊢conv deleg)
 
-  CERTS'ToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
+  CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
                → CertDeps* pp dcerts
                  ⊢ ReflexiveTransitiveClosure {sts = L._⊢_⇀⦇_,CERT⦈_} Γ s dcerts s' ⭆ⁱ λ deposits _ →
                    ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_}
                              Γ (getCertDeps* deposits ⊢conv s) dcerts
                                (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
-  CERTS'ToConf .convⁱ deposits (BS-base Id-nop) = BS-base Id-nop
-  CERTS'ToConf .convⁱ deposits (BS-ind r rs)    = BS-ind (deposits ⊢conv r) (updateCertDeps deposits ⊢conv rs)
+  CERTSToConf .convⁱ deposits (BS-base Id-nop) = BS-base Id-nop
+  CERTSToConf .convⁱ deposits (BS-ind r rs)    = BS-ind (deposits ⊢conv r) (updateCertDeps deposits ⊢conv rs)
 
-  CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
-              → CertDeps* pp dcerts
-                ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ deposits _ →
-                  Γ C.⊢ (getCertDeps* deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈
-                        (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
-  CERTSToConf .convⁱ deposits (RTC (base , step)) =
-    RTC (getCertDeps* deposits ⊢conv base , deposits ⊢conv step)
+  -- CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
+  --             → CertDeps* pp dcerts
+  --               ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ deposits _ →
+  --                 Γ C.⊢ (getCertDeps* deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈
+  --                       (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
+  -- CERTSToConf .convⁱ deposits (RTC (base , step)) =
+  --   RTC (getCertDeps* deposits ⊢conv base , deposits ⊢conv step)
 
 -- Converting form Conformance is easier since the deposit tracking disappears.
 instance
@@ -237,13 +237,13 @@ instance
                      Γ L.⊢ (conv s) ⇀⦇ _ ,CERTBASE⦈ (conv s')
   CERTBASEFromConf .convⁱ _ (C.CERT-base h) = L.CERT-base h
 
-  CERTS'FromConf : ∀ {Γ s dcerts s'}
+  CERTSFromConf : ∀ {Γ s dcerts s'}
                  → ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_} Γ s dcerts s' ⭆
                    ReflexiveTransitiveClosure {sts = L._⊢_⇀⦇_,CERT⦈_} Γ (conv s) dcerts (conv s')
-  CERTS'FromConf .convⁱ _ (BS-base Id-nop) = BS-base Id-nop
-  CERTS'FromConf .convⁱ _ (BS-ind r rs) = BS-ind (conv r) (conv rs)
+  CERTSFromConf .convⁱ _ (BS-base Id-nop) = BS-base Id-nop
+  CERTSFromConf .convⁱ _ (BS-ind r rs) = BS-ind (conv r) (conv rs)
 
-  CERTSFromConf : ∀ {Γ s dcerts s'}
-                → Γ C.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆
-                  Γ L.⊢ conv s ⇀⦇ dcerts ,CERTS⦈ conv s'
-  CERTSFromConf .convⁱ _ (RTC (base , step)) = RTC (conv base , conv step)
+  -- CERTSFromConf : ∀ {Γ s dcerts s'}
+  --               → Γ C.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆
+  --                 Γ L.⊢ conv s ⇀⦇ dcerts ,CERTS⦈ conv s'
+  -- CERTSFromConf .convⁱ _ (RTC (base , step)) = RTC (conv base , conv step)
