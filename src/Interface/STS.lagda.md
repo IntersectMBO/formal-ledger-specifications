@@ -200,6 +200,26 @@ ReflexiveTransitiveClosureᵢᵇ :
 ReflexiveTransitiveClosureᵢᵇ {base = b} {sts} = ⟪ (baseDrop b) AndThenRunIndexedTrace sts ⟫
 ```
 
+**Note**.  The backward-compatibility layer does not cover all cases and the
+refactoring of this module is a breaking change.  For example, what we previously
+expressed as
+
+`_⊢_⇀⟦_⟧ᵢ*'_`{.AgdaDatatype} `{`
+`_⊢_⇀⟦_⟧ᵇ_`{.AgdaDatatype} = `IdSTS`{.AgdaDatatype} `}` `{` `sts`{.AgdaBound} `}`
+
+must now be changed to
+
+`RunIndexedTrace'`{.AgdaDatatype} `sts`{.AgdaBound}.
+
+In the [Ledger.Properties][] module, for instance, in the proof of
+`STS→GovSt≡`{.AgdaFunction}, we changed
+
+`_⊢_⇀⟦_⟧ᵢ*'_`{.AgdaDatatype} `{` `_⊢_⇀⟦_⟧ᵇ_`{.AgdaDatatype} = `IdSTS`{.AgdaDatatype} `}` `{` `_⊢_⇀⦇_,GOV⦈_`{.AgdaDatatype} `}`
+
+to
+
+`RunIndexedTrace'`{.AgdaDatatype} `_⊢_⇀⦇_,GOV⦈_`{.AgdaDatatype}.
+
 
 ## Totality
 

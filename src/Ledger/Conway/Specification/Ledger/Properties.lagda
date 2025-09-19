@@ -159,12 +159,12 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
   STS→GovSt≡ (LEDGER-V x) refl = STS→updateGovSt≡ (txgov txb) 0 (proj₂ (proj₂ (proj₂ x)))
     where
     STS→updateGovSt≡ : (vps : List (GovVote ⊎ GovProposal)) (k : ℕ) {certSt : CertState} {govSt govSt' : GovState}
-      → (_⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{_⊢_⇀⦇_,GOV⦈_} (⟦ txId , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
+      → (RunIndexedTrace' _⊢_⇀⦇_,GOV⦈_ (⟦ txId , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
       → govSt' ≡ updateGovStates vps k govSt
-    STS→updateGovSt≡ [] _ (BS-base Id-nop) = refl
-    STS→updateGovSt≡ (inj₁ v ∷ vps) k (BS-ind (GOV-Vote x) h)
+    STS→updateGovSt≡ [] _ runᵢ-[] = refl
+    STS→updateGovSt≡ (inj₁ v ∷ vps) k (runᵢ-∷ (GOV-Vote x) h)
       = STS→updateGovSt≡ vps (suc k) h
-    STS→updateGovSt≡ (inj₂ p ∷ vps) k (BS-ind (GOV-Propose x) h) = STS→updateGovSt≡ vps (suc k) h
+    STS→updateGovSt≡ (inj₂ p ∷ vps) k (runᵢ-∷ (GOV-Propose x) h) = STS→updateGovSt≡ vps (suc k) h
 
   opaque
     unfolding addVote
