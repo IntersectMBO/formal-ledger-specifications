@@ -6,14 +6,14 @@ where we define the functions used to compute the fees associated with reference
 The function `scriptsCost`{.AgdaFunction},
 defined in the [Calculation of Fees for Reference Scripts][] section, calculates the
 fee for reference scripts in a transaction. It takes as input the total
-size of the reference scripts in bytes---which can be calculated using
-the `refScriptsSize`{.AgdaFunction} (see [Functions used in UTxO rules, continued][])---and
+size of the reference scripts in bytes---calculated by
+`refScriptsSize`{.AgdaFunction} (see [Functions used in UTxO rules][])---and
 uses a function (`scriptsCostAux`{.AgdaFunction}) that is piece-wise
 linear in the size, where the linear constant multiple grows with each
 `refScriptCostStride`{.AgdaFunction} bytes. In addition,
 `scriptsCost`{.AgdaFunction} depends on the following constants (which
-are bundled with the protocol parameters; see
-[Section 'Protocol parameter definitions'](Ledger.Conway.Specification.PParams.md#protocol-parameter-definitions)):
+are bundled with the protocol parameters; see the
+[Protocol Parameter Declarations][] section):
 
 - `refScriptCostMultiplier`{.AgdaFunction}, a rational number, the
   growth factor or step multiplier that determines how much the price

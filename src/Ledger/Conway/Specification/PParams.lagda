@@ -175,7 +175,7 @@ record PParams : Type where
 \maxBlockSize{} \maxTxSize{} \maxHeaderSize{} \maxValSize{}
 \maxBlockExUnits{} \AgdaField{a}{} \AgdaField{b}{}
 \minFeeRefScriptCoinsPerByte{} \coinsPerUTxOByte{} \govActionDeposit{}
-\caption{Protocol parameter definitions}
+\caption{Protocol Parameter Declarations}
 \label{fig:protocol-parameter-declarations}
 \end{figure*}
 \begin{code}[hide]
