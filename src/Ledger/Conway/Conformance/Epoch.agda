@@ -18,6 +18,9 @@ open import Data.List using (filter)
 open import Agda.Builtin.FromNat
 
 open import Ledger.Conway.Specification.Enact govStructure
+open import Ledger.Conway.Conformance.Equivalence txs abs
+open import Ledger.Conway.Conformance.Equivalence.Convert
+open import Ledger.Conway.Conformance.Equivalence.Deposits txs abs
 open import Ledger.Conway.Conformance.Ledger txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Conformance.Utxo txs abs
@@ -25,6 +28,7 @@ open import Ledger.Conway.Conformance.Certs govStructure
 open import Ledger.Conway.Conformance.Rewards txs abs
 open import Ledger.Conway.Specification.Epoch txs abs
   using (getStakeCred; getOrphans; mkStakeDistrs; toRwdAddr) public
+import Ledger.Conway.Specification.Epoch txs abs as EpochSpec
 
 record EpochState : Type where
   constructor ⟦_,_,_,_,_⟧ᵉ'
@@ -45,6 +49,17 @@ instance
   unquoteDecl HasCast-EpochState HasCast-NewEpochState = derive-HasCast
     ( (quote EpochState     , HasCast-EpochState)
     ∷ [ (quote NewEpochState  , HasCast-NewEpochState)])
+
+  EpochStateFromConf : EpochState ⭆ EpochSpec.EpochState
+  EpochStateFromConf .convⁱ _ epochState =
+    let open EpochState epochState in
+    ⟦ acnt , ss , conv ls , es , fut ⟧
+
+  EpochStateToConf : EpochSpec.EpochState ⭆ EpochState
+  EpochStateToConf .convⁱ deposits epochSt =
+    let open EpochSpec.EpochState epochSt in
+    ⟦ acnt , ss , certDeposits ls ⊢conv ls , es , fut ⟧ᵉ'
+
 
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd rewardUpdate

@@ -23,7 +23,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Certs             as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Enact             as X
   (EnactState(..), EnactEnv(..), enactStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Epoch             as X
-  (EpochState(..), epochStep)
+  (EpochState(..), epochStep, specEpochStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Core          as X
   (GovRole(..), Anchor(..), VDeleg(..), Vote(..), GovVote(..), GovVoter, GovVotes(..))
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov               as X
