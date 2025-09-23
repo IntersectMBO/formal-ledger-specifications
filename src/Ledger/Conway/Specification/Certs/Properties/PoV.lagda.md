@@ -79,10 +79,12 @@ the value of the withdrawals in `Γ`{.AgdaBound}.
 *Proof*.
 
 ```agda
+    -- CERTS-pov validNetId (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov validNetId bsts
+    -- CERTS-pov {Γ = Γ} validNetId (RTC (bsts , BS-ind x sts)) =
+    --   trans  (CERTBASE-pov validNetId bsts)
+    --          (cong  (_+ getCoin (CertEnv.wdrls Γ))
+    --          (trans (CERT-pov indexedSumᵛ'-∪' x) (sts-pov sts)))
+    CERTS-pov validNetId (BS-base x) = CERTBASE-pov validNetId x
+    CERTS-pov validNetId (BS-ind x xs) = trans (CERT-pov indexedSumᵛ'-∪' x) (CERTS-pov validNetId xs)
 
-    CERTS-pov validNetId (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov validNetId bsts
-    CERTS-pov {Γ = Γ} validNetId (RTC (bsts , BS-ind x sts)) =
-      trans  (CERTBASE-pov validNetId bsts)
-             (cong  (_+ getCoin (CertEnv.wdrls Γ))
-             (trans (CERT-pov indexedSumᵛ'-∪' x) (sts-pov sts)))
 ```
