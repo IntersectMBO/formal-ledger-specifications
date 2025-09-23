@@ -109,8 +109,14 @@ unquoteDecl = do
 
 -- Computational function
 
-gov-step : HsType (GovEnv → GovState → List (GovVote ⊎ GovProposal) → ComputationResult String GovState)
-gov-step Γ govSt gvps = to (compute Computational-GOVS ⟦ txid , e' , pparams , ppolicy , enactState , to certState , rewardCreds ⟧ (from govSt) (from gvps))
+gov-step
+  : HsType (GovEnv → GovState → List (GovVote ⊎ GovProposal)
+  → ComputationResult String GovState)
+gov-step Γ govSt gvps =
+    to $ compute Computational-GOVS
+      ⟦ txid , e' , pparams , ppolicy , enactState , to certState , rewardCreds ⟧
+      (from govSt)
+      (from gvps)
   where open GovEnv (from Γ) renaming (epoch to e')
 
 {-# COMPILE GHC gov-step as govStep #-}

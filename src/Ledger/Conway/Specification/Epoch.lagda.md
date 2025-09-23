@@ -55,13 +55,13 @@ open import Ledger.Conway.Specification.Utxo txs abs
 ```agda
 record EpochState : Type where
 ```
- 
+
 <!--
 ```agda
   constructor ⟦_,_,_,_,_⟧ᵉ'
 ```
 -->
- 
+
 ```agda
   field
     acnt       : Acnt
@@ -126,13 +126,13 @@ record NewEpochState : Type where
     The formal specification utilizes the type `PoolDelegatedStake`{.AgdaDatatype}
     in lieu of the derived type `PoolDistr`{.AgdaDatatype} (Figure 5, Shelley
     specification [CVG19](#shelley-ledger-spec)). The latter can be computed from the
-    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype} 
+    former by divinding the associated `Coin`{.AgdaDatatype} to each `KeyHash`{.AgdaDatatype}
     by the total stake in the map.
 
     In addition, the formal specification omits the VRF key hashes in the
     codomain of `PoolDelegatedStake`{.AgdaDatatype} as they are not implemented at
     the moment.
- 
+
 <!--
 ```agda
 record HasNewEpochState {a} (A : Type a) : Type a where
@@ -625,7 +625,7 @@ EPOCH-updates fut ls dState' acnt' =
 
 ### Transition Rule
 
-This section defines the `EPOCH`{.AgdaDatatype} transition rule. 
+This section defines the `EPOCH`{.AgdaDatatype} transition rule.
 
 In Conway, the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
 and carries out the following tasks:
@@ -694,7 +694,7 @@ data
 ```
 -->
 ```agda
-  NEWEPOCH-New : 
+  NEWEPOCH-New :
 ```
 <!--
 ```agda
@@ -717,7 +717,7 @@ data
       ──────────────────────────────────────────────
       _ ⊢ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧ ⇀⦇ e ,NEWEPOCH⦈ ⟦ lastEpoch , bprev , bcur , eps , mru , pd ⟧
 
-  NEWEPOCH-No-Reward-Update : 
+  NEWEPOCH-No-Reward-Update :
 ```
 <!--
 ```agda
