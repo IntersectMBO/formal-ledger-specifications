@@ -66,6 +66,16 @@ instance
     let open EpochSpec.EpochState epochSt in
     ⟦ acnt , ss , certDeposits ls ⊢conv ls , es , fut ⟧ᵉ'
 
+  NewEpochStateFromConf : NewEpochState ⭆ EpochSpec.NewEpochState
+  NewEpochStateFromConf .convⁱ _ newEpochState =
+    let open NewEpochState newEpochState in
+    ⟦ lastEpoch , bprev , bcur , conv epochState , ru , pd ⟧
+
+  NewEpochStateToConf : EpochSpec.NewEpochState ⭆ NewEpochState
+  NewEpochStateToConf .convⁱ deposits newEpochSt =
+    let open EpochSpec.NewEpochState newEpochSt in
+    ⟦ lastEpoch , bcur , bprev , conv epochState , ru , pd ⟧
+
 
 applyRUpd : RewardUpdate → EpochState → EpochState
 applyRUpd rewardUpdate

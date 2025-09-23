@@ -33,7 +33,7 @@ import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.Actions       as X
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ledger            as X
   (LEnv(..), LState(..), ledgerStep, ledgersStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.NewEpoch          as X
-  (NewEpochState(..), newEpochStep)
+  (NewEpochState(..), newEpochStep, specNewEpochStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Ratify            as X
   (StakeDistrs(..), RatifyEnv(..), RatifyState(..), ratifyStep)
 import MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Rewards           as X
