@@ -392,6 +392,13 @@ This section defines the functions
 `calculateVDelegDelegatedStake`{.AgdaFunction}, and
 `mkStakeDistrs`{.AgdaFunction}, which calculates stake distributions for voting purposes.
 
+The function `calculatePoolDelegatedState`{.AgdaFunction} calculates
+the delegated stake to SPOs. Note that this function is used both in
+the `EPOCH`{.AgdaDatatype} rule (via
+`calculatePoolDelegatedStateForVoting`{.AgdaFunction}, to calculate
+the delegated stake for voting purposes, and in the
+`NEWEPOCH`{.AgdaDatatype} rule to calculate rewards.
+
 <!--
 ```agda
 open RwdAddr using (stake)
@@ -399,14 +406,14 @@ opaque
 ```
 -->
 ```agda
-  calculatePoolDelegatedStake : Snapshot → PoolDelegatedStake
+  calculatePoolDelegatedStake
+    : Snapshot
+    → PoolDelegatedStake
   calculatePoolDelegatedStake ss =
       -- Shelley spec: the output map must contain keys appearing in both
       -- sd and the pool parameters.
-      sd ∣ dom (ss .pools)
+      sd ∣ dom (PoolsOf ss)
     where
-      open Snapshot
-
       -- stake credentials delegating to each pool
       stakeCredentialsPerPool : Rel KeyHash Credential
       stakeCredentialsPerPool = (StakeDelegsOf ss ˢ) ⁻¹ʳ
@@ -414,7 +421,9 @@ opaque
       -- delegated stake per pool
       sd : KeyHash ⇀ Coin
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
+```
 
+```agda
   calculateVDelegDelegatedStake
     : Epoch
     → UTxOState
@@ -424,7 +433,7 @@ opaque
     → VDeleg ⇀ Coin
   calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
     = aggregate₊ (((activeVoteDelegs ˢ) ⁻¹ʳ
-                  ∘ʳ (stakePerCredential ∪⁺ stakeFromRewards ∪⁺ stakeFromGADeposits) ˢ) ᶠˢ)
+                  ∘ʳ (stakePerCredential ∪⁺ stakeFromGADeposits) ˢ) ᶠˢ)
     where
       open UTxOState utxoSt
       open DState dState
@@ -452,11 +461,34 @@ opaque
         where
           govSt' : ℙ (GovActionID × RwdAddr)
           govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
+```
 
-      -- stake from rewards
-      stakeFromRewards : Stake
-      stakeFromRewards = RewardsOf dState
+```agda
+  calculatePoolDelegatedStakeForVoting
+    : Snapshot
+    → UTxOState
+    → GovState
+    → GState
+    → DState
+    → KeyHash ⇀ Coin
+  calculatePoolDelegatedStakeForVoting ss utxoSt govSt gState dState
+    = calculatePoolDelegatedStake ss ∪⁺ stakeFromDeposits
+    where
+      open UTxOState utxoSt
 
+      stakeFromGADeposits : Stake
+      stakeFromGADeposits = aggregateBy
+        (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
+        (mapFromPartialFun (λ (gaid , _) → lookupᵐ? deposits (GovActionDeposit gaid)) govSt')
+        where
+          govSt' : ℙ (GovActionID × RwdAddr)
+          govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
+
+      stakeFromDeposits : KeyHash ⇀ Coin
+      stakeFromDeposits = aggregate₊ (((StakeDelegsOf ss ˢ) ⁻¹ʳ ∘ʳ (stakeFromGADeposits ˢ)) ᶠˢ) ∣ dom (PoolsOf ss)
+```
+
+```agda
   mkStakeDistrs
     : Snapshot
     → Epoch
@@ -466,12 +498,8 @@ opaque
     → DState
     → StakeDistrs
   mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
-    ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState , poolDelegatedStake ⟧
-    where
-      poolDelegatedStake : PoolDelegatedStake
-      poolDelegatedStake =
-        mapWithKey (λ kh c → maybe (c +_) c (lookupᵐ? (RewardsOf dState) (KeyHashObj kh)))
-                   (calculatePoolDelegatedStake ss)
+    ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
+    , calculatePoolDelegatedStakeForVoting ss utxoSt govSt gState dState ⟧
 ```
 
 <!--
