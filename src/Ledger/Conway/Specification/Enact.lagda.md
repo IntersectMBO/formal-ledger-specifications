@@ -5,9 +5,6 @@ source_path: src/Ledger/Conway/Specification/Enact.lagda.md
 
 # Enactment {#sec:enactment}
 
-This section is part of the [Ledger.Conway.Specification.Enact][] module of the
-[formal ledger specification][].
-
 <!--
 ```agda
 {-# OPTIONS --safe #-}
@@ -25,7 +22,7 @@ open import Ledger.Conway.Specification.Gov.Actions gs
 -->
 
 
-## Types and functions of the <span class="AgdaDatatype">ENACT</span> transition system
+## Types and Functions of the <span class="AgdaDatatype">ENACT</span> Transition System
 {#types-and-function-of-the-enact-transition-system}
 
 This section contains some definitions required to define the
@@ -135,7 +132,7 @@ instance
 -->
 
 
-## <span class="AgdaDatatype">ENACT</span> transition system {#enact-transition-system}
+## <span class="AgdaDatatype">ENACT</span> Transition System {#enact-transition-system}
 
 This section defines the rules of the `ENACT`{.AgdaDatatype} transition system.
 Usually no preconditions are checked and the state is simply updated (including the

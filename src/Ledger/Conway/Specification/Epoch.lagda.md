@@ -390,7 +390,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
 This section defines the functions
 `calculatePoolDelegatedState`{.AgdaFunction},
 `calculateVDelegDelegatedStake`{.AgdaFunction}, and
-`mkStakeDistrs`{.AgdaFunction}, which calculate stake distributions for voting purposes.
+`mkStakeDistrs`{.AgdaFunction}, which calculates stake distributions for voting purposes.
 
 <!--
 ```agda
