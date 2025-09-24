@@ -5,10 +5,6 @@ source_path: src/Ledger/Conway/Specification/Gov.lagda.md
 
 # Governance {#sec:governance}
 
-This section is part of the [Ledger.Conway.Specification.Gov][] module of the
-[formal ledger specification][], where we define the types required for ledger
-governance.
-
 The behavior of `GovState`{.AgdaFunction} is similar to that of a queue.
 New proposals are appended at the end, but any proposal can be removed
 at the epoch boundary. However, for the purposes of enactment, earlier
@@ -268,7 +264,7 @@ opaque
   validHFAction _ _ _ = ⊤
 ```
 
-## Type signature of the <span class="AgdaDatatype">GOV</span> transition relation {#type-signature-of-the-gov-transition-relation}
+## Type Signature of the <span class="AgdaDatatype">GOV</span> Transition System {#type-signature-of-the-gov-transition-relation}
 
 The `GOV`{.AgdaDatatype} transition rule has the following type signature:
 
