@@ -12,20 +12,6 @@ proposals take priority. Note that `EnactState`{.AgdaRecord} used in
 `GovEnv`{.AgdaRecord} is defined in
 the [Enact][Ledger.Conway.Specification.Enact] module.
 
-- `addVote`{.AgdaFunction} inserts (and potentially overrides) a vote
-  made for a particular governance action (identified by its ID) by a
-  credential with a role.
-
-- `addAction`{.AgdaFunction} adds a new proposed action at the end of a
-  given `GovState`{.AgdaFunction}.
-
-- The `validHFAction`{.AgdaFunction} property indicates whether a given
-  proposal, if it is a `TriggerHardFork`{.AgdaInductiveConstructor}
-  action, can potentially be enacted in the future. For this to be the
-  case, its `prevAction`{.AgdaField} needs to exist, be another
-  `TriggerHardFork`{.AgdaInductiveConstructor} action and have a
-  compatible version.
-
 <!--
 ```agda
 {-# OPTIONS --safe #-}
@@ -60,7 +46,7 @@ open GovActionState
 ```
 -->
 
-## Types of the <span class="AgdaDatatype">GOV</span> Transition System {#types-of-the-gov-transition-system}
+## Governance Types {#governance-types}
 
 *Derived types*
 
@@ -124,7 +110,23 @@ open PState
 -->
 
 
-## Functions of the  <span class="AgdaDatatype">GOV</span> Transition System {#functions-of-the-gov-transition-system}
+## Governance Functions {#governance-functions}
+
+The function definitions worth highlighting in this section are the following:
+
+- `addVote`{.AgdaFunction} inserts (and potentially overrides) a vote
+  made for a particular governance action (identified by its ID) by a
+  credential with a role.
+
+- `addAction`{.AgdaFunction} adds a new proposed action at the end of a
+  given `GovState`{.AgdaFunction}.
+
+- The `validHFAction`{.AgdaFunction} property indicates whether a given
+  proposal, if it is a `TriggerHardFork`{.AgdaInductiveConstructor}
+  action, can potentially be enacted in the future. For this to be the
+  case, its `prevAction`{.AgdaField} needs to exist, be another
+  `TriggerHardFork`{.AgdaInductiveConstructor} action and have a
+  compatible version.
 
 ```agda
 govActionPriority : GovActionType → ℕ
@@ -262,14 +264,6 @@ opaque
       aid' = EnactState.pv e .proj₂
 
   validHFAction _ _ _ = ⊤
-```
-
-## Type Signature of the <span class="AgdaDatatype">GOV</span> Transition System {#type-signature-of-the-gov-transition-relation}
-
-The `GOV`{.AgdaDatatype} transition rule has the following type signature:
-
-```agda
-data _⊢_⇀⦇_,GOV⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type
 ```
 
 ## Enactability Predicate
@@ -494,10 +488,12 @@ variable
 -->
 
 
-## Rules for the <span class="AgdaDatatype">GOV</span> Transition System {#rules-for-the-gov-transition-system}
+## The <span class="AgdaDatatype">GOV</span> Transition System {#the-gov-transition-system}
+
+The `GOV`{.AgdaDatatype} transition rule has the following type signature:
 
 ```agda
-data _⊢_⇀⦇_,GOV⦈_ where
+data _⊢_⇀⦇_,GOV⦈_ : GovEnv × ℕ → GovState → GovVote ⊎ GovProposal → GovState → Type where
 
   GOV-Vote :
     ∙ (aid , ast) ∈ fromList s

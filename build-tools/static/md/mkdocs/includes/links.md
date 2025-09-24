@@ -16,10 +16,11 @@
 [Fees]: Ledger.Conway.Specification.Fees.md
 [formal ledger specification]: https://github.com/IntersectMBO/formal-ledger-specifications
 [Functions used in UTxO rules]: Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules
-[Functions of the GOV Transition System]: Ledger.Conway.Specification.Gov.md#functions-of-the-gov-transition-system
+[Functions of the GOV Transition System]: Ledger.Conway.Specification.Gov.md#governance-functions
 [Functions related to voting]: Ledger.Conway.Specification.Ratify.md#functions-related-to-voting
-[GOV]: Ledger.Conway.Specification.Gov.md#rules-for-the-gov-transition-system
+[GOV]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
+[Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
 [Ledger.Conway.Specification.Enact]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Enact.lagda.md
@@ -38,8 +39,8 @@
 [repourl]: https://github.com/IntersectMBO/formal-ledger-specifications
 [scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
+[Type signature of the GOV transition relation]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [Time handling on Cardano]: https://docs.cardano.org/about-cardano/explore-more/time
-[Type signature of the GOV transition relation]: Ledger.Conway.Specification.Gov.md#type-signature-of-the-gov-transition-relation
 [UTXO]: Ledger.Conway.Specification.Utxo.md#sec:utxo-inference-rule
 [UTXOS]: Ledger.Conway.Specification.Utxo.md#sec:utxos-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#utxow-inference-rules

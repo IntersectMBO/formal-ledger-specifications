@@ -22,8 +22,7 @@ open import Ledger.Conway.Specification.Gov.Actions gs
 -->
 
 
-## Types and Functions of the <span class="AgdaDatatype">ENACT</span> Transition System
-{#types-and-function-of-the-enact-transition-system}
+## Auxiliary Types and Functions {#auxiliary-types-and-function}
 
 This section contains some definitions required to define the
 `ENACT`{.AgdaDatatype} transition system.  `EnactEnv`{.AgdaRecord} is the environment
