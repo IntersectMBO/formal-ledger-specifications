@@ -7,7 +7,7 @@
 open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
 
-module Ledger.Conway.Specification.Utxo.Properties
+module Ledger.Conway.Specification.Utxo.Properties.Computational
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
