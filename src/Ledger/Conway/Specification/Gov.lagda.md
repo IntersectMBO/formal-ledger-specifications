@@ -554,3 +554,6 @@ the section on [Validity and Wellformedness Predicates][].
 
 [^2]:  The Agda code defining various versions of the `ReflexiveTransitiveClosure`{.AgdaFunction}
        type is not yet documented as we are in the process of refactoring it.
+
+
+
