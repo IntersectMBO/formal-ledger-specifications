@@ -35,7 +35,7 @@ d_functor_10 ~v0 = du_functor_10
 du_functor_10 :: MAlonzo.Code.Effect.Functor.T_RawFunctor_24
 du_functor_10
   = coe
-      MAlonzo.Code.Effect.Functor.C_RawFunctor'46'constructor_241
+      MAlonzo.Code.Effect.Functor.C_constructor_44
       (coe
          (\ v0 v1 v2 v3 ->
             coe MAlonzo.Code.Data.List.NonEmpty.Base.du_map_98 v2 v3))
@@ -48,7 +48,7 @@ du_applicative_14 ::
   MAlonzo.Code.Effect.Applicative.T_RawApplicative_20
 du_applicative_14
   = coe
-      MAlonzo.Code.Effect.Applicative.C_RawApplicative'46'constructor_453
+      MAlonzo.Code.Effect.Applicative.C_constructor_78
       (coe du_functor_10)
       (\ v0 v1 ->
          coe MAlonzo.Code.Data.List.NonEmpty.Base.du_'91'_'93'_42 v1)
@@ -63,8 +63,7 @@ d_monad_18 ~v0 = du_monad_18
 du_monad_18 :: MAlonzo.Code.Effect.Monad.T_RawMonad_24
 du_monad_18
   = coe
-      MAlonzo.Code.Effect.Monad.C_RawMonad'46'constructor_319
-      (coe du_applicative_14)
+      MAlonzo.Code.Effect.Monad.C_constructor_98 (coe du_applicative_14)
       (coe
          (\ v0 v1 v2 v3 ->
             coe MAlonzo.Code.Data.List.NonEmpty.Base.du_concatMap_208 v3 v2))
@@ -76,7 +75,7 @@ d_comonad_22 ~v0 = du_comonad_22
 du_comonad_22 :: MAlonzo.Code.Effect.Comonad.T_RawComonad_22
 du_comonad_22
   = coe
-      MAlonzo.Code.Effect.Comonad.C_RawComonad'46'constructor_293
+      MAlonzo.Code.Effect.Comonad.C_constructor_52
       (coe
          (\ v0 v1 ->
             MAlonzo.Code.Data.List.NonEmpty.Base.d_head_30 (coe v1)))
@@ -87,7 +86,7 @@ du_comonad_22
               (coe
                  MAlonzo.Code.Data.Product.Base.du_uncurry_244
                  (coe du_extend_32 (coe v2)))
-              (coe MAlonzo.Code.Data.List.NonEmpty.Base.du_uncons_36)))
+              (coe MAlonzo.Code.Data.List.NonEmpty.Base.d_uncons_36)))
 -- Data.List.NonEmpty.Effectful._.extend
 d_extend_32 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->

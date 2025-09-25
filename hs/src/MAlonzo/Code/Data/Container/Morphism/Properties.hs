@@ -78,7 +78,7 @@ d_natural_132 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Container.Relation.Binary.Pointwise.T_Pointwise_36
@@ -86,7 +86,7 @@ d_natural_132 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 ~v7 ~v8 ~v9 v10 v11 v12
   = du_natural_132 v6 v10 v11 v12
 du_natural_132 ::
   MAlonzo.Code.Data.Container.Core.T__'8658'__74 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
   (AgdaAny -> AgdaAny) ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Container.Relation.Binary.Pointwise.T_Pointwise_36
@@ -150,7 +150,7 @@ d_m_236 ::
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14) ->
   (() ->
-   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44 ->
+   MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46 ->
    (AgdaAny -> AgdaAny) ->
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Data.Container.Relation.Binary.Pointwise.T_Pointwise_36) ->

@@ -47,5 +47,5 @@ d__'8799'__12 ::
   AgdaAny -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d__'8799'__12 v0 v1
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
       erased erased (coe d__'8776''63'__10 v0 v1)

@@ -57,7 +57,7 @@ du_unArgs_10 ::
 du_unArgs_10
   = coe
       MAlonzo.Code.Data.List.Base.du_map_22
-      (coe MAlonzo.Code.Reflection.AST.Argument.du_unArg_74)
+      (coe MAlonzo.Code.Reflection.AST.Argument.d_unArg_74)
 -- Reflection.Utils.Args.args
 d_args_12 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
@@ -123,68 +123,44 @@ du_'46'extendedlambda1_26 v0 v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Args.argInfo
 d_argInfo_34 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_ArgInfo_76
-d_argInfo_34 ~v0 ~v1 v2 = du_argInfo_34 v2
-du_argInfo_34 ::
-  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
-  MAlonzo.Code.Agda.Builtin.Reflection.T_ArgInfo_76
-du_argInfo_34 v0
+d_argInfo_34 v0
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Args.isVisible?
 d_isVisible'63'_40 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_isVisible'63'_40 ~v0 ~v1 v2 = du_isVisible'63'_40 v2
-du_isVisible'63'_40 ::
-  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
-  MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_isVisible'63'_40 v0
+d_isVisible'63'_40 v0
   = coe
       MAlonzo.Code.Reflection.AST.Argument.Visibility.d__'8799'__8
       (coe
          MAlonzo.Code.Reflection.AST.Argument.Information.d_visibility_16
-         (coe du_argInfo_34 (coe v0)))
+         (coe d_argInfo_34 (coe v0)))
       (coe MAlonzo.Code.Agda.Builtin.Reflection.C_visible_50)
 -- Reflection.Utils.Args.isInstance?
 d_isInstance'63'_46 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_isInstance'63'_46 ~v0 ~v1 v2 = du_isInstance'63'_46 v2
-du_isInstance'63'_46 ::
-  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
-  MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_isInstance'63'_46 v0
+d_isInstance'63'_46 v0
   = coe
       MAlonzo.Code.Reflection.AST.Argument.Visibility.d__'8799'__8
       (coe
          MAlonzo.Code.Reflection.AST.Argument.Information.d_visibility_16
-         (coe du_argInfo_34 (coe v0)))
+         (coe d_argInfo_34 (coe v0)))
       (coe MAlonzo.Code.Agda.Builtin.Reflection.C_instance'8242'_54)
 -- Reflection.Utils.Args.isHidden?
 d_isHidden'63'_52 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-d_isHidden'63'_52 ~v0 ~v1 v2 = du_isHidden'63'_52 v2
-du_isHidden'63'_52 ::
-  MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 ->
-  MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
-du_isHidden'63'_52 v0
+d_isHidden'63'_52 v0
   = coe
       MAlonzo.Code.Reflection.AST.Argument.Visibility.d__'8799'__8
       (coe
          MAlonzo.Code.Reflection.AST.Argument.Information.d_visibility_16
-         (coe du_argInfo_34 (coe v0)))
+         (coe d_argInfo_34 (coe v0)))
       (coe MAlonzo.Code.Agda.Builtin.Reflection.C_hidden_52)
 -- Reflection.Utils.Args.remove-iArgs
 d_remove'45'iArgs_56 ::
@@ -318,7 +294,7 @@ d_apply'8943'_88 v0 v1
                                      MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
                                      (coe
                                         MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22
-                                        (coe MAlonzo.Code.Data.List.Base.du_length_284 v0)
+                                        (coe MAlonzo.Code.Data.List.Base.du_length_268 v0)
                                         (addInt
                                            (coe (1 :: Integer))
                                            (coe MAlonzo.Code.Data.Fin.Base.du_toℕ_18 (coe v3))))
@@ -327,8 +303,8 @@ d_apply'8943'_88 v0 v1
                     _ -> MAlonzo.RTE.mazUnreachableError))
             (coe
                MAlonzo.Code.Data.List.Base.du_zip_182
-               (MAlonzo.Code.Data.List.Base.d_allFin_424
-                  (coe MAlonzo.Code.Data.List.Base.du_length_284 v0))
+               (MAlonzo.Code.Data.List.Base.d_allFin_408
+                  (coe MAlonzo.Code.Data.List.Base.du_length_268 v0))
                v0)))
 -- Reflection.Utils.Args.apply∗
 d_apply'8727'_100 ::

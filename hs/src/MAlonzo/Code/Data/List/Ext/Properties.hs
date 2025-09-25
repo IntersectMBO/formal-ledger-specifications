@@ -138,19 +138,19 @@ du_AllPairs'8658''8801''8744'R'8744'R'7506''7510'_78 v0 v1 v2 v3
              _ -> MAlonzo.RTE.mazUnreachableError
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Data.List.Ext.Properties._.deduplicate≡
-d_deduplicate'8801'_166 ::
+d_deduplicate'8801'_168 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> [AgdaAny] -> [AgdaAny]
-d_deduplicate'8801'_166 ~v0 ~v1 v2 = du_deduplicate'8801'_166 v2
-du_deduplicate'8801'_166 ::
+d_deduplicate'8801'_168 ~v0 ~v1 v2 = du_deduplicate'8801'_168 v2
+du_deduplicate'8801'_168 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 -> [AgdaAny] -> [AgdaAny]
-du_deduplicate'8801'_166 v0
+du_deduplicate'8801'_168 v0
   = coe
-      MAlonzo.Code.Data.List.Base.du_deduplicate_898
+      MAlonzo.Code.Data.List.Base.du_deduplicate_882
       (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
 -- Data.List.Ext.Properties._.disj-on-dedup
-d_disj'45'on'45'dedup_172 ::
+d_disj'45'on'45'dedup_174 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -162,23 +162,23 @@ d_disj'45'on'45'dedup_172 ::
   AgdaAny ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_disj'45'on'45'dedup_172 = erased
+d_disj'45'on'45'dedup_174 = erased
 -- Data.List.Ext.Properties._.∈-dedup
-d_'8712''45'dedup_180 ::
+d_'8712''45'dedup_182 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
-d_'8712''45'dedup_180 ~v0 ~v1 v2 v3 v4
-  = du_'8712''45'dedup_180 v2 v3 v4
-du_'8712''45'dedup_180 ::
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858
+d_'8712''45'dedup_182 ~v0 ~v1 v2 v3 v4
+  = du_'8712''45'dedup_182 v2 v3 v4
+du_'8712''45'dedup_182 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
-du_'8712''45'dedup_180 v0 v1 v2
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858
+du_'8712''45'dedup_182 v0 v1 v2
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2414
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2474
       (coe
          MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45'deduplicate'8314'_614
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0)) (coe v1)
@@ -188,7 +188,7 @@ du_'8712''45'dedup_180 v0 v1 v2
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
          (coe v1))
 -- Data.List.Ext.Properties._.dedup-++-↭
-d_dedup'45''43''43''45''8621'_186 ::
+d_dedup'45''43''43''45''8621'_188 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -198,29 +198,29 @@ d_dedup'45''43''43''45''8621'_186 ::
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__34
-d_dedup'45''43''43''45''8621'_186 ~v0 ~v1 v2 v3 v4 ~v5
-  = du_dedup'45''43''43''45''8621'_186 v2 v3 v4
-du_dedup'45''43''43''45''8621'_186 ::
+d_dedup'45''43''43''45''8621'_188 ~v0 ~v1 v2 v3 v4 ~v5
+  = du_dedup'45''43''43''45''8621'_188 v2 v3 v4
+du_dedup'45''43''43''45''8621'_188 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
   [AgdaAny] ->
   [AgdaAny] ->
   MAlonzo.Code.Data.List.Relation.Binary.Permutation.Propositional.T__'8621'__34
-du_dedup'45''43''43''45''8621'_186 v0 v1 v2
+du_dedup'45''43''43''45''8621'_188 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Relation.Binary.BagAndSetEquality.du_'8764'bag'8658''8621'_1352
       (coe
-         MAlonzo.Code.Data.List.Base.du_deduplicate_898
+         MAlonzo.Code.Data.List.Base.du_deduplicate_882
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
          (coe
             MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v1) (coe v2)))
       (coe
          MAlonzo.Code.Data.List.Base.du__'43''43'__32
          (coe
-            MAlonzo.Code.Data.List.Base.du_deduplicate_898
+            MAlonzo.Code.Data.List.Base.du_deduplicate_882
             (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
             (coe v1))
          (coe
-            MAlonzo.Code.Data.List.Base.du_deduplicate_898
+            MAlonzo.Code.Data.List.Base.du_deduplicate_882
             (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
             (coe v2)))
       (coe
@@ -228,35 +228,35 @@ du_dedup'45''43''43''45''8621'_186 v0 v1 v2
          (coe
             (\ v3 ->
                coe
-                 MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+                 MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
                  (\ v4 v5 v6 ->
                     coe
                       MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                       (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
                  erased erased erased
                  (coe
-                    MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+                    MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
                     (\ v4 v5 v6 ->
                        coe
                          MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                          (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
                     erased erased erased
                     (coe
-                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+                       MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
                        (\ v4 v5 v6 ->
                           coe
                             MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                             (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
                        erased erased erased
                        (coe
-                          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_300
+                          MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du_step'45''8764'_302
                           (\ v4 v5 v6 ->
                              coe
                                MAlonzo.Code.Function.Related.Propositional.du_K'45'trans_164
                                (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12))
                           erased erased erased
                           (coe
-                             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_492
+                             MAlonzo.Code.Relation.Binary.Reasoning.Syntax.du__'8718'_494
                              (\ v4 ->
                                 coe
                                   MAlonzo.Code.Function.Related.Propositional.du_K'45'refl_160
@@ -267,24 +267,24 @@ du_dedup'45''43''43''45''8621'_186 v0 v1 v2
                              MAlonzo.Code.Function.Related.Propositional.du_SK'45'sym_168
                              (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_88)
                              (coe
-                                du_helper_204 (coe du_deduplicate'8801'_166 v0 v1)
-                                (coe du_deduplicate'8801'_166 v0 v2))))
+                                du_helper_206 (coe du_deduplicate'8801'_168 v0 v1)
+                                (coe du_deduplicate'8801'_168 v0 v2))))
                        (coe
                           du__'8846''45'cong__54
                           (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_12)
-                          (coe du_'8712''45'dedup_180 (coe v0) (coe v1) (coe v3))
-                          (coe du_'8712''45'dedup_180 (coe v0) (coe v2) (coe v3))))
-                    (coe du_helper_204 (coe v1) (coe v2)))
+                          (coe du_'8712''45'dedup_182 (coe v0) (coe v1) (coe v3))
+                          (coe du_'8712''45'dedup_182 (coe v0) (coe v2) (coe v3))))
+                    (coe du_helper_206 (coe v1) (coe v2)))
                  (coe
                     MAlonzo.Code.Function.Related.Propositional.du_SK'45'sym_168
                     (coe MAlonzo.Code.Function.Related.Propositional.C_equivalence_88)
                     (coe
-                       du_'8712''45'dedup_180 (coe v0)
+                       du_'8712''45'dedup_182 (coe v0)
                        (coe
                           MAlonzo.Code.Data.List.Base.du__'43''43'__32 (coe v1) (coe v2))
                        (coe v3))))))
 -- Data.List.Ext.Properties._._.helper
-d_helper_204 ::
+d_helper_206 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
@@ -295,15 +295,15 @@ d_helper_204 ::
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   [AgdaAny] ->
   [AgdaAny] ->
-  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
-d_helper_204 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 ~v8
-  = du_helper_204 v6 v7
-du_helper_204 ::
+  AgdaAny -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858
+d_helper_206 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5 v6 v7 ~v8
+  = du_helper_206 v6 v7
+du_helper_206 ::
   [AgdaAny] ->
-  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Equivalence_1810
-du_helper_204 v0 v1
+  [AgdaAny] -> MAlonzo.Code.Function.Bundles.T_Equivalence_1858
+du_helper_206 v0 v1
   = coe
-      MAlonzo.Code.Function.Bundles.du_mk'8660'_2414
+      MAlonzo.Code.Function.Bundles.du_mk'8660'_2474
       (coe
          MAlonzo.Code.Data.List.Membership.Propositional.Properties.du_'8712''45''43''43''8315'_206
          v0 v1)

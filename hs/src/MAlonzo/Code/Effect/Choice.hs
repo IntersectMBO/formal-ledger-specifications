@@ -22,14 +22,13 @@ import qualified MAlonzo.Code.Agda.Primitive
 -- Effect.Choice.RawChoice
 d_RawChoice_16 a0 a1 a2 = ()
 newtype T_RawChoice_16
-  = C_RawChoice'46'constructor_149 (() ->
-                                    AgdaAny -> AgdaAny -> AgdaAny)
+  = C_constructor_26 (() -> AgdaAny -> AgdaAny -> AgdaAny)
 -- Effect.Choice.RawChoice._<|>_
 d__'60''124''62'__22 ::
   T_RawChoice_16 -> () -> AgdaAny -> AgdaAny -> AgdaAny
 d__'60''124''62'__22 v0
   = case coe v0 of
-      C_RawChoice'46'constructor_149 v1 -> coe v1
+      C_constructor_26 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Effect.Choice.RawChoice._∣_
 d__'8739'__24 ::

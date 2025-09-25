@@ -40,71 +40,215 @@ d_E4_54 a0 a1 = ()
 data T_E4_54 = C_c1E4_58 | C_c2E4_64
 -- Tactic.Derive.TestTypes.R1
 d_R1_66 = ()
-data T_R1_66 = C_R1'46'constructor_385 T_E1_8 T_E2_28
+data T_R1_66 = C_constructor_76 T_E1_8 T_E2_28
 -- Tactic.Derive.TestTypes.R1.f1R1
 d_f1R1_72 :: T_R1_66 -> T_E1_8
 d_f1R1_72 v0
   = case coe v0 of
-      C_R1'46'constructor_385 v1 v2 -> coe v1
+      C_constructor_76 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.TestTypes.R1.f2R1
 d_f2R1_74 :: T_R1_66 -> T_E2_28
 d_f2R1_74 v0
   = case coe v0 of
-      C_R1'46'constructor_385 v1 v2 -> coe v2
+      C_constructor_76 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.TestTypes.R2
-d_R2_80 a0 a1 = ()
-data T_R2_80
-  = C_R2'46'constructor_483 T_E1_8 T_E2_28 T_R1_66 T_R1_66 AgdaAny
-                            AgdaAny
+d_R2_82 a0 a1 = ()
+data T_R2_82
+  = C_constructor_112 T_E1_8 T_E2_28 T_R1_66 T_R1_66 AgdaAny AgdaAny
 -- Tactic.Derive.TestTypes.R2.f1R2
-d_f1R2_98 :: T_R2_80 -> T_E1_8
-d_f1R2_98 v0
+d_f1R2_100 :: T_R2_82 -> T_E1_8
+d_f1R2_100 v0
   = case coe v0 of
-      C_R2'46'constructor_483 v1 v2 v3 v4 v5 v6 -> coe v1
+      C_constructor_112 v1 v2 v3 v4 v5 v6 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.TestTypes.R2.f2R2
-d_f2R2_100 :: T_R2_80 -> T_E2_28
-d_f2R2_100 v0
+d_f2R2_102 :: T_R2_82 -> T_E2_28
+d_f2R2_102 v0
   = case coe v0 of
-      C_R2'46'constructor_483 v1 v2 v3 v4 v5 v6 -> coe v2
+      C_constructor_112 v1 v2 v3 v4 v5 v6 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.TestTypes.R2.f3R2
-d_f3R2_102 :: T_R2_80 -> T_R1_66
-d_f3R2_102 v0
+d_f3R2_104 :: T_R2_82 -> T_R1_66
+d_f3R2_104 v0
   = case coe v0 of
-      C_R2'46'constructor_483 v1 v2 v3 v4 v5 v6 -> coe v3
+      C_constructor_112 v1 v2 v3 v4 v5 v6 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.TestTypes.R2.f4R2
-d_f4R2_104 :: T_R2_80 -> T_R1_66
-d_f4R2_104 v0
+d_f4R2_106 :: T_R2_82 -> T_R1_66
+d_f4R2_106 v0
   = case coe v0 of
-      C_R2'46'constructor_483 v1 v2 v3 v4 v5 v6 -> coe v4
+      C_constructor_112 v1 v2 v3 v4 v5 v6 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.TestTypes.R2.f5R2
-d_f5R2_106 :: T_R2_80 -> AgdaAny
-d_f5R2_106 v0
+d_f5R2_108 :: T_R2_82 -> AgdaAny
+d_f5R2_108 v0
   = case coe v0 of
-      C_R2'46'constructor_483 v1 v2 v3 v4 v5 v6 -> coe v5
+      C_constructor_112 v1 v2 v3 v4 v5 v6 -> coe v5
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.TestTypes.R2.f6R2
-d_f6R2_108 :: T_R2_80 -> AgdaAny
-d_f6R2_108 v0
+d_f6R2_110 :: T_R2_82 -> AgdaAny
+d_f6R2_110 v0
   = case coe v0 of
-      C_R2'46'constructor_483 v1 v2 v3 v4 v5 v6 -> coe v6
+      C_constructor_112 v1 v2 v3 v4 v5 v6 -> coe v6
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20
+d_R20_114 = ()
+data T_R20_114
+  = C_constructor_196 Bool Bool Bool Bool Bool Bool Bool Bool Bool
+                      Bool Bool Bool Bool Bool Bool Bool Bool Bool Bool Bool
+-- Tactic.Derive.TestTypes.R20.r0
+d_r0_156 :: T_R20_114 -> Bool
+d_r0_156 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v1
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r1
+d_r1_158 :: T_R20_114 -> Bool
+d_r1_158 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v2
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r2
+d_r2_160 :: T_R20_114 -> Bool
+d_r2_160 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v3
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r3
+d_r3_162 :: T_R20_114 -> Bool
+d_r3_162 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v4
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r4
+d_r4_164 :: T_R20_114 -> Bool
+d_r4_164 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v5
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r5
+d_r5_166 :: T_R20_114 -> Bool
+d_r5_166 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v6
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r6
+d_r6_168 :: T_R20_114 -> Bool
+d_r6_168 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v7
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r7
+d_r7_170 :: T_R20_114 -> Bool
+d_r7_170 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v8
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r8
+d_r8_172 :: T_R20_114 -> Bool
+d_r8_172 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v9
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r9
+d_r9_174 :: T_R20_114 -> Bool
+d_r9_174 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v10
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r10
+d_r10_176 :: T_R20_114 -> Bool
+d_r10_176 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v11
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r11
+d_r11_178 :: T_R20_114 -> Bool
+d_r11_178 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v12
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r12
+d_r12_180 :: T_R20_114 -> Bool
+d_r12_180 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v13
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r13
+d_r13_182 :: T_R20_114 -> Bool
+d_r13_182 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v14
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r14
+d_r14_184 :: T_R20_114 -> Bool
+d_r14_184 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v15
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r15
+d_r15_186 :: T_R20_114 -> Bool
+d_r15_186 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v16
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r16
+d_r16_188 :: T_R20_114 -> Bool
+d_r16_188 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v17
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r17
+d_r17_190 :: T_R20_114 -> Bool
+d_r17_190 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v18
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r18
+d_r18_192 :: T_R20_114 -> Bool
+d_r18_192 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v19
+      _ -> MAlonzo.RTE.mazUnreachableError
+-- Tactic.Derive.TestTypes.R20.r19
+d_r19_194 :: T_R20_114 -> Bool
+d_r19_194 v0
+  = case coe v0 of
+      C_constructor_196 v1 v2 v3 v4 v5 v6 v7 v8 v9 v10 v11 v12 v13 v14 v15 v16 v17 v18 v19 v20
+        -> coe v20
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Tactic.Derive.TestTypes.M₁
-d_M'8321'_110 = ()
-data T_M'8321'_110
-  = C_m'8321'_114 | C_m'8322''8594''8321'_116 T_M'8322'_112
+d_M'8321'_198 = ()
+data T_M'8321'_198
+  = C_m'8321'_202 | C_m'8322''8594''8321'_204 T_M'8322'_200
 -- Tactic.Derive.TestTypes.M₂
-d_M'8322'_112 = ()
-data T_M'8322'_112
-  = C_m'8322'_118 | C_m'8321''8594''8322'_120 T_M'8321'_110
+d_M'8322'_200 = ()
+data T_M'8322'_200
+  = C_m'8322'_206 | C_m'8321''8594''8322'_208 T_M'8321'_198
 -- Tactic.Derive.TestTypes.AllTestTypes
-d_AllTestTypes_122 :: [AgdaAny]
-d_AllTestTypes_122
+d_AllTestTypes_210 :: [AgdaAny]
+d_AllTestTypes_210
   = coe
       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
       (coe
@@ -144,27 +288,27 @@ d_AllTestTypes_122
                      MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                      (coe
                         (MAlonzo.RTE.QName
-                           (80 :: Integer) (4963930465463636455 :: Integer)
+                           (82 :: Integer) (4963930465463636455 :: Integer)
                            "Tactic.Derive.TestTypes.R2"
                            (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                      (coe
                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                         (coe
                            (MAlonzo.RTE.QName
-                              (110 :: Integer) (4963930465463636455 :: Integer)
+                              (198 :: Integer) (4963930465463636455 :: Integer)
                               "Tactic.Derive.TestTypes.M\8321"
                               (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                         (coe
                            MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                            (coe
                               (MAlonzo.RTE.QName
-                                 (112 :: Integer) (4963930465463636455 :: Integer)
+                                 (200 :: Integer) (4963930465463636455 :: Integer)
                                  "Tactic.Derive.TestTypes.M\8322"
                                  (MAlonzo.RTE.Fixity MAlonzo.RTE.NonAssoc MAlonzo.RTE.Unrelated)))
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
 -- Tactic.Derive.TestTypes.stdlibTypes
-d_stdlibTypes_124 :: [AgdaAny]
-d_stdlibTypes_124
+d_stdlibTypes_212 :: [AgdaAny]
+d_stdlibTypes_212
   = coe
       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
       (coe

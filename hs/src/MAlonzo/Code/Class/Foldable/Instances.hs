@@ -17,52 +17,50 @@ import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     rem64, lt64, eq64, word64FromNat, word64ToNat)
 import qualified MAlonzo.RTE
 import qualified Data.Text
-import qualified MAlonzo.Code.Agda.Primitive
 import qualified MAlonzo.Code.Class.Foldable.Core
 import qualified MAlonzo.Code.Class.Monoid.Core
 import qualified MAlonzo.Code.Class.Semigroup.Core
+import qualified MAlonzo.Code.Data.List.Base
+import qualified MAlonzo.Code.Data.List.NonEmpty.Base
+import qualified MAlonzo.Code.Data.Maybe.Base
 
 -- Class.Foldable.Instances.Foldable-List
 d_Foldable'45'List_6 ::
   MAlonzo.Code.Class.Foldable.Core.T_Foldable_10
 d_Foldable'45'List_6
   = coe
-      MAlonzo.Code.Class.Foldable.Core.C_Foldable'46'constructor_287
-      (coe (\ v0 v1 v2 v3 -> coe du_go_12 (coe v0) (coe v2) (coe v3)))
--- Class.Foldable.Instances._.go
-d_go_12 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
-  MAlonzo.Code.Class.Monoid.Core.T_Monoid_12 -> [AgdaAny] -> AgdaAny
-d_go_12 v0 ~v1 v2 v3 = du_go_12 v0 v2 v3
-du_go_12 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
-  MAlonzo.Code.Class.Monoid.Core.T_Monoid_12 -> [AgdaAny] -> AgdaAny
-du_go_12 v0 v1 v2
-  = coe du_'46'extendedlambda0_14 (coe v0) (coe v1) (coe v2)
--- Class.Foldable.Instances._..extendedlambda0
-d_'46'extendedlambda0_14 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
-  MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
-  MAlonzo.Code.Class.Monoid.Core.T_Monoid_12 -> [AgdaAny] -> AgdaAny
-d_'46'extendedlambda0_14 v0 ~v1 v2 v3 v4
-  = du_'46'extendedlambda0_14 v0 v2 v3 v4
-du_'46'extendedlambda0_14 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Class.Semigroup.Core.T_Semigroup_10 ->
-  MAlonzo.Code.Class.Monoid.Core.T_Monoid_12 -> [AgdaAny] -> AgdaAny
-du_'46'extendedlambda0_14 v0 v1 v2 v3
-  = case coe v3 of
-      [] -> coe MAlonzo.Code.Class.Monoid.Core.d_ε_20 (coe v2)
-      (:) v4 v5
-        -> case coe v5 of
-             [] -> coe v4
-             (:) v6 v7
-               -> coe
-                    MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16 v1 v4
-                    (coe du_go_12 v0 v1 v2 v5)
-             _ -> MAlonzo.RTE.mazUnreachableError
-      _ -> MAlonzo.RTE.mazUnreachableError
+      MAlonzo.Code.Class.Foldable.Core.C_constructor_30
+      (coe
+         (\ v0 v1 v2 v3 ->
+            coe
+              MAlonzo.Code.Data.List.Base.du_foldr_216
+              (coe MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16 (coe v2))
+              (coe MAlonzo.Code.Class.Monoid.Core.d_ε_20 (coe v3))))
+-- Class.Foldable.Instances.Foldable-Maybe
+d_Foldable'45'Maybe_8 ::
+  MAlonzo.Code.Class.Foldable.Core.T_Foldable_10
+d_Foldable'45'Maybe_8
+  = coe
+      MAlonzo.Code.Class.Foldable.Core.C_constructor_30
+      (coe
+         (\ v0 v1 v2 v3 ->
+            coe
+              MAlonzo.Code.Data.Maybe.Base.du_fromMaybe_46
+              (MAlonzo.Code.Class.Monoid.Core.d_ε_20 (coe v3))))
+-- Class.Foldable.Instances.Foldable-List⁺
+d_Foldable'45'List'8314'_10 ::
+  MAlonzo.Code.Class.Foldable.Core.T_Foldable_10
+d_Foldable'45'List'8314'_10
+  = coe
+      MAlonzo.Code.Class.Foldable.Core.C_constructor_30
+      (coe
+         (\ v0 v1 v2 v3 v4 ->
+            case coe v4 of
+              MAlonzo.Code.Data.List.NonEmpty.Base.C__'8759'__34 v5 v6
+                -> coe
+                     MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16 v2 v5
+                     (coe
+                        MAlonzo.Code.Data.List.Base.du_foldr_216
+                        (coe MAlonzo.Code.Class.Semigroup.Core.d__'9671'__16 (coe v2))
+                        (coe MAlonzo.Code.Class.Monoid.Core.d_ε_20 (coe v3)) (coe v6))
+              _ -> MAlonzo.RTE.mazUnreachableError))

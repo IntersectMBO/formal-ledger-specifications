@@ -56,7 +56,7 @@ d_contradiction'45'irr_38 ~v0 ~v1 ~v2 ~v3 ~v4 ~v5
   = du_contradiction'45'irr_38
 du_contradiction'45'irr_38 :: AgdaAny
 du_contradiction'45'irr_38
-  = coe MAlonzo.Code.Data.Empty.du_'8869''45'elim'45'irr_20
+  = coe MAlonzo.Code.Data.Empty.du_'8869''45'elim'45'irr_18
 -- Relation.Nullary.Negation.Core.contradiction
 d_contradiction_44 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -99,8 +99,16 @@ d_contraposition_62 ::
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
 d_contraposition_62 = erased
+-- Relation.Nullary.Negation.Core.contra-diagonal
+d_contra'45'diagonal_70 ::
+  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
+  () ->
+  (AgdaAny ->
+   AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
+  AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
+d_contra'45'diagonal_70 = erased
 -- Relation.Nullary.Negation.Core.stable
-d_stable_70 ::
+d_stable_76 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   ((((AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
@@ -108,18 +116,18 @@ d_stable_70 ::
     AgdaAny) ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_stable_70 = erased
+d_stable_76 = erased
 -- Relation.Nullary.Negation.Core.negated-stable
-d_negated'45'stable_74 ::
+d_negated'45'stable_80 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   (((AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
     MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_negated'45'stable_74 = erased
+d_negated'45'stable_80 = erased
 -- Relation.Nullary.Negation.Core.¬¬-map
-d_'172''172''45'map_80 ::
+d_'172''172''45'map_86 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -129,4 +137,4 @@ d_'172''172''45'map_80 ::
    MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   (AgdaAny -> MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20) ->
   MAlonzo.Code.Data.Irrelevant.T_Irrelevant_20
-d_'172''172''45'map_80 = erased
+d_'172''172''45'map_86 = erased

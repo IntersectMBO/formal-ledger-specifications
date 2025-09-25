@@ -30,15 +30,9 @@ import qualified MAlonzo.Code.Reflection.AST.Argument
 
 -- Reflection.Utils.Core.absName
 d_absName_6 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112 ->
   MAlonzo.Code.Agda.Builtin.String.T_String_6
-d_absName_6 ~v0 ~v1 v2 = du_absName_6 v2
-du_absName_6 ::
-  MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112 ->
-  MAlonzo.Code.Agda.Builtin.String.T_String_6
-du_absName_6 v0
+d_absName_6 v0
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122 v1 v2 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -161,70 +155,92 @@ d_resultTy_70 v0
   = coe
       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
       (coe d_viewTy'8242'_58 (coe v0))
+-- Reflection.Utils.Core.tyTele
+d_tyTele_72 ::
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_tyTele_72 = coe d_'46'extendedlambda1_74
+-- Reflection.Utils.Core..extendedlambda1
+d_'46'extendedlambda1_74 ::
+  MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
+  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_'46'extendedlambda1_74 v0
+  = let v1 = coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16 in
+    coe
+      (case coe v0 of
+         MAlonzo.Code.Agda.Builtin.Reflection.C_pi_202 v2 v3
+           -> case coe v3 of
+                MAlonzo.Code.Agda.Builtin.Reflection.C_abs_122 v4 v5
+                  -> coe
+                       MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
+                       (coe MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v4) (coe v2))
+                       (coe d_tyTele_72 v5)
+                _ -> MAlonzo.RTE.mazUnreachableError
+         _ -> coe v1)
 -- Reflection.Utils.Core.DataDef
-d_DataDef_72 = ()
-data T_DataDef_72
-  = C_DataDef'46'constructor_2435 AgdaAny
-                                  [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-                                  [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
-                                  [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
+d_DataDef_82 = ()
+data T_DataDef_82
+  = C_constructor_100 AgdaAny
+                      [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+                      [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
+                      [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
 -- Reflection.Utils.Core.DataDef.name
-d_name_82 :: T_DataDef_72 -> AgdaAny
-d_name_82 v0
+d_name_92 :: T_DataDef_82 -> AgdaAny
+d_name_92 v0
   = case coe v0 of
-      C_DataDef'46'constructor_2435 v1 v2 v3 v4 -> coe v1
+      C_constructor_100 v1 v2 v3 v4 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Core.DataDef.constructors
-d_constructors_84 ::
-  T_DataDef_72 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_constructors_84 v0
+d_constructors_94 ::
+  T_DataDef_82 -> [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
+d_constructors_94 v0
   = case coe v0 of
-      C_DataDef'46'constructor_2435 v1 v2 v3 v4 -> coe v2
+      C_constructor_100 v1 v2 v3 v4 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Core.DataDef.params
-d_params_86 ::
-  T_DataDef_72 -> [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
-d_params_86 v0
+d_params_96 ::
+  T_DataDef_82 -> [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
+d_params_96 v0
   = case coe v0 of
-      C_DataDef'46'constructor_2435 v1 v2 v3 v4 -> coe v3
+      C_constructor_100 v1 v2 v3 v4 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Core.DataDef.indices
-d_indices_88 ::
-  T_DataDef_72 -> [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
-d_indices_88 v0
+d_indices_98 ::
+  T_DataDef_82 -> [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
+d_indices_98 v0
   = case coe v0 of
-      C_DataDef'46'constructor_2435 v1 v2 v3 v4 -> coe v4
+      C_constructor_100 v1 v2 v3 v4 -> coe v4
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Core.RecordDef
-d_RecordDef_90 = ()
-data T_RecordDef_90
-  = C_RecordDef'46'constructor_2565 AgdaAny
-                                    [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88]
-                                    [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
+d_RecordDef_102 = ()
+data T_RecordDef_102
+  = C_constructor_116 AgdaAny
+                      [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88]
+                      [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
 -- Reflection.Utils.Core.RecordDef.name
-d_name_98 :: T_RecordDef_90 -> AgdaAny
-d_name_98 v0
+d_name_110 :: T_RecordDef_102 -> AgdaAny
+d_name_110 v0
   = case coe v0 of
-      C_RecordDef'46'constructor_2565 v1 v2 v3 -> coe v1
+      C_constructor_116 v1 v2 v3 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Core.RecordDef.fields
-d_fields_100 ::
-  T_RecordDef_90 -> [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88]
-d_fields_100 v0
+d_fields_112 ::
+  T_RecordDef_102 -> [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88]
+d_fields_112 v0
   = case coe v0 of
-      C_RecordDef'46'constructor_2565 v1 v2 v3 -> coe v2
+      C_constructor_116 v1 v2 v3 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Core.RecordDef.params
-d_params_102 ::
-  T_RecordDef_90 -> [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
-d_params_102 v0
+d_params_114 ::
+  T_RecordDef_102 -> [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
+d_params_114 v0
   = case coe v0 of
-      C_RecordDef'46'constructor_2565 v1 v2 v3 -> coe v3
+      C_constructor_116 v1 v2 v3 -> coe v3
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Reflection.Utils.Core.parameters
-d_parameters_104 ::
+d_parameters_118 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Definition_280 -> Integer
-d_parameters_104 v0
+d_parameters_118 v0
   = let v1 = 0 :: Integer in
     coe
       (case coe v0 of
@@ -232,10 +248,10 @@ d_parameters_104 v0
            -> coe v2
          _ -> coe v1)
 -- Reflection.Utils.Core.toTelescope
-d_toTelescope_108 ::
+d_toTelescope_122 ::
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112] ->
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
-d_toTelescope_108
+d_toTelescope_122
   = coe
       MAlonzo.Code.Data.List.Base.du_map_22
       (coe
@@ -246,10 +262,10 @@ d_toTelescope_108
                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v1) (coe v2)
               _ -> MAlonzo.RTE.mazUnreachableError))
 -- Reflection.Utils.Core.fromTelescope
-d_fromTelescope_116 ::
+d_fromTelescope_130 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14] ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Abs_112]
-d_fromTelescope_116
+d_fromTelescope_130
   = coe
       MAlonzo.Code.Data.List.Base.du_map_22
       (coe

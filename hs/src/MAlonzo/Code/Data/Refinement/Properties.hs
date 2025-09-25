@@ -55,7 +55,7 @@ du__'8799'__34 ::
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 du__'8799'__34 v0 v1 v2
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
       erased erased
       (coe
          v0 (MAlonzo.Code.Data.Refinement.Base.d_value_38 (coe v1))

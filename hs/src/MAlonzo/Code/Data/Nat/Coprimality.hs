@@ -109,10 +109,10 @@ d_coprime'63'_70 ::
   Integer -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
 d_coprime'63'_70 v0 v1
   = coe
-      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+      MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
       erased erased
       (coe
-         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710
+         MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796
          (coe MAlonzo.Code.Data.Nat.GCD.d_gcd_152 (coe v0) (coe v1))
          (coe (1 :: Integer)))
 -- Data.Nat.Coprimality.1-coprimeTo
@@ -133,7 +133,7 @@ d_0'45'coprimeTo'45'm'8658'm'8801'1_82 = erased
 -- Data.Nat.Coprimality.¬0-coprimeTo-2+
 d_'172'0'45'coprimeTo'45'2'43'_88 ::
   Integer ->
-  MAlonzo.Code.Data.Nat.Base.T_NonTrivial_152 ->
+  MAlonzo.Code.Data.Nat.Base.T_NonTrivial_154 ->
   (Integer ->
    MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
    MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12) ->

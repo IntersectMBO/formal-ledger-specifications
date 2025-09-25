@@ -52,49 +52,49 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 d_DecEq'45''8869'_6 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45''8869'_6
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe (\ v0 -> MAlonzo.RTE.mazUnreachableError))
 -- Class.DecEq.Instances.DecEq-⊤
 d_DecEq'45''8868'_10 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45''8868'_10
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (\ v0 v1 -> coe MAlonzo.Code.Data.Unit.Properties.du__'8799'__8)
 -- Class.DecEq.Instances.DecEq-Bool
 d_DecEq'45'Bool_16 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Bool_16
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-      (coe MAlonzo.Code.Data.Bool.Properties.d__'8799'__3104)
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      (coe MAlonzo.Code.Data.Bool.Properties.d__'8799'__3196)
 -- Class.DecEq.Instances.DecEq-ℕ
 d_DecEq'45'ℕ_22 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'ℕ_22
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2710)
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      (coe MAlonzo.Code.Data.Nat.Properties.d__'8799'__2796)
 -- Class.DecEq.Instances.DecEq-ℤ
 d_DecEq'45'ℤ_28 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'ℤ_28
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-      (coe MAlonzo.Code.Data.Integer.Properties.d__'8799'__2714)
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      (coe MAlonzo.Code.Data.Integer.Properties.d__'8799'__2800)
 -- Class.DecEq.Instances.DecEq-ℚ
 d_DecEq'45'ℚ_34 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'ℚ_34
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
-      (coe MAlonzo.Code.Data.Rational.Properties.d__'8799'__2706)
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
+      (coe MAlonzo.Code.Data.Rational.Properties.d__'8799'__2792)
 -- Class.DecEq.Instances.DecEq-Char
 d_DecEq'45'Char_40 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Char_40
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Data.Char.Properties.d__'8799'__14)
 -- Class.DecEq.Instances.DecEq-String
 d_DecEq'45'String_46 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'String_46
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Data.String.Properties.d__'8799'__54)
 -- Class.DecEq.Instances.DecEq-Fin
 d_DecEq'45'Fin_52 ::
@@ -103,7 +103,7 @@ d_DecEq'45'Fin_52 ~v0 = du_DecEq'45'Fin_52
 du_DecEq'45'Fin_52 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Fin_52
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Data.Fin.Properties.du__'8799'__50)
 -- Class.DecEq.Instances.DecEq-List
 d_DecEq'45'List_58 ::
@@ -117,7 +117,7 @@ du_DecEq'45'List_58 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'List_58 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          MAlonzo.Code.Data.List.Properties.du_'8801''45'dec_60
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0)))
@@ -148,7 +148,7 @@ du_DecEq'45'List'8314'_82 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'List'8314'_82 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          (\ v1 ->
             case coe v1 of
@@ -214,9 +214,9 @@ du_DecEq'45'Vec_136 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Vec_136 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
-         MAlonzo.Code.Data.Vec.Properties.du_'8801''45'dec_68
+         MAlonzo.Code.Data.Vec.Properties.du_'8801''45'dec_92
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0)))
 -- Class.DecEq.Instances._.DecEq-Maybe
 d_DecEq'45'Maybe_142 ::
@@ -230,7 +230,7 @@ du_DecEq'45'Maybe_142 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Maybe_142 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          MAlonzo.Code.Data.Maybe.Properties.du_'8801''45'dec_24
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0)))
@@ -248,7 +248,7 @@ du_DecEq'45'Refinement_150 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Refinement_150 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          (\ v1 v2 ->
             let v3
@@ -290,7 +290,7 @@ du_DecEq'45''215'_182 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45''215'_182 v0 v1
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          MAlonzo.Code.Data.Product.Properties.du_'8801''45'dec_78
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
@@ -313,7 +313,7 @@ du_DecEq'45''8846'_188 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45''8846'_188 v0 v1
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          MAlonzo.Code.Data.Sum.Properties.du_'8801''45'dec_54
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
@@ -335,7 +335,7 @@ du_DecEq'45'These_194 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'These_194 v0 v1
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          MAlonzo.Code.Data.These.Properties.du_'8801''45'dec_60
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0))
@@ -344,43 +344,43 @@ du_DecEq'45'These_194 v0 v1
 d_DecEq'45'Name_200 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Name_200
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Reflection.AST.Name.d__'8799'__12)
 -- Class.DecEq.Instances.DecEq-Lit
 d_DecEq'45'Lit_206 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Lit_206
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Reflection.AST.Literal.d__'8799'__48)
 -- Class.DecEq.Instances.DecEq-Meta
 d_DecEq'45'Meta_212 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Meta_212
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Reflection.AST.Meta.d__'8799'__10)
 -- Class.DecEq.Instances.DecEq-Term
 d_DecEq'45'Term_218 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Term_218
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Reflection.AST.Term.d__'8799'__224)
 -- Class.DecEq.Instances.DecEq-Mod
 d_DecEq'45'Mod_224 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Mod_224
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Reflection.AST.Argument.Modality.d__'8799'__30)
 -- Class.DecEq.Instances.DecEq-Vis
 d_DecEq'45'Vis_230 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'Vis_230
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe MAlonzo.Code.Reflection.AST.Argument.Visibility.d__'8799'__8)
 -- Class.DecEq.Instances.DecEq-ArgI
 d_DecEq'45'ArgI_236 :: MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 d_DecEq'45'ArgI_236
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          MAlonzo.Code.Reflection.AST.Argument.Information.d__'8799'__30)
 -- Class.DecEq.Instances.DecEq-Arg
@@ -395,7 +395,7 @@ du_DecEq'45'Arg_242 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10
 du_DecEq'45'Arg_242 v0
   = coe
-      MAlonzo.Code.Class.DecEq.Core.C_DecEq'46'constructor_31
+      MAlonzo.Code.Class.DecEq.Core.C_constructor_32
       (coe
          MAlonzo.Code.Reflection.AST.Argument.du_'8801''45'dec_96
          (coe MAlonzo.Code.Class.DecEq.Core.d__'8799'__16 (coe v0)))

@@ -21,38 +21,37 @@ import qualified MAlonzo.Code.Axiom.Set
 import qualified MAlonzo.Code.Axiom.Set.Map
 
 -- Class.HasEmptySet._.Map
-d_Map_152 :: MAlonzo.Code.Axiom.Set.T_Theory_94 -> () -> () -> ()
-d_Map_152 = erased
+d_Map_154 :: MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> () -> ()
+d_Map_154 = erased
 -- Class.HasEmptySet.HasEmptySet
-d_HasEmptySet_300 a0 a1 = ()
-newtype T_HasEmptySet_300
-  = C_HasEmptySet'46'constructor_1119 AgdaAny
+d_HasEmptySet_308 a0 a1 = ()
+newtype T_HasEmptySet_308 = C_constructor_316 AgdaAny
 -- Class.HasEmptySet.HasEmptySet.∅
-d_'8709'_306 :: T_HasEmptySet_300 -> AgdaAny
-d_'8709'_306 v0
+d_'8709'_314 :: T_HasEmptySet_308 -> AgdaAny
+d_'8709'_314 v0
   = case coe v0 of
-      C_HasEmptySet'46'constructor_1119 v1 -> coe v1
+      C_constructor_316 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Class.HasEmptySet._.∅
-d_'8709'_310 :: T_HasEmptySet_300 -> AgdaAny
-d_'8709'_310 v0 = coe d_'8709'_306 (coe v0)
+d_'8709'_320 :: T_HasEmptySet_308 -> AgdaAny
+d_'8709'_320 v0 = coe d_'8709'_314 (coe v0)
 -- Class.HasEmptySet.HasEmptySet-Set
-d_HasEmptySet'45'Set_314 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_94 -> () -> T_HasEmptySet_300
-d_HasEmptySet'45'Set_314 v0 ~v1 = du_HasEmptySet'45'Set_314 v0
-du_HasEmptySet'45'Set_314 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_94 -> T_HasEmptySet_300
-du_HasEmptySet'45'Set_314 v0
+d_HasEmptySet'45'Set_324 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> T_HasEmptySet_308
+d_HasEmptySet'45'Set_324 v0 ~v1 = du_HasEmptySet'45'Set_324 v0
+du_HasEmptySet'45'Set_324 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_96 -> T_HasEmptySet_308
+du_HasEmptySet'45'Set_324 v0
   = coe
-      C_HasEmptySet'46'constructor_1119
-      (coe MAlonzo.Code.Axiom.Set.du_'8709'_442 (coe v0))
+      C_constructor_316
+      (coe MAlonzo.Code.Axiom.Set.du_'8709'_444 (coe v0))
 -- Class.HasEmptySet.HasEmptySet-Map
-d_HasEmptySet'45'Map_320 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_94 -> () -> () -> T_HasEmptySet_300
-d_HasEmptySet'45'Map_320 v0 ~v1 ~v2 = du_HasEmptySet'45'Map_320 v0
-du_HasEmptySet'45'Map_320 ::
-  MAlonzo.Code.Axiom.Set.T_Theory_94 -> T_HasEmptySet_300
-du_HasEmptySet'45'Map_320 v0
+d_HasEmptySet'45'Map_330 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_96 -> () -> () -> T_HasEmptySet_308
+d_HasEmptySet'45'Map_330 v0 ~v1 ~v2 = du_HasEmptySet'45'Map_330 v0
+du_HasEmptySet'45'Map_330 ::
+  MAlonzo.Code.Axiom.Set.T_Theory_96 -> T_HasEmptySet_308
+du_HasEmptySet'45'Map_330 v0
   = coe
-      C_HasEmptySet'46'constructor_1119
-      (coe MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_578 (coe v0))
+      C_constructor_316
+      (coe MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582 (coe v0))

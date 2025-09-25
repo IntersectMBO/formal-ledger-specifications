@@ -47,15 +47,18 @@ d_'8707''8322''45'syntax_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   () -> () -> (AgdaAny -> AgdaAny -> ()) -> ()
 d_'8707''8322''45'syntax_90 = erased
+-- Prelude.Init.∃⁇
+d_'8707''8263'_100 :: MAlonzo.Code.Agda.Primitive.T_Level_18 -> ()
+d_'8707''8263'_100 = erased
 -- Prelude.Init._↔_
-d__'8596'__98 ::
+d__'8596'__104 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> () -> ()
-d__'8596'__98 = erased
+d__'8596'__104 = erased
 -- Prelude.Init.Is
-d_Is_108 a0 a1 a2 = ()
-data T_Is_108 = C_'10219'__114
+d_Is_114 a0 a1 a2 = ()
+data T_Is_114 = C_'10219'__120
 -- Prelude.Init.typeOf
-d_typeOf_120 ::
+d_typeOf_126 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 -> () -> AgdaAny -> ()
-d_typeOf_120 = erased
+d_typeOf_126 = erased

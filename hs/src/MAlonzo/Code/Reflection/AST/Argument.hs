@@ -109,12 +109,8 @@ du_arg'45'injective_72
       MAlonzo.Code.Data.Product.Base.du_'60'_'44'_'62'_112 erased erased
 -- Reflection.AST.Argument.unArg
 d_unArg_74 ::
-  MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  () -> MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 -> AgdaAny
-d_unArg_74 ~v0 ~v1 v2 = du_unArg_74 v2
-du_unArg_74 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88 -> AgdaAny
-du_unArg_74 v0
+d_unArg_74 v0
   = case coe v0 of
       MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v1 v2 -> coe v2
       _ -> MAlonzo.RTE.mazUnreachableError
@@ -138,11 +134,11 @@ du_unArg'45'dec_84 v0 v1 v2
         -> case coe v1 of
              MAlonzo.Code.Agda.Builtin.Reflection.C_arg_98 v5 v6
                -> coe
-                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_168
+                    MAlonzo.Code.Relation.Nullary.Decidable.Core.du_map'8242'_178
                     (coe MAlonzo.Code.Data.Product.Base.du_uncurry_244 erased)
                     (coe du_arg'45'injective_72)
                     (coe
-                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__76
+                       MAlonzo.Code.Relation.Nullary.Decidable.Core.du__'215''45'dec__84
                        (coe
                           MAlonzo.Code.Reflection.AST.Argument.Information.d__'8799'__30
                           (coe v3) (coe v5))
@@ -170,4 +166,4 @@ du_'8801''45'dec_96 ::
 du_'8801''45'dec_96 v0 v1 v2
   = coe
       du_unArg'45'dec_84 (coe v1) (coe v2)
-      (coe v0 (coe du_unArg_74 (coe v1)) (coe du_unArg_74 (coe v2)))
+      (coe v0 (d_unArg_74 (coe v1)) (d_unArg_74 (coe v2)))

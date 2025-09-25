@@ -63,8 +63,8 @@ du_zipWithIndex_34 v0 v1
   = coe
       MAlonzo.Code.Data.List.Base.du_zipWith_104 (coe v0)
       (coe
-         MAlonzo.Code.Data.List.Base.d_upTo_418
-         (coe MAlonzo.Code.Data.List.Base.du_length_284 v1))
+         MAlonzo.Code.Data.List.Base.d_upTo_402
+         (coe MAlonzo.Code.Data.List.Base.du_length_268 v1))
       (coe v1)
 -- Meta.Prelude.enumerate
 d_enumerate_44 ::

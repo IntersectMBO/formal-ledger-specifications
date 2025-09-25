@@ -88,7 +88,7 @@ du_'172''172''45'Monad_64 ::
   MAlonzo.Code.Effect.Monad.T_RawMonad_24
 du_'172''172''45'Monad_64
   = coe
-      MAlonzo.Code.Effect.Monad.du_mkRawMonad_178
+      MAlonzo.Code.Effect.Monad.du_mkRawMonad_180
       (coe
          (\ v0 v1 ->
             coe

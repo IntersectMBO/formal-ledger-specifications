@@ -76,7 +76,7 @@ d_fromChar_16
   = coe
       MAlonzo.Code.Function.Base.du__'8728''8242'__216
       (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
-      (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_286)
+      (coe MAlonzo.Code.Data.List.Base.du_'91'_'93'_270)
 -- Data.String.Base.fromList⁺
 d_fromList'8314'_18 ::
   MAlonzo.Code.Data.List.NonEmpty.Base.T_List'8314'_22 ->
@@ -85,7 +85,7 @@ d_fromList'8314'_18
   = coe
       MAlonzo.Code.Function.Base.du__'8728''8242'__216
       (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
-      (coe MAlonzo.Code.Data.List.NonEmpty.Base.du_toList_60)
+      (coe MAlonzo.Code.Data.List.NonEmpty.Base.d_toList_60)
 -- Data.String.Base._++_
 d__'43''43'__20 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 ->
@@ -98,7 +98,7 @@ d_length_22 ::
   MAlonzo.Code.Agda.Builtin.String.T_String_6 -> Integer
 d_length_22 v0
   = coe
-      MAlonzo.Code.Data.List.Base.du_length_284
+      MAlonzo.Code.Data.List.Base.du_length_268
       (coe MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v0)
 -- Data.String.Base.replicate
 d_replicate_24 ::
@@ -109,7 +109,7 @@ d_replicate_24 v0 v1
   = coe
       MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14
       (coe
-         MAlonzo.Code.Data.List.Base.du_replicate_294 (coe v0) (coe v1))
+         MAlonzo.Code.Data.List.Base.du_replicate_278 (coe v0) (coe v1))
 -- Data.String.Base.concat
 d_concat_28 ::
   [MAlonzo.Code.Agda.Builtin.String.T_String_6] ->
@@ -248,7 +248,7 @@ d_padBoth_80 v0 v1 v2 v3
          d__'43''43'__20
          (d_replicate_24
             (coe
-               MAlonzo.Code.Data.Nat.Base.d_'8970'_'47'2'8971'_264
+               MAlonzo.Code.Data.Nat.Base.d_'8970'_'47'2'8971'_268
                (coe
                   MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22 v2
                   (d_length_22 (coe v3))))
@@ -257,7 +257,7 @@ d_padBoth_80 v0 v1 v2 v3
             d__'43''43'__20 v3
             (d_replicate_24
                (coe
-                  MAlonzo.Code.Data.Nat.Base.d_'8968'_'47'2'8969'_268
+                  MAlonzo.Code.Data.Nat.Base.d_'8968'_'47'2'8969'_272
                   (coe
                      MAlonzo.Code.Agda.Builtin.Nat.d__'45'__22 v2
                      (d_length_22 (coe v3))))
@@ -296,7 +296,7 @@ du_wordsBy_106 v0 v1
       MAlonzo.Code.Data.List.Base.du_map_22
       (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
       (coe
-         MAlonzo.Code.Data.List.Base.du_wordsBy_818 v0
+         MAlonzo.Code.Data.List.Base.du_wordsBy_802 v0
          (coe MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v1))
 -- Data.String.Base.wordsByᵇ
 d_wordsBy'7495'_110 ::
@@ -308,7 +308,7 @@ d_wordsBy'7495'_110 v0
       du_wordsBy_106
       (coe
          (\ v1 ->
-            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_66
+            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
               (coe v0 v1)))
 -- Data.String.Base.words
 d_words_114 ::
@@ -337,7 +337,7 @@ du_linesBy_122 v0 v1
       MAlonzo.Code.Data.List.Base.du_map_22
       (coe MAlonzo.Code.Agda.Builtin.String.d_primStringFromList_14)
       (coe
-         MAlonzo.Code.Data.List.Base.du_linesBy_786 v0
+         MAlonzo.Code.Data.List.Base.du_linesBy_770 v0
          (coe MAlonzo.Code.Agda.Builtin.String.d_primStringToList_12 v1))
 -- Data.String.Base.linesByᵇ
 d_linesBy'7495'_126 ::
@@ -349,7 +349,7 @@ d_linesBy'7495'_126 v0
       du_linesBy_122
       (coe
          (\ v1 ->
-            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_66
+            MAlonzo.Code.Relation.Nullary.Decidable.Core.d_T'63'_72
               (coe v0 v1)))
 -- Data.String.Base.lines
 d_lines_130 ::

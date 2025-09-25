@@ -27,14 +27,14 @@ import qualified MAlonzo.Code.Reflection.Debug
 d_defaultTCOptionsI_4 :: MAlonzo.Code.Class.MonadTC.T_TCOptions_12
 d_defaultTCOptionsI_4
   = coe
-      MAlonzo.Code.Class.MonadTC.C_TCOptions'46'constructor_49
+      MAlonzo.Code.Class.MonadTC.C_constructor_22
       (coe
-         MAlonzo.Code.Reflection.Debug.C_DebugOptions'46'constructor_1897
+         MAlonzo.Code.Reflection.Debug.C_constructor_256
          (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)
-         (coe MAlonzo.Code.Reflection.Debug.C_All_60)
+         (coe MAlonzo.Code.Reflection.Debug.C_All_62)
          (coe
-            MAlonzo.Code.Algebra.Lattice.Bundles.d_'8869'_716
-            (coe MAlonzo.Code.Reflection.Debug.d_Filter'45'Alg_68))
+            MAlonzo.Code.Algebra.Lattice.Bundles.d_'8869'_732
+            (coe MAlonzo.Code.Reflection.Debug.d_Filter'45'Alg_70))
          (coe (100 :: Integer)) (coe '\9475'))
       (coe
          MAlonzo.Code.Agda.Builtin.List.C__'8759'__22

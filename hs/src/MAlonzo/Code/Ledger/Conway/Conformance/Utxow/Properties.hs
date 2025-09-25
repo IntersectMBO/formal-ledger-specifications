@@ -33,16 +33,16 @@ import qualified MAlonzo.Code.Class.ToBool
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Interface.ComputationalRelation
 import qualified MAlonzo.Code.Interface.Hashable
-import qualified MAlonzo.Code.Ledger.Conway.Abstract
-import qualified MAlonzo.Code.Ledger.Conway.Address
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Utxow
-import qualified MAlonzo.Code.Ledger.Conway.Crypto
-import qualified MAlonzo.Code.Ledger.Conway.Script.Base
-import qualified MAlonzo.Code.Ledger.Conway.Script.Validation
-import qualified MAlonzo.Code.Ledger.Conway.Transaction
-import qualified MAlonzo.Code.Ledger.Conway.Utxo
-import qualified MAlonzo.Code.Ledger.Conway.Utxow
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Base
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Validation
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Transaction
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxo
+import qualified MAlonzo.Code.Ledger.Conway.Specification.Utxow
+import qualified MAlonzo.Code.Ledger.Core.Specification.Address
+import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
 import qualified MAlonzo.Code.Level
 import qualified MAlonzo.Code.Prelude
 import qualified MAlonzo.Code.Relation.Nullary.Decidable.Core
@@ -51,32 +51,32 @@ import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 import qualified MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError
 
 -- Ledger.Conway.Conformance.Utxow.Properties._._⊢_⇀⦇_,UTXOW⦈_
-d__'8866'_'8640''10631'_'44'UTXOW'10632'__1622 a0 a1 a2 a3 a4 a5
+d__'8866'_'8640''10631'_'44'UTXOW'10632'__1816 a0 a1 a2 a3 a4 a5
   = ()
 -- Ledger.Conway.Conformance.Utxow.Properties.Computational-UTXOW
-d_Computational'45'UTXOW_1714 ::
-  MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
-  MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
+d_Computational'45'UTXOW_1912 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2240 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'UTXOW_1714 v0 v1
+d_Computational'45'UTXOW_1912 v0 v1
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
-      (d_computeProof_1754 (coe v0) (coe v1))
+      (d_computeProof_1952 (coe v0) (coe v1))
 -- Ledger.Conway.Conformance.Utxow.Properties._.Go.computeProof
-d_computeProof_1754 ::
-  MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
-  MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
-  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOEnv_2042 ->
-  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOState_2060 ->
-  MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3130 ->
+d_computeProof_1952 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2240 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2326 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2342 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3382 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_1754 v0 v1 v2 v3 v4
+d_computeProof_1952 v0 v1 v2 v3 v4
   = let v5
           = MAlonzo.Code.Class.Decidable.Core.d_dec_16
               (coe
                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                  (coe
-                    MAlonzo.Code.Ledger.Conway.Conformance.Utxow.du_UTXOW'45'inductive'45'premises_2468
+                    MAlonzo.Code.Ledger.Conway.Conformance.Utxow.du_UTXOW'45'inductive'45'premises_2760
                     (coe v0) (coe v4) (coe v3))) in
     coe
       (case coe v5 of
@@ -106,11 +106,11 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                (coe
                                                                                   MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
                                                                                   (coe
-                                                                                     MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_72)
+                                                                                     MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
                                                                                   (coe
                                                                                      (\ v23 v24 ->
                                                                                         coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2442
+                                                                                          MAlonzo.Code.Ledger.Conway.Conformance.Utxow.C_UTXOW'45'inductive_2734
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                                                              (coe
@@ -145,7 +145,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                                                      v22)
                                                                                                                   (coe
                                                                                                                      v24))))))))))))
-                                                                               (MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_computeProof_2538
+                                                                               (MAlonzo.Code.Ledger.Conway.Conformance.Utxo.Properties.d_computeProof_2830
                                                                                   (coe v0) (coe v1)
                                                                                   (coe v2) (coe v3)
                                                                                   (coe v4))
@@ -165,40 +165,40 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                  = coe
                                      MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
                                      (coe
-                                        MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
+                                        MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1644
                                         (coe
                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                         (coe
                                            (\ v8 ->
                                               coe
-                                                MAlonzo.Code.Ledger.Conway.Crypto.d_Dec'45'isSigned_118
-                                                (MAlonzo.Code.Ledger.Conway.Crypto.d_pkk_174
+                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_Dec'45'isSigned_120
+                                                (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_pkk_178
                                                    (coe
-                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
+                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                       (coe v0)))
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v8))
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_txidBytes_2402
+                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txidBytes_2492
                                                    v0
-                                                   (MAlonzo.Code.Ledger.Conway.Transaction.d_txid_3012
+                                                   (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txId_3248
                                                       (coe
-                                                         MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
+                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
                                                          (coe v4))))
                                                 (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                    (coe v8))))
                                         (coe
-                                           MAlonzo.Code.Axiom.Set.Map.du__'738'_550
+                                           MAlonzo.Code.Axiom.Set.Map.du__'738'_554
                                            (coe
-                                              MAlonzo.Code.Ledger.Conway.Transaction.d_vkSigs_3120
+                                              MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_vkSigs_3370
                                               (coe
-                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_wits_3144
+                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3396
                                                  (coe v4)))))
                                      erased in
                            coe
                              (case coe v8 of
                                 MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v9
                                   -> coe
-                                       ("\172\nClass.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 .patternInTele0 \8594\n   .PKKScheme.isSigned\n   (.Crypto.pkk (.TransactionStructure.crypto txs))\n   (.proj\8321 .patternInTele0)\n   (.TransactionStructure.txidBytes txs\n    (.TransactionStructure.TxBody.txid\n     (.TransactionStructure.Tx.body tx)))\n   (.proj\8322 .patternInTele0))\n(.TransactionStructure.TxWitnesses.vkSigs\n (.TransactionStructure.Tx.wits tx))"
+                                       ("\172\nClass.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 .patternInTele0 \8594\n   .PKKScheme.isSigned\n   (.CryptoStructure.pkk (.TransactionStructure.cryptoStructure txs))\n   (.proj\8321 .patternInTele0)\n   (.TransactionStructure.txidBytes txs\n    (.TransactionStructure.TxBody.txId\n     (.TransactionStructure.Tx.body tx)))\n   (.proj\8322 .patternInTele0))\n(.TransactionStructure.TxWitnesses.vkSigs\n (.TransactionStructure.Tx.wits tx))"
                                         ::
                                         Data.Text.Text)
                                 MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v9
@@ -206,106 +206,106 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                            = coe
                                                MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
                                                (coe
-                                                  MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
+                                                  MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1644
                                                   (coe
                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                   (coe
                                                      (\ v10 ->
                                                         coe
-                                                          MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_22
+                                                          MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''8594'_12
                                                           (coe
-                                                             MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
+                                                             MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1682
                                                              (coe
                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'ScriptHash_206
+                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
+                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                                    (coe v0)))
                                                              (coe
                                                                 MAlonzo.Code.Interface.Hashable.d_hash_16
-                                                                (MAlonzo.Code.Ledger.Conway.Script.Base.d_Hashable'45'P1Script_114
+                                                                (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_118
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Script.Base.d_p1s_294
+                                                                      MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_p1s_302
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                          (coe v0))))
                                                                 v10)
                                                              (coe
-                                                                MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                                (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                                (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                    (coe
                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                 (\ v11 ->
                                                                    coe
-                                                                     MAlonzo.Code.Ledger.Conway.Address.du_isScriptObj_52
+                                                                     MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_56
                                                                      (coe
                                                                         MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                         (coe v11)))
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Conway.Script.Validation.du_credsNeeded_2276
+                                                                   MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_credsNeeded_2554
                                                                    (coe v0)
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                      MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                       (coe v3))
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
+                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
                                                                       (coe v4)))))
                                                           (coe
-                                                             MAlonzo.Code.Ledger.Conway.Script.Base.d_Dec'45'validP1Script_112
-                                                             (MAlonzo.Code.Ledger.Conway.Script.Base.d_p1s_294
+                                                             MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Dec'45'validP1Script_116
+                                                             (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_p1s_302
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                    (coe v0)))
                                                              (coe
-                                                                MAlonzo.Code.Axiom.Set.du_map_398
-                                                                (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                MAlonzo.Code.Axiom.Set.du_map_400
+                                                                (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                    (coe
                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                 (MAlonzo.Code.Interface.Hashable.d_hash_16
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Crypto.d_T'45'Hashable_30
+                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Conway.Crypto.d_khs_202
+                                                                         MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                          (coe
-                                                                            MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
+                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                                             (coe v0)))))
                                                                 (coe
-                                                                   MAlonzo.Code.Class.IsSet.du_dom_548
+                                                                   MAlonzo.Code.Class.IsSet.du_dom_562
                                                                    (coe
-                                                                      MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                      MAlonzo.Code.Axiom.Set.d_th_1480
                                                                       (coe
                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                    (coe
-                                                                      MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
+                                                                      MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
                                                                    (coe
-                                                                      MAlonzo.Code.Ledger.Conway.Transaction.d_vkSigs_3120
+                                                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_vkSigs_3370
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Conway.Transaction.d_wits_3144
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3396
                                                                          (coe v4)))))
-                                                             (MAlonzo.Code.Ledger.Conway.Transaction.d_txvldt_2992
+                                                             (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txVldt_3256
                                                                 (coe
-                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
+                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
                                                                    (coe v4)))
                                                              v10)))
                                                   (coe
-                                                     MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                     (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                     MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                     (MAlonzo.Code.Axiom.Set.d_th_1480
                                                         (coe
                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                      (coe
-                                                        MAlonzo.Code.Ledger.Conway.Script.Base.du_toP1Script_404)
-                                                     (MAlonzo.Code.Ledger.Conway.Transaction.d_txscripts_3256
+                                                        MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_toP1Script_412)
+                                                     (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txscripts_3510
                                                         (coe v0) (coe v4)
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                            (coe v3)))))
                                                erased in
                                      coe
                                        (case coe v10 of
                                           MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v11
                                             -> coe
-                                                 ("\172\nClass.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 s\8321 \8594\n   (z\n    : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n       Class.IsSet.IsSet.\8712\n       .Hashable.hash\n       (.Ledger.Conway.Script.Base.P1ScriptStructure.Hashable-P1Script\n        (.Ledger.Conway.Script.Base.ScriptStructure.p1s\n         (.TransactionStructure.scriptStructure txs)))\n       s\8321)\n      (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n       (\955 x \8594\n          Ledger.Conway.Address.isScriptObj\n          (.Ledger.Conway.Types.Epoch.GlobalConstants.Network\n           (.TransactionStructure.globalConstants txs))\n          (.isHashableSet.THash\n           (.Crypto.khs (.TransactionStructure.crypto txs)))\n          (.Crypto.ScriptHash (.TransactionStructure.crypto txs)) (.proj\8322 x))\n       (Ledger.Conway.Script.Validation.credsNeeded txs abs\n        (.Ledger.Conway.Utxo.UTxOState.utxo s)\n        (.TransactionStructure.Tx.body tx)))) \8594\n   .Ledger.Conway.Script.Base.P1ScriptStructure.validP1Script\n   (.Ledger.Conway.Script.Base.ScriptStructure.p1s\n    (.TransactionStructure.scriptStructure txs))\n   (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.Hashable.hash\n     (.isHashableSet.T-Hashable\n      (.Crypto.khs (.TransactionStructure.crypto txs))))\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.TransactionStructure.TxWitnesses.vkSigs\n      (.TransactionStructure.Tx.wits tx))))\n   (.TransactionStructure.TxBody.txvldt\n    (.TransactionStructure.Tx.body tx))\n   s\8321)\n(Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (Ledger.Conway.Script.Base.ScriptStructure.toP1Script\n  (.TransactionStructure.scriptStructure txs))\n (TransactionStructure.txscripts txs tx\n  (.Ledger.Conway.Utxo.UTxOState.utxo s)))"
+                                                 ("\172\nClass.IsSet.All-syntax (.Axiom.Set.Theory\7496.th List-Model\7496)\n(\955 s\8321 \8594\n   (z\n    : (Class.IsSet.IsSet-Set (.Axiom.Set.Theory\7496.th List-Model\7496)\n       Class.IsSet.IsSet.\8712\n       .Hashable.hash\n       (.Ledger.Conway.Specification.Script.Base.P1ScriptStructure.Hashable-P1Script\n        (.Ledger.Conway.Specification.Script.Base.ScriptStructure.p1s\n         (.TransactionStructure.scriptStructure txs)))\n       s\8321)\n      (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n       (\955 x \8594\n          Ledger.Core.Specification.Address.isScriptObj\n          (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n           (.TransactionStructure.globalConstants txs))\n          (.isHashableSet.THash\n           (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n          (.CryptoStructure.ScriptHash\n           (.TransactionStructure.cryptoStructure txs))\n          (.proj\8322 x))\n       (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n        (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n        (.TransactionStructure.Tx.body tx)))) \8594\n   .Ledger.Conway.Specification.Script.Base.P1ScriptStructure.validP1Script\n   (.Ledger.Conway.Specification.Script.Base.ScriptStructure.p1s\n    (.TransactionStructure.scriptStructure txs))\n   (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.Hashable.hash\n     (.isHashableSet.T-Hashable\n      (.CryptoStructure.khs\n       (.TransactionStructure.cryptoStructure txs))))\n    (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n     (.TransactionStructure.TxWitnesses.vkSigs\n      (.TransactionStructure.Tx.wits tx))))\n   (.TransactionStructure.TxBody.txVldt\n    (.TransactionStructure.Tx.body tx))\n   s\8321)\n(Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (Ledger.Conway.Specification.Script.Base.ScriptStructure.toP1Script\n  (.TransactionStructure.scriptStructure txs))\n (TransactionStructure.txscripts txs tx\n  (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)))"
                                                   ::
                                                   Data.Text.Text)
                                           MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v11
@@ -313,75 +313,75 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                      = coe
                                                          MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
                                                          (coe
-                                                            MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
+                                                            MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1644
                                                             (coe
                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                             (coe
                                                                (\ v12 ->
                                                                   coe
-                                                                    MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
+                                                                    MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1682
                                                                     (coe
                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'THash_24
+                                                                       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                        (coe
-                                                                          MAlonzo.Code.Ledger.Conway.Crypto.d_khs_202
+                                                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                                              (coe v0))))
                                                                     (coe v12)
                                                                     (coe
-                                                                       MAlonzo.Code.Axiom.Set.du_map_398
-                                                                       (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                       MAlonzo.Code.Axiom.Set.du_map_400
+                                                                       (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                           (coe
                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                        (MAlonzo.Code.Interface.Hashable.d_hash_16
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Crypto.d_T'45'Hashable_30
+                                                                             MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Crypto.d_khs_202
+                                                                                MAlonzo.Code.Ledger.Core.Specification.Crypto.d_khs_206
                                                                                 (coe
-                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
+                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                                                    (coe v0)))))
                                                                        (coe
-                                                                          MAlonzo.Code.Class.IsSet.du_dom_548
+                                                                          MAlonzo.Code.Class.IsSet.du_dom_562
                                                                           (coe
-                                                                             MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                             MAlonzo.Code.Axiom.Set.d_th_1480
                                                                              (coe
                                                                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                           (coe
-                                                                             MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
+                                                                             MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
                                                                           (coe
-                                                                             MAlonzo.Code.Ledger.Conway.Transaction.d_vkSigs_3120
+                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_vkSigs_3370
                                                                              (coe
-                                                                                MAlonzo.Code.Ledger.Conway.Transaction.d_wits_3144
+                                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3396
                                                                                 (coe v4)))))))
                                                             (coe
-                                                               MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                               (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                               MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                               (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                   (coe
                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                (\ v12 ->
                                                                   coe
-                                                                    MAlonzo.Code.Ledger.Conway.Address.du_isKeyHashObj_42
+                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_isKeyHashObj_46
                                                                     (coe
                                                                        MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
                                                                        (coe v12)))
                                                                (coe
-                                                                  MAlonzo.Code.Ledger.Conway.Script.Validation.du_credsNeeded_2276
+                                                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_credsNeeded_2554
                                                                   (coe v0)
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                      (coe v3))
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
                                                                      (coe v4)))))
                                                          erased in
                                                coe
                                                  (case coe v12 of
                                                     MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v13
                                                       -> coe
-                                                           ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 x \8594\n    Ledger.Conway.Address.isKeyHashObj\n    (.Ledger.Conway.Types.Epoch.GlobalConstants.Network\n     (.TransactionStructure.globalConstants txs))\n    (.isHashableSet.THash\n     (.Crypto.khs (.TransactionStructure.crypto txs)))\n    (.Crypto.ScriptHash (.TransactionStructure.crypto txs)) (.proj\8322 x))\n (Ledger.Conway.Script.Validation.credsNeeded txs abs\n  (.Ledger.Conway.Utxo.UTxOState.utxo s)\n  (.TransactionStructure.Tx.body tx)))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.Crypto.khs (.TransactionStructure.crypto txs))))\n (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.TransactionStructure.TxWitnesses.vkSigs\n   (.TransactionStructure.Tx.wits tx))))"
+                                                           ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 x \8594\n    Ledger.Core.Specification.Address.isKeyHashObj\n    (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n     (.TransactionStructure.globalConstants txs))\n    (.isHashableSet.THash\n     (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n    (.CryptoStructure.ScriptHash\n     (.TransactionStructure.cryptoStructure txs))\n    (.proj\8322 x))\n (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n  (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n  (.TransactionStructure.Tx.body tx)))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.CryptoStructure.khs\n    (.TransactionStructure.cryptoStructure txs))))\n (Class.IsSet.dom (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.TransactionStructure.TxWitnesses.vkSigs\n   (.TransactionStructure.Tx.wits tx))))"
                                                             ::
                                                             Data.Text.Text)
                                                     MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v13
@@ -389,195 +389,184 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                = coe
                                                                    MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
                                                                    (coe
-                                                                      MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_24
+                                                                      MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
                                                                       (coe
-                                                                         MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
+                                                                         MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1644
                                                                          (coe
                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                          (coe
                                                                             (\ v14 ->
                                                                                coe
-                                                                                 MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
+                                                                                 MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1682
                                                                                  (coe
                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                                                        (coe v0)))
                                                                                  (coe v14)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Axiom.Set.du_map_398
-                                                                                    (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                    MAlonzo.Code.Axiom.Set.du_map_400
+                                                                                    (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                        (coe
                                                                                           MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                     (MAlonzo.Code.Interface.Hashable.d_hash_16
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Script.Base.du_Hashable'45'Script_390
+                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_398
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                                              (coe
                                                                                                 v0))))
-                                                                                    (MAlonzo.Code.Ledger.Conway.Transaction.d_scripts_3122
+                                                                                    (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scripts_3372
                                                                                        (coe
-                                                                                          MAlonzo.Code.Ledger.Conway.Transaction.d_wits_3144
+                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3396
                                                                                           (coe
                                                                                              v4))))))
-                                                                         (let v14
-                                                                                = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-                                                                          coe
+                                                                         (coe
+                                                                            MAlonzo.Code.Axiom.Set.du__'65340'__732
                                                                             (coe
-                                                                               MAlonzo.Code.Axiom.Set.du__'65340'__730
+                                                                               MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                (coe
-                                                                                  MAlonzo.Code.Axiom.Set.d_th_1470
-                                                                                  (coe v14))
-                                                                               (coe
-                                                                                  MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1600
-                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                                                                                  erased
-                                                                                  (MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'ScriptHash_206
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
-                                                                                        (coe v0))))
-                                                                               (coe
-                                                                                  MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                                                  (MAlonzo.Code.Axiom.Set.d_th_1470
-                                                                                     (coe
-                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                  (\ v15 ->
-                                                                                     coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Address.du_isScriptObj_52
-                                                                                       (coe
-                                                                                          MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                                                                                          (coe
-                                                                                             v15)))
+                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                            (coe
+                                                                               MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1610
+                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                                                                               erased
+                                                                               (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Conway.Script.Validation.du_credsNeeded_2276
-                                                                                     (coe v0)
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
-                                                                                        (coe v3))
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
-                                                                                        (coe v4))))
+                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
+                                                                                     (coe v0))))
+                                                                            (coe
+                                                                               MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                                               (MAlonzo.Code.Axiom.Set.d_th_1480
+                                                                                  (coe
+                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                               (\ v14 ->
+                                                                                  coe
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_56
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                                                                       (coe v14)))
                                                                                (coe
-                                                                                  MAlonzo.Code.Axiom.Set.du_map_398
-                                                                                  (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_credsNeeded_2554
+                                                                                  (coe v0)
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
+                                                                                     (coe v3))
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
+                                                                                     (coe v4))))
+                                                                            (coe
+                                                                               MAlonzo.Code.Axiom.Set.du_map_400
+                                                                               (MAlonzo.Code.Axiom.Set.d_th_1480
+                                                                                  (coe
+                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                               (MAlonzo.Code.Interface.Hashable.d_hash_16
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_398
                                                                                      (coe
-                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                  (MAlonzo.Code.Interface.Hashable.d_hash_16
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Script.Base.du_Hashable'45'Script_390
-                                                                                        (coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
-                                                                                           (coe
-                                                                                              v0))))
-                                                                                  (MAlonzo.Code.Ledger.Conway.Transaction.d_refScripts_3206
-                                                                                     (coe v0)
-                                                                                     (coe v4)
-                                                                                     (coe
-                                                                                        MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
-                                                                                        (coe
-                                                                                           v3)))))))
+                                                                                        MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
+                                                                                        (coe v0))))
+                                                                               (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_refScripts_3462
+                                                                                  (coe v0) (coe v4)
+                                                                                  (coe
+                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
+                                                                                     (coe v3))))))
                                                                       (coe
-                                                                         MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
+                                                                         MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1644
                                                                          (coe
                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                          (coe
                                                                             (\ v14 ->
                                                                                coe
-                                                                                 MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
+                                                                                 MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1682
                                                                                  (coe
                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                  (coe
-                                                                                    MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
                                                                                     (coe
-                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
+                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                                                        (coe v0)))
                                                                                  (coe v14)
-                                                                                 (let v15
-                                                                                        = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
-                                                                                  coe
+                                                                                 (coe
+                                                                                    MAlonzo.Code.Axiom.Set.du__'65340'__732
                                                                                     (coe
-                                                                                       MAlonzo.Code.Axiom.Set.du__'65340'__730
+                                                                                       MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                        (coe
-                                                                                          MAlonzo.Code.Axiom.Set.d_th_1470
-                                                                                          (coe v15))
-                                                                                       (coe
-                                                                                          MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1600
-                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
-                                                                                          erased
-                                                                                          (MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'ScriptHash_206
+                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1610
+                                                                                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
+                                                                                       erased
+                                                                                       (MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'ScriptHash_210
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Transaction.d_crypto_1268
+                                                                                                v0))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                                                       (MAlonzo.Code.Axiom.Set.d_th_1480
+                                                                                          (coe
+                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                       (\ v15 ->
+                                                                                          coe
+                                                                                            MAlonzo.Code.Ledger.Core.Specification.Address.du_isScriptObj_56
+                                                                                            (coe
+                                                                                               MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
+                                                                                               (coe
+                                                                                                  v15)))
+                                                                                       (coe
+                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_credsNeeded_2554
+                                                                                          (coe v0)
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
+                                                                                             (coe
+                                                                                                v3))
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
+                                                                                             (coe
+                                                                                                v4))))
+                                                                                    (coe
+                                                                                       MAlonzo.Code.Axiom.Set.du_map_400
+                                                                                       (MAlonzo.Code.Axiom.Set.d_th_1480
+                                                                                          (coe
+                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
+                                                                                       (MAlonzo.Code.Interface.Hashable.d_hash_16
+                                                                                          (coe
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_398
+                                                                                             (coe
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                                                 (coe
                                                                                                    v0))))
-                                                                                       (coe
-                                                                                          MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                                                          (MAlonzo.Code.Axiom.Set.d_th_1470
-                                                                                             (coe
-                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                          (\ v16 ->
-                                                                                             coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Address.du_isScriptObj_52
-                                                                                               (coe
-                                                                                                  MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
-                                                                                                  (coe
-                                                                                                     v16)))
+                                                                                       (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_refScripts_3462
+                                                                                          (coe v0)
+                                                                                          (coe v4)
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Conway.Script.Validation.du_credsNeeded_2276
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                                              (coe
-                                                                                                v0)
-                                                                                             (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
-                                                                                                (coe
-                                                                                                   v3))
-                                                                                             (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
-                                                                                                (coe
-                                                                                                   v4))))
-                                                                                       (coe
-                                                                                          MAlonzo.Code.Axiom.Set.du_map_398
-                                                                                          (MAlonzo.Code.Axiom.Set.d_th_1470
-                                                                                             (coe
-                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                                                                          (MAlonzo.Code.Interface.Hashable.d_hash_16
-                                                                                             (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Script.Base.du_Hashable'45'Script_390
-                                                                                                (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
-                                                                                                   (coe
-                                                                                                      v0))))
-                                                                                          (MAlonzo.Code.Ledger.Conway.Transaction.d_refScripts_3206
-                                                                                             (coe
-                                                                                                v0)
-                                                                                             (coe
-                                                                                                v4)
-                                                                                             (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
-                                                                                                (coe
-                                                                                                   v3))))))))
+                                                                                                v3)))))))
                                                                          (coe
-                                                                            MAlonzo.Code.Axiom.Set.du_map_398
-                                                                            (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                            MAlonzo.Code.Axiom.Set.du_map_400
+                                                                            (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                (coe
                                                                                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                             (MAlonzo.Code.Interface.Hashable.d_hash_16
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Script.Base.du_Hashable'45'Script_390
+                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_398
                                                                                   (coe
-                                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                                      (coe v0))))
-                                                                            (MAlonzo.Code.Ledger.Conway.Transaction.d_scripts_3122
+                                                                            (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scripts_3372
                                                                                (coe
-                                                                                  MAlonzo.Code.Ledger.Conway.Transaction.d_wits_3144
+                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3396
                                                                                   (coe v4))))))
                                                                    erased in
                                                          coe
                                                            (case coe v14 of
                                                               MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v15
                                                                 -> coe
-                                                                     ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8801\7497\n (HasSubtract-\8473 HasSubtract.-\n  Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594\n     Ledger.Conway.Address.isScriptObj\n     (.Ledger.Conway.Types.Epoch.GlobalConstants.Network\n      (.TransactionStructure.globalConstants txs))\n     (.isHashableSet.THash\n      (.Crypto.khs (.TransactionStructure.crypto txs)))\n     (.Crypto.ScriptHash (.TransactionStructure.crypto txs)) (.proj\8322 x))\n  (Ledger.Conway.Script.Validation.credsNeeded txs abs\n   (.Ledger.Conway.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.Tx.body tx)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.Hashable.hash\n   (Ledger.Conway.Script.Base.ScriptStructure.Hashable-Script\n    (.TransactionStructure.scriptStructure txs)))\n  (TransactionStructure.refScripts txs tx\n   (.Ledger.Conway.Utxo.UTxOState.utxo s))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (Ledger.Conway.Script.Base.ScriptStructure.Hashable-Script\n   (.TransactionStructure.scriptStructure txs)))\n (.TransactionStructure.TxWitnesses.scripts\n  (.TransactionStructure.Tx.wits tx)))"
+                                                                     ("\172\n(.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8801\7497\n (HasSubtract-\8473 HasSubtract.-\n  Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 x \8594\n     Ledger.Core.Specification.Address.isScriptObj\n     (.Ledger.Core.Specification.Epoch.GlobalConstants.Network\n      (.TransactionStructure.globalConstants txs))\n     (.isHashableSet.THash\n      (.CryptoStructure.khs (.TransactionStructure.cryptoStructure txs)))\n     (.CryptoStructure.ScriptHash\n      (.TransactionStructure.cryptoStructure txs))\n     (.proj\8322 x))\n  (Ledger.Conway.Specification.Script.Validation.credsNeeded txs abs\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.Tx.body tx)))\n (Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (.Hashable.hash\n   (Ledger.Conway.Specification.Script.Base.ScriptStructure.Hashable-Script\n    (.TransactionStructure.scriptStructure txs)))\n  (TransactionStructure.refScripts txs tx\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (Ledger.Conway.Specification.Script.Base.ScriptStructure.Hashable-Script\n   (.TransactionStructure.scriptStructure txs)))\n (.TransactionStructure.TxWitnesses.scripts\n  (.TransactionStructure.Tx.wits tx)))"
                                                                       ::
                                                                       Data.Text.Text)
                                                               MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v15
@@ -585,66 +574,66 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                          = coe
                                                                              MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
                                                                              (coe
-                                                                                MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
+                                                                                MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1644
                                                                                 (coe
                                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                 (coe
                                                                                    (\ v16 ->
                                                                                       coe
-                                                                                        MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
+                                                                                        MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1682
                                                                                         (coe
                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'THash_24
+                                                                                           MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Conway.Crypto.d_T'45'isHashable_42
+                                                                                              MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                                                               (coe
-                                                                                                 MAlonzo.Code.Ledger.Conway.Script.Base.d_Data'688'_194
+                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_200
                                                                                                  (coe
-                                                                                                    MAlonzo.Code.Ledger.Conway.Script.Base.d_ps_316
+                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_324
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                                                        (coe
                                                                                                           v0))))))
                                                                                         (coe v16)
                                                                                         (coe
-                                                                                           MAlonzo.Code.Axiom.Set.du_map_398
-                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                           MAlonzo.Code.Axiom.Set.du_map_400
+                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                               (coe
                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                            (MAlonzo.Code.Interface.Hashable.d_hash_16
                                                                                               (coe
-                                                                                                 MAlonzo.Code.Ledger.Conway.Crypto.d_T'45'Hashable_30
+                                                                                                 MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                                                                                  (coe
-                                                                                                    MAlonzo.Code.Ledger.Conway.Crypto.d_T'45'isHashable_42
+                                                                                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Conway.Script.Base.d_Data'688'_194
+                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_200
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Conway.Script.Base.d_ps_316
+                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_324
                                                                                                           (coe
-                                                                                                             MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                                                              (coe
                                                                                                                 v0)))))))
-                                                                                           (MAlonzo.Code.Ledger.Conway.Transaction.d_txdats_3124
+                                                                                           (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txdats_3374
                                                                                               (coe
-                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_wits_3144
+                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3396
                                                                                                  (coe
                                                                                                     v4))))))
                                                                                 (coe
-                                                                                   MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                                                   (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                   MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                                                   (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                       (coe
                                                                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                    (\ v16 ->
                                                                                       coe
-                                                                                        MAlonzo.Code.Class.ToBool.du_if_then_else__42
+                                                                                        MAlonzo.Code.Class.ToBool.du_if_then_else__38
                                                                                         (coe
-                                                                                           MAlonzo.Code.Class.ToBool.du_ToBool'45'Maybe_102)
+                                                                                           MAlonzo.Code.Class.ToBool.du_ToBool'45'Maybe_100)
                                                                                         (coe
-                                                                                           MAlonzo.Code.Ledger.Conway.Script.Validation.du_txOutToP2Script_2356
+                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_txOutToP2Script_2634
                                                                                            (coe v0)
                                                                                            (coe
-                                                                                              MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                                               (coe
                                                                                                  v3))
                                                                                            (coe v4)
@@ -657,7 +646,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                         (coe
                                                                                            (\ v17 ->
                                                                                               coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Script.Validation.du_txOutToDataHash_2352
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_txOutToDataHash_2630
                                                                                                 (coe
                                                                                                    v16)))
                                                                                         (coe
@@ -665,21 +654,21 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                               coe
                                                                                                 MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))
                                                                                    (coe
-                                                                                      MAlonzo.Code.Class.IsSet.du_range_550
+                                                                                      MAlonzo.Code.Class.IsSet.du_range_564
                                                                                       (coe
-                                                                                         MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                         MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                          (coe
                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                       (coe
-                                                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
+                                                                                         MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
                                                                                       (coe
-                                                                                         MAlonzo.Code.Axiom.Set.Map.du__'8739'__1342
+                                                                                         MAlonzo.Code.Axiom.Set.Map.du__'8739'__1348
                                                                                          (coe
-                                                                                            MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                            MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                             (coe
                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                          (coe
-                                                                                            MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1600
+                                                                                            MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1610
                                                                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                                                             erased
                                                                                             (coe
@@ -688,20 +677,20 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                                erased
                                                                                                MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                erased
-                                                                                               (MAlonzo.Code.Ledger.Conway.Transaction.d_DecEq'45'TxId_1222
+                                                                                               (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_DecEq'45'TxId_1268
                                                                                                   (coe
                                                                                                      v0))
-                                                                                               (MAlonzo.Code.Ledger.Conway.Transaction.d_DecEq'45'Ix_1220
+                                                                                               (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_DecEq'45'Ix_1266
                                                                                                   (coe
                                                                                                      v0))))
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                                             (coe
                                                                                                v3))
                                                                                          (coe
-                                                                                            MAlonzo.Code.Ledger.Conway.Transaction.d_txins_2982
+                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txIns_3240
                                                                                             (coe
-                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
+                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
                                                                                                (coe
                                                                                                   v4)))))))
                                                                              erased in
@@ -709,7 +698,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                      (case coe v16 of
                                                                         MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v17
                                                                           -> coe
-                                                                               ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 txout \8594\n    (ToBool\8242.if ToBool-Maybe then\n     Ledger.Conway.Script.Validation.txOutToP2Script txs abs\n     (.Ledger.Conway.Utxo.UTxOState.utxo s) tx txout\n     else\n     (\955 {z} \8594\n        Ledger.Conway.Script.Validation.txOutToDataHash txs abs txout))\n    (\955 {z} \8594 nothing))\n (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n    .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n   (.Ledger.Conway.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.TxBody.txins\n    (.TransactionStructure.Tx.body tx)))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.HashableSet.T-isHashable\n    (.Ledger.Conway.Script.Base.PlutusStructure.Data\688\n     (.Ledger.Conway.Script.Base.ScriptStructure.ps\n      (.TransactionStructure.scriptStructure txs))))))\n (.TransactionStructure.TxWitnesses.txdats\n  (.TransactionStructure.Tx.wits tx)))"
+                                                                               ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n (\955 txout \8594\n    (ToBool\8242.if ToBool-Maybe then\n     Ledger.Conway.Specification.Script.Validation.txOutToP2Script txs\n     abs (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s) tx txout\n     else\n     (\955 {z} \8594\n        Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n        abs txout))\n    (\955 {z} \8594 nothing))\n (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n  ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n    .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n   (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n   (.TransactionStructure.TxBody.txIns\n    (.TransactionStructure.Tx.body tx)))))\n(Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.HashableSet.T-isHashable\n    (.Ledger.Conway.Specification.Script.Base.PlutusStructure.Data\688\n     (.Ledger.Conway.Specification.Script.Base.ScriptStructure.ps\n      (.TransactionStructure.scriptStructure txs))))))\n (.TransactionStructure.TxWitnesses.txdats\n  (.TransactionStructure.Tx.wits tx)))"
                                                                                 ::
                                                                                 Data.Text.Text)
                                                                         MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v17
@@ -717,51 +706,51 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                    = coe
                                                                                        MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
                                                                                        (coe
-                                                                                          MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
+                                                                                          MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1644
                                                                                           (coe
                                                                                              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                           (coe
                                                                                              (\ v18 ->
                                                                                                 coe
-                                                                                                  MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
+                                                                                                  MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1682
                                                                                                   (coe
                                                                                                      MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Ledger.Conway.Crypto.d_DecEq'45'THash_24
+                                                                                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_DecEq'45'THash_26
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Ledger.Conway.Crypto.d_T'45'isHashable_42
+                                                                                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Conway.Script.Base.d_Data'688'_194
+                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_200
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Ledger.Conway.Script.Base.d_ps_316
+                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_324
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                                                                  (coe
                                                                                                                     v0))))))
                                                                                                   (coe
                                                                                                      v18)
                                                                                                   (coe
-                                                                                                     MAlonzo.Code.Axiom.Set.du__'8746'__680
+                                                                                                     MAlonzo.Code.Axiom.Set.du__'8746'__682
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                        MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                         (coe
                                                                                                            MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                                                                        (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                        MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                                                                        (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                            (coe
                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                         (\ v19 ->
                                                                                                            coe
-                                                                                                             MAlonzo.Code.Class.ToBool.du_if_then_else__42
+                                                                                                             MAlonzo.Code.Class.ToBool.du_if_then_else__38
                                                                                                              (coe
-                                                                                                                MAlonzo.Code.Class.ToBool.du_ToBool'45'Maybe_102)
+                                                                                                                MAlonzo.Code.Class.ToBool.du_ToBool'45'Maybe_100)
                                                                                                              (coe
-                                                                                                                MAlonzo.Code.Ledger.Conway.Script.Validation.du_txOutToP2Script_2356
+                                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_txOutToP2Script_2634
                                                                                                                 (coe
                                                                                                                    v0)
                                                                                                                 (coe
-                                                                                                                   MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                                                                    (coe
                                                                                                                       v3))
                                                                                                                 (coe
@@ -775,7 +764,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                                              (coe
                                                                                                                 (\ v20 ->
                                                                                                                    coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Script.Validation.du_txOutToDataHash_2352
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_txOutToDataHash_2630
                                                                                                                      (coe
                                                                                                                         v19)))
                                                                                                              (coe
@@ -783,21 +772,21 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                                                    coe
                                                                                                                      MAlonzo.Code.Agda.Builtin.Maybe.C_nothing_18)))
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Class.IsSet.du_range_550
+                                                                                                           MAlonzo.Code.Class.IsSet.du_range_564
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                              MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                               (coe
                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
+                                                                                                              MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Axiom.Set.Map.du__'8739'__1342
+                                                                                                              MAlonzo.Code.Axiom.Set.Map.du__'8739'__1348
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                                  (coe
                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1600
+                                                                                                                 MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1610
                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                                                                                  erased
                                                                                                                  (coe
@@ -806,72 +795,72 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                                                     erased
                                                                                                                     MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                     erased
-                                                                                                                    (MAlonzo.Code.Ledger.Conway.Transaction.d_DecEq'45'TxId_1222
+                                                                                                                    (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_DecEq'45'TxId_1268
                                                                                                                        (coe
                                                                                                                           v0))
-                                                                                                                    (MAlonzo.Code.Ledger.Conway.Transaction.d_DecEq'45'Ix_1220
+                                                                                                                    (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_DecEq'45'Ix_1266
                                                                                                                        (coe
                                                                                                                           v0))))
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                                                                  (coe
                                                                                                                     v3))
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_txins_2982
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txIns_3240
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
                                                                                                                     (coe
                                                                                                                        v4))))))
                                                                                                      (coe
-                                                                                                        MAlonzo.Code.Axiom.Set.du__'8746'__680
+                                                                                                        MAlonzo.Code.Axiom.Set.du__'8746'__682
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                           MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                            (coe
                                                                                                               MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                           MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                               (coe
                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Ledger.Conway.Script.Validation.du_txOutToDataHash_2352)
+                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_txOutToDataHash_2630)
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Class.IsSet.du_range_550
+                                                                                                              MAlonzo.Code.Class.IsSet.du_range_564
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                                  (coe
                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
+                                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Ledger.Conway.Transaction.d_txouts_2986
+                                                                                                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txOuts_3246
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
                                                                                                                     (coe
                                                                                                                        v4)))))
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Axiom.Set.du_mapPartial_576
-                                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                           MAlonzo.Code.Axiom.Set.du_mapPartial_578
+                                                                                                           (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                               (coe
                                                                                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Ledger.Conway.Script.Validation.du_txOutToDataHash_2352)
+                                                                                                              MAlonzo.Code.Ledger.Conway.Specification.Script.Validation.du_txOutToDataHash_2630)
                                                                                                            (coe
-                                                                                                              MAlonzo.Code.Class.IsSet.du_range_550
+                                                                                                              MAlonzo.Code.Class.IsSet.du_range_564
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                                 MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                                  (coe
                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_556)
+                                                                                                                 MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
                                                                                                               (coe
-                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du__'8739'__1342
+                                                                                                                 MAlonzo.Code.Axiom.Set.Map.du__'8739'__1348
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                                                    MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                                     (coe
                                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1600
+                                                                                                                    MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1610
                                                                                                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
                                                                                                                     erased
                                                                                                                     (coe
@@ -880,43 +869,43 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                                                        erased
                                                                                                                        MAlonzo.Code.Agda.Primitive.d_lzero_20
                                                                                                                        erased
-                                                                                                                       (MAlonzo.Code.Ledger.Conway.Transaction.d_DecEq'45'TxId_1222
+                                                                                                                       (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_DecEq'45'TxId_1268
                                                                                                                           (coe
                                                                                                                              v0))
-                                                                                                                       (MAlonzo.Code.Ledger.Conway.Transaction.d_DecEq'45'Ix_1220
+                                                                                                                       (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_DecEq'45'Ix_1266
                                                                                                                           (coe
                                                                                                                              v0))))
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                                                                     (coe
                                                                                                                        v3))
                                                                                                                  (coe
-                                                                                                                    MAlonzo.Code.Ledger.Conway.Transaction.d_refInputs_2984
+                                                                                                                    MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_refInputs_3242
                                                                                                                     (coe
-                                                                                                                       MAlonzo.Code.Ledger.Conway.Transaction.d_body_3142
+                                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_body_3394
                                                                                                                        (coe
                                                                                                                           v4))))))))))
                                                                                           (coe
-                                                                                             MAlonzo.Code.Axiom.Set.du_map_398
-                                                                                             (MAlonzo.Code.Axiom.Set.d_th_1470
+                                                                                             MAlonzo.Code.Axiom.Set.du_map_400
+                                                                                             (MAlonzo.Code.Axiom.Set.d_th_1480
                                                                                                 (coe
                                                                                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
                                                                                              (MAlonzo.Code.Interface.Hashable.d_hash_16
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Crypto.d_T'45'Hashable_30
+                                                                                                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                                                                                    (coe
-                                                                                                      MAlonzo.Code.Ledger.Conway.Crypto.d_T'45'isHashable_42
+                                                                                                      MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'isHashable_44
                                                                                                       (coe
-                                                                                                         MAlonzo.Code.Ledger.Conway.Script.Base.d_Data'688'_194
+                                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_200
                                                                                                          (coe
-                                                                                                            MAlonzo.Code.Ledger.Conway.Script.Base.d_ps_316
+                                                                                                            MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_324
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                                                                (coe
                                                                                                                   v0)))))))
-                                                                                             (MAlonzo.Code.Ledger.Conway.Transaction.d_txdats_3124
+                                                                                             (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txdats_3374
                                                                                                 (coe
-                                                                                                   MAlonzo.Code.Ledger.Conway.Transaction.d_wits_3144
+                                                                                                   MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_wits_3396
                                                                                                    (coe
                                                                                                       v4)))))
                                                                                        erased in
@@ -924,7 +913,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                (case coe v18 of
                                                                                   MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v19
                                                                                     -> coe
-                                                                                         ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.HashableSet.T-isHashable\n    (.Ledger.Conway.Script.Base.PlutusStructure.Data\688\n     (.Ledger.Conway.Script.Base.ScriptStructure.ps\n      (.TransactionStructure.scriptStructure txs))))))\n (.TransactionStructure.TxWitnesses.txdats\n  (.TransactionStructure.Tx.wits tx)))\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 txout \8594\n     (ToBool\8242.if ToBool-Maybe then\n      Ledger.Conway.Script.Validation.txOutToP2Script txs abs\n      (.Ledger.Conway.Utxo.UTxOState.utxo s) tx txout\n      else\n      (\955 {z} \8594\n         Ledger.Conway.Script.Validation.txOutToDataHash txs abs txout))\n     (\955 {z} \8594 nothing))\n  (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n   ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n     .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n    (.Ledger.Conway.Utxo.UTxOState.utxo s)\n    (.TransactionStructure.TxBody.txins\n     (.TransactionStructure.Tx.body tx)))))\n ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n   Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Ledger.Conway.Script.Validation.txOutToDataHash txs abs)\n   (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.TransactionStructure.TxBody.txouts\n     (.TransactionStructure.Tx.body tx))))\n  (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Ledger.Conway.Script.Validation.txOutToDataHash txs abs)\n   (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n    ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n      .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n     (.Ledger.Conway.Utxo.UTxOState.utxo s)\n     (.TransactionStructure.TxBody.refInputs\n      (.TransactionStructure.Tx.body tx)))))))"
+                                                                                         ("\172\n(HasSubset-Set HasSubset.\8838\n Axiom.Set.Theory.map (.Axiom.Set.Theory\7496.th List-Model\7496)\n (.Hashable.hash\n  (.isHashableSet.T-Hashable\n   (.HashableSet.T-isHashable\n    (.Ledger.Conway.Specification.Script.Base.PlutusStructure.Data\688\n     (.Ledger.Conway.Specification.Script.Base.ScriptStructure.ps\n      (.TransactionStructure.scriptStructure txs))))))\n (.TransactionStructure.TxWitnesses.txdats\n  (.TransactionStructure.Tx.wits tx)))\n((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n  Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n  (\955 txout \8594\n     (ToBool\8242.if ToBool-Maybe then\n      Ledger.Conway.Specification.Script.Validation.txOutToP2Script txs\n      abs (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s) tx txout\n      else\n      (\955 {z} \8594\n         Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n         abs txout))\n     (\955 {z} \8594 nothing))\n  (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n   ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n     .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n    (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n    (.TransactionStructure.TxBody.txIns\n     (.TransactionStructure.Tx.body tx)))))\n ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Theory.\8746\n   Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n    abs)\n   (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n    (.TransactionStructure.TxBody.txOuts\n     (.TransactionStructure.Tx.body tx))))\n  (Axiom.Set.Theory.mapPartial (.Axiom.Set.Theory\7496.th List-Model\7496)\n   (Ledger.Conway.Specification.Script.Validation.txOutToDataHash txs\n    abs)\n   (Class.IsSet.range (.Axiom.Set.Theory\7496.th List-Model\7496)\n    ((.Axiom.Set.Theory\7496.th List-Model\7496 Axiom.Set.Map.Restriction\7504.\8739\n      .Axiom.Set.Theory\7496.\8712-sp List-Model\7496)\n     (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s)\n     (.TransactionStructure.TxBody.refInputs\n      (.TransactionStructure.Tx.body tx)))))))"
                                                                                           ::
                                                                                           Data.Text.Text)
                                                                                   MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v19
@@ -932,43 +921,43 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                              = coe
                                                                                                  MAlonzo.Code.QstdlibZ45Zmeta.Tactic.GenError.du_dec'45'de'45'morgan_10
                                                                                                  (coe
-                                                                                                    MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1634
+                                                                                                    MAlonzo.Code.Axiom.Set.du_Dec'45'All'738'_1644
                                                                                                     (coe
                                                                                                        MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                                     (coe
                                                                                                        (\ v20 ->
                                                                                                           coe
-                                                                                                            MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1672
+                                                                                                            MAlonzo.Code.Axiom.Set.du_Dec'45''8712'_1682
                                                                                                             (coe
                                                                                                                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Script.Base.d_DecEq'45'Language_218
+                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_DecEq'45'Language_224
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Script.Base.d_ps_316
+                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_ps_324
                                                                                                                   (coe
-                                                                                                                     MAlonzo.Code.Ledger.Conway.Transaction.d_scriptStructure_1808
+                                                                                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_scriptStructure_1896
                                                                                                                      (coe
                                                                                                                         v0))))
                                                                                                             (coe
                                                                                                                v20)
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Utxow.du_allowedLanguages_2332
+                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Utxow.du_allowedLanguages_2622
                                                                                                                (coe
                                                                                                                   v0)
                                                                                                                (coe
                                                                                                                   v4)
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                                                                   (coe
                                                                                                                      v3)))))
                                                                                                     (coe
-                                                                                                       MAlonzo.Code.Ledger.Conway.Utxow.du_languages_2318
+                                                                                                       MAlonzo.Code.Ledger.Conway.Specification.Utxow.du_languages_2608
                                                                                                        (coe
                                                                                                           v0)
                                                                                                        (coe
                                                                                                           v4)
                                                                                                        (coe
-                                                                                                          MAlonzo.Code.Ledger.Conway.Utxo.d_utxo_2070
+                                                                                                          MAlonzo.Code.Ledger.Conway.Specification.Utxo.d_utxo_2352
                                                                                                           (coe
                                                                                                              v3))))
                                                                                                  erased in
@@ -977,7 +966,7 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                                                                                  v20 of
                                                                                             MAlonzo.Code.Data.Sum.Base.C_inj'8321'_38 v21
                                                                                               -> coe
-                                                                                                   ("\172\n(HasSubset-Set HasSubset.\8838\n Ledger.Conway.Utxow.languages txs abs tx\n (.Ledger.Conway.Utxo.UTxOState.utxo s))\n(Ledger.Conway.Utxow.allowedLanguages txs abs tx\n (.Ledger.Conway.Utxo.UTxOState.utxo s))"
+                                                                                                   ("\172\n(HasSubset-Set HasSubset.\8838\n Ledger.Conway.Specification.Utxow.languages txs abs tx\n (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))\n(Ledger.Conway.Specification.Utxow.allowedLanguages txs abs tx\n (.Ledger.Conway.Specification.Utxo.UTxOState.utxo s))"
                                                                                                     ::
                                                                                                     Data.Text.Text)
                                                                                             MAlonzo.Code.Data.Sum.Base.C_inj'8322'_42 v21
@@ -994,13 +983,13 @@ d_computeProof_1754 v0 v1 v2 v3 v4
                                 _ -> MAlonzo.RTE.mazUnreachableError)))
          _ -> MAlonzo.RTE.mazUnreachableError)
 -- Ledger.Conway.Conformance.Utxow.Properties._.Go.completeness
-d_completeness_1778 ::
-  MAlonzo.Code.Ledger.Conway.Transaction.T_TransactionStructure_22 ->
-  MAlonzo.Code.Ledger.Conway.Abstract.T_AbstractFunctions_1956 ->
-  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOEnv_2042 ->
-  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOState_2060 ->
-  MAlonzo.Code.Ledger.Conway.Transaction.T_Tx_3130 ->
-  MAlonzo.Code.Ledger.Conway.Utxo.T_UTxOState_2060 ->
-  MAlonzo.Code.Ledger.Conway.Conformance.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2328 ->
+d_completeness_1976 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2240 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOEnv_2326 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2342 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_Tx_3382 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Utxo.T_UTxOState_2342 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Utxow.T__'8866'_'8640''10631'_'44'UTXOW'10632'__2622 ->
   MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_1778 = erased
+d_completeness_1976 = erased

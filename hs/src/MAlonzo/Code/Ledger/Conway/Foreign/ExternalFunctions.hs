@@ -25,10 +25,10 @@ data ExternalFunctions = MkExternalFunctions
 -- Ledger.Conway.Foreign.ExternalFunctions.ExternalFunctions
 d_ExternalFunctions_8 = ()
 type T_ExternalFunctions_8 = ExternalFunctions
-pattern C_ExternalFunctions'46'constructor_1 a0 = MkExternalFunctions a0
-check_ExternalFunctions'46'constructor_1 ::
+pattern C_constructor_14 a0 = MkExternalFunctions a0
+check_constructor_14 ::
   (Integer -> Integer -> Integer -> Bool) -> T_ExternalFunctions_8
-check_ExternalFunctions'46'constructor_1 = MkExternalFunctions
+check_constructor_14 = MkExternalFunctions
 cover_ExternalFunctions_8 :: ExternalFunctions -> ()
 cover_ExternalFunctions_8 x
   = case x of
@@ -38,13 +38,13 @@ d_extIsSigned_12 ::
   T_ExternalFunctions_8 -> Integer -> Integer -> Integer -> Bool
 d_extIsSigned_12 v0
   = case coe v0 of
-      C_ExternalFunctions'46'constructor_1 v1 -> coe v1
+      C_constructor_14 v1 -> coe v1
       _ -> MAlonzo.RTE.mazUnreachableError
 -- Ledger.Conway.Foreign.ExternalFunctions.dummyExternalFunctions
 dummyExternalFunctions :: T_ExternalFunctions_8
-dummyExternalFunctions = coe d_dummyExternalFunctions_14
-d_dummyExternalFunctions_14 :: T_ExternalFunctions_8
-d_dummyExternalFunctions_14
+dummyExternalFunctions = coe d_dummyExternalFunctions_16
+d_dummyExternalFunctions_16 :: T_ExternalFunctions_8
+d_dummyExternalFunctions_16
   = coe
-      C_ExternalFunctions'46'constructor_1
+      C_constructor_14
       (coe (\ v0 v1 v2 -> coe MAlonzo.Code.Agda.Builtin.Bool.C_true_10))

@@ -46,7 +46,7 @@ d_argmax_6 ::
 d_argmax_6 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmax_144
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2
 -- Data.String._.argmax-all
 d_argmax'45'all_8 ::
@@ -62,7 +62,7 @@ d_argmax'45'all_8 ::
 d_argmax'45'all_8 v0 v1 v2 v3 v4 v5 v6 v7 v8
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmax'45'all_518
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v3 v5 v6 v7 v8
 -- Data.String._.argmax-sel
 d_argmax'45'sel_10 ::
@@ -73,7 +73,7 @@ d_argmax'45'sel_10 ::
 d_argmax'45'sel_10 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmax'45'sel_506
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2
 -- Data.String._.argmax[xs]<argmax[ys]⁺
 d_argmax'91'xs'93''60'argmax'91'ys'93''8314'_12 ::
@@ -92,7 +92,7 @@ d_argmax'91'xs'93''60'argmax'91'ys'93''8314'_12 v0 v1 v2 v3 v4 v5
                                                 v6 v7 v8 v9
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmax'91'xs'93''60'argmax'91'ys'93''8314'_490
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3 v4 v5 v6 v7 v8 v9
 -- Data.String._.argmax[xs]≤argmax[ys]⁺
 d_argmax'91'xs'93''8804'argmax'91'ys'93''8314'_14 ::
@@ -111,7 +111,7 @@ d_argmax'91'xs'93''8804'argmax'91'ys'93''8314'_14 v0 v1 v2 v3 v4 v5
                                                   v6 v7 v8 v9
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmax'91'xs'93''8804'argmax'91'ys'93''8314'_462
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3 v4 v5 v6 v7 v8 v9
 -- Data.String._.argmin
 d_argmin_16 ::
@@ -120,7 +120,7 @@ d_argmin_16 ::
 d_argmin_16 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmin_140
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2
 -- Data.String._.argmin-all
 d_argmin'45'all_18 ::
@@ -136,7 +136,7 @@ d_argmin'45'all_18 ::
 d_argmin'45'all_18 v0 v1 v2 v3 v4 v5 v6 v7 v8
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmin'45'all_312
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v3 v4 v5 v7 v8
 -- Data.String._.argmin-sel
 d_argmin'45'sel_20 ::
@@ -147,7 +147,7 @@ d_argmin'45'sel_20 ::
 d_argmin'45'sel_20 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmin'45'sel_300
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2
 -- Data.String._.argmin[xs]<argmin[ys]⁺
 d_argmin'91'xs'93''60'argmin'91'ys'93''8314'_22 ::
@@ -166,7 +166,7 @@ d_argmin'91'xs'93''60'argmin'91'ys'93''8314'_22 v0 v1 v2 v3 v4 v5
                                                 v6 v7 v8 v9
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmin'91'xs'93''60'argmin'91'ys'93''8314'_284
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3 v4 v5 v6 v7 v8 v9
 -- Data.String._.argmin[xs]≤argmin[ys]⁺
 d_argmin'91'xs'93''8804'argmin'91'ys'93''8314'_24 ::
@@ -185,7 +185,7 @@ d_argmin'91'xs'93''8804'argmin'91'ys'93''8314'_24 v0 v1 v2 v3 v4 v5
                                                   v6 v7 v8 v9
   = coe
       MAlonzo.Code.Data.List.Extrema.du_argmin'91'xs'93''8804'argmin'91'ys'93''8314'_256
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3 v4 v5 v6 v7 v8 v9
 -- Data.String._.f[argmax]<v⁺
 d_f'91'argmax'93''60'v'8314'_26 ::
@@ -201,7 +201,7 @@ d_f'91'argmax'93''60'v'8314'_26 ::
 d_f'91'argmax'93''60'v'8314'_26 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Data.List.Extrema.du_f'91'argmax'93''60'v'8314'_404
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v4 v5
 -- Data.String._.f[argmax]≈f[v]⁺
 d_f'91'argmax'93''8776'f'91'v'93''8314'_28 ::
@@ -230,7 +230,7 @@ d_f'91'argmax'93''8804'v'8314'_30 ::
 d_f'91'argmax'93''8804'v'8314'_30 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Data.List.Extrema.du_f'91'argmax'93''8804'v'8314'_394
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v4 v5
 -- Data.String._.f[argmin]<v⁺
 d_f'91'argmin'93''60'v'8314'_32 ::
@@ -245,7 +245,7 @@ d_f'91'argmin'93''60'v'8314'_32 ::
 d_f'91'argmin'93''60'v'8314'_32 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.List.Extrema.du_f'91'argmin'93''60'v'8314'_178
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3
 -- Data.String._.f[argmin]≈f[v]⁺
 d_f'91'argmin'93''8776'f'91'v'93''8314'_34 ::
@@ -270,7 +270,7 @@ d_f'91'argmin'93''8804'f'91'xs'93'_36 ::
 d_f'91'argmin'93''8804'f'91'xs'93'_36 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Data.List.Extrema.du_f'91'argmin'93''8804'f'91'xs'93'_216
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3 v4
 -- Data.String._.f[argmin]≤f[⊤]
 d_f'91'argmin'93''8804'f'91''8868''93'_38 ::
@@ -281,7 +281,7 @@ d_f'91'argmin'93''8804'f'91''8868''93'_38 ::
 d_f'91'argmin'93''8804'f'91''8868''93'_38 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Data.List.Extrema.du_f'91'argmin'93''8804'f'91''8868''93'_204
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3 v4
 -- Data.String._.f[argmin]≤v⁺
 d_f'91'argmin'93''8804'v'8314'_40 ::
@@ -296,7 +296,7 @@ d_f'91'argmin'93''8804'v'8314'_40 ::
 d_f'91'argmin'93''8804'v'8314'_40 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.List.Extrema.du_f'91'argmin'93''8804'v'8314'_168
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3
 -- Data.String._.f[xs]≤f[argmax]
 d_f'91'xs'93''8804'f'91'argmax'93'_42 ::
@@ -308,7 +308,7 @@ d_f'91'xs'93''8804'f'91'argmax'93'_42 ::
 d_f'91'xs'93''8804'f'91'argmax'93'_42 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Data.List.Extrema.du_f'91'xs'93''8804'f'91'argmax'93'_422
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3 v4
 -- Data.String._.f[⊥]≤f[argmax]
 d_f'91''8869''93''8804'f'91'argmax'93'_44 ::
@@ -319,14 +319,14 @@ d_f'91''8869''93''8804'f'91'argmax'93'_44 ::
 d_f'91''8869''93''8804'f'91'argmax'93'_44 v0 v1 v2 v3 v4
   = coe
       MAlonzo.Code.Data.List.Extrema.du_f'91''8869''93''8804'f'91'argmax'93'_410
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3 v4
 -- Data.String._.max
 d_max_46 :: Integer -> [Integer] -> Integer
 d_max_46
   = coe
       MAlonzo.Code.Data.List.Extrema.du_max_150
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.max-mono-⊆
 d_max'45'mono'45''8838'_48 ::
   Integer ->
@@ -341,7 +341,7 @@ d_max'45'mono'45''8838'_48 ::
 d_max'45'mono'45''8838'_48
   = coe
       MAlonzo.Code.Data.List.Extrema.du_max'45'mono'45''8838'_780
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.max<v⁺
 d_max'60'v'8314'_50 ::
   Integer ->
@@ -353,7 +353,7 @@ d_max'60'v'8314'_50 ::
 d_max'60'v'8314'_50 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Extrema.du_max'60'v'8314'_694
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v1 v2
 -- Data.String._.max[xs]<max[ys]⁺
 d_max'91'xs'93''60'max'91'ys'93''8314'_52 ::
@@ -367,7 +367,7 @@ d_max'91'xs'93''60'max'91'ys'93''8314'_52 ::
 d_max'91'xs'93''60'max'91'ys'93''8314'_52
   = coe
       MAlonzo.Code.Data.List.Extrema.du_max'91'xs'93''60'max'91'ys'93''8314'_770
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.max[xs]≤max[ys]⁺
 d_max'91'xs'93''8804'max'91'ys'93''8314'_54 ::
   Integer ->
@@ -380,7 +380,7 @@ d_max'91'xs'93''8804'max'91'ys'93''8314'_54 ::
 d_max'91'xs'93''8804'max'91'ys'93''8314'_54
   = coe
       MAlonzo.Code.Data.List.Extrema.du_max'91'xs'93''8804'max'91'ys'93''8314'_754
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.max≈v⁺
 d_max'8776'v'8314'_56 ::
   Integer ->
@@ -402,14 +402,14 @@ d_max'8804'v'8314'_58 ::
 d_max'8804'v'8314'_58 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Extrema.du_max'8804'v'8314'_684
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v1 v2
 -- Data.String._.min
 d_min_60 :: Integer -> [Integer] -> Integer
 d_min_60
   = coe
       MAlonzo.Code.Data.List.Extrema.du_min_148
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.min-mono-⊆
 d_min'45'mono'45''8838'_62 ::
   Integer ->
@@ -424,7 +424,7 @@ d_min'45'mono'45''8838'_62 ::
 d_min'45'mono'45''8838'_62
   = coe
       MAlonzo.Code.Data.List.Extrema.du_min'45'mono'45''8838'_668
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.min<v⁺
 d_min'60'v'8314'_64 ::
   Integer ->
@@ -435,7 +435,7 @@ d_min'60'v'8314'_64 ::
 d_min'60'v'8314'_64
   = coe
       MAlonzo.Code.Data.List.Extrema.du_min'60'v'8314'_582
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.min[xs]<min[ys]⁺
 d_min'91'xs'93''60'min'91'ys'93''8314'_66 ::
   Integer ->
@@ -448,7 +448,7 @@ d_min'91'xs'93''60'min'91'ys'93''8314'_66 ::
 d_min'91'xs'93''60'min'91'ys'93''8314'_66
   = coe
       MAlonzo.Code.Data.List.Extrema.du_min'91'xs'93''60'min'91'ys'93''8314'_658
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.min[xs]≤min[ys]⁺
 d_min'91'xs'93''8804'min'91'ys'93''8314'_68 ::
   Integer ->
@@ -461,7 +461,7 @@ d_min'91'xs'93''8804'min'91'ys'93''8314'_68 ::
 d_min'91'xs'93''8804'min'91'ys'93''8314'_68
   = coe
       MAlonzo.Code.Data.List.Extrema.du_min'91'xs'93''8804'min'91'ys'93''8314'_642
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.min≈v⁺
 d_min'8776'v'8314'_70 ::
   Integer ->
@@ -482,7 +482,7 @@ d_min'8804'v'8314'_72 ::
 d_min'8804'v'8314'_72
   = coe
       MAlonzo.Code.Data.List.Extrema.du_min'8804'v'8314'_572
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.min≤xs
 d_min'8804'xs_74 ::
   Integer ->
@@ -490,14 +490,14 @@ d_min'8804'xs_74 ::
 d_min'8804'xs_74
   = coe
       MAlonzo.Code.Data.List.Extrema.du_min'8804'xs_616
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.min≤⊤
 d_min'8804''8868'_76 ::
   Integer -> [Integer] -> MAlonzo.Code.Data.Nat.Base.T__'8804'__22
 d_min'8804''8868'_76
   = coe
       MAlonzo.Code.Data.List.Extrema.du_min'8804''8868'_608
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.v<f[argmax]⁺
 d_v'60'f'91'argmax'93''8314'_78 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
@@ -511,7 +511,7 @@ d_v'60'f'91'argmax'93''8314'_78 ::
 d_v'60'f'91'argmax'93''8314'_78 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.List.Extrema.du_v'60'f'91'argmax'93''8314'_384
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3
 -- Data.String._.v<f[argmin]⁺
 d_v'60'f'91'argmin'93''8314'_80 ::
@@ -527,7 +527,7 @@ d_v'60'f'91'argmin'93''8314'_80 ::
 d_v'60'f'91'argmin'93''8314'_80 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Data.List.Extrema.du_v'60'f'91'argmin'93''8314'_198
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v4 v5
 -- Data.String._.v<max⁺
 d_v'60'max'8314'_82 ::
@@ -539,7 +539,7 @@ d_v'60'max'8314'_82 ::
 d_v'60'max'8314'_82
   = coe
       MAlonzo.Code.Data.List.Extrema.du_v'60'max'8314'_714
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.v<min⁺
 d_v'60'min'8314'_84 ::
   Integer ->
@@ -551,7 +551,7 @@ d_v'60'min'8314'_84 ::
 d_v'60'min'8314'_84 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Extrema.du_v'60'min'8314'_602
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v1 v2
 -- Data.String._.v≤f[argmax]⁺
 d_v'8804'f'91'argmax'93''8314'_86 ::
@@ -566,7 +566,7 @@ d_v'8804'f'91'argmax'93''8314'_86 ::
 d_v'8804'f'91'argmax'93''8314'_86 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Data.List.Extrema.du_v'8804'f'91'argmax'93''8314'_374
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v3
 -- Data.String._.v≤f[argmin]⁺
 d_v'8804'f'91'argmin'93''8314'_88 ::
@@ -582,7 +582,7 @@ d_v'8804'f'91'argmin'93''8314'_88 ::
 d_v'8804'f'91'argmin'93''8314'_88 v0 v1 v2 v3 v4 v5
   = coe
       MAlonzo.Code.Data.List.Extrema.du_v'8804'f'91'argmin'93''8314'_188
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v2 v4 v5
 -- Data.String._.v≤max⁺
 d_v'8804'max'8314'_90 ::
@@ -594,7 +594,7 @@ d_v'8804'max'8314'_90 ::
 d_v'8804'max'8314'_90
   = coe
       MAlonzo.Code.Data.List.Extrema.du_v'8804'max'8314'_704
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.v≤min⁺
 d_v'8804'min'8314'_92 ::
   Integer ->
@@ -606,7 +606,7 @@ d_v'8804'min'8314'_92 ::
 d_v'8804'min'8314'_92 v0 v1 v2
   = coe
       MAlonzo.Code.Data.List.Extrema.du_v'8804'min'8314'_592
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
       v1 v2
 -- Data.String._.xs≤max
 d_xs'8804'max_94 ::
@@ -615,14 +615,14 @@ d_xs'8804'max_94 ::
 d_xs'8804'max_94
   = coe
       MAlonzo.Code.Data.List.Extrema.du_xs'8804'max_728
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._.⊥≤max
 d_'8869''8804'max_96 ::
   Integer -> [Integer] -> MAlonzo.Code.Data.Nat.Base.T__'8804'__22
 d_'8869''8804'max_96
   = coe
       MAlonzo.Code.Data.List.Extrema.du_'8869''8804'max_720
-      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848)
+      (coe MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966)
 -- Data.String._._∈_
 d__'8712'__100 ::
   MAlonzo.Code.Agda.Builtin.Char.T_Char_6 ->
@@ -800,7 +800,7 @@ du_width_148 :: MAlonzo.Code.Data.Vec.Base.T_Vec_28 -> Integer
 du_width_148 v0
   = coe
       MAlonzo.Code.Data.List.Extrema.du_max_150
-      MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2848
+      MAlonzo.Code.Data.Nat.Properties.d_'8804''45'totalOrder_2966
       (0 :: Integer) (coe du_sizes_146 (coe v0))
 -- Data.String.rectangleˡ
 d_rectangle'737'_156 ::

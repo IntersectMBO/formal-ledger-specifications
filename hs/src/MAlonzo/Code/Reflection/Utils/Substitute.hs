@@ -89,7 +89,7 @@ d_'46'extendedlambda0_24 v0 v1 v2
       MAlonzo.Code.Agda.Builtin.Reflection.C_var_172 v3 v4
         -> coe
              d_'46'extendedlambda1_30 (coe v0) (coe v1) (coe v3) (coe v4)
-             (coe MAlonzo.Code.Data.Nat.Base.d_compare_470 (coe v0) (coe v3))
+             (coe MAlonzo.Code.Data.Nat.Base.d_compare_474 (coe v0) (coe v3))
       MAlonzo.Code.Agda.Builtin.Reflection.C_con_178 v3 v4
         -> coe
              MAlonzo.Code.Agda.Builtin.Reflection.C_con_178 (coe v3)
@@ -126,11 +126,11 @@ d_'46'extendedlambda1_30 ::
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154 ->
   Integer ->
   [MAlonzo.Code.Agda.Builtin.Reflection.T_Arg_88] ->
-  MAlonzo.Code.Data.Nat.Base.T_Ordering_448 ->
+  MAlonzo.Code.Data.Nat.Base.T_Ordering_452 ->
   MAlonzo.Code.Agda.Builtin.Reflection.T_Term_154
 d_'46'extendedlambda1_30 v0 v1 v2 v3 v4
   = case coe v4 of
-      MAlonzo.Code.Data.Nat.Base.C_less_454 v6
+      MAlonzo.Code.Data.Nat.Base.C_less_458 v6
         -> coe
              MAlonzo.Code.Agda.Builtin.Reflection.C_var_172
              (coe
@@ -138,8 +138,8 @@ d_'46'extendedlambda1_30 v0 v1 v2 v3 v4
                 (addInt (coe addInt (coe (1 :: Integer)) (coe v0)) (coe v6))
                 (1 :: Integer))
              (coe d_substArgs_12 v0 v1 v3)
-      MAlonzo.Code.Data.Nat.Base.C_equal_458 -> coe v1
-      MAlonzo.Code.Data.Nat.Base.C_greater_464 v6
+      MAlonzo.Code.Data.Nat.Base.C_equal_462 -> coe v1
+      MAlonzo.Code.Data.Nat.Base.C_greater_468 v6
         -> coe
              MAlonzo.Code.Agda.Builtin.Reflection.C_var_172 (coe v2)
              (coe
@@ -422,7 +422,7 @@ d_'46'extendedlambda9_216 v0 v1 v2
              (coe
                 d_mapFreeVars_110 v0
                 (addInt
-                   (coe MAlonzo.Code.Data.List.Base.du_length_284 v3) (coe v1))
+                   (coe MAlonzo.Code.Data.List.Base.du_length_268 v3) (coe v1))
                 v5)
       MAlonzo.Code.Agda.Builtin.Reflection.C_absurd'45'clause_278 v3 v4
         -> coe

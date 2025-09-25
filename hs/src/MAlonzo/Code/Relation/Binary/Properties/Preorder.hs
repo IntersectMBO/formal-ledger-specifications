@@ -29,7 +29,7 @@ d__'8764''7506'__26 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
   AgdaAny -> AgdaAny -> ()
 d__'8764''7506'__26 = erased
 -- Relation.Binary.Properties.Preorder.converse-isPreorder
@@ -37,30 +37,30 @@ d_converse'45'isPreorder_86 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 d_converse'45'isPreorder_86 ~v0 ~v1 ~v2 v3
   = du_converse'45'isPreorder_86 v3
 du_converse'45'isPreorder_86 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 du_converse'45'isPreorder_86 v0
   = coe
       MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_isPreorder_258
       (coe
-         MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0))
+         MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0))
 -- Relation.Binary.Properties.Preorder.converse-preorder
 d_converse'45'preorder_88 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 d_converse'45'preorder_88 ~v0 ~v1 ~v2 v3
   = du_converse'45'preorder_88 v3
 du_converse'45'preorder_88 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 du_converse'45'preorder_88 v0
   = coe
       MAlonzo.Code.Relation.Binary.Construct.Flip.EqAndOrd.du_preorder_682
@@ -70,31 +70,31 @@ d_InducedEquivalence_90 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 d_InducedEquivalence_90 ~v0 ~v1 ~v2 v3
   = du_InducedEquivalence_90 v3
 du_InducedEquivalence_90 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 du_InducedEquivalence_90 v0
   = coe
-      MAlonzo.Code.Relation.Binary.Bundles.C_Setoid'46'constructor_761
+      MAlonzo.Code.Relation.Binary.Bundles.C_constructor_84
       (coe
-         MAlonzo.Code.Relation.Binary.Structures.C_IsEquivalence'46'constructor_745
+         MAlonzo.Code.Relation.Binary.Structures.C_constructor_46
          (coe
             (\ v1 ->
                coe
                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                  (coe
-                    MAlonzo.Code.Relation.Binary.Structures.du_refl_98
+                    MAlonzo.Code.Relation.Binary.Structures.du_refl_104
                     (coe
-                       MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0))
+                       MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0))
                     (coe v1))
                  (coe
-                    MAlonzo.Code.Relation.Binary.Structures.du_refl_98
+                    MAlonzo.Code.Relation.Binary.Structures.du_refl_104
                     (coe
-                       MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0))
+                       MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0))
                     (coe v1))))
          (coe (\ v1 v2 -> coe MAlonzo.Code.Data.Product.Base.du_swap_370))
          (coe
@@ -102,36 +102,36 @@ du_InducedEquivalence_90 v0
                coe
                  MAlonzo.Code.Data.Product.Base.du_zip_198
                  (coe
-                    MAlonzo.Code.Relation.Binary.Structures.d_trans_84
-                    (MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)) v1
+                    MAlonzo.Code.Relation.Binary.Structures.d_trans_90
+                    (MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0)) v1
                     v2 v3)
                  (coe
                     (\ v4 v5 v6 v7 ->
                        coe
-                         MAlonzo.Code.Relation.Binary.Structures.d_trans_84
-                         (MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_158 (coe v0)) v3
+                         MAlonzo.Code.Relation.Binary.Structures.d_trans_90
+                         (MAlonzo.Code.Relation.Binary.Bundles.d_isPreorder_164 (coe v0)) v3
                          v2 v1 v7 v6)))))
 -- Relation.Binary.Properties.Preorder.invIsPreorder
 d_invIsPreorder_96 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 d_invIsPreorder_96 ~v0 ~v1 ~v2 v3 = du_invIsPreorder_96 v3
 du_invIsPreorder_96 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_70
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Structures.T_IsPreorder_76
 du_invIsPreorder_96 v0 = coe du_converse'45'isPreorder_86 (coe v0)
 -- Relation.Binary.Properties.Preorder.invPreorder
 d_invPreorder_98 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 d_invPreorder_98 ~v0 ~v1 ~v2 v3 = du_invPreorder_98 v3
 du_invPreorder_98 ::
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142 ->
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 du_invPreorder_98 v0 = coe du_converse'45'preorder_88 (coe v0)

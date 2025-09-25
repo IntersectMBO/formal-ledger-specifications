@@ -30,12 +30,12 @@ d_'91'_'93''45'Order_12 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Function.Related.Propositional.T_Kind_6 ->
   MAlonzo.Code.Data.Container.Core.T_Container_10 ->
-  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 d_'91'_'93''45'Order_12 ~v0 ~v1 ~v2 v3 ~v4 ~v5
   = du_'91'_'93''45'Order_12 v3
 du_'91'_'93''45'Order_12 ::
   MAlonzo.Code.Function.Related.Propositional.T_Kind_6 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_136
+  MAlonzo.Code.Relation.Binary.Bundles.T_Preorder_142
 du_'91'_'93''45'Order_12 v0
   = coe
       MAlonzo.Code.Function.Related.Propositional.du_InducedPreorder'8322'_392
@@ -47,12 +47,12 @@ d_'91'_'93''45'Equality_26 ::
   MAlonzo.Code.Agda.Primitive.T_Level_18 ->
   MAlonzo.Code.Function.Related.Propositional.T_SymmetricKind_86 ->
   MAlonzo.Code.Data.Container.Core.T_Container_10 ->
-  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  () -> MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 d_'91'_'93''45'Equality_26 ~v0 ~v1 ~v2 v3 ~v4 ~v5
   = du_'91'_'93''45'Equality_26 v3
 du_'91'_'93''45'Equality_26 ::
   MAlonzo.Code.Function.Related.Propositional.T_SymmetricKind_86 ->
-  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_44
+  MAlonzo.Code.Relation.Binary.Bundles.T_Setoid_46
 du_'91'_'93''45'Equality_26 v0
   = coe
       MAlonzo.Code.Function.Related.Propositional.du_InducedEquivalence'8322'_482
