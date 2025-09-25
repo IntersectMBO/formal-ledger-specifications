@@ -1,4 +1,4 @@
-<!--
+n<!--
 ```agda
 
 {-# OPTIONS --safe #-}
@@ -39,7 +39,7 @@ private variable
 instance
   _ = +-0-monoid
 
-module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+module CERTSpov  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                               → disjoint (dom m) (dom m')
                               → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
@@ -51,7 +51,7 @@ module _  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ 
     ( ≡ᵉ-getCoinˢ'     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
-    open CERTSpov indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'
+    open CERTS-pov-helper indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ' public
 ```
 -->
 

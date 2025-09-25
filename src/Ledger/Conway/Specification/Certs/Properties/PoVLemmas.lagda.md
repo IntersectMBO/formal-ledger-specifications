@@ -122,7 +122,7 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
-  module CERTSpov
+  module CERTS-pov-helper
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
     ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
     ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)

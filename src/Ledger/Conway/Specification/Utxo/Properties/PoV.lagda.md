@@ -14,7 +14,7 @@ module Ledger.Conway.Specification.Utxo.Properties.PoV
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Conway.Specification.Utxo.Properties txs abs using (χ; module DepositHelpers)
+open import Ledger.Conway.Specification.Utxo.Properties.DepositHelpers txs abs public
 open UTxOState; open Tx; open TxBody
 ```
 -->
@@ -58,8 +58,8 @@ UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
 ```agda
 
 UTXOpov h' step@(UTXO-inductive⋯ _ Γ _ _ _ _ _ _ _ newBal noMintAda _ _ _ _ _ _ _ _ _ (Scripts-Yes (_ , _ , valid)))
-  = DepositHelpers.pov-scripts step h' refl valid
+  = pov-scripts step h' refl valid
 
 UTXOpov h' step@(UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ (Scripts-No (_ , invalid)))
-  = DepositHelpers.pov-no-scripts step h' invalid
+  = pov-no-scripts step h' invalid
 ```
