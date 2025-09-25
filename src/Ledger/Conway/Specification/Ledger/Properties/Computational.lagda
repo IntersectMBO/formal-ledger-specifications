@@ -1,3 +1,8 @@
+\section{Ledger: Computational}
+\label{sec:ledger-computational}
+
+This module proves that the \LEDGER{} transition system is computational.
+
 \begin{code}[hide]
 {-# OPTIONS --safe #-}
 
@@ -20,9 +25,9 @@ open import Ledger.Conway.Specification.Utxow txs abs
 open import Ledger.Conway.Specification.Utxow.Properties txs abs
 
 open import Data.Bool.Properties using (¬-not)
+\end{code}
 
--- ** Proof that LEDGER is computational.
-
+\begin{code}
 instance
   _ = Monad-ComputationResult
 
@@ -75,3 +80,4 @@ instance
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
 Computational-LEDGERS = it
+\end{code}
