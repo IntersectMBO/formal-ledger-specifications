@@ -61,7 +61,7 @@ module _ {eps : EpochState} {e : Epoch} where
       open CertState
       open EPOCH-Updates0
       cs = ls .certState
-      u0 = EPOCH-updates0 fut ls
+      u0 = EPOCH-updates0 e fut ls
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total =
@@ -75,7 +75,7 @@ module _ {eps : EpochState} {e : Epoch} where
     EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
       let
         EPOCHUpdates es govSt' dState'' gState' _ acnt'' =
-          EPOCH-updates fut ls dState' acnt'
+          EPOCH-updates e fut ls dState' acnt'
         certState' = ⟦ dState'' , pState' , gState' ⟧ᶜˢ
        in
           record
