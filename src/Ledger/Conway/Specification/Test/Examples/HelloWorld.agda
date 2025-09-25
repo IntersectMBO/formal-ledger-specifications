@@ -19,7 +19,7 @@ open TransactionStructure SVTransactionStructure
 open import Ledger.Core.Specification.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
-open import Ledger.Conway.Specification.Utxo.Properties SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool

@@ -9,7 +9,7 @@ module Ledger.Conway.Specification.BlockBody.Properties
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Conway.Specification.BlockBody txs abs
-open import Ledger.Conway.Specification.Ledger.Properties txs abs
+open import Ledger.Conway.Specification.Ledger.Properties.Computational txs abs
 open import Ledger.Prelude
 
 open Computational ⦃...⦄

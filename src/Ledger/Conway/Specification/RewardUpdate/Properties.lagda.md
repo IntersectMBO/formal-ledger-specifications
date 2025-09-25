@@ -10,7 +10,7 @@ module Ledger.Conway.Specification.RewardUpdate.Properties
   where
 open import Ledger.Conway.Specification.RewardUpdate txs abs
 open import Ledger.Conway.Specification.Epoch txs abs
-open import Ledger.Conway.Specification.Epoch.Properties txs abs
+open import Ledger.Conway.Specification.Epoch.Properties.Computational txs abs
 open import Ledger.Prelude
 
 open Computational ⦃...⦄

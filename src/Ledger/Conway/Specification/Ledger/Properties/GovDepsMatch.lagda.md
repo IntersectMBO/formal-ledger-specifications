@@ -13,7 +13,8 @@ module Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch
 
 open import Ledger.Conway.Specification.Certs govStructure using (DepositPurpose)
 open import Ledger.Conway.Specification.Ledger txs abs
-open import Ledger.Conway.Specification.Ledger.Properties txs abs
+open import Ledger.Conway.Specification.Ledger.Properties.Computational txs abs
+open import Ledger.Conway.Specification.Ledger.Properties.Setoid txs abs
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Utxo txs abs
 
