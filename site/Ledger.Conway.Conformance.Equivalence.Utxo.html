@@ -1,0 +1,6988 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Formal ledger specification and documentation.">
+      
+      
+        <meta name="author" content="Formal Methods Ledger Team">
+      
+      
+        <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Conformance.Equivalence.Utxo.html">
+      
+      
+        <link rel="prev" href="Ledger.Conway.Conformance.Equivalence.Map.html">
+      
+      
+        <link rel="next" href="Ledger.Conway.Conformance.Gov.html">
+      
+      
+      <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+    
+    
+      
+        <title>Utxo - Formal Ledger Specification</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i%7CSource+Code+Pro:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Open Sans";--md-code-font:"Source Code Pro"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="css/custom.css">
+    
+      <link rel="stylesheet" href="css/Agda.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="." title="Formal Ledger Specification" class="md-header__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
+      
+  <img src="img/Cardano-RGB_Logo-Icon-Blue.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Formal Ledger Specification
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Utxo
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="index.html" class="md-tabs__link">
+          
+  
+  
+  Navigation
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="." title="Formal Ledger Specification" class="md-nav__button md-logo" aria-label="Formal Ledger Specification" data-md-component="logo">
+      
+  <img src="img/Cardano-RGB_Logo-Icon-Blue.svg" alt="logo">
+
+    </a>
+    Formal Ledger Specification
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Navigation
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Navigation
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guide for Contributors
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Preliminaries
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Preliminaries
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Notation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Notation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ledger
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ledger/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            Ledger/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prelude
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Introduction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_4" id="__nav_1_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Prelude/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            Prelude/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.Base.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_4_2" id="__nav_1_5_4_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Foreign/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Foreign/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.Foreign.HSTypes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HSTypes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.Foreign.Util.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Util
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.HasCoin.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HasCoin
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.Instances.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Instances
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.Numeric.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Numeric
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_4_6" id="__nav_1_5_4_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Numeric/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_4_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_4_6">
+            <span class="md-nav__icon md-icon"></span>
+            Numeric/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.Numeric.PositiveNat.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PositiveNat
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Prelude.Numeric.UnitInterval.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    UnitInterval
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_5" id="__nav_1_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Core/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_5">
+            <span class="md-nav__icon md-icon"></span>
+            Core/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_5_1" id="__nav_1_5_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Specification/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Specification/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Address
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Crypto
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Core.Specification.Epoch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Epoch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conway
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7" id="__nav_1_5_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Conway/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_5_7">
+            <span class="md-nav__icon md-icon"></span>
+            Conway/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Specification
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2" id="__nav_1_5_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Specification/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            Specification/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Abstract.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Abstract
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.BlockBody.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BlockBody
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_3" id="__nav_1_5_7_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    BlockBody/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            BlockBody/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.BlockBody.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Certs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Certs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_5" id="__nav_1_5_7_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Certs/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Certs/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Certs.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_5_2" id="__nav_1_5_7_2_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Properties/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_5_7_2_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Properties/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Certs.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PoV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Certs.Properties.PoVLemmas.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PoVLemmas
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VoteDelegsVDeleg
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Chain
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_7" id="__nav_1_5_7_2_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Chain/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_7">
+            <span class="md-nav__icon md-icon"></span>
+            Chain/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Chain.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_7_2" id="__nav_1_5_7_2_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Properties/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_5_7_2_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            Properties/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CredDepsEqualDomRwds
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Chain.Properties.EpochStep.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    EpochStep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GovDepsMatch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PParamsWellFormed
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Enact.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Enact
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_9" id="__nav_1_5_7_2_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Enact/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_9">
+            <span class="md-nav__icon md-icon"></span>
+            Enact/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Enact.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Epoch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Epoch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_11" id="__nav_1_5_7_2_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Epoch/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_11">
+            <span class="md-nav__icon md-icon"></span>
+            Epoch/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Epoch.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_11_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_11_2" id="__nav_1_5_7_2_11_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Properties/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_5_7_2_11_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_11_2">
+            <span class="md-nav__icon md-icon"></span>
+            Properties/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Epoch.Properties.ConstRwds.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ConstRwds
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GovDepsMatch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NoPropSameDReps
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Fees.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fees
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Gov.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gov
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_14" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_14" id="__nav_1_5_7_2_14_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Gov/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_14_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_14">
+            <span class="md-nav__icon md-icon"></span>
+            Gov/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Gov.Base.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Actions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Gov.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_14_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_14_4" id="__nav_1_5_7_2_14_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Properties/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_5_7_2_14_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_14_4">
+            <span class="md-nav__icon md-icon"></span>
+            Properties/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ChangePPGroup
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Ledger.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ledger.Ledger
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_16" id="__nav_1_5_7_2_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ledger.Ledger/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_16">
+            <span class="md-nav__icon md-icon"></span>
+            Ledger.Ledger/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_16_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_16_2" id="__nav_1_5_7_2_16_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Properties/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_5_7_2_16_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_16_2">
+            <span class="md-nav__icon md-icon"></span>
+            Properties/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GovDepsMatch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PoV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.PoolReap.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PoolReap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PParams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ratify
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_21" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_21" id="__nav_1_5_7_2_21_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ratify/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_21_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_21">
+            <span class="md-nav__icon md-icon"></span>
+            Ratify/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Ratify.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Rewards.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rewards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.RewardUpdate.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RewardUpdate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_24" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_24" id="__nav_1_5_7_2_24_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    RewardUpdate/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_24_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_24">
+            <span class="md-nav__icon md-icon"></span>
+            RewardUpdate/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.RewardUpdate.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Script.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Script
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_26" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_26" id="__nav_1_5_7_2_26_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Script/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_26_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_26">
+            <span class="md-nav__icon md-icon"></span>
+            Script/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Script.Base.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Script.Timelock.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Timelock
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Script.Validation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Validation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_27" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_27" id="__nav_1_5_7_2_27_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    TokenAlgebra/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_27_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_27">
+            <span class="md-nav__icon md-icon"></span>
+            TokenAlgebra/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Base
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Coin.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Coin
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ValueSet
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ValueVector
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Transaction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Utxo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utxo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_30" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_30" id="__nav_1_5_7_2_30_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Utxo/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_30_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_30">
+            <span class="md-nav__icon md-icon"></span>
+            Utxo/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Utxo.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_30_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_30_2" id="__nav_1_5_7_2_30_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Properties/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_5_7_2_30_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_30_2">
+            <span class="md-nav__icon md-icon"></span>
+            Properties/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Utxo.Properties.MinSpend.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MinSpend
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Utxo.Properties.PoV.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PoV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utxow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_32" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_32" id="__nav_1_5_7_2_32_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Utxow/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_32_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_32">
+            <span class="md-nav__icon md-icon"></span>
+            Utxow/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Utxow.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_33" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_33" id="__nav_1_5_7_2_33_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Test
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_33_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_33">
+            <span class="md-nav__icon md-icon"></span>
+            Test
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Test.Examples.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_33_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_33_2" id="__nav_1_5_7_2_33_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Examples/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_5_7_2_33_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_33_2">
+            <span class="md-nav__icon md-icon"></span>
+            Examples/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Test.Examples.HelloWorld.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HelloWorld
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SucceedIfNumber
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Test.LedgerImplementation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    LedgerImplementation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Test.Lib.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lib
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Test.Prelude.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Prelude
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    StructuredContracts
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_2_34" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_2_34" id="__nav_1_5_7_2_34_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Types/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_2_34_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_2_34">
+            <span class="md-nav__icon md-icon"></span>
+            Types/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Specification.Types.GovStructure.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GovStructure
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_3" id="__nav_1_5_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Bootstrap/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bootstrap/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ConwayBootstrap.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ConwayBootstrap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ConwayBootstrapEnact.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ConwayBootstrapEnact
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_4" id="__nav_1_5_7_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Foreign/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_7_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_4">
+            <span class="md-nav__icon md-icon"></span>
+            Foreign/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.ExternalFunctions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ExternalFunctions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HSLedger
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_4_3" id="__nav_1_5_7_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    HSLedger/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            HSLedger/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Address.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Address
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseTypes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Cert.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cert
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Certs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Certs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Chain.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Chain
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Core.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Enact.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Enact
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Epoch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Epoch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.ExternalStructures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ExternalStructures
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Gov.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gov
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_4_3_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_4_3_11" id="__nav_1_5_7_4_3_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Gov/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="6" aria-labelledby="__nav_1_5_7_4_3_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_4_3_11">
+            <span class="md-nav__icon md-icon"></span>
+            Gov/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Gov.Core.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Gov.Actions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Actions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Ledger.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ledger
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.NewEpoch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NewEpoch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.PParams.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PParams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Ratify.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ratify
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Rewards.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rewards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Transaction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transaction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Foreign.HSLedger.Utxo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utxo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Conformance
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_6" id="__nav_1_5_7_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Conformance/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_7_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_5_7_6">
+            <span class="md-nav__icon md-icon"></span>
+            Conformance/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Certs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Certs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_6_2" id="__nav_1_5_7_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Certs/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Certs/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Certs.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Chain.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Chain
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_6_4" id="__nav_1_5_7_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Chain/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            Chain/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Chain.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Epoch.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Epoch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_6_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_6_6" id="__nav_1_5_7_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Epoch/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_6_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_6_6">
+            <span class="md-nav__icon md-icon"></span>
+            Epoch/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Epoch.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Equivalence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Equivalence
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_6_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_6_8" id="__nav_1_5_7_6_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Equivalence/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_6_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_5_7_6_8">
+            <span class="md-nav__icon md-icon"></span>
+            Equivalence/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Equivalence.Bisimilarity.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Bisimilarity
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Equivalence.Certs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Certs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Equivalence.Convert.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Convert
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Equivalence.Deposits.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deposits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Equivalence.Map.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Map
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="Ledger.Conway.Conformance.Equivalence.Utxo.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utxo
+    
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Gov.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Gov
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Ledger.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ledger
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_6_11" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_6_11" id="__nav_1_5_7_6_11_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Ledger/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_6_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_6_11">
+            <span class="md-nav__icon md-icon"></span>
+            Ledger/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Ledger.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Rewards.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rewards
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Script.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Script
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Utxo.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utxo
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_6_16" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_6_16" id="__nav_1_5_7_6_16_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Utxo/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_6_16_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_6_16">
+            <span class="md-nav__icon md-icon"></span>
+            Utxo/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Utxo.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Utxow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Utxow
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_7_6_18" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_7_6_18" id="__nav_1_5_7_6_18_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Utxow/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_7_6_18_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_7_6_18">
+            <span class="md-nav__icon md-icon"></span>
+            Utxow/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.Conway.Conformance.Utxow.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PreConway
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_9" id="__nav_1_5_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PreConway/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_9">
+            <span class="md-nav__icon md-icon"></span>
+            PreConway/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_9_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_9_1" id="__nav_1_5_9_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Conformance
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_9_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_9_1">
+            <span class="md-nav__icon md-icon"></span>
+            Conformance
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.Conformance.NewPP.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NewPP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_9_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_9_1_2" id="__nav_1_5_9_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NewPP/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_9_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_9_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            NewPP/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.Conformance.NewPP.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.Conformance.PPUp.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PPUp
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_9_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_9_1_4" id="__nav_1_5_9_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PPUp/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_5_9_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_9_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            PPUp/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.Conformance.PPUp.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NewPP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_9_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_9_3" id="__nav_1_5_9_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    NewPP/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_9_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_9_3">
+            <span class="md-nav__icon md-icon"></span>
+            NewPP/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.NewPP.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    PPUp
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_9_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_9_5" id="__nav_1_5_9_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    PPUp/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_9_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_9_5">
+            <span class="md-nav__icon md-icon"></span>
+            PPUp/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Ledger.PreConway.PPUp.Properties.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Properties
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_6" id="__nav_1_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Foreign/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Foreign/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Foreign.Convertible.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Convertible
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_6_2" id="__nav_1_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Convertible/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            Convertible/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Foreign.Convertible.Deriving.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deriving
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Foreign.Convertible.DerivingTest.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    DerivingTest
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Foreign.HaskellTypes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HaskellTypes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_6_4" id="__nav_1_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    HaskellTypes/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_6_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_6_4">
+            <span class="md-nav__icon md-icon"></span>
+            HaskellTypes/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Foreign.HaskellTypes.Deriving.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Deriving
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_7" id="__nav_1_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Appendix/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            Appendix/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Definitions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Definitions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Prelude.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Agda Prelude
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_7_3" id="__nav_1_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Type Classes
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            Type Classes
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_7_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_7_3_1" id="__nav_1_7_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Interface
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_7_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_7_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            Interface
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Interface.ComputationalRelation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ComputationalRelation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Interface.HasSubset.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HasSubset
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Interface.HasSubtract.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    HasSubtract
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_7_3_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_7_3_1_4" id="__nav_1_7_3_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    HasSubtract/
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="5" aria-labelledby="__nav_1_7_3_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_7_3_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            HasSubtract/
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Interface.HasSubtract.Instances.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Instance
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Interface.Hashable.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Hashable
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="Interface.STS.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    STS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="MyDebugOptions.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MyDebugOptions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Conformance/Equivalence/Utxo.agda"
+     class="md-content__button md-icon"
+     title="View the source of this page"
+     aria-label="View the source of this page">
+    
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </a>
+
+
+  <h1>Utxo</h1>
+
+<pre class="Agda"><a id="105" class="Symbol">{-#</a> <a id="109" class="Keyword">OPTIONS</a> <a id="117" class="Pragma">--safe</a> <a id="124" class="Symbol">#-}</a>
+
+<a id="129" class="Keyword">open</a> <a id="134" class="Keyword">import</a> <a id="141" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="156" class="Keyword">open</a> <a id="161" class="Keyword">import</a> <a id="168" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<a id="205" class="Keyword">open</a> <a id="210" class="Keyword">import</a> <a id="217" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a> <a id="257" class="Keyword">using</a> <a id="263" class="Symbol">(</a><a id="264" href="Ledger.Conway.Specification.Transaction.html#2771" class="Record">TransactionStructure</a><a id="284" class="Symbol">)</a>
+
+<a id="287" class="Keyword">open</a> <a id="292" class="Keyword">import</a> <a id="299" href="Data.Unit.html" class="Module">Data.Unit</a> <a id="309" class="Keyword">using</a> <a id="315" class="Symbol">(</a><a id="316" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a><a id="317" class="Symbol">)</a>
+<a id="319" class="Keyword">open</a> <a id="324" class="Keyword">import</a> <a id="331" href="Data.Product.html" class="Module">Data.Product</a> <a id="344" class="Keyword">using</a> <a id="350" class="Symbol">(</a><a id="351" href="Data.Product.Base.html#1618" class="Function Operator">_×_</a><a id="354" class="Symbol">;</a> <a id="356" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">_,_</a><a id="359" class="Symbol">)</a>
+<a id="361" class="Keyword">open</a> <a id="366" class="Keyword">import</a> <a id="373" href="Function.Bundles.html" class="Module">Function.Bundles</a> <a id="390" class="Keyword">using</a> <a id="396" class="Symbol">(</a><a id="397" href="Function.Bundles.html#12398" class="Function Operator">_⇔_</a><a id="400" class="Symbol">;</a> <a id="402" href="Function.Bundles.html#13497" class="Function">mk⇔</a><a id="405" class="Symbol">;</a> <a id="407" href="Function.Bundles.html#4750" class="Record">Equivalence</a><a id="418" class="Symbol">)</a>
+<a id="420" class="Keyword">open</a> <a id="425" class="Keyword">import</a> <a id="432" href="Relation.Binary.PropositionalEquality.html" class="Module">Relation.Binary.PropositionalEquality</a>
+<a id="470" class="Keyword">open</a> <a id="475" href="Relation.Binary.PropositionalEquality.Properties.html#6850" class="Module">≡-Reasoning</a>
+
+<a id="488" class="Keyword">open</a> <a id="493" class="Keyword">import</a> <a id="500" href="Ledger.Conway.Conformance.Equivalence.Convert.html" class="Module">Ledger.Conway.Conformance.Equivalence.Convert</a>
+
+<a id="547" class="Keyword">module</a> <a id="554" href="Ledger.Conway.Conformance.Equivalence.Utxo.html" class="Module">Ledger.Conway.Conformance.Equivalence.Utxo</a>
+  <a id="599" class="Symbol">(</a><a id="600" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#600" class="Bound">txs</a> <a id="604" class="Symbol">:</a> <a id="606" class="Symbol">_)</a> <a id="609" class="Symbol">(</a><a id="610" class="Keyword">open</a> <a id="615" href="Ledger.Conway.Specification.Transaction.html#2771" class="Module">TransactionStructure</a> <a id="636" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#600" class="Bound">txs</a><a id="639" class="Symbol">)</a>
+  <a id="643" class="Symbol">(</a><a id="644" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#644" class="Bound">abs</a> <a id="648" class="Symbol">:</a> <a id="650" href="Ledger.Conway.Specification.Abstract.html#752" class="Record">AbstractFunctions</a> <a id="668" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#600" class="Bound">txs</a><a id="671" class="Symbol">)</a> <a id="673" class="Symbol">(</a><a id="674" class="Keyword">open</a> <a id="679" href="Ledger.Conway.Specification.Abstract.html#752" class="Module">AbstractFunctions</a> <a id="697" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#644" class="Bound">abs</a><a id="700" class="Symbol">)</a>
+  <a id="704" class="Keyword">where</a>
+
+<a id="711" class="Keyword">private</a>
+  <a id="721" class="Keyword">module</a> <a id="L"></a><a id="728" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#728" class="Module">L</a> <a id="730" class="Keyword">where</a>
+    <a id="740" class="Keyword">open</a> <a id="745" class="Keyword">import</a> <a id="752" href="Ledger.Conway.Specification.Utxo.html" class="Module">Ledger.Conway.Specification.Utxo</a> <a id="785" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#600" class="Bound">txs</a> <a id="789" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#644" class="Bound">abs</a> <a id="793" class="Keyword">public</a>
+    <a id="804" class="Keyword">open</a> <a id="809" class="Keyword">import</a> <a id="816" href="Ledger.Conway.Specification.Utxow.html" class="Module">Ledger.Conway.Specification.Utxow</a> <a id="850" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#600" class="Bound">txs</a> <a id="854" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#644" class="Bound">abs</a> <a id="858" class="Keyword">public</a>
+    <a id="869" class="Keyword">open</a> <a id="874" class="Keyword">import</a> <a id="881" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="915" href="Ledger.Conway.Specification.Transaction.html#3901" class="Function">govStructure</a> <a id="928" class="Keyword">public</a>
+
+  <a id="938" class="Keyword">module</a> <a id="C"></a><a id="945" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#945" class="Module">C</a> <a id="947" class="Keyword">where</a>
+    <a id="957" class="Keyword">open</a> <a id="962" class="Keyword">import</a> <a id="969" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a> <a id="1000" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#600" class="Bound">txs</a> <a id="1004" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#644" class="Bound">abs</a> <a id="1008" class="Keyword">public</a>
+    <a id="1019" class="Keyword">open</a> <a id="1024" class="Keyword">import</a> <a id="1031" href="Ledger.Conway.Conformance.Utxow.html" class="Module">Ledger.Conway.Conformance.Utxow</a> <a id="1063" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#600" class="Bound">txs</a> <a id="1067" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#644" class="Bound">abs</a> <a id="1071" class="Keyword">public</a>
+    <a id="1082" class="Keyword">open</a> <a id="1087" class="Keyword">import</a> <a id="1094" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="1126" href="Ledger.Conway.Specification.Transaction.html#3901" class="Function">govStructure</a> <a id="1139" class="Keyword">public</a>
+
+<a id="1147" class="Keyword">open</a> <a id="1152" href="Ledger.Conway.Specification.Transaction.html#6629" class="Module">Tx</a>
+
+<a id="setDeposits"></a><a id="1156" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1156" class="Function">setDeposits</a> <a id="1168" class="Symbol">:</a> <a id="1170" href="Ledger.Conway.Specification.Certs.html#1311" class="Function">L.Deposits</a> <a id="1181" class="Symbol">→</a> <a id="1183" href="Ledger.Conway.Specification.Utxo.html#3011" class="Record">L.UTxOState</a> <a id="1195" class="Symbol">→</a> <a id="1197" href="Ledger.Conway.Specification.Utxo.html#3011" class="Record">L.UTxOState</a>
+<a id="1209" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1156" class="Function">setDeposits</a> <a id="1221" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1221" class="Bound">deposits</a> <a id="1230" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1230" class="Bound">utxoSt</a> <a id="1237" class="Symbol">=</a> <a id="1239" class="Keyword">record</a> <a id="1246" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1230" class="Bound">utxoSt</a> <a id="1253" class="Symbol">{</a> <a id="1255" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a> <a id="1264" class="Symbol">=</a> <a id="1266" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1221" class="Bound">deposits</a> <a id="1275" class="Symbol">}</a>
+
+<a id="withDepositsFrom"></a><a id="1278" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1278" class="Function">withDepositsFrom</a> <a id="1295" class="Symbol">:</a> <a id="1297" href="Ledger.Conway.Specification.Utxo.html#3011" class="Record">L.UTxOState</a> <a id="1309" class="Symbol">→</a> <a id="1311" href="Ledger.Conway.Specification.Utxo.html#3011" class="Record">L.UTxOState</a> <a id="1323" class="Symbol">→</a> <a id="1325" href="Ledger.Conway.Specification.Utxo.html#3011" class="Record">L.UTxOState</a>
+<a id="1337" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1278" class="Function">withDepositsFrom</a> <a id="1354" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1354" class="Bound">utxoSt</a> <a id="1361" class="Symbol">=</a> <a id="1363" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1156" class="Function">setDeposits</a> <a id="1375" class="Symbol">(</a><a id="1376" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">L.UTxOState.deposits</a> <a id="1397" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1354" class="Bound">utxoSt</a><a id="1403" class="Symbol">)</a>
+
+<a id="1406" class="Keyword">instance</a>
+
+  <a id="UTXOSToConf"></a><a id="1418" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1418" class="Function">UTXOSToConf</a> <a id="1430" class="Symbol">:</a> <a id="1432" class="Symbol">∀</a> <a id="1434" class="Symbol">{</a><a id="1435" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1435" class="Bound">Γ</a> <a id="1437" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1437" class="Bound">s</a> <a id="1439" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1439" class="Bound">tx</a> <a id="1442" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1442" class="Bound">s&#39;</a><a id="1444" class="Symbol">}</a> <a id="1446" class="Symbol">→</a> <a id="1448" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1435" class="Bound">Γ</a> <a id="1450" href="Ledger.Conway.Specification.Utxo.html#16529" class="Datatype Operator">L.⊢</a> <a id="1454" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1437" class="Bound">s</a> <a id="1456" href="Ledger.Conway.Specification.Utxo.html#16529" class="Datatype Operator">⇀⦇</a> <a id="1459" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1439" class="Bound">tx</a> <a id="1462" href="Ledger.Conway.Specification.Utxo.html#16529" class="Datatype Operator">,UTXOS⦈</a> <a id="1470" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1442" class="Bound">s&#39;</a> <a id="1473" href="Ledger.Conway.Conformance.Equivalence.Convert.html#516" class="Function Operator">⭆</a> <a id="1475" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1435" class="Bound">Γ</a> <a id="1477" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">C.⊢</a> <a id="1481" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1437" class="Bound">s</a> <a id="1483" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">⇀⦇</a> <a id="1486" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1439" class="Bound">tx</a> <a id="1489" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">,UTXOS⦈</a> <a id="1497" class="Symbol">(</a><a id="1498" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1278" class="Function">withDepositsFrom</a> <a id="1515" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1437" class="Bound">s</a> <a id="1517" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1442" class="Bound">s&#39;</a><a id="1519" class="Symbol">)</a>
+  <a id="1523" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1418" class="Function">UTXOSToConf</a> <a id="1535" class="Symbol">.</a><a id="1536" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="Field">convⁱ</a> <a id="1542" class="Symbol">_</a> <a id="1544" class="Symbol">(</a><a id="1545" href="Ledger.Conway.Specification.Utxo.html#16599" class="InductiveConstructor">L.Scripts-Yes</a> <a id="1559" class="Symbol">(</a><a id="1560" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1560" class="Bound">certsValid</a> <a id="1571" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1573" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1573" class="Bound">eval</a> <a id="1578" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1580" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1580" class="Bound">txValid</a><a id="1587" class="Symbol">))</a> <a id="1590" class="Symbol">=</a> <a id="1592" href="Ledger.Conway.Conformance.Utxo.html#1323" class="InductiveConstructor">C.Scripts-Yes</a> <a id="1606" class="Symbol">(</a><a id="1607" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1573" class="Bound">eval</a> <a id="1612" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1614" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1580" class="Bound">txValid</a><a id="1621" class="Symbol">)</a>
+  <a id="1625" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1418" class="Function">UTXOSToConf</a> <a id="1637" class="Symbol">.</a><a id="1638" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="Field">convⁱ</a> <a id="1644" class="Symbol">_</a> <a id="1646" class="Symbol">(</a><a id="1647" href="Ledger.Conway.Specification.Utxo.html#17146" class="InductiveConstructor">L.Scripts-No</a> <a id="1660" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1660" class="Bound">h</a><a id="1661" class="Symbol">)</a>                              <a id="1692" class="Symbol">=</a> <a id="1694" href="Ledger.Conway.Conformance.Utxo.html#1918" class="InductiveConstructor">C.Scripts-No</a> <a id="1707" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1660" class="Bound">h</a>
+
+<a id="1710" class="Keyword">module</a> <a id="1717" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1717" class="Module">_</a> <a id="1719" class="Symbol">{</a><a id="1720" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1720" class="Bound">Γ</a> <a id="1722" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1722" class="Bound">s</a> <a id="1724" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1724" class="Bound">tx</a> <a id="1727" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1727" class="Bound">s&#39;</a><a id="1729" class="Symbol">}</a> <a id="1731" class="Keyword">where</a>
+  <a id="1739" class="Keyword">open</a> <a id="1744" href="Ledger.Conway.Specification.Utxo.html#2877" class="Module">L.UTxOEnv</a> <a id="1754" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1720" class="Bound">Γ</a> <a id="1756" class="Keyword">renaming</a> <a id="1765" class="Symbol">(</a><a id="1766" href="Ledger.Conway.Specification.Utxo.html#2931" class="Field">pparams</a> <a id="1774" class="Symbol">to</a> <a id="1777" class="Field">pp</a><a id="1779" class="Symbol">)</a>
+  <a id="1783" class="Keyword">open</a> <a id="1788" href="Ledger.Conway.Specification.Utxo.html#3011" class="Module">L.UTxOState</a> <a id="1800" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1722" class="Bound">s</a> <a id="1802" class="Keyword">using</a> <a id="1808" class="Symbol">(</a><a id="1809" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a><a id="1817" class="Symbol">)</a>
+  <a id="1821" class="Keyword">open</a> <a id="1826" href="Ledger.Conway.Specification.Transaction.html#6629" class="Module">Tx</a> <a id="1829" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1724" class="Bound">tx</a> <a id="1832" class="Keyword">renaming</a> <a id="1841" class="Symbol">(</a><a id="1842" href="Ledger.Conway.Specification.Transaction.html#6661" class="Field">body</a> <a id="1847" class="Symbol">to</a> <a id="1850" class="Field">txb</a><a id="1853" class="Symbol">)</a>
+
+  <a id="1858" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1858" class="Function">utxoSDeposits</a> <a id="1872" class="Symbol">:</a> <a id="1874" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1720" class="Bound">Γ</a> <a id="1876" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">C.⊢</a> <a id="1880" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1722" class="Bound">s</a> <a id="1882" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">⇀⦇</a> <a id="1885" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1724" class="Bound">tx</a> <a id="1888" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">,UTXOS⦈</a> <a id="1896" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1727" class="Bound">s&#39;</a> <a id="1899" class="Symbol">→</a> <a id="1901" href="Ledger.Conway.Specification.Certs.html#1311" class="Function">L.Deposits</a>
+  <a id="1914" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1858" class="Function">utxoSDeposits</a> <a id="1928" class="Symbol">(</a><a id="1929" href="Ledger.Conway.Conformance.Utxo.html#1323" class="InductiveConstructor">C.Scripts-Yes</a> <a id="1943" class="Symbol">_)</a> <a id="1946" class="Symbol">=</a> <a id="1948" href="Ledger.Conway.Specification.Utxo.html#12433" class="Function">L.updateDeposits</a> <a id="1965" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1777" class="Function">pp</a> <a id="1968" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1850" class="Function">txb</a> <a id="1972" href="Ledger.Conway.Specification.Utxo.html#3148" class="Function">deposits</a>
+  <a id="1983" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1858" class="Function">utxoSDeposits</a> <a id="1997" class="Symbol">(</a><a id="1998" href="Ledger.Conway.Conformance.Utxo.html#1918" class="InductiveConstructor">C.Scripts-No</a>  <a id="2012" class="Symbol">_)</a> <a id="2015" class="Symbol">=</a> <a id="2017" href="Ledger.Conway.Specification.Utxo.html#3148" class="Function">deposits</a>
+
+  <a id="2029" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2029" class="Function">utxoDeposits</a> <a id="2042" class="Symbol">:</a> <a id="2044" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1720" class="Bound">Γ</a> <a id="2046" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">C.⊢</a> <a id="2050" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1722" class="Bound">s</a> <a id="2052" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">⇀⦇</a> <a id="2055" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1724" class="Bound">tx</a> <a id="2058" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">,UTXO⦈</a> <a id="2065" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1727" class="Bound">s&#39;</a> <a id="2068" class="Symbol">→</a> <a id="2070" href="Ledger.Conway.Specification.Certs.html#1311" class="Function">L.Deposits</a>
+  <a id="2083" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2029" class="Function">utxoDeposits</a> <a id="2096" class="Symbol">(</a><a id="2097" href="Ledger.Conway.Conformance.Utxo.html#4038" class="InductiveConstructor">C.UTXO-inductive⋯</a> <a id="2115" class="Symbol">_</a> <a id="2117" class="Symbol">_</a> <a id="2119" class="Symbol">_</a> <a id="2121" class="Symbol">_</a> <a id="2123" class="Symbol">_</a> <a id="2125" class="Symbol">_</a> <a id="2127" class="Symbol">_</a> <a id="2129" class="Symbol">_</a> <a id="2131" class="Symbol">_</a> <a id="2133" class="Symbol">_</a> <a id="2135" class="Symbol">_</a> <a id="2137" class="Symbol">_</a> <a id="2139" class="Symbol">_</a> <a id="2141" class="Symbol">_</a> <a id="2143" class="Symbol">_</a> <a id="2145" class="Symbol">_</a> <a id="2147" class="Symbol">_</a> <a id="2149" class="Symbol">_</a> <a id="2151" class="Symbol">_</a> <a id="2153" class="Symbol">_</a> <a id="2155" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2155" class="Bound">h</a><a id="2156" class="Symbol">)</a> <a id="2158" class="Symbol">=</a> <a id="2160" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1858" class="Function">utxoSDeposits</a> <a id="2174" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2155" class="Bound">h</a>
+
+  <a id="2179" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2179" class="Function">utxowDeposits</a> <a id="2193" class="Symbol">:</a> <a id="2195" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1720" class="Bound">Γ</a> <a id="2197" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">C.⊢</a> <a id="2201" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1722" class="Bound">s</a> <a id="2203" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">⇀⦇</a> <a id="2206" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1724" class="Bound">tx</a> <a id="2209" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">,UTXOW⦈</a> <a id="2217" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1727" class="Bound">s&#39;</a> <a id="2220" class="Symbol">→</a> <a id="2222" href="Ledger.Conway.Specification.Certs.html#1311" class="Function">L.Deposits</a>
+  <a id="2235" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2179" class="Function">utxowDeposits</a> <a id="2249" class="Symbol">(</a><a id="2250" href="Ledger.Conway.Conformance.Utxow.html#2515" class="InductiveConstructor">C.UTXOW-inductive⋯</a> <a id="2269" class="Symbol">_</a> <a id="2271" class="Symbol">_</a> <a id="2273" class="Symbol">_</a> <a id="2275" class="Symbol">_</a> <a id="2277" class="Symbol">_</a> <a id="2279" class="Symbol">_</a> <a id="2281" class="Symbol">_</a> <a id="2283" class="Symbol">_</a> <a id="2285" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2285" class="Bound">h</a><a id="2286" class="Symbol">)</a> <a id="2288" class="Symbol">=</a> <a id="2290" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2029" class="Function">utxoDeposits</a> <a id="2303" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2285" class="Bound">h</a>
+
+<a id="2306" class="Keyword">instance</a>
+  <a id="2317" class="Comment">-- Here we pass in the ValidCertDeposits proof explicitly and</a>
+  <a id="2381" class="Comment">-- override the deposits in s&#39; with updateDeposits (in case of</a>
+  <a id="2446" class="Comment">-- Scripts-Yes).</a>
+  <a id="UTXOSFromConf"></a><a id="2465" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2465" class="Function">UTXOSFromConf</a> <a id="2479" class="Symbol">:</a> <a id="2481" class="Symbol">∀</a> <a id="2483" class="Symbol">{</a><a id="2484" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2484" class="Bound">Γ</a> <a id="2486" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2486" class="Bound">s</a> <a id="2488" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2488" class="Bound">tx</a> <a id="2491" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2491" class="Bound">s&#39;</a><a id="2493" class="Symbol">}</a>
+                    <a id="2515" class="Symbol">(</a><a id="2516" class="Keyword">let</a> <a id="2520" class="Keyword">open</a> <a id="2525" href="Ledger.Conway.Specification.Utxo.html#2877" class="Module">L.UTxOEnv</a> <a id="2535" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2484" class="Bound">Γ</a> <a id="2537" class="Keyword">using</a> <a id="2543" class="Symbol">()</a> <a id="2546" class="Keyword">renaming</a> <a id="2555" class="Symbol">(</a><a id="2556" href="Ledger.Conway.Specification.Utxo.html#2931" class="Field">pparams</a> <a id="2564" class="Symbol">to</a> <a id="2567" class="Field">pp</a><a id="2569" class="Symbol">)</a>
+                         <a id="2596" class="Keyword">open</a> <a id="2601" href="Ledger.Conway.Specification.Utxo.html#3011" class="Module">L.UTxOState</a> <a id="2613" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2486" class="Bound">s</a> <a id="2615" class="Keyword">using</a> <a id="2621" class="Symbol">(</a><a id="2622" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a><a id="2630" class="Symbol">)</a>
+                         <a id="2657" class="Keyword">open</a> <a id="2662" href="Ledger.Conway.Specification.Transaction.html#6629" class="Module">Tx</a> <a id="2665" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2488" class="Bound">tx</a> <a id="2668" class="Keyword">renaming</a> <a id="2677" class="Symbol">(</a><a id="2678" href="Ledger.Conway.Specification.Transaction.html#6661" class="Field">body</a> <a id="2683" class="Symbol">to</a> <a id="2686" class="Field">txb</a><a id="2689" class="Symbol">)</a>
+                         <a id="2716" class="Keyword">open</a> <a id="2721" href="Ledger.Conway.Specification.Transaction.html#4908" class="Module">TxBody</a> <a id="2728" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2686" class="Function">txb</a> <a id="2732" class="Keyword">using</a> <a id="2738" class="Symbol">(</a><a id="2739" href="Ledger.Conway.Specification.Transaction.html#5126" class="Field">txCerts</a><a id="2746" class="Symbol">))</a>
+                <a id="2765" class="Symbol">→</a> <a id="2767" class="Symbol">(</a><a id="2768" href="Ledger.Conway.Specification.Transaction.html#6733" class="Field">isValid</a> <a id="2776" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2488" class="Bound">tx</a> <a id="2779" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="2781" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a> <a id="2787" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="2789" href="Ledger.Conway.Specification.Utxo.html#6161" class="Datatype">L.ValidCertDeposits</a> <a id="2809" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2567" class="Function">pp</a> <a id="2812" href="Ledger.Conway.Specification.Utxo.html#3148" class="Function">deposits</a> <a id="2821" href="Ledger.Conway.Specification.Transaction.html#5126" class="Function">txCerts</a><a id="2828" class="Symbol">)</a>
+                  <a id="2848" href="Ledger.Conway.Conformance.Equivalence.Convert.html#263" class="Record Operator">⊢</a> <a id="2850" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2484" class="Bound">Γ</a> <a id="2852" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">C.⊢</a> <a id="2856" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2486" class="Bound">s</a> <a id="2858" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">⇀⦇</a> <a id="2861" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2488" class="Bound">tx</a> <a id="2864" href="Ledger.Conway.Conformance.Utxo.html#1254" class="Datatype Operator">,UTXOS⦈</a> <a id="2872" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2491" class="Bound">s&#39;</a> <a id="2875" href="Ledger.Conway.Conformance.Equivalence.Convert.html#263" class="Record Operator">⭆ⁱ</a> <a id="2878" class="Symbol">λ</a> <a id="2880" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2880" class="Bound">_</a> <a id="2882" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2882" class="Bound">h</a> <a id="2884" class="Symbol">→</a>
+                    <a id="2906" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2484" class="Bound">Γ</a> <a id="2908" href="Ledger.Conway.Specification.Utxo.html#16529" class="Datatype Operator">L.⊢</a> <a id="2912" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2486" class="Bound">s</a> <a id="2914" href="Ledger.Conway.Specification.Utxo.html#16529" class="Datatype Operator">⇀⦇</a> <a id="2917" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2488" class="Bound">tx</a> <a id="2920" href="Ledger.Conway.Specification.Utxo.html#16529" class="Datatype Operator">,UTXOS⦈</a> <a id="2928" class="Symbol">(</a><a id="2929" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1156" class="Function">setDeposits</a> <a id="2941" class="Symbol">(</a><a id="2942" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1858" class="Function">utxoSDeposits</a> <a id="2956" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2882" class="Bound">h</a><a id="2957" class="Symbol">)</a> <a id="2959" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2491" class="Bound">s&#39;</a><a id="2961" class="Symbol">)</a>
+  <a id="2965" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2465" class="Function">UTXOSFromConf</a> <a id="2979" class="Symbol">.</a><a id="2980" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="Field">convⁱ</a> <a id="2986" class="Symbol">(</a><a id="2987" href="Data.Sum.Base.html#675" class="InductiveConstructor">inj₁</a> <a id="2992" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a><a id="2996" class="Symbol">)</a>       <a id="3004" class="Symbol">(</a><a id="3005" href="Ledger.Conway.Conformance.Utxo.html#1323" class="InductiveConstructor">C.Scripts-Yes</a> <a id="3019" class="Symbol">(</a><a id="3020" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3020" class="Bound">eval</a> <a id="3025" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3027" class="Symbol">()))</a>
+  <a id="3034" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2465" class="Function">UTXOSFromConf</a> <a id="3048" class="Symbol">.</a><a id="3049" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="Field">convⁱ</a> <a id="3055" class="Symbol">(</a><a id="3056" href="Data.Sum.Base.html#700" class="InductiveConstructor">inj₂</a> <a id="3061" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3061" class="Bound">validCerts</a><a id="3071" class="Symbol">)</a> <a id="3073" class="Symbol">(</a><a id="3074" href="Ledger.Conway.Conformance.Utxo.html#1323" class="InductiveConstructor">C.Scripts-Yes</a> <a id="3088" class="Symbol">(</a><a id="3089" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3089" class="Bound">eval</a> <a id="3094" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3096" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3096" class="Bound">txValid</a><a id="3103" class="Symbol">))</a> <a id="3106" class="Symbol">=</a> <a id="3108" href="Ledger.Conway.Specification.Utxo.html#16599" class="InductiveConstructor">L.Scripts-Yes</a> <a id="3122" class="Symbol">(</a><a id="3123" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3061" class="Bound">validCerts</a> <a id="3134" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3136" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3089" class="Bound">eval</a> <a id="3141" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3143" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3096" class="Bound">txValid</a><a id="3150" class="Symbol">)</a>
+  <a id="3154" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2465" class="CatchallClause Function">UTXOSFromConf</a><a id="3167" class="CatchallClause"> </a><a id="3168" class="CatchallClause Symbol">.</a><a id="3169" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="CatchallClause Field">convⁱ</a><a id="3174" class="CatchallClause"> </a><a id="3175" class="CatchallClause Symbol">_</a><a id="3176" class="CatchallClause"> </a><a id="3177" class="CatchallClause Symbol">(</a><a id="3178" href="Ledger.Conway.Conformance.Utxo.html#1918" class="CatchallClause InductiveConstructor">C.Scripts-No</a><a id="3190" class="CatchallClause"> </a><a id="3191" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3191" class="CatchallClause Bound">h</a><a id="3192" class="CatchallClause Symbol">)</a> <a id="3194" class="Symbol">=</a> <a id="3196" href="Ledger.Conway.Specification.Utxo.html#17146" class="InductiveConstructor">L.Scripts-No</a> <a id="3209" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3191" class="Bound">h</a>
+
+<a id="3212" class="Keyword">instance</a>
+  <a id="3223" class="Comment">-- It&#39;s a little weird that UTXO still has a bunch of preconditions</a>
+  <a id="3293" class="Comment">-- for consumed and produced (using updateDeposits) when the</a>
+  <a id="3356" class="Comment">-- deposits don&#39;t change! Why are they even part of the UTxOState?</a>
+  <a id="3425" class="Comment">-- In conformance the update happens in GOVCERT (under CERT).</a>
+  <a id="UTXOToConf"></a><a id="3489" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3489" class="Function">UTXOToConf</a> <a id="3500" class="Symbol">:</a> <a id="3502" class="Symbol">∀</a> <a id="3504" class="Symbol">{</a><a id="3505" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3505" class="Bound">Γ</a> <a id="3507" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3507" class="Bound">s</a> <a id="3509" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3509" class="Bound">tx</a> <a id="3512" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3512" class="Bound">s&#39;</a><a id="3514" class="Symbol">}</a> <a id="3516" class="Symbol">→</a> <a id="3518" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3505" class="Bound">Γ</a> <a id="3520" href="Ledger.Conway.Specification.Utxo.html#4025" class="Datatype Operator">L.⊢</a> <a id="3524" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3507" class="Bound">s</a> <a id="3526" href="Ledger.Conway.Specification.Utxo.html#4025" class="Datatype Operator">⇀⦇</a> <a id="3529" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3509" class="Bound">tx</a> <a id="3532" href="Ledger.Conway.Specification.Utxo.html#4025" class="Datatype Operator">,UTXO⦈</a> <a id="3539" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3512" class="Bound">s&#39;</a> <a id="3542" href="Ledger.Conway.Conformance.Equivalence.Convert.html#516" class="Function Operator">⭆</a> <a id="3544" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3505" class="Bound">Γ</a> <a id="3546" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">C.⊢</a> <a id="3550" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3507" class="Bound">s</a> <a id="3552" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">⇀⦇</a> <a id="3555" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3509" class="Bound">tx</a> <a id="3558" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">,UTXO⦈</a> <a id="3565" class="Symbol">(</a><a id="3566" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1278" class="Function">withDepositsFrom</a> <a id="3583" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3507" class="Bound">s</a> <a id="3585" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3512" class="Bound">s&#39;</a><a id="3587" class="Symbol">)</a>
+  <a id="3591" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3489" class="Function">UTXOToConf</a> <a id="3602" class="Symbol">{</a><a id="3603" class="Argument">s</a> <a id="3605" class="Symbol">=</a> <a id="3607" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3607" class="Bound">s</a><a id="3608" class="Symbol">}</a> <a id="3610" class="Symbol">{</a><a id="3611" class="Argument">tx</a> <a id="3614" class="Symbol">=</a> <a id="3616" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3616" class="Bound">tx</a><a id="3618" class="Symbol">}</a> <a id="3620" class="Symbol">.</a><a id="3621" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="Field">convⁱ</a> <a id="3627" class="Symbol">_</a> <a id="3629" class="Symbol">(</a><a id="3630" href="Ledger.Conway.Specification.Utxo.html#18052" class="InductiveConstructor">L.UTXO-inductive</a> <a id="3647" class="Symbol">(</a><a id="3648" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3648" class="Bound">a</a> <a id="3650" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3652" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3652" class="Bound">b</a> <a id="3654" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3656" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3656" class="Bound">c</a> <a id="3658" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3660" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3660" class="Bound">d</a> <a id="3662" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3664" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3664" class="Bound">e</a> <a id="3666" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3668" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3668" class="Bound">f</a> <a id="3670" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3672" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3672" class="Bound">g</a> <a id="3674" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3676" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3676" class="Bound">r</a> <a id="3678" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3680" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3680" class="Bound">h</a> <a id="3682" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3684" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3684" class="Bound">i</a> <a id="3686" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3688" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3688" class="Bound">j</a> <a id="3690" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3692" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3692" class="Bound">k</a> <a id="3694" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3696" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3696" class="Bound">l</a> <a id="3698" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3700" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3700" class="Bound">m</a> <a id="3702" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3704" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3704" class="Bound">n</a> <a id="3706" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3708" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3708" class="Bound">o</a> <a id="3710" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3712" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3712" class="Bound">p</a> <a id="3714" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3716" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3716" class="Bound">utxo</a><a id="3720" class="Symbol">))</a> <a id="3723" class="Symbol">=</a>
+    <a id="3729" href="Ledger.Conway.Conformance.Utxo.html#2772" class="InductiveConstructor">C.UTXO-inductive</a> <a id="3746" class="Symbol">(</a><a id="3747" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3648" class="Bound">a</a> <a id="3749" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3751" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3652" class="Bound">b</a> <a id="3753" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3755" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3656" class="Bound">c</a> <a id="3757" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3759" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3660" class="Bound">d</a> <a id="3761" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3763" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3664" class="Bound">e</a> <a id="3765" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3767" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3668" class="Bound">f</a> <a id="3769" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3771" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3672" class="Bound">g</a> <a id="3773" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3775" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3676" class="Bound">r</a> <a id="3777" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3779" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3680" class="Bound">h</a> <a id="3781" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3783" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3684" class="Bound">i</a> <a id="3785" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3787" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3688" class="Bound">j</a> <a id="3789" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3791" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3692" class="Bound">k</a> <a id="3793" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3795" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3696" class="Bound">l</a> <a id="3797" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3799" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3700" class="Bound">m</a> <a id="3801" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3803" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3704" class="Bound">n</a> <a id="3805" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3807" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3708" class="Bound">o</a> <a id="3809" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3811" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3712" class="Bound">p</a> <a id="3813" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3815" href="Ledger.Conway.Conformance.Equivalence.Convert.html#559" class="Function">conv</a> <a id="3820" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3716" class="Bound">utxo</a><a id="3824" class="Symbol">)</a>
+
+  <a id="UTXOFromConf"></a><a id="3829" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3829" class="Function">UTXOFromConf</a> <a id="3842" class="Symbol">:</a> <a id="3844" class="Symbol">∀</a> <a id="3846" class="Symbol">{</a><a id="3847" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3847" class="Bound">Γ</a> <a id="3849" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3849" class="Bound">s</a> <a id="3851" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3851" class="Bound">tx</a> <a id="3854" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3854" class="Bound">s&#39;</a><a id="3856" class="Symbol">}</a>
+                   <a id="3877" class="Symbol">(</a><a id="3878" class="Keyword">let</a> <a id="3882" class="Keyword">open</a> <a id="3887" href="Ledger.Conway.Specification.Utxo.html#2877" class="Module">L.UTxOEnv</a> <a id="3897" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3847" class="Bound">Γ</a> <a id="3899" class="Keyword">using</a> <a id="3905" class="Symbol">()</a> <a id="3908" class="Keyword">renaming</a> <a id="3917" class="Symbol">(</a><a id="3918" href="Ledger.Conway.Specification.Utxo.html#2931" class="Field">pparams</a> <a id="3926" class="Symbol">to</a> <a id="3929" class="Field">pp</a><a id="3931" class="Symbol">)</a>
+                        <a id="3957" class="Keyword">open</a> <a id="3962" href="Ledger.Conway.Specification.Utxo.html#3011" class="Module">L.UTxOState</a> <a id="3974" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3849" class="Bound">s</a> <a id="3976" class="Keyword">using</a> <a id="3982" class="Symbol">(</a><a id="3983" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a><a id="3991" class="Symbol">)</a>
+                        <a id="4017" class="Keyword">open</a> <a id="4022" href="Ledger.Conway.Specification.Transaction.html#6629" class="Module">Tx</a> <a id="4025" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3851" class="Bound">tx</a> <a id="4028" class="Keyword">renaming</a> <a id="4037" class="Symbol">(</a><a id="4038" href="Ledger.Conway.Specification.Transaction.html#6661" class="Field">body</a> <a id="4043" class="Symbol">to</a> <a id="4046" class="Field">txb</a><a id="4049" class="Symbol">)</a>
+                        <a id="4075" class="Keyword">open</a> <a id="4080" href="Ledger.Conway.Specification.Transaction.html#4908" class="Module">TxBody</a> <a id="4087" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4046" class="Function">txb</a> <a id="4091" class="Keyword">using</a> <a id="4097" class="Symbol">(</a><a id="4098" href="Ledger.Conway.Specification.Transaction.html#5126" class="Field">txCerts</a><a id="4105" class="Symbol">))</a>
+               <a id="4123" class="Symbol">→</a> <a id="4125" class="Symbol">(</a><a id="4126" href="Ledger.Conway.Specification.Transaction.html#6733" class="Field">isValid</a> <a id="4134" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3851" class="Bound">tx</a> <a id="4137" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="4139" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a> <a id="4145" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="4147" href="Ledger.Conway.Specification.Utxo.html#6161" class="Datatype">L.ValidCertDeposits</a> <a id="4167" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3929" class="Function">pp</a> <a id="4170" href="Ledger.Conway.Specification.Utxo.html#3148" class="Function">deposits</a> <a id="4179" href="Ledger.Conway.Specification.Transaction.html#5126" class="Function">txCerts</a><a id="4186" class="Symbol">)</a>
+                 <a id="4205" href="Ledger.Conway.Conformance.Equivalence.Convert.html#263" class="Record Operator">⊢</a> <a id="4207" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3847" class="Bound">Γ</a> <a id="4209" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">C.⊢</a> <a id="4213" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3849" class="Bound">s</a> <a id="4215" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">⇀⦇</a> <a id="4218" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3851" class="Bound">tx</a> <a id="4221" href="Ledger.Conway.Conformance.Utxo.html#2703" class="Datatype Operator">,UTXO⦈</a> <a id="4228" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3854" class="Bound">s&#39;</a> <a id="4231" href="Ledger.Conway.Conformance.Equivalence.Convert.html#263" class="Record Operator">⭆ⁱ</a> <a id="4234" class="Symbol">λ</a> <a id="4236" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4236" class="Bound">_</a> <a id="4238" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4238" class="Bound">h</a> <a id="4240" class="Symbol">→</a>
+                   <a id="4261" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3847" class="Bound">Γ</a> <a id="4263" href="Ledger.Conway.Specification.Utxo.html#4025" class="Datatype Operator">L.⊢</a> <a id="4267" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3849" class="Bound">s</a> <a id="4269" href="Ledger.Conway.Specification.Utxo.html#4025" class="Datatype Operator">⇀⦇</a> <a id="4272" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3851" class="Bound">tx</a> <a id="4275" href="Ledger.Conway.Specification.Utxo.html#4025" class="Datatype Operator">,UTXO⦈</a> <a id="4282" class="Symbol">(</a><a id="4283" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1156" class="Function">setDeposits</a> <a id="4295" class="Symbol">(</a><a id="4296" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2029" class="Function">utxoDeposits</a> <a id="4309" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4238" class="Bound">h</a><a id="4310" class="Symbol">)</a> <a id="4312" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3854" class="Bound">s&#39;</a><a id="4314" class="Symbol">)</a>
+  <a id="4318" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#3829" class="Function">UTXOFromConf</a> <a id="4331" class="Symbol">{</a><a id="4332" class="Argument">s</a> <a id="4334" class="Symbol">=</a> <a id="4336" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4336" class="Bound">s</a><a id="4337" class="Symbol">}</a> <a id="4339" class="Symbol">{</a><a id="4340" class="Argument">tx</a> <a id="4343" class="Symbol">=</a> <a id="4345" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4345" class="Bound">tx</a><a id="4347" class="Symbol">}</a> <a id="4349" class="Symbol">.</a><a id="4350" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="Field">convⁱ</a> <a id="4356" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4356" class="Bound">validCerts</a> <a id="4367" class="Symbol">(</a><a id="4368" href="Ledger.Conway.Conformance.Utxo.html#2772" class="InductiveConstructor">C.UTXO-inductive</a> <a id="4385" class="Symbol">(</a><a id="4386" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4386" class="Bound">a</a> <a id="4388" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4390" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4390" class="Bound">b</a> <a id="4392" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4394" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4394" class="Bound">c</a> <a id="4396" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4398" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4398" class="Bound">d</a> <a id="4400" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4402" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4402" class="Bound">e</a> <a id="4404" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4406" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4406" class="Bound">f</a> <a id="4408" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4410" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4410" class="Bound">g</a> <a id="4412" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4414" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4414" class="Bound">r</a> <a id="4416" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4418" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4418" class="Bound">h</a> <a id="4420" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4422" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4422" class="Bound">i</a> <a id="4424" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4426" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4426" class="Bound">j</a> <a id="4428" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4430" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4430" class="Bound">k</a> <a id="4432" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4434" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4434" class="Bound">l</a> <a id="4436" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4438" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4438" class="Bound">m</a> <a id="4440" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4442" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4442" class="Bound">n</a> <a id="4444" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4446" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4446" class="Bound">o</a> <a id="4448" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4450" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4450" class="Bound">p</a> <a id="4452" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4454" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4454" class="Bound">utxo</a><a id="4458" class="Symbol">))</a> <a id="4461" class="Symbol">=</a>
+    <a id="4467" href="Ledger.Conway.Specification.Utxo.html#18052" class="InductiveConstructor">L.UTXO-inductive</a> <a id="4484" class="Symbol">(</a><a id="4485" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4386" class="Bound">a</a> <a id="4487" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4489" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4390" class="Bound">b</a> <a id="4491" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4493" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4394" class="Bound">c</a> <a id="4495" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4497" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4398" class="Bound">d</a> <a id="4499" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4501" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4402" class="Bound">e</a> <a id="4503" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4505" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4406" class="Bound">f</a> <a id="4507" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4509" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4410" class="Bound">g</a> <a id="4511" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4513" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4414" class="Bound">r</a> <a id="4515" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4517" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4418" class="Bound">h</a> <a id="4519" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4521" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4422" class="Bound">i</a> <a id="4523" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4525" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4426" class="Bound">j</a> <a id="4527" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4529" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4430" class="Bound">k</a> <a id="4531" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4533" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4434" class="Bound">l</a> <a id="4535" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4537" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4438" class="Bound">m</a> <a id="4539" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4541" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4442" class="Bound">n</a> <a id="4543" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4545" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4446" class="Bound">o</a> <a id="4547" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4549" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4450" class="Bound">p</a> <a id="4551" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="4553" class="Symbol">(</a><a id="4554" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4356" class="Bound">validCerts</a> <a id="4565" href="Ledger.Conway.Conformance.Equivalence.Convert.html#377" class="Function Operator">⊢conv</a> <a id="4571" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4454" class="Bound">utxo</a><a id="4575" class="Symbol">))</a>
+
+  <a id="UTXOWToConf"></a><a id="4581" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4581" class="Function">UTXOWToConf</a> <a id="4593" class="Symbol">:</a> <a id="4595" class="Symbol">∀</a> <a id="4597" class="Symbol">{</a><a id="4598" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4598" class="Bound">Γ</a> <a id="4600" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4600" class="Bound">s</a> <a id="4602" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4602" class="Bound">tx</a> <a id="4605" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4605" class="Bound">s&#39;</a><a id="4607" class="Symbol">}</a> <a id="4609" class="Symbol">→</a> <a id="4611" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4598" class="Bound">Γ</a> <a id="4613" href="Ledger.Conway.Specification.Utxow.html#4479" class="Datatype Operator">L.⊢</a> <a id="4617" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4600" class="Bound">s</a> <a id="4619" href="Ledger.Conway.Specification.Utxow.html#4479" class="Datatype Operator">⇀⦇</a> <a id="4622" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4602" class="Bound">tx</a> <a id="4625" href="Ledger.Conway.Specification.Utxow.html#4479" class="Datatype Operator">,UTXOW⦈</a> <a id="4633" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4605" class="Bound">s&#39;</a> <a id="4636" href="Ledger.Conway.Conformance.Equivalence.Convert.html#516" class="Function Operator">⭆</a> <a id="4638" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4598" class="Bound">Γ</a> <a id="4640" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">C.⊢</a> <a id="4644" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4600" class="Bound">s</a> <a id="4646" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">⇀⦇</a> <a id="4649" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4602" class="Bound">tx</a> <a id="4652" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">,UTXOW⦈</a> <a id="4660" class="Symbol">(</a><a id="4661" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1278" class="Function">withDepositsFrom</a> <a id="4678" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4600" class="Bound">s</a> <a id="4680" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4605" class="Bound">s&#39;</a><a id="4682" class="Symbol">)</a>
+  <a id="4686" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4581" class="Function">UTXOWToConf</a> <a id="4698" class="Symbol">.</a><a id="4699" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="Field">convⁱ</a> <a id="4705" class="Symbol">_</a> <a id="4707" class="Symbol">(</a><a id="4708" href="Ledger.Conway.Specification.Utxow.html#6621" class="InductiveConstructor">L.UTXOW-inductive⋯</a> <a id="4727" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4727" class="Bound">a</a> <a id="4729" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4729" class="Bound">b</a> <a id="4731" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4731" class="Bound">c</a> <a id="4733" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4733" class="Bound">d</a> <a id="4735" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4735" class="Bound">e</a> <a id="4737" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4737" class="Bound">f</a> <a id="4739" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4739" class="Bound">g</a> <a id="4741" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4741" class="Bound">h</a> <a id="4743" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4743" class="Bound">utxo</a><a id="4747" class="Symbol">)</a> <a id="4749" class="Symbol">=</a>
+    <a id="4755" href="Ledger.Conway.Conformance.Utxow.html#2515" class="InductiveConstructor">C.UTXOW-inductive⋯</a> <a id="4774" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4727" class="Bound">a</a> <a id="4776" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4729" class="Bound">b</a> <a id="4778" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4731" class="Bound">c</a> <a id="4780" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4733" class="Bound">d</a> <a id="4782" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4735" class="Bound">e</a> <a id="4784" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4737" class="Bound">f</a> <a id="4786" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4739" class="Bound">g</a> <a id="4788" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4741" class="Bound">h</a> <a id="4790" class="Symbol">(</a><a id="4791" href="Ledger.Conway.Conformance.Equivalence.Convert.html#559" class="Function">conv</a> <a id="4796" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4743" class="Bound">utxo</a><a id="4800" class="Symbol">)</a>
+
+  <a id="UTXOWFromConf"></a><a id="4805" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4805" class="Function">UTXOWFromConf</a> <a id="4819" class="Symbol">:</a> <a id="4821" class="Symbol">∀</a> <a id="4823" class="Symbol">{</a><a id="4824" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4824" class="Bound">Γ</a> <a id="4826" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4826" class="Bound">s</a> <a id="4828" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4828" class="Bound">tx</a> <a id="4831" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4831" class="Bound">s&#39;</a><a id="4833" class="Symbol">}</a>
+                    <a id="4855" class="Symbol">(</a><a id="4856" class="Keyword">let</a> <a id="4860" class="Keyword">open</a> <a id="4865" href="Ledger.Conway.Specification.Utxo.html#2877" class="Module">L.UTxOEnv</a> <a id="4875" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4824" class="Bound">Γ</a> <a id="4877" class="Keyword">using</a> <a id="4883" class="Symbol">()</a> <a id="4886" class="Keyword">renaming</a> <a id="4895" class="Symbol">(</a><a id="4896" href="Ledger.Conway.Specification.Utxo.html#2931" class="Field">pparams</a> <a id="4904" class="Symbol">to</a> <a id="4907" class="Field">pp</a><a id="4909" class="Symbol">)</a>
+                         <a id="4936" class="Keyword">open</a> <a id="4941" href="Ledger.Conway.Specification.Utxo.html#3011" class="Module">L.UTxOState</a> <a id="4953" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4826" class="Bound">s</a> <a id="4955" class="Keyword">using</a> <a id="4961" class="Symbol">(</a><a id="4962" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a><a id="4970" class="Symbol">)</a>
+                         <a id="4997" class="Keyword">open</a> <a id="5002" href="Ledger.Conway.Specification.Transaction.html#6629" class="Module">Tx</a> <a id="5005" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4828" class="Bound">tx</a> <a id="5008" class="Keyword">renaming</a> <a id="5017" class="Symbol">(</a><a id="5018" href="Ledger.Conway.Specification.Transaction.html#6661" class="Field">body</a> <a id="5023" class="Symbol">to</a> <a id="5026" class="Field">txb</a><a id="5029" class="Symbol">)</a>
+                         <a id="5056" class="Keyword">open</a> <a id="5061" href="Ledger.Conway.Specification.Transaction.html#4908" class="Module">TxBody</a> <a id="5068" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5026" class="Function">txb</a> <a id="5072" class="Keyword">using</a> <a id="5078" class="Symbol">(</a><a id="5079" href="Ledger.Conway.Specification.Transaction.html#5126" class="Field">txCerts</a><a id="5086" class="Symbol">))</a>
+                <a id="5105" class="Symbol">→</a> <a id="5107" class="Symbol">(</a><a id="5108" href="Ledger.Conway.Specification.Transaction.html#6733" class="Field">isValid</a> <a id="5116" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4828" class="Bound">tx</a> <a id="5119" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="5121" href="Agda.Builtin.Bool.html#192" class="InductiveConstructor">false</a> <a id="5127" href="Data.Sum.Base.html#625" class="Datatype Operator">⊎</a> <a id="5129" href="Ledger.Conway.Specification.Utxo.html#6161" class="Datatype">L.ValidCertDeposits</a> <a id="5149" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4907" class="Function">pp</a> <a id="5152" href="Ledger.Conway.Specification.Utxo.html#3148" class="Function">deposits</a> <a id="5161" href="Ledger.Conway.Specification.Transaction.html#5126" class="Function">txCerts</a><a id="5168" class="Symbol">)</a>
+                  <a id="5188" href="Ledger.Conway.Conformance.Equivalence.Convert.html#263" class="Record Operator">⊢</a> <a id="5190" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4824" class="Bound">Γ</a> <a id="5192" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">C.⊢</a> <a id="5196" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4826" class="Bound">s</a> <a id="5198" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">⇀⦇</a> <a id="5201" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4828" class="Bound">tx</a> <a id="5204" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">,UTXOW⦈</a> <a id="5212" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4831" class="Bound">s&#39;</a> <a id="5215" href="Ledger.Conway.Conformance.Equivalence.Convert.html#263" class="Record Operator">⭆ⁱ</a> <a id="5218" class="Symbol">λ</a> <a id="5220" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5220" class="Bound">_</a> <a id="5222" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5222" class="Bound">h</a> <a id="5224" class="Symbol">→</a>
+                    <a id="5246" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4824" class="Bound">Γ</a> <a id="5248" href="Ledger.Conway.Specification.Utxow.html#4479" class="Datatype Operator">L.⊢</a> <a id="5252" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4826" class="Bound">s</a> <a id="5254" href="Ledger.Conway.Specification.Utxow.html#4479" class="Datatype Operator">⇀⦇</a> <a id="5257" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4828" class="Bound">tx</a> <a id="5260" href="Ledger.Conway.Specification.Utxow.html#4479" class="Datatype Operator">,UTXOW⦈</a> <a id="5268" class="Symbol">(</a><a id="5269" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#1156" class="Function">setDeposits</a> <a id="5281" class="Symbol">(</a><a id="5282" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#2179" class="Function">utxowDeposits</a> <a id="5296" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5222" class="Bound">h</a><a id="5297" class="Symbol">)</a> <a id="5299" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4831" class="Bound">s&#39;</a><a id="5301" class="Symbol">)</a>  <a id="5304" class="Comment">-- Conformance doesn&#39;t update deposits in UTXOW</a>
+  <a id="5354" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#4805" class="Function">UTXOWFromConf</a> <a id="5368" class="Symbol">.</a><a id="5369" href="Ledger.Conway.Conformance.Equivalence.Convert.html#324" class="Field">convⁱ</a> <a id="5375" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5375" class="Bound">validCerts</a> <a id="5386" class="Symbol">(</a><a id="5387" href="Ledger.Conway.Conformance.Utxow.html#2515" class="InductiveConstructor">C.UTXOW-inductive⋯</a> <a id="5406" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5406" class="Bound">a</a> <a id="5408" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5408" class="Bound">b</a> <a id="5410" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5410" class="Bound">c</a> <a id="5412" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5412" class="Bound">d</a> <a id="5414" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5414" class="Bound">e</a> <a id="5416" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5416" class="Bound">f</a> <a id="5418" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5418" class="Bound">g</a> <a id="5420" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5420" class="Bound">h</a> <a id="5422" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5422" class="Bound">utxo</a><a id="5426" class="Symbol">)</a> <a id="5428" class="Symbol">=</a>
+    <a id="5434" href="Ledger.Conway.Specification.Utxow.html#6621" class="InductiveConstructor">L.UTXOW-inductive⋯</a> <a id="5453" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5406" class="Bound">a</a> <a id="5455" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5408" class="Bound">b</a> <a id="5457" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5410" class="Bound">c</a> <a id="5459" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5412" class="Bound">d</a> <a id="5461" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5414" class="Bound">e</a> <a id="5463" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5416" class="Bound">f</a> <a id="5465" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5418" class="Bound">g</a> <a id="5467" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5420" class="Bound">h</a> <a id="5469" class="Symbol">(</a><a id="5470" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5375" class="Bound">validCerts</a> <a id="5481" href="Ledger.Conway.Conformance.Equivalence.Convert.html#377" class="Function Operator">⊢conv</a> <a id="5487" href="Ledger.Conway.Conformance.Equivalence.Utxo.html#5422" class="Bound">utxo</a><a id="5491" class="Symbol">)</a>
+</pre>
+
+<!-- Properties -->
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="Ledger.Conway.Conformance.Equivalence.Map.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Map">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Map
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="Ledger.Conway.Conformance.Gov.html" class="md-footer__link md-footer__link--next" aria-label="Next: Gov">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Gov
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="js/katex-config.js"></script>
+      
+        <script src="AgdaKaTeX.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+        <script src="js/custom.js"></script>
+      
+    
+  </body>
+</html>
