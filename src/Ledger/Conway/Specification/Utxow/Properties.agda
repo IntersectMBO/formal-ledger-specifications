@@ -14,7 +14,7 @@ module Ledger.Conway.Specification.Utxow.Properties
 
 open import Ledger.Conway.Specification.Utxow txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Conway.Specification.Utxo.Properties txs abs
+open import Ledger.Conway.Specification.Utxo.Properties.Computational txs abs
 
 instance
   Computational-UTXOW : Computational _⊢_⇀⦇_,UTXOW⦈_ String
