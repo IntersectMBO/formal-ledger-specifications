@@ -50,10 +50,6 @@ class SourcePaths:
     mkdocs_dir: Path
     mkdocs_docs_dir: Path
 
-    # MdBook static structure
-    mdbook_dir: Path
-    mdbook_src_dir: Path
-
     # Key input files
     macros_sty_path: Path
     references_bib_path: Path
@@ -62,12 +58,10 @@ class SourcePaths:
     md_css_dir: Path
     md_js_dir: Path
     custom_css_path: Path
-    custom_js_path: Path
     katex_js_path: Path
 
     # Navigation templates
     mkdocs_nav_yml_path: Path
-    mdbook_summary_md_path: Path
 
     @classmethod
     def from_project_root(cls, project_root: Path) -> SourcePaths:
@@ -99,10 +93,6 @@ class SourcePaths:
         mkdocs_dir = md_dir / "mkdocs"
         mkdocs_docs_dir = mkdocs_dir / "docs"
 
-        # MdBook static
-        mdbook_dir = md_dir / "mdbook"
-        mdbook_src_dir = mdbook_dir / "src"
-
         # Key files
         macros_sty_path = latex_dir / "macros.sty"
         references_bib_path = latex_dir / "references.bib"
@@ -110,13 +100,11 @@ class SourcePaths:
         # Assets
         md_css_dir = md_common_src_dir / "css"
         md_js_dir = md_common_src_dir / "js"
-        custom_css_path = md_css_dir / "custom.css"
-        custom_js_path = md_js_dir / "custom.js"
+        custom_css_path = md_dir / "custom.css"
         katex_js_path = md_js_dir / "katex-config.js"
 
         # Navigation
-        mkdocs_nav_yml_path = md_common_dir / "nav.yml"
-        mdbook_summary_md_path = mdbook_src_dir / "SUMMARY.md"
+        mkdocs_nav_yml_path = md_dir / "nav.yml"
 
         return cls(
             project_root=project_root,
@@ -134,17 +122,13 @@ class SourcePaths:
             md_common_src_dir=md_common_src_dir,
             mkdocs_dir=mkdocs_dir,
             mkdocs_docs_dir=mkdocs_docs_dir,
-            mdbook_dir=mdbook_dir,
-            mdbook_src_dir=mdbook_src_dir,
             macros_sty_path=macros_sty_path,
             references_bib_path=references_bib_path,
             md_css_dir=md_css_dir,
             md_js_dir=md_js_dir,
             custom_css_path=custom_css_path,
-            custom_js_path=custom_js_path,
             katex_js_path=katex_js_path,
             mkdocs_nav_yml_path=mkdocs_nav_yml_path,
-            mdbook_summary_md_path=mdbook_summary_md_path,
         )
 
 
@@ -177,11 +161,6 @@ class BuildPaths:
     mkdocs_css_dir: Path
     mkdocs_js_dir: Path
     mkdocs_includes_dir: Path
-
-    mdbook_dir: Path
-    mdbook_src_dir: Path
-    mdbook_css_dir: Path
-    mdbook_js_dir: Path
 
     # Key intermediate files
     macros_json_path: Path
@@ -218,12 +197,6 @@ class BuildPaths:
         mkdocs_js_dir = mkdocs_docs_dir / "js"
         mkdocs_includes_dir = mkdocs_dir / "includes"
 
-        # MdBook site
-        mdbook_dir = build_md_dir / "mdbook"
-        mdbook_src_dir = mdbook_dir / "src"
-        mdbook_css_dir = mdbook_src_dir / "css"
-        mdbook_js_dir = mdbook_src_dir / "js"
-
         # Key files
         macros_json_path = build_md_aux_dir / "macros.json"
         agda_css_path = build_md_aux_dir / "Agda.css"
@@ -246,10 +219,6 @@ class BuildPaths:
             mkdocs_css_dir=mkdocs_css_dir,
             mkdocs_js_dir=mkdocs_js_dir,
             mkdocs_includes_dir=mkdocs_includes_dir,
-            mdbook_dir=mdbook_dir,
-            mdbook_src_dir=mdbook_src_dir,
-            mdbook_css_dir=mdbook_css_dir,
-            mdbook_js_dir=mdbook_js_dir,
             macros_json_path=macros_json_path,
             agda_css_path=agda_css_path,
             log_file_path=log_file_path,
@@ -318,7 +287,7 @@ class BibTeXConfig:
 
 @dataclass(frozen=True)
 class SiteConfig:
-    """Configuration for site generation (MkDocs/MdBook)."""
+    """Configuration for site generation (MkDocs)."""
 
     # Site metadata
     site_name: str
@@ -327,7 +296,6 @@ class SiteConfig:
 
     # Build options
     generate_mkdocs: bool
-    generate_mdbook: bool
 
     # Asset handling
     dynamic_css_files: Tuple[str, ...]
@@ -341,7 +309,6 @@ class SiteConfig:
             site_description="Formal ledger specification and documentation.",
             site_url="https://intersectmbo.github.io/formal-ledger-specifications/",
             generate_mkdocs=True,
-            generate_mdbook=False,  # Not yet fully supported
             dynamic_css_files=("css/Agda.css", "css/custom.css"),
             dynamic_js_files=("js/custom.js", "js/katex-config.js")
         )
