@@ -96,6 +96,8 @@
         - Utxo/:
           - Properties: Ledger.Conway.Specification.Utxo.Properties.md
           - Properties/:
+            - DepositHelpers: Ledger.Conway.Specification.Utxo.Properties.DepositHelpers.md
+            - GenMinspend: Ledger.Conway.Specification.Utxo.Properties.GenMinSpend.md
             - MinSpend: Ledger.Conway.Specification.Utxo.Properties.MinSpend.md
             - PoV: Ledger.Conway.Specification.Utxo.Properties.PoV.md
         - Utxow: Ledger.Conway.Specification.Utxow.md
