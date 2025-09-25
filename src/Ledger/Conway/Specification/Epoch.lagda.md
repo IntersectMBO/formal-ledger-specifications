@@ -390,14 +390,8 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
 This section defines the functions
 `calculatePoolDelegatedState`{.AgdaFunction},
 `calculateVDelegDelegatedStake`{.AgdaFunction}, and
-`mkStakeDistrs`{.AgdaFunction}, which calculates stake distributions for voting purposes.
-
-The function `calculatePoolDelegatedState`{.AgdaFunction} calculates
-the delegated stake to SPOs. Note that this function is used both in
-the `EPOCH`{.AgdaDatatype} rule (via
-`calculatePoolDelegatedStateForVoting`{.AgdaFunction}, to calculate
-the delegated stake for voting purposes, and in the
-`NEWEPOCH`{.AgdaDatatype} rule to calculate rewards.
+`mkStakeDistrs`{.AgdaFunction}, which calculates stake distributions
+for voting purposes.
 
 <!--
 ```agda
@@ -423,6 +417,33 @@ opaque
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 ```
 
+The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the
+delegated stake to SPO{.AgdaFunction}s. This function is used both in the
+`EPOCH`{.AgdaDatatype} rule (via
+`calculatePoolDelegatedStateForVoting`{.AgdaFunction}, see below) and in the
+`NEWEPOCH`{.AgdaDatatype} rule.
+
+
+```agda
+  stakeFromGADeposits
+    : GovState
+    → UTxOState
+    → Stake
+  stakeFromGADeposits govSt utxoSt = aggregateBy
+     (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
+     (mapFromPartialFun (λ (gaid , _) → lookupᵐ? deposits (GovActionDeposit gaid)) govSt')
+     where
+       open UTxOState utxoSt
+
+       govSt' : ℙ (GovActionID × RwdAddr)
+       govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
+```
+
+The function `stakeFromGADeposits`{.AgdaFunction} computes the stake
+pertaining to governance action deposits. It returns a map which, for
+each governance action, maps its `returnAddr` (as a staking
+credential) to the deposit.
+
 ```agda
   calculateVDelegDelegatedStake
     : Epoch
@@ -433,7 +454,7 @@ opaque
     → VDeleg ⇀ Coin
   calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
     = aggregate₊ (((activeVoteDelegs ˢ) ⁻¹ʳ
-                  ∘ʳ (stakePerCredential ∪⁺ stakeFromGADeposits) ˢ) ᶠˢ)
+                  ∘ʳ (stakePerCredential ∪⁺ stakeFromGADeposits govSt utxoSt) ˢ) ᶠˢ)
     where
       open UTxOState utxoSt
       open DState dState
@@ -453,14 +474,6 @@ opaque
       stakePerCredential = mapFromFun (λ c → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c))
                                       (dom activeVoteDelegs)
 
-      -- stake from governance action deposits
-      stakeFromGADeposits : Stake
-      stakeFromGADeposits = aggregateBy
-        (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
-        (mapFromPartialFun (λ (gaid , _) → lookupᵐ? deposits (GovActionDeposit gaid)) govSt')
-        where
-          govSt' : ℙ (GovActionID × RwdAddr)
-          govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
 ```
 
 ```agda
@@ -472,21 +485,34 @@ opaque
     → DState
     → KeyHash ⇀ Coin
   calculatePoolDelegatedStakeForVoting ss utxoSt govSt gState dState
-    = calculatePoolDelegatedStake ss ∪⁺ stakeFromDeposits
+    = calculatePoolDelegatedStake ss ∪⁺ (stakeFromDeposits ∣ dom (PoolsOf ss))
     where
-      open UTxOState utxoSt
-
-      stakeFromGADeposits : Stake
-      stakeFromGADeposits = aggregateBy
-        (mapˢ (λ (gaid , addr) → (gaid , addr) , stake addr) govSt')
-        (mapFromPartialFun (λ (gaid , _) → lookupᵐ? deposits (GovActionDeposit gaid)) govSt')
-        where
-          govSt' : ℙ (GovActionID × RwdAddr)
-          govSt' = mapˢ (map₂ returnAddr) (fromList govSt)
-
       stakeFromDeposits : KeyHash ⇀ Coin
-      stakeFromDeposits = aggregate₊ (((StakeDelegsOf ss ˢ) ⁻¹ʳ ∘ʳ (stakeFromGADeposits ˢ)) ᶠˢ) ∣ dom (PoolsOf ss)
+      stakeFromDeposits = aggregate₊ (((StakeDelegsOf ss ˢ) ⁻¹ʳ
+                                      ∘ʳ (stakeFromGADeposits govSt utxoSt ˢ)) ᶠˢ)
 ```
+
+The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction}
+computes the delegated stake to `SPO`{.AgdaInductiveConstructor}s that
+will be used for counting votes. It complements the result of
+`calculatePoolDelegatedStake`{.AgdaFunction} with the deposits made to
+governance actions.
+
+??? erratum
+    [CIP-1694](https://cips.cardano.org/cip/CIP-1694) specifies that
+    deposits of governance actions should count towards the stake for
+    voting purposes:
+
+    > The deposit amount will be added to the deposit pot, similar to
+    > stake key deposits. It will also be counted towards the stake of
+    > the reward address it will be paid back to, to not reduce the
+    > submitter's voting power to vote on their own (and competing)
+    > actions.
+
+    While originally _intended_ for `DRep`{.AgdaInductiveConstructor}s
+    only, the Haskell implementation and the formal specification
+    count deposits on governance actions towards the stake of
+    `SPO`{.AgdaInductiveConstructor}s as well.
 
 ```agda
   mkStakeDistrs
