@@ -304,12 +304,11 @@ module _  {Γ : CertEnv}
 
     sts-pov  : {s₁ sₙ : CertState} → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
              → getCoin s₁ ≡ getCoin sₙ
-    sts-pov (BS-base Id-nop) = refl
-    sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
+    sts-pov run-[] = refl
+    sts-pov (run-∷ x xs) = trans (CERT-pov x) (sts-pov xs)
 
-    CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
-    CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts
-    CERTS-pov (RTC (bsts , BS-ind x sts)) = trans  (CERTBASE-pov bsts)
-                                                   (cong  (_+ getCoin (CertEnv.wdrls Γ))
-                                                          (trans (CERT-pov x) (sts-pov sts)))
-
+    CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ + getCoin (WithdrawalsOf Γ)
+    CERTS-pov (_ , cbase , run-[]) = CERTBASE-pov cbase
+    CERTS-pov (_ , cbase , run-∷ x sts) = trans (CERTBASE-pov cbase)
+                                                $ cong (_+ getCoin (WithdrawalsOf Γ)) $ trans (CERT-pov x)
+                                                                                              (sts-pov sts)
