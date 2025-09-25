@@ -253,6 +253,10 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Certs.Properties.Computational.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Certs.Properties.PoV.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -270,6 +274,10 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Certs.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Chain.Properties.Computational.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -302,6 +310,10 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Enact.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Epoch.Properties.Computational.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -341,6 +353,10 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Gov.Properties.Computational.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Gov.Properties.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -349,11 +365,19 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ledger.Properties.Computational.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ledger.Properties.PoV.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ledger.Properties.Setoid.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -462,6 +486,10 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Types.GovStructure.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Utxo.Properties.Computational.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>

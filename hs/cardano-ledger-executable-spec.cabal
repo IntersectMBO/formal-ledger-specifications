@@ -501,7 +501,7 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Gov
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Base
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Ledger
       MAlonzo.Code.Ledger.Conway.Specification.PoolReap
       MAlonzo.Code.Ledger.Conway.Specification.PParams
