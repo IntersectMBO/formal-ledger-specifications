@@ -41,3 +41,6 @@ build-tools/static/latex/*.aux
 build-tools/static/latex/*.log
 build-tools/static/latex/*-Diagram.pdf
 build-tools/static/latex/*-Diagram.svg
+
+## Prevent accidental adding of conflict files!
+*.orig
