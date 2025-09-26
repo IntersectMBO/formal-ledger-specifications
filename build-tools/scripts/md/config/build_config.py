@@ -43,8 +43,6 @@ class SourcePaths:
     # Static content directories
     latex_dir: Path
     md_dir: Path
-    md_common_dir: Path
-    md_common_src_dir: Path
 
     # MkDocs static structure
     mkdocs_dir: Path
@@ -58,6 +56,7 @@ class SourcePaths:
     md_css_dir: Path
     md_js_dir: Path
     custom_css_path: Path
+    custom_js_path: Path
     katex_js_path: Path
 
     # Navigation templates
@@ -86,8 +85,6 @@ class SourcePaths:
         # Static content
         latex_dir = static_dir / "latex"
         md_dir = static_dir / "md"
-        md_common_dir = md_dir / "common"
-        md_common_src_dir = md_common_dir / "src"
 
         # MkDocs static
         mkdocs_dir = md_dir / "mkdocs"
@@ -98,9 +95,10 @@ class SourcePaths:
         references_bib_path = latex_dir / "references.bib"
 
         # Assets
-        md_css_dir = md_common_src_dir / "css"
-        md_js_dir = md_common_src_dir / "js"
-        custom_css_path = md_dir / "custom.css"
+        md_css_dir = mkdocs_docs_dir / "css"
+        md_js_dir = mkdocs_docs_dir / "js"
+        custom_css_path = md_css_dir / "custom.css"
+        custom_js_path = md_js_dir / "custom.js"
         katex_js_path = md_js_dir / "katex-config.js"
 
         # Navigation
@@ -118,8 +116,6 @@ class SourcePaths:
             static_dir=static_dir,
             latex_dir=latex_dir,
             md_dir=md_dir,
-            md_common_dir=md_common_dir,
-            md_common_src_dir=md_common_src_dir,
             mkdocs_dir=mkdocs_dir,
             mkdocs_docs_dir=mkdocs_docs_dir,
             macros_sty_path=macros_sty_path,
@@ -127,6 +123,7 @@ class SourcePaths:
             md_css_dir=md_css_dir,
             md_js_dir=md_js_dir,
             custom_css_path=custom_css_path,
+            custom_js_path=custom_js_path,
             katex_js_path=katex_js_path,
             mkdocs_nav_yml_path=mkdocs_nav_yml_path,
         )

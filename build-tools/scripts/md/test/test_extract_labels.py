@@ -20,7 +20,7 @@ def extract_labels_from_markdown_file(md_path: Path):
 
 config = load_build_config()
 markdown_dirs = [
-    config.source_paths.md_common_src_dir,
+    config.source_paths.mkdocs_docs_dir,
     config.source_paths.src_dir
 ]
 

@@ -86,7 +86,7 @@ def setup_static_site_structure(config: BuildConfig) -> Result[Dict[str, Path], 
 
 def copy_common_source_files(config: BuildConfig) -> Result[None, PipelineError]:
     """Copies shared files from the common source to all target site directories."""
-    common_src_dir = config.source_paths.md_common_src_dir
+    common_src_dir = config.source_paths.mkdocs_docs_dir
     if not common_src_dir.exists():
         logging.info("No common source directory found. Skipping copy.")
         return Result.ok(None)
