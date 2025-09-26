@@ -1,3 +1,7 @@
+---
+source_path: build-tools/static/md/mkdocs/docs/Notation.md
+---
+
 # Notation {#sec:notation}
 
 This section introduces some of the notation we use in this document and

@@ -375,7 +375,7 @@ def _extract_labels_from_markdown_file(md_file: Path, config: BuildConfig) -> Di
     for match in pattern.finditer(content):
         title, label_id = match.group(1).strip(), match.group(2)
         label_map[label_id] = {
-            "file": get_flat_filename(md_file.relative_to(config.source_paths.md_common_src_dir)),
+            "file": get_flat_filename(md_file.relative_to(config.source_paths.mkdocs_docs_dir)),
             "anchor": f"#{label_id}",
             "caption_text": title,
         }
@@ -384,7 +384,7 @@ def _extract_labels_from_markdown_file(md_file: Path, config: BuildConfig) -> Di
 
 def _handle_static_sources(config: BuildConfig) -> Dict[str, Dict[str, str]]:
     label_map = {}
-    static_md_dir = config.source_paths.md_common_src_dir
+    static_md_dir = config.source_paths.mkdocs_docs_dir
     if static_md_dir.exists():
         for md_file in static_md_dir.rglob("*.md"):
             label_map.update(_extract_labels_from_markdown_file(md_file, config))

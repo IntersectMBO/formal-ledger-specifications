@@ -1,3 +1,7 @@
+---
+source_path: build-tools/static/md/mkdocs/docs/ConwayBootstrapEnact.md
+---
+
 # Bootstrapping EnactState {#sec:conway-bootstrap-enact}
 
 To form an `EnactState`{.AgdaRecord}, some governance action IDs need to be provided. However, at

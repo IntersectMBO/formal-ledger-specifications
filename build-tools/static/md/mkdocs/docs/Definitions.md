@@ -1,3 +1,7 @@
+---
+source_path: build-tools/static/md/mkdocs/docs/Definitions.md
+---
+
 # Definitions {#sec:definitions}
 
 To keep this site somewhat self-contained, we define some technical

@@ -340,7 +340,7 @@ let
       '';
     };
 
-    # 3. DOCS SHELL - Complete documentation pipeline (mkdocs + mdbook)
+    # 3. DOCS SHELL - Complete documentation pipeline (mkdocs)
     docs = mkShell {
       inherit (locales) LANG LC_ALL LOCALE_ARCHIVE;
       packages = [
@@ -381,7 +381,6 @@ let
         echo "pip: $(pip --version)"
         echo "pybtex: $(pybtex --version)"
         echo "mkdocs: $(mkdocs --version)"
-        echo "mdbook: $(mdbook --version)"
         echo "Pandoc: $(pandoc --version)"
         echo "Chromium: $(chromium --version 2>/dev/null | head -1 || echo 'available')"
         echo ""
@@ -389,8 +388,6 @@ let
         echo "  • Agda development: agda, fls-shake"
         echo "  • LaTeX→Markdown: pandoc, python scripts"
         echo "  • MkDocs sites: mkdocs build"
-        echo "  • mdbook sites: mdbook build"
-        echo "  • Install mdbook extensions: cargo install mdbook-pdf"
         echo "----------------------------------------------------"
       '';
     };

@@ -179,7 +179,6 @@ We provide several development shells tailored for different tasks. You can ente
     + [`pandoc`][pandoc] (the document conversion tool)
     + [`latex`][latex] (the typesetting language)
     + [`mkdocs`][mkdocs] (with Python dependencies)
-    + [`mdbook`][mdbook] (with Rust dependencies)
 
 
 ---
@@ -852,9 +851,6 @@ Here is the complete annotated subtree of the `build-tools` directory.
 │           │   └── src/                             # Source assets (CSS, JS, images, etc.)
 │           │       ├── css/custom.css               # Custom stylesheet for documentation sites
 │           │       └── js/custom.js                 # Custom JavaScript for documentation sites
-│           ├── mdbook/                              # Configuration and templates for MdBook
-│           │   ├── book.toml                        # Main configuration file for MdBook
-│           │   └── src/SUMMARY.md                   # Defines the navigation for the MdBook site
 │           └── mkdocs/                              # Configuration and templates for MkDocs
 │               ├── docs/index.md                    # Homepage/landing page for the MkDocs site
 │               ├── includes/links.md                # Common Markdown link references
@@ -904,7 +900,6 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 [latexmk]: https://ctan.org/pkg/latexmk
 [literate]: https://en.wikipedia.org/wiki/Literate_programming
 [Main.hs]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/src/Main.hs
-[mdbook]: https://rust-lang.github.io/mdBook/
 [mkdocs]: https://www.mkdocs.org/
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
 [niv]: https://github.com/nmattia/niv

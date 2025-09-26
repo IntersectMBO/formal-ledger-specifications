@@ -280,11 +280,6 @@ def deploy_mkdocs_assets(config: BuildConfig, nav_files: List[str]) -> List[str]
         shutil.copy2(agda_css_path, config.build_paths.mkdocs_css_dir)
         logging.info("✅ Deployed generated custom.css and Agda.css.")
 
-    # 2. Deploy JS
-    shutil.copy2(config.source_paths.custom_js_path, config.build_paths.mkdocs_js_dir)
-    shutil.copy2(config.source_paths.katex_js_path, config.build_paths.mkdocs_js_dir)
-    logging.info("✅ Deployed custom.js and KaTeX config.")
-
     # 3. Deploy Bibliography
     bib_source = config.source_paths.references_bib_path
     bib_target_dir = config.build_paths.mkdocs_includes_dir

@@ -108,7 +108,10 @@ def stage_content(config: BuildConfig, processed_files: List[Path]) -> List[Path
         # or pass through from BuildConfig if you wire mkdocs extras through.
         "index.md": "README.md",
         "guide.md": "CONTRIBUTING.md",
-        "Notation.md": "build-tools/static/md/common/src/Notation.md",
+        "Notation.md": "build-tools/static/md/mkdocs/docs/Notation.md",
+        "Definitions.md": "build-tools/static/md/mkdocs/docs/Definitions.md",
+        "ConwayBootstrap.md": "build-tools/static/md/mkdocs/docs/ConwayBootstrap.md",
+        "ConwayBootstrapEnact.md": "build-tools/static/md/mkdocs/docs/ConwayBootstrapEnact.md",
     }
 
     # Ensure each staged file has a correct source_path header

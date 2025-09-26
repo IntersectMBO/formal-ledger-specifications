@@ -30,7 +30,7 @@ new_md = ensure_source_header_str(md_text, "src/Ledger/Prelude.agda", "master")
 
 # Add/update a single file on disk (preserve existing header if present):
 ensure_source_header_file(Path("_build/md/mkdocs/docs/Notation.md"),
-                          "build-tools/static/md/common/src/Notation.md",
+                          "build-tools/static/md/mkdocs/docs/Notation.md",
                           "master",
                           preserve_existing=True)
 
