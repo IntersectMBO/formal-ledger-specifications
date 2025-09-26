@@ -1,8 +1,12 @@
-\section{Certificates}
-\label{sec:certificates}
-\modulenote{\ConwayModule{Certs}}.
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Certs.lagda.md
+---
 
-\begin{code}[hide]
+# Certificates {#sec:certificates}
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude renaming (filterˢ to filter)
@@ -14,13 +18,13 @@ module Ledger.Conway.Specification.Certs (gs : _) (open GovStructure gs) where
 open import Ledger.Conway.Specification.Gov.Actions gs
 open RwdAddr
 open PParams
-\end{code}
+```
+-->
+
+## Stake Pool Parameter Definitions
 
 
-\begin{figure*}
-\begin{AgdaMultiCode}
-\begin{NoConway}
-\begin{code}
+```agda
 record StakePoolParams : Type where
   field
     owners          : ℙ KeyHash
@@ -28,16 +32,12 @@ record StakePoolParams : Type where
     margin          : UnitInterval
     pledge          : Coin
     rewardAccount   : Credential
-\end{code}
-\end{NoConway}
-\end{AgdaMultiCode}
-\caption{Stake Pool Parameter Definitions}
-\end{figure*}
+```
 
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+## Deposit Types
+
+```agda
 data DepositPurpose : Type where
   CredentialDeposit  : Credential   → DepositPurpose
   PoolDeposit        : KeyHash      → DepositPurpose
@@ -46,9 +46,10 @@ data DepositPurpose : Type where
 
 Deposits : Type
 Deposits = DepositPurpose ⇀ Coin
-\end{code}
+```
 
-\begin{code}[hide]
+<!--
+```agda
 record HasDeposits {a} (A : Type a) : Type a where
   field DepositsOf : A → Deposits
 open HasDeposits ⦃...⦄ public
@@ -56,16 +57,14 @@ open HasDeposits ⦃...⦄ public
 instance
   unquoteDecl DecEq-DepositPurpose = derive-DecEq
     ((quote DepositPurpose , DecEq-DepositPurpose) ∷ [])
-\end{code}
-\end{AgdaMultiCode}
-\caption{Deposit Types}
-\label{fig:certs:deposit-types}
-\end{figure*}
+```
+-->
 
 
-\begin{figure*}[h!]
-\begin{AgdaMultiCode}
-\begin{code}
+## Miscellaneous Type Aliases
+
+
+```agda
 CCHotKeys DReps PoolEnv Pools Retiring Rewards Stake StakeDelegs : Type
 CCHotKeys    = Credential ⇀ Maybe Credential
 DReps        = Credential ⇀ Epoch
@@ -75,8 +74,10 @@ Retiring     = KeyHash ⇀ Epoch
 Rewards      = Credential ⇀ Coin
 Stake        = Credential ⇀ Coin
 StakeDelegs  = Credential ⇀ KeyHash
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 record HasCCHotKeys {a} (A : Type a) : Type a where
   field CCHotKeysOf : A → CCHotKeys
 
@@ -105,16 +106,13 @@ open HasRetiring ⦃...⦄ public
 open HasRewards ⦃...⦄ public
 open HasStake ⦃...⦄ public
 open HasStakeDelegs ⦃...⦄ public
-\end{code}
-\end{AgdaMultiCode}
-\caption{Miscellaneous Type Aliases}
-\label{fig:certs:misc-type-aliases}
-\end{figure*}
+```
+-->
 
 
-\begin{figure*}[h!]
-\begin{AgdaMultiCode}
-\begin{code}
+## Delegation Definitions
+
+```agda
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert
   dereg       : Credential → Maybe Coin → DCert
@@ -123,17 +121,20 @@ data DCert : Type where
   regdrep     : Credential → Coin → Anchor → DCert
   deregdrep   : Credential → Coin → DCert
   ccreghot    : Credential → Maybe Credential → DCert
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
   -- The `reg` cert is deprecated in Conway, but it's still present in this era
   -- for backwards compatibility. This has been added to the spec to make
   -- conformance testing work properly. We don't talk about this certificate
-  -- in the pdf because it has been deprecated and we want to discourage people
+  -- in the docs because it has been deprecated and we want to discourage people
   -- from using it.
   reg         : Credential → Coin → DCert
-\end{code}
-\begin{NoConway}
-\begin{code}
+```
+-->
+
+```agda
 cwitness : DCert → Maybe Credential
 cwitness (delegate c _ _ _)  = just c
 cwitness (dereg c _)         = just c
@@ -142,24 +143,23 @@ cwitness (retirepool kh _)   = just $ KeyHashObj kh
 cwitness (regdrep c _ _)     = just c
 cwitness (deregdrep c _)     = just c
 cwitness (ccreghot c _)      = just c
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 -- The implementation requires the `reg` cert to be witnessed only if the
 -- deposit is set. There didn't use to be a field for the deposit, but that was
 -- added in the Conway era to make it easier to determine, just by looking at
 -- the transaction, how much deposit was paid for that certificate.
 cwitness (reg _ zero)        = nothing
 cwitness (reg c (suc _))     = just c
-\end{code}
-\end{NoConway}
-\end{AgdaMultiCode}
-\caption{Delegation Definitions}
-\end{figure*}
+```
+-->
 
 
-\begin{figure*}[htb]
-\begin{AgdaMultiCode}
-\begin{code}
+## Certification Types
+
+```agda
 record CertEnv : Type where
   field
     epoch     : Epoch
@@ -169,11 +169,15 @@ record CertEnv : Type where
     coldCreds : ℙ Credential
 
 record DState : Type where
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
   constructor ⟦_,_,_⟧ᵈ
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
   field
     voteDelegs   : VoteDelegs
     stakeDelegs  : StakeDelegs
@@ -185,21 +189,29 @@ record PState : Type where
     retiring  : KeyHash ⇀ Epoch
 
 record GState : Type where
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
   constructor ⟦_,_⟧ᵛ
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
   field
     dreps      : DReps
     ccHotKeys  : Credential ⇀ Maybe Credential
 
 record CertState : Type where
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
   constructor ⟦_,_,_⟧ᶜˢ
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
   field
     dState : DState
     pState : PState
@@ -210,12 +222,10 @@ record DelegEnv : Type where
     pparams       : PParams
     pools         : Pools
     delegatees    : ℙ Credential
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types Used for CERTS Transition System}
-\end{figure*}
+```
 
-\begin{code}[hide]
+<!--
+```agda
 record HasDState {a} (A : Type a) : Type a where
   field DStateOf : A → DState
 open HasDState ⦃...⦄ public
@@ -283,10 +293,16 @@ instance
 
   HasVoteDelegs-CertState : HasVoteDelegs CertState
   HasVoteDelegs-CertState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf
+```
+-->
 
+```agda
 rewardsBalance : DState → Coin
 rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
+```
 
+<!--
+```agda
 instance
   HasCoin-CertState : HasCoin CertState
   HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
@@ -329,122 +345,95 @@ private variable
   stᵍ stᵍ' : GState
   stᵖ stᵖ' : PState
   cc : ℙ Credential
-\end{code}
+```
+-->
 
-\subsection{Changes Introduced in Conway Era}
 
-\subsubsection{Delegation}
+## Changes Introduced in the Conway Era
 
-Registered credentials can now delegate to a DRep as well as to a
-stake pool. This is achieved by giving the \delegate{} certificate two
-optional fields, corresponding to a DRep and stake pool.
+### Delegation
+
+Registered credentials can now delegate to a DRep as well as to a stake
+pool. This is achieved by giving the
+`delegate`{.AgdaInductiveConstructor} certificate two optional fields,
+corresponding to a DRep and stake pool.
 
 Stake can be delegated for voting and block production simultaneously,
 since these are two separate features. In fact, preventing this could
 weaken the security of the chain, since security relies on high
 participation of honest stake holders.
 
-\subsubsection{Removal of Pointer Addresses, Genesis Delegations and MIR Certificates}
+### Removal of Pointer Addresses, Genesis Delegations and MIR Certificates
 
-Support for pointer addresses, genesis delegations and MIR
-certificates is removed (see \hrefCIP{1694} and \textcite{cip1694}).
-In \DState{}, this means that the four fields relating to those features
-are no longer present, and \DelegEnv{} contains none of the fields it used
-to in the Shelley era (see \textcite[\sectionname~9.2]{shelley-ledger-spec}).
+Support for pointer addresses, genesis delegations and MIR certificates
+is removed (see [CIP-1694](https://cips.cardano.org/cip-1694) and
+[CKB+23](#cip1694)). In `DState`{.AgdaDatatype}, this means that the
+four fields relating to those features are no longer present, and
+`DelegEnv`{.AgdaDatatype} contains none of the fields it used to in the
+Shelley era (see [CVG19, ](#shelley-ledger-spec)).
 
 Note that pointer addresses are still usable, only their staking
 functionality has been retired. So all funds locked behind pointer
-addresses are still accessible, they just don't count towards the
-stake distribution anymore. Genesis delegations and MIR certificates
-have been superceded by the new governance mechanisms, in particular
-the \TreasuryWithdrawal{} governance action in case of the MIR certificates.
+addresses are still accessible, they just don’t count towards the stake
+distribution anymore. Genesis delegations and MIR certificates have been
+superceded by the new governance mechanisms, in particular the
+`TreasuryWithdrawal`{.AgdaInductiveConstructor} governance action in
+case of the MIR certificates.
 
-\subsubsection{Explicit Deposits}
+### Explicit Deposits
 
-Registration and deregistration of staking credentials are now
-required to explicitly state the deposit that is being paid or
-refunded. This deposit is used for checking correctness of transactions
-with certificates. Including the deposit aligns better with other
-design decisions such as having explicit transaction fees and helps
-make this information visible to light clients and hardware wallets.
+Registration and deregistration of staking credentials are now required
+to explicitly state the deposit that is being paid or refunded. This
+deposit is used for checking correctness of transactions with
+certificates. Including the deposit aligns better with other design
+decisions such as having explicit transaction fees and helps make this
+information visible to light clients and hardware wallets.
 
 While not shown in the figures, the old certificates without explicit
 deposits will still be supported for some time for backwards
 compatibility.
 
-\subsection{Governance Certificate Rules}
+## Governance Certificate Rules
 
 The rules for transition systems dealing with individual certificates
 are defined in
-\begin{NoConway}
-\Cref{fig:sts:aux-cert-deleg,fig:sts:aux-cert-pool,fig:sts:aux-cert-gov}.
-\end{NoConway}
-\begin{Conway}
-\Cref{fig:sts:aux-cert-deleg,fig:sts:aux-cert-gov}.
-\end{Conway}
-GOVCERT deals with the new certificates relating to DReps and the
-constitutional committee.
+Sections [Auxiliary `DELEG`{.AgdaDatatype} Transition System](#auxiliary-deleg-transition-system),
+[Auxiliary `POOL`{.AgdaDatatype} transition system](#auxiliary-pool-transition-system), and
+[Auxiliary `GOVCERT`{.AgdaDatatype} transition system](#auxiliary-govcert-transition-system).
 
-\begin{itemize}
-\item \GOVCERTregdrep{} registers (or re-registers) a DRep. In case of
-  registration, a deposit needs to be paid. Either way, the activity
-  period of the DRep is reset.
-\item \GOVCERTderegdrep{} deregisters a DRep.
-\item \GOVCERTccreghot{} registers a ``hot'' credential for constitutional
-  committee members.\footnote{By ``hot'' and ``cold'' credentials we mean
-    the following: a cold credential is used to register a hot credential,
-    and then the hot credential is used for voting. The idea is that the
-    access to the cold credential is kept in a secure location, while the
-    hot credential is more conveniently accessed.  If the hot credential
-    is compromised, it can be changed using the cold credential.}
-  We check that the cold key did not previously
-  resign from the committee. We allow this delegation for any cold
-  credential that is either part of \EnactState{} or is is a proposal.
-  This allows a newly elected member of the constitutional committee to
-  immediately delegate their vote to a hot key and use it to vote. Since
-  votes are counted after previous actions have been enacted, this allows
-  constitutional committee members to act without a delay of one epoch.
-\end{itemize}
+`GOVCERT`{.AgdaDatatype} deals with the new certificates relating to
+DReps and the constitutional committee.
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
-data _⊢_⇀⦇_,DELEG⦈_     : DelegEnv  → DState     → DCert  → DState     → Type
++  `GOVCERT-regdrep`{.AgdaInductiveConstructor} registers (or
+   re-registers) a DRep. In case of registration, a deposit needs to be
+   paid. Either way, the activity period of the DRep is reset.
 
-data _⊢_⇀⦇_,POOL⦈_      : PoolEnv   → PState     → DCert  → PState     → Type
++  `GOVCERT-deregdrep`{.AgdaInductiveConstructor} deregisters a DRep.
 
-data _⊢_⇀⦇_,GOVCERT⦈_   : CertEnv   → GState     → DCert  → GState     → Type
++  `GOVCERT-ccreghot`{.AgdaInductiveConstructor} registers a "hot"
+   credential for constitutional committee members.[^1] We check that the
+   cold key did not previously resign from the committee. We allow this
+   delegation for any cold credential that is either part of
+   `EnactState`{.AgdaRecord} or a proposal. This allows a newly
+   elected member of the constitutional committee to immediately delegate
+   their vote to a hot key and use it to vote. Since votes are counted
+   after previous actions have been enacted, this allows constitutional
+   committee members to act without a delay of one epoch.
 
-data _⊢_⇀⦇_,CERT⦈_      : CertEnv   → CertState  → DCert  → CertState  → Type
 
-data _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv   → CertState  → ⊤      → CertState  → Type
+### Auxiliary DELEG transition system
 
--- _⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
--- _⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
-_⊢_⇀⦇_,CERTS⦈_     : CertEnv → CertState → List DCert → CertState → Type
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
-\end{code}
-\end{AgdaMultiCode}
-\caption{Types for the transition systems relating to certificates}
-\label{fig:sts:certs-types}
-\end{figure*}
-
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
-data _⊢_⇀⦇_,DELEG⦈_ -- : DelegEnv → DState → DCert → DState → Type
-  where
+```agda
+data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type where
 
   DELEG-delegate :
-    let Γ = ⟦ pp , pools , delegatees ⟧
-    in
     ∙ (c ∉ dom rwds → d ≡ pp .keyDeposit)
     ∙ (c ∈ dom rwds → d ≡ 0)
     ∙ mvd ∈ mapˢ (just ∘ vDelegCredential) delegatees ∪
             fromList ( nothing ∷ just vDelegAbstain ∷ just vDelegNoConfidence ∷ [] )
     ∙ mkh ∈ mapˢ just (dom pools) ∪ ❴ nothing ❵
       ────────────────────────────────
-      Γ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mvd mkh d ,DELEG⦈ ⟦ insertIfJust c mvd vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+      ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ delegate c mvd mkh d ,DELEG⦈ ⟦ insertIfJust c mvd vDelegs , insertIfJust c mkh sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
 
   DELEG-dereg :
     ∙ (c , 0) ∈ rwds
@@ -456,19 +445,13 @@ data _⊢_⇀⦇_,DELEG⦈_ -- : DelegEnv → DState → DCert → DState → Ty
     ∙ d ≡ pp .keyDeposit ⊎ d ≡ 0
       ────────────────────────────────
       ⟦ pp , pools , delegatees ⟧ ⊢ ⟦ vDelegs , sDelegs , rwds ⟧ ⇀⦇ reg c d ,DELEG⦈ ⟦ vDelegs , sDelegs , rwds ∪ˡ ❴ c , 0 ❵ ⟧
+```
 
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{Auxiliary DELEG transition system}
-\label{fig:sts:aux-cert-deleg}
-\end{figure*}
 
-\begin{NoConway}
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
-data _⊢_⇀⦇_,POOL⦈_ -- : PoolEnv → PState → DCert → PState → Type
-  where
+### Auxiliary POOL transition system
+
+```agda
+data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-regpool :
     ∙ kh ∉ dom pools
@@ -478,25 +461,18 @@ data _⊢_⇀⦇_,POOL⦈_ -- : PoolEnv → PState → DCert → PState → Type
   POOL-retirepool :
     ────────────────────────────────
     pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{Auxiliary POOL transition system}
-\label{fig:sts:aux-cert-pool}
-\end{figure*}
-\end{NoConway}
+```
 
-\begin{figure*}[htb]
-\begin{AgdaSuppressSpace}
-\begin{code}
-data _⊢_⇀⦇_,GOVCERT⦈_ -- : CertEnv → GState → DCert → GState → Type
-  where
+
+### Auxiliary GOVCERT transition system
+
+```agda
+data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type where
 
   GOVCERT-regdrep :
-    let Γ = ⟦ e , pp , vs , wdrls , cc ⟧
-    in
     ∙ (d ≡ pp .drepDeposit × c ∉ dom dReps) ⊎ (d ≡ 0 × c ∈ dom dReps)
       ────────────────────────────────
-      Γ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ regdrep c d an ,GOVCERT⦈ ⟦ ❴ c , e + pp .drepActivity ❵ ∪ˡ dReps , ccKeys ⟧
 
   GOVCERT-deregdrep :
     ∙ c ∈ dom dReps
@@ -508,32 +484,19 @@ data _⊢_⇀⦇_,GOVCERT⦈_ -- : CertEnv → GState → DCert → GState → T
     ∙ c ∈ cc
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
+```
 
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{Auxiliary GOVCERT transition system}
-\label{fig:sts:aux-cert-gov}
-\end{figure*}
+## The <span class="AgdaDatatype">CERTS</span> Transition System
 
-\Cref{fig:sts:certs} assembles the CERTS transition system by
-bundling the previously defined pieces together into the CERT system,
-and then taking the reflexive-transitive closure of CERT together with
-CERTBASE as the base case. CERTBASE does the following:
+This section culminates in the definition of the `CERTS`{.AgdaDatatype} transition
+system by bundling previously defined pieces together into a
+`CERT`{.AgdaDatatype} transition rule which `CERTS`{.AgdaDatatype} runs on a sequence
+of signals, keeping track of the certification state as it progresses.
 
-\begin{itemize}
-\item check the correctness of withdrawals and ensure that withdrawals
-  only happen from credentials that have delegated their voting power;
-\item set the rewards of the credentials that withdrew funds to zero;
-\item and set the activity timer of all DReps that voted to
-  \drepActivity{} epochs in the future.
-\end{itemize}
+### The <span class="AgdaDatatype">CERT</span> Transition System
 
-\begin{figure*}[htbp]
-\emph{CERT transitions}
-\begin{AgdaSuppressSpace}
-\begin{code}
-data _⊢_⇀⦇_,CERT⦈_  -- : CertEnv   → CertState  → DCert  → CertState  → Type
-  where
+```agda
+data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → Type where
 
   CERT-deleg :
     ∙ ⟦ pp , PState.pools stᵖ , dom (GState.dreps stᵍ) ⟧ ⊢ stᵈ ⇀⦇ dCert ,DELEG⦈ stᵈ'
@@ -549,16 +512,30 @@ data _⊢_⇀⦇_,CERT⦈_  -- : CertEnv   → CertState  → DCert  → CertSta
     ∙ Γ ⊢ stᵍ ⇀⦇ dCert ,GOVCERT⦈ stᵍ'
       ────────────────────────────────
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
+```
 
-\end{code}
-\end{AgdaSuppressSpace}
-\emph{CERTBASE transition}
-\begin{AgdaSuppressSpace}
-\begin{code}[hide]
+### The <span class="AgdaFunction">CERTBASE</span> Function
+
+Here we define the `CERTBASE`{.AgdaFunction} function which handles the following
+important housekeeping tasks:
+
+- check the correctness of withdrawals and ensure that withdrawals only
+  happen from credentials that have delegated their voting power;
+
+- set the rewards of the credentials that withdrew funds to zero;
+
+- and set the activity timer of all DReps that voted to `drepActivity`{.AgdaField}
+  epochs in the future.
+
+<!--
+```agda
 open GovVote using (voter)
-data _⊢_⇀⦇_,CERTBASE⦈_ where
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
+data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
+
   CERT-base :
     let refresh          = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
         refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
@@ -569,9 +546,29 @@ data _⊢_⇀⦇_,CERTBASE⦈_ where
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧ ⇀⦇ _ ,CERTBASE⦈ ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{CERTS rules}
-\label{fig:sts:certs}
-\end{figure*}
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧
+      ⇀⦇ _ ,CERTBASE⦈
+      ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
+
+_⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
+_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
+```
+
+# References {#references .unnumbered}
+
+**\[CKB+23\]** <span id="cip1694" label="cip1694"></span> Jared Corduan
+and Andre Knispel and Matthias Benkort and Kevin Hammond and Charles
+Hoskinson and Samuel Leathers. *A First Step Towards On-Chain
+Decentralized Governance*. 2023.
+
+**\[CVG19\]** <span id="shelley-ledger-spec"
+label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
+and Matthias Güdemann. *A Formal Specification of the Cardano Ledger*.
+2019.
+
+[^1]: By "hot" and "cold" credentials we mean the following: a cold
+    credential is used to register a hot credential, and then the hot
+    credential is used for voting. The idea is that the access to the
+    cold credential is kept in a secure location, while the hot
+    credential is more conveniently accessed. If the hot credential is
+    compromised, it can be changed using the cold credential.
