@@ -168,41 +168,39 @@ instance
     with computeProof Γ (CertState.gState cs) dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
 
-  Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
-  Computational-CERTBASE .computeProof ce st sig = goal
-    where
-    open CertEnv ce; open PParams pp; open CertState st
-    open GState gState; open DState dState
-    sep : String
-    sep = " | "
-    refresh = mapPartial (isGovVoterDRep ∘ voter) (fromList votes)
 
-    genErr : ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
-                 × mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards)
-                  → String
-    genErr ¬p = case dec-de-morgan ¬p of λ where
-      (inj₁ a) → " ¬ ( filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs ) "
-                 + sep + " filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)): "
-                 + show (filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)))
-                 + sep + " dom voteDelegs: "
-                 + show (dom voteDelegs)
-      (inj₂ b) → "¬ ( mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ) ⊆ proj₁ rewards )"
-                 + sep + " mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ): "
-                 + show (mapˢ (Bifunctor.map₁ Bifunctor-× (RwdAddr.stake)) (wdrls ˢ))
-                 + sep + " proj₁ rewards: "
-                 + show (proj₁ rewards)
-
-    goal : ComputationResult String
-           (∃-syntax (_⊢_⇀⦇_,CERTBASE⦈_ ⟦ CertEnv.epoch ce , pp , votes , wdrls , _ ⟧ st sig))
-    goal = case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
+  Computational-PRE-CERT : Computational _⊢_⇀⦇_,PRE-CERT⦈_ String
+  Computational-PRE-CERT .computeProof ce cs _ =
+    let open CertEnv ce; open PParams pp
+        open GState (CertState.gState cs); open DState (CertState.dState cs)
+        refresh = mapPartial (isGovVoterDRep ∘ voter) (fromList votes)
+        refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
+    in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
               × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-      (yes p) → success (-, CERT-base p)
-      (no ¬p) → failure (genErr ¬p)
-  Computational-CERTBASE .completeness ce st _ st' (CERT-base p)
-    rewrite let dState = CertState.dState st; open DState dState; open CertEnv ce in
-      dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
-                × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿
+      (yes p) → success (-, CERT-init p)
+      (no ¬p) → failure (genErrors ¬p)
+  Computational-PRE-CERT .completeness ce st _ st' (CERT-init p)
+    rewrite let dState = CertState.dState st; open DState dState in
+      dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
+                × mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
+
+  -- POST-CERT has no premises, so computing always succeeds
+  -- with the unique post-state and proof CERT-last.
+  Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
+  Computational-POST-CERT .computeProof ce cs tt = success ( cs' , CERT-last)
+    where
+      dreps : DReps
+      dreps = GState.dreps (CertState.gState cs)
+      validVoteDelegs : VoteDelegs
+      validVoteDelegs = (DState.voteDelegs (CertState.dState cs)) ∣^ ( mapˢ vDelegCredential (dom dreps) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
+      cs' : CertState
+      cs' = ⟦ ⟦ validVoteDelegs , _ , _ ⟧ , CertState.pState cs , CertState.gState cs ⟧
+
+  -- Completeness: the relational proof pins s' to exactly `post`,
+  -- and computeProof returns success at that same state; so refl.
+  Computational-POST-CERT .completeness ce cs _ cs' CERT-last = refl
+
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it

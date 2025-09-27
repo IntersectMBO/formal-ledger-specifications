@@ -122,7 +122,7 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
-  module CERTS-pov-helper
+  module Certs-Pov-lemmas
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
     ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
     ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
@@ -135,13 +135,13 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
 ```
 
 
-**Lemma (`CERTBASE`{.AgdaOperator} rule preserves value).**
+**Lemma (`PRE-CERT`{.AgdaOperator} rule preserves value).**
 
 *Informally*.
 
 Let `Γ`{.AgdaBound} : `CertEnv`{.AgdaRecord} be a certificate environment, and let
 `s`{.AgdaBound}, `s'`{.AgdaBound} : `CertState`{.AgdaRecord} be certificate states such that
-`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} \_ `,CERTBASE⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
+`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} \_ `,PRE-CERT⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
 Then, the value of `s`{.AgdaBound} is equal to the value of `s'`{.AgdaBound} plus the
 value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
 
@@ -150,9 +150,9 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
 *Formally*.
 
 ```agda
-    CERTBASE-pov : {Γ : CertEnv} {s s' : CertState}
+    PRE-CERT-pov : {Γ : CertEnv} {s s' : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
-      → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
+      → Γ ⊢ s ⇀⦇ _ ,PRE-CERT⦈ s'
       → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 ```
 
@@ -160,11 +160,11 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
 
 ```agda
 
-    CERTBASE-pov  {Γ   = Γ}
+    PRE-CERT-pov  {Γ   = Γ}
                   {s   = cs}
                   {s'  = cs'}
                   validNetId
-                  (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
+                  (CERT-pre {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
       let
         open DState (dState cs )
         open DState (dState cs') renaming (rewards to rewards')
@@ -210,6 +210,33 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
             ∎
 ```
 
+
+**Lemma (`POST-CERT`{.AgdaOperator} rule preserves value).**
+
+*Informally*.
+
+Let `Γ`{.AgdaBound} : `CertEnv`{.AgdaRecord} be a certificate environment, and let
+`s`{.AgdaBound}, `s'`{.AgdaBound} : `CertState`{.AgdaRecord} be certificate states such that
+`s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} \_ `,POST-CERT⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
+Then, the value of `s`{.AgdaBound} is equal to the value of `s'`{.AgdaBound}.
+In other terms,
+
+`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
+
+*Formally*.
+
+```agda
+    POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
+      → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s'
+      → getCoin s ≡ getCoin s'
+```
+
+*Proof*.
+
+```agda
+    POST-CERT-pov CERT-post = refl
+```
+
 **Lemma (iteration of `CERT`{.AgdaOperator} rule preserves value).**
 
 *Informally*. Let `l`{.AgdaBound} be a list of `DCert`{.AgdaDatatype}s, and let
@@ -221,14 +248,14 @@ Then, the value of `s₁`{.AgdaBound} is equal to the value of `sₙ`{.AgdaBound
 *Formally*.
 
 ```agda
-    sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState}
-      → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
+    sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
+      → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
       → getCoin s₁ ≡ getCoin sₙ
 ```
 
 *Proof*.
 
 ```agda
-    sts-pov (BS-base Id-nop) = refl
-    sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
+    sts-pov (run-[] x) = POST-CERT-pov x
+    sts-pov (run-∷ x xs) = trans (CERT-pov x) (sts-pov xs)
 ```

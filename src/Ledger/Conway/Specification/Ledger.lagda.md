@@ -153,24 +153,24 @@ allColdCreds govSt es =
 <!--
 ```agda
 private variable
-  Γ : LEnv
-  s s' s'' : LState
-  utxoSt utxoSt' : UTxOState
-  govSt govSt' : GovState
-  certState certState' : CertState
-  tx : Tx
-  slot : Slot
-  ppolicy : Maybe ScriptHash
-  pp : PParams
-  enactState : EnactState
-  treasury : Treasury
+  Γ                     : LEnv
+  s s' s''              : LState
+  utxoSt utxoSt'        : UTxOState
+  govSt govSt'          : GovState
+  certState certState'  : CertState
+  tx                    : Tx
+  slot                  : Slot
+  ppolicy               : Maybe ScriptHash
+  pp                    : PParams
+  enactState            : EnactState
+  treasury              : Treasury
 ```
 -->
 
 ```agda
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
   LEDGER-V :
-    let  txb         = tx .body
+    let  txb = tx .body
 ```
 <!--
 ```agda
@@ -199,16 +199,15 @@ process governance action proposals and votes.
 ??? note
 
     The governance state used as input to `GOVS`{.AgdaDatatype} is filtered to
-    remove votes from `DRep`{.AgdaInductiveConstructor}s that are no longer
+    remove votes from DReps that are no longer
     registered (see function `rmOrphanDRepVotes`{.AgdaFunction}).
 
     This mechanism serves to prevent attacks where malicious adversaries could
-    submit transactions that:
+    submit transactions that
 
-    1. register a fraudulent `DRep`{.AgdaInductiveConstructor}
-    1. cast numerous votes utilizing that `DRep`{.AgdaInductiveConstructor}
-    1. deregisters the `DRep`{.AgdaInductiveConstructor}, thereby recovering
-    the deposit
+    1.  register a fraudulent DRep,
+    2.  cast numerous votes utilizing that DRep,
+    3.  deregisters the DRep thereby recovering the deposit.
 
 <!--
 ```agda

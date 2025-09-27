@@ -13,11 +13,12 @@ module Ledger.Conway.Specification.Ledger.Properties.PoV
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Chain txs abs
-open import Ledger.Conway.Specification.Certs.Properties.PoVLemmas govStructure
+open import Ledger.Conway.Specification.Certs.Properties govStructure
 open import Ledger.Conway.Specification.Certs.Properties.PoV govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Utxo txs abs
+open import Ledger.Conway.Specification.Utxo.Properties txs abs using (χ; module DepositHelpers)
 open import Ledger.Conway.Specification.Utxo.Properties.PoV txs abs
 open import Ledger.Conway.Specification.Utxow txs abs
 
@@ -81,10 +82,9 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
       open LState s' renaming (utxoSt to utxoSt'; govSt to govSt'; certState to certState')
       open CertState certState'
       open ≡-Reasoning
-      open CERTSpov indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ
-      zeroMap = constMap (mapˢ RwdAddr.stake (dom txWithdrawals)) 0
+      open Certs-PoV indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ
+      zeroMap    = constMap (mapˢ RwdAddr.stake (dom txWithdrawals)) 0
     in
-
     begin
       getCoin utxoSt + getCoin certState
         ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov r h') ⟩

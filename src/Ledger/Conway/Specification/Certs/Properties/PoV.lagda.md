@@ -1,4 +1,4 @@
-n<!--
+<!--
 ```agda
 
 {-# OPTIONS --safe #-}
@@ -39,7 +39,7 @@ private variable
 instance
   _ = +-0-monoid
 
-module CERTSpov  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+module Certs-PoV  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                               → disjoint (dom m) (dom m')
                               → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
@@ -51,7 +51,7 @@ module CERTSpov  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' :
     ( ≡ᵉ-getCoinˢ'     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
                          → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
     where
-    open CERTS-pov-helper indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ' public
+    open Certs-Pov-lemmas indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'
 ```
 -->
 
@@ -79,6 +79,7 @@ the value of the withdrawals in `Γ`{.AgdaBound}.
 *Proof*.
 
 ```agda
-    CERTS-pov validNetId (BS-base x) = CERTBASE-pov validNetId x
-    CERTS-pov validNetId (BS-ind x xs) = trans (CERT-pov indexedSumᵛ'-∪' x) (CERTS-pov validNetId xs)
+    CERTS-pov {Γ = Γ} validNetId (run (pre-cert , certs)) =
+      trans  (PRE-CERT-pov validNetId pre-cert)
+             (cong (_+ getCoin (WithdrawalsOf Γ)) (sts-pov certs))
 ```

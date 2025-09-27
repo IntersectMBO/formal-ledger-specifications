@@ -59,6 +59,27 @@ module _ {_⊢_⇀⟦_⟧ᵇ_ : C → S → ⊤ → S → Type} {_⊢_⇀⟦_⟧
           Γ ⊢ s ⇀⟦ sigs ⟧*' s''
 
 
+data RunTraceAndThen (Step : C → S → Sig → S → Type) (Last : C → S → ⊤ → S → Type) :
+  C → S → List Sig → S → Type where
+
+    run-[] : Last Γ s tt s' → RunTraceAndThen Step Last Γ s [] s'
+
+    run-∷ :  Step Γ s sig s'
+             → RunTraceAndThen Step Last Γ s' sigs s''
+             → RunTraceAndThen Step Last Γ s (sig ∷ sigs) s''
+
+data RunTraceAfterAndThen (Init : C → S → ⊤ → S → Type)
+                          (Step : C → S → Sig → S → Type)
+                          (Last : C → S → ⊤ → S → Type) :
+  C → S → List Sig → S → Type where
+
+    run :
+        ∙ Init Γ s tt s'
+        ∙ RunTraceAndThen Step Last Γ s' sigs s''
+        ─────────────────────────────────────────────
+        RunTraceAfterAndThen Init Step Last Γ s sigs s''
+
+
 -- with a trivial base case
 ReflexiveTransitiveClosure : {sts : C → S → Sig → S → Type} → C → S → List Sig → S → Type
 ReflexiveTransitiveClosure {sts = sts} = _⊢_⇀⟦_⟧*_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS}{sts}
