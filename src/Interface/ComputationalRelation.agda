@@ -8,7 +8,7 @@ open import Interface.STS public
 private variable
   a : Level
   C S Sig : Type
-  Err Err₁ Err₂ : Type
+  Err Err₁ Err₂ Err₃ : Type
   c : C
   s s' s'' : S
   sig : Sig
@@ -248,6 +248,62 @@ module _ {BSTS : C → S → ⊤ → S → Type} ⦃ _ : Computational BSTS Err�
       with  computeProof {STS = ReflexiveTransitiveClosureᵇ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {STS}}{Err} c s₁ sigs
          |  completeness {Err = Err} _ _ _ _ sts
     ... | success (s₂ , _) | p = p
+
+module _ {Step : C → S → Sig → S → Type} ⦃ serr : Computational Step Err₁ ⦄ where
+  module _  {Last : C → S → ⊤ → S → Type} ⦃ lerr : Computational Last Err₂ ⦄
+            ⦃ _ : InjectError Err₁ Err ⦄ ⦃ _ : InjectError Err₂ Err ⦄
+    where
+
+    instance
+
+      Computational-RunTraceAndThen : Computational (RunTraceAndThen Step Last) Err
+
+      Computational-RunTraceAndThen .computeProof Γ s []
+        with computeProof {STS = Last} Γ s tt
+      ... | failure e = failure (injectError it e)
+      ... | success (s' , h) = success (s' , run-[] h)
+
+
+      Computational-RunTraceAndThen .computeProof Γ s (sig ∷ sigs)
+        with computeProof {STS = Step} Γ s sig
+      ... | failure e = failure (injectError it e)
+      ... | success (s₁ , h) with computeProof {STS = RunTraceAndThen Step Last} Γ s₁ sigs
+      ... | failure e = failure (injectError it e)
+      ... | success (s₂ , hs) = success (s₂ , run-∷ h hs)
+
+      Computational-RunTraceAndThen .completeness Γ s sigs s'' (run-[] x)
+        with computeProof {STS = Last} Γ s tt | completeness _ _ _ _ x
+      ... | success (s' , h) | refl = refl
+
+      Computational-RunTraceAndThen .completeness Γ s (sig ∷ sigs) s'' (run-∷ x x₁)
+        with computeProof {STS = Step} Γ s sig | completeness _ _ _ _ x
+      ... | success (s₁ , _) | refl
+        with computeProof {STS = RunTraceAndThen Step Last} Γ s₁ sigs | completeness _ _ _ _ x₁
+      ... | success (s₂ , _) | p = p
+
+
+module _ {Init : C → S → ⊤ → S → Type} ⦃ ierr : Computational Init Err₂ ⦄ where
+  module _ {Step : C → S → Sig → S → Type} ⦃ serr : Computational Step Err₁ ⦄ where
+    module _ {Last : C → S → ⊤ → S → Type} ⦃ lerr : Computational Last Err₂ ⦄
+             ⦃ _ : InjectError Err₁ Err ⦄ ⦃ _ : InjectError Err₂ Err ⦄ where
+
+      instance
+        Computational-RunTraceAfterAndThen : Computational (RunTraceAfterAndThen Init Step Last) Err
+
+        Computational-RunTraceAfterAndThen .computeProof Γ s sigs
+          with computeProof {STS = Init} Γ s tt
+        ... | failure e = failure (injectError it e)
+        ... | success (s' , h)
+              with computeProof {STS = RunTraceAndThen Step Last} {Err = Err} Γ s' sigs
+        ...   | failure e = failure (injectError it e)
+        ...   | success (t , r) = success (t , RTAAT (h , r))
+
+        Computational-RunTraceAfterAndThen .completeness Γ s sigs t (RTAAT (init , rtat))
+          with computeProof {STS = Init} Γ s tt | completeness _ _ _ _ init
+        ... | success (s' , h) | refl
+              with computeProof {STS = RunTraceAndThen Step Last} {Err = Err} Γ s' sigs
+              | completeness {Err = Err} _ _ _ _ rtat
+        ...   | success (t' , r) | refl = refl
 
 
 Computational-ReflexiveTransitiveClosure : {STS : C → S → Sig → S → Type} → ⦃ Computational STS Err ⦄

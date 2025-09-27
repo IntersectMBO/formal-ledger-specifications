@@ -170,7 +170,7 @@ private variable
 ```agda
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
   LEDGER-V :
-    let  txb         = tx .body
+    let  txb              = tx .body
 ```
 <!--
 ```agda

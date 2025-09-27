@@ -293,6 +293,9 @@ instance
 
   HasVoteDelegs-CertState : HasVoteDelegs CertState
   HasVoteDelegs-CertState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf
+
+  HasStakeDelegs-CertState : HasStakeDelegs CertState
+  HasStakeDelegs-CertState .StakeDelegsOf = StakeDelegsOf ∘ DStateOf
 ```
 -->
 
@@ -534,24 +537,31 @@ open GovVote using (voter)
 -->
 
 ```agda
-data _⊢_⇀⦇_,CERTBASE⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
+data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
-  CERT-base :
-    let refresh          = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
-        refreshedDReps   = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
-        wdrlCreds        = mapˢ stake (dom wdrls)
-        validVoteDelegs  = voteDelegs ∣^ (  mapˢ vDelegCredential (dom dReps)
-                                        ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
+  CERT-init :
+    let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
+        refreshedDReps  = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
+        wdrlCreds       = mapˢ stake (dom wdrls)
     in
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧
-      ⇀⦇ _ ,CERTBASE⦈
-      ⟦ ⟦ validVoteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
+      ⇀⦇ _ ,PRE-CERT⦈
+      ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
+
+data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
+
+  CERT-last :
+    ⟦ e , pp , vs , wdrls , cc ⟧
+    ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
+      ⇀⦇ _ ,POST-CERT⦈
+      ⟦ ⟦ voteDelegs ∣^ (  mapˢ vDelegCredential (dom (GState.dreps stᵍ)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
+        , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
 
 _⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
-_⊢_⇀⦇_,CERTS⦈_ = ReflexiveTransitiveClosureᵇ' {_⊢_⇀⟦_⟧ᵇ_ = _⊢_⇀⦇_,CERTBASE⦈_} {_⊢_⇀⦇_,CERT⦈_}
+_⊢_⇀⦇_,CERTS⦈_ = RunTraceAfterAndThen _⊢_⇀⦇_,PRE-CERT⦈_ _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_
 ```
 
 # References {#references .unnumbered}

@@ -143,21 +143,37 @@ instance
     with computeProof ce (gState cs) dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
 
-  Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
-  Computational-CERTBASE .computeProof ce cs _ =
+  Computational-PRE-CERT : Computational _⊢_⇀⦇_,PRE-CERT⦈_ String
+  Computational-PRE-CERT .computeProof ce cs _ =
     let open CertEnv ce; open PParams pp
         open GState (gState cs); open DState (dState cs)
         refresh = mapPartial (isGovVoterDRep ∘ voter) (fromList votes)
         refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
     in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
               × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-      (yes p) → success (-, CERT-base p)
+      (yes p) → success (-, CERT-init p)
       (no ¬p) → failure (genErrors ¬p)
-  Computational-CERTBASE .completeness ce st _ st' (CERT-base p)
+  Computational-PRE-CERT .completeness ce st _ st' (CERT-init p)
     rewrite let dState = CertState.dState st; open DState dState in
       dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
                 × mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
+
+  -- POST-CERT has no premises, so computing always succeeds
+  -- with the unique post-state and proof CERT-last.
+  Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
+  Computational-POST-CERT .computeProof ce cs tt = success ( cs' , CERT-last)
+    where
+      dreps : DReps
+      dreps = GState.dreps (gState cs)
+      validVoteDelegs : VoteDelegs
+      validVoteDelegs = (VoteDelegsOf cs) ∣^ ( mapˢ vDelegCredential (dom dreps) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
+      cs' : CertState
+      cs' = ⟦ ⟦ validVoteDelegs , StakeDelegsOf cs , RewardsOf cs ⟧ , PStateOf cs , GStateOf cs ⟧
+
+  -- Completeness: the relational proof pins s' to exactly `post`,
+  -- and computeProof returns success at that same state; so refl.
+  Computational-POST-CERT .completeness ce cs _ cs' CERT-last = refl
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it
@@ -240,78 +256,78 @@ module _  {Γ : CertEnv}
   injOn _ h {record { stake = stakex }} {record { stake = stakey }} x∈ y∈ refl =
     cong (λ u → record { net = u ; stake = stakex }) (trans (h x∈) (sym (h y∈)))
 
-  module CERTSpov
-    -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
-    ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
-    ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                         → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-    ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
-                         → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-    ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                         → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
-    ( constNetworkId  :  ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId )
-    where
+  -- module CERTSpov
+  --   -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
+  --   ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
+  --   ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
+  --                        → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
+  --   ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
+  --                        → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
+  --   ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+  --                        → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+  --   ( constNetworkId  :  ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId )
+  --   where
 
-    CERTBASE-pov :  {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
-                    → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
+  --   CERTBASE-pov :  {s s' : CertState} → Γ ⊢ s ⇀⦇ _ ,CERTBASE⦈ s'
+  --                   → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
 
-    CERTBASE-pov  {s  = cs}
-                  {s' = cs'}
-                  (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
-      let
-        open DState (dState cs )
-        open DState (dState cs') renaming (rewards to rewards')
-        module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
-        wdrlsCC         = mapˢ (map₁ RwdAddr.stake) (wdrls ˢ)
-        zeroMap         = constMap (mapˢ RwdAddr.stake (dom wdrls)) 0
-        rwds-∪ˡ-decomp  = (rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC)
-      in
-        begin
-          getCoin rewards
-            ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rewards
-                ( ≡ᵉ.trans (disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint))
-                           (≡ᵉ.trans ∪-sym (res-ex-∪ (_∈? dom wdrlsCC))) ) ⟩
-          getCoin rwds-∪ˡ-decomp
-            ≡⟨ indexedSumᵛ'-∪ (rewards ∣ dom wdrlsCC ᶜ) (rewards ∣ dom wdrlsCC)
-                              (disjoint-sym res-ex-disjoint) ⟩
-          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin (rewards ∣ dom wdrlsCC )
-            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_)
-               ( getCoin-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
-          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrlsCC
-            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn wdrls constNetworkId)) ⟩
-          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrls
-            ≡˘⟨ cong (_+ getCoin wdrls)
-                ( begin
-                  getCoin (zeroMap ∪ˡ rewards)
-                    ≡⟨ ≡ᵉ-getCoin (zeroMap ∪ˡ rewards) (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
-                                  (res-decomp zeroMap rewards) ⟩
-                  getCoin (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
-                    ≡⟨ indexedSumᵛ'-∪ zeroMap (rewards ∣ dom zeroMap ᶜ)
-                                      (disjoint-sym res-comp-dom) ⟩
-                  getCoin zeroMap + getCoin (rewards ∣ dom zeroMap ᶜ)
-                    ≡⟨ cong (λ u → u + getCoin (rewards ∣ dom zeroMap ᶜ)) sumConstZero ⟩
-                  0 + getCoin (rewards ∣ (dom zeroMap) ᶜ)
-                    ≡⟨ +-identityˡ (getCoin (rewards ∣ dom zeroMap ᶜ)) ⟩
-                  getCoin (rewards ∣ dom zeroMap ᶜ)
-                    ≡⟨ ≡ᵉ-getCoin (rewards ∣ dom zeroMap ᶜ) (rewards ∣ dom wdrlsCC ᶜ)
-                       ( res-comp-cong
-                         ( ⊆-Transitive (proj₁ constMap-dom) (proj₂ dom-mapˡ≡map-dom)
-                         , ⊆-Transitive (proj₁ dom-mapˡ≡map-dom) (proj₂ constMap-dom) ) ) ⟩
-                  getCoin (rewards ∣ dom wdrlsCC ᶜ)
-                    ∎ ) ⟩
-          getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
-            ∎
+  --   CERTBASE-pov  {s  = cs}
+  --                 {s' = cs'}
+  --                 (CERT-base {pp}{vs}{e}{dreps}{wdrls} (_ , wdrlsCC⊆rwds)) =
+  --     let
+  --       open DState (dState cs )
+  --       open DState (dState cs') renaming (rewards to rewards')
+  --       module ≡ᵉ       = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
+  --       wdrlsCC         = mapˢ (map₁ RwdAddr.stake) (wdrls ˢ)
+  --       zeroMap         = constMap (mapˢ RwdAddr.stake (dom wdrls)) 0
+  --       rwds-∪ˡ-decomp  = (rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC)
+  --     in
+  --       begin
+  --         getCoin rewards
+  --           ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rewards
+  --               ( ≡ᵉ.trans (disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint))
+  --                          (≡ᵉ.trans ∪-sym (res-ex-∪ (_∈? dom wdrlsCC))) ) ⟩
+  --         getCoin rwds-∪ˡ-decomp
+  --           ≡⟨ indexedSumᵛ'-∪ (rewards ∣ dom wdrlsCC ᶜ) (rewards ∣ dom wdrlsCC)
+  --                             (disjoint-sym res-ex-disjoint) ⟩
+  --         getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin (rewards ∣ dom wdrlsCC )
+  --           ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_)
+  --              ( getCoin-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
+  --         getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrlsCC
+  --           ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn wdrls constNetworkId)) ⟩
+  --         getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrls
+  --           ≡˘⟨ cong (_+ getCoin wdrls)
+  --               ( begin
+  --                 getCoin (zeroMap ∪ˡ rewards)
+  --                   ≡⟨ ≡ᵉ-getCoin (zeroMap ∪ˡ rewards) (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
+  --                                 (res-decomp zeroMap rewards) ⟩
+  --                 getCoin (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
+  --                   ≡⟨ indexedSumᵛ'-∪ zeroMap (rewards ∣ dom zeroMap ᶜ)
+  --                                     (disjoint-sym res-comp-dom) ⟩
+  --                 getCoin zeroMap + getCoin (rewards ∣ dom zeroMap ᶜ)
+  --                   ≡⟨ cong (λ u → u + getCoin (rewards ∣ dom zeroMap ᶜ)) sumConstZero ⟩
+  --                 0 + getCoin (rewards ∣ (dom zeroMap) ᶜ)
+  --                   ≡⟨ +-identityˡ (getCoin (rewards ∣ dom zeroMap ᶜ)) ⟩
+  --                 getCoin (rewards ∣ dom zeroMap ᶜ)
+  --                   ≡⟨ ≡ᵉ-getCoin (rewards ∣ dom zeroMap ᶜ) (rewards ∣ dom wdrlsCC ᶜ)
+  --                      ( res-comp-cong
+  --                        ( ⊆-Transitive (proj₁ constMap-dom) (proj₂ dom-mapˡ≡map-dom)
+  --                        , ⊆-Transitive (proj₁ dom-mapˡ≡map-dom) (proj₂ constMap-dom) ) ) ⟩
+  --                 getCoin (rewards ∣ dom wdrlsCC ᶜ)
+  --                   ∎ ) ⟩
+  --         getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
+  --           ∎
 
-    sts-pov  : {s₁ sₙ : CertState} → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
-             → getCoin s₁ ≡ getCoin sₙ
-    sts-pov (BS-base Id-nop) = refl
-    sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
+  --   sts-pov  : {s₁ sₙ : CertState} → ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,CERT⦈_} Γ s₁ l sₙ
+  --            → getCoin s₁ ≡ getCoin sₙ
+  --   sts-pov (BS-base Id-nop) = refl
+  --   sts-pov (BS-ind x xs) = trans (CERT-pov x) (sts-pov xs)
 
-    CERTS-pov : {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
-                → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ l ,CERTS⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
-                → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ + getCoin (CertEnv.wdrls Γ)
-    CERTS-pov (BS-base x) = CERTBASE-pov x
-    CERTS-pov (BS-ind  x xs) = trans (CERT-pov x) (CERTS-pov xs)
+  --   CERTS-pov : {stᵈ stᵈ' : DState} {stᵖ stᵖ' : PState} {stᵍ stᵍ' : GState}
+  --               → Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ⇀⦇ l ,CERTS⦈ ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ
+  --               → getCoin ⟦ stᵈ , stᵖ , stᵍ ⟧ᶜˢ ≡ getCoin ⟦ stᵈ' , stᵖ' , stᵍ' ⟧ᶜˢ + getCoin (CertEnv.wdrls Γ)
+  --   CERTS-pov (BS-base x) = CERTBASE-pov x
+  --   CERTS-pov (BS-ind  x xs) = trans (CERT-pov x) (CERTS-pov xs)
     -- CERTS-pov : {s₁ sₙ : CertState} → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ → getCoin s₁ ≡ getCoin sₙ + getCoin (CertEnv.wdrls Γ)
     -- CERTS-pov (RTC {s' = s'} {s'' = sₙ} (bsts , BS-base Id-nop)) = CERTBASE-pov bsts
     -- CERTS-pov (RTC (bsts , BS-ind x sts)) = trans  (CERTBASE-pov bsts)
