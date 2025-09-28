@@ -56,7 +56,6 @@ class SourcePaths:
     md_css_dir: Path
     md_js_dir: Path
     custom_css_path: Path
-    custom_js_path: Path
     katex_js_path: Path
 
     # Navigation templates
@@ -98,7 +97,6 @@ class SourcePaths:
         md_css_dir = mkdocs_docs_dir / "css"
         md_js_dir = mkdocs_docs_dir / "js"
         custom_css_path = md_css_dir / "custom.css"
-        custom_js_path = md_js_dir / "custom.js"
         katex_js_path = md_js_dir / "katex-config.js"
 
         # Navigation
@@ -123,7 +121,6 @@ class SourcePaths:
             md_css_dir=md_css_dir,
             md_js_dir=md_js_dir,
             custom_css_path=custom_css_path,
-            custom_js_path=custom_js_path,
             katex_js_path=katex_js_path,
             mkdocs_nav_yml_path=mkdocs_nav_yml_path,
         )
