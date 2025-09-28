@@ -1,3 +1,8 @@
+---
+source_path: build-tools/static/md/mkdocs/docs/ConwayBootstrap.md
+---
+
+
 # Bootstrapping the Governance System {#sec:conway-bootstrap-gov}
 
 As described in [CIP-1694](https://cips.cardano.org/cip/CIP-1694), the governance
