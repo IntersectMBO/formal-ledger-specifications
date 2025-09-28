@@ -420,7 +420,8 @@ data _⊢_⇀⦇_,CERT⦈_      : CertEnv   → CertState  → DCert  → CertSt
 data _⊢_⇀⦇_,CERTBASE⦈_  : CertEnv   → CertState  → ⊤      → CertState  → Type
 
 _⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
-_⊢_⇀⦇_,CERTS⦈_ = ⟪ baseDrop _⊢_⇀⦇_,CERTBASE⦈_ AndThenRunTrace _⊢_⇀⦇_,CERT⦈_ ⟫
+_⊢_⇀⦇_,CERTS⦈_ = RunTraceAfter _⊢_⇀⦇_,CERTBASE⦈_ _⊢_⇀⦇_,CERT⦈_
+-- _⊢_⇀⦇_,CERTS⦈_ = RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,CERTBASE⦈_
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types for the transition systems relating to certificates}

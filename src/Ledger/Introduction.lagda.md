@@ -16,7 +16,7 @@ open import Prelude
 
 import Data.Maybe as Maybe
 open import Data.Maybe.Properties
-open import Interface.STS
+open import Interface.STS hiding (_⊢_⇀⟦_⟧*_)
 open import Relation.Binary.PropositionalEquality
 
 private variable

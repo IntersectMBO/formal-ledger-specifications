@@ -162,9 +162,11 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
       → (RunIndexedTrace' _⊢_⇀⦇_,GOV⦈_ (⟦ txId , epoch slot , pp , ppolicy , enactState , certSt , dom rewards ⟧ , k) govSt vps govSt')
       → govSt' ≡ updateGovStates vps k govSt
     STS→updateGovSt≡ [] _ runᵢ-[] = refl
-    STS→updateGovSt≡ (inj₁ v ∷ vps) k (runᵢ-∷ (GOV-Vote x) h)
-      = STS→updateGovSt≡ vps (suc k) h
+    STS→updateGovSt≡ (inj₁ v ∷ vps) k (runᵢ-∷ (GOV-Vote x) h) = STS→updateGovSt≡ vps (suc k) h
     STS→updateGovSt≡ (inj₂ p ∷ vps) k (runᵢ-∷ (GOV-Propose x) h) = STS→updateGovSt≡ vps (suc k) h
+    -- STS→updateGovSt≡ [] _ (BS-base Id-nop) = refl
+    -- STS→updateGovSt≡ (inj₁ v ∷ vps) k (BS-ind (GOV-Vote x) h) = STS→updateGovSt≡ vps (suc k) h
+    -- STS→updateGovSt≡ (inj₂ p ∷ vps) k (BS-ind (GOV-Propose x) h) = STS→updateGovSt≡ vps (suc k) h
 
   opaque
     unfolding addVote

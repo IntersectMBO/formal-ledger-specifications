@@ -169,6 +169,10 @@ record TransactionStructure : Type₁ where
     field GovProposalsOf  : A → List GovProposal
   open HasGovProposals ⦃...⦄ public
 
+  record HasGovVotes {a} (A : Type a) : Type a where
+    field GovVotesOf  : A → List GovVote
+  open HasGovVotes ⦃...⦄ public
+
   record HasTxId {a} (A : Type a) : Type a where
     field TxIdOf    : A → TxId
   open HasTxId ⦃...⦄ public
@@ -211,6 +215,9 @@ record TransactionStructure : Type₁ where
 
     HasGovProposals-Tx : HasGovProposals Tx
     HasGovProposals-Tx .GovProposalsOf = TxBody.txGovProposals ∘ TxBodyOf
+
+    HasGovVotes-Tx : HasGovVotes Tx
+    HasGovVotes-Tx .GovVotesOf = TxBody.txGovVotes ∘ TxBodyOf
 
     HasWithdrawals-TxBody : HasWithdrawals TxBody
     HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals

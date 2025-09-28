@@ -148,13 +148,11 @@ allColdCreds govSt es =
   ccCreds (es .cc) ∪ concatMapˢ (λ (_ , st) → proposedCC (GovActionOf st)) (fromList govSt)
 ```
 
-## <span class="AgdaDatatype">LEDGER</span> Transition System
- 
+## <span class="AgdaDatatype">LEDGER</span> and <span class="AgdaDatatype">LEDGERS</span> Transition Systems
+
 <!--
 ```agda
 private variable
-  Γ : LEnv
-  s s' s'' : LState
   utxoSt utxoSt' : UTxOState
   govSt govSt' : GovState
   certState certState' : CertState
@@ -170,19 +168,10 @@ private variable
 ```agda
 data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
   LEDGER-V :
-    let  txb         = tx .body
-```
-<!--
-```agda
-         open TxBody txb
-```
--->
-```agda
-    in
       ∙ isValid tx ≡ true
       ∙ ⟦ slot , pp , treasury ⟧  ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
-      ∙ ⟦ epoch slot , pp , txGovVotes , txWithdrawals , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ txCerts ,CERTS⦈ certState'
-      ∙ ⟦ txId , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov txb ,GOVS⦈ govSt'
+      ∙ ⟦ epoch slot , pp , GovVotesOf tx , WithdrawalsOf tx , allColdCreds govSt enactState ⟧ ⊢ certState ⇀⦇ DCertsOf tx ,CERTS⦈ certState'
+      ∙ ⟦ TxIdOf tx , epoch slot , pp , ppolicy , enactState , certState' , dom (RewardsOf certState) ⟧ ⊢ rmOrphanDRepVotes certState' govSt ⇀⦇ txgov (TxBodyOf tx) ,GOVS⦈ govSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt' , certState' ⟧
 
@@ -191,6 +180,9 @@ data _⊢_⇀⦇_,LEDGER⦈_ : LEnv → LState → Tx → LState → Type where
       ∙ ⟦ slot , pp , treasury ⟧ ⊢ utxoSt ⇀⦇ tx ,UTXOW⦈ utxoSt'
       ────────────────────────────────
       ⟦ slot , ppolicy , pp , enactState , treasury ⟧ ⊢ ⟦ utxoSt , govSt , certState ⟧ ⇀⦇ tx ,LEDGER⦈ ⟦ utxoSt' , govSt , certState ⟧
+
+_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
+_⊢_⇀⦇_,LEDGERS⦈_ = RunTrace _⊢_⇀⦇_,LEDGER⦈_
 ```
 
 The rule `LEDGER`{.AgdaDatatype} invokes the `GOVS`{.AgdaDatatype} rule to
@@ -217,9 +209,3 @@ pattern LEDGER-I⋯ y z     = LEDGER-I (y , z)
 ```
 -->
 
-## <span class="AgdaDatatype">LEDGERS</span> Transition System
-
-```agda
-_⊢_⇀⦇_,LEDGERS⦈_ : LEnv → LState → List Tx → LState → Type
-_⊢_⇀⦇_,LEDGERS⦈_ = ReflexiveTransitiveClosure {sts = _⊢_⇀⦇_,LEDGER⦈_}
-```
