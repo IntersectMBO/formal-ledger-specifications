@@ -1,7 +1,3 @@
-\subsection{UTxO}
-\label{sec:utxo-properties}
-
-\begin{code}[hide]
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
@@ -136,27 +132,13 @@ opaque
   Computational-UTXO = Computational-UTXO'
 
 private variable
-  tx                               : Tx
-  utxo utxo'                       : UTxO
-  Γ                                : UTxOEnv
-  utxoState utxoState'             : UTxOState
-  fees fees'                       : Fees
-  donations donations'             : Donations
-  deposits deposits'               : Deposits
+  tx                    : Tx
+  Γ                     : UTxOEnv
+  utxoState utxoState'  : UTxOState
 
-\end{code}
-
-Here we state the fact that the UTxO relation is computable.
-
-\begin{figure*}[h]
-\begin{code}
 UTXO-step : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
 UTXO-step = compute ⦃ Computational-UTXO ⦄
 
 UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ success utxoState'
                          ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
 UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
-\end{code}
-\caption{Computing the UTXO transition system}
-\end{figure*}
-

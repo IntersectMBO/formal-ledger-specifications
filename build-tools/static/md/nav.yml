@@ -32,6 +32,8 @@
         - BlockBody: Ledger.Conway.Specification.BlockBody.md
         - BlockBody/:
             - Properties: Ledger.Conway.Specification.BlockBody.Properties.md
+            - Properties/:
+              - Computational: Ledger.Conway.Specification.BlockBody.Properties.Computational.md
         - Certs: Ledger.Conway.Specification.Certs.md
         - Certs/:
           - Properties: Ledger.Conway.Specification.Certs.Properties.md
@@ -51,7 +53,9 @@
             - PParamsWellFormed: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md
         - Enact: Ledger.Conway.Specification.Enact.md
         - Enact/:
-          - Properties: Ledger.Conway.Specification.Enact.Properties.md
+            - Properties: Ledger.Conway.Specification.Enact.Properties.md
+            - Properties/:
+              - Computational: Ledger.Conway.Specification.Enact.Properties.Computational.md
         - Epoch: Ledger.Conway.Specification.Epoch.md
         - Epoch/:
           - Properties: Ledger.Conway.Specification.Epoch.Properties.md
@@ -73,20 +77,24 @@
         - Ledger.Ledger/:
           - Properties: Ledger.Conway.Specification.Ledger.Properties.md
           - Properties/:
+            - Base: Ledger.Conway.Specification.Ledger.Properties.Base.md
             - Computational: Ledger.Conway.Specification.Ledger.Properties.Computational.md
             - GovDepsMatch: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
             - PoV: Ledger.Conway.Specification.Ledger.Properties.PoV.md
-            - Setoid: Ledger.Conway.Specification.Ledger.Properties.Setoid.md
         - PoolReap: Ledger.Conway.Specification.PoolReap.md
         - PParams: Ledger.Conway.Specification.PParams.md
         - Properties: Ledger.Conway.Specification.Properties.md
         - Ratify: Ledger.Conway.Specification.Ratify.md
         - Ratify/:
           - Properties: Ledger.Conway.Specification.Ratify.Properties.md
+          - Properties/:
+            - Computational: Ledger.Conway.Specification.Ratify.Properties.Computational.md
         - Rewards: Ledger.Conway.Specification.Rewards.md
         - RewardUpdate: Ledger.Conway.Specification.RewardUpdate.md
         - RewardUpdate/:
             - Properties: Ledger.Conway.Specification.RewardUpdate.Properties.md
+            - Properties/:
+              - Computational: Ledger.Conway.Specification.RewardUpdate.Properties.Computational.md
         - Script: Ledger.Conway.Specification.Script.md
         - Script/:
           - Base: Ledger.Conway.Specification.Script.Base.md
@@ -102,14 +110,16 @@
         - Utxo/:
           - Properties: Ledger.Conway.Specification.Utxo.Properties.md
           - Properties/:
+            - Base: Ledger.Conway.Specification.Utxo.Properties.Base.md
             - Computational: Ledger.Conway.Specification.Utxo.Properties.Computational.md
-            - DepositHelpers: Ledger.Conway.Specification.Utxo.Properties.DepositHelpers.md
             - GenMinspend: Ledger.Conway.Specification.Utxo.Properties.GenMinSpend.md
             - MinSpend: Ledger.Conway.Specification.Utxo.Properties.MinSpend.md
             - PoV: Ledger.Conway.Specification.Utxo.Properties.PoV.md
         - Utxow: Ledger.Conway.Specification.Utxow.md
         - Utxow/:
-          - Properties: Ledger.Conway.Specification.Utxow.Properties.md
+            - Properties: Ledger.Conway.Specification.Utxow.Properties.md
+            - Properties/:
+              - Computational: Ledger.Conway.Specification.Utxow.Properties.Computational.md
         - Test:
           - Examples: Ledger.Conway.Specification.Test.Examples.md
           - Examples/:

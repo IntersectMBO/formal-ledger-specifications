@@ -17,8 +17,8 @@ open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch txs abs
-open import Ledger.Conway.Specification.Ledger.Properties.Setoid txs abs
 open import Ledger.Prelude hiding (map) renaming (mapˢ to map)
 open import Ledger.Conway.Specification.RewardUpdate txs abs
 

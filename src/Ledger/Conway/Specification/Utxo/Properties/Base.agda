@@ -3,7 +3,7 @@
 open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
 
-module Ledger.Conway.Specification.Utxo.Properties.DepositHelpers
+module Ledger.Conway.Specification.Utxo.Properties.Base
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
@@ -227,9 +227,6 @@ module _
     ℤ.+_ uDep + (dep - uDep)   ≡⟨ Int.distribʳ-⊖-+-pos uDep dep uDep ⟩
     (uDep + dep) - uDep        ≡⟨ cong (_- uDep) (+-comm uDep dep) ⟩
     (dep + uDep) - uDep        ≡˘⟨ Int.distribʳ-⊖-+-pos dep uDep uDep ⟩
-    -- ℤ.+_ uDep + (dep - uDep)   ≡⟨ distribʳ-⊖-+-pos uDep dep uDep ⟩
-    -- (uDep + dep) - uDep        ≡⟨ cong (_- uDep) (+-comm uDep dep) ⟩
-    -- (dep + uDep) - uDep        ≡˘⟨ distribʳ-⊖-+-pos dep uDep uDep ⟩
     ℤ.+_ dep ℤ.+ (uDep - uDep) ≡⟨ cong (λ u → ℤ.+_ dep ℤ.+ u) (n⊖n≡0 uDep) ⟩
     ℤ.+_ dep ℤ.+ ℤ.0ℤ          ≡⟨ Int.+-identityʳ _ ⟩
     ℤ.+_ dep ∎

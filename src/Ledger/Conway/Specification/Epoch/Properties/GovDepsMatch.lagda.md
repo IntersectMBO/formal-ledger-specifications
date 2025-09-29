@@ -15,7 +15,7 @@ open import Ledger.Prelude using (mapˢ)
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
-open import Ledger.Conway.Specification.Ledger.Properties.Setoid txs abs
+open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
 open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Prelude renaming (map to map'; mapˢ to map)
 open import Ledger.Conway.Specification.Ratify txs hiding (vote)

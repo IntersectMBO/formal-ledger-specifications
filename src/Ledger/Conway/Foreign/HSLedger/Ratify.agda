@@ -14,7 +14,7 @@ import Data.Rational.Show as Rational
 
 import Foreign.Haskell.Pair as F
 open import Ledger.Conway.Specification.Ratify it
-open import Ledger.Conway.Specification.Ratify.Properties it
+open import Ledger.Conway.Specification.Ratify.Properties.Computational it
 
 instance
   HsTy-StakeDistrs = autoHsType StakeDistrs

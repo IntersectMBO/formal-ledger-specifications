@@ -1,10 +1,9 @@
-```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 open import Ledger.Conway.Specification.Abstract using (AbstractFunctions)
 
-module Ledger.Conway.Specification.RewardUpdate.Properties
+module Ledger.Conway.Specification.RewardUpdate.Properties.Computational
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
@@ -49,4 +48,3 @@ instance
     with recomputeProof ruStep | completeness _ _ _ _ ruStep
   ... | success _ | refl
      = refl
-```

@@ -22,7 +22,7 @@ open import Ledger.Conway.Specification.Gov.Properties.Computational txs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Utxow txs abs
-open import Ledger.Conway.Specification.Utxow.Properties txs abs
+open import Ledger.Conway.Specification.Utxow.Properties.Computational txs abs
 
 open import Data.Bool.Properties using (¬-not)
 \end{code}

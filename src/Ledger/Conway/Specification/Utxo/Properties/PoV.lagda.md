@@ -14,7 +14,7 @@ module Ledger.Conway.Specification.Utxo.Properties.PoV
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Utxo txs abs
-open import Ledger.Conway.Specification.Utxo.Properties.DepositHelpers txs abs public
+open import Ledger.Conway.Specification.Utxo.Properties.Base txs abs public
 open UTxOState; open Tx; open TxBody
 ```
 -->

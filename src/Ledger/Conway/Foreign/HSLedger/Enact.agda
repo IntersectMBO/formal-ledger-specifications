@@ -7,7 +7,7 @@ open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Gov.Actions
 
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Enact.Properties govStructure
+open import Ledger.Conway.Specification.Enact.Properties.Computational govStructure
 
 instance
   HsTy-EnactState = autoHsType EnactState ⊣ withConstructor "MkEnactState"

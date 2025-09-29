@@ -7,13 +7,13 @@ module Ledger.Conway.Specification.Chain.Properties.Computational
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
-open import Ledger.Conway.Specification.BlockBody.Properties txs abs
+open import Ledger.Conway.Specification.BlockBody.Properties.Computational txs abs
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Enact govStructure using (EnactState)
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.RewardUpdate txs abs
-open import Ledger.Conway.Specification.RewardUpdate.Properties txs abs
+open import Ledger.Conway.Specification.RewardUpdate.Properties.Computational txs abs
 open import Ledger.Prelude
 
 open Computational ⦃...⦄

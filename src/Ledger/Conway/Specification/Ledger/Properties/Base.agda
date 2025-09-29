@@ -1,11 +1,10 @@
-\begin{code}[hide]
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
 import Ledger.Conway.Specification.Certs
 
-module Ledger.Conway.Specification.Ledger.Properties.Setoid
+module Ledger.Conway.Specification.Ledger.Properties.Base
   (txs : _) (open TransactionStructure txs) (open Ledger.Conway.Specification.Certs govStructure)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
@@ -39,13 +38,11 @@ isGADeposit dp = isGADepositᵇ dp ≡ true
   isGADepositᵇ : DepositPurpose → Bool
   isGADepositᵇ (GovActionDeposit _) = true
   isGADepositᵇ _                    = false
-\end{code}
-\begin{code}
+
 govDepsMatch : LState → Type
 govDepsMatch ls =
   filterˢ isGADeposit (dom (DepositsOf ls)) ≡ᵉ fromList (dpMap (GovStateOf ls))
-\end{code}
-\begin{code}[hide]
+
 module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {DepositPurpose})
 pattern UTXOW-UTXOS x = UTXOW⇒UTXO (UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ x)
 open Equivalence
@@ -369,5 +366,3 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
     fromList (dpMap (updateGovStates (map inj₂ txGovProposals) k govSt))
       ≈˘⟨ props-dpMap-votes-invar txGovVotes txGovProposals {k} {govSt} ⟩
     fromList (dpMap (updateGovStates (txgov txb) k govSt)) ∎
-
-\end{code}
