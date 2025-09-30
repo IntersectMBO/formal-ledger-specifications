@@ -63,17 +63,30 @@ instance
 
 ## Miscellaneous Type Aliases
 
-
 ```agda
-CCHotKeys DReps PoolEnv Pools Retiring Rewards Stake StakeDelegs : Type
-CCHotKeys    = Credential ⇀ Maybe Credential
-DReps        = Credential ⇀ Epoch
-PoolEnv      = PParams
-Pools        = KeyHash ⇀ StakePoolParams
-Retiring     = KeyHash ⇀ Epoch
-Rewards      = Credential ⇀ Coin
-Stake        = Credential ⇀ Coin
-StakeDelegs  = Credential ⇀ KeyHash
+CCHotKeys : Type
+CCHotKeys = Credential ⇀ Maybe Credential
+
+DReps : Type
+DReps = Credential ⇀ Epoch
+
+PoolEnv : Type
+PoolEnv = PParams
+
+Pools : Type
+Pools = KeyHash ⇀ StakePoolParams
+
+Retiring : Type
+Retiring = KeyHash ⇀ Epoch
+
+Rewards : Type
+Rewards = Credential ⇀ Coin
+
+Stake : Type
+Stake = Credential ⇀ Coin
+
+StakeDelegs : Type
+StakeDelegs = Credential ⇀ KeyHash
 ```
 
 <!--
@@ -356,10 +369,10 @@ private variable
 
 ### Delegation
 
-Registered credentials can now delegate to a DRep as well as to a stake
-pool. This is achieved by giving the
+Registered credentials can now delegate to a `DRep`{.AgdaInductiveConstructor}
+as well as to a stake pool.  This is achieved by giving the
 `delegate`{.AgdaInductiveConstructor} certificate two optional fields,
-corresponding to a DRep and stake pool.
+corresponding to a `DRep`{.AgdaInductiveConstructor} and stake pool.
 
 Stake can be delegated for voting and block production simultaneously,
 since these are two separate features. In fact, preventing this could
@@ -405,13 +418,15 @@ Sections [Auxiliary `DELEG`{.AgdaDatatype} Transition System](#auxiliary-deleg-t
 [Auxiliary `GOVCERT`{.AgdaDatatype} transition system](#auxiliary-govcert-transition-system).
 
 `GOVCERT`{.AgdaDatatype} deals with the new certificates relating to
-DReps and the constitutional committee.
+`DRep`{.AgdaInductiveConstructor}s and the constitutional committee.
 
 +  `GOVCERT-regdrep`{.AgdaInductiveConstructor} registers (or
-   re-registers) a DRep. In case of registration, a deposit needs to be
-   paid. Either way, the activity period of the DRep is reset.
+   re-registers) a `DRep`{.AgdaInductiveConstructor}.  In case of registration,
+   a deposit needs to be paid.  Either way, the activity period of the
+   `DRep`{.AgdaInductiveConstructor} is reset.
 
-+  `GOVCERT-deregdrep`{.AgdaInductiveConstructor} deregisters a DRep.
++  `GOVCERT-deregdrep`{.AgdaInductiveConstructor} deregisters a
+   `DRep`{.AgdaInductiveConstructor}.
 
 +  `GOVCERT-ccreghot`{.AgdaInductiveConstructor} registers a "hot"
    credential for constitutional committee members.[^1] We check that the
@@ -522,13 +537,13 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
 Here we define the `CERTBASE`{.AgdaFunction} function which handles the following
 important housekeeping tasks:
 
-- check the correctness of withdrawals and ensure that withdrawals only
-  happen from credentials that have delegated their voting power;
++  check the correctness of withdrawals and ensure that withdrawals only
+   happen from credentials that have delegated their voting power;
 
-- set the rewards of the credentials that withdrew funds to zero;
++  set the rewards of the credentials that withdrew funds to zero;
 
-- and set the activity timer of all DReps that voted to `drepActivity`{.AgdaField}
-  epochs in the future.
++  and set the activity timer of all `DRep`{.AgdaInductiveConstructor}s that voted
+   to `drepActivity`{.AgdaField} epochs in the future.
 
 <!--
 ```agda
@@ -539,7 +554,7 @@ open GovVote using (voter)
 ```agda
 data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
-  CERT-init :
+  CERT-pre :
     let refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + pp .drepActivity)) dReps refresh
         wdrlCreds       = mapˢ stake (dom wdrls)
@@ -553,7 +568,7 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
 
 data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
-  CERT-last :
+  CERT-post :
     ⟦ e , pp , vs , wdrls , cc ⟧
     ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
       ⇀⦇ _ ,POST-CERT⦈

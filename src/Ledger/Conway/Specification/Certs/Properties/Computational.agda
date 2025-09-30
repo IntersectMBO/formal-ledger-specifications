@@ -143,21 +143,37 @@ instance
     with computeProof ce (gState cs) dCert | completeness _ _ _ _ h
   ... | success _ | refl = refl
 
-  Computational-CERTBASE : Computational _⊢_⇀⦇_,CERTBASE⦈_ String
-  Computational-CERTBASE .computeProof ce cs _ =
+  Computational-PRE-CERT : Computational _⊢_⇀⦇_,PRE-CERT⦈_ String
+  Computational-PRE-CERT .computeProof ce cs _ =
     let open CertEnv ce; open PParams pp
         open GState (gState cs); open DState (dState cs)
         refresh = mapPartial (isGovVoterDRep ∘ voter) (fromList votes)
         refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
     in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
               × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-      (yes p) → success (-, CERT-base p)
+      (yes p) → success (-, CERT-pre p)
       (no ¬p) → failure (genErrors ¬p)
-  Computational-CERTBASE .completeness ce st _ st' (CERT-base p)
+  Computational-PRE-CERT .completeness ce st _ st' (CERT-pre p)
     rewrite let dState = CertState.dState st; open DState dState in
       dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
                 × mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
+
+  -- POST-CERT has no premises, so computing always succeeds
+  -- with the unique post-state and proof CERT-post.
+  Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
+  Computational-POST-CERT .computeProof ce cs tt = success ( cs' , CERT-post)
+    where
+      dreps : DReps
+      dreps = GState.dreps (gState cs)
+      validVoteDelegs : VoteDelegs
+      validVoteDelegs = (VoteDelegsOf cs) ∣^ ( mapˢ vDelegCredential (dom dreps) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
+      cs' : CertState
+      cs' = ⟦ ⟦ validVoteDelegs , StakeDelegsOf cs , RewardsOf cs ⟧ , PStateOf cs , GStateOf cs ⟧
+
+  -- Completeness: the relational proof pins s' to exactly `post`,
+  -- and computeProof returns success at that same state; so refl.
+  Computational-POST-CERT .completeness ce cs _ cs' CERT-post = refl
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String
 Computational-CERTS = it

@@ -200,7 +200,7 @@ data _⊢_⇀⦇_,CERT⦈_ : CertEnv → CertState → DCert → CertState → T
 
 data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
-  CERT-init :
+  CERT-pre :
     let open PParams pp
         refresh         = mapPartial (isGovVoterDRep ∘ voter) (fromList vs)
         refreshedDReps  = mapValueRestricted (const (e + drepActivity)) dReps refresh
@@ -215,7 +215,7 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
 
 data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
-  CERT-last :
+  CERT-post :
       ⟦ e , pp , vs , wdrls , cc ⟧
       ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards , ddep ⟧ , stᵖ , stᵍ ⟧
         ⇀⦇ _ ,POST-CERT⦈

@@ -177,18 +177,18 @@ instance
         refreshedDReps  = mapValueRestricted (const (CertEnv.epoch ce + drepActivity)) dreps refresh
     in case ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom wdrls)) ⊆ dom voteDelegs
               × mapˢ (map₁ RwdAddr.stake) (wdrls ˢ) ⊆ rewards ˢ ¿ of λ where
-      (yes p) → success (-, CERT-init p)
+      (yes p) → success (-, CERT-pre p)
       (no ¬p) → failure (genErrors ¬p)
-  Computational-PRE-CERT .completeness ce st _ st' (CERT-init p)
+  Computational-PRE-CERT .completeness ce st _ st' (CERT-pre p)
     rewrite let dState = CertState.dState st; open DState dState in
       dec-yes ¿ filterˢ isKeyHash (mapˢ RwdAddr.stake (dom (CertEnv.wdrls ce))) ⊆ dom voteDelegs
                 × mapˢ (map₁ RwdAddr.stake) (CertEnv.wdrls ce ˢ) ⊆ rewards ˢ ¿
         p .proj₂ = refl
 
   -- POST-CERT has no premises, so computing always succeeds
-  -- with the unique post-state and proof CERT-last.
+  -- with the unique post-state and proof CERT-post.
   Computational-POST-CERT : Computational _⊢_⇀⦇_,POST-CERT⦈_ String
-  Computational-POST-CERT .computeProof ce cs tt = success ( cs' , CERT-last)
+  Computational-POST-CERT .computeProof ce cs tt = success ( cs' , CERT-post)
     where
       dreps : DReps
       dreps = GState.dreps (CertState.gState cs)
@@ -199,7 +199,7 @@ instance
 
   -- Completeness: the relational proof pins s' to exactly `post`,
   -- and computeProof returns success at that same state; so refl.
-  Computational-POST-CERT .completeness ce cs _ cs' CERT-last = refl
+  Computational-POST-CERT .completeness ce cs _ cs' CERT-post = refl
 
 
 Computational-CERTS : Computational _⊢_⇀⦇_,CERTS⦈_ String

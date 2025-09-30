@@ -534,7 +534,7 @@ definitions:
   \item \AgdaFunction{defaultVote}: This map sets a default vote to
   all SPOs who didn't vote, with the default depending on the given
   action, and whether the SPO has delegated their vote to one of the
-  default DReps.
+  default \DRep{}s.
 
   \item \AgdaFunction{actualVotes}: This map combines the votes cast
   by SPOs with \AgdaBound{defaultVote} using a left-biased union
@@ -557,8 +557,8 @@ be counted as having voted \abstain{} by default. Members of the SPO
 community found this behavior counterintuitive and requested that
 non-voters be assigned a \no{} vote by default, with the caveat that
 an SPO could change its default setting by delegating its reward
-account credential to an \texttt{AlwaysNoConfidence} DRep or an
-\texttt{AlwaysAbstain} DRep. (This change applies only after the
+account credential to an \texttt{AlwaysNoConfidence} \DRep{} or an
+\texttt{AlwaysAbstain} \DRep{}. (This change applies only after the
 bootstrap period; during the bootstrap period the logic is unchanged;
 see \cref{sec:conway-bootstrap-gov}.)  To be precise, the agreed upon
 specification is the following: an SPO that did not vote is assumed to
@@ -566,11 +566,11 @@ have voted \no{}, except under the following circumstances:
 %
 \begin{itemize}
   \item if the SPO has delegated its reward credential to an
-    \texttt{AlwaysNoConfidence} DRep, then their default vote is
+    \texttt{AlwaysNoConfidence} \DRep{}, then their default vote is
     \yes{} for \NoConfidence{} proposals and \no{} for other
     proposals;
   \item if the SPO has delegated its reward credential to an
-    \texttt{AlwaysAbstain} DRep, then its default vote is \abstain{}
+    \texttt{AlwaysAbstain} \DRep{}, then its default vote is \abstain{}
     for all proposals.
 \end{itemize}
 

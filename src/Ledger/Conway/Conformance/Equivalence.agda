@@ -217,7 +217,7 @@ getValidCertDepositsC : ∀ Γ s {s'} tx
                      → isValid tx ≡ true
                      → ⟦ epoch slot , pparams , txGovVotes , txWithdrawals , cc ⟧ C.⊢ certState ⇀⦇ txCerts ,CERTS⦈ s'
                      → L.ValidCertDeposits pparams deposits txCerts
-getValidCertDepositsC Γ s tx wf refl (run {s' = s'} (C.CERT-init _ , cert-post)) =
+getValidCertDepositsC Γ s tx wf refl (run {s' = s'} (C.CERT-pre _ , cert-post)) =
   getValidCertDepositsCERTS (C.UTxOState.deposits ((C.LState.utxoSt s))) wf cert-post
 
 lemUtxowDeposits : ∀ {Γ s s' tx}
@@ -266,7 +266,7 @@ open IsEquivalence ≡ᵈ-isEquivalence renaming (refl to ≡ᵈ-refl; sym to �
 lemCERTS'DepositsC : ∀ {Γ s dcerts s'} (open C.CertEnv Γ using (pp))
                    → RunTraceAndThen C._⊢_⇀⦇_,CERT⦈_ C._⊢_⇀⦇_,POST-CERT⦈_ Γ s dcerts s'
                    → certDepositsC s' ≡ ⟨ updateDDeps pp dcerts , updateGDeps pp dcerts ⟩ (certDepositsC s)
-lemCERTS'DepositsC (run-[] C.CERT-last) = refl
+lemCERTS'DepositsC (run-[] C.CERT-post) = refl
 lemCERTS'DepositsC (run-∷ (C.CERT-deleg  (C.DELEG-delegate     _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (run-∷ (C.CERT-deleg  (C.DELEG-dereg        _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (run-∷ (C.CERT-deleg  (C.DELEG-reg          _)) rs) = lemCERTS'DepositsC rs
@@ -279,7 +279,7 @@ lemCERTS'DepositsC (run-∷ (C.CERT-vdel   (C.GOVCERT-ccreghot   _)) rs) = lemCE
 lemCERTSDepositsC : ∀ {Γ s txCerts s'} (open C.CertEnv Γ using (pp))
                   → Γ C.⊢ s ⇀⦇ txCerts ,CERTS⦈ s'
                   → certDepositsC s' ≡ ⟨ updateDDeps pp txCerts , updateGDeps pp txCerts ⟩ (certDepositsC s)
-lemCERTSDepositsC (run (C.CERT-init _ , step)) = lemCERTS'DepositsC step
+lemCERTSDepositsC (run (C.CERT-pre _ , step)) = lemCERTS'DepositsC step
 
 lemWellformed : ∀ {Γ s tx s'} → WellformedLState s → Γ C.⊢ s ⇀⦇ tx ,LEDGER⦈ s' → WellformedLState s'
 lemWellformed {Γ} {s = ls} {tx} {s' = ls'} wf (C.LEDGER-V⋯ refl utxo certs gov) = goal
@@ -327,9 +327,6 @@ setCertDeposits (ddeps , gdeps) cs =
   let open C.CertState cs in
   ⟦ record dState {deposits = ddeps} , pState , record gState {deposits = gdeps} ⟧
 
--- _⊢_⇀⦇_,CERTS'⦈_ : C.CertEnv → C.CertState → List L.DCert → C.CertState → Type
--- _⊢_⇀⦇_,CERTS'⦈_ = ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_}
-
 updateCDep : PParams → L.DCert → L.Deposits × L.Deposits → L.Deposits × L.Deposits
 updateCDep pp cert (ddep , gdep) = updateDDep pp cert ddep , updateGDep pp cert gdep
 
@@ -339,7 +336,7 @@ opaque
              → RunTraceAndThen C._⊢_⇀⦇_,CERT⦈_ C._⊢_⇀⦇_,POST-CERT⦈_ Γ (deps₁ ⊢conv s) certs (deps₁' ⊢conv s')
              → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂'
                            × RunTraceAndThen C._⊢_⇀⦇_,CERT⦈_ C._⊢_⇀⦇_,POST-CERT⦈_ Γ (deps₂ ⊢conv s) certs (deps₂' ⊢conv s')
-  castCERTS' deps₁ deps₂ deps₁' eqd (run-[] C.CERT-last) = deps₂ , eqd , run-[] C.CERT-last
+  castCERTS' deps₁ deps₂ deps₁' eqd (run-[] C.CERT-post) = deps₂ , eqd , run-[] C.CERT-post
   castCERTS' {Γ} deps₁ deps₂ deps₁' eqd (run-∷ (C.CERT-deleg {dCert = cert} (C.DELEG-delegate h))    rs)
     = let
         open C.CertEnv Γ using (pp)
@@ -389,9 +386,9 @@ opaque
             → deps₁ ≡ᵈ deps₂
             → Γ C.⊢ deps₁ ⊢conv s ⇀⦇ certs ,CERTS⦈ (deps₁' ⊢conv s')
             → ∃[ deps₂' ] deps₁' ≡ᵈ deps₂' × Γ C.⊢ deps₂ ⊢conv s ⇀⦇ certs ,CERTS⦈ (deps₂' ⊢conv s')
-  castCERTS deps₁ deps₂ deps₁' eqd (run (C.CERT-init h , step)) =
+  castCERTS deps₁ deps₂ deps₁' eqd (run (C.CERT-pre h , step)) =
     let deps₂' , eqd' , step' = castCERTS' deps₁ deps₂ deps₁' eqd step
-    in  deps₂' , eqd' , run (C.CERT-init h , step')
+    in  deps₂' , eqd' , run (C.CERT-pre h , step')
 
 _⊢_⇀⦇_,GOVn⦈_ : L.GovEnv × ℕ → L.GovState → List (GovVote ⊎ GovProposal) → L.GovState → Type
 _⊢_⇀⦇_,GOVn⦈_ = _⊢_⇀⟦_⟧ᵢ*'_ {_⊢_⇀⟦_⟧ᵇ_ = IdSTS} {_⊢_⇀⟦_⟧_ = L._⊢_⇀⦇_,GOV⦈_}

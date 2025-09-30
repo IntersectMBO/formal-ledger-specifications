@@ -153,13 +153,13 @@ instance
                  → L.Deposits × L.Deposits
                    ⊢ Γ L.⊢ s ⇀⦇ _ ,PRE-CERT⦈ s' ⭆ⁱ λ deposits _ →
                      Γ C.⊢ (deposits ⊢conv s) ⇀⦇ _ ,PRE-CERT⦈ (deposits ⊢conv s')
-  PRE-CERTToConf .convⁱ deposits (L.CERT-init h) = C.CERT-init h
+  PRE-CERTToConf .convⁱ deposits (L.CERT-pre h) = C.CERT-pre h
 
   POST-CERTToConf : ∀ {Γ s s'}
                  → L.Deposits × L.Deposits
                    ⊢ Γ L.⊢ s ⇀⦇ _ ,POST-CERT⦈ s' ⭆ⁱ λ deposits _ →
                      Γ C.⊢ (deposits ⊢conv s) ⇀⦇ _ ,POST-CERT⦈ (deposits ⊢conv s')
-  POST-CERTToConf .convⁱ deposits L.CERT-last = C.CERT-last
+  POST-CERTToConf .convⁱ deposits L.CERT-post = C.CERT-post
 
   DELEGToConf : ∀ {Γ s dcert dcerts s'}
                   (open L.DelegEnv Γ renaming (pparams to pp))
@@ -242,12 +242,12 @@ instance
   PRE-CERTFromConf : ∀ {Γ s s'}
                    → Γ C.⊢ s ⇀⦇ _ ,PRE-CERT⦈ s' ⭆
                      Γ L.⊢ (conv s) ⇀⦇ _ ,PRE-CERT⦈ (conv s')
-  PRE-CERTFromConf .convⁱ _ (C.CERT-init h) = L.CERT-init h
+  PRE-CERTFromConf .convⁱ _ (C.CERT-pre h) = L.CERT-pre h
 
   POST-CERTFromConf : ∀ {Γ s s'}
                    → Γ C.⊢ s ⇀⦇ _ ,POST-CERT⦈ s' ⭆
                      Γ L.⊢ (conv s) ⇀⦇ _ ,POST-CERT⦈ (conv s')
-  POST-CERTFromConf .convⁱ _ C.CERT-last = L.CERT-last
+  POST-CERTFromConf .convⁱ _ C.CERT-post = L.CERT-post
 
 
   CERT-POST-CERTFromConf : ∀ {Γ s dcerts s'}

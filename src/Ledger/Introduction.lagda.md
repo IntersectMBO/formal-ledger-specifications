@@ -218,7 +218,7 @@ formally defined.
 
 - [DELEG][] handles registering stake addresses and delegating to a stake pool.
 
-- [GOVCERT][] handles registering and delegating to DReps.
+- [GOVCERT][] handles registering and delegating to `DRep`{.AgdaInductiveConstructor}s.
 
 - [POOL][] handles registering and retiring stake pools.
 
