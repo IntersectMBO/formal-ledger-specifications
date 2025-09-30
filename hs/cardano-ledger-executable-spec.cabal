@@ -495,18 +495,18 @@ library
       MAlonzo.Code.Ledger.Conway.Specification.Abstract
       MAlonzo.Code.Ledger.Conway.Specification.Certs
       MAlonzo.Code.Ledger.Conway.Specification.Enact
-      MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties
+      MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Epoch
       MAlonzo.Code.Ledger.Conway.Specification.Fees
       MAlonzo.Code.Ledger.Conway.Specification.Gov
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Base
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Ledger
       MAlonzo.Code.Ledger.Conway.Specification.PoolReap
       MAlonzo.Code.Ledger.Conway.Specification.PParams
       MAlonzo.Code.Ledger.Conway.Specification.Ratify
-      MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties
+      MAlonzo.Code.Ledger.Conway.Specification.Ratify.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Rewards
       MAlonzo.Code.Ledger.Conway.Specification.Script
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base

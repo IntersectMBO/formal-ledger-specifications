@@ -10,7 +10,7 @@
 
 {-# OPTIONS_GHC -Wno-overlapping-patterns #-}
 
-module MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties where
+module MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational where
 
 import MAlonzo.RTE (coe, erased, AgdaAny, addInt, subInt, mulInt,
                     quotInt, remInt, geqInt, ltInt, eqInt, add64, sub64, mul64, quot64,
@@ -52,53 +52,53 @@ import qualified MAlonzo.Code.Relation.Nullary.Reflects
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
 -- _.preoEpoch
-d_preoEpoch_424 ::
+d_preoEpoch_426 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Class.HasOrder.Core.T_HasPreorder_28
-d_preoEpoch_424 v0
+d_preoEpoch_426 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Epoch.d_preoEpoch_92
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.d_epochStructure_644
          (coe v0))
--- Ledger.Conway.Specification.Enact.Properties._._⊢_⇀⦇_,ENACT⦈_
-d__'8866'_'8640''10631'_'44'ENACT'10632'__1038 a0 a1 a2 a3 a4 = ()
--- Ledger.Conway.Specification.Enact.Properties._.HasccMaxTermLength-EnactState
-d_HasccMaxTermLength'45'EnactState_1074 ::
+-- Ledger.Conway.Specification.Enact.Properties.Computational._._⊢_⇀⦇_,ENACT⦈_
+d__'8866'_'8640''10631'_'44'ENACT'10632'__1040 a0 a1 a2 a3 a4 = ()
+-- Ledger.Conway.Specification.Enact.Properties.Computational._.HasccMaxTermLength-EnactState
+d_HasccMaxTermLength'45'EnactState_1076 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_HasCCMaxTermLength_440
-d_HasccMaxTermLength'45'EnactState_1074 ~v0
-  = du_HasccMaxTermLength'45'EnactState_1074
-du_HasccMaxTermLength'45'EnactState_1074 ::
+d_HasccMaxTermLength'45'EnactState_1076 ~v0
+  = du_HasccMaxTermLength'45'EnactState_1076
+du_HasccMaxTermLength'45'EnactState_1076 ::
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_HasCCMaxTermLength_440
-du_HasccMaxTermLength'45'EnactState_1074
+du_HasccMaxTermLength'45'EnactState_1076
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Enact.du_HasccMaxTermLength'45'EnactState_1100
--- Ledger.Conway.Specification.Enact.Properties._.completeness
-d_completeness_1124 ::
+-- Ledger.Conway.Specification.Enact.Properties.Computational._.completeness
+d_completeness_1126 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Equality.T__'8801'__12
-d_completeness_1124 = erased
--- Ledger.Conway.Specification.Enact.Properties._.computeProof
-d_computeProof_1130 ::
+d_completeness_1126 = erased
+-- Ledger.Conway.Specification.Enact.Properties.Computational._.computeProof
+d_computeProof_1132 ::
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232 ->
   AgdaAny ->
   AgdaAny ->
   AgdaAny ->
   MAlonzo.Code.Interface.ComputationalRelation.T_ComputationResult_34
-d_computeProof_1130 v0
+d_computeProof_1132 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.d_computeProof_272
       (coe v0)
--- Ledger.Conway.Specification.Enact.Properties.Computational-ENACT
-d_Computational'45'ENACT_1142 ::
+-- Ledger.Conway.Specification.Enact.Properties.Computational.Computational-ENACT
+d_Computational'45'ENACT_1144 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Interface.ComputationalRelation.T_Computational_232
-d_Computational'45'ENACT_1142 v0
+d_Computational'45'ENACT_1144 v0
   = coe
       MAlonzo.Code.Interface.ComputationalRelation.C_MkComputational_412
       (\ v1 v2 v3 ->
