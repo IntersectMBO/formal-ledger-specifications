@@ -1,12 +1,13 @@
 # Rewards {#sec:rewards}
 
-This section is part of the [Ledger.Conway.Specification.Rewards][] module of the
-[formal ledger specification][], where we define how rewards for stake pools and
-their delegators are calculated and paid out. This calculation has two main aspects.
+In this section we define how rewards for stake pools and their delegators
+are calculated and paid out. This calculation has two main aspects.
 
-1.  The *amount* of rewards to be paid out. This is defined in the section [Amount of Rewards to be Paid Out][].
+1.  The *amount* of rewards to be paid out. This is defined in the section
+    [Amount of Rewards to be Paid Out][].
 
-2.  The *time* when rewards are paid out. This is defined in the section [Timing of Rewards Payout][].
+2.  The *time* when rewards are paid out. This is defined in the section
+    [Timing of Rewards Payout][].
 
 
 <!--
@@ -39,7 +40,6 @@ open import Ledger.Conway.Specification.Utxo txs abs
 -->
 
 ## Rewards Motivation {#sec:rewards-motivation}
-[Rewards Motivation]: #sec:rewards-motivation
 
 In order to operate, any blockchain needs to attract parties that are
 willing to spend computational and network resources on processing
@@ -88,8 +88,7 @@ number of stake pools that attract most of the stake. For more details
 about the design and rationale of the rewards and delegation system, see
 [Team18](#shelley-delegation-design).
 
-## Amount of Rewards to be Paid Out {#sec:rewards-amount}
-[Amount of Rewards to be Paid Out]: #sec:rewards-amount
+## Amount of Rewards to be Paid Out {#sec:amount-of-rewards-to-be-paid-out}
 
 ### Precision of Arithmetic Operations {#sec:precision-rewards}
 
@@ -646,11 +645,11 @@ opaque
         mapWithKey (λ c rewardBalance → utxoBalance c + rewardBalance) activeRewards
 ```
 
-## Timing of Rewards Payout {#sec:rewards-time}
+## Timing of Rewards Payout {#sec:timing-of-rewards-payout}
 
-### Rewards Calculation Timeline {#sec:rewards-timeline}
+### Rewards Calculation Timeline {#sec:rewards-calculation-timeline}
 
-As described in the [Rewards Motivation](#sec:rewards-motivation) section, the probability of
+As described in the [Rewards Motivation][] section, the probability of
 producing a block depends on the stake delegated to the block producer.  However, the
 stake distribution changes over time, as funds are transferred between parties.  This
 raises the question: What is the point in time from which we take the stake
