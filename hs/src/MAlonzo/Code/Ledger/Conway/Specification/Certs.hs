@@ -1421,11 +1421,22 @@ du_HasVoteDelegs'45'CertState_1496
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_856
       (coe (\ v0 -> d_voteDelegs_1320 (coe d_dState_1360 (coe v0))))
+-- Ledger.Conway.Specification.Certs.HasStakeDelegs-CertState
+d_HasStakeDelegs'45'CertState_1498 ::
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
+  T_HasStakeDelegs_1212
+d_HasStakeDelegs'45'CertState_1498 ~v0
+  = du_HasStakeDelegs'45'CertState_1498
+du_HasStakeDelegs'45'CertState_1498 :: T_HasStakeDelegs_1212
+du_HasStakeDelegs'45'CertState_1498
+  = coe
+      C_constructor_1222
+      (coe (\ v0 -> d_stakeDelegs_1322 (coe d_dState_1360 (coe v0))))
 -- Ledger.Conway.Specification.Certs.rewardsBalance
-d_rewardsBalance_1498 ::
+d_rewardsBalance_1500 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_DState_1312 -> Integer
-d_rewardsBalance_1498 v0 v1
+d_rewardsBalance_1500 v0 v1
   = coe
       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1222
       (coe
@@ -1451,23 +1462,23 @@ d_rewardsBalance_1498 v0 v1
             MAlonzo.Code.Data.Nat.Properties.d_'43''45'0'45'commutativeMonoid_3476))
       (coe (\ v2 -> v2)) (coe d_rewards_1324 (coe v1))
 -- Ledger.Conway.Specification.Certs.HasCoin-CertState
-d_HasCoin'45'CertState_1504 ::
+d_HasCoin'45'CertState_1506 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.Ledger.Prelude.HasCoin.T_HasCoin_10
-d_HasCoin'45'CertState_1504 v0
+d_HasCoin'45'CertState_1506 v0
   = coe
       MAlonzo.Code.Ledger.Prelude.HasCoin.C_constructor_20
       (coe
          (\ v1 ->
-            d_rewardsBalance_1498 (coe v0) (coe d_dState_1360 (coe v1))))
+            d_rewardsBalance_1500 (coe v0) (coe d_dState_1360 (coe v1))))
 -- Ledger.Conway.Specification.Certs.HasCast-CertEnv
-d_HasCast'45'CertEnv_1506 ::
+d_HasCast'45'CertEnv_1508 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'CertEnv_1506 ~v0 = du_HasCast'45'CertEnv_1506
-du_HasCast'45'CertEnv_1506 ::
+d_HasCast'45'CertEnv_1508 ~v0 = du_HasCast'45'CertEnv_1508
+du_HasCast'45'CertEnv_1508 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'CertEnv_1506
+du_HasCast'45'CertEnv_1508
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -2244,13 +2255,13 @@ du_HasCast'45'CertEnv_1506
                            (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
          (coe C_constructor_1310))
 -- Ledger.Conway.Specification.Certs.HasCast-DState
-d_HasCast'45'DState_1508 ::
+d_HasCast'45'DState_1510 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'DState_1508 ~v0 = du_HasCast'45'DState_1508
-du_HasCast'45'DState_1508 ::
+d_HasCast'45'DState_1510 ~v0 = du_HasCast'45'DState_1510
+du_HasCast'45'DState_1510 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'DState_1508
+du_HasCast'45'DState_1510
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -2366,13 +2377,13 @@ du_HasCast'45'DState_1508
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
          (coe C_'10214'_'44'_'44'_'10215''7496'_1326))
 -- Ledger.Conway.Specification.Certs.HasCast-PState
-d_HasCast'45'PState_1510 ::
+d_HasCast'45'PState_1512 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'PState_1510 ~v0 = du_HasCast'45'PState_1510
-du_HasCast'45'PState_1510 ::
+d_HasCast'45'PState_1512 ~v0 = du_HasCast'45'PState_1512
+du_HasCast'45'PState_1512 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'PState_1510
+du_HasCast'45'PState_1512
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -2496,13 +2507,13 @@ du_HasCast'45'PState_1510
                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
          (coe C_constructor_1338))
 -- Ledger.Conway.Specification.Certs.HasCast-GState
-d_HasCast'45'GState_1512 ::
+d_HasCast'45'GState_1514 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'GState_1512 ~v0 = du_HasCast'45'GState_1512
-du_HasCast'45'GState_1512 ::
+d_HasCast'45'GState_1514 ~v0 = du_HasCast'45'GState_1514
+du_HasCast'45'GState_1514 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'GState_1512
+du_HasCast'45'GState_1514
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -3206,13 +3217,13 @@ du_HasCast'45'GState_1512
                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))
          (coe C_'10214'_'44'_'10215''7515'_1350))
 -- Ledger.Conway.Specification.Certs.HasCast-CertState
-d_HasCast'45'CertState_1514 ::
+d_HasCast'45'CertState_1516 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'CertState_1514 ~v0 = du_HasCast'45'CertState_1514
-du_HasCast'45'CertState_1514 ::
+d_HasCast'45'CertState_1516 ~v0 = du_HasCast'45'CertState_1516
+du_HasCast'45'CertState_1516 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'CertState_1514
+du_HasCast'45'CertState_1516
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -3328,13 +3339,13 @@ du_HasCast'45'CertState_1514
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
          (coe C_'10214'_'44'_'44'_'10215''7580''738'_1366))
 -- Ledger.Conway.Specification.Certs.HasCast-DelegEnv
-d_HasCast'45'DelegEnv_1516 ::
+d_HasCast'45'DelegEnv_1518 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-d_HasCast'45'DelegEnv_1516 ~v0 = du_HasCast'45'DelegEnv_1516
-du_HasCast'45'DelegEnv_1516 ::
+d_HasCast'45'DelegEnv_1518 ~v0 = du_HasCast'45'DelegEnv_1518
+du_HasCast'45'DelegEnv_1518 ::
   MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.T_HasCast_16
-du_HasCast'45'DelegEnv_1516
+du_HasCast'45'DelegEnv_1518
   = coe
       MAlonzo.Code.QstdlibZ45Zclasses.Class.HasCast.Base.C_constructor_30
       (coe
@@ -3732,36 +3743,42 @@ du_HasCast'45'DelegEnv_1516
                      (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
          (coe C_constructor_1382))
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,DELEG⦈_
-d__'8866'_'8640''10631'_'44'DELEG'10632'__1586 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'DELEG'10632'__1586
-  = C_DELEG'45'delegate_1600 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
-    C_DELEG'45'dereg_1602 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
-    C_DELEG'45'reg_1604 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+d__'8866'_'8640''10631'_'44'DELEG'10632'__1588 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'DELEG'10632'__1588
+  = C_DELEG'45'delegate_1590 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 |
+    C_DELEG'45'dereg_1592 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
+    C_DELEG'45'reg_1594 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,POOL⦈_
-d__'8866'_'8640''10631'_'44'POOL'10632'__1588 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'POOL'10632'__1588
-  = C_POOL'45'regpool_1606 | C_POOL'45'retirepool_1608
+d__'8866'_'8640''10631'_'44'POOL'10632'__1596 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'POOL'10632'__1596
+  = C_POOL'45'regpool_1598 | C_POOL'45'retirepool_1600
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,GOVCERT⦈_
-d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1590 a0 a1 a2 a3 a4
+d__'8866'_'8640''10631'_'44'GOVCERT'10632'__1602 a0 a1 a2 a3 a4
   = ()
-data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1590
-  = C_GOVCERT'45'regdrep_1612 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
-    C_GOVCERT'45'deregdrep_1614 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
-    C_GOVCERT'45'ccreghot_1616 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+data T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1602
+  = C_GOVCERT'45'regdrep_1604 MAlonzo.Code.Data.Sum.Base.T__'8846'__30 |
+    C_GOVCERT'45'deregdrep_1606 MAlonzo.Code.Data.List.Relation.Unary.Any.T_Any_34 |
+    C_GOVCERT'45'ccreghot_1608 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,CERT⦈_
-d__'8866'_'8640''10631'_'44'CERT'10632'__1592 a0 a1 a2 a3 a4 = ()
-data T__'8866'_'8640''10631'_'44'CERT'10632'__1592
-  = C_CERT'45'deleg_1618 T__'8866'_'8640''10631'_'44'DELEG'10632'__1586 |
-    C_CERT'45'pool_1620 T__'8866'_'8640''10631'_'44'POOL'10632'__1588 |
-    C_CERT'45'vdel_1622 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1590
--- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,CERTBASE⦈_
-d__'8866'_'8640''10631'_'44'CERTBASE'10632'__1594 a0 a1 a2 a3 a4
+d__'8866'_'8640''10631'_'44'CERT'10632'__1610 a0 a1 a2 a3 a4 = ()
+data T__'8866'_'8640''10631'_'44'CERT'10632'__1610
+  = C_CERT'45'deleg_1612 T__'8866'_'8640''10631'_'44'DELEG'10632'__1588 |
+    C_CERT'45'pool_1614 T__'8866'_'8640''10631'_'44'POOL'10632'__1596 |
+    C_CERT'45'vdel_1616 T__'8866'_'8640''10631'_'44'GOVCERT'10632'__1602
+-- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,PRE-CERT⦈_
+d__'8866'_'8640''10631'_'44'PRE'45'CERT'10632'__1618 a0 a1 a2 a3 a4
   = ()
-newtype T__'8866'_'8640''10631'_'44'CERTBASE'10632'__1594
-  = C_CERT'45'base_1632 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+newtype T__'8866'_'8640''10631'_'44'PRE'45'CERT'10632'__1618
+  = C_CERT'45'pre_1626 MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
+-- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,POST-CERT⦈_
+d__'8866'_'8640''10631'_'44'POST'45'CERT'10632'__1628 a0 a1 a2 a3
+                                                      a4
+  = ()
+data T__'8866'_'8640''10631'_'44'POST'45'CERT'10632'__1628
+  = C_CERT'45'post_1630
 -- Ledger.Conway.Specification.Certs._⊢_⇀⦇_,CERTS⦈_
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1596 ::
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1632 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Base.T_GovStructure_10 ->
   T_CertEnv_1288 ->
   T_CertState_1352 -> [T_DCert_1252] -> T_CertState_1352 -> ()
-d__'8866'_'8640''10631'_'44'CERTS'10632'__1596 = erased
+d__'8866'_'8640''10631'_'44'CERTS'10632'__1632 = erased

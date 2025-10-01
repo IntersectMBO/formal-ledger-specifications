@@ -1118,7 +1118,7 @@ du_Computational'45'Id_740
            C_success_42
            (coe
               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v1)
-              (coe MAlonzo.Code.Interface.STS.C_Id'45'nop_78)))
+              (coe MAlonzo.Code.Interface.STS.C_Id'45'nop_120)))
 -- Interface.ComputationalRelation._._.Computational-ReflexiveTransitiveClosureᵇ
 d_Computational'45'ReflexiveTransitiveClosure'7495'_776 ::
   () ->
@@ -1156,7 +1156,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7495'_776 v0 v1 v2
                   (coe
                      MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
                      (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
-                     (\ v7 v8 -> coe MAlonzo.Code.Interface.STS.C_BS'45'base_40 v8))
+                     (\ v7 v8 -> coe MAlonzo.Code.Interface.STS.C_BS'45'base_82 v8))
                   (coe
                      d_computeProof_272 v0 v4 v5
                      (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8))
@@ -1185,7 +1185,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7495'_776 v0 v1 v2
                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                        (coe v15)
                                                        (coe
-                                                          MAlonzo.Code.Interface.STS.C_BS'45'ind_42
+                                                          MAlonzo.Code.Interface.STS.C_BS'45'ind_84
                                                           v11 v12 v16))
                                              _ -> MAlonzo.RTE.mazUnreachableError
                                       C_failure_44 v14
@@ -1238,7 +1238,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7522''7495'''_948 v0
                   (coe
                      MAlonzo.Code.Class.Bifunctor.du_map'8322''8242'_54
                      (coe MAlonzo.Code.Class.Bifunctor.du_Bifunctor'45'Σ_74)
-                     (coe (\ v7 -> coe MAlonzo.Code.Interface.STS.C_BS'45'base_60)))
+                     (coe (\ v7 -> coe MAlonzo.Code.Interface.STS.C_BS'45'base_102)))
                   (coe
                      d_computeProof_272 v0
                      (MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v4)) v5
@@ -1277,7 +1277,7 @@ du_Computational'45'ReflexiveTransitiveClosure'7522''7495'''_948 v0
                                                        MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
                                                        (coe v15)
                                                        (coe
-                                                          MAlonzo.Code.Interface.STS.C_BS'45'ind_62
+                                                          MAlonzo.Code.Interface.STS.C_BS'45'ind_104
                                                           v11 v12 v16))
                                              _ -> MAlonzo.RTE.mazUnreachableError
                                       C_failure_44 v14 -> coe v13
@@ -1324,8 +1324,129 @@ du_Computational'45'ReflexiveTransitiveClosure'7522''7495'_1102 v0
            (coe
               MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v4)
               (coe (0 :: Integer))))
--- Interface.ComputationalRelation._._.Computational-ReflexiveTransitiveClosureᵇ'
-d_Computational'45'ReflexiveTransitiveClosure'7495'''_1140 ::
+-- Interface.ComputationalRelation.Computational-ReflexiveTransitiveClosure
+d_Computational'45'ReflexiveTransitiveClosure_1110 ::
+  () ->
+  () ->
+  () ->
+  () ->
+  (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
+  T_Computational_232 -> T_Computational_232
+d_Computational'45'ReflexiveTransitiveClosure_1110 ~v0 ~v1 ~v2 ~v3
+                                                   ~v4 v5
+  = du_Computational'45'ReflexiveTransitiveClosure_1110 v5
+du_Computational'45'ReflexiveTransitiveClosure_1110 ::
+  T_Computational_232 -> T_Computational_232
+du_Computational'45'ReflexiveTransitiveClosure_1110 v0
+  = coe
+      du_Computational'45'ReflexiveTransitiveClosure'7495'_776
+      (coe du_Computational'45'Id_740) (coe v0)
+      (coe du_InjectError'45''8869'_728) (coe du_InjectError'45'Id_732)
+-- Interface.ComputationalRelation.Computational-ReflexiveTransitiveClosureᵢ
+d_Computational'45'ReflexiveTransitiveClosure'7522'_1114 ::
+  () ->
+  () ->
+  () ->
+  () ->
+  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
+   AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
+  T_Computational_232 -> T_Computational_232
+d_Computational'45'ReflexiveTransitiveClosure'7522'_1114 ~v0 ~v1
+                                                         ~v2 ~v3 ~v4 v5
+  = du_Computational'45'ReflexiveTransitiveClosure'7522'_1114 v5
+du_Computational'45'ReflexiveTransitiveClosure'7522'_1114 ::
+  T_Computational_232 -> T_Computational_232
+du_Computational'45'ReflexiveTransitiveClosure'7522'_1114 v0
+  = coe
+      du_Computational'45'ReflexiveTransitiveClosure'7522''7495'_1102
+      (coe du_Computational'45'Id_740) (coe v0)
+      (coe du_InjectError'45''8869'_728) (coe du_InjectError'45'Id_732)
+-- Interface.ComputationalRelation._._.Computational-RunTraceAndThen
+d_Computational'45'RunTraceAndThen_1148 ::
+  () ->
+  () ->
+  () ->
+  () ->
+  (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
+  T_Computational_232 ->
+  () ->
+  () ->
+  (AgdaAny ->
+   AgdaAny ->
+   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 -> AgdaAny -> ()) ->
+  T_Computational_232 ->
+  T_InjectError_716 -> T_InjectError_716 -> T_Computational_232
+d_Computational'45'RunTraceAndThen_1148 ~v0 ~v1 ~v2 ~v3 ~v4 v5 ~v6
+                                        ~v7 ~v8 v9 v10 v11
+  = du_Computational'45'RunTraceAndThen_1148 v5 v9 v10 v11
+du_Computational'45'RunTraceAndThen_1148 ::
+  T_Computational_232 ->
+  T_Computational_232 ->
+  T_InjectError_716 -> T_InjectError_716 -> T_Computational_232
+du_Computational'45'RunTraceAndThen_1148 v0 v1 v2 v3
+  = coe
+      C_MkComputational_412
+      (\ v4 v5 v6 ->
+         case coe v6 of
+           []
+             -> let v7
+                      = coe
+                          d_computeProof_272 v1 v4 v5
+                          (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8) in
+                coe
+                  (case coe v7 of
+                     C_success_42 v8
+                       -> case coe v8 of
+                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v9 v10
+                              -> coe
+                                   C_success_42
+                                   (coe
+                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v9)
+                                      (coe MAlonzo.Code.Interface.STS.C_run'45''91''93'_40 v10))
+                            _ -> MAlonzo.RTE.mazUnreachableError
+                     C_failure_44 v8 -> coe C_failure_44 (coe d_injectError_724 v3 v8)
+                     _ -> MAlonzo.RTE.mazUnreachableError)
+           (:) v7 v8
+             -> let v9 = coe d_computeProof_272 v0 v4 v5 v7 in
+                coe
+                  (case coe v9 of
+                     C_success_42 v10
+                       -> case coe v10 of
+                            MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v11 v12
+                              -> let v13
+                                       = coe
+                                           d_computeProof_272
+                                           (coe
+                                              du_Computational'45'RunTraceAndThen_1148 (coe v0)
+                                              (coe v1) (coe v2) (coe v3))
+                                           v4 v11 v8 in
+                                 coe
+                                   (case coe v13 of
+                                      C_success_42 v14
+                                        -> case coe v14 of
+                                             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v15 v16
+                                               -> coe
+                                                    C_success_42
+                                                    (coe
+                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
+                                                       (coe v15)
+                                                       (coe
+                                                          MAlonzo.Code.Interface.STS.C_run'45''8759'_42
+                                                          v11 v12 v16))
+                                             _ -> MAlonzo.RTE.mazUnreachableError
+                                      C_failure_44 v14
+                                        -> coe
+                                             C_failure_44
+                                             (coe
+                                                d_injectError_724
+                                                (coe C_constructor_726 (coe (\ v15 -> v15))) v14)
+                                      _ -> MAlonzo.RTE.mazUnreachableError)
+                            _ -> MAlonzo.RTE.mazUnreachableError
+                     C_failure_44 v10 -> coe C_failure_44 (coe d_injectError_724 v2 v10)
+                     _ -> MAlonzo.RTE.mazUnreachableError)
+           _ -> MAlonzo.RTE.mazUnreachableError)
+-- Interface.ComputationalRelation._._._.Computational-RunTraceAfterAndThen
+d_Computational'45'RunTraceAfterAndThen_1366 ::
   () ->
   () ->
   () ->
@@ -1335,98 +1456,65 @@ d_Computational'45'ReflexiveTransitiveClosure'7495'''_1140 ::
   T_Computational_232 ->
   () ->
   () ->
-  () ->
   (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
   T_Computational_232 ->
-  T_InjectError_716 -> T_InjectError_716 -> T_Computational_232
-d_Computational'45'ReflexiveTransitiveClosure'7495'''_1140 ~v0 ~v1
-                                                           ~v2 ~v3 v4 ~v5 ~v6 ~v7 ~v8 v9 v10 v11
-  = du_Computational'45'ReflexiveTransitiveClosure'7495'''_1140
-      v4 v9 v10 v11
-du_Computational'45'ReflexiveTransitiveClosure'7495'''_1140 ::
-  T_Computational_232 ->
+  () ->
+  (AgdaAny ->
+   AgdaAny ->
+   MAlonzo.Code.Agda.Builtin.Unit.T_'8868'_6 -> AgdaAny -> ()) ->
   T_Computational_232 ->
   T_InjectError_716 -> T_InjectError_716 -> T_Computational_232
-du_Computational'45'ReflexiveTransitiveClosure'7495'''_1140 v0 v1
-                                                            v2 v3
+d_Computational'45'RunTraceAfterAndThen_1366 ~v0 ~v1 ~v2 ~v3 v4 ~v5
+                                             ~v6 ~v7 v8 ~v9 ~v10 v11 v12 v13
+  = du_Computational'45'RunTraceAfterAndThen_1366 v4 v8 v11 v12 v13
+du_Computational'45'RunTraceAfterAndThen_1366 ::
+  T_Computational_232 ->
+  T_Computational_232 ->
+  T_Computational_232 ->
+  T_InjectError_716 -> T_InjectError_716 -> T_Computational_232
+du_Computational'45'RunTraceAfterAndThen_1366 v0 v1 v2 v3 v4
   = coe
       C_MkComputational_412
-      (\ v4 v5 v6 ->
-         let v7
+      (\ v5 v6 v7 ->
+         let v8
                = coe
-                   d_computeProof_272 v0 v4 v5
+                   d_computeProof_272 v0 v5 v6
                    (coe MAlonzo.Code.Agda.Builtin.Unit.C_tt_8) in
          coe
-           (case coe v7 of
-              C_success_42 v8
-                -> case coe v8 of
-                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v9 v10
-                       -> let v11
+           (case coe v8 of
+              C_success_42 v9
+                -> case coe v9 of
+                     MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v10 v11
+                       -> let v12
                                 = coe
                                     d_computeProof_272
                                     (coe
-                                       du_Computational'45'ReflexiveTransitiveClosure'7495'_776
-                                       (coe du_Computational'45'Id_740) (coe v1)
-                                       (coe
-                                          C_constructor_726
-                                          (coe (\ v11 -> MAlonzo.RTE.mazUnreachableError)))
-                                       (coe v3))
-                                    v4 v9 v6 in
+                                       du_Computational'45'RunTraceAndThen_1148 (coe v1) (coe v2)
+                                       (coe v3) (coe v4))
+                                    v5 v10 v7 in
                           coe
-                            (case coe v11 of
-                               C_success_42 v12
-                                 -> case coe v12 of
-                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v13 v14
+                            (case coe v12 of
+                               C_success_42 v13
+                                 -> case coe v13 of
+                                      MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 v14 v15
                                         -> coe
                                              C_success_42
                                              (coe
                                                 MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                (coe v13)
+                                                (coe v14)
                                                 (coe
-                                                   MAlonzo.Code.Interface.STS.C_RTC_96 v9
+                                                   MAlonzo.Code.Interface.STS.C_run_64 v10
                                                    (coe
                                                       MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-                                                      (coe v10) (coe v14))))
+                                                      (coe v11) (coe v15))))
                                       _ -> MAlonzo.RTE.mazUnreachableError
-                               C_failure_44 v12 -> coe v11
+                               C_failure_44 v13
+                                 -> coe
+                                      C_failure_44
+                                      (coe
+                                         d_injectError_724
+                                         (coe C_constructor_726 (coe (\ v14 -> v14))) v13)
                                _ -> MAlonzo.RTE.mazUnreachableError)
                      _ -> MAlonzo.RTE.mazUnreachableError
-              C_failure_44 v8 -> coe C_failure_44 (coe d_injectError_724 v2 v8)
+              C_failure_44 v9 -> coe C_failure_44 (coe d_injectError_724 v4 v9)
               _ -> MAlonzo.RTE.mazUnreachableError))
--- Interface.ComputationalRelation.Computational-ReflexiveTransitiveClosure
-d_Computational'45'ReflexiveTransitiveClosure_1258 ::
-  () ->
-  () ->
-  () ->
-  () ->
-  (AgdaAny -> AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
-  T_Computational_232 -> T_Computational_232
-d_Computational'45'ReflexiveTransitiveClosure_1258 ~v0 ~v1 ~v2 ~v3
-                                                   ~v4 v5
-  = du_Computational'45'ReflexiveTransitiveClosure_1258 v5
-du_Computational'45'ReflexiveTransitiveClosure_1258 ::
-  T_Computational_232 -> T_Computational_232
-du_Computational'45'ReflexiveTransitiveClosure_1258 v0
-  = coe
-      du_Computational'45'ReflexiveTransitiveClosure'7495'_776
-      (coe du_Computational'45'Id_740) (coe v0)
-      (coe du_InjectError'45''8869'_728) (coe du_InjectError'45'Id_732)
--- Interface.ComputationalRelation.Computational-ReflexiveTransitiveClosureᵢ
-d_Computational'45'ReflexiveTransitiveClosure'7522'_1262 ::
-  () ->
-  () ->
-  () ->
-  () ->
-  (MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
-   AgdaAny -> AgdaAny -> AgdaAny -> ()) ->
-  T_Computational_232 -> T_Computational_232
-d_Computational'45'ReflexiveTransitiveClosure'7522'_1262 ~v0 ~v1
-                                                         ~v2 ~v3 ~v4 v5
-  = du_Computational'45'ReflexiveTransitiveClosure'7522'_1262 v5
-du_Computational'45'ReflexiveTransitiveClosure'7522'_1262 ::
-  T_Computational_232 -> T_Computational_232
-du_Computational'45'ReflexiveTransitiveClosure'7522'_1262 v0
-  = coe
-      du_Computational'45'ReflexiveTransitiveClosure'7522''7495'_1102
-      (coe du_Computational'45'Id_740) (coe v0)
-      (coe du_InjectError'45''8869'_728) (coe du_InjectError'45'Id_732)
