@@ -6,9 +6,9 @@
 [Auxiliary POOL transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
 [Calculation of Fees for Reference Scripts]: Ledger.Conway.Specification.Fees.md#sec:calculation-of-fees
 [Cardano Staking: How To Stake ADA]: https://www.ledger.com/academy/cardano-staking-how-to-stake-ada
-[CERT]: Ledger.Conway.Specification.Certs.md#certs-rules
-[CERTS]: Ledger.Conway.Specification.Certs.md#certs-rules
-[CERTS rules]: Ledger.Conway.Specification.Certs.md#certs-rules
+[CERT]: Ledger.Conway.Specification.Certs.md#sec:the-certs-transition-system
+[CERTS]: Ledger.Conway.Specification.Certs.md#sec:the-certs-transition-system
+[CERTS rules]: Ledger.Conway.Specification.Certs.md#sec:the-certs-transition-system
 [CHAIN]: Ledger.Conway.Specification.Chain.md#chain-transition-system
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Specification.Enact.md#enact-transition-system

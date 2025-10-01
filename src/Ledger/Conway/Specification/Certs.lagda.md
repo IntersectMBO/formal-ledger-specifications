@@ -504,7 +504,7 @@ data _⊢_⇀⦇_,GOVCERT⦈_ : CertEnv → GState → DCert → GState → Type
       ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ dReps , ccKeys ⟧ ⇀⦇ ccreghot c mc ,GOVCERT⦈ ⟦ dReps , ❴ c , mc ❵ ∪ˡ ccKeys ⟧
 ```
 
-## The <span class="AgdaDatatype">CERTS</span> Transition System
+## The <span class="AgdaDatatype">CERTS</span> Transition System {#sec:the-certs-transition-system}
 
 This section culminates in the definition of the `CERTS`{.AgdaDatatype} transition
 system by bundling previously defined pieces together into a
@@ -532,18 +532,26 @@ data _⊢_⇀⦇_,CERT⦈_  : CertEnv → CertState → DCert → CertState → 
       Γ ⊢ ⟦ stᵈ , stᵖ , stᵍ ⟧ ⇀⦇ dCert ,CERT⦈ ⟦ stᵈ , stᵖ , stᵍ' ⟧
 ```
 
-### The <span class="AgdaFunction">CERTBASE</span> Function
+### The <span class="AgdaFunction">PRE-CERT</span> Transition Rule
 
-Here we define the `CERTBASE`{.AgdaFunction} function which handles the following
+Here we define the `PRE-CERT`{.AgdaDatatype} transition rule.  This rule is applied
+at the start of the `CERTS`{.AgdaDatatype} transition rule and handles the following
 important housekeeping tasks:
 
 +  check the correctness of withdrawals and ensure that withdrawals only
    happen from credentials that have delegated their voting power;
 
-+  set the rewards of the credentials that withdrew funds to zero;
++  set the activity timer of all `DRep`{.AgdaInductiveConstructor}s that voted
+   to `drepActivity`{.AgdaField} epochs in the future;
 
-+  and set the activity timer of all `DRep`{.AgdaInductiveConstructor}s that voted
-   to `drepActivity`{.AgdaField} epochs in the future.
++  set the rewards of the credentials that withdrew funds to zero.
+
+Regarding the second item, if there is a new governance proposal to vote on in this transaction,
+then expiry for all `DReps`{.AgdaInductiveConstructor} will be increased by
+the number of dormant epochs.  However, the `PRE-CERT`{.AgdaDatatype} transition occurs in
+`LEDGER`{.AgdaDatatype} *before* the `GOV`{.AgdaDatatype} rule, so it cannot validate
+any governance proposal.  This is not a problem since the entire transaction will
+fail if the proposal is not accepted in the `GOV`{.AgdaDatatype} rule.
 
 <!--
 ```agda
@@ -562,18 +570,20 @@ data _⊢_⇀⦇_,PRE-CERT⦈_ : CertEnv → CertState → ⊤ → CertState →
     ∙ filter isKeyHash wdrlCreds ⊆ dom voteDelegs
     ∙ mapˢ (map₁ stake) (wdrls ˢ) ⊆ rewards ˢ
       ────────────────────────────────
-      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧
-      ⇀⦇ _ ,PRE-CERT⦈
-      ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , ⟦ dReps , ccHotKeys ⟧ ⟧ ⇀⦇ _ ,PRE-CERT⦈ ⟦ ⟦ voteDelegs , stakeDelegs , constMap wdrlCreds 0 ∪ˡ rewards ⟧ , stᵖ , ⟦ refreshedDReps , ccHotKeys ⟧ ⟧
+```
 
+### The <span class="AgdaFunction">POST-CERT</span> Transition Rule
+
+The `POST-CERT`{.AgdaFunction} transition rule is applied at the end of the
+`CERTS`{.AgdaDatatype} rule and it ensures that only valid registered
+`DReps`{.AgdaInductiveConstructor} are included in the final `CertState`{.AgdaRecord}.
+
+```agda
 data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
   CERT-post :
-    ⟦ e , pp , vs , wdrls , cc ⟧
-    ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
-      ⇀⦇ _ ,POST-CERT⦈
-      ⟦ ⟦ voteDelegs ∣^ (  mapˢ vDelegCredential (dom (GState.dreps stᵍ)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ []) )
-        , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
+    ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ (mapˢ vDelegCredential (dom (DRepsOf stᵍ)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])) , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
 
 _⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
 _⊢_⇀⦇_,CERTS⦈_ = RunTraceAfterAndThen _⊢_⇀⦇_,PRE-CERT⦈_ _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_
