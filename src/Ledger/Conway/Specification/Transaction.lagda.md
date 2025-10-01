@@ -1,11 +1,15 @@
-\section{Transactions}
-\label{sec:transactions}
-\modulenote{\ConwayModule{Transaction}}, where we define transactions.
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Transaction.lagda
+---
 
- A transaction consists of a transaction body, a collection of witnesses and some optional auxiliary
-data.
+# Transactions {#sec:transactions}
 
-\begin{code}[hide]
+A transaction consists of a transaction body, a collection of witnesses
+and some optional auxiliary data.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 --------------------------------------------------------------------------------
 -- NOTE: Everything in this module is part of TransactionStructure
@@ -31,45 +35,54 @@ open import Relation.Nullary.Decidable using (⌊_⌋)
 data Tag : Type where
   Spend Mint Cert Rewrd Vote Propose : Tag
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
+```
+-->
 
-\end{code}
-
-\begin{NoConway}
 Some key ingredients in the transaction body are:
-\begin{itemize}
-  \item A set \txIns{} of transaction inputs, each of which identifies an output from
-    a previous transaction.  A transaction input consists of a transaction id and an
-    index to uniquely identify the output.
-  \item An indexed collection \txOuts{} of transaction outputs.
-    The \TxOut{} type is an address paired with a coin value.
-  \item A transaction fee. This value will be added to the fee pot.
-  \item The hash \txid{} of the serialized form of the
-    transaction that was included in the block.
-\end{itemize}
-\end{NoConway}
-\begin{Conway}
-Ingredients of the transaction body introduced in the Conway era are the following:
-\begin{itemize}
-  \item \txvote{}, the list of votes for goverance actions;
-  \item \txprop{}, the list of governance proposals;
-  \item \txDonation{}, amount of \Coin{} to donate to treasury, e.g., to return money
-    to the treasury after a governance action;
-  \item \currentTreasury{}, the current value of the treasury. This field serves as a
-    precondition to executing Plutus scripts that access the value of the treasury.
-\end{itemize}
-\end{Conway}
 
-\begin{figure*}[ht]
-\begin{code}[hide]
++  A set `txIns`{.AgdaField} of transaction inputs, each of which
+   identifies an output from a previous transaction. A transaction input
+   consists of a transaction id and an index to uniquely identify the
+   output.
+
++  An indexed collection `txOuts`{.AgdaField} of transaction outputs. The
+   `TxOut`{.AgdaFunction} type is an address paired with a coin value.
+
++  A transaction fee, `txFee`{.AgdaField}, which will be added to the fee pot.
+
++  The hash of the serialized form of the transaction that was included
+   in the block.
+
+
+Ingredients of the transaction body introduced in the Conway era are the
+following:
+
++  `txGovVotes`{.AgdaField}, the list of votes for goverance actions;
+
++  `txGovProposals`{.AgdaField}, the list of governance proposals;
+
++  `txDonation`{.AgdaField}, the amount of `Coin`{.AgdaFunction} to donate to
+   treasury, e.g., to return funds to the treasury after a governance action;
+
++  `currentTreasury`{.AgdaField}, the current value of the treasury. This
+   field serves as a precondition to executing Plutus scripts that access
+   the value of the treasury.
+
+
+## Transaction Types
+
+```agda
 record TransactionStructure : Type₁ where
   field
-\end{code}
-\emph{Abstract types}
-\begin{code}
-    Ix TxId AuxiliaryData : Type
+```
 
-\end{code}
-\begin{code}[hide]
+*Abstract types*
+```agda
+    Ix TxId AuxiliaryData : Type
+```
+
+<!--
+```agda
     ⦃ DecEq-Ix   ⦄ : DecEq Ix
     ⦃ DecEq-TxId ⦄ : DecEq TxId
     adHashingScheme : isHashableSet AuxiliaryData
@@ -114,26 +127,29 @@ record TransactionStructure : Type₁ where
   open GovActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Conway.Specification.Certs govStructure
-\end{code}
-\begin{NoConway}
-\emph{Derived types}
-\begin{code}
+```
+-->
+
+*Derived types*
+```agda
   TxIn               = TxId × Ix
   TxOut              = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
   UTxO               = TxIn ⇀ TxOut
   RdmrPtr            = Tag × Ix
   ProposedPPUpdates  = KeyHash ⇀ PParamsUpdate
   Update             = ProposedPPUpdates × Epoch
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
   record HasUTxO {a} (A : Type a) : Type a where
     field UTxOOf : A → UTxO
   open HasUTxO ⦃...⦄ public
-\end{code}
-\end{NoConway}
-\emph{Transaction types}
-\begin{AgdaMultiCode}
-\begin{code}
+```
+-->
+
+*Transaction types*
+```agda
   record TxBody : Type where
     field
       txIns                : ℙ TxIn
@@ -155,8 +171,10 @@ record TransactionStructure : Type₁ where
       reqSignerHashes      : ℙ KeyHash
       scriptIntegrityHash  : Maybe ScriptHash
       -- txup              : Maybe Update   -- deprecated; leave for now
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
   record HasTxBody {a} (A : Type a) : Type a where
     field TxBodyOf : A → TxBody
   open HasTxBody  ⦃...⦄ public
@@ -176,10 +194,11 @@ record TransactionStructure : Type₁ where
   instance
     HasDonations-TxBody : HasDonations TxBody
     HasDonations-TxBody .DonationsOf = TxBody.txDonation
-\end{code}
+```
+-->
 
-\begin{NoConway}
-\begin{code}
+
+```agda
   record TxWitnesses : Type where
     field
       vkSigs   : VKey ⇀ Sig
@@ -197,8 +216,10 @@ record TransactionStructure : Type₁ where
       txsize   : ℕ
       isValid  : Bool
       txAD     : Maybe AuxiliaryData
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
   instance
     HasTxBody-Tx : HasTxBody Tx
     HasTxBody-Tx .TxBodyOf = Tx.body
@@ -223,17 +244,14 @@ record TransactionStructure : Type₁ where
 
     HasDonations-Tx : HasDonations Tx
     HasDonations-Tx .DonationsOf = DonationsOf ∘ TxBodyOf
-\end{code}
-\end{NoConway}
-\end{AgdaMultiCode}
-\caption{Transactions and related types}
-\label{fig:defs:transactions}
-\end{figure*}
+```
+-->
 
-\begin{NoConway}
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+
+## Transaction Functions
+
+
+```agda
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
@@ -266,15 +284,13 @@ record TransactionStructure : Type₁ where
   lookupScriptHash : ScriptHash → Tx → UTxO → Maybe Script
   lookupScriptHash sh tx utxo = lookupᵐ? m sh
     where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
-\end{code}
-\end{AgdaMultiCode}
-\caption{Functions related to transactions}
-\label{fig:defs:transaction-funs}
-\end{figure*}
-\end{NoConway}
+```
 
-\begin{code}[hide]
+<!--
+```agda
   instance
     HasCoin-TxOut : HasCoin TxOut
     HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
-\end{code}
+```
+-->
+
