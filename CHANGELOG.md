@@ -4,6 +4,13 @@
 
 ### WIP
 
+- Add the BBODY transition relation from Shelley
+- Add the RUPD and TICK transition relations
+- Change two constructor names of `GovActionType` data type
+- Change 14 field names of `TxBody` record type
+- Implement the POOLREAP state transition relation from Shelley
+- Move `txsize` from `TxBody` to `Tx`.
+- Change the return type of `refScripts` to a set
 - Add `poolParameters` field to `Snapshot` and compute it in `SNAP`.
 - Add `treasuryCut` (formerly `tau`) and `monetaryExpansion` (formerly `rho`) to `PParams`
 - Change the `DELEG-dereg` transition so that the deposit field can be empty

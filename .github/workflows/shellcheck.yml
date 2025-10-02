@@ -30,7 +30,7 @@ jobs:
           script: |
             printf "Checking shellcheck on all scripts.\n"
 
-            git ls-files scripts/       \
+            git ls-files build-tools/scripts/       \
               | grep '\.sh'             \
               | xargs -rd\\n -I {} -- shellcheck {}
 

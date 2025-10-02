@@ -1,13 +1,13 @@
 module Ledger.Conway where
 
-import Ledger.ConwaySafe
+--- ** Cardano ledger in the Conway era
+import Ledger.Conway.Specification
 
+-- ** Conformance test reconciliation
+import Ledger.Conway.Conformance
+
+-- ** Haskell code extraction
 import Ledger.Conway.Foreign.HSLedger
-
--- ** Verifying script examples
-import ScriptVerification.Examples
-import ScriptVerification.StructuredContracts
-import ScriptVerification.Lib
 
 -- ** Not currently used
 import Foreign.Convertible.DerivingTest

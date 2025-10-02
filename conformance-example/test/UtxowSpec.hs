@@ -82,24 +82,24 @@ initState :: UTxOState
 initState = MkUTxOState {utxo = initUTxO, fees = 0, deposits = MkHSMap [], donations = 0}
 
 data SimpleTxBody = MkSimpleTxBody
-  { stxins     :: [TxIn]
+  { stxIns     :: [TxIn]
   , srefInputs :: [TxIn]
-  , stxouts    :: HSMap Ix TxOut
+  , stxOuts    :: HSMap Ix TxOut
   , stxvldt    :: (Maybe Integer, Maybe Integer)
   , stxid      :: TxId
-  , stxcerts   :: [DCert]}
+  , stxCerts   :: [DCert]}
 
 bodyFromSimple :: PParams -> SimpleTxBody -> TxBody
 bodyFromSimple pp stxb = let s = 5 in MkTxBody
-  { txins         = MkHSSet (stxins stxb)
+  { txIns         = MkHSSet (stxIns stxb)
   , refInputs     = MkHSSet (srefInputs stxb)
-  , txouts        = stxouts stxb
-  , txfee         = (ppA pp) * s + (ppB pp)
+  , txOuts        = stxOuts stxb
+  , txFee         = (ppA pp) * s + (ppB pp)
   , txvldt        = stxvldt stxb
   , txsize        = s
   , txid          = stxid stxb
-  , txcerts       = stxcerts stxb
-  , txwdrls       = MkHSMap []
+  , txCerts       = stxCerts stxb
+  , txWdrls       = MkHSMap []
   , mint          = 0
   , txvote        = []
   , txprop        = []
@@ -107,7 +107,7 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
   , txup          = Nothing
   , txADhash      = Nothing
   , txNetworkId   = Just 0
-  , curTreasury   = Nothing
+  , currentTreasury   = Nothing
   , collateral    = MkHSSet []
   , reqSigHash    = MkHSSet []
   , scriptIntHash = Nothing
@@ -115,14 +115,14 @@ bodyFromSimple pp stxb = let s = 5 in MkTxBody
 
 testTxBody1 :: TxBody
 testTxBody1 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins     = [(mkTxId 0, 0)]
+  { stxIns     = [(mkTxId 0, 0)]
   , srefInputs = []
-  , stxouts    = MkHSMap
+  , stxOuts    = MkHSMap
                    [ 0 .-> (a0, (890, (Nothing, Nothing)))
                    , 1 .-> (a1, (100, (Nothing, Nothing))) ]
   , stxvldt    = (Nothing, Just 10)
   , stxid      = mkTxId 1
-  , stxcerts   = []}
+  , stxCerts   = []}
 
 testTx1 :: Tx
 testTx1 = MkTx
@@ -134,14 +134,14 @@ testTx1 = MkTx
 
 testTxBody2 :: TxBody
 testTxBody2 = bodyFromSimple initParams $ MkSimpleTxBody
-  { stxins     = [(mkTxId 1, 1)]
+  { stxIns     = [(mkTxId 1, 1)]
   , srefInputs = [(mkTxId 1, 0)]
-  , stxouts    = MkHSMap
+  , stxOuts    = MkHSMap
                    [ 0 .-> (a2, (10, (Nothing, Nothing)))
                    , 1 .-> (a1, (80, (Nothing, Nothing))) ]
   , stxvldt    = (Nothing, Just 10)
   , stxid      = mkTxId 2
-  , stxcerts   = []}
+  , stxCerts   = []}
 
 testTx2 :: Tx
 testTx2 = MkTx

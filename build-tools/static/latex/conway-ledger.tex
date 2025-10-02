@@ -1,0 +1,73 @@
+\documentclass[11pt,a4paper,dvipsnames]{article}
+
+\usepackage{environ}
+\NewEnviron{NoConway}{%
+}
+\NewEnviron{Conway}{%
+\BODY
+}
+
+\input{preamble}
+
+\begin{document}
+\title{Formal Specification of the Cardano Ledger for the Conway era}
+
+\author{
+   Andre Knispel \\ {\small \email{andre.knispel@iohk.io}} \\
+   \and
+   William DeMeo \\ {\small \email{william.demeo@iohk.io}} \\
+   \and
+   Joosep Jääger \\ {\small \email{joosep.jaager@iohk.io}} \\
+   \and
+   Carlos Tom\'{e} Corti\~{n}as \\ {\small \email{carlos.tome-cortinas@iohk.io}}
+}
+
+\date{}
+
+\maketitle
+
+\begin{abstract}
+  This document presents the modifications to the previous
+  specifications of the Cardano ledger (see
+  \cite{shelley-ledger-spec,shelley-ma-ledger-spec,alonzo-ledger-spec,babbage-ledger-spec})
+  for the Conway era.  The additions mostly relate to the implementation of the governance
+  framework described in \hrefCIP{1694}~\parencite{cip1694}.
+\end{abstract}
+
+\section*{List of Contributors}
+\label{acknowledgements}
+
+Alasdair Hill, Ulf Norell, Orestis Melkonian, Jared Corduan, Alexey Kuleshevich
+
+\tableofcontents
+
+\clearpage
+
+\inputAgda{Ledger/Introduction}
+\input{Notation}
+
+\includeAgda{Ledger/Conway/PParams}
+\includeAgda{Ledger/Conway/Fees}
+\includeAgda{Ledger/Conway/Specification/Gov/Actions}
+\includeAgda{Ledger/Conway/Transaction}
+\includeAgda{Ledger/Conway/Utxo}
+\includeAgda{Ledger/Conway/Utxow}
+\includeAgda{Ledger/Conway/Specification/Gov}
+\includeAgda{Ledger/Conway/Certs}
+\includeAgda{Ledger/Conway/Ledger}
+\includeAgda{Ledger/Conway/Enact}
+\includeAgda{Ledger/Conway/Ratify}
+\includeAgda{Ledger/Conway/Epoch}
+
+\clearpage
+
+\printbibliography
+
+\clearpage
+
+\appendix
+
+\input{ConwayBootstrapEnact}
+\input{ConwayBootstrap}
+
+\end{document}

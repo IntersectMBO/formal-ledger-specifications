@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Transaction
-open import Ledger.Conway.Abstract
+open import Ledger.Conway.Specification.Transaction
+open import Ledger.Conway.Specification.Abstract
 import Ledger.Conway.Conformance.Certs
 
 module Ledger.Conway.Conformance.Ledger.Properties
@@ -12,13 +12,13 @@ module Ledger.Conway.Conformance.Ledger.Properties
 
 open import Axiom.Set.Properties th
 open import Ledger.Conway.Conformance.Chain txs abs
-open import Ledger.Conway.Enact govStructure
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Epoch txs abs
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
-open import Ledger.Conway.Gov txs
-open import Ledger.Conway.Gov.Properties txs
+open import Ledger.Conway.Specification.Gov txs
+open import Ledger.Conway.Specification.Gov.Properties.Computational txs
 open import Ledger.Conway.Conformance.Ledger txs abs
-open import Ledger.Conway.Ratify txs hiding (vote)
+open import Ledger.Conway.Specification.Ratify txs hiding (vote)
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Utxo.Properties txs abs
 open import Ledger.Conway.Conformance.Utxow txs abs
@@ -64,15 +64,15 @@ instance
       (tx : Tx)    (let open Tx tx renaming (body to txb); open TxBody txb)
       where
       utxoΓ = UTxOEnv ∋ record { LEnv Γ }
-      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txvote , txwdrls , _ ⟧
+      certΓ = CertEnv ∋ ⟦ epoch slot , pparams , txGovVotes , txWithdrawals , _ ⟧
       govΓ : CertState → GovEnv
-      govΓ certState = ⟦ txid , epoch slot , pparams , ppolicy , enactState , conv certState , _ ⟧
+      govΓ certState = ⟦ txId , epoch slot , pparams , ppolicy , enactState , conv certState , _ ⟧
 
       computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s')
       computeProof = case isValid ≟ true of λ where
         (yes p) → do
           (utxoSt' , utxoStep) ← computeUtxow utxoΓ utxoSt tx
-          (certSt' , certStep) ← computeCerts certΓ certState txcerts
+          (certSt' , certStep) ← computeCerts certΓ certState txCerts
           (govSt'  , govStep)  ← computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt) (txgov txb)
           success (_ , LEDGER-V⋯ p utxoStep certStep govStep)
         (no ¬p) → do
@@ -86,7 +86,7 @@ instance
       ... | yes refl
         with computeUtxow utxoΓ utxoSt tx | complete _ _ _ _ utxoStep
       ... | success (utxoSt' , _) | refl
-        with computeCerts certΓ certState txcerts | complete _ _ _ _ certStep
+        with computeCerts certΓ certState txCerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
         with computeGov (govΓ certSt') (rmOrphanDRepVotes (conv certSt') govSt) (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl

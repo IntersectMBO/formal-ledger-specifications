@@ -8,6 +8,4 @@ record HasSubset {a} (A : Set a) : Set (suc a) where
   field _⊆_ : A → A → Set a
   infix 4 _⊆_
 
-
-
 open HasSubset ⦃...⦄ public

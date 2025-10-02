@@ -7,14 +7,14 @@ open import Ledger.Conway.Foreign.HSLedger.BaseTypes
 open import Ledger.Conway.Foreign.HSLedger.Enact
 open import Ledger.Conway.Foreign.HSLedger.PParams
 open import Ledger.Conway.Foreign.HSLedger.Gov.Core
-open import Ledger.Conway.Foreign.HSLedger.GovernanceActions
+open import Ledger.Conway.Foreign.HSLedger.Gov.Actions
 open import Ledger.Conway.Foreign.HSLedger.Cert
 
 open import Ledger.Conway.Conformance.Certs govStructure
-open import Ledger.Conway.Enact govStructure
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Conformance.Gov it it
-import Ledger.Conway.Gov it as L
-open import Ledger.Conway.Gov.Properties it
+import Ledger.Conway.Specification.Gov it as L
+open import Ledger.Conway.Specification.Gov.Properties.Computational it
 
 instance
 
@@ -29,22 +29,22 @@ instance
 -- dummy GovActionID.
 
 toNeedsHash : ∀ {action} → GovActionID → NeedsHash action
-toNeedsHash {NoConfidence}     x = x
-toNeedsHash {UpdateCommittee}  x = x
-toNeedsHash {NewConstitution}  x = x
-toNeedsHash {TriggerHF}        x = x
-toNeedsHash {ChangePParams}    x = x
-toNeedsHash {TreasuryWdrl}     x = tt
-toNeedsHash {Info}             x = tt
+toNeedsHash {NoConfidence}        x = x
+toNeedsHash {UpdateCommittee}     x = x
+toNeedsHash {NewConstitution}     x = x
+toNeedsHash {TriggerHardFork}     x = x
+toNeedsHash {ChangePParams}       x = x
+toNeedsHash {TreasuryWithdrawal}  x = tt
+toNeedsHash {Info}                x = tt
 
 fromNeedsHash : ∀ {action} → NeedsHash action → GovActionID
-fromNeedsHash {NoConfidence}     x = x
-fromNeedsHash {UpdateCommittee}  x = x
-fromNeedsHash {NewConstitution}  x = x
-fromNeedsHash {TriggerHF}        x = x
-fromNeedsHash {ChangePParams}    x = x
-fromNeedsHash {TreasuryWdrl}     x = 0 , 0
-fromNeedsHash {Info}             x = 0 , 0
+fromNeedsHash {NoConfidence}        x = x
+fromNeedsHash {UpdateCommittee}     x = x
+fromNeedsHash {NewConstitution}     x = x
+fromNeedsHash {TriggerHardFork}     x = x
+fromNeedsHash {ChangePParams}       x = x
+fromNeedsHash {TreasuryWithdrawal}  x = 0 , 0
+fromNeedsHash {Info}                x = 0 , 0
 
 -- Then we define non-dependent versions of the types that use
 -- NeedsHash.
@@ -60,7 +60,7 @@ record GovProposal' : Type where
 
 record GovActionState' : Type where
   field
-    votes       : Voter ⇀ Vote
+    votes       : GovVotes
     returnAddr  : RwdAddr
     expiresIn   : Epoch
     action      : GovAction'
@@ -105,7 +105,7 @@ instance
 unquoteDecl = do
   hsTypeAlias GovActionID
   hsTypeAlias GovState
-  hsTypeAlias Voter
+  hsTypeAlias GovVoter'
 
 -- Computational function
 

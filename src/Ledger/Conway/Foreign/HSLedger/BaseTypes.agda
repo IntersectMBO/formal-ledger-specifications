@@ -2,10 +2,11 @@ module Ledger.Conway.Foreign.HSLedger.BaseTypes where
 
 open import Data.Rational
 
-open import Ledger.Conway.Types.Numeric.UnitInterval
+open import Ledger.Prelude.Numeric.UnitInterval
+open import Ledger.Prelude.Numeric.PositiveNat
 open import Ledger.Conway.Foreign.ExternalFunctions
 open import Ledger.Conway.Foreign.HSLedger.Core public
-import Ledger.Conway.Foreign.HSTypes as F
+import Ledger.Prelude.Foreign.HSTypes as F
 
 instance
   iConvTop    = Convertible-Refl {⊤}
@@ -90,3 +91,14 @@ instance
     case toUnitInterval (from x) of λ where
       (just x) → x
       nothing → error "Formal Spec: rational outside of unit interval"
+
+instance
+  HsTy-PosNat : HasHsType PosNat
+  HsTy-PosNat .HasHsType.HsType = ℕ
+
+  Conv-PosNat : Convertible PosNat ℕ
+  Conv-PosNat .to x = to (fromPosNat x)
+  Conv-PosNat .from x =
+    case toPosNat (from x) of λ where
+      (just x) → x
+      nothing → error "Formal Spec: natural number is zero (not nonZero)"

@@ -2,16 +2,18 @@ open import Ledger.Conway.Foreign.ExternalFunctions
 
 module Ledger.Conway.Foreign.HSLedger.ExternalStructures (externalFunctions : ExternalFunctions) where
 
-open import Ledger.Conway.Crypto
-open import Ledger.Conway.Types.Epoch
+import      Data.Rational as ℚ using (pos) -- import an instance
+
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
 open import Ledger.Conway.Foreign.HSLedger.Core
 
 HSGlobalConstants = GlobalConstants ∋ record {Implementation}
 instance
   HSEpochStructure = EpochStructure  ∋ ℕEpochStructure HSGlobalConstants
 
-  HSCrypto : Crypto
-  HSCrypto = record
+  HSCryptoStructure : CryptoStructure
+  HSCryptoStructure = record
     { Implementation
     ; pkk = HSPKKScheme
     }
@@ -29,7 +31,8 @@ instance
 
 -- No P2 scripts for now
 
-open import Ledger.Conway.Script it it
+open import Ledger.Conway.Specification.Script it it
+open import Ledger.Conway.Specification.Script.Timelock it it public
 open import Ledger.Conway.Conformance.Script it it public
 
 instance
@@ -53,7 +56,7 @@ instance
         ; PlutusScript = HSPlutusScript
         }
 
-open import Ledger.Conway.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
+open import Ledger.Conway.Specification.PParams it it it hiding (Acnt; DrepThresholds; PoolThresholds)
 
 HsGovParams : GovParams
 HsGovParams = record
@@ -94,7 +97,7 @@ instance
     { Implementation
     ; epochStructure  = HSEpochStructure
     ; globalConstants = HSGlobalConstants
-    ; crypto          = HSCrypto
+    ; cryptoStructure = HSCryptoStructure
     ; govParams       = HsGovParams
     ; txidBytes       = id
     ; scriptStructure = HSScriptStructure
@@ -102,9 +105,9 @@ instance
     }
 
 open TransactionStructure HSTransactionStructure public
-open import Ledger.Conway.Certs govStructure public
+open import Ledger.Conway.Specification.Certs govStructure public
 
-open import Ledger.Conway.Abstract it
+open import Ledger.Conway.Specification.Abstract it
 
 instance
   HSAbstractFunctions : AbstractFunctions
@@ -126,4 +129,4 @@ instance
         (inj₂ x) → HSPlutusScript.psScriptSize x
     }
 
-open import Ledger.Conway.Address Network KeyHash ScriptHash using () public
+open import Ledger.Core.Specification.Address Network KeyHash ScriptHash using () public

@@ -1,9 +1,0 @@
-\AgdaField{txvote}
-\AgdaField{txprop}
-\AgdaField{txdonation}
-\AgdaFunction{txdonation}
-\AgdaField{curTreasury}
-\AgdaFunction{curTreasury}
-\AgdaFunction{treasury}
-\AgdaBound{inputHashes}
-\AgdaBound{txdatsHashes}
