@@ -1,25 +1,23 @@
 
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (_∘_) renaming (_∘₂_ to _∘_)
-open import Ledger.Conway.Crypto
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction
+open import Ledger.Prelude
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxow
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 open import Ledger.Conway.Conformance.Utxo txs abs
-open import Ledger.Conway.ScriptValidation txs abs
-open import Ledger.Conway.Certs govStructure
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Certs govStructure
 
 private
   module L where
-    open import Ledger.Conway.Utxow txs abs public
-    open import Ledger.Conway.Utxo txs abs public
-
-open L using (scriptsNeeded; witsVKeyNeeded) public
+    open import Ledger.Conway.Specification.Utxow txs abs public
+    open import Ledger.Conway.Specification.Utxo txs abs public
 
 data
 
@@ -35,21 +33,25 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
   UTXOW-inductive :
     let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOState s
-        witsKeyHashes     = mapˢ hash (dom vkSigs)
-        witsScriptHashes  = mapˢ hash scripts
-        inputHashes       = L.getInputHashes tx utxo
-        refScriptHashes   = fromList $ map hash (refScripts tx utxo)
-        neededHashes      = L.scriptsNeeded utxo txb
-        txdatsHashes      = dom txdats
-        allOutHashes      = L.getDataHashes (range txouts)
-        nativeScripts     = mapPartial isInj₁ (txscripts tx utxo)
+        witsKeyHashes       = mapˢ hash (dom vkSigs)
+        witsScriptHashes    = mapˢ hash scripts
+        refScriptHashes     = mapˢ hash (refScripts tx utxo)
+        neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
+        neededVKeyHashes    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
+        txdatsHashes        = mapˢ hash txdats
+        inputsDataHashes    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
+                                                     then txOutToDataHash txout
+                                                     else nothing) (range (utxo ∣ txIns))
+        refInputsDataHashes = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
+        outputsDataHashes   = mapPartial txOutToDataHash (range txOuts)
+        nativeScripts       = mapPartial toP1Script (txscripts tx utxo)
     in
-    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txid) σ
-    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededHashes → validP1Script witsKeyHashes txvldt s)
-    ∙  L.witsVKeyNeeded utxo txb ⊆ witsKeyHashes
-    ∙  neededHashes ＼ refScriptHashes ≡ᵉ witsScriptHashes
-    ∙  inputHashes ⊆ txdatsHashes
-    ∙  txdatsHashes ⊆ inputHashes ∪ allOutHashes ∪ L.getDataHashes (range (utxo ∣ refInputs))
+    ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txId) σ
+    ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
+    ∙  neededVKeyHashes ⊆ witsKeyHashes
+    ∙  neededScriptHashes - refScriptHashes ≡ᵉ witsScriptHashes
+    ∙  inputsDataHashes ⊆ txdatsHashes
+    ∙  txdatsHashes ⊆ inputsDataHashes ∪ outputsDataHashes ∪ refInputsDataHashes
     ∙  L.languages tx utxo ⊆ L.allowedLanguages tx utxo
     ∙  txADhash ≡ map hash txAD
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'

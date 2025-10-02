@@ -1,211 +1,430 @@
-# Contributing to the formal ledger specifications
+# Contributing to the Formal Ledger Specifications
 
-<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
-**Table of Contents**
+**Brief Contents**
 
-- [Contributing to the formal ledger specifications](#contributing-to-the-formal-ledger-specifications)
-  - [Style guidelines](#style-guidelines)
-  - [Quick Start](#quick-start)
-  - [Working on the ledger spec from inside a Nix shell ](#working-on-the-ledger-spec-from-inside-a-nix-shell)
-  - [Dependencies](#dependencies)
-    - [Nix Dependencies](#nix-dependencies)
-    - [Agda Dependencies](#agda-dependencies)
-      - [Modifying the Agda libraries](#modifying-the-agda-libraries)
-  - [Agda Setup](#agda-setup)
-    - [Global `ledger-agda` installation](#global-ledger-agda-installation)
-    - [Local `ledger-agda`installation](#local-ledger-agdainstallation)
-  - [Working on the artifacts](#working-on-the-artifacts)
-  - [Building the artifacts](#building-the-artifacts)
-    - [PDF](#pdf)
-    - [Haskell code (for conformance testing)](#haskell-code-for-conformance-testing)
-    - [Html-hyperlinked Agda code](#html-hyperlinked-agda-code)
-    - [fls-shake intermediate outputs](#fls-shake-intermediate-outputs)
-  - [Setup Without Nix](#setup-without-nix)
-    - [Agda and its dependencies](#agda-and-its-dependencies)
-    - [`fls-shake`](#fls-shake)
-    - [Building `fls-shake` manually](#building-fls-shake-manually)
-  - [Updating nixpkgs](#updating-nixpkgs)
-  - [Troubleshooting](#troubleshooting)
-  - [Miscellanea](#miscellanea)
-  - [Maintainers](#maintainers)
+<!-- DO NOT REMOVE TRAILING WHITE SPACE FROM TOC LIST -->
 
-<!-- markdown-toc end -->
+[🖊️️ Style Guidelines][]  
+[🗺️ Project Overview][]  
+[💻 Development Environment Setup][]  
+[🏗️ Building Project Artifacts][]  
+[📖 HTML Documentation][]  
+[🖥️ IDE Integration][]  
+[🧑‍🔧 Working on the Agda source code][]  
+[🔁 CI/CD Workflow][]  
+[🎛️️ Setup Without Nix][]  
+[🕵️‍♀️ Conformance Testing][]  
+[🗃️ Miscellanea][]  
+[👷 Maintainers][]
+
 
 ---
 
-## Style guidelines
+<a id="style-guidelines"></a>
+## 🖊️️ Style Guidelines
 
-We are currently aspiring to follow the [Agda standard library style guide][] as much as reasonable. Since some of our code will be rendered into a PDF, the formatting of the PDF takes priority over formatting of the code, so deviations are to be expected.
-
-We also have a separate style guide for formatting the PDF: [PDF style guide](PDF-style-guide.md).
-
----
-
-## Quick Start
-
-`nix-shell` provides Agda with the correct dependencies.
-You should be able to run your preferred editor within `nix-shell` and it should see
-the required `agda` executable.
-
-Here are some examples of *alternative* ways to interact with the code in this
-repository.  (You will probably use some but not all of these.)
-
-All of these assume you have at least cloned this repository to your local machine:
-
-```
-git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
-cd formal-ledger-specifications
-```
-
-+  Open a Nix shell (in which the correct version of Agda will be available) and
-   launch your favorite editor:
-
-   ```bash
-   nix-shell
-   emacs src/Everything.agda
-   ```
-
-   Type-check everything inside Emacs with `C-c C-l`.
-   (You may need to do `M-x my/toggle-ledger-agda` first.)
-
-+  Type-check the formal ledger Agda code from the command line,
-
-   ```bash
-   agda src/Everything.agda
-   ```
-
-+  Type-check the formal ledger Agda code and generate the `cardano-ledger.pdf` document,
-
-   ```bash
-   nix-shell --run 'fls-shake cardano-ledger.pdf'
-   ```
-
-+  Use Nix flakes to build everything,
-
-   ```bash
-   nix build
-   ```
-
-   and then compile `cardano-ledger.pdf`:
-
-   ```bash
-   ./result/bin/fls-shake cardano-ledger.pdf
-   ```
-
-**If you encounter any problems, please read the rest of these instructions and open
-a [New Issue][] if necessary**.
-
----
-
-## Working on the ledger spec from inside a Nix shell
-
-For Nix users, the `nix-shell` command will provide Agda along with the required
-dependencies.
-
-Entering the commands
-
-```
-git clone https://github.com/IntersectMBO/formal-ledger-specifications.git
-cd formal-ledger-specifications
-nix-shell
-```
-
-drops you into a shell in which you could, for example, typecheck the Agda formal
-specification by running
-
-```
-agda src/Everything.agda
-```
-
-You should also be able to launch your preferred editor within `nix-shell` and it should
-see the required `agda` executable.
-
-For instructions on setting up Agda without Nix, check [Setup without nix](#setup-without-nix).
-
----
-
-## Dependencies
-
-### Nix Dependencies
-
-We use Nix to set up an environment with all dependencies installed correctly.
-
-While it is possible to work with this repository without using Nix
-(instructions for doing so are included [below][Setup without nix]) those wishing to
-make nontrivial contributions to this repository are advised to follow the Nix-based
-approach described here. This doesn't require running NixOS, but does require
-the Nix package manager which can be installed by following the official
-[Nix download instructions][].
-
-### Agda Dependencies
-
-This project depends on the following libraries: [agda-sets][], [agda-stdlib][],
-[agda-stdlib-classes][], and [agda-stdlib-meta][]. At the time of this writing, the
-specific versions of these that we use are as follows:
-
-   + [agda-sets f517d0d](https://github.com/input-output-hk/agda-sets/tree/f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6)
-   + [agda-stdlib v2.2](https://github.com/agda/agda-stdlib/tree/v2.2-release)
-   + [agda-stdlib-classes v2.2](https://github.com/agda/agda-stdlib-classes/releases/tag/v2.2)
-   + [agda-stdlib-meta v2.2](https://github.com/agda/agda-stdlib-meta/releases/tag/v2.2)
-
-**Note**. These versions may change. The authoritative source for the commits/tags
-of the versions we currently use is the `default.nix` file (e.g. `v2.2` for `agda-stdlib-meta`).
+We adhere to the [Agda standard library style guide][] where practical.
+However, because we use [literate][] Agda to produce html documentation, readability
+of the latter takes precedence over code formatting.
 
 
-#### Modifying the Agda libraries
+### Miscellaneous conventions
 
-To work simultaneously on the ledger and one of its dependencies, the easiest
-way to do this is to remove the library from the ledger's `.agda-lib` file and
-add its path to the `include:` section.
-
-When finished, push the changes to the library and update `default.nix` to point
-to your new commit.
-
-*Warning:* Don't forget to update the SHA when updating `default.nix`. Nix will
-fail silently on your local machine if you do that. Just change a few
-characters, run `nix-build -A ledger` and nix will tell you the correct hash to
-put there.
-
----
-
-## Agda Setup
-
-We use Agda version 2.7.0.1 and various dependencies.  For the purposes of this
-documentation, we call our custom setup `ledger-agda`.
-
-### Global `ledger-agda` installation
-
-After cloning this repository, the single command `nix-env -iA agda -f .` will
-install `ledger-agda`.  This is a *global install*, which you may not want if you
-also have other Agda projects.
-
-### Local `ledger-agda`installation
-
-To install a local version of `ledger-agda`,
-
-1.  Build `agda` and `agda-mode` binaries.
-
+1.  Type classes for accessing fields of records should be named after the *type* of
+    the field and not the name of the field.  For example, suppose
+    ```agda
+    Fees : Type
+    Fees = ℕ
     ```
-    nix-build -A agdaWithDeps -o ~/IOHK/ledger-agda
+    and suppose we have a record type `A` with a field called `fee`:
+    ```agda
+    record A : Type where
+      field
+        fee : Fees
+        ...
+    ```
+    Then we would make a type class called `HasFees` (since the **type** is called `Fees`)
+    ```agda
+    record HasFees {a} (A : Type a) : Type a where
+      field FeesOf : A → Fees
+    open HasFees ⦃...⦄ public
+    ```
+    and define the following instance of the `HasFees` type class for the type `A`:
+    ```agda
+      instance
+        HasFees-A : HasFees A
+        HasFees-A .FeesOf = A.fee
+    ```
+    then, if `a : A`, we can access the `fee` field of `a` via `FeesOf a`.  From this
+    contrived example, you might think type classes are overkill here, and you're not
+    all wrong.  However, they can come in handy in practice, expecially when we have
+    many different types that have, say, fees or donations associated with them, and
+    we want to be able to access those values in a consistent way.  Moreover, we have
+    many examples of nested records that contain fees or donations, and the "getter type
+    class" instances allow us to access those values without having to remember the
+    specific paths to the field names of those record types.  Another example of the
+    [getter type class pattern](#example-getter-type-class) is given in the
+    [🗃️ Miscellanea][] section below.
+
+2.  Use camel case for field names (e.g., `txNetworkId` instead of `txnetworkid`).
+
+---
+
+<a id="project-overview"></a>
+## 🗺️ Project Overview
+
+This repository uses [Nix][] and [Shake][] to provide a reproducible, declarative,
+and portable development environment.
+
+
+### Nix and Flakes
+
+We use Nix to manage dependencies, build processes, and development shells.
+Using [Nix flakes][] is the recommended way to interact with the project, but we also
+support the use of `nix-shell`.
+
+
+### Dependency Management
+
+All external Nix dependencies (like `nixpkgs`) and Agda libraries are pinned to
+specific versions (e.g., Git commits) using [niv](https://github.com/nmattia/niv).
+The pinned versions are stored in
+[`build-tools/nix/sources.json`][build-tools/nix/sources.json], which guarantees
+reproducible builds.
+
+The core Agda dependencies include:
+
++ [agda-stdlib][]: standard library;
++ [agda-stdlib-classes][]: type-class extensions for the standard library;
++ [agda-stdlib-meta][]: meta-programming utilities;
++ [agda-sets][]: abstract set theory library;
++ [iog-agda-prelude][]: supplementary prelude.
+
+
+### Directory Structure
+
+The main directories and files involved in the build process are as follows. (A more
+detailed version of this annotated tree can be found at the bottom of this page.)
+
+```
+├── default.nix                # Definitions of Nix derivations
+├── flake.nix                  # Nix flake interface
+├── TROUBLESHOOTING.md         # Guide for resolving common build issues
+├── TEX2MD_MIGRATION.md        # Guide for LaTeX to Markdown migration process
+└── build-tools/
+    ├── agda/
+    │   ├── data/
+    │   │   ├── Agda.css       # for styling Agda HTML output
+    │   │   └── AgdaKaTeX.js   # for integrating Agda's HTML with KaTeX
+    │   ├── fls-agda.cabal     # for building fls-agda Haskell package
+    │   ├── nix/
+    │   │   └── fls-agda.nix   # Nix derivation for fls-agda package
+    │   └── src/
+    │       └── Main.hs        # Main entry point for fls-agda executable
+    └── shake/
+        ├── fls-shake.cabal    # for building fls-shake Haskell package
+        ├── nix/
+        │   └── fls-shake.nix  # Nix derivation for fls-shake package
+        └── src/
+            └── Main.hs        # Main entry point for fls-shake build system
+```
+
+---
+
+<a id="development-environment-setup"></a>
+## 💻 Development Environment Setup
+
+We provide several development shells tailored for different tasks. You can enter them using `nix develop`.
+
+
++  🐚 **Default Shell**
+
+    This is the primary environment for Agda development. It includes Agda, all required libraries, and the `fls-shake` build tool.
+
+    ```bash
+    # Enter the default development shell
+    nix develop
     ```
 
-    **Notes**
+    ⚒️ **Available Tools**
 
-    *  Replace `~/IOHK/ledger-agda` with whatever path you like; make sure to replace
-       it in `my/agda-versions` below as well.
+    + [`agda`][Agda] (with all project libraries)
+    + `fls-shake` (our custom build tool)
+    + [`python311`][python311] (Python version 3.11)
+    + [`hpack`][hpack] (the Haskell package helper)
 
-    *  It is not necessary to have built/installed Agda prior to invoking this
-       `nix-build` command (though it's okay if you have).
 
-    *  Check which Agda is the default with `which agda` and `agda --version`.
++  🐚 **CI Shell**
 
-    *  To ensure the commands described below use the `ledger-agda` version of Agda,
-       invoke them like so: `AGDA=~/IOHK/ledger-agda COMMAND`.
+    A minimal environment designed for automated builds, containing only the `fls-shake` build tool and its runtime dependencies.
 
-2.  Put the following in your [Emacs init file][]
-    (highlight and `M-x eval-region` to load it without restarting emacs):
+    ```bash
+    # Enter the CI shell
+    nix develop .#ci
+    ```
 
-    ```lisp
++  🐚 **Documentation Shell**
+
+    A comprehensive environment for working on documentation, including the full documentation generation pipeline.
+
+    ```bash
+    # Enter the documentation shell
+    nix develop .#docs
+    ```
+
+    ⚒️ **Available Tools**
+
+    Everything from the default shell plus
+
+    + [`pandoc`][pandoc] (the document conversion tool)
+    + [`latex`][latex] (the typesetting language)
+    + [`mkdocs`][mkdocs] (with Python dependencies)
+
+
+---
+
+
+<a id="building-project-artifacts"></a>
+## 🏗️ Building Project Artifacts
+
+You can build project artifacts in several ways. The recommended method is using `nix build`.
+
+### Using Nix Flakes (Recommended)
+
+The `flake.nix` file exposes all buildable artifacts as packages.
+
+(How to view or use what these commands build is explained below; see
+[Building and viewing the formal specification][] and [Browsing the source code][].)
+
+```bash
+# Type-check the Agda specification (default package)
+nix build .#formal-ledger
+# or simply:
+nix build
+
+# Generate the (HTML version of the) formal specification
+nix build .#mkdocs
+
+# Generate browseable HTML version of Agda code
+nix build .#html
+
+# Generate Haskell source code for conformance testing
+nix build .#hs-src
+```
+
+Build outputs are symlinked in the `result/` directory.
+
+### Using `nix-build`
+
+If you don't want to use Flakes, the following legacy `nix-build` commands are available:
+
+```bash
+# Type-check the Agda specification
+nix-build -A formal-ledger
+
+# Generate the html version of the Agda specification
+nix-build -A mkdocs
+
+# Generate browsable HTML version of Agda code
+nix-build -A html
+
+# Generate Haskell source code
+nix-build -A hs-src
+```
+
+
+### Using the `fls-shake` Build Tool
+
+For more granular control, you can use our Shake-based build tool, `fls-shake`, from within a development shell.
+
+```bash
+# Enter the default development shell
+nix develop
+
+# Build specific artifacts using fls-shake
+fls-shake html                # Build HTML docs
+fls-shake hs                  # Build Haskell source
+
+# See all available targets
+fls-shake --help
+```
+
+---
+
+<a id="html-documentation"></a>
+## 📖 HTML Documentation
+
+### Building and viewing the formal specification
+
+There are two ways to do this.
+
+1.  **With Nix**
+
+    Enter the command `nix build .#mkdocs` (or `nix-build -A mkdocs`) then open the
+    file `result/site/index.html` in a browser. This type-checks the
+    Agda code, and generates the HTML documentation from scratch.
+
+    **Note**. This currently works in Chrome but may not work in Brave or
+    Firefox.  If you want to use one of those browsers to view the generated
+    documentation, you can run a local server on the result,
+    `cd result/site; python3 -m http.server`, and then point your browser
+    to <http://127.0.0.1:8000/>.
+
+2.  **Manually**
+
+    This method only type-checks the Agda code that has changed since last time and
+    then generates the HTML documentation.
+
+    ```bash
+    nix develop .#docs
+    python build-tools/scripts/md/build.py --run-agda
+    cd _build/md/mkdocs
+    mkdocs serve
+    ```
+
+    Then point your browser to  <http://127.0.0.1:8000/>.
+
+
+### Generating images
+
+The diagrams in our documentation come from legacy tikz source code files that live
+in the `build-tools/static/latex/Diagrams` directory.  To generate svg images from a tikz
+source code file, we create a standalone LaTeX document for it (e.g.,
+`build-tools/static/latex/STS-Diagram.tex`) and
+
+1.  run the following commands:
+
+    ```
+    lualatex -halt-on-error -interaction=batchmode STS-Diagram.tex
+    dvisvgm --pdf --page=1 -n -a -o STS-Diagram.svg STS-Diagram.pdf
+    ```
+
+2.  copy the resulting `.svg` file into the `build-tools/static/md/common/src/img/` directory.
+
+To include the diagram in the markdown documentation, we add it to a
+`.lagda.md` file as follows: `![STS-Diagram](img/STS-Diagram.svg)`.
+
+(The Python pipeline for markdown migration and mkdocs site generation
+can now handle steps 1 and 2 above.  Specifically, when you build the html
+documentation site using the second ("manual") method above, the program looks in the
+`build-tools/static/latex/` directory for LaTeX files with names matching the pattern
+`*-Diagram.tex`; it processes each such file with the `lualatex` and `dvisvgm`
+commands shown above and then copies the resulting `.svg` image file into the
+`build-tools/static/md/common/src/img` directory.)
+
+**Important Notes**
+
++  For each tikz source file in `build-tools/static/latex/Diagrams`, to generate the
+   corresponding svg image file, we must create a standalone LaTeX file
+   `*-Diagram.tex` file that `\include`s the tikz source file.  Also, we need to
+   include the svg image in the appropriate `.lagda.md` file by hand, either
+
+    +  using the standard Markdown syntax for including images, that is, `![...](...)`; e.g.,
+
+        `![Rewards flowchart](img/Rewards-Diagram.svg "Rewards flowchart")`
+
+        OR
+
+    +  using our custom `svg-card` css class; e.g.,
+
+        ````html
+        <figure class="svg-card">
+          <img src="img/RewardsTiming-Diagram.svg" alt="Rewards timeline">
+        </figure>
+        ````
+
++  Each `.tex` file in the `build-tools/static/latex/` directory that should not be
+   converted to Markdown by the pipeline must be added to the `excluded_prefixes`
+   list in the `convert_all_static_tex` function of the Python script
+   `build-tools/scripts/md/modules/static_tex_processor.py`.
+
+
+### Browsing the source code
+
+After generating the HTML version of the source code with `nix build .#html` (or `nix-build -A html`), you can
+view the result by pointing your (Chrome) browser to `result/html/index.html`.  If
+this fails, then you may have to run a local server, as follows:
+
+```
+cd result/html
+python3 -m http.server
+```
+
+Then point your browser to <http://127.0.0.1:8000>.
+
+---
+
+<a id="ide-integration"></a>
+## 🖥️ IDE Integration
+
+For the best development experience, you should configure your IDE to use the Agda executable provided by this project's Nix environment.
+
+First, build `agdaWithPackages` and create a stable symlink to it in your home directory. This prevents you from having to update your IDE settings every time the project's dependencies change.
+
+```bash
+nix-build -A agdaWithPackages -o ~/ledger-agda
+```
+
+Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
+
+---
+
+### Setting up multiple versions with `update-alternatives` (OPTIONAL)
+
+**For Linux users**.
+
+If you have `update-alternatives` installed, then, instead of creating a symlink from
+your home directory (or some other directory that's in your `PATH`) to our version of
+agda in `~/ledger-agda/bin/agda`, you can configure multiple versions of `agda` and
+`agda-mode` as follows:
+
+```bash
+sudo update-alternatives --install /usr/bin/agda agda ~/ledger-agda/bin/agda 1
+```
+
+Do the same for any other versions of Agda that you have installed, and want to make
+available, on your system.
+
+For example,
+
+```bash
+sudo update-alternatives --install /usr/bin/agda agda ~/.cabal/bin/agda-2.8.0 10
+```
+
+Now, install the associated version of `agda-mode`, which is required for using Agda
+(versions < 2.8.0) in Emacs:
+
+```bash
+sudo update-alternatives --install /usr/bin/agda-mode agda-mode ~/ledger-agda/bin/agda-mode 1
+```
+
+Finally, choose which Agda version you want to use:
+
+```bash
+sudo update-alternatives --config agda
+```
+
+and, if you choose a version below 2.8.0, be sure to select the appropriate
+`agda-mode` version to accompany it!
+
+```bash
+sudo update-alternatives --config agda-mode
+```
+
+---
+
+### Emacs
+
+(This section does not assume you followed the optional `update-alternative`
+setup instructions above.  However, even if you did, you can still carry out
+the customization instructions in the present section, which do not conflict with
+the `update-alternatives` approach.)
+
+1.  **Configure Emacs for version switching**.
+
+    Add the following to your [Emacs init file][] (highlight and `M-x eval-region` to load without restarting):
+
+    ```elisp
     ;; Defines a function `my/switch-agda' that switches between different
     ;; `agda' executables defined in `my/agda-versions'. The first entry of
     ;; `my/agda-versions' is assumed to be the default Agda.
@@ -213,16 +432,14 @@ To install a local version of `ledger-agda`,
     ;; If there are two entries in `my/agda-versions', `my/switch-agda' toggles
     ;; between the two. If there are more entries, it will ask which one
     ;; to choose.
-
-    (setq my/agda-versions `(("Agda"        "2.6.4" "agda")
-                             ("Ledger Agda" "2.7.0" "~/IOHK/ledger-agda/bin/agda")))
-
+    (setq my/agda-versions `(("System Agda"  "2.8.0" "agda")  ; Adjust version as needed
+                             ("Ledger Agda"  "2.7.0.1" "~/ledger-agda/bin/agda")))
     (setq my/selected-agda (caar my/agda-versions))
 
     (defun my/switch-agda (name version path)
       (interactive
        (cond ((> (length my/agda-versions) 2)
-              (assoc (completing-read "Agda" my/agda-versions '(lambda (x) 't) 't) my/agda-versions))
+              (assoc (completing-read "Agda: " my/agda-versions '(lambda (x) 't) 't) my/agda-versions))
              ((= (length my/agda-versions) 2)
               (car (seq-filter '(lambda (x) (not (string= my/selected-agda (car x)))) my/agda-versions)))
              (t (error "my/agda-versions needs to have at least two elements!"))))
@@ -232,363 +449,275 @@ To install a local version of `ledger-agda`,
             agda2-program-name path)
       (agda2-restart))
 
-    (with-eval-after-load 'agda2-mode (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
+    ;; Bind the switch function to C-c C-x C-t in agda2-mode
+    (with-eval-after-load 'agda2-mode
+      (define-key agda2-mode-map (kbd "C-c C-x C-t") 'my/switch-agda))
     ```
 
     **Notes**
 
-    *  This assumes that your regular install of Agda is in your path with the name
-       `agda` and version `2.6.4`, otherwise edit `my/agda-versions` to match your
-       existing Agda installation.
+    + Update the system Agda version in `my/agda-versions` to match your installation.
+    + Check your system Agda with `which agda && agda --version`.
+    + Once configured, use `M-x my/switch-agda` (or `C-c C-x C-t`) to switch between Agda versions.
+    + This works with most Emacs distributions (Doom, Spacemacs, vanilla, etc.).
 
-    *  Once you make these changes, the Emacs command `M-x my/toggle-ledger-agda`
-       (or `C-c C-x C-t`) will switch between your regular Agda and the IOHK version.
+2.  Launch Emacs from within the project's Nix shell to make it aware of the environment:
 
-    *  There are other options as well, but this should work with all kinds of custom
-       emacs setups or distributions (assuming there isn't already some other stuff
-       going on with your Agda setup).
+    ```bash
+    nix develop
+    emacs src/Ledger.agda
+    ```
 
-**If you encounter any problems, please read the rest of these instructions and open
-a [New Issue][] if necessary**.
-
----
-
-## Working on the artifacts
-
-The artifacts that `formal-ledger-specifications` provides are built using a
-custom system written in a Haskell DSL called [Shake](https://shakebuild.com/).
-The Haskell project [`fls-shake`](fls-shake) contains the source code of the build
-system. We refer to the build-system binary as `fls-shake`.
-
-Depending on whether you use Nix or not, the commands given in the rest of this
-instructions are to be run differently.
-
-+  For Nix users, the commands should be executed as follows:
-
-   ```bash
-   nix-shell --run COMMAND
-   ```
-
-   This ensures that the correct dependencies are in scope.
-
-   As an example, the instructions to build the [html](#html)-hyperlinked Agda
-   code specify to run the command `fls-shake html`, but using Nix you would enter
-   this command as follows:
-
-   ```bash
-   nix-shell --run 'fls-shake html'
-   ```
-
-+  For non-Nix users, the commands are to be executed verbatim, assuming 
-   `fls-shake` and Agda and their dependencies are installed.
-   Instructions for compiling `fls-shake` and setting up Agda and its dependencies
-   are provided in the section [Setup without Nix](#setup-without-nix) below.
+3.  Use standard `agda-mode` commands (e.g., `C-c C-l` to load a file).
 
 
-`fls-shake` uses three top level directories:
+### Visual Studio Code
 
-+ `_build` to store intermediate build objects;
-+ `.shake` to store build information;
-+ `dist` to store built artifacts.
+1.  Install the official **Agda Language Server** extension from the marketplace.
 
-**If you encounter any problems, please read the rest of these instructions
-(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**. 
+2.  Configure the extension to use the project's Agda executable. Open your `settings.json` (`Ctrl+Shift+P` \> "Preferences: Open User Settings (JSON)") and add the path to the symlink:
+    ```json
+    {
+      "agdaMode.connection.paths": [
+        "~/ledger-agda/bin/agda",
+        "agda"
+      ]
+    }
+    ```
+    *(Note: VS Code may not expand `~`, so you might need to use the full path, e.g., `/home/user/ledger-agda/bin/agda`)*.
+
+3.  Use `Ctrl+C Ctrl+R` to switch between Agda versions if you have multiple configured.
 
 ---
 
-## Building the artifacts
+<a id="working-on-the-agda-source-code"></a>
+## 🧑‍🔧 Working on the Agda source code
 
-### PDF
+### Editing the source files
 
-`fls-shake` provides two targets, `conway-ledger.pdf` and `cardano-ledger.pdf`,
-to build the respective pdfs.  For example, the command
+You can use either Emacs or VSCode to edit the source code files under the main `src`
+directory.  Currently, we have a mixture of plain Agda (`.agda`), LaTeX-based
+literate Agda (`.lagda`), and Markdown-based literate Agda (`.lagda.md`), but
+eventually all Agda files under `src` will be of the Markdown flavor and as such will
+have the `.lagda.md` extension.
 
-```bash
-nix-shell --run 'fls-shake cardano-ledger.pdf'
+Markdown-flavored literate Agda files contain English prose, formatted using Markdown
+syntax, along with code blocks each of which is delimited by an Agda code fence. For
+example,
+
+````markdown
+```agda
+-- Agda code goes here
 ```
+````
 
-produces the output `dist/cardano-ledger.pdf`.
+We also use "hidden" code blocks, inside of which is code that is type-checked by
+Agda but does not (by default) appear on web pages generated by from the `.lagda.md`
+source file.[^1]  A normal Agda code block is hidden by simply surrounding a normal
+code block with the standard HTML comment delimiters.  For example,
 
-In addition, `fls-shake` has internal rules to generate 
-[intermediate outputs][fls-shake intermediate outputs].
-
-
-### Haskell code (for conformance testing)
-
-`fls-shake` provides a target to build the Haskell code:
-
-```bash
-nix-shell --run 'fls-shake hs'
+````markdown
+<!--
+```agda
+-- Agda code here will be type-checked but not shown on the web page by default.
 ```
+-->
+````
 
-this produces the output `dist/hs`
+See also: [the Agda documentation section on literate markdown][Agda literate markdown].
 
+### Checking how your code looks on the site
 
-### Html-hyperlinked Agda code
+An important step in contributing any code to the repository is to check how it will
+appear when run through our custom mkdocs site generator and rendered on our website.
+This section explains how to use the tools we have created to monitor the effects
+your changes to the code will have on the appearance of the corresponding web pages.
 
-`fls-shake` provides a target to build the html:
+1.  First, generate the mkdocs site **Manually** (as described in option 2 of the
+    [Building and viewing the formal specification][] section):
 
-```bash
-nix-shell --run 'fls-shake html'
-```
+    ```bash
+    nix develop .#docs
+    python build-tools/scripts/md/build.py --run-agda
+    cd _build/md/mkdocs
+    mkdocs serve
+    ```
+2.  In another terminal window, enter the default Nix shell with `nix develop` and then
+    run `fls-shake --watch`.
 
-This produces the output `dist/html`
+3.  Now, instead of directly editing a file (or creating a new file) under the main `src`
+    directory, make your changes to (or create) `.lagda.md` files under `_build/md/md.in/src`.
 
-In addition, `fls-shake` has internal rules to generate 
-[intermediate outputs][fls-shake intermediate outputs].
+4.  Check your work by viewing the corresponding page at <http://127.0.0.1:8000/>.
 
+5.  Once you are satisfied with your changes.  Replace the corresponding file under
+    `src` with your new version from `_build/md/md.in/src`.
 
-### fls-shake intermediate outputs
-
-+  **Agda-generated `tex` files** from literate Agda source code are stored in
-   `_build/latex.gen`. This are shared between pdf artifacts.
-
-+  **Pdf-artifact specific files** are stored under `_build/target` (where e.g.,
-   the target is `cardano-ledger.pdf`, `_build/cardano-ledger.pdf`).
-
-   The structure of `_build/target` is the following:
-
-   +  `latex.in` for verbatim latex related files copied from the top level `latex`
-      directory.
-   +  `latex.pp` for post processed `tex` files from Agda-generated `tex`
-      (e.g., applying [`agda2vec.py`](agda2vec.py)).
-   +  `latex.out` for latex intermediate build files.
-
-+  **Html files**s are stored under `_build/html`.
-
-   The structure of `_build/html` is as follows:
-
-   +  `html.in` contains the Agda source code.  Agda files are copied verbatim,
-      literate Agda files are `illiterated`.
-   +  `html.out` contains the output html.
-
-
-**If you encounter any problems, please read the rest of these instructions
-(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**.
+**How this works**.  The `fls-shake --watch` command watches for changes to files in
+`_build/md/md.in/src` and, whenever a change occurs, generates a new corresponding page
+in the mkdocs site directory.  Since the mkdocs server is listening for changes to
+files in the mkdocs site directory, you will see the effect of your changes in the
+browser.
 
 ---
 
-## Setup Without Nix
+<a id="cicd-workflow"></a>
+## 🔁 CI/CD Workflow
 
-### Agda and its dependencies
+Our CI/CD pipeline, defined in `.github/workflows/`, automates the building and publishing of artifacts. Here are some key details:
 
-+  Install Agda version `2.7.0.1` (e.g. follow the instructions in
-   <https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda>).
++ **Caching**
 
-+  In a folder `LIB`, clone the [Agda Dependencies][]:
+   The initial `formal-ledger-agda` job type-checks the code and uploads the resulting `_build` directory as a GitHub artifact. Subsequent jobs download this artifact to avoid re-compiling Agda code.
 
-   ```bash
-   mkdir -p LIB; cd LIB
-   git clone --config advice.detachedHead=false --single-branch -b "v2.2" https://github.com/agda/agda-stdlib.git
-   git clone --config advice.detachedHead=false --single-branch -b "v2.0" https://github.com/agda/agda-stdlib-classes.git
-   git clone --config advice.detachedHead=false --single-branch -b "v2.1.1" https://github.com/agda/agda-stdlib-meta.git
-   git clone --config advice.detachedHead=false --single-branch -b "master" https://github.com/input-output-hk/agda-sets.git
-   ```
-and checkout the commits/tags found in `default.nix` (e.g. `v2.1.1` for `agda-stdlib-meta`).
++ **Artifact Branches**
 
+   For every push to `master` or a pull request branch, the CI creates a corresponding `<branch-name>-artifacts` branch. This branch stores the generated artifacts (PDFs, HTML, Haskell code).
 
-+  Create a file `LIB/libraries` with the following content:
++ **PDF Generation Note**
 
-   ```
-   LIB/agda-stdlib/standard-library.agda-lib
-   LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
-   LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
-   LIB/agda-sets/abstract-set-theory.agda-lib
-   ```
+   The CI workflow **does not** build PDFs from the current source. Instead, it checks out the `legacy-latex-artifacts` branch and copies the PDFs from there. This is a temporary measure to ensure the stability of the published documents. You can still build PDFs locally from source using the commands described above.
 
-+  Use `AGDA_DIR=LIB agda` instead of `agda`.
+---
 
-   For example:
+<a id="setup-without-nix"></a>
+## 🎛️️ Setup Without Nix
 
-    +  To typecheck the formal specification, run:
+While we recommend using Nix for the best experience, it's possible to work with
+this repository without Nix. Those making nontrivial contributions are advised
+to use the Nix-based approach, but these instructions are provided for those who
+prefer not to use Nix.
 
-       ```bash
-       AGDA_DIR=LIB agda src/Everything.agda
-       ```
+### Installing Agda and Dependencies Manually
 
-    +  To build the `conway-ledger.pdf` artifact, run:
+1.  **Install Agda 2.7.0.1**.
 
-       ```bash
-       AGDA_DIR=LIB fls-shake conway-ledger.pdf
-       ```
+    Follow the instructions at https://agda.readthedocs.io/en/v2.7.0/getting-started/installation.html#step-1-install-agda
 
-### `fls-shake`
+2.  **Clone the required Agda libraries**.
 
-When making nontrivial changes to the Agda code or its documentation,
-it's advisable to use `fls-shake`, our build system (a `make` alternative that
-handles type-checking the Agda code, generating  html, recompiling pdfs, etc.).
+    ```bash
+    mkdir -p LIB && cd LIB
 
-The easiest way to build `fls-shake` is to simply type `nix-build -A fls-shake`.
+    # Clone exact versions used by the project
+    git clone --config advice.detachedHead=false --single-branch -b "v2.2" \
+      https://github.com/agda/agda-stdlib.git
+    git clone --config advice.detachedHead=false --single-branch \
+      https://github.com/agda/agda-stdlib-classes.git
+    git clone --config advice.detachedHead=false --single-branch \
+      https://github.com/agda/agda-stdlib-meta.git
+    git clone --config advice.detachedHead=false --single-branch -b "master" \
+      https://github.com/input-output-hk/agda-sets.git
+    git clone --config advice.detachedHead=false --single-branch -b "main" \
+      https://github.com/input-output-hk/iog-agda-prelude.git
 
-If that doesn't work, you can try to build `fls-shake` from scratch.
+    # Checkout specific commits (check sources.json for exact versions)
+    cd agda-stdlib-classes && git checkout aa62ce6348d39c554ef89487079871d5590e155e && cd ..
+    cd agda-stdlib-meta && git checkout 5ff853375180ef69f243ce72f2d3f6294bdb6aff && cd ..
+    cd agda-sets && git checkout f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6 && cd ..
+    cd iog-agda-prelude && git checkout 20e4ab42fd6a980233053c8c3b1b8b2ab42946c9 && cd ..
+    ```
 
-### Building `fls-shake` manually
+3.  **Create library configuration**.
 
-For users not using Nix, compile `fls-shake` by taking the following steps:
+    Create a file `LIB/libraries` with the following content:
 
-1.  **Install** GHC and Cabal.
+    ```
+    LIB/agda-stdlib/standard-library.agda-lib
+    LIB/agda-stdlib-classes/agda-stdlib-classes.agda-lib
+    LIB/agda-stdlib-meta/agda-stdlib-meta.agda-lib
+    LIB/agda-sets/abstract-set-theory.agda-lib
+    LIB/iog-agda-prelude/iog-prelude.agda-lib
+    ```
 
-    Follow the [official instructions][Haskell].
+4.  **Use Agda with the libraries**.
 
-    Verify the installation.
+    ```bash
+    # Type-check the formal specification
+    AGDA_DIR=LIB agda src/Everything.agda
+
+    # Build artifacts (requires fls-shake, see below)
+    AGDA_DIR=LIB fls-shake cardano-ledger.pdf
+    ```
+
+### Building fls-shake Without Nix
+
+The build system `fls-shake` can be compiled manually by following the steps
+described in this subsection.
+
+1.  **Install GHC and Cabal**.
+
+    Follow the [official Haskell instructions][].
+
+    Verify installation and update:
 
     ```bash
     ghc --version
     cabal --version
-    ```
-
-    Update Cabal package database.
-
-    ```bash
     cabal update
     ```
 
-2.  **Compile** `fls-shake`.
-
-    In the folder `fls-shake`, run
+2.  **Compile fls-shake**.
 
     ```bash
+    cd build-tools/shake
     cabal build fls-shake
     ```
 
-3.  **Run** it.
-
-    Once built, run `fls-shake` on one of the build targets
-    (e.g., `cardano-ledger.pdf`) as follows:
+3.  **Run fls-shake:**
 
     ```bash
-    cabal run fls-shake -- -C '..' cardano-ledger.pdf
+    # Build PDF documents
+    cabal run fls-shake -- -C '../..' cardano-ledger.pdf
+    cabal run fls-shake -- -C '../..' conway-ledger.pdf
+
+    # Build HTML and Haskell outputs
+    cabal run fls-shake -- -C '../..' html
+    cabal run fls-shake -- -C '../..' hs
     ```
 
-    Note that we pass the option `-C '..'` so that `fls-shake` runs from
-    the repository's main directory.
+    Note: The `-C '../..'` option makes fls-shake run from the repository's main directory.
 
-    Here is a list of commands for the various targets that `fls-shake` can build:
 
-    ```bash
-    cabal run fls-shake -- -C '..' cardano-ledger.pdf
-    cabal run fls-shake -- -C '..' conway-ledger.pdf
-    cabal run fls-shake -- -C '..' html
-    cabal run fls-shake -- -C '..' hs
-    ```
+### Required System Dependencies
 
-**If you encounter any problems, please read the rest of these instructions
-(especially the [Troubleshooting][] section) and open a [New Issue][] if necessary**.
+For non-Nix users, you'll also need to install the following:
+
++  **LaTeX** (for PDF generation)
+
+   ```bash
+   # Ubuntu/Debian
+   sudo apt install texlive-full latexmk
+
+   # Or minimal installation
+   sudo apt install texlive-latex-extra latexmk
+   ```
+
++  **Python and dependencies** (for documentation tools)
+
+   ```bash
+   pip install mkdocs mkdocs-material pymdown-extensions pyyaml
+   ```
+
++  **Other tools**
+
+   pandoc, basic utilities (cp, mkdir, etc.)
 
 ---
 
-## Updating nixpkgs
+<a id="conformance-testing"></a>
+## 🕵️‍♀️ Conformance Testing
 
-To update the default nixpkgs used to build the derivations, run
+After producing the Agda-generated Haskell code with `nix build .#hs-src`
+(or `nix-build -A hs-src`), you can run the conformance tests.
 
-```bash
-niv update nixpkgs -r <revision>
-```
-
-or
-
-```bash
-niv update nixpkgs -v <version>
-```
-
-For example:
-
-```bash
-niv update nixpkgs -r 4e329926df7ee5fa49929a83d31ee7d541f8b45c
-niv update nixpkgs -v 21.11.337905.902d91def1e
-```
+See [the `conformance-example` directory][conformance-example].
 
 ---
 
-## Troubleshooting
+<a id="miscellanea"></a>
+## 🗃️ Miscellanea
 
-+  **Problem**. After installing `fls-shake` as described above, the command 
-
-   ```bash
-   ./result/bin/fls-shake -- cardano-ledger.pdf
-   ```
-
-   produces error messages ending with the line
-
-   ```bash
-   latexmk: createProcess: exec: invalid argument (Bad file descriptor)
-   ```
-
-
-   **Root Causes**.  Most likely either `latexmk` is not installed or the `texlive` installation
-   is missing some required components.
-
-
-   1.  **`latexmk` is not installed**.
-
-       Shake tried to run `latexmk`, but the command doesn't exist in the system's `PATH`.
-       On Nix this gets injected via dependencies, but in a `cabal`-based setup, you
-       need to manually install it.
-
-       **Solution**
-
-       +  Install `latexmk`.
-
-          Follow the [official instructions][latexmk].
-
-          For example, on Ubuntu,
-          ```bash
-          sudo apt update
-          sudo apt install latexmk
-          ```
-
-       +  Install `latex`.
-
-          Follow [the official instructions][latex].
-
-          For example, on Ubuntu, `sudo apt install texlive-full` (or, for a minimal
-          alternative, `sudo apt install texlive-latex-extra`).
-
-       Once these dependencies are installed, verify with `latexmk --version`,
-       and then re-run the command that failed (e.g., `cabal run fls-shake -- cardano-ledger.pdf`.)
-
-
-   2.  `PATH` issues inside `cabal run`.
-
-       If you have `latexmk` installed but it's still not found, you may need to make
-       sure it's in your shell `PATH`.
-
-
-+  **Problem**. After installing `fls-shake` as described above, the command 
-
-   ```bash
-   ./result/bin/fls-shake -- cardano-ledger.pdf
-   ```
-
-   produces error messages containing the line
-
-   ```bash
-   commitBuffer: invalid argument (cannot encode character '\8474')
-   ```
-
-   +  **Root Cause**.  Most likely Agda is trying to write a character (Ⅎ, U+2112)
-      into a file or stdout using the wrong encoding — probably ASCII or Latin-1.
-
-   +  **Solution**: Ensure Agda runs in a UTF-8 locale.
-
-      Option 1: Set `LANG/LC_ALL` manually when running
-
-      ```bash
-      LC_ALL=en_US.UTF-8 ./result/bin/fls-shake -- cardano-ledger.pdf
-      ```
-
-      Option 2: Add locale settings globally in your shell:
-
-      ```bash
-      export LANG=en_US.UTF-8
-      export LC_ALL=en_US.UTF-8
-      ```
-
-      Then try the `fls-shake` command again.
-
----
-
-## Miscellanea
 
 ### Plotting typechecking times
 
@@ -607,36 +736,183 @@ and open `index.html` in your browser.
 
 ---
 
-## Maintainers
+<a id="example-getter-type-class"></a>
+### Another Example of the Getter Type Class Pattern
+
+Here's a more realistic example of how we use type classes to make accessing fields
+of records easier and more consistent.
+
+Let
+
+```agda
+VoteDelegs : Type
+VoteDelegs = Credential ⇀ VDeleg
+
+record HasVoteDelegs {a} (A : Type a) : Type a where
+  field VoteDelegsOf : A → VoteDelegs
+open HasVoteDelegs ⦃...⦄ public
+
+record DState : Type where
+  field
+    voteDelegs   : VoteDelegs
+    ...
+
+record HasDState {a} (A : Type a) : Type a where
+  field DStateOf : A → DState
+open HasDState ⦃...⦄ public
+
+record CertState : Type where
+  field
+    dState : DState
+    ...
+
+instance
+  HasVoteDelegs-DState : HasVoteDelegs DState
+  HasVoteDelegs-DState .VoteDelegsOf = DState.voteDelegs
+
+  HasDState-CertState : HasDState CertState
+  HasDState-CertState .DStateOf = CertState.dState
+
+  HasVoteDelegs-CertState : HasVoteDelegs CertState
+  HasVoteDelegs-CertState .VoteDelegsOf = VoteDelegsOf ∘ DStateOf
+```
+
+Now, if we have `cs : CertState`, we can fetch the `voteDelegs` field of (the
+`dState` of) `cs` as follows: `VoteDelegsOf cs`.
+
+Without type classes we would have to `open DState` and `open CertState` and then
+write `cs .dState .voteDelegs`, or, if we want to avoid `open` clutter, `DState.voteDelegs CertState.dState cs`.
+
+---
+
+### Build-tools
+
+Here is the complete annotated subtree of the `build-tools` directory.
+
+
+```
+├── build-tools/                                     # All build-related utilities and static assets
+│   ├── agda/                                        # Source for the custom `fls-agda` Agda backend
+│   │   ├── data/                                    # Static assets used by the fls-agda backend
+│   │   │   ├── Agda.css                             # Base CSS for styling Agda HTML output
+│   │   │   └── AgdaKaTeX.js                         # JS for integrating Agda's HTML with KaTeX
+│   │   ├── fls-agda.cabal                           # Cabal file for building the fls-agda Haskell package
+│   │   ├── nix/                                     # Nix-specific build files for fls-agda
+│   │   │   └── fls-agda.nix                         # Nix derivation for the fls-agda package
+│   │   ├── src/                                     # Haskell source code for the fls-agda backend
+│   │   │   └── Main.hs                              # Main entry point for the fls-agda executable
+│   │   └── test/                                    # Test files for the fls-agda backend
+│   │       └── Test0.agda                           # Agda file for testing the backend's functionality
+│   ├── nix/                                         # General Nix configuration for the project
+│   │   ├── sources.json                             # Niv-managed file pinning exact dependency versions
+│   │   └── sources.nix                              # Niv-generated file to load pinned dependencies
+│   ├── scripts/                                     # Various utility scripts for building and processing
+│   │   ├── agda2vec.py                              # Python script for post-processing Agda-generated LaTeX
+│   │   ├── checkTypeChecked.sh                      # Shell script to verify Agda type-checking success
+│   │   ├── hldiff.py                                # Python script for highlighting differences in LaTeX
+│   │   ├── md/                                      # Scripts for the Markdown documentation pipeline
+│   │   │   ├── agda-filter.lua                      # Pandoc Lua filter for processing Agda code blocks
+│   │   │   ├── build.py                             # Main entry point for the Markdown build script
+│   │   │   ├── config/                              # Configuration modules for the build script
+│   │   │   │   └── build_config.py                  # Defines dataclasses for build paths and settings
+│   │   │   ├── modules/                             # Core logic modules for the build script
+│   │   │   │   ├── agda_processing.py               # Handles interaction with the Agda compiler
+│   │   │   │   ├── bibtex_processor.py              # Processes BibTeX citations
+│   │   │   │   ├── content_staging.py               # Manages intermediate build files
+│   │   │   │   ├── latex_pipeline.py                # Orchestrates LaTeX-to-Markdown conversion
+│   │   │   │   ├── latex_preprocessor.py            # Pre-processes LaTeX files before conversion
+│   │   │   │   └── site_assembly.py                 # Assembles the final MkDocs/MdBook site
+│   │   │   ├── test/                                # Tests for the Markdown build pipeline
+│   │   │   │   └── test_bibtex_processor.py         # Unit tests for the BibTeX processor
+│   │   │   └── utils/                               # Utility functions used by the build script
+│   │   │       ├── command_runner.py                # Helper for running external commands
+│   │   │       ├── file_ops.py                      # Helpers for file system operations
+│   │   │       ├── pipeline_types.py                # Defines custom types used in the pipeline
+│   │   │       └── text_processing.py               # Helpers for text manipulation
+│   │   ├── plot_typecheck_time.py                   # Script to plot Agda type-checking performance
+│   │   └── prepare-conf-test.sh                     # Script to prepare for conformance testing
+│   ├── shake/                                       # Source for the `fls-shake` build tool
+│   │   ├── fls-shake.cabal                          # Cabal file for building the fls-shake Haskell package
+│   │   ├── nix/                                     # Nix-specific build files for fls-shake
+│   │   │   └── fls-shake.nix                        # Nix derivation for the fls-shake package
+│   │   └── src/                                     # Haskell source code for fls-shake
+│   │       └── Main.hs                              # Main entry point for the fls-shake build system
+│   └── static/                                      # Static assets copied into builds
+│       ├── hs-src/                                  # Template for the extracted Haskell source code
+│       │   ├── package.yaml                         # hpack file to generate the .cabal file
+│       │   └── src/MAlonzo/Code/Ledger/Foreign/API.hs # Manual Haskell FFI to Agda code
+│       ├── latex/                                   # Static LaTeX files for (legacy) PDF generation
+│       │   ├── cardano-ledger.tex                   # Main TeX file for the full specification PDF
+│       │   ├── ...                                  # Other TeX includes, diagrams, fonts, etc.
+│       │   └── references.bib                       # BibTeX file for all citations
+│       └── md/                                      # Static assets for Markdown documentation sites
+│           ├── common/                              # Assets shared between MkDocs and MdBook
+│           │   ├── nav.yml                          # Template for the MkDocs navigation structure
+│           │   └── src/                             # Source assets (CSS, JS, images, etc.)
+│           │       ├── css/custom.css               # Custom stylesheet for documentation sites
+│           │       └── js/custom.js                 # Custom JavaScript for documentation sites
+│           └── mkdocs/                              # Configuration and templates for MkDocs
+│               ├── docs/index.md                    # Homepage/landing page for the MkDocs site
+│               ├── includes/links.md                # Common Markdown link references
+│               └── mkdocs.yml                       # Main configuration file for the MkDocs site
+├── TEX2MD_MIGRATION.md                              # Guide for the LaTeX to Markdown migration process
+└── TROUBLESHOOTING.md                               # Guide for resolving common build issues
+```
+
+
+---
+
+<a id="maintainers"></a>
+## 🧑‍🔧 Maintainers
 
 This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamdemeo][].
 
-
-**If you encounter any problems, please open a [New Issue][]**. 
+**If you encounter any problems, please open a [New Issue][]**.
 
 ---
 
 [Agda]: https://wiki.portal.chalmers.se/agda/pmwiki.php
-[Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/notes/style-guide.md
+[Agda literate markdown]: https://agda.readthedocs.io/en/v2.8.0/tools/literate-programming.html#literate-markdown-and-typst
+[Agda standard library style guide]: https://github.com/agda/agda-stdlib/blob/master/doc/style-guide.md
+[Agda.css]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/Agda.css
+[AgdaKaTeX.js]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/data/AgdaKaTeX.js
 [agda-stdlib]: https://github.com/agda/agda-stdlib
-[agda-stdlib v2.2]: https://github.com/agda/agda-stdlib/tree/v2.2-release
 [agda-stdlib-classes]: https://github.com/agda/agda-stdlib-classes
-[agda-stdlib-classes v2.2]: https://github.com/agda/agda-stdlib-classes/releases/tag/v2.2
 [agda-stdlib-meta]: https://github.com/agda/agda-stdlib-meta
-[agda-stdlib-meta v2.2]: https://github.com/agda/agda-stdlib-meta/releases/tag/v2.2
 [agda-sets]: https://github.com/input-output-hk/agda-sets
-[agda-sets f517d0d]: https://github.com/input-output-hk/agda-sets/tree/f517d0d0c1ff1fd6dbac8b34309dea0e1aea6fc6
 [binary]: https://github.com/haskell/binary
+[build-tools/nix/sources.json]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/nix/sources.json
+[conformance-example]: https://github.com/IntersectMBO/formal-ledger-specifications/tree/master/conformance-example
 [deepseq]: https://github.com/haskell/deepseq
+[default.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/default.nix
 [Emacs init file]: https://www.gnu.org/software/emacs/manual/html_node/emacs/Init-File.html
+[flake.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/flake.nix
+[fls-agda.cabal]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/fls-agda.cabal
+[fls-agda.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/agda/nix/fls-agda.nix
+[fls-shake.cabal]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/fls-shake.cabal
+[fls-shake.nix]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/nix/fls-shake.nix
 [formal-ledger-specifications]: https://github.com/IntersectMBO/formal-ledger-specifications
 [hashable]: https://github.com/haskell-unordered-containers/hashable
 [Haskell]: https://www.haskell.org/downloads/
+[hpack]: https://hackage.haskell.org/package/hpack
+[iog-agda-prelude]: https://github.com/input-output-hk/iog-agda-prelude
 [latex]: https://www.latex-project.org/get/
 [latexmk]: https://ctan.org/pkg/latexmk
-[Nix download instructions]: https://nixos.org/download/
+[literate]: https://en.wikipedia.org/wiki/Literate_programming
+[Main.hs]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/build-tools/shake/src/Main.hs
+[mkdocs]: https://www.mkdocs.org/
 [New Issue]: https://github.com/IntersectMBO/formal-ledger-specifications/issues/new/choose
-[shake]: https://shakebuild.com/
+[niv]: https://github.com/nmattia/niv
+[Nix]: https://nixos.org/
+[Nix flakes]: https://nixos.wiki/wiki/Flakes 
+[Nix download instructions]: https://nixos.org/download/
+[official Haskell instructions]: https://www.haskell.org/downloads/
+[pandoc]: https://pandoc.org/
+[python311]: https://www.python.org/downloads/release/python-3110/
+[Shake]: https://shakebuild.com/
+[TEX2MD_MIGRATION.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TEX2MD_MIGRATION.md
+[Troubleshooting Guide]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
+[TROUBLESHOOTING.md]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/TROUBLESHOOTING.md
 
 [@WhatisRT]: https://github.com/whatisrt
 [@carlostome]: https://github.com/carlostome
@@ -646,27 +922,21 @@ This repository is maintained by [@carlostome][], [@WhatisRT][], and [@williamde
 <!-- These links will probably need to be updated by hand whenever -->
 <!-- `markdown-toc-generate-toc` is used to update the toc. -->
 <!-- TODO: find or make a script/utility that generates all the links from the toc -->
-[Style guidelines]: #style-guidelines
-[Quick Start]: #quick-start
-[Working on the ledger spec from inside a Nix shell]: #working-on-the-ledger-spec-from-inside-a-nix-shell
-[Dependencies]: #dependencies
-[Nix Dependencies]: #nix-dependencies
-[Agda Dependencies]: #agda-dependencies
-[Agda Setup]: #agda-setup
-[Global `ledger-agda` installation]: #global-ledger-agda-installation
-[Local `ledger-agda`installation]: #local-ledger-agdainstallation
-[Working on the artifacts]: #working-on-the-artifacts
-[Building the artifacts]: #building-the-artifacts
-[PDF]: #pdf
-[Haskell code (for conformance testing)]: #haskell-code-for-conformance-testing
-[Html-hyperlinked Agda code]: #html-hyperlinked-agda-code
-[fls-shake intermediate outputs]: #fls-shake-intermediate-outputs
-[Modifying the Agda libraries]: #modifying-the-agda-libraries
-[Setup Without Nix]: #setup-without-nix
-[Agda and its dependencies]: #agda-and-its-dependencies
-[`fls-shake`]: #fls-shake
-[Building `fls-shake` manually]: #building-fls-shake-manually
-[Updating nixpkgs]: #updating-nixpkgs
-[Troubleshooting]: #troubleshooting
-[Maintainers]: #maintainers
-[Miscellanea]: #miscellanea
+
+[🖊️️ Style Guidelines]: #style-guidelines
+[🗺️ Project Overview]: #project-overview
+[💻 Development Environment Setup]: #development-environment-setup
+[🏗️ Building Project Artifacts]: #building-project-artifacts
+[📖 HTML Documentation]: #html-documentation
+[Building and viewing the formal specification]: #building-and-viewing-the-formal-specification
+[Browsing the source code]: #browsing-the-source-code
+[🧑‍🔧 Working on the Agda source code]: #working-on-the-agda-source-code
+[🕵️‍♀️ Conformance Testing]: #conformance-testing
+[🖥️ IDE Integration]: #ide-integration
+[🔁 CI/CD Workflow]: #cicd-workflow
+[🎛️️ Setup Without Nix]: #setup-without-nix
+[🗃️ Miscellanea]: #miscellanea
+[👷 Maintainers]: #maintainers
+
+
+[^1]: However, our custom mkdocs configuration provides a toggle button that allows the reader to view hidden code blocks if desired.)

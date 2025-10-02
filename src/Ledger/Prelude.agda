@@ -13,7 +13,7 @@ module Ledger.Prelude where
 
 open import Prelude public
   hiding (∃⁇)
-open import iog-prelude.Prelude.Init public
+open import Prelude.Init public
   using (∃⁇)
 
 open import Ledger.Prelude.Base public
@@ -24,15 +24,17 @@ open import stdlib-classes.Class.HasCast public
 open import Class.HasOrder public
 open import Class.ToBool public
 open import Interface.ComputationalRelation public
-open import Interface.HasSubtract public
-open import Interface.HasSubtract.Instance public
-open import Interface.HasSubset public
-open import Interface.HasSubset.Instance public
 open import Interface.Hashable public
-open import Ledger.Interface.HasCoin public
+open import Interface.HasSubset public
+open import Interface.HasSubtract public
+open import Interface.HasSubtract.Instances public
+open import Ledger.Prelude.Instances public
+open import Ledger.Prelude.HasCoin public
 open import Tactic.Defaults public
+open import Tactic.Derive.DecEq public
+open import Tactic.Inline public
 open import MyDebugOptions public
-open import iog-prelude.Tactic.Premises public
+open import Prelude.STS.GenPremises public
 
 open import abstract-set-theory.FiniteSetTheory public
   renaming (_⊆_ to _⊆ˢ_)
@@ -44,18 +46,6 @@ open import Data.Rational using (ℚ)
 dec-de-morgan : ∀{P Q : Type} → ⦃ P ⁇ ⦄ → ¬ (P × Q) → ¬ P ⊎ ¬ Q
 dec-de-morgan ⦃ ⁇ no ¬p ⦄ ¬pq = inj₁ ¬p
 dec-de-morgan ⦃ ⁇ yes p ⦄ ¬pq = inj₂ λ q → ¬pq (p , q)
-
-instance
-  CommMonoid-ℕ-+ = NonUniqueInstances.CommMonoid-ℕ-+
-
-  HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .getCoin s = ∑[ x ← s ] x
-
-  HasCoin-Set : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (ℙ (A × Coin))
-  HasCoin-Set .getCoin s = ∑ˢ[ (a , c) ← s ] c
-
-  HasSubset-Set : ∀ {A} → HasSubset (ℙ A)
-  HasSubset-Set ._⊆_ = _⊆ˢ_
 
 ≡ᵉ-getCoin : ∀ {A} → ⦃ _ : DecEq A ⦄ → (s s' : A ⇀ Coin) → s ˢ ≡ᵉ s' ˢ → getCoin s ≡ getCoin s'
 ≡ᵉ-getCoin {A} ⦃ decEqA ⦄ s s' s≡s' = indexedSumᵛ'-cong {C = Coin} {x = s} {y = s'} s≡s'
@@ -89,3 +79,18 @@ infix 6 ∣_∣
 module Filter where
   filter : ∀ {a} {p} {A : Type a} → (P : Pred A p) → ⦃ P ⁇¹ ⦄ → List A → List A
   filter P = Data.List.filter ¿ P ¿¹
+
+-- TODO: Move to agda-sets
+-- https://github.com/input-output-hk/agda-sets/pull/13
+infixr 9 _∘ʳ_
+infix 10 _⁻¹ʳ
+opaque
+  _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
+  R ⁻¹ʳ = mapˢ swap R
+    where open import Data.Product using (swap)
+
+  _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
+  R ∘ʳ S =
+    concatMapˢ
+      (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
+      R

@@ -8,21 +8,19 @@ open import Data.Nat.Properties using (+-0-commutativeMonoid; suc-injective)
 
 open import stdlib.Data.List.Relation.Unary.MOf
 
-open import Tactic.Derive.DecEq
-open import Tactic.Inline
 
 open import Ledger.Prelude hiding (All; Any; all?; any?; _∷ʳ_; uncons; _⊆_)
-open import Ledger.Conway.Crypto
-open import Ledger.Conway.Types.Epoch
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
 
-import Ledger.Conway.Script
+import Ledger.Conway.Specification.Script
 
 module Ledger.Conway.Conformance.Script
-  (crypto : _) (open Crypto crypto)
-  (es     : _) (open EpochStructure es)
+  (cs : _) (open CryptoStructure cs)
+  (es : _) (open EpochStructure es)
   where
 
-open Ledger.Conway.Script crypto es
+open Ledger.Conway.Specification.Script cs es
 
 record HSTimelock : Type where
   field

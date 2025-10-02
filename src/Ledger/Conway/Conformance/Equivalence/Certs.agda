@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 open import Data.Product using (_×_; _,_)
 open import Relation.Binary.PropositionalEquality
@@ -16,7 +16,7 @@ module Ledger.Conway.Conformance.Equivalence.Certs
 
 private
   module L where
-    open import Ledger.Conway.Certs govStructure public
+    open import Ledger.Conway.Specification.Certs govStructure public
 
   module C where
     open import Ledger.Conway.Conformance.Certs govStructure public
@@ -149,11 +149,17 @@ instance
     let open C.CertState certState in
     ⟦ conv dState , pState , conv gState ⟧
 
-  CERTBASEToConf : ∀ {Γ s s'}
+  PRE-CERTToConf : ∀ {Γ s s'}
                  → L.Deposits × L.Deposits
-                   ⊢ Γ L.⊢ s ⇀⦇ _ ,CERTBASE⦈ s' ⭆ⁱ λ deposits _ →
-                     Γ C.⊢ (deposits ⊢conv s) ⇀⦇ _ ,CERTBASE⦈ (deposits ⊢conv s')
-  CERTBASEToConf .convⁱ deposits (L.CERT-base h) = C.CERT-base h
+                   ⊢ Γ L.⊢ s ⇀⦇ _ ,PRE-CERT⦈ s' ⭆ⁱ λ deposits _ →
+                     Γ C.⊢ (deposits ⊢conv s) ⇀⦇ _ ,PRE-CERT⦈ (deposits ⊢conv s')
+  PRE-CERTToConf .convⁱ deposits (L.CERT-pre h) = C.CERT-pre h
+
+  POST-CERTToConf : ∀ {Γ s s'}
+                 → L.Deposits × L.Deposits
+                   ⊢ Γ L.⊢ s ⇀⦇ _ ,POST-CERT⦈ s' ⭆ⁱ λ deposits _ →
+                     Γ C.⊢ (deposits ⊢conv s) ⇀⦇ _ ,POST-CERT⦈ (deposits ⊢conv s')
+  POST-CERTToConf .convⁱ deposits L.CERT-post = C.CERT-post
 
   DELEGToConf : ∀ {Γ s dcert dcerts s'}
                   (open L.DelegEnv Γ renaming (pparams to pp))
@@ -190,22 +196,23 @@ instance
   CERTToConf .convⁱ deposits@(ccreghot* _ _)    (L.CERT-vdel govcert) = C.CERT-vdel (deposits ⊢conv govcert)
   CERTToConf .convⁱ deposits@(reg* _ _)         (L.CERT-deleg deleg)  = C.CERT-deleg (deposits ⊢conv deleg)
 
-  CERTS'ToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
-               → CertDeps* pp dcerts
-                 ⊢ ReflexiveTransitiveClosure {sts = L._⊢_⇀⦇_,CERT⦈_} Γ s dcerts s' ⭆ⁱ λ deposits _ →
-                   ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_}
-                             Γ (getCertDeps* deposits ⊢conv s) dcerts
-                               (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
-  CERTS'ToConf .convⁱ deposits (BS-base Id-nop) = BS-base Id-nop
-  CERTS'ToConf .convⁱ deposits (BS-ind r rs)    = BS-ind (deposits ⊢conv r) (updateCertDeps deposits ⊢conv rs)
+  CERT-POST-CERTToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
+    → CertDeps* pp dcerts
+      ⊢ RunTraceAndThen L._⊢_⇀⦇_,CERT⦈_ L._⊢_⇀⦇_,POST-CERT⦈_ Γ s dcerts s'
+        ⭆ⁱ λ deposits _ → RunTraceAndThen C._⊢_⇀⦇_,CERT⦈_ C._⊢_⇀⦇_,POST-CERT⦈_
+                            Γ (getCertDeps* deposits ⊢conv s) dcerts
+                              (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
+  CERT-POST-CERTToConf .convⁱ deposits (run-[] x) = run-[] ((deposits .depsᵈ , deposits .depsᵍ) ⊢conv x)
+  CERT-POST-CERTToConf .convⁱ deposits (run-∷ x x₁) = run-∷ (deposits ⊢conv x) (updateCertDeps deposits ⊢conv x₁)
+
 
   CERTSToConf : ∀ {Γ s dcerts s'} (let open L.CertEnv Γ)
-              → CertDeps* pp dcerts
-                ⊢ Γ L.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆ⁱ λ deposits _ →
-                  Γ C.⊢ (getCertDeps* deposits ⊢conv s) ⇀⦇ dcerts ,CERTS⦈
-                        (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
-  CERTSToConf .convⁱ deposits (RTC (base , step)) =
-    RTC (getCertDeps* deposits ⊢conv base , deposits ⊢conv step)
+    → CertDeps* pp dcerts
+      ⊢ RunTraceAfterAndThen L._⊢_⇀⦇_,PRE-CERT⦈_ L._⊢_⇀⦇_,CERT⦈_ L._⊢_⇀⦇_,POST-CERT⦈_ Γ s dcerts s'
+      ⭆ⁱ λ deposits _ → RunTraceAfterAndThen C._⊢_⇀⦇_,PRE-CERT⦈_ C._⊢_⇀⦇_,CERT⦈_ C._⊢_⇀⦇_,POST-CERT⦈_
+                          Γ (getCertDeps* deposits ⊢conv s) dcerts
+                            (getCertDeps* (updateCertDeps* dcerts deposits) ⊢conv s')
+  CERTSToConf .convⁱ deposits (run (pre , cert-post)) = run (getCertDeps* deposits ⊢conv pre , deposits ⊢conv cert-post)
 
 -- Converting form Conformance is easier since the deposit tracking disappears.
 instance
@@ -232,18 +239,25 @@ instance
   CERTFromConf .convⁱ _ (C.CERT-pool pool)    = L.CERT-pool (conv pool)
   CERTFromConf .convⁱ _ (C.CERT-vdel govcert) = L.CERT-vdel (conv govcert)
 
-  CERTBASEFromConf : ∀ {Γ s s'}
-                   → Γ C.⊢ s ⇀⦇ _ ,CERTBASE⦈ s' ⭆
-                     Γ L.⊢ (conv s) ⇀⦇ _ ,CERTBASE⦈ (conv s')
-  CERTBASEFromConf .convⁱ _ (C.CERT-base h) = L.CERT-base h
+  PRE-CERTFromConf : ∀ {Γ s s'}
+                   → Γ C.⊢ s ⇀⦇ _ ,PRE-CERT⦈ s' ⭆
+                     Γ L.⊢ (conv s) ⇀⦇ _ ,PRE-CERT⦈ (conv s')
+  PRE-CERTFromConf .convⁱ _ (C.CERT-pre h) = L.CERT-pre h
 
-  CERTS'FromConf : ∀ {Γ s dcerts s'}
-                 → ReflexiveTransitiveClosure {sts = C._⊢_⇀⦇_,CERT⦈_} Γ s dcerts s' ⭆
-                   ReflexiveTransitiveClosure {sts = L._⊢_⇀⦇_,CERT⦈_} Γ (conv s) dcerts (conv s')
-  CERTS'FromConf .convⁱ _ (BS-base Id-nop) = BS-base Id-nop
-  CERTS'FromConf .convⁱ _ (BS-ind r rs) = BS-ind (conv r) (conv rs)
+  POST-CERTFromConf : ∀ {Γ s s'}
+                   → Γ C.⊢ s ⇀⦇ _ ,POST-CERT⦈ s' ⭆
+                     Γ L.⊢ (conv s) ⇀⦇ _ ,POST-CERT⦈ (conv s')
+  POST-CERTFromConf .convⁱ _ C.CERT-post = L.CERT-post
+
+
+  CERT-POST-CERTFromConf : ∀ {Γ s dcerts s'}
+    → RunTraceAndThen C._⊢_⇀⦇_,CERT⦈_ C._⊢_⇀⦇_,POST-CERT⦈_ Γ s dcerts s'
+      ⭆ RunTraceAndThen L._⊢_⇀⦇_,CERT⦈_ L._⊢_⇀⦇_,POST-CERT⦈_ Γ (conv s) dcerts (conv s')
+  CERT-POST-CERTFromConf .convⁱ _ (run-[] x) = run-[] (conv x)
+  CERT-POST-CERTFromConf .convⁱ _ (run-∷ x xs) = run-∷ (conv x) (conv xs)
+
 
   CERTSFromConf : ∀ {Γ s dcerts s'}
-                → Γ C.⊢ s ⇀⦇ dcerts ,CERTS⦈ s' ⭆
-                  Γ L.⊢ conv s ⇀⦇ dcerts ,CERTS⦈ conv s'
-  CERTSFromConf .convⁱ _ (RTC (base , step)) = RTC (conv base , conv step)
+                 → RunTraceAfterAndThen C._⊢_⇀⦇_,PRE-CERT⦈_ C._⊢_⇀⦇_,CERT⦈_ C._⊢_⇀⦇_,POST-CERT⦈_ Γ s dcerts s' ⭆
+                   RunTraceAfterAndThen L._⊢_⇀⦇_,PRE-CERT⦈_ L._⊢_⇀⦇_,CERT⦈_ L._⊢_⇀⦇_,POST-CERT⦈_ Γ (conv s) dcerts (conv s')
+  CERTSFromConf .convⁱ _ (run (pre , cert-post)) = run ((conv pre) , conv cert-post)

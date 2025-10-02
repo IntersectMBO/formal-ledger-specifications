@@ -3,9 +3,9 @@
 import Data.Maybe as M
 
 open import Ledger.Prelude
-open import Ledger.Conway.Crypto
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxow.Properties
   (txs : _) (open TransactionStructure txs)

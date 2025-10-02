@@ -1,8 +1,8 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 open import Data.Unit using (⊤)
 open import Data.Product using (_×_; _,_)
@@ -19,9 +19,9 @@ module Ledger.Conway.Conformance.Equivalence.Deposits
  
 private
   module L where
-    open import Ledger.Conway.Ledger txs abs public
-    open import Ledger.Conway.Utxo txs abs public
-    open import Ledger.Conway.Certs govStructure public
+    open import Ledger.Conway.Specification.Ledger txs abs public
+    open import Ledger.Conway.Specification.Utxo txs abs public
+    open import Ledger.Conway.Specification.Certs govStructure public
   
   module C where
     open import Ledger.Conway.Conformance.Ledger txs abs public
@@ -68,7 +68,7 @@ updateGDeps pp (cert ∷ certs) deps = updateGDeps pp certs (updateGDep pp cert 
 updateLedgerDeps : PParams → Tx → L.Deposits × L.Deposits → L.Deposits × L.Deposits
 updateLedgerDeps pp tx deps@(ddeps , gdeps) = updateDDeps pp certs ddeps , updateGDeps pp certs gdeps
   where
-    certs = tx .Tx.body .TxBody.txcerts
+    certs = DCertsOf tx
 
 data DPurpose : L.DepositPurpose → Set where
   CredentialDeposit : ∀ {c} → DPurpose (L.CredentialDeposit c)
@@ -336,36 +336,36 @@ lem-upd-cert-gdeps {pp} deps (L.deregdrep c v ∷ certs) =
 lem-upd-cert-gdeps deps (L.retirepool _ _ ∷ certs) = lem-upd-cert-gdeps deps certs
 lem-upd-cert-gdeps deps (L.ccreghot _ _ ∷ certs) = lem-upd-cert-gdeps deps certs
 
-lem-upd-ddeps : ∀ pparams deps tx (open TxBody (body tx) using (txcerts))
-              → updateDDeps pparams txcerts (certDDeps deps) ≡ᵐ certDDeps (L.updateDeposits pparams (body tx) deps)
+lem-upd-ddeps : ∀ pparams deps tx (open TxBody (body tx) using (txCerts))
+              → updateDDeps pparams txCerts (certDDeps deps) ≡ᵐ certDDeps (L.updateDeposits pparams (body tx) deps)
 lem-upd-ddeps pparams deps tx = begin
-    updateDDeps pparams txcerts (certDDeps deps) ˢ
-      ≈⟨ cong-updateDDeps txcerts (lem-upd-prop-ddeps txprop deps) ⟩
-    updateDDeps pparams txcerts (certDDeps (updateProp deps)) ˢ
-      ≈⟨ lem-upd-cert-ddeps (updateProp deps) txcerts ⟩
+    updateDDeps pparams txCerts (certDDeps deps) ˢ
+      ≈⟨ cong-updateDDeps txCerts (lem-upd-prop-ddeps txGovProposals deps) ⟩
+    updateDDeps pparams txCerts (certDDeps (updateProp deps)) ˢ
+      ≈⟨ lem-upd-cert-ddeps (updateProp deps) txCerts ⟩
     certDDeps (L.updateDeposits pparams (body tx) deps) ˢ
       ∎
   where
     open TxBody (body tx)
     open module R {A} = SetoidReasoning (≡ᵉ-Setoid {A = A})
-    updateCert = L.updateCertDeposits pparams txcerts
-    updateProp = L.updateProposalDeposits txprop txid (pparams .PParams.govActionDeposit)
+    updateCert = L.updateCertDeposits pparams txCerts
+    updateProp = L.updateProposalDeposits txGovProposals txId (pparams .PParams.govActionDeposit)
 
-lem-upd-gdeps  :   ∀ pparams deps tx (open TxBody (body tx) using (txcerts))
-               →   updateGDeps pparams txcerts (certGDeps deps)
+lem-upd-gdeps  :   ∀ pparams deps tx (open TxBody (body tx) using (txCerts))
+               →   updateGDeps pparams txCerts (certGDeps deps)
                ≡ᵐ  certGDeps (L.updateDeposits pparams (body tx) deps)
 lem-upd-gdeps pparams deps tx = begin
-    updateGDeps pparams txcerts (certGDeps deps) ˢ
-      ≈⟨ cong-updateGDeps txcerts (lem-upd-prop-gdeps txprop deps) ⟩
-    updateGDeps pparams txcerts (certGDeps (updateProp deps)) ˢ
-      ≈⟨ lem-upd-cert-gdeps (updateProp deps) txcerts ⟩
+    updateGDeps pparams txCerts (certGDeps deps) ˢ
+      ≈⟨ cong-updateGDeps txCerts (lem-upd-prop-gdeps txGovProposals deps) ⟩
+    updateGDeps pparams txCerts (certGDeps (updateProp deps)) ˢ
+      ≈⟨ lem-upd-cert-gdeps (updateProp deps) txCerts ⟩
     certGDeps (L.updateDeposits pparams (body tx) deps) ˢ
       ∎
   where
     open TxBody (body tx)
     open module R {A} = SetoidReasoning (≡ᵉ-Setoid {A = A})
-    updateCert = L.updateCertDeposits pparams txcerts
-    updateProp = L.updateProposalDeposits txprop txid (pparams .PParams.govActionDeposit)
+    updateCert = L.updateCertDeposits pparams txCerts
+    updateProp = L.updateProposalDeposits txGovProposals txId (pparams .PParams.govActionDeposit)
 
 lemUpdCert : ∀ pp ((ddeps , gdeps) : L.Deposits × L.Deposits) deps cert
            → (ddeps , gdeps) ≡ᵈ (certDDeps deps , certGDeps deps)

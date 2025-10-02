@@ -1,56 +1,68 @@
-# Unified flake.nix that:
-# - Preserves original flake features (hydraJobs, formalLedger)
-# - Imports logic from default.nix and shell.nix
-# - Supports nix build, nix run, nix develop
-
+# flake.nix
 {
-  description = "Formal Ledger Specification (with flake integration)";
+  description = "Formal Ledger Specifications (flake integration)";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/0da3c44a9460a26d2025ec3ed2ec60a895eb1114";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils, ... }:
-    flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [];
-        };
+  outputs =
+    { self, flake-utils, ... }:
+    let
+      # reuse the dependencies pinned by niv
+      sources = import ./build-tools/nix/sources.nix;
+      systems = [ "x86_64-linux" "aarch64-darwin" ];
 
-        # Load shell environment from shell.nix
-        shellEnv = import ./shell.nix { inherit pkgs; };
+      perSystem = flake-utils.lib.eachSystem systems (
+        system:
+        let
+          nixpkgs = import sources.nixpkgs { inherit system; };
+          pkgs = import ./default.nix { inherit nixpkgs; };
+        in
+        {
+          packages = pkgs // {
+            # Set default package
+            default = pkgs.formal-ledger;
+          };
+          # Expose development shells
+          devShells = pkgs.devShells // {
+            # default shell points to the main development environment
+            default = pkgs.devShells.default;
+          };
 
-        # Load package from default.nix
-        defaultPackage = import ./default.nix { inherit pkgs; };
-
-        # Optionally expose additional components
-        fls-shake = defaultPackage.fls-shake or defaultPackage;
-      in {
-
-        # Make fls-shake the default build target
-        packages.default = fls-shake;
-
-        # Make it runnable
-        apps.default = flake-utils.lib.mkApp {
-          drv = fls-shake;
-        };
-
-        # Dev shell imports same environment as shell.nix
-        devShells = {
-          default = shellEnv.shell;
-          ci = shellEnv.run.shell;
-        };
-
-        # Hydra jobs (if applicable)
-        hydraJobs = {
-          inherit (self.packages.${system}) default;
-        };
-
-        # Preserve formalLedger attribute
-        formalLedger = {
-          inherit fls-shake;
-        };
-      });
+          # Keep hydraJobs for CI
+          hydraJobs =
+            let
+              jobs = {
+                inherit (pkgs)
+                  agdaWithPackages
+                  fls-shake
+                  formal-ledger
+                  hs-src
+                  mkdocs
+                  ;
+              };
+            in
+            jobs // {
+              required = nixpkgs.releaseTools.aggregate {
+                name = "${system}-required";
+                constituents = with nixpkgs.lib; collect isDerivation jobs;
+              };
+            };
+        }
+      );
+    in
+    perSystem
+    // {
+      hydraJobs = perSystem.hydraJobs // {
+        required =
+          let
+            nixpkgs = import sources.nixpkgs { system = builtins.head systems; };
+          in
+          nixpkgs.releaseTools.aggregate {
+            name = "required";
+            constituents = map (system: perSystem.hydraJobs.${system}.required) systems;
+          };
+      };
+    };
 }

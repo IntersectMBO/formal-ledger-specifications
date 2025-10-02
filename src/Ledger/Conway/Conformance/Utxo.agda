@@ -8,24 +8,23 @@ import Data.Sum.Relation.Unary.All as Sum
 import Data.Integer as ℤ
 import Data.Rational as ℚ
 
-open import Tactic.Derive.DecEq
 
 open import Ledger.Prelude
-open import Ledger.Conway.Abstract
-open import Ledger.Conway.Transaction
+open import Ledger.Conway.Specification.Abstract
+open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxo
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
-open import Ledger.Conway.ScriptValidation txs abs
-open import Ledger.Conway.Fees txs using (scriptsCost)
+open import Ledger.Conway.Specification.Script.Validation txs abs
+open import Ledger.Conway.Specification.Fees txs using (scriptsCost)
 open import Ledger.Conway.Conformance.Certs govStructure
 
 private
   module L where
-    open import Ledger.Conway.Utxo txs abs public
+    open import Ledger.Conway.Specification.Utxo txs abs public
 
 open PParams
 
@@ -49,15 +48,15 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          p2Scripts = collectP2ScriptsWithContext pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ isValid
+        ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ true
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txins ᶜ) ∪ˡ (L.outs txb)
-                              , fees + txfee
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ (utxo ∣ txIns ᶜ) ∪ˡ (L.outs txb)
+                              , fees + txFee
                               , deposits
-                              , donations + txdonation
+                              , donations + txDonation
                               ⟧
 
   Scripts-No :
@@ -65,13 +64,13 @@ data _⊢_⇀⦇_,UTXOS⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
     → let open Tx tx renaming (body to txb); open TxBody txb
           open UTxOEnv Γ renaming (pparams to pp)
           open UTxOState s
-          sLst = collectPhaseTwoScriptInputs pp tx utxo
+          p2Scripts = collectP2ScriptsWithContext pp tx utxo
       in
-        ∙ evalScripts tx sLst ≡ isValid
+        ∙ evalP2Scripts p2Scripts ≡ isValid
         ∙ isValid ≡ false
           ────────────────────────────────
-          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateral ᶜ
-                              , fees + L.cbalance (utxo ∣ collateral)
+          Γ ⊢ s ⇀⦇ tx ,UTXOS⦈  ⟦ utxo ∣ collateralInputs ᶜ
+                              , fees + L.cbalance (utxo ∣ collateralInputs)
                               , deposits
                               , donations
                               ⟧
@@ -82,32 +81,33 @@ unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scrip
 data _⊢_⇀⦇_,UTXO⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
 
   UTXO-inductive :
-    let open Tx tx renaming (body to txb); open TxBody txb
+    let open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
         open UTxOEnv Γ renaming (pparams to pp)
         open UTxOState s
-        txoutsʰ = (mapValues txOutHash txouts)
+        txOutsʰ = (mapValues txOutHash txOuts)
         overhead = 160
     in
-    ∙ txins ≢ ∅                              ∙ txins ∪ refInputs ⊆ dom utxo
-    ∙ txins ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txvldt
-    ∙ L.feesOK pp tx utxo                    ∙ L.consumed pp s txb ≡ L.produced pp s txb
-    ∙ coin mint ≡ 0                          ∙ txsize ≤ maxTxSize pp
+    ∙ txIns ≢ ∅                              ∙ txIns ∪ refInputs ⊆ dom utxo
+    ∙ txIns ∩ refInputs ≡ ∅                  ∙ L.inInterval slot txVldt
+    ∙ L.minfee pp utxo tx ≤ txFee            ∙ (txrdmrs ˢ ≢ ∅ → L.collateralCheck pp tx utxo)
+    ∙ consumed pp s txb ≡ produced pp s txb  ∙ coin mint ≡ 0
+    ∙ txsize ≤ maxTxSize pp
     ∙ L.refScriptsSize utxo tx ≤ pp .maxRefScriptSizePerTx
 
-    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         inject ((overhead + L.utxoEntrySize txout) * coinsPerUTxOByte pp) ≤ᵗ getValueʰ txout
-    ∙ ∀[ (_ , txout) ∈ ∣ txoutsʰ ∣ ]
+    ∙ ∀[ (_ , txout) ∈ ∣ txOutsʰ ∣ ]
         serSize (getValueʰ txout) ≤ maxValSize pp
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]
         Sum.All (const ⊤) (λ a → a .BootstrapAddr.attrsSize ≤ 64) a
-    ∙ ∀[ (a , _) ∈ range txoutsʰ ]  netId a         ≡ NetworkId
-    ∙ ∀[ a ∈ dom txwdrls ]          NetworkIdOf a   ≡ NetworkId
+    ∙ ∀[ (a , _) ∈ range txOutsʰ ]  netId a         ≡ NetworkId
+    ∙ ∀[ a ∈ dom txWithdrawals ]    NetworkIdOf a   ≡ NetworkId
     ∙ txNetworkId ~ just NetworkId
-    ∙ curTreasury ~ just treasury
+    ∙ currentTreasury ~ just treasury
     ∙ Γ ⊢ s ⇀⦇ tx ,UTXOS⦈ s'
       ────────────────────────────────
       Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
 
-pattern UTXO-inductive⋯ tx Γ s x y z w k l m v j n o p q r t u h
-      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , v , j , n , o , p , q , r , t , u , h)
+pattern UTXO-inductive⋯ tx Γ s x y z w k l m c v j n o p q r t u h
+      = UTXO-inductive {tx}{Γ}{s} (x , y , z , w , k , l , m , c , v , j , n , o , p , q , r , t , u , h)
 unquoteDecl UTXO-premises = genPremises UTXO-premises (quote UTXO-inductive)

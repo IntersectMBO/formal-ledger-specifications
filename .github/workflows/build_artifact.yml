@@ -21,10 +21,10 @@ jobs:
           extra_nix_config: |
             trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
             substituters = https://cache.iog.io https://cache.nixos.org/
-      - name: Build the target ${{ inputs.target }}
+      - name: Build artifact
         run: |
-          nix-shell --run 'fls-shake --trace -j8 ${{ inputs.target }}'
-      - name: Upload ${{ inputs.target }} artifact
+          nix-shell -A devShells.ci --run 'fls-shake --trace -j8 ${{ inputs.target }}'
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.target }}

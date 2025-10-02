@@ -1,7 +1,7 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Abstract using (AbstractFunctions)
-open import Ledger.Conway.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Abstract using (AbstractFunctions)
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 
 module Ledger.Conway.Conformance.Utxo.Properties
   (txs : _) (open TransactionStructure txs)
@@ -12,7 +12,7 @@ open import Data.Nat.Properties hiding (_≟_)
 open import Data.String.Base renaming (_++_ to _+ˢ_) using ()
 open import Interface.ComputationalRelation
 open import Ledger.Prelude hiding (≤-trans; ≤-antisym; All); open Properties
-open import Ledger.Conway.ScriptValidation txs abs
+open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Conformance.Utxo txs abs
 open import Ledger.Conway.Conformance.Certs govStructure
 open import Prelude
@@ -20,7 +20,7 @@ open import stdlib-meta.Tactic.GenError
 
 private
   module L where
-    open import Ledger.Conway.Utxo txs abs public
+    open import Ledger.Conway.Specification.Utxo txs abs public
 
 open Equivalence
 
@@ -38,7 +38,7 @@ instance
       open Tx tx renaming (body to txb); open TxBody txb
       open UTxOEnv Γ renaming (pparams to pp)
       open UTxOState s
-      sLst = collectPhaseTwoScriptInputs pp tx utxo
+      sLst = collectP2ScriptsWithContext pp tx utxo
 
       computeProof =
         case H-Yes? ,′ H-No? of λ where
@@ -66,28 +66,29 @@ instance
           renaming (computeProof to computeProof'; completeness to completeness')
 
         computeProofH : Dec H → ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
-        computeProofH (yes (x , y , z , e , k , l , m , v , j , n , o , p , q , r , t , u)) =
-            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m v j n o p q r t u) <$> computeProof' Γ s tx
+        computeProofH (yes (x , y , z , e , k , l , m , c , v , j , n , o , p , q , r , t , u)) =
+            map₂′ (UTXO-inductive⋯ _ _ _ x y z e k l m c v j n o p q r t u) <$> computeProof' Γ s tx
         computeProofH (no ¬p) = failure $ genErrors ¬p
 
         computeProof : ComputationResult String (∃[ s' ] Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s')
         computeProof = computeProofH H?
 
         completeness : ∀ s' → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s' → map proj₁ computeProof ≡ success s'
-        completeness s' (UTXO-inductive⋯ _ _ _ x y z e k l m v j n o p q r t u h) with H?
-        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , e , k , l , m , v , j , n , o , p , q , r , t , u )
+        completeness s' (UTXO-inductive⋯ _ _ _ x y z e k l m c v j n o p q r t u h) with H?
+        ... | no ¬p = ⊥-elim $ ¬p (x , y , z , e , k , l , m , c , v , j , n , o , p , q , r , t , u )
         ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
         ... | success _ | refl = refl
 
 open Computational ⦃...⦄
 
 private variable
-  tx                               : Tx
-  utxo utxo'                       : UTxO
-  Γ                                : UTxOEnv
-  utxoState utxoState'             : UTxOState
-  fees fees' donations donations'  : Coin
-  deposits deposits'               : DepositPurpose ⇀ Coin
+  tx                         : Tx
+  utxo utxo'                 : UTxO
+  Γ                          : UTxOEnv
+  utxoState utxoState'       : UTxOState
+  fees fees'                 : Fees
+  donations donations'       : Donations
+  deposits deposits'         : Deposits
 
 UTXO-step : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
 UTXO-step = compute ⦃ Computational-UTXO ⦄

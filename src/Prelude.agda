@@ -11,9 +11,10 @@ open import Function public
 
 open import Data.Bool public
   hiding (_≟_; _≤_; _≤?_; _<_; _<?_; if_then_else_)
+open import Data.Bool.ListAction public
 open import Data.Empty public
 open import Data.List public
-  hiding (align; alignWith; filter; fromMaybe; map; zip; zipWith)
+  hiding (all; and; any; align; alignWith; filter; fromMaybe; map; or; product; sum; zip; zipWith)
 open import Data.List.Membership.Propositional public
   using () renaming (_∈_ to _∈ˡ_; _∉_ to _∉ˡ_)
 open import Data.Maybe public
@@ -31,6 +32,7 @@ open import Data.Product public
 open import Data.Nat public
   hiding (_≟_; _≤_; _≤?_; _<_; _<?_; _≤ᵇ_; _≡ᵇ_; _≥_; _>_; less-than-or-equal)
   renaming (_+_ to _+ℕ_)
+open import Data.Nat.ListAction public
 open import Data.Integer as ℤ public
   using (ℤ)
   renaming (_+_ to _+ℤ_)
