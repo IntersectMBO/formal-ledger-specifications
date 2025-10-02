@@ -2,21 +2,22 @@
 
 ```agda
 {-# OPTIONS --safe #-}
-module Ledger.Dijkstra.Transaction where
+module Ledger.Dijkstra.Specification.Transaction where
 
 import Data.Maybe.Base as M
 
 open import Ledger.Prelude renaming (filterᵐ to filter)
 
-open import Ledger.Dijkstra.Crypto
-open import Ledger.Dijkstra.Types.Epoch
-open import Ledger.Dijkstra.Types.GovStructure
-import Ledger.Dijkstra.PParams
-import Ledger.Dijkstra.Script
-import Ledger.Dijkstra.GovernanceActions
-import Ledger.Dijkstra.Certs
-import Ledger.Dijkstra.TokenAlgebra
-import Ledger.Dijkstra.Address
+open import Ledger.Dijkstra.Specification.Crypto
+open import Ledger.Dijkstra.Specification.Epoch
+open import Ledger.Dijkstra.Specification.Gov.Base
+
+import Ledger.Dijkstra.Specification.Address
+import Ledger.Dijkstra.Specification.Certs
+import Ledger.Dijkstra.Specification.Gov.Actions
+import Ledger.Dijkstra.Specification.PParams
+import Ledger.Dijkstra.Specification.Script
+import Ledger.Dijkstra.Specification.TokenAlgebra.Base
 
 open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
@@ -96,16 +97,16 @@ record TransactionStructure : Type₁ where
 
   field crypto : _
   open CryptoStructure crypto public
-  open Ledger.Dijkstra.TokenAlgebra ScriptHash public
-  open Ledger.Dijkstra.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
+  open Ledger.Dijkstra.Specification.TokenAlgebra.Base ScriptHash public
+  open Ledger.Dijkstra.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
-  open Ledger.Dijkstra.Script crypto epochStructure public
+  open Ledger.Dijkstra.Specification.Script crypto epochStructure public
 
   field scriptStructure : _
   open ScriptStructure scriptStructure public
-  open Ledger.Dijkstra.PParams crypto epochStructure scriptStructure public
+  open Ledger.Dijkstra.Specification.PParams crypto epochStructure scriptStructure public
 
   field govParams : _
   open GovParams govParams public
@@ -126,10 +127,10 @@ record TransactionStructure : Type₁ where
     ; globalConstants = globalConstants
     }
 
-  module GovernanceActions = Ledger.Dijkstra.GovernanceActions govStructure
+  module GovernanceActions = Ledger.Dijkstra.Specification.Gov.Actions govStructure
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
-  open import Ledger.Dijkstra.Certs govStructure
+  open import Ledger.Dijkstra.Specification.Certs govStructure
 
   TxIn     = TxId × Ix
   TxOut    = Addr × Value × Maybe (Datum ⊎ DataHash) × Maybe Script
@@ -239,7 +240,7 @@ could be either of them:
     field txpropOf  : A → List GovProposal
   open Hastxprop  ⦃...⦄ public
 
-  record Hastxid    {a} (A : Type a) : Type a where 
+  record Hastxid    {a} (A : Type a) : Type a where
     field txidOf    : A → TxId
   open Hastxid    ⦃...⦄ public
 
@@ -249,7 +250,7 @@ could be either of them:
 
   --   Hastxfee-Tx : Hastxfee (Tx txLevel)
   --   Hastxfee-Tx .txfeeOf = TxBody.txfee ∘ TxBodyOf
-    
+
   --   Hastxcerts-Tx : Hastxcerts Tx
   --   Hastxcerts-Tx .txcertsOf = TxBody.txcerts ∘ TxBodyOf
 
@@ -302,12 +303,14 @@ could be either of them:
       nothing
     where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
 
+  -- -- Already defined in, and imported from, Conway --
   -- isP2Script : Script → Type
   -- isP2Script = T ∘ is-just ∘ isInj₂
-
+  --
   -- isP2Script? : ∀ {s} → isP2Script s ⁇
   -- isP2Script? {inj₁ x} .dec = no λ ()
   -- isP2Script? {inj₂ y} .dec = yes tt
+  -- ----------------------------------------------------
 
   instance
     HasCoin-TxOut : HasCoin TxOut

@@ -1,10 +1,10 @@
 ```
 {-# OPTIONS --safe #-}
-open import Ledger.Dijkstra.Crypto
+open import Ledger.Dijkstra.Specification.Crypto
   using (CryptoStructure)
-open import Ledger.Dijkstra.Types.Epoch
+open import Ledger.Dijkstra.Specification.Epoch
   using (EpochStructure)
-module Ledger.Dijkstra.Script
+module Ledger.Dijkstra.Specification.Script
   (crypto : CryptoStructure)
   (es     : EpochStructure) where
 

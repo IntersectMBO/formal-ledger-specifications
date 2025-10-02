@@ -1,13 +1,13 @@
 ```
 {-# OPTIONS --safe #-}
-open import Ledger.Dijkstra.Crypto
+open import Ledger.Dijkstra.Specification.Crypto
   using (CryptoStructure)
-open import Ledger.Dijkstra.Script
+open import Ledger.Dijkstra.Specification.Script
   using (ScriptStructure)
-open import Ledger.Dijkstra.Types.Epoch
+open import Ledger.Dijkstra.Specification.Epoch
   using (EpochStructure)
 
-module Ledger.Dijkstra.PParams
+module Ledger.Dijkstra.Specification.PParams
   (crypto : CryptoStructure )
   (es     : EpochStructure)
   (ss     : ScriptStructure crypto es)

@@ -1,7 +1,7 @@
 ```
 {-# OPTIONS --safe #-}
 open import Prelude using (Type; DecEq)
-module Ledger.Dijkstra.Address
+module Ledger.Dijkstra.Specification.Address
   (Network KeyHash ScriptHash : Type)
   ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
 

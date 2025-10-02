@@ -1,6 +1,6 @@
 ```
 {-# OPTIONS --safe #-}
-module Ledger.Dijkstra.Types.Epoch where
+module Ledger.Dijkstra.Specification.Epoch where
 
 open import Ledger.Core.Specification.Epoch public
 ```
