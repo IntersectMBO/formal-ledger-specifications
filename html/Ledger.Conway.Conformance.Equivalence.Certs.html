@@ -3,7 +3,7 @@
 
 <a id="25" class="Keyword">open</a> <a id="30" class="Keyword">import</a> <a id="37" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 <a id="52" class="Keyword">open</a> <a id="57" class="Keyword">import</a> <a id="64" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
-<a id="101" class="Keyword">open</a> <a id="106" class="Keyword">import</a> <a id="113" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a> <a id="153" class="Keyword">using</a> <a id="159" class="Symbol">(</a><a id="160" href="Ledger.Conway.Specification.Transaction.html#1000" class="Record">TransactionStructure</a><a id="180" class="Symbol">)</a>
+<a id="101" class="Keyword">open</a> <a id="106" class="Keyword">import</a> <a id="113" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a> <a id="153" class="Keyword">using</a> <a id="159" class="Symbol">(</a><a id="160" href="Ledger.Conway.Specification.Transaction.html#999" class="Record">TransactionStructure</a><a id="180" class="Symbol">)</a>
 
 <a id="183" class="Keyword">open</a> <a id="188" class="Keyword">import</a> <a id="195" href="Data.Product.html" class="Module">Data.Product</a> <a id="208" class="Keyword">using</a> <a id="214" class="Symbol">(</a><a id="215" href="Data.Product.Base.html#1618" class="Function Operator">_×_</a><a id="218" class="Symbol">;</a> <a id="220" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">_,_</a><a id="223" class="Symbol">)</a>
 <a id="225" class="Keyword">open</a> <a id="230" class="Keyword">import</a> <a id="237" href="Relation.Binary.PropositionalEquality.html" class="Module">Relation.Binary.PropositionalEquality</a>
@@ -11,16 +11,16 @@
 <a id="276" class="Keyword">open</a> <a id="281" class="Keyword">import</a> <a id="288" href="Ledger.Conway.Conformance.Equivalence.Convert.html" class="Module">Ledger.Conway.Conformance.Equivalence.Convert</a>
 
 <a id="335" class="Keyword">module</a> <a id="342" href="Ledger.Conway.Conformance.Equivalence.Certs.html" class="Module">Ledger.Conway.Conformance.Equivalence.Certs</a>
-  <a id="388" class="Symbol">(</a><a id="389" href="Ledger.Conway.Conformance.Equivalence.Certs.html#389" class="Bound">txs</a> <a id="393" class="Symbol">:</a> <a id="395" class="Symbol">_)</a> <a id="398" class="Symbol">(</a><a id="399" class="Keyword">open</a> <a id="404" href="Ledger.Conway.Specification.Transaction.html#1000" class="Module">TransactionStructure</a> <a id="425" href="Ledger.Conway.Conformance.Equivalence.Certs.html#389" class="Bound">txs</a><a id="428" class="Symbol">)</a>
+  <a id="388" class="Symbol">(</a><a id="389" href="Ledger.Conway.Conformance.Equivalence.Certs.html#389" class="Bound">txs</a> <a id="393" class="Symbol">:</a> <a id="395" class="Symbol">_)</a> <a id="398" class="Symbol">(</a><a id="399" class="Keyword">open</a> <a id="404" href="Ledger.Conway.Specification.Transaction.html#999" class="Module">TransactionStructure</a> <a id="425" href="Ledger.Conway.Conformance.Equivalence.Certs.html#389" class="Bound">txs</a><a id="428" class="Symbol">)</a>
   <a id="432" class="Symbol">(</a><a id="433" href="Ledger.Conway.Conformance.Equivalence.Certs.html#433" class="Bound">abs</a> <a id="437" class="Symbol">:</a> <a id="439" href="Ledger.Conway.Specification.Abstract.html#654" class="Record">AbstractFunctions</a> <a id="457" href="Ledger.Conway.Conformance.Equivalence.Certs.html#389" class="Bound">txs</a><a id="460" class="Symbol">)</a> <a id="462" class="Symbol">(</a><a id="463" class="Keyword">open</a> <a id="468" href="Ledger.Conway.Specification.Abstract.html#654" class="Module">AbstractFunctions</a> <a id="486" href="Ledger.Conway.Conformance.Equivalence.Certs.html#433" class="Bound">abs</a><a id="489" class="Symbol">)</a>
   <a id="493" class="Keyword">where</a>
 
 <a id="500" class="Keyword">private</a>
   <a id="510" class="Keyword">module</a> <a id="L"></a><a id="517" href="Ledger.Conway.Conformance.Equivalence.Certs.html#517" class="Module">L</a> <a id="519" class="Keyword">where</a>
-    <a id="529" class="Keyword">open</a> <a id="534" class="Keyword">import</a> <a id="541" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="575" href="Ledger.Conway.Specification.Transaction.html#2079" class="Function">govStructure</a> <a id="588" class="Keyword">public</a>
+    <a id="529" class="Keyword">open</a> <a id="534" class="Keyword">import</a> <a id="541" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="575" href="Ledger.Conway.Specification.Transaction.html#2077" class="Function">govStructure</a> <a id="588" class="Keyword">public</a>
 
   <a id="598" class="Keyword">module</a> <a id="C"></a><a id="605" href="Ledger.Conway.Conformance.Equivalence.Certs.html#605" class="Module">C</a> <a id="607" class="Keyword">where</a>
-    <a id="617" class="Keyword">open</a> <a id="622" class="Keyword">import</a> <a id="629" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="661" href="Ledger.Conway.Specification.Transaction.html#2079" class="Function">govStructure</a> <a id="674" class="Keyword">public</a>
+    <a id="617" class="Keyword">open</a> <a id="622" class="Keyword">import</a> <a id="629" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="661" href="Ledger.Conway.Specification.Transaction.html#2077" class="Function">govStructure</a> <a id="674" class="Keyword">public</a>
 
 <a id="682" class="Keyword">instance</a>
 
