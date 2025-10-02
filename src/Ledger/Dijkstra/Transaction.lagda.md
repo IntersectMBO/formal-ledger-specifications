@@ -95,7 +95,7 @@ record TransactionStructure : Type₁ where
   open GlobalConstants globalConstants public
 
   field crypto : _
-  open Crypto crypto public
+  open CryptoStructure crypto public
   open Ledger.Dijkstra.TokenAlgebra ScriptHash public
   open Ledger.Dijkstra.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
@@ -119,7 +119,7 @@ record TransactionStructure : Type₁ where
   govStructure = record
     -- TODO: figure out what to do with the hash
     { TxId = TxId; DocHash = ADHash
-    ; crypto = crypto
+    ; cryptoStructure = crypto
     ; epochStructure = epochStructure
     ; scriptStructure = scriptStructure
     ; govParams = govParams
@@ -302,12 +302,12 @@ could be either of them:
       nothing
     where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
 
-  isP2Script : Script → Type
-  isP2Script = T ∘ is-just ∘ isInj₂
+  -- isP2Script : Script → Type
+  -- isP2Script = T ∘ is-just ∘ isInj₂
 
-  isP2Script? : ∀ {s} → isP2Script s ⁇
-  isP2Script? {inj₁ x} .dec = no λ ()
-  isP2Script? {inj₂ y} .dec = yes tt
+  -- isP2Script? : ∀ {s} → isP2Script s ⁇
+  -- isP2Script? {inj₁ x} .dec = no λ ()
+  -- isP2Script? {inj₂ y} .dec = yes tt
 
   instance
     HasCoin-TxOut : HasCoin TxOut
