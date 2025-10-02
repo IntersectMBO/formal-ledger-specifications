@@ -38,35 +38,30 @@ unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 ```
 -->
 
-Some key ingredients in the transaction body are:
+Here are some key components of the transaction body.
 
-+  A set `txIns`{.AgdaField} of transaction inputs, each of which
-   identifies an output from a previous transaction. A transaction input
-   consists of a transaction id and an index to uniquely identify the
-   output.
++  `txIns`{.AgdaField} denotes a set of transaction inputs; each input consists of a
+   transaction id and an index that points to a unique output from a previous transaction.
 
-+  An indexed collection `txOuts`{.AgdaField} of transaction outputs. The
-   `TxOut`{.AgdaFunction} type is an address paired with a coin value.
++  `txOuts`{.AgdaField} denotes an indexed collection of transaction outputs; each output
+   consists of an address and a coin value.
 
-+  A transaction fee, `txFee`{.AgdaField}, which will be added to the fee pot.
++  `txFee`{.AgdaField} denotes a transaction fee to be added to the fee pot.
 
-+  The hash of the serialized form of the transaction that was included
-   in the block.
++  `txId`{.AgdaField} denotes the hash of the serialized form of the
+   transaction---the form in which the transaction is included in a block.
 
+In addition to these, the Conway era introduces some new fields to the transaction body.
 
-Ingredients of the transaction body introduced in the Conway era are the
-following:
++  `txGovVotes`{.AgdaField} denotes the list of votes for governance actions.
 
-+  `txGovVotes`{.AgdaField}, the list of votes for goverance actions;
++  `txGovProposals`{.AgdaField} denotes the list of governance proposals.
 
-+  `txGovProposals`{.AgdaField}, the list of governance proposals;
++  `txDonation`{.AgdaField} denotes the amount of `Coin`{.AgdaFunction} to donate to
+   treasury, e.g., to return funds to the treasury after a governance action.
 
-+  `txDonation`{.AgdaField}, the amount of `Coin`{.AgdaFunction} to donate to
-   treasury, e.g., to return funds to the treasury after a governance action;
-
-+  `currentTreasury`{.AgdaField}, the current value of the treasury. This
-   field serves as a precondition to executing Plutus scripts that access
-   the value of the treasury.
++  `currentTreasury`{.AgdaField} denotes the current value of the treasury; this serves
+   as a precondition to executing Plutus scripts that access the value of the treasury.
 
 
 ## Transaction Types
