@@ -215,6 +215,9 @@ instance
 
   HasTreasury-RatifyEnv : HasTreasury RatifyEnv
   HasTreasury-RatifyEnv .TreasuryOf = RatifyEnv.treasury
+
+  HasDReps-RatifyEnv : HasDReps RatifyEnv
+  HasDReps-RatifyEnv .DRepsOf = RatifyEnv.dreps
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types and functions for the RATIFY transition system}
@@ -261,7 +264,7 @@ acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 \end{code}
 \begin{code}[hide]
     open EnactState eSt using (cc; pparams)
-    open RatifyEnv Γ
+    open RatifyEnv Γ using (currentEpoch; ccHotKeys)
     open PParams (proj₁ pparams)
     open GovActionState gaSt
     open GovVotes votes using (gvCC)
@@ -388,52 +391,57 @@ In addition, it has to be the case that either
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \begin{code}
+module AcceptedByDRep (Γ : RatifyEnv)
+                      (eSt : EnactState)
+                      (gaSt : GovActionState) where
+
+  open EnactState eSt using (cc; pparams)
+  open RatifyEnv Γ using (currentEpoch; dreps; stakeDistrs)
+  open PParams (proj₁ pparams)
+  open StakeDistrs stakeDistrs
+  open GovActionState gaSt
+  open GovVotes votes using (gvDRep)
+
+  castVotes : VDeleg ⇀ Vote
+  castVotes = mapKeys vDelegCredential gvDRep
+
+  activeDReps : ℙ Credential
+  activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
+
+  predeterminedDRepVotes : VDeleg ⇀ Vote
+  predeterminedDRepVotes = case gaType action of
+      λ where
+        NoConfidence → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.yes ❵
+        _            → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.no  ❵
+
+  defaultDRepCredentialVotes : VDeleg ⇀ Vote
+  defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
+
+  actualVotes : VDeleg ⇀ Vote
+  actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes
+                             ∪ˡ predeterminedDRepVotes
+
+  t : ℚ
+  t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action DRep)
+
+  acceptedStake totalStake : Coin
+  acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes                          ] x
+  totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+
+  accepted = (acceptedStake /₀ totalStake) ≥ t
+
 acceptedByDRep
   : RatifyEnv
   → EnactState
   → GovActionState
   → Type
-acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
-  where
+acceptedByDRep Γ eSt gaSt = AcceptedByDRep.accepted Γ eSt gaSt
 \end{code}
 \begin{code}[hide]
-    open EnactState eSt using (cc; pparams)
-    open RatifyEnv Γ
-    open PParams (proj₁ pparams)
-    open StakeDistrs stakeDistrs
-    open GovActionState gaSt
-    open GovVotes votes using (gvDRep)
 \end{code}
 \begin{code}
-    castVotes : VDeleg ⇀ Vote
-    castVotes = mapKeys vDelegCredential gvDRep
-
-    activeDReps : ℙ Credential
-    activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
-
-    predeterminedDRepVotes : VDeleg ⇀ Vote
-    predeterminedDRepVotes = case gaType action of
 \end{code}
 \begin{code}[hide]
-      λ where
-\end{code}
-\begin{code}
-        NoConfidence → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.yes ❵
-        _            → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.no  ❵
-
-    defaultDRepCredentialVotes : VDeleg ⇀ Vote
-    defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
-
-    actualVotes : VDeleg ⇀ Vote
-    actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes
-                               ∪ˡ predeterminedDRepVotes
-
-    t : ℚ
-    t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action DRep)
-
-    acceptedStake totalStake : Coin
-    acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes                          ] x
-    totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting for DReps}
@@ -479,7 +487,7 @@ acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
 \end{code}
 \begin{code}[hide]
     open EnactState eSt using (cc; pparams)
-    open RatifyEnv Γ
+    open RatifyEnv Γ using (delegatees; stakeDistrs; pools)
     open StakeDistrs stakeDistrs
     open GovActionState gaSt
     open GovVotes votes using (gvSPO)
