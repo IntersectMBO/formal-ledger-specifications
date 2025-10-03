@@ -1,6 +1,7 @@
 [Agda documentation]: https://agda.readthedocs.io/en/
 [Agda record types]: https://agda.readthedocs.io/en/stable/language/record-types.html
 [Agda Wiki]: https://wiki.portal.chalmers.se/agda/pmwiki.php
+[Amount of Rewards to be Paid Out]: Ledger.Conway.Specification.Rewards.md#sec:amount-of-rewards-to-be-paid-out
 [Auxiliary DELEG transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [Auxiliary GOVCERT transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [Auxiliary POOL transition system]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
@@ -37,10 +38,12 @@
 [RATIFY]: Ledger.Conway.Specification.Ratify.md#the-ratify-transition-system
 [(Re)introduction to Cardano]: https://developers.cardano.org/docs/operate-a-stake-pool/introduction-to-cardano/
 [repourl]: https://github.com/IntersectMBO/formal-ledger-specifications
+[Rewards Motivation]: Ledger.Conway.Specification.Rewards.md#sec:rewards-motivation
 [scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
-[Type signature of the GOV transition relation]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [Time handling on Cardano]: https://docs.cardano.org/about-cardano/explore-more/time
+[Timing of Rewards Payout]: Ledger.Conway.Specification.Rewards.md#sec:timing-of-rewards-payout
+[Type signature of the GOV transition relation]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [UTXO]: Ledger.Conway.Specification.Utxo.md#sec:utxo-inference-rule
 [UTXOS]: Ledger.Conway.Specification.Utxo.md#sec:utxos-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#utxow-inference-rules
