@@ -1,11 +1,16 @@
-\section{Scripts}
-\label{sec:scripts}
-\modulenote{\ConwayModule{Script}}, in which we define \Timelock{} scripts.
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Script/Timelock.lagda
+---
 
-\Timelock{} scripts can verify the presence of keys and whether a transaction happens in a certain slot
-interval.  The scripts are executed as part of the regular witnessing.
+# Timelock Scripts {#sec:timelock-scripts}
 
-\begin{code}[hide]
+This section defines `Timelock`{.AgdaDatatype} scripts, which verify the presence of
+keys and whether a transaction happens in a certain slot interval.  The scripts
+are executed as part of the regular witnessing.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Algebra.Morphism
@@ -35,11 +40,12 @@ open import Data.List.Relation.Unary.All
 open import Data.List.Relation.Unary.Any
   using (Any; any?)
 open import stdlib.Data.List.Relation.Unary.MOf
+```
+-->
 
-\end{code}
+## The <span class="AgdaDatatype">Timelock</span> Type {#sec:the-timelock-type}
 
-\begin{figure*}[h]
-\begin{code}
+```agda
 data Timelock : Type where
   RequireAllOf       : List Timelock      → Timelock
   RequireAnyOf       : List Timelock      → Timelock
@@ -47,8 +53,10 @@ data Timelock : Type where
   RequireSig         : KeyHash            → Timelock
   RequireTimeStart   : Slot               → Timelock
   RequireTimeExpire  : Slot               → Timelock
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 unquoteDecl DecEq-Timelock = derive-DecEq ((quote Timelock , DecEq-Timelock) ∷ [])
 
 private variable
@@ -60,30 +68,23 @@ private variable
 
 open import Data.List.Relation.Binary.Sublist.Propositional as S
 import Data.Maybe.Relation.Unary.Any as M
-\end{code}
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  evalTimelock (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) : Timelock → Type where
-  evalAll  : All (evalTimelock khs I) ss
-           → (evalTimelock khs I) (RequireAllOf ss)
-  evalAny  : Any (evalTimelock khs I) ss
-           → (evalTimelock khs I) (RequireAnyOf ss)
-  evalMOf  : MOf m (evalTimelock khs I) ss
-           → (evalTimelock khs I) (RequireMOf m ss)
-  evalSig  : x ∈ khs
-           → (evalTimelock khs I) (RequireSig x)
-  evalTSt  : M.Any (a ≤_) (I .proj₁)
-           → (evalTimelock khs I) (RequireTimeStart a)
-  evalTEx  : M.Any (_≤ a) (I .proj₂)
-           → (evalTimelock khs I) (RequireTimeExpire a)
-\end{code}
-\caption{Timelock scripts and their evaluation}
-\label{fig:defs:timelock}
-\end{figure*}
+```
+-->
 
-\begin{code}[hide]
+## The <span class="AgdaDatatype">evalTimelock</span> Type {#sec:the-evaltimelock-type}
+
+```agda
+data evalTimelock (khs : ℙ KeyHash) (I : Maybe Slot × Maybe Slot) : Timelock → Type where
+  evalAll : All (evalTimelock khs I) ss → (evalTimelock khs I) (RequireAllOf ss)
+  evalAny : Any (evalTimelock khs I) ss → (evalTimelock khs I) (RequireAnyOf ss)
+  evalMOf : MOf m (evalTimelock khs I) ss → (evalTimelock khs I) (RequireMOf m ss)
+  evalSig : x ∈ khs → (evalTimelock khs I) (RequireSig x)
+  evalTSt : M.Any (a ≤_) (I .proj₁) → (evalTimelock khs I) (RequireTimeStart a)
+  evalTEx : M.Any (_≤ a) (I .proj₂) → (evalTimelock khs I) (RequireTimeExpire a)
+```
+
+<!--
+```agda
 instance
   Dec-evalTimelock : evalTimelock ⁇³
   Dec-evalTimelock {khs} {I} {tl} .dec = go? tl
@@ -130,4 +131,5 @@ instance
         (RequireTimeStart a)  → mapDec evalTSt evalTSt˘ dec
         (RequireTimeExpire a) → mapDec evalTEx evalTEx˘ dec
         (RequireMOf m xs)     → mapDec evalMOf evalMOf˘ (MOf-go? m xs)
-\end{code}
+```
+-->
