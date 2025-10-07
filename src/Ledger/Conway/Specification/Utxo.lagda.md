@@ -192,7 +192,7 @@ module _ (let open Tx; open TxBody; open TxWitnesses) where opaque
 ```agda
 instance
   HasCoin-UTxO : HasCoin UTxO
-  HasCoin-UTxO .CoinOf = cbalance
+  HasCoin-UTxO .getCoin = cbalance
 ```
 -->
 
@@ -355,7 +355,7 @@ proposalDepositsΔ props pp txb = updateProposalDeposits props txId (pp .govActi
 ```agda
 depositsChange : PParams → TxBody → Deposits → ℤ
 depositsChange pp txb deposits =
-  CoinOf (updateDeposits pp txb deposits) - CoinOf deposits
+  getCoin (updateDeposits pp txb deposits) - getCoin deposits
 
 data inInterval (slot : Slot) : (Maybe Slot × Maybe Slot) → Type where
   both   : ∀ {l r}  → l ≤ slot × slot ≤ r  →  inInterval slot (just l   , just r)
@@ -382,9 +382,9 @@ instance
   Dec-inInterval {slot} {nothing , nothing} .dec = yes none
 
   HasCoin-UTxOState : HasCoin UTxOState
-  HasCoin-UTxOState .CoinOf s = CoinOf (UTxOState.utxo s)
+  HasCoin-UTxOState .getCoin s = getCoin (UTxOState.utxo s)
                                + (UTxOState.fees s)
-                               + CoinOf (UTxOState.deposits s)
+                               + getCoin (UTxOState.deposits s)
                                + UTxOState.donations s
 
 coinPolicies : ℙ ScriptHash
@@ -434,7 +434,7 @@ that their difference is the identity function.
     =  balance (st .utxo ∣ txb .txIns)
     +  txb .mint
     +  inject (depositRefunds pp st txb)
-    +  inject (CoinOf (txb .txWithdrawals))
+    +  inject (getCoin (txb .txWithdrawals))
 
   produced : PParams → UTxOState → TxBody → Value
   produced pp st txb = balance (outs txb)

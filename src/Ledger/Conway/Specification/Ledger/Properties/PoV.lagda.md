@@ -29,19 +29,19 @@ open import Data.Nat.Properties using (+-0-monoid; +-identityʳ; +-comm; +-assoc
 
 instance
   HasCoin-LState : HasCoin LState
-  HasCoin-LState .CoinOf s = CoinOf (LState.utxoSt s) + CoinOf (LState.certState s)
+  HasCoin-LState .getCoin s = getCoin (LState.utxoSt s) + getCoin (LState.certState s)
 
 module _
   (tx : Tx) (let open Tx tx; open TxBody body)
   ( indexedSumᵛ'-∪  :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
-                       → disjoint (dom m) (dom m') → CoinOf (m ∪ˡ m') ≡ CoinOf m + CoinOf m' )
-  ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → CoinOf (constMap X 0) ≡ 0 )
+                       → disjoint (dom m) (dom m') → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
+  ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
   ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                        → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-  ( CoinOf-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
+  ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
                        → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-  ( ≡ᵉ-CoinOfˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                       → InjectiveOn (dom s) f → CoinOf (mapˢ (map₁ f) s) ≡ CoinOf s )
+  ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                       → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
   where
 
   pattern UTXO-induction r = UTXO-inductive⋯ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ r _ _ _
@@ -58,14 +58,14 @@ module _
 that is not already part of the `UTxOState`{.AgdaRecord} of `s`{.AgdaBound}. If
 `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,LEDGER⦈`{.AgdaDatatype} `s'`{.AgdaBound},
 then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is, 
-`CoinOf`{.AgdaField} `s`{.AgdaBound} $≡$ `CoinOf`{.AgdaField} `s'`{.AgdaBound}.
+`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
 
 *Formally*.
 
 ```agda
   LEDGER-pov : {Γ : LEnv} {s s' : LState}
     → txId ∉ mapˢ proj₁ (dom (UTxOOf s))
-    → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → CoinOf s ≡ CoinOf s'
+    → Γ ⊢ s ⇀⦇ tx ,LEDGER⦈ s' → getCoin s ≡ getCoin s'
 ```
 
 *Proof*.
@@ -81,23 +81,23 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
       open LState s' renaming (utxoSt to utxoSt'; govSt to govSt'; certState to certState')
       open CertState certState'
       open ≡-Reasoning
-      open Certs-PoV indexedSumᵛ'-∪ sumConstZero res-decomp  CoinOf-cong ≡ᵉ-CoinOfˢ
+      open Certs-PoV indexedSumᵛ'-∪ sumConstZero res-decomp  getCoin-cong ≡ᵉ-getCoinˢ
       zeroMap    = constMap (mapˢ RwdAddr.stake (dom txWithdrawals)) 0
     in
     begin
-      CoinOf utxoSt + CoinOf certState
-        ≡⟨ cong (CoinOf utxoSt +_) (CERTS-pov r h') ⟩
-      CoinOf utxoSt + (CoinOf certState' + CoinOf txWithdrawals)
-        ≡˘⟨ cong (λ x → CoinOf utxoSt + (CoinOf certState' + x )) (*-identityʳ (CoinOf txWithdrawals)) ⟩
-      CoinOf utxoSt + (CoinOf certState' + CoinOf txWithdrawals * 1)
-        ≡˘⟨ cong (λ u → CoinOf utxoSt + (CoinOf certState' + CoinOf txWithdrawals * χ u)) valid ⟩
-      CoinOf utxoSt + (CoinOf certState' + CoinOf txWithdrawals * χ isValid)
-        ≡⟨ cong (CoinOf utxoSt +_) (+-comm (CoinOf certState') _) ⟩
-      CoinOf utxoSt + (CoinOf txWithdrawals * χ isValid + CoinOf certState')
-        ≡˘⟨ +-assoc (CoinOf utxoSt) (CoinOf txWithdrawals * χ isValid) (CoinOf certState') ⟩
-      CoinOf utxoSt + CoinOf txWithdrawals * χ isValid + CoinOf certState'
-        ≡⟨ cong (_+ CoinOf certState') (UTXOpov h st) ⟩
-      CoinOf utxoSt' + CoinOf certState'
+      getCoin utxoSt + getCoin certState
+        ≡⟨ cong (getCoin utxoSt +_) (CERTS-pov r h') ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txWithdrawals)
+        ≡˘⟨ cong (λ x → getCoin utxoSt + (getCoin certState' + x )) (*-identityʳ (getCoin txWithdrawals)) ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txWithdrawals * 1)
+        ≡˘⟨ cong (λ u → getCoin utxoSt + (getCoin certState' + getCoin txWithdrawals * χ u)) valid ⟩
+      getCoin utxoSt + (getCoin certState' + getCoin txWithdrawals * χ isValid)
+        ≡⟨ cong (getCoin utxoSt +_) (+-comm (getCoin certState') _) ⟩
+      getCoin utxoSt + (getCoin txWithdrawals * χ isValid + getCoin certState')
+        ≡˘⟨ +-assoc (getCoin utxoSt) (getCoin txWithdrawals * χ isValid) (getCoin certState') ⟩
+      getCoin utxoSt + getCoin txWithdrawals * χ isValid + getCoin certState'
+        ≡⟨ cong (_+ getCoin certState') (UTXOpov h st) ⟩
+      getCoin utxoSt' + getCoin certState'
         ∎
 
   LEDGER-pov  {s = s}
@@ -112,14 +112,14 @@ then the coin values of `s`{.AgdaBound} and `s'`{.AgdaBound} are equal, that is,
                                         ; deposits to deposits'; donations to donations') in
     cong (_+ rewardsBalance dState)
     ( begin
-      CoinOf ⟦ utxo , fees , deposits , donations ⟧
-        ≡˘⟨ +-identityʳ (CoinOf ⟦ utxo , fees , deposits , donations ⟧) ⟩
-      CoinOf ⟦ utxo , fees , deposits , donations ⟧ + 0
-        ≡˘⟨ cong (CoinOf ⟦ utxo , fees , deposits , donations ⟧ +_) (*-zeroʳ (CoinOf txWithdrawals)) ⟩
-      CoinOf ⟦ utxo , fees , deposits , donations ⟧ + CoinOf txWithdrawals * 0
-        ≡˘⟨ cong (λ x → CoinOf ⟦ utxo , fees , deposits , donations ⟧ + CoinOf txWithdrawals * χ x) invalid ⟩
-      CoinOf ⟦ utxo , fees , deposits , donations ⟧ + CoinOf txWithdrawals * χ isValid
+      getCoin ⟦ utxo , fees , deposits , donations ⟧
+        ≡˘⟨ +-identityʳ (getCoin ⟦ utxo , fees , deposits , donations ⟧) ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + 0
+        ≡˘⟨ cong (getCoin ⟦ utxo , fees , deposits , donations ⟧ +_) (*-zeroʳ (getCoin txWithdrawals)) ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txWithdrawals * 0
+        ≡˘⟨ cong (λ x → getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txWithdrawals * χ x) invalid ⟩
+      getCoin ⟦ utxo , fees , deposits , donations ⟧ + getCoin txWithdrawals * χ isValid
         ≡⟨ UTXOpov h st ⟩
-      CoinOf ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
+      getCoin ⟦ utxo' , fees' , deposits' , donations' ⟧ ∎ )
     where open ≡-Reasoning
 ```

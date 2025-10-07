@@ -34,11 +34,11 @@ If `tx`{.AgdaBound} is not valid, then the coin values of `s`{.AgdaBound} and
 `s'`{.AgdaBound} are equal.  We can express this concisely as follows:
 
 <!--
-`CoinOf`{.AgdaField} `s`{.AgdaBound} + `CoinOf`{.AgdaField} `txWithdrawals`{.AgdaBound} ·
-`χ`{.AgdaFunction} (`tx`{.AgdaBound} .`isValid`{.AgdaField}) `≡`{.AgdaSymbol} `CoinOf`{.AgdaField} `s'`{.AgdaBound},
+`getCoin`{.AgdaField} `s`{.AgdaBound} + `getCoin`{.AgdaField} `txWithdrawals`{.AgdaBound} ·
+`χ`{.AgdaFunction} (`tx`{.AgdaBound} .`isValid`{.AgdaField}) `≡`{.AgdaSymbol} `getCoin`{.AgdaField} `s'`{.AgdaBound},
 -->
 
-<pre class="Agda"><a id="1867" href="Ledger.Prelude.HasCoin.html#178" class="Field">CoinOf</a> <a id="1875" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#1775" class="Bound">s</a> <a id="1877" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="1879" href="Ledger.Prelude.HasCoin.html#178" class="Field">CoinOf</a> <a id="1887" class="Symbol">(</a><a id="1888" href="Ledger.Conway.Specification.Certs.html#3679" class="Field">wdrlsOf</a> <a id="1896" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#1765" class="Bound">tx</a><a id="1898" class="Symbol">)</a> <a id="1900" href="Agda.Builtin.Nat.html#539" class="Primitive Operator">*</a> <a id="1902" href="Ledger.Conway.Specification.Utxo.Properties.html#13724" class="Function">χ</a> <a id="1904" class="Symbol">(</a><a id="1905" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#1765" class="Bound">tx</a> <a id="1908" class="Symbol">.</a><a id="1909" href="Ledger.Conway.Specification.Transaction.html#6540" class="Field">isValid</a><a id="1916" class="Symbol">)</a> <a id="1918" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1920" href="Ledger.Prelude.HasCoin.html#178" class="Field">CoinOf</a> <a id="1928" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#1777" class="Bound">s&#39;</a>
+<pre class="Agda"><a id="1867" href="Ledger.Prelude.HasCoin.html#178" class="Field">getCoin</a> <a id="1875" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#1775" class="Bound">s</a> <a id="1877" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="1879" href="Ledger.Prelude.HasCoin.html#178" class="Field">getCoin</a> <a id="1887" class="Symbol">(</a><a id="1888" href="Ledger.Conway.Specification.Certs.html#3679" class="Field">wdrlsOf</a> <a id="1896" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#1765" class="Bound">tx</a><a id="1898" class="Symbol">)</a> <a id="1900" href="Agda.Builtin.Nat.html#539" class="Primitive Operator">*</a> <a id="1902" href="Ledger.Conway.Specification.Utxo.Properties.html#13724" class="Function">χ</a> <a id="1904" class="Symbol">(</a><a id="1905" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#1765" class="Bound">tx</a> <a id="1908" class="Symbol">.</a><a id="1909" href="Ledger.Conway.Specification.Transaction.html#6540" class="Field">isValid</a><a id="1916" class="Symbol">)</a> <a id="1918" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1920" href="Ledger.Prelude.HasCoin.html#178" class="Field">getCoin</a> <a id="1928" href="Ledger.Conway.Specification.Utxo.Properties.PoV.html#1777" class="Bound">s&#39;</a>
 </pre>
 
 where `χ`{.AgdaFunction} : `Bool`{.AgdaDatatype} → $\{0, 1\}$ is the *characteristic function*,
@@ -50,7 +50,7 @@ which returns 0 for false and 1 for true.
 UTXOpov : {Γ : UTxOEnv} {tx : Tx} {s s' : UTxOState}
   → TxIdOf tx ∉ mapˢ proj₁ (dom (UTxOOf s))
   → Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
-  → CoinOf s + CoinOf (WithdrawalsOf tx) * χ (tx .isValid) ≡ CoinOf s'
+  → getCoin s + getCoin (WithdrawalsOf tx) * χ (tx .isValid) ≡ getCoin s'
 ```
 
 *Proof*.

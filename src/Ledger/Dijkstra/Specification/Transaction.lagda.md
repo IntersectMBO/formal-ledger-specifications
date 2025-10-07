@@ -314,7 +314,7 @@ could be either of them.
     HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
 
     HasCoin-TxOut : HasCoin TxOut
-    HasCoin-TxOut .CoinOf = coin ∘ proj₁ ∘ proj₂
+    HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 
     HasData-TxWitnesses : HasData (TxWitnesses txLevel)
     HasData-TxWitnesses .DataOf = range ∘ TxWitnesses.txData

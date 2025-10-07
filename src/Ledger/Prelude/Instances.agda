@@ -15,10 +15,10 @@ instance
   CommMonoid-ℕ-+ = NonUniqueInstances.CommMonoid-ℕ-+
 
   HasCoin-Map : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (A ⇀ Coin)
-  HasCoin-Map .CoinOf s = ∑[ x ← s ] x
+  HasCoin-Map .getCoin s = ∑[ x ← s ] x
 
   HasCoin-Set : ∀ {A} → ⦃ DecEq A ⦄ → HasCoin (ℙ (A × Coin))
-  HasCoin-Set .CoinOf s = ∑ˢ[ (a , c) ← s ] c
+  HasCoin-Set .getCoin s = ∑ˢ[ (a , c) ← s ] c
 
   HasSubset-Set : ∀ {A} → HasSubset (ℙ A)
   HasSubset-Set ._⊆_ = _⊆ˢ_

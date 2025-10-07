@@ -6,6 +6,6 @@ open import Prelude
 open import Ledger.Prelude.Base
 
 record HasCoin {a} (A : Type a) : Type a where
-  field CoinOf : A → Coin
+  field getCoin : A → Coin
 
 open HasCoin ⦃...⦄ public

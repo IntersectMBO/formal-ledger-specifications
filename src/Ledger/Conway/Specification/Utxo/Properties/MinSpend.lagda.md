@@ -53,7 +53,7 @@ proposals in `tx`{.AgdaBound}.
 ```agda
 module _
   -- ASSUMPTION --
-  (gc-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → CoinOf (d₁ ∪⁺ d₂) ≡ CoinOf d₁ + CoinOf d₂)
+  (gc-hom : (d₁ d₂ : DepositPurpose ⇀ Coin) → getCoin (d₁ ∪⁺ d₂) ≡ getCoin d₁ + getCoin d₂)
   {Γ : UTxOEnv}
   where
     open module Γ = UTxOEnv Γ
@@ -73,10 +73,10 @@ module _
       begin
       length txGovProposals * govActionDeps
         ≡˘⟨ updatePropDeps≡ gc-hom txGovProposals ⟩
-      CoinOf (updateProposalDeposits txGovProposals txId (govActionDeps) deposits) ∸ CoinOf deposits
-        ≤⟨ ∸-monoˡ-≤ (CoinOf deposits) (≤updateCertDeps gc-hom txCerts nrf) ⟩
-      CoinOf (updateDeposits (PParamsOf Γ) txb deposits) - CoinOf deposits
-        ≡⟨ ∸≡posPart⊖ {CoinOf (updateDeposits (PParamsOf Γ) txb deposits)} {CoinOf deposits} ⟩
+      getCoin (updateProposalDeposits txGovProposals txId (govActionDeps) deposits) ∸ getCoin deposits
+        ≤⟨ ∸-monoˡ-≤ (getCoin deposits) (≤updateCertDeps gc-hom txCerts nrf) ⟩
+      getCoin (updateDeposits (PParamsOf Γ) txb deposits) - getCoin deposits
+        ≡⟨ ∸≡posPart⊖ {getCoin (updateDeposits (PParamsOf Γ) txb deposits)} {getCoin deposits} ⟩
       newDeps
         ≤⟨ m≤n+m newDeps (coin balOut + txFee + txDonation) ⟩
       coin balOut + txFee + txDonation + newDeps
@@ -102,7 +102,7 @@ module _
       newDeps refunds wdrls : Coin
       newDeps = newDeposits (PParamsOf Γ) utxoSt txb
       refunds = depositRefunds (PParamsOf Γ) utxoSt txb
-      wdrls = CoinOf (WithdrawalsOf tx)
+      wdrls = getCoin (WithdrawalsOf tx)
 
       balIn balOut : Value
       balIn = balance (utxo ∣ txIns)

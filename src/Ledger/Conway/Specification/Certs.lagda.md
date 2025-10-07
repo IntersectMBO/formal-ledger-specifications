@@ -321,7 +321,7 @@ rewardsBalance ds = ∑[ x ← RewardsOf ds ] x
 ```agda
 instance
   HasCoin-CertState : HasCoin CertState
-  HasCoin-CertState .CoinOf = rewardsBalance ∘ DStateOf
+  HasCoin-CertState .getCoin = rewardsBalance ∘ DStateOf
 
   unquoteDecl HasCast-CertEnv HasCast-DState HasCast-PState HasCast-GState HasCast-CertState HasCast-DelegEnv = derive-HasCast
     (   (quote CertEnv , HasCast-CertEnv)
