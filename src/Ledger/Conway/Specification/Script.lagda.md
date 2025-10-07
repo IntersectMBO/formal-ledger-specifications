@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Script.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Core.Specification.Crypto
@@ -10,3 +16,4 @@ module Ledger.Conway.Specification.Script
 
 open import Ledger.Conway.Specification.Script.Base cs es public
 open import Ledger.Conway.Specification.Script.Timelock cs es public
+```
