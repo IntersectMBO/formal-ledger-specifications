@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Script/Base.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Algebra.Morphism
@@ -82,7 +88,7 @@ record ScriptStructure : Type₁ where
 
   isP1Script? : ∀ {s} → isP1Script s ⁇
   isP1Script? {inj₁ x} .dec = yes tt
-  isP1Script? {inj₂ y} .dec = no λ () 
+  isP1Script? {inj₂ y} .dec = no λ ()
 
   isNativeScript : Script → Type
   isNativeScript = isP1Script
@@ -99,3 +105,4 @@ record ScriptStructure : Type₁ where
 
   toP2Script : Script → Maybe P2Script
   toP2Script = isInj₂
+```
