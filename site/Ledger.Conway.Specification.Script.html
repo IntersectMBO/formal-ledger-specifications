@@ -7326,7 +7326,7 @@
 
 
 
-  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Script.agda"
+  <a href="https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Script.lagda.md?plain=1"
      class="md-content__button md-icon"
      title="View the source of this page"
      aria-label="View the source of this page">
@@ -7338,18 +7338,18 @@
 
   <h1>Script</h1>
 
-<pre class="Agda"><a id="97" class="Symbol">{-#</a> <a id="101" class="Keyword">OPTIONS</a> <a id="109" class="Pragma">--safe</a> <a id="116" class="Symbol">#-}</a>
+<pre class="Agda"><a id="101" class="Symbol">{-#</a> <a id="105" class="Keyword">OPTIONS</a> <a id="113" class="Pragma">--safe</a> <a id="120" class="Symbol">#-}</a>
 
-<a id="121" class="Keyword">open</a> <a id="126" class="Keyword">import</a> <a id="133" href="Ledger.Core.Specification.Crypto.html" class="Module">Ledger.Core.Specification.Crypto</a>
-<a id="166" class="Keyword">open</a> <a id="171" class="Keyword">import</a> <a id="178" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
+<a id="125" class="Keyword">open</a> <a id="130" class="Keyword">import</a> <a id="137" href="Ledger.Core.Specification.Crypto.html" class="Module">Ledger.Core.Specification.Crypto</a>
+<a id="170" class="Keyword">open</a> <a id="175" class="Keyword">import</a> <a id="182" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
 
-<a id="211" class="Keyword">module</a> <a id="218" href="Ledger.Conway.Specification.Script.html" class="Module">Ledger.Conway.Specification.Script</a>
-  <a id="255" class="Symbol">(</a><a id="256" href="Ledger.Conway.Specification.Script.html#256" class="Bound">cs</a> <a id="259" class="Symbol">:</a> <a id="261" class="Symbol">_)</a> <a id="264" class="Symbol">(</a><a id="265" class="Keyword">open</a> <a id="270" href="Ledger.Core.Specification.Crypto.html#2045" class="Module">CryptoStructure</a> <a id="286" href="Ledger.Conway.Specification.Script.html#256" class="Bound">cs</a><a id="288" class="Symbol">)</a>
-  <a id="292" class="Symbol">(</a><a id="293" href="Ledger.Conway.Specification.Script.html#293" class="Bound">es</a> <a id="296" class="Symbol">:</a> <a id="298" class="Symbol">_)</a> <a id="301" class="Symbol">(</a><a id="302" class="Keyword">open</a> <a id="307" href="Ledger.Core.Specification.Epoch.html#623" class="Module">EpochStructure</a> <a id="322" href="Ledger.Conway.Specification.Script.html#293" class="Bound">es</a><a id="324" class="Symbol">)</a>
-  <a id="328" class="Keyword">where</a>
+<a id="215" class="Keyword">module</a> <a id="222" href="Ledger.Conway.Specification.Script.html" class="Module">Ledger.Conway.Specification.Script</a>
+  <a id="259" class="Symbol">(</a><a id="260" href="Ledger.Conway.Specification.Script.html#260" class="Bound">cs</a> <a id="263" class="Symbol">:</a> <a id="265" class="Symbol">_)</a> <a id="268" class="Symbol">(</a><a id="269" class="Keyword">open</a> <a id="274" href="Ledger.Core.Specification.Crypto.html#2045" class="Module">CryptoStructure</a> <a id="290" href="Ledger.Conway.Specification.Script.html#260" class="Bound">cs</a><a id="292" class="Symbol">)</a>
+  <a id="296" class="Symbol">(</a><a id="297" href="Ledger.Conway.Specification.Script.html#297" class="Bound">es</a> <a id="300" class="Symbol">:</a> <a id="302" class="Symbol">_)</a> <a id="305" class="Symbol">(</a><a id="306" class="Keyword">open</a> <a id="311" href="Ledger.Core.Specification.Epoch.html#623" class="Module">EpochStructure</a> <a id="326" href="Ledger.Conway.Specification.Script.html#297" class="Bound">es</a><a id="328" class="Symbol">)</a>
+  <a id="332" class="Keyword">where</a>
 
-<a id="335" class="Keyword">open</a> <a id="340" class="Keyword">import</a> <a id="347" href="Ledger.Conway.Specification.Script.Base.html" class="Module">Ledger.Conway.Specification.Script.Base</a> <a id="387" href="Ledger.Conway.Specification.Script.html#256" class="Bound">cs</a> <a id="390" href="Ledger.Conway.Specification.Script.html#293" class="Bound">es</a> <a id="393" class="Keyword">public</a>
-<a id="400" class="Keyword">open</a> <a id="405" class="Keyword">import</a> <a id="412" href="Ledger.Conway.Specification.Script.Timelock.html" class="Module">Ledger.Conway.Specification.Script.Timelock</a> <a id="456" href="Ledger.Conway.Specification.Script.html#256" class="Bound">cs</a> <a id="459" href="Ledger.Conway.Specification.Script.html#293" class="Bound">es</a> <a id="462" class="Keyword">public</a>
+<a id="339" class="Keyword">open</a> <a id="344" class="Keyword">import</a> <a id="351" href="Ledger.Conway.Specification.Script.Base.html" class="Module">Ledger.Conway.Specification.Script.Base</a> <a id="391" href="Ledger.Conway.Specification.Script.html#260" class="Bound">cs</a> <a id="394" href="Ledger.Conway.Specification.Script.html#297" class="Bound">es</a> <a id="397" class="Keyword">public</a>
+<a id="404" class="Keyword">open</a> <a id="409" class="Keyword">import</a> <a id="416" href="Ledger.Conway.Specification.Script.Timelock.html" class="Module">Ledger.Conway.Specification.Script.Timelock</a> <a id="460" href="Ledger.Conway.Specification.Script.html#260" class="Bound">cs</a> <a id="463" href="Ledger.Conway.Specification.Script.html#297" class="Bound">es</a> <a id="466" class="Keyword">public</a>
 </pre>
 
 <!-- Properties -->
