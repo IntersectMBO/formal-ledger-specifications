@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Script/Validation.agda
+source_path: src/Ledger/Conway/Specification/Script/Validation.lagda.md
 ---
 
 ```agda
