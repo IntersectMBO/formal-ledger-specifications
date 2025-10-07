@@ -1,4 +1,8 @@
-```
+---
+source_branch: master
+source_path: src/Ledger/Dijkstra/Specification/Script.lagda.md
+---
+```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Dijkstra.Specification.Crypto
   using (CryptoStructure)
