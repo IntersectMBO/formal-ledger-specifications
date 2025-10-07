@@ -144,8 +144,8 @@ record TransactionStructure : Type₁ where
   Withdrawals : Type
   Withdrawals = RewardAddress ⇀ Coin
 
-  Datums : Type
-  Datums = DataHash ⇀ Datum
+  -- Datums : Type
+  -- Datums = DataHash ⇀ Datum
 
   RedeemerPtr : TxLevel → Type
   RedeemerPtr txLevel  = Tag txLevel × Ix
@@ -208,7 +208,7 @@ The fields that depend on the transaction level use the auxiliary functions
       field
         vKeySigs     : VKey ⇀ Sig
         scripts      : ℙ Script
-        txDatums     : Datums
+        txData       : DataHash ⇀ Datum
         txRedeemers  : RedeemerPtr txLevel ⇀ Redeemer × ExUnits
 
       scriptsP1 : ℙ P1Script
@@ -216,7 +216,7 @@ The fields that depend on the transaction level use the auxiliary functions
 ```
 
 Using these types, we define the types of top-level and sub
-transaction as:
+transaction as follows:
 
 ```agda
   TopLevelTx : Type
@@ -227,13 +227,14 @@ transaction as:
 ```
 
 In addition, we define the type of transactions in which its level
-could be either of them:
+could be either of them.
 
 ```agda
   AnyLevelTx : Type
   AnyLevelTx = TopLevelTx ⊎ SubLevelTx
 ```
 
+<!--
 ```agda
   record HasTxBody {txLevel} {a} (A : Type a) : Type a where
     field TxBodyOf : A → TxBody txLevel
@@ -247,15 +248,60 @@ could be either of them:
     field FeesOf? : A → Maybe Fees
   open HasFees? ⦃...⦄ public
 
+  record HasDCerts {a} (A : Type a) : Type a where
+    field DCertsOf : A → List DCert
+  open HasDCerts ⦃...⦄ public
+
+  record HasData {a} (A : Type a) : Type a where
+    field DataOf : A → ℙ Datum
+  open HasData ⦃...⦄ public
+
+  record HasTxWitnesses {txLevel} {a} (A : Type a) : Type a where
+    field TxWitnessesOf : A → TxWitnesses txLevel
+  open HasTxWitnesses ⦃...⦄ public
+
+  record HasValue {a} (A : Type a) : Type a where
+    field ValueOf : A → Value
+  open HasValue ⦃...⦄ public
+
+  record HasGovProposals {a} (A : Type a) : Type a where
+    field GovProposalsOf : A → List GovProposal
+  open HasGovProposals ⦃...⦄ public
+
+  record HasGovVotes {a} (A : Type a) : Type a where
+    field GovVotesOf : A → List GovVote
+  open HasGovVotes ⦃...⦄ public
+
   instance
     HasTxBody-Tx : HasTxBody (Tx txLevel)
     HasTxBody-Tx .TxBodyOf = Tx.txBody
+
+    HasTxWitnesses-Tx : HasTxWitnesses (Tx txLevel)
+    HasTxWitnesses-Tx .TxWitnessesOf = Tx.txWitnesses
+
+    HasDCerts-TxBody : HasDCerts (TxBody txLevel)
+    HasDCerts-TxBody .DCertsOf = TxBody.txCerts
 
     HasWithdrawals-TxBody : HasWithdrawals (TxBody txLevel)
     HasWithdrawals-TxBody .WithdrawalsOf = TxBody.txWithdrawals
 
     HasWithdrawals-Tx : HasWithdrawals (Tx txLevel)
     HasWithdrawals-Tx .WithdrawalsOf = WithdrawalsOf ∘ TxBodyOf
+
+    HasValue-TxBody : HasValue (TxBody txLevel)
+    HasValue-TxBody .ValueOf = TxBody.mint
+
+    HasGovVotes-TxBody : HasGovVotes (TxBody txLevel)
+    HasGovVotes-TxBody .GovVotesOf = TxBody.txGovVotes
+
+    HasGovVotes-Tx : HasGovVotes (Tx txLevel)
+    HasGovVotes-Tx .GovVotesOf = GovVotesOf ∘ TxBodyOf
+
+    HasGovProposals-TxBody : HasGovProposals (TxBody txLevel)
+    HasGovProposals-TxBody .GovProposalsOf = TxBody.txGovProposals
+
+    HasGovProposals-Tx : HasGovProposals (Tx txLevel)
+    HasGovProposals-Tx .GovProposalsOf = GovProposalsOf ∘ TxBodyOf
 
     HasFees?-TxBody : {ℓ : TxLevel} → HasFees? (TxBody ℓ)
     HasFees?-TxBody {TxLevelTop} .FeesOf? tbTop = just (TxBody.txFee tbTop)
@@ -266,6 +312,19 @@ could be either of them:
 
     HasTxId-Tx : HasTxId (Tx txLevel)
     HasTxId-Tx .TxIdOf = TxBody.txId ∘ TxBodyOf
+
+    HasCoin-TxOut : HasCoin TxOut
+    HasCoin-TxOut .CoinOf = coin ∘ proj₁ ∘ proj₂
+
+    HasData-TxWitnesses : HasData (TxWitnesses txLevel)
+    HasData-TxWitnesses .DataOf = range ∘ TxWitnesses.txData
+
+    HasData-Tx : HasData (Tx txLevel)
+    HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
+
+  -- getTxData : Tx txLevel → ℙ Datum
+  -- getTxData =
+
 
   getValue : TxOut → Value
   getValue (_ , v , _) = v
@@ -303,17 +362,5 @@ could be either of them:
     else
       nothing
     where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
-
-  -- -- Already defined in, and imported from, Conway --
-  -- isP2Script : Script → Type
-  -- isP2Script = T ∘ is-just ∘ isInj₂
-  --
-  -- isP2Script? : ∀ {s} → isP2Script s ⁇
-  -- isP2Script? {inj₁ x} .dec = no λ ()
-  -- isP2Script? {inj₂ y} .dec = yes tt
-  -- ----------------------------------------------------
-
-  instance
-    HasCoin-TxOut : HasCoin TxOut
-    HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
 ```
+-->

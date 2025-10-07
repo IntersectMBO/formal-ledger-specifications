@@ -37,31 +37,31 @@ getCoin-singleton : ⦃ _ : DecEq A ⦄ {(a , c) : A × Coin} → indexedSumᵛ'
 getCoin-singleton = indexedSum-singleton' {M = Coin} (finiteness _)
 
 ∪ˡsingleton∈dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
-                → a ∈ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m
+                → a ∈ dom m → CoinOf (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ CoinOf m
 ∪ˡsingleton∈dom m {(a , c)} a∈dom = ≡ᵉ-getCoin (m ∪ˡ ❴ (a , c) ❵) m (singleton-∈-∪ˡ {m = m} a∈dom)
 
 module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                               → disjoint (dom m) (dom m')
-                              → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
+                              → CoinOf (m ∪ˡ m') ≡ CoinOf m + CoinOf m' )
   where
   open ≡-Reasoning
   open Equivalence
 
   ∪ˡsingleton∉dom :  ⦃ _ : DecEq A ⦄ (m : A ⇀ Coin) {(a , c) : A × Coin}
-                   → a ∉ dom m → getCoin (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ getCoin m + c
+                   → a ∉ dom m → CoinOf (m ∪ˡ ❴ (a , c) ❵ᵐ) ≡ CoinOf m + c
   ∪ˡsingleton∉dom m {(a , c)} a∉dom = begin
-    getCoin (m ∪ˡ ❴ a , c ❵ᵐ)
+    CoinOf (m ∪ˡ ❴ a , c ❵ᵐ)
       ≡⟨ indexedSumᵛ'-∪ m ❴ a , c ❵ᵐ
          ( λ x y → a∉dom (subst (_∈ dom m) (from ∈-dom-singleton-pair y) x) ) ⟩
-    getCoin m + getCoin ❴ a , c ❵ᵐ
-      ≡⟨ cong (getCoin m +_) getCoin-singleton ⟩
-    getCoin m + c
+    CoinOf m + CoinOf ❴ a , c ❵ᵐ
+      ≡⟨ cong (CoinOf m +_) getCoin-singleton ⟩
+    CoinOf m + c
       ∎
 
-  ∪ˡsingleton0≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {a : A} → getCoin (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ getCoin m
+  ∪ˡsingleton0≡ : ⦃ _ : DecEq A ⦄ → (m : A ⇀ Coin) {a : A} → CoinOf (m ∪ˡ ❴ (a , 0) ❵ᵐ) ≡ CoinOf m
   ∪ˡsingleton0≡ m {a} with a ∈? dom m
   ... | yes a∈dom = ∪ˡsingleton∈dom m a∈dom
-  ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (getCoin m))
+  ... | no a∉dom = trans (∪ˡsingleton∉dom m a∉dom) (+-identityʳ (CoinOf m))
 ```
 -->
 
@@ -73,14 +73,14 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 Let `s`{.AgdaBound}, `s'`{.AgdaBound} be `CertState`{.AgdaRecord}s such that
 `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `dcert`{.AgdaBound} `,CERT⦈`{.AgdaDatatype} `s'`{.AgdaBound} for
 some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
-`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
+`CoinOf`{.AgdaField} `s`{.AgdaBound} $≡$ `CoinOf`{.AgdaField} `s'`{.AgdaBound}.
 
 *Formally*.
 
 ```agda
   CERT-pov : {Γ : CertEnv} {s s'  : CertState}
     → Γ ⊢ s ⇀⦇ dCert ,CERT⦈ s'
-    → getCoin s ≡ getCoin s'
+    → CoinOf s ≡ CoinOf s'
 ```
 
 *Proof*.
@@ -90,14 +90,14 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
   CERT-pov (CERT-deleg (DELEG-reg {rwds = rwds} _)) = sym (∪ˡsingleton0≡ rwds)
   CERT-pov {s = ⟦ _ , stᵖ , stᵍ ⟧ᶜˢ}{⟦ _ , stᵖ' , stᵍ' ⟧ᶜˢ}
     (CERT-deleg (DELEG-dereg {c = c} {rwds} {vDelegs = vDelegs}{sDelegs} x)) = begin
-    getCoin ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ , stᵖ , stᵍ ⟧
+    CoinOf ⟦ ⟦ vDelegs , sDelegs , rwds ⟧ , stᵖ , stᵍ ⟧
       ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rwds
           ( ≡ᵉ.trans rwds-∪ˡ-∪ (≡ᵉ.trans ∪-sym (res-ex-∪ Dec-∈-singleton)) ) ⟩
-    getCoin rwds-∪ˡ-decomp
+    CoinOf rwds-∪ˡ-decomp
       ≡⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ) rwds-∪ˡ≡sing-∪ˡ  ⟩
-    getCoin ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )
+    CoinOf ((rwds ∣ ❴ c ❵ ᶜ) ∪ˡ ❴ (c , 0) ❵ᵐ )
       ≡⟨ ∪ˡsingleton0≡ (rwds ∣ ❴ c ❵ ᶜ) ⟩
-    getCoin ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ , stᵖ' , stᵍ' ⟧
+    CoinOf ⟦ ⟦ vDelegs ∣ ❴ c ❵ ᶜ , sDelegs ∣ ❴ c ❵ ᶜ , rwds ∣ ❴ c ❵ ᶜ ⟧ , stᵖ' , stᵍ' ⟧
       ∎
     where
     module ≡ᵉ = IsEquivalence (≡ᵉ-isEquivalence {Credential × Coin})
@@ -124,13 +124,13 @@ some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
 
   module Certs-Pov-lemmas
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
-    ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
+    ( sumConstZero    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → CoinOf (constMap X 0) ≡ 0 )
     ( res-decomp      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                          → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-    ( getCoin-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
+    ( CoinOf-cong    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
                          → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-    ( ≡ᵉ-getCoinˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                         → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+    ( ≡ᵉ-CoinOfˢ     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                         → InjectiveOn (dom s) f → CoinOf (mapˢ (map₁ f) s) ≡ CoinOf s )
     where
 ```
 
@@ -145,7 +145,7 @@ Let `Γ`{.AgdaBound} : `CertEnv`{.AgdaRecord} be a certificate environment, and 
 Then, the value of `s`{.AgdaBound} is equal to the value of `s'`{.AgdaBound} plus the
 value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
 
-`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound} + `getCoin`{.AgdaField} (`Γ`{.AgdaBound} .`wdrls`{.AgdaField} ).
+`CoinOf`{.AgdaField} `s`{.AgdaBound} $≡$ `CoinOf`{.AgdaField} `s'`{.AgdaBound} + `CoinOf`{.AgdaField} (`Γ`{.AgdaBound} .`wdrls`{.AgdaField} ).
 
 *Formally*.
 
@@ -153,7 +153,7 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
     PRE-CERT-pov : {Γ : CertEnv} {s s' : CertState}
       → ∀[ a ∈ dom (CertEnv.wdrls Γ) ] NetworkIdOf a ≡ NetworkId
       → Γ ⊢ s ⇀⦇ _ ,PRE-CERT⦈ s'
-      → getCoin s ≡ getCoin s' + getCoin (CertEnv.wdrls Γ)
+      → CoinOf s ≡ CoinOf s' + CoinOf (CertEnv.wdrls Γ)
 ```
 
 *Proof*.
@@ -174,39 +174,39 @@ value of the withdrawals in `Γ`{.AgdaBound}.  In other terms,
         rwds-∪ˡ-decomp  = (rewards ∣ dom wdrlsCC ᶜ) ∪ˡ (rewards ∣ dom wdrlsCC)
       in
         begin
-          getCoin rewards
+          CoinOf rewards
             ≡˘⟨ ≡ᵉ-getCoin rwds-∪ˡ-decomp rewards
                 ( ≡ᵉ.trans (disjoint-∪ˡ-∪ (disjoint-sym res-ex-disjoint))
                            (≡ᵉ.trans ∪-sym (res-ex-∪ (_∈? dom wdrlsCC))) ) ⟩
-          getCoin rwds-∪ˡ-decomp
+          CoinOf rwds-∪ˡ-decomp
             ≡⟨ indexedSumᵛ'-∪ (rewards ∣ dom wdrlsCC ᶜ) (rewards ∣ dom wdrlsCC)
                               (disjoint-sym res-ex-disjoint) ⟩
-          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin (rewards ∣ dom wdrlsCC )
-            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_)
-               ( getCoin-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
-          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrlsCC
-            ≡⟨ cong (getCoin (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-getCoinˢ (wdrls ˢ) (injOn wdrls validNetId)) ⟩
-          getCoin (rewards ∣ dom wdrlsCC ᶜ) + getCoin wdrls
-            ≡˘⟨ cong (_+ getCoin wdrls)
+          CoinOf (rewards ∣ dom wdrlsCC ᶜ) + CoinOf (rewards ∣ dom wdrlsCC )
+            ≡⟨ cong (CoinOf (rewards ∣ dom wdrlsCC ᶜ) +_)
+               ( CoinOf-cong (rewards ∣ dom wdrlsCC) wdrlsCC (res-subset{m = rewards} wdrlsCC⊆rwds) ) ⟩
+          CoinOf (rewards ∣ dom wdrlsCC ᶜ) + CoinOf wdrlsCC
+            ≡⟨ cong (CoinOf (rewards ∣ dom wdrlsCC ᶜ) +_) (≡ᵉ-CoinOfˢ (wdrls ˢ) (injOn wdrls validNetId)) ⟩
+          CoinOf (rewards ∣ dom wdrlsCC ᶜ) + CoinOf wdrls
+            ≡˘⟨ cong (_+ CoinOf wdrls)
                 ( begin
-                  getCoin (zeroMap ∪ˡ rewards)
+                  CoinOf (zeroMap ∪ˡ rewards)
                     ≡⟨ ≡ᵉ-getCoin (zeroMap ∪ˡ rewards) (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
                                   (res-decomp zeroMap rewards) ⟩
-                  getCoin (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
+                  CoinOf (zeroMap ∪ˡ (rewards ∣ dom zeroMap ᶜ))
                     ≡⟨ indexedSumᵛ'-∪ zeroMap (rewards ∣ dom zeroMap ᶜ)
                                       (disjoint-sym res-comp-dom) ⟩
-                  getCoin zeroMap + getCoin (rewards ∣ dom zeroMap ᶜ)
-                    ≡⟨ cong (λ u → u + getCoin (rewards ∣ dom zeroMap ᶜ)) sumConstZero ⟩
-                  0 + getCoin (rewards ∣ (dom zeroMap) ᶜ)
-                    ≡⟨ +-identityˡ (getCoin (rewards ∣ dom zeroMap ᶜ)) ⟩
-                  getCoin (rewards ∣ dom zeroMap ᶜ)
+                  CoinOf zeroMap + CoinOf (rewards ∣ dom zeroMap ᶜ)
+                    ≡⟨ cong (λ u → u + CoinOf (rewards ∣ dom zeroMap ᶜ)) sumConstZero ⟩
+                  0 + CoinOf (rewards ∣ (dom zeroMap) ᶜ)
+                    ≡⟨ +-identityˡ (CoinOf (rewards ∣ dom zeroMap ᶜ)) ⟩
+                  CoinOf (rewards ∣ dom zeroMap ᶜ)
                     ≡⟨ ≡ᵉ-getCoin (rewards ∣ dom zeroMap ᶜ) (rewards ∣ dom wdrlsCC ᶜ)
                        ( res-comp-cong
                          ( ⊆-Transitive (proj₁ constMap-dom) (proj₂ dom-mapˡ≡map-dom)
                          , ⊆-Transitive (proj₁ dom-mapˡ≡map-dom) (proj₂ constMap-dom) ) ) ⟩
-                  getCoin (rewards ∣ dom wdrlsCC ᶜ)
+                  CoinOf (rewards ∣ dom wdrlsCC ᶜ)
                     ∎ ) ⟩
-          getCoin (zeroMap ∪ˡ rewards) + getCoin wdrls
+          CoinOf (zeroMap ∪ˡ rewards) + CoinOf wdrls
             ∎
 ```
 
@@ -221,14 +221,14 @@ Let `Γ`{.AgdaBound} : `CertEnv`{.AgdaRecord} be a certificate environment, and 
 Then, the value of `s`{.AgdaBound} is equal to the value of `s'`{.AgdaBound}.
 In other terms,
 
-`getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
+`CoinOf`{.AgdaField} `s`{.AgdaBound} $≡$ `CoinOf`{.AgdaField} `s'`{.AgdaBound}.
 
 *Formally*.
 
 ```agda
     POST-CERT-pov : {Γ : CertEnv} {s s' : CertState}
       → Γ ⊢ s ⇀⦇ _ ,POST-CERT⦈ s'
-      → getCoin s ≡ getCoin s'
+      → CoinOf s ≡ CoinOf s'
 ```
 
 *Proof*.
@@ -250,7 +250,7 @@ Then, the value of `s₁`{.AgdaBound} is equal to the value of `sₙ`{.AgdaBound
 ```agda
     sts-pov : {Γ : CertEnv} {s₁ sₙ : CertState} {sigs : List DCert}
       → RunTraceAndThen _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_ Γ s₁ sigs sₙ
-      → getCoin s₁ ≡ getCoin sₙ
+      → CoinOf s₁ ≡ CoinOf sₙ
 ```
 
 *Proof*.

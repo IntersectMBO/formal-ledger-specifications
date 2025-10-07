@@ -41,17 +41,17 @@ instance
 
 module Certs-PoV  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                               → disjoint (dom m) (dom m')
-                              → getCoin (m ∪ˡ m') ≡ getCoin m + getCoin m' )
+                              → CoinOf (m ∪ˡ m') ≡ CoinOf m + CoinOf m' )
     -- TODO: prove some or all of the following assumptions, used in roof of `CERTBASE-pov`.
-    ( sumConstZero'    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → getCoin (constMap X 0) ≡ 0 )
+    ( sumConstZero'    :  {A : Type} ⦃ _ : DecEq A ⦄ {X : ℙ A} → CoinOf (constMap X 0) ≡ 0 )
     ( res-decomp'      :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ Coin)
                          → (m ∪ˡ m')ˢ ≡ᵉ (m ∪ˡ (m' ∣ dom (m ˢ) ᶜ))ˢ )
-    ( getCoin-cong'    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
+    ( CoinOf-cong'    :  {A : Type} ⦃ _ : DecEq A ⦄ (s : A ⇀ Coin) (s' : ℙ (A × Coin)) → s ˢ ≡ᵉ s'
                          → indexedSum' proj₂ (s ˢ) ≡ indexedSum' proj₂ s' )
-    ( ≡ᵉ-getCoinˢ'     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
-                         → InjectiveOn (dom s) f → getCoin (mapˢ (map₁ f) s) ≡ getCoin s )
+    ( ≡ᵉ-CoinOfˢ'     :  {A A' : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : DecEq A' ⦄ (s : ℙ (A × Coin)) {f : A → A'}
+                         → InjectiveOn (dom s) f → CoinOf (mapˢ (map₁ f) s) ≡ CoinOf s )
     where
-    open Certs-Pov-lemmas indexedSumᵛ'-∪' sumConstZero' res-decomp' getCoin-cong' ≡ᵉ-getCoinˢ'
+    open Certs-Pov-lemmas indexedSumᵛ'-∪' sumConstZero' res-decomp' CoinOf-cong' ≡ᵉ-CoinOfˢ'
 ```
 -->
 
@@ -73,7 +73,7 @@ the value of the withdrawals in `Γ`{.AgdaBound}.
     CERTS-pov : {Γ : CertEnv} {s₁ sₙ  : CertState}
       → ∀[ a ∈ dom (WithdrawalsOf Γ) ] NetworkIdOf a ≡ NetworkId
       → Γ ⊢ s₁ ⇀⦇ l ,CERTS⦈ sₙ
-      → getCoin s₁ ≡ getCoin sₙ + getCoin (WithdrawalsOf Γ)
+      → CoinOf s₁ ≡ CoinOf sₙ + CoinOf (WithdrawalsOf Γ)
 ```
 
 *Proof*.
@@ -81,5 +81,5 @@ the value of the withdrawals in `Γ`{.AgdaBound}.
 ```agda
     CERTS-pov {Γ = Γ} validNetId (run (pre-cert , certs)) =
       trans  (PRE-CERT-pov validNetId pre-cert)
-             (cong (_+ getCoin (WithdrawalsOf Γ)) (sts-pov certs))
+             (cong (_+ CoinOf (WithdrawalsOf Γ)) (sts-pov certs))
 ```

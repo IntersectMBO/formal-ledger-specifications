@@ -285,7 +285,7 @@ record TransactionStructure : Type₁ where
 ```agda
   instance
     HasCoin-TxOut : HasCoin TxOut
-    HasCoin-TxOut .getCoin = coin ∘ proj₁ ∘ proj₂
+    HasCoin-TxOut .CoinOf = coin ∘ proj₁ ∘ proj₂
 ```
 -->
 

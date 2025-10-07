@@ -126,7 +126,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       retired    = (pState .retiring) ⁻¹ e
       payout     = govActionReturns ∪⁺ trWithdrawals
       refunds    = pullbackMap payout toRwdAddr (dom (dState .rewards))
-      unclaimed  = getCoin payout - getCoin refunds
+      unclaimed  = CoinOf payout - CoinOf refunds
       vDeposits  = gState .deposits
 
       dState' : DState

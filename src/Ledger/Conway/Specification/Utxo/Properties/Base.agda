@@ -59,11 +59,11 @@ module _
     consumedCoinEquality : ∀ {utxoState} {pp}
       → coin mint ≡ 0
       → coin (consumed pp utxoState txb)
-      ≡ cbalance ((UTxOState.utxo utxoState) ∣ txIns) + depositRefunds pp utxoState txb + getCoin txWithdrawals
+      ≡ cbalance ((UTxOState.utxo utxoState) ∣ txIns) + depositRefunds pp utxoState txb + CoinOf txWithdrawals
     consumedCoinEquality {utxoState} {pp} h =
       let  utxo = UTxOState.utxo utxoState
            dRefs = depositRefunds pp utxoState txb
-           sWdls = getCoin txWithdrawals
+           sWdls = CoinOf txWithdrawals
       in begin
       coin (balance (utxo ∣ txIns) + mint + inject dRefs + inject sWdls)
         ≡⟨ ∙-homo-Coin _ _ ⟩
@@ -120,10 +120,10 @@ module _
       → coin mint ≡ 0
       → consumed pp utxoState txb ≡ produced pp utxoState txb
       → cbalance ((UTxOState.utxo utxoState) ∣ txIns)
-      + depositRefunds pp utxoState txb + getCoin txWithdrawals
+      + depositRefunds pp utxoState txb + CoinOf txWithdrawals
       ≡ cbalance (outs txb) + txFee + newDeposits pp utxoState txb + txDonation
     balValueToCoin {utxoState} {pp} h h' = begin
-      cbalance ((UTxOState.utxo utxoState) ∣ txIns) + depositRefunds pp utxoState txb + getCoin txWithdrawals
+      cbalance ((UTxOState.utxo utxoState) ∣ txIns) + depositRefunds pp utxoState txb + CoinOf txWithdrawals
         ≡˘⟨ consumedCoinEquality {utxoState} {pp} h ⟩
       coin (consumed pp utxoState txb)
         ≡⟨ cong! h' ⟩
@@ -185,16 +185,16 @@ module _
     pp : PParams
     pp = UTxOEnv.pparams Γ
     dep : Coin
-    dep = getCoin deposits
+    dep = CoinOf deposits
     uDep : Coin
-    uDep = getCoin (updateDeposits pp txb deposits)
+    uDep = CoinOf (updateDeposits pp txb deposits)
     Δdep : ℤ
     Δdep = depositsChange pp txb deposits
     utxoSt : UTxOState
     utxoSt = ⟦ utxo , fees , deposits , donations ⟧
     ref tot : Coin
     ref = depositRefunds pp utxoSt txb
-    wdls = getCoin txWithdrawals
+    wdls = CoinOf txWithdrawals
     tot = newDeposits    pp utxoSt txb
     h : disjoint (dom (utxo ∣ txIns ᶜ)) (dom (outs txb))
     h = λ h₁ h₂ → ∉-∅ $ proj₁ (newTxid⇒disj {txb} {utxo} h')
@@ -212,7 +212,7 @@ module _
     noMintAda : coin mint ≡ 0
     noMintAda = noMintAda' step
     remDepTot : Coin
-    remDepTot = getCoin deposits - ref
+    remDepTot = CoinOf deposits - ref
 
   deposits-change' : Δdep ≡ tot - ref
   deposits-change' = sym posPart-negPart≡x
@@ -316,7 +316,7 @@ module _
       (bal : ℕ)
     → deposits' ≡ updateDeposits pp txb deposits
     → bal + txFee + txDonation + tot + (remDepTot + fees)
-    ≡ bal + (fees + txFee + getCoin deposits' + txDonation)
+    ≡ bal + (fees + txFee + CoinOf deposits' + txDonation)
   rearrange0 bal h = begin
     bal ℕ.+ txFee ℕ.+ txDonation ℕ.+ tot ℕ.+ (remDepTot ℕ.+ fees)
       ≡t⟨⟩
@@ -335,11 +335,11 @@ module _
           $ begin tot + (dep - ref) ≡˘⟨ +-∸-assoc tot ref≤dep ⟩
                   (tot + dep) - ref ≡⟨ cong (_- ref) $ +-comm tot dep ⟩
                   (dep + tot) - ref ≡˘⟨ deposits-change ⟩
-                  uDep              ≡⟨ cong getCoin $ sym h ⟩
-                  getCoin deposits' ∎ ⟩
-        (fees + txFee) + getCoin deposits' + txDonation
+                  uDep              ≡⟨ cong CoinOf $ sym h ⟩
+                  CoinOf deposits' ∎ ⟩
+        (fees + txFee) + CoinOf deposits' + txDonation
           ∎ ⟩
-    bal + ((fees + txFee) + getCoin deposits' + txDonation)
+    bal + ((fees + txFee) + CoinOf deposits' + txDonation)
       ∎
 
   module _ (balanceUtxo balanceUtxo' : Coin)
@@ -348,8 +348,8 @@ module _
            where
 
     pov-scripts-worker :  isValid ≡ true
-                          →  balanceUtxo + fees + getCoin deposits + donations + wdls * χ(isValid)
-                             ≡ balanceUtxo' + (fees + txFee) + getCoin deposits' + (donations + txDonation)
+                          →  balanceUtxo + fees + CoinOf deposits + donations + wdls * χ(isValid)
+                             ≡ balanceUtxo' + (fees + txFee) + CoinOf deposits' + (donations + txDonation)
     pov-scripts-worker valid = begin
       balanceUtxo + fees + dep + donations + wdls * χ(isValid)
         ≡⟨ cong (λ x → balanceUtxo + fees + dep + donations + wdls * χ x) valid ⟩
@@ -386,21 +386,21 @@ module _
               ≡⟨ cong (_+ (remDepTot + fees)) ref-prop ⟩
             balanceUtxo' + txFee + txDonation + tot + (remDepTot + fees)
               ≡⟨ rearrange0 (balanceUtxo') h ⟩
-            balanceUtxo' + (fees + txFee + getCoin deposits' + txDonation)
+            balanceUtxo' + (fees + txFee + CoinOf deposits' + txDonation)
               ∎ ⟩
-      balanceUtxo' ℕ.+ (fees + txFee ℕ.+ getCoin deposits' ℕ.+ txDonation) ℕ.+ donations
+      balanceUtxo' ℕ.+ (fees + txFee ℕ.+ CoinOf deposits' ℕ.+ txDonation) ℕ.+ donations
         ≡t⟨⟩
-      balanceUtxo' ℕ.+ (fees + txFee) ℕ.+ getCoin deposits' ℕ.+ (txDonation ℕ.+ donations)
-        ≡⟨ cong (balanceUtxo' + (fees + txFee) + getCoin deposits' ℕ.+_)
+      balanceUtxo' ℕ.+ (fees + txFee) ℕ.+ CoinOf deposits' ℕ.+ (txDonation ℕ.+ donations)
+        ≡⟨ cong (balanceUtxo' + (fees + txFee) + CoinOf deposits' ℕ.+_)
          $ +-comm txDonation donations ⟩
-      balanceUtxo' + (fees + txFee) + getCoin deposits' + (donations + txDonation)
+      balanceUtxo' + (fees + txFee) + CoinOf deposits' + (donations + txDonation)
         ∎
 
   pov-scripts :  deposits' ≡ updateDeposits pp txb deposits
                  →  isValid ≡ true
                  →  cbalance utxo + fees + dep + donations + wdls * χ(isValid)
                     ≡  cbalance ((utxo ∣ txIns ᶜ) ∪ˡ outs txb)
-                       + (fees + txFee) + getCoin deposits' + (donations + txDonation)
+                       + (fees + txFee) + CoinOf deposits' + (donations + txDonation)
   pov-scripts h valid = pov-scripts-worker (cbalance utxo) (cbalance ((utxo ∣ txIns ᶜ) ∪ˡ outs txb)) utxo-ref-prop h valid
 
   pov-no-scripts :  isValid ≡ false

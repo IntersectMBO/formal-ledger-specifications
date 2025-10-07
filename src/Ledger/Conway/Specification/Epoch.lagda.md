@@ -662,7 +662,7 @@ EPOCH-updates fut ls dState' acnt' =
     dState'' = record dState' { rewards = RewardsOf dState' ∪⁺ refunds }
 
     unclaimed : Coin
-    unclaimed = getCoin (u0 .payout) - getCoin refunds
+    unclaimed = CoinOf (u0 .payout) - CoinOf refunds
 
     acnt'' : Acnt
     acnt'' = record acnt'

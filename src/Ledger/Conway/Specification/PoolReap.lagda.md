@@ -72,7 +72,7 @@ data
 
     mRefunds = rewardAcnts' ∣ dom (dState .rewards) ᶜ
 
-    unclaimed  = getCoin mRefunds
+    unclaimed  = CoinOf mRefunds
 
     retiredDeposits : ℙ DepositPurpose
     retiredDeposits = mapˢ PoolDeposit retired
