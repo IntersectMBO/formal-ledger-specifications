@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/Script/Timelock.lagda
+source_path: src/Ledger/Conway/Specification/Script/Timelock.lagda.md
 ---
 
 # Timelock Scripts {#sec:timelock-scripts}
