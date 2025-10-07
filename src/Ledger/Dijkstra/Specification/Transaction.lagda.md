@@ -322,10 +322,6 @@ could be either of them.
     HasData-Tx : HasData (Tx txLevel)
     HasData-Tx .DataOf = DataOf ∘ TxWitnessesOf
 
-  -- getTxData : Tx txLevel → ℙ Datum
-  -- getTxData =
-
-
   getValue : TxOut → Value
   getValue (_ , v , _) = v
 
