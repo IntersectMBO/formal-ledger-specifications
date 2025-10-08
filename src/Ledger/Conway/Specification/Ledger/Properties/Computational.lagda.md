@@ -77,7 +77,8 @@ instance
       ... | success (utxoSt' , _) | refl
         with computeCerts certΓ certState txCerts | complete _ _ _ _ certStep
       ... | success (certSt' , _) | refl
-        with computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt ) (txgov txb) | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
+        with computeGov (govΓ certSt') (rmOrphanDRepVotes certSt' govSt ) (txgov txb)
+             | complete {STS = _⊢_⇀⦇_,GOVS⦈_} (govΓ certSt') _ _ _ govStep
       ... | success (govSt' , _) | refl = refl
       completeness ledgerSt (LEDGER-I⋯ i utxoStep)
         with isValid ≟ true
