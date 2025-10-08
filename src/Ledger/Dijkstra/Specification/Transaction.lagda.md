@@ -198,10 +198,16 @@ The fields that depend on the transaction level use the auxiliary functions
         mint                 : Value
         scriptIntegrityHash  : Maybe ScriptHash
 
-        -- new in Dijkstra
-        txSubTransactions         : InTopLevel txLevel (List (Tx TxLevelSub)) -- only in top-level tx
-        txRequiredGuards          : ℙ Credential -- replaces reqSigHash : ℙ KeyHash
+
+        -- New in Dijkstra --
+        --
+        txSubTransactions    : InTopLevel txLevel (List (Tx TxLevelSub)) -- only in top-level tx
+        -- ^^^^^^^^^^ should this be a set? i.e. InTopLevel txLevel (ℙ (Tx TxLevelSub))
+        --            (in getTxScripts function below we need it as a set)
+        --
+        txRequiredGuards          : ℙ KeyHash -- replaces reqSigHash : ℙ KeyHash
         txRequiredTopLevelGuards  : InSubLevel txLevel (ScriptHash ⇀ Datum) -- only in sub-level tx
+        ---------------------
 
     record TxWitnesses (txLevel : TxLevel) : Type where
       inductive
@@ -358,5 +364,16 @@ could be either of them.
     else
       nothing
     where m = setToMap (mapˢ < hash , id > (txscripts tx utxo))
+
+  getSubTxScripts : SubLevelTx → ℙ (TxId × ScriptHash)
+  getSubTxScripts subtx = mapˢ (λ hash → (TxIdOf subtx , hash)) (ScriptHashes subtx)
+    where
+    ScriptHashes : Tx TxLevelSub → ℙ ScriptHash
+    ScriptHashes = dom ∘ TxBody.txRequiredTopLevelGuards ∘ TxBodyOf
+
+  getTxScripts : {ℓ : TxLevel} → Tx ℓ → ℙ (TxId × ScriptHash)
+  getTxScripts {TxLevelSub} = getSubTxScripts
+  getTxScripts {TxLevelTop} =
+    concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
 ```
 -->

@@ -17,7 +17,7 @@ record indexOf : Type where
     indexOfPolicyId : ScriptHash → ℙ ScriptHash → Maybe Ix
     indexOfVote     : GovVoter → List GovVoter → Maybe Ix
     indexOfProposal : GovProposal → List GovProposal → Maybe Ix
-    indexOfGuard    : Credential → ℙ Credential → Maybe Ix
+    indexOfGuard    : TxId × ScriptHash → ℙ (TxId × ScriptHash) → Maybe Ix
 
 record AbstractFunctions : Type where
   field txScriptFee     : Prices → ExUnits → Fees
