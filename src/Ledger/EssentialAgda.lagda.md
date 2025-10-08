@@ -17,7 +17,7 @@ details, the reader is encouraged to consult the official
 ```agda
 {-# OPTIONS --safe #-}
 
-module EssentialAgda where
+module Ledger.EssentialAgda where
 
 open import Prelude using (Type)
 open import Data.Nat
