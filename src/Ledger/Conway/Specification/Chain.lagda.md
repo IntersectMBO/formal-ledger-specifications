@@ -1,8 +1,12 @@
-\section{Blockchain Layer}
-\label{sec:blockchain-layer}
-\modulenote{\ConwayModule{Chain}}
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Chain.lagda.md
+---
 
-\begin{code}[hide]
+# Blockchain Layer {#sec:blockchain-layer}
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -26,19 +30,19 @@ open import Ledger.Conway.Specification.Utxo txs abs
 
 open import Algebra
 open import Data.Nat.Properties using (+-0-monoid)
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
+```
+-->
+
+## Definition of <span class="AgdaRecord">ChainState</span> {#sec:definition-of-chainstate}
+
+```agda
 record ChainState : Type where
   field
     newEpochState  : NewEpochState
+```
 
-\end{code}
-\end{AgdaMultiCode}
-\caption{Definitions CHAIN transition system}
-\end{figure*}
-\begin{code}[hide]
+<!--
+```agda
 instance
   HasNewEpochState-ChainState : HasNewEpochState ChainState
   HasNewEpochState-ChainState .NewEpochStateOf = ChainState.newEpochState
@@ -75,32 +79,28 @@ totalRefScriptsSize lst txs = sum $ map (refScriptsSize utxo) txs
   where open UTxOState (LState.utxoSt lst)
 
 private variable
-  ls' : LState 
-data
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
-  _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{Type of the CHAIN transition system}
-\end{figure*}
-\begin{code}[hide]
-  where
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaSuppressSpace}
-\begin{code}
+  ls' : LState
+```
+-->
+
+## The <span class="AgdaDatatype">CHAIN</span> Transition System {#sec:the-chain-transition-system}
+
+```agda
+data _⊢_⇀⦇_,CHAIN⦈_ : ⊤ → ChainState → Block → ChainState → Type where
+
   CHAIN : ∀ {bcur'} {b : Block} {nes : NewEpochState} {cs : ChainState}
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
     → let open ChainState cs; open Block b; open BHeader bheader
           open BHBody bhbody; open NewEpochState nes
           open EpochState epochState; open EnactState es renaming (pparams to pp)
           open PParams ∣ pp ∣ using (maxRefScriptSizePerBlock) in
-\end{code}
-\begin{code}
+```
+-->
+
+```agda
     let  cs'  = record cs {  newEpochState
                              = record nes {  bcur = bcur';
                                              epochState
@@ -111,7 +111,4 @@ data
     ∙ (es , acnt) ⊢ (ls , bcur) ⇀⦇ b ,BBODY⦈ (ls' , bcur')
       ────────────────────────────────
       _ ⊢ cs ⇀⦇ b ,CHAIN⦈ cs'
-\end{code}
-\end{AgdaSuppressSpace}
-\caption{CHAIN transition system}
-\end{figure*}
+```
