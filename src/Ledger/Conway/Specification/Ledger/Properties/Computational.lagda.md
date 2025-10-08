@@ -1,9 +1,15 @@
-\section{Ledger: Computational}
-\label{sec:ledger-computational}
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Ledger/Properties/Computational.lagda.md
+---
 
-This module proves that the \LEDGER{} transition system is computational.
+# Ledger: Computational {#sec:ledger-computational}
 
-\begin{code}[hide]
+This module proves that the `LEDGER`{.AgdaOperator} transition system is
+computational.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -25,9 +31,11 @@ open import Ledger.Conway.Specification.Utxow txs abs
 open import Ledger.Conway.Specification.Utxow.Properties.Computational txs abs
 
 open import Data.Bool.Properties using (¬-not)
-\end{code}
+```
+-->
 
-\begin{code}
+
+```agda
 instance
   _ = Monad-ComputationResult
 
@@ -80,4 +88,4 @@ instance
 
 Computational-LEDGERS : Computational _⊢_⇀⦇_,LEDGERS⦈_ String
 Computational-LEDGERS = it
-\end{code}
+```
