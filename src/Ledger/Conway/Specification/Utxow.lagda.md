@@ -1,16 +1,20 @@
-\subsection{Witnessing}
-\label{sec:witnessing}
-\modulenote{\ConwayModule{Utxow}}, in which we define witnessing.
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Utxow.lagda
+---
 
-The purpose of witnessing is make sure the intended action is
-authorized by the holder of the signing key.  (For details
-see \textcite[\sectionname~8.3]{shelley-ledger-spec}.)
-\Cref{fig:functions:utxow} defines functions used for witnessing.
-\witsVKeyNeeded{} and \scriptsNeeded{} are now defined by projecting the same
-information out of \credsNeeded{}.  Note that the last component of \credsNeeded{}
-adds the script in the proposal policy only if it is present.
+# Witnessing {#sec:witnessing}
 
-\begin{code}[hide]
+The purpose of witnessing is make sure the intended action is authorized
+by the holder of the signing key. (For details see [CVG19](#shelley-ledger-spec).)
+The [Witnessing Functions][] section defines functions used for witnessing.
+`witsVKeyNeeded`{.AgdaFunction} and `scriptsNeeded`{.AgdaFunction} are now defined by
+projecting the same information out of `credsNeeded`{.AgdaFunction}.  Note that the
+last component of `credsNeeded`{.AgdaFunction} adds the script in the
+proposal policy only if it is present.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
@@ -25,19 +29,22 @@ module Ledger.Conway.Specification.Utxow
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Certs govStructure
-\end{code}
+```
+-->
 
-\allowedLanguages{} has additional conditions for new features in
-Conway. If a transaction contains any votes, proposals, a treasury
-donation or asserts the treasury amount, it is only allowed to contain
-Plutus V3 scripts. Additionally, the presence of reference scripts or
-inline scripts does not prevent Plutus V1 scripts from being used in a
-transaction anymore. Only inline datums are now disallowed from
-appearing together with a Plutus V1 script.
+`allowedLanguages`{.AgdaFunction} has additional conditions for new
+features in Conway. If a transaction contains any votes, proposals, a
+treasury donation or asserts the treasury amount, it is only allowed to
+contain Plutus V3 scripts. Additionally, the presence of reference
+scripts or inline scripts does not prevent Plutus V1 scripts from being
+used in a transaction anymore. Only inline datums are now disallowed
+from appearing together with a Plutus V1 script.
 
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
+
+## Witnessing Functions {#sec:witnessing-functions}
+
+<!--
+```agda
 module _ (o : TxOut) where
   d = proj₁ (proj₂ (proj₂ o))
   data HasInlineDatum : Set where
@@ -78,9 +85,10 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
     getLanguage : Script → Maybe Language
     getLanguage (inj₁ _) = nothing
     getLanguage (inj₂ s) = just (language s)
-\end{code}
-\begin{code}
+```
+-->
 
+```agda
 allowedLanguages : Tx → UTxO → ℙ Language
 allowedLanguages tx utxo =
   if (∃[ o ∈ os ] isBootstrapAddr (proj₁ o))
@@ -94,57 +102,40 @@ allowedLanguages tx utxo =
   where
     txb = tx .Tx.body; open TxBody txb
     os = range (outs txb) ∪ range (utxo ∣ (txIns ∪ refInputs))
-\end{code}
-\end{AgdaMultiCode}
-\caption{Functions used for witnessing}
-\label{fig:functions:utxow}
-\end{figure*}
+```
 
-\begin{figure*}[h]
-\begin{code}[hide]
-data
-\end{code}
-\begin{code}
-  _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type
-\end{code}
-\caption{UTxOW transition-system types}
-\label{fig:ts-types:utxow}
-\end{figure*}
+## The <span class="AgdaDatatype">UTXOW</span> Transition System
 
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
+<!--
+```agda
+
 private variable
-  Γ           : UTxOEnv
-  s s'        : UTxOState
-  tx          : Tx
+  Γ     : UTxOEnv
+  s s'  : UTxOState
+  tx    : Tx
 
 open UTxOState
+```
+-->
 
-data _⊢_⇀⦇_,UTXOW⦈_ where
-\end{code}
-\begin{code}
+```agda
+data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Type where
+
   UTXOW-inductive :
-    let  utxo                                = s .utxo
-\end{code}
-\begin{code}[hide]
-         open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
-\end{code}
-\begin{code}
-         witsKeyHashes                       = mapˢ hash (dom vkSigs)
-         witsScriptHashes                    = mapˢ hash scripts
-         refScriptHashes                     = mapˢ hash (refScripts tx utxo)
-         neededScriptHashes                  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
-         neededVKeyHashes                    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
-         txdatsHashes                        = mapˢ hash txdats
-         inputsDataHashes                    = mapPartial (λ txout → if txOutToP2Script utxo tx txout
-                                                                      then txOutToDataHash txout
-                                                                      else nothing) (range (utxo ∣ txIns))
-         refInputsDataHashes                 = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
-         outputsDataHashes                   = mapPartial txOutToDataHash (range txOuts)
-         nativeScripts                       = mapPartial toP1Script (txscripts tx utxo)
-\end{code}
-\begin{code}
+    let  open Tx tx renaming (body to txb); open TxBody txb; open TxWitnesses wits
+         utxo                = s .utxo
+         witsKeyHashes       = mapˢ hash (dom vkSigs)
+         witsScriptHashes    = mapˢ hash scripts
+         refScriptHashes     = mapˢ hash (refScripts tx utxo)
+         neededScriptHashes  = mapPartial (isScriptObj  ∘ proj₂) (credsNeeded utxo txb)
+         neededVKeyHashes    = mapPartial (isKeyHashObj ∘ proj₂) (credsNeeded utxo txb)
+         txdatsHashes        = mapˢ hash txdats
+         inputsDataHashes    = mapPartial (λ txout →  if txOutToP2Script utxo tx txout
+                                                      then txOutToDataHash txout
+                                                      else nothing) (range (utxo ∣ txIns))
+         refInputsDataHashes = mapPartial txOutToDataHash (range (utxo ∣ refInputs))
+         outputsDataHashes   = mapPartial txOutToDataHash (range txOuts)
+         nativeScripts       = mapPartial toP1Script (txscripts tx utxo)
     in
     ∙  ∀[ (vk , σ) ∈ vkSigs ] isSigned vk (txidBytes txId) σ
     ∙  ∀[ s ∈ nativeScripts ] (hash s ∈ neededScriptHashes → validP1Script witsKeyHashes txVldt s)
@@ -157,34 +148,53 @@ data _⊢_⇀⦇_,UTXOW⦈_ where
     ∙  Γ ⊢ s ⇀⦇ tx ,UTXO⦈ s'
        ────────────────────────────────
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
-\end{code}
-\end{AgdaMultiCode}
-\caption{UTXOW inference rules}
-\label{fig:rules:utxow}
-\end{figure*}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h
       = UTXOW-inductive (p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈ , h)
 pattern UTXOW⇒UTXO x = UTXOW-inductive⋯ _ _ _ _ _ _ _ _ x
 
 unquoteDecl UTXOW-inductive-premises =
   genPremises UTXOW-inductive-premises (quote UTXOW-inductive)
-\end{code}
+```
+-->
 
-\subsection{Plutus script context}
-\hrefCIP{0069}
-unifies the arguments given to all types of Plutus scripts currently available:
-spending, certifying, rewarding, minting, voting, proposing.
 
-The formal specification permits running spending scripts in the absence datums
-in the Conway era.  However, since the interface with Plutus is kept abstract
-in this specification, changes to the representation of the script context which
-are part of \hrefCIP{0069} are not included here.  To provide a \hrefCIP{0069}-conformant
-implementation of Plutus to this specification, an additional step processing
-the \List{} \Data{} argument we provide would be required.
+## Plutus script context
 
-In \cref{fig:rules:utxow}, the line
-\inputHashes{}~\subseteqfield{}~\txdatsHashes{} compares two inhabitants of
-\PowerSet{}~\DataHash{}.  In the Alonzo spec, these two terms would
-have inhabited \PowerSet{}~(\Maybe{}~\DataHash{}), where a \nothing{} is thrown
-out~\parencite[\sectionname~3.1]{alonzo-ledger-spec}.
+[CIP-0069](https://cips.cardano.org/cip-0069) unifies the arguments
+given to all types of Plutus scripts currently available: spending,
+certifying, rewarding, minting, voting, proposing.
+
+The formal specification permits running spending scripts in the absence
+datums in the Conway era. However, since the interface with Plutus is
+kept abstract in this specification, changes to the representation of
+the script context which are part of
+[CIP-0069](https://cips.cardano.org/cip-0069) are not included here. To
+provide a [CIP-0069](https://cips.cardano.org/cip-0069)-conformant
+implementation of Plutus to this specification, an additional step
+processing the `List`{.AgdaDatatype} `Data`{.AgdaFunction} argument we
+provide would be required.
+
+In Section [UTXOW inference rules](Ledger.Conway.Specification.Utxow.md#utxow-inference-rules), the line
+`inputHashes`{.AgdaBound} `subseteqfield`{.AgdaInductiveConstructor}
+`txdatsHashes`{.AgdaBound} compares two inhabitants of
+`PowerSet`{.AgdaFunction} `DataHash`{.AgdaFunction}. In the Alonzo spec,
+these two terms would have inhabited `PowerSet`{.AgdaFunction}
+(`Maybe`{.AgdaDatatype} `DataHash`{.AgdaFunction}), where a
+`nothing`{.AgdaInductiveConstructor} is thrown out [VK21,
+](#alonzo-ledger-spec).
+
+# References {#references .unnumbered}
+
+**\[CVG19\]** <span id="shelley-ledger-spec"
+label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
+and Matthias Güdemann. *A Formal Specification of the Cardano Ledger*.
+2019.
+
+**\[VK21\]** <span id="alonzo-ledger-spec"
+label="alonzo-ledger-spec"></span> Polina Vinogradova and Andre Knispel.
+*A Formal Specification of the Cardano Ledger integrating Plutus Core*.
+2021.
