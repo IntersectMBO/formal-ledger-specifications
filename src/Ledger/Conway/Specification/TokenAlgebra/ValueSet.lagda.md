@@ -1,7 +1,13 @@
-\subsection{Value Set}
-\label{sec:tokenalgebra-valueset}
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/TokenAlgebra/ValueSet.lagda.md
+---
 
-\begin{code}[hide]
+## Value Set {#sec:value-set}
+
+<!--
+```agda
+
 {-# OPTIONS --safe --no-import-sorts #-}
 
 open import Prelude using (Type)
@@ -21,52 +27,58 @@ open import Relation.Binary.PropositionalEquality  using (module ≡-Reasoning)
 
 import Relation.Binary.PropositionalEquality as ≡
 import Relation.Binary.Core  as stdlib
-\end{code}
+```
+-->
 
-\subsubsection{Derived types}
+## Derived Types
 
-(See Fig 3 of the
-\href{https://github.com/input-output-hk/cardano-ledger/releases/latest/download/mary-ledger.pdf}%
-{Mary ledger specification}.)
+(See Fig 3 of the [Mary ledger
+specification](https://github.com/input-output-hk/cardano-ledger/releases/latest/download/mary-ledger.pdf).)
 
-\begin{itemize}
-\item \AgdaBound{AssetName} is a byte string used to distinguish different assets with the same \AgdaBound{PolicyId}.
-\item \AgdaBound{AssetId} is a product type consisting of a \AgdaBound{PolicyId} and an \AgdaBound{AssetName}.
-\item \AgdaBound{AdaId} is the Id for the asset Ada.
-\item \AgdaBound{Quantity} is the type of amounts of assets.
-\end{itemize}
+- `AssetName`{.AgdaBound} is a byte string used to distinguish different
+  assets with the same `PolicyId`{.AgdaBound}.
 
-In the formal ledger specification \AgdaBound{AssetId} is sometimes viewed as a direct sum type,
-the inhabitants of which belong to either \AgdaBound{AdaIdType} or the product
-\AgdaBound{PolicyId}~\AgdaBound{×}~\AgdaBound{AssetName}; if we were adhering to that point of view,
-then we would have defined
-\AgdaBound{AssetId}
-  = \AgdaBound{AdaIdType}~\AgdaBound{⊎}~(\AgdaBound{PolicyId}~\AgdaBound{×}~\AgdaBound{AssetName}).
+- `AssetId`{.AgdaBound} is a product type consisting of a
+  `PolicyId`{.AgdaBound} and an `AssetName`{.AgdaBound}.
 
-Finally, we define a record type with a single inhabitant with which we may wish to
-represent the type of Ada (rather than viewing Ada as just another asset).
+- `AdaId`{.AgdaBound} is the Id for the asset Ada.
 
-\begin{code}
+- `Quantity`{.AgdaBound} is the type of amounts of assets.
+
+In the formal ledger specification `AssetId`{.AgdaBound} is sometimes
+viewed as a direct sum type, the inhabitants of which belong to either
+`AdaIdType`{.AgdaBound} or the product `PolicyId`{.AgdaBound}
+`×`{.AgdaBound} `AssetName`{.AgdaBound}; if we were adhering to that
+point of view, then we would have defined `AssetId`{.AgdaBound} =
+`AdaIdType`{.AgdaBound} `⊎`{.AgdaBound} (`PolicyId`{.AgdaBound}
+`×`{.AgdaBound} `AssetName`{.AgdaBound}).
+
+Finally, we define a record type with a single inhabitant with which we
+may wish to represent the type of Ada (rather than viewing Ada as just
+another asset).
+
+```agda
 record AdaIdType : Type where
   instance constructor AdaId
-\end{code}
+```
 
+## Value Monoid Definition
 
-\subsection{Definition of the value monoid}
+An inhabitant of ‘Value‘ is a map denoting a finite collection of
+quantities of assets.
 
-An inhabitant of `Value` is a map denoting a finite collection of quantities of assets.
-
-\begin{code}
+```agda
 open Algebra.CommutativeMonoid renaming (_∙_ to _⋆_) hiding (refl ; sym ; trans)
 
 AssetId  = PolicyId × AssetName
 Quantity = ℕ
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
 module _
-\end{code}
-\begin{code}
-
+```
+-->
+```agda
   {X : ℙ AssetId}
   {⋁A : isMaximal X}
   ⦃ DecEq-PolicyId  : DecEq PolicyId ⦄
@@ -74,15 +86,17 @@ module _
   ⦃ DecEq-Tot : DecEq (AssetId ⇒ ℕ) ⦄
   (Dec-lookup≤ : ∀ {u v : AssetId ⇒ ℕ}
     → (∀ {a p q} → lookup u (a , p) ≤ lookup v (a , q)) ⁇)
-\end{code}
-\begin{code}[hide]
-  where
+```
 
+<!--
+```agda
+  where
   open ≡-Reasoning
   open FunTot X ⋁A
-\end{code}
-\begin{code}
+```
+-->
 
+```agda
   _⊕_ : Op₂ (AssetId ⇒ Quantity)
   u ⊕ v = Fun⇒TotalMap λ aa → (lookup u) aa + (lookup v) aa
 
@@ -150,11 +164,11 @@ module _
   ≋-⊕-ι-isMonoid : IsMonoid _≋_ _⊕_ ι
   ≋-⊕-ι-isMonoid .isSemigroup  = isSemigrp
   ≋-⊕-ι-isMonoid .identity     = ι-identity
-\end{code}
+```
 
 We are now in a position to define the commutative monoid.
 
-\begin{code}
+```agda
   open IsCommutativeMonoid
 
   Vcm : Algebra.CommutativeMonoid 0ℓ 0ℓ
@@ -216,4 +230,4 @@ We are now in a position to define the commutative monoid.
     CoinMonHom .isMagmaHomomorphism .isRelHomomorphism .⟦⟧-cong  = λ x → x
     CoinMonHom .isMagmaHomomorphism .homo                        = λ x y → ⊕-lemma x y
     CoinMonHom .ε-homo                                           = lookupι≡0
-\end{code}
+```

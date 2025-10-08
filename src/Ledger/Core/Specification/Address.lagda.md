@@ -1,19 +1,25 @@
-\section{Addresses}
-\label{sec:addresses}
-\modulenote{\ConwayModule{Address}}, in which we define credentials and various types
-of addresses here. 
+---
+source_branch: master
+source_path: src/Ledger/Core/Specification/Address.lagda.md
+---
+
+# Addresses {#sec:addresses}
+
+This section defines credentials and various address types.
 
 A credential contains a hash, either of a verifying (public) key
-(\isVKey{}) or of a script (\isScript{}).
+(`isVKey`{.AgdaDatatype}) or of a script (`isScript`{.AgdaDatatype}).
 
-N.B.~in the Shelley era the type of the \stake{} field of the
-\BaseAddr{} record was \CredentialType{} (see \textcite[\sectionname~4]{shelley-ledger-spec});
-to specify an address with no stake, we would use an ``enterprise'' address.
-In contrast, the type of \stake{} in the Conway era is \Maybe{}~\CredentialType{},
-so we can now use \BaseAddr{} to specify an address with no stake
-by setting \stake{} to \nothing{}.
+N.B. in the Shelley era the type of the `stake`{.AgdaField} field of the
+`BaseAddr`{.AgdaRecord} record was `CredentialType`{.AgdaDatatype} (see
+[CVG19, ](#shelley-ledger-spec)); to specify an address with no stake, we would use
+an “enterprise” address. In contrast, the type of `stake`{.AgdaField} in the Conway
+era is `Maybe`{.AgdaDatatype} `CredentialType`{.AgdaDatatype}, so we now use
+`BaseAddr`{.AgdaRecord} to specify an address with no stake by setting
+`stake`{.AgdaField} to `nothing`{.AgdaInductiveConstructor}.
 
-\begin{code}[hide]
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
@@ -21,30 +27,31 @@ open import Ledger.Prelude
 open import Tactic.Derive.Show
 
 module Ledger.Core.Specification.Address (
-\end{code}
+```
+-->
 
-\begin{figure*}[!ht]
-\begin{AgdaMultiCode}
-\emph{Abstract types}
-\begin{code}
+## Address Definitions
+
+*Abstract types*
+```agda
   Network
   KeyHash
   ScriptHash
-
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
   : Type)  ⦃ _ : DecEq Network ⦄ ⦃ _ : DecEq KeyHash ⦄ ⦃ _ : DecEq ScriptHash ⦄ where
-\end{code}
-\emph{Derived types}
-\AgdaTarget{Credential, BaseAddr, BootstrapAddr, RwdAddr, net, pay, stake, Addr,
-VKeyBaseAddr, VKeyBoostrapAddr, ScriptBaseAddr, ScriptBootstrapAddr, VKeyAddr, ScriptAddr}
-\begin{code}
+```
+-->
+ *Derived types*
+```agda
 data Credential : Type where
   KeyHashObj : KeyHash → Credential
   ScriptObj  : ScriptHash → Credential
-\end{code}
-\begin{code}[hide]
-record HasCredential {a} (A : Type a) : Type a where 
+```
+<!--
+```agda
+record HasCredential {a} (A : Type a) : Type a where
   field CredentialOf : A → Credential
 open HasCredential ⦃...⦄ public
 
@@ -68,28 +75,33 @@ data isVKey : Credential → Type where
 
 data isScript : Credential → Type where
   SHisScript : (sh : ScriptHash) → isScript (ScriptObj sh)
-\end{code}
-\begin{code}
+```
+-->
 
+```agda
 record BaseAddr : Type where
-  field net    : Network
-        pay    : Credential
-        stake  : Maybe Credential
+  field
+    net    : Network
+    pay    : Credential
+    stake  : Maybe Credential
 
 record BootstrapAddr : Type where
-  field net        : Network
-        pay        : Credential
-        attrsSize  : ℕ
+  field
+    net        : Network
+    pay        : Credential
+    attrsSize  : ℕ
 
 record RwdAddr : Type where
-  field net    : Network
-        stake  : Credential
+  field
+    net    : Network
+    stake  : Credential
 
 Withdrawals : Type
-Withdrawals  = RwdAddr ⇀ Coin
+Withdrawals = RwdAddr ⇀ Coin
+```
 
-\end{code}
-\begin{code}[hide]
+<!--
+```agda
 open BaseAddr; open BootstrapAddr; open BaseAddr; open BootstrapAddr
 
 record HasNetworkId {a} (A : Type a) : Type a where
@@ -112,9 +124,10 @@ instance
 
   HasCredential-RwdAddr : HasCredential RwdAddr
   HasCredential-RwdAddr .CredentialOf = RwdAddr.stake
-\end{code}
-\begin{code}
+```
+-->
 
+```agda
 VKeyBaseAddr         = Σ[ addr ∈ BaseAddr       ] isVKey    (addr .pay)
 VKeyBootstrapAddr    = Σ[ addr ∈ BootstrapAddr  ] isVKey    (addr .pay)
 ScriptBaseAddr       = Σ[ addr ∈ BaseAddr       ] isScript  (addr .pay)
@@ -123,11 +136,10 @@ ScriptBootstrapAddr  = Σ[ addr ∈ BootstrapAddr  ] isScript  (addr .pay)
 Addr        = BaseAddr        ⊎ BootstrapAddr
 VKeyAddr    = VKeyBaseAddr    ⊎ VKeyBootstrapAddr
 ScriptAddr  = ScriptBaseAddr  ⊎ ScriptBootstrapAddr
-\end{code}
-\\
-\emph{Helper functions}
-\AgdaTarget{payCred, isVKeyAddr}
-\begin{code}
+```
+
+*Helper functions*
+```agda
 payCred       : Addr → Credential
 stakeCred     : Addr → Maybe Credential
 netId         : Addr → Network
@@ -137,12 +149,10 @@ isScriptAddr  : Addr → Type
 isVKeyAddr       = isVKey ∘ payCred
 isScriptAddr     = isScript ∘ payCred
 isScriptRwdAddr  = isScript ∘ CredentialOf
-\end{code}
-\end{AgdaMultiCode}
-\caption{Definitions used in Addresses}
-\label{fig:defs:addresses}
-\end{figure*}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 payCred (inj₁ record {pay = pay}) = pay
 payCred (inj₂ record {pay = pay}) = pay
 
@@ -196,4 +206,12 @@ module _ ⦃ _ : Show Network  ⦄ ⦃ _ : Show KeyHash  ⦄ ⦃ _ : Show Script
     unquoteDecl Show-RwdAddr = derive-Show [ (quote RwdAddr , Show-RwdAddr) ]
     Show-Credential×Coin : Show (Credential × Coin)
     Show-Credential×Coin = Show-×
-\end{code}
+```
+-->
+
+# References {#references .unnumbered}
+
+**\[CVG19\]** <span id="shelley-ledger-spec"
+label="shelley-ledger-spec"></span> Jared Corduan and Polina Vinogradova
+and Matthias Güdemann. *A Formal Specification of the Cardano Ledger*.
+2019.

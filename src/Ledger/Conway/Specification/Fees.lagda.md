@@ -1,7 +1,6 @@
 # Fee Calculation {#sec:fees}
 
-This section is part of the [Ledger.Conway.Specification.Fees][] module of the [formal ledger specification][]
-where we define the functions used to compute the fees associated with reference scripts.
+This section defines the functions used to compute the fees associated with reference scripts.
 
 The function `scriptsCost`{.AgdaFunction},
 defined in the [Calculation of Fees for Reference Scripts][] section, calculates the
@@ -13,7 +12,7 @@ linear in the size, where the linear constant multiple grows with each
 `refScriptCostStride`{.AgdaFunction} bytes. In addition,
 `scriptsCost`{.AgdaFunction} depends on the following constants (which
 are bundled with the protocol parameters; see the
-[Protocol Parameter Declarations][] section):
+[Protocol Parameter Definitions][] section):
 
 - `refScriptCostMultiplier`{.AgdaFunction}, a rational number, the
   growth factor or step multiplier that determines how much the price

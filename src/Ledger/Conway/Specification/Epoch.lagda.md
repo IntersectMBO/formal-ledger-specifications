@@ -190,9 +190,7 @@ opaque
 ```
 -->
 
-## <span class="AgdaDatatype">RewardUpdate</span>
-
-### Computing <span class="AgdaDatatype">RewardUpdate</span>
+## Computing Reward Updates
 
 This section defines the function `createRUpd`{.AgdaFunction} which creates a
 `RewardUpdate`{.AgdaRecord}, i.e. the net flow of Ada due to paying out rewards
@@ -360,7 +358,7 @@ Relevant quantities are:
   denominator is zero.
 
 
-## Applying <span class="AgdaDatatype">RewardUpdate</span> {#applying-rewardupdate}
+## Applying Reward Updates {#sec:applying-reward-updates}
 
 This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
 `RewardUpdate`{.AgdaDatatype} to the `EpochState`{.AgdaFunction}.
@@ -389,7 +387,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
     unregRU'  = ∑[ x ← unregRU ] x
 ```
 
-## Stake Distributions {#stake-distributions}
+## Stake Distributions {#sec:stake-distributions}
 
 This section defines the functions
 `calculatePoolDelegatedState`{.AgdaFunction},
@@ -576,12 +574,10 @@ private variable
 ```
 -->
 
-## <span class="AgdaDatatype">EPOCH</span> Transition System {#epoch-transition-system}
+## The <span class="AgdaDatatype">EPOCH</span> Transition System {#sec:the-epoch-transition-system}
 
-The `EPOCH`{.AgdaDatatype} transition system updates several parts of the
-`EpochState`{.AgdaDatatype}. We encapsulate these updates using Agda's module
-system. This modularization reduces typechecking times and helps strucuturing
-proofs about properties of the `EPOCH`{.AgdaDatatype} transition system.
+Before presenting the `EPOCH`{.AgdaDatatype} transition system, we must first define some
+functions that are needed to update various values in the states involved in the transition.
 
 ### Update Modules and Functions
 
@@ -798,9 +794,9 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧ , es' , fut' ⟧
 ```
 
-## <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#newepoch-transition-system}
+## The <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#sec:the-newepoch-transition-system}
 
-This section defines the `NEWEPOCH`{.AgdaDatatype} transition system.
+Finally, we define the `NEWEPOCH`{.AgdaDatatype} transition system.
 
 ```agda
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where
