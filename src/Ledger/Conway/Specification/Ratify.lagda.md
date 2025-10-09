@@ -204,9 +204,9 @@ record RatifyEnv : Type where
 
 record RatifyState : Type where
   field
-    es              : EnactState
-    removed         : ℙ (GovActionID × GovActionState)
-    delay           : Bool
+    es       : EnactState
+    removed  : ℙ (GovActionID × GovActionState)
+    delay    : Bool
 ```
 
 <!--
@@ -354,7 +354,7 @@ acceptedByCC Γ eSt gaSt =
   stakeDistr = constMap (dom actualVotes) 1
 
   acceptedStake totalStake : Coin
-  acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes                           ] x
+  acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 ```
 
@@ -419,7 +419,7 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action DRep)
 
   acceptedStake totalStake : Coin
-  acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes                           ] x
+  acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 ```
 
@@ -517,7 +517,7 @@ acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action SPO)
 
   acceptedStake totalStake : Coin
-  acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes                           ] x
+  acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistrPools ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 ```
 
@@ -679,8 +679,7 @@ data _⊢_⇀⦇_,RATIFY⦈_ : RatifyEnv → RatifyState → GovActionID × GovA
     ∙ acceptConds Γ ⟦ es , removed , d ⟧ a
     ∙ ⟦ gaId , treasury , e ⟧ ⊢ es ⇀⦇ action ,ENACT⦈ es'
       ────────────────────────────────
-      Γ ⊢ ⟦ es  , removed         , d                     ⟧ ⇀⦇ a ,RATIFY⦈
-          ⟦ es' , ❴ a ❵ ∪ removed , delayingAction (gaType action) ⟧
+      Γ ⊢ ⟦ es , removed , d ⟧ ⇀⦇ a ,RATIFY⦈ ⟦ es' , ❴ a ❵ ∪ removed , delayingAction (gaType action) ⟧
 
   RATIFY-Reject :
     let e              = Γ .currentEpoch
