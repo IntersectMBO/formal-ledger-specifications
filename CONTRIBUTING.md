@@ -77,20 +77,15 @@ This repository uses [Nix][] and [Shake][] to provide a reproducible, declarativ
 and portable development environment.
 
 
-### Nix and Flakes
+### Nix Flakes
 
-We use Nix to manage dependencies, build processes, and development shells.
-Using [Nix flakes][] is the recommended way to interact with the project, but we also
-support the use of `nix-shell`.
+We use Nix Flakes to manage dependencies, build processes, and development shells.
 
 
 ### Dependency Management
 
 All external Nix dependencies (like `nixpkgs`) and Agda libraries are pinned to
-specific versions (e.g., Git commits) using [niv](https://github.com/nmattia/niv).
-The pinned versions are stored in
-[`build-tools/nix/sources.json`][build-tools/nix/sources.json], which guarantees
-reproducible builds.
+specific versions (e.g., Git commits).
 
 The core Agda dependencies include:
 
@@ -107,8 +102,7 @@ The main directories and files involved in the build process are as follows. (A 
 detailed version of this annotated tree can be found at the bottom of this page.)
 
 ```
-├── default.nix                # Definitions of Nix derivations
-├── flake.nix                  # Nix flake interface
+├── flake.nix                  # Nix flake
 ├── TROUBLESHOOTING.md         # Guide for resolving common build issues
 ├── TEX2MD_MIGRATION.md        # Guide for LaTeX to Markdown migration process
 └── build-tools/
@@ -214,24 +208,6 @@ nix build .#hs-src
 
 Build outputs are symlinked in the `result/` directory.
 
-### Using `nix-build`
-
-If you don't want to use Flakes, the following legacy `nix-build` commands are available:
-
-```bash
-# Type-check the Agda specification
-nix-build -A formal-ledger
-
-# Generate the html version of the Agda specification
-nix-build -A mkdocs
-
-# Generate browsable HTML version of Agda code
-nix-build -A html
-
-# Generate Haskell source code
-nix-build -A hs-src
-```
-
 
 ### Using the `fls-shake` Build Tool
 
@@ -260,7 +236,7 @@ There are two ways to do this.
 
 1.  **With Nix**
 
-    Enter the command `nix build .#mkdocs` (or `nix-build -A mkdocs`) then open the
+    Enter the command `nix build .#mkdocs` then open the
     file `result/site/index.html` in a browser. This type-checks the
     Agda code, and generates the HTML documentation from scratch.
 
@@ -341,8 +317,8 @@ commands shown above and then copies the resulting `.svg` image file into the
 
 ### Browsing the source code
 
-After generating the HTML version of the source code with `nix build .#html` (or `nix-build -A html`), you can
-view the result by pointing your (Chrome) browser to `result/html/index.html`.  If
+After generating the HTML version of the source code with `nix build .#html`, you can
+view the result by pointing your browser to `result/html/index.html`.  If
 this fails, then you may have to run a local server, as follows:
 
 ```
@@ -362,7 +338,7 @@ For the best development experience, you should configure your IDE to use the Ag
 First, build `agdaWithPackages` and create a stable symlink to it in your home directory. This prevents you from having to update your IDE settings every time the project's dependencies change.
 
 ```bash
-nix-build -A agdaWithPackages -o ~/ledger-agda
+nix build ./#agdaWithPackages -o ~/ledger-agda
 ```
 
 Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
@@ -708,8 +684,8 @@ For non-Nix users, you'll also need to install the following:
 <a id="conformance-testing"></a>
 ## 🕵️‍♀️ Conformance Testing
 
-After producing the Agda-generated Haskell code with `nix build .#hs-src`
-(or `nix-build -A hs-src`), you can run the conformance tests.
+After producing the Agda-generated Haskell code with `nix build .#hs-src`, you
+can run the conformance tests.
 
 See [the `conformance-example` directory][conformance-example].
 

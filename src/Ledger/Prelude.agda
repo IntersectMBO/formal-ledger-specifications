@@ -79,18 +79,3 @@ infix 6 ∣_∣
 module Filter where
   filter : ∀ {a} {p} {A : Type a} → (P : Pred A p) → ⦃ P ⁇¹ ⦄ → List A → List A
   filter P = Data.List.filter ¿ P ¿¹
-
--- TODO: Move to agda-sets
--- https://github.com/input-output-hk/agda-sets/pull/13
-infixr 9 _∘ʳ_
-infix 10 _⁻¹ʳ
-opaque
-  _⁻¹ʳ : {A B : Type} → Rel A B → Rel B A
-  R ⁻¹ʳ = mapˢ swap R
-    where open import Data.Product using (swap)
-
-  _∘ʳ_ : {A B C : Type} ⦃ _ : DecEq B ⦄ → Rel A B → Rel B C → Rel A C
-  R ∘ʳ S =
-    concatMapˢ
-      (λ (a , b) → mapˢ ((a ,_) ∘ proj₂) $ filterˢ ((b ≡_) ∘ proj₁) S)
-      R
