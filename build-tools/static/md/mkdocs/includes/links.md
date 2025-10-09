@@ -17,8 +17,8 @@
 [Fees]: Ledger.Conway.Specification.Fees.md
 [formal ledger specification]: https://github.com/IntersectMBO/formal-ledger-specifications
 [Functions used in UTxO rules]: Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules
-[Functions of the GOV Transition System]: Ledger.Conway.Specification.Gov.md#governance-functions
-[Functions related to voting]: Ledger.Conway.Specification.Ratify.md#functions-related-to-voting
+[Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
+[Voting Functions]: Ledger.Conway.Specification.Ratify.md#sec:voting-functions
 [Ratification Requirements]: Ledger.Conway.Specification.Ratify.md#sec:ratification-requirements
 
 [GOV]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
@@ -45,7 +45,7 @@
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
 [Time handling on Cardano]: https://docs.cardano.org/about-cardano/explore-more/time
 [Timing of Rewards Payout]: Ledger.Conway.Specification.Rewards.md#sec:timing-of-rewards-payout
-[Type signature of the GOV transition relation]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
+[The GOV Transition System]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [UTXO]: Ledger.Conway.Specification.Utxo.md#sec:utxo-inference-rule
 [UTXOS]: Ledger.Conway.Specification.Utxo.md#sec:utxos-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#utxow-inference-rules

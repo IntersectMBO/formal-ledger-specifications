@@ -101,6 +101,7 @@ instance
   HasReserves-Acnt : HasReserves Acnt
   HasReserves-Acnt .ReservesOf = Acnt.reserves
 ```
+-->
 ```agda
 ProtVer : Type
 ProtVer = ℕ × ℕ
@@ -111,6 +112,7 @@ instance
   Show-ProtVer : Show ProtVer
   Show-ProtVer = Show-×
 ```
+-->
 ```agda
 data pvCanFollow : ProtVer → ProtVer → Type where
   canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
@@ -501,7 +503,6 @@ module PParamsUpdate where
 
 <!--
 ```agda
-
 instance
   pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
   pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)

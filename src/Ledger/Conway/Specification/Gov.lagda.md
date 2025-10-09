@@ -279,8 +279,7 @@ enacted one.[^1]
 The function `govActionPriority`{.AgdaFunction} assigns a priority to
 the various types of governance actions. This is useful for ordering
 lists of governance actions (see the definition of the
-`insertGovAction`{.AgdaFunction} function in the section on
-[Functions of the GOV Transition System][]
+`insertGovAction`{.AgdaFunction} function in the [Governance Functions][] section).
 Priority is also used to check if two actions `Overlap`{.AgdaFunction}; that is,
 they would modify the same piece of `EnactState`{.AgdaDatatype}.
 
@@ -539,7 +538,7 @@ _⊢_⇀⦇_,GOVS⦈_ = ReflexiveTransitiveClosureᵢ {sts = _⊢_⇀⦇_,GOV⦈
 
 For `GOVVote`{.AgdaInductiveConstructor}, we check that the governance
 action being voted on exists; that the voter’s role is allowed to vote
-(see `canVote`{.AgdaFunction} in Section [Functions related to voting][]; and
+(see `canVote`{.AgdaFunction} in Section [Voting Functions][]; and
 that the voter’s credential is actually associated with their role (see
 `isRegistered`{.AgdaFunction} in the section on the
 [Type signature of the GOV transition relation][].
