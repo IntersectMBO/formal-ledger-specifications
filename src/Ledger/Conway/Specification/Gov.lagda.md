@@ -27,7 +27,7 @@ open import Axiom.Set.Properties th using (∃-sublist-⇔)
 
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
 open import Ledger.Conway.Specification.Enact govStructure
-open import Ledger.Conway.Specification.Ratify txs hiding (vote)
+open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Certs govStructure
 
 open import stdlib.Data.List.Subpermutations using (subpermutations; sublists)

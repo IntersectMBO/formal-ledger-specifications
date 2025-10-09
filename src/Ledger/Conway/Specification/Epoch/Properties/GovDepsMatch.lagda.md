@@ -18,7 +18,7 @@ open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
 open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Prelude renaming (map to map'; mapˢ to map)
-open import Ledger.Conway.Specification.Ratify txs hiding (vote)
+open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Utxo txs abs
 
 open import Axiom.Set.Properties th
