@@ -19,6 +19,8 @@
 [Functions used in UTxO rules]: Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules
 [Functions of the GOV Transition System]: Ledger.Conway.Specification.Gov.md#governance-functions
 [Functions related to voting]: Ledger.Conway.Specification.Ratify.md#functions-related-to-voting
+[Ratification Requirements]: Ledger.Conway.Specification.Ratify.md#sec:ratification-requirements
+
 [GOV]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
