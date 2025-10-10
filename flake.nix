@@ -6,9 +6,29 @@
     nixpkgs.url = "github:NixOs/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
 
-    agda-nix = {
-      url = "github:input-output-hk/agda.nix";
+    standard-library-classes = {
+      url = "github:input-output-hk/agda.nix?dir=libraries/standard-library-classes";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    standard-library-meta = {
+      url = "github:input-output-hk/agda.nix?dir=libraries/standard-library-meta";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.standard-library-classes.follows = "standard-library-classes";
+    };
+
+    abstract-set-theory = {
+      url = "github:input-output-hk/agda-sets/carlos/use-agda-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.standard-library-classes.follows = "standard-library-classes";
+      inputs.standard-library-meta.follows = "standard-library-meta";
+    };
+
+    iog-prelude = {
+      url = "github:input-output-hk/iog-agda-prelude/carlos/use-agda-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.standard-library-classes.follows = "standard-library-classes";
+      inputs.standard-library-meta.follows = "standard-library-meta";
     };
 
     fls-agda = {
@@ -45,7 +65,10 @@
             inherit system;
             overlays = [
               inputs.fls-agda.overlays.default
-              inputs.agda-nix.overlays.default
+              inputs.standard-library-classes.overlays.default
+              inputs.standard-library-meta.overlays.default
+              inputs.abstract-set-theory.overlays.default
+              inputs.iog-prelude.overlays.default
               overlay-formal-ledger
             ];
           };
