@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Conway.Specification.Gov.Base</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda"><a id="1" class="Symbol">{-#</a> <a id="5" class="Keyword">OPTIONS</a> <a id="13" class="Pragma">--safe</a> <a id="20" class="Symbol">#-}</a>
+
+<a id="25" class="Keyword">module</a> <a id="32" href="Ledger.Conway.Specification.Gov.Base.html" class="Module">Ledger.Conway.Specification.Gov.Base</a> <a id="69" class="Keyword">where</a>
+
+<a id="76" class="Keyword">open</a> <a id="81" class="Keyword">import</a> <a id="88" href="Prelude.html" class="Module">Prelude</a> <a id="96" class="Keyword">using</a> <a id="102" class="Symbol">(</a><a id="103" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="107" class="Symbol">)</a>
+<a id="109" class="Keyword">open</a> <a id="114" class="Keyword">import</a> <a id="121" href="Class.DecEq.html" class="Module">Class.DecEq</a>
+<a id="133" class="Keyword">open</a> <a id="138" class="Keyword">import</a> <a id="145" href="Ledger.Core.Specification.Crypto.html" class="Module">Ledger.Core.Specification.Crypto</a>
+<a id="178" class="Keyword">open</a> <a id="183" class="Keyword">import</a> <a id="190" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
+<a id="222" class="Keyword">open</a> <a id="227" class="Keyword">import</a> <a id="234" href="Ledger.Conway.Specification.Script.Base.html" class="Module">Ledger.Conway.Specification.Script.Base</a>
+<a id="274" class="Keyword">import</a> <a id="281" href="Ledger.Conway.Specification.PParams.html" class="Module">Ledger.Conway.Specification.PParams</a>
+
+<a id="318" class="Keyword">record</a> <a id="GovStructure"></a><a id="325" href="Ledger.Conway.Specification.Gov.Base.html#325" class="Record">GovStructure</a> <a id="338" class="Symbol">:</a> <a id="340" href="Agda.Primitive.html#388" class="Primitive">Type₁</a> <a id="346" class="Keyword">where</a>
+  <a id="354" class="Keyword">field</a> <a id="GovStructure.TxId"></a><a id="360" href="Ledger.Conway.Specification.Gov.Base.html#360" class="Field">TxId</a> <a id="GovStructure.DocHash"></a><a id="365" href="Ledger.Conway.Specification.Gov.Base.html#365" class="Field">DocHash</a> <a id="373" class="Symbol">:</a> <a id="375" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+        <a id="388" class="Symbol">⦃</a> <a id="GovStructure.DecEq-TxId"></a><a id="390" href="Ledger.Conway.Specification.Gov.Base.html#390" class="Field">DecEq-TxId</a> <a id="401" class="Symbol">⦄</a> <a id="403" class="Symbol">:</a> <a id="405" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="411" href="Ledger.Conway.Specification.Gov.Base.html#360" class="Field">TxId</a>
+
+  <a id="419" class="Keyword">field</a> <a id="GovStructure.cryptoStructure"></a><a id="425" href="Ledger.Conway.Specification.Gov.Base.html#425" class="Field">cryptoStructure</a> <a id="441" class="Symbol">:</a> <a id="443" class="Symbol">_</a>
+  <a id="447" class="Keyword">open</a> <a id="452" href="Ledger.Core.Specification.Crypto.html#1110" class="Module">CryptoStructure</a> <a id="468" href="Ledger.Conway.Specification.Gov.Base.html#425" class="Field">cryptoStructure</a> <a id="484" class="Keyword">public</a>
+
+  <a id="494" class="Keyword">field</a> <a id="GovStructure.epochStructure"></a><a id="500" href="Ledger.Conway.Specification.Gov.Base.html#500" class="Field">epochStructure</a> <a id="515" class="Symbol">:</a> <a id="517" class="Symbol">_</a>
+  <a id="521" class="Keyword">open</a> <a id="526" href="Ledger.Core.Specification.Epoch.html#530" class="Module">EpochStructure</a> <a id="541" href="Ledger.Conway.Specification.Gov.Base.html#500" class="Field">epochStructure</a> <a id="556" class="Keyword">public</a>
+
+  <a id="566" class="Keyword">field</a> <a id="GovStructure.scriptStructure"></a><a id="572" href="Ledger.Conway.Specification.Gov.Base.html#572" class="Field">scriptStructure</a> <a id="588" class="Symbol">:</a> <a id="590" href="Ledger.Conway.Specification.Script.Base.html#2048" class="Record">ScriptStructure</a> <a id="606" href="Ledger.Conway.Specification.Gov.Base.html#425" class="Field">cryptoStructure</a> <a id="622" href="Ledger.Conway.Specification.Gov.Base.html#500" class="Field">epochStructure</a>
+  <a id="639" class="Keyword">open</a> <a id="644" href="Ledger.Conway.Specification.Script.Base.html#2048" class="Module">ScriptStructure</a> <a id="660" href="Ledger.Conway.Specification.Gov.Base.html#572" class="Field">scriptStructure</a> <a id="676" class="Keyword">public</a>
+
+  <a id="686" class="Keyword">open</a> <a id="691" href="Ledger.Conway.Specification.PParams.html" class="Module">Ledger.Conway.Specification.PParams</a> <a id="727" href="Ledger.Conway.Specification.Gov.Base.html#425" class="Field">cryptoStructure</a> <a id="743" href="Ledger.Conway.Specification.Gov.Base.html#500" class="Field">epochStructure</a> <a id="758" href="Ledger.Conway.Specification.Gov.Base.html#572" class="Field">scriptStructure</a> <a id="774" class="Keyword">public</a>
+
+  <a id="784" class="Keyword">field</a> <a id="GovStructure.govParams"></a><a id="790" href="Ledger.Conway.Specification.Gov.Base.html#790" class="Field">govParams</a> <a id="800" class="Symbol">:</a> <a id="802" href="Ledger.Conway.Specification.PParams.html#14009" class="Record">GovParams</a>
+  <a id="814" class="Keyword">open</a> <a id="819" href="Ledger.Conway.Specification.PParams.html#14009" class="Module">GovParams</a> <a id="829" href="Ledger.Conway.Specification.Gov.Base.html#790" class="Field">govParams</a> <a id="839" class="Keyword">public</a>
+
+  <a id="849" class="Keyword">field</a> <a id="GovStructure.globalConstants"></a><a id="855" href="Ledger.Conway.Specification.Gov.Base.html#855" class="Field">globalConstants</a> <a id="871" class="Symbol">:</a> <a id="873" class="Symbol">_</a>
+  <a id="877" class="Keyword">open</a> <a id="882" href="Ledger.Core.Specification.Epoch.html#2118" class="Module">GlobalConstants</a> <a id="898" href="Ledger.Conway.Specification.Gov.Base.html#855" class="Field">globalConstants</a> <a id="914" class="Keyword">public</a>
+
+  <a id="924" class="Keyword">open</a> <a id="929" class="Keyword">import</a> <a id="936" href="Ledger.Core.Specification.Address.html" class="Module">Ledger.Core.Specification.Address</a> <a id="970" href="Ledger.Core.Specification.Epoch.html#2157" class="Function">Network</a> <a id="978" href="Ledger.Core.Specification.Crypto.html#1386" class="Function">KeyHash</a> <a id="986" href="Ledger.Core.Specification.Crypto.html#1242" class="Function">ScriptHash</a> <a id="997" class="Keyword">public</a>
+</pre></body></html>
