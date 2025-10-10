@@ -1,0 +1,146 @@
+/* === Agda hover tooltip ================================================== */
+.agda-tooltip {
+  position: absolute;
+  z-index: 2000;
+  max-width: min(42rem, 92vw);
+  box-shadow: 0 10px 26px rgba(0,0,0,.18), 0 4px 10px rgba(0,0,0,.12);
+  border-radius: .5rem;
+  border: 1px solid rgba(0,0,0,.1);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: opacity .12s ease, transform .12s ease;
+  transform: translateY(-2px);
+  opacity: 1;
+}
+.agda-tooltip.hidden { opacity: 0; pointer-events: none; }
+
+.agda-tooltip .agda-tooltip-inner {
+  padding: .75rem .9rem .7rem .9rem;
+  font-size: .92rem;
+  line-height: 1.25rem;
+}
+
+.agda-tip-head {
+  display: flex;
+  align-items: baseline;
+  gap: .5rem;
+  margin-bottom: .4rem;
+  font-weight: 600;
+}
+
+.agda-kind {
+  font-size: .78rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  opacity: .8;
+}
+
+.agda-name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-weight: 700;
+}
+
+.agda-module {
+  margin-left: auto;
+  font-size: .78rem;
+  opacity: .7;
+}
+
+.agda-tip-snippet {
+  white-space: pre-wrap;
+  margin: .25rem 0 .5rem 0;
+  padding: .5rem .6rem;
+  border-radius: .4rem;
+  background: rgba(127,127,127,.08);
+  font-size: .85rem;
+  overflow: hidden;
+}
+
+.agda-tip-empty {
+  margin: .25rem 0 .5rem 0;
+  font-size: .85rem;
+  opacity: .85;
+}
+
+.agda-tip-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.agda-open-def {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* Light/dark theming with MkDocs Material */
+:root,
+[data-md-color-scheme="default"] {
+  --agda-tip-bg: #ffffff;
+  --agda-tip-fg: #1f2328;
+  --agda-tip-link: #0969da;
+  --agda-tip-border: rgba(0,0,0,.1);
+}
+[data-md-color-scheme="slate"] {
+  --agda-tip-bg: #1f2430;
+  --agda-tip-fg: #f4f6f8;
+  --agda-tip-link: #8ab4ff;
+  --agda-tip-border: rgba(255,255,255,.14);
+  .agda-tip-snippet { background: rgba(255,255,255,.06); }
+}
+
+.agda-tooltip {
+  background: var(--agda-tip-bg);
+  color: var(--agda-tip-fg);
+  border-color: var(--agda-tip-border);
+}
+.agda-open-def { color: var(--agda-tip-link); }
+/* === Agda tooltip polish (compact & clean) =============================== */
+.agda-tooltip .agda-tooltip-inner {
+  padding: .55rem .7rem .55rem .7rem;
+  font-size: .88rem;              /* smaller base */
+  line-height: 1.2rem;
+}
+
+.agda-tip-head {
+  gap: .4rem;
+  margin-bottom: .25rem;
+  font-weight: 600;
+}
+
+.agda-kind {
+  font-size: .72rem;
+  letter-spacing: .05em;
+  opacity: .75;
+}
+
+.agda-name {
+  font-size: .9rem;               /* tighter monospace name */
+  font-weight: 700;
+}
+
+.agda-module {
+  font-size: .72rem;
+  opacity: .6;
+}
+
+.agda-tip-snippet {
+  margin: .2rem 0 .4rem 0;
+  padding: .45rem .55rem;
+  border-radius: .35rem;
+  font-size: .82rem;              /* smaller code */
+  line-height: 1.15rem;
+  max-width: 80ch;                /* avoid ultra-wide lines */
+  overflow-x: auto;               /* allow horizontal scroll if needed */
+  white-space: pre;               /* preserve formatting exactly */
+}
+
+.agda-tooltip {
+  max-width: min(46rem, 92vw);    /* a bit narrower overall */
+  border-radius: .45rem;
+  box-shadow: 0 10px 22px rgba(0,0,0,.16), 0 3px 8px rgba(0,0,0,.10);
+  transform: translateY(-1px);
+}
+
+/* Dark mode nuance */
+[data-md-color-scheme="slate"] .agda-tip-snippet {
+  background: rgba(255,255,255,.04);
+}
