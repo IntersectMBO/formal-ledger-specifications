@@ -1,0 +1,134 @@
+/* ==========================================================================
+   Agda Hover Tooltip (clean + compact)
+   --------------------------------------------------------------------------
+   Tuning knobs:
+   - --agda-font-base: base font size used for most text in the tooltip
+   - --agda-font-code: font size for code snippet
+   - --agda-line-base: line-height for body text
+   - --agda-line-code: line-height for code snippet
+   - --agda-width:     max width of the tooltip
+   - --agda-ch:        max code line width in characters (for readability)
+   ========================================================================== */
+
+/* === Theme + size tokens ================================================= */
+:root,
+[data-md-color-scheme="default"] {
+  /* Sizes (make smaller/larger here) */
+  --agda-font-base: 0.72rem;   /* overall base text size (very compact) */
+  --agda-font-code: 0.70rem;   /* code size (very compact) */
+  --agda-line-base: 1.05rem;   /* base line-height */
+  --agda-line-code: 1.06rem;   /* code line-height */
+  --agda-width:     min(34rem, 90vw); /* tooltip max width */
+  --agda-ch:        68ch;      /* max code line width */
+
+  /* Colors (light) */
+  --agda-tip-bg:     #ffffff;
+  --agda-tip-fg:     #1f2328;
+  --agda-tip-border: rgba(0,0,0,.10);
+  --agda-tip-link:   #0969da;  /* reserved if links added later */
+  --agda-tip-codebg: rgba(127,127,127,.06);
+  --agda-shadow:     0 6px 16px rgba(0,0,0,.14), 0 2px 6px rgba(0,0,0,.10);
+}
+
+[data-md-color-scheme="slate"] {
+  /* Colors (dark) */
+  --agda-tip-bg:     #1f2430;
+  --agda-tip-fg:     #f4f6f8;
+  --agda-tip-border: rgba(255,255,255,.14);
+  --agda-tip-link:   #8ab4ff;
+  --agda-tip-codebg: rgba(255,255,255,.04);
+  --agda-shadow:     0 6px 16px rgba(0,0,0,.25), 0 2px 6px rgba(0,0,0,.18);
+}
+
+/* === Tooltip container =================================================== */
+.agda-tooltip {
+  position: absolute;
+  z-index: 2000;
+  max-width: var(--agda-width);
+  background: var(--agda-tip-bg);
+  color: var(--agda-tip-fg);
+  border: 1px solid var(--agda-tip-border);
+  border-radius: .35rem;
+  box-shadow: var(--agda-shadow);
+  opacity: 1;
+  transform: none;
+
+  /* Hover-only behavior: no interactions inside the box */
+  pointer-events: none;
+  /* To allow selection/copy, flip to 'auto' */
+}
+
+.agda-tooltip.hidden {
+  opacity: 0;
+  /* Tooltip is purely informational; hide by opacity. */
+  /* (JS is already preventing pointer events when hidden.) */
+}
+
+/* === Inner layout ======================================================== */
+.agda-tooltip .agda-tooltip-inner {
+  padding: .36rem .48rem;   /* very tight padding */
+  font-size: var(--agda-font-base);
+  line-height: var(--agda-line-base);
+}
+
+/* === Header line (kind · name · module) ================================= */
+.agda-tip-head {
+  display: flex;
+  align-items: baseline;
+  gap: .32rem;
+  margin-bottom: .16rem;
+  font-weight: 600;
+}
+
+.agda-kind {
+  font-size: calc(var(--agda-font-base) - 0.06rem); /* tiny label */
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  opacity: .72;
+}
+
+.agda-name {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+               "Liberation Mono", "Courier New", monospace;
+  font-size: calc(var(--agda-font-base) - 0.02rem);
+  font-weight: 700;
+}
+
+.agda-module {
+  margin-left: auto;
+  font-size: calc(var(--agda-font-base) - 0.08rem);
+  opacity: .55;
+}
+
+/* === Code preview ======================================================== */
+.agda-tip-snippet {
+  margin: .10rem 0 0 0;
+  padding: .30rem .40rem;
+  border-radius: .28rem;
+  background: var(--agda-tip-codebg);
+
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+               "Liberation Mono", "Courier New", monospace;
+  font-size: var(--agda-font-code);
+  line-height: var(--agda-line-code);
+
+  /* Keep Agda formatting exactly. If you prefer wrapping, change to 'pre-wrap'. */
+  white-space: pre;
+
+  /* Width hygiene */
+  max-width: var(--agda-ch);
+  overflow-x: auto;  /* allow horizontal scroll for long types */
+  overflow-y: hidden;
+}
+
+/* When no snippet could be extracted */
+.agda-tip-empty {
+  margin: .12rem 0 0 0;
+  font-size: calc(var(--agda-font-base) - 0.04rem);
+  opacity: .85;
+}
+
+/* === Legacy / unused bits (kept inert) ================================== */
+/* If older CSS defines these, keep them invisible to avoid layout churn. */
+.agda-tip-actions { display: none !important; }
+.agda-open-def    { display: none !important; }
