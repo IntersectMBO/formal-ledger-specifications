@@ -64,6 +64,8 @@
           nixpkgs = import inputs.nixpkgs {
             inherit system;
             overlays = [
+              # it's important to apply this overlay first
+              # (see https://github.com/NixOS/nixpkgs/issues/447012)
               inputs.fls-agda.overlays.default
               inputs.standard-library-classes.overlays.default
               inputs.standard-library-meta.overlays.default
