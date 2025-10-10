@@ -542,11 +542,10 @@ private variable
 ```
 -->
 
-## The <span class="AgdaDatatype">EPOCH</span> Transition System {#sec:epoch-transition-system}
+## The <span class="AgdaDatatype">EPOCH</span> Transition System {#sec:the-epoch-transition-system}
 
-The `EPOCH`{.AgdaDatatype} transition has a few updates that are encapsulated
-in the following functions. We need these functions to bring them in scope for
-some proofs about `EPOCH`{.AgdaDatatype}.
+Before presenting the `EPOCH`{.AgdaDatatype} transition system, we must first define some
+functions that are needed to update various values in the states involved in the transition.
 
 ### Helper Functions
 
