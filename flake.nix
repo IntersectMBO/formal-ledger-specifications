@@ -18,14 +18,14 @@
     };
 
     abstract-set-theory = {
-      url = "github:input-output-hk/agda-sets/carlos/use-agda-nix";
+      url = "github:input-output-hk/agda-sets";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.standard-library-classes.follows = "standard-library-classes";
       inputs.standard-library-meta.follows = "standard-library-meta";
     };
 
     iog-prelude = {
-      url = "github:input-output-hk/iog-agda-prelude/carlos/use-agda-nix";
+      url = "github:input-output-hk/iog-agda-prelude";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.standard-library-classes.follows = "standard-library-classes";
       inputs.standard-library-meta.follows = "standard-library-meta";
