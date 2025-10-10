@@ -1,13 +1,17 @@
-\section{Protocol Parameters}
-\label{sec:protocol-parameters}
-\modulenote{\ConwayModule{PParams}}, in which we define the adjustable protocol
-parameters of the Cardano ledger.  
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/PParams.lagda.md
+---
 
-Protocol parameters are used in block validation and
-can affect various features of the system, such as minimum fees, maximum and minimum
-sizes of certain components, and more.
+# Protocol Parameters {#sec:protocol-parameters}
 
-\begin{code}[hide]
+This section defines the adjustable protocol parameters of the Cardano ledger.
+Protocol parameters are used in block validation and can affect various
+features of the system, such as minimum fees, maximum and minimum sizes
+of certain components, and more.
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Data.Product.Properties
@@ -32,69 +36,111 @@ module Ledger.Conway.Specification.PParams
 
 private variable
   m n : ℕ
-\end{code}
+```
+-->
+ The `Acnt`{.AgdaRecord} record has two fields,
+`treasury`{.AgdaField} and `reserves`{.AgdaField}, so the
+`acnt`{.AgdaBound} field in `NewEpochState`{.AgdaRecord} keeps track of
+the total assets that remain in treasury and reserves.
 
-\begin{NoConway}
-The \AgdaRecord{Acnt} record has two fields, \AgdaField{treasury} and \AgdaField{reserves}, so
-the \AgdaBound{acnt} field in \AgdaRecord{NewEpochState} keeps track of the total assets that
-remain in treasury and reserves.
+## Protocol Parameter Definitions {#sec:protocol-parameter-definitions}
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+`PParams`{.AgdaRecord} contains parameters used in the Cardano ledger, which we group
+according to the general purpose that each parameter serves.
+
++  `NetworkGroup`{.AgdaInductiveConstructor}: parameters related to the network
+   settings;
+
++  `EconomicGroup`{.AgdaInductiveConstructor}: parameters related to the economic
+   aspects of the ledger;
+
++  `TechnicalGroup`{.AgdaInductiveConstructor}: parameters related to technical
+   settings;
+
++  `GovernanceGroup`{.AgdaInductiveConstructor}: parameters related to governance
+   settings;
+
++  `SecurityGroup`{.AgdaInductiveConstructor}: parameters that can impact the
+   security of the system.
+
+The purpose of these groups is to determine voting thresholds for proposals aiming to
+change parameters.  Given a proposal to change a certain set of parameters, we look
+at which groups those parameters fall into and from this we determine the voting
+threshold for that proposal.  (The voting threshold calculation is described in
+detail in the [Ratification Requirements][] section.)
+
+The first four groups have the property that every protocol parameter is associated
+to precisely one of these groups.  The `SecurityGroup`{.AgdaInductiveConstructor} is
+special: a protocol parameter may or may not be in the
+`SecurityGroup`{.AgdaInductiveConstructor}.  So, each protocol parameter belongs to
+at least one and at most two groups.  Note that in
+[CIP-1694](https://cips.cardano.org/cip-1694) there is no
+`SecurityGroup`{.AgdaInductiveConstructor}, but there is the concept of
+security-relevant protocol parameters (see [CKB+23](#cip1694)).  The difference
+between these notions is only social, so we implement security-relevant protocol
+parameters as a group.
+
+```agda
 record Acnt : Type where
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
   constructor ⟦_,_⟧ᵃ
-\end{code}
-\begin{code}
+```
+-->
+```agda
   field
     treasury reserves : Coin
-
+```
+<!--
+```agda
 instance
   HasTreasury-Acnt : HasTreasury Acnt
   HasTreasury-Acnt .TreasuryOf = Acnt.treasury
 
   HasReserves-Acnt : HasReserves Acnt
   HasReserves-Acnt .ReservesOf = Acnt.reserves
-
+```
+-->
+```agda
 ProtVer : Type
 ProtVer = ℕ × ℕ
-
+```
+<!--
+```agda
 instance
   Show-ProtVer : Show ProtVer
   Show-ProtVer = Show-×
-
+```
+-->
+```agda
 data pvCanFollow : ProtVer → ProtVer → Type where
   canFollowMajor : pvCanFollow (m , n) (m + 1 , 0)
   canFollowMinor : pvCanFollow (m , n) (m , n + 1)
-\end{code}
-\end{AgdaMultiCode}
-\caption{Definitions related to protocol parameters}
-\label{fig:protocol-parameter-defs}
-\end{figure*}
-\end{NoConway}
-\begin{code}[hide]
+```
+<!--
+```agda
 instance
   unquoteDecl HasCast-Acnt = derive-HasCast
     [ (quote Acnt , HasCast-Acnt) ]
-\end{code}
+```
+-->
 
-\begin{figure*}[ht]
-\begin{code}
+
+### Protocol Parameter Group Definition {#sec:protocol-parameter-group-definition}
+
+```agda
 data PParamGroup : Type where
   NetworkGroup     : PParamGroup
   EconomicGroup    : PParamGroup
   TechnicalGroup   : PParamGroup
   GovernanceGroup  : PParamGroup
   SecurityGroup    : PParamGroup
-\end{code}
-\caption{Protocol parameter group definition}
-\label{fig:protocol-parameter-groups}
-\end{figure*}
+```
 
-\begin{figure*}[ht]
-\begin{code}
+### Protocol Parameter Threshold Definitions {#sec:protocol-parameter-threshold-definitions}
+
+```agda
 record DrepThresholds : Type where
   field
     P1 P2a P2b P3 P4 P5a P5b P5c P5d P6 : ℚ
@@ -102,19 +148,44 @@ record DrepThresholds : Type where
 record PoolThresholds : Type where
   field
     Q1 Q2a Q2b Q4 Q5 : ℚ
-\end{code}
-\caption{Protocol parameter threshold definitions}
-\label{fig:protocol-parameter-thresholds}
-\end{figure*}
+```
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}
+### Protocol Parameter Declarations {#sec:protocol-parameter-declarations}
+
+This section defines new protocol parameters which denote the following concepts:
+
++  `drepThresholds`{.AgdaField}: governance thresholds for ; these are rational
+   numbers named `Pone`{.AgdaField}, `Ptwoa`{.AgdaField}, `Ptwob`{.AgdaField},
+   `Pthree`{.AgdaField}, `Pfour`{.AgdaField}, `Pfivea`{.AgdaField},
+   `Pfiveb`{.AgdaField}, `Pfivec`{.AgdaField}, `Pfived`{.AgdaField}, and
+   `Psix`{.AgdaField};
+
++  `poolThresholds`{.AgdaField}: pool-related governance thresholds; these are
+   rational numbers named `Qone`{.AgdaField}, `Qtwoa`{.AgdaField},
+   `Qtwob`{.AgdaField}, `Qfour`{.AgdaField} and `Qfive`{.AgdaField};
+
++  `ccMinSize`{.AgdaField}: minimum constitutional committee size;
+
++  `ccMaxTermLength`{.AgdaField}: maximum term limit (in epochs) of constitutional
+   committee members;
+
++  `govActionLifetime`{.AgdaField}: governance action expiration;
+
++  `govActionDeposit`{.AgdaField}: governance action deposit;
+
++  `drepDeposit`{.AgdaField}: `DRep`{.AgdaInductiveConstructor} deposit amount;
+
++  `drepActivity`{.AgdaField}: `DRep`{.AgdaInductiveConstructor} activity period;
+
++  `minimumAVS`{.AgdaField}: the minimum active voting threshold.
+
+
+```agda
 record PParams : Type where
   field
-\end{code}
-\emph{Network group}
-\begin{code}
+```
+*Network group*
+```agda
         maxBlockSize                  : ℕ
         maxTxSize                     : ℕ
         maxHeaderSize                 : ℕ
@@ -122,12 +193,14 @@ record PParams : Type where
         maxBlockExUnits               : ExUnits
         maxValSize                    : ℕ
         maxCollateralInputs           : ℕ
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
         pv                            : ProtVer -- retired, keep for now
-\end{code}
-\emph{Economic group}
-\begin{code}
+```
+-->
+*Economic group*
+```agda
         a                             : ℕ
         b                             : ℕ
         keyDeposit                    : Coin
@@ -141,25 +214,29 @@ record PParams : Type where
         maxRefScriptSizePerBlock      : ℕ
         refScriptCostStride           : ℕ⁺
         refScriptCostMultiplier       : ℚ
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
         minUTxOValue                  : Coin -- retired, keep for now
-\end{code}
-\emph{Technical group}
-\begin{code}
+```
+-->
+*Technical group*
+```agda
         Emax                          : Epoch
         nopt                          : ℕ
         a0                            : ℚ
         collateralPercentage          : ℕ
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
         -- costmdls                   : Language →/⇀ CostModel (Does not work with DecEq)
-\end{code}
-\begin{code}
+```
+-->
+```agda
         costmdls                      : CostModel
-\end{code}
-\emph{Governance group}
-\begin{code}
+```
+*Governance group*
+```agda
         poolThresholds                : PoolThresholds
         drepThresholds                : DrepThresholds
         ccMinSize                     : ℕ
@@ -168,17 +245,17 @@ record PParams : Type where
         govActionDeposit              : Coin
         drepDeposit                   : Coin
         drepActivity                  : Epoch
-\end{code}
-\end{AgdaMultiCode}
-\emph{Security group}
+```
+*Security group*
 
-\maxBlockSize{} \maxTxSize{} \maxHeaderSize{} \maxValSize{}
-\maxBlockExUnits{} \AgdaField{a}{} \AgdaField{b}{}
-\minFeeRefScriptCoinsPerByte{} \coinsPerUTxOByte{} \govActionDeposit{}
-\caption{Protocol Parameter Declarations}
-\label{fig:protocol-parameter-declarations}
-\end{figure*}
-\begin{code}[hide]
+`maxBlockSize`{.AgdaField} `maxTxSize`{.AgdaField}
+`maxHeaderSize`{.AgdaField} `maxValSize`{.AgdaField}
+`maxBlockExUnits`{.AgdaField} `a`{.AgdaField} `b`{.AgdaField}
+`minFeeRefScriptCoinsPerByte`{.AgdaField} `coinsPerUTxOByte`{.AgdaField}
+`govActionDeposit`{.AgdaField}
+
+<!--
+```agda
 record HasPParams {a} (A : Type a) : Type a where
   field PParamsOf : A → PParams
 open HasPParams ⦃...⦄ public
@@ -186,37 +263,37 @@ open HasPParams ⦃...⦄ public
 record HasCCMaxTermLength {a} (A : Type a) : Type a where
   field CCMaxTermLengthOf : A → ℕ
 open HasCCMaxTermLength ⦃...⦄ public
+```
+-->
 
-\end{code}
-\begin{figure*}
-\begin{AgdaMultiCode}
-\begin{code}
+## Protocol Parameter Well Formedness
+
+We define the function `paramsWellFormed`{.AgdaFunction} which performs some sanity
+checks on protocol parameters.
+```agda
 positivePParams : PParams → List ℕ
 positivePParams pp =  ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize
                       ∷ maxValSize ∷ coinsPerUTxOByte
                       ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                       ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
-\end{code}
-\begin{code}[hide]
+```
+<!--
+```agda
   where open PParams pp
-\end{code}
-\begin{code}
-
+```
+-->
+```agda
 paramsWellFormed : PParams → Type
 paramsWellFormed pp = 0 ∉ fromList (positivePParams pp)
-\end{code}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 paramsWF-elim : (pp : PParams) → paramsWellFormed pp → (n : ℕ) → n ∈ˡ (positivePParams pp) → n > 0
 paramsWF-elim pp pwf (suc n) x = z<s
 paramsWF-elim pp pwf 0 0∈ = ⊥-elim (pwf (to ∈-fromList 0∈))
   where open Equivalence
 
-\end{code}
-\end{AgdaMultiCode}
-\caption{Protocol parameter well-formedness}
-\label{fig:protocol-parameter-well-formedness}
-\end{figure*}
-\begin{code}[hide]
 instance
   unquoteDecl DecEq-DrepThresholds = derive-DecEq
     ((quote DrepThresholds , DecEq-DrepThresholds) ∷ [])
@@ -265,17 +342,17 @@ module PParamsUpdate where
           govActionDeposit drepDeposit  : Maybe Coin
           drepActivity                  : Maybe Epoch
           ccMinSize ccMaxTermLength     : Maybe ℕ
-  
+
   paramsUpdateWellFormed : PParamsUpdate → Type
   paramsUpdateWellFormed ppu =
        just 0 ∉ fromList ( maxBlockSize ∷ maxTxSize ∷ maxHeaderSize ∷ maxValSize
                          ∷ coinsPerUTxOByte ∷ poolDeposit ∷ collateralPercentage ∷ ccMaxTermLength
                          ∷ govActionLifetime ∷ govActionDeposit ∷ drepDeposit ∷ [] )
     where open PParamsUpdate ppu
-  
+
   paramsUpdateWellFormed? : ( u : PParamsUpdate ) → Dec (paramsUpdateWellFormed u)
   paramsUpdateWellFormed? u = ¿ paramsUpdateWellFormed u ¿
-  
+
   modifiesNetworkGroup : PParamsUpdate → Bool
   modifiesNetworkGroup ppu = let open PParamsUpdate ppu in
     or
@@ -288,7 +365,7 @@ module PParamsUpdate where
       ∷ is-just maxBlockExUnits
       ∷ is-just pv
       ∷ [])
-  
+
   modifiesEconomicGroup : PParamsUpdate → Bool
   modifiesEconomicGroup ppu = let open PParamsUpdate ppu in
     or
@@ -307,7 +384,7 @@ module PParamsUpdate where
       ∷ is-just prices
       ∷ is-just minUTxOValue
       ∷ [])
-  
+
   modifiesTechnicalGroup : PParamsUpdate → Bool
   modifiesTechnicalGroup ppu = let open PParamsUpdate ppu in
     or
@@ -317,7 +394,7 @@ module PParamsUpdate where
       ∷ is-just collateralPercentage
       ∷ is-just costmdls
       ∷ [])
-  
+
   modifiesGovernanceGroup : PParamsUpdate → Bool
   modifiesGovernanceGroup ppu = let open PParamsUpdate ppu in
     or
@@ -346,7 +423,7 @@ module PParamsUpdate where
       ∷ is-just minFeeRefScriptCoinsPerByte
       ∷ []
       )
-  
+
   modifiedUpdateGroups : PParamsUpdate → ℙ PParamGroup
   modifiedUpdateGroups ppu =
     ( modifiesNetworkGroup    ?═⇒ NetworkGroup
@@ -358,22 +435,22 @@ module PParamsUpdate where
     where
       _?═⇒_ : (PParamsUpdate → Bool) → PParamGroup → ℙ PParamGroup
       pred ?═⇒ grp = if pred ppu then ❴ grp ❵ else ∅
-  
+
   _?↗_ : ∀ {A : Type} → Maybe A → A → A
   just x ?↗ _ = x
   nothing ?↗ x = x
-  
+
   ≡-update : ∀ {A : Type} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x ⇔ (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
   ≡-update {u} {p} {x} = mk⇔ to from
     where
       to : ∀ {A} {u : Maybe A} {p : A} {x : A} → u ?↗ p ≡ x → (u ≡ just x ⊎ (p ≡ x × u ≡ nothing))
       to {u = just x} refl = inj₁ refl
       to {u = nothing} refl = inj₂ (refl , refl)
-  
+
       from : ∀ {A} {u : Maybe A} {p : A} {x : A} → u ≡ just x ⊎ (p ≡ x × u ≡ nothing) → u ?↗ p ≡ x
       from (inj₁ refl) = refl
       from (inj₂ (refl , refl)) = refl
-  
+
   applyPParamsUpdate : PParams → PParamsUpdate → PParams
   applyPParamsUpdate pp ppu =
     record
@@ -420,76 +497,12 @@ module PParamsUpdate where
   instance
     unquoteDecl DecEq-PParamsUpdate  = derive-DecEq
       ((quote PParamsUpdate , DecEq-PParamsUpdate) ∷ [])
-\end{code}
-% Retiring ProtVer's documentation since ProtVer is retired.
-% \ProtVer{} represents the protocol version used in the Cardano ledger.
-% It is a pair of natural numbers, representing the major and minor version,
-% respectively.
-
-\PParams{} contains parameters used in the Cardano ledger, which we group according
-to the general purpose that each parameter serves.
-\begin{itemize}
-  \item \NetworkGroup{}: parameters related to the network settings;
-  \item \EconomicGroup{}: parameters related to the economic aspects of the ledger;
-  \item \TechnicalGroup{}: parameters related to technical settings;
-  \item \GovernanceGroup{}: parameters related to governance settings;
-  \item \SecurityGroup{}: parameters that can impact the security of the system.
-\end{itemize}
-The purpose of these groups is to determine voting thresholds for
-proposals aiming to change parameters.  Given a proposal to change a certain set of
-parameters, we look at which groups those parameters fall into and from this we
-determine the voting threshold for that proposal.  (The voting threshold
-calculation is described in detail in \cref{sec:ratification-requirements}; in
-particular, the definition of the \threshold{} function appears in
-\cref{fig:ratification-requirements}.)
-
-The first four groups have the property that every protocol parameter
-is associated to precisely one of these groups.  The \SecurityGroup{} is
-special: a protocol parameter may or may not be in the \SecurityGroup{}.
-So, each protocol parameter belongs to at least one and at most two groups.
-Note that in \hrefCIP{1694} there is no \SecurityGroup{}, but there is the
-concept of security-relevant protocol parameters (see \textcite{cip1694}).
-The difference between these notions is only social, so we implement
-security-relevant protocol parameters as a group.
-
-The new protocol parameters are declared in \cref{fig:protocol-parameter-declarations}
-and denote the following concepts:
-\begin{itemize}
-  \item \drepThresholds{}: governance thresholds for \DReps{}; these are rational
-    numbers named \Pone{}, \Ptwoa{}, \Ptwob{}, \Pthree{}, \Pfour{}, \Pfivea{},
-    \Pfiveb{}, \Pfivec{}, \Pfived{}, and \Psix{};
-  \item \poolThresholds: pool-related governance thresholds; these are rational
-    numbers named \Qone{}, \Qtwoa{}, \Qtwob{}, \Qfour{} and \Qfive{};
-  \item \ccMinSize{}: minimum constitutional committee size;
-  \item \ccMaxTermLength{}: maximum term limit (in epochs) of constitutional
-    committee members;
-  \item \govActionLifetime{}: governance action expiration;
-  \item \govActionDeposit{}: governance action deposit;
-  \item \drepDeposit{}: \DRep{} deposit amount;
-  \item \drepActivity{}: \DRep{} activity period;
-  \item \minimumAVS{}: the minimum active voting threshold.
-\end{itemize}
-\Cref{fig:protocol-parameter-declarations} also defines the
-function \paramsWellFormed{} which performs some sanity checks on protocol
-parameters.
-\Cref{fig:pp-update-type} defines types and functions to update
-parameters. These consist of an abstract type \AgdaField{UpdateT} and
-two functions \AgdaField{applyUpdate} and \AgdaField{updateGroups}.
-The type \AgdaField{UpdateT} is to be instantiated by a type that
-%
-\begin{itemize}
-  \item can be used to update parameters, via the
-    function \AgdaField{applyUpdate}
-  \item can be queried about what parameter groups it updates, via the
-    function \AgdaField{updateGroups}
-\end{itemize}
-%
-An element of the type \AgdaField{UpdateT} is well formed if it
-updates at least one group and applying the update preserves
-well-formedness.
+```
+-->
 
 
-\begin{code}[hide]
+<!--
+```agda
 instance
   pvCanFollow? : ∀ {pv} {pv'} → Dec (pvCanFollow pv pv')
   pvCanFollow? {m , n} {pv} with pv ≟ (m + 1 , 0) | pv ≟ (m , n + 1)
@@ -498,39 +511,60 @@ instance
   ... | no ¬p    | yes refl = yes canFollowMinor
   ... | yes refl | no ¬p    = yes canFollowMajor
   ... | yes refl | yes p    = ⊥-elim $ m+1+n≢m m $ ×-≡,≡←≡ p .proj₁
-\end{code}
+```
+-->
 
-\begin{figure*}[ht]
-\begin{AgdaMultiCode}
-\begin{code}[hide]
+## Abstract Type for Parameter Updates {#sec:abstract-type-for-parameter-updates}
+
+This section defines an abstract type, `UpdateT`{.AgdaField}, and two functions,
+`applyUpdate`{.AgdaField} and `updateGroups`{.AgdaField}.  The type
+`UpdateT`{.AgdaField} is to be instantiated by a type that can be
+
++  used to update parameters, via the function `applyUpdate`{.AgdaField}, and
+
++  queried about what parameter groups it updates, via the function
+   `updateGroups`{.AgdaField}.
+
+An element of the type `UpdateT`{.AgdaField} is well formed if it updates at least
+one group and applying the update preserves well-formedness.
+
+<!--
+```agda
 record PParamsDiff : Type₁ where
   field
-\end{code}
-\emph{Abstract types \& functions}
-\begin{code}
-    UpdateT : Type
-    applyUpdate : PParams → UpdateT → PParams
-    updateGroups : UpdateT → ℙ PParamGroup
-
-\end{code}
-\begin{code}[hide]
+```
+-->
+*Abstract types & functions*
+```agda
+    UpdateT       : Type
+    applyUpdate   : PParams → UpdateT → PParams
+    updateGroups  : UpdateT → ℙ PParamGroup
+```
+<!--
+```agda
     ⦃ ppWF? ⦄ : ∀ {u} → (∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)) ⁇
-\end{code}
-\emph{Well-formedness condition}
-\begin{code}
-
+```
+-->
+ *Well-formedness condition*
+```agda
   ppdWellFormed : UpdateT → Type
-  ppdWellFormed u = updateGroups u ≢ ∅
+  ppdWellFormed u =
+    updateGroups u ≢ ∅
     × ∀ pp → paramsWellFormed pp → paramsWellFormed (applyUpdate pp u)
-\end{code}
-\end{AgdaMultiCode}
-\caption{Abstract type for parameter updates}
-\label{fig:pp-update-type}
-\end{figure*}
-\begin{code}[hide]
+```
+<!--
+```agda
 record GovParams : Type₁ where
   field ppUpd : PParamsDiff
   open PParamsDiff ppUpd renaming (UpdateT to PParamsUpdate) public
   field ⦃ DecEq-UpdT ⦄ : DecEq PParamsUpdate
 --         ⦃ Show-UpdT ⦄ : Show PParamsUpdate
-\end{code}
+```
+-->
+
+# References {#references .unnumbered}
+
+**\[CKB+23\]** <span id="cip1694" label="cip1694"></span> Jared Corduan
+and Andre Knispel and Matthias Benkort and Kevin Hammond and Charles
+Hoskinson and Samuel Leathers. *A First Step Towards On-Chain
+Decentralized Governance*. 2023.
