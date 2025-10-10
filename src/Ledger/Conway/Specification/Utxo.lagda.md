@@ -1,8 +1,6 @@
 # UTxO {#sec:utxo}
 
-This section is part of the [Ledger.Conway.Specification.Utxo][]
-module of the [formal ledger specification][] where we define types and functions
-needed for the UTxO transition system.
+This section defines types and functions needed for the UTxO transition system.
 
 The UTxO transition system is built up from a number of smaller parts defined in this
 section, culminating in the `UTXO`{.AgdaDatatype} rule given in the final
@@ -444,7 +442,7 @@ that their difference is the identity function.
 ```
 
 
-## The `UTXOS`{.AgdaDatatype} rule {#sec:utxos-rule}
+## The <span class="AgdaDatatype">UTXOS</span> Transition Rule {#sec:the-utxos-transition-rule}
 
 <!--
 ```agda
@@ -505,7 +503,7 @@ unquoteDecl Scripts-No-premises  = genPremises Scripts-No-premises  (quote Scrip
 -->
 
 
-## UTXO Inference Rule {#sec:utxo-inference-rule}
+## The <span class="AgdaDatatype">UTXO</span> Transition System {#sec:the-utxo-transition-system}
 
 This section ties all the pieces of the UTXO rule together.
 

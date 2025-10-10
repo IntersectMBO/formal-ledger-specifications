@@ -10,7 +10,7 @@ New proposals are appended at the end, but any proposal can be removed
 at the epoch boundary. However, for the purposes of enactment, earlier
 proposals take priority. Note that `EnactState`{.AgdaRecord} used in
 `GovEnv`{.AgdaRecord} is defined in
-the [Enact][Ledger.Conway.Specification.Enact] module.
+the [Enact](Ledger.Conway.Specification.Enact.md) module.
 
 <!--
 ```agda

@@ -131,7 +131,7 @@ instance
 -->
 
 
-## <span class="AgdaDatatype">ENACT</span> Transition System {#enact-transition-system}
+## The <span class="AgdaDatatype">ENACT</span> Transition System {#sec:the-enact-transition-system}
 
 This section defines the rules of the `ENACT`{.AgdaDatatype} transition system.
 Usually no preconditions are checked and the state is simply updated (including the

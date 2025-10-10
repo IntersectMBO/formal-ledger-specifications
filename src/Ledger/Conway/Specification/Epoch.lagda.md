@@ -186,9 +186,7 @@ opaque
 ```
 -->
 
-## <span class="AgdaDatatype">RewardUpdate</span>
-
-### Computing <span class="AgdaDatatype">RewardUpdate</span>
+## Computing Reward Updates
 
 This section defines the function `createRUpd`{.AgdaFunction} which creates a
 `RewardUpdate`{.AgdaRecord}, i.e. the net flow of Ada due to paying out rewards
@@ -356,7 +354,7 @@ Relevant quantities are:
   denominator is zero.
 
 
-## Applying <span class="AgdaDatatype">RewardUpdate</span> {#applying-rewardupdate}
+## Applying Reward Updates {#sec:applying-reward-updates}
 
 This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
 `RewardUpdate`{.AgdaDatatype} to the `EpochState`{.AgdaFunction}.
@@ -385,7 +383,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
     unregRU'  = ∑[ x ← unregRU ] x
 ```
 
-## Stake Distributions {#stake-distributions}
+## Stake Distributions {#sec:stake-distributions}
 
 This section defines the functions
 `calculatePoolDelegatedState`{.AgdaFunction},
@@ -474,9 +472,6 @@ credential) to the deposit.
       stakePerCredential = mapFromFun (λ c → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c))
                                       (dom activeVoteDelegs)
 
-```
-
-```agda
   calculatePoolDelegatedStakeForVoting
     : Snapshot
     → UTxOState
@@ -509,7 +504,7 @@ governance actions.
     > submitter's voting power to vote on their own (and competing)
     > actions.
 
-    While originally _intended_ for `DRep`{.AgdaInductiveConstructor}s
+    While originally _intended_ for `DReps`{.AgdaInductiveConstructor}
     only, the Haskell implementation and the formal specification
     count deposits on governance actions towards the stake of
     `SPO`{.AgdaInductiveConstructor}s as well.
@@ -547,7 +542,7 @@ private variable
 ```
 -->
 
-## <span class="AgdaDatatype">EPOCH</span> Transition System {#epoch-transition-system}
+## The <span class="AgdaDatatype">EPOCH</span> Transition System {#sec:epoch-transition-system}
 
 The `EPOCH`{.AgdaDatatype} transition has a few updates that are encapsulated
 in the following functions. We need these functions to bring them in scope for
@@ -671,9 +666,9 @@ EPOCH-updates fut ls dState' acnt' =
       }
 ```
 
-### Transition Rule
+### Transition Rules
 
-This section defines the `EPOCH`{.AgdaDatatype} transition rule. 
+We are now ready to define the `EPOCH`{.AgdaDatatype} transition rule.
 
 In Conway, the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
 and carries out the following tasks:
@@ -683,7 +678,7 @@ and carries out the following tasks:
 - Remove expired and enacted governance actions, and refund deposits.
 
 - If `govSt’`{.AgdaBound} is empty, increment the activity counter for
-  `DRep`{.AgdaInductiveConstructor}s.
+  `DReps`{.AgdaInductiveConstructor}.
 
 - Remove all hot keys from the constitutional committee delegation map
   that do not belong to currently elected members.
@@ -723,9 +718,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 ```
 
-## <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#newepoch-transition-system}
-
-This section defines the `NEWEPOCH`{.AgdaDatatype} transition system.
+Finally, we define the `NEWEPOCH`{.AgdaDatatype} transition system.
 
 ```agda
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where

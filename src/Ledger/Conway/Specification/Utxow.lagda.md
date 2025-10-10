@@ -104,7 +104,7 @@ allowedLanguages tx utxo =
     os = range (outs txb) ∪ range (utxo ∣ (txIns ∪ refInputs))
 ```
 
-## The <span class="AgdaDatatype">UTXOW</span> Transition System
+## The <span class="AgdaDatatype">UTXOW</span> Transition System {#sec:the-utxow-transition-system}
 
 <!--
 ```agda
@@ -178,14 +178,15 @@ implementation of Plutus to this specification, an additional step
 processing the `List`{.AgdaDatatype} `Data`{.AgdaFunction} argument we
 provide would be required.
 
-In Section [UTXOW inference rules](Ledger.Conway.Specification.Utxow.md#utxow-inference-rules), the line
-`inputHashes`{.AgdaBound} `subseteqfield`{.AgdaInductiveConstructor}
-`txdatsHashes`{.AgdaBound} compares two inhabitants of
-`PowerSet`{.AgdaFunction} `DataHash`{.AgdaFunction}. In the Alonzo spec,
-these two terms would have inhabited `PowerSet`{.AgdaFunction}
-(`Maybe`{.AgdaDatatype} `DataHash`{.AgdaFunction}), where a
-`nothing`{.AgdaInductiveConstructor} is thrown out [VK21,
-](#alonzo-ledger-spec).
+In the list of premises of the `UTXOW`{.AgdaDatatype} rule, in the section on
+[The UTXOW Transition System](Ledger.Conway.Specification.Utxow.md#sec:the-utxow-transition-system),
+the line `inputsDataHashes`{.AgdaBound} `⊆`{.AgdaInductiveConstructor}
+`txdatsHashes`{.AgdaBound} compares two inhabitants of type
+`PowerSet`{.AgdaFunction} `DataHash`{.AgdaFunction}.  In the Alonzo era, these two
+terms inhabited the
+`PowerSet`{.AgdaFunction} (`Maybe`{.AgdaDatatype} `DataHash`{.AgdaFunction}) type,
+where a `nothing`{.AgdaInductiveConstructor} was simply thrown out
+[VK21,](#alonzo-ledger-spec).
 
 # References {#references .unnumbered}
 
