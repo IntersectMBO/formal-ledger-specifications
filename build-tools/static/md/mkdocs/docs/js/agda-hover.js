@@ -1,5 +1,5 @@
 // === Agda hover definitions ===============================================
-// Works on Agda-generated HTML embedded in your Markdown, i.e., inside <pre class="Agda">.
+// Works on Agda-generated HTML embedded in Markdown, i.e., inside <pre class="Agda">.
 // Shows a tooltip on hover with (1) token info, (2) link to full definition,
 // and (best-effort) a short snippet from the target page near the anchor.
 
@@ -253,10 +253,9 @@
     return { block, start, end, iAnchor };
   }
 
-
-
   function renderTooltipContent(info, snippet) {
-    const { href, basename, agdaClass, moduleName } = info;
+    const { basename, agdaClass, moduleName } = info;
+
     const header = `<div class="agda-tip-head">
         <span class="agda-kind">${sanitize(agdaClass)}</span>
         <code class="agda-name">${sanitize(basename)}</code>
@@ -267,11 +266,7 @@
       ? `<pre class="agda-tip-snippet"><code>${sanitize(snippet)}</code></pre>`
       : `<div class="agda-tip-empty">No preview available.</div>`;
 
-    const footer = `<div class="agda-tip-actions">
-        <a class="agda-open-def" href="${href}">Open definition ↗</a>
-      </div>`;
-
-    return header + body + footer;
+    return header + body;  // ⟵ no footer
   }
 
   function showTooltip(evt, a, content) {
