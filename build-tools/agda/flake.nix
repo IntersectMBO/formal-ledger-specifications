@@ -15,7 +15,7 @@
     let
       overlay = final: prev: {
         agdaPackages = prev.agdaPackages.override (_: {
-          Agda = prev.haskellPackages.callPackage ./fls-agda.nix { };
+          Agda = prev.haskellPackages.callPackage ./nix/fls-agda.nix { };
         });
       };
     in

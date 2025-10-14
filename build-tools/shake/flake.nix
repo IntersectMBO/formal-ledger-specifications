@@ -25,7 +25,7 @@
         };
       in
       {
-        packages.default = pkgs.haskellPackages.callPackage ./fls-shake.nix {
+        packages.default = pkgs.haskellPackages.callPackage ./nix/fls-shake.nix {
           fls-agda = inputs.fls-agda.packages.${system}.default;
           inherit (pkgs)
             makeWrapper

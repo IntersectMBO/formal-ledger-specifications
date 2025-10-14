@@ -103,10 +103,9 @@ detailed version of this annotated tree can be found at the bottom of this page.
 
 ```
 ├── flake.nix                  # Nix flake
-├── TROUBLESHOOTING.md         # Guide for resolving common build issues
-├── TEX2MD_MIGRATION.md        # Guide for LaTeX to Markdown migration process
 └── build-tools/
     ├── agda/
+    │   ├── flake.nix          # Nix flake
     │   ├── data/
     │   │   ├── Agda.css       # for styling Agda HTML output
     │   │   └── AgdaKaTeX.js   # for integrating Agda's HTML with KaTeX
@@ -115,7 +114,15 @@ detailed version of this annotated tree can be found at the bottom of this page.
     │   │   └── fls-agda.nix   # Nix derivation for fls-agda package
     │   └── src/
     │       └── Main.hs        # Main entry point for fls-agda executable
+    │
+    ├── nix                    # Nix derivations for exported packages
+    │   ├── formal-ledger.nix
+    │   ├── hs-src.nix
+    │   ├── html.nix
+    │   └── mkdocs.nix
+    │
     └── shake/
+        ├── flake.nix          # Nix flake
         ├── fls-shake.cabal    # for building fls-shake Haskell package
         ├── nix/
         │   └── fls-shake.nix  # Nix derivation for fls-shake package
@@ -128,8 +135,8 @@ detailed version of this annotated tree can be found at the bottom of this page.
 <a id="development-environment-setup"></a>
 ## 💻 Development Environment Setup
 
-We provide several development shells tailored for different tasks. You can enter them using `nix develop`.
-
+We provide several development shells tailored for different tasks. You can
+enter them using `nix develop`.
 
 +  🐚 **Default Shell**
 
