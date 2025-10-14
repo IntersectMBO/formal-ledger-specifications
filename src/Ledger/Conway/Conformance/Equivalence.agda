@@ -193,7 +193,7 @@ getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (run-∷ (C.CERT-del
             (getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
 getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (run-∷ (C.CERT-deleg (C.DELEG-reg x)) rs)
   = L.reg (getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
-getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (run-∷ (C.CERT-pool (C.POOL-regpool _)) rs)
+getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (run-∷ (C.CERT-pool L.POOL-regpool) rs)
   = L.regpool (getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
 getValidCertDepositsCERTS {Γ} {s} {cert ∷ _} deposits wf (run-∷ (C.CERT-pool C.POOL-retirepool) rs)
   = L.retirepool (getValidCertDepositsCERTS _ (lemUpdCert (L.CertEnv.pp Γ) (certDepositsC s) deposits cert wf) rs)
@@ -270,7 +270,7 @@ lemCERTS'DepositsC (run-[] C.CERT-post) = refl
 lemCERTS'DepositsC (run-∷ (C.CERT-deleg  (C.DELEG-delegate     _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (run-∷ (C.CERT-deleg  (C.DELEG-dereg        _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (run-∷ (C.CERT-deleg  (C.DELEG-reg          _)) rs) = lemCERTS'DepositsC rs
-lemCERTS'DepositsC (run-∷ (C.CERT-pool   (C.POOL-regpool       _)) rs) = lemCERTS'DepositsC rs
+lemCERTS'DepositsC (run-∷ (C.CERT-pool   L.POOL-regpool          ) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (run-∷ (C.CERT-pool    C.POOL-retirepool     )  rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (run-∷ (C.CERT-vdel   (C.GOVCERT-regdrep    _)) rs) = lemCERTS'DepositsC rs
 lemCERTS'DepositsC (run-∷ (C.CERT-vdel   (C.GOVCERT-deregdrep  _)) rs) = lemCERTS'DepositsC rs
@@ -358,9 +358,9 @@ opaque
                                           , cong-updateGDep {pp} cert {deps₁ .proj₂} {deps₂ .proj₂} ⟩ eqd) rs
     in  deps₂' , eqd' , run-∷ (C.CERT-deleg (C.DELEG-reg h)) rs'
 
-  castCERTS' {Γ} deps₁ deps₂ deps₁' eqd (run-∷ (C.CERT-pool  {dCert = cert} (C.POOL-regpool h))      rs) =
+  castCERTS' {Γ} deps₁ deps₂ deps₁' eqd (run-∷ (C.CERT-pool  {dCert = cert} L.POOL-regpool)          rs) =
     let deps₂' , eqd' , rs' = castCERTS' deps₁ deps₂ deps₁' eqd rs
-    in  deps₂' , eqd' , run-∷  (C.CERT-pool (C.POOL-regpool h)) rs'
+    in  deps₂' , eqd' , run-∷  (C.CERT-pool L.POOL-regpool) rs'
 
   castCERTS' {Γ} deps₁ deps₂ deps₁' eqd (run-∷ (C.CERT-pool  {dCert = cert} C.POOL-retirepool)       rs) =
     let deps₂' , eqd' , rs' = castCERTS' deps₁ deps₂ deps₁' eqd rs

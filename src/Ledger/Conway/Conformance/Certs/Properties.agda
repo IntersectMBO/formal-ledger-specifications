@@ -8,6 +8,8 @@ module Ledger.Conway.Conformance.Certs.Properties (gs : _) (open GovStructure gs
 open import Data.Maybe.Properties
 open import Relation.Nullary.Decidable
 
+open import Ledger.Conway.Specification.Certs.Properties.Computational gs
+  using (Computational-POOL)
 open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
 open import Ledger.Conway.Conformance.Certs gs
 
@@ -76,17 +78,6 @@ instance
   Computational-DELEG .completeness de ds (reg c d) _ (DELEG-reg p)
     rewrite dec-yes (¿ c ∉ dom (DState.rewards ds) × (d ≡ DelegEnv.pparams de .PParams.keyDeposit ⊎ d ≡ 0) ¿) p .proj₂ = refl
 
-  Computational-POOL : Computational _⊢_⇀⦇_,POOL⦈_ String
-  Computational-POOL .computeProof _ ps (regpool c _) =
-    case ¬? (c ∈? dom (pools ps)) of λ where
-      (yes p) → success (-, POOL-regpool p)
-      (no ¬p) → failure (genErrors ¬p)
-  Computational-POOL .computeProof _ _ (retirepool c e) = success (-, POOL-retirepool)
-  Computational-POOL .computeProof _ _ _ = failure "Unexpected certificate in POOL"
-  Computational-POOL .completeness _ ps (regpool c _) _ (POOL-regpool ¬p)
-    rewrite dec-no (c ∈? dom (pools ps)) ¬p = refl
-  Computational-POOL .completeness _ _ (retirepool _ _) _ POOL-retirepool = refl
-
   Computational-GOVCERT : Computational _⊢_⇀⦇_,GOVCERT⦈_ String
   Computational-GOVCERT .computeProof ce gs (regdrep c d _) =
     let open CertEnv ce; open GState gs; open PParams pp in
@@ -148,8 +139,8 @@ instance
   ... | success _ | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(regpool c poolParams) cs' (CERT-pool h)
-    with computeProof (CertEnv.pp ce) (CertState.pState cs) dCert | completeness _ _ _ _ h
-  ... | success _ | refl = refl
+    with completeness _ _ _ _ h
+  ... | refl = refl
   Computational-CERT .completeness ce cs
     dCert@(retirepool c e) cs' (CERT-pool h)
     with completeness _ _ _ _ h
