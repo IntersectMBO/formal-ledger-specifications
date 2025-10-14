@@ -2,9 +2,10 @@
 {-# OPTIONS --safe #-}
 module Ledger.Dijkstra.Specification where
 
-import Ledger.Dijkstra.Specification.Address
+import Ledger.Core.Specification.Address renaming (RwdAddr to RewardAddress)
+import Ledger.Core.Specification.Epoch
+
 import Ledger.Dijkstra.Specification.Certs
-import Ledger.Dijkstra.Specification.Epoch
 import Ledger.Dijkstra.Specification.Gov.Base
 import Ledger.Dijkstra.Specification.Gov.Actions
 import Ledger.Dijkstra.Specification.PParams
