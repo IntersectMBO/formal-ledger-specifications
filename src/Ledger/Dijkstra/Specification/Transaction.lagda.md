@@ -8,11 +8,11 @@ import Data.Maybe.Base as M
 
 open import Ledger.Prelude renaming (filterᵐ to filter)
 
-open import Ledger.Dijkstra.Specification.Crypto
-open import Ledger.Dijkstra.Specification.Epoch
+open import Ledger.Core.Specification.Crypto
+open import Ledger.Core.Specification.Epoch
 open import Ledger.Dijkstra.Specification.Gov.Base
 
-import Ledger.Dijkstra.Specification.Address
+import Ledger.Core.Specification.Address renaming (RwdAddr to RewardAddress)
 import Ledger.Dijkstra.Specification.Certs
 import Ledger.Dijkstra.Specification.Gov.Actions
 import Ledger.Dijkstra.Specification.PParams
@@ -24,20 +24,20 @@ open import Relation.Nullary.Decidable using (⌊_⌋)
 ```
 
 A transaction in Dijkstra is very similar to a transaction in Conway
-except that now it may include:
+except that now, as described in CIP 0118[^1], it may include
 
-- other (sub)transactions as part of its body (TODO: cite CIP)
-- _guard_ scripts (TODO: cite CIP)
++  other (sub)transactions as part of its body;
++  _guard_ scripts.
 
 Before continuing, we remark that transactions cannot be arbitrarily
 nested. That is, a transaction (henceforth refered as top-level
 transaction) can include subtransactions, but these cannot include
 other subtransactions.
 
-## Transaction levels
+## Transaction Levels {#sec:transaction-levels}
 
 To differentiate between the two types of transactions (i.e. top-level
-and sub), we define the type of transaction level:
+and sub-level), we define the type of transaction level.
 
 ```agda
 data TxLevel : Type where
@@ -45,8 +45,8 @@ data TxLevel : Type where
 ```
 
 This type will be used, among other purposes, to provide a concise
-definition of the types of top-level and sub transactions in (TODO:
-add forward reference).
+definition of the types of top-level and sub transactions in the [Transactions][]
+section below.
 
 To that end, we define two auxiliary functions that will aid in
 specifying which record fields of a transaction body are present at
@@ -80,7 +80,7 @@ data Tag : TxLevel → Type where
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 ```
 
-## Transactions
+## Transactions {#sec:transactions}
 
 ```agda
 record TransactionStructure : Type₁ where
@@ -98,7 +98,7 @@ record TransactionStructure : Type₁ where
   field crypto : _
   open CryptoStructure crypto public
   open Ledger.Dijkstra.Specification.TokenAlgebra.Base ScriptHash public
-  open Ledger.Dijkstra.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
+  open Ledger.Core.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
 
   field epochStructure : _
   open EpochStructure epochStructure public
@@ -141,9 +141,6 @@ record TransactionStructure : Type₁ where
   UTxO : Type
   UTxO = TxIn ⇀ TxOut
 
-  Withdrawals : Type
-  Withdrawals = RewardAddress ⇀ Coin
-
   -- Datums : Type
   -- Datums = DataHash ⇀ Datum
 
@@ -165,7 +162,7 @@ The type of transactions is defined as three mutually recursive
 records parameterised by a value of type `TxLevel`{.agdatype}.
 
 The fields that depend on the transaction level use the auxiliary functions
-`InTopLevel` and `InSubLevel` defined in (TODO: add back ref)
+`InTopLevel` and `InSubLevel` defined in the section on [Transaction Levels][].
 
 ```agda
   mutual
@@ -377,3 +374,60 @@ could be either of them.
     concatMapˢ getSubTxScripts ∘ fromList ∘ TxBody.txSubTransactions ∘ TxBodyOf
 ```
 -->
+
+## Changes to Transaction Validity
+
+As discussed in [Ledger.Conway.Specification.Properties][], transaction validity is
+tricky, and this is as true in the Dijkstra era as it was in Conway, if not moreso.
+
+Here are some key points about transaction validity in the Dijkstra era.
+
+1.  Sub-transactions are not allowed to contain sub-transactions themselves.
+
+2.  Sub-transactions are not allowed to contain collateral inputs.  Only a top-level
+    transaction is allowed to (furthermore, obligated to) provide sufficient
+    collateral for all scripts that are run as part of validating all transactions in
+    that batch.  If any script in a batch fails, none of the transactions in the batch
+    is applied; only the collateral is collected.
+
+3.  Transactions using the new features of the Dijkstra era are not allowed to run
+    PlutusV3 scripts (nor earlier Plutus version scripts).
+
+4.  All scripts are shared across all transactions within a single batch, so
+    attaching one script to either a sub- or a top-level-transaction allows other
+    transactions to run it without also including it in its own scripts.  This
+    includes references scripts that are sourced from the outputs to which reference
+    inputs point in the UTxO.  These referenced UTxO entries could be outputs of
+    preceding transactions in the batch.
+
+    Datums (from reference inputs and from other transactions) are also shared in
+    this way.  As before, only the datums fixed by the executing transaction are
+    included in the `TxInfo`{.AgdaRecord} constructed for its scripts, however, now they don't
+    necessarily have to be attached to that transaction.
+
+5.  All inputs of all transactions in a single batch must be contained in the UTxO
+    set before any of the batch transactions are applied.  This ensures that
+    operation of scripts is not disrupted, for example, by temporarily duplicating
+    thread tokens, or falsifying access to assets via flash loans.  In the future,
+    this may be up for reconsideration.
+
+6.  The batch must be balanced; i.e., preservation of value (POV) must hold.  The
+    updated `produced` and `consumed` calculations sum up the appropriate quantities
+    not for individual transactions, but for the entire batch, which includes the
+    top-level transaction and all its sub-transactions.
+
+7.  All transactions (sub- and top-level) may specify a non-zero fee.  The total fee
+    summed up across all transactions in a batch is required to cover the minimum
+    fees of all transactions.  The fees specified in all transactions are always
+    collected.  Individual transactions in a batch do not need to meet the min-fee
+    requirement.
+
+8.  The total size of the top-level transaction (including all its sub-transactions)
+    must be less than the `maxTxSize`{.AgdaField}.  This constraint is necessary to
+    ensure efficient network operation since batches will be transmitted wholesale
+    across the Cardano network.
+
+
+[^1]:  See CIP 0118; once finalized and merged, CIP 0118 will appear in the
+       main branch of [the CIP repository][CIPs]; until then, it can be found
+       at <https://github.com/polinavino/CIPs/tree/polina/CIP0118/CIP-0118>.

@@ -4,10 +4,10 @@ source_path: src/Ledger/Dijkstra/Specification/Script.lagda.md
 ---
 ```agda
 {-# OPTIONS --safe #-}
-open import Ledger.Dijkstra.Specification.Crypto
-  using (CryptoStructure)
-open import Ledger.Dijkstra.Specification.Epoch
-  using (EpochStructure)
+
+open import Ledger.Core.Specification.Crypto using (CryptoStructure)
+open import Ledger.Core.Specification.Epoch using (EpochStructure)
+
 module Ledger.Dijkstra.Specification.Script
   (crypto : CryptoStructure)
   (es     : EpochStructure) where

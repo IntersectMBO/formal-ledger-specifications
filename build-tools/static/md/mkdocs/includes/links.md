@@ -11,6 +11,7 @@
 [CERTS]: Ledger.Conway.Specification.Certs.md#sec:the-certs-transition-system
 [CERTS rules]: Ledger.Conway.Specification.Certs.md#sec:the-certs-transition-system
 [CHAIN]: Ledger.Conway.Specification.Chain.md#chain-transition-system
+[CIPs]: https://github.com/cardano-foundation/CIPs
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Specification.Enact.md#enact-transition-system
 [EPOCH]: Ledger.Conway.Specification.Epoch.md#epoch-transition-system
@@ -70,3 +71,6 @@
 [Epoch.Properties.ConstRwds]: Ledger.Conway.Specification.Epoch.Properties.ConstRwds.md
 [Epoch.Properties.NoPropSameDReps]: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.md
 [Certs.Properties.VoteDelegsVDeleg]: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.md
+
+[Transactions]: Ledger.Dijkstra.Specification.Transaction.md##sec:transactions
+[Transaction Levels]: Ledger.Dijkstra.Specification.Transaction.md##sec:transaction-levels
