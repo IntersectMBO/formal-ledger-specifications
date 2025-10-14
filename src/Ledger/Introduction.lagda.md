@@ -28,21 +28,13 @@ private variable
 ```
 -->
 
-??? note "Conway specifics"
+This is the formal specification of the Cardano ledger.  The Agda source code with
+which we formalize the ledger specification and which generates this web site is
+open source and resides at the following
 
-    This is the specification of the Conway era of the Cardano ledger. As
-    with previous specifications, this document is an incremental
-    specification, so everything that isn’t defined here refers to the most
-    recent definition from an older specification.
+**repository url**: <https://github.com/IntersectMBO/formal-ledger-specifications>
 
-This is the work-in-progress specification of the Cardano ledger. The
-Agda source code with which we formalize the ledger specification and
-which generates this pdf document is open source and resides at the
-following
-
-**Repository url**: <https://github.com/IntersectMBO/formal-ledger-specifications>
-
-The current status of each individual era is described in [Table 1](#fig:eras-progress).
+The current status of each individual era is described in the table below.
 
 <a id="fig:eras-progress">
 
@@ -60,29 +52,40 @@ The current status of each individual era is described in [Table 1](#fig:eras-pr
 
 ## Overview {#sec:overview}
 
-This document describes, in a precise and executable way, the behavior
-of the Cardano ledger that can be updated in response to a series of
-events. Because of the precise nature of the document, it can be dense
-and difficult to read at times, and it can be helpful to have a
-high-level understanding of what it is trying to describe, which we
-present below. Keep in mind that this section focuses on intuition,
-using terms (set in *italics*) which may be unfamiliar to some readers,
-but rest assured that later sections of the document will make the
-intuition and italicized terms precise.
+The formal ledger specification Agda source code (and the documentation on this site
+that it generates), describes, in a precise and executable way, the behavior of the
+Cardano ledger as it is updated in response to a series of events.  Because of the
+precise nature of the documententation, it can be dense and difficult to read at
+times, and it can be helpful to have a high-level understanding of what it is trying
+to describe, which we present in this introduction.  Keep in mind that this section
+focuses on intuition, using terms (set in italics) that may be unfamiliar to some
+readers, but rest assured that later sections of the document will make the intuition
+and italicized terms precise.
 
 ## A Note on Agda
 
-This specification is written using the  . We have made a considerable
-effort to ensure that this document is readable by people unfamiliar
-with Agda (or other proof assistants, functional programming languages,
-etc.). However, by the nature of working in a formal language we have to
-play by its rules, meaning that some instances of uncommon notation are
-very difficult or impossible to avoid. Some are explained in
-the [Notation][] and [Agda Essentials][] sections,
-but there is no guarantee that those sections are complete. If the
-meaning of an expression is confusing or unclear, please
-[open an issue][issues] in the [formal ledger repository][repourl] with
-the "notation" label.
+This specification is written using the
+[Agda proof assistant and programming language][Agda Wiki].  We have made a
+considerable effort to ensure that this documentation is readable by people
+unfamiliar with Agda or other proof assistants.  However, by the nature of working in
+a formal language we have to play by its rules, meaning that some instances of
+uncommon notation are very difficult or impossible to avoid.  Some are explained in
+the [Notation][] and [Essential Agda][] sections, but there is no guarantee that
+those sections are complete.  If the meaning of an expression is confusing or
+unclear, please [open an issue][issues] in the [formal ledger repository][repourl]
+with the "notation" label.
+
+!!! note "Viewing the Complete Agda Source Code"
+
+    Throughout the documentation, source code snippets are presented in
+    [literate Agda](https://agda.readthedocs.io/en/latest/tools/literate-programming.html)
+    but some of the more technical and less essential bits of code are hidden from
+    view in order to improve flow and make the formalization easier to digest.
+    However, if you wish to see the complete Agda source code, you can click on
+    the "Show more Agda" button at the top of each page, which will reveal the
+    complete Agda source code for the module presented on that page.  Alterantively,
+    you can always find the source code in its entirety in the
+    [formal ledger repository][repourl].
 
 ## Separation of Concerns
 
@@ -131,31 +134,29 @@ ledger should be updated in response to those events. The primary aim of
 this document is to provide a precise description of this system—the
 ledger state, valid events and the rules for processing them.
 
-We will model this via a number of *state transition systems* (STS)
-which from now on we refer to as “transition rules” or just “rules.”
-These rules describe the different behaviors that determine how the
-whole system evolves and, taken together, they comprise a full
-description of the ledger protocol. Each transition rule consists of the
-following components:
+We model this via a number of *state transition systems* (STS), sometimes called
+“transition rules” or just “rules.”  These rules describe the different behaviors
+that determine how the whole system evolves and, taken together, they comprise a full
+description of the ledger protocol.  Each transition rule consists of the following
+components:
 
-- an *environment* consisting of data, read from the ledger state or the
-  outside world, which should be considered constant for the purposes of
-  the rule;
++  an *environment* consisting of data, read from the ledger state or the
+   outside world, which should be considered constant for the purposes of
+   the rule;
 
-- an *initial state*, consisting of the subset of the full ledger state
-  that is relevant to the rule and which the rule can update;
++  an *initial state*, consisting of the subset of the full ledger state
+   that is relevant to the rule and which the rule can update;
 
-- a *signal* or *event*, with associated data, that the rule can receive
-  or observe;
++  a *signal* or *event*, with associated data, that the rule can receive
+   or observe;
 
-- a set of *preconditions* that must be met in order for the transition
-  to be valid;
++  a set of *preconditions* that must be met in order for the transition
+   to be valid;
 
-- a new state that results from the transition rule.
++  a new state that results from the transition rule.
 
-For example, the UTXOW transition rule---defined in the section called
-[The UTXOW Transition System](Ledger.Conway.Specification.Utxow.md#sec:the-utxow-transition-system)
-of the [Utxow module](Ledger.Conway.Specification.Utxow.md)---checks that, among
+For example, the UTXOW transition rule—defined in the section called
+[The UTXOW Transition System][] of the [Utxow module][]—checks that, among
 other things, a given transaction is signed by the appropriate parties.
 
 The transition rules can be composed in the sense that they may require
@@ -164,7 +165,7 @@ example, the UTXOW rule mentioned above requires the UTXO rule, which
 checks that the inputs to the transaction exist, that the transaction is
 balanced, and several other conditions.
 
-!!! note "**Figure: STS Diagram**"
+!!! info "**Figure: STS Diagram**"
 
     State transition rules of the ledger specification, presented as a
     directed graph; each node represents a transition rule; an arrow
@@ -186,52 +187,52 @@ A brief description of each transition rule is provided below, with a
 link to an Agda module and reference to a section where the rule is
 formally defined.
 
-- [CHAIN][] is the top level transition in response to a new block that applies
-  the NEWEPOCH transition when crossing an epoch boundary, and the
-  LEDGERS transition on the list of transactions in the body.
++  [CHAIN][] is the top level transition in response to a new block that applies
+   the NEWEPOCH transition when crossing an epoch boundary, and the
+   LEDGERS transition on the list of transactions in the body.
 
-- [NEWEPOCH][] computes the new state as of the start of a new epoch; includes the
-  previous EPOCH transition.
++  [NEWEPOCH][] computes the new state as of the start of a new epoch; includes the
+   previous EPOCH transition.
 
-- [EPOCH][] computes the new state as of the end of an epoch; includes the ENACT,
-  RATIFY, and SNAP transition rules.
++  [EPOCH][] computes the new state as of the end of an epoch; includes the ENACT,
+   RATIFY, and SNAP transition rules.
 
-- [RATIFY][] decides whether a pending governance action has reached the thresholds
-  it needs to be ratified.
++  [RATIFY][] decides whether a pending governance action has reached the thresholds
+   it needs to be ratified.
 
-- [ENACT][] applies the result of a previously ratified governance action, such as
-  triggering a hard fork or updating the protocol parameters.
++  [ENACT][] applies the result of a previously ratified governance action, such as
+   triggering a hard fork or updating the protocol parameters.
 
 
-- [SNAP][] computes new stake distribution snapshots.
++  [SNAP][] computes new stake distribution snapshots.
 
-- [LEDGERS][] applies LEDGER repeatedly as needed, for each transaction in a list of
-  transactions.
++  [LEDGERS][] applies LEDGER repeatedly as needed, for each transaction in a list of
+   transactions.
 
-- [LEDGER][] is the full state update in response to a single transaction; it
-  includes the UTXOW, GOV, and CERTS rules.
++  [LEDGER][] is the full state update in response to a single transaction; it
+   includes the UTXOW, GOV, and CERTS rules.
 
-- [CERTS][] applies CERT repeatedly for each certificate in the transaction.
++  [CERTS][] applies CERT repeatedly for each certificate in the transaction.
 
-- [CERT][] combines DELEG, POOL, GOVCERT transition rules, as well as some
-  additional rules shared by all three.
++  [CERT][] combines DELEG, POOL, GOVCERT transition rules, as well as some
+   additional rules shared by all three.
 
-- [DELEG][] handles registering stake addresses and delegating to a stake pool.
++  [DELEG][] handles registering stake addresses and delegating to a stake pool.
 
-- [GOVCERT][] handles registering and delegating to `DRep`{.AgdaInductiveConstructor}s.
++  [GOVCERT][] handles registering and delegating to `DReps`{.AgdaInductiveConstructor}.
 
-- [POOL][] handles registering and retiring stake pools.
++  [POOL][] handles registering and retiring stake pools.
 
-- [GOV][] handles voting and submitting governance proposals.
++  [GOV][] handles voting and submitting governance proposals.
 
-- [UTXOW][] checks that a transaction is witnessed correctly with the appropriate
-  signatures, datums, and scripts; includes the UTXO transition rule.
++  [UTXOW][] checks that a transaction is witnessed correctly with the appropriate
+   signatures, datums, and scripts; includes the UTXO transition rule.
 
-- [UTXO][] checks core invariants for an individual transaction to be valid, such
-  as the transaction being balanced, fees being paid, etc; include the
-  UTXOS transition rule.
++  [UTXO][] checks core invariants for an individual transaction to be valid, such
+   as the transaction being balanced, fees being paid, etc; include the
+   UTXOS transition rule.
 
-- [UTXOS][] checks that any relevant scripts needed by the transaction evaluate to true.
++  [UTXOS][] checks that any relevant scripts needed by the transaction evaluate to true.
 
 ## Reflexive-transitive Closure
 
@@ -240,10 +241,9 @@ to arrive at a final state. Since we use this pattern multiple times, we
 define a closure operation which takes a transition rule and applies it
 as many times as possible.
 
-The closure `RTCI`{.AgdaOperator} of a relation `RTCB`{.AgdaOperator} is
-defined in [Reflexive transitive closure](Ledger.Introduction.md#reflexive-transitive-closure). In the
-remainder of the text, the closure operation is called
-`RTC`{.AgdaFunction}.
+The closure `RTCI`{.AgdaOperator} of a relation `RTCB`{.AgdaOperator} is defined in
+[Reflexive transitive closure](Ledger.Introduction.md#reflexive-transitive-closure).
+In the remainder of the text, the closure operation is called `RTC`{.AgdaFunction}.
 
 
 ### Reflexive transitive closure

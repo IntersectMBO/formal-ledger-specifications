@@ -59,9 +59,9 @@ the `EpochState`{.AgdaRecord} field is set to the
 `epochState`{.AgdaField} of `cs`{.AgdaBound} with the exception of the
 `LState`{.AgdaRecord} field, which is set to that of `nes`{.AgdaBound}.
 Let `utxoSt`{.AgdaBound} and `utxoSt'`{.AgdaBound} be the
-respective `UTxOState`{.AgdaRecord}s of the ledger states of `cs`{.AgdaBound} and
+respective `UTxOStates`{.AgdaRecord} of the ledger states of `cs`{.AgdaBound} and
 `cs'`{.AgdaFunction}, respectively, and let `govSt`{.AgdaBound} and
-`govSt'`{.AgdaBound} be their respective `GovState`{.AgdaFunction}s.
+`govSt'`{.AgdaBound} be their respective `GovStates`{.AgdaFunction}.
 Assume the following conditions hold:
 
 +  Let `removed'`{.AgdaFunction} : `ℙ`{.AgdaFunction}(`GovActionID`{.AgdaDatatype} × `GovActionState`{.AgdaDatatype}) be the union of

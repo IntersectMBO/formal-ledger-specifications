@@ -3,7 +3,7 @@ source_branch: master
 source_path: src/EssentialAgda.lagda.md
 ---
 
-# Agda Essentials {#sec:agda-essentials}
+# Essential Agda {#sec:essential-agda}
 
 Here we describe some of the essential concepts and syntax of the Agda
 programming language and proof assistant. The goal is to provide some
@@ -17,7 +17,7 @@ details, the reader is encouraged to consult the official
 ```agda
 {-# OPTIONS --safe #-}
 
-module Ledger.EssentialAgda where
+module EssentialAgda where
 
 open import Prelude using (Type)
 open import Data.Nat

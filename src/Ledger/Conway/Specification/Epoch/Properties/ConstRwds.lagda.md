@@ -21,9 +21,8 @@ open import Ledger.Prelude
 
 *Informally*.
 
-Rewards are left unchanged by the `NEWEPOCH`{.AgdaOperator} rule.
-That is, if `es`{.AgdaBound} and `es'`{.AgdaBound} are two
-`NewEpochState`{.AgdaRecord}s such that
+Rewards are left unchanged by the `NEWEPOCH`{.AgdaOperator} rule.  That is, if
+`es`{.AgdaBound} and `es'`{.AgdaBound} are two `NewEpochStates`{.AgdaRecord} such that
 `es`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `e`{.AgdaBound} `,NEWEPOCH⦈`{.AgdaDatatype} `es'`{.AgdaBound},
 then the rewards of `es`{.AgdaBound} and `es'`{.AgdaBound} are equal.
 

@@ -26,8 +26,9 @@ open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
 -->
 
 Governance actions are ratified through on-chain votes. Different kinds
-of governance actions have different ratification requirements but
-always involve at least two of the three governance bodies.
+of governance actions ([governance action types][Governance Action Types]) have
+different ratification requirements but always involve at least two of the three
+governance bodies.
 
 A successful motion of no-confidence, election of a new constitutional
 committee, a constitutional change, or a hard-fork delays ratification
@@ -40,15 +41,14 @@ consequences in combination with other actions.
 
 ## Ratification Requirements {#sec:ratification-requirements}
 
-The section on [Voting Functions](Ledger.Conway.Specification.Ratify.md#sec:voting-functions)
-details the ratification requirements for each governance action
-scenario. For a governance action to be ratified, all of these
-requirements must be satisfied, on top of other conditions that are
-explained further down. The `threshold`{.AgdaFunction} function is
-defined as a table, with a row for each type of
-`GovAction`{.AgdaDatatype} and a column for each of the three governing bodies
-(or "governance roles")---`CC`{.AgdaInductiveConstructor},
-`DRep`{.AgdaInductiveConstructor} and `SPO`{.AgdaInductiveConstructor}, in that order.
+This section details the ratification requirements for each governance action
+scenario.  For a governance action to be ratified, all of these requirements must be
+satisfied, on top of other conditions that are explained further down.  The
+`threshold`{.AgdaFunction} function is defined as a table, with a row for each type
+of `GovAction`{.AgdaDatatype} and a column for each of the three governing bodies
+(or "governance roles")—`CC`{.AgdaInductiveConstructor},
+`DRep`{.AgdaInductiveConstructor} and `SPO`{.AgdaInductiveConstructor}, in that
+order.
 
 The meaning of the symbols are as follows.
 
@@ -67,9 +67,8 @@ The meaning of the symbols are as follows.
 
 Two rows in this table contain functions that compute the
 `DRep`{.AgdaInductiveConstructor} and `SPO`{.AgdaInductiveConstructor}
-thresholds simultaneously---namely, the
-`UpdateCommittee`{.AgdaInductiveConstructor} and
-`ChangePParams`{.AgdaInductiveConstructor} rows.
+thresholds simultaneously—namely, the `UpdateCommittee`{.AgdaInductiveConstructor}
+and `ChangePParams`{.AgdaInductiveConstructor} rows.
 
 For `UpdateCommittee`{.AgdaInductiveConstructor}, there can be different
 thresholds depending on whether the system is in a state of no-confidence or not.
@@ -89,11 +88,8 @@ vote will always be required. A protocol parameter may or may not be in the
 `SecurityGroup`{.AgdaInductiveConstructor}, so an `SPO`{.AgdaInductiveConstructor}
 vote may not be required.
 
-Finally, each of the `Pₓ`{.AgdaFunction} and `Qₓ`{.AgdaFunction} in the section on
-[Voting Functions](Ledger.Conway.Specification.Ratify.md#sec:voting-functions) are
-protocol parameters.
-
-## Voting Functions {#sec:voting-functions}
+Finally, each of the `Px`{.AgdaFunction} and `Qx`{.AgdaFunction} are protocol
+parameters.
 
 <!--
 ```agda
@@ -120,6 +116,7 @@ threshold pp ccThreshold ga =
         (Info                , _       ) → ∣ ✓†  ∣ ✓†           ∣ ✓†       ∣
           where
 ```
+
 <!--
 ```agda
           open PParams pp
@@ -127,6 +124,7 @@ threshold pp ccThreshold ga =
           open PoolThresholds poolThresholds
 ```
 -->
+
 ```agda
           vote : ℚ → Maybe ℚ
           vote = just
@@ -179,11 +177,12 @@ the groups involved will apply to any given such governance action.
 The purpose of the `SecurityGroup`{.AgdaInductiveConstructor} is to add
 an additional check to security-relevant protocol parameters. Any
 proposal that includes a change to a security-relevant protocol
-parameter must also be accepted by at least half of the SPO stake.
+parameter must also be accepted by at least half of the
+`SPO`{.AgdaInductiveConstructor} stake.
 
 ## Ratification Types and Functions {#sec:ratification-types-and-functions}
 
-This section defines some types and functions used in the `RATIFY`{.AgdaDatatype}
+This section defines types and functions used in the `RATIFY`{.AgdaDatatype}
 transition system.
 
 ```agda
@@ -242,9 +241,9 @@ instance
 ## Vote Counting {#sec:vote-counting}
 
 This section defines the `acceptedBy`{.AgdaFunction} predicate for each of the
-governing bodies. Given the current state of the votes and other parts
-of the system these functions calculate whether a governance action is
-ratified by the corresponding body.
+governing bodies.  Given the current state of the votes and other parts of the system
+these functions calculate whether a governance action is ratified by the
+corresponding body.
 
 ### Constitutional Committee (CC) Vote Counting {#sec:cc-vote-counting}
 
@@ -311,6 +310,7 @@ acceptedByCC Γ eSt gaSt =
   × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
   where
 ```
+
 <!--
 ```agda
   open EnactState eSt using (cc; pparams)
@@ -320,6 +320,7 @@ acceptedByCC Γ eSt gaSt =
   open GovVotes votes using (gvCC)
 ```
 -->
+
 ```agda
   castVotes : Credential ⇀ Vote
   castVotes = gvCC
@@ -358,7 +359,7 @@ acceptedByCC Γ eSt gaSt =
   totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 ```
 
-### DRep Vote Counting {#sec:dreps-vote-counting}
+### DRep Vote Counting {#sec:drep-vote-counting}
 
 This section defines the predicate `acceptedByDRep`{.AgdaFunction}, which depends on
 the following auxiliary definitions.
@@ -386,6 +387,7 @@ acceptedByDRep : RatifyEnv → EnactState → GovActionState → Type
 acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   where
 ```
+
 <!--
 ```agda
   open EnactState eSt using (cc; pparams)
@@ -396,6 +398,7 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   open GovVotes votes using (gvDRep)
 ```
 -->
+
 ```agda
   castVotes : VDeleg ⇀ Vote
   castVotes = mapKeys vDelegCredential gvDRep
@@ -423,70 +426,75 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 ```
 
-### Stake Pool Operator (SPO) Vote Counting {#sec:spo-vote-counting}
+### Stake Pool Operator (<span class="AgdaInductiveConstructor">SPO</span>) Vote Counting {#sec:spo-vote-counting}
 
 This section defines the predicate `acceptedBySPO`{.AgdaFunction}, which uses the
 following auxiliary definitions.
 
-+  `castVotes`{.AgdaFunction}: This map contains the votes that have been
-   cast by members of the SPO body and have been collected as part of the
-   `GovActionState`{.AgdaDatatype} `gaSt`{.AgdaBound}.
++  `castVotes`{.AgdaFunction}: This map contains the votes that have been cast by
+   members of the `SPO`{.AgdaInductiveConstructor} body and have been collected as
+   part of the `GovActionState`{.AgdaDatatype} `gaSt`{.AgdaBound}.
 
-+  `defaultVote`{.AgdaFunction}: This map sets a default vote to all SPOs
-   who didn't vote, with the default depending on the given action, and
-   whether the SPO has delegated their vote to one of the default
-   `DReps`{.AgdaInductiveConstructor}.
++  `defaultVote`{.AgdaFunction}: This map sets a default vote to all
+   `SPOs`{.AgdaInductiveConstructor} who didn't vote, with the default depending on
+   the given action, and whether the `SPO`{.AgdaInductiveConstructor} has delegated
+   their vote to one of the default `DReps`{.AgdaInductiveConstructor}.
 
-+  `actualVotes`{.AgdaFunction}: This map combines the votes cast by SPOs
-   with `defaultVote`{.AgdaBound} using a left-biased union making cast
-   votes take precedence over default votes.
++  `actualVotes`{.AgdaFunction}: This map combines the votes cast by
+   `SPOs`{.AgdaInductiveConstructor} with `defaultVote`{.AgdaBound} using a
+   left-biased union making cast votes take precedence over default votes.
 
 +  `t`{.AgdaFunction}: This rational number is the threshold used to calculate
-   whether the action is ratified by the SPO body.
+   whether the action is ratified by the `SPO`{.AgdaInductiveConstructor} body.
 
-+  `acceptedStake`{.AgdaFunction}: This is the portion of SPO stake that
-   voted `yes`{.AgdaInductiveConstructor}; it is computed using the stake
-   distribution `stakeDistrPools`{.AgdaField} provided in the environment.
++  `acceptedStake`{.AgdaFunction}: This is the portion of
+   `SPO`{.AgdaInductiveConstructor} stake that voted
+   `yes`{.AgdaInductiveConstructor}; it is computed using the stake distribution
+   `stakeDistrPools`{.AgdaField} provided in the environment.
 
-+  `totalStake`{.AgdaFunction}: This is the portion of SPO stake that voted
-  either `yes`{.AgdaInductiveConstructor} or `no`{.AgdaInductiveConstructor};
-  it is computed using the stake distribution `stakeDistrPools`{.AgdaField}
-  provided in the environment.
++  `totalStake`{.AgdaFunction}: This is the portion of
+   `SPO`{.AgdaInductiveConstructor} stake that voted either
+   `yes`{.AgdaInductiveConstructor} or `no`{.AgdaInductiveConstructor}; it is
+   computed using the stake distribution `stakeDistrPools`{.AgdaField} provided in
+   the environment.
 
-Let us discuss in more detail the way SPO votes are counted, as the ledger
-specification's handling of this has evolved in response to community feedback.
-Previously, if an SPO did not vote, then it would be counted as having voted
-`abstain`{.AgdaInductiveConstructor} by default.  Members of the SPO community found
-this behavior counterintuitive and requested that non-voters be assigned a
-`no`{.AgdaInductiveConstructor} vote by default, with the caveat that an SPO could
-change its default setting by delegating its reward account credential to an
-`AlwaysNoConfidence` `DRep`{.AgdaInductiveConstructor} or an `AlwaysAbstain`
-`DRep`{.AgdaInductiveConstructor}.  (This change applies only after the bootstrap
-period; during the bootstrap period the logic is unchanged; see the section on
-[Bootstrapping the Governance System](ConwayBootstrap.md#sec:conway-bootstrap-gov).)
+An `SPO`{.AgdaInductiveConstructor} that did not vote is assumed to have voted
+`no`{.AgdaInductiveConstructor}, except under the following circumstances:
 
-To be precise, the agreed upon specification is the following: an SPO that did not
-vote is assumed to have voted `no`{.AgdaInductiveConstructor}, except under the
-following circumstances:
++  if the `SPO`{.AgdaInductiveConstructor} has delegated its reward credential to an
+   `AlwaysNoConfidence` `DRep`{.AgdaInductiveConstructor}, then their default vote is
+   `yes`{.AgdaInductiveConstructor} for `NoConfidence`{.AgdaInductiveConstructor}
+   proposals and `no`{.AgdaInductiveConstructor} for other proposals;
 
-+  if the SPO has delegated its reward credential to an `AlwaysNoConfidence`
-  `DRep`{.AgdaInductiveConstructor}, then their default vote is
-  `yes`{.AgdaInductiveConstructor} for `NoConfidence`{.AgdaInductiveConstructor}
-  proposals and `no`{.AgdaInductiveConstructor} for other proposals;
-
-+  if the SPO has delegated its reward credential to an `AlwaysAbstain`
-   `DRep`{.AgdaInductiveConstructor}, then its default vote is
++  if the `SPO`{.AgdaInductiveConstructor} has delegated its reward credential to an
+   `AlwaysAbstain` `DRep`{.AgdaInductiveConstructor}, then its default vote is
    `abstain`{.AgdaInductiveConstructor} for all proposals.
 
 It is important to note that the credential that can now be used to configure
 *default* voting behavior is the credential used to withdraw staking rewards, which
 is not the same as the credential that is used for standard voting.
 
+!!! info "Vote Counting Methodology"
+
+    The way `SPO`{.AgdaInductiveConstructor} votes are counted has evolved in response to
+    community feedback.  Previously, if an `SPO`{.AgdaInductiveConstructor} did not vote,
+    then it would be counted as having voted `abstain`{.AgdaInductiveConstructor} by
+    default.  Members of the `SPO`{.AgdaInductiveConstructor} community found this
+    behavior counterintuitive and requested that non-voters be assigned a
+    `no`{.AgdaInductiveConstructor} vote by default, with the caveat that an
+    `SPO`{.AgdaInductiveConstructor} could change its default setting by delegating its
+    reward account credential to an `AlwaysNoConfidence`
+    `DRep`{.AgdaInductiveConstructor} or an `AlwaysAbstain`
+    `DRep`{.AgdaInductiveConstructor}.  (This change applies only after the bootstrap
+    period; during the bootstrap period the logic is unchanged; see the section on
+    [Bootstrapping the Governance System](ConwayBootstrap.md#sec:conway-bootstrap-gov).)
+
 ```agda
 acceptedBySPO : RatifyEnv → EnactState → GovActionState → Type
 acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   where
 ```
+
 <!--
 ```agda
   open EnactState eSt using (cc; pparams)
@@ -496,6 +504,7 @@ acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   open GovVotes votes using (gvSPO)
 ```
 -->
+
 ```agda
   castVotes : KeyHash ⇀ Vote
   castVotes = gvSPO
@@ -532,6 +541,7 @@ which are used in the rules of the `RATIFY`{.AgdaDatatype} transition system.
 abstract
 ```
 -->
+
 ```agda
   accepted : RatifyEnv → EnactState → GovActionState → Type
   accepted Γ es gs = acceptedByCC Γ es gs × acceptedByDRep Γ es gs × acceptedBySPO Γ es gs
@@ -559,6 +569,7 @@ previous action was a delaying one.  This information is passed in as an argumen
 open EnactState
 ```
 -->
+
 ```agda
 verifyPrev : (a : GovActionType) → NeedsHash a → EnactState → Type
 verifyPrev NoConfidence        h es  = h ≡ es .cc .proj₂
