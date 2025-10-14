@@ -67,7 +67,6 @@ def main(run_agda_html_flag: bool = False, test_mode_flag: bool = False) -> None
     if static_tex_result.is_err:
         logging.error(f"❌ Static LaTeX conversion failed: {static_tex_result.unwrap_err()}")
         sys.exit(1)
-    logging.info(f"✅ Converted {len(static_tex_result.unwrap())} static .tex files to Markdown")
 
     # 4. Process Agda source files (.agda -> .lagda.md)
     agda_result = process_agda_source_files(config)

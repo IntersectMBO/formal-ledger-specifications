@@ -70,7 +70,7 @@ module _  ( indexedSumᵛ'-∪ :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' : A ⇀ C
 
 *Informally*.
 
-Let `s`{.AgdaBound}, `s'`{.AgdaBound} be `CertState`{.AgdaRecord}s such that
+Let `s`{.AgdaBound}, `s'`{.AgdaBound} be `CertStates`{.AgdaRecord} such that
 `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `dcert`{.AgdaBound} `,CERT⦈`{.AgdaDatatype} `s'`{.AgdaBound} for
 some `dcert`{.AgdaBound} : `DCert`{.AgdaDatatype}. Then,
 `getCoin`{.AgdaField} `s`{.AgdaBound} $≡$ `getCoin`{.AgdaField} `s'`{.AgdaBound}.
@@ -239,10 +239,10 @@ In other terms,
 
 **Lemma (iteration of `CERT`{.AgdaOperator} rule preserves value).**
 
-*Informally*. Let `l`{.AgdaBound} be a list of `DCert`{.AgdaDatatype}s, and let
-`s₁`{.AgdaBound}, `sₙ`{.AgdaBound} be `CertState`{.AgdaRecord}s such that, starting
+*Informally*. Let `l`{.AgdaBound} be a list of `DCerts`{.AgdaDatatype}, and let
+`s₁`{.AgdaBound}, `sₙ`{.AgdaBound} be `CertStates`{.AgdaRecord} such that, starting
 with `s₁`{.AgdaBound} and successively applying the `CERT`{.AgdaOperator} rule to with
-`DCert`{.AgdaDatatype}s from the list `l`{.AgdaBound}, we obtain `sₙ`{.AgdaBound}.
+`DCerts`{.AgdaDatatype} from the list `l`{.AgdaBound}, we obtain `sₙ`{.AgdaBound}.
 Then, the value of `s₁`{.AgdaBound} is equal to the value of `sₙ`{.AgdaBound}.
 
 *Formally*.

@@ -5,4 +5,4 @@ import Ledger.PreConway
 import Ledger.Conway
 import Ledger.Dijkstra
 
-import Ledger.EssentialAgda
+import EssentialAgda

@@ -419,8 +419,8 @@ opaque
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the
-delegated stake to SPO{.AgdaFunction}s. This function is used both in the
+The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the delegated
+stake to `SPOs`{.AgdaInductiveConstructor}.  This function is used both in the
 `EPOCH`{.AgdaDatatype} rule (via
 `calculatePoolDelegatedStateForVoting`{.AgdaFunction}, see below) and in the
 `NEWEPOCH`{.AgdaDatatype} rule.
@@ -515,11 +515,10 @@ opaque
                                       ∘ʳ (stakeFromGADeposits govSt utxoSt ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction}
-computes the delegated stake to `SPO`{.AgdaInductiveConstructor}s that
-will be used for counting votes. It complements the result of
-`calculatePoolDelegatedStake`{.AgdaFunction} with the deposits made to
-governance actions.
+The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction} computes the
+delegated stake to `SPOs`{.AgdaInductiveConstructor} that will be used for counting
+votes. It complements the result of `calculatePoolDelegatedStake`{.AgdaFunction} with
+the deposits made to governance actions.
 
 ??? erratum
     [CIP-1694](https://cips.cardano.org/cip/CIP-1694) specifies that
@@ -532,10 +531,10 @@ governance actions.
     > submitter's voting power to vote on their own (and competing)
     > actions.
 
-    While originally _intended_ for `DRep`{.AgdaInductiveConstructor}s
+    While originally _intended_ for `DReps`{.AgdaInductiveConstructor}
     only, the Haskell implementation and the formal specification
     count deposits on governance actions towards the stake of
-    `SPO`{.AgdaInductiveConstructor}s as well.
+    `SPOs`{.AgdaInductiveConstructor} as well.
 
 ```agda
 mkStakeDistrs

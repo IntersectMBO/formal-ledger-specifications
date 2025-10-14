@@ -24,13 +24,17 @@
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Specification.Enact.md#sec:the-enact-transition-system
 [EPOCH]: Ledger.Conway.Specification.Epoch.md#sec:the-epoch-transition-system
+[Epoch]: Ledger.Conway.Specification.Epoch.md
+[Epoch Boundary]: Ledger.Conway.Specification.Epoch.md#sec:epoch-boundary
 [Epoch.Properties.ConstRwds]: Ledger.Conway.Specification.Epoch.Properties.ConstRwds.md
 [Epoch.Properties.GovDepsMatch]: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.md
 [Epoch.Properties.NoPropSameDReps]: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.md
+[Essential Agda]: EssentialAgda.md
 [Fees]: Ledger.Conway.Specification.Fees.md
 [formal ledger specification]: https://github.com/IntersectMBO/formal-ledger-specifications
 [Functions used in UTxO rules]: Ledger.Conway.Specification.Utxo.md#functions-used-in-utxo-rules
 [Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
+[Governance Action Types]: Ledger.Conway.Specification.Gov.Actions.md#sec:governance-action-types
 [GOV]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [Gov.Properties.ChangePPGroup]: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
@@ -48,16 +52,18 @@
 [LEDGERS]: Ledger.Conway.Specification.Ledger.md#ledgers-transition-system
 [lem:EpochGovDepsMatch]: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.md#lem:EpochGovDepsMatch
 [lem:LedgerGovDepsMatch]: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md#lem:LedgerGovDepsMatch
-[NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#newepoch-transition-system
+[NEWEPOCH]: Ledger.Conway.Specification.Epoch.md#sec:the-newepoch-transition-system
 [Notation]: Notation.md
 [Ouroboros Chronos blog post]: https://iohk.io/en/blog/posts/2021/10/27/ouroboros-chronos-provides-the-first-high-resilience-cryptographic-time-source-based-on-blockchain/
 [POOL]: Ledger.Conway.Specification.Certs.md#auxiliary-pool-transition-system
-[Protocol Parameter Decfinitions]: Ledger.Conway.Specification.PParams.md#sec:protocol-parameter-definitions
+[Protocol Parameter Definitions]: Ledger.Conway.Specification.PParams.md#sec:protocol-parameter-definitions
 [Ratification Requirements]: Ledger.Conway.Specification.Ratify.md#sec:ratification-requirements
 [RATIFY]: Ledger.Conway.Specification.Ratify.md#the-ratify-transition-system
 [(Re)introduction to Cardano]: https://developers.cardano.org/docs/operate-a-stake-pool/introduction-to-cardano/
 [repourl]: https://github.com/IntersectMBO/formal-ledger-specifications
+[Rewards Calculation Timeline]: Ledger.Conway.Specification.Rewards.md#sec:rewards-calculation-timeline
 [Rewards Motivation]: Ledger.Conway.Specification.Rewards.md#sec:rewards-motivation
+[Script Validation]: Ledger.Conway.Specification.Script.Validation.md#sec:script-validation
 [scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
 [Shelley Ledger Spec (pdf)]: https://github.com/intersectmbo/cardano-ledger/releases/latest/download/shelley-ledger.pdf
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
@@ -71,6 +77,7 @@
 [Utxo.Properties.PoV]: Ledger.Conway.Specification.Utxo.Properties.PoV.md
 [UTXOS]: Ledger.Conway.Specification.Utxo.md#sec:the-utxos-transition-rule
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#sec:the-utxow-transition-system
+[Utxow module]: Ledger.Conway.Specification.Utxow.md
 [Validity and wellformedness predicates]: Ledger.Conway.Specification.Gov.md#validity-and-wellformedness-predicates
 [Voting Functions]: Ledger.Conway.Specification.Ratify.md#sec:voting-functions
 

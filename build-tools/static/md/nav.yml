@@ -215,7 +215,7 @@
       - Deriving: Foreign.HaskellTypes.Deriving.md
   - Appendix/:
     - Definitions: Definitions.md
-    - EssentialAgda: Ledger.EssentialAgda.md
+    - EssentialAgda: EssentialAgda.md
     - Agda Prelude: Prelude.md
     - Type Classes:
       - Interface:

@@ -5,13 +5,9 @@ source_path: src/Ledger/Conway/Specification/Utxow.lagda
 
 # Witnessing {#sec:witnessing}
 
-The purpose of witnessing is make sure the intended action is authorized
+The purpose of witnessing is make sure the actions specified a transaction are authorized
 by the holder of the signing key. (For details see [CVG19](#shelley-ledger-spec).)
-The [Witnessing Functions][] section defines functions used for witnessing.
-`witsVKeyNeeded`{.AgdaFunction} and `scriptsNeeded`{.AgdaFunction} are now defined by
-projecting the same information out of `credsNeeded`{.AgdaFunction}.  Note that the
-last component of `credsNeeded`{.AgdaFunction} adds the script in the
-proposal policy only if it is present.
+This section formalizes the mechanisms use by the Cardano ledger to support witnessing.
 
 <!--
 ```agda
@@ -31,15 +27,6 @@ open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Certs govStructure
 ```
 -->
-
-`allowedLanguages`{.AgdaFunction} has additional conditions for new
-features in Conway. If a transaction contains any votes, proposals, a
-treasury donation or asserts the treasury amount, it is only allowed to
-contain Plutus V3 scripts. Additionally, the presence of reference
-scripts or inline scripts does not prevent Plutus V1 scripts from being
-used in a transaction anymore. Only inline datums are now disallowed
-from appearing together with a Plutus V1 script.
-
 
 ## Witnessing Functions {#sec:witnessing-functions}
 
@@ -87,6 +74,13 @@ languages tx utxo = mapPartial getLanguage (txscripts tx utxo)
     getLanguage (inj₂ s) = just (language s)
 ```
 -->
+
+We begin with the definition of `allowedLanguages`{.AgdaFunction}, which
+includes conditions for new features in Conway.  If a transaction contains any votes,
+proposals, a treasury donation or asserts the treasury amount, it is only allowed to
+contain Plutus V3 scripts.  Additionally, the presence of reference scripts or inline
+scripts does not prevent Plutus V1 scripts from being used in a transaction anymore.
+Only inline datums are now disallowed from appearing together with a Plutus V1 script.
 
 ```agda
 allowedLanguages : Tx → UTxO → ℙ Language
@@ -150,6 +144,19 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
        Γ ⊢ s ⇀⦇ tx ,UTXOW⦈ s'
 ```
 
+**Remarks**
+
++  the line `inputsDataHashes`{.AgdaBound} `⊆`{.AgdaInductiveConstructor} `txdatsHashes`{.AgdaBound}
+   compares two inhabitants of type `PowerSet`{.AgdaFunction} `DataHash`{.AgdaFunction}.
+   In the Alonzo era, these two terms inhabited the `ℙ`{.AgdaFunction}
+   (`Maybe`{.AgdaDatatype} `DataHash`{.AgdaFunction}) type, where a
+   `nothing`{.AgdaInductiveConstructor} was simply thrown out [VK21,](#alonzo-ledger-spec).
+
++  `neededScriptHashes`{.AgdaBound} and `neededVKeyHashes`{.AgdaBound} are
+   defined by projecting information out of `credsNeeded`{.AgdaFunction}.  Also, the
+   last component of the `credsNeeded`{.AgdaFunction} function (defined in the
+   [Script Validation][] module) adds the script in the proposal policy only if it is present.
+
 <!--
 ```agda
 pattern UTXOW-inductive⋯ p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ h
@@ -162,31 +169,21 @@ unquoteDecl UTXOW-inductive-premises =
 -->
 
 
-## Plutus script context
+!!! note "Plutus Script Context"
 
-[CIP-0069](https://cips.cardano.org/cip-0069) unifies the arguments
-given to all types of Plutus scripts currently available: spending,
-certifying, rewarding, minting, voting, proposing.
+    [CIP-0069](https://cips.cardano.org/cip-0069) unifies the arguments
+    given to all types of Plutus scripts currently available: spending,
+    certifying, rewarding, minting, voting, proposing.
 
-The formal specification permits running spending scripts in the absence
-datums in the Conway era. However, since the interface with Plutus is
-kept abstract in this specification, changes to the representation of
-the script context which are part of
-[CIP-0069](https://cips.cardano.org/cip-0069) are not included here. To
-provide a [CIP-0069](https://cips.cardano.org/cip-0069)-conformant
-implementation of Plutus to this specification, an additional step
-processing the `List`{.AgdaDatatype} `Data`{.AgdaFunction} argument we
-provide would be required.
+    The formal specification permits running spending scripts in the absence datums in
+    the Conway era.  However, since the interface with Plutus is kept abstract in this
+    specification, changes to the representation of the script context which are part of
+    [CIP-0069](https://cips.cardano.org/cip-0069) are not included here.
 
-In the list of premises of the `UTXOW`{.AgdaDatatype} rule, in the section on
-[The UTXOW Transition System](Ledger.Conway.Specification.Utxow.md#sec:the-utxow-transition-system),
-the line `inputsDataHashes`{.AgdaBound} `⊆`{.AgdaInductiveConstructor}
-`txdatsHashes`{.AgdaBound} compares two inhabitants of type
-`PowerSet`{.AgdaFunction} `DataHash`{.AgdaFunction}.  In the Alonzo era, these two
-terms inhabited the
-`PowerSet`{.AgdaFunction} (`Maybe`{.AgdaDatatype} `DataHash`{.AgdaFunction}) type,
-where a `nothing`{.AgdaInductiveConstructor} was simply thrown out
-[VK21,](#alonzo-ledger-spec).
+    To supply this specification with a
+    [CIP-0069](https://cips.cardano.org/cip-0069)-conformant implementation of Plutus, an
+    additional step processing the `List`{.AgdaDatatype} `Data`{.AgdaFunction} argument
+    we provide would be required.
 
 # References {#references .unnumbered}
 
