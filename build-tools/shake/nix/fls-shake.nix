@@ -19,7 +19,7 @@
 mkDerivation {
   pname = "fls-shake";
   version = "0.0.0.1";
-  src = ./.;
+  src = ../.;
   isLibrary = false;
   isExecutable = true;
   executableHaskellDepends = [

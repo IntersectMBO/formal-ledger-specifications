@@ -17,7 +17,7 @@
 mkDerivation {
   pname = "fls-agda";
   version = "2.8.0";
-  src = ./.;
+  src = ../.;
   isLibrary = false;
   isExecutable = true;
   enableSeparateDataOutput = true;
