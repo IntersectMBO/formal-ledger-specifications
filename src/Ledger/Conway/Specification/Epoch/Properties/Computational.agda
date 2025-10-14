@@ -55,13 +55,15 @@ module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
 
+  u0 = EPOCHUpdates0.updates fut ls
+  module u0 = EPOCH-Updates0 u0
+
   prs = ⟦ u0 .utxoSt' , acnt , cs .dState , cs .pState ⟧
     where
       open LState
       open CertState
       open EPOCH-Updates0
       cs = ls .certState
-      u0 = EPOCH-updates0 fut ls
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total =
@@ -74,15 +76,15 @@ module _ {eps : EpochState} {e : Epoch} where
     EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
     EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
       let
-        EPOCHUpdates es govSt' dState'' gState' _ acnt'' =
-          EPOCH-updates fut ls dState' acnt'
-        certState' = ⟦ dState'' , pState' , gState' ⟧ᶜˢ
+        EPOCHUpdates dState'' acnt'' =
+          EPOCHUpdates.updates u0 ls dState' acnt'
+        certState' = ⟦ dState'' , pState' , u0.gState' ⟧ᶜˢ
        in
           record
             { acnt = acnt''
             ; ss = ss
-            ; ls = ⟦ utxoSt'' , govSt' , certState' ⟧ˡ
-            ; es = es
+            ; ls = ⟦ utxoSt'' , u0.govSt' , certState' ⟧ˡ
+            ; es = u0.es
             ; fut = fut'
             }
 
@@ -115,7 +117,7 @@ module _ {eps : EpochState} {e : Epoch} where
       fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
       fut'≡fut'' = RATIFIES-deterministic-≡
                     (cong (λ x → record
-                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _ _ _
+                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _ (GStateOf ls) (DStateOf ls)
                                    ; currentEpoch = _
                                    ; dreps = _
                                    ; ccHotKeys = _
