@@ -170,7 +170,7 @@ enter them using `nix develop`.
 
     ```bash
     # Enter the documentation shell
-    nix develop .#docs
+    nix develop .#mkdocs
     ```
 
     ⚒️ **Available Tools**
@@ -189,8 +189,6 @@ enter them using `nix develop`.
 ## 🏗️ Building Project Artifacts
 
 You can build project artifacts in several ways. The recommended method is using `nix build`.
-
-### Using Nix Flakes (Recommended)
 
 The `flake.nix` file exposes all buildable artifacts as packages.
 
@@ -259,7 +257,7 @@ There are two ways to do this.
     then generates the HTML documentation.
 
     ```bash
-    nix develop .#docs
+    nix develop .#mkdocs
     python build-tools/scripts/md/build.py --run-agda
     cd _build/md/mkdocs
     mkdocs serve
@@ -520,7 +518,7 @@ your changes to the code will have on the appearance of the corresponding web pa
     [Building and viewing the formal specification][] section):
 
     ```bash
-    nix develop .#docs
+    nix develop .#mkdocs
     python build-tools/scripts/md/build.py --run-agda
     cd _build/md/mkdocs
     mkdocs serve
