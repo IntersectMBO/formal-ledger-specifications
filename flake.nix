@@ -81,6 +81,7 @@
             nixpkgs.stdenv.mkDerivation (args // default);
 
           pkgs = {
+            formal-ledger = nixpkgs.agdaPackages.formal-ledger;
             hs-src = nixpkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
             html = nixpkgs.callPackage ./build-tools/nix/html.nix { inherit mkDerivation; };
             mkdocs = nixpkgs.callPackage ./build-tools/nix/mkdocs.nix { inherit mkDerivation; };
@@ -88,7 +89,7 @@
         in
         {
           packages = pkgs // {
-            default = nixpkgs.agdaPackages.formal-ledger;
+            default = pkgs.formal-ledger;
             inherit agdaWithPackages;
           };
 
