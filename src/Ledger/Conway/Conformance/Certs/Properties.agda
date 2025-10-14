@@ -40,7 +40,7 @@ instance
     (dereg c md) → case lookupDeposit deposits (CredentialDeposit c) of λ where
       (yes ((k , d) , _)) →
         case
-          ¿ (c , 0) ∈ rewards 
+          ¿ (c , 0) ∈ rewards
           × (CredentialDeposit c , d) ∈ deposits
           × (md ≡ nothing ⊎ md ≡ just d)
           ¿ of λ where
