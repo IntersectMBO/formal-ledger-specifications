@@ -7057,7 +7057,7 @@ d_Conv'45'DState'45'DState''_158
                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'44'_'10215''7496'_1480
                      (coe v1) (coe v2) (coe v2)
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+                        MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1480
                            (coe
@@ -7085,7 +7085,7 @@ d_Conv'45'GState'45'GState''_174
                      MAlonzo.Code.Ledger.Conway.Conformance.Certs.C_'10214'_'44'_'44'_'10215''7515'_1496
                      (coe v1) (coe v2)
                      (coe
-                        MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+                        MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
                         (coe
                            MAlonzo.Code.Axiom.Set.d_th_1480
                            (coe

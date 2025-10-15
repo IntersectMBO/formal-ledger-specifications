@@ -1233,7 +1233,7 @@ d_HsRewardUpdate'8594'RewardUpdate_210 v0
                           (coe d_Δr_150 (coe v0)))
                        (coe d_Δf_152 (coe v0)))
                     (coe
-                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1222
+                       MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1276
                        (coe
                           MAlonzo.Code.Ledger.Core.Specification.Address.du_DecEq'45'Credential_222
                           (coe

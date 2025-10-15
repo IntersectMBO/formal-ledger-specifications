@@ -18,11 +18,11 @@
         <link rel="prev" href="Ledger.Conway.Specification.Ledger.Properties.PoV.html">
       
       
-        <link rel="next" href="Ledger.Conway.Specification.PParams.html">
+        <link rel="next" href="Ledger.Conway.Specification.Ratify.Properties.html">
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.2a3383ac.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -200,7 +200,7 @@
         <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -278,7 +278,7 @@
       <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -1029,7 +1029,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
         
   
   
@@ -1052,7 +1052,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
         
   
   
@@ -1684,7 +1684,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
         
   
   
@@ -2470,7 +2470,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -2776,7 +2776,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
         
   
   
@@ -2894,7 +2894,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
         
   
   
@@ -2917,7 +2917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
         
   
   
@@ -2940,7 +2940,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
         
   
   
@@ -3491,7 +3491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
         
   
   
@@ -3537,7 +3537,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
         
   
   
@@ -3877,7 +3877,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
         
   
   
@@ -4280,7 +4280,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
         
   
   
@@ -6094,7 +6094,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.html" class="md-nav__link">
+      <a href="Ledger.PreConway.md" class="md-nav__link">
         
   
   
@@ -6405,7 +6405,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
         
   
   
@@ -6502,7 +6502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
         
   
   
@@ -7341,93 +7341,97 @@
      aria-label="View the source of this page">
     
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </a>
 
 
 <h1 id="pool-reaping-transition" sec:pool-reaping-transition="sec:pool-reaping-transition">Pool Reaping Transition<a class="headerlink" href="#pool-reaping-transition" title="Permanent link">&para;</a></h1>
-<pre class="Agda hidden-source"><a id="71" class="Symbol">{-#</a> <a id="75" class="Keyword">OPTIONS</a> <a id="83" class="Pragma">--safe</a> <a id="90" class="Symbol">#-}</a>
+<!--
+<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
 
-<a id="95" class="Keyword">open</a> <a id="100" class="Keyword">import</a> <a id="107" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
-<a id="144" class="Keyword">open</a> <a id="149" class="Keyword">import</a> <a id="156" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Abstract</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Transaction</span>
 
-<a id="197" class="Keyword">module</a> <a id="204" href="Ledger.Conway.Specification.PoolReap.html" class="Module">Ledger.Conway.Specification.PoolReap</a>
-  <a id="243" class="Symbol">(</a><a id="244" href="Ledger.Conway.Specification.PoolReap.html#244" class="Bound">txs</a> <a id="248" class="Symbol">:</a> <a id="250" class="Symbol">_)</a> <a id="253" class="Symbol">(</a><a id="254" class="Keyword">open</a> <a id="259" href="Ledger.Conway.Specification.Transaction.html#2461" class="Module">TransactionStructure</a> <a id="280" href="Ledger.Conway.Specification.PoolReap.html#244" class="Bound">txs</a><a id="283" class="Symbol">)</a>
-  <a id="287" class="Symbol">(</a><a id="288" href="Ledger.Conway.Specification.PoolReap.html#288" class="Bound">abs</a> <a id="292" class="Symbol">:</a> <a id="294" href="Ledger.Conway.Specification.Abstract.html#752" class="Record">AbstractFunctions</a> <a id="312" href="Ledger.Conway.Specification.PoolReap.html#244" class="Bound">txs</a><a id="315" class="Symbol">)</a>
-  <a id="319" class="Keyword">where</a>
-<a id="325" class="Keyword">open</a> <a id="330" class="Keyword">import</a> <a id="337" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="352" class="Keyword">open</a> <a id="357" class="Keyword">import</a> <a id="364" href="Ledger.Conway.Specification.Utxo.html" class="Module">Ledger.Conway.Specification.Utxo</a> <a id="397" href="Ledger.Conway.Specification.PoolReap.html#244" class="Bound">txs</a> <a id="401" href="Ledger.Conway.Specification.PoolReap.html#288" class="Bound">abs</a>
-<a id="405" class="Keyword">open</a> <a id="410" class="Keyword">import</a> <a id="417" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="451" href="Ledger.Conway.Specification.Transaction.html#3583" class="Function">govStructure</a>
-</pre>
+<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.PoolReap</span>
+<span class="w">  </span><span class="o">(</span>txs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>TransactionStructure<span class="w"> </span>txs<span class="o">)</span>
+<span class="w">  </span><span class="o">(</span>abs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>AbstractFunctions<span class="w"> </span>txs<span class="o">)</span>
+<span class="w">  </span><span class="kr">where</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Utxo</span><span class="w"> </span>txs<span class="w"> </span>abs
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Certs</span><span class="w"> </span>govStructure
+</code></pre></div>
+-->
 
-<pre class="Agda"><a id="481" class="Keyword">record</a> <a id="PoolReapState"></a><a id="488" href="Ledger.Conway.Specification.PoolReap.html#488" class="Record">PoolReapState</a> <a id="502" class="Symbol">:</a> <a id="504" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="509" class="Keyword">where</a>
-</pre>
-<pre class="Agda hidden-source">  <a id="534" class="Keyword">constructor</a> <a id="⟦_,_,_,_⟧ᵖ"></a><a id="546" href="Ledger.Conway.Specification.PoolReap.html#546" class="InductiveConstructor Operator">⟦_,_,_,_⟧ᵖ</a>
-</pre>
-<pre class="Agda">  <a id="575" class="Keyword">field</a>
-    <a id="PoolReapState.utxoSt"></a><a id="585" href="Ledger.Conway.Specification.PoolReap.html#585" class="Field">utxoSt</a>     <a id="596" class="Symbol">:</a> <a id="598" href="Ledger.Conway.Specification.Utxo.html#3011" class="Record">UTxOState</a>   <a id="610" class="Comment">-- utxo state</a>
-    <a id="PoolReapState.acnt"></a><a id="628" href="Ledger.Conway.Specification.PoolReap.html#628" class="Field">acnt</a>       <a id="639" class="Symbol">:</a> <a id="641" href="Ledger.Conway.Specification.PParams.html#1725" class="Record">Acnt</a>        <a id="653" class="Comment">-- accounting</a>
-    <a id="PoolReapState.dState"></a><a id="671" href="Ledger.Conway.Specification.PoolReap.html#671" class="Field">dState</a>     <a id="682" class="Symbol">:</a> <a id="684" href="Ledger.Conway.Specification.Certs.html#4311" class="Record">DState</a>      <a id="696" class="Comment">-- delegation state</a>
-    <a id="PoolReapState.pState"></a><a id="720" href="Ledger.Conway.Specification.PoolReap.html#720" class="Field">pState</a>     <a id="731" class="Symbol">:</a> <a id="733" href="Ledger.Conway.Specification.Certs.html#4493" class="Record">PState</a>      <a id="745" class="Comment">-- pool state</a>
-</pre>
-<pre class="Agda hidden-source"><a id="777" class="Keyword">instance</a>
-  <a id="788" class="Keyword">unquoteDecl</a> <a id="HasCast-PoolReapState"></a><a id="800" href="Ledger.Conway.Specification.PoolReap.html#800" class="Function">HasCast-PoolReapState</a> <a id="822" class="Symbol">=</a> <a id="824" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
-                <a id="855" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="857" class="Symbol">(</a><a id="858" class="Keyword">quote</a> <a id="864" href="Ledger.Conway.Specification.PoolReap.html#488" class="Record">PoolReapState</a> <a id="878" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="880" href="Ledger.Conway.Specification.PoolReap.html#800" class="Function">HasCast-PoolReapState</a><a id="901" class="Symbol">)</a> <a id="903" href="Data.List.Base.html#4907" class="Function Operator">]</a>
+<div class="highlight"><pre><span></span><code><span class="kr">record</span><span class="w"> </span>PoolReapState<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
+</code></pre></div>
+<!--
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kr">constructor</span><span class="w"> </span>⟦_,_,_,_⟧ᵖ
+</code></pre></div>
+-->
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kr">field</span>
+<span class="w">    </span><span class="nf">utxoSt</span><span class="w">     </span><span class="ow">:</span><span class="w"> </span>UTxOState<span class="w">   </span><span class="c1">-- utxo state</span>
+<span class="w">    </span><span class="nf">acnt</span><span class="w">       </span><span class="ow">:</span><span class="w"> </span>Acnt<span class="w">        </span><span class="c1">-- accounting</span>
+<span class="w">    </span><span class="nf">dState</span><span class="w">     </span><span class="ow">:</span><span class="w"> </span>DState<span class="w">      </span><span class="c1">-- delegation state</span>
+<span class="w">    </span><span class="nf">pState</span><span class="w">     </span><span class="ow">:</span><span class="w"> </span>PState<span class="w">      </span><span class="c1">-- pool state</span>
+</code></pre></div>
+<!--
+<div class="highlight"><pre><span></span><code><span class="kr">instance</span>
+<span class="w">  </span><span class="kr">unquoteDecl</span><span class="w"> </span>HasCast-PoolReapState<span class="w"> </span><span class="ow">=</span><span class="w"> </span>derive-HasCast
+<span class="w">                </span>[<span class="w"> </span><span class="o">(</span><span class="kr">quote</span><span class="w"> </span>PoolReapState<span class="w"> </span>,<span class="w"> </span>HasCast-PoolReapState<span class="o">)</span><span class="w"> </span>]
 
-<a id="906" class="Keyword">private</a> <a id="914" class="Keyword">variable</a>
-  <a id="925" href="Ledger.Conway.Specification.PoolReap.html#925" class="Generalizable">e</a> <a id="927" href="Ledger.Conway.Specification.PoolReap.html#927" class="Generalizable">lastEpoch</a> <a id="937" class="Symbol">:</a> <a id="939" href="Ledger.Core.Specification.Epoch.html#691" class="Function">Epoch</a>
-  <a id="947" href="Ledger.Conway.Specification.PoolReap.html#947" class="Generalizable">poolReapState</a> <a id="961" class="Symbol">:</a> <a id="963" href="Ledger.Conway.Specification.PoolReap.html#488" class="Record">PoolReapState</a>
+<span class="kr">private</span><span class="w"> </span><span class="kr">variable</span>
+<span class="w">  </span>e<span class="w"> </span>lastEpoch<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Epoch
+<span class="w">  </span><span class="nf">poolReapState</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>PoolReapState
 
-<a id="978" class="Keyword">data</a>
-</pre>
-<pre class="Agda">  <a id="_⊢_⇀⦇_,POOLREAP⦈_"></a><a id="1001" href="Ledger.Conway.Specification.PoolReap.html#1001" class="Datatype Operator">_⊢_⇀⦇_,POOLREAP⦈_</a> <a id="1019" class="Symbol">:</a> <a id="1021" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="1023" class="Symbol">→</a> <a id="1025" href="Ledger.Conway.Specification.PoolReap.html#488" class="Record">PoolReapState</a> <a id="1039" class="Symbol">→</a> <a id="1041" href="Ledger.Core.Specification.Epoch.html#691" class="Function">Epoch</a> <a id="1047" class="Symbol">→</a> <a id="1049" href="Ledger.Conway.Specification.PoolReap.html#488" class="Record">PoolReapState</a> <a id="1063" class="Symbol">→</a> <a id="1065" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1070" class="Keyword">where</a>
-  <a id="_⊢_⇀⦇_,POOLREAP⦈_.POOLREAP"></a><a id="1078" href="Ledger.Conway.Specification.PoolReap.html#1078" class="InductiveConstructor">POOLREAP</a> <a id="1087" class="Symbol">:</a> <a id="1089" class="Keyword">let</a>
-    <a id="1097" class="Keyword">open</a> <a id="1102" href="Ledger.Conway.Specification.PoolReap.html#488" class="Module">PoolReapState</a> <a id="1116" href="Ledger.Conway.Specification.PoolReap.html#947" class="Generalizable">poolReapState</a>
-    <a id="1134" class="Keyword">open</a> <a id="1139" href="Ledger.Conway.Specification.Certs.html#542" class="Module">StakePoolParams</a>
-    <a id="1159" class="Keyword">open</a> <a id="1164" href="Ledger.Conway.Specification.Utxo.html#3011" class="Module">UTxOState</a>
-    <a id="1178" class="Keyword">open</a> <a id="1183" href="Ledger.Conway.Specification.Certs.html#4493" class="Module">PState</a>
-    <a id="1194" class="Keyword">open</a> <a id="1199" href="Ledger.Conway.Specification.Certs.html#4311" class="Module">DState</a>
-    <a id="1210" class="Keyword">open</a> <a id="1215" href="Ledger.Conway.Specification.PParams.html#1725" class="Module">Acnt</a>
-    <a id="1224" class="Keyword">open</a> <a id="1229" href="Ledger.Conway.Specification.PParams.html#2917" class="Module">PParams</a>
+<span class="kr">data</span>
+</code></pre></div>
+-->
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="nf">_⊢_⇀⦇_,POOLREAP⦈_</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>⊤<span class="w"> </span><span class="ow">→</span><span class="w"> </span>PoolReapState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch<span class="w"> </span><span class="ow">→</span><span class="w"> </span>PoolReapState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="nf">POOLREAP</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="kr">let</span>
+<span class="w">    </span><span class="kr">open</span><span class="w"> </span>PoolReapState<span class="w"> </span>poolReapState
+<span class="w">    </span><span class="kr">open</span><span class="w"> </span>StakePoolParams
+<span class="w">    </span><span class="kr">open</span><span class="w"> </span>UTxOState
+<span class="w">    </span><span class="kr">open</span><span class="w"> </span>PState
+<span class="w">    </span><span class="kr">open</span><span class="w"> </span>DState
+<span class="w">    </span><span class="kr">open</span><span class="w"> </span>Acnt
+<span class="w">    </span><span class="kr">open</span><span class="w"> </span>PParams
 
-    <a id="1242" href="Ledger.Conway.Specification.PoolReap.html#1242" class="Bound">retired</a>    <a id="1253" class="Symbol">=</a> <a id="1255" href="Ledger.Conway.Specification.PoolReap.html#720" class="Function">pState</a> <a id="1262" class="Symbol">.</a><a id="1263" href="Ledger.Conway.Specification.Certs.html#4547" class="Field">retiring</a> <a id="1272" href="Axiom.Set.Map.html#14616" class="Function Operator">⁻¹</a> <a id="1275" href="Ledger.Conway.Specification.PoolReap.html#925" class="Generalizable">e</a>
-    <a id="1281" href="Ledger.Conway.Specification.PoolReap.html#1281" class="Bound">rewardAcnts</a> <a id="1293" class="Symbol">:</a> <a id="1295" href="Ledger.Conway.Specification.Certs.html#770" class="Datatype">DepositPurpose</a> <a id="1310" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="1312" href="Ledger.Core.Specification.Address.html#1510" class="Datatype">Credential</a>
-    <a id="1327" href="Ledger.Conway.Specification.PoolReap.html#1281" class="Bound">rewardAcnts</a> <a id="1339" class="Symbol">=</a>
-      <a id="1347" href="Axiom.Set.Map.html#5896" class="Function">mapKeys</a> <a id="1355" href="Ledger.Conway.Specification.Certs.html#853" class="InductiveConstructor">PoolDeposit</a> <a id="1367" href="Function.Base.html#1993" class="Function Operator">$</a>
-      <a id="1375" href="Axiom.Set.Map.html#6068" class="Function">mapValues</a> <a id="1385" href="Ledger.Conway.Specification.Certs.html#704" class="Field">rewardAccount</a> <a id="1399" href="Function.Base.html#1993" class="Function Operator">$</a>
-      <a id="1407" href="Ledger.Conway.Specification.PoolReap.html#720" class="Function">pState</a> <a id="1414" class="Symbol">.</a><a id="1415" href="Ledger.Conway.Specification.Certs.html#4525" class="Field">pools</a> <a id="1421" href="Axiom.Set.Map.html#10678" class="Function Operator">∣</a> <a id="1423" href="Ledger.Conway.Specification.PoolReap.html#1242" class="Bound">retired</a>
+<span class="w">    </span>retired<span class="w">    </span><span class="ow">=</span><span class="w"> </span>pState<span class="w"> </span><span class="ow">.</span>retiring<span class="w"> </span>⁻¹<span class="w"> </span>e
+<span class="w">    </span><span class="nf">rewardAcnts</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>DepositPurpose<span class="w"> </span>⇀<span class="w"> </span>Credential
+<span class="w">    </span>rewardAcnts<span class="w"> </span><span class="ow">=</span>
+<span class="w">      </span>mapKeys<span class="w"> </span>PoolDeposit<span class="w"> </span>$
+<span class="w">      </span>mapValues<span class="w"> </span>rewardAccount<span class="w"> </span>$
+<span class="w">      </span>pState<span class="w"> </span><span class="ow">.</span>pools<span class="w"> </span>∣<span class="w"> </span>retired
 
-    <a id="1436" href="Ledger.Conway.Specification.PoolReap.html#1436" class="Bound">rewardAcnts&#39;</a> <a id="1449" class="Symbol">:</a> <a id="1451" href="Ledger.Core.Specification.Address.html#1510" class="Datatype">Credential</a> <a id="1462" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="1464" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
-    <a id="1473" href="Ledger.Conway.Specification.PoolReap.html#1436" class="Bound">rewardAcnts&#39;</a> <a id="1486" class="Symbol">=</a> <a id="1488" href="abstract-set-theory.FiniteSetTheory.html#3599" class="Function">aggregateBy</a> <a id="1500" class="Symbol">(</a><a id="1501" href="Ledger.Conway.Specification.PoolReap.html#1281" class="Bound">rewardAcnts</a> <a id="1513" href="Axiom.Set.Map.html#2293" class="Function Operator">ˢ</a><a id="1514" class="Symbol">)</a> <a id="1516" class="Symbol">(</a><a id="1517" href="Ledger.Conway.Specification.PoolReap.html#585" class="Function">utxoSt</a> <a id="1524" class="Symbol">.</a><a id="1525" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a><a id="1533" class="Symbol">)</a>
+<span class="w">    </span><span class="nf">rewardAcnts&#39;</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Credential<span class="w"> </span>⇀<span class="w"> </span>Coin
+<span class="w">    </span>rewardAcnts&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>aggregateBy<span class="w"> </span><span class="o">(</span>rewardAcnts<span class="w"> </span>ˢ<span class="o">)</span><span class="w"> </span><span class="o">(</span>utxoSt<span class="w"> </span><span class="ow">.</span>deposits<span class="o">)</span>
 
-    <a id="1540" href="Ledger.Conway.Specification.PoolReap.html#1540" class="Bound">refunds</a> <a id="1548" class="Symbol">:</a> <a id="1550" href="Ledger.Core.Specification.Address.html#1510" class="Datatype">Credential</a> <a id="1561" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="1563" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
-    <a id="1572" href="Ledger.Conway.Specification.PoolReap.html#1540" class="Bound">refunds</a> <a id="1580" class="Symbol">=</a> <a id="1582" href="Ledger.Conway.Specification.PoolReap.html#1436" class="Bound">rewardAcnts&#39;</a> <a id="1595" href="Axiom.Set.Map.html#10678" class="Function Operator">∣</a> <a id="1597" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1601" class="Symbol">(</a><a id="1602" href="Ledger.Conway.Specification.PoolReap.html#671" class="Function">dState</a> <a id="1609" class="Symbol">.</a><a id="1610" href="Ledger.Conway.Specification.Certs.html#4462" class="Field">rewards</a><a id="1617" class="Symbol">)</a>
+<span class="w">    </span><span class="nf">refunds</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Credential<span class="w"> </span>⇀<span class="w"> </span>Coin
+<span class="w">    </span>refunds<span class="w"> </span><span class="ow">=</span><span class="w"> </span>rewardAcnts&#39;<span class="w"> </span>∣<span class="w"> </span>dom<span class="w"> </span><span class="o">(</span>dState<span class="w"> </span><span class="ow">.</span>rewards<span class="o">)</span>
 
-    <a id="1624" href="Ledger.Conway.Specification.PoolReap.html#1624" class="Bound">mRefunds</a> <a id="1633" class="Symbol">=</a> <a id="1635" href="Ledger.Conway.Specification.PoolReap.html#1436" class="Bound">rewardAcnts&#39;</a> <a id="1648" href="Axiom.Set.Map.html#10748" class="Function Operator">∣</a> <a id="1650" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1654" class="Symbol">(</a><a id="1655" href="Ledger.Conway.Specification.PoolReap.html#671" class="Function">dState</a> <a id="1662" class="Symbol">.</a><a id="1663" href="Ledger.Conway.Specification.Certs.html#4462" class="Field">rewards</a><a id="1670" class="Symbol">)</a> <a id="1672" href="Axiom.Set.Map.html#10748" class="Function Operator">ᶜ</a>
+<span class="w">    </span>mRefunds<span class="w"> </span><span class="ow">=</span><span class="w"> </span>rewardAcnts&#39;<span class="w"> </span>∣<span class="w"> </span>dom<span class="w"> </span><span class="o">(</span>dState<span class="w"> </span><span class="ow">.</span>rewards<span class="o">)</span><span class="w"> </span>ᶜ
 
-    <a id="1679" href="Ledger.Conway.Specification.PoolReap.html#1679" class="Bound">unclaimed</a>  <a id="1690" class="Symbol">=</a> <a id="1692" href="Ledger.Prelude.HasCoin.html#254" class="Field">getCoin</a> <a id="1700" href="Ledger.Conway.Specification.PoolReap.html#1624" class="Bound">mRefunds</a>
+<span class="w">    </span>unclaimed<span class="w">  </span><span class="ow">=</span><span class="w"> </span>getCoin<span class="w"> </span>mRefunds
 
-    <a id="1714" href="Ledger.Conway.Specification.PoolReap.html#1714" class="Bound">retiredDeposits</a> <a id="1730" class="Symbol">:</a> <a id="1732" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="1734" href="Ledger.Conway.Specification.Certs.html#770" class="Datatype">DepositPurpose</a>
-    <a id="1753" href="Ledger.Conway.Specification.PoolReap.html#1714" class="Bound">retiredDeposits</a> <a id="1769" class="Symbol">=</a> <a id="1771" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="1776" href="Ledger.Conway.Specification.Certs.html#853" class="InductiveConstructor">PoolDeposit</a> <a id="1788" href="Ledger.Conway.Specification.PoolReap.html#1242" class="Bound">retired</a>
+<span class="w">    </span><span class="nf">retiredDeposits</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℙ<span class="w"> </span>DepositPurpose
+<span class="w">    </span>retiredDeposits<span class="w"> </span><span class="ow">=</span><span class="w"> </span>mapˢ<span class="w"> </span>PoolDeposit<span class="w"> </span>retired
 
-    <a id="1801" href="Ledger.Conway.Specification.PoolReap.html#1801" class="Bound">utxoSt&#39;</a> <a id="1809" class="Symbol">=</a> <a id="1811" class="Keyword">record</a> <a id="1818" href="Ledger.Conway.Specification.PoolReap.html#585" class="Function">utxoSt</a> <a id="1825" class="Symbol">{</a> <a id="1827" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a> <a id="1836" class="Symbol">=</a> <a id="1838" href="Ledger.Conway.Specification.PoolReap.html#585" class="Function">utxoSt</a> <a id="1845" class="Symbol">.</a><a id="1846" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a> <a id="1855" href="Axiom.Set.Map.html#10748" class="Function Operator">∣</a> <a id="1857" href="Ledger.Conway.Specification.PoolReap.html#1714" class="Bound">retiredDeposits</a> <a id="1873" href="Axiom.Set.Map.html#10748" class="Function Operator">ᶜ</a> <a id="1875" class="Symbol">}</a>
+<span class="w">    </span>utxoSt&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span>utxoSt<span class="w"> </span><span class="o">{</span><span class="w"> </span>deposits<span class="w"> </span><span class="ow">=</span><span class="w"> </span>utxoSt<span class="w"> </span><span class="ow">.</span>deposits<span class="w"> </span>∣<span class="w"> </span>retiredDeposits<span class="w"> </span>ᶜ<span class="w"> </span><span class="o">}</span>
 
-    <a id="1882" href="Ledger.Conway.Specification.PoolReap.html#1882" class="Bound">acnt&#39;</a> <a id="1888" class="Symbol">=</a> <a id="1890" class="Keyword">record</a> <a id="1897" href="Ledger.Conway.Specification.PoolReap.html#628" class="Function">acnt</a> <a id="1902" class="Symbol">{</a> <a id="1904" href="Ledger.Conway.Specification.PParams.html#1815" class="Field">treasury</a> <a id="1913" class="Symbol">=</a> <a id="1915" href="Ledger.Conway.Specification.PoolReap.html#628" class="Function">acnt</a> <a id="1920" class="Symbol">.</a><a id="1921" href="Ledger.Conway.Specification.PParams.html#1815" class="Field">treasury</a> <a id="1930" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="1932" href="Ledger.Conway.Specification.PoolReap.html#1679" class="Bound">unclaimed</a> <a id="1942" class="Symbol">}</a>
+<span class="w">    </span>acnt&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span>acnt<span class="w"> </span><span class="o">{</span><span class="w"> </span>treasury<span class="w"> </span><span class="ow">=</span><span class="w"> </span>acnt<span class="w"> </span><span class="ow">.</span>treasury<span class="w"> </span>+<span class="w"> </span>unclaimed<span class="w"> </span><span class="o">}</span>
 
-    <a id="1949" href="Ledger.Conway.Specification.PoolReap.html#1949" class="Bound">dState&#39;</a> <a id="1957" class="Symbol">=</a>
-      <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.PoolReap.html#671}{\htmlId{1967}{\htmlClass{Function}{\text{dState}}}}\, \,\htmlId{1974}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Certs.html#4401}{\htmlId{1975}{\htmlClass{Field}{\text{voteDelegs}}}}\,
-      \\ \,\href{Ledger.Conway.Specification.PoolReap.html#671}{\htmlId{1994}{\htmlClass{Function}{\text{dState}}}}\, \,\htmlId{2001}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Certs.html#4431}{\htmlId{2002}{\htmlClass{Field}{\text{stakeDelegs}}}}\, \,\href{Axiom.Set.Map.html#14509}{\htmlId{2014}{\htmlClass{Function Operator}{\text{∣\^{}}}}}\, \,\href{Ledger.Conway.Specification.PoolReap.html#1242}{\htmlId{2017}{\htmlClass{Bound}{\text{retired}}}}\, \,\href{Axiom.Set.Map.html#14509}{\htmlId{2025}{\htmlClass{Function Operator}{\text{ᶜ}}}}\,
-      \\ \,\href{Ledger.Conway.Specification.PoolReap.html#671}{\htmlId{2035}{\htmlClass{Function}{\text{dState}}}}\, \,\htmlId{2042}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Certs.html#4462}{\htmlId{2043}{\htmlClass{Field}{\text{rewards}}}}\, \,\href{Axiom.Set.Map.Dec.html#2046}{\htmlId{2051}{\htmlClass{Function Operator}{\text{∪⁺}}}}\, \,\href{Ledger.Conway.Specification.PoolReap.html#1540}{\htmlId{2054}{\htmlClass{Bound}{\text{refunds}}}}\,
-      \end{pmatrix}$</a>
+<span class="w">    </span>dState&#39;<span class="w"> </span><span class="ow">=</span>
+<span class="w">      </span>⟦<span class="w"> </span>dState<span class="w"> </span><span class="ow">.</span>voteDelegs
+<span class="w">      </span>,<span class="w"> </span>dState<span class="w"> </span><span class="ow">.</span>stakeDelegs<span class="w"> </span>∣^<span class="w"> </span>retired<span class="w"> </span>ᶜ
+<span class="w">      </span>,<span class="w"> </span>dState<span class="w"> </span><span class="ow">.</span>rewards<span class="w"> </span>∪⁺<span class="w"> </span>refunds
+<span class="w">      </span>⟧
 
-    <a id="2075" href="Ledger.Conway.Specification.PoolReap.html#2075" class="Bound">pState&#39;</a> <a id="2083" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.PoolReap.html#720}{\htmlId{2087}{\htmlClass{Function}{\text{pState}}}}\, \,\htmlId{2094}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Certs.html#4525}{\htmlId{2095}{\htmlClass{Field}{\text{pools}}}}\, \,\href{Axiom.Set.Map.html#10748}{\htmlId{2101}{\htmlClass{Function Operator}{\text{∣}}}}\, \,\href{Ledger.Conway.Specification.PoolReap.html#1242}{\htmlId{2103}{\htmlClass{Bound}{\text{retired}}}}\, \,\href{Axiom.Set.Map.html#10748}{\htmlId{2111}{\htmlClass{Function Operator}{\text{ᶜ}}}}\, \\ \,\href{Ledger.Conway.Specification.PoolReap.html#720}{\htmlId{2115}{\htmlClass{Function}{\text{pState}}}}\, \,\htmlId{2122}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Certs.html#4547}{\htmlId{2123}{\htmlClass{Field}{\text{retiring}}}}\, \,\href{Axiom.Set.Map.html#10748}{\htmlId{2132}{\htmlClass{Function Operator}{\text{∣}}}}\, \,\href{Ledger.Conway.Specification.PoolReap.html#1242}{\htmlId{2134}{\htmlClass{Bound}{\text{retired}}}}\, \,\href{Axiom.Set.Map.html#10748}{\htmlId{2142}{\htmlClass{Function Operator}{\text{ᶜ}}}}\, \end{pmatrix}$</a>
+<span class="w">    </span>pState&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⟦<span class="w"> </span>pState<span class="w"> </span><span class="ow">.</span>pools<span class="w"> </span>∣<span class="w"> </span>retired<span class="w"> </span>ᶜ<span class="w"> </span>,<span class="w"> </span>pState<span class="w"> </span><span class="ow">.</span>retiring<span class="w"> </span>∣<span class="w"> </span>retired<span class="w"> </span>ᶜ<span class="w"> </span>⟧
 
-    <a id="2151" class="Keyword">in</a>
-    <a id="2158" href="Prelude.InferenceRules.html#45235" class="Function Operator">────────────────────────────────</a>
-    <a id="2195" class="Symbol">_</a> <a id="2197" href="Ledger.Conway.Specification.PoolReap.html#1001" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.PoolReap.html#585}{\htmlId{2201}{\htmlClass{Function}{\text{utxoSt}}}}\, \\ \,\href{Ledger.Conway.Specification.PoolReap.html#628}{\htmlId{2210}{\htmlClass{Function}{\text{acnt}}}}\, \\ \,\href{Ledger.Conway.Specification.PoolReap.html#671}{\htmlId{2217}{\htmlClass{Function}{\text{dState}}}}\, \\ \,\href{Ledger.Conway.Specification.PoolReap.html#720}{\htmlId{2226}{\htmlClass{Function}{\text{pState}}}}\, \end{pmatrix}$</a> <a id="2235" href="Ledger.Conway.Specification.PoolReap.html#1001" class="Datatype Operator">⇀⦇</a> <a id="2238" href="Ledger.Conway.Specification.PoolReap.html#925" class="Generalizable">e</a> <a id="2240" href="Ledger.Conway.Specification.PoolReap.html#1001" class="Datatype Operator">,POOLREAP⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Specification.PoolReap.html#1801}{\htmlId{2253}{\htmlClass{Bound}{\text{utxoSt&#39;}}}}\, \\ \,\href{Ledger.Conway.Specification.PoolReap.html#1882}{\htmlId{2263}{\htmlClass{Bound}{\text{acnt&#39;}}}}\, \\ \,\href{Ledger.Conway.Specification.PoolReap.html#1949}{\htmlId{2271}{\htmlClass{Bound}{\text{dState&#39;}}}}\, \\ \,\href{Ledger.Conway.Specification.PoolReap.html#2075}{\htmlId{2281}{\htmlClass{Bound}{\text{pState&#39;}}}}\, \end{pmatrix}$</a>
-
-</pre>
-
+<span class="w">    </span><span class="kr">in</span>
+<span class="w">    </span>────────────────────────────────
+<span class="w">    </span>_<span class="w"> </span>⊢<span class="w"> </span>⟦<span class="w"> </span>utxoSt<span class="w"> </span>,<span class="w"> </span>acnt<span class="w"> </span>,<span class="w"> </span>dState<span class="w"> </span>,<span class="w"> </span>pState<span class="w"> </span>⟧<span class="w"> </span>⇀⦇<span class="w"> </span>e<span class="w"> </span>,POOLREAP⦈<span class="w"> </span>⟦<span class="w"> </span>utxoSt&#39;<span class="w"> </span>,<span class="w"> </span>acnt&#39;<span class="w"> </span>,<span class="w"> </span>dState&#39;<span class="w"> </span>,<span class="w"> </span>pState&#39;<span class="w"> </span>⟧
+</code></pre></div>
 <!-- Properties -->
 
 
@@ -7478,13 +7482,13 @@
         
         
           
-          <a href="Ledger.Conway.Specification.PParams.html" class="md-footer__link md-footer__link--next" aria-label="Next: PParams">
+          <a href="Ledger.Conway.Specification.Ratify.Properties.html" class="md-footer__link md-footer__link--next" aria-label="Next: Properties">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                PParams
+                Properties
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -7523,7 +7527,7 @@
       <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

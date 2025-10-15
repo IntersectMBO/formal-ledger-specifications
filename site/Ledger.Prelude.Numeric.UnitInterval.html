@@ -18,11 +18,11 @@
         <link rel="prev" href="Ledger.Prelude.Numeric.PositiveNat.html">
       
       
-        <link rel="next" href="Ledger.Core.Specification.Address.html">
+        <link rel="next" href="Ledger.Core.Specification.Epoch.html">
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.2a3383ac.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -195,7 +195,7 @@
         <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -273,7 +273,7 @@
       <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -1036,7 +1036,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
         
   
   
@@ -1059,7 +1059,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
         
   
   
@@ -1687,7 +1687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
         
   
   
@@ -2473,7 +2473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -2779,7 +2779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
         
   
   
@@ -2887,7 +2887,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
         
   
   
@@ -2910,7 +2910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
         
   
   
@@ -2933,7 +2933,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
         
   
   
@@ -3484,7 +3484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
         
   
   
@@ -3530,7 +3530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
         
   
   
@@ -3870,7 +3870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
         
   
   
@@ -4273,7 +4273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
         
   
   
@@ -6087,7 +6087,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.html" class="md-nav__link">
+      <a href="Ledger.PreConway.md" class="md-nav__link">
         
   
   
@@ -6398,7 +6398,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
         
   
   
@@ -6495,7 +6495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
         
   
   
@@ -7332,124 +7332,123 @@
      aria-label="View the source of this page">
     
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </a>
 
 
   <h1>UnitInterval</h1>
 
-<pre class="Agda"><a id="98" class="Symbol">{-#</a> <a id="102" class="Keyword">OPTIONS</a> <a id="110" class="Pragma">--safe</a> <a id="117" class="Symbol">#-}</a>
+<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
 
-<a id="122" class="Comment">-- Rational number in the unit interval.</a>
-<a id="163" class="Keyword">module</a> <a id="170" href="Ledger.Prelude.Numeric.UnitInterval.html" class="Module">Ledger.Prelude.Numeric.UnitInterval</a> <a id="206" class="Keyword">where</a>
+<span class="c1">-- Rational number in the unit interval.</span>
+<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Prelude.Numeric.UnitInterval</span><span class="w"> </span><span class="kr">where</span>
 
-<a id="213" class="Keyword">open</a> <a id="218" class="Keyword">import</a> <a id="225" href="Prelude.html" class="Module">Prelude</a>
-  <a id="235" class="Keyword">hiding</a> <a id="242" class="Symbol">(</a><a id="243" href="Data.Sum.Base.html#811" class="Function Operator">[_,_]</a><a id="248" class="Symbol">;</a> <a id="250" href="Data.List.Base.html#4907" class="Function Operator">[_]</a><a id="253" class="Symbol">;</a> <a id="255" href="Agda.Builtin.Nat.html#539" class="Primitive Operator">_*_</a><a id="258" class="Symbol">)</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Prelude</span>
+<span class="w">  </span><span class="kr">hiding</span><span class="w"> </span><span class="o">(</span>[_,_];<span class="w"> </span>[_];<span class="w"> </span>_*_<span class="o">)</span>
 
-<a id="261" class="Keyword">open</a> <a id="266" class="Keyword">import</a> <a id="273" href="Agda.Builtin.FromNat.html" class="Module">Agda.Builtin.FromNat</a>
-<a id="294" class="Keyword">open</a> <a id="299" class="Keyword">import</a> <a id="306" href="Class.Show.html" class="Module">Class.Show</a> <a id="317" class="Keyword">using</a> <a id="323" class="Symbol">(</a><a id="324" href="Class.Show.Core.html#125" class="Record">Show</a><a id="328" class="Symbol">;</a> <a id="330" href="Class.Show.Core.html#187" class="Field">show</a><a id="334" class="Symbol">)</a>
-<a id="336" class="Keyword">open</a> <a id="341" class="Keyword">import</a> <a id="348" href="Data.Irrelevant.html" class="Module">Data.Irrelevant</a> <a id="364" class="Keyword">using</a> <a id="370" class="Symbol">(</a><a id="371" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">[_]</a><a id="374" class="Symbol">)</a>
-<a id="376" class="Keyword">open</a> <a id="381" class="Keyword">import</a> <a id="388" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="402" class="Keyword">using</a> <a id="408" class="Symbol">(</a><a id="409" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="410" class="Symbol">;</a> <a id="412" href="Data.Rational.Base.html#2544" class="Datatype Operator">_≤_</a><a id="415" class="Symbol">;</a> <a id="417" href="Data.Rational.Properties.html#19598" class="Function Operator">_≤?_</a><a id="421" class="Symbol">;</a> <a id="423" href="Data.Rational.Base.html#6394" class="Function Operator">_*_</a><a id="426" class="Symbol">;</a> <a id="428" href="Data.Rational.Base.html#5864" class="Function">nonNegative</a><a id="439" class="Symbol">)</a>
-<a id="441" class="Keyword">open</a> <a id="446" class="Keyword">import</a> <a id="453" href="Data.Rational.Properties.html" class="Module">Data.Rational.Properties</a>
-<a id="478" class="Keyword">open</a> <a id="483" class="Keyword">import</a> <a id="490" href="Data.Rational.Show.html" class="Module">Data.Rational.Show</a> <a id="509" class="Keyword">using</a> <a id="515" class="Symbol">()</a> <a id="518" class="Keyword">renaming</a> <a id="527" class="Symbol">(</a><a id="528" href="Data.Rational.Show.html#429" class="Function">show</a> <a id="533" class="Symbol">to</a> <a id="536" class="Function">ℚshow</a><a id="541" class="Symbol">)</a>
-<a id="543" class="Keyword">open</a> <a id="548" class="Keyword">import</a> <a id="555" href="Data.Refinement.html" class="Module">Data.Refinement</a> <a id="571" class="Keyword">using</a> <a id="577" class="Symbol">(</a><a id="578" href="Data.Refinement.Base.html#1082" class="Function">Refinement-syntax</a><a id="595" class="Symbol">;</a> <a id="597" href="Data.Refinement.Base.html#789" class="Field">value</a><a id="602" class="Symbol">;</a> <a id="604" href="Data.Refinement.Base.html#777" class="InductiveConstructor Operator">_,_</a><a id="607" class="Symbol">)</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Agda.Builtin.FromNat</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Class.Show</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>Show;<span class="w"> </span>show<span class="o">)</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Irrelevant</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>[_]<span class="o">)</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Rational</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>ℚ;<span class="w"> </span>_≤_;<span class="w"> </span>_≤?_;<span class="w"> </span>_*_;<span class="w"> </span>nonNegative<span class="o">)</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Rational.Properties</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Rational.Show</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="kr">renaming</span><span class="w"> </span><span class="o">(</span>show<span class="w"> </span>to<span class="w"> </span>ℚshow<span class="o">)</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Refinement</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>Refinement-syntax;<span class="w"> </span>value;<span class="w"> </span>_,_<span class="o">)</span>
 
-<a id="610" class="Keyword">open</a> <a id="615" href="Data.Rational.Properties.html#26415" class="Module">≤-Reasoning</a>
+<span class="kr">open</span><span class="w"> </span>≤-Reasoning
 
-<a id="628" class="Comment">-- inUnitInterval predicate</a>
-<a id="inUnitInterval"></a><a id="656" href="Ledger.Prelude.Numeric.UnitInterval.html#656" class="Function">inUnitInterval</a> <a id="671" class="Symbol">:</a> <a id="673" class="Symbol">(</a><a id="674" href="Ledger.Prelude.Numeric.UnitInterval.html#674" class="Bound">x</a> <a id="676" class="Symbol">:</a> <a id="678" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="679" class="Symbol">)</a> <a id="681" class="Symbol">→</a> <a id="683" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="688" href="Ledger.Prelude.Numeric.UnitInterval.html#656" class="Function">inUnitInterval</a> <a id="703" href="Ledger.Prelude.Numeric.UnitInterval.html#703" class="Bound">x</a> <a id="705" class="Symbol">=</a> <a id="707" class="Symbol">(</a><a id="708" class="Number">0</a> <a id="710" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="712" href="Ledger.Prelude.Numeric.UnitInterval.html#703" class="Bound">x</a><a id="713" class="Symbol">)</a> <a id="715" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="717" class="Symbol">(</a><a id="718" href="Ledger.Prelude.Numeric.UnitInterval.html#703" class="Bound">x</a> <a id="720" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="722" class="Number">1</a><a id="723" class="Symbol">)</a>
+<span class="c1">-- inUnitInterval predicate</span>
+<span class="nf">inUnitInterval</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>Type
+inUnitInterval<span class="w"> </span>x<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="w"> </span>≤<span class="w"> </span>x<span class="o">)</span><span class="w"> </span>×<span class="w"> </span><span class="o">(</span>x<span class="w"> </span>≤<span class="w"> </span><span class="mi">1</span><span class="o">)</span>
 
-<a id="726" class="Comment">-- Decide whether a rational number is in the unit interval.</a>
-<a id="isInUnitInterval"></a><a id="787" href="Ledger.Prelude.Numeric.UnitInterval.html#787" class="Function">isInUnitInterval</a> <a id="804" class="Symbol">:</a> <a id="806" class="Symbol">(</a><a id="807" href="Ledger.Prelude.Numeric.UnitInterval.html#807" class="Bound">x</a> <a id="809" class="Symbol">:</a> <a id="811" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="812" class="Symbol">)</a> <a id="814" class="Symbol">→</a> <a id="816" href="Relation.Nullary.Decidable.Core.html#1966" class="Record">Dec</a> <a id="820" class="Symbol">(</a><a id="821" href="Ledger.Prelude.Numeric.UnitInterval.html#656" class="Function">inUnitInterval</a> <a id="836" href="Ledger.Prelude.Numeric.UnitInterval.html#807" class="Bound">x</a><a id="837" class="Symbol">)</a>
-<a id="839" href="Ledger.Prelude.Numeric.UnitInterval.html#787" class="Function">isInUnitInterval</a> <a id="856" href="Ledger.Prelude.Numeric.UnitInterval.html#856" class="Bound">x</a> <a id="858" class="Symbol">=</a> <a id="860" class="Symbol">(</a><a id="861" class="Number">0</a> <a id="863" href="Data.Rational.Properties.html#19598" class="Function Operator">≤?</a> <a id="866" href="Ledger.Prelude.Numeric.UnitInterval.html#856" class="Bound">x</a><a id="867" class="Symbol">)</a> <a id="869" href="Relation.Nullary.Decidable.Core.html#3432" class="Function Operator">×-dec</a> <a id="875" class="Symbol">(</a><a id="876" href="Ledger.Prelude.Numeric.UnitInterval.html#856" class="Bound">x</a> <a id="878" href="Data.Rational.Properties.html#19598" class="Function Operator">≤?</a> <a id="881" class="Number">1</a><a id="882" class="Symbol">)</a>
+<span class="c1">-- Decide whether a rational number is in the unit interval.</span>
+<span class="nf">isInUnitInterval</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>Dec<span class="w"> </span><span class="o">(</span>inUnitInterval<span class="w"> </span>x<span class="o">)</span>
+isInUnitInterval<span class="w"> </span>x<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">(</span><span class="mi">0</span><span class="w"> </span>≤?<span class="w"> </span>x<span class="o">)</span><span class="w"> </span>×-dec<span class="w"> </span><span class="o">(</span>x<span class="w"> </span>≤?<span class="w"> </span><span class="mi">1</span><span class="o">)</span>
 
-<a id="885" class="Comment">-- Multiplying with a number from the unit interval only decreases.</a>
-<a id="inUnitInterval-*-≤y"></a><a id="953" href="Ledger.Prelude.Numeric.UnitInterval.html#953" class="Function">inUnitInterval-*-≤y</a> <a id="973" class="Symbol">:</a> <a id="975" class="Symbol">∀</a> <a id="977" class="Symbol">(</a><a id="978" href="Ledger.Prelude.Numeric.UnitInterval.html#978" class="Bound">x</a> <a id="980" href="Ledger.Prelude.Numeric.UnitInterval.html#980" class="Bound">y</a> <a id="982" class="Symbol">:</a> <a id="984" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="985" class="Symbol">)</a> <a id="987" class="Symbol">→</a> <a id="989" href="Ledger.Prelude.Numeric.UnitInterval.html#656" class="Function">inUnitInterval</a> <a id="1004" href="Ledger.Prelude.Numeric.UnitInterval.html#978" class="Bound">x</a> <a id="1006" class="Symbol">→</a> <a id="1008" class="Number">0</a> <a id="1010" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="1012" href="Ledger.Prelude.Numeric.UnitInterval.html#980" class="Bound">y</a> <a id="1014" class="Symbol">→</a> <a id="1016" href="Ledger.Prelude.Numeric.UnitInterval.html#978" class="Bound">x</a> <a id="1018" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1020" href="Ledger.Prelude.Numeric.UnitInterval.html#980" class="Bound">y</a> <a id="1022" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="1024" href="Ledger.Prelude.Numeric.UnitInterval.html#980" class="Bound">y</a>
-<a id="1026" href="Ledger.Prelude.Numeric.UnitInterval.html#953" class="Function">inUnitInterval-*-≤y</a> <a id="1046" href="Ledger.Prelude.Numeric.UnitInterval.html#1046" class="Bound">x</a> <a id="1048" href="Ledger.Prelude.Numeric.UnitInterval.html#1048" class="Bound">y</a> <a id="1050" class="Symbol">(</a><a id="1051" href="Ledger.Prelude.Numeric.UnitInterval.html#1051" class="Bound">0≤x</a> <a id="1055" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1057" href="Ledger.Prelude.Numeric.UnitInterval.html#1057" class="Bound">x≤1</a><a id="1060" class="Symbol">)</a> <a id="1062" href="Ledger.Prelude.Numeric.UnitInterval.html#1062" class="Bound">0≤y</a> <a id="1066" class="Symbol">=</a>
-  <a id="1070" href="Relation.Binary.Reasoning.Syntax.html#1572" class="Function Operator">begin</a>
-    <a id="1080" href="Ledger.Prelude.Numeric.UnitInterval.html#1046" class="Bound">x</a> <a id="1082" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1084" href="Ledger.Prelude.Numeric.UnitInterval.html#1048" class="Bound">y</a>  <a id="1087" href="Relation.Binary.Reasoning.Syntax.html#5544" class="Function">≤⟨</a> <a id="1090" href="Data.Rational.Properties.html#47905" class="Function">*-monoʳ-≤-nonNeg</a> <a id="1107" href="Ledger.Prelude.Numeric.UnitInterval.html#1048" class="Bound">y</a> <a id="1109" class="Symbol">⦃</a> <a id="1111" href="Data.Rational.Base.html#5864" class="Function">nonNegative</a> <a id="1123" href="Ledger.Prelude.Numeric.UnitInterval.html#1062" class="Bound">0≤y</a> <a id="1127" class="Symbol">⦄</a> <a id="1129" href="Ledger.Prelude.Numeric.UnitInterval.html#1057" class="Bound">x≤1</a> <a id="1133" href="Relation.Binary.Reasoning.Syntax.html#5544" class="Function">⟩</a>
-    <a id="1139" class="Number">1</a> <a id="1141" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1143" href="Ledger.Prelude.Numeric.UnitInterval.html#1048" class="Bound">y</a>  <a id="1146" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">≡⟨</a> <a id="1149" href="Data.Rational.Properties.html#42770" class="Function">*-identityˡ</a> <a id="1161" class="Symbol">_</a> <a id="1163" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">⟩</a>
-    <a id="1169" href="Ledger.Prelude.Numeric.UnitInterval.html#1048" class="Bound">y</a>      <a id="1176" href="Relation.Binary.Reasoning.Syntax.html#12345" class="Function Operator">∎</a>
+<span class="c1">-- Multiplying with a number from the unit interval only decreases.</span>
+<span class="nf">inUnitInterval-*-≤y</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span>y<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>inUnitInterval<span class="w"> </span>x<span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>≤<span class="w"> </span>y<span class="w"> </span><span class="ow">→</span><span class="w"> </span>x<span class="w"> </span>*<span class="w"> </span>y<span class="w"> </span>≤<span class="w"> </span>y
+inUnitInterval-*-≤y<span class="w"> </span>x<span class="w"> </span>y<span class="w"> </span><span class="o">(</span><span class="mi">0</span>≤x<span class="w"> </span>,<span class="w"> </span>x≤1<span class="o">)</span><span class="w"> </span><span class="mi">0</span>≤y<span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span>begin
+<span class="w">    </span>x<span class="w"> </span>*<span class="w"> </span>y<span class="w">  </span>≤⟨<span class="w"> </span>*-monoʳ-≤-nonNeg<span class="w"> </span>y<span class="w"> </span>⦃<span class="w"> </span>nonNegative<span class="w"> </span><span class="mi">0</span>≤y<span class="w"> </span>⦄<span class="w"> </span>x≤1<span class="w"> </span>⟩
+<span class="w">    </span><span class="mi">1</span><span class="w"> </span>*<span class="w"> </span>y<span class="w">  </span>≡⟨<span class="w"> </span>*-identityˡ<span class="w"> </span>_<span class="w"> </span>⟩
+<span class="w">    </span>y<span class="w">      </span>∎
 
-<a id="1179" class="Comment">-- Left multiplication by unit interval element preserves non-negativity.</a>
-<a id="inUnitInterval-*-0≤"></a><a id="1253" href="Ledger.Prelude.Numeric.UnitInterval.html#1253" class="Function">inUnitInterval-*-0≤</a> <a id="1273" class="Symbol">:</a> <a id="1275" class="Symbol">∀</a> <a id="1277" class="Symbol">(</a><a id="1278" href="Ledger.Prelude.Numeric.UnitInterval.html#1278" class="Bound">x</a> <a id="1280" href="Ledger.Prelude.Numeric.UnitInterval.html#1280" class="Bound">y</a> <a id="1282" class="Symbol">:</a> <a id="1284" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="1285" class="Symbol">)</a> <a id="1287" class="Symbol">→</a> <a id="1289" href="Ledger.Prelude.Numeric.UnitInterval.html#656" class="Function">inUnitInterval</a> <a id="1304" href="Ledger.Prelude.Numeric.UnitInterval.html#1280" class="Bound">y</a> <a id="1306" class="Symbol">→</a> <a id="1308" class="Number">0</a> <a id="1310" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="1312" href="Ledger.Prelude.Numeric.UnitInterval.html#1278" class="Bound">x</a> <a id="1314" class="Symbol">→</a> <a id="1316" class="Number">0</a> <a id="1318" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="1320" href="Ledger.Prelude.Numeric.UnitInterval.html#1278" class="Bound">x</a> <a id="1322" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1324" href="Ledger.Prelude.Numeric.UnitInterval.html#1280" class="Bound">y</a>
-<a id="1326" href="Ledger.Prelude.Numeric.UnitInterval.html#1253" class="Function">inUnitInterval-*-0≤</a> <a id="1346" href="Ledger.Prelude.Numeric.UnitInterval.html#1346" class="Bound">x</a> <a id="1348" href="Ledger.Prelude.Numeric.UnitInterval.html#1348" class="Bound">y</a> <a id="1350" class="Symbol">(</a><a id="1351" href="Ledger.Prelude.Numeric.UnitInterval.html#1351" class="Bound">0≤y</a> <a id="1355" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1357" class="Symbol">_)</a> <a id="1360" href="Ledger.Prelude.Numeric.UnitInterval.html#1360" class="Bound">0≤x</a> <a id="1364" class="Symbol">=</a>
-  <a id="1368" href="Relation.Binary.Reasoning.Syntax.html#1572" class="Function Operator">begin</a>
-    <a id="1378" class="Number">0</a>      <a id="1385" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">≡⟨</a> <a id="1388" href="Relation.Binary.PropositionalEquality.Core.html#2035" class="Function">sym</a> <a id="1392" class="Symbol">(</a><a id="1393" href="Data.Rational.Properties.html#43151" class="Function">*-zeroʳ</a> <a id="1401" href="Ledger.Prelude.Numeric.UnitInterval.html#1346" class="Bound">x</a><a id="1402" class="Symbol">)</a> <a id="1404" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">⟩</a>
-    <a id="1410" href="Ledger.Prelude.Numeric.UnitInterval.html#1346" class="Bound">x</a> <a id="1412" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1414" class="Number">0</a>  <a id="1417" href="Relation.Binary.Reasoning.Syntax.html#5544" class="Function">≤⟨</a> <a id="1420" href="Data.Rational.Properties.html#48249" class="Function">*-monoˡ-≤-nonNeg</a> <a id="1437" href="Ledger.Prelude.Numeric.UnitInterval.html#1346" class="Bound">x</a> <a id="1439" class="Symbol">⦃</a> <a id="1441" href="Data.Rational.Base.html#5864" class="Function">nonNegative</a> <a id="1453" href="Ledger.Prelude.Numeric.UnitInterval.html#1360" class="Bound">0≤x</a> <a id="1457" class="Symbol">⦄</a> <a id="1459" href="Ledger.Prelude.Numeric.UnitInterval.html#1351" class="Bound">0≤y</a> <a id="1463" href="Relation.Binary.Reasoning.Syntax.html#5544" class="Function">⟩</a>
-    <a id="1469" href="Ledger.Prelude.Numeric.UnitInterval.html#1346" class="Bound">x</a> <a id="1471" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1473" href="Ledger.Prelude.Numeric.UnitInterval.html#1348" class="Bound">y</a>  <a id="1476" href="Relation.Binary.Reasoning.Syntax.html#12345" class="Function Operator">∎</a>
+<span class="c1">-- Left multiplication by unit interval element preserves non-negativity.</span>
+<span class="nf">inUnitInterval-*-0≤</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span>y<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>inUnitInterval<span class="w"> </span>y<span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>≤<span class="w"> </span>x<span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>≤<span class="w"> </span>x<span class="w"> </span>*<span class="w"> </span>y
+inUnitInterval-*-0≤<span class="w"> </span>x<span class="w"> </span>y<span class="w"> </span><span class="o">(</span><span class="mi">0</span>≤y<span class="w"> </span>,<span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="mi">0</span>≤x<span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span>begin
+<span class="w">    </span><span class="mi">0</span><span class="w">      </span>≡⟨<span class="w"> </span>sym<span class="w"> </span><span class="o">(</span>*-zeroʳ<span class="w"> </span>x<span class="o">)</span><span class="w"> </span>⟩
+<span class="w">    </span>x<span class="w"> </span>*<span class="w"> </span><span class="mi">0</span><span class="w">  </span>≤⟨<span class="w"> </span>*-monoˡ-≤-nonNeg<span class="w"> </span>x<span class="w"> </span>⦃<span class="w"> </span>nonNegative<span class="w"> </span><span class="mi">0</span>≤x<span class="w"> </span>⦄<span class="w"> </span><span class="mi">0</span>≤y<span class="w"> </span>⟩
+<span class="w">    </span>x<span class="w"> </span>*<span class="w"> </span>y<span class="w">  </span>∎
 
-<a id="1479" class="Comment">-- Left multiplication by unit interval element preserves being upper boundeded by 1.</a>
-<a id="inUnitInterval-*-≤1"></a><a id="1565" href="Ledger.Prelude.Numeric.UnitInterval.html#1565" class="Function">inUnitInterval-*-≤1</a> <a id="1585" class="Symbol">:</a> <a id="1587" class="Symbol">∀</a> <a id="1589" class="Symbol">(</a><a id="1590" href="Ledger.Prelude.Numeric.UnitInterval.html#1590" class="Bound">x</a> <a id="1592" href="Ledger.Prelude.Numeric.UnitInterval.html#1592" class="Bound">y</a> <a id="1594" class="Symbol">:</a> <a id="1596" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="1597" class="Symbol">)</a> <a id="1599" class="Symbol">→</a> <a id="1601" href="Ledger.Prelude.Numeric.UnitInterval.html#656" class="Function">inUnitInterval</a> <a id="1616" href="Ledger.Prelude.Numeric.UnitInterval.html#1590" class="Bound">x</a> <a id="1618" class="Symbol">→</a> <a id="1620" href="Ledger.Prelude.Numeric.UnitInterval.html#1592" class="Bound">y</a> <a id="1622" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="1624" class="Number">1</a> <a id="1626" class="Symbol">→</a> <a id="1628" href="Ledger.Prelude.Numeric.UnitInterval.html#1590" class="Bound">x</a> <a id="1630" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1632" href="Ledger.Prelude.Numeric.UnitInterval.html#1592" class="Bound">y</a> <a id="1634" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="1636" class="Number">1</a>
-<a id="1638" href="Ledger.Prelude.Numeric.UnitInterval.html#1565" class="Function">inUnitInterval-*-≤1</a> <a id="1658" href="Ledger.Prelude.Numeric.UnitInterval.html#1658" class="Bound">x</a> <a id="1660" href="Ledger.Prelude.Numeric.UnitInterval.html#1660" class="Bound">y</a> <a id="1662" class="Symbol">(</a><a id="1663" href="Ledger.Prelude.Numeric.UnitInterval.html#1663" class="Bound">0≤x</a> <a id="1667" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1669" href="Ledger.Prelude.Numeric.UnitInterval.html#1669" class="Bound">x≤1</a><a id="1672" class="Symbol">)</a> <a id="1674" href="Ledger.Prelude.Numeric.UnitInterval.html#1674" class="Bound">y≤1</a> <a id="1678" class="Symbol">=</a>
-  <a id="1682" href="Relation.Binary.Reasoning.Syntax.html#1572" class="Function Operator">begin</a>
-    <a id="1692" href="Ledger.Prelude.Numeric.UnitInterval.html#1658" class="Bound">x</a> <a id="1694" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1696" href="Ledger.Prelude.Numeric.UnitInterval.html#1660" class="Bound">y</a>  <a id="1699" href="Relation.Binary.Reasoning.Syntax.html#5544" class="Function">≤⟨</a> <a id="1702" href="Data.Rational.Properties.html#48249" class="Function">*-monoˡ-≤-nonNeg</a> <a id="1719" href="Ledger.Prelude.Numeric.UnitInterval.html#1658" class="Bound">x</a> <a id="1721" class="Symbol">⦃</a> <a id="1723" href="Data.Rational.Base.html#5864" class="Function">nonNegative</a> <a id="1735" href="Ledger.Prelude.Numeric.UnitInterval.html#1663" class="Bound">0≤x</a> <a id="1739" class="Symbol">⦄</a> <a id="1741" href="Ledger.Prelude.Numeric.UnitInterval.html#1674" class="Bound">y≤1</a> <a id="1745" href="Relation.Binary.Reasoning.Syntax.html#5544" class="Function">⟩</a>
-    <a id="1751" href="Ledger.Prelude.Numeric.UnitInterval.html#1658" class="Bound">x</a> <a id="1753" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="1755" class="Number">1</a>  <a id="1758" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">≡⟨</a> <a id="1761" href="Data.Rational.Properties.html#42876" class="Function">*-identityʳ</a> <a id="1773" class="Symbol">_</a> <a id="1775" href="Relation.Binary.Reasoning.Syntax.html#11048" class="Function">⟩</a>
-    <a id="1781" href="Ledger.Prelude.Numeric.UnitInterval.html#1658" class="Bound">x</a>      <a id="1788" href="Relation.Binary.Reasoning.Syntax.html#5544" class="Function">≤⟨</a> <a id="1791" href="Ledger.Prelude.Numeric.UnitInterval.html#1669" class="Bound">x≤1</a> <a id="1795" href="Relation.Binary.Reasoning.Syntax.html#5544" class="Function">⟩</a>
-    <a id="1801" class="Number">1</a>      <a id="1808" href="Relation.Binary.Reasoning.Syntax.html#12345" class="Function Operator">∎</a>
+<span class="c1">-- Left multiplication by unit interval element preserves being upper boundeded by 1.</span>
+<span class="nf">inUnitInterval-*-≤1</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span>y<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>inUnitInterval<span class="w"> </span>x<span class="w"> </span><span class="ow">→</span><span class="w"> </span>y<span class="w"> </span>≤<span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>x<span class="w"> </span>*<span class="w"> </span>y<span class="w"> </span>≤<span class="w"> </span><span class="mi">1</span>
+inUnitInterval-*-≤1<span class="w"> </span>x<span class="w"> </span>y<span class="w"> </span><span class="o">(</span><span class="mi">0</span>≤x<span class="w"> </span>,<span class="w"> </span>x≤1<span class="o">)</span><span class="w"> </span>y≤1<span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span>begin
+<span class="w">    </span>x<span class="w"> </span>*<span class="w"> </span>y<span class="w">  </span>≤⟨<span class="w"> </span>*-monoˡ-≤-nonNeg<span class="w"> </span>x<span class="w"> </span>⦃<span class="w"> </span>nonNegative<span class="w"> </span><span class="mi">0</span>≤x<span class="w"> </span>⦄<span class="w"> </span>y≤1<span class="w"> </span>⟩
+<span class="w">    </span>x<span class="w"> </span>*<span class="w"> </span><span class="mi">1</span><span class="w">  </span>≡⟨<span class="w"> </span>*-identityʳ<span class="w"> </span>_<span class="w"> </span>⟩
+<span class="w">    </span>x<span class="w">      </span>≤⟨<span class="w"> </span>x≤1<span class="w"> </span>⟩
+<span class="w">    </span><span class="mi">1</span><span class="w">      </span>∎
 
-<a id="1811" class="Comment">-- UnitInterval: rational number in the unit interval [0, 1].</a>
-<a id="UnitInterval"></a><a id="1873" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a> <a id="1886" class="Symbol">:</a> <a id="1888" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-<a id="1893" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a> <a id="1906" class="Symbol">=</a> <a id="1908" href="Data.Refinement.Base.html#1082" class="Function">[</a> <a id="1910" href="Ledger.Prelude.Numeric.UnitInterval.html#1910" class="Bound">x</a> <a id="1912" href="Data.Refinement.Base.html#1082" class="Function">∈</a> <a id="1914" href="Data.Rational.Base.html#1421" class="Record">ℚ</a> <a id="1916" href="Data.Refinement.Base.html#1082" class="Function">∣</a> <a id="1918" href="Ledger.Prelude.Numeric.UnitInterval.html#656" class="Function">inUnitInterval</a> <a id="1933" href="Ledger.Prelude.Numeric.UnitInterval.html#1910" class="Bound">x</a> <a id="1935" href="Data.Refinement.Base.html#1082" class="Function">]</a>
+<span class="c1">-- UnitInterval: rational number in the unit interval [0, 1].</span>
+<span class="nf">UnitInterval</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type
+UnitInterval<span class="w"> </span><span class="ow">=</span><span class="w"> </span>[<span class="w"> </span>x<span class="w"> </span>∈<span class="w"> </span>ℚ<span class="w"> </span>∣<span class="w"> </span>inUnitInterval<span class="w"> </span>x<span class="w"> </span>]
 
-<a id="1938" class="Keyword">instance</a>
-  <a id="Show-UnitInterval"></a><a id="1949" href="Ledger.Prelude.Numeric.UnitInterval.html#1949" class="Function">Show-UnitInterval</a> <a id="1967" class="Symbol">:</a> <a id="1969" href="Class.Show.Core.html#125" class="Record">Show</a> <a id="1974" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a>
-  <a id="1989" href="Ledger.Prelude.Numeric.UnitInterval.html#1949" class="Function">Show-UnitInterval</a> <a id="2007" class="Symbol">.</a><a id="2008" href="Class.Show.Core.html#187" class="Field">show</a> <a id="2013" class="Symbol">=</a> <a id="2015" href="Ledger.Prelude.Numeric.UnitInterval.html#536" class="Function">ℚshow</a> <a id="2021" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="2023" href="Data.Refinement.Base.html#789" class="Field">value</a>
+<span class="kr">instance</span>
+<span class="w">  </span><span class="nf">Show-UnitInterval</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Show<span class="w"> </span>UnitInterval
+<span class="w">  </span>Show-UnitInterval<span class="w"> </span><span class="ow">.</span>show<span class="w"> </span><span class="ow">=</span><span class="w"> </span>ℚshow<span class="w"> </span>∘<span class="w"> </span>value
 
-<a id="2030" class="Comment">-- In the cardano-ledger codebase:</a>
-<a id="2065" class="Comment">--  unboundRational</a>
-<a id="fromUnitInterval"></a><a id="2085" href="Ledger.Prelude.Numeric.UnitInterval.html#2085" class="Function">fromUnitInterval</a> <a id="2102" class="Symbol">:</a> <a id="2104" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a> <a id="2117" class="Symbol">→</a> <a id="2119" href="Data.Rational.Base.html#1421" class="Record">ℚ</a>
-<a id="2121" href="Ledger.Prelude.Numeric.UnitInterval.html#2085" class="Function">fromUnitInterval</a> <a id="2138" class="Symbol">=</a> <a id="2140" href="Data.Refinement.Base.html#789" class="Field">value</a>
+<span class="c1">-- In the cardano-ledger codebase:</span>
+<span class="c1">--  unboundRational</span>
+<span class="nf">fromUnitInterval</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>UnitInterval<span class="w"> </span><span class="ow">→</span><span class="w"> </span>ℚ
+fromUnitInterval<span class="w"> </span><span class="ow">=</span><span class="w"> </span>value
 
-<a id="2147" class="Comment">-- In the cardano-ledger codebase:</a>
-<a id="2182" class="Comment">--  unboundRational</a>
-<a id="toUnitInterval"></a><a id="2202" href="Ledger.Prelude.Numeric.UnitInterval.html#2202" class="Function">toUnitInterval</a> <a id="2217" class="Symbol">:</a> <a id="2219" href="Data.Rational.Base.html#1421" class="Record">ℚ</a> <a id="2221" class="Symbol">→</a> <a id="2223" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="2229" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a>
-<a id="2242" href="Ledger.Prelude.Numeric.UnitInterval.html#2202" class="Function">toUnitInterval</a> <a id="2257" href="Ledger.Prelude.Numeric.UnitInterval.html#2257" class="Bound">x</a> <a id="2259" class="Keyword">with</a> <a id="2264" href="Ledger.Prelude.Numeric.UnitInterval.html#787" class="Function">isInUnitInterval</a> <a id="2281" href="Ledger.Prelude.Numeric.UnitInterval.html#2257" class="Bound">x</a>
-<a id="2283" class="Symbol">...</a> <a id="2287" class="Symbol">|</a> <a id="2289" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="2292" href="Ledger.Prelude.Numeric.UnitInterval.html#2292" class="Bound">¬p</a> <a id="2295" class="Symbol">=</a> <a id="2297" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>
-<a id="2305" class="Symbol">...</a> <a id="2309" class="Symbol">|</a> <a id="2311" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2315" href="Ledger.Prelude.Numeric.UnitInterval.html#2315" class="Bound">p</a> <a id="2317" class="Symbol">=</a> <a id="2319" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="2324" class="Symbol">(</a><a id="2325" class="Bound">x</a> <a id="2327" href="Data.Refinement.Base.html#777" class="InductiveConstructor Operator">,</a> <a id="2329" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">[</a> <a id="2331" href="Ledger.Prelude.Numeric.UnitInterval.html#2315" class="Bound">p</a> <a id="2333" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">]</a><a id="2334" class="Symbol">)</a>
+<span class="c1">-- In the cardano-ledger codebase:</span>
+<span class="c1">--  unboundRational</span>
+<span class="nf">toUnitInterval</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Maybe<span class="w"> </span>UnitInterval
+toUnitInterval<span class="w"> </span>x<span class="w"> </span><span class="kr">with</span><span class="w"> </span>isInUnitInterval<span class="w"> </span>x
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>no<span class="w"> </span>¬p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>nothing
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>yes<span class="w"> </span>p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>just<span class="w"> </span><span class="o">(</span>x<span class="w"> </span>,<span class="w"> </span>[<span class="w"> </span>p<span class="w"> </span>]<span class="o">)</span>
 
-<a id="2337" class="Comment">-- Helper function to make an element of the Refinement type</a>
-<a id="2398" class="Comment">-- that is useful in the case where Agda can infer the evidence</a>
-<a id="2462" class="Comment">-- automatically by computation.</a>
-<a id="2495" class="Comment">-- Usage example:  mkUnitInterval (+ 2 / 10)</a>
-<a id="mkUnitInterval"></a><a id="2540" href="Ledger.Prelude.Numeric.UnitInterval.html#2540" class="Function">mkUnitInterval</a> <a id="2555" class="Symbol">:</a> <a id="2557" class="Symbol">∀</a> <a id="2559" class="Symbol">(</a><a id="2560" href="Ledger.Prelude.Numeric.UnitInterval.html#2560" class="Bound">x</a> <a id="2562" class="Symbol">:</a> <a id="2564" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="2565" class="Symbol">)</a> <a id="2567" class="Symbol">→</a> <a id="2569" class="Symbol">{</a><a id="2570" href="Data.Bool.Base.html#1358" class="Function">T</a> <a id="2572" class="Symbol">(</a><a id="2573" href="Relation.Nullary.Decidable.Core.html#2032" class="Field">does</a> <a id="2578" class="Symbol">(</a><a id="2579" href="Ledger.Prelude.Numeric.UnitInterval.html#787" class="Function">isInUnitInterval</a> <a id="2596" href="Ledger.Prelude.Numeric.UnitInterval.html#2560" class="Bound">x</a><a id="2597" class="Symbol">))}</a> <a id="2601" class="Symbol">→</a> <a id="2603" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a>
-<a id="2616" href="Ledger.Prelude.Numeric.UnitInterval.html#2540" class="Function">mkUnitInterval</a> <a id="2631" href="Ledger.Prelude.Numeric.UnitInterval.html#2631" class="Bound">x</a> <a id="2633" class="Symbol">{</a><a id="2634" href="Ledger.Prelude.Numeric.UnitInterval.html#2634" class="Bound">evidence</a><a id="2642" class="Symbol">}</a> <a id="2644" class="Keyword">with</a> <a id="2649" href="Ledger.Prelude.Numeric.UnitInterval.html#787" class="Function">isInUnitInterval</a> <a id="2666" href="Ledger.Prelude.Numeric.UnitInterval.html#2631" class="Bound">x</a> <a id="2668" class="Keyword">in</a> <a id="2671" class="Argument">eq</a>
-<a id="2674" class="Symbol">...</a> <a id="2678" class="Symbol">|</a> <a id="2680" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a>  <a id="2684" class="Symbol">_</a> <a id="2686" class="Keyword">rewrite</a> <a id="2694" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Function">cong</a> <a id="2699" href="Relation.Nullary.Decidable.Core.html#2032" class="Field">does</a> <a id="2704" href="Ledger.Prelude.Numeric.UnitInterval.html#2671" class="Bound">eq</a> <a id="2707" class="Symbol">=</a> <a id="2709" href="Data.Empty.html#1069" class="Function">⊥-elim</a> <a id="2716" class="Bound">evidence</a>
-<a id="2725" class="Symbol">...</a> <a id="2729" class="Symbol">|</a> <a id="2731" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2735" href="Ledger.Prelude.Numeric.UnitInterval.html#2735" class="Bound">p</a> <a id="2737" class="Symbol">=</a> <a id="2739" class="Bound">x</a> <a id="2741" href="Data.Refinement.Base.html#777" class="InductiveConstructor Operator">,</a> <a id="2743" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">[</a> <a id="2745" href="Ledger.Prelude.Numeric.UnitInterval.html#2735" class="Bound">p</a> <a id="2747" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">]</a>
+<span class="c1">-- Helper function to make an element of the Refinement type</span>
+<span class="c1">-- that is useful in the case where Agda can infer the evidence</span>
+<span class="c1">-- automatically by computation.</span>
+<span class="c1">-- Usage example:  mkUnitInterval (+ 2 / 10)</span>
+<span class="nf">mkUnitInterval</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="o">{</span>T<span class="w"> </span><span class="o">(</span>does<span class="w"> </span><span class="o">(</span>isInUnitInterval<span class="w"> </span>x<span class="o">))}</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>UnitInterval
+mkUnitInterval<span class="w"> </span>x<span class="w"> </span><span class="o">{</span>evidence<span class="o">}</span><span class="w"> </span><span class="kr">with</span><span class="w"> </span>isInUnitInterval<span class="w"> </span>x<span class="w"> </span><span class="kr">in</span><span class="w"> </span>eq
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>no<span class="w">  </span>_<span class="w"> </span><span class="kr">rewrite</span><span class="w"> </span>cong<span class="w"> </span>does<span class="w"> </span>eq<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⊥-elim<span class="w"> </span>evidence
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>yes<span class="w"> </span>p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>x<span class="w"> </span>,<span class="w"> </span>[<span class="w"> </span>p<span class="w"> </span>]
 
-<a id="2750" class="Comment">-- Clamp a rational number to the unit interval.</a>
-<a id="2799" class="Comment">-- Values below 0 or above 1 are set to 0 or 1, respectively.</a>
-<a id="clamp"></a><a id="2861" href="Ledger.Prelude.Numeric.UnitInterval.html#2861" class="Function">clamp</a> <a id="2867" class="Symbol">:</a> <a id="2869" href="Data.Rational.Base.html#1421" class="Record">ℚ</a> <a id="2871" class="Symbol">→</a> <a id="2873" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a>
-<a id="2886" href="Ledger.Prelude.Numeric.UnitInterval.html#2861" class="Function">clamp</a> <a id="2892" href="Ledger.Prelude.Numeric.UnitInterval.html#2892" class="Bound">x</a> <a id="2894" class="Keyword">with</a> <a id="2899" class="Number">0</a> <a id="2901" href="Data.Rational.Properties.html#19598" class="Function Operator">≤?</a> <a id="2904" href="Ledger.Prelude.Numeric.UnitInterval.html#2892" class="Bound">x</a>
-<a id="2906" class="Symbol">...</a> <a id="2910" class="Symbol">|</a> <a id="2912" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a>  <a id="2916" class="Symbol">_</a> <a id="2918" class="Symbol">=</a> <a id="2920" href="Ledger.Prelude.Numeric.UnitInterval.html#2540" class="Function">mkUnitInterval</a> <a id="2935" class="Number">0</a>
-<a id="2937" class="Symbol">...</a> <a id="2941" class="Symbol">|</a> <a id="2943" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="2947" href="Ledger.Prelude.Numeric.UnitInterval.html#2947" class="Bound">0≤x</a> <a id="2951" class="Keyword">with</a> <a id="2956" class="Bound">x</a> <a id="2958" href="Data.Rational.Properties.html#19598" class="Function Operator">≤?</a> <a id="2961" class="Number">1</a>
-<a id="2963" class="Symbol">...</a>     <a id="2971" class="Symbol">|</a> <a id="2973" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a>  <a id="2977" class="Symbol">_</a>   <a id="2981" class="Symbol">=</a> <a id="2983" href="Ledger.Prelude.Numeric.UnitInterval.html#2540" class="Function">mkUnitInterval</a> <a id="2998" class="Number">1</a>
-<a id="3000" class="Symbol">...</a>     <a id="3008" class="Symbol">|</a> <a id="3010" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="3014" href="Ledger.Prelude.Numeric.UnitInterval.html#3014" class="Bound">x≤1</a> <a id="3018" class="Symbol">=</a> <a id="3020" class="Symbol">(</a><a id="3021" class="Bound">x</a> <a id="3023" href="Data.Refinement.Base.html#777" class="InductiveConstructor Operator">,</a> <a id="3025" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">[</a> <a id="3027" class="Bound">0≤x</a> <a id="3031" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3033" href="Ledger.Prelude.Numeric.UnitInterval.html#3014" class="Bound">x≤1</a> <a id="3037" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">]</a><a id="3038" class="Symbol">)</a>
+<span class="c1">-- Clamp a rational number to the unit interval.</span>
+<span class="c1">-- Values below 0 or above 1 are set to 0 or 1, respectively.</span>
+<span class="nf">clamp</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="w"> </span><span class="ow">→</span><span class="w"> </span>UnitInterval
+clamp<span class="w"> </span>x<span class="w"> </span><span class="kr">with</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>≤?<span class="w"> </span>x
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>no<span class="w">  </span>_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>mkUnitInterval<span class="w"> </span><span class="mi">0</span>
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>yes<span class="w"> </span><span class="mi">0</span>≤x<span class="w"> </span><span class="kr">with</span><span class="w"> </span>x<span class="w"> </span>≤?<span class="w"> </span><span class="mi">1</span>
+<span class="ow">...</span><span class="w">     </span><span class="ow">|</span><span class="w"> </span>no<span class="w">  </span>_<span class="w">   </span><span class="ow">=</span><span class="w"> </span>mkUnitInterval<span class="w"> </span><span class="mi">1</span>
+<span class="ow">...</span><span class="w">     </span><span class="ow">|</span><span class="w"> </span>yes<span class="w"> </span>x≤1<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span>,<span class="w"> </span>[<span class="w"> </span><span class="mi">0</span>≤x<span class="w"> </span>,<span class="w"> </span>x≤1<span class="w"> </span>]<span class="o">)</span>
 
-<a id="3041" class="Comment">-- UnitInterval Properties</a>
+<span class="c1">-- UnitInterval Properties</span>
 
-<a id="3069" class="Comment">-- The predicate for &#39;UnitInterval&#39; also holds in a proof-relevant context.</a>
-<a id="fromUnitInterval-inUnitInterval"></a><a id="3145" href="Ledger.Prelude.Numeric.UnitInterval.html#3145" class="Function">fromUnitInterval-inUnitInterval</a>
-  <a id="3179" class="Symbol">:</a> <a id="3181" class="Symbol">∀</a> <a id="3183" class="Symbol">(</a><a id="3184" href="Ledger.Prelude.Numeric.UnitInterval.html#3184" class="Bound">x</a> <a id="3186" class="Symbol">:</a> <a id="3188" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a><a id="3200" class="Symbol">)</a> <a id="3202" class="Symbol">→</a> <a id="3204" href="Ledger.Prelude.Numeric.UnitInterval.html#656" class="Function">inUnitInterval</a> <a id="3219" class="Symbol">(</a><a id="3220" href="Ledger.Prelude.Numeric.UnitInterval.html#2085" class="Function">fromUnitInterval</a> <a id="3237" href="Ledger.Prelude.Numeric.UnitInterval.html#3184" class="Bound">x</a><a id="3238" class="Symbol">)</a>
-<a id="3240" href="Ledger.Prelude.Numeric.UnitInterval.html#3145" class="Function">fromUnitInterval-inUnitInterval</a> <a id="3272" class="Symbol">(</a><a id="3273" href="Ledger.Prelude.Numeric.UnitInterval.html#3273" class="Bound">x</a> <a id="3275" href="Data.Refinement.Base.html#777" class="InductiveConstructor Operator">,</a> <a id="3277" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">[</a> <a id="3279" href="Ledger.Prelude.Numeric.UnitInterval.html#3279" class="Bound">p0</a> <a id="3282" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">]</a><a id="3283" class="Symbol">)</a> <a id="3285" class="Keyword">with</a> <a id="3290" href="Ledger.Prelude.Numeric.UnitInterval.html#787" class="Function">isInUnitInterval</a> <a id="3307" href="Ledger.Prelude.Numeric.UnitInterval.html#3273" class="Bound">x</a>
-<a id="3309" class="Symbol">...</a> <a id="3313" class="Symbol">|</a> <a id="3315" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="3318" href="Ledger.Prelude.Numeric.UnitInterval.html#3318" class="Bound">¬p</a> <a id="3321" class="Symbol">=</a> <a id="3323" href="Data.Empty.html#1129" class="Function">⊥-elim-irr</a> <a id="3334" class="Symbol">(</a><a id="3335" href="Ledger.Prelude.Numeric.UnitInterval.html#3318" class="Bound">¬p</a> <a id="3338" class="Bound">p0</a><a id="3340" class="Symbol">)</a>
-<a id="3342" class="Symbol">...</a> <a id="3346" class="Symbol">|</a> <a id="3348" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="3352" href="Ledger.Prelude.Numeric.UnitInterval.html#3352" class="Bound">p</a> <a id="3354" class="Symbol">=</a> <a id="3356" href="Ledger.Prelude.Numeric.UnitInterval.html#3352" class="Bound">p</a>
+<span class="c1">-- The predicate for &#39;UnitInterval&#39; also holds in a proof-relevant context.</span>
+<span class="nf">fromUnitInterval-inUnitInterval</span>
+<span class="w">  </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span><span class="ow">:</span><span class="w"> </span>UnitInterval<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>inUnitInterval<span class="w"> </span><span class="o">(</span>fromUnitInterval<span class="w"> </span>x<span class="o">)</span>
+fromUnitInterval-inUnitInterval<span class="w"> </span><span class="o">(</span>x<span class="w"> </span>,<span class="w"> </span>[<span class="w"> </span>p0<span class="w"> </span>]<span class="o">)</span><span class="w"> </span><span class="kr">with</span><span class="w"> </span>isInUnitInterval<span class="w"> </span>x
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>no<span class="w"> </span>¬p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⊥-elim-irr<span class="w"> </span><span class="o">(</span>¬p<span class="w"> </span>p0<span class="o">)</span>
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>yes<span class="w"> </span>p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>p
 
-<a id="3359" class="Comment">-- Left multiplication by unit interval element preserves non-negativity.</a>
-<a id="UnitInterval-*-0≤"></a><a id="3433" href="Ledger.Prelude.Numeric.UnitInterval.html#3433" class="Function">UnitInterval-*-0≤</a>
-  <a id="3453" class="Symbol">:</a> <a id="3455" class="Symbol">∀</a> <a id="3457" class="Symbol">(</a><a id="3458" href="Ledger.Prelude.Numeric.UnitInterval.html#3458" class="Bound">x</a> <a id="3460" class="Symbol">:</a> <a id="3462" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="3463" class="Symbol">)</a> <a id="3465" class="Symbol">(</a><a id="3466" href="Ledger.Prelude.Numeric.UnitInterval.html#3466" class="Bound">y</a> <a id="3468" class="Symbol">:</a> <a id="3470" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a><a id="3482" class="Symbol">)</a> <a id="3484" class="Symbol">→</a> <a id="3486" class="Number">0</a> <a id="3488" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="3490" href="Ledger.Prelude.Numeric.UnitInterval.html#3458" class="Bound">x</a> <a id="3492" class="Symbol">→</a> <a id="3494" class="Number">0</a> <a id="3496" href="Data.Rational.Base.html#2544" class="Datatype Operator">≤</a> <a id="3498" href="Ledger.Prelude.Numeric.UnitInterval.html#3458" class="Bound">x</a> <a id="3500" href="Data.Rational.Base.html#6394" class="Function Operator">*</a> <a id="3502" href="Ledger.Prelude.Numeric.UnitInterval.html#2085" class="Function">fromUnitInterval</a> <a id="3519" href="Ledger.Prelude.Numeric.UnitInterval.html#3466" class="Bound">y</a>
-<a id="3521" href="Ledger.Prelude.Numeric.UnitInterval.html#3433" class="Function">UnitInterval-*-0≤</a> <a id="3539" href="Ledger.Prelude.Numeric.UnitInterval.html#3539" class="Bound">x</a> <a id="3541" href="Ledger.Prelude.Numeric.UnitInterval.html#3541" class="Bound">y</a> <a id="3543" href="Ledger.Prelude.Numeric.UnitInterval.html#3543" class="Bound">0≤x</a> <a id="3547" class="Symbol">=</a>
-  <a id="3551" href="Ledger.Prelude.Numeric.UnitInterval.html#1253" class="Function">inUnitInterval-*-0≤</a> <a id="3571" href="Ledger.Prelude.Numeric.UnitInterval.html#3539" class="Bound">x</a> <a id="3573" class="Symbol">(</a><a id="3574" href="Data.Refinement.Base.html#789" class="Field">value</a> <a id="3580" href="Ledger.Prelude.Numeric.UnitInterval.html#3541" class="Bound">y</a><a id="3581" class="Symbol">)</a> <a id="3583" class="Symbol">(</a><a id="3584" href="Ledger.Prelude.Numeric.UnitInterval.html#3145" class="Function">fromUnitInterval-inUnitInterval</a> <a id="3616" href="Ledger.Prelude.Numeric.UnitInterval.html#3541" class="Bound">y</a><a id="3617" class="Symbol">)</a> <a id="3619" href="Ledger.Prelude.Numeric.UnitInterval.html#3543" class="Bound">0≤x</a>
+<span class="c1">-- Left multiplication by unit interval element preserves non-negativity.</span>
+<span class="nf">UnitInterval-*-0≤</span>
+<span class="w">  </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ<span class="o">)</span><span class="w"> </span><span class="o">(</span>y<span class="w"> </span><span class="ow">:</span><span class="w"> </span>UnitInterval<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>≤<span class="w"> </span>x<span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>≤<span class="w"> </span>x<span class="w"> </span>*<span class="w"> </span>fromUnitInterval<span class="w"> </span>y
+UnitInterval-*-0≤<span class="w"> </span>x<span class="w"> </span>y<span class="w"> </span><span class="mi">0</span>≤x<span class="w"> </span><span class="ow">=</span>
+<span class="w">  </span>inUnitInterval-*-0≤<span class="w"> </span>x<span class="w"> </span><span class="o">(</span>value<span class="w"> </span>y<span class="o">)</span><span class="w"> </span><span class="o">(</span>fromUnitInterval-inUnitInterval<span class="w"> </span>y<span class="o">)</span><span class="w"> </span><span class="mi">0</span>≤x
 
-<a id="3624" class="Comment">-- to/from is the identity</a>
-<a id="prop-toUnitInterval-fromUnitInterval"></a><a id="3651" href="Ledger.Prelude.Numeric.UnitInterval.html#3651" class="Function">prop-toUnitInterval-fromUnitInterval</a> <a id="3688" class="Symbol">:</a> <a id="3690" class="Symbol">∀</a> <a id="3692" class="Symbol">(</a><a id="3693" href="Ledger.Prelude.Numeric.UnitInterval.html#3693" class="Bound">x</a> <a id="3695" class="Symbol">:</a> <a id="3697" href="Ledger.Prelude.Numeric.UnitInterval.html#1873" class="Function">UnitInterval</a><a id="3709" class="Symbol">)</a>
-  <a id="3713" class="Symbol">→</a> <a id="3715" href="Ledger.Prelude.Numeric.UnitInterval.html#2202" class="Function">toUnitInterval</a> <a id="3730" class="Symbol">(</a><a id="3731" href="Ledger.Prelude.Numeric.UnitInterval.html#2085" class="Function">fromUnitInterval</a> <a id="3748" href="Ledger.Prelude.Numeric.UnitInterval.html#3693" class="Bound">x</a><a id="3749" class="Symbol">)</a> <a id="3751" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="3753" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="3758" href="Ledger.Prelude.Numeric.UnitInterval.html#3693" class="Bound">x</a>
-<a id="3760" href="Ledger.Prelude.Numeric.UnitInterval.html#3651" class="Function">prop-toUnitInterval-fromUnitInterval</a> <a id="3797" class="Symbol">(</a><a id="3798" href="Ledger.Prelude.Numeric.UnitInterval.html#3798" class="Bound">x</a> <a id="3800" href="Data.Refinement.Base.html#777" class="InductiveConstructor Operator">,</a> <a id="3802" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">[</a> <a id="3804" href="Ledger.Prelude.Numeric.UnitInterval.html#3804" class="Bound">p0</a> <a id="3807" href="Data.Irrelevant.html#776" class="InductiveConstructor Operator">]</a><a id="3808" class="Symbol">)</a> <a id="3810" class="Keyword">with</a> <a id="3815" href="Ledger.Prelude.Numeric.UnitInterval.html#787" class="Function">isInUnitInterval</a> <a id="3832" href="Ledger.Prelude.Numeric.UnitInterval.html#3798" class="Bound">x</a>
-<a id="3834" class="Symbol">...</a> <a id="3838" class="Symbol">|</a> <a id="3840" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="3843" href="Ledger.Prelude.Numeric.UnitInterval.html#3843" class="Bound">¬p</a> <a id="3846" class="Symbol">=</a> <a id="3848" href="Data.Empty.html#1129" class="Function">⊥-elim-irr</a> <a id="3859" class="Symbol">(</a><a id="3860" href="Ledger.Prelude.Numeric.UnitInterval.html#3843" class="Bound">¬p</a> <a id="3863" class="Bound">p0</a><a id="3865" class="Symbol">)</a>
-<a id="3867" class="Symbol">...</a> <a id="3871" class="Symbol">|</a> <a id="3873" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="3877" href="Ledger.Prelude.Numeric.UnitInterval.html#3877" class="Bound">p</a> <a id="3879" class="Symbol">=</a> <a id="3881" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-</pre>
-
+<span class="c1">-- to/from is the identity</span>
+<span class="nf">prop-toUnitInterval-fromUnitInterval</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">(</span>x<span class="w"> </span><span class="ow">:</span><span class="w"> </span>UnitInterval<span class="o">)</span>
+<span class="w">  </span><span class="ow">→</span><span class="w"> </span>toUnitInterval<span class="w"> </span><span class="o">(</span>fromUnitInterval<span class="w"> </span>x<span class="o">)</span><span class="w"> </span>≡<span class="w"> </span>just<span class="w"> </span>x
+prop-toUnitInterval-fromUnitInterval<span class="w"> </span><span class="o">(</span>x<span class="w"> </span>,<span class="w"> </span>[<span class="w"> </span>p0<span class="w"> </span>]<span class="o">)</span><span class="w"> </span><span class="kr">with</span><span class="w"> </span>isInUnitInterval<span class="w"> </span>x
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>no<span class="w"> </span>¬p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⊥-elim-irr<span class="w"> </span><span class="o">(</span>¬p<span class="w"> </span>p0<span class="o">)</span>
+<span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>yes<span class="w"> </span>p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>refl
+</code></pre></div>
 <!-- Properties -->
 
 
@@ -7500,13 +7499,13 @@
         
         
           
-          <a href="Ledger.Core.Specification.Address.html" class="md-footer__link md-footer__link--next" aria-label="Next: Address">
+          <a href="Ledger.Core.Specification.Epoch.html" class="md-footer__link md-footer__link--next" aria-label="Next: Epoch">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Address
+                Epoch
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -7545,7 +7544,7 @@
       <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

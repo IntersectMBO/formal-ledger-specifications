@@ -15,14 +15,14 @@
         <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Epoch.html">
       
       
-        <link rel="prev" href="Ledger.Core.Specification.Crypto.html">
+        <link rel="prev" href="Ledger.Prelude.Numeric.UnitInterval.html">
       
       
         <link rel="next" href="Ledger.Conway.html">
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.2a3383ac.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -195,7 +195,7 @@
         <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -273,7 +273,7 @@
       <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -1028,7 +1028,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
         
   
   
@@ -1051,7 +1051,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
         
   
   
@@ -1687,7 +1687,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
         
   
   
@@ -2473,7 +2473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -2779,7 +2779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
         
   
   
@@ -2887,7 +2887,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
         
   
   
@@ -2910,7 +2910,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
         
   
   
@@ -2933,7 +2933,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
         
   
   
@@ -3484,7 +3484,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
         
   
   
@@ -3530,7 +3530,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
         
   
   
@@ -3870,7 +3870,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
         
   
   
@@ -4273,7 +4273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
         
   
   
@@ -6087,7 +6087,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.html" class="md-nav__link">
+      <a href="Ledger.PreConway.md" class="md-nav__link">
         
   
   
@@ -6398,7 +6398,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
         
   
   
@@ -6495,7 +6495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
         
   
   
@@ -7332,122 +7332,121 @@
      aria-label="View the source of this page">
     
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </a>
 
 
   <h1>Epoch</h1>
 
-<pre class="Agda"><a id="94" class="Symbol">{-#</a> <a id="98" class="Keyword">OPTIONS</a> <a id="106" class="Pragma">--safe</a> <a id="113" class="Symbol">#-}</a>
+<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
 
-<a id="118" class="Keyword">module</a> <a id="125" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a> <a id="157" class="Keyword">where</a>
+<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Core.Specification.Epoch</span><span class="w"> </span><span class="kr">where</span>
 
-<a id="164" class="Keyword">open</a> <a id="169" class="Keyword">import</a> <a id="176" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="191" class="Keyword">hiding</a> <a id="198" class="Symbol">(</a><a id="199" href="Data.Nat.Base.html#9190" class="Function">compare</a><a id="206" class="Symbol">;</a> <a id="208" href="Axiom.Set.Rel.html#1297" class="Function">Rel</a><a id="211" class="Symbol">)</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span><span class="w"> </span><span class="kr">hiding</span><span class="w"> </span><span class="o">(</span>compare;<span class="w"> </span>Rel<span class="o">)</span>
 
-<a id="214" class="Keyword">open</a> <a id="219" class="Keyword">import</a> <a id="226" href="Agda.Builtin.FromNat.html" class="Module">Agda.Builtin.FromNat</a>
-<a id="247" class="Keyword">open</a> <a id="252" class="Keyword">import</a> <a id="259" href="Algebra.html" class="Module">Algebra</a> <a id="267" class="Keyword">using</a> <a id="273" class="Symbol">(</a><a id="274" href="Algebra.Bundles.html#18455" class="Record">Semiring</a><a id="282" class="Symbol">)</a>
-<a id="284" class="Keyword">open</a> <a id="289" class="Keyword">import</a> <a id="296" href="Relation.Binary.html" class="Module">Relation.Binary</a>
-<a id="312" class="Keyword">open</a> <a id="317" class="Keyword">import</a> <a id="324" href="Data.Nat.Properties.html" class="Module">Data.Nat.Properties</a> <a id="344" class="Keyword">using</a> <a id="350" class="Symbol">(</a><a id="351" href="Data.Nat.Properties.html#25252" class="Function">+-*-semiring</a><a id="363" class="Symbol">)</a>
-<a id="365" class="Keyword">open</a> <a id="370" class="Keyword">import</a> <a id="377" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="391" class="Keyword">using</a> <a id="397" class="Symbol">(</a><a id="398" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="399" class="Symbol">)</a>
-<a id="401" class="Keyword">import</a>      <a id="413" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="427" class="Symbol">as</a> <a id="430" class="Module">ℚ</a>
-<a id="432" class="Keyword">import</a>      <a id="444" href="Data.Rational.Properties.html" class="Module">Data.Rational.Properties</a> <a id="469" class="Symbol">as</a> <a id="472" class="Module">ℚ</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Agda.Builtin.FromNat</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Algebra</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>Semiring<span class="o">)</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Relation.Binary</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Nat.Properties</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>+-*-semiring<span class="o">)</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Rational</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>ℚ<span class="o">)</span>
+<span class="kr">import</span><span class="w">      </span><span class="n">Data.Rational</span><span class="w"> </span>as<span class="w"> </span>ℚ
+<span class="kr">import</span><span class="w">      </span><span class="n">Data.Rational.Properties</span><span class="w"> </span>as<span class="w"> </span>ℚ
 
-<a id="additionVia"></a><a id="475" href="Ledger.Core.Specification.Epoch.html#475" class="Function">additionVia</a> <a id="487" class="Symbol">:</a> <a id="489" class="Symbol">∀{</a><a id="491" href="Ledger.Core.Specification.Epoch.html#491" class="Bound">A</a> <a id="493" class="Symbol">:</a> <a id="495" href="Agda.Primitive.html#388" class="Primitive">Set</a><a id="498" class="Symbol">}</a> <a id="500" class="Symbol">→</a> <a id="502" class="Symbol">(</a><a id="503" href="Ledger.Core.Specification.Epoch.html#491" class="Bound">A</a> <a id="505" class="Symbol">→</a> <a id="507" href="Ledger.Core.Specification.Epoch.html#491" class="Bound">A</a><a id="508" class="Symbol">)</a> <a id="510" class="Symbol">→</a> <a id="512" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="514" class="Symbol">→</a> <a id="516" href="Ledger.Core.Specification.Epoch.html#491" class="Bound">A</a> <a id="518" class="Symbol">→</a> <a id="520" href="Ledger.Core.Specification.Epoch.html#491" class="Bound">A</a>
-<a id="522" href="Ledger.Core.Specification.Epoch.html#475" class="Function">additionVia</a> <a id="534" href="Ledger.Core.Specification.Epoch.html#534" class="Bound">sucFun</a> <a id="541" href="Agda.Builtin.Nat.html#221" class="InductiveConstructor">zero</a> <a id="546" href="Ledger.Core.Specification.Epoch.html#546" class="Bound">r</a> <a id="548" class="Symbol">=</a> <a id="550" href="Ledger.Core.Specification.Epoch.html#546" class="Bound">r</a>
-<a id="552" href="Ledger.Core.Specification.Epoch.html#475" class="Function">additionVia</a> <a id="564" href="Ledger.Core.Specification.Epoch.html#564" class="Bound">sucFun</a> <a id="571" class="Symbol">(</a><a id="572" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="576" href="Ledger.Core.Specification.Epoch.html#576" class="Bound">l</a><a id="577" class="Symbol">)</a> <a id="579" href="Ledger.Core.Specification.Epoch.html#579" class="Bound">r</a> <a id="581" class="Symbol">=</a> <a id="583" href="Ledger.Core.Specification.Epoch.html#564" class="Bound">sucFun</a> <a id="590" class="Symbol">(</a><a id="591" href="Ledger.Core.Specification.Epoch.html#475" class="Function">additionVia</a> <a id="603" href="Ledger.Core.Specification.Epoch.html#564" class="Bound">sucFun</a> <a id="610" href="Ledger.Core.Specification.Epoch.html#576" class="Bound">l</a> <a id="612" href="Ledger.Core.Specification.Epoch.html#579" class="Bound">r</a><a id="613" class="Symbol">)</a>
+<span class="nf">additionVia</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="o">{</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="kt">Set</span><span class="o">}</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>A<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>ℕ<span class="w"> </span><span class="ow">→</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>A
+additionVia<span class="w"> </span>sucFun<span class="w"> </span>zero<span class="w"> </span>r<span class="w"> </span><span class="ow">=</span><span class="w"> </span>r
+additionVia<span class="w"> </span>sucFun<span class="w"> </span><span class="o">(</span>suc<span class="w"> </span>l<span class="o">)</span><span class="w"> </span>r<span class="w"> </span><span class="ow">=</span><span class="w"> </span>sucFun<span class="w"> </span><span class="o">(</span>additionVia<span class="w"> </span>sucFun<span class="w"> </span>l<span class="w"> </span>r<span class="o">)</span>
 
-<a id="616" class="Keyword">record</a> <a id="EpochStructure"></a><a id="623" href="Ledger.Core.Specification.Epoch.html#623" class="Record">EpochStructure</a> <a id="638" class="Symbol">:</a> <a id="640" href="Agda.Primitive.html#388" class="Primitive">Type₁</a> <a id="646" class="Keyword">where</a>
-  <a id="654" class="Keyword">field</a> <a id="EpochStructure.Slotʳ"></a><a id="660" href="Ledger.Core.Specification.Epoch.html#660" class="Field">Slotʳ</a> <a id="666" class="Symbol">:</a> <a id="668" href="Algebra.Bundles.html#18455" class="Record">Semiring</a> <a id="677" href="Level.html#521" class="Function">0ℓ</a> <a id="680" href="Level.html#521" class="Function">0ℓ</a>
-        <a id="EpochStructure.Epoch"></a><a id="691" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a> <a id="697" class="Symbol">:</a> <a id="699" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="703" class="Symbol">;</a> <a id="705" class="Symbol">⦃</a> <a id="EpochStructure.DecEq-Epoch"></a><a id="707" href="Ledger.Core.Specification.Epoch.html#707" class="Field">DecEq-Epoch</a> <a id="719" class="Symbol">⦄</a> <a id="721" class="Symbol">:</a> <a id="723" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="729" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a><a id="734" class="Symbol">;</a> <a id="736" class="Symbol">⦃</a> <a id="EpochStructure.Show-Epoch"></a><a id="738" href="Ledger.Core.Specification.Epoch.html#738" class="Field">Show-Epoch</a> <a id="749" class="Symbol">⦄</a> <a id="751" class="Symbol">:</a> <a id="753" href="Class.Show.Core.html#125" class="Record">Show</a> <a id="758" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a>
+<span class="kr">record</span><span class="w"> </span>EpochStructure<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type₁<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span><span class="w"> </span>Slotʳ<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Semiring<span class="w"> </span><span class="mi">0</span>ℓ<span class="w"> </span><span class="mi">0</span>ℓ
+<span class="w">        </span><span class="nf">Epoch</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type;<span class="w"> </span>⦃<span class="w"> </span>DecEq-Epoch<span class="w"> </span>⦄<span class="w"> </span><span class="ow">:</span><span class="w"> </span>DecEq<span class="w"> </span>Epoch;<span class="w"> </span>⦃<span class="w"> </span>Show-Epoch<span class="w"> </span>⦄<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Show<span class="w"> </span>Epoch
 
-  <a id="EpochStructure.Slot"></a><a id="767" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a> <a id="772" class="Symbol">=</a> <a id="774" href="Algebra.Bundles.html#18551" class="Field">Semiring.Carrier</a> <a id="791" href="Ledger.Core.Specification.Epoch.html#660" class="Field">Slotʳ</a>
+<span class="w">  </span>Slot<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Semiring.Carrier<span class="w"> </span>Slotʳ
 
-  <a id="800" class="Keyword">field</a> <a id="806" class="Symbol">⦃</a> <a id="EpochStructure.DecPo-Slot"></a><a id="808" href="Ledger.Core.Specification.Epoch.html#808" class="Field">DecPo-Slot</a> <a id="819" class="Symbol">⦄</a>   <a id="823" class="Symbol">:</a> <a id="825" href="Class.HasOrder.Core.html#3921" class="Function">HasDecPartialOrder≡</a> <a id="845" class="Symbol">{</a><a id="846" class="Argument">A</a> <a id="848" class="Symbol">=</a> <a id="850" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a><a id="854" class="Symbol">}</a>
-        <a id="864" class="Symbol">⦃</a> <a id="EpochStructure.DecEq-Slot"></a><a id="866" href="Ledger.Core.Specification.Epoch.html#866" class="Field">DecEq-Slot</a> <a id="877" class="Symbol">⦄</a>   <a id="881" class="Symbol">:</a> <a id="883" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="889" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a>
+<span class="w">  </span><span class="kr">field</span><span class="w"> </span>⦃<span class="w"> </span>DecPo-Slot<span class="w"> </span>⦄<span class="w">   </span><span class="ow">:</span><span class="w"> </span>HasDecPartialOrder≡<span class="w"> </span><span class="o">{</span>A<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Slot<span class="o">}</span>
+<span class="w">        </span>⦃<span class="w"> </span>DecEq-Slot<span class="w"> </span>⦄<span class="w">   </span><span class="ow">:</span><span class="w"> </span>DecEq<span class="w"> </span>Slot
 
-        <a id="EpochStructure.epoch"></a><a id="903" href="Ledger.Core.Specification.Epoch.html#903" class="Field">epoch</a>                         <a id="933" class="Symbol">:</a> <a id="935" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a> <a id="940" class="Symbol">→</a> <a id="942" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a>
-        <a id="EpochStructure.firstSlot"></a><a id="956" href="Ledger.Core.Specification.Epoch.html#956" class="Field">firstSlot</a>                     <a id="986" class="Symbol">:</a> <a id="988" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a> <a id="994" class="Symbol">→</a> <a id="996" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a>
-        <a id="EpochStructure.RandomnessStabilisationWindow"></a><a id="1009" href="Ledger.Core.Specification.Epoch.html#1009" class="Field">RandomnessStabilisationWindow</a> <a id="1039" class="Symbol">:</a> <a id="1041" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a>
-        <a id="EpochStructure.StabilityWindow"></a><a id="1054" href="Ledger.Core.Specification.Epoch.html#1054" class="Field">StabilityWindow</a>               <a id="1084" class="Symbol">:</a> <a id="1086" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a>
-        <a id="EpochStructure.sucᵉ"></a><a id="1099" href="Ledger.Core.Specification.Epoch.html#1099" class="Field">sucᵉ</a>                          <a id="1129" class="Symbol">:</a> <a id="1131" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a> <a id="1137" class="Symbol">→</a> <a id="1139" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a>
+<span class="w">        </span><span class="nf">epoch</span><span class="w">                         </span><span class="ow">:</span><span class="w"> </span>Slot<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch
+<span class="w">        </span><span class="nf">firstSlot</span><span class="w">                     </span><span class="ow">:</span><span class="w"> </span>Epoch<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Slot
+<span class="w">        </span><span class="nf">RandomnessStabilisationWindow</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Slot
+<span class="w">        </span><span class="nf">StabilityWindow</span><span class="w">               </span><span class="ow">:</span><span class="w"> </span>Slot
+<span class="w">        </span><span class="nf">sucᵉ</span><span class="w">                          </span><span class="ow">:</span><span class="w"> </span>Epoch<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch
 
-  <a id="EpochStructure._+ᵉ_"></a><a id="1148" href="Ledger.Core.Specification.Epoch.html#1148" class="Function Operator">_+ᵉ_</a> <a id="1153" class="Symbol">=</a> <a id="1155" href="Ledger.Core.Specification.Epoch.html#475" class="Function">additionVia</a> <a id="1167" href="Ledger.Core.Specification.Epoch.html#1099" class="Field">sucᵉ</a>
+<span class="w">  </span>_+ᵉ_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>additionVia<span class="w"> </span>sucᵉ
 
-  <a id="1175" class="Keyword">field</a>
-        <a id="EpochStructure._+ᵉ&#39;_"></a><a id="1189" href="Ledger.Core.Specification.Epoch.html#1189" class="Field Operator">_+ᵉ&#39;_</a>           <a id="1205" class="Symbol">:</a> <a id="1207" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1209" class="Symbol">→</a> <a id="1211" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a> <a id="1217" class="Symbol">→</a> <a id="1219" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a>
-        <a id="EpochStructure.+ᵉ≡+ᵉ&#39;"></a><a id="1233" href="Ledger.Core.Specification.Epoch.html#1233" class="Field">+ᵉ≡+ᵉ&#39;</a>          <a id="1249" class="Symbol">:</a> <a id="1251" class="Symbol">∀</a> <a id="1253" class="Symbol">{</a><a id="1254" href="Ledger.Core.Specification.Epoch.html#1254" class="Bound">a</a> <a id="1256" href="Ledger.Core.Specification.Epoch.html#1256" class="Bound">b</a><a id="1257" class="Symbol">}</a> <a id="1259" class="Symbol">→</a> <a id="1261" href="Ledger.Core.Specification.Epoch.html#1254" class="Bound">a</a> <a id="1263" href="Ledger.Core.Specification.Epoch.html#1148" class="Function Operator">+ᵉ</a> <a id="1266" href="Ledger.Core.Specification.Epoch.html#1256" class="Bound">b</a> <a id="1268" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1270" href="Ledger.Core.Specification.Epoch.html#1254" class="Bound">a</a> <a id="1272" href="Ledger.Core.Specification.Epoch.html#1189" class="Field Operator">+ᵉ&#39;</a> <a id="1276" href="Ledger.Core.Specification.Epoch.html#1256" class="Bound">b</a>
+<span class="w">  </span><span class="kr">field</span>
+<span class="w">        </span><span class="nf">_+ᵉ&#39;_</span><span class="w">           </span><span class="ow">:</span><span class="w"> </span>ℕ<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch
+<span class="w">        </span><span class="nf">+ᵉ≡+ᵉ&#39;</span><span class="w">          </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">{</span>a<span class="w"> </span>b<span class="o">}</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>a<span class="w"> </span>+ᵉ<span class="w"> </span>b<span class="w"> </span>≡<span class="w"> </span>a<span class="w"> </span>+ᵉ&#39;<span class="w"> </span>b
 
-  <a id="1281" class="Comment">-- preorders and partial orders</a>
+<span class="w">  </span><span class="c1">-- preorders and partial orders</span>
 
-  <a id="1316" class="Keyword">instance</a>
-    <a id="EpochStructure.preoEpoch"></a><a id="1329" href="Ledger.Core.Specification.Epoch.html#1329" class="Function">preoEpoch</a> <a id="1339" class="Symbol">:</a> <a id="1341" href="Class.HasOrder.Core.html#536" class="Record">HasPreorder</a>
-    <a id="1357" href="Ledger.Core.Specification.Epoch.html#1329" class="Function">preoEpoch</a> <a id="1367" class="Symbol">=</a> <a id="1369" href="Class.HasOrder.Core.html#5455" class="Function">hasPreorderFromStrictPartialOrder</a> <a id="1403" class="Symbol">{</a><a id="1404" class="Argument">_&lt;_</a> <a id="1408" class="Symbol">=</a> <a id="1410" href="Class.HasOrder.Core.html#646" class="Field Operator">_&lt;_</a> <a id="1414" href="Function.Base.html#6228" class="Function Operator">on</a> <a id="1417" href="Ledger.Core.Specification.Epoch.html#956" class="Field">firstSlot</a><a id="1426" class="Symbol">}</a>
-      <a id="1434" class="Keyword">record</a>
-        <a id="1449" class="Symbol">{</a> <a id="1451" href="Relation.Binary.Structures.html#4842" class="Field">isEquivalence</a> <a id="1465" class="Symbol">=</a> <a id="1467" href="Relation.Binary.PropositionalEquality.Properties.html#5530" class="Function">isEquivalence</a>
-        <a id="1489" class="Symbol">;</a> <a id="1491" href="Relation.Binary.Structures.html#4876" class="Field">irrefl</a> <a id="1498" class="Symbol">=</a> <a id="1500" class="Symbol">λ</a> <a id="1502" class="Keyword">where</a> <a id="1508" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1513" class="Symbol">→</a> <a id="1515" href="Class.HasOrder.Core.html#722" class="Field">&lt;-irrefl</a> <a id="1524" class="Symbol">{</a><a id="1525" class="Argument">A</a> <a id="1527" class="Symbol">=</a> <a id="1529" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a><a id="1533" class="Symbol">}</a> <a id="1535" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-        <a id="1548" class="Symbol">;</a> <a id="1550" href="Relation.Binary.Structures.html#4916" class="Field">trans</a>  <a id="1557" class="Symbol">=</a> <a id="1559" href="Class.HasOrder.Core.html#2224" class="Function">&lt;-trans</a> <a id="1567" class="Symbol">{</a><a id="1568" class="Argument">A</a> <a id="1570" class="Symbol">=</a> <a id="1572" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a><a id="1576" class="Symbol">}</a>
-        <a id="1586" class="Symbol">;</a> <a id="1588" href="Relation.Binary.Structures.html#4951" class="Field">&lt;-resp-≈</a> <a id="1597" class="Symbol">=</a> <a id="1599" class="Symbol">(λ</a> <a id="1602" class="Keyword">where</a> <a id="1608" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1613" class="Symbol">→</a> <a id="1615" href="Function.Base.html#704" class="Function">id</a><a id="1617" class="Symbol">)</a> <a id="1619" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1621" class="Symbol">(λ</a> <a id="1624" class="Keyword">where</a> <a id="1630" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1635" class="Symbol">→</a> <a id="1637" href="Function.Base.html#704" class="Function">id</a><a id="1639" class="Symbol">)</a>
-        <a id="1649" class="Symbol">}</a>
+<span class="w">  </span><span class="kr">instance</span>
+<span class="w">    </span><span class="nf">preoEpoch</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasPreorder
+<span class="w">    </span>preoEpoch<span class="w"> </span><span class="ow">=</span><span class="w"> </span>hasPreorderFromStrictPartialOrder<span class="w"> </span><span class="o">{</span>_&lt;_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>_&lt;_<span class="w"> </span>on<span class="w"> </span>firstSlot<span class="o">}</span>
+<span class="w">      </span><span class="kr">record</span>
+<span class="w">        </span><span class="o">{</span><span class="w"> </span>isEquivalence<span class="w"> </span><span class="ow">=</span><span class="w"> </span>isEquivalence
+<span class="w">        </span>;<span class="w"> </span>irrefl<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span><span class="w"> </span>refl<span class="w"> </span><span class="ow">→</span><span class="w"> </span>&lt;-irrefl<span class="w"> </span><span class="o">{</span>A<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Slot<span class="o">}</span><span class="w"> </span>refl
+<span class="w">        </span>;<span class="w"> </span>trans<span class="w">  </span><span class="ow">=</span><span class="w"> </span>&lt;-trans<span class="w"> </span><span class="o">{</span>A<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Slot<span class="o">}</span>
+<span class="w">        </span>;<span class="w"> </span>&lt;-resp-≈<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">(</span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span><span class="w"> </span>refl<span class="w"> </span><span class="ow">→</span><span class="w"> </span>id<span class="o">)</span><span class="w"> </span>,<span class="w"> </span><span class="o">(</span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span><span class="w"> </span>refl<span class="w"> </span><span class="ow">→</span><span class="w"> </span>id<span class="o">)</span>
+<span class="w">        </span><span class="o">}</span>
 
-  <a id="1654" href="Ledger.Core.Specification.Epoch.html#1654" class="Function">_</a> <a id="1656" class="Symbol">=</a> <a id="1658" href="Class.HasOrder.Core.html#646" class="Field Operator">_&lt;_</a> <a id="1662" class="Symbol">{</a><a id="1663" class="Argument">A</a> <a id="1665" class="Symbol">=</a> <a id="1667" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a><a id="1671" class="Symbol">}</a>  <a id="1674" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a> <a id="1677" href="Function.Base.html#4505" class="Function Operator">∋</a> <a id="1679" href="Function.Base.html#4755" class="Function">it</a>
-  <a id="1684" href="Ledger.Core.Specification.Epoch.html#1684" class="Function">_</a> <a id="1686" class="Symbol">=</a> <a id="1688" href="Class.HasOrder.Core.html#613" class="Field Operator">_≤_</a> <a id="1692" class="Symbol">{</a><a id="1693" class="Argument">A</a> <a id="1695" class="Symbol">=</a> <a id="1697" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a><a id="1701" class="Symbol">}</a>  <a id="1704" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a> <a id="1707" href="Function.Base.html#4505" class="Function Operator">∋</a> <a id="1709" href="Function.Base.html#4755" class="Function">it</a>
-  <a id="1714" href="Ledger.Core.Specification.Epoch.html#1714" class="Function">_</a> <a id="1716" class="Symbol">=</a> <a id="1718" href="Class.HasOrder.Core.html#646" class="Field Operator">_&lt;_</a> <a id="1722" class="Symbol">{</a><a id="1723" class="Argument">A</a> <a id="1725" class="Symbol">=</a> <a id="1727" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a><a id="1732" class="Symbol">}</a> <a id="1734" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a> <a id="1737" href="Function.Base.html#4505" class="Function Operator">∋</a> <a id="1739" href="Function.Base.html#4755" class="Function">it</a>
-  <a id="1744" href="Ledger.Core.Specification.Epoch.html#1744" class="Function">_</a> <a id="1746" class="Symbol">=</a> <a id="1748" href="Class.HasOrder.Core.html#613" class="Field Operator">_≤_</a> <a id="1752" class="Symbol">{</a><a id="1753" class="Argument">A</a> <a id="1755" class="Symbol">=</a> <a id="1757" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a><a id="1762" class="Symbol">}</a> <a id="1764" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a> <a id="1767" href="Function.Base.html#4505" class="Function Operator">∋</a> <a id="1769" href="Function.Base.html#4755" class="Function">it</a>
+<span class="w">  </span>_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>_&lt;_<span class="w"> </span><span class="o">{</span>A<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Slot<span class="o">}</span><span class="w">  </span>⁇²<span class="w"> </span>∋<span class="w"> </span>it
+<span class="w">  </span>_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>_≤_<span class="w"> </span><span class="o">{</span>A<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Slot<span class="o">}</span><span class="w">  </span>⁇²<span class="w"> </span>∋<span class="w"> </span>it
+<span class="w">  </span>_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>_&lt;_<span class="w"> </span><span class="o">{</span>A<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Epoch<span class="o">}</span><span class="w"> </span>⁇²<span class="w"> </span>∋<span class="w"> </span>it
+<span class="w">  </span>_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>_≤_<span class="w"> </span><span class="o">{</span>A<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Epoch<span class="o">}</span><span class="w"> </span>⁇²<span class="w"> </span>∋<span class="w"> </span>it
 
-  <a id="1775" class="Comment">-- addition</a>
+<span class="w">  </span><span class="c1">-- addition</span>
 
-  <a id="1790" class="Keyword">open</a> <a id="1795" href="Algebra.Bundles.html#18455" class="Module">Semiring</a> <a id="1804" href="Ledger.Core.Specification.Epoch.html#660" class="Field">Slotʳ</a> <a id="1810" class="Keyword">renaming</a> <a id="1819" class="Symbol">(</a><a id="1820" href="Algebra.Bundles.html#18605" class="Field Operator">_+_</a> <a id="1824" class="Symbol">to</a> <a id="1827" class="Field Operator">_+ˢ_</a><a id="1831" class="Symbol">)</a>
+<span class="w">  </span><span class="kr">open</span><span class="w"> </span>Semiring<span class="w"> </span>Slotʳ<span class="w"> </span><span class="kr">renaming</span><span class="w"> </span><span class="o">(</span>_+_<span class="w"> </span>to<span class="w"> </span>_+ˢ_<span class="o">)</span>
 
-  <a id="EpochStructure.ℕtoEpoch"></a><a id="1836" href="Ledger.Core.Specification.Epoch.html#1836" class="Function">ℕtoEpoch</a> <a id="1845" class="Symbol">:</a> <a id="1847" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="1849" class="Symbol">→</a> <a id="1851" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a>
-  <a id="1859" href="Ledger.Core.Specification.Epoch.html#1836" class="Function">ℕtoEpoch</a> <a id="1868" href="Agda.Builtin.Nat.html#221" class="InductiveConstructor">zero</a>    <a id="1876" class="Symbol">=</a> <a id="1878" href="Ledger.Core.Specification.Epoch.html#903" class="Field">epoch</a> <a id="1884" href="Algebra.Bundles.html#18663" class="Function">0#</a>
-  <a id="1889" href="Ledger.Core.Specification.Epoch.html#1836" class="Function">ℕtoEpoch</a> <a id="1898" class="Symbol">(</a><a id="1899" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="1903" href="Ledger.Core.Specification.Epoch.html#1903" class="Bound">n</a><a id="1904" class="Symbol">)</a> <a id="1906" class="Symbol">=</a> <a id="1908" href="Ledger.Core.Specification.Epoch.html#1099" class="Field">sucᵉ</a> <a id="1913" class="Symbol">(</a><a id="1914" href="Ledger.Core.Specification.Epoch.html#1836" class="Function">ℕtoEpoch</a> <a id="1923" href="Ledger.Core.Specification.Epoch.html#1903" class="Bound">n</a><a id="1924" class="Symbol">)</a>
+<span class="w">  </span><span class="nf">ℕtoEpoch</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℕ<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch
+<span class="w">  </span>ℕtoEpoch<span class="w"> </span>zero<span class="w">    </span><span class="ow">=</span><span class="w"> </span>epoch<span class="w"> </span><span class="mi">0</span>#
+<span class="w">  </span>ℕtoEpoch<span class="w"> </span><span class="o">(</span>suc<span class="w"> </span>n<span class="o">)</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span>sucᵉ<span class="w"> </span><span class="o">(</span>ℕtoEpoch<span class="w"> </span>n<span class="o">)</span>
 
-  <a id="1929" class="Keyword">instance</a>
-    <a id="EpochStructure.addSlot"></a><a id="1942" href="Ledger.Core.Specification.Epoch.html#1942" class="Function">addSlot</a> <a id="1950" class="Symbol">:</a> <a id="1952" href="Class.HasAdd.Core.html#104" class="Record">HasAdd</a> <a id="1959" href="Ledger.Core.Specification.Epoch.html#767" class="Function">Slot</a>
-    <a id="1968" href="Ledger.Core.Specification.Epoch.html#1942" class="Function">addSlot</a> <a id="1976" class="Symbol">.</a><a id="1977" href="Class.HasAdd.Core.html#162" class="Field Operator">_+_</a> <a id="1981" class="Symbol">=</a> <a id="1983" href="Ledger.Core.Specification.Epoch.html#1827" class="Function Operator">_+ˢ_</a>
+<span class="w">  </span><span class="kr">instance</span>
+<span class="w">    </span><span class="nf">addSlot</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasAdd<span class="w"> </span>Slot
+<span class="w">    </span>addSlot<span class="w"> </span><span class="ow">.</span>_+_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>_+ˢ_
 
-    <a id="EpochStructure.addEpoch"></a><a id="1993" href="Ledger.Core.Specification.Epoch.html#1993" class="Function">addEpoch</a> <a id="2002" class="Symbol">:</a> <a id="2004" href="Class.HasAdd.Core.html#104" class="Record">HasAdd</a> <a id="2011" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a>
-    <a id="2021" href="Ledger.Core.Specification.Epoch.html#1993" class="Function">addEpoch</a> <a id="2030" class="Symbol">.</a><a id="2031" href="Class.HasAdd.Core.html#162" class="Field Operator">_+_</a> <a id="2035" href="Ledger.Core.Specification.Epoch.html#2035" class="Bound">e</a> <a id="2037" href="Ledger.Core.Specification.Epoch.html#2037" class="Bound">e&#39;</a> <a id="2040" class="Symbol">=</a> <a id="2042" href="Ledger.Core.Specification.Epoch.html#903" class="Field">epoch</a> <a id="2048" class="Symbol">(</a><a id="2049" href="Ledger.Core.Specification.Epoch.html#956" class="Field">firstSlot</a> <a id="2059" href="Ledger.Core.Specification.Epoch.html#2035" class="Bound">e</a> <a id="2061" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="2063" href="Ledger.Core.Specification.Epoch.html#956" class="Field">firstSlot</a> <a id="2073" href="Ledger.Core.Specification.Epoch.html#2037" class="Bound">e&#39;</a><a id="2075" class="Symbol">)</a>
+<span class="w">    </span><span class="nf">addEpoch</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasAdd<span class="w"> </span>Epoch
+<span class="w">    </span>addEpoch<span class="w"> </span><span class="ow">.</span>_+_<span class="w"> </span>e<span class="w"> </span>e&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>epoch<span class="w"> </span><span class="o">(</span>firstSlot<span class="w"> </span>e<span class="w"> </span>+<span class="w"> </span>firstSlot<span class="w"> </span>e&#39;<span class="o">)</span>
 
-    <a id="EpochStructure.Number-Epoch"></a><a id="2082" href="Ledger.Core.Specification.Epoch.html#2082" class="Function">Number-Epoch</a> <a id="2095" class="Symbol">:</a> <a id="2097" href="Agda.Builtin.FromNat.html#196" class="Record">Number</a> <a id="2104" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a>
-    <a id="2114" href="Ledger.Core.Specification.Epoch.html#2082" class="Function">Number-Epoch</a> <a id="2127" class="Symbol">.</a><a id="2128" href="Agda.Builtin.FromNat.html#252" class="Field">Number.Constraint</a> <a id="2146" class="Symbol">_</a> <a id="2148" class="Symbol">=</a> <a id="2150" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a>
-    <a id="2156" href="Ledger.Core.Specification.Epoch.html#2082" class="Function">Number-Epoch</a> <a id="2169" class="Symbol">.</a><a id="2170" href="Agda.Builtin.FromNat.html#281" class="Field">Number.fromNat</a>    <a id="2188" href="Ledger.Core.Specification.Epoch.html#2188" class="Bound">x</a> <a id="2190" class="Symbol">=</a> <a id="2192" href="Ledger.Core.Specification.Epoch.html#1836" class="Function">ℕtoEpoch</a> <a id="2201" href="Ledger.Core.Specification.Epoch.html#2188" class="Bound">x</a>
+<span class="w">    </span><span class="nf">Number-Epoch</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Number<span class="w"> </span>Epoch
+<span class="w">    </span>Number-Epoch<span class="w"> </span><span class="ow">.</span>Number.Constraint<span class="w"> </span>_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⊤
+<span class="w">    </span>Number-Epoch<span class="w"> </span><span class="ow">.</span>Number.fromNat<span class="w">    </span>x<span class="w"> </span><span class="ow">=</span><span class="w"> </span>ℕtoEpoch<span class="w"> </span>x
 
-<a id="2204" class="Keyword">record</a> <a id="GlobalConstants"></a><a id="2211" href="Ledger.Core.Specification.Epoch.html#2211" class="Record">GlobalConstants</a> <a id="2227" class="Symbol">:</a> <a id="2229" href="Agda.Primitive.html#388" class="Primitive">Type₁</a> <a id="2235" class="Keyword">where</a>
-  <a id="2243" class="Keyword">field</a>  <a id="GlobalConstants.Network"></a><a id="2250" href="Ledger.Core.Specification.Epoch.html#2250" class="Field">Network</a> <a id="2258" class="Symbol">:</a> <a id="2260" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="2264" class="Symbol">;</a> <a id="2266" class="Symbol">⦃</a> <a id="GlobalConstants.DecEq-Netw"></a><a id="2268" href="Ledger.Core.Specification.Epoch.html#2268" class="Field">DecEq-Netw</a> <a id="2279" class="Symbol">⦄</a> <a id="2281" class="Symbol">:</a> <a id="2283" href="Class.DecEq.Core.html#126" class="Record">DecEq</a> <a id="2289" href="Ledger.Core.Specification.Epoch.html#2250" class="Field">Network</a><a id="2296" class="Symbol">;</a> <a id="2298" class="Symbol">⦃</a> <a id="GlobalConstants.Show-Network"></a><a id="2300" href="Ledger.Core.Specification.Epoch.html#2300" class="Field">Show-Network</a> <a id="2313" class="Symbol">⦄</a> <a id="2315" class="Symbol">:</a> <a id="2317" href="Class.Show.Core.html#125" class="Record">Show</a> <a id="2322" href="Ledger.Core.Specification.Epoch.html#2250" class="Field">Network</a>
-         <a id="GlobalConstants.SlotsPerEpochᶜ"></a><a id="2339" href="Ledger.Core.Specification.Epoch.html#2339" class="Field">SlotsPerEpochᶜ</a>   <a id="2356" class="Symbol">:</a> <a id="2358" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="2359" class="Symbol">;</a> <a id="2361" class="Symbol">⦃</a> <a id="GlobalConstants.NonZero-SlotsPerEpochᶜ"></a><a id="2363" href="Ledger.Core.Specification.Epoch.html#2363" class="Field">NonZero-SlotsPerEpochᶜ</a> <a id="2386" class="Symbol">⦄</a> <a id="2388" class="Symbol">:</a> <a id="2390" href="Data.Nat.Base.html#3266" class="Record">NonZero</a> <a id="2398" href="Ledger.Core.Specification.Epoch.html#2339" class="Field">SlotsPerEpochᶜ</a>
-         <a id="GlobalConstants.ActiveSlotCoeff"></a><a id="2422" href="Ledger.Core.Specification.Epoch.html#2422" class="Field">ActiveSlotCoeff</a>  <a id="2439" class="Symbol">:</a> <a id="2441" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="2442" class="Symbol">;</a> <a id="2444" class="Symbol">⦃</a> <a id="GlobalConstants.Positive-ActiveSlotCoeff"></a><a id="2446" href="Ledger.Core.Specification.Epoch.html#2446" class="Field">Positive-ActiveSlotCoeff</a> <a id="2471" class="Symbol">⦄</a> <a id="2473" class="Symbol">:</a> <a id="2475" href="Data.Rational.Base.html#4630" class="Function">ℚ.Positive</a> <a id="2486" href="Ledger.Core.Specification.Epoch.html#2422" class="Field">ActiveSlotCoeff</a>
-         <a id="GlobalConstants.RandomnessStabilisationWindowᶜ"></a><a id="2511" href="Ledger.Core.Specification.Epoch.html#2511" class="Field">RandomnessStabilisationWindowᶜ</a> <a id="2542" class="Symbol">:</a> <a id="2544" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-         <a id="GlobalConstants.StabilityWindowᶜ"></a><a id="2555" href="Ledger.Core.Specification.Epoch.html#2555" class="Field">StabilityWindowᶜ</a> <a id="2572" class="Symbol">:</a> <a id="2574" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-         <a id="GlobalConstants.MaxLovelaceSupplyᶜ"></a><a id="2585" href="Ledger.Core.Specification.Epoch.html#2585" class="Field">MaxLovelaceSupplyᶜ</a> <a id="2604" class="Symbol">:</a> <a id="2606" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
-         <a id="GlobalConstants.Quorum"></a><a id="2620" href="Ledger.Core.Specification.Epoch.html#2620" class="Field">Quorum</a> <a id="2627" class="Symbol">:</a> <a id="2629" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-         <a id="GlobalConstants.NetworkId"></a><a id="2640" href="Ledger.Core.Specification.Epoch.html#2640" class="Field">NetworkId</a> <a id="2650" class="Symbol">:</a> <a id="2652" href="Ledger.Core.Specification.Epoch.html#2250" class="Field">Network</a>
+<span class="kr">record</span><span class="w"> </span>GlobalConstants<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type₁<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span><span class="w">  </span>Network<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type;<span class="w"> </span>⦃<span class="w"> </span>DecEq-Netw<span class="w"> </span>⦄<span class="w"> </span><span class="ow">:</span><span class="w"> </span>DecEq<span class="w"> </span>Network;<span class="w"> </span>⦃<span class="w"> </span>Show-Network<span class="w"> </span>⦄<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Show<span class="w"> </span>Network
+<span class="w">         </span><span class="nf">SlotsPerEpochᶜ</span><span class="w">   </span><span class="ow">:</span><span class="w"> </span>ℕ;<span class="w"> </span>⦃<span class="w"> </span>NonZero-SlotsPerEpochᶜ<span class="w"> </span>⦄<span class="w"> </span><span class="ow">:</span><span class="w"> </span>NonZero<span class="w"> </span>SlotsPerEpochᶜ
+<span class="w">         </span><span class="nf">ActiveSlotCoeff</span><span class="w">  </span><span class="ow">:</span><span class="w"> </span>ℚ;<span class="w"> </span>⦃<span class="w"> </span>Positive-ActiveSlotCoeff<span class="w"> </span>⦄<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ.Positive<span class="w"> </span>ActiveSlotCoeff
+<span class="w">         </span><span class="nf">RandomnessStabilisationWindowᶜ</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℕ
+<span class="w">         </span><span class="nf">StabilityWindowᶜ</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℕ
+<span class="w">         </span><span class="nf">MaxLovelaceSupplyᶜ</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Coin
+<span class="w">         </span><span class="nf">Quorum</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℕ
+<span class="w">         </span><span class="nf">NetworkId</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Network
 
-  <a id="2663" class="Keyword">instance</a>
-    <a id="GlobalConstants.NonZero-ActiveSlotCoeff"></a><a id="2676" href="Ledger.Core.Specification.Epoch.html#2676" class="Function">NonZero-ActiveSlotCoeff</a> <a id="2700" class="Symbol">:</a> <a id="2702" href="Data.Rational.Base.html#4577" class="Function">ℚ.NonZero</a> <a id="2712" href="Ledger.Core.Specification.Epoch.html#2422" class="Field">ActiveSlotCoeff</a>
-    <a id="2732" href="Ledger.Core.Specification.Epoch.html#2676" class="Function">NonZero-ActiveSlotCoeff</a> <a id="2756" class="Symbol">=</a> <a id="2758" href="Data.Rational.Base.html#5293" class="Function">ℚ.&gt;-nonZero</a> <a id="2770" class="Symbol">(</a><a id="2771" href="Data.Rational.Properties.html#26962" class="Function">ℚ.positive⁻¹</a> <a id="2784" href="Ledger.Core.Specification.Epoch.html#2422" class="Field">ActiveSlotCoeff</a><a id="2799" class="Symbol">)</a>
+<span class="w">  </span><span class="kr">instance</span>
+<span class="w">    </span><span class="nf">NonZero-ActiveSlotCoeff</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℚ.NonZero<span class="w"> </span>ActiveSlotCoeff
+<span class="w">    </span>NonZero-ActiveSlotCoeff<span class="w"> </span><span class="ow">=</span><span class="w"> </span>ℚ.&gt;-nonZero<span class="w"> </span><span class="o">(</span>ℚ.positive⁻¹<span class="w"> </span>ActiveSlotCoeff<span class="o">)</span>
 
-  <a id="GlobalConstants.ℕ+ᵉ≡+ᵉ&#39;"></a><a id="2804" href="Ledger.Core.Specification.Epoch.html#2804" class="Function">ℕ+ᵉ≡+ᵉ&#39;</a> <a id="2812" class="Symbol">:</a> <a id="2814" class="Symbol">∀</a> <a id="2816" class="Symbol">{</a><a id="2817" href="Ledger.Core.Specification.Epoch.html#2817" class="Bound">a</a> <a id="2819" href="Ledger.Core.Specification.Epoch.html#2819" class="Bound">b</a><a id="2820" class="Symbol">}</a> <a id="2822" class="Symbol">→</a> <a id="2824" href="Ledger.Core.Specification.Epoch.html#475" class="Function">additionVia</a> <a id="2836" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="2840" href="Ledger.Core.Specification.Epoch.html#2817" class="Bound">a</a> <a id="2842" href="Ledger.Core.Specification.Epoch.html#2819" class="Bound">b</a> <a id="2844" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="2846" href="Ledger.Core.Specification.Epoch.html#2817" class="Bound">a</a> <a id="2848" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="2850" href="Ledger.Core.Specification.Epoch.html#2819" class="Bound">b</a>
-  <a id="2854" href="Ledger.Core.Specification.Epoch.html#2804" class="Function">ℕ+ᵉ≡+ᵉ&#39;</a> <a id="2862" class="Symbol">{</a><a id="2863" href="Agda.Builtin.Nat.html#221" class="InductiveConstructor">zero</a><a id="2867" class="Symbol">}</a> <a id="2869" class="Symbol">{</a><a id="2870" href="Ledger.Core.Specification.Epoch.html#2870" class="Bound">b</a><a id="2871" class="Symbol">}</a> <a id="2873" class="Symbol">=</a> <a id="2875" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-  <a id="2882" href="Ledger.Core.Specification.Epoch.html#2804" class="Function">ℕ+ᵉ≡+ᵉ&#39;</a> <a id="2890" class="Symbol">{</a><a id="2891" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="2895" href="Ledger.Core.Specification.Epoch.html#2895" class="Bound">a</a><a id="2896" class="Symbol">}</a> <a id="2898" class="Symbol">{</a><a id="2899" href="Ledger.Core.Specification.Epoch.html#2899" class="Bound">b</a><a id="2900" class="Symbol">}</a> <a id="2902" class="Symbol">=</a> <a id="2904" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Function">cong</a> <a id="2909" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a> <a id="2913" class="Symbol">(</a><a id="2914" href="Ledger.Core.Specification.Epoch.html#2804" class="Function">ℕ+ᵉ≡+ᵉ&#39;</a> <a id="2922" class="Symbol">{</a><a id="2923" href="Ledger.Core.Specification.Epoch.html#2895" class="Bound">a</a><a id="2924" class="Symbol">}</a> <a id="2926" class="Symbol">{</a><a id="2927" href="Ledger.Core.Specification.Epoch.html#2899" class="Bound">b</a><a id="2928" class="Symbol">})</a>
+<span class="w">  </span><span class="nf">ℕ+ᵉ≡+ᵉ&#39;</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span><span class="o">{</span>a<span class="w"> </span>b<span class="o">}</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>additionVia<span class="w"> </span>suc<span class="w"> </span>a<span class="w"> </span>b<span class="w"> </span>≡<span class="w"> </span>a<span class="w"> </span>+<span class="w"> </span>b
+<span class="w">  </span>ℕ+ᵉ≡+ᵉ&#39;<span class="w"> </span><span class="o">{</span>zero<span class="o">}</span><span class="w"> </span><span class="o">{</span>b<span class="o">}</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span>refl
+<span class="w">  </span>ℕ+ᵉ≡+ᵉ&#39;<span class="w"> </span><span class="o">{</span>suc<span class="w"> </span>a<span class="o">}</span><span class="w"> </span><span class="o">{</span>b<span class="o">}</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span>cong<span class="w"> </span>suc<span class="w"> </span><span class="o">(</span>ℕ+ᵉ≡+ᵉ&#39;<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">{</span>b<span class="o">})</span>
 
-  <a id="GlobalConstants.ℕEpochStructure"></a><a id="2934" href="Ledger.Core.Specification.Epoch.html#2934" class="Function">ℕEpochStructure</a> <a id="2950" class="Symbol">:</a> <a id="2952" href="Ledger.Core.Specification.Epoch.html#623" class="Record">EpochStructure</a>
-  <a id="2969" href="Ledger.Core.Specification.Epoch.html#2934" class="Function">ℕEpochStructure</a> <a id="2985" class="Symbol">=</a> <a id="2987" class="Symbol">λ</a> <a id="2989" class="Keyword">where</a>
-    <a id="2999" class="Symbol">.</a><a id="3000" href="Ledger.Core.Specification.Epoch.html#660" class="Field">Slotʳ</a>                         <a id="3030" class="Symbol">→</a> <a id="3032" href="Data.Nat.Properties.html#25252" class="Function">+-*-semiring</a>
-    <a id="3049" class="Symbol">.</a><a id="3050" href="Ledger.Core.Specification.Epoch.html#691" class="Field">Epoch</a>                         <a id="3080" class="Symbol">→</a> <a id="3082" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
-    <a id="3088" class="Symbol">.</a><a id="3089" href="Ledger.Core.Specification.Epoch.html#903" class="Field">epoch</a> <a id="3095" href="Ledger.Core.Specification.Epoch.html#3095" class="Bound">slot</a>                    <a id="3119" class="Symbol">→</a> <a id="3121" href="Ledger.Core.Specification.Epoch.html#3095" class="Bound">slot</a> <a id="3126" href="Data.Nat.Base.html#7102" class="Function Operator">/</a> <a id="3128" href="Ledger.Core.Specification.Epoch.html#2339" class="Field">SlotsPerEpochᶜ</a>
-    <a id="3147" class="Symbol">.</a><a id="3148" href="Ledger.Core.Specification.Epoch.html#956" class="Field">firstSlot</a> <a id="3158" href="Ledger.Core.Specification.Epoch.html#3158" class="Bound">e</a>                   <a id="3178" class="Symbol">→</a> <a id="3180" href="Ledger.Core.Specification.Epoch.html#3158" class="Bound">e</a> <a id="3182" href="Agda.Builtin.Nat.html#539" class="Primitive Operator">*</a> <a id="3184" href="Ledger.Core.Specification.Epoch.html#2339" class="Field">SlotsPerEpochᶜ</a>
-    <a id="3203" class="Symbol">.</a><a id="3204" href="Ledger.Core.Specification.Epoch.html#1009" class="Field">RandomnessStabilisationWindow</a> <a id="3234" class="Symbol">→</a> <a id="3236" href="Ledger.Core.Specification.Epoch.html#2511" class="Field">RandomnessStabilisationWindowᶜ</a>
-    <a id="3271" class="Symbol">.</a><a id="3272" href="Ledger.Core.Specification.Epoch.html#1054" class="Field">StabilityWindow</a>               <a id="3302" class="Symbol">→</a> <a id="3304" href="Ledger.Core.Specification.Epoch.html#2555" class="Field">StabilityWindowᶜ</a>
-    <a id="3325" class="Symbol">.</a><a id="3326" href="Ledger.Core.Specification.Epoch.html#1099" class="Field">sucᵉ</a>                          <a id="3356" class="Symbol">→</a> <a id="3358" href="Agda.Builtin.Nat.html#234" class="InductiveConstructor">suc</a>
-    <a id="3366" class="Symbol">.</a><a id="3367" href="Ledger.Core.Specification.Epoch.html#1189" class="Field Operator">_+ᵉ&#39;_</a>                         <a id="3397" class="Symbol">→</a> <a id="3399" href="Class.HasAdd.Core.html#162" class="Field Operator">_+_</a>
-    <a id="3407" class="Symbol">.</a><a id="3408" href="Ledger.Core.Specification.Epoch.html#1233" class="Field">+ᵉ≡+ᵉ&#39;</a> <a id="3415" class="Symbol">{</a><a id="3416" href="Ledger.Core.Specification.Epoch.html#3416" class="Bound">a</a><a id="3417" class="Symbol">}</a> <a id="3419" class="Symbol">{</a><a id="3420" href="Ledger.Core.Specification.Epoch.html#3420" class="Bound">b</a><a id="3421" class="Symbol">}</a>                <a id="3438" class="Symbol">→</a> <a id="3440" href="Ledger.Core.Specification.Epoch.html#2804" class="Function">ℕ+ᵉ≡+ᵉ&#39;</a> <a id="3448" class="Symbol">{</a><a id="3449" href="Ledger.Core.Specification.Epoch.html#3416" class="Bound">a</a><a id="3450" class="Symbol">}</a> <a id="3452" class="Symbol">{</a><a id="3453" href="Ledger.Core.Specification.Epoch.html#3420" class="Bound">b</a><a id="3454" class="Symbol">}</a>
+<span class="w">  </span><span class="nf">ℕEpochStructure</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>EpochStructure
+<span class="w">  </span>ℕEpochStructure<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span>
+<span class="w">    </span><span class="ow">.</span>Slotʳ<span class="w">                         </span><span class="ow">→</span><span class="w"> </span>+-*-semiring
+<span class="w">    </span><span class="ow">.</span>Epoch<span class="w">                         </span><span class="ow">→</span><span class="w"> </span>ℕ
+<span class="w">    </span><span class="ow">.</span>epoch<span class="w"> </span>slot<span class="w">                    </span><span class="ow">→</span><span class="w"> </span>slot<span class="w"> </span>/<span class="w"> </span>SlotsPerEpochᶜ
+<span class="w">    </span><span class="ow">.</span>firstSlot<span class="w"> </span>e<span class="w">                   </span><span class="ow">→</span><span class="w"> </span>e<span class="w"> </span>*<span class="w"> </span>SlotsPerEpochᶜ
+<span class="w">    </span><span class="ow">.</span>RandomnessStabilisationWindow<span class="w"> </span><span class="ow">→</span><span class="w"> </span>RandomnessStabilisationWindowᶜ
+<span class="w">    </span><span class="ow">.</span>StabilityWindow<span class="w">               </span><span class="ow">→</span><span class="w"> </span>StabilityWindowᶜ
+<span class="w">    </span><span class="ow">.</span>sucᵉ<span class="w">                          </span><span class="ow">→</span><span class="w"> </span>suc
+<span class="w">    </span><span class="ow">.</span>_+ᵉ&#39;_<span class="w">                         </span><span class="ow">→</span><span class="w"> </span>_+_
+<span class="w">    </span><span class="ow">.</span>+ᵉ≡+ᵉ&#39;<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">{</span>b<span class="o">}</span><span class="w">                </span><span class="ow">→</span><span class="w"> </span>ℕ+ᵉ≡+ᵉ&#39;<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">{</span>b<span class="o">}</span>
 
-   <a id="3460" class="Keyword">where</a> <a id="3466" class="Keyword">open</a> <a id="3471" href="Ledger.Core.Specification.Epoch.html#623" class="Module">EpochStructure</a>
+<span class="w">   </span><span class="kr">where</span><span class="w"> </span><span class="kr">open</span><span class="w"> </span>EpochStructure
 
-<a id="3487" class="Keyword">open</a> <a id="3492" href="Ledger.Core.Specification.Epoch.html#2211" class="Module">GlobalConstants</a> <a id="3508" class="Keyword">using</a> <a id="3514" class="Symbol">(</a><a id="3515" href="Ledger.Core.Specification.Epoch.html#2934" class="Function">ℕEpochStructure</a><a id="3530" class="Symbol">)</a> <a id="3532" class="Keyword">public</a>
-</pre>
-
+<span class="kr">open</span><span class="w"> </span>GlobalConstants<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>ℕEpochStructure<span class="o">)</span><span class="w"> </span>public
+</code></pre></div>
 <!-- Properties -->
 
 
@@ -7481,7 +7480,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.Core.Specification.Crypto.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Crypto">
+          <a href="Ledger.Prelude.Numeric.UnitInterval.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: UnitInterval">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -7491,7 +7490,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Crypto
+                UnitInterval
               </div>
             </div>
           </a>
@@ -7543,7 +7542,7 @@
       <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

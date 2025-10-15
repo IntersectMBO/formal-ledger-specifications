@@ -15,14 +15,14 @@
         <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.PreConway.NewPP.Properties.html">
       
       
-        <link rel="prev" href="Ledger.PreConway.NewPP.html">
+        <link rel="prev" href="Ledger.PreConway.Conformance.PPUp.Properties.html">
       
       
-        <link rel="next" href="Ledger.PreConway.PPUp.html">
+        <link rel="next" href="Ledger.PreConway.PPUp.Properties.html">
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.2a3383ac.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -195,7 +195,7 @@
         <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -273,7 +273,7 @@
       <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -1024,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
         
   
   
@@ -1047,7 +1047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
         
   
   
@@ -1675,7 +1675,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
         
   
   
@@ -2461,7 +2461,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -2767,7 +2767,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
         
   
   
@@ -2875,7 +2875,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
         
   
   
@@ -2898,7 +2898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
         
   
   
@@ -2921,7 +2921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
         
   
   
@@ -3472,7 +3472,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
         
   
   
@@ -3518,7 +3518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
         
   
   
@@ -3858,7 +3858,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
         
   
   
@@ -4261,7 +4261,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
         
   
   
@@ -6075,7 +6075,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.html" class="md-nav__link">
+      <a href="Ledger.PreConway.md" class="md-nav__link">
         
   
   
@@ -6388,7 +6388,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
         
   
   
@@ -6495,7 +6495,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
         
   
   
@@ -7332,40 +7332,39 @@
      aria-label="View the source of this page">
     
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </a>
 
 
   <h1>Properties</h1>
 
-<pre class="Agda"><a id="96" class="Symbol">{-#</a> <a id="100" class="Keyword">OPTIONS</a> <a id="108" class="Pragma">--safe</a> <a id="115" class="Symbol">#-}</a>
+<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
 
-<a id="120" class="Keyword">open</a> <a id="125" class="Keyword">import</a> <a id="132" href="Relation.Nullary.Decidable.html" class="Module">Relation.Nullary.Decidable</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Relation.Nullary.Decidable</span>
 
-<a id="160" class="Keyword">open</a> <a id="165" class="Keyword">import</a> <a id="172" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="187" class="Keyword">open</a> <a id="192" class="Keyword">import</a> <a id="199" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Transaction</span>
 
-<a id="240" class="Keyword">module</a> <a id="247" href="Ledger.PreConway.NewPP.Properties.html" class="Module">Ledger.PreConway.NewPP.Properties</a> <a id="281" class="Symbol">(</a><a id="282" href="Ledger.PreConway.NewPP.Properties.html#282" class="Bound">txs</a> <a id="286" class="Symbol">:</a> <a id="288" class="Symbol">_)</a> <a id="291" class="Symbol">(</a><a id="292" class="Keyword">open</a> <a id="297" href="Ledger.Conway.Specification.Transaction.html#2461" class="Module">TransactionStructure</a> <a id="318" href="Ledger.PreConway.NewPP.Properties.html#282" class="Bound">txs</a><a id="321" class="Symbol">)</a> <a id="323" class="Keyword">where</a>
+<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.PreConway.NewPP.Properties</span><span class="w"> </span><span class="o">(</span>txs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>TransactionStructure<span class="w"> </span>txs<span class="o">)</span><span class="w"> </span><span class="kr">where</span>
 
-<a id="330" class="Keyword">open</a> <a id="335" class="Keyword">import</a> <a id="342" href="Ledger.PreConway.PPUp.html" class="Module">Ledger.PreConway.PPUp</a> <a id="364" href="Ledger.PreConway.NewPP.Properties.html#282" class="Bound">txs</a>
-<a id="368" class="Keyword">open</a> <a id="373" class="Keyword">import</a> <a id="380" href="Ledger.PreConway.NewPP.html" class="Module">Ledger.PreConway.NewPP</a> <a id="403" href="Ledger.PreConway.NewPP.Properties.html#282" class="Bound">txs</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.PreConway.PPUp</span><span class="w"> </span>txs
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.PreConway.NewPP</span><span class="w"> </span>txs
 
-<a id="408" class="Keyword">instance</a>
-  <a id="Computational-NEWPP"></a><a id="419" href="Ledger.PreConway.NewPP.Properties.html#419" class="Function">Computational-NEWPP</a> <a id="439" class="Symbol">:</a> <a id="441" href="Interface.ComputationalRelation.html#13270" class="Record">Computational</a> <a id="455" href="Ledger.PreConway.NewPP.html#1371" class="Datatype Operator">_⊢_⇀⦇_,NEWPP⦈_</a> <a id="470" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
-  <a id="479" href="Ledger.PreConway.NewPP.Properties.html#419" class="Function">Computational-NEWPP</a> <a id="499" class="Symbol">=</a> <a id="501" class="Keyword">record</a> <a id="508" class="Symbol">{</a><a id="509" href="Ledger.PreConway.NewPP.Properties.html#525" class="Module">M</a><a id="510" class="Symbol">}</a> <a id="512" class="Keyword">where</a> <a id="518" class="Keyword">module</a> <a id="525" href="Ledger.PreConway.NewPP.Properties.html#525" class="Module">M</a> <a id="527" href="Ledger.PreConway.NewPP.Properties.html#527" class="Bound">Γ</a> <a id="529" href="Ledger.PreConway.NewPP.Properties.html#529" class="Bound">s</a> <a id="531" class="Symbol">(</a><a id="532" class="Keyword">open</a> <a id="537" href="Ledger.PreConway.NewPP.html#514" class="Module">NewPParamState</a> <a id="552" href="Ledger.PreConway.NewPP.Properties.html#529" class="Bound">s</a><a id="553" class="Symbol">)</a> <a id="555" class="Keyword">where</a>
-    <a id="565" href="Ledger.PreConway.NewPP.Properties.html#565" class="Function">computeProof</a> <a id="578" class="Symbol">=</a> <a id="580" class="Symbol">λ</a> <a id="582" class="Keyword">where</a>
-      <a id="594" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="602" class="Symbol">→</a> <a id="604" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="612" class="Symbol">(_</a> <a id="615" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="617" href="Ledger.PreConway.NewPP.html#1736" class="InductiveConstructor">NEWPP-Reject</a><a id="629" class="Symbol">)</a>
-      <a id="637" class="Symbol">(</a><a id="638" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="643" href="Ledger.PreConway.NewPP.Properties.html#643" class="Bound">upd</a><a id="646" class="Symbol">)</a> <a id="648" class="Symbol">→</a> <a id="650" class="Keyword">let</a> <a id="654" href="Ledger.PreConway.NewPP.Properties.html#654" class="Bound">newpp</a> <a id="660" class="Symbol">=</a> <a id="662" href="Ledger.Conway.Specification.PParams.html#19758" class="Function">applyUpdate</a> <a id="674" href="Ledger.PreConway.NewPP.html#554" class="Field">pparams</a> <a id="682" href="Ledger.PreConway.NewPP.Properties.html#643" class="Bound">upd</a> <a id="686" class="Keyword">in</a>
-        <a id="697" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="702" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="704" href="Ledger.PreConway.PPUp.html#937" class="Function">viablePParams</a> <a id="718" href="Ledger.PreConway.NewPP.Properties.html#654" class="Bound">newpp</a> <a id="724" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="726" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="729" class="Symbol">λ</a> <a id="731" class="Keyword">where</a>
-          <a id="747" class="Symbol">(</a><a id="748" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="752" href="Ledger.PreConway.NewPP.Properties.html#752" class="Bound">p</a><a id="753" class="Symbol">)</a> <a id="755" class="Symbol">→</a> <a id="757" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="765" class="Symbol">(_</a> <a id="768" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="770" href="Ledger.PreConway.NewPP.html#1523" class="InductiveConstructor">NEWPP-Accept</a> <a id="783" href="Ledger.PreConway.NewPP.Properties.html#752" class="Bound">p</a><a id="784" class="Symbol">)</a>
-          <a id="796" class="Symbol">(</a><a id="797" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="800" class="Symbol">_)</a>  <a id="804" class="Symbol">→</a> <a id="806" href="Interface.ComputationalRelation.html#10560" class="InductiveConstructor">failure</a> <a id="814" class="String">&quot;Failed in NEWPP&quot;</a>
+<span class="kr">instance</span>
+<span class="w">  </span><span class="nf">Computational-NEWPP</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Computational<span class="w"> </span>_⊢_⇀⦇_,NEWPP⦈_<span class="w"> </span>String
+<span class="w">  </span>Computational-NEWPP<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span><span class="o">{</span>M<span class="o">}</span><span class="w"> </span><span class="kr">where</span><span class="w"> </span><span class="kr">module</span><span class="w"> </span><span class="n">M</span><span class="w"> </span>Γ<span class="w"> </span>s<span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>NewPParamState<span class="w"> </span>s<span class="o">)</span><span class="w"> </span><span class="kr">where</span>
+<span class="w">    </span>computeProof<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span>
+<span class="w">      </span>nothing<span class="w"> </span><span class="ow">→</span><span class="w"> </span>success<span class="w"> </span><span class="o">(</span>_<span class="w"> </span>,<span class="w"> </span>NEWPP-Reject<span class="o">)</span>
+<span class="w">      </span><span class="o">(</span>just<span class="w"> </span>upd<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="kr">let</span><span class="w"> </span>newpp<span class="w"> </span><span class="ow">=</span><span class="w"> </span>applyUpdate<span class="w"> </span>pparams<span class="w"> </span>upd<span class="w"> </span><span class="kr">in</span>
+<span class="w">        </span>case<span class="w"> </span>¿<span class="w"> </span>viablePParams<span class="w"> </span>newpp<span class="w"> </span>¿<span class="w"> </span>of<span class="w"> </span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span>
+<span class="w">          </span><span class="o">(</span>yes<span class="w"> </span>p<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>success<span class="w"> </span><span class="o">(</span>_<span class="w"> </span>,<span class="w"> </span>NEWPP-Accept<span class="w"> </span>p<span class="o">)</span>
+<span class="w">          </span><span class="o">(</span>no<span class="w"> </span>_<span class="o">)</span><span class="w">  </span><span class="ow">→</span><span class="w"> </span>failure<span class="w"> </span><span class="s">&quot;Failed in NEWPP&quot;</span>
 
-    <a id="837" href="Ledger.PreConway.NewPP.Properties.html#837" class="Function">completeness</a> <a id="850" class="Symbol">:</a> <a id="852" class="Symbol">_</a>
-    <a id="858" href="Ledger.PreConway.NewPP.Properties.html#837" class="Function">completeness</a> <a id="871" href="Ledger.PreConway.NewPP.Properties.html#871" class="Bound">sig</a> <a id="875" href="Ledger.PreConway.NewPP.Properties.html#875" class="Bound">s&#39;</a> <a id="878" href="Ledger.PreConway.NewPP.Properties.html#878" class="Bound">h</a> <a id="880" class="Keyword">with</a> <a id="885" href="Ledger.PreConway.NewPP.Properties.html#871" class="Bound">sig</a> <a id="889" class="Symbol">|</a> <a id="891" href="Ledger.PreConway.NewPP.Properties.html#878" class="Bound">h</a>
-    <a id="897" class="Symbol">...</a> <a id="901" class="Symbol">|</a> <a id="903" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>  <a id="912" class="Symbol">|</a> <a id="914" href="Ledger.PreConway.NewPP.html#1736" class="InductiveConstructor">NEWPP-Reject</a>   <a id="929" class="Symbol">=</a> <a id="931" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-    <a id="940" class="Symbol">...</a> <a id="944" class="Symbol">|</a> <a id="946" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="951" href="Ledger.PreConway.NewPP.Properties.html#951" class="Bound">upd</a> <a id="955" class="Symbol">|</a> <a id="957" href="Ledger.PreConway.NewPP.html#1523" class="InductiveConstructor">NEWPP-Accept</a> <a id="970" href="Ledger.PreConway.NewPP.Properties.html#970" class="Bound">p</a> <a id="972" class="Symbol">=</a> <a id="974" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-</pre>
-
+<span class="w">    </span><span class="nf">completeness</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>_
+<span class="w">    </span>completeness<span class="w"> </span>sig<span class="w"> </span>s&#39;<span class="w"> </span>h<span class="w"> </span><span class="kr">with</span><span class="w"> </span>sig<span class="w"> </span><span class="ow">|</span><span class="w"> </span>h
+<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>nothing<span class="w">  </span><span class="ow">|</span><span class="w"> </span>NEWPP-Reject<span class="w">   </span><span class="ow">=</span><span class="w"> </span>refl
+<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>just<span class="w"> </span>upd<span class="w"> </span><span class="ow">|</span><span class="w"> </span>NEWPP-Accept<span class="w"> </span>p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>refl
+</code></pre></div>
 <!-- Properties -->
 
 
@@ -7399,7 +7398,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.PreConway.NewPP.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: NewPP">
+          <a href="Ledger.PreConway.Conformance.PPUp.Properties.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Properties">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -7409,20 +7408,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                NewPP
+                Properties
               </div>
             </div>
           </a>
         
         
           
-          <a href="Ledger.PreConway.PPUp.html" class="md-footer__link md-footer__link--next" aria-label="Next: PPUp">
+          <a href="Ledger.PreConway.PPUp.Properties.html" class="md-footer__link md-footer__link--next" aria-label="Next: Properties">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                PPUp
+                Properties
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -7461,7 +7460,7 @@
       <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

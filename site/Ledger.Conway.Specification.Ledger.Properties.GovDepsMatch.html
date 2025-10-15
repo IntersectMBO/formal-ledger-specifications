@@ -15,14 +15,14 @@
         <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html">
       
       
-        <link rel="prev" href="Ledger.Conway.Specification.Ledger.Properties.Computational.html">
+        <link rel="prev" href="Ledger.Conway.Specification.Ledger.Properties.Base.html">
       
       
         <link rel="next" href="Ledger.Conway.Specification.Ledger.Properties.PoV.html">
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.2a3383ac.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -195,7 +195,7 @@
         <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -273,7 +273,7 @@
       <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -1024,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
         
   
   
@@ -1047,7 +1047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
         
   
   
@@ -1679,7 +1679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
         
   
   
@@ -2465,7 +2465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -2775,7 +2775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
         
   
   
@@ -2891,7 +2891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
         
   
   
@@ -2914,7 +2914,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
         
   
   
@@ -2937,7 +2937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
         
   
   
@@ -3488,7 +3488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
         
   
   
@@ -3534,7 +3534,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
         
   
   
@@ -3874,7 +3874,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
         
   
   
@@ -4277,7 +4277,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
         
   
   
@@ -6091,7 +6091,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.html" class="md-nav__link">
+      <a href="Ledger.PreConway.md" class="md-nav__link">
         
   
   
@@ -6402,7 +6402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
         
   
   
@@ -6499,7 +6499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
         
   
   
@@ -7336,35 +7336,36 @@
      aria-label="View the source of this page">
     
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </a>
 
 
   <h1>GovDepsMatch</h1>
 
-<pre class="Agda hidden-source">
-<a id="15" class="Symbol">{-#</a> <a id="19" class="Keyword">OPTIONS</a> <a id="27" class="Pragma">--safe</a> <a id="34" class="Symbol">#-}</a>
+<!--
+<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
 
-<a id="39" class="Keyword">open</a> <a id="44" class="Keyword">import</a> <a id="51" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
-<a id="91" class="Keyword">open</a> <a id="96" class="Keyword">import</a> <a id="103" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Transaction</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Abstract</span>
 
-<a id="141" class="Keyword">module</a> <a id="148" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html" class="Module">Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch</a>
-  <a id="209" class="Symbol">(</a><a id="210" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#210" class="Bound">txs</a> <a id="214" class="Symbol">:</a> <a id="216" class="Symbol">_)</a> <a id="219" class="Symbol">(</a><a id="220" class="Keyword">open</a> <a id="225" href="Ledger.Conway.Specification.Transaction.html#2461" class="Module">TransactionStructure</a> <a id="246" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#210" class="Bound">txs</a><a id="249" class="Symbol">)</a>
-  <a id="253" class="Symbol">(</a><a id="254" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#254" class="Bound">abs</a> <a id="258" class="Symbol">:</a> <a id="260" href="Ledger.Conway.Specification.Abstract.html#752" class="Record">AbstractFunctions</a> <a id="278" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#210" class="Bound">txs</a><a id="281" class="Symbol">)</a> <a id="283" class="Symbol">(</a><a id="284" class="Keyword">open</a> <a id="289" href="Ledger.Conway.Specification.Abstract.html#752" class="Module">AbstractFunctions</a> <a id="307" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#254" class="Bound">abs</a><a id="310" class="Symbol">)</a>
-  <a id="314" class="Keyword">where</a>
+<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch</span>
+<span class="w">  </span><span class="o">(</span>txs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>TransactionStructure<span class="w"> </span>txs<span class="o">)</span>
+<span class="w">  </span><span class="o">(</span>abs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>AbstractFunctions<span class="w"> </span>txs<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>AbstractFunctions<span class="w"> </span>abs<span class="o">)</span>
+<span class="w">  </span><span class="kr">where</span>
 
-<a id="321" class="Keyword">open</a> <a id="326" class="Keyword">import</a> <a id="333" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="367" href="Ledger.Conway.Specification.Transaction.html#3583" class="Function">govStructure</a> <a id="380" class="Keyword">using</a> <a id="386" class="Symbol">(</a><a id="387" href="Ledger.Conway.Specification.Certs.html#770" class="Datatype">DepositPurpose</a><a id="401" class="Symbol">)</a>
-<a id="403" class="Keyword">open</a> <a id="408" class="Keyword">import</a> <a id="415" href="Ledger.Conway.Specification.Ledger.html" class="Module">Ledger.Conway.Specification.Ledger</a> <a id="450" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#210" class="Bound">txs</a> <a id="454" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#254" class="Bound">abs</a>
-<a id="458" class="Keyword">open</a> <a id="463" class="Keyword">import</a> <a id="470" href="Ledger.Conway.Specification.Ledger.Properties.Base.html" class="Module">Ledger.Conway.Specification.Ledger.Properties.Base</a> <a id="521" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#210" class="Bound">txs</a> <a id="525" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#254" class="Bound">abs</a>
-<a id="529" class="Keyword">open</a> <a id="534" class="Keyword">import</a> <a id="541" href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="Module">Ledger.Conway.Specification.Ledger.Properties.Computational</a> <a id="601" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#210" class="Bound">txs</a> <a id="605" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#254" class="Bound">abs</a>
-<a id="609" class="Keyword">open</a> <a id="614" class="Keyword">import</a> <a id="621" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
-<a id="636" class="Keyword">open</a> <a id="641" class="Keyword">import</a> <a id="648" href="Ledger.Conway.Specification.Utxo.html" class="Module">Ledger.Conway.Specification.Utxo</a> <a id="681" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#210" class="Bound">txs</a> <a id="685" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#254" class="Bound">abs</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Certs</span><span class="w"> </span>govStructure<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>DepositPurpose<span class="o">)</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Ledger</span><span class="w"> </span>txs<span class="w"> </span>abs
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Ledger.Properties.Base</span><span class="w"> </span>txs<span class="w"> </span>abs
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Ledger.Properties.Computational</span><span class="w"> </span>txs<span class="w"> </span>abs
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Utxo</span><span class="w"> </span>txs<span class="w"> </span>abs
 
-<a id="690" class="Keyword">open</a> <a id="695" class="Keyword">import</a> <a id="702" href="Axiom.Set.Properties.html" class="Module">Axiom.Set.Properties</a> <a id="723" href="Axiom.Set.html#10751" class="Function">th</a>
-<a id="726" class="Keyword">import</a> <a id="733" href="Relation.Binary.Reasoning.Setoid.html" class="Module">Relation.Binary.Reasoning.Setoid</a> <a id="766" class="Symbol">as</a> <a id="769" class="Module">SetoidReasoning</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Axiom.Set.Properties</span><span class="w"> </span>th
+<span class="kr">import</span><span class="w"> </span><span class="n">Relation.Binary.Reasoning.Setoid</span><span class="w"> </span>as<span class="w"> </span>SetoidReasoning
 
-<a id="786" class="Keyword">open</a> <a id="791" href="Relation.Binary.Reasoning.Setoid.html" class="Module">SetoidReasoning</a> <a id="807" class="Symbol">(</a><a id="808" href="Axiom.Set.Properties.html#3967" class="Function">≡ᵉ-Setoid</a><a id="817" class="Symbol">{</a><a id="818" href="Ledger.Conway.Specification.Certs.html#770" class="Datatype">DepositPurpose</a><a id="832" class="Symbol">})</a>
-</pre>
+<span class="kr">open</span><span class="w"> </span>SetoidReasoning<span class="w"> </span><span class="o">(</span>≡ᵉ-Setoid<span class="o">{</span>DepositPurpose<span class="o">})</span>
+</code></pre></div>
+-->
 
 <p><a id="lem:LedgerGovDepsMatch"></a>
 <strong>Lemma (<code class="AgdaFunction">govDepsMatch</code> is invariant of <code class="AgdaOperator">LEDGER</code> rule).</strong></p>
@@ -7379,37 +7380,36 @@ If the governance action deposits of <code class="AgdaBound">utxoSt</code> are e
 In other terms, if <code class="AgdaFunction">govDepsMatch</code> <code class="AgdaBound">s</code>, then
 <code class="AgdaFunction">govDepsMatch</code> <code class="AgdaBound">s'</code>.</p>
 <p><em>Formally</em>.</p>
-<pre class="Agda"><a id="LEDGER-govDepsMatch"></a><a id="1667" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1667" class="Function">LEDGER-govDepsMatch</a> <a id="1687" class="Symbol">:</a>  <a id="1690" href="Interface.STS.html#5250" class="Function">LedgerInvariant</a> <a id="1706" href="Ledger.Conway.Specification.Ledger.html#4340" class="Datatype Operator">_⊢_⇀⦇_,LEDGER⦈_</a> <a id="1722" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1625" class="Function">govDepsMatch</a>
-</pre>
+<div class="highlight"><pre><span></span><code><span class="nf">LEDGER-govDepsMatch</span><span class="w"> </span><span class="ow">:</span><span class="w">  </span>LedgerInvariant<span class="w"> </span>_⊢_⇀⦇_,LEDGER⦈_<span class="w"> </span>govDepsMatch
+</code></pre></div>
 <p><em>Proof</em>.</p>
-<pre class="Agda"><a id="1758" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1667" class="Function">LEDGER-govDepsMatch</a> <a id="1778" class="Symbol">(</a><a id="1779" href="Ledger.Conway.Specification.Ledger.html#6116" class="InductiveConstructor">LEDGER-I⋯</a> <a id="1789" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1794" class="Symbol">(</a><a id="1795" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1823" class="InductiveConstructor">UTXOW-UTXOS</a> <a id="1807" class="Symbol">(</a><a id="1808" href="Ledger.Conway.Specification.Utxo.html#17146" class="InductiveConstructor">Scripts-No</a> <a id="1819" class="Symbol">_)))</a> <a id="1824" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1824" class="Bound">aprioriMatch</a> <a id="1837" class="Symbol">=</a> <a id="1839" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1824" class="Bound">aprioriMatch</a>
+<div class="highlight"><pre><span></span><code>LEDGER-govDepsMatch<span class="w"> </span><span class="o">(</span>LEDGER-I⋯<span class="w"> </span>refl<span class="w"> </span><span class="o">(</span>UTXOW-UTXOS<span class="w"> </span><span class="o">(</span>Scripts-No<span class="w"> </span>_<span class="o">)))</span><span class="w"> </span>aprioriMatch<span class="w"> </span><span class="ow">=</span><span class="w"> </span>aprioriMatch
 
-<a id="1853" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1667" class="Function">LEDGER-govDepsMatch</a> <a id="1873" class="Symbol">{</a><a id="1874" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1874" class="Bound">Γ</a><a id="1875" class="Symbol">}{</a><a id="1877" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1877" class="Bound">s</a><a id="1878" class="Symbol">}{</a><a id="1880" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1880" class="Bound">tx</a><a id="1882" class="Symbol">}{</a><a id="1884" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1884" class="Bound">s&#39;</a><a id="1886" class="Symbol">}</a>
-    <a id="1892" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1892" class="Bound">utxosts</a><a id="1899" class="Symbol">@(</a><a id="1901" href="Ledger.Conway.Specification.Ledger.html#6063" class="InductiveConstructor">LEDGER-V⋯</a> <a id="1911" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1911" class="Bound">tx-valid</a> <a id="1920" class="Symbol">(</a><a id="1921" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1823" class="InductiveConstructor">UTXOW-UTXOS</a> <a id="1933" class="Symbol">(</a><a id="1934" href="Ledger.Conway.Specification.Utxo.html#16599" class="InductiveConstructor">Scripts-Yes</a> <a id="1946" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1946" class="Bound">x</a><a id="1947" class="Symbol">))</a> <a id="1950" class="Symbol">_</a> <a id="1952" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1952" class="Bound">GOV-sts</a><a id="1959" class="Symbol">)</a> <a id="1961" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1961" class="Bound">aprioriMatch</a> <a id="1974" class="Symbol">=</a>
-    <a id="1980" class="Keyword">let</a>  <a id="1985" class="Keyword">open</a> <a id="1990" href="Ledger.Conway.Specification.Transaction.html#6302" class="Module">Tx</a> <a id="1993" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1880" class="Bound">tx</a><a id="1995" class="Symbol">;</a> <a id="1997" class="Keyword">open</a> <a id="2002" href="Ledger.Conway.Specification.Transaction.html#4584" class="Module">TxBody</a> <a id="2009" href="Ledger.Conway.Specification.Transaction.html#6334" class="Function">body</a>
-         <a id="2023" class="Keyword">open</a> <a id="2028" href="Ledger.Conway.Specification.Ledger.html#1025" class="Module">LEnv</a> <a id="2033" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1874" class="Bound">Γ</a> <a id="2035" class="Keyword">renaming</a> <a id="2044" class="Symbol">(</a><a id="2045" href="Ledger.Conway.Specification.Ledger.html#1113" class="Field">pparams</a> <a id="2053" class="Symbol">to</a> <a id="2056" class="Field">pp</a><a id="2058" class="Symbol">)</a>
-         <a id="2069" class="Keyword">open</a> <a id="2074" href="Ledger.Conway.Specification.PParams.html#2917" class="Module">PParams</a> <a id="2082" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#2056" class="Function">pp</a> <a id="2085" class="Keyword">using</a> <a id="2091" class="Symbol">(</a><a id="2092" href="Ledger.Conway.Specification.PParams.html#4785" class="Field">govActionDeposit</a><a id="2108" class="Symbol">)</a>
-         <a id="2119" class="Keyword">open</a> <a id="2124" href="Ledger.Conway.Specification.Ledger.html#1320" class="Module">LState</a> <a id="2131" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1877" class="Bound">s</a>
-         <a id="2142" class="Keyword">open</a> <a id="2147" href="Ledger.Conway.Specification.Ledger.html#1320" class="Module">LState</a> <a id="2154" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1884" class="Bound">s&#39;</a> <a id="2157" class="Keyword">renaming</a> <a id="2166" class="Symbol">(</a><a id="2167" href="Ledger.Conway.Specification.Ledger.html#1435" class="Field">govSt</a> <a id="2173" class="Symbol">to</a> <a id="2176" class="Field">govSt&#39;</a><a id="2182" class="Symbol">;</a> <a id="2184" href="Ledger.Conway.Specification.Ledger.html#1461" class="Field">certState</a> <a id="2194" class="Symbol">to</a> <a id="2197" class="Field">certState&#39;</a><a id="2207" class="Symbol">)</a>
-         <a id="2218" class="Keyword">open</a> <a id="2223" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#2277" class="Module">LEDGER-PROPS</a> <a id="2236" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1880" class="Bound">tx</a> <a id="2239" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1874" class="Bound">Γ</a> <a id="2241" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1877" class="Bound">s</a> <a id="2243" class="Keyword">using</a> <a id="2249" class="Symbol">(</a><a id="2250" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#2578" class="Function">utxoDeps</a><a id="2258" class="Symbol">;</a> <a id="2260" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3249" class="Function">updateGovStates</a><a id="2275" class="Symbol">;</a> <a id="2277" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3592" class="Function">STS→GovSt≡</a><a id="2287" class="Symbol">)</a>
-         <a id="2298" class="Keyword">open</a> <a id="2303" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#4715" class="Module">SetoidProperties</a> <a id="2320" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1880" class="Bound">tx</a> <a id="2323" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1874" class="Bound">Γ</a> <a id="2325" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1877" class="Bound">s</a> <a id="2327" class="Keyword">using</a> <a id="2333" class="Symbol">(</a><a id="2334" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#19440" class="Function">|ᵒ-GAs-pres</a><a id="2345" class="Symbol">;</a> <a id="2347" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#11944" class="Function">props-dpMap-votes-invar</a><a id="2370" class="Symbol">;</a> <a id="2372" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#15763" class="Function">utxo-govst-connex</a><a id="2389" class="Symbol">;</a> <a id="2391" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#8354" class="Function">noGACerts</a><a id="2400" class="Symbol">)</a>
-    <a id="2406" class="Keyword">in</a>
-    <a id="2413" href="Relation.Binary.Reasoning.Syntax.html#1572" class="Function Operator">begin</a>
-      <a id="2425" href="abstract-set-theory.FiniteSetTheory.html#2813" class="Function">filterˢ</a> <a id="2433" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1414" class="Function">isGADeposit</a> <a id="2445" class="Symbol">(</a><a id="2446" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2450" class="Symbol">(</a><a id="2451" href="Ledger.Conway.Specification.Utxo.html#12433" class="Function">updateDeposits</a> <a id="2466" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#2056" class="Function">pp</a> <a id="2469" href="Ledger.Conway.Specification.Transaction.html#6334" class="Function">body</a> <a id="2474" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#2578" class="Function">utxoDeps</a><a id="2482" class="Symbol">))</a>
-        <a id="2493" href="Relation.Binary.Reasoning.Syntax.html#7111" class="Function">≈⟨</a> <a id="2496" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#8354" class="Function">noGACerts</a> <a id="2506" href="Ledger.Conway.Specification.Transaction.html#4802" class="Function">txCerts</a> <a id="2514" class="Symbol">(</a><a id="2515" href="Ledger.Conway.Specification.Utxo.html#12128" class="Function">updateProposalDeposits</a> <a id="2538" href="Ledger.Conway.Specification.Transaction.html#5093" class="Function">txGovProposals</a> <a id="2553" href="Ledger.Conway.Specification.Transaction.html#4768" class="Function">txId</a> <a id="2558" href="Ledger.Conway.Specification.PParams.html#4785" class="Function">govActionDeposit</a> <a id="2575" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#2578" class="Function">utxoDeps</a><a id="2583" class="Symbol">)</a> <a id="2585" href="Relation.Binary.Reasoning.Syntax.html#7111" class="Function">⟩</a>
-      <a id="2593" href="abstract-set-theory.FiniteSetTheory.html#2813" class="Function">filterˢ</a> <a id="2601" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1414" class="Function">isGADeposit</a> <a id="2613" class="Symbol">(</a><a id="2614" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2618" class="Symbol">(</a><a id="2619" href="Ledger.Conway.Specification.Utxo.html#12128" class="Function">updateProposalDeposits</a> <a id="2642" href="Ledger.Conway.Specification.Transaction.html#5093" class="Function">txGovProposals</a> <a id="2657" href="Ledger.Conway.Specification.Transaction.html#4768" class="Function">txId</a> <a id="2662" href="Ledger.Conway.Specification.PParams.html#4785" class="Function">govActionDeposit</a> <a id="2679" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#2578" class="Function">utxoDeps</a><a id="2687" class="Symbol">))</a>
-        <a id="2698" href="Relation.Binary.Reasoning.Syntax.html#7111" class="Function">≈⟨</a> <a id="2701" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#15763" class="Function">utxo-govst-connex</a> <a id="2719" href="Ledger.Conway.Specification.Transaction.html#5093" class="Function">txGovProposals</a> <a id="2734" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1961" class="Bound">aprioriMatch</a> <a id="2747" href="Relation.Binary.Reasoning.Syntax.html#7111" class="Function">⟩</a>
-      <a id="2755" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="2764" class="Symbol">(</a><a id="2765" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1335" class="Function">dpMap</a> <a id="2771" class="Symbol">(</a><a id="2772" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3249" class="Function">updateGovStates</a> <a id="2788" class="Symbol">(</a><a id="2789" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="2793" href="Data.Sum.Base.html#700" class="InductiveConstructor">inj₂</a> <a id="2798" href="Ledger.Conway.Specification.Transaction.html#5093" class="Function">txGovProposals</a><a id="2812" class="Symbol">)</a> <a id="2814" class="Number">0</a> <a id="2816" href="Ledger.Conway.Specification.Ledger.html#1435" class="Function">govSt</a><a id="2821" class="Symbol">))</a>
-        <a id="2832" href="Relation.Binary.Reasoning.Syntax.html#7462" class="Function">≈˘⟨</a> <a id="2836" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#11944" class="Function">props-dpMap-votes-invar</a> <a id="2860" href="Ledger.Conway.Specification.Transaction.html#5051" class="Function">txGovVotes</a> <a id="2871" href="Ledger.Conway.Specification.Transaction.html#5093" class="Function">txGovProposals</a> <a id="2886" href="Relation.Binary.Reasoning.Syntax.html#7462" class="Function">⟩</a>
-      <a id="2894" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="2903" class="Symbol">(</a><a id="2904" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1335" class="Function">dpMap</a> <a id="2910" class="Symbol">(</a><a id="2911" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3249" class="Function">updateGovStates</a> <a id="2927" class="Symbol">(</a><a id="2928" href="Ledger.Conway.Specification.Ledger.html#3186" class="Function">txgov</a> <a id="2934" href="Ledger.Conway.Specification.Transaction.html#6334" class="Function">body</a><a id="2938" class="Symbol">)</a> <a id="2940" class="Number">0</a> <a id="2942" href="Ledger.Conway.Specification.Ledger.html#1435" class="Function">govSt</a> <a id="2948" class="Symbol">))</a>
-        <a id="2959" href="Relation.Binary.Reasoning.Syntax.html#7462" class="Function">≈˘⟨</a> <a id="2963" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#19440" class="Function">|ᵒ-GAs-pres</a> <a id="2975" class="Number">0</a> <a id="2977" href="Ledger.Conway.Specification.Ledger.html#1435" class="Function">govSt</a> <a id="2983" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#2197" class="Function">certState&#39;</a> <a id="2994" href="Relation.Binary.Reasoning.Syntax.html#7462" class="Function">⟩</a>
-      <a id="3002" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="3011" class="Symbol">(</a><a id="3012" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1335" class="Function">dpMap</a> <a id="3018" class="Symbol">(</a><a id="3019" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3249" class="Function">updateGovStates</a> <a id="3035" class="Symbol">(</a><a id="3036" href="Ledger.Conway.Specification.Ledger.html#3186" class="Function">txgov</a> <a id="3042" href="Ledger.Conway.Specification.Transaction.html#6334" class="Function">body</a><a id="3046" class="Symbol">)</a> <a id="3048" class="Number">0</a> <a id="3050" class="Symbol">(</a><a id="3051" href="Ledger.Conway.Specification.Ledger.html#3316" class="Function">rmOrphanDRepVotes</a> <a id="3069" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#2197" class="Function">certState&#39;</a> <a id="3080" href="Ledger.Conway.Specification.Ledger.html#1435" class="Function">govSt</a><a id="3085" class="Symbol">)))</a>
-        <a id="3097" href="Relation.Binary.Reasoning.Syntax.html#11539" class="Function">≡˘⟨</a> <a id="3101" href="Relation.Binary.PropositionalEquality.Core.html#1481" class="Function">cong</a> <a id="3106" class="Symbol">(</a><a id="3107" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="3116" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="3118" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1335" class="Function">dpMap</a> <a id="3124" class="Symbol">)</a> <a id="3126" class="Symbol">(</a><a id="3127" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#3592" class="Function">STS→GovSt≡</a> <a id="3138" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1892" class="Bound">utxosts</a> <a id="3146" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1911" class="Bound">tx-valid</a><a id="3154" class="Symbol">)</a> <a id="3156" href="Relation.Binary.Reasoning.Syntax.html#11539" class="Function">⟩</a>
-      <a id="3164" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="3173" class="Symbol">(</a><a id="3174" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1335" class="Function">dpMap</a> <a id="3180" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#2176" class="Function">govSt&#39;</a><a id="3186" class="Symbol">)</a> <a id="3188" href="Relation.Binary.Reasoning.Syntax.html#12345" class="Function Operator">∎</a>
+LEDGER-govDepsMatch<span class="w"> </span><span class="o">{</span>Γ<span class="o">}{</span>s<span class="o">}{</span>tx<span class="o">}{</span>s&#39;<span class="o">}</span>
+<span class="w">    </span>utxosts@<span class="o">(</span>LEDGER-V⋯<span class="w"> </span>tx-valid<span class="w"> </span><span class="o">(</span>UTXOW-UTXOS<span class="w"> </span><span class="o">(</span>Scripts-Yes<span class="w"> </span>x<span class="o">))</span><span class="w"> </span>_<span class="w"> </span>GOV-sts<span class="o">)</span><span class="w"> </span>aprioriMatch<span class="w"> </span><span class="ow">=</span>
+<span class="w">    </span><span class="kr">let</span><span class="w">  </span><span class="kr">open</span><span class="w"> </span>Tx<span class="w"> </span>tx;<span class="w"> </span><span class="kr">open</span><span class="w"> </span>TxBody<span class="w"> </span>body
+<span class="w">         </span><span class="kr">open</span><span class="w"> </span>LEnv<span class="w"> </span>Γ<span class="w"> </span><span class="kr">renaming</span><span class="w"> </span><span class="o">(</span>pparams<span class="w"> </span>to<span class="w"> </span>pp<span class="o">)</span>
+<span class="w">         </span><span class="kr">open</span><span class="w"> </span>PParams<span class="w"> </span>pp<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>govActionDeposit<span class="o">)</span>
+<span class="w">         </span><span class="kr">open</span><span class="w"> </span>LState<span class="w"> </span>s
+<span class="w">         </span><span class="kr">open</span><span class="w"> </span>LState<span class="w"> </span>s&#39;<span class="w"> </span><span class="kr">renaming</span><span class="w"> </span><span class="o">(</span>govSt<span class="w"> </span>to<span class="w"> </span>govSt&#39;;<span class="w"> </span>certState<span class="w"> </span>to<span class="w"> </span>certState&#39;<span class="o">)</span>
+<span class="w">         </span><span class="kr">open</span><span class="w"> </span>LEDGER-PROPS<span class="w"> </span>tx<span class="w"> </span>Γ<span class="w"> </span>s<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>utxoDeps;<span class="w"> </span>updateGovStates;<span class="w"> </span>STS→GovSt≡<span class="o">)</span>
+<span class="w">         </span><span class="kr">open</span><span class="w"> </span>SetoidProperties<span class="w"> </span>tx<span class="w"> </span>Γ<span class="w"> </span>s<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span><span class="ow">|</span>ᵒ-GAs-pres;<span class="w"> </span>props-dpMap-votes-invar;<span class="w"> </span>utxo-govst-connex;<span class="w"> </span>noGACerts<span class="o">)</span>
+<span class="w">    </span><span class="kr">in</span>
+<span class="w">    </span>begin
+<span class="w">      </span>filterˢ<span class="w"> </span>isGADeposit<span class="w"> </span><span class="o">(</span>dom<span class="w"> </span><span class="o">(</span>updateDeposits<span class="w"> </span>pp<span class="w"> </span>body<span class="w"> </span>utxoDeps<span class="o">))</span>
+<span class="w">        </span>≈⟨<span class="w"> </span>noGACerts<span class="w"> </span>txCerts<span class="w"> </span><span class="o">(</span>updateProposalDeposits<span class="w"> </span>txGovProposals<span class="w"> </span>txId<span class="w"> </span>govActionDeposit<span class="w"> </span>utxoDeps<span class="o">)</span><span class="w"> </span>⟩
+<span class="w">      </span>filterˢ<span class="w"> </span>isGADeposit<span class="w"> </span><span class="o">(</span>dom<span class="w"> </span><span class="o">(</span>updateProposalDeposits<span class="w"> </span>txGovProposals<span class="w"> </span>txId<span class="w"> </span>govActionDeposit<span class="w"> </span>utxoDeps<span class="o">))</span>
+<span class="w">        </span>≈⟨<span class="w"> </span>utxo-govst-connex<span class="w"> </span>txGovProposals<span class="w"> </span>aprioriMatch<span class="w"> </span>⟩
+<span class="w">      </span>fromList<span class="w"> </span><span class="o">(</span>dpMap<span class="w"> </span><span class="o">(</span>updateGovStates<span class="w"> </span><span class="o">(</span>map<span class="w"> </span>inj₂<span class="w"> </span>txGovProposals<span class="o">)</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>govSt<span class="o">))</span>
+<span class="w">        </span>≈˘⟨<span class="w"> </span>props-dpMap-votes-invar<span class="w"> </span>txGovVotes<span class="w"> </span>txGovProposals<span class="w"> </span>⟩
+<span class="w">      </span>fromList<span class="w"> </span><span class="o">(</span>dpMap<span class="w"> </span><span class="o">(</span>updateGovStates<span class="w"> </span><span class="o">(</span>txgov<span class="w"> </span>body<span class="o">)</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span>govSt<span class="w"> </span><span class="o">))</span>
+<span class="w">        </span>≈˘⟨<span class="w"> </span><span class="ow">|</span>ᵒ-GAs-pres<span class="w"> </span><span class="mi">0</span><span class="w"> </span>govSt<span class="w"> </span>certState&#39;<span class="w"> </span>⟩
+<span class="w">      </span>fromList<span class="w"> </span><span class="o">(</span>dpMap<span class="w"> </span><span class="o">(</span>updateGovStates<span class="w"> </span><span class="o">(</span>txgov<span class="w"> </span>body<span class="o">)</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">(</span>rmOrphanDRepVotes<span class="w"> </span>certState&#39;<span class="w"> </span>govSt<span class="o">)))</span>
+<span class="w">        </span>≡˘⟨<span class="w"> </span>cong<span class="w"> </span><span class="o">(</span>fromList<span class="w"> </span>∘<span class="w"> </span>dpMap<span class="w"> </span><span class="o">)</span><span class="w"> </span><span class="o">(</span>STS→GovSt≡<span class="w"> </span>utxosts<span class="w"> </span>tx-valid<span class="o">)</span><span class="w"> </span>⟩
+<span class="w">      </span>fromList<span class="w"> </span><span class="o">(</span>dpMap<span class="w"> </span>govSt&#39;<span class="o">)</span><span class="w"> </span>∎
 
-<a id="3191" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#1667" class="Function">LEDGER-govDepsMatch</a> <a id="3211" class="Symbol">{</a><a id="3212" class="Argument">s&#39;</a> <a id="3215" class="Symbol">=</a> <a id="3217" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#3217" class="Bound">s&#39;</a><a id="3219" class="Symbol">}</a> <a id="3221" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#3221" class="Bound">utxosts</a><a id="3228" class="Symbol">@(</a><a id="3230" href="Ledger.Conway.Specification.Ledger.html#4401" class="InductiveConstructor">LEDGER-V</a> <a id="3239" class="Symbol">(()</a> <a id="3243" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3245" href="Ledger.Conway.Specification.Ledger.Properties.Base.html#1823" class="InductiveConstructor">UTXOW-UTXOS</a> <a id="3257" class="Symbol">(</a><a id="3258" href="Ledger.Conway.Specification.Utxo.html#17146" class="InductiveConstructor">Scripts-No</a> <a id="3269" class="Symbol">(_</a> <a id="3272" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3274" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a><a id="3278" class="Symbol">))</a> <a id="3281" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3283" class="Symbol">_</a> <a id="3285" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3287" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#3287" class="Bound">GOV-sts</a><a id="3294" class="Symbol">))</a> <a id="3297" href="Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html#3297" class="Bound">aprioriMatch</a>
-</pre>
-
+LEDGER-govDepsMatch<span class="w"> </span><span class="o">{</span>s&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>s&#39;<span class="o">}</span><span class="w"> </span>utxosts@<span class="o">(</span>LEDGER-V<span class="w"> </span><span class="o">(()</span><span class="w"> </span>,<span class="w"> </span>UTXOW-UTXOS<span class="w"> </span><span class="o">(</span>Scripts-No<span class="w"> </span><span class="o">(</span>_<span class="w"> </span>,<span class="w"> </span>refl<span class="o">))</span><span class="w"> </span>,<span class="w"> </span>_<span class="w"> </span>,<span class="w"> </span>GOV-sts<span class="o">))</span><span class="w"> </span>aprioriMatch
+</code></pre></div>
 <!-- Properties -->
 
 
@@ -7443,7 +7443,7 @@ In other terms, if <code class="AgdaFunction">govDepsMatch</code> <code class="A
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Computational">
+          <a href="Ledger.Conway.Specification.Ledger.Properties.Base.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Base">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -7453,7 +7453,7 @@ In other terms, if <code class="AgdaFunction">govDepsMatch</code> <code class="A
                 Previous
               </span>
               <div class="md-ellipsis">
-                Computational
+                Base
               </div>
             </div>
           </a>
@@ -7505,7 +7505,7 @@ In other terms, if <code class="AgdaFunction">govDepsMatch</code> <code class="A
       <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

@@ -15,14 +15,14 @@
         <link rel="canonical" href="https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.TokenAlgebra.ValueVector.html">
       
       
-        <link rel="prev" href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html">
+        <link rel="prev" href="Ledger.Conway.Specification.TokenAlgebra.Coin.html">
       
       
         <link rel="next" href="Ledger.Conway.Specification.Transaction.html">
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.17">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
     
     
       
@@ -30,7 +30,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.7e37652d.min.css">
+      <link rel="stylesheet" href="assets/stylesheets/main.2a3383ac.min.css">
       
         
         <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
@@ -195,7 +195,7 @@
         <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -273,7 +273,7 @@
       <a href="https://github.com/IntersectMBO/formal-ledger-specifications" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
   </div>
   <div class="md-source__repository">
     GitHub
@@ -1024,7 +1024,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
         
   
   
@@ -1047,7 +1047,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
         
   
   
@@ -1679,7 +1679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
         
   
   
@@ -2465,7 +2465,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
         
   
   
@@ -2771,7 +2771,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
         
   
   
@@ -2879,7 +2879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
         
   
   
@@ -2902,7 +2902,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
         
   
   
@@ -2925,7 +2925,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
         
   
   
@@ -3478,7 +3478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
         
   
   
@@ -3524,7 +3524,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
         
   
   
@@ -3872,7 +3872,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
         
   
   
@@ -4275,7 +4275,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
         
   
   
@@ -6089,7 +6089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.html" class="md-nav__link">
+      <a href="Ledger.PreConway.md" class="md-nav__link">
         
   
   
@@ -6400,7 +6400,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
         
   
   
@@ -6497,7 +6497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
         
   
   
@@ -7334,64 +7334,63 @@
      aria-label="View the source of this page">
     
     
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.0.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
   </a>
 
 
   <h1>ValueVector</h1>
 
-<pre class="Agda"><a id="115" class="Symbol">{-#</a> <a id="119" class="Keyword">OPTIONS</a> <a id="127" class="Pragma">--safe</a> <a id="134" class="Symbol">#-}</a>
-<a id="138" class="Keyword">open</a> <a id="143" class="Keyword">import</a> <a id="150" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="165" class="Keyword">hiding</a> <a id="172" class="Symbol">(</a><a id="173" href="Prelude.InferenceRules.html#56006" class="Function Operator">_∙_</a><a id="176" class="Symbol">;</a> <a id="178" href="Class.Monoid.Core.html#225" class="Field">ε</a><a id="179" class="Symbol">)</a>
+<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span><span class="w"> </span><span class="kr">hiding</span><span class="w"> </span><span class="o">(</span>_∙_;<span class="w"> </span>ε<span class="o">)</span>
 
-<a id="182" class="Keyword">module</a> <a id="189" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html" class="Module">Ledger.Conway.Specification.TokenAlgebra.ValueVector</a> <a id="242" class="Symbol">(</a><a id="243" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#243" class="Bound">PolicyId</a> <a id="252" class="Symbol">:</a> <a id="254" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="258" class="Symbol">)</a> <a id="260" class="Symbol">(</a><a id="261" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#261" class="Bound">n</a> <a id="263" class="Symbol">:</a> <a id="265" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="266" class="Symbol">)</a> <a id="268" class="Keyword">where</a>
+<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.TokenAlgebra.ValueVector</span><span class="w"> </span><span class="o">(</span>PolicyId<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="o">)</span><span class="w"> </span><span class="o">(</span>n<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℕ<span class="o">)</span><span class="w"> </span><span class="kr">where</span>
 
-<a id="275" class="Keyword">import</a> <a id="282" href="Algebra.html" class="Module">Algebra</a> <a id="290" class="Symbol">as</a> <a id="293" class="Module">Alg</a>
-<a id="297" class="Keyword">open</a> <a id="302" class="Keyword">import</a> <a id="309" href="Algebra.Construct.DirectProduct.html" class="Module">Algebra.Construct.DirectProduct</a>
-<a id="341" class="Keyword">open</a> <a id="346" class="Keyword">import</a> <a id="353" href="stdlib.Algebra.Morphism.Construct.DirectProduct.html" class="Module">stdlib.Algebra.Morphism.Construct.DirectProduct</a>
-<a id="401" class="Keyword">open</a> <a id="406" class="Keyword">import</a> <a id="413" href="Data.Nat.Properties.html" class="Module">Data.Nat.Properties</a> <a id="433" class="Keyword">using</a> <a id="439" class="Symbol">(</a><a id="440" href="Data.Nat.Properties.html#17645" class="Function">+-0-commutativeMonoid</a><a id="461" class="Symbol">)</a>
-<a id="463" class="Keyword">import</a> <a id="470" href="Data.Product.Relation.Binary.Pointwise.NonDependent.html" class="Module">Data.Product.Relation.Binary.Pointwise.NonDependent</a> <a id="522" class="Symbol">as</a> <a id="525" class="Module">Product</a>
-<a id="533" class="Keyword">open</a> <a id="538" class="Keyword">import</a> <a id="545" href="Data.Vec.html" class="Module">Data.Vec</a> <a id="554" class="Symbol">as</a> <a id="557" class="Module">Vec</a>
-  <a id="563" class="Keyword">hiding</a> <a id="570" class="Symbol">(</a><a id="571" href="Data.Vec.Base.html#8496" class="Function">fromList</a><a id="579" class="Symbol">)</a>
-<a id="581" class="Keyword">import</a> <a id="588" href="stdlib.Data.Vec.Instances.html" class="Module">stdlib.Data.Vec.Instances</a> <a id="614" class="Symbol">as</a> <a id="617" class="Module">Vec</a>
-<a id="621" class="Keyword">import</a> <a id="628" href="Data.Vec.Relation.Binary.Pointwise.Inductive.html" class="Module">Data.Vec.Relation.Binary.Pointwise.Inductive</a> <a id="673" class="Symbol">as</a> <a id="676" class="Module">Vec</a>
+<span class="kr">import</span><span class="w"> </span><span class="n">Algebra</span><span class="w"> </span>as<span class="w"> </span>Alg
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Algebra.Construct.DirectProduct</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">stdlib.Algebra.Morphism.Construct.DirectProduct</span>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Nat.Properties</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>+-0-commutativeMonoid<span class="o">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="n">Data.Product.Relation.Binary.Pointwise.NonDependent</span><span class="w"> </span>as<span class="w"> </span>Product
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Vec</span><span class="w"> </span>as<span class="w"> </span>Vec
+<span class="w">  </span><span class="kr">hiding</span><span class="w"> </span><span class="o">(</span>fromList<span class="o">)</span>
+<span class="kr">import</span><span class="w"> </span><span class="n">stdlib.Data.Vec.Instances</span><span class="w"> </span>as<span class="w"> </span>Vec
+<span class="kr">import</span><span class="w"> </span><span class="n">Data.Vec.Relation.Binary.Pointwise.Inductive</span><span class="w"> </span>as<span class="w"> </span>Vec
 
-<a id="681" class="Keyword">open</a> <a id="686" class="Keyword">import</a> <a id="693" href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Conway.Specification.TokenAlgebra.Base</a> <a id="739" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#243" class="Bound">PolicyId</a>
+<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.TokenAlgebra.Base</span><span class="w"> </span>PolicyId
 
-<a id="Quantity"></a><a id="749" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#749" class="Function">Quantity</a> <a id="758" class="Symbol">=</a> <a id="760" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+Quantity<span class="w"> </span><span class="ow">=</span><span class="w"> </span>ℕ
 
-<a id="Vec-commutativeMonoid"></a><a id="763" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#763" class="Function">Vec-commutativeMonoid</a> <a id="785" class="Symbol">=</a> <a id="787" href="stdlib.Data.Vec.Instances.html#2075" class="Function">Vec.commutativeMonoid</a> <a id="809" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#261" class="Bound">n</a> <a id="811" href="Data.Nat.Properties.html#17645" class="Function">+-0-commutativeMonoid</a>
+Vec-commutativeMonoid<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Vec.commutativeMonoid<span class="w"> </span>n<span class="w"> </span>+-0-commutativeMonoid
 
-<a id="834" class="Keyword">module</a> <a id="+-0-commutativeMonoid"></a><a id="841" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#841" class="Module">+-0-commutativeMonoid</a> <a id="863" class="Symbol">=</a> <a id="865" href="Algebra.Bundles.html#7886" class="Module">Alg.CommutativeMonoid</a> <a id="887" href="Data.Nat.Properties.html#17645" class="Function">+-0-commutativeMonoid</a>
-<a id="909" class="Keyword">module</a> <a id="Vec-commutativeMonoid"></a><a id="916" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#916" class="Module">Vec-commutativeMonoid</a> <a id="938" class="Symbol">=</a> <a id="940" href="Algebra.Bundles.html#7886" class="Module">Alg.CommutativeMonoid</a> <a id="962" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#763" class="Function">Vec-commutativeMonoid</a>
+<span class="kr">module</span><span class="w"> </span>+-0-<span class="n">commutativeMonoid</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span>Alg.CommutativeMonoid<span class="w"> </span>+-0-commutativeMonoid
+<span class="kr">module</span><span class="w"> </span><span class="n">Vec</span>-commutativeMonoid<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Alg.CommutativeMonoid<span class="w"> </span>Vec-commutativeMonoid
 
-<a id="985" class="Keyword">module</a> <a id="992" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#992" class="Module">_</a> <a id="994" class="Symbol">(</a><a id="995" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#995" class="Bound">Policies</a> <a id="1004" class="Symbol">:</a> <a id="1006" href="Data.Vec.Base.html#1119" class="Datatype">Vec</a> <a id="1010" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#243" class="Bound">PolicyId</a> <a id="1019" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#261" class="Bound">n</a><a id="1020" class="Symbol">)</a> <a id="1022" class="Keyword">where</a>
-  <a id="1030" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1030" class="Function">Value-TokenAlgebra</a> <a id="1049" class="Symbol">:</a> <a id="1051" href="Ledger.Conway.Specification.TokenAlgebra.Base.html#1068" class="Record">TokenAlgebra</a>
-  <a id="1066" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1030" class="Function">Value-TokenAlgebra</a> <a id="1085" class="Symbol">=</a> <a id="1087" class="Keyword">record</a> <a id="1094" class="Symbol">{</a><a id="1095" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1122" class="Module">go</a><a id="1097" class="Symbol">}</a>
-    <a id="1103" class="Keyword">where</a>
-      <a id="1115" class="Keyword">module</a> <a id="1122" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1122" class="Module">go</a> <a id="1125" class="Keyword">where</a>
-        <a id="1139" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1139" class="Function">Value</a> <a id="1145" class="Symbol">:</a> <a id="1147" href="Agda.Primitive.html#388" class="Primitive">Type</a>
-        <a id="1160" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1139" class="Function">Value</a> <a id="1166" class="Symbol">=</a> <a id="1168" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a> <a id="1173" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="1175" href="Data.Vec.Base.html#1119" class="Datatype">Vec</a> <a id="1179" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#749" class="Function">Quantity</a> <a id="1188" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#261" class="Bound">n</a>
+<span class="kr">module</span><span class="w"> </span>_ (<span class="n">Policies</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Vec<span class="w"> </span>PolicyId<span class="w"> </span>n<span class="o">)</span><span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="nf">Value-TokenAlgebra</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>TokenAlgebra
+<span class="w">  </span>Value-TokenAlgebra<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span><span class="o">{</span>go<span class="o">}</span>
+<span class="w">    </span><span class="kr">where</span>
+<span class="w">      </span><span class="kr">module</span><span class="w"> </span><span class="n">go</span><span class="w"> </span><span class="kr">where</span>
+<span class="w">        </span><span class="nf">Value</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type
+<span class="w">        </span>Value<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Coin<span class="w"> </span>×<span class="w"> </span>Vec<span class="w"> </span>Quantity<span class="w"> </span>n
 
-        <a id="1199" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1199" class="Function">Value-CommutativeMonoid</a> <a id="1223" class="Symbol">:</a> <a id="1225" href="Class.CommutativeMonoid.Core.html#191" class="Record">CommutativeMonoid</a> <a id="1243" href="Level.html#521" class="Function">0ℓ</a> <a id="1246" href="Level.html#521" class="Function">0ℓ</a> <a id="1249" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1139" class="Function">Value</a>
-        <a id="1263" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1199" class="Function">Value-CommutativeMonoid</a> <a id="1287" class="Symbol">=</a> <a id="1289" href="Class.CommutativeMonoid.Core.html#639" class="Function">Conversion.fromBundle</a> <a id="1311" class="Symbol">(</a><a id="1312" href="Algebra.Construct.DirectProduct.html#7719" class="Function">commutativeMonoid</a> <a id="1330" href="Data.Nat.Properties.html#17645" class="Function">+-0-commutativeMonoid</a> <a id="1352" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#763" class="Function">Vec-commutativeMonoid</a><a id="1373" class="Symbol">)</a>
+<span class="w">        </span><span class="nf">Value-CommutativeMonoid</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>CommutativeMonoid<span class="w"> </span><span class="mi">0</span>ℓ<span class="w"> </span><span class="mi">0</span>ℓ<span class="w"> </span>Value
+<span class="w">        </span>Value-CommutativeMonoid<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Conversion.fromBundle<span class="w"> </span><span class="o">(</span>commutativeMonoid<span class="w"> </span>+-0-commutativeMonoid<span class="w"> </span>Vec-commutativeMonoid<span class="o">)</span>
 
-        <a id="1384" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1384" class="Function">coin</a> <a id="1389" class="Symbol">:</a> <a id="1391" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1139" class="Function">Value</a> <a id="1397" class="Symbol">→</a> <a id="1399" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
-        <a id="1412" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1384" class="Function">coin</a> <a id="1417" class="Symbol">=</a> <a id="1419" href="Data.Product.Base.html#636" class="Field">proj₁</a>
+<span class="w">        </span><span class="nf">coin</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Value<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Coin
+<span class="w">        </span>coin<span class="w"> </span><span class="ow">=</span><span class="w"> </span>proj₁
 
-        <a id="1436" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1436" class="Function">inject</a> <a id="1443" class="Symbol">:</a> <a id="1445" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a> <a id="1450" class="Symbol">→</a> <a id="1452" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1139" class="Function">Value</a>
-        <a id="1466" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1436" class="Function">inject</a> <a id="1473" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1473" class="Bound">c</a> <a id="1475" class="Symbol">=</a> <a id="1477" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1473" class="Bound">c</a> <a id="1479" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1481" href="Data.Vec.Base.html#6493" class="Function">Vec.replicate</a> <a id="1495" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#261" class="Bound">n</a> <a id="1497" class="Number">0</a>
+<span class="w">        </span><span class="nf">inject</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Coin<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Value
+<span class="w">        </span>inject<span class="w"> </span>c<span class="w"> </span><span class="ow">=</span><span class="w"> </span>c<span class="w"> </span>,<span class="w"> </span>Vec.replicate<span class="w"> </span>n<span class="w"> </span><span class="mi">0</span>
 
-        <a id="1510" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1510" class="Function">policies</a>                   <a id="1537" class="Symbol">=</a> <a id="1539" class="Symbol">λ</a> <a id="1541" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1541" class="Bound">_</a> <a id="1543" class="Symbol">→</a> <a id="1545" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="1554" class="Symbol">(</a><a id="1555" href="Data.Vec.Base.html#8402" class="Function">toList</a> <a id="1562" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#995" class="Bound">Policies</a><a id="1570" class="Symbol">)</a>
-        <a id="1580" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1580" class="Function">size</a>                       <a id="1607" class="Symbol">=</a> <a id="1609" class="Symbol">λ</a> <a id="1611" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1611" class="Bound">_</a> <a id="1613" class="Symbol">→</a> <a id="1615" class="Number">1</a> <a id="1617" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="1619" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#261" class="Bound">n</a>
-        <a id="1629" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1629" class="Function Operator">_≤ᵗ_</a>                       <a id="1656" class="Symbol">=</a> <a id="1658" href="Data.Product.Relation.Binary.Pointwise.NonDependent.html#1147" class="Function">Product.Pointwise</a> <a id="1676" href="Class.HasOrder.Core.html#613" class="Field Operator">_≤_</a> <a id="1680" class="Symbol">(</a><a id="1681" href="Data.Vec.Relation.Binary.Pointwise.Inductive.html#1552" class="Datatype">Vec.Pointwise</a> <a id="1695" href="Class.HasOrder.Core.html#613" class="Field Operator">_≤_</a><a id="1698" class="Symbol">)</a>
+<span class="w">        </span>policies<span class="w">                   </span><span class="ow">=</span><span class="w"> </span><span class="ow">λ</span><span class="w"> </span>_<span class="w"> </span><span class="ow">→</span><span class="w"> </span>fromList<span class="w"> </span><span class="o">(</span>toList<span class="w"> </span>Policies<span class="o">)</span>
+<span class="w">        </span>size<span class="w">                       </span><span class="ow">=</span><span class="w"> </span><span class="ow">λ</span><span class="w"> </span>_<span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span>+<span class="w"> </span>n
+<span class="w">        </span>_≤ᵗ_<span class="w">                       </span><span class="ow">=</span><span class="w"> </span>Product.Pointwise<span class="w"> </span>_≤_<span class="w"> </span><span class="o">(</span>Vec.Pointwise<span class="w"> </span>_≤_<span class="o">)</span>
 
-        <a id="1709" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1709" class="Function">coin∘inject≗id</a>             <a id="1736" class="Symbol">=</a> <a id="1738" class="Symbol">λ</a> <a id="1740" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1740" class="Bound">_</a> <a id="1742" class="Symbol">→</a> <a id="1744" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
-        <a id="1757" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1757" class="Function">coinIsMonoidHomomorphism</a>   <a id="1784" class="Symbol">=</a> <a id="1786" href="stdlib.Algebra.Morphism.Construct.DirectProduct.html#577" class="Function">Monoid-Export.proj₁</a> <a id="1806" class="Symbol">{</a><a id="1807" class="Argument">refl</a> <a id="1812" class="Symbol">=</a> <a id="1814" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a><a id="1818" class="Symbol">}</a>
+<span class="w">        </span>coin∘inject≗id<span class="w">             </span><span class="ow">=</span><span class="w"> </span><span class="ow">λ</span><span class="w"> </span>_<span class="w"> </span><span class="ow">→</span><span class="w"> </span>refl
+<span class="w">        </span>coinIsMonoidHomomorphism<span class="w">   </span><span class="ow">=</span><span class="w"> </span>Monoid-Export.proj₁<span class="w"> </span><span class="o">{</span>refl<span class="w"> </span><span class="ow">=</span><span class="w"> </span>refl<span class="o">}</span>
 
-        <a id="1829" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1829" class="Function">Dec-≤ᵗ</a> <a id="1836" class="Symbol">:</a> <a id="1838" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1629" class="Function Operator">_≤ᵗ_</a> <a id="1843" href="Class.Decidable.Core.html#590" class="Function Operator">⁇²</a>
-        <a id="1854" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1829" class="Function">Dec-≤ᵗ</a> <a id="1861" class="Symbol">{(</a><a id="1863" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1863" class="Bound">c₁</a> <a id="1866" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1868" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1868" class="Bound">v₁</a><a id="1870" class="Symbol">)}</a> <a id="1873" class="Symbol">{(</a><a id="1875" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1875" class="Bound">c₂</a> <a id="1878" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1880" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1880" class="Bound">v₂</a><a id="1882" class="Symbol">)}</a> <a id="1885" class="Symbol">=</a> <a id="1887" href="Class.Decidable.Instances.html#512" class="Function">Dec-×</a> <a id="1893" class="Symbol">⦃</a> <a id="1895" href="Class.Decidable.Instances.html#1571" class="Function">ℕ-Dec-≤</a> <a id="1903" class="Symbol">⦄</a> <a id="1905" class="Symbol">⦃</a> <a id="1907" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="1909" href="Data.Vec.Relation.Binary.Pointwise.Inductive.html#3854" class="Function">Vec.decidable</a> <a id="1923" href="Class.Decidable.Core.html#919" class="Function">dec²</a> <a id="1928" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1868" class="Bound">v₁</a> <a id="1931" href="Ledger.Conway.Specification.TokenAlgebra.ValueVector.html#1880" class="Bound">v₂</a> <a id="1934" class="Symbol">⦄</a>
-</pre>
-
+<span class="w">        </span><span class="nf">Dec-≤ᵗ</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>_≤ᵗ_<span class="w"> </span>⁇²
+<span class="w">        </span>Dec-≤ᵗ<span class="w"> </span><span class="o">{(</span>c₁<span class="w"> </span>,<span class="w"> </span>v₁<span class="o">)}</span><span class="w"> </span><span class="o">{(</span>c₂<span class="w"> </span>,<span class="w"> </span>v₂<span class="o">)}</span><span class="w"> </span><span class="ow">=</span><span class="w"> </span>Dec-×<span class="w"> </span>⦃<span class="w"> </span>ℕ-Dec-≤<span class="w"> </span>⦄<span class="w"> </span>⦃<span class="w"> </span>⁇<span class="w"> </span>Vec.decidable<span class="w"> </span>dec²<span class="w"> </span>v₁<span class="w"> </span>v₂<span class="w"> </span>⦄
+</code></pre></div>
 <!-- Properties -->
 
 
@@ -7425,7 +7424,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: ValueSet">
+          <a href="Ledger.Conway.Specification.TokenAlgebra.Coin.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Coin">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -7435,7 +7434,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                ValueSet
+                Coin
               </div>
             </div>
           </a>
@@ -7487,7 +7486,7 @@
       <script id="__config" type="application/json">{"base": ".", "features": ["toc.follow", "content.tooltips", "content.code.copy", "content.action.view", "navigation.footer", "navigation.sections", "navigation.tabs"], "search": "assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="assets/javascripts/bundle.92b07e13.min.js"></script>
+      <script src="assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
       

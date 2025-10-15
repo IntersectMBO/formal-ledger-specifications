@@ -50,7 +50,7 @@ du_HasCoin'45'Map_10 v0
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1222
+              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1276
               (coe v0)
               (coe
                  MAlonzo.Code.Class.DecEq.Core.C_constructor_32
@@ -75,7 +75,7 @@ du_HasCoin'45'Set_18 v0
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum''_1228
+              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum''_1282
               (coe
                  MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 (coe v0)
                  (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))

@@ -305,10 +305,6 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Chain.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Enact.Properties.Computational.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -349,10 +345,6 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Gov.Actions.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Gov.Base.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -377,10 +369,6 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ledger.Properties.Computational.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -397,15 +385,7 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.PParams.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.PoolReap.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Properties.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -414,10 +394,6 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ratify.Properties.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Ratify.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -477,19 +453,7 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Test.StructuredContracts.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.TokenAlgebra.Base.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.TokenAlgebra.Coin.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.TokenAlgebra.ValueSet.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -541,23 +505,11 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Utxow.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Address.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Core.Specification.Crypto.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
@@ -589,19 +541,7 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.PreConway.NewPP.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.PreConway.PPUp.Properties.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.PreConway.PPUp.html</loc>
-         <lastmod>1980-01-01</lastmod>
-    </url>
-    <url>
-         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.PreConway.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>

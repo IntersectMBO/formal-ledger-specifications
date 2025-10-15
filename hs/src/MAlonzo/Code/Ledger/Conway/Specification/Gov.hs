@@ -1742,19 +1742,19 @@ du_gas_2578 v0 v1 v2 v3
       (coe
          MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_998
          (coe
-            MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+            MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
             (coe
                MAlonzo.Code.Axiom.Set.d_th_1480
                (coe
                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
          (coe
-            MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+            MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
             (coe
                MAlonzo.Code.Axiom.Set.d_th_1480
                (coe
                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8)))
          (coe
-            MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_582
+            MAlonzo.Code.Axiom.Set.Map.du_'8709''7504'_588
             (coe
                MAlonzo.Code.Axiom.Set.d_th_1480
                (coe
@@ -1878,7 +1878,7 @@ du_votes''_2628 v0 v1 v2 v3
                -> coe
                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_998
                     (coe
-                       MAlonzo.Code.Axiom.Set.Map.du_insert_960
+                       MAlonzo.Code.Axiom.Set.Map.du_insert_1142
                        (coe
                           MAlonzo.Code.Axiom.Set.d_th_1480
                           (coe
@@ -1926,7 +1926,7 @@ du_votes''_2628 v0 v1 v2 v3
                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_votes_1012
                           (coe v2)))
                     (coe
-                       MAlonzo.Code.Axiom.Set.Map.du_insert_960
+                       MAlonzo.Code.Axiom.Set.Map.du_insert_1142
                        (coe
                           MAlonzo.Code.Axiom.Set.d_th_1480
                           (coe
@@ -1974,7 +1974,7 @@ du_votes''_2628 v0 v1 v2 v3
                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_votes_1012
                           (coe v2)))
                     (coe
-                       MAlonzo.Code.Axiom.Set.Map.du_insert_960
+                       MAlonzo.Code.Axiom.Set.Map.du_insert_1142
                        (coe
                           MAlonzo.Code.Axiom.Set.d_th_1480
                           (coe
@@ -2386,7 +2386,7 @@ d_enactable'63'_2934 v0 v1 v2 v3
                        (coe
                           MAlonzo.Code.Function.Properties.Equivalence.du_sym_48
                           (coe
-                             MAlonzo.Code.Axiom.Set.Properties.du_'8707''45'sublist'45''8660'_1070
+                             MAlonzo.Code.Axiom.Set.Properties.du_'8707''45'sublist'45''8660'_1114
                              (coe
                                 MAlonzo.Code.Axiom.Set.d_th_1480
                                 (coe
@@ -2608,12 +2608,12 @@ d_actionValid'63'_3112 v0 v1 v2 v3 v4 v5
                                            (coe v0)))
                                      v4 v8)))
                           (coe
-                             MAlonzo.Code.Class.IsSet.du_range_564
+                             MAlonzo.Code.Class.IsSet.du_range_582
                              (coe
                                 MAlonzo.Code.Axiom.Set.d_th_1480
                                 (coe
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
+                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_588)
                              (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7))))
                        (coe
                           MAlonzo.Code.Class.Decidable.Instances.du_Dec'45''215'_14
@@ -2673,12 +2673,12 @@ d_actionValid'63'_3112 v0 v1 v2 v3 v4 v5
                                             MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                             (coe v0)))))
                                 (coe
-                                   MAlonzo.Code.Class.IsSet.du_dom_562
+                                   MAlonzo.Code.Class.IsSet.du_dom_580
                                    (coe
                                       MAlonzo.Code.Axiom.Set.d_th_1480
                                       (coe
                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                   (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
+                                   (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_588)
                                    (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)))
                                 (coe
                                    MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -2733,12 +2733,12 @@ d_actionValid'63'_3112 v0 v1 v2 v3 v4 v5
                                                     MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1318
                                                     (coe v0)))))
                                         (coe
-                                           MAlonzo.Code.Class.IsSet.du_dom_562
+                                           MAlonzo.Code.Class.IsSet.du_dom_580
                                            (coe
                                               MAlonzo.Code.Axiom.Set.d_th_1480
                                               (coe
                                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                           (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570)
+                                           (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_588)
                                            (coe MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28 (coe v7)))
                                         (coe
                                            MAlonzo.Code.Agda.Builtin.Sigma.d_fst_28
@@ -2836,12 +2836,12 @@ d_actionValid'63'_3112 v0 v1 v2 v3 v4 v5
                              MAlonzo.Code.Ledger.Core.Specification.Address.d_stake_112
                                (coe v8))
                           (coe
-                             MAlonzo.Code.Class.IsSet.du_dom_562
+                             MAlonzo.Code.Class.IsSet.du_dom_580
                              (coe
                                 MAlonzo.Code.Axiom.Set.d_th_1480
                                 (coe
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570) (coe v7))))
+                             (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_588) (coe v7))))
              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_Info_840
                -> coe
                     MAlonzo.Code.Class.Decidable.Core.du_'8263''178'__102
@@ -2882,7 +2882,7 @@ d_actionWellFormed'63'_3116 v0 v1
                        (coe
                           MAlonzo.Code.Class.Decidable.Instances.du_DecEq'8658'Dec_6
                           (coe
-                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1170
+                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_DecEq'45'ℙ_1200
                              (coe
                                 MAlonzo.Code.Ledger.Conway.Specification.PParams.du_DecEq'45'PParamGroup_570))
                           (coe
@@ -2933,12 +2933,12 @@ d_actionWellFormed'63'_3116 v0 v1
                                      MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_globalConstants_1284
                                      (coe v0)))))
                        (coe
-                          MAlonzo.Code.Class.IsSet.du_dom_562
+                          MAlonzo.Code.Class.IsSet.du_dom_580
                           (coe
                              MAlonzo.Code.Axiom.Set.d_th_1480
                              (coe
                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570) (coe v3)))
+                          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_588) (coe v3)))
                     (coe
                        MAlonzo.Code.Axiom.Set.du_Dec'45'Any'738'_1648
                        (coe
@@ -2953,12 +2953,12 @@ d_actionWellFormed'63'_3116 v0 v1
                                   (coe (0 :: Integer)))
                                (coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8869'_8)))
                        (coe
-                          MAlonzo.Code.Class.IsSet.du_range_564
+                          MAlonzo.Code.Class.IsSet.du_range_582
                           (coe
                              MAlonzo.Code.Axiom.Set.d_th_1480
                              (coe
                                 MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_570) (coe v3)))
+                          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_588) (coe v3)))
              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_Info_840
                -> coe MAlonzo.Code.Class.Decidable.Instances.d_Dec'45''8868'_10
              _ -> MAlonzo.RTE.mazUnreachableError
