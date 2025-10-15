@@ -23,7 +23,7 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build artifact
         run: |
-          nix-shell -A devShells.ci --run 'fls-shake --trace -j8 ${{ inputs.target }}'
+          nix develop ./#ci --command fls-shake --trace -j8 ${{ inputs.target }}
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
