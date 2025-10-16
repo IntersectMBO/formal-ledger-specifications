@@ -55,7 +55,7 @@ module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
 
-  prs = ⟦ u0 .utxoSt' , acnt , cs .dState , cs .pState ⟧
+  prs = ⟦ u0 .utxoSt' , acnt , cs .dState , u0 .pState' ⟧
     where
       open LState
       open CertState
@@ -74,7 +74,7 @@ module _ {eps : EpochState} {e : Epoch} where
     EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
     EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState'' ⟧ᵖ) =
       let
-        EPOCHUpdates es govSt' dState'' gState' _ acnt'' =
+        EPOCHUpdates es govSt' dState'' _ gState' _ acnt'' =
           EPOCH-updates fut ls dState' acnt'
         certState' = ⟦ dState'' , pState'' , gState' ⟧ᶜˢ
        in

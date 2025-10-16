@@ -87,7 +87,11 @@ data
       , dState .rewards ∪⁺ refunds
       ⟧
 
-    pState' = ⟦ pState .pools ∣ retired ᶜ , pState .retiring ∣ retired ᶜ ⟧
+    pState' =
+      ⟦ pState .pools ∣ retired ᶜ
+      , pState .fPools ∣ retired ᶜ
+      , pState .retiring ∣ retired ᶜ
+      ⟧
 
     in
     ────────────────────────────────

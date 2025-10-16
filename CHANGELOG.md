@@ -3,7 +3,7 @@
 ## Conway spec
 
 ### WIP
-
+- Implement the fPoolParams field of PState as in the Shelley specification
 - Add the BBODY transition relation from Shelley
 - Add the RUPD and TICK transition relations
 - Change two constructor names of `GovActionType` data type

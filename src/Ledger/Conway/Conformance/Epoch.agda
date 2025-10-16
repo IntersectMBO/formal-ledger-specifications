@@ -133,7 +133,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       dState' = record dState { rewards = dState .rewards ∪⁺ refunds }
 
       pState' : PState
-      pState' = ⟦ (pState .pools) ∣ retired ᶜ , (pState .retiring) ∣ retired ᶜ ⟧
+      pState' = ⟦ (pState .pools) ∣ retired ᶜ
+                , (pState .fPools) ∣ retired ᶜ
+                , (pState .retiring) ∣ retired ᶜ
+                ⟧
 
       gState' : GState
       gState' = ⟦ (if null govSt' then mapValues (1 +_) (gState .dreps) else (gState .dreps))
