@@ -700,7 +700,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 ```
 <!--
 ```agda
-    ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
+    ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState''} →
 ```
 -->
 ```agda
@@ -718,9 +718,9 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
     in
         ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
       ∙ Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
-      ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
+      ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState'' ⟧
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
+      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 ```
 
 ## <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#newepoch-transition-system}
