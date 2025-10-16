@@ -96,6 +96,7 @@
           devShells = with nixpkgs; {
             default = mkShell {
               packages = [
+                agdaWithPackages
                 fls-shake
                 python3
                 coreutils
