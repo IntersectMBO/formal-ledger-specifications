@@ -6,11 +6,11 @@ open import Ledger.Prelude hiding (compare; Rel)
 
 open import Agda.Builtin.FromNat
 open import Algebra using (Semiring)
-open import Relation.Binary
-open import Data.Nat.Properties using (+-*-semiring)
+open import Data.Nat.Properties using (+-monoˡ-≤; +-cancelˡ-<; +-*-semiring; suc-injective)
 open import Data.Rational using (ℚ)
 import      Data.Rational as ℚ
 import      Data.Rational.Properties as ℚ
+open import Data.Sum using ([_,_]′)
 
 additionVia : ∀{A : Set} → (A → A) → ℕ → A → A
 additionVia sucFun zero r = r
@@ -48,6 +48,10 @@ record EpochStructure : Type₁ where
         ; trans  = <-trans {A = Slot}
         ; <-resp-≈ = (λ where refl → id) , (λ where refl → id)
         }
+
+  field
+    e<sucᵉ : ∀ {e : Epoch} → e < sucᵉ e
+    ≤-predᵉ : ∀ {e e' : Epoch} → sucᵉ e ≤ sucᵉ e' → e ≤ e'
 
   _ = _<_ {A = Slot}  ⁇² ∋ it
   _ = _≤_ {A = Slot}  ⁇² ∋ it
@@ -94,12 +98,15 @@ record GlobalConstants : Type₁ where
   ℕEpochStructure : EpochStructure
   ℕEpochStructure = λ where
     .Slotʳ                         → +-*-semiring
+    .DecPo-Slot                    → ℕ-hasDecPartialOrder
     .Epoch                         → ℕ
     .epoch slot                    → slot / SlotsPerEpochᶜ
     .firstSlot e                   → e * SlotsPerEpochᶜ
     .RandomnessStabilisationWindow → RandomnessStabilisationWindowᶜ
     .StabilityWindow               → StabilityWindowᶜ
     .sucᵉ                          → suc
+    .e<sucᵉ                        → +-monoˡ-≤ _ (>-nonZero⁻¹ SlotsPerEpochᶜ)
+    .≤-predᵉ                       → [ (λ p → inj₁ (+-cancelˡ-< _ _ _ p)) , (λ p → inj₂ (suc-injective p)) ]′
     ._+ᵉ'_                         → _+_
     .+ᵉ≡+ᵉ' {a} {b}                → ℕ+ᵉ≡+ᵉ' {a} {b}
 
