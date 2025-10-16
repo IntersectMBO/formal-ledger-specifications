@@ -130,7 +130,7 @@ record NewEpochState : Type where
     In addition, the formal specification omits the VRF key hashes in the
     codomain of `PoolDelegatedStake`{.AgdaDatatype} as they are not implemented at
     the moment.
- 
+
 <!--
 ```agda
 record HasNewEpochState {a} (A : Type a) : Type a where
@@ -673,7 +673,7 @@ EPOCH-updates fut ls dState' acnt' =
 
 ### Transition Rule
 
-This section defines the `EPOCH`{.AgdaDatatype} transition rule. 
+This section defines the `EPOCH`{.AgdaDatatype} transition rule.
 
 In Conway, the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
 and carries out the following tasks:
