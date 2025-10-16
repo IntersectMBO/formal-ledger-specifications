@@ -1,4 +1,5 @@
--- {-# OPTIONS --without-K #-}
+{-# OPTIONS --safe #-}
+
 open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
 
@@ -25,10 +26,6 @@ open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
 open import Axiom.Set.Properties th
 open import Relation.Binary.PropositionalEquality hiding (cong)
-
-postulate
-  e<sucᵉ : ∀ {e : Epoch} → e < sucᵉ e
-  ≤-predᵉ : ∀ {e e' : Epoch} → sucᵉ e ≤ sucᵉ e' → e ≤ e'
 
 -- | Epoch indexed relation.
 -- Two DReps (Map Credential Epoch) are related iff: Non-expired DReps are the same.
