@@ -595,24 +595,22 @@ opaque
 
 ```agda
   stakeDistr : UTxO → DState → PState → Snapshot
-  stakeDistr utxo dState pState =
-      ⟦ activeStake , StakeDelegsOf dState , pools ⟧
+  stakeDistr utxo dState pState = ⟦ activeStake , StakeDelegsOf dState , pools ⟧
     where
-      pools         : Pools
-      pools          = PoolsOf pState
+    pools : Pools
+    pools = PoolsOf pState
 
-      utxoBalance   : Credential → Coin
-      utxoBalance    = λ cred → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just cred)
+    utxoBalance : Credential → Coin
+    utxoBalance = λ cred → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just cred)
 
-      activeDelegs  : StakeDelegs
-      activeDelegs   = (StakeDelegsOf dState ∣ dom (RewardsOf dState)) ∣^ dom pools
+    activeDelegs : StakeDelegs
+    activeDelegs = (StakeDelegsOf dState ∣ dom (RewardsOf dState)) ∣^ dom pools
 
-      activeRewards : Rewards
-      activeRewards  = RewardsOf dState ∣ dom activeDelegs
+    activeRewards : Rewards
+    activeRewards = RewardsOf dState ∣ dom activeDelegs
 
-      activeStake   : Stake
-      activeStake    =
-        mapWithKey (λ c rewardBalance → utxoBalance c + rewardBalance) activeRewards
+    activeStake : Stake
+    activeStake = mapWithKey (λ c rewardBalance → utxoBalance c + rewardBalance) activeRewards
 ```
 
 

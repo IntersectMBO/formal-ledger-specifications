@@ -96,9 +96,22 @@ record Anchor : Type where
     We keep it separate because it is used for a different purpose.
 
 
-## The Governance Action Type
+## Governance Action Types {#sec:governance-action-types}
 
-A governance actions is one of the seven possible actions shown in the table below.
+We classify governance actions by type which we represent using the following definition:
+
+```agda
+data GovActionType : Type where
+  NoConfidence        : GovActionType
+  UpdateCommittee     : GovActionType
+  NewConstitution     : GovActionType
+  TriggerHardFork     : GovActionType
+  ChangePParams       : GovActionType
+  TreasuryWithdrawal  : GovActionType
+  Info                : GovActionType
+```
+
+Thus, a governance actions is one of the seven kinds described in the table below.
 
 | **Action** | **Description** |
 |:---|:---|
@@ -125,18 +138,6 @@ Governance actions carry the following information:
 
 +  `TreasuryWithdrawal`{.AgdaInductiveConstructor}: a map of withdrawals.
 
-We now define the types used to represent the various components of a governance action.
-
-```agda
-data GovActionType : Type where
-  NoConfidence        : GovActionType
-  UpdateCommittee     : GovActionType
-  NewConstitution     : GovActionType
-  TriggerHardFork     : GovActionType
-  ChangePParams       : GovActionType
-  TreasuryWithdrawal  : GovActionType
-  Info                : GovActionType
-```
 
 <!--
 ```agda
@@ -160,7 +161,12 @@ GovActionData TriggerHardFork     = ProtVer
 GovActionData ChangePParams       = PParamsUpdate
 GovActionData TreasuryWithdrawal  = Withdrawals
 GovActionData Info                = ⊤
+```
 
+Finally, we represent governance actions as the inhabitants of the
+`GovAction`{.AgdaRecord} type, which is defined as follows:
+
+```agda
 record GovAction : Type where
   constructor ⟦_,_⟧ᵍᵃ
   field
@@ -190,11 +196,14 @@ instance
 
 For some governance actions, in addition to obtaining the necessary
 votes, enactment requires that the following condition is also
-satisfied: the state obtained by enacting the proposal is in fact the
-state that was intended when the proposal was submitted. This is
-achieved by requiring actions to unambiguously link to the state they
+satisfied:
+
+> the state obtained by enacting the proposal is in fact the state that was intended
+> when the proposal was submitted.
+
+This is achieved by requiring actions to unambiguously link to the state they
 are modifying via a pointer to the previous modification. A proposal can
-only be enacted if it contains the of the previously enacted proposal
+only be enacted if it contains the hash of the previously enacted proposal
 modifying the same piece of state.
 `NoConfidence`{.AgdaInductiveConstructor} and
 `UpdateCommittee`{.AgdaInductiveConstructor} modify the same state,
@@ -257,7 +266,12 @@ record GovVote : Type where
     voter       : GovVoter
     vote        : Vote
     anchor      : Maybe Anchor
+```
 
+Finally, we define the `GovVotes`{.AgdaRecord} type, an inhabitant of which is comprised
+of three maps that collect the votes cast by members of each of the three governance bodies.
+
+```agda
 record GovVotes : Type where
   field
     gvCC   : Credential ⇀ Vote
@@ -268,16 +282,21 @@ record GovVotes : Type where
 ## Governance Proposal Types {#sec:governance-proposal-types}
 
 To propose a governance action, a `GovProposal`{.AgdaRecord} needs to be
-submitted.  Beside the proposed action, it contains the following:
+submitted.  Beside the proposed action, it contains five other fields which we now
+describe.
 
-+  a pointer to the previous action if required (see [Hash Protection](#sec:hash-protection));
++  `prevAction`{.AgdaField}: a pointer to the previous action if required
+   (see [Hash Protection](#sec:hash-protection));
 
-+  a pointer to the proposal policy if one is required;
++  `policy`{.AgdaField}: a pointer to the proposal policy if one is required;
 
-+  a deposit, which will be returned to `returnAddr`{.AgdaField};
++  `deposit`{.AgdaField}: a deposit, which will be returned to `returnAddr`{.AgdaField};
 
-+  an `Anchor`{.AgdaRecord}, providing further information about the
-   proposal.
++  `returnAddr`{.AgdaField}: a reward address to which the deposit will be
+   returned when the proposal is removed from the state;
+
++  `anchor`{.AgdaField}: a placeholder which may be used to provide further
+   information about the proposal.
 
 While the deposit is held, it is added to the deposit pot, similar to stake key
 deposits.  It is also counted towards the voting stake (but not the block production

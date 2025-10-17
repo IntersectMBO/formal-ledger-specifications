@@ -1,32 +1,6 @@
 # Fee Calculation {#sec:fees}
 
-This section defines the functions used to compute the fees associated with reference scripts.
-
-The function `scriptsCost`{.AgdaFunction},
-defined in the [Calculation of Fees for Reference Scripts][] section, calculates the
-fee for reference scripts in a transaction. It takes as input the total
-size of the reference scripts in bytes—calculated by
-`refScriptsSize`{.AgdaFunction} (see [Functions used in UTxO rules][])—and
-uses a function (`scriptsCostAux`{.AgdaFunction}) that is piece-wise
-linear in the size, where the linear constant multiple grows with each
-`refScriptCostStride`{.AgdaFunction} bytes. In addition,
-`scriptsCost`{.AgdaFunction} depends on the following constants (which
-are bundled with the protocol parameters; see the
-[Protocol Parameter Definitions][] section):
-
-- `refScriptCostMultiplier`{.AgdaFunction}, a rational number, the
-  growth factor or step multiplier that determines how much the price
-  per byte increases after each increment;
-
-- `refScriptCostStride`{.AgdaFunction}, an integer, the size in bytes at
-  which the price per byte grows linearly;
-
-- `minFeeRefScriptCoinsPerByte`{.AgdaFunction}, a rational number, the
-  base fee or initial price per byte.
-
-For background on this particular choice of fee calculation, see
-[Kuleshevich24](#adr9).
-
+This section defines the function used to compute the fees associated with reference scripts.
 
 <!--
 ```agda
@@ -54,6 +28,28 @@ open Number number renaming (fromNat to fromℕ)
 -->
 
 ## Calculation of Fees for Reference Scripts {#sec:calculation-of-fees}
+
+The function defined in this section calculates the fee for reference scripts in a
+transaction.  It takes as input the total size of the reference scripts in
+bytes—calculated by `refScriptsSize`{.AgdaFunction}
+(see [Functions used in UTxO rules][])—and uses a function
+(`scriptsCostAux`{.AgdaFunction}) that is piece-wise linear in the size, where the
+linear constant multiple grows with each `refScriptCostStride`{.AgdaFunction} bytes.
+In addition, `scriptsCost`{.AgdaFunction} depends on the following constants, which
+are bundled with the protocol parameters (see the
+[Protocol Parameter Definitions][] section).
+
++  `refScriptCostMultiplier`{.AgdaFunction}: a rational number, the
+   growth factor or step multiplier that determines how much the price
+   per byte increases after each increment;
+
++  `refScriptCostStride`{.AgdaFunction}: an integer, the size in bytes at
+   which the price per byte grows linearly;
+
++  `minFeeRefScriptCoinsPerByte`{.AgdaFunction}: a rational number, the
+   base fee or initial price per byte.
+
+For background on this method of fee calculation, see [Kuleshevich24](#adr9).
 
 ```agda
 scriptsCost : (pp : PParams) → ℕ → Coin

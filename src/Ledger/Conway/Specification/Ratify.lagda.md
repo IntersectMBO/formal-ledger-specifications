@@ -26,8 +26,9 @@ open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
 -->
 
 Governance actions are ratified through on-chain votes. Different kinds
-of governance actions have different ratification requirements but
-always involve at least two of the three governance bodies.
+of governance actions ([governance action types][Governance Action Types]) have
+different ratification requirements but always involve at least two of the three
+governance bodies.
 
 A successful motion of no-confidence, election of a new constitutional
 committee, a constitutional change, or a hard-fork delays ratification
@@ -457,22 +458,7 @@ following auxiliary definitions.
    computed using the stake distribution `stakeDistrPools`{.AgdaField} provided in
    the environment.
 
-Let us discuss in more detail the way `SPO`{.AgdaInductiveConstructor} votes are
-counted, as the ledger specification's handling of this has evolved in response to
-community feedback.  Previously, if an `SPO`{.AgdaInductiveConstructor} did not vote,
-then it would be counted as having voted `abstain`{.AgdaInductiveConstructor} by
-default.  Members of the `SPO`{.AgdaInductiveConstructor} community found this
-behavior counterintuitive and requested that non-voters be assigned a
-`no`{.AgdaInductiveConstructor} vote by default, with the caveat that an
-`SPO`{.AgdaInductiveConstructor} could change its default setting by delegating its
-reward account credential to an `AlwaysNoConfidence`
-`DRep`{.AgdaInductiveConstructor} or an `AlwaysAbstain`
-`DRep`{.AgdaInductiveConstructor}.  (This change applies only after the bootstrap
-period; during the bootstrap period the logic is unchanged; see the section on
-[Bootstrapping the Governance System](ConwayBootstrap.md#sec:conway-bootstrap-gov).)
-
-To be precise, the agreed upon specification is the following: an
-`SPO`{.AgdaInductiveConstructor} that did not vote is assumed to have voted
+An `SPO`{.AgdaInductiveConstructor} that did not vote is assumed to have voted
 `no`{.AgdaInductiveConstructor}, except under the following circumstances:
 
 +  if the `SPO`{.AgdaInductiveConstructor} has delegated its reward credential to an
@@ -487,6 +473,21 @@ To be precise, the agreed upon specification is the following: an
 It is important to note that the credential that can now be used to configure
 *default* voting behavior is the credential used to withdraw staking rewards, which
 is not the same as the credential that is used for standard voting.
+
+!!! info "Vote Counting Methodology"
+
+    The way `SPO`{.AgdaInductiveConstructor} votes are counted has evolved in response to
+    community feedback.  Previously, if an `SPO`{.AgdaInductiveConstructor} did not vote,
+    then it would be counted as having voted `abstain`{.AgdaInductiveConstructor} by
+    default.  Members of the `SPO`{.AgdaInductiveConstructor} community found this
+    behavior counterintuitive and requested that non-voters be assigned a
+    `no`{.AgdaInductiveConstructor} vote by default, with the caveat that an
+    `SPO`{.AgdaInductiveConstructor} could change its default setting by delegating its
+    reward account credential to an `AlwaysNoConfidence`
+    `DRep`{.AgdaInductiveConstructor} or an `AlwaysAbstain`
+    `DRep`{.AgdaInductiveConstructor}.  (This change applies only after the bootstrap
+    period; during the bootstrap period the logic is unchanged; see the section on
+    [Bootstrapping the Governance System](ConwayBootstrap.md#sec:conway-bootstrap-gov).)
 
 ```agda
 acceptedBySPO : RatifyEnv → EnactState → GovActionState → Type

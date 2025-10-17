@@ -6,9 +6,6 @@ source_path: src/Ledger/Conway/Specification/PParams.lagda.md
 # Protocol Parameters {#sec:protocol-parameters}
 
 This section defines the adjustable protocol parameters of the Cardano ledger.
-Protocol parameters are used in block validation and can affect various
-features of the system, such as minimum fees, maximum and minimum sizes
-of certain components, and more.
 
 <!--
 ```agda
@@ -41,7 +38,12 @@ private variable
 
 ## Protocol Parameter Definitions {#sec:protocol-parameter-definitions}
 
-`PParams`{.AgdaRecord} contains parameters used in the Cardano ledger, which we group
+Protocol parameters are used in block validation and can affect various
+features of the system, such as minimum fees, maximum and minimum sizes
+of certain components, and more.
+
+The main protocol parameter type is `PParams`{.AgdaRecord}, defined later in
+this section.  It contains parameters used in the Cardano ledger, which we group
 according to the general purpose that each parameter serves.
 
 +  `NetworkGroup`{.AgdaInductiveConstructor}: parameters related to the network
@@ -79,18 +81,15 @@ parameters as a group.
 ```agda
 record Acnt : Type where
 ```
-
 <!--
 ```agda
   constructor ⟦_,_⟧ᵃ
 ```
 -->
-
 ```agda
   field
     treasury reserves : Coin
 ```
-
 <!--
 ```agda
 instance
