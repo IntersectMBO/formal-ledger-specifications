@@ -6,6 +6,11 @@
     nixpkgs.url = "github:NixOs/nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
 
+    abstract-set-theory = {
+      url = "github:input-output-hk/agda-sets/de39823e91d845232bbf22058565d0553f5da2ac";
+      flake = false;
+    }; 
+
     agda-nix = {
       url = "github:input-output-hk/agda.nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -38,6 +43,16 @@
         );
       };
 
+      overlay-abstract-set-theory = final: prev: {
+        agdaPackages = prev.agdaPackages.overrideScope (
+          afinal: aprev: {
+            abstract-set-theory = aprev.abstract-set-theory.overrideAttrs (_: {
+              src = inputs.abstract-set-theory;
+            });
+          }
+        );
+      };
+
       perSystem = flake-utils.lib.eachSystem systems (
         system:
         let
@@ -48,6 +63,7 @@
               # (see https://github.com/NixOS/nixpkgs/issues/447012)
               inputs.fls-agda.overlays.default
               inputs.agda-nix.overlays.default
+              overlay-abstract-set-theory
               overlay-formal-ledger
             ];
           };

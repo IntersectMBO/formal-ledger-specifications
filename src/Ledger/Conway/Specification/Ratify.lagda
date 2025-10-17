@@ -215,6 +215,9 @@ instance
 
   HasTreasury-RatifyEnv : HasTreasury RatifyEnv
   HasTreasury-RatifyEnv .TreasuryOf = RatifyEnv.treasury
+
+  HasDReps-RatifyEnv : HasDReps RatifyEnv
+  HasDReps-RatifyEnv .DRepsOf = RatifyEnv.dreps
 \end{code}
 \end{AgdaMultiCode}
 \caption{Types and functions for the RATIFY transition system}
@@ -250,73 +253,81 @@ ratified by the corresponding body.
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \begin{code}
-acceptedByCC
-  : RatifyEnv
-  → EnactState
-  → GovActionState
-  → Type
-acceptedByCC Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
-  × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
-  where
+module AcceptedByCC (currentEpoch : Epoch)
+                    (ccHotKeys : Credential ⇀ Maybe Credential)
+                    (eSt : EnactState)
+                    (gaSt : GovActionState) where
+
 \end{code}
 \begin{code}[hide]
-    open EnactState eSt using (cc; pparams)
-    open RatifyEnv Γ
-    open PParams (proj₁ pparams)
-    open GovActionState gaSt
-    open GovVotes votes using (gvCC)
+  open EnactState eSt using (cc; pparams)
+  open PParams (proj₁ pparams)
+  open GovActionState gaSt
+  open GovVotes votes using (gvCC)
 \end{code}
 \begin{code}
-    castVotes : Credential ⇀ Vote
-    castVotes = gvCC
+  castVotes : Credential ⇀ Vote
+  castVotes = gvCC
 
-    getCCHotCred : Credential × Epoch → Maybe Credential
-    getCCHotCred (c , e) =
-      if currentEpoch > e
-        then nothing -- credential has expired
-        else case lookupᵐ? ccHotKeys c of
+  getCCHotCred : Credential × Epoch → Maybe Credential
+  getCCHotCred (c , e) =
+    if currentEpoch > e
+      then nothing -- credential has expired
+      else case lookupᵐ? ccHotKeys c of
 \end{code}
 \begin{code}[hide]
           λ where
 \end{code}
 \begin{code}
-          (just (just c'))  → just c'
-          _                 → nothing -- hot key not registered or resigned
+        (just (just c'))  → just c'
+        _                 → nothing -- hot key not registered or resigned
 
-    actualVote : Credential → Epoch → Vote
-    actualVote c e = case getCCHotCred (c , e) of
+  actualVote : Credential → Epoch → Vote
+  actualVote c e = case getCCHotCred (c , e) of
 \end{code}
 \begin{code}[hide]
-      λ where
+    λ where
 \end{code}
 \begin{code}
-        (just c')  → maybe id Vote.no (lookupᵐ? castVotes c')
-        _          → Vote.abstain
+      (just c')  → maybe id Vote.no (lookupᵐ? castVotes c')
+      _          → Vote.abstain
 
-    actualVotes : Credential ⇀ Vote
-    actualVotes = case proj₁ cc of
+  actualVotes : Credential ⇀ Vote
+  actualVotes = case proj₁ cc of
 \end{code}
 \begin{code}[hide]
-      λ where
+    λ where
 \end{code}
 \begin{code}
-        nothing         →  ∅
-        (just (m , _))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
-                           then mapWithKey actualVote m
-                           else constMap (dom m) Vote.no
+      nothing         →  ∅
+      (just (m , _))  →  if ccMinSize ≤ lengthˢ (mapFromPartialFun getCCHotCred (m ˢ))
+                         then mapWithKey actualVote m
+                         else constMap (dom m) Vote.no
 
-    mT : Maybe ℚ
-    mT = threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action CC
+  mT : Maybe ℚ
+  mT = threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action CC
 
-    t : ℚ
-    t = maybe id 0ℚ mT
+  t : ℚ
+  t = maybe id 0ℚ mT
 
-    stakeDistr : Credential ⇀ Coin
-    stakeDistr = constMap (dom actualVotes) 1
+  stakeDistr : Credential ⇀ Coin
+  stakeDistr = constMap (dom actualVotes) 1
 
-    acceptedStake totalStake : Coin
-    acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes                           ] x
-    totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵))  ] x
+  acceptedStake totalStake : Coin
+  acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes                           ] x
+  totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵))  ] x
+
+  accepted : Type
+  accepted = (acceptedStake /₀ totalStake) ≥ t
+    × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
+
+acceptedByCC
+  : RatifyEnv
+  → EnactState
+  → GovActionState
+  → Type
+acceptedByCC Γ = AcceptedByCC.accepted currentEpoch ccHotKeys
+  where open RatifyEnv Γ using (currentEpoch; ccHotKeys)
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting for CC}
@@ -388,52 +399,60 @@ In addition, it has to be the case that either
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \begin{code}
+module AcceptedByDRep (Γ : RatifyEnv)
+                      (eSt : EnactState)
+                      (gaSt : GovActionState) where
+
+\end{code}
+\begin{code}[hide]
+  open EnactState eSt using (cc; pparams)
+  open RatifyEnv Γ using (currentEpoch; dreps; stakeDistrs)
+  open PParams (proj₁ pparams)
+  open StakeDistrs stakeDistrs
+  open GovActionState gaSt
+  open GovVotes votes using (gvDRep)
+\end{code}
+\begin{code}
+  castVotes : VDeleg ⇀ Vote
+  castVotes = mapKeys vDelegCredential gvDRep
+
+  activeDReps : ℙ Credential
+  activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
+
+  predeterminedDRepVotes : VDeleg ⇀ Vote
+  predeterminedDRepVotes = case gaType action of
+      λ where
+        NoConfidence → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.yes ❵
+        _            → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.no  ❵
+
+  defaultDRepCredentialVotes : VDeleg ⇀ Vote
+  defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
+
+  actualVotes : VDeleg ⇀ Vote
+  actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes
+                             ∪ˡ predeterminedDRepVotes
+
+  t : ℚ
+  t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action DRep)
+
+  acceptedStake totalStake : Coin
+  acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes                          ] x
+  totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+
+  accepted = (acceptedStake /₀ totalStake) ≥ t
+
 acceptedByDRep
   : RatifyEnv
   → EnactState
   → GovActionState
   → Type
-acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
-  where
+acceptedByDRep = AcceptedByDRep.accepted
 \end{code}
 \begin{code}[hide]
-    open EnactState eSt using (cc; pparams)
-    open RatifyEnv Γ
-    open PParams (proj₁ pparams)
-    open StakeDistrs stakeDistrs
-    open GovActionState gaSt
-    open GovVotes votes using (gvDRep)
 \end{code}
 \begin{code}
-    castVotes : VDeleg ⇀ Vote
-    castVotes = mapKeys vDelegCredential gvDRep
-
-    activeDReps : ℙ Credential
-    activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
-
-    predeterminedDRepVotes : VDeleg ⇀ Vote
-    predeterminedDRepVotes = case gaType action of
 \end{code}
 \begin{code}[hide]
-      λ where
-\end{code}
-\begin{code}
-        NoConfidence → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.yes ❵
-        _            → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.no  ❵
-
-    defaultDRepCredentialVotes : VDeleg ⇀ Vote
-    defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
-
-    actualVotes : VDeleg ⇀ Vote
-    actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes
-                               ∪ˡ predeterminedDRepVotes
-
-    t : ℚ
-    t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action DRep)
-
-    acceptedStake totalStake : Coin
-    acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes                          ] x
-    totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting for DReps}
@@ -469,53 +488,61 @@ auxiliary definitions:
 \begin{figure*}[!ht]
 \begin{AgdaMultiCode}
 \begin{code}
+module AcceptedBySPO (delegatees : VoteDelegs)
+                     (pools : Pools)
+                     (stakeDistrPools : KeyHash ⇀ Coin)
+                     (eSt : EnactState)
+                     (gaSt : GovActionState) where
+\end{code}
+\begin{code}[hide]
+  open EnactState eSt using (cc; pparams)
+  open GovActionState gaSt
+  open GovVotes votes using (gvSPO)
+\end{code}
+\begin{code}
+  castVotes : KeyHash ⇀ Vote
+  castVotes = gvSPO
+
+  defaultVote : KeyHash → Vote
+  defaultVote kh = case lookupᵐ? pools kh of
+\end{code}
+\begin{code}[hide]
+    λ where
+\end{code}
+\begin{code}
+    nothing   → Vote.no
+    (just  p) → case lookupᵐ? delegatees (StakePoolParams.rewardAccount p) , gaType action of
+\end{code}
+\begin{code}[hide]
+           λ where
+\end{code}
+\begin{code}
+           (_                       , TriggerHardFork)  → Vote.no
+           (just vDelegNoConfidence , NoConfidence   )  → Vote.yes
+           (just vDelegAbstain      , _              )  → Vote.abstain
+           _                                            → Vote.no
+
+  actualVotes : KeyHash ⇀ Vote
+  actualVotes = castVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
+
+  t : ℚ
+  t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action SPO)
+
+  acceptedStake totalStake : Coin
+  acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes                          ] x
+  totalStake     = ∑[ x ← stakeDistrPools ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+
+  accepted : Type
+  accepted = (acceptedStake /₀ totalStake) ≥ t
+
 acceptedBySPO
   : RatifyEnv
   → EnactState
   → GovActionState
   → Type
-acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
-  where
-\end{code}
-\begin{code}[hide]
-    open EnactState eSt using (cc; pparams)
-    open RatifyEnv Γ
-    open StakeDistrs stakeDistrs
-    open GovActionState gaSt
-    open GovVotes votes using (gvSPO)
-\end{code}
-\begin{code}
-    castVotes : KeyHash ⇀ Vote
-    castVotes = gvSPO
-
-    defaultVote : KeyHash → Vote
-    defaultVote kh = case lookupᵐ? pools kh of
-\end{code}
-\begin{code}[hide]
-      λ where
-\end{code}
-\begin{code}
-      nothing   → Vote.no
-      (just  p) → case lookupᵐ? delegatees (StakePoolParams.rewardAccount p) , gaType action of
-\end{code}
-\begin{code}[hide]
-             λ where
-\end{code}
-\begin{code}
-             (_                       , TriggerHardFork)  → Vote.no
-             (just vDelegNoConfidence , NoConfidence   )  → Vote.yes
-             (just vDelegAbstain      , _              )  → Vote.abstain
-             _                                            → Vote.no
-
-    actualVotes : KeyHash ⇀ Vote
-    actualVotes = castVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
-
-    t : ℚ
-    t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action SPO)
-
-    acceptedStake totalStake : Coin
-    acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes                          ] x
-    totalStake     = ∑[ x ← stakeDistrPools ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+acceptedBySPO Γ = AcceptedBySPO.accepted delegatees pools stakeDistrPools
+  where open RatifyEnv Γ
+        open StakeDistrs stakeDistrs
 \end{code}
 \end{AgdaMultiCode}
 \caption{Vote counting for SPOs}
@@ -584,7 +611,7 @@ used for voting.
 
 \begin{figure*}[!ht]
 \begin{code}[hide]
-abstract
+opaque
 \end{code}
 \begin{code}
   accepted : RatifyEnv → EnactState → GovActionState → Type
@@ -638,7 +665,9 @@ acceptConds Γ stʳ (id , st) =
           open RatifyState stʳ
           open GovActionState st
 
-abstract
+opaque
+  unfolding accepted
+
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
   verifyPrev? NoConfidence        h es = dec
   verifyPrev? UpdateCommittee     h es = dec

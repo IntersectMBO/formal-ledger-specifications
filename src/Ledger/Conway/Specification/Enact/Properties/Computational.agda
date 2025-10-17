@@ -13,6 +13,21 @@ open EnactState
 
 open Computational ⦃...⦄
 
+module _ {Γ : EnactEnv} {eSt : EnactState} {ga : GovAction} where
+
+  -- TODO: Make this follow from computationalness or viceversa
+  ENACT-deterministic : ∀ {eSt' eSt''}
+                      → Γ ⊢ eSt ⇀⦇ ga ,ENACT⦈ eSt'
+                      → Γ ⊢ eSt ⇀⦇ ga ,ENACT⦈ eSt''
+                      → eSt' ≡ eSt''
+  ENACT-deterministic Enact-NoConf Enact-NoConf = refl
+  ENACT-deterministic (Enact-UpdComm _) (Enact-UpdComm _) = refl
+  ENACT-deterministic Enact-NewConst Enact-NewConst = refl
+  ENACT-deterministic Enact-HF Enact-HF = refl
+  ENACT-deterministic Enact-PParams Enact-PParams = refl
+  ENACT-deterministic (Enact-Wdrl _) (Enact-Wdrl _) = refl
+  ENACT-deterministic Enact-Info Enact-Info = refl
+
 instance
   Computational-ENACT : Computational _⊢_⇀⦇_,ENACT⦈_ String
   Computational-ENACT .computeProof Γᵉ s =
