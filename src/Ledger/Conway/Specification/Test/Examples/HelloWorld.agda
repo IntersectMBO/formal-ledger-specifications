@@ -1,18 +1,22 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import Ledger.Conway.Specification.Test.Prelude
 
+open import Ledger.Conway.Specification.Test.Prelude (String)
 module Ledger.Conway.Specification.Test.Examples.HelloWorld where
+open import Ledger.Conway.Specification.Test.LedgerImplementation String String
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open TransactionStructure SVTransactionStructure using (Data)
+open import Ledger.Conway.Specification.ScriptPurpose SVTransactionStructure
 
-scriptImp : ScriptImplementation String String
-scriptImp = record { serialise = id ;
-                     deserialise = λ x → just x ;
-                     toData' = λ x → "dummy" }
 
-open import Ledger.Conway.Specification.Test.LedgerImplementation String String scriptImp
-open import Ledger.Conway.Specification.Test.Lib String String scriptImp
+valContext : TxInfo → ScriptPurpose → Data
+valContext x x₁ = ""
+
+open import Ledger.Conway.Specification.Test.AbstractImplementation String String valContext
+open import Ledger.Conway.Specification.Test.Lib String String valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Data.Empty
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Transaction
 open TransactionStructure SVTransactionStructure
@@ -20,6 +24,7 @@ open import Ledger.Core.Specification.Epoch
 open EpochStructure SVEpochStructure
 open Implementation
 open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
+
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool
@@ -48,7 +53,6 @@ succeedTx : Tx
 succeedTx = record { body = record
                          { txIns = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
                          ; refInputs = ∅
-                         ; collateralInputs = Ledger.Prelude.fromList ((5 , 5) ∷ [])
                          ; txOuts = fromListIx ((6 , initTxOut)
                                                ∷ (5
                                                  , ((inj₁ (record { net = 0 ;
@@ -68,6 +72,7 @@ succeedTx = record { body = record
                          ; txNetworkId = just 0
                          ; currentTreasury = nothing
                          ; txId = 7
+                         ; collateralInputs = Ledger.Prelude.fromList ((5 , 5) ∷ [])
                          ; reqSignerHashes = ∅
                          ; scriptIntegrityHash = nothing
                          } ;
@@ -85,7 +90,6 @@ failTx : Tx
 failTx = record { body = record
                          { txIns = Ledger.Prelude.fromList ((6 , 6) ∷ [])
                          ; refInputs = ∅
-                         ; collateralInputs = ∅
                          ; txOuts = ∅
                          ; txFee = 10
                          ; mint = 0
@@ -99,6 +103,7 @@ failTx = record { body = record
                          ; txNetworkId = just 0
                          ; currentTreasury = nothing
                          ; txId = 7
+                         ; collateralInputs = ∅
                          ; reqSignerHashes = ∅
                          ; scriptIntegrityHash = nothing
                          } ;

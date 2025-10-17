@@ -4,14 +4,16 @@ open import Ledger.Prelude hiding (fromList; ε); open Computational
 open import Ledger.Conway.Specification.Test.Prelude
 
 module Ledger.Conway.Specification.Test.Examples.SucceedIfNumber where
+open import Ledger.Conway.Specification.Test.LedgerImplementation ℕ ℕ 
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open TransactionStructure SVTransactionStructure using (Data)
+open import Ledger.Conway.Specification.ScriptPurpose SVTransactionStructure
 
-scriptImp : ScriptImplementation ℕ ℕ
-scriptImp = record { serialise = id ;
-                     deserialise = λ x → just x ;
-                     toData' = λ x → 9999999 }
+valContext : TxInfo → ScriptPurpose → Data
+valContext x x₁ = 0
 
-open import Ledger.Conway.Specification.Test.LedgerImplementation ℕ ℕ scriptImp
-open import Ledger.Conway.Specification.Test.Lib ℕ ℕ scriptImp
+open import Ledger.Conway.Specification.Test.AbstractImplementation ℕ ℕ valContext
+open import Ledger.Conway.Specification.Test.Lib ℕ ℕ valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Transaction
@@ -70,7 +72,6 @@ succeedTx : Tx
 succeedTx = record { body = record
                          { txIns = Ledger.Prelude.fromList ((6 , 6) ∷ (5 , 5) ∷ [])
                          ; refInputs = ∅
-                         ; collateralInputs = Ledger.Prelude.fromList ((5 , 5) ∷ [])
                          ; txOuts = fromListIx ((6 , initTxOut)
                                                 ∷ (5
                                                   , ((inj₁ (record { net = 0 ;
@@ -78,18 +79,19 @@ succeedTx = record { body = record
                                                                      stake = just (KeyHashObj 5) }))
                                                   , (1000000000000 - 10000000000) , nothing , nothing))
                                                 ∷ [])
-                         ; txId = 7
-                         ; txCerts = []
                          ; txFee = 10000000000
-                         ; txWithdrawals = ∅
+                         ; mint = 0
                          ; txVldt = nothing , nothing
-                         ; txADhash = nothing
-                         ; txDonation = 0
+                         ; txCerts = []
+                         ; txWithdrawals = ∅
                          ; txGovVotes = []
                          ; txGovProposals = []
+                         ; txDonation = 0
+                         ; txADhash = nothing
                          ; txNetworkId = just 0
                          ; currentTreasury = nothing
-                         ; mint = 0
+                         ; txId = 7
+                         ; collateralInputs = Ledger.Prelude.fromList ((5 , 5) ∷ [])
                          ; reqSignerHashes = ∅
                          ; scriptIntegrityHash = nothing
                          } ;
@@ -111,20 +113,20 @@ failTx : Tx
 failTx = record { body = record
                          { txIns = Ledger.Prelude.fromList ((6 , 6) ∷ [])
                          ; refInputs = ∅
-                         ; collateralInputs = ∅
                          ; txOuts = ∅
-                         ; txId = 7
-                         ; txCerts = []
                          ; txFee = 10
-                         ; txWithdrawals = ∅
+                         ; mint = 0
                          ; txVldt = nothing , nothing
-                         ; txADhash = nothing
-                         ; txDonation = 0
+                         ; txCerts = []
+                         ; txWithdrawals = ∅
                          ; txGovVotes = []
                          ; txGovProposals = []
+                         ; txDonation = 0
+                         ; txADhash = nothing
                          ; txNetworkId = just 0
                          ; currentTreasury = nothing
-                         ; mint = 0
+                         ; txId = 7
+                         ; collateralInputs = ∅
                          ; reqSignerHashes = ∅
                          ; scriptIntegrityHash = nothing
                          } ;
@@ -194,3 +196,4 @@ opaque
 
   _ : failExampleU ≡ false
   _ = refl
+
