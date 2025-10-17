@@ -148,7 +148,7 @@ data _⊢_⇀⦇_,UTXOW⦈_ : UTxOEnv → UTxOState → Tx → UTxOState → Typ
 
 +  the line `inputsDataHashes`{.AgdaBound} `⊆`{.AgdaInductiveConstructor} `txdatsHashes`{.AgdaBound}
    compares two inhabitants of type `PowerSet`{.AgdaFunction} `DataHash`{.AgdaFunction}.
-   In the Alonzo era, these two terms inhabited the `PowerSet`{.AgdaFunction}
+   In the Alonzo era, these two terms inhabited the `ℙ`{.AgdaFunction}
    (`Maybe`{.AgdaDatatype} `DataHash`{.AgdaFunction}) type, where a
    `nothing`{.AgdaInductiveConstructor} was simply thrown out [VK21,](#alonzo-ledger-spec).
 
