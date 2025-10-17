@@ -583,7 +583,10 @@ The `POST-CERT`{.AgdaFunction} transition rule is applied at the end of the
 data _⊢_⇀⦇_,POST-CERT⦈_ : CertEnv → CertState → ⊤ → CertState → Type where
 
   CERT-post :
-    ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ (mapˢ vDelegCredential (dom (DRepsOf stᵍ)) ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])) , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
+    let activeVDelegs = mapˢ vDelegCredential (dom (DRepsOf stᵍ))
+                         ∪ fromList (vDelegNoConfidence ∷ vDelegAbstain ∷ [])
+    in
+      ⟦ e , pp , vs , wdrls , cc ⟧ ⊢ ⟦ ⟦ voteDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧ ⇀⦇ _ ,POST-CERT⦈ ⟦ ⟦ voteDelegs ∣^ activeVDelegs , stakeDelegs , rewards ⟧ , stᵖ , stᵍ ⟧
 
 _⊢_⇀⦇_,CERTS⦈_  : CertEnv → CertState  → List DCert  → CertState  → Type
 _⊢_⇀⦇_,CERTS⦈_ = RunTraceAfterAndThen _⊢_⇀⦇_,PRE-CERT⦈_ _⊢_⇀⦇_,CERT⦈_ _⊢_⇀⦇_,POST-CERT⦈_
