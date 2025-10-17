@@ -7466,13 +7466,6 @@ This section formalizes the mechanisms use by the Cardano ledger to support witn
 </code></pre></div>
 -->
 
-<p><code class="AgdaFunction">allowedLanguages</code> has additional conditions for new
-features in Conway. If a transaction contains any votes, proposals, a
-treasury donation or asserts the treasury amount, it is only allowed to
-contain Plutus V3 scripts. Additionally, the presence of reference
-scripts or inline scripts does not prevent Plutus V1 scripts from being
-used in a transaction anymore. Only inline datums are now disallowed
-from appearing together with a Plutus V1 script.</p>
 <h2 id="sec:witnessing-functions">Witnessing Functions<a class="headerlink" href="#sec:witnessing-functions" title="Permanent link">&para;</a></h2>
 <!--
 <div class="highlight"><pre><span></span><code><span class="kr">module</span><span class="w"> </span>_ (<span class="n">o</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>TxOut<span class="o">)</span><span class="w"> </span><span class="kr">where</span>
@@ -7518,6 +7511,12 @@ languages<span class="w"> </span>tx<span class="w"> </span>utxo<span class="w"> 
 </code></pre></div>
 -->
 
+<p>We begin with the definition of <code class="AgdaFunction">allowedLanguages</code>, which
+includes conditions for new features in Conway.  If a transaction contains any votes,
+proposals, a treasury donation or asserts the treasury amount, it is only allowed to
+contain Plutus V3 scripts.  Additionally, the presence of reference scripts or inline
+scripts does not prevent Plutus V1 scripts from being used in a transaction anymore.
+Only inline datums are now disallowed from appearing together with a Plutus V1 script.</p>
 <div class="highlight"><pre><span></span><code><span class="nf">allowedLanguages</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Tx<span class="w"> </span><span class="ow">→</span><span class="w"> </span>UTxO<span class="w"> </span><span class="ow">→</span><span class="w"> </span>ℙ<span class="w"> </span>Language
 allowedLanguages<span class="w"> </span>tx<span class="w"> </span>utxo<span class="w"> </span><span class="ow">=</span>
 <span class="w">  </span>if<span class="w"> </span><span class="o">(</span>∃[<span class="w"> </span>o<span class="w"> </span>∈<span class="w"> </span>os<span class="w"> </span>]<span class="w"> </span>isBootstrapAddr<span class="w"> </span><span class="o">(</span>proj₁<span class="w"> </span>o<span class="o">))</span>
@@ -7578,7 +7577,7 @@ allowedLanguages<span class="w"> </span>tx<span class="w"> </span>utxo<span clas
 <li>
 <p>the line <code class="AgdaBound">inputsDataHashes</code> <code class="AgdaInductiveConstructor">⊆</code> <code class="AgdaBound">txdatsHashes</code>
    compares two inhabitants of type <code class="AgdaFunction">PowerSet</code> <code class="AgdaFunction">DataHash</code>.
-   In the Alonzo era, these two terms inhabited the <code class="AgdaFunction">PowerSet</code>
+   In the Alonzo era, these two terms inhabited the <code class="AgdaFunction">ℙ</code>
    (<code class="AgdaDatatype">Maybe</code> <code class="AgdaFunction">DataHash</code>) type, where a
    <code class="AgdaInductiveConstructor">nothing</code> was simply thrown out <a href="#alonzo-ledger-spec">VK21,</a>.</p>
 </li>
