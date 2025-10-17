@@ -28,7 +28,7 @@
         };
       in
       {
-        packages.default = pkgs.agda;
+        packages.default = pkgs.agdaPackages.agda;
       }
     )
     // {

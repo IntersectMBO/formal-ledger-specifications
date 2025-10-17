@@ -1,10 +1,11 @@
 {
   lib,
   mkDerivation,
-  agda,
+  dejavu_fonts,
+  ghostscript,
   pandoc,
   python3,
-  ghostscript,
+  texlive,
 }:
 mkDerivation {
   pname = "mkdocs";
@@ -23,7 +24,6 @@ mkDerivation {
   };
   meta = { };
   buildInputs = [
-    agda
     pandoc
     (python3.withPackages (
       ps: with ps; [
@@ -32,8 +32,26 @@ mkDerivation {
         mkdocs-material
         pymdown-extensions
         pyyaml
+        pybtex
       ]
     ))
+    (texlive.combine {
+      inherit (texlive)
+        bclogo
+        scheme-small
+        dejavu
+        mdframed
+        zref
+        luatex
+        luatex85
+        dvisvgm
+        needspace
+        standalone
+        tikz-cd
+        pgfplots
+        ;
+    })
+    dejavu_fonts
     ghostscript
   ];
   buildPhase = ''
