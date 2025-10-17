@@ -130,7 +130,7 @@ record NewEpochState : Type where
     In addition, the formal specification omits the VRF key hashes in the
     codomain of `PoolDelegatedStake`{.AgdaDatatype} as they are not implemented at
     the moment.
- 
+
 <!--
 ```agda
 record HasNewEpochState {a} (A : Type a) : Type a where
@@ -579,15 +579,17 @@ record EPOCH-Updates0 : Type where
     es             : EnactState
     govSt'         : GovState
     payout         : Withdrawals
+    pState'        : PState
     gState'        : GState
     utxoSt'        : UTxOState
     totWithdrawals : Coin
 
 EPOCH-updates0 : RatifyState → LState → EPOCH-Updates0
 EPOCH-updates0 fut ls =
-    EPOCHUpdates0 es govSt' payout gState' utxoSt' totWithdrawals
+    EPOCHUpdates0 es govSt' payout pState' gState' utxoSt' totWithdrawals
   where
     open LState ls public
+    open PState
     open CertState certState using (gState) public
     open RatifyState fut renaming (es to esW)
 
@@ -626,6 +628,12 @@ EPOCH-updates0 fut ls =
       , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
       ⟧
 
+    pState = PStateOf ls
+    pState' = record pState
+      { pools  = pState .fPools ∪ˡ pState .pools
+      ; fPools = ∅ᵐ
+      }
+
     utxoSt' : UTxOState
     utxoSt' = record utxoSt
       { deposits = DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
@@ -641,6 +649,7 @@ record EPOCH-Updates : Type where
     es             : EnactState
     govSt'         : GovState
     dState''       : DState
+    pState''       : PState
     gState'        : GState
     utxoSt'        : UTxOState
     acnt''         : Acnt
@@ -648,7 +657,14 @@ record EPOCH-Updates : Type where
 EPOCH-updates
   : RatifyState → LState → DState → Acnt → EPOCH-Updates
 EPOCH-updates fut ls dState' acnt' =
-    EPOCHUpdates (u0 .es) (u0 .govSt') dState'' (u0 .gState') (u0 .utxoSt') acnt''
+    EPOCHUpdates
+      (u0 .es)
+      (u0 .govSt')
+      dState''
+      (u0 .pState')
+      (u0 .gState')
+      (u0 .utxoSt')
+      acnt''
   where
     open LState
     open EPOCH-Updates0
@@ -673,7 +689,7 @@ EPOCH-updates fut ls dState' acnt' =
 
 ### Transition Rule
 
-This section defines the `EPOCH`{.AgdaDatatype} transition rule. 
+This section defines the `EPOCH`{.AgdaDatatype} transition rule.
 
 In Conway, the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
 and carries out the following tasks:
@@ -700,12 +716,12 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 ```
 <!--
 ```agda
-    ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState'} →
+    ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState''} →
 ```
 -->
 ```agda
     let
-      EPOCHUpdates es govSt' dState'' gState' utxoSt' acnt'' =
+      EPOCHUpdates es govSt' dState'' pState' gState' utxoSt' acnt'' =
         EPOCH-updates fut ls dState' acnt'
 
       stakeDistrs : StakeDistrs
@@ -718,9 +734,9 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
     in
         ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
       ∙ Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
-      ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , PStateOf ls ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState' ⟧
+      ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , pState' ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState'' ⟧
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
+      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
 ```
 
 ## <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#newepoch-transition-system}

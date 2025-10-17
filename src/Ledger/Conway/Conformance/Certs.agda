@@ -76,7 +76,7 @@ private variable
   sDelegs stakeDelegs    : Credential ⇀ KeyHash
   ccKeys ccHotKeys       : Credential ⇀ Maybe Credential
   vDelegs voteDelegs     : VoteDelegs
-  pools                  : Pools
+  pools fPools           : Pools
   retiring               : KeyHash ⇀ Epoch
   wdrls                  : Withdrawals
 
@@ -110,12 +110,12 @@ data _⊢_⇀⦇_,POOL⦈_ where
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢  ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
+      pp ⊢  ⟦ pools , fPools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
+            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , fPools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧
+    pp ⊢ ⟦ pools , fPools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , fPools , ❴ kh , e ❵ ∪ˡ retiring ⟧
 
 data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in

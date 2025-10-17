@@ -55,7 +55,7 @@ module _ {eps : EpochState} {e : Epoch} where
 
   open EpochState eps hiding (es)
 
-  prs = ⟦ u0 .utxoSt' , acnt , cs .dState , cs .pState ⟧
+  prs = ⟦ u0 .utxoSt' , acnt , cs .dState , u0 .pState' ⟧
     where
       open LState
       open CertState
@@ -72,11 +72,11 @@ module _ {eps : EpochState} {e : Epoch} where
 
   private
     EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
-    EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState' ⟧ᵖ) =
+    EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState'' ⟧ᵖ) =
       let
-        EPOCHUpdates es govSt' dState'' gState' _ acnt'' =
+        EPOCHUpdates es govSt' dState'' _ gState' _ acnt'' =
           EPOCH-updates fut ls dState' acnt'
-        certState' = ⟦ dState'' , pState' , gState' ⟧ᶜˢ
+        certState' = ⟦ dState'' , pState'' , gState' ⟧ᶜˢ
        in
           record
             { acnt = acnt''
@@ -97,14 +97,14 @@ module _ {eps : EpochState} {e : Epoch} where
         {utxoSt'' = utxoSt''₁}
         {acnt' = acnt'₁}
         {dState' = dState'₁}
-        {pState' = pState'₁}
+        {pState'' = pState'₁}
         (p₁ , p₂ , p₃)
       )
       (EPOCH
         {utxoSt'' = utxoSt''₂}
         {acnt' = acnt'₂}
         {dState' = dState'₂}
-        {pState' = pState'₂}
+        {pState'' = pState'₂}
         (p₁' , p₂' , p₃')
       ) =
     cong₂ _$_ (cong₂ EPOCH-state ss'≡ss'' fut'≡fut'') prs'≡prs''

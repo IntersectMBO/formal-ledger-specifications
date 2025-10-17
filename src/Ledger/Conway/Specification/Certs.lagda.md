@@ -199,6 +199,7 @@ record DState : Type where
 record PState : Type where
   field
     pools     : Pools
+    fPools    : Pools
     retiring  : KeyHash ⇀ Epoch
 
 record GState : Type where
@@ -337,7 +338,7 @@ private variable
   sDelegs stakeDelegs    : StakeDelegs
   ccKeys ccHotKeys       : CCHotKeys
   vDelegs voteDelegs     : VoteDelegs
-  pools                  : Pools
+  pools fPools           : Pools
   retiring               : Retiring
   wdrls                  : Withdrawals
 
@@ -474,11 +475,11 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
   POOL-regpool :
     ∙ kh ∉ dom pools
       ────────────────────────────────
-      pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , retiring ⟧
+      pp ⊢ ⟦ pools , fPools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , fPools , retiring ⟧
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , ❴ kh , e ❵ ∪ˡ retiring ⟧
+    pp ⊢ ⟦ pools , fPools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , fPools , ❴ kh , e ❵ ∪ˡ retiring ⟧
 ```
 
 
