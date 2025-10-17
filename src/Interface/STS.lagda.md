@@ -31,7 +31,7 @@ private
 ## A Note on Recent Changes
 
 We refactored the `STS`{.AgdaModule} module to reflect what the code actually
-does--it processes a list of signals, transforming state.
+does—it processes a list of signals, transforming state.
 
 +  **Clearer names**
 
