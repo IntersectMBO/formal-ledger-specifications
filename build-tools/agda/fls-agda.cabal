@@ -11,7 +11,7 @@ extra-doc-files:    README.md
 data-files: data/Agda.css
             data/AgdaKaTeX.js
 
-executable fls-agda
+executable agda
   hs-source-dirs:      src
   main-is:             Main.hs
   other-modules:       Paths_fls_agda

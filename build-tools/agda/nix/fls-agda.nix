@@ -37,5 +37,5 @@ mkDerivation {
   ];
   description = "Custom backend for formal-ledger-specifications";
   license = "unknown";
-  mainProgram = "fls-agda";
+  mainProgram = "agda";
 }
