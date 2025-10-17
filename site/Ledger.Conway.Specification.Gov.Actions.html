@@ -7588,13 +7588,12 @@ to identify a proposal within a transaction.</p>
 <div class="highlight"><pre><span></span><code><span class="nf">GovActionID</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type
 GovActionID<span class="w">  </span><span class="ow">=</span><span class="w"> </span>TxId<span class="w"> </span>×<span class="w"> </span>ℕ
 </code></pre></div>
-<p><code class="AgdaDatatype">VDeleg</code> represents voter delegation and specifies the different ways
-to delegate votes.  To delegate voting stake, the stake holder provides one of the
-following:</p>
+<p>The type <code class="AgdaDatatype">VDeleg</code> represents the different ways in which
+voting stake can be delegated:</p>
 <ol>
-<li>a credential (<code class="AgdaInductiveConstructor">vDelegCredential</code>);</li>
-<li>an abstention (<code class="AgdaInductiveConstructor">vDelegAbstain</code>);</li>
-<li>a vote of no confidence (<code class="AgdaInductiveConstructor">vDelegNoConfidence</code>).</li>
+<li>to the credential of a <code>DRep</code> (<code class="AgdaInductiveConstructor">vDelegCredential</code>);</li>
+<li>to an abstention (<code class="AgdaInductiveConstructor">vDelegAbstain</code>);</li>
+<li>to a vote of no confidence (<code class="AgdaInductiveConstructor">vDelegNoConfidence</code>).</li>
 </ol>
 <div class="highlight"><pre><span></span><code><span class="kr">data</span><span class="w"> </span>VDeleg<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
 <span class="w">  </span><span class="nf">vDelegCredential</span><span class="w">   </span><span class="ow">:</span><span class="w"> </span>Credential<span class="w"> </span><span class="ow">→</span><span class="w"> </span>VDeleg
