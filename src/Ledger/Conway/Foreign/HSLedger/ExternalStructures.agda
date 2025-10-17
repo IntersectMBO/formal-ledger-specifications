@@ -127,6 +127,7 @@ instance
     ; scriptSize = λ where 
         (inj₁ x) → HSTimelock.tlScriptSize x
         (inj₂ x) → HSPlutusScript.psScriptSize x
+    ; valContext = λ _ _ → zero
     }
 
 open import Ledger.Core.Specification.Address Network KeyHash ScriptHash using () public

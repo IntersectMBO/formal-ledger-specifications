@@ -56,7 +56,7 @@ record PlutusStructure : Type₁ where
   field validPlutusScript : CostModel → List Data → ExUnits → PlutusScript → Type
         ⦃ Dec-validPlutusScript ⦄ : ∀ {x} → (validPlutusScript x ⁇³)
         language : PlutusScript → Language
-        toData : ∀ {A : Type} → A → Data
+       -- toData : ∀ {A : Type} → A → Data
 
 record ScriptStructure : Type₁ where
 
