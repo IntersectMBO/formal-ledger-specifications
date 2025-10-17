@@ -239,6 +239,25 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="references.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  References
+
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -1024,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
         
   
   
@@ -1047,7 +1066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
         
   
   
@@ -1677,7 +1696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
         
   
   
@@ -2463,7 +2482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
         
   
   
@@ -2769,7 +2788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
         
   
   
@@ -2877,7 +2896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
         
   
   
@@ -2900,7 +2919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
         
   
   
@@ -2923,7 +2942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
         
   
   
@@ -3474,7 +3493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
         
   
   
@@ -3520,7 +3539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
         
   
   
@@ -3860,7 +3879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
         
   
   
@@ -4263,7 +4282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
         
   
   
@@ -6087,7 +6106,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.md" class="md-nav__link">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
         
   
   
@@ -6398,7 +6417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
         
   
   
@@ -6495,7 +6514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
         
   
   
@@ -7293,6 +7312,28 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="references.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -7338,193 +7379,194 @@
 
   <h1>Epoch</h1>
 
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<pre class="Agda"><a id="94" class="Symbol">{-#</a> <a id="98" class="Keyword">OPTIONS</a> <a id="106" class="Pragma">--safe</a> <a id="113" class="Symbol">#-}</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Abstract</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Transaction</span>
+<a id="118" class="Keyword">open</a> <a id="123" class="Keyword">import</a> <a id="130" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<a id="167" class="Keyword">open</a> <a id="172" class="Keyword">import</a> <a id="179" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Epoch</span>
-<span class="w">  </span><span class="o">(</span>txs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>TransactionStructure<span class="w"> </span>txs<span class="o">)</span>
-<span class="w">  </span><span class="o">(</span>abs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>AbstractFunctions<span class="w"> </span>txs<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>AbstractFunctions<span class="w"> </span>abs<span class="o">)</span>
-<span class="w">  </span><span class="kr">where</span>
+<a id="220" class="Keyword">module</a> <a id="227" href="Ledger.Conway.Conformance.Epoch.html" class="Module">Ledger.Conway.Conformance.Epoch</a>
+  <a id="261" class="Symbol">(</a><a id="262" href="Ledger.Conway.Conformance.Epoch.html#262" class="Bound">txs</a> <a id="266" class="Symbol">:</a> <a id="268" class="Symbol">_)</a> <a id="271" class="Symbol">(</a><a id="272" class="Keyword">open</a> <a id="277" href="Ledger.Conway.Specification.Transaction.html#2461" class="Module">TransactionStructure</a> <a id="298" href="Ledger.Conway.Conformance.Epoch.html#262" class="Bound">txs</a><a id="301" class="Symbol">)</a>
+  <a id="305" class="Symbol">(</a><a id="306" href="Ledger.Conway.Conformance.Epoch.html#306" class="Bound">abs</a> <a id="310" class="Symbol">:</a> <a id="312" href="Ledger.Conway.Specification.Abstract.html#752" class="Record">AbstractFunctions</a> <a id="330" href="Ledger.Conway.Conformance.Epoch.html#262" class="Bound">txs</a><a id="333" class="Symbol">)</a> <a id="335" class="Symbol">(</a><a id="336" class="Keyword">open</a> <a id="341" href="Ledger.Conway.Specification.Abstract.html#752" class="Module">AbstractFunctions</a> <a id="359" href="Ledger.Conway.Conformance.Epoch.html#306" class="Bound">abs</a><a id="362" class="Symbol">)</a>
+  <a id="366" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Integer</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">()</span><span class="w"> </span><span class="kr">renaming</span><span class="w"> </span><span class="o">(</span>+_<span class="w"> </span>to<span class="w"> </span>pos<span class="o">)</span>
-<span class="kr">import</span><span class="w"> </span><span class="n">Data.Integer</span><span class="w"> </span>as<span class="w"> </span>ℤ
+<a id="373" class="Keyword">open</a> <a id="378" class="Keyword">import</a> <a id="385" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="400" class="Keyword">open</a> <a id="405" class="Keyword">import</a> <a id="412" href="Data.Integer.html" class="Module">Data.Integer</a> <a id="425" class="Keyword">using</a> <a id="431" class="Symbol">()</a> <a id="434" class="Keyword">renaming</a> <a id="443" class="Symbol">(</a><a id="444" href="Agda.Builtin.Int.html#263" class="InductiveConstructor">+_</a> <a id="447" class="Symbol">to</a> <a id="450" class="InductiveConstructor">pos</a><a id="453" class="Symbol">)</a>
+<a id="455" class="Keyword">import</a> <a id="462" href="Data.Integer.html" class="Module">Data.Integer</a> <a id="475" class="Symbol">as</a> <a id="478" class="Module">ℤ</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Nat.Properties</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>+-0-monoid;<span class="w"> </span>+-0-commutativeMonoid<span class="o">)</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.List</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>filter<span class="o">)</span>
+<a id="481" class="Keyword">open</a> <a id="486" class="Keyword">import</a> <a id="493" href="Data.Nat.Properties.html" class="Module">Data.Nat.Properties</a> <a id="513" class="Keyword">using</a> <a id="519" class="Symbol">(</a><a id="520" href="Data.Nat.Properties.html#17566" class="Function">+-0-monoid</a><a id="530" class="Symbol">;</a> <a id="532" href="Data.Nat.Properties.html#17645" class="Function">+-0-commutativeMonoid</a><a id="553" class="Symbol">)</a>
+<a id="555" class="Keyword">open</a> <a id="560" class="Keyword">import</a> <a id="567" href="Data.List.html" class="Module">Data.List</a> <a id="577" class="Keyword">using</a> <a id="583" class="Symbol">(</a><a id="584" href="Data.List.Base.html#10389" class="Function">filter</a><a id="590" class="Symbol">)</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Agda.Builtin.FromNat</span>
+<a id="593" class="Keyword">open</a> <a id="598" class="Keyword">import</a> <a id="605" href="Agda.Builtin.FromNat.html" class="Module">Agda.Builtin.FromNat</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Enact</span><span class="w"> </span>govStructure
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Ledger</span><span class="w"> </span>txs<span class="w"> </span>abs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Ratify</span><span class="w"> </span>txs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Utxo</span><span class="w"> </span>txs<span class="w"> </span>abs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Certs</span><span class="w"> </span>govStructure
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Rewards</span><span class="w"> </span>txs<span class="w"> </span>abs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Epoch</span><span class="w"> </span>txs<span class="w"> </span>abs
-<span class="w">  </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>getStakeCred;<span class="w"> </span>getOrphans;<span class="w"> </span>mkStakeDistrs;<span class="w"> </span>toRwdAddr<span class="o">)</span><span class="w"> </span>public
+<a id="627" class="Keyword">open</a> <a id="632" class="Keyword">import</a> <a id="639" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="673" href="Ledger.Conway.Specification.Transaction.html#3583" class="Function">govStructure</a>
+<a id="686" class="Keyword">open</a> <a id="691" class="Keyword">import</a> <a id="698" href="Ledger.Conway.Conformance.Ledger.html" class="Module">Ledger.Conway.Conformance.Ledger</a> <a id="731" href="Ledger.Conway.Conformance.Epoch.html#262" class="Bound">txs</a> <a id="735" href="Ledger.Conway.Conformance.Epoch.html#306" class="Bound">abs</a>
+<a id="739" class="Keyword">open</a> <a id="744" class="Keyword">import</a> <a id="751" href="Ledger.Conway.Specification.Ratify.html" class="Module">Ledger.Conway.Specification.Ratify</a> <a id="786" href="Ledger.Conway.Conformance.Epoch.html#262" class="Bound">txs</a>
+<a id="790" class="Keyword">open</a> <a id="795" class="Keyword">import</a> <a id="802" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a> <a id="833" href="Ledger.Conway.Conformance.Epoch.html#262" class="Bound">txs</a> <a id="837" href="Ledger.Conway.Conformance.Epoch.html#306" class="Bound">abs</a>
+<a id="841" class="Keyword">open</a> <a id="846" class="Keyword">import</a> <a id="853" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="885" href="Ledger.Conway.Specification.Transaction.html#3583" class="Function">govStructure</a>
+<a id="898" class="Keyword">open</a> <a id="903" class="Keyword">import</a> <a id="910" href="Ledger.Conway.Conformance.Rewards.html" class="Module">Ledger.Conway.Conformance.Rewards</a> <a id="944" href="Ledger.Conway.Conformance.Epoch.html#262" class="Bound">txs</a> <a id="948" href="Ledger.Conway.Conformance.Epoch.html#306" class="Bound">abs</a>
+<a id="952" class="Keyword">open</a> <a id="957" class="Keyword">import</a> <a id="964" href="Ledger.Conway.Specification.Epoch.html" class="Module">Ledger.Conway.Specification.Epoch</a> <a id="998" href="Ledger.Conway.Conformance.Epoch.html#262" class="Bound">txs</a> <a id="1002" href="Ledger.Conway.Conformance.Epoch.html#306" class="Bound">abs</a>
+  <a id="1008" class="Keyword">using</a> <a id="1014" class="Symbol">(</a><a id="1015" href="Ledger.Conway.Specification.Epoch.html#6160" class="Function">getStakeCred</a><a id="1027" class="Symbol">;</a> <a id="1029" href="Ledger.Conway.Specification.Epoch.html#18413" class="Function">getOrphans</a><a id="1039" class="Symbol">;</a> <a id="1041" href="Ledger.Conway.Specification.Epoch.html#17428" class="Function">mkStakeDistrs</a><a id="1054" class="Symbol">;</a> <a id="1056" href="Ledger.Conway.Specification.Epoch.html#6073" class="Function">toRwdAddr</a><a id="1065" class="Symbol">)</a> <a id="1067" class="Keyword">public</a>
 
-<span class="kr">record</span><span class="w"> </span>EpochState<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="w"> </span>⟦_,_,_,_,_⟧ᵉ&#39;
-<span class="w">  </span><span class="kr">field</span>
-<span class="w">    </span><span class="nf">acnt</span><span class="w">       </span><span class="ow">:</span><span class="w"> </span>Acnt
-<span class="w">    </span><span class="nf">ss</span><span class="w">         </span><span class="ow">:</span><span class="w"> </span>Snapshots
-<span class="w">    </span><span class="nf">ls</span><span class="w">         </span><span class="ow">:</span><span class="w"> </span>LState
-<span class="w">    </span><span class="nf">es</span><span class="w">         </span><span class="ow">:</span><span class="w"> </span>EnactState
-<span class="w">    </span><span class="nf">fut</span><span class="w">        </span><span class="ow">:</span><span class="w"> </span>RatifyState
+<a id="1075" class="Keyword">record</a> <a id="EpochState"></a><a id="1082" href="Ledger.Conway.Conformance.Epoch.html#1082" class="Record">EpochState</a> <a id="1093" class="Symbol">:</a> <a id="1095" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1100" class="Keyword">where</a>
+  <a id="1108" class="Keyword">constructor</a> <a id="⟦_,_,_,_,_⟧ᵉ&#39;"></a><a id="1120" href="Ledger.Conway.Conformance.Epoch.html#1120" class="InductiveConstructor Operator">⟦_,_,_,_,_⟧ᵉ&#39;</a>
+  <a id="1136" class="Keyword">field</a>
+    <a id="EpochState.acnt"></a><a id="1146" href="Ledger.Conway.Conformance.Epoch.html#1146" class="Field">acnt</a>       <a id="1157" class="Symbol">:</a> <a id="1159" href="Ledger.Conway.Specification.PParams.html#1725" class="Record">Acnt</a>
+    <a id="EpochState.ss"></a><a id="1168" href="Ledger.Conway.Conformance.Epoch.html#1168" class="Field">ss</a>         <a id="1179" class="Symbol">:</a> <a id="1181" href="Ledger.Conway.Specification.Rewards.html#28009" class="Record">Snapshots</a>
+    <a id="EpochState.ls"></a><a id="1195" href="Ledger.Conway.Conformance.Epoch.html#1195" class="Field">ls</a>         <a id="1206" class="Symbol">:</a> <a id="1208" href="Ledger.Conway.Conformance.Ledger.html#873" class="Record">LState</a>
+    <a id="EpochState.es"></a><a id="1219" href="Ledger.Conway.Conformance.Epoch.html#1219" class="Field">es</a>         <a id="1230" class="Symbol">:</a> <a id="1232" href="Ledger.Conway.Specification.Enact.html#1629" class="Record">EnactState</a>
+    <a id="EpochState.fut"></a><a id="1247" href="Ledger.Conway.Conformance.Epoch.html#1247" class="Field">fut</a>        <a id="1258" class="Symbol">:</a> <a id="1260" href="Ledger.Conway.Specification.Ratify.html#8386" class="Record">RatifyState</a>
 
-<span class="kr">record</span><span class="w"> </span>NewEpochState<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
-<span class="w">  </span><span class="kr">field</span>
-<span class="w">    </span><span class="nf">lastEpoch</span><span class="w">   </span><span class="ow">:</span><span class="w"> </span>Epoch
-<span class="w">    </span><span class="nf">epochState</span><span class="w">  </span><span class="ow">:</span><span class="w"> </span>EpochState
-<span class="w">    </span><span class="nf">ru</span><span class="w">          </span><span class="ow">:</span><span class="w"> </span>Maybe<span class="w"> </span>RewardUpdate
+<a id="1273" class="Keyword">record</a> <a id="NewEpochState"></a><a id="1280" href="Ledger.Conway.Conformance.Epoch.html#1280" class="Record">NewEpochState</a> <a id="1294" class="Symbol">:</a> <a id="1296" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1301" class="Keyword">where</a>
+  <a id="1309" class="Keyword">field</a>
+    <a id="NewEpochState.lastEpoch"></a><a id="1319" href="Ledger.Conway.Conformance.Epoch.html#1319" class="Field">lastEpoch</a>   <a id="1331" class="Symbol">:</a> <a id="1333" href="Ledger.Core.Specification.Epoch.html#691" class="Function">Epoch</a>
+    <a id="NewEpochState.epochState"></a><a id="1343" href="Ledger.Conway.Conformance.Epoch.html#1343" class="Field">epochState</a>  <a id="1355" class="Symbol">:</a> <a id="1357" href="Ledger.Conway.Conformance.Epoch.html#1082" class="Record">EpochState</a>
+    <a id="NewEpochState.ru"></a><a id="1372" href="Ledger.Conway.Conformance.Epoch.html#1372" class="Field">ru</a>          <a id="1384" class="Symbol">:</a> <a id="1386" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="1392" href="Ledger.Conway.Specification.Rewards.html#17967" class="Record">RewardUpdate</a>
 
-<span class="kr">instance</span>
-<span class="w">  </span><span class="kr">unquoteDecl</span><span class="w"> </span>HasCast-EpochState<span class="w"> </span>HasCast-NewEpochState<span class="w"> </span><span class="ow">=</span><span class="w"> </span>derive-HasCast
-<span class="w">    </span><span class="o">(</span><span class="w"> </span><span class="o">(</span><span class="kr">quote</span><span class="w"> </span>EpochState<span class="w">     </span>,<span class="w"> </span>HasCast-EpochState<span class="o">)</span>
-<span class="w">    </span>∷<span class="w"> </span>[<span class="w"> </span><span class="o">(</span><span class="kr">quote</span><span class="w"> </span>NewEpochState<span class="w">  </span>,<span class="w"> </span>HasCast-NewEpochState<span class="o">)</span>]<span class="o">)</span>
+<a id="1406" class="Keyword">instance</a>
+  <a id="1417" class="Keyword">unquoteDecl</a> <a id="HasCast-EpochState"></a><a id="1429" href="Ledger.Conway.Conformance.Epoch.html#1429" class="Function">HasCast-EpochState</a> <a id="HasCast-NewEpochState"></a><a id="1448" href="Ledger.Conway.Conformance.Epoch.html#1448" class="Function">HasCast-NewEpochState</a> <a id="1470" class="Symbol">=</a> <a id="1472" href="stdlib-classes.Class.HasCast.Derive.html#2690" class="Function">derive-HasCast</a>
+    <a id="1491" class="Symbol">(</a> <a id="1493" class="Symbol">(</a><a id="1494" class="Keyword">quote</a> <a id="1500" href="Ledger.Conway.Conformance.Epoch.html#1082" class="Record">EpochState</a>     <a id="1515" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1517" href="Ledger.Conway.Conformance.Epoch.html#1429" class="Function">HasCast-EpochState</a><a id="1535" class="Symbol">)</a>
+    <a id="1541" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="1543" href="Data.List.Base.html#4907" class="Function Operator">[</a> <a id="1545" class="Symbol">(</a><a id="1546" class="Keyword">quote</a> <a id="1552" href="Ledger.Conway.Conformance.Epoch.html#1280" class="Record">NewEpochState</a>  <a id="1567" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1569" href="Ledger.Conway.Conformance.Epoch.html#1448" class="Function">HasCast-NewEpochState</a><a id="1590" class="Symbol">)</a><a id="1591" href="Data.List.Base.html#4907" class="Function Operator">]</a><a id="1592" class="Symbol">)</a>
 
-<span class="nf">applyRUpd</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>RewardUpdate<span class="w"> </span><span class="ow">→</span><span class="w"> </span>EpochState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>EpochState
-applyRUpd<span class="w"> </span>rewardUpdate
-<span class="w">  </span>⟦<span class="w"> </span>⟦<span class="w"> </span>treasury<span class="w"> </span>,<span class="w"> </span>reserves<span class="w"> </span>⟧ᵃ
-<span class="w">  </span>,<span class="w"> </span>ss
-<span class="w">  </span>,<span class="w"> </span>⟦<span class="w"> </span>⟦<span class="w"> </span>utxo<span class="w"> </span>,<span class="w"> </span>fees<span class="w"> </span>,<span class="w"> </span>deposits<span class="w"> </span>,<span class="w"> </span>donations<span class="w"> </span>⟧ᵘ
-<span class="w">    </span>,<span class="w"> </span>govSt
-<span class="w">    </span>,<span class="w"> </span>⟦<span class="w"> </span>⟦<span class="w"> </span>voteDelegs<span class="w"> </span>,<span class="w"> </span>stakeDelegs<span class="w"> </span>,<span class="w"> </span>rewards<span class="w"> </span>,<span class="w"> </span>deposits&#39;<span class="w"> </span>⟧ᵈ<span class="w"> </span>,<span class="w"> </span>pState<span class="w"> </span>,<span class="w"> </span>gState<span class="w"> </span>⟧ᶜˢ<span class="w"> </span>⟧ˡ
-<span class="w">  </span>,<span class="w"> </span>es
-<span class="w">  </span>,<span class="w"> </span>fut
-<span class="w">  </span>⟧ᵉ&#39;<span class="w"> </span><span class="ow">=</span>
-<span class="w">  </span>⟦<span class="w"> </span>⟦<span class="w"> </span>posPart<span class="w"> </span><span class="o">(</span>pos<span class="w"> </span>treasury<span class="w"> </span>+<span class="w"> </span>Δt<span class="w"> </span>+<span class="w"> </span>pos<span class="w"> </span>unregRU&#39;<span class="o">)</span>
-<span class="w">    </span>,<span class="w"> </span>posPart<span class="w"> </span><span class="o">(</span>pos<span class="w"> </span>reserves<span class="w"> </span>+<span class="w"> </span>Δr<span class="o">)</span><span class="w"> </span>⟧
-<span class="w">  </span>,<span class="w"> </span>ss
-<span class="w">  </span>,<span class="w"> </span>⟦<span class="w"> </span>⟦<span class="w"> </span>utxo<span class="w"> </span>,<span class="w"> </span>posPart<span class="w"> </span><span class="o">(</span>pos<span class="w"> </span>fees<span class="w"> </span>+<span class="w"> </span>Δf<span class="o">)</span><span class="w"> </span>,<span class="w"> </span>deposits<span class="w"> </span>,<span class="w"> </span>donations<span class="w"> </span>⟧
-<span class="w">    </span>,<span class="w"> </span>govSt
-<span class="w">    </span>,<span class="w"> </span>⟦<span class="w"> </span>⟦<span class="w"> </span>voteDelegs<span class="w"> </span>,<span class="w"> </span>stakeDelegs<span class="w"> </span>,<span class="w"> </span>rewards<span class="w"> </span>∪⁺<span class="w"> </span>regRU<span class="w"> </span>,<span class="w"> </span>deposits&#39;<span class="w"> </span>⟧<span class="w"> </span>,<span class="w"> </span>pState<span class="w"> </span>,<span class="w"> </span>gState<span class="w"> </span>⟧<span class="w"> </span>⟧
-<span class="w">  </span>,<span class="w"> </span>es
-<span class="w">  </span>,<span class="w"> </span>fut<span class="w"> </span>⟧
-<span class="w">  </span><span class="kr">where</span>
-<span class="w">    </span><span class="kr">open</span><span class="w"> </span>RewardUpdate<span class="w"> </span>rewardUpdate<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>Δt;<span class="w"> </span>Δr;<span class="w"> </span>Δf;<span class="w"> </span>rs<span class="o">)</span>
-<span class="w">    </span>regRU<span class="w">     </span><span class="ow">=</span><span class="w"> </span>rs<span class="w"> </span>∣<span class="w"> </span>dom<span class="w"> </span>rewards
-<span class="w">    </span>unregRU<span class="w">   </span><span class="ow">=</span><span class="w"> </span>rs<span class="w"> </span>∣<span class="w"> </span>dom<span class="w"> </span>rewards<span class="w"> </span>ᶜ
-<span class="w">    </span>unregRU&#39;<span class="w">  </span><span class="ow">=</span><span class="w"> </span>∑[<span class="w"> </span>x<span class="w"> </span>←<span class="w"> </span>unregRU<span class="w"> </span>]<span class="w"> </span>x
+<a id="applyRUpd"></a><a id="1595" href="Ledger.Conway.Conformance.Epoch.html#1595" class="Function">applyRUpd</a> <a id="1605" class="Symbol">:</a> <a id="1607" href="Ledger.Conway.Specification.Rewards.html#17967" class="Record">RewardUpdate</a> <a id="1620" class="Symbol">→</a> <a id="1622" href="Ledger.Conway.Conformance.Epoch.html#1082" class="Record">EpochState</a> <a id="1633" class="Symbol">→</a> <a id="1635" href="Ledger.Conway.Conformance.Epoch.html#1082" class="Record">EpochState</a>
+<a id="1646" href="Ledger.Conway.Conformance.Epoch.html#1595" class="Function">applyRUpd</a> <a id="1656" href="Ledger.Conway.Conformance.Epoch.html#1656" class="Bound">rewardUpdate</a>
+  <a class="AgdaKaTeX">$\begin{pmatrix} \begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#1675}{\htmlId{1675}{\htmlClass{Bound}{\text{treasury}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1686}{\htmlId{1686}{\htmlClass{Bound}{\text{reserves}}}}\, \end{pmatrix}
+  \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1702}{\htmlId{1702}{\htmlClass{Bound}{\text{ss}}}}\,
+  \\ \begin{pmatrix} \begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#1713}{\htmlId{1713}{\htmlClass{Bound}{\text{utxo}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1720}{\htmlId{1720}{\htmlClass{Bound}{\text{fees}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1727}{\htmlId{1727}{\htmlClass{Bound}{\text{deposits}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1738}{\htmlId{1738}{\htmlClass{Bound}{\text{donations}}}}\, \end{pmatrix}
+    \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1757}{\htmlId{1757}{\htmlClass{Bound}{\text{govSt}}}}\,
+    \\ \begin{pmatrix} \begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#1773}{\htmlId{1773}{\htmlClass{Bound}{\text{voteDelegs}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1786}{\htmlId{1786}{\htmlClass{Bound}{\text{stakeDelegs}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1800}{\htmlId{1800}{\htmlClass{Bound}{\text{rewards}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1810}{\htmlId{1810}{\htmlClass{Bound}{\text{deposits&#39;}}}}\, \end{pmatrix} \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1825}{\htmlId{1825}{\htmlClass{Bound}{\text{pState}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1834}{\htmlId{1834}{\htmlClass{Bound}{\text{gState}}}}\, \end{pmatrix} \end{pmatrix}
+  \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1852}{\htmlId{1852}{\htmlClass{Bound}{\text{es}}}}\,
+  \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1859}{\htmlId{1859}{\htmlClass{Bound}{\text{fut}}}}\,
+  \end{pmatrix}$</a> <a id="1869" class="Symbol">=</a>
+  <a class="AgdaKaTeX">$\begin{pmatrix} \begin{pmatrix} \,\href{Prelude.html#3348}{\htmlId{1877}{\htmlClass{Function}{\text{posPart}}}}\, \,\htmlId{1885}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Epoch.html#450}{\htmlId{1886}{\htmlClass{InductiveConstructor}{\text{pos}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#1675}{\htmlId{1890}{\htmlClass{Bound}{\text{treasury}}}}\, \,\href{Class.HasAdd.Core.html#162}{\htmlId{1899}{\htmlClass{Field Operator}{\text{+}}}}\, \,\href{Ledger.Conway.Specification.Rewards.html#18004}{\htmlId{1901}{\htmlClass{Function}{\text{Δt}}}}\, \,\href{Class.HasAdd.Core.html#162}{\htmlId{1904}{\htmlClass{Field Operator}{\text{+}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#450}{\htmlId{1906}{\htmlClass{InductiveConstructor}{\text{pos}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#2284}{\htmlId{1910}{\htmlClass{Function}{\text{unregRU&#39;}}}}\,\,\htmlId{1918}{\htmlClass{Symbol}{\text{)}}}\,
+    \\ \,\href{Prelude.html#3348}{\htmlId{1926}{\htmlClass{Function}{\text{posPart}}}}\, \,\htmlId{1934}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Epoch.html#450}{\htmlId{1935}{\htmlClass{InductiveConstructor}{\text{pos}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#1686}{\htmlId{1939}{\htmlClass{Bound}{\text{reserves}}}}\, \,\href{Class.HasAdd.Core.html#162}{\htmlId{1948}{\htmlClass{Field Operator}{\text{+}}}}\, \,\href{Ledger.Conway.Specification.Rewards.html#18007}{\htmlId{1950}{\htmlClass{Function}{\text{Δr}}}}\,\,\htmlId{1952}{\htmlClass{Symbol}{\text{)}}}\, \end{pmatrix}
+  \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1702}{\htmlId{1960}{\htmlClass{Bound}{\text{ss}}}}\,
+  \\ \begin{pmatrix} \begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#1713}{\htmlId{1971}{\htmlClass{Bound}{\text{utxo}}}}\, \\ \,\href{Prelude.html#3348}{\htmlId{1978}{\htmlClass{Function}{\text{posPart}}}}\, \,\htmlId{1986}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Epoch.html#450}{\htmlId{1987}{\htmlClass{InductiveConstructor}{\text{pos}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#1720}{\htmlId{1991}{\htmlClass{Bound}{\text{fees}}}}\, \,\href{Class.HasAdd.Core.html#162}{\htmlId{1996}{\htmlClass{Field Operator}{\text{+}}}}\, \,\href{Ledger.Conway.Specification.Rewards.html#18010}{\htmlId{1998}{\htmlClass{Function}{\text{Δf}}}}\,\,\htmlId{2000}{\htmlClass{Symbol}{\text{)}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1727}{\htmlId{2004}{\htmlClass{Bound}{\text{deposits}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1738}{\htmlId{2015}{\htmlClass{Bound}{\text{donations}}}}\, \end{pmatrix}
+    \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1757}{\htmlId{2033}{\htmlClass{Bound}{\text{govSt}}}}\,
+    \\ \begin{pmatrix} \begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#1773}{\htmlId{2049}{\htmlClass{Bound}{\text{voteDelegs}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1786}{\htmlId{2062}{\htmlClass{Bound}{\text{stakeDelegs}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1800}{\htmlId{2076}{\htmlClass{Bound}{\text{rewards}}}}\, \,\href{Axiom.Set.Map.Dec.html#2052}{\htmlId{2084}{\htmlClass{Function Operator}{\text{∪⁺}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#2216}{\htmlId{2087}{\htmlClass{Function}{\text{regRU}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1810}{\htmlId{2095}{\htmlClass{Bound}{\text{deposits&#39;}}}}\, \end{pmatrix} \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1825}{\htmlId{2109}{\htmlClass{Bound}{\text{pState}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1834}{\htmlId{2118}{\htmlClass{Bound}{\text{gState}}}}\, \end{pmatrix} \end{pmatrix}
+  \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1852}{\htmlId{2133}{\htmlClass{Bound}{\text{es}}}}\,
+  \\ \,\href{Ledger.Conway.Conformance.Epoch.html#1859}{\htmlId{2140}{\htmlClass{Bound}{\text{fut}}}}\, \end{pmatrix}$</a>
+  <a id="2148" class="Keyword">where</a>
+    <a id="2158" class="Keyword">open</a> <a id="2163" href="Ledger.Conway.Specification.Rewards.html#17967" class="Module">RewardUpdate</a> <a id="2176" href="Ledger.Conway.Conformance.Epoch.html#1656" class="Bound">rewardUpdate</a> <a id="2189" class="Keyword">using</a> <a id="2195" class="Symbol">(</a><a id="2196" href="Ledger.Conway.Specification.Rewards.html#18004" class="Field">Δt</a><a id="2198" class="Symbol">;</a> <a id="2200" href="Ledger.Conway.Specification.Rewards.html#18007" class="Field">Δr</a><a id="2202" class="Symbol">;</a> <a id="2204" href="Ledger.Conway.Specification.Rewards.html#18010" class="Field">Δf</a><a id="2206" class="Symbol">;</a> <a id="2208" href="Ledger.Conway.Specification.Rewards.html#18030" class="Field">rs</a><a id="2210" class="Symbol">)</a>
+    <a id="2216" href="Ledger.Conway.Conformance.Epoch.html#2216" class="Function">regRU</a>     <a id="2226" class="Symbol">=</a> <a id="2228" href="Ledger.Conway.Specification.Rewards.html#18030" class="Function">rs</a> <a id="2231" href="Axiom.Set.Map.html#12770" class="Function Operator">∣</a> <a id="2233" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2237" href="Ledger.Conway.Conformance.Epoch.html#1800" class="Bound">rewards</a>
+    <a id="2249" href="Ledger.Conway.Conformance.Epoch.html#2249" class="Function">unregRU</a>   <a id="2259" class="Symbol">=</a> <a id="2261" href="Ledger.Conway.Specification.Rewards.html#18030" class="Function">rs</a> <a id="2264" href="Axiom.Set.Map.html#12840" class="Function Operator">∣</a> <a id="2266" href="Class.IsSet.html#916" class="Function">dom</a> <a id="2270" href="Ledger.Conway.Conformance.Epoch.html#1800" class="Bound">rewards</a> <a id="2278" href="Axiom.Set.Map.html#12840" class="Function Operator">ᶜ</a>
+    <a id="2284" href="Ledger.Conway.Conformance.Epoch.html#2284" class="Function">unregRU&#39;</a>  <a id="2294" class="Symbol">=</a> <a id="2296" href="abstract-set-theory.FiniteSetTheory.html#3487" class="Function">∑[</a> <a id="2299" href="Ledger.Conway.Conformance.Epoch.html#2299" class="Bound">x</a> <a id="2301" href="abstract-set-theory.FiniteSetTheory.html#3487" class="Function">←</a> <a id="2303" href="Ledger.Conway.Conformance.Epoch.html#2249" class="Function">unregRU</a> <a id="2311" href="abstract-set-theory.FiniteSetTheory.html#3487" class="Function">]</a> <a id="2313" href="Ledger.Conway.Conformance.Epoch.html#2299" class="Bound">x</a>
 
-<span class="kr">private</span><span class="w"> </span><span class="kr">variable</span>
-<span class="w">  </span>nes<span class="w"> </span>nes&#39;<span class="w"> </span><span class="ow">:</span><span class="w"> </span>NewEpochState
-<span class="w">  </span>e<span class="w"> </span>lastEpoch<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Epoch
-<span class="w">  </span>fut<span class="w"> </span>fut&#39;<span class="w"> </span><span class="ow">:</span><span class="w"> </span>RatifyState
-<span class="w">  </span>eps<span class="w"> </span>eps&#39;<span class="w"> </span>eps&#39;&#39;<span class="w"> </span><span class="ow">:</span><span class="w"> </span>EpochState
-<span class="w">  </span><span class="nf">ls</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>LState
-<span class="w">  </span><span class="nf">acnt</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Acnt
-<span class="w">  </span><span class="nf">es₀</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>EnactState
-<span class="w">  </span>mark<span class="w"> </span>set<span class="w"> </span>go<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Snapshot
-<span class="w">  </span><span class="nf">feeSS</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Coin
-<span class="w">  </span><span class="nf">lstate</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>LState
-<span class="w">  </span>ss<span class="w"> </span>ss&#39;<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Snapshots
-<span class="w">  </span><span class="nf">ru</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>RewardUpdate
-<span class="w">  </span><span class="nf">mru</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Maybe<span class="w"> </span>RewardUpdate
-<span class="w">  </span><span class="nf">certState&#39;</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>CertState
+<a id="2316" class="Keyword">private</a> <a id="2324" class="Keyword">variable</a>
+  <a id="2335" href="Ledger.Conway.Conformance.Epoch.html#2335" class="Generalizable">nes</a> <a id="2339" href="Ledger.Conway.Conformance.Epoch.html#2339" class="Generalizable">nes&#39;</a> <a id="2344" class="Symbol">:</a> <a id="2346" href="Ledger.Conway.Conformance.Epoch.html#1280" class="Record">NewEpochState</a>
+  <a id="2362" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="2364" href="Ledger.Conway.Conformance.Epoch.html#2364" class="Generalizable">lastEpoch</a> <a id="2374" class="Symbol">:</a> <a id="2376" href="Ledger.Core.Specification.Epoch.html#691" class="Function">Epoch</a>
+  <a id="2384" href="Ledger.Conway.Conformance.Epoch.html#2384" class="Generalizable">fut</a> <a id="2388" href="Ledger.Conway.Conformance.Epoch.html#2388" class="Generalizable">fut&#39;</a> <a id="2393" class="Symbol">:</a> <a id="2395" href="Ledger.Conway.Specification.Ratify.html#8386" class="Record">RatifyState</a>
+  <a id="2409" href="Ledger.Conway.Conformance.Epoch.html#2409" class="Generalizable">eps</a> <a id="2413" href="Ledger.Conway.Conformance.Epoch.html#2413" class="Generalizable">eps&#39;</a> <a id="2418" href="Ledger.Conway.Conformance.Epoch.html#2418" class="Generalizable">eps&#39;&#39;</a> <a id="2424" class="Symbol">:</a> <a id="2426" href="Ledger.Conway.Conformance.Epoch.html#1082" class="Record">EpochState</a>
+  <a id="2439" href="Ledger.Conway.Conformance.Epoch.html#2439" class="Generalizable">ls</a> <a id="2442" class="Symbol">:</a> <a id="2444" href="Ledger.Conway.Conformance.Ledger.html#873" class="Record">LState</a>
+  <a id="2453" href="Ledger.Conway.Conformance.Epoch.html#2453" class="Generalizable">acnt</a> <a id="2458" class="Symbol">:</a> <a id="2460" href="Ledger.Conway.Specification.PParams.html#1725" class="Record">Acnt</a>
+  <a id="2467" href="Ledger.Conway.Conformance.Epoch.html#2467" class="Generalizable">es₀</a> <a id="2471" class="Symbol">:</a> <a id="2473" href="Ledger.Conway.Specification.Enact.html#1629" class="Record">EnactState</a>
+  <a id="2486" href="Ledger.Conway.Conformance.Epoch.html#2486" class="Generalizable">mark</a> <a id="2491" href="Ledger.Conway.Conformance.Epoch.html#2491" class="Generalizable">set</a> <a id="2495" href="Ledger.Conway.Conformance.Epoch.html#2495" class="Generalizable">go</a> <a id="2498" class="Symbol">:</a> <a id="2500" href="Ledger.Conway.Specification.Rewards.html#20350" class="Record">Snapshot</a>
+  <a id="2511" href="Ledger.Conway.Conformance.Epoch.html#2511" class="Generalizable">feeSS</a> <a id="2517" class="Symbol">:</a> <a id="2519" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+  <a id="2526" href="Ledger.Conway.Conformance.Epoch.html#2526" class="Generalizable">lstate</a> <a id="2533" class="Symbol">:</a> <a id="2535" href="Ledger.Conway.Conformance.Ledger.html#873" class="Record">LState</a>
+  <a id="2544" href="Ledger.Conway.Conformance.Epoch.html#2544" class="Generalizable">ss</a> <a id="2547" href="Ledger.Conway.Conformance.Epoch.html#2547" class="Generalizable">ss&#39;</a> <a id="2551" class="Symbol">:</a> <a id="2553" href="Ledger.Conway.Specification.Rewards.html#28009" class="Record">Snapshots</a>
+  <a id="2565" href="Ledger.Conway.Conformance.Epoch.html#2565" class="Generalizable">ru</a> <a id="2568" class="Symbol">:</a> <a id="2570" href="Ledger.Conway.Specification.Rewards.html#17967" class="Record">RewardUpdate</a>
+  <a id="2585" href="Ledger.Conway.Conformance.Epoch.html#2585" class="Generalizable">mru</a> <a id="2589" class="Symbol">:</a> <a id="2591" href="Agda.Builtin.Maybe.html#135" class="Datatype">Maybe</a> <a id="2597" href="Ledger.Conway.Specification.Rewards.html#17967" class="Record">RewardUpdate</a>
+  <a id="2612" href="Ledger.Conway.Conformance.Epoch.html#2612" class="Generalizable">certState&#39;</a> <a id="2623" class="Symbol">:</a> <a id="2625" href="Ledger.Conway.Conformance.Certs.html#1064" class="Record">CertState</a>
 
-<span class="kr">data</span><span class="w"> </span>_⊢_⇀⦇_,EPOCH⦈_<span class="w"> </span><span class="ow">:</span><span class="w"> </span>⊤<span class="w"> </span><span class="ow">→</span><span class="w"> </span>EpochState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch<span class="w"> </span><span class="ow">→</span><span class="w"> </span>EpochState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
+<a id="2636" class="Keyword">data</a> <a id="_⊢_⇀⦇_,EPOCH⦈_"></a><a id="2641" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">_⊢_⇀⦇_,EPOCH⦈_</a> <a id="2656" class="Symbol">:</a> <a id="2658" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="2660" class="Symbol">→</a> <a id="2662" href="Ledger.Conway.Conformance.Epoch.html#1082" class="Record">EpochState</a> <a id="2673" class="Symbol">→</a> <a id="2675" href="Ledger.Core.Specification.Epoch.html#691" class="Function">Epoch</a> <a id="2681" class="Symbol">→</a> <a id="2683" href="Ledger.Conway.Conformance.Epoch.html#1082" class="Record">EpochState</a> <a id="2694" class="Symbol">→</a> <a id="2696" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="2701" class="Keyword">where</a>
 
-<span class="w">  </span><span class="nf">EPOCH</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="kr">let</span>
-<span class="w">      </span><span class="kr">open</span><span class="w"> </span>LState<span class="w"> </span>ls
-<span class="w">      </span><span class="kr">open</span><span class="w"> </span>CertState<span class="w"> </span>certState
-<span class="w">      </span><span class="kr">open</span><span class="w"> </span>RatifyState<span class="w"> </span>fut<span class="w"> </span><span class="kr">renaming</span><span class="w"> </span><span class="o">(</span>es<span class="w"> </span>to<span class="w"> </span>esW<span class="o">)</span>
-<span class="w">      </span><span class="kr">open</span><span class="w"> </span>UTxOState
-<span class="w">      </span><span class="kr">open</span><span class="w"> </span>PState;<span class="w"> </span><span class="kr">open</span><span class="w"> </span>DState;<span class="w"> </span><span class="kr">open</span><span class="w"> </span>GState
-<span class="w">      </span><span class="kr">open</span><span class="w"> </span>Acnt;<span class="w"> </span><span class="kr">open</span><span class="w"> </span>EnactState;<span class="w"> </span><span class="kr">open</span><span class="w"> </span>GovActionState
+  <a id="_⊢_⇀⦇_,EPOCH⦈_.EPOCH"></a><a id="2710" href="Ledger.Conway.Conformance.Epoch.html#2710" class="InductiveConstructor">EPOCH</a> <a id="2716" class="Symbol">:</a> <a id="2718" class="Keyword">let</a>
+      <a id="2728" class="Keyword">open</a> <a id="2733" href="Ledger.Conway.Conformance.Ledger.html#873" class="Module">LState</a> <a id="2740" href="Ledger.Conway.Conformance.Epoch.html#2439" class="Generalizable">ls</a>
+      <a id="2749" class="Keyword">open</a> <a id="2754" href="Ledger.Conway.Conformance.Certs.html#1064" class="Module">CertState</a> <a id="2764" href="Ledger.Conway.Conformance.Ledger.html#981" class="Function">certState</a>
+      <a id="2780" class="Keyword">open</a> <a id="2785" href="Ledger.Conway.Specification.Ratify.html#8386" class="Module">RatifyState</a> <a id="2797" href="Ledger.Conway.Conformance.Epoch.html#2384" class="Generalizable">fut</a> <a id="2801" class="Keyword">renaming</a> <a id="2810" class="Symbol">(</a><a id="2811" href="Ledger.Conway.Specification.Ratify.html#8423" class="Field">es</a> <a id="2814" class="Symbol">to</a> <a id="2817" class="Field">esW</a><a id="2820" class="Symbol">)</a>
+      <a id="2828" class="Keyword">open</a> <a id="2833" href="Ledger.Conway.Specification.Utxo.html#3011" class="Module">UTxOState</a>
+      <a id="2849" class="Keyword">open</a> <a id="2854" href="Ledger.Conway.Specification.Certs.html#4493" class="Module">PState</a><a id="2860" class="Symbol">;</a> <a id="2862" class="Keyword">open</a> <a id="2867" href="Ledger.Conway.Conformance.Certs.html#710" class="Module">DState</a><a id="2873" class="Symbol">;</a> <a id="2875" class="Keyword">open</a> <a id="2880" href="Ledger.Conway.Conformance.Certs.html#896" class="Module">GState</a>
+      <a id="2893" class="Keyword">open</a> <a id="2898" href="Ledger.Conway.Specification.PParams.html#1725" class="Module">Acnt</a><a id="2902" class="Symbol">;</a> <a id="2904" class="Keyword">open</a> <a id="2909" href="Ledger.Conway.Specification.Enact.html#1629" class="Module">EnactState</a><a id="2919" class="Symbol">;</a> <a id="2921" class="Keyword">open</a> <a id="2926" href="Ledger.Conway.Specification.Gov.Actions.html#9173" class="Module">GovActionState</a>
 
-<span class="w">      </span><span class="nf">es</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>EnactState
-<span class="w">      </span>es<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span>esW<span class="w"> </span><span class="o">{</span><span class="w"> </span>withdrawals<span class="w"> </span><span class="ow">=</span><span class="w"> </span>∅<span class="w"> </span><span class="o">}</span>
+      <a id="2948" href="Ledger.Conway.Conformance.Epoch.html#2948" class="Bound">es</a> <a id="2951" class="Symbol">:</a> <a id="2953" href="Ledger.Conway.Specification.Enact.html#1629" class="Record">EnactState</a>
+      <a id="2970" href="Ledger.Conway.Conformance.Epoch.html#2948" class="Bound">es</a> <a id="2973" class="Symbol">=</a> <a id="2975" class="Keyword">record</a> <a id="2982" href="Ledger.Conway.Conformance.Epoch.html#2817" class="Function">esW</a> <a id="2986" class="Symbol">{</a> <a id="2988" href="Ledger.Conway.Specification.Enact.html#1881" class="Field">withdrawals</a> <a id="3000" class="Symbol">=</a> <a id="3002" href="Class.HasEmptySet.html#287" class="Field">∅</a> <a id="3004" class="Symbol">}</a>
 
-<span class="w">      </span>tmpGovSt<span class="w"> </span><span class="ow">=</span><span class="w"> </span>filter<span class="w"> </span><span class="o">(</span><span class="ow">λ</span><span class="w"> </span>x<span class="w"> </span><span class="ow">→</span><span class="w"> </span>¿<span class="w"> </span>proj₁<span class="w"> </span>x<span class="w"> </span>∉<span class="w"> </span>mapˢ<span class="w"> </span>proj₁<span class="w"> </span>removed<span class="w"> </span>¿<span class="o">)</span><span class="w"> </span>govSt
+      <a id="3013" href="Ledger.Conway.Conformance.Epoch.html#3013" class="Bound">tmpGovSt</a> <a id="3022" class="Symbol">=</a> <a id="3024" href="Data.List.Base.html#10389" class="Function">filter</a> <a id="3031" class="Symbol">(λ</a> <a id="3034" href="Ledger.Conway.Conformance.Epoch.html#3034" class="Bound">x</a> <a id="3036" class="Symbol">→</a> <a id="3038" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="3040" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3046" href="Ledger.Conway.Conformance.Epoch.html#3034" class="Bound">x</a> <a id="3048" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="3050" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="3055" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3061" href="Ledger.Conway.Specification.Ratify.html#8456" class="Function">removed</a> <a id="3069" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a><a id="3070" class="Symbol">)</a> <a id="3072" href="Ledger.Conway.Conformance.Ledger.html#955" class="Function">govSt</a>
 
-<span class="w">      </span><span class="nf">orphans</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℙ<span class="w"> </span><span class="o">(</span>GovActionID<span class="w"> </span>×<span class="w"> </span>GovActionState<span class="o">)</span>
-<span class="w">      </span>orphans<span class="w">  </span><span class="ow">=</span><span class="w"> </span>fromList<span class="w"> </span><span class="o">(</span>getOrphans<span class="w"> </span>es<span class="w"> </span>tmpGovSt<span class="o">)</span>
+      <a id="3085" href="Ledger.Conway.Conformance.Epoch.html#3085" class="Bound">orphans</a> <a id="3093" class="Symbol">:</a> <a id="3095" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="3097" class="Symbol">(</a><a id="3098" href="Ledger.Conway.Specification.Gov.Actions.html#1678" class="Function">GovActionID</a> <a id="3110" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3112" href="Ledger.Conway.Specification.Gov.Actions.html#9173" class="Record">GovActionState</a><a id="3126" class="Symbol">)</a>
+      <a id="3134" href="Ledger.Conway.Conformance.Epoch.html#3085" class="Bound">orphans</a>  <a id="3143" class="Symbol">=</a> <a id="3145" href="Axiom.Set.html#5718" class="Function">fromList</a> <a id="3154" class="Symbol">(</a><a id="3155" href="Ledger.Conway.Specification.Epoch.html#18413" class="Function">getOrphans</a> <a id="3166" href="Ledger.Conway.Conformance.Epoch.html#2948" class="Bound">es</a> <a id="3169" href="Ledger.Conway.Conformance.Epoch.html#3013" class="Bound">tmpGovSt</a><a id="3177" class="Symbol">)</a>
 
-<span class="w">      </span><span class="nf">removed&#39;</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℙ<span class="w"> </span><span class="o">(</span>GovActionID<span class="w"> </span>×<span class="w"> </span>GovActionState<span class="o">)</span>
-<span class="w">      </span>removed&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>removed<span class="w"> </span>∪<span class="w"> </span>orphans
+      <a id="3186" href="Ledger.Conway.Conformance.Epoch.html#3186" class="Bound">removed&#39;</a> <a id="3195" class="Symbol">:</a> <a id="3197" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="3199" class="Symbol">(</a><a id="3200" href="Ledger.Conway.Specification.Gov.Actions.html#1678" class="Function">GovActionID</a> <a id="3212" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3214" href="Ledger.Conway.Specification.Gov.Actions.html#9173" class="Record">GovActionState</a><a id="3228" class="Symbol">)</a>
+      <a id="3236" href="Ledger.Conway.Conformance.Epoch.html#3186" class="Bound">removed&#39;</a> <a id="3245" class="Symbol">=</a> <a id="3247" href="Ledger.Conway.Specification.Ratify.html#8456" class="Function">removed</a> <a id="3255" href="Axiom.Set.html#8952" class="Function Operator">∪</a> <a id="3257" href="Ledger.Conway.Conformance.Epoch.html#3085" class="Bound">orphans</a>
 
-<span class="w">      </span>govSt&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>filter<span class="w"> </span><span class="o">(</span><span class="ow">λ</span><span class="w"> </span>x<span class="w"> </span><span class="ow">→</span><span class="w"> </span>¿<span class="w"> </span>proj₁<span class="w"> </span>x<span class="w"> </span>∉<span class="w"> </span>mapˢ<span class="w"> </span>proj₁<span class="w"> </span>removed&#39;<span class="w"> </span>¿<span class="o">)</span><span class="w"> </span>govSt
+      <a id="3272" href="Ledger.Conway.Conformance.Epoch.html#3272" class="Bound">govSt&#39;</a> <a id="3279" class="Symbol">=</a> <a id="3281" href="Data.List.Base.html#10389" class="Function">filter</a> <a id="3288" class="Symbol">(λ</a> <a id="3291" href="Ledger.Conway.Conformance.Epoch.html#3291" class="Bound">x</a> <a id="3293" class="Symbol">→</a> <a id="3295" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="3297" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3303" href="Ledger.Conway.Conformance.Epoch.html#3291" class="Bound">x</a> <a id="3305" href="Class.IsSet.html#462" class="Function Operator">∉</a> <a id="3307" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="3312" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="3318" href="Ledger.Conway.Conformance.Epoch.html#3186" class="Bound">removed&#39;</a> <a id="3327" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a><a id="3328" class="Symbol">)</a> <a id="3330" href="Ledger.Conway.Conformance.Ledger.html#955" class="Function">govSt</a>
 
-<span class="w">      </span><span class="nf">removedGovActions</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℙ<span class="w"> </span><span class="o">(</span>RwdAddr<span class="w"> </span>×<span class="w"> </span>DepositPurpose<span class="w"> </span>×<span class="w"> </span>Coin<span class="o">)</span>
-<span class="w">      </span>removedGovActions<span class="w"> </span><span class="ow">=</span>
-<span class="w">        </span>flip<span class="w"> </span>concatMapˢ<span class="w"> </span>removed&#39;<span class="w"> </span><span class="ow">λ</span><span class="w"> </span><span class="o">(</span>gaid<span class="w"> </span>,<span class="w"> </span>gaSt<span class="o">)</span><span class="w"> </span><span class="ow">→</span>
-<span class="w">          </span>mapˢ
-<span class="w">            </span><span class="o">(</span>returnAddr<span class="w"> </span>gaSt<span class="w"> </span>,_<span class="o">)</span>
-<span class="w">            </span><span class="o">((</span>utxoSt<span class="w"> </span><span class="ow">.</span>deposits<span class="w"> </span>∣<span class="w"> </span>❴<span class="w"> </span>GovActionDeposit<span class="w"> </span>gaid<span class="w"> </span>❵<span class="o">)</span><span class="w"> </span>ˢ<span class="o">)</span>
+      <a id="3343" href="Ledger.Conway.Conformance.Epoch.html#3343" class="Bound">removedGovActions</a> <a id="3361" class="Symbol">:</a> <a id="3363" href="abstract-set-theory.FiniteSetTheory.html#488" class="Function Operator">ℙ</a> <a id="3365" class="Symbol">(</a><a id="3366" href="Ledger.Core.Specification.Address.html#2640" class="Record">RwdAddr</a> <a id="3374" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3376" href="Ledger.Conway.Specification.Certs.html#770" class="Datatype">DepositPurpose</a> <a id="3391" href="Data.Product.Base.html#1618" class="Function Operator">×</a> <a id="3393" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a><a id="3397" class="Symbol">)</a>
+      <a id="3405" href="Ledger.Conway.Conformance.Epoch.html#3343" class="Bound">removedGovActions</a> <a id="3423" class="Symbol">=</a>
+        <a id="3433" href="Function.Base.html#1657" class="Function">flip</a> <a id="3438" href="Axiom.Set.html#7022" class="Function">concatMapˢ</a> <a id="3449" href="Ledger.Conway.Conformance.Epoch.html#3186" class="Bound">removed&#39;</a> <a id="3458" class="Symbol">λ</a> <a id="3460" class="Symbol">(</a><a id="3461" href="Ledger.Conway.Conformance.Epoch.html#3461" class="Bound">gaid</a> <a id="3466" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3468" href="Ledger.Conway.Conformance.Epoch.html#3468" class="Bound">gaSt</a><a id="3472" class="Symbol">)</a> <a id="3474" class="Symbol">→</a>
+          <a id="3486" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a>
+            <a id="3503" class="Symbol">(</a><a id="3504" href="Ledger.Conway.Specification.Gov.Actions.html#9240" class="Field">returnAddr</a> <a id="3515" href="Ledger.Conway.Conformance.Epoch.html#3468" class="Bound">gaSt</a> <a id="3520" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,_</a><a id="3522" class="Symbol">)</a>
+            <a id="3536" class="Symbol">((</a><a id="3538" href="Ledger.Conway.Conformance.Ledger.html#928" class="Function">utxoSt</a> <a id="3545" class="Symbol">.</a><a id="3546" href="Ledger.Conway.Specification.Utxo.html#3148" class="Field">deposits</a> <a id="3555" href="Axiom.Set.Map.html#12770" class="Function Operator">∣</a> <a id="3557" href="Class.HasSingleton.html#288" class="Field Operator">❴</a> <a id="3559" href="Ledger.Conway.Specification.Certs.html#959" class="InductiveConstructor">GovActionDeposit</a> <a id="3576" href="Ledger.Conway.Conformance.Epoch.html#3461" class="Bound">gaid</a> <a id="3581" href="Class.HasSingleton.html#288" class="Field Operator">❵</a><a id="3582" class="Symbol">)</a> <a id="3584" href="Axiom.Set.Map.html#2293" class="Function Operator">ˢ</a><a id="3585" class="Symbol">)</a>
 
-<span class="w">      </span><span class="nf">govActionReturns</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>RwdAddr<span class="w"> </span>⇀<span class="w"> </span>Coin
-<span class="w">      </span>govActionReturns<span class="w"> </span><span class="ow">=</span>
-<span class="w">        </span>aggregate₊<span class="w"> </span><span class="o">(</span>mapˢ<span class="w"> </span><span class="o">(</span><span class="ow">λ</span><span class="w"> </span><span class="o">(</span>a<span class="w"> </span>,<span class="w"> </span>_<span class="w"> </span>,<span class="w"> </span>d<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>a<span class="w"> </span>,<span class="w"> </span>d<span class="o">)</span><span class="w"> </span>removedGovActions<span class="w"> </span>ᶠˢ<span class="o">)</span>
+      <a id="3594" href="Ledger.Conway.Conformance.Epoch.html#3594" class="Bound">govActionReturns</a> <a id="3611" class="Symbol">:</a> <a id="3613" href="Ledger.Core.Specification.Address.html#2640" class="Record">RwdAddr</a> <a id="3621" href="abstract-set-theory.FiniteSetTheory.html#633" class="Function Operator">⇀</a> <a id="3623" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
+      <a id="3634" href="Ledger.Conway.Conformance.Epoch.html#3594" class="Bound">govActionReturns</a> <a id="3651" class="Symbol">=</a>
+        <a id="3661" href="Axiom.Set.Map.Dec.html#2130" class="Function">aggregate₊</a> <a id="3672" class="Symbol">(</a><a id="3673" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="3678" class="Symbol">(λ</a> <a id="3681" class="Symbol">(</a><a id="3682" href="Ledger.Conway.Conformance.Epoch.html#3682" class="Bound">a</a> <a id="3684" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3686" class="Symbol">_</a> <a id="3688" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3690" href="Ledger.Conway.Conformance.Epoch.html#3690" class="Bound">d</a><a id="3691" class="Symbol">)</a> <a id="3693" class="Symbol">→</a> <a id="3695" href="Ledger.Conway.Conformance.Epoch.html#3682" class="Bound">a</a> <a id="3697" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="3699" href="Ledger.Conway.Conformance.Epoch.html#3690" class="Bound">d</a><a id="3700" class="Symbol">)</a> <a id="3702" href="Ledger.Conway.Conformance.Epoch.html#3343" class="Bound">removedGovActions</a> <a id="3720" href="abstract-set-theory.FiniteSetTheory.html#2860" class="Function Operator">ᶠˢ</a><a id="3722" class="Symbol">)</a>
 
-<span class="w">      </span>trWithdrawals<span class="w">   </span><span class="ow">=</span><span class="w"> </span>esW<span class="w"> </span><span class="ow">.</span>withdrawals
-<span class="w">      </span>totWithdrawals<span class="w">  </span><span class="ow">=</span><span class="w"> </span>∑[<span class="w"> </span>x<span class="w"> </span>←<span class="w"> </span>trWithdrawals<span class="w"> </span>]<span class="w"> </span>x
+      <a id="3731" href="Ledger.Conway.Conformance.Epoch.html#3731" class="Bound">trWithdrawals</a>   <a id="3747" class="Symbol">=</a> <a id="3749" href="Ledger.Conway.Conformance.Epoch.html#2817" class="Function">esW</a> <a id="3753" class="Symbol">.</a><a id="3754" href="Ledger.Conway.Specification.Enact.html#1881" class="Field">withdrawals</a>
+      <a id="3772" href="Ledger.Conway.Conformance.Epoch.html#3772" class="Bound">totWithdrawals</a>  <a id="3788" class="Symbol">=</a> <a id="3790" href="abstract-set-theory.FiniteSetTheory.html#3487" class="Function">∑[</a> <a id="3793" href="Ledger.Conway.Conformance.Epoch.html#3793" class="Bound">x</a> <a id="3795" href="abstract-set-theory.FiniteSetTheory.html#3487" class="Function">←</a> <a id="3797" href="Ledger.Conway.Conformance.Epoch.html#3731" class="Bound">trWithdrawals</a> <a id="3811" href="abstract-set-theory.FiniteSetTheory.html#3487" class="Function">]</a> <a id="3813" href="Ledger.Conway.Conformance.Epoch.html#3793" class="Bound">x</a>
 
-<span class="w">      </span>retired<span class="w">    </span><span class="ow">=</span><span class="w"> </span><span class="o">(</span>pState<span class="w"> </span><span class="ow">.</span>retiring<span class="o">)</span><span class="w"> </span>⁻¹<span class="w"> </span>e
-<span class="w">      </span>payout<span class="w">     </span><span class="ow">=</span><span class="w"> </span>govActionReturns<span class="w"> </span>∪⁺<span class="w"> </span>trWithdrawals
-<span class="w">      </span>refunds<span class="w">    </span><span class="ow">=</span><span class="w"> </span>pullbackMap<span class="w"> </span>payout<span class="w"> </span>toRwdAddr<span class="w"> </span><span class="o">(</span>dom<span class="w"> </span><span class="o">(</span>dState<span class="w"> </span><span class="ow">.</span>rewards<span class="o">))</span>
-<span class="w">      </span>unclaimed<span class="w">  </span><span class="ow">=</span><span class="w"> </span>getCoin<span class="w"> </span>payout<span class="w"> </span>-<span class="w"> </span>getCoin<span class="w"> </span>refunds
-<span class="w">      </span>vDeposits<span class="w">  </span><span class="ow">=</span><span class="w"> </span>gState<span class="w"> </span><span class="ow">.</span>deposits
+      <a id="3822" href="Ledger.Conway.Conformance.Epoch.html#3822" class="Bound">retired</a>    <a id="3833" class="Symbol">=</a> <a id="3835" class="Symbol">(</a><a id="3836" href="Ledger.Conway.Conformance.Certs.html#1143" class="Function">pState</a> <a id="3843" class="Symbol">.</a><a id="3844" href="Ledger.Conway.Specification.Certs.html#4547" class="Field">retiring</a><a id="3852" class="Symbol">)</a> <a id="3854" href="Axiom.Set.Map.html#17191" class="Function Operator">⁻¹</a> <a id="3857" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a>
+      <a id="3865" href="Ledger.Conway.Conformance.Epoch.html#3865" class="Bound">payout</a>     <a id="3876" class="Symbol">=</a> <a id="3878" href="Ledger.Conway.Conformance.Epoch.html#3594" class="Bound">govActionReturns</a> <a id="3895" href="Axiom.Set.Map.Dec.html#2052" class="Function Operator">∪⁺</a> <a id="3898" href="Ledger.Conway.Conformance.Epoch.html#3731" class="Bound">trWithdrawals</a>
+      <a id="3918" href="Ledger.Conway.Conformance.Epoch.html#3918" class="Bound">refunds</a>    <a id="3929" class="Symbol">=</a> <a id="3931" href="Axiom.Set.Map.html#16752" class="Function">pullbackMap</a> <a id="3943" href="Ledger.Conway.Conformance.Epoch.html#3865" class="Bound">payout</a> <a id="3950" href="Ledger.Conway.Specification.Epoch.html#6073" class="Function">toRwdAddr</a> <a id="3960" class="Symbol">(</a><a id="3961" href="Class.IsSet.html#916" class="Function">dom</a> <a id="3965" class="Symbol">(</a><a id="3966" href="Ledger.Conway.Conformance.Certs.html#1123" class="Function">dState</a> <a id="3973" class="Symbol">.</a><a id="3974" href="Ledger.Conway.Conformance.Certs.html#837" class="Field">rewards</a><a id="3981" class="Symbol">))</a>
+      <a id="3990" href="Ledger.Conway.Conformance.Epoch.html#3990" class="Bound">unclaimed</a>  <a id="4001" class="Symbol">=</a> <a id="4003" href="Ledger.Prelude.HasCoin.html#254" class="Field">getCoin</a> <a id="4011" href="Ledger.Conway.Conformance.Epoch.html#3865" class="Bound">payout</a> <a id="4018" href="Interface.HasSubtract.html#292" class="Field Operator">-</a> <a id="4020" href="Ledger.Prelude.HasCoin.html#254" class="Field">getCoin</a> <a id="4028" href="Ledger.Conway.Conformance.Epoch.html#3918" class="Bound">refunds</a>
+      <a id="4042" href="Ledger.Conway.Conformance.Epoch.html#4042" class="Bound">vDeposits</a>  <a id="4053" class="Symbol">=</a> <a id="4055" href="Ledger.Conway.Conformance.Certs.html#1163" class="Function">gState</a> <a id="4062" class="Symbol">.</a><a id="4063" href="Ledger.Conway.Conformance.Certs.html#1034" class="Field">deposits</a>
 
-<span class="w">      </span><span class="nf">dState&#39;</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>DState
-<span class="w">      </span>dState&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span>dState<span class="w"> </span><span class="o">{</span><span class="w"> </span>rewards<span class="w"> </span><span class="ow">=</span><span class="w"> </span>dState<span class="w"> </span><span class="ow">.</span>rewards<span class="w"> </span>∪⁺<span class="w"> </span>refunds<span class="w"> </span><span class="o">}</span>
+      <a id="4079" href="Ledger.Conway.Conformance.Epoch.html#4079" class="Bound">dState&#39;</a> <a id="4087" class="Symbol">:</a> <a id="4089" href="Ledger.Conway.Conformance.Certs.html#710" class="Record">DState</a>
+      <a id="4102" href="Ledger.Conway.Conformance.Epoch.html#4079" class="Bound">dState&#39;</a> <a id="4110" class="Symbol">=</a> <a id="4112" class="Keyword">record</a> <a id="4119" href="Ledger.Conway.Conformance.Certs.html#1123" class="Function">dState</a> <a id="4126" class="Symbol">{</a> <a id="4128" href="Ledger.Conway.Conformance.Certs.html#837" class="Field">rewards</a> <a id="4136" class="Symbol">=</a> <a id="4138" href="Ledger.Conway.Conformance.Certs.html#1123" class="Function">dState</a> <a id="4145" class="Symbol">.</a><a id="4146" href="Ledger.Conway.Conformance.Certs.html#837" class="Field">rewards</a> <a id="4154" href="Axiom.Set.Map.Dec.html#2052" class="Function Operator">∪⁺</a> <a id="4157" href="Ledger.Conway.Conformance.Epoch.html#3918" class="Bound">refunds</a> <a id="4165" class="Symbol">}</a>
 
-<span class="w">      </span><span class="nf">pState&#39;</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>PState
-<span class="w">      </span>pState&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⟦<span class="w"> </span><span class="o">(</span>pState<span class="w"> </span><span class="ow">.</span>pools<span class="o">)</span><span class="w"> </span>∣<span class="w"> </span>retired<span class="w"> </span>ᶜ<span class="w"> </span>,<span class="w"> </span><span class="o">(</span>pState<span class="w"> </span><span class="ow">.</span>retiring<span class="o">)</span><span class="w"> </span>∣<span class="w"> </span>retired<span class="w"> </span>ᶜ<span class="w"> </span>⟧
+      <a id="4174" href="Ledger.Conway.Conformance.Epoch.html#4174" class="Bound">pState&#39;</a> <a id="4182" class="Symbol">:</a> <a id="4184" href="Ledger.Conway.Specification.Certs.html#4493" class="Record">PState</a>
+      <a id="4197" href="Ledger.Conway.Conformance.Epoch.html#4174" class="Bound">pState&#39;</a> <a id="4205" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\htmlId{4209}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Certs.html#1143}{\htmlId{4210}{\htmlClass{Function}{\text{pState}}}}\, \,\htmlId{4217}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Certs.html#4525}{\htmlId{4218}{\htmlClass{Field}{\text{pools}}}}\,\,\htmlId{4223}{\htmlClass{Symbol}{\text{)}}}\, \,\href{Axiom.Set.Map.html#12840}{\htmlId{4225}{\htmlClass{Function Operator}{\text{∣}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#3822}{\htmlId{4227}{\htmlClass{Bound}{\text{retired}}}}\, \,\href{Axiom.Set.Map.html#12840}{\htmlId{4235}{\htmlClass{Function Operator}{\text{ᶜ}}}}\, \\ \,\htmlId{4239}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Certs.html#1143}{\htmlId{4240}{\htmlClass{Function}{\text{pState}}}}\, \,\htmlId{4247}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Certs.html#4547}{\htmlId{4248}{\htmlClass{Field}{\text{retiring}}}}\,\,\htmlId{4256}{\htmlClass{Symbol}{\text{)}}}\, \,\href{Axiom.Set.Map.html#12840}{\htmlId{4258}{\htmlClass{Function Operator}{\text{∣}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#3822}{\htmlId{4260}{\htmlClass{Bound}{\text{retired}}}}\, \,\href{Axiom.Set.Map.html#12840}{\htmlId{4268}{\htmlClass{Function Operator}{\text{ᶜ}}}}\, \end{pmatrix}$</a>
 
-<span class="w">      </span><span class="nf">gState&#39;</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>GState
-<span class="w">      </span>gState&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⟦<span class="w"> </span><span class="o">(</span>if<span class="w"> </span>null<span class="w"> </span>govSt&#39;<span class="w"> </span>then<span class="w"> </span>mapValues<span class="w"> </span><span class="o">(</span><span class="mi">1</span><span class="w"> </span>+_<span class="o">)</span><span class="w"> </span><span class="o">(</span>gState<span class="w"> </span><span class="ow">.</span>dreps<span class="o">)</span><span class="w"> </span>else<span class="w"> </span><span class="o">(</span>gState<span class="w"> </span><span class="ow">.</span>dreps<span class="o">))</span>
-<span class="w">                </span>,<span class="w"> </span><span class="o">(</span>gState<span class="w"> </span><span class="ow">.</span>ccHotKeys<span class="o">)</span><span class="w"> </span>∣<span class="w"> </span>ccCreds<span class="w"> </span><span class="o">(</span>es<span class="w"> </span><span class="ow">.</span>cc<span class="o">)</span>
-<span class="w">                </span>,<span class="w"> </span>vDeposits
-<span class="w">                </span>⟧
+      <a id="4279" href="Ledger.Conway.Conformance.Epoch.html#4279" class="Bound">gState&#39;</a> <a id="4287" class="Symbol">:</a> <a id="4289" href="Ledger.Conway.Conformance.Certs.html#896" class="Record">GState</a>
+      <a id="4302" href="Ledger.Conway.Conformance.Epoch.html#4279" class="Bound">gState&#39;</a> <a id="4310" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\htmlId{4314}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Class.ToBool.html#342}{\htmlId{4315}{\htmlClass{Function Operator}{\text{if}}}}\, \,\href{Data.List.Base.html#4681}{\htmlId{4318}{\htmlClass{Function}{\text{null}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#3272}{\htmlId{4323}{\htmlClass{Bound}{\text{govSt&#39;}}}}\, \,\href{Class.ToBool.html#342}{\htmlId{4330}{\htmlClass{Function Operator}{\text{then}}}}\, \,\href{Axiom.Set.Map.html#7106}{\htmlId{4335}{\htmlClass{Function}{\text{mapValues}}}}\, \,\htmlId{4345}{\htmlClass{Symbol}{\text{(}}}\,\,\htmlId{4346}{\htmlClass{Number}{\text{1}}}\, \,\href{Class.HasAdd.Core.html#162}{\htmlId{4348}{\htmlClass{Field Operator}{\text{+\_}}}}\,\,\htmlId{4350}{\htmlClass{Symbol}{\text{)}}}\, \,\htmlId{4352}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Certs.html#1163}{\htmlId{4353}{\htmlClass{Function}{\text{gState}}}}\, \,\htmlId{4360}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Conformance.Certs.html#951}{\htmlId{4361}{\htmlClass{Field}{\text{dreps}}}}\,\,\htmlId{4366}{\htmlClass{Symbol}{\text{)}}}\, \,\href{Class.ToBool.html#342}{\htmlId{4368}{\htmlClass{Function Operator}{\text{else}}}}\, \,\htmlId{4373}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Certs.html#1163}{\htmlId{4374}{\htmlClass{Function}{\text{gState}}}}\, \,\htmlId{4381}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Conformance.Certs.html#951}{\htmlId{4382}{\htmlClass{Field}{\text{dreps}}}}\,\,\htmlId{4387}{\htmlClass{Symbol}{\text{))}}}\,
+                , \,\htmlId{4408}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Certs.html#1163}{\htmlId{4409}{\htmlClass{Function}{\text{gState}}}}\, \,\htmlId{4416}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Conformance.Certs.html#987}{\htmlId{4417}{\htmlClass{Field}{\text{ccHotKeys}}}}\,\,\htmlId{4426}{\htmlClass{Symbol}{\text{)}}}\, \,\href{Axiom.Set.Map.html#12770}{\htmlId{4428}{\htmlClass{Function Operator}{\text{∣}}}}\, \,\href{Ledger.Conway.Specification.Enact.html#2578}{\htmlId{4430}{\htmlClass{Function}{\text{ccCreds}}}}\, \,\htmlId{4438}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Ledger.Conway.Conformance.Epoch.html#2948}{\htmlId{4439}{\htmlClass{Bound}{\text{es}}}}\, \,\htmlId{4442}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Enact.html#1665}{\htmlId{4443}{\htmlClass{Field}{\text{cc}}}}\,\,\htmlId{4445}{\htmlClass{Symbol}{\text{)}}}\,
+                , \,\href{Ledger.Conway.Conformance.Epoch.html#4042}{\htmlId{4465}{\htmlClass{Bound}{\text{vDeposits}}}}\,
+                \end{pmatrix}$</a>
 
-<span class="w">      </span><span class="nf">certState&#39;</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>CertState
-<span class="w">      </span>certState&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>dState<span class="w"> </span><span class="ow">=</span><span class="w"> </span>dState&#39;<span class="w"> </span>;<span class="w"> </span>pState<span class="w"> </span><span class="ow">=</span><span class="w"> </span>pState&#39;<span class="w"> </span>;<span class="w"> </span>gState<span class="w"> </span><span class="ow">=</span><span class="w"> </span>gState&#39;<span class="w"> </span><span class="o">}</span>
+      <a id="4500" href="Ledger.Conway.Conformance.Epoch.html#4500" class="Bound">certState&#39;</a> <a id="4511" class="Symbol">:</a> <a id="4513" href="Ledger.Conway.Conformance.Certs.html#1064" class="Record">CertState</a>
+      <a id="4529" href="Ledger.Conway.Conformance.Epoch.html#4500" class="Bound">certState&#39;</a> <a id="4540" class="Symbol">=</a> <a id="4542" class="Keyword">record</a> <a id="4549" class="Symbol">{</a> <a id="4551" href="Ledger.Conway.Conformance.Certs.html#1123" class="Field">dState</a> <a id="4558" class="Symbol">=</a> <a id="4560" href="Ledger.Conway.Conformance.Epoch.html#4079" class="Bound">dState&#39;</a> <a id="4568" class="Symbol">;</a> <a id="4570" href="Ledger.Conway.Conformance.Certs.html#1143" class="Field">pState</a> <a id="4577" class="Symbol">=</a> <a id="4579" href="Ledger.Conway.Conformance.Epoch.html#4174" class="Bound">pState&#39;</a> <a id="4587" class="Symbol">;</a> <a id="4589" href="Ledger.Conway.Conformance.Certs.html#1163" class="Field">gState</a> <a id="4596" class="Symbol">=</a> <a id="4598" href="Ledger.Conway.Conformance.Epoch.html#4279" class="Bound">gState&#39;</a> <a id="4606" class="Symbol">}</a>
 
-<span class="w">      </span>utxoSt&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⟦<span class="w"> </span>utxoSt<span class="w"> </span><span class="ow">.</span>utxo<span class="w"> </span>,<span class="w"> </span>utxoSt<span class="w"> </span><span class="ow">.</span>fees<span class="w"> </span>,<span class="w"> </span>utxoSt<span class="w"> </span><span class="ow">.</span>deposits<span class="w"> </span>∣<span class="w"> </span>mapˢ<span class="w"> </span><span class="o">(</span>proj₁<span class="w"> </span>∘<span class="w"> </span>proj₂<span class="o">)</span><span class="w"> </span>removedGovActions<span class="w"> </span>ᶜ<span class="w"> </span>,<span class="w"> </span><span class="mi">0</span><span class="w"> </span>⟧
+      <a id="4615" href="Ledger.Conway.Conformance.Epoch.html#4615" class="Bound">utxoSt&#39;</a> <a id="4623" class="Symbol">=</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Ledger.html#928}{\htmlId{4627}{\htmlClass{Function}{\text{utxoSt}}}}\, \,\htmlId{4634}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Utxo.html#3104}{\htmlId{4635}{\htmlClass{Field}{\text{utxo}}}}\, \\ \,\href{Ledger.Conway.Conformance.Ledger.html#928}{\htmlId{4642}{\htmlClass{Function}{\text{utxoSt}}}}\, \,\htmlId{4649}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Utxo.html#3126}{\htmlId{4650}{\htmlClass{Field}{\text{fees}}}}\, \\ \,\href{Ledger.Conway.Conformance.Ledger.html#928}{\htmlId{4657}{\htmlClass{Function}{\text{utxoSt}}}}\, \,\htmlId{4664}{\htmlClass{Symbol}{\text{.}}}\,\,\href{Ledger.Conway.Specification.Utxo.html#3148}{\htmlId{4665}{\htmlClass{Field}{\text{deposits}}}}\, \,\href{Axiom.Set.Map.html#12840}{\htmlId{4674}{\htmlClass{Function Operator}{\text{∣}}}}\, \,\href{abstract-set-theory.FiniteSetTheory.html#519}{\htmlId{4676}{\htmlClass{Function}{\text{mapˢ}}}}\, \,\htmlId{4681}{\htmlClass{Symbol}{\text{(}}}\,\,\href{Data.Product.Base.html#636}{\htmlId{4682}{\htmlClass{Field}{\text{proj₁}}}}\, \,\href{Function.Base.html#1134}{\htmlId{4688}{\htmlClass{Function Operator}{\text{∘}}}}\, \,\href{Data.Product.Base.html#650}{\htmlId{4690}{\htmlClass{Field}{\text{proj₂}}}}\,\,\htmlId{4695}{\htmlClass{Symbol}{\text{)}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#3343}{\htmlId{4697}{\htmlClass{Bound}{\text{removedGovActions}}}}\, \,\href{Axiom.Set.Map.html#12840}{\htmlId{4715}{\htmlClass{Function Operator}{\text{ᶜ}}}}\, \\ \,\htmlId{4719}{\htmlClass{Number}{\text{0}}}\, \end{pmatrix}$</a>
 
-<span class="w">      </span>acnt&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span>acnt
-<span class="w">        </span><span class="o">{</span><span class="w"> </span>treasury<span class="w">  </span><span class="ow">=</span><span class="w"> </span>acnt<span class="w"> </span><span class="ow">.</span>treasury<span class="w"> </span>∸<span class="w"> </span>totWithdrawals<span class="w"> </span>+<span class="w"> </span>utxoSt<span class="w"> </span><span class="ow">.</span>donations<span class="w"> </span>+<span class="w"> </span>unclaimed<span class="w"> </span><span class="o">}</span>
+      <a id="4730" href="Ledger.Conway.Conformance.Epoch.html#4730" class="Bound">acnt&#39;</a> <a id="4736" class="Symbol">=</a> <a id="4738" class="Keyword">record</a> <a id="4745" href="Ledger.Conway.Conformance.Epoch.html#2453" class="Generalizable">acnt</a>
+        <a id="4758" class="Symbol">{</a> <a id="4760" href="Ledger.Conway.Specification.PParams.html#1815" class="Field">treasury</a>  <a id="4770" class="Symbol">=</a> <a id="4772" href="Ledger.Conway.Conformance.Epoch.html#2453" class="Generalizable">acnt</a> <a id="4777" class="Symbol">.</a><a id="4778" href="Ledger.Conway.Specification.PParams.html#1815" class="Field">treasury</a> <a id="4787" href="Data.Nat.Base.html#4462" class="Primitive Operator">∸</a> <a id="4789" href="Ledger.Conway.Conformance.Epoch.html#3772" class="Bound">totWithdrawals</a> <a id="4804" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="4806" href="Ledger.Conway.Conformance.Ledger.html#928" class="Function">utxoSt</a> <a id="4813" class="Symbol">.</a><a id="4814" href="Ledger.Conway.Specification.Utxo.html#3174" class="Field">donations</a> <a id="4824" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="4826" href="Ledger.Conway.Conformance.Epoch.html#3990" class="Bound">unclaimed</a> <a id="4836" class="Symbol">}</a>
 
-<span class="w">      </span><span class="nf">stakeDistrs</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>StakeDistrs
-<span class="w">      </span>stakeDistrs<span class="w"> </span><span class="ow">=</span><span class="w"> </span>mkStakeDistrs<span class="w"> </span><span class="o">(</span>Snapshots.mark<span class="w"> </span>ss&#39;<span class="o">)</span><span class="w"> </span>e<span class="w"> </span>utxoSt&#39;<span class="w"> </span>govSt&#39;<span class="w"> </span><span class="o">(</span><span class="kr">record</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>GState<span class="w"> </span><span class="o">(</span>CertState.gState<span class="w"> </span><span class="o">(</span>LState.certState<span class="w"> </span>ls<span class="o">))</span><span class="w"> </span><span class="o">})</span>
-<span class="w">                                                                        </span><span class="o">(</span><span class="kr">record</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>DState<span class="w"> </span><span class="o">(</span>CertState.dState<span class="w"> </span><span class="o">(</span>LState.certState<span class="w"> </span>ls<span class="o">))</span><span class="w"> </span><span class="o">})</span>
+      <a id="4845" href="Ledger.Conway.Conformance.Epoch.html#4845" class="Bound">stakeDistrs</a> <a id="4857" class="Symbol">:</a> <a id="4859" href="Ledger.Conway.Specification.Ratify.html#7975" class="Record">StakeDistrs</a>
+      <a id="4877" href="Ledger.Conway.Conformance.Epoch.html#4845" class="Bound">stakeDistrs</a> <a id="4889" class="Symbol">=</a> <a id="4891" href="Ledger.Conway.Specification.Epoch.html#17428" class="Function">mkStakeDistrs</a> <a id="4905" class="Symbol">(</a><a id="4906" href="Ledger.Conway.Specification.Rewards.html#28043" class="Field">Snapshots.mark</a> <a id="4921" href="Ledger.Conway.Conformance.Epoch.html#2547" class="Generalizable">ss&#39;</a><a id="4924" class="Symbol">)</a> <a id="4926" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="4928" href="Ledger.Conway.Conformance.Epoch.html#4615" class="Bound">utxoSt&#39;</a> <a id="4936" href="Ledger.Conway.Conformance.Epoch.html#3272" class="Bound">govSt&#39;</a> <a id="4943" class="Symbol">(</a><a id="4944" class="Keyword">record</a> <a id="4951" class="Symbol">{</a> <a id="4953" href="Ledger.Conway.Conformance.Epoch.html#4953" class="Module">GState</a> <a id="4960" class="Symbol">(</a><a id="4961" href="Ledger.Conway.Conformance.Certs.html#1163" class="Field">CertState.gState</a> <a id="4978" class="Symbol">(</a><a id="4979" href="Ledger.Conway.Conformance.Ledger.html#981" class="Field">LState.certState</a> <a id="4996" href="Ledger.Conway.Conformance.Epoch.html#2439" class="Generalizable">ls</a><a id="4998" class="Symbol">))</a> <a id="5001" class="Symbol">})</a>
+                                                                        <a id="5076" class="Symbol">(</a><a id="5077" class="Keyword">record</a> <a id="5084" class="Symbol">{</a> <a id="5086" href="Ledger.Conway.Conformance.Epoch.html#5086" class="Module">DState</a> <a id="5093" class="Symbol">(</a><a id="5094" href="Ledger.Conway.Conformance.Certs.html#1123" class="Field">CertState.dState</a> <a id="5111" class="Symbol">(</a><a id="5112" href="Ledger.Conway.Conformance.Ledger.html#981" class="Field">LState.certState</a> <a id="5129" href="Ledger.Conway.Conformance.Epoch.html#2439" class="Generalizable">ls</a><a id="5131" class="Symbol">))</a> <a id="5134" class="Symbol">})</a>
 
-<span class="w">    </span><span class="kr">in</span>
-<span class="w">    </span><span class="kr">record</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>currentEpoch<span class="w"> </span><span class="ow">=</span><span class="w"> </span>e
-<span class="w">           </span>;<span class="w"> </span>stakeDistrs<span class="w"> </span><span class="ow">=</span><span class="w"> </span>stakeDistrs
-<span class="w">           </span>;<span class="w"> </span>treasury<span class="w"> </span><span class="ow">=</span><span class="w"> </span>acnt<span class="w"> </span><span class="ow">.</span>treasury<span class="w"> </span>;<span class="w"> </span>GState<span class="w"> </span>gState
-<span class="w">           </span>;<span class="w"> </span>pools<span class="w"> </span><span class="ow">=</span><span class="w"> </span>pState<span class="w"> </span><span class="ow">.</span>pools<span class="w"> </span>;<span class="w"> </span>delegatees<span class="w"> </span><span class="ow">=</span><span class="w"> </span>dState<span class="w"> </span><span class="ow">.</span>voteDelegs<span class="w"> </span><span class="o">}</span>
-<span class="w">        </span>⊢<span class="w"> </span>⟦<span class="w"> </span>es<span class="w"> </span>,<span class="w"> </span>∅<span class="w"> </span>,<span class="w"> </span>false<span class="w"> </span>⟧<span class="w"> </span>⇀⦇<span class="w"> </span>govSt&#39;<span class="w"> </span>,RATIFIES⦈<span class="w"> </span>fut&#39;
-<span class="w">      </span><span class="ow">→</span><span class="w"> </span>ls<span class="w"> </span>⊢<span class="w"> </span>ss<span class="w"> </span>⇀⦇<span class="w"> </span>tt<span class="w"> </span>,SNAP⦈<span class="w"> </span>ss&#39;
-<span class="w">    </span>────────────────────────────────
-<span class="w">    </span>_<span class="w"> </span>⊢<span class="w"> </span>⟦<span class="w"> </span>acnt<span class="w"> </span>,<span class="w"> </span>ss<span class="w"> </span>,<span class="w"> </span>ls<span class="w"> </span>,<span class="w"> </span>es₀<span class="w"> </span>,<span class="w"> </span>fut<span class="w"> </span>⟧<span class="w"> </span>⇀⦇<span class="w"> </span>e<span class="w"> </span>,EPOCH⦈
-<span class="w">        </span>⟦<span class="w"> </span>acnt&#39;<span class="w"> </span>,<span class="w"> </span>ss&#39;<span class="w"> </span>,<span class="w"> </span>⟦<span class="w"> </span>utxoSt&#39;<span class="w"> </span>,<span class="w"> </span>govSt&#39;<span class="w"> </span>,<span class="w"> </span>certState&#39;<span class="w"> </span>⟧<span class="w"> </span>,<span class="w"> </span>es<span class="w"> </span>,<span class="w"> </span>fut&#39;<span class="w"> </span>⟧
+    <a id="5142" class="Keyword">in</a>
+    <a id="5149" class="Keyword">record</a> <a id="5156" class="Symbol">{</a> <a id="5158" href="Ledger.Conway.Specification.Ratify.html#8161" class="Field">currentEpoch</a> <a id="5171" class="Symbol">=</a> <a id="5173" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a>
+           <a id="5186" class="Symbol">;</a> <a id="5188" href="Ledger.Conway.Specification.Ratify.html#8129" class="Field">stakeDistrs</a> <a id="5200" class="Symbol">=</a> <a id="5202" href="Ledger.Conway.Conformance.Epoch.html#4845" class="Bound">stakeDistrs</a>
+           <a id="5225" class="Symbol">;</a> <a id="5227" href="Ledger.Conway.Specification.Ratify.html#8276" class="Field">treasury</a> <a id="5236" class="Symbol">=</a> <a id="5238" href="Ledger.Conway.Conformance.Epoch.html#2453" class="Generalizable">acnt</a> <a id="5243" class="Symbol">.</a><a id="5244" href="Ledger.Conway.Specification.PParams.html#1815" class="Field">treasury</a> <a id="5253" class="Symbol">;</a> <a id="5255" href="Ledger.Conway.Conformance.Epoch.html#5255" class="Module">GState</a> <a id="5262" href="Ledger.Conway.Conformance.Certs.html#1163" class="Function">gState</a>
+           <a id="5280" class="Symbol">;</a> <a id="5282" href="Ledger.Conway.Specification.Ratify.html#8305" class="Field">pools</a> <a id="5288" class="Symbol">=</a> <a id="5290" href="Ledger.Conway.Conformance.Certs.html#1143" class="Function">pState</a> <a id="5297" class="Symbol">.</a><a id="5298" href="Ledger.Conway.Specification.Certs.html#4525" class="Field">pools</a> <a id="5304" class="Symbol">;</a> <a id="5306" href="Ledger.Conway.Specification.Ratify.html#8351" class="Field">delegatees</a> <a id="5317" class="Symbol">=</a> <a id="5319" href="Ledger.Conway.Conformance.Certs.html#1123" class="Function">dState</a> <a id="5326" class="Symbol">.</a><a id="5327" href="Ledger.Conway.Conformance.Certs.html#767" class="Field">voteDelegs</a> <a id="5338" class="Symbol">}</a>
+        <a id="5348" href="Ledger.Conway.Specification.Ratify.html#26524" class="Function Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#2948}{\htmlId{5352}{\htmlClass{Bound}{\text{es}}}}\, \\ \,\href{Class.HasEmptySet.html#287}{\htmlId{5357}{\htmlClass{Field}{\text{∅}}}}\, \\ \,\href{Agda.Builtin.Bool.html#192}{\htmlId{5361}{\htmlClass{InductiveConstructor}{\text{false}}}}\, \end{pmatrix}$</a> <a id="5369" href="Ledger.Conway.Specification.Ratify.html#26524" class="Function Operator">⇀⦇</a> <a id="5372" href="Ledger.Conway.Conformance.Epoch.html#3272" class="Bound">govSt&#39;</a> <a id="5379" href="Ledger.Conway.Specification.Ratify.html#26524" class="Function Operator">,RATIFIES⦈</a> <a id="5390" href="Ledger.Conway.Conformance.Epoch.html#2388" class="Generalizable">fut&#39;</a>
+      <a id="5401" class="Symbol">→</a> <a id="5403" href="Ledger.Conway.Conformance.Epoch.html#2439" class="Generalizable">ls</a> <a id="5406" href="Ledger.Conway.Conformance.Rewards.html#708" class="Datatype Operator">⊢</a> <a id="5408" href="Ledger.Conway.Conformance.Epoch.html#2544" class="Generalizable">ss</a> <a id="5411" href="Ledger.Conway.Conformance.Rewards.html#708" class="Datatype Operator">⇀⦇</a> <a id="5414" href="Agda.Builtin.Unit.html#212" class="InductiveConstructor">tt</a> <a id="5417" href="Ledger.Conway.Conformance.Rewards.html#708" class="Datatype Operator">,SNAP⦈</a> <a id="5424" href="Ledger.Conway.Conformance.Epoch.html#2547" class="Generalizable">ss&#39;</a>
+    <a id="5432" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
+    <a id="5469" class="Symbol">_</a> <a id="5471" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#2453}{\htmlId{5475}{\htmlClass{Generalizable}{\text{acnt}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2544}{\htmlId{5482}{\htmlClass{Generalizable}{\text{ss}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2439}{\htmlId{5487}{\htmlClass{Generalizable}{\text{ls}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2467}{\htmlId{5492}{\htmlClass{Generalizable}{\text{es₀}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2384}{\htmlId{5498}{\htmlClass{Generalizable}{\text{fut}}}}\, \end{pmatrix}$</a> <a id="5504" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">⇀⦇</a> <a id="5507" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="5509" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">,EPOCH⦈</a>
+        <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#4730}{\htmlId{5527}{\htmlClass{Bound}{\text{acnt&#39;}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2547}{\htmlId{5535}{\htmlClass{Generalizable}{\text{ss&#39;}}}}\, \\ \begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#4615}{\htmlId{5543}{\htmlClass{Bound}{\text{utxoSt&#39;}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#3272}{\htmlId{5553}{\htmlClass{Bound}{\text{govSt&#39;}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#4500}{\htmlId{5562}{\htmlClass{Bound}{\text{certState&#39;}}}}\, \end{pmatrix} \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2948}{\htmlId{5577}{\htmlClass{Bound}{\text{es}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2388}{\htmlId{5582}{\htmlClass{Generalizable}{\text{fut&#39;}}}}\, \end{pmatrix}$</a>
 
-<span class="kr">data</span><span class="w"> </span>_⊢_⇀⦇_,NEWEPOCH⦈_<span class="w"> </span><span class="ow">:</span><span class="w"> </span>⊤<span class="w"> </span><span class="ow">→</span><span class="w"> </span>NewEpochState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Epoch<span class="w"> </span><span class="ow">→</span><span class="w"> </span>NewEpochState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
+<a id="5590" class="Keyword">data</a> <a id="_⊢_⇀⦇_,NEWEPOCH⦈_"></a><a id="5595" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">_⊢_⇀⦇_,NEWEPOCH⦈_</a> <a id="5613" class="Symbol">:</a> <a id="5615" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="5617" class="Symbol">→</a> <a id="5619" href="Ledger.Conway.Conformance.Epoch.html#1280" class="Record">NewEpochState</a> <a id="5633" class="Symbol">→</a> <a id="5635" href="Ledger.Core.Specification.Epoch.html#691" class="Function">Epoch</a> <a id="5641" class="Symbol">→</a> <a id="5643" href="Ledger.Conway.Conformance.Epoch.html#1280" class="Record">NewEpochState</a> <a id="5657" class="Symbol">→</a> <a id="5659" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="5664" class="Keyword">where</a>
 
-<span class="w">  </span><span class="nf">NEWEPOCH-New</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="kr">let</span>
-<span class="w">      </span>eps&#39;<span class="w"> </span><span class="ow">=</span><span class="w"> </span>applyRUpd<span class="w"> </span>ru<span class="w"> </span>eps
-<span class="w">    </span><span class="kr">in</span>
-<span class="w">    </span>∙<span class="w"> </span>e<span class="w"> </span>≡<span class="w"> </span>lastEpoch<span class="w"> </span>+<span class="w"> </span><span class="mi">1</span>
-<span class="w">    </span>∙<span class="w"> </span>_<span class="w"> </span>⊢<span class="w"> </span>eps&#39;<span class="w"> </span>⇀⦇<span class="w"> </span>e<span class="w"> </span>,EPOCH⦈<span class="w"> </span>eps&#39;&#39;
-<span class="w">      </span>────────────────────────────────
-<span class="w">      </span>_<span class="w"> </span>⊢<span class="w"> </span>⟦<span class="w"> </span>lastEpoch<span class="w"> </span>,<span class="w"> </span>eps<span class="w"> </span>,<span class="w"> </span>just<span class="w"> </span>ru<span class="w"> </span>⟧<span class="w"> </span>⇀⦇<span class="w"> </span>e<span class="w"> </span>,NEWEPOCH⦈<span class="w"> </span>⟦<span class="w"> </span>e<span class="w"> </span>,<span class="w"> </span>eps&#39;&#39;<span class="w"> </span>,<span class="w"> </span>nothing<span class="w"> </span>⟧
+  <a id="_⊢_⇀⦇_,NEWEPOCH⦈_.NEWEPOCH-New"></a><a id="5673" href="Ledger.Conway.Conformance.Epoch.html#5673" class="InductiveConstructor">NEWEPOCH-New</a> <a id="5686" class="Symbol">:</a> <a id="5688" class="Keyword">let</a>
+      <a id="5698" href="Ledger.Conway.Conformance.Epoch.html#5698" class="Bound">eps&#39;</a> <a id="5703" class="Symbol">=</a> <a id="5705" href="Ledger.Conway.Conformance.Epoch.html#1595" class="Function">applyRUpd</a> <a id="5715" href="Ledger.Conway.Conformance.Epoch.html#2565" class="Generalizable">ru</a> <a id="5718" href="Ledger.Conway.Conformance.Epoch.html#2409" class="Generalizable">eps</a>
+    <a id="5726" class="Keyword">in</a>
+    <a id="5733" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="5735" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="5737" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="5739" href="Ledger.Conway.Conformance.Epoch.html#2364" class="Generalizable">lastEpoch</a> <a id="5749" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5751" class="Number">1</a>
+    <a id="5757" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="5759" class="Symbol">_</a> <a id="5761" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">⊢</a> <a id="5763" href="Ledger.Conway.Conformance.Epoch.html#5698" class="Bound">eps&#39;</a> <a id="5768" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">⇀⦇</a> <a id="5771" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="5773" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">,EPOCH⦈</a> <a id="5781" href="Ledger.Conway.Conformance.Epoch.html#2418" class="Generalizable">eps&#39;&#39;</a>
+      <a id="5793" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
+      <a id="5832" class="Symbol">_</a> <a id="5834" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#2364}{\htmlId{5838}{\htmlClass{Generalizable}{\text{lastEpoch}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2409}{\htmlId{5850}{\htmlClass{Generalizable}{\text{eps}}}}\, \\ \,\href{Agda.Builtin.Maybe.html#173}{\htmlId{5856}{\htmlClass{InductiveConstructor}{\text{just}}}}\, \,\href{Ledger.Conway.Conformance.Epoch.html#2565}{\htmlId{5861}{\htmlClass{Generalizable}{\text{ru}}}}\, \end{pmatrix}$</a> <a id="5866" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">⇀⦇</a> <a id="5869" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="5871" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">,NEWEPOCH⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#2362}{\htmlId{5884}{\htmlClass{Generalizable}{\text{e}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2418}{\htmlId{5888}{\htmlClass{Generalizable}{\text{eps&#39;&#39;}}}}\, \\ \,\href{Agda.Builtin.Maybe.html#194}{\htmlId{5896}{\htmlClass{InductiveConstructor}{\text{nothing}}}}\, \end{pmatrix}$</a>
 
-<span class="w">  </span><span class="nf">NEWEPOCH-Not-New</span><span class="w"> </span><span class="ow">:</span>
-<span class="w">    </span>∙<span class="w"> </span>e<span class="w"> </span>≢<span class="w"> </span>lastEpoch<span class="w"> </span>+<span class="w"> </span><span class="mi">1</span>
-<span class="w">      </span>────────────────────────────────
-<span class="w">      </span>_<span class="w"> </span>⊢<span class="w"> </span>⟦<span class="w"> </span>lastEpoch<span class="w"> </span>,<span class="w"> </span>eps<span class="w"> </span>,<span class="w"> </span>mru<span class="w"> </span>⟧<span class="w"> </span>⇀⦇<span class="w"> </span>e<span class="w"> </span>,NEWEPOCH⦈<span class="w"> </span>⟦<span class="w"> </span>lastEpoch<span class="w"> </span>,<span class="w"> </span>eps<span class="w"> </span>,<span class="w"> </span>mru<span class="w"> </span>⟧
+  <a id="_⊢_⇀⦇_,NEWEPOCH⦈_.NEWEPOCH-Not-New"></a><a id="5909" href="Ledger.Conway.Conformance.Epoch.html#5909" class="InductiveConstructor">NEWEPOCH-Not-New</a> <a id="5926" class="Symbol">:</a>
+    <a id="5932" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="5934" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="5936" href="Relation.Binary.PropositionalEquality.Core.html#1000" class="Function Operator">≢</a> <a id="5938" href="Ledger.Conway.Conformance.Epoch.html#2364" class="Generalizable">lastEpoch</a> <a id="5948" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="5950" class="Number">1</a>
+      <a id="5958" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
+      <a id="5997" class="Symbol">_</a> <a id="5999" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#2364}{\htmlId{6003}{\htmlClass{Generalizable}{\text{lastEpoch}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2409}{\htmlId{6015}{\htmlClass{Generalizable}{\text{eps}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2585}{\htmlId{6021}{\htmlClass{Generalizable}{\text{mru}}}}\, \end{pmatrix}$</a> <a id="6027" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">⇀⦇</a> <a id="6030" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="6032" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">,NEWEPOCH⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#2364}{\htmlId{6045}{\htmlClass{Generalizable}{\text{lastEpoch}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2409}{\htmlId{6057}{\htmlClass{Generalizable}{\text{eps}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2585}{\htmlId{6063}{\htmlClass{Generalizable}{\text{mru}}}}\, \end{pmatrix}$</a>
 
-<span class="w">  </span><span class="nf">NEWEPOCH-No-Reward-Update</span><span class="w"> </span><span class="ow">:</span>
-<span class="w">    </span>∙<span class="w"> </span>e<span class="w"> </span>≡<span class="w"> </span>lastEpoch<span class="w"> </span>+<span class="w"> </span><span class="mi">1</span>
-<span class="w">    </span>∙<span class="w"> </span>_<span class="w"> </span>⊢<span class="w"> </span>eps<span class="w"> </span>⇀⦇<span class="w"> </span>e<span class="w"> </span>,EPOCH⦈<span class="w"> </span>eps&#39;
-<span class="w">      </span>────────────────────────────────
-<span class="w">      </span>_<span class="w"> </span>⊢<span class="w"> </span>⟦<span class="w"> </span>lastEpoch<span class="w"> </span>,<span class="w"> </span>eps<span class="w"> </span>,<span class="w"> </span>nothing<span class="w"> </span>⟧<span class="w"> </span>⇀⦇<span class="w"> </span>e<span class="w"> </span>,NEWEPOCH⦈<span class="w"> </span>⟦<span class="w"> </span>e<span class="w"> </span>,<span class="w"> </span>eps&#39;<span class="w"> </span>,<span class="w"> </span>nothing<span class="w"> </span>⟧
-</code></pre></div>
+  <a id="_⊢_⇀⦇_,NEWEPOCH⦈_.NEWEPOCH-No-Reward-Update"></a><a id="6072" href="Ledger.Conway.Conformance.Epoch.html#6072" class="InductiveConstructor">NEWEPOCH-No-Reward-Update</a> <a id="6098" class="Symbol">:</a>
+    <a id="6104" href="Prelude.InferenceRules.html#56075" class="Function Operator">∙</a> <a id="6106" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="6108" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="6110" href="Ledger.Conway.Conformance.Epoch.html#2364" class="Generalizable">lastEpoch</a> <a id="6120" href="Class.HasAdd.Core.html#162" class="Field Operator">+</a> <a id="6122" class="Number">1</a>
+    <a id="6128" href="Prelude.InferenceRules.html#56006" class="Function Operator">∙</a> <a id="6130" class="Symbol">_</a> <a id="6132" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">⊢</a> <a id="6134" href="Ledger.Conway.Conformance.Epoch.html#2409" class="Generalizable">eps</a> <a id="6138" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">⇀⦇</a> <a id="6141" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="6143" href="Ledger.Conway.Conformance.Epoch.html#2641" class="Datatype Operator">,EPOCH⦈</a> <a id="6151" href="Ledger.Conway.Conformance.Epoch.html#2413" class="Generalizable">eps&#39;</a>
+      <a id="6162" href="Prelude.InferenceRules.html#13694" class="Function Operator">────────────────────────────────</a>
+      <a id="6201" class="Symbol">_</a> <a id="6203" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#2364}{\htmlId{6207}{\htmlClass{Generalizable}{\text{lastEpoch}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2409}{\htmlId{6219}{\htmlClass{Generalizable}{\text{eps}}}}\, \\ \,\href{Agda.Builtin.Maybe.html#194}{\htmlId{6225}{\htmlClass{InductiveConstructor}{\text{nothing}}}}\, \end{pmatrix}$</a> <a id="6235" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">⇀⦇</a> <a id="6238" href="Ledger.Conway.Conformance.Epoch.html#2362" class="Generalizable">e</a> <a id="6240" href="Ledger.Conway.Conformance.Epoch.html#5595" class="Datatype Operator">,NEWEPOCH⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Epoch.html#2362}{\htmlId{6253}{\htmlClass{Generalizable}{\text{e}}}}\, \\ \,\href{Ledger.Conway.Conformance.Epoch.html#2413}{\htmlId{6257}{\htmlClass{Generalizable}{\text{eps&#39;}}}}\, \\ \,\href{Agda.Builtin.Maybe.html#194}{\htmlId{6264}{\htmlClass{InductiveConstructor}{\text{nothing}}}}\, \end{pmatrix}$</a>
+</pre>
+
 <!-- Properties -->
 
 

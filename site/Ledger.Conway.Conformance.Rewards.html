@@ -239,6 +239,25 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="references.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  References
+
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -1024,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
         
   
   
@@ -1047,7 +1066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
         
   
   
@@ -1677,7 +1696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
         
   
   
@@ -2463,7 +2482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
         
   
   
@@ -2769,7 +2788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
         
   
   
@@ -2877,7 +2896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
         
   
   
@@ -2900,7 +2919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
         
   
   
@@ -2923,7 +2942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
         
   
   
@@ -3474,7 +3493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
         
   
   
@@ -3520,7 +3539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
         
   
   
@@ -3860,7 +3879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
         
   
   
@@ -4263,7 +4282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
         
   
   
@@ -6087,7 +6106,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.md" class="md-nav__link">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
         
   
   
@@ -6398,7 +6417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
         
   
   
@@ -6495,7 +6514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
         
   
   
@@ -7293,6 +7312,28 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="references.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -7338,38 +7379,39 @@
 
   <h1>Rewards</h1>
 
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<pre class="Agda"><a id="96" class="Symbol">{-#</a> <a id="100" class="Keyword">OPTIONS</a> <a id="108" class="Pragma">--safe</a> <a id="115" class="Symbol">#-}</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Abstract</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Transaction</span>
+<a id="120" class="Keyword">open</a> <a id="125" class="Keyword">import</a> <a id="132" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<a id="169" class="Keyword">open</a> <a id="174" class="Keyword">import</a> <a id="181" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Rewards</span>
-<span class="w">  </span><span class="o">(</span>txs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>TransactionStructure<span class="w"> </span>txs<span class="o">)</span>
-<span class="w">  </span><span class="o">(</span>abs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>AbstractFunctions<span class="w"> </span>txs<span class="o">)</span>
-<span class="w">  </span><span class="kr">where</span>
+<a id="222" class="Keyword">module</a> <a id="229" href="Ledger.Conway.Conformance.Rewards.html" class="Module">Ledger.Conway.Conformance.Rewards</a>
+  <a id="265" class="Symbol">(</a><a id="266" href="Ledger.Conway.Conformance.Rewards.html#266" class="Bound">txs</a> <a id="270" class="Symbol">:</a> <a id="272" class="Symbol">_)</a> <a id="275" class="Symbol">(</a><a id="276" class="Keyword">open</a> <a id="281" href="Ledger.Conway.Specification.Transaction.html#2461" class="Module">TransactionStructure</a> <a id="302" href="Ledger.Conway.Conformance.Rewards.html#266" class="Bound">txs</a><a id="305" class="Symbol">)</a>
+  <a id="309" class="Symbol">(</a><a id="310" href="Ledger.Conway.Conformance.Rewards.html#310" class="Bound">abs</a> <a id="314" class="Symbol">:</a> <a id="316" href="Ledger.Conway.Specification.Abstract.html#752" class="Record">AbstractFunctions</a> <a id="334" href="Ledger.Conway.Conformance.Rewards.html#266" class="Bound">txs</a><a id="337" class="Symbol">)</a>
+  <a id="341" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
+<a id="348" class="Keyword">open</a> <a id="353" class="Keyword">import</a> <a id="360" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Certs</span><span class="w"> </span>govStructure
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Ledger</span><span class="w"> </span>txs<span class="w"> </span>abs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Utxo</span><span class="w"> </span>txs<span class="w"> </span>abs
+<a id="376" class="Keyword">open</a> <a id="381" class="Keyword">import</a> <a id="388" href="Ledger.Conway.Conformance.Certs.html" class="Module">Ledger.Conway.Conformance.Certs</a> <a id="420" href="Ledger.Conway.Specification.Transaction.html#3583" class="Function">govStructure</a>
+<a id="433" class="Keyword">open</a> <a id="438" class="Keyword">import</a> <a id="445" href="Ledger.Conway.Conformance.Ledger.html" class="Module">Ledger.Conway.Conformance.Ledger</a> <a id="478" href="Ledger.Conway.Conformance.Rewards.html#266" class="Bound">txs</a> <a id="482" href="Ledger.Conway.Conformance.Rewards.html#310" class="Bound">abs</a>
+<a id="486" class="Keyword">open</a> <a id="491" class="Keyword">import</a> <a id="498" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a> <a id="529" href="Ledger.Conway.Conformance.Rewards.html#266" class="Bound">txs</a> <a id="533" href="Ledger.Conway.Conformance.Rewards.html#310" class="Bound">abs</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Rewards</span><span class="w"> </span>txs<span class="w"> </span>abs
-<span class="w">  </span><span class="kr">hiding</span><span class="w"> </span><span class="o">(</span>_⊢_⇀⦇_,SNAP⦈_<span class="o">)</span><span class="w"> </span>public
+<a id="538" class="Keyword">open</a> <a id="543" class="Keyword">import</a> <a id="550" href="Ledger.Conway.Specification.Rewards.html" class="Module">Ledger.Conway.Specification.Rewards</a> <a id="586" href="Ledger.Conway.Conformance.Rewards.html#266" class="Bound">txs</a> <a id="590" href="Ledger.Conway.Conformance.Rewards.html#310" class="Bound">abs</a>
+  <a id="596" class="Keyword">hiding</a> <a id="603" class="Symbol">(</a><a id="604" href="Ledger.Conway.Specification.Rewards.html#29023" class="Datatype Operator">_⊢_⇀⦇_,SNAP⦈_</a><a id="617" class="Symbol">)</a> <a id="619" class="Keyword">public</a>
 
-<span class="kr">private</span><span class="w"> </span><span class="kr">variable</span>
-<span class="w">  </span><span class="nf">lstate</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>LState
-<span class="w">  </span>mark<span class="w"> </span>set<span class="w"> </span>go<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Snapshot
-<span class="w">  </span><span class="nf">feeSS</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Coin
+<a id="627" class="Keyword">private</a> <a id="635" class="Keyword">variable</a>
+  <a id="646" href="Ledger.Conway.Conformance.Rewards.html#646" class="Generalizable">lstate</a> <a id="653" class="Symbol">:</a> <a id="655" href="Ledger.Conway.Conformance.Ledger.html#873" class="Record">LState</a>
+  <a id="664" href="Ledger.Conway.Conformance.Rewards.html#664" class="Generalizable">mark</a> <a id="669" href="Ledger.Conway.Conformance.Rewards.html#669" class="Generalizable">set</a> <a id="673" href="Ledger.Conway.Conformance.Rewards.html#673" class="Generalizable">go</a> <a id="676" class="Symbol">:</a> <a id="678" href="Ledger.Conway.Specification.Rewards.html#20350" class="Record">Snapshot</a>
+  <a id="689" href="Ledger.Conway.Conformance.Rewards.html#689" class="Generalizable">feeSS</a> <a id="695" class="Symbol">:</a> <a id="697" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
 
-<span class="kr">data</span><span class="w"> </span>_⊢_⇀⦇_,SNAP⦈_<span class="w"> </span><span class="ow">:</span><span class="w"> </span>LState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Snapshots<span class="w"> </span><span class="ow">→</span><span class="w"> </span>⊤<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Snapshots<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
-<span class="w">  </span><span class="nf">SNAP</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="kr">let</span><span class="w"> </span><span class="kr">open</span><span class="w"> </span>LState<span class="w"> </span>lstate
-<span class="w">             </span><span class="kr">open</span><span class="w"> </span>UTxOState<span class="w"> </span>utxoSt
-<span class="w">             </span><span class="kr">open</span><span class="w"> </span>CertState<span class="w"> </span>certState
-<span class="w">             </span>stake<span class="w"> </span><span class="ow">=</span><span class="w"> </span>stakeDistr<span class="w"> </span>utxo<span class="w"> </span><span class="o">(</span><span class="kr">record</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>DState<span class="w"> </span>dState<span class="w"> </span><span class="o">})</span><span class="w"> </span>pState
-<span class="w">    </span><span class="kr">in</span>
-<span class="w">    </span>lstate<span class="w"> </span>⊢<span class="w"> </span>⟦<span class="w"> </span>mark<span class="w"> </span>,<span class="w"> </span>set<span class="w"> </span>,<span class="w"> </span>go<span class="w"> </span>,<span class="w"> </span>feeSS<span class="w"> </span>⟧<span class="w"> </span>⇀⦇<span class="w"> </span>tt<span class="w"> </span>,SNAP⦈<span class="w"> </span>⟦<span class="w"> </span>stake<span class="w"> </span>,<span class="w"> </span>mark<span class="w"> </span>,<span class="w"> </span>set<span class="w"> </span>,<span class="w"> </span>fees<span class="w"> </span>⟧
-</code></pre></div>
+<a id="703" class="Keyword">data</a> <a id="_⊢_⇀⦇_,SNAP⦈_"></a><a id="708" href="Ledger.Conway.Conformance.Rewards.html#708" class="Datatype Operator">_⊢_⇀⦇_,SNAP⦈_</a> <a id="722" class="Symbol">:</a> <a id="724" href="Ledger.Conway.Conformance.Ledger.html#873" class="Record">LState</a> <a id="731" class="Symbol">→</a> <a id="733" href="Ledger.Conway.Specification.Rewards.html#28009" class="Record">Snapshots</a> <a id="743" class="Symbol">→</a> <a id="745" href="Agda.Builtin.Unit.html#175" class="Record">⊤</a> <a id="747" class="Symbol">→</a> <a id="749" href="Ledger.Conway.Specification.Rewards.html#28009" class="Record">Snapshots</a> <a id="759" class="Symbol">→</a> <a id="761" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="766" class="Keyword">where</a>
+  <a id="_⊢_⇀⦇_,SNAP⦈_.SNAP"></a><a id="774" href="Ledger.Conway.Conformance.Rewards.html#774" class="InductiveConstructor">SNAP</a> <a id="779" class="Symbol">:</a> <a id="781" class="Keyword">let</a> <a id="785" class="Keyword">open</a> <a id="790" href="Ledger.Conway.Conformance.Ledger.html#873" class="Module">LState</a> <a id="797" href="Ledger.Conway.Conformance.Rewards.html#646" class="Generalizable">lstate</a>
+             <a id="817" class="Keyword">open</a> <a id="822" href="Ledger.Conway.Specification.Utxo.html#3011" class="Module">UTxOState</a> <a id="832" href="Ledger.Conway.Conformance.Ledger.html#928" class="Function">utxoSt</a>
+             <a id="852" class="Keyword">open</a> <a id="857" href="Ledger.Conway.Conformance.Certs.html#1064" class="Module">CertState</a> <a id="867" href="Ledger.Conway.Conformance.Ledger.html#981" class="Function">certState</a>
+             <a id="890" href="Ledger.Conway.Conformance.Rewards.html#890" class="Bound">stake</a> <a id="896" class="Symbol">=</a> <a id="898" href="Ledger.Conway.Specification.Rewards.html#21793" class="Function">stakeDistr</a> <a id="909" href="Ledger.Conway.Specification.Utxo.html#3104" class="Function">utxo</a> <a id="914" class="Symbol">(</a><a id="915" class="Keyword">record</a> <a id="922" class="Symbol">{</a> <a id="924" href="Ledger.Conway.Conformance.Rewards.html#924" class="Module">DState</a> <a id="931" href="Ledger.Conway.Conformance.Certs.html#1123" class="Function">dState</a> <a id="938" class="Symbol">})</a> <a id="941" href="Ledger.Conway.Conformance.Certs.html#1143" class="Function">pState</a>
+    <a id="952" class="Keyword">in</a>
+    <a id="959" href="Ledger.Conway.Conformance.Rewards.html#646" class="Generalizable">lstate</a> <a id="966" href="Ledger.Conway.Conformance.Rewards.html#708" class="Datatype Operator">⊢</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Rewards.html#664}{\htmlId{970}{\htmlClass{Generalizable}{\text{mark}}}}\, \\ \,\href{Ledger.Conway.Conformance.Rewards.html#669}{\htmlId{977}{\htmlClass{Generalizable}{\text{set}}}}\, \\ \,\href{Ledger.Conway.Conformance.Rewards.html#673}{\htmlId{983}{\htmlClass{Generalizable}{\text{go}}}}\, \\ \,\href{Ledger.Conway.Conformance.Rewards.html#689}{\htmlId{988}{\htmlClass{Generalizable}{\text{feeSS}}}}\, \end{pmatrix}$</a> <a id="996" href="Ledger.Conway.Conformance.Rewards.html#708" class="Datatype Operator">⇀⦇</a> <a id="999" href="Agda.Builtin.Unit.html#212" class="InductiveConstructor">tt</a> <a id="1002" href="Ledger.Conway.Conformance.Rewards.html#708" class="Datatype Operator">,SNAP⦈</a> <a class="AgdaKaTeX">$\begin{pmatrix} \,\href{Ledger.Conway.Conformance.Rewards.html#890}{\htmlId{1011}{\htmlClass{Bound}{\text{stake}}}}\, \\ \,\href{Ledger.Conway.Conformance.Rewards.html#664}{\htmlId{1019}{\htmlClass{Generalizable}{\text{mark}}}}\, \\ \,\href{Ledger.Conway.Conformance.Rewards.html#669}{\htmlId{1026}{\htmlClass{Generalizable}{\text{set}}}}\, \\ \,\href{Ledger.Conway.Specification.Utxo.html#3126}{\htmlId{1032}{\htmlClass{Function}{\text{fees}}}}\, \end{pmatrix}$</a>
+</pre>
+
 <!-- Properties -->
 
 

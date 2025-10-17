@@ -18,7 +18,7 @@
         <link rel="prev" href="Ledger.Conway.Conformance.Utxow.html">
       
       
-        <link rel="next" href="Ledger.PreConway.Conformance.NewPP.html">
+        <link rel="next" href="Ledger.PreConway.html">
       
       
       <link rel="icon" href="img/Cardano-RGB_Logo-Icon-White.svg">
@@ -236,6 +236,25 @@
         </a>
       </li>
     
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="references.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  References
+
+      </a>
+    </li>
   
 
       
@@ -1024,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
         
   
   
@@ -1047,7 +1066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
         
   
   
@@ -1677,7 +1696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
         
   
   
@@ -2463,7 +2482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
         
   
   
@@ -2769,7 +2788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
         
   
   
@@ -2877,7 +2896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
         
   
   
@@ -2900,7 +2919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
         
   
   
@@ -2923,7 +2942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
         
   
   
@@ -3474,7 +3493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
         
   
   
@@ -3520,7 +3539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
         
   
   
@@ -3860,7 +3879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
         
   
   
@@ -4263,7 +4282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
         
   
   
@@ -6089,7 +6108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.md" class="md-nav__link">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
         
   
   
@@ -6400,7 +6419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
         
   
   
@@ -6497,7 +6516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
         
   
   
@@ -7295,6 +7314,28 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="references.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -7340,48 +7381,49 @@
 
   <h1>Properties</h1>
 
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<pre class="Agda"><a id="105" class="Symbol">{-#</a> <a id="109" class="Keyword">OPTIONS</a> <a id="117" class="Pragma">--safe</a> <a id="124" class="Symbol">#-}</a>
 
-<span class="kr">import</span><span class="w"> </span><span class="n">Data.Maybe</span><span class="w"> </span>as<span class="w"> </span>M
+<a id="129" class="Keyword">import</a> <a id="136" href="Data.Maybe.html" class="Module">Data.Maybe</a> <a id="147" class="Symbol">as</a> <a id="150" class="Module">M</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Core.Specification.Crypto</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Abstract</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Transaction</span>
+<a id="153" class="Keyword">open</a> <a id="158" class="Keyword">import</a> <a id="165" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="180" class="Keyword">open</a> <a id="185" class="Keyword">import</a> <a id="192" href="Ledger.Core.Specification.Crypto.html" class="Module">Ledger.Core.Specification.Crypto</a>
+<a id="225" class="Keyword">open</a> <a id="230" class="Keyword">import</a> <a id="237" href="Ledger.Conway.Specification.Abstract.html" class="Module">Ledger.Conway.Specification.Abstract</a>
+<a id="274" class="Keyword">open</a> <a id="279" class="Keyword">import</a> <a id="286" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Utxow.Properties</span>
-<span class="w">  </span><span class="o">(</span>txs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>TransactionStructure<span class="w"> </span>txs<span class="o">)</span>
-<span class="w">  </span><span class="o">(</span>abs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>AbstractFunctions<span class="w"> </span>txs<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>AbstractFunctions<span class="w"> </span>abs<span class="o">)</span>
-<span class="w">  </span><span class="kr">where</span>
+<a id="327" class="Keyword">module</a> <a id="334" href="Ledger.Conway.Conformance.Utxow.Properties.html" class="Module">Ledger.Conway.Conformance.Utxow.Properties</a>
+  <a id="379" class="Symbol">(</a><a id="380" href="Ledger.Conway.Conformance.Utxow.Properties.html#380" class="Bound">txs</a> <a id="384" class="Symbol">:</a> <a id="386" class="Symbol">_)</a> <a id="389" class="Symbol">(</a><a id="390" class="Keyword">open</a> <a id="395" href="Ledger.Conway.Specification.Transaction.html#2461" class="Module">TransactionStructure</a> <a id="416" href="Ledger.Conway.Conformance.Utxow.Properties.html#380" class="Bound">txs</a><a id="419" class="Symbol">)</a>
+  <a id="423" class="Symbol">(</a><a id="424" href="Ledger.Conway.Conformance.Utxow.Properties.html#424" class="Bound">abs</a> <a id="428" class="Symbol">:</a> <a id="430" href="Ledger.Conway.Specification.Abstract.html#752" class="Record">AbstractFunctions</a> <a id="448" href="Ledger.Conway.Conformance.Utxow.Properties.html#380" class="Bound">txs</a><a id="451" class="Symbol">)</a> <a id="453" class="Symbol">(</a><a id="454" class="Keyword">open</a> <a id="459" href="Ledger.Conway.Specification.Abstract.html#752" class="Module">AbstractFunctions</a> <a id="477" href="Ledger.Conway.Conformance.Utxow.Properties.html#424" class="Bound">abs</a><a id="480" class="Symbol">)</a>
+  <a id="484" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Utxow</span><span class="w"> </span>txs<span class="w"> </span>abs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Utxo</span><span class="w"> </span>txs<span class="w"> </span>abs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Utxo.Properties</span><span class="w"> </span>txs<span class="w"> </span>abs
+<a id="491" class="Keyword">open</a> <a id="496" class="Keyword">import</a> <a id="503" href="Ledger.Conway.Conformance.Utxow.html" class="Module">Ledger.Conway.Conformance.Utxow</a> <a id="535" href="Ledger.Conway.Conformance.Utxow.Properties.html#380" class="Bound">txs</a> <a id="539" href="Ledger.Conway.Conformance.Utxow.Properties.html#424" class="Bound">abs</a>
+<a id="543" class="Keyword">open</a> <a id="548" class="Keyword">import</a> <a id="555" href="Ledger.Conway.Conformance.Utxo.html" class="Module">Ledger.Conway.Conformance.Utxo</a> <a id="586" href="Ledger.Conway.Conformance.Utxow.Properties.html#380" class="Bound">txs</a> <a id="590" href="Ledger.Conway.Conformance.Utxow.Properties.html#424" class="Bound">abs</a>
+<a id="594" class="Keyword">open</a> <a id="599" class="Keyword">import</a> <a id="606" href="Ledger.Conway.Conformance.Utxo.Properties.html" class="Module">Ledger.Conway.Conformance.Utxo.Properties</a> <a id="648" href="Ledger.Conway.Conformance.Utxow.Properties.html#380" class="Bound">txs</a> <a id="652" href="Ledger.Conway.Conformance.Utxow.Properties.html#424" class="Bound">abs</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">stdlib</span>-meta.Tactic.GenError<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>genErrors<span class="o">)</span>
+<a id="657" class="Keyword">open</a> <a id="662" class="Keyword">import</a> <a id="669" href="stdlib-meta.Tactic.GenError.html" class="Module">stdlib-meta.Tactic.GenError</a> <a id="697" class="Keyword">using</a> <a id="703" class="Symbol">(</a><a id="704" href="stdlib-meta.Tactic.GenError.html#2066" class="Function">genErrors</a><a id="713" class="Symbol">)</a>
 
-<span class="kr">instance</span>
-<span class="w">  </span><span class="nf">Computational-UTXOW</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Computational<span class="w"> </span>_⊢_⇀⦇_,UTXOW⦈_<span class="w"> </span>String
-<span class="w">  </span>Computational-UTXOW<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span><span class="o">{</span>Go<span class="o">}</span>
-<span class="w">    </span><span class="kr">where</span><span class="w"> </span><span class="kr">module</span><span class="w"> </span><span class="n">Go</span><span class="w"> </span>Γ<span class="w"> </span>s<span class="w"> </span>tx<span class="w"> </span><span class="o">(</span><span class="kr">let</span><span class="w"> </span>H<span class="w"> </span>,<span class="w"> </span>⁇<span class="w"> </span>H?<span class="w"> </span><span class="ow">=</span><span class="w"> </span>UTXOW-inductive-premises<span class="w"> </span><span class="o">{</span>tx<span class="o">}{</span>s<span class="o">})</span><span class="w"> </span><span class="kr">where</span>
+<a id="716" class="Keyword">instance</a>
+  <a id="Computational-UTXOW"></a><a id="727" href="Ledger.Conway.Conformance.Utxow.Properties.html#727" class="Function">Computational-UTXOW</a> <a id="747" class="Symbol">:</a> <a id="749" href="Interface.ComputationalRelation.html#13270" class="Record">Computational</a> <a id="763" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">_⊢_⇀⦇_,UTXOW⦈_</a> <a id="778" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
+  <a id="787" href="Ledger.Conway.Conformance.Utxow.Properties.html#727" class="Function">Computational-UTXOW</a> <a id="807" class="Symbol">=</a> <a id="809" class="Keyword">record</a> <a id="816" class="Symbol">{</a><a id="817" href="Ledger.Conway.Conformance.Utxow.Properties.html#838" class="Module">Go</a><a id="819" class="Symbol">}</a>
+    <a id="825" class="Keyword">where</a> <a id="831" class="Keyword">module</a> <a id="838" href="Ledger.Conway.Conformance.Utxow.Properties.html#838" class="Module">Go</a> <a id="841" href="Ledger.Conway.Conformance.Utxow.Properties.html#841" class="Bound">Γ</a> <a id="843" href="Ledger.Conway.Conformance.Utxow.Properties.html#843" class="Bound">s</a> <a id="845" href="Ledger.Conway.Conformance.Utxow.Properties.html#845" class="Bound">tx</a> <a id="848" class="Symbol">(</a><a id="849" class="Keyword">let</a> <a id="853" href="Ledger.Conway.Conformance.Utxow.Properties.html#853" class="Bound">H</a> <a id="855" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="857" href="Class.Decidable.Core.html#262" class="InductiveConstructor Operator">⁇</a> <a id="859" href="Ledger.Conway.Conformance.Utxow.Properties.html#859" class="Bound">H?</a> <a id="862" class="Symbol">=</a> <a id="864" href="Ledger.Conway.Conformance.Utxow.html#2697" class="Function">UTXOW-inductive-premises</a> <a id="889" class="Symbol">{</a><a id="890" href="Ledger.Conway.Conformance.Utxow.Properties.html#845" class="Bound">tx</a><a id="892" class="Symbol">}{</a><a id="894" href="Ledger.Conway.Conformance.Utxow.Properties.html#843" class="Bound">s</a><a id="895" class="Symbol">})</a> <a id="898" class="Keyword">where</a>
 
-<span class="w">    </span><span class="kr">open</span><span class="w"> </span>Computational<span class="w"> </span>Computational-UTXO
-<span class="w">      </span><span class="kr">renaming</span><span class="w"> </span><span class="o">(</span>computeProof<span class="w"> </span>to<span class="w"> </span>computeProof&#39;;<span class="w"> </span>completeness<span class="w"> </span>to<span class="w"> </span>completeness&#39;<span class="o">)</span>
+    <a id="909" class="Keyword">open</a> <a id="914" href="Interface.ComputationalRelation.html#13270" class="Module">Computational</a> <a id="928" href="Ledger.Conway.Conformance.Utxo.Properties.html#2340" class="Function">Computational-UTXO</a>
+      <a id="953" class="Keyword">renaming</a> <a id="962" class="Symbol">(</a><a id="963" href="Interface.ComputationalRelation.html#13350" class="Field">computeProof</a> <a id="976" class="Symbol">to</a> <a id="979" class="Field">computeProof&#39;</a><a id="992" class="Symbol">;</a> <a id="994" href="Interface.ComputationalRelation.html#13567" class="Field">completeness</a> <a id="1007" class="Symbol">to</a> <a id="1010" class="Field">completeness&#39;</a><a id="1023" class="Symbol">)</a>
 
-<span class="w">    </span><span class="nf">computeProof</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ComputationResult<span class="w"> </span>String<span class="w"> </span><span class="o">(</span>∃<span class="w"> </span><span class="o">(</span>Γ<span class="w"> </span>⊢<span class="w"> </span>s<span class="w"> </span>⇀⦇<span class="w"> </span>tx<span class="w"> </span>,UTXOW⦈_<span class="o">))</span>
-<span class="w">    </span>computeProof<span class="w"> </span><span class="ow">=</span>
-<span class="w">      </span>case<span class="w"> </span>H?<span class="w"> </span>of<span class="w"> </span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span>
-<span class="w">        </span><span class="o">(</span>yes<span class="w"> </span><span class="o">(</span>p₁<span class="w"> </span>,<span class="w"> </span>p₂<span class="w"> </span>,<span class="w"> </span>p₃<span class="w"> </span>,<span class="w"> </span>p₄<span class="w"> </span>,<span class="w"> </span>p₅<span class="w"> </span>,<span class="w"> </span>p₆<span class="w"> </span>,<span class="w"> </span>p₇<span class="w"> </span>,<span class="w"> </span>p₈<span class="o">))</span><span class="w"> </span><span class="ow">→</span>
-<span class="w">          </span>map<span class="w"> </span><span class="o">(</span>map₂′<span class="w"> </span><span class="o">(</span>UTXOW-inductive⋯<span class="w"> </span>p₁<span class="w"> </span>p₂<span class="w"> </span>p₃<span class="w"> </span>p₄<span class="w"> </span>p₅<span class="w"> </span>p₆<span class="w"> </span>p₇<span class="w"> </span>p₈<span class="o">))</span><span class="w"> </span><span class="o">(</span>computeProof&#39;<span class="w"> </span>Γ<span class="w"> </span>s<span class="w"> </span>tx<span class="o">)</span>
-<span class="w">        </span><span class="o">(</span>no<span class="w"> </span>¬p<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>failure<span class="w"> </span>$<span class="w"> </span>genErrors<span class="w"> </span>¬p
+    <a id="1030" href="Ledger.Conway.Conformance.Utxow.Properties.html#1030" class="Function">computeProof</a> <a id="1043" class="Symbol">:</a> <a id="1045" href="Interface.ComputationalRelation.html#10445" class="Datatype">ComputationResult</a> <a id="1063" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="1070" class="Symbol">(</a><a id="1071" href="Data.Product.Base.html#852" class="Function">∃</a> <a id="1073" class="Symbol">(</a><a id="1074" href="Ledger.Conway.Conformance.Utxow.Properties.html#841" class="Bound">Γ</a> <a id="1076" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">⊢</a> <a id="1078" href="Ledger.Conway.Conformance.Utxow.Properties.html#843" class="Bound">s</a> <a id="1080" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">⇀⦇</a> <a id="1083" href="Ledger.Conway.Conformance.Utxow.Properties.html#845" class="Bound">tx</a> <a id="1086" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">,UTXOW⦈_</a><a id="1094" class="Symbol">))</a>
+    <a id="1101" href="Ledger.Conway.Conformance.Utxow.Properties.html#1030" class="Function">computeProof</a> <a id="1114" class="Symbol">=</a>
+      <a id="1122" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="1127" href="Ledger.Conway.Conformance.Utxow.Properties.html#859" class="Bound">H?</a> <a id="1130" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="1133" class="Symbol">λ</a> <a id="1135" class="Keyword">where</a>
+        <a id="1149" class="Symbol">(</a><a id="1150" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1154" class="Symbol">(</a><a id="1155" href="Ledger.Conway.Conformance.Utxow.Properties.html#1155" class="Bound">p₁</a> <a id="1158" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1160" href="Ledger.Conway.Conformance.Utxow.Properties.html#1160" class="Bound">p₂</a> <a id="1163" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1165" href="Ledger.Conway.Conformance.Utxow.Properties.html#1165" class="Bound">p₃</a> <a id="1168" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1170" href="Ledger.Conway.Conformance.Utxow.Properties.html#1170" class="Bound">p₄</a> <a id="1173" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1175" href="Ledger.Conway.Conformance.Utxow.Properties.html#1175" class="Bound">p₅</a> <a id="1178" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1180" href="Ledger.Conway.Conformance.Utxow.Properties.html#1180" class="Bound">p₆</a> <a id="1183" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1185" href="Ledger.Conway.Conformance.Utxow.Properties.html#1185" class="Bound">p₇</a> <a id="1188" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1190" href="Ledger.Conway.Conformance.Utxow.Properties.html#1190" class="Bound">p₈</a><a id="1192" class="Symbol">))</a> <a id="1195" class="Symbol">→</a>
+          <a id="1207" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="1211" class="Symbol">(</a><a id="1212" href="Class.Bifunctor.html#615" class="Function">map₂′</a> <a id="1218" class="Symbol">(</a><a id="1219" href="Ledger.Conway.Conformance.Utxow.html#2515" class="InductiveConstructor">UTXOW-inductive⋯</a> <a id="1236" href="Ledger.Conway.Conformance.Utxow.Properties.html#1155" class="Bound">p₁</a> <a id="1239" href="Ledger.Conway.Conformance.Utxow.Properties.html#1160" class="Bound">p₂</a> <a id="1242" href="Ledger.Conway.Conformance.Utxow.Properties.html#1165" class="Bound">p₃</a> <a id="1245" href="Ledger.Conway.Conformance.Utxow.Properties.html#1170" class="Bound">p₄</a> <a id="1248" href="Ledger.Conway.Conformance.Utxow.Properties.html#1175" class="Bound">p₅</a> <a id="1251" href="Ledger.Conway.Conformance.Utxow.Properties.html#1180" class="Bound">p₆</a> <a id="1254" href="Ledger.Conway.Conformance.Utxow.Properties.html#1185" class="Bound">p₇</a> <a id="1257" href="Ledger.Conway.Conformance.Utxow.Properties.html#1190" class="Bound">p₈</a><a id="1259" class="Symbol">))</a> <a id="1262" class="Symbol">(</a><a id="1263" href="Ledger.Conway.Conformance.Utxow.Properties.html#979" class="Function">computeProof&#39;</a> <a id="1277" href="Ledger.Conway.Conformance.Utxow.Properties.html#841" class="Bound">Γ</a> <a id="1279" href="Ledger.Conway.Conformance.Utxow.Properties.html#843" class="Bound">s</a> <a id="1281" href="Ledger.Conway.Conformance.Utxow.Properties.html#845" class="Bound">tx</a><a id="1283" class="Symbol">)</a>
+        <a id="1293" class="Symbol">(</a><a id="1294" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="1297" href="Ledger.Conway.Conformance.Utxow.Properties.html#1297" class="Bound">¬p</a><a id="1299" class="Symbol">)</a> <a id="1301" class="Symbol">→</a> <a id="1303" href="Interface.ComputationalRelation.html#10560" class="InductiveConstructor">failure</a> <a id="1311" href="Function.Base.html#1993" class="Function Operator">$</a> <a id="1313" href="stdlib-meta.Tactic.GenError.html#2066" class="Macro">genErrors</a> <a id="1323" href="Ledger.Conway.Conformance.Utxow.Properties.html#1297" class="Bound">¬p</a>
 
-<span class="w">    </span><span class="nf">completeness</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="ow">∀</span><span class="w"> </span>s&#39;<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Γ<span class="w"> </span>⊢<span class="w"> </span>s<span class="w"> </span>⇀⦇<span class="w"> </span>tx<span class="w"> </span>,UTXOW⦈<span class="w"> </span>s&#39;
-<span class="w">                        </span><span class="ow">→</span><span class="w"> </span>map<span class="w"> </span>proj₁<span class="w"> </span>computeProof<span class="w"> </span>≡<span class="w"> </span>success<span class="w"> </span>s&#39;
-<span class="w">    </span>completeness<span class="w"> </span>s&#39;<span class="w"> </span><span class="o">(</span>UTXOW-inductive⋯<span class="w"> </span>p₁<span class="w"> </span>p₂<span class="w"> </span>p₃<span class="w"> </span>p₄<span class="w"> </span>p₅<span class="w"> </span>p₆<span class="w"> </span>p₇<span class="w"> </span>p₈<span class="w"> </span>h<span class="o">)</span><span class="w"> </span><span class="kr">with</span><span class="w"> </span>H?
-<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>no<span class="w"> </span>¬p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>⊥-elim<span class="w"> </span>$<span class="w"> </span>¬p<span class="w"> </span><span class="o">((</span>p₁<span class="w"> </span>,<span class="w"> </span>p₂<span class="w"> </span>,<span class="w"> </span>p₃<span class="w"> </span>,<span class="w"> </span>p₄<span class="w"> </span>,<span class="w"> </span>p₅<span class="w"> </span>,<span class="w"> </span>p₆<span class="w"> </span>,<span class="w"> </span>p₇<span class="w"> </span>,<span class="w"> </span>p₈<span class="o">))</span>
-<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>yes<span class="w"> </span>_<span class="w"> </span><span class="kr">with</span><span class="w"> </span>computeProof&#39;<span class="w"> </span>Γ<span class="w"> </span>s<span class="w"> </span>tx<span class="w"> </span><span class="ow">|</span><span class="w"> </span>completeness&#39;<span class="w"> </span>_<span class="w"> </span>_<span class="w"> </span>_<span class="w"> </span>_<span class="w"> </span>h
-<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>success<span class="w"> </span>_<span class="w"> </span><span class="ow">|</span><span class="w"> </span>refl<span class="w"> </span><span class="ow">=</span><span class="w"> </span>refl
-</code></pre></div>
+    <a id="1331" href="Ledger.Conway.Conformance.Utxow.Properties.html#1331" class="Function">completeness</a> <a id="1344" class="Symbol">:</a> <a id="1346" class="Symbol">∀</a> <a id="1348" href="Ledger.Conway.Conformance.Utxow.Properties.html#1348" class="Bound">s&#39;</a> <a id="1351" class="Symbol">→</a> <a id="1353" href="Ledger.Conway.Conformance.Utxow.Properties.html#841" class="Bound">Γ</a> <a id="1355" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">⊢</a> <a id="1357" href="Ledger.Conway.Conformance.Utxow.Properties.html#843" class="Bound">s</a> <a id="1359" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">⇀⦇</a> <a id="1362" href="Ledger.Conway.Conformance.Utxow.Properties.html#845" class="Bound">tx</a> <a id="1365" href="Ledger.Conway.Conformance.Utxow.html#785" class="Datatype Operator">,UTXOW⦈</a> <a id="1373" href="Ledger.Conway.Conformance.Utxow.Properties.html#1348" class="Bound">s&#39;</a>
+                        <a id="1400" class="Symbol">→</a> <a id="1402" href="Class.Functor.Core.html#272" class="Function">map</a> <a id="1406" href="Data.Product.Base.html#636" class="Field">proj₁</a> <a id="1412" href="Ledger.Conway.Conformance.Utxow.Properties.html#1030" class="Function">computeProof</a> <a id="1425" href="Agda.Builtin.Equality.html#150" class="Datatype Operator">≡</a> <a id="1427" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="1435" href="Ledger.Conway.Conformance.Utxow.Properties.html#1348" class="Bound">s&#39;</a>
+    <a id="1442" href="Ledger.Conway.Conformance.Utxow.Properties.html#1331" class="Function">completeness</a> <a id="1455" href="Ledger.Conway.Conformance.Utxow.Properties.html#1455" class="Bound">s&#39;</a> <a id="1458" class="Symbol">(</a><a id="1459" href="Ledger.Conway.Conformance.Utxow.html#2515" class="InductiveConstructor">UTXOW-inductive⋯</a> <a id="1476" href="Ledger.Conway.Conformance.Utxow.Properties.html#1476" class="Bound">p₁</a> <a id="1479" href="Ledger.Conway.Conformance.Utxow.Properties.html#1479" class="Bound">p₂</a> <a id="1482" href="Ledger.Conway.Conformance.Utxow.Properties.html#1482" class="Bound">p₃</a> <a id="1485" href="Ledger.Conway.Conformance.Utxow.Properties.html#1485" class="Bound">p₄</a> <a id="1488" href="Ledger.Conway.Conformance.Utxow.Properties.html#1488" class="Bound">p₅</a> <a id="1491" href="Ledger.Conway.Conformance.Utxow.Properties.html#1491" class="Bound">p₆</a> <a id="1494" href="Ledger.Conway.Conformance.Utxow.Properties.html#1494" class="Bound">p₇</a> <a id="1497" href="Ledger.Conway.Conformance.Utxow.Properties.html#1497" class="Bound">p₈</a> <a id="1500" href="Ledger.Conway.Conformance.Utxow.Properties.html#1500" class="Bound">h</a><a id="1501" class="Symbol">)</a> <a id="1503" class="Keyword">with</a> <a id="1508" href="Ledger.Conway.Conformance.Utxow.Properties.html#859" class="Bound">H?</a>
+    <a id="1515" class="Symbol">...</a> <a id="1519" class="Symbol">|</a> <a id="1521" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="1524" href="Ledger.Conway.Conformance.Utxow.Properties.html#1524" class="Bound">¬p</a> <a id="1527" class="Symbol">=</a> <a id="1529" href="Data.Empty.html#1069" class="Function">⊥-elim</a> <a id="1536" href="Function.Base.html#1993" class="Function Operator">$</a> <a id="1538" href="Ledger.Conway.Conformance.Utxow.Properties.html#1524" class="Bound">¬p</a> <a id="1541" class="Symbol">((</a><a id="1543" class="Bound">p₁</a> <a id="1546" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1548" class="Bound">p₂</a> <a id="1551" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1553" class="Bound">p₃</a> <a id="1556" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1558" class="Bound">p₄</a> <a id="1561" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1563" class="Bound">p₅</a> <a id="1566" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1568" class="Bound">p₆</a> <a id="1571" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1573" class="Bound">p₇</a> <a id="1576" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1578" class="Bound">p₈</a><a id="1580" class="Symbol">))</a>
+    <a id="1587" class="Symbol">...</a> <a id="1591" class="Symbol">|</a> <a id="1593" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="1597" class="Symbol">_</a> <a id="1599" class="Keyword">with</a> <a id="1604" href="Ledger.Conway.Conformance.Utxow.Properties.html#979" class="Function">computeProof&#39;</a> <a id="1618" href="Ledger.Conway.Conformance.Utxow.Properties.html#841" class="Bound">Γ</a> <a id="1620" href="Ledger.Conway.Conformance.Utxow.Properties.html#843" class="Bound">s</a> <a id="1622" href="Ledger.Conway.Conformance.Utxow.Properties.html#845" class="Bound">tx</a> <a id="1625" class="Symbol">|</a> <a id="1627" href="Ledger.Conway.Conformance.Utxow.Properties.html#1010" class="Function">completeness&#39;</a> <a id="1641" class="Symbol">_</a> <a id="1643" class="Symbol">_</a> <a id="1645" class="Symbol">_</a> <a id="1647" class="Symbol">_</a> <a id="1649" class="Bound">h</a>
+    <a id="1655" class="Symbol">...</a> <a id="1659" class="Symbol">|</a> <a id="1661" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="1669" class="Symbol">_</a> <a id="1671" class="Symbol">|</a> <a id="1673" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a> <a id="1678" class="Symbol">=</a> <a id="1680" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+</pre>
+
 <!-- Properties -->
 
 
@@ -7432,13 +7474,13 @@
         
         
           
-          <a href="Ledger.PreConway.Conformance.NewPP.html" class="md-footer__link md-footer__link--next" aria-label="Next: NewPP">
+          <a href="Ledger.PreConway.html" class="md-footer__link md-footer__link--next" aria-label="Next: PreConway">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                NewPP
+                PreConway
               </div>
             </div>
             <div class="md-footer__button md-icon">

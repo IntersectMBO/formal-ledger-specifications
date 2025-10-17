@@ -9745,7 +9745,7 @@ du_POST'45'CERTFromConf_3462
             seq
               (coe v1)
               (coe
-                 MAlonzo.Code.Ledger.Conway.Specification.Certs.C_CERT'45'post_1668)))
+                 MAlonzo.Code.Ledger.Conway.Specification.Certs.C_CERT'45'post_1670)))
 -- Ledger.Conway.Conformance.Equivalence.Certs.CERT-POST-CERTFromConf
 d_CERT'45'POST'45'CERTFromConf_3472 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->

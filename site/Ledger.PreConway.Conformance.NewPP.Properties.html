@@ -239,6 +239,25 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="references.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  References
+
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -1024,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
         
   
   
@@ -1047,7 +1066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
         
   
   
@@ -1675,7 +1694,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
         
   
   
@@ -2461,7 +2480,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
         
   
   
@@ -2767,7 +2786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
         
   
   
@@ -2875,7 +2894,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
         
   
   
@@ -2898,7 +2917,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
         
   
   
@@ -2921,7 +2940,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
         
   
   
@@ -3472,7 +3491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
         
   
   
@@ -3518,7 +3537,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
         
   
   
@@ -3858,7 +3877,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
         
   
   
@@ -4261,7 +4280,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
         
   
   
@@ -6075,7 +6094,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.md" class="md-nav__link">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
         
   
   
@@ -6400,7 +6419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
         
   
   
@@ -6497,7 +6516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
         
   
   
@@ -7295,6 +7314,28 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="references.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -7340,33 +7381,34 @@
 
   <h1>Properties</h1>
 
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<pre class="Agda"><a id="108" class="Symbol">{-#</a> <a id="112" class="Keyword">OPTIONS</a> <a id="120" class="Pragma">--safe</a> <a id="127" class="Symbol">#-}</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Relation.Nullary.Decidable</span>
+<a id="132" class="Keyword">open</a> <a id="137" class="Keyword">import</a> <a id="144" href="Relation.Nullary.Decidable.html" class="Module">Relation.Nullary.Decidable</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Transaction</span>
+<a id="172" class="Keyword">open</a> <a id="177" class="Keyword">import</a> <a id="184" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="199" class="Keyword">open</a> <a id="204" class="Keyword">import</a> <a id="211" href="Ledger.Conway.Specification.Transaction.html" class="Module">Ledger.Conway.Specification.Transaction</a>
 
-<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.PreConway.Conformance.NewPP.Properties</span><span class="w"> </span><span class="o">(</span>txs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>TransactionStructure<span class="w"> </span>txs<span class="o">)</span><span class="w"> </span><span class="kr">where</span>
+<a id="252" class="Keyword">module</a> <a id="259" href="Ledger.PreConway.Conformance.NewPP.Properties.html" class="Module">Ledger.PreConway.Conformance.NewPP.Properties</a> <a id="305" class="Symbol">(</a><a id="306" href="Ledger.PreConway.Conformance.NewPP.Properties.html#306" class="Bound">txs</a> <a id="310" class="Symbol">:</a> <a id="312" class="Symbol">_)</a> <a id="315" class="Symbol">(</a><a id="316" class="Keyword">open</a> <a id="321" href="Ledger.Conway.Specification.Transaction.html#2461" class="Module">TransactionStructure</a> <a id="342" href="Ledger.PreConway.Conformance.NewPP.Properties.html#306" class="Bound">txs</a><a id="345" class="Symbol">)</a> <a id="347" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.PreConway.Conformance.PPUp</span><span class="w"> </span>txs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.PreConway.Conformance.NewPP</span><span class="w"> </span>txs
+<a id="354" class="Keyword">open</a> <a id="359" class="Keyword">import</a> <a id="366" href="Ledger.PreConway.Conformance.PPUp.html" class="Module">Ledger.PreConway.Conformance.PPUp</a> <a id="400" href="Ledger.PreConway.Conformance.NewPP.Properties.html#306" class="Bound">txs</a>
+<a id="404" class="Keyword">open</a> <a id="409" class="Keyword">import</a> <a id="416" href="Ledger.PreConway.Conformance.NewPP.html" class="Module">Ledger.PreConway.Conformance.NewPP</a> <a id="451" href="Ledger.PreConway.Conformance.NewPP.Properties.html#306" class="Bound">txs</a>
 
-<span class="kr">instance</span>
-<span class="w">  </span><span class="nf">Computational-NEWPP</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Computational<span class="w"> </span>_⊢_⇀⦇_,NEWPP⦈_<span class="w"> </span>String
-<span class="w">  </span>Computational-NEWPP<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span><span class="o">{</span>M<span class="o">}</span><span class="w"> </span><span class="kr">where</span><span class="w"> </span><span class="kr">module</span><span class="w"> </span><span class="n">M</span><span class="w"> </span>Γ<span class="w"> </span>s<span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>NewPParamState<span class="w"> </span>s<span class="o">)</span><span class="w"> </span><span class="kr">where</span>
-<span class="w">    </span>computeProof<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span>
-<span class="w">      </span>nothing<span class="w"> </span><span class="ow">→</span><span class="w"> </span>success<span class="w"> </span><span class="o">(</span>_<span class="w"> </span>,<span class="w"> </span>NEWPP-Reject<span class="o">)</span>
-<span class="w">      </span><span class="o">(</span>just<span class="w"> </span>upd<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span><span class="kr">let</span><span class="w"> </span>newpp<span class="w"> </span><span class="ow">=</span><span class="w"> </span>applyUpdate<span class="w"> </span>pparams<span class="w"> </span>upd<span class="w"> </span><span class="kr">in</span>
-<span class="w">        </span>case<span class="w"> </span>¿<span class="w"> </span>viablePParams<span class="w"> </span>newpp<span class="w"> </span>¿<span class="w"> </span>of<span class="w"> </span><span class="ow">λ</span><span class="w"> </span><span class="kr">where</span>
-<span class="w">          </span><span class="o">(</span>yes<span class="w"> </span>p<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>success<span class="w"> </span><span class="o">(</span>_<span class="w"> </span>,<span class="w"> </span>NEWPP-Accept<span class="w"> </span>p<span class="o">)</span>
-<span class="w">          </span><span class="o">(</span>no<span class="w"> </span>_<span class="o">)</span><span class="w">  </span><span class="ow">→</span><span class="w"> </span>failure<span class="w"> </span><span class="s">&quot;Failed in NEWPP&quot;</span>
+<a id="456" class="Keyword">instance</a>
+  <a id="Computational-NEWPP"></a><a id="467" href="Ledger.PreConway.Conformance.NewPP.Properties.html#467" class="Function">Computational-NEWPP</a> <a id="487" class="Symbol">:</a> <a id="489" href="Interface.ComputationalRelation.html#13270" class="Record">Computational</a> <a id="503" href="Ledger.PreConway.Conformance.NewPP.html#1234" class="Datatype Operator">_⊢_⇀⦇_,NEWPP⦈_</a> <a id="518" href="Agda.Builtin.String.html#335" class="Postulate">String</a>
+  <a id="527" href="Ledger.PreConway.Conformance.NewPP.Properties.html#467" class="Function">Computational-NEWPP</a> <a id="547" class="Symbol">=</a> <a id="549" class="Keyword">record</a> <a id="556" class="Symbol">{</a><a id="557" href="Ledger.PreConway.Conformance.NewPP.Properties.html#573" class="Module">M</a><a id="558" class="Symbol">}</a> <a id="560" class="Keyword">where</a> <a id="566" class="Keyword">module</a> <a id="573" href="Ledger.PreConway.Conformance.NewPP.Properties.html#573" class="Module">M</a> <a id="575" href="Ledger.PreConway.Conformance.NewPP.Properties.html#575" class="Bound">Γ</a> <a id="577" href="Ledger.PreConway.Conformance.NewPP.Properties.html#577" class="Bound">s</a> <a id="579" class="Symbol">(</a><a id="580" class="Keyword">open</a> <a id="585" href="Ledger.PreConway.Conformance.NewPP.html#435" class="Module">NewPParamState</a> <a id="600" href="Ledger.PreConway.Conformance.NewPP.Properties.html#577" class="Bound">s</a><a id="601" class="Symbol">)</a> <a id="603" class="Keyword">where</a>
+    <a id="613" href="Ledger.PreConway.Conformance.NewPP.Properties.html#613" class="Function">computeProof</a> <a id="626" class="Symbol">=</a> <a id="628" class="Symbol">λ</a> <a id="630" class="Keyword">where</a>
+      <a id="642" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a> <a id="650" class="Symbol">→</a> <a id="652" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="660" class="Symbol">(_</a> <a id="663" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="665" href="Ledger.PreConway.Conformance.NewPP.html#1549" class="InductiveConstructor">NEWPP-Reject</a><a id="677" class="Symbol">)</a>
+      <a id="685" class="Symbol">(</a><a id="686" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="691" href="Ledger.PreConway.Conformance.NewPP.Properties.html#691" class="Bound">upd</a><a id="694" class="Symbol">)</a> <a id="696" class="Symbol">→</a> <a id="698" class="Keyword">let</a> <a id="702" href="Ledger.PreConway.Conformance.NewPP.Properties.html#702" class="Bound">newpp</a> <a id="708" class="Symbol">=</a> <a id="710" href="Ledger.Conway.Specification.PParams.html#19776" class="Function">applyUpdate</a> <a id="722" href="Ledger.PreConway.Conformance.NewPP.html#475" class="Field">pparams</a> <a id="730" href="Ledger.PreConway.Conformance.NewPP.Properties.html#691" class="Bound">upd</a> <a id="734" class="Keyword">in</a>
+        <a id="745" href="Function.Base.html#4061" class="Function Operator">case</a> <a id="750" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="752" href="Ledger.PreConway.Conformance.PPUp.html#849" class="Function">viablePParams</a> <a id="766" href="Ledger.PreConway.Conformance.NewPP.Properties.html#702" class="Bound">newpp</a> <a id="772" href="Class.Decidable.Core.html#470" class="Function Operator">¿</a> <a id="774" href="Function.Base.html#4061" class="Function Operator">of</a> <a id="777" class="Symbol">λ</a> <a id="779" class="Keyword">where</a>
+          <a id="795" class="Symbol">(</a><a id="796" href="Relation.Nullary.Decidable.Core.html#2099" class="InductiveConstructor">yes</a> <a id="800" href="Ledger.PreConway.Conformance.NewPP.Properties.html#800" class="Bound">p</a><a id="801" class="Symbol">)</a> <a id="803" class="Symbol">→</a> <a id="805" href="Interface.ComputationalRelation.html#10518" class="InductiveConstructor">success</a> <a id="813" class="Symbol">(_</a> <a id="816" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="818" href="Ledger.PreConway.Conformance.NewPP.html#1336" class="InductiveConstructor">NEWPP-Accept</a> <a id="831" href="Ledger.PreConway.Conformance.NewPP.Properties.html#800" class="Bound">p</a><a id="832" class="Symbol">)</a>
+          <a id="844" class="Symbol">(</a><a id="845" href="Relation.Nullary.Decidable.Core.html#2136" class="InductiveConstructor">no</a> <a id="848" class="Symbol">_)</a>  <a id="852" class="Symbol">→</a> <a id="854" href="Interface.ComputationalRelation.html#10560" class="InductiveConstructor">failure</a> <a id="862" class="String">&quot;Failed in NEWPP&quot;</a>
 
-<span class="w">    </span><span class="nf">completeness</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>_
-<span class="w">    </span>completeness<span class="w"> </span>sig<span class="w"> </span>s&#39;<span class="w"> </span>h<span class="w"> </span><span class="kr">with</span><span class="w"> </span>sig<span class="w"> </span><span class="ow">|</span><span class="w"> </span>h
-<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>nothing<span class="w">  </span><span class="ow">|</span><span class="w"> </span>NEWPP-Reject<span class="w">   </span><span class="ow">=</span><span class="w"> </span>refl
-<span class="w">    </span><span class="ow">...</span><span class="w"> </span><span class="ow">|</span><span class="w"> </span>just<span class="w"> </span>upd<span class="w"> </span><span class="ow">|</span><span class="w"> </span>NEWPP-Accept<span class="w"> </span>p<span class="w"> </span><span class="ow">=</span><span class="w"> </span>refl
-</code></pre></div>
+    <a id="885" href="Ledger.PreConway.Conformance.NewPP.Properties.html#885" class="Function">completeness</a> <a id="898" class="Symbol">:</a> <a id="900" class="Symbol">_</a>
+    <a id="906" href="Ledger.PreConway.Conformance.NewPP.Properties.html#885" class="Function">completeness</a> <a id="919" href="Ledger.PreConway.Conformance.NewPP.Properties.html#919" class="Bound">sig</a> <a id="923" href="Ledger.PreConway.Conformance.NewPP.Properties.html#923" class="Bound">s&#39;</a> <a id="926" href="Ledger.PreConway.Conformance.NewPP.Properties.html#926" class="Bound">h</a> <a id="928" class="Keyword">with</a> <a id="933" href="Ledger.PreConway.Conformance.NewPP.Properties.html#919" class="Bound">sig</a> <a id="937" class="Symbol">|</a> <a id="939" href="Ledger.PreConway.Conformance.NewPP.Properties.html#926" class="Bound">h</a>
+    <a id="945" class="Symbol">...</a> <a id="949" class="Symbol">|</a> <a id="951" href="Agda.Builtin.Maybe.html#194" class="InductiveConstructor">nothing</a>  <a id="960" class="Symbol">|</a> <a id="962" href="Ledger.PreConway.Conformance.NewPP.html#1549" class="InductiveConstructor">NEWPP-Reject</a>   <a id="977" class="Symbol">=</a> <a id="979" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+    <a id="988" class="Symbol">...</a> <a id="992" class="Symbol">|</a> <a id="994" href="Agda.Builtin.Maybe.html#173" class="InductiveConstructor">just</a> <a id="999" href="Ledger.PreConway.Conformance.NewPP.Properties.html#999" class="Bound">upd</a> <a id="1003" class="Symbol">|</a> <a id="1005" href="Ledger.PreConway.Conformance.NewPP.html#1336" class="InductiveConstructor">NEWPP-Accept</a> <a id="1018" href="Ledger.PreConway.Conformance.NewPP.Properties.html#1018" class="Bound">p</a> <a id="1020" class="Symbol">=</a> <a id="1022" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+</pre>
+
 <!-- Properties -->
 
 

@@ -239,6 +239,25 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="references.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  References
+
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -1024,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
         
   
   
@@ -1047,7 +1066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
         
   
   
@@ -1677,7 +1696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
         
   
   
@@ -2463,7 +2482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
         
   
   
@@ -2769,7 +2788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
         
   
   
@@ -2877,7 +2896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
         
   
   
@@ -2900,7 +2919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
         
   
   
@@ -2923,7 +2942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
         
   
   
@@ -3474,7 +3493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
         
   
   
@@ -3520,7 +3539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
         
   
   
@@ -3860,7 +3879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
         
   
   
@@ -4263,7 +4282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
         
   
   
@@ -6089,7 +6108,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.md" class="md-nav__link">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
         
   
   
@@ -6400,7 +6419,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
         
   
   
@@ -6497,7 +6516,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
         
   
   
@@ -7295,6 +7314,28 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="references.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -7340,31 +7381,32 @@
 
   <h1>Enact</h1>
 
-<div class="highlight"><pre><span></span><code><span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Rational</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>ℚ<span class="o">)</span>
-<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Foreign.HSLedger.Enact</span><span class="w"> </span><span class="kr">where</span>
+<pre class="Agda"><a id="99" class="Keyword">open</a> <a id="104" class="Keyword">import</a> <a id="111" href="Data.Rational.html" class="Module">Data.Rational</a> <a id="125" class="Keyword">using</a> <a id="131" class="Symbol">(</a><a id="132" href="Data.Rational.Base.html#1421" class="Record">ℚ</a><a id="133" class="Symbol">)</a>
+<a id="135" class="Keyword">module</a> <a id="142" href="Ledger.Conway.Foreign.HSLedger.Enact.html" class="Module">Ledger.Conway.Foreign.HSLedger.Enact</a> <a id="179" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Foreign.HSLedger.Address</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Foreign.HSLedger.BaseTypes</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Foreign.HSLedger.PParams</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Foreign.HSLedger.Gov.Actions</span>
+<a id="186" class="Keyword">open</a> <a id="191" class="Keyword">import</a> <a id="198" href="Ledger.Conway.Foreign.HSLedger.Address.html" class="Module">Ledger.Conway.Foreign.HSLedger.Address</a>
+<a id="237" class="Keyword">open</a> <a id="242" class="Keyword">import</a> <a id="249" href="Ledger.Conway.Foreign.HSLedger.BaseTypes.html" class="Module">Ledger.Conway.Foreign.HSLedger.BaseTypes</a>
+<a id="290" class="Keyword">open</a> <a id="295" class="Keyword">import</a> <a id="302" href="Ledger.Conway.Foreign.HSLedger.PParams.html" class="Module">Ledger.Conway.Foreign.HSLedger.PParams</a>
+<a id="341" class="Keyword">open</a> <a id="346" class="Keyword">import</a> <a id="353" href="Ledger.Conway.Foreign.HSLedger.Gov.Actions.html" class="Module">Ledger.Conway.Foreign.HSLedger.Gov.Actions</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Enact</span><span class="w"> </span>govStructure
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Enact.Properties.Computational</span><span class="w"> </span>govStructure
+<a id="397" class="Keyword">open</a> <a id="402" class="Keyword">import</a> <a id="409" href="Ledger.Conway.Specification.Enact.html" class="Module">Ledger.Conway.Specification.Enact</a> <a id="443" href="Ledger.Conway.Specification.Transaction.html#3583" class="Function">govStructure</a>
+<a id="456" class="Keyword">open</a> <a id="461" class="Keyword">import</a> <a id="468" href="Ledger.Conway.Specification.Enact.Properties.Computational.html" class="Module">Ledger.Conway.Specification.Enact.Properties.Computational</a> <a id="527" href="Ledger.Conway.Specification.Transaction.html#3583" class="Function">govStructure</a>
 
-<span class="kr">instance</span>
-<span class="w">  </span>HsTy-EnactState<span class="w"> </span><span class="ow">=</span><span class="w"> </span>autoHsType<span class="w"> </span>EnactState<span class="w"> </span>⊣<span class="w"> </span>withConstructor<span class="w"> </span><span class="s">&quot;MkEnactState&quot;</span>
-<span class="w">                                          </span>•<span class="w"> </span>fieldPrefix<span class="w"> </span><span class="s">&quot;es&quot;</span>
-<span class="w">  </span>Conv-EnactState<span class="w"> </span><span class="ow">=</span><span class="w"> </span>autoConvert<span class="w"> </span>EnactState
+<a id="541" class="Keyword">instance</a>
+  <a id="HsTy-EnactState"></a><a id="552" href="Ledger.Conway.Foreign.HSLedger.Enact.html#552" class="Function">HsTy-EnactState</a> <a id="568" class="Symbol">=</a> <a id="570" href="Foreign.HaskellTypes.Deriving.html#11621" class="Macro Operator">autoHsType</a> <a id="581" href="Ledger.Conway.Specification.Enact.html#1629" class="Record">EnactState</a> <a id="592" href="Foreign.HaskellTypes.Deriving.html#11621" class="Macro Operator">⊣</a> <a id="594" href="Foreign.HaskellTypes.Deriving.html#3328" class="Function">withConstructor</a> <a id="610" class="String">&quot;MkEnactState&quot;</a>
+                                          <a id="667" href="Foreign.HaskellTypes.Deriving.html#3614" class="Function Operator">•</a> <a id="669" href="Foreign.HaskellTypes.Deriving.html#3510" class="Function">fieldPrefix</a> <a id="681" class="String">&quot;es&quot;</a>
+  <a id="Conv-EnactState"></a><a id="688" href="Ledger.Conway.Foreign.HSLedger.Enact.html#688" class="Function">Conv-EnactState</a> <a id="704" class="Symbol">=</a> <a id="706" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="718" href="Ledger.Conway.Specification.Enact.html#1629" class="Record">EnactState</a>
 
-<span class="w">  </span>HsTy-EnactEnv<span class="w"> </span><span class="ow">=</span><span class="w"> </span>autoHsType<span class="w"> </span>EnactEnv<span class="w"> </span>⊣<span class="w"> </span>withConstructor<span class="w"> </span><span class="s">&quot;MkEnactEnv&quot;</span>
-<span class="w">                                      </span>•<span class="w"> </span>fieldPrefix<span class="w"> </span><span class="s">&quot;ee&quot;</span>
-<span class="w">  </span>Conv-EnactEnv<span class="w"> </span><span class="ow">=</span><span class="w"> </span>autoConvert<span class="w"> </span>EnactEnv
+  <a id="HsTy-EnactEnv"></a><a id="732" href="Ledger.Conway.Foreign.HSLedger.Enact.html#732" class="Function">HsTy-EnactEnv</a> <a id="746" class="Symbol">=</a> <a id="748" href="Foreign.HaskellTypes.Deriving.html#11621" class="Macro Operator">autoHsType</a> <a id="759" href="Ledger.Conway.Specification.Enact.html#1516" class="Record">EnactEnv</a> <a id="768" href="Foreign.HaskellTypes.Deriving.html#11621" class="Macro Operator">⊣</a> <a id="770" href="Foreign.HaskellTypes.Deriving.html#3328" class="Function">withConstructor</a> <a id="786" class="String">&quot;MkEnactEnv&quot;</a>
+                                      <a id="837" href="Foreign.HaskellTypes.Deriving.html#3614" class="Function Operator">•</a> <a id="839" href="Foreign.HaskellTypes.Deriving.html#3510" class="Function">fieldPrefix</a> <a id="851" class="String">&quot;ee&quot;</a>
+  <a id="Conv-EnactEnv"></a><a id="858" href="Ledger.Conway.Foreign.HSLedger.Enact.html#858" class="Function">Conv-EnactEnv</a> <a id="872" class="Symbol">=</a> <a id="874" href="Foreign.Convertible.Deriving.html#6904" class="Macro">autoConvert</a> <a id="886" href="Ledger.Conway.Specification.Enact.html#1516" class="Record">EnactEnv</a>
 
-<span class="nf">enact-step</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HsType<span class="w"> </span><span class="o">(</span>EnactEnv<span class="w"> </span><span class="ow">→</span><span class="w"> </span>EnactState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>GovAction<span class="w"> </span><span class="ow">→</span><span class="w"> </span>ComputationResult<span class="w"> </span>String<span class="w"> </span>EnactState<span class="o">)</span>
-enact-step<span class="w"> </span><span class="ow">=</span><span class="w"> </span>to<span class="w"> </span><span class="o">(</span>compute<span class="w"> </span>Computational-ENACT<span class="o">)</span>
+<a id="enact-step"></a><a id="896" href="Ledger.Conway.Foreign.HSLedger.Enact.html#896" class="Function">enact-step</a> <a id="907" class="Symbol">:</a> <a id="909" href="Foreign.HaskellTypes.html#675" class="Function">HsType</a> <a id="916" class="Symbol">(</a><a id="917" href="Ledger.Conway.Specification.Enact.html#1516" class="Record">EnactEnv</a> <a id="926" class="Symbol">→</a> <a id="928" href="Ledger.Conway.Specification.Enact.html#1629" class="Record">EnactState</a> <a id="939" class="Symbol">→</a> <a id="941" href="Ledger.Conway.Specification.Gov.Actions.html#2834" class="Record">GovAction</a> <a id="951" class="Symbol">→</a> <a id="953" href="Interface.ComputationalRelation.html#10445" class="Datatype">ComputationResult</a> <a id="971" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="978" href="Ledger.Conway.Specification.Enact.html#1629" class="Record">EnactState</a><a id="988" class="Symbol">)</a>
+<a id="990" href="Ledger.Conway.Foreign.HSLedger.Enact.html#896" class="Function">enact-step</a> <a id="1001" class="Symbol">=</a> <a id="1003" href="Foreign.Convertible.html#230" class="Field">to</a> <a id="1006" class="Symbol">(</a><a id="1007" href="Interface.ComputationalRelation.html#13447" class="Function">compute</a> <a id="1015" href="Ledger.Conway.Specification.Enact.Properties.Computational.html#504" class="Function">Computational-ENACT</a><a id="1034" class="Symbol">)</a>
 
-<span class="cm">{-# COMPILE GHC enact-step as enactStep #-}</span>
-</code></pre></div>
+<a id="1037" class="Symbol">{-#</a> <a id="1041" class="Keyword">COMPILE</a> <a id="1049" class="Keyword">GHC</a> <a id="1053" href="Ledger.Conway.Foreign.HSLedger.Enact.html#896" class="Function">enact-step</a> <a id="1064" class="Pragma">as</a> <a id="1067" class="Pragma">enactStep</a> <a id="1077" class="Symbol">#-}</a>
+</pre>
+
 <!-- Properties -->
 
 
