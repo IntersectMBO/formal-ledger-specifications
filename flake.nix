@@ -96,12 +96,7 @@
 
           devShells = with nixpkgs; {
             default = mkShell {
-              packages = [
-                agdaWithPackages
-                fls-shake
-                python3
-                coreutils
-              ];
+              inputsFrom = builtins.attrValues pkgs;
             };
 
             # Minimal environment for CI builds (see GH actions)
@@ -113,43 +108,8 @@
 
             # Complete documentation pipeline (mkdocs)
             mkdocs = mkShell {
-              packages = [
-                # Core Agda development
-                agdaWithPackages
-                fls-shake
-
-                # Document conversion tools
-                pandoc
-                (texlive.combine {
-                  inherit (texlive)
-                    scheme-small
-                    dejavu
-                    luatex
-                    luatex85
-                    dvisvgm
-                    standalone
-                    tikz-cd
-                    pgfplots
-                    ;
-                })
-                dejavu_fonts
-
-                # Python environment for mkdocs pipeline
-                (python3.withPackages (
-                  ps: with ps; [
-                    pip
-                    mkdocs
-                    mkdocs-material
-                    pymdown-extensions
-                    pyyaml
-                    pybtex
-                  ]
-                ))
-
-                # Additional tools
-                coreutils
-                hpack
-                ghostscript
+              inputsFrom = [
+                pkgs.mkdocs
               ];
             };
           };
