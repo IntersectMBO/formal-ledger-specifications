@@ -267,7 +267,7 @@ d_Conv'45'GovVotes_42
       (coe
          (\ v0 ->
             case coe v0 of
-              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_998 v1 v2 v3
+              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1000 v1 v2 v3
                 -> coe
                      C_GovVotes_1263
                      (coe
@@ -312,7 +312,7 @@ d_Conv'45'GovVotes_42
             case coe v0 of
               C_GovVotes_1263 v1 v2 v3
                 -> coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_998
+                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1000
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
                         (coe

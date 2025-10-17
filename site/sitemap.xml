@@ -517,6 +517,50 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Abstract.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Certs.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Gov.Actions.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Gov.Base.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.PParams.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Script.Validation.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Script.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.TokenAlgebra.Base.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.Transaction.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.Specification.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Dijkstra.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Introduction.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
