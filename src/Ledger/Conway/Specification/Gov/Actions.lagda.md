@@ -177,6 +177,7 @@ record GovAction : Type where
 <!--
 ```agda
 open GovAction public
+
 record HasGovAction (A : Type) : Type where
   field GovActionOf : A → GovAction
 open HasGovAction ⦃...⦄ public

@@ -14,6 +14,7 @@
 [Certs.Properties.PoVLemmas]: Ledger.Conway.Specification.Certs.Properties.PoVLemmas.md
 [Certs.Properties.VoteDelegsVDeleg]: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.md
 [CHAIN]: Ledger.Conway.Specification.Chain.md#sec:the-chain-transition-system
+[CIPs]: https://github.com/cardano-foundation/CIPs
 [Chain.Properties.CredDepsEqualDomRwds]: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.md
 [Chain.Properties.EpochStep]: Ledger.Conway.Specification.Chain.Properties.EpochStep.md
 [Chain.Properties.PParamsWellFormed]: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md

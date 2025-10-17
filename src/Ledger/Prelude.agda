@@ -79,3 +79,4 @@ infix 6 ∣_∣
 module Filter where
   filter : ∀ {a} {p} {A : Type a} → (P : Pred A p) → ⦃ P ⁇¹ ⦄ → List A → List A
   filter P = Data.List.filter ¿ P ¿¹
+
