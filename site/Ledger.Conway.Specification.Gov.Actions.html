@@ -7716,6 +7716,7 @@ GovActionData<span class="w"> </span>Info<span class="w">                </span>
 </code></pre></div>
 <!--
 <div class="highlight"><pre><span></span><code><span class="kr">open</span><span class="w"> </span>GovAction<span class="w"> </span>public
+
 <span class="kr">record</span><span class="w"> </span>HasGovAction<span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="o">)</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
 <span class="w">  </span><span class="kr">field</span><span class="w"> </span>GovActionOf<span class="w"> </span><span class="ow">:</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>GovAction
 <span class="kr">open</span><span class="w"> </span>HasGovAction<span class="w"> </span>⦃...⦄<span class="w"> </span>public
@@ -7831,11 +7832,14 @@ submitter’s voting power when voting on their own (and competing) actions.  Fo
 proposal to be valid, the deposit must be set to the current value of
 <code class="AgdaField">govActionDeposit</code>.  The deposit will be returned when the action is
 removed from the state in any way.</p>
-<div class="highlight"><pre><span></span><code><span class="kr">record</span><span class="w"> </span>GovProposal<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
+<div class="highlight"><pre><span></span><code><span class="nf">Policy</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type
+Policy<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Maybe<span class="w"> </span>ScriptHash
+
+<span class="kr">record</span><span class="w"> </span>GovProposal<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
 <span class="w">  </span><span class="kr">field</span>
 <span class="w">    </span><span class="nf">action</span><span class="w">      </span><span class="ow">:</span><span class="w"> </span>GovAction
 <span class="w">    </span><span class="nf">prevAction</span><span class="w">  </span><span class="ow">:</span><span class="w"> </span>NeedsHash<span class="w"> </span><span class="o">(</span>gaType<span class="w"> </span>action<span class="o">)</span>
-<span class="w">    </span><span class="nf">policy</span><span class="w">      </span><span class="ow">:</span><span class="w"> </span>Maybe<span class="w"> </span>ScriptHash
+<span class="w">    </span><span class="nf">policy</span><span class="w">      </span><span class="ow">:</span><span class="w"> </span>Policy
 <span class="w">    </span><span class="nf">deposit</span><span class="w">     </span><span class="ow">:</span><span class="w"> </span>Coin
 <span class="w">    </span><span class="nf">returnAddr</span><span class="w">  </span><span class="ow">:</span><span class="w"> </span>RwdAddr
 <span class="w">    </span><span class="nf">anchor</span><span class="w">      </span><span class="ow">:</span><span class="w"> </span>Anchor
@@ -7853,7 +7857,28 @@ necessary to enact the action and to repay the deposit.</p>
 <span class="w">    </span><span class="nf">prevAction</span><span class="w">  </span><span class="ow">:</span><span class="w"> </span>NeedsHash<span class="w"> </span><span class="o">(</span>gaType<span class="w"> </span>action<span class="o">)</span>
 </code></pre></div>
 <!--
-<div class="highlight"><pre><span></span><code><span class="kr">instance</span>
+<div class="highlight"><pre><span></span><code><span class="kr">record</span><span class="w"> </span>HasGovVoter<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="o">)</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span><span class="w"> </span>GovVoterOf<span class="w"> </span><span class="ow">:</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>GovVoter
+<span class="kr">open</span><span class="w"> </span>HasGovVoter<span class="w"> </span>⦃...⦄<span class="w"> </span>public
+
+<span class="kr">record</span><span class="w"> </span>HasVote<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="o">)</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span><span class="w"> </span>VoteOf<span class="w"> </span><span class="ow">:</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Vote
+<span class="kr">open</span><span class="w"> </span>HasVote<span class="w"> </span>⦃...⦄<span class="w"> </span>public
+
+<span class="kr">record</span><span class="w"> </span>HasPolicy<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="o">)</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="w"> </span><span class="kr">where</span>
+<span class="w">  </span><span class="kr">field</span><span class="w"> </span>PolicyOf<span class="w"> </span><span class="ow">:</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Policy
+<span class="kr">open</span><span class="w"> </span>HasPolicy<span class="w"> </span>⦃...⦄<span class="w"> </span>public
+
+<span class="kr">instance</span>
+<span class="w">  </span><span class="nf">HasGovVoter-GovVote</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasGovVoter<span class="w"> </span>GovVote
+<span class="w">  </span>HasGovVoter-GovVote<span class="w"> </span><span class="ow">.</span>GovVoterOf<span class="w"> </span><span class="ow">=</span><span class="w"> </span>GovVote.voter
+
+<span class="w">  </span><span class="nf">HasVote-GovVote</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasVote<span class="w"> </span>GovVote
+<span class="w">  </span>HasVote-GovVote<span class="w"> </span><span class="ow">.</span>VoteOf<span class="w"> </span><span class="ow">=</span><span class="w"> </span>GovVote.vote
+
+<span class="w">  </span><span class="nf">HasPolicy-GovProposal</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasPolicy<span class="w"> </span>GovProposal
+<span class="w">  </span>HasPolicy-GovProposal<span class="w"> </span><span class="ow">.</span>PolicyOf<span class="w"> </span><span class="ow">=</span><span class="w"> </span>GovProposal.policy
+
 <span class="w">  </span><span class="nf">HasGovAction-GovProposal</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasGovAction<span class="w"> </span>GovProposal
 <span class="w">  </span>HasGovAction-GovProposal<span class="w"> </span><span class="ow">.</span>GovActionOf<span class="w"> </span><span class="ow">=</span><span class="w"> </span>GovProposal.action
 
