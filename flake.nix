@@ -52,14 +52,19 @@
             ];
           };
 
-          agdaWithPackages = nixpkgs.agda.withPackages (
+          # fls-agda with formal-ledger dependencies
+          fls-agdaWithPackages = nixpkgs.agda.withPackages (
             builtins.filter (p: p ? isAgdaDerivation) nixpkgs.agdaPackages.formal-ledger.buildInputs
           );
 
+          # Override fls-agda in fls-shake to use fls-agda with the formal-ledger dependencies
           fls-shake = inputs.fls-shake.packages.${system}.default.override (_: {
-            fls-agda = agdaWithPackages;
+            fls-agda = fls-agdaWithPackages;
           });
 
+          formal-ledger = nixpkgs.agdaPackages.formal-ledger;
+
+          # Helper to create derivations that reuse _build from formal-ledger
           mkDerivation =
             args:
             let
@@ -67,12 +72,12 @@
                 version = "0.1";
                 meta = args.meta or { };
                 buildInputs = (args.buildInputs or [ ]) ++ [
-                  agdaWithPackages
+                  formal-ledger
+                  fls-agdaWithPackages
                   fls-shake
-                  nixpkgs.agdaPackages.formal-ledger
                 ];
                 copyAgdaBuild = ''
-                  cp -r "${nixpkgs.agdaPackages.formal-ledger}/_build" .
+                  cp -r "${formal-ledger}/_build" .
                   find _build -type d -print0 | xargs -0 chmod 755
                   find _build -type f -print0 | xargs -0 chmod 644
                 '';
@@ -82,18 +87,27 @@
             nixpkgs.stdenv.mkDerivation (args // default);
 
           pkgs = {
-            formal-ledger = nixpkgs.agdaPackages.formal-ledger;
+            inherit formal-ledger;
             hs-src = nixpkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
             html = nixpkgs.callPackage ./build-tools/nix/html.nix { inherit mkDerivation; };
-            mkdocs = nixpkgs.callPackage ./build-tools/nix/mkdocs.nix { inherit mkDerivation; };
+            mkdocs = nixpkgs.callPackage ./build-tools/nix/mkdocs.nix {
+              inherit (nixpkgs.stdenv) mkDerivation;
+              inherit fls-agdaWithPackages;
+            };
           };
         in
         {
+          # ========================
+          # Packages
+          # ========================
           packages = pkgs // {
-            default = pkgs.formal-ledger;
-            inherit agdaWithPackages;
+            default = formal-ledger;
+            inherit fls-agdaWithPackages;
           };
 
+          # ========================
+          # Developer shells
+          # ========================
           devShells = with nixpkgs; {
             default = mkShell {
               inputsFrom = builtins.attrValues pkgs;
@@ -114,10 +128,13 @@
             };
           };
 
+          # ========================
+          # Hydra jobs
+          # ========================
           hydraJobs =
             let
               jobs = {
-                inherit agdaWithPackages;
+                inherit fls-agdaWithPackages;
                 formal-ledger = nixpkgs.agdaPackages.formal-ledger;
               }
               // pkgs;
