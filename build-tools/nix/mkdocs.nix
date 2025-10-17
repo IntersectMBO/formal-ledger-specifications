@@ -1,6 +1,7 @@
 {
   lib,
   mkDerivation,
+  fls-agdaWithPackages,
   dejavu_fonts,
   ghostscript,
   pandoc,
@@ -8,7 +9,8 @@
   texlive,
 }:
 mkDerivation {
-  pname = "mkdocs";
+  name = "mkdocs";
+  version = "0.1";
   src = lib.fileset.toSource {
     root = ../../.;
     fileset = lib.fileset.unions [
@@ -24,6 +26,9 @@ mkDerivation {
   };
   meta = { };
   buildInputs = [
+    dejavu_fonts
+    fls-agdaWithPackages
+    ghostscript
     pandoc
     (python3.withPackages (
       ps: with ps; [
@@ -51,8 +56,6 @@ mkDerivation {
         pgfplots
         ;
     })
-    dejavu_fonts
-    ghostscript
   ];
   buildPhase = ''
     runHook preBuild

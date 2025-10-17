@@ -307,11 +307,14 @@ proposal to be valid, the deposit must be set to the current value of
 removed from the state in any way.
 
 ```agda
+Policy : Type
+Policy = Maybe ScriptHash
+
 record GovProposal : Type where
   field
     action      : GovAction
     prevAction  : NeedsHash (gaType action)
-    policy      : Maybe ScriptHash
+    policy      : Policy
     deposit     : Coin
     returnAddr  : RwdAddr
     anchor      : Anchor
@@ -335,7 +338,28 @@ record GovActionState : Type where
 
 <!--
 ```agda
+record HasGovVoter {a} (A : Type a) : Type a where
+  field GovVoterOf : A → GovVoter
+open HasGovVoter ⦃...⦄ public
+
+record HasVote {a} (A : Type a) : Type a where
+  field VoteOf : A → Vote
+open HasVote ⦃...⦄ public
+
+record HasPolicy {a} (A : Type a) : Type a where
+  field PolicyOf : A → Policy
+open HasPolicy ⦃...⦄ public
+
 instance
+  HasGovVoter-GovVote : HasGovVoter GovVote
+  HasGovVoter-GovVote .GovVoterOf = GovVote.voter
+
+  HasVote-GovVote : HasVote GovVote
+  HasVote-GovVote .VoteOf = GovVote.vote
+
+  HasPolicy-GovProposal : HasPolicy GovProposal
+  HasPolicy-GovProposal .PolicyOf = GovProposal.policy
+
   HasGovAction-GovProposal : HasGovAction GovProposal
   HasGovAction-GovProposal .GovActionOf = GovProposal.action
 
