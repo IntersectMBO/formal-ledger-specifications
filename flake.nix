@@ -67,6 +67,7 @@
                 version = "0.1";
                 meta = args.meta or { };
                 buildInputs = (args.buildInputs or [ ]) ++ [
+                  agdaWithPackages
                   fls-shake
                   nixpkgs.agdaPackages.formal-ledger
                 ];

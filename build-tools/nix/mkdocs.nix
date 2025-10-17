@@ -1,7 +1,6 @@
 {
   lib,
   mkDerivation,
-  agda,
   pandoc,
   python3,
   ghostscript,
@@ -23,7 +22,6 @@ mkDerivation {
   };
   meta = { };
   buildInputs = [
-    agda
     pandoc
     (python3.withPackages (
       ps: with ps; [
