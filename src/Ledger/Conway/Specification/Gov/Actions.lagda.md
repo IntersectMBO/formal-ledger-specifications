@@ -63,13 +63,12 @@ GovActionID : Type
 GovActionID  = TxId × ℕ
 ```
 
-`VDeleg`{.AgdaDatatype} represents voter delegation and specifies the different ways
-to delegate votes.  To delegate voting stake, the stake holder provides one of the
-following:
+The type `VDeleg`{.AgdaDatatype} represents the different ways in which
+voting stake can be delegated:
 
-1. a credential (`vDelegCredential`{.AgdaInductiveConstructor});
-2. an abstention (`vDelegAbstain`{.AgdaInductiveConstructor});
-3. a vote of no confidence (`vDelegNoConfidence`{.AgdaInductiveConstructor}).
+1. to the credential of a `DRep` (`vDelegCredential`{.AgdaInductiveConstructor});
+2. to an abstention (`vDelegAbstain`{.AgdaInductiveConstructor});
+3. to a vote of no confidence (`vDelegNoConfidence`{.AgdaInductiveConstructor}).
 
 ```agda
 data VDeleg : Type where
