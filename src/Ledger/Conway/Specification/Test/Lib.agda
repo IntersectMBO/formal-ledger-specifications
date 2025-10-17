@@ -1,17 +1,24 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (fromList; ε; _/_); open Computational
+open import Ledger.Prelude  hiding (fromList; ε; _/_); open Computational
 open import Ledger.Conway.Specification.Test.Prelude
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Conway.Specification.Test.LedgerImplementation using (SVTransactionStructure)
+open import Ledger.Conway.Specification.ScriptPurpose using ()
 
-module Ledger.Conway.Specification.Test.Lib (A D : Type)
-  (scriptImp : ScriptImplementation A D) (open ScriptImplementation scriptImp)
+module Ledger.Conway.Specification.Test.Lib (T D : Set){{DecEq-Data : DecEq D}}{{Show-Data : Show D}}
+  -- (open TransactionStructure (SVTransactionStructure T D) using (TxInfo; ScriptPurpose))
+  (open Ledger.Conway.Specification.ScriptPurpose (SVTransactionStructure T D) using (TxInfo; ScriptPurpose))
+  (valContext' : TxInfo → ScriptPurpose → D)
   where
 
-open import Ledger.Conway.Specification.Test.LedgerImplementation A D scriptImp
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Test.AbstractImplementation T D valContext'
+open import Ledger.Conway.Specification.Test.LedgerImplementation T D 
+  renaming (SVTransactionStructure to SVTransactionStructure')
+open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure' SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo SVTransactionStructure' SVAbstractFunctions
 open import Ledger.Conway.Specification.Transaction
-open TransactionStructure SVTransactionStructure
+open TransactionStructure SVTransactionStructure'
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Prelude.Numeric using (mkUnitInterval; mkℕ⁺)
 open EpochStructure SVEpochStructure
@@ -115,5 +122,11 @@ notEmpty (x ∷ xs) = ⊤
 isSuccess : ComputationResult String UTxOState → Bool
 isSuccess (success x) = true
 isSuccess (failure x) = false
+
+applyScriptWithContext : (Maybe D → Maybe D → List D → Bool) → List D → Bool
+applyScriptWithContext f [] = f nothing nothing []
+applyScriptWithContext f (_ ∷ []) = f nothing nothing []
+applyScriptWithContext f (redeemer ∷ valcontext ∷ []) = f nothing (just redeemer) []
+applyScriptWithContext f (datum ∷ redeemer ∷ valcontext ∷ vs) = f (just datum) (just redeemer) (valcontext ∷ vs)
 
 -- [1] https://github.com/IntersectMBO/cardano-ledger/blob/master/docs/adr/2024-08-14_009-refscripts-fee-change.md

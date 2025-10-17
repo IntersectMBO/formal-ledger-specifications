@@ -1,12 +1,9 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Test.Prelude
-open import Prelude using (Type)
+open import Ledger.Prelude hiding (fromList; ε); open Computational
 
 module Ledger.Conway.Specification.Test.LedgerImplementation
-  (T D : Type)
-  (scriptImp : ScriptImplementation T D) (open ScriptImplementation scriptImp)
-  where
+  (T D : Set) {{DecEq-Data : DecEq D}} {{Show-Data : Show D}} where
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 import      Data.Integer as ℤ
@@ -21,7 +18,7 @@ open import Ledger.Conway.Specification.Transaction
 open import Ledger.Core.Specification.Epoch
 open import Ledger.Conway.Specification.Gov.Base
 
-module _ {A : Type} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
+module _ {A : Set} ⦃ _ : DecEq A ⦄ ⦃ _ : Show A ⦄ where instance
   ∀Hashable : Hashable A A
   ∀Hashable = λ where .hash → id
 
@@ -35,10 +32,10 @@ instance
 module Implementation where
   Network          = ℕ
   SlotsPerEpochᶜ   = 100
-  ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20
+  ActiveSlotCoeff  = ℤ.1ℤ ℚ./ 20  
   StabilityWindowᶜ = 10
-  RandomnessStabilisationWindowᶜ = 10
-  MaxLovelaceSupplyᶜ = 1
+  RandomnessStabilisationWindowᶜ = 2
+  MaxLovelaceSupplyᶜ = 1000000000000000000
   Quorum           = 1
   NetworkId        = 0
 
@@ -51,9 +48,7 @@ module Implementation where
   sign       = _+_
 
   Data         = D
-  Dataʰ        = mkHashableSet Data
-  toData : ∀ {A : Type} → A → D
-  toData = toData' -- fix this
+  Dataʰ        = mkHashableSet D
 
   PlutusScript = ℕ × (List Data → Bool)
   ScriptHash = ℕ
@@ -80,13 +75,12 @@ module Implementation where
     where open import Ledger.Conway.Specification.TokenAlgebra.Coin ScriptHash
             using (Coin-TokenAlgebra)
 
-
 SVGlobalConstants = GlobalConstants ∋ record {Implementation}
 SVEpochStructure  = EpochStructure  ∋ ℕEpochStructure SVGlobalConstants
 instance _ = SVEpochStructure
 
-SVCryptoStructure : CryptoStructure
-SVCryptoStructure = record
+SVCrypto : CryptoStructure
+SVCrypto = record
   { Implementation
   ; pkk = SVPKKScheme
   }
@@ -95,15 +89,15 @@ SVCryptoStructure = record
   SVPKKScheme : PKKScheme
   SVPKKScheme = record
     { Implementation
-    ; isSigned         = λ a b m → ⊤
-    ; sign             = λ _ _ → zero
-    ; isSigned-correct = λ where (sk , sk , refl) _ _ h → tt
+    ; isSigned         = λ a b m → a + b ≡ m
+    ; sign             = _+_
+    ; isSigned-correct = λ where (sk , sk , refl) _ _ h → h
     }
 
-instance _ = SVCryptoStructure
+instance _ = SVCrypto
 
 open import Ledger.Conway.Specification.Script it it
-open import Ledger.Conway.Conformance.Script it it
+open import Ledger.Conway.Conformance.Script it it public using (P1ScriptStructure-HTL)
 
 SVScriptStructure : ScriptStructure
 SVScriptStructure = record
@@ -146,7 +140,7 @@ SVGovStructure = record
   { Implementation
   ; epochStructure  = SVEpochStructure
   ; govParams       = SVGovParams
-  ; cryptoStructure = SVCryptoStructure
+  ; cryptoStructure = SVCrypto
   ; globalConstants = SVGlobalConstants
   }
 instance _ = SVGovStructure
@@ -160,7 +154,7 @@ SVTransactionStructure = record
   ; epochStructure  = SVEpochStructure
   ; globalConstants = SVGlobalConstants
   ; adHashingScheme = it
-  ; cryptoStructure = SVCryptoStructure
+  ; cryptoStructure = SVCrypto
   ; govParams       = SVGovParams
   ; txidBytes       = id
   ; scriptStructure = SVScriptStructure
@@ -168,27 +162,9 @@ SVTransactionStructure = record
 instance _ = SVTransactionStructure
 
 open import Ledger.Conway.Specification.Abstract it
-open import Ledger.Conway.Specification.Gov it
+open import Ledger.Conway.Conformance.Gov it
 
 open TransactionStructure it
 
 indexOfTxInImp : TxIn → ℙ TxIn → Maybe Ix
 indexOfTxInImp x y = lookupᵐ? (fromListᵐ (setToList y)) (proj₁ x)
-
-SVAbstractFunctions : AbstractFunctions
-SVAbstractFunctions = record
-  { Implementation
-  ; txscriptfee = λ tt y → 0
-  ; serSize     = λ v → 0 -- changed to 0
-  ; indexOfImp  = record
-    { indexOfDCert    = λ _ _ → nothing
-    ; indexOfRwdAddr  = λ _ _ → nothing
-    ; indexOfTxIn     = indexOfTxInImp
-    ; indexOfPolicyId = λ _ _ → nothing
-    ; indexOfVote     = λ _ _ → nothing
-    ; indexOfProposal = λ _ _ → nothing
-    }
-  ; runPLCScript = λ { x x₁ x₂ x₃ → proj₂ x₁ x₃ }
-  ; scriptSize = λ _ → 0
-  }
-instance _ = SVAbstractFunctions
