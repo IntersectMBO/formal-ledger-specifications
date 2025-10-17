@@ -239,6 +239,25 @@
   
 
       
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="references.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  References
+
+      </a>
+    </li>
+  
+
+      
     </ul>
   </div>
 </nav>
@@ -1024,7 +1043,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Address.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Address.html" class="md-nav__link">
         
   
   
@@ -1047,7 +1066,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Core.Specification.Crypto.md" class="md-nav__link">
+      <a href="Ledger.Core.Specification.Crypto.html" class="md-nav__link">
         
   
   
@@ -1677,7 +1696,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Chain.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Chain.html" class="md-nav__link">
         
   
   
@@ -2463,7 +2482,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Gov.Actions.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Gov.Actions.html" class="md-nav__link">
         
   
   
@@ -2769,7 +2788,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ledger.Properties.Computational.html" class="md-nav__link">
         
   
   
@@ -2877,7 +2896,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.PParams.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.PParams.html" class="md-nav__link">
         
   
   
@@ -2900,7 +2919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Properties.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Properties.html" class="md-nav__link">
         
   
   
@@ -2923,7 +2942,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Ratify.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Ratify.html" class="md-nav__link">
         
   
   
@@ -3474,7 +3493,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.Base.html" class="md-nav__link">
         
   
   
@@ -3520,7 +3539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.TokenAlgebra.ValueSet.html" class="md-nav__link">
         
   
   
@@ -3860,7 +3879,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Utxow.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Utxow.html" class="md-nav__link">
         
   
   
@@ -4263,7 +4282,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.Conway.Specification.Test.StructuredContracts.md" class="md-nav__link">
+      <a href="Ledger.Conway.Specification.Test.StructuredContracts.html" class="md-nav__link">
         
   
   
@@ -6087,7 +6106,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.md" class="md-nav__link">
+      <a href="Ledger.PreConway.html" class="md-nav__link">
         
   
   
@@ -6398,7 +6417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.NewPP.md" class="md-nav__link">
+      <a href="Ledger.PreConway.NewPP.html" class="md-nav__link">
         
   
   
@@ -6495,7 +6514,7 @@
   
   
     <li class="md-nav__item">
-      <a href="Ledger.PreConway.PPUp.md" class="md-nav__link">
+      <a href="Ledger.PreConway.PPUp.html" class="md-nav__link">
         
   
   
@@ -7293,6 +7312,28 @@
   
 
     
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="references.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    References
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
   </ul>
 </nav>
                   </div>
@@ -7338,55 +7379,58 @@
 
   <h1>Script</h1>
 
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<pre class="Agda">
+<a id="96" class="Symbol">{-#</a> <a id="100" class="Keyword">OPTIONS</a> <a id="108" class="Pragma">--safe</a> <a id="115" class="Symbol">#-}</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Algebra.Morphism</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.List.Relation.Unary.All</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>All;<span class="w"> </span>[];<span class="w"> </span>_∷_;<span class="w"> </span>all?;<span class="w"> </span>uncons<span class="o">)</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.List.Relation.Unary.Any</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Nat.Properties</span><span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>+-0-commutativeMonoid;<span class="w"> </span>suc-injective<span class="o">)</span>
+<a id="120" class="Keyword">open</a> <a id="125" class="Keyword">import</a> <a id="132" href="Algebra.Morphism.html" class="Module">Algebra.Morphism</a>
+<a id="149" class="Keyword">open</a> <a id="154" class="Keyword">import</a> <a id="161" href="Data.List.Relation.Unary.All.html" class="Module">Data.List.Relation.Unary.All</a> <a id="190" class="Keyword">using</a> <a id="196" class="Symbol">(</a><a id="197" href="Data.List.Relation.Unary.All.html#1638" class="Datatype">All</a><a id="200" class="Symbol">;</a> <a id="202" href="Data.List.Relation.Unary.All.html#1701" class="InductiveConstructor">[]</a><a id="204" class="Symbol">;</a> <a id="206" href="Data.List.Relation.Unary.All.html#1718" class="InductiveConstructor Operator">_∷_</a><a id="209" class="Symbol">;</a> <a id="211" href="Data.List.Relation.Unary.All.html#6419" class="Function">all?</a><a id="215" class="Symbol">;</a> <a id="217" href="Data.List.Relation.Unary.All.html#2472" class="Function">uncons</a><a id="223" class="Symbol">)</a>
+<a id="225" class="Keyword">open</a> <a id="230" class="Keyword">import</a> <a id="237" href="Data.List.Relation.Unary.Any.html" class="Module">Data.List.Relation.Unary.Any</a>
+<a id="266" class="Keyword">open</a> <a id="271" class="Keyword">import</a> <a id="278" href="Data.Nat.Properties.html" class="Module">Data.Nat.Properties</a> <a id="298" class="Keyword">using</a> <a id="304" class="Symbol">(</a><a id="305" href="Data.Nat.Properties.html#17645" class="Function">+-0-commutativeMonoid</a><a id="326" class="Symbol">;</a> <a id="328" href="Data.Nat.Properties.html#3485" class="Function">suc-injective</a><a id="341" class="Symbol">)</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">stdlib.Data.List.Relation.Unary.MOf</span>
+<a id="344" class="Keyword">open</a> <a id="349" class="Keyword">import</a> <a id="356" href="stdlib.Data.List.Relation.Unary.MOf.html" class="Module">stdlib.Data.List.Relation.Unary.MOf</a>
 
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span><span class="w"> </span><span class="kr">hiding</span><span class="w"> </span><span class="o">(</span>All;<span class="w"> </span>Any;<span class="w"> </span>all?;<span class="w"> </span>any?;<span class="w"> </span>_∷ʳ_;<span class="w"> </span>uncons;<span class="w"> </span>_⊆_<span class="o">)</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Core.Specification.Crypto</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Core.Specification.Epoch</span>
+<a id="394" class="Keyword">open</a> <a id="399" class="Keyword">import</a> <a id="406" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a> <a id="421" class="Keyword">hiding</a> <a id="428" class="Symbol">(</a><a id="429" href="Axiom.Set.html#9724" class="Function">All</a><a id="432" class="Symbol">;</a> <a id="434" href="Axiom.Set.html#9793" class="Function">Any</a><a id="437" class="Symbol">;</a> <a id="439" href="Axiom.Set.html#10903" class="Function">all?</a><a id="443" class="Symbol">;</a> <a id="445" href="Axiom.Set.html#10977" class="Function">any?</a><a id="449" class="Symbol">;</a> <a id="451" href="Data.List.Base.html#7153" class="Function Operator">_∷ʳ_</a><a id="455" class="Symbol">;</a> <a id="457" href="Data.List.Base.html#8047" class="Function">uncons</a><a id="463" class="Symbol">;</a> <a id="465" href="Interface.HasSubset.html#239" class="Field Operator">_⊆_</a><a id="468" class="Symbol">)</a>
+<a id="470" class="Keyword">open</a> <a id="475" class="Keyword">import</a> <a id="482" href="Ledger.Core.Specification.Crypto.html" class="Module">Ledger.Core.Specification.Crypto</a>
+<a id="515" class="Keyword">open</a> <a id="520" class="Keyword">import</a> <a id="527" href="Ledger.Core.Specification.Epoch.html" class="Module">Ledger.Core.Specification.Epoch</a>
 
-<span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Script</span>
+<a id="560" class="Keyword">import</a> <a id="567" href="Ledger.Conway.Specification.Script.html" class="Module">Ledger.Conway.Specification.Script</a>
 
-<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Conformance.Script</span>
-<span class="w">  </span><span class="o">(</span>cs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>CryptoStructure<span class="w"> </span>cs<span class="o">)</span>
-<span class="w">  </span><span class="o">(</span>es<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>EpochStructure<span class="w"> </span>es<span class="o">)</span>
-<span class="w">  </span><span class="kr">where</span>
+<a id="603" class="Keyword">module</a> <a id="610" href="Ledger.Conway.Conformance.Script.html" class="Module">Ledger.Conway.Conformance.Script</a>
+  <a id="645" class="Symbol">(</a><a id="646" href="Ledger.Conway.Conformance.Script.html#646" class="Bound">cs</a> <a id="649" class="Symbol">:</a> <a id="651" class="Symbol">_)</a> <a id="654" class="Symbol">(</a><a id="655" class="Keyword">open</a> <a id="660" href="Ledger.Core.Specification.Crypto.html#2045" class="Module">CryptoStructure</a> <a id="676" href="Ledger.Conway.Conformance.Script.html#646" class="Bound">cs</a><a id="678" class="Symbol">)</a>
+  <a id="682" class="Symbol">(</a><a id="683" href="Ledger.Conway.Conformance.Script.html#683" class="Bound">es</a> <a id="686" class="Symbol">:</a> <a id="688" class="Symbol">_)</a> <a id="691" class="Symbol">(</a><a id="692" class="Keyword">open</a> <a id="697" href="Ledger.Core.Specification.Epoch.html#623" class="Module">EpochStructure</a> <a id="712" href="Ledger.Conway.Conformance.Script.html#683" class="Bound">es</a><a id="714" class="Symbol">)</a>
+  <a id="718" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span>Ledger.Conway.Specification.Script<span class="w"> </span>cs<span class="w"> </span>es
+<a id="725" class="Keyword">open</a> <a id="730" href="Ledger.Conway.Specification.Script.html" class="Module">Ledger.Conway.Specification.Script</a> <a id="765" href="Ledger.Conway.Conformance.Script.html#646" class="Bound">cs</a> <a id="768" href="Ledger.Conway.Conformance.Script.html#683" class="Bound">es</a>
 
-<span class="kr">record</span><span class="w"> </span>HSTimelock<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
-<span class="w">  </span><span class="kr">field</span>
-<span class="w">    </span><span class="nf">timelock</span><span class="w">     </span><span class="ow">:</span><span class="w"> </span>Timelock
-<span class="w">    </span><span class="nf">tlScriptHash</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ScriptHash
-<span class="w">    </span><span class="nf">tlScriptSize</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℕ
+<a id="772" class="Keyword">record</a> <a id="HSTimelock"></a><a id="779" href="Ledger.Conway.Conformance.Script.html#779" class="Record">HSTimelock</a> <a id="790" class="Symbol">:</a> <a id="792" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="797" class="Keyword">where</a>
+  <a id="805" class="Keyword">field</a>
+    <a id="HSTimelock.timelock"></a><a id="815" href="Ledger.Conway.Conformance.Script.html#815" class="Field">timelock</a>     <a id="828" class="Symbol">:</a> <a id="830" href="Ledger.Conway.Specification.Script.Timelock.html#1397" class="Datatype">Timelock</a>
+    <a id="HSTimelock.tlScriptHash"></a><a id="843" href="Ledger.Conway.Conformance.Script.html#843" class="Field">tlScriptHash</a> <a id="856" class="Symbol">:</a> <a id="858" href="Ledger.Core.Specification.Crypto.html#2177" class="Field">ScriptHash</a>
+    <a id="HSTimelock.tlScriptSize"></a><a id="873" href="Ledger.Conway.Conformance.Script.html#873" class="Field">tlScriptSize</a> <a id="886" class="Symbol">:</a> <a id="888" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
 
-<span class="kr">instance</span>
-<span class="w">  </span><span class="nf">Hashable-HSTimelock</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Hashable<span class="w"> </span>HSTimelock<span class="w"> </span>ScriptHash
-<span class="w">  </span>Hashable-HSTimelock<span class="w"> </span><span class="ow">.</span>hash<span class="w"> </span><span class="ow">=</span><span class="w"> </span>HSTimelock.tlScriptHash
+<a id="891" class="Keyword">instance</a>
+  <a id="Hashable-HSTimelock"></a><a id="902" href="Ledger.Conway.Conformance.Script.html#902" class="Function">Hashable-HSTimelock</a> <a id="922" class="Symbol">:</a> <a id="924" href="Interface.Hashable.html#238" class="Record">Hashable</a> <a id="933" href="Ledger.Conway.Conformance.Script.html#779" class="Record">HSTimelock</a> <a id="944" href="Ledger.Core.Specification.Crypto.html#2177" class="Field">ScriptHash</a>
+  <a id="957" href="Ledger.Conway.Conformance.Script.html#902" class="Function">Hashable-HSTimelock</a> <a id="977" class="Symbol">.</a><a id="978" href="Interface.Hashable.html#285" class="Field">hash</a> <a id="983" class="Symbol">=</a> <a id="985" href="Ledger.Conway.Conformance.Script.html#843" class="Field">HSTimelock.tlScriptHash</a>
 
-<span class="kr">unquoteDecl</span><span class="w"> </span>DecEq-HSTimelock<span class="w"> </span><span class="ow">=</span><span class="w"> </span>derive-DecEq<span class="w"> </span><span class="o">((</span><span class="kr">quote</span><span class="w"> </span>HSTimelock<span class="w"> </span>,<span class="w"> </span>DecEq-HSTimelock<span class="o">)</span><span class="w"> </span>∷<span class="w"> </span>[]<span class="o">)</span>
+<a id="1010" class="Keyword">unquoteDecl</a> <a id="DecEq-HSTimelock"></a><a id="1022" href="Ledger.Conway.Conformance.Script.html#1022" class="Function">DecEq-HSTimelock</a> <a id="1039" class="Symbol">=</a> <a id="1041" href="Tactic.Derive.DecEq.html#5150" class="Function">derive-DecEq</a> <a id="1054" class="Symbol">((</a><a id="1056" class="Keyword">quote</a> <a id="1062" href="Ledger.Conway.Conformance.Script.html#779" class="Record">HSTimelock</a> <a id="1073" href="Agda.Builtin.Sigma.html#235" class="InductiveConstructor Operator">,</a> <a id="1075" href="Ledger.Conway.Conformance.Script.html#1022" class="Function">DecEq-HSTimelock</a><a id="1091" class="Symbol">)</a> <a id="1093" href="Agda.Builtin.List.html#199" class="InductiveConstructor Operator">∷</a> <a id="1095" href="Agda.Builtin.List.html#184" class="InductiveConstructor">[]</a><a id="1097" class="Symbol">)</a>
 
-<span class="kr">record</span><span class="w"> </span>HSPlutusScript<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span><span class="kr">where</span>
-<span class="w">  </span><span class="kr">constructor</span><span class="w"> </span>MkHSPlutusScript
-<span class="w">  </span><span class="kr">field</span><span class="w"> </span>psScriptHash<span class="w"> </span><span class="ow">:</span><span class="w"> </span>ScriptHash
-<span class="w">        </span><span class="nf">psScriptSize</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>ℕ
+<a id="1100" class="Keyword">record</a> <a id="HSPlutusScript"></a><a id="1107" href="Ledger.Conway.Conformance.Script.html#1107" class="Record">HSPlutusScript</a> <a id="1122" class="Symbol">:</a> <a id="1124" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="1129" class="Keyword">where</a>
+  <a id="1137" class="Keyword">constructor</a> <a id="MkHSPlutusScript"></a><a id="1149" href="Ledger.Conway.Conformance.Script.html#1149" class="InductiveConstructor">MkHSPlutusScript</a>
+  <a id="1168" class="Keyword">field</a> <a id="HSPlutusScript.psScriptHash"></a><a id="1174" href="Ledger.Conway.Conformance.Script.html#1174" class="Field">psScriptHash</a> <a id="1187" class="Symbol">:</a> <a id="1189" href="Ledger.Core.Specification.Crypto.html#2177" class="Field">ScriptHash</a>
+        <a id="HSPlutusScript.psScriptSize"></a><a id="1208" href="Ledger.Conway.Conformance.Script.html#1208" class="Field">psScriptSize</a> <a id="1221" class="Symbol">:</a> <a id="1223" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
 
-<span class="kr">instance</span>
-<span class="w">  </span><span class="nf">Hashable-HSPlutusScript</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Hashable<span class="w"> </span>HSPlutusScript<span class="w"> </span>ScriptHash
-<span class="w">  </span>Hashable-HSPlutusScript<span class="w"> </span><span class="ow">.</span>hash<span class="w"> </span><span class="ow">=</span><span class="w"> </span>HSPlutusScript.psScriptHash
+<a id="1226" class="Keyword">instance</a>
+  <a id="Hashable-HSPlutusScript"></a><a id="1237" href="Ledger.Conway.Conformance.Script.html#1237" class="Function">Hashable-HSPlutusScript</a> <a id="1261" class="Symbol">:</a> <a id="1263" href="Interface.Hashable.html#238" class="Record">Hashable</a> <a id="1272" href="Ledger.Conway.Conformance.Script.html#1107" class="Record">HSPlutusScript</a> <a id="1287" href="Ledger.Core.Specification.Crypto.html#2177" class="Field">ScriptHash</a>
+  <a id="1300" href="Ledger.Conway.Conformance.Script.html#1237" class="Function">Hashable-HSPlutusScript</a> <a id="1324" class="Symbol">.</a><a id="1325" href="Interface.Hashable.html#285" class="Field">hash</a> <a id="1330" class="Symbol">=</a> <a id="1332" href="Ledger.Conway.Conformance.Script.html#1174" class="Field">HSPlutusScript.psScriptHash</a>
 
-<span class="nf">P1ScriptStructure-HTL</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>P1ScriptStructure
-P1ScriptStructure-HTL<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span>
-<span class="w">  </span><span class="o">{</span><span class="w"> </span>P1Script<span class="w"> </span><span class="ow">=</span><span class="w"> </span>HSTimelock
-<span class="w">  </span>;<span class="w"> </span>validP1Script<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="ow">λ</span><span class="w"> </span>x<span class="w"> </span>y<span class="w"> </span><span class="ow">→</span><span class="w"> </span>evalTimelock<span class="w"> </span>x<span class="w"> </span>y<span class="w"> </span>∘<span class="w"> </span>HSTimelock.timelock<span class="w"> </span><span class="o">}</span>
-</code></pre></div>
+<a id="P1ScriptStructure-HTL"></a><a id="1361" href="Ledger.Conway.Conformance.Script.html#1361" class="Function">P1ScriptStructure-HTL</a> <a id="1383" class="Symbol">:</a> <a id="1385" href="Ledger.Conway.Specification.Script.Base.html#706" class="Record">P1ScriptStructure</a>
+<a id="1403" href="Ledger.Conway.Conformance.Script.html#1361" class="Function">P1ScriptStructure-HTL</a> <a id="1425" class="Symbol">=</a> <a id="1427" class="Keyword">record</a>
+  <a id="1436" class="Symbol">{</a> <a id="1438" href="Ledger.Conway.Specification.Script.Base.html#746" class="Field">P1Script</a> <a id="1447" class="Symbol">=</a> <a id="1449" href="Ledger.Conway.Conformance.Script.html#779" class="Record">HSTimelock</a>
+  <a id="1462" class="Symbol">;</a> <a id="1464" href="Ledger.Conway.Specification.Script.Base.html#770" class="Field">validP1Script</a> <a id="1478" class="Symbol">=</a> <a id="1480" class="Symbol">λ</a> <a id="1482" href="Ledger.Conway.Conformance.Script.html#1482" class="Bound">x</a> <a id="1484" href="Ledger.Conway.Conformance.Script.html#1484" class="Bound">y</a> <a id="1486" class="Symbol">→</a> <a id="1488" href="Ledger.Conway.Specification.Script.Timelock.html#2152" class="Datatype">evalTimelock</a> <a id="1501" href="Ledger.Conway.Conformance.Script.html#1482" class="Bound">x</a> <a id="1503" href="Ledger.Conway.Conformance.Script.html#1484" class="Bound">y</a> <a id="1505" href="Function.Base.html#1134" class="Function Operator">∘</a> <a id="1507" href="Ledger.Conway.Conformance.Script.html#815" class="Field">HSTimelock.timelock</a> <a id="1527" class="Symbol">}</a>
+
+</pre>
+
 <!-- Properties -->
 
 
