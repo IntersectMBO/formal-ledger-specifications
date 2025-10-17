@@ -31,7 +31,7 @@ private
 ## A Note on Recent Changes
 
 We refactored the `STS`{.AgdaModule} module to reflect what the code actually
-does---it processes a list of signals, transforming state.
+does—it processes a list of signals, transforming state.
 
 +  **Clearer names**
 
@@ -48,7 +48,7 @@ does---it processes a list of signals, transforming state.
 +  `RunTraceAndThen Step Last Γ s sigs s'` means: starting in `s`, running `sigs`
    (left-to-right) under environment `Γ`, then perform `Last`, to yield `s'`.
 
-A variation that is sometimes useful involves indexed steps---that is, it allows the
+A variation that is sometimes useful involves indexed steps—that is, it allows the
 step relation to depend on the position in the trace via an index `n : ℕ`.
 
 ## State Transition Sytem Types

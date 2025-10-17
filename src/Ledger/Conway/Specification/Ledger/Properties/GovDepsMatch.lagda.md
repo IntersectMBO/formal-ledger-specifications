@@ -33,8 +33,8 @@ open SetoidReasoning (≡ᵉ-Setoid{DepositPurpose})
 Suppose `s`{.AgdaBound} and `s'`{.AgdaBound} are ledger states such that
 `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,LEDGER⦈`{.AgdaDatatype} `s'`{.AgdaBound}.
 Let `utxoSt`{.AgdaBound} and `utxoSt'`{.AgdaBound} be their respective
-`UTxOState`{.AgdaRecord}s and let `govSt`{.AgdaBound}  and
-`govSt'`{.AgdaBound} be their respective `GovState`{.AgdaFunction}s.
+`UTxOStates`{.AgdaRecord} and let `govSt`{.AgdaBound}  and
+`govSt'`{.AgdaBound} be their respective `GovStates`{.AgdaFunction}.
 If the governance action deposits of `utxoSt`{.AgdaBound} are equal to those of
 `govSt`{.AgdaBound}, then the same holds for `utxoSt'`{.AgdaBound} and `govSt'`{.AgdaBound}.
 In other terms, if `govDepsMatch`{.AgdaFunction} `s`{.AgdaBound}, then

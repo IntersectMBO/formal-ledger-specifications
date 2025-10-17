@@ -1,6 +1,12 @@
-\section{Update Proposal Mechanism}
+---
+source_branch: master
+source_path: src/Ledger/PreConway/PPUp.lagda.md
+---
 
-\begin{code}[hide]
+# Protocol Parameter Update Proposal Mechanism {#sec:protocol-parameter-update-proposal-mechanism}
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Agda.Builtin.FromNat
@@ -17,10 +23,12 @@ open Semiring Slotʳ using (_*_)
 open Semiring-Lit Slotʳ
 
 private variable m n : ℕ
-\end{code}
-\begin{figure*}[h]
-\begin{AgdaMultiCode}
-\begin{code}
+```
+-->
+
+## Protocol Parameter Update Types {#sec:protocol-parameter-update-types}
+
+```agda
 GenesisDelegation = KeyHash ⇀ (KeyHash × KeyHash)
 
 record PPUpdateState : Type where
@@ -33,22 +41,21 @@ record PPUpdateEnv : Type where
     slot       : Slot
     pparams    : PParams
     genDelegs  : GenesisDelegation
-\end{code}
-\end{AgdaMultiCode}
-\caption{PPUP types}
-\end{figure*}
-\begin{figure*}[h]
-\begin{code}
+```
+
+## Protocol Parameter Update Definitions {#sec:protocol-parameter-update-definitions}
+
+```agda
 viablePParams : PParams → Type
 viablePParams pp = ⊤ -- TODO: block size check
 
 isViableUpdate : PParams → PParamsUpdate → Type
 isViableUpdate pp pup with applyUpdate pp pup
 ... | pp' = pvCanFollow (PParams.pv pp) (PParams.pv pp') × viablePParams pp'
-\end{code}
-\caption{Definitions for PPUP}
-\end{figure*}
-\begin{code}[hide]
+```
+
+<!--
+```agda
 private variable
   Γ : PPUpdateEnv
   s : PPUpdateState
@@ -64,10 +71,14 @@ instance
   ... | yes refl | no ¬p    = yes canFollowMajor
   ... | yes refl | yes p    = ⊥-elim $ ℕ.m+1+n≢m m $ ×.×-≡,≡←≡ p .proj₁
 
+```
+-->
+
+## The <span class="AgdaDatatype">PPUP</span> Transition System {#sec:the-ppup-transition-system}
+
+```agda
 data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → PPUpdateState → Type where
-\end{code}
-\begin{figure*}[h]
-\begin{code}
+
   PPUpdateEmpty : Γ ⊢ s ⇀⦇ nothing ,PPUP⦈ s
 
   PPUpdateCurrent : let open PPUpdateEnv Γ in
@@ -87,6 +98,4 @@ data _⊢_⇀⦇_,PPUP⦈_ : PPUpdateEnv → PPUpdateState → Maybe Update → 
     ────────────────────────────────
     Γ ⊢ record { pup = pupˢ ; fpup = fpupˢ } ⇀⦇ just (pup , e) ,PPUP⦈
         record { pup = pupˢ ; fpup = pup ∪ˡ fpupˢ }
-\end{code}
-\caption{PPUP inference rules}
-\end{figure*}
+```

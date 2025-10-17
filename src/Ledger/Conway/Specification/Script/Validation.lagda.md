@@ -3,6 +3,11 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Script/Validation.lagda.md
 ---
 
+# Script Validation {#sec:script-validation}
+
+<!-- TODO: Document this section. -->
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -16,7 +21,10 @@ module Ledger.Conway.Specification.Script.Validation
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Certs govStructure
+```
+-->
 
+```agda
 data ScriptPurpose : Type where
   Cert     : DCert        → ScriptPurpose
   Rwrd     : RwdAddr      → ScriptPurpose
@@ -24,7 +32,10 @@ data ScriptPurpose : Type where
   Spend    : TxIn         → ScriptPurpose
   Vote     : GovVoter     → ScriptPurpose
   Propose  : GovProposal  → ScriptPurpose
+```
 
+<!--
+```agda
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where
   (Cert h)     → map (Cert    ,_) $ indexOfDCert    h txCerts
@@ -50,7 +61,10 @@ getDatum tx utxo (Spend txin) =
      where
        m = setToMap (mapˢ < hash , id > (TxWitnesses.txdats (Tx.wits tx)))
 getDatum tx utxo _ = nothing
+```
+-->
 
+```agda
 record TxInfo : Type where
   field realizedInputs : UTxO
         txOuts         : Ix ⇀ TxOut
@@ -86,11 +100,11 @@ credsNeeded utxo txb
                 (fromList (map voter txGovVotes))
   ∪  mapPartial (λ p → if p .policy then (λ {sh} → just (Propose  p , ScriptObj sh)) else nothing)
                 (fromList txGovProposals)
-  where
-    open TxBody txb
-    open GovVote
-    open RwdAddr
-    open GovProposal
+```
+
+<!--
+```agda
+  where open TxBody txb; open GovVote; open RwdAddr; open GovProposal
 
 valContext : TxInfo → ScriptPurpose → Data
 valContext txinfo sp = toData (txinfo , sp)
@@ -131,3 +145,4 @@ opaque
 evalP2Scripts : List (P2Script × List Data × ExUnits × CostModel) → Bool
 evalP2Scripts = all (λ (s , d , eu , cm) → runPLCScript cm s eu d)
 ```
+-->

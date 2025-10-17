@@ -418,7 +418,7 @@ Sections [Auxiliary `DELEG`{.AgdaDatatype} Transition System](#auxiliary-deleg-t
 [Auxiliary `GOVCERT`{.AgdaDatatype} transition system](#auxiliary-govcert-transition-system).
 
 `GOVCERT`{.AgdaDatatype} deals with the new certificates relating to
-`DRep`{.AgdaInductiveConstructor}s and the constitutional committee.
+`DReps`{.AgdaInductiveConstructor} and the constitutional committee.
 
 +  `GOVCERT-regdrep`{.AgdaInductiveConstructor} registers (or
    re-registers) a `DRep`{.AgdaInductiveConstructor}.  In case of registration,
@@ -541,7 +541,7 @@ important housekeeping tasks:
 +  check the correctness of withdrawals and ensure that withdrawals only
    happen from credentials that have delegated their voting power;
 
-+  set the activity timer of all `DRep`{.AgdaInductiveConstructor}s that voted
++  set the activity timer of all `DReps`{.AgdaInductiveConstructor} that voted
    to `drepActivity`{.AgdaField} epochs in the future;
 
 +  set the rewards of the credentials that withdrew funds to zero.
