@@ -7602,8 +7602,9 @@
 -->
 
 <p>Governance actions are ratified through on-chain votes. Different kinds
-of governance actions have different ratification requirements but
-always involve at least two of the three governance bodies.</p>
+of governance actions (<a href="Ledger.Conway.Specification.Gov.Actions.html#sec:governance-action-types">governance action types</a>) have
+different ratification requirements but always involve at least two of the three
+governance bodies.</p>
 <p>A successful motion of no-confidence, election of a new constitutional
 committee, a constitutional change, or a hard-fork delays ratification
 of all other governance actions until the first epoch after their
@@ -8031,21 +8032,7 @@ following auxiliary definitions.</p>
    the environment.</p>
 </li>
 </ul>
-<p>Let us discuss in more detail the way <code class="AgdaInductiveConstructor">SPO</code> votes are
-counted, as the ledger specification's handling of this has evolved in response to
-community feedback.  Previously, if an <code class="AgdaInductiveConstructor">SPO</code> did not vote,
-then it would be counted as having voted <code class="AgdaInductiveConstructor">abstain</code> by
-default.  Members of the <code class="AgdaInductiveConstructor">SPO</code> community found this
-behavior counterintuitive and requested that non-voters be assigned a
-<code class="AgdaInductiveConstructor">no</code> vote by default, with the caveat that an
-<code class="AgdaInductiveConstructor">SPO</code> could change its default setting by delegating its
-reward account credential to an <code>AlwaysNoConfidence</code>
-<code class="AgdaInductiveConstructor">DRep</code> or an <code>AlwaysAbstain</code>
-<code class="AgdaInductiveConstructor">DRep</code>.  (This change applies only after the bootstrap
-period; during the bootstrap period the logic is unchanged; see the section on
-<a href="ConwayBootstrap.html#sec:conway-bootstrap-gov">Bootstrapping the Governance System</a>.)</p>
-<p>To be precise, the agreed upon specification is the following: an
-<code class="AgdaInductiveConstructor">SPO</code> that did not vote is assumed to have voted
+<p>An <code class="AgdaInductiveConstructor">SPO</code> that did not vote is assumed to have voted
 <code class="AgdaInductiveConstructor">no</code>, except under the following circumstances:</p>
 <ul>
 <li>
@@ -8063,6 +8050,21 @@ period; during the bootstrap period the logic is unchanged; see the section on
 <p>It is important to note that the credential that can now be used to configure
 <em>default</em> voting behavior is the credential used to withdraw staking rewards, which
 is not the same as the credential that is used for standard voting.</p>
+<div class="admonition info">
+<p class="admonition-title">Vote Counting Methodology</p>
+<p>The way <code class="AgdaInductiveConstructor">SPO</code> votes are counted has evolved in response to
+community feedback.  Previously, if an <code class="AgdaInductiveConstructor">SPO</code> did not vote,
+then it would be counted as having voted <code class="AgdaInductiveConstructor">abstain</code> by
+default.  Members of the <code class="AgdaInductiveConstructor">SPO</code> community found this
+behavior counterintuitive and requested that non-voters be assigned a
+<code class="AgdaInductiveConstructor">no</code> vote by default, with the caveat that an
+<code class="AgdaInductiveConstructor">SPO</code> could change its default setting by delegating its
+reward account credential to an <code>AlwaysNoConfidence</code>
+<code class="AgdaInductiveConstructor">DRep</code> or an <code>AlwaysAbstain</code>
+<code class="AgdaInductiveConstructor">DRep</code>.  (This change applies only after the bootstrap
+period; during the bootstrap period the logic is unchanged; see the section on
+<a href="ConwayBootstrap.html#sec:conway-bootstrap-gov">Bootstrapping the Governance System</a>.)</p>
+</div>
 <div class="highlight"><pre><span></span><code><span class="nf">acceptedBySPO</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>RatifyEnv<span class="w"> </span><span class="ow">→</span><span class="w"> </span>EnactState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>GovActionState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Type
 acceptedBySPO<span class="w"> </span>Γ<span class="w"> </span>eSt<span class="w"> </span>gaSt<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="o">(</span>acceptedStake<span class="w"> </span>/₀<span class="w"> </span>totalStake<span class="o">)</span><span class="w"> </span>≥<span class="w"> </span>t
 <span class="w">  </span><span class="kr">where</span>

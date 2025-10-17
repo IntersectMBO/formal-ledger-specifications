@@ -7529,10 +7529,7 @@
 
 
 <h1 id="sec:protocol-parameters">Protocol Parameters<a class="headerlink" href="#sec:protocol-parameters" title="Permanent link">&para;</a></h1>
-<p>This section defines the adjustable protocol parameters of the Cardano ledger.
-Protocol parameters are used in block validation and can affect various
-features of the system, such as minimum fees, maximum and minimum sizes
-of certain components, and more.</p>
+<p>This section defines the adjustable protocol parameters of the Cardano ledger.</p>
 <!--
 <div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
 
@@ -7562,7 +7559,11 @@ of certain components, and more.</p>
 -->
 
 <h2 id="sec:protocol-parameter-definitions">Protocol Parameter Definitions<a class="headerlink" href="#sec:protocol-parameter-definitions" title="Permanent link">&para;</a></h2>
-<p><code class="AgdaRecord">PParams</code> contains parameters used in the Cardano ledger, which we group
+<p>Protocol parameters are used in block validation and can affect various
+features of the system, such as minimum fees, maximum and minimum sizes
+of certain components, and more.</p>
+<p>The main protocol parameter type is <code class="AgdaRecord">PParams</code>, defined later in
+this section.  It contains parameters used in the Cardano ledger, which we group
 according to the general purpose that each parameter serves.</p>
 <ul>
 <li>
@@ -7607,7 +7608,6 @@ parameters as a group.</p>
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kr">constructor</span><span class="w"> </span>⟦_,_⟧ᵃ
 </code></pre></div>
 -->
-
 <div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kr">field</span>
 <span class="w">    </span>treasury<span class="w"> </span>reserves<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Coin
 </code></pre></div>

@@ -7427,35 +7427,7 @@
 
 
 <h1 id="sec:fees">Fee Calculation<a class="headerlink" href="#sec:fees" title="Permanent link">&para;</a></h1>
-<p>This section defines the functions used to compute the fees associated with reference scripts.</p>
-<p>The function <code class="AgdaFunction">scriptsCost</code>,
-defined in the <a href="Ledger.Conway.Specification.Fees.html#sec:calculation-of-fees">Calculation of Fees for Reference Scripts</a> section, calculates the
-fee for reference scripts in a transaction. It takes as input the total
-size of the reference scripts in bytes—calculated by
-<code class="AgdaFunction">refScriptsSize</code> (see <a href="Ledger.Conway.Specification.Utxo.html#functions-used-in-utxo-rules">Functions used in UTxO rules</a>)—and
-uses a function (<code class="AgdaFunction">scriptsCostAux</code>) that is piece-wise
-linear in the size, where the linear constant multiple grows with each
-<code class="AgdaFunction">refScriptCostStride</code> bytes. In addition,
-<code class="AgdaFunction">scriptsCost</code> depends on the following constants (which
-are bundled with the protocol parameters; see the
-<a href="Ledger.Conway.Specification.PParams.html#sec:protocol-parameter-definitions">Protocol Parameter Definitions</a> section):</p>
-<ul>
-<li>
-<p><code class="AgdaFunction">refScriptCostMultiplier</code>, a rational number, the
-  growth factor or step multiplier that determines how much the price
-  per byte increases after each increment;</p>
-</li>
-<li>
-<p><code class="AgdaFunction">refScriptCostStride</code>, an integer, the size in bytes at
-  which the price per byte grows linearly;</p>
-</li>
-<li>
-<p><code class="AgdaFunction">minFeeRefScriptCoinsPerByte</code>, a rational number, the
-  base fee or initial price per byte.</p>
-</li>
-</ul>
-<p>For background on this particular choice of fee calculation, see
-<a href="#adr9">Kuleshevich24</a>.</p>
+<p>This section defines the function used to compute the fees associated with reference scripts.</p>
 <!--
 <div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
 
@@ -7481,6 +7453,31 @@ are bundled with the protocol parameters; see the
 -->
 
 <h2 id="sec:calculation-of-fees">Calculation of Fees for Reference Scripts<a class="headerlink" href="#sec:calculation-of-fees" title="Permanent link">&para;</a></h2>
+<p>The function defined in this section calculates the fee for reference scripts in a
+transaction.  It takes as input the total size of the reference scripts in
+bytes—calculated by <code class="AgdaFunction">refScriptsSize</code>
+(see <a href="Ledger.Conway.Specification.Utxo.html#functions-used-in-utxo-rules">Functions used in UTxO rules</a>)—and uses a function
+(<code class="AgdaFunction">scriptsCostAux</code>) that is piece-wise linear in the size, where the
+linear constant multiple grows with each <code class="AgdaFunction">refScriptCostStride</code> bytes.
+In addition, <code class="AgdaFunction">scriptsCost</code> depends on the following constants, which
+are bundled with the protocol parameters (see the
+<a href="Ledger.Conway.Specification.PParams.html#sec:protocol-parameter-definitions">Protocol Parameter Definitions</a> section).</p>
+<ul>
+<li>
+<p><code class="AgdaFunction">refScriptCostMultiplier</code>: a rational number, the
+   growth factor or step multiplier that determines how much the price
+   per byte increases after each increment;</p>
+</li>
+<li>
+<p><code class="AgdaFunction">refScriptCostStride</code>: an integer, the size in bytes at
+   which the price per byte grows linearly;</p>
+</li>
+<li>
+<p><code class="AgdaFunction">minFeeRefScriptCoinsPerByte</code>: a rational number, the
+   base fee or initial price per byte.</p>
+</li>
+</ul>
+<p>For background on this method of fee calculation, see <a href="#adr9">Kuleshevich24</a>.</p>
 <div class="highlight"><pre><span></span><code><span class="nf">scriptsCost</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="o">(</span>pp<span class="w"> </span><span class="ow">:</span><span class="w"> </span>PParams<span class="o">)</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>ℕ<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Coin
 scriptsCost<span class="w"> </span>pp<span class="w"> </span>scriptSize
 <span class="w">  </span><span class="ow">=</span><span class="w"> </span>scriptsCostAux<span class="w"> </span><span class="mi">0</span>ℚ<span class="w"> </span>minFeeRefScriptCoinsPerByte<span class="w"> </span>scriptSize<span class="w"> </span><span class="o">(</span>&lt;′-wellFounded<span class="w"> </span>scriptSize<span class="o">)</span>
