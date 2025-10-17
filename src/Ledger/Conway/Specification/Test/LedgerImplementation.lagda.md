@@ -198,4 +198,3 @@ SVAbstractFunctions = record
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions
-```

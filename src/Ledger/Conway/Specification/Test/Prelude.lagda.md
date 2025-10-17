@@ -15,4 +15,3 @@ record ScriptImplementation (T D : Type) : Type₁ where
         toData' : ∀ {A : Type} → A → D -- fix this
         ⦃ DecEq-Data  ⦄    : DecEq D
         ⦃ Show-Data  ⦄     : Show D
-```

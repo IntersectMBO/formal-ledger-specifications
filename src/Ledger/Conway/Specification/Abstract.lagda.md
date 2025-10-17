@@ -13,6 +13,7 @@ module Ledger.Conway.Specification.Abstract (txs : TransactionStructure) where
 
 open TransactionStructure txs
 open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.ScriptPurpose txs
 
 record indexOf : Type where
   field
@@ -29,4 +30,4 @@ record AbstractFunctions : Type where
         indexOfImp   : indexOf
         runPLCScript : CostModel → P2Script → ExUnits → List Data → Bool
         scriptSize   : Script → ℕ
-```
+        valContext   : TxInfo → ScriptPurpose → Data
