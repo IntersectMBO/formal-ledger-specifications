@@ -171,7 +171,7 @@ instance
   DELEGToConf .convⁱ (reg* _ _) (L.DELEG-reg h) = C.DELEG-reg h
 
   POOLToConf : ∀ {pp s dcert s'} → pp L.⊢ s ⇀⦇ dcert ,POOL⦈ s' ⭆ pp C.⊢ s ⇀⦇ dcert ,POOL⦈ s'
-  POOLToConf .convⁱ _ (L.POOL-regpool h) = C.POOL-regpool h
+  POOLToConf .convⁱ _ L.POOL-regpool = C.POOL-regpool
   POOLToConf .convⁱ _ L.POOL-retirepool  = C.POOL-retirepool
 
   GOVCERTToConf : ∀ {Γ s dcert dcerts s'}
@@ -222,10 +222,6 @@ instance
   DELEGFromConf .convⁱ _ (C.DELEG-delegate h)    = L.DELEG-delegate h
   DELEGFromConf .convⁱ _ (C.DELEG-dereg (h , _)) = L.DELEG-dereg h
   DELEGFromConf .convⁱ _ (C.DELEG-reg h)         = L.DELEG-reg h
-
-  POOLFromConf : ∀ {pp s dcert s'} → pp C.⊢ s ⇀⦇ dcert ,POOL⦈ s' ⭆ pp L.⊢ s ⇀⦇ dcert ,POOL⦈ s'
-  POOLFromConf .convⁱ _ (C.POOL-regpool h) = L.POOL-regpool h
-  POOLFromConf .convⁱ _ C.POOL-retirepool  = L.POOL-retirepool
 
   GOVCERTFromConf : ∀ {Γ s dcert s'}
                   → Γ C.⊢ s ⇀⦇ dcert ,GOVCERT⦈ s' ⭆
