@@ -7767,15 +7767,15 @@
 
   <h1>Util</h1>
 
-<div class="highlight"><pre><span></span><code><span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Prelude.Foreign.Util</span><span class="w"> </span><span class="kr">where</span>
+<pre class="Agda"><a id="90" class="Keyword">module</a> <a id="97" href="Ledger.Prelude.Foreign.Util.html" class="Module">Ledger.Prelude.Foreign.Util</a> <a id="125" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
+<a id="132" class="Keyword">open</a> <a id="137" class="Keyword">import</a> <a id="144" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
 
-<span class="kr">postulate</span>
-<span class="w">  </span><span class="nf">error</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="o">{</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span><span class="kt">Set</span><span class="o">}</span><span class="w"> </span><span class="ow">→</span><span class="w"> </span>String<span class="w"> </span><span class="ow">→</span><span class="w"> </span>A
-<span class="cm">{-# FOREIGN GHC import Data.Text #-}</span>
-<span class="cm">{-# COMPILE GHC error = \ _ s -&gt; error (unpack s) #-}</span>
-</code></pre></div>
+<a id="160" class="Keyword">postulate</a>
+  <a id="error"></a><a id="172" href="Ledger.Prelude.Foreign.Util.html#172" class="Postulate">error</a> <a id="178" class="Symbol">:</a> <a id="180" class="Symbol">{</a><a id="181" href="Ledger.Prelude.Foreign.Util.html#181" class="Bound">A</a> <a id="183" class="Symbol">:</a> <a id="185" href="Agda.Primitive.html#388" class="Primitive">Set</a><a id="188" class="Symbol">}</a> <a id="190" class="Symbol">→</a> <a id="192" href="Agda.Builtin.String.html#335" class="Postulate">String</a> <a id="199" class="Symbol">→</a> <a id="201" href="Ledger.Prelude.Foreign.Util.html#181" class="Bound">A</a>
+<a id="203" class="Symbol">{-#</a> <a id="207" class="Keyword">FOREIGN</a> <a id="215" class="Pragma">GHC</a> <a id="219" class="Pragma">import</a> <a id="226" class="Pragma">Data.Text</a> <a id="236" class="Symbol">#-}</a>
+<a id="240" class="Symbol">{-#</a> <a id="244" class="Keyword">COMPILE</a> <a id="252" class="Keyword">GHC</a> <a id="256" href="Ledger.Prelude.Foreign.Util.html#172" class="Postulate">error</a> <a id="262" class="Pragma">=</a> <a id="264" class="Pragma">\</a> <a id="266" class="Pragma">_</a> <a id="268" class="Pragma">s</a> <a id="270" class="Pragma">-&gt;</a> <a id="273" class="Pragma">error</a> <a id="279" class="Pragma">(unpack</a> <a id="287" class="Pragma">s)</a> <a id="290" class="Symbol">#-}</a>
+</pre>
 
 
 

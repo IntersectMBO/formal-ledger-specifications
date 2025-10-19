@@ -7763,17 +7763,17 @@
 
   <h1>MyDebugOptions</h1>
 
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe --without-K #-}</span>
-<span class="kr">module</span><span class="w"> </span><span class="n">MyDebugOptions</span><span class="w"> </span><span class="kr">where</span>
+<pre class="Agda"><a id="77" class="Symbol">{-#</a> <a id="81" class="Keyword">OPTIONS</a> <a id="89" class="Pragma">--safe</a> <a id="96" class="Pragma">--without-K</a> <a id="108" class="Symbol">#-}</a>
+<a id="112" class="Keyword">module</a> <a id="119" href="MyDebugOptions.html" class="Module">MyDebugOptions</a> <a id="134" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Meta.Init</span>
+<a id="141" class="Keyword">open</a> <a id="146" class="Keyword">import</a> <a id="153" href="Meta.Init.html" class="Module">Meta.Init</a>
 
-<span class="kr">instance</span>
-<span class="w">  </span><span class="nf">defaultDebugOptionsI</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>DebugOptions
-<span class="w">  </span>defaultDebugOptionsI<span class="w"> </span><span class="ow">=</span><span class="w"> </span><span class="kr">record</span><span class="w"> </span>defaultDebugOptions
-<span class="w">    </span><span class="o">{</span><span class="w"> </span>selection<span class="w"> </span><span class="ow">=</span><span class="w"> </span>All
-<span class="w">    </span>;<span class="w"> </span>filter<span class="w"> </span><span class="ow">=</span><span class="w"> </span>Filter.⊥<span class="w"> </span><span class="o">}</span>
-</code></pre></div>
+<a id="164" class="Keyword">instance</a>
+  <a id="defaultDebugOptionsI"></a><a id="175" href="MyDebugOptions.html#175" class="Function">defaultDebugOptionsI</a> <a id="196" class="Symbol">:</a> <a id="198" href="Reflection.Debug.html#2387" class="Record">DebugOptions</a>
+  <a id="213" href="MyDebugOptions.html#175" class="Function">defaultDebugOptionsI</a> <a id="234" class="Symbol">=</a> <a id="236" class="Keyword">record</a> <a id="243" href="Reflection.Debug.html#2542" class="Function">defaultDebugOptions</a>
+    <a id="267" class="Symbol">{</a> <a id="269" href="Reflection.Debug.html#2452" class="Field">selection</a> <a id="279" class="Symbol">=</a> <a id="281" href="Reflection.Debug.html#1442" class="InductiveConstructor">All</a>
+    <a id="289" class="Symbol">;</a> <a id="291" href="Reflection.Debug.html#2483" class="Field">filter</a> <a id="298" class="Symbol">=</a> <a id="300" href="Algebra.Lattice.Bundles.html#6091" class="Function">Filter.⊥</a> <a id="309" class="Symbol">}</a>
+</pre>
 
 
 

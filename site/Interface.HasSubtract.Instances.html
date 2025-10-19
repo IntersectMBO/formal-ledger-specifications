@@ -7769,25 +7769,25 @@
 
   <h1>Instance</h1>
 
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<pre class="Agda"><a id="94" class="Symbol">{-#</a> <a id="98" class="Keyword">OPTIONS</a> <a id="106" class="Pragma">--safe</a> <a id="113" class="Symbol">#-}</a>
 
-<span class="kr">module</span><span class="w"> </span><span class="n">Interface.HasSubtract.Instances</span><span class="w"> </span><span class="kr">where</span>
+<a id="118" class="Keyword">module</a> <a id="125" href="Interface.HasSubtract.Instances.html" class="Module">Interface.HasSubtract.Instances</a> <a id="157" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Interface.HasSubtract</span>
+<a id="164" class="Keyword">open</a> <a id="169" class="Keyword">import</a> <a id="176" href="Interface.HasSubtract.html" class="Module">Interface.HasSubtract</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Integer</span><span class="w"> </span>as<span class="w"> </span>ℤ<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>ℤ<span class="o">)</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Data.Nat</span><span class="w">     </span>as<span class="w"> </span>ℕ<span class="w"> </span><span class="kr">using</span><span class="w"> </span><span class="o">(</span>ℕ<span class="o">)</span>
+<a id="199" class="Keyword">open</a> <a id="204" class="Keyword">import</a> <a id="211" href="Data.Integer.html" class="Module">Data.Integer</a> <a id="224" class="Symbol">as</a> <a id="227" class="Module">ℤ</a> <a id="229" class="Keyword">using</a> <a id="235" class="Symbol">(</a><a id="236" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a><a id="237" class="Symbol">)</a>
+<a id="239" class="Keyword">open</a> <a id="244" class="Keyword">import</a> <a id="251" href="Data.Nat.html" class="Module">Data.Nat</a>     <a id="264" class="Symbol">as</a> <a id="267" class="Module">ℕ</a> <a id="269" class="Keyword">using</a> <a id="275" class="Symbol">(</a><a id="276" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a><a id="277" class="Symbol">)</a>
 
-<span class="kr">instance</span>
-<span class="w">  </span><span class="nf">HasSubtract-ℕ</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasSubtract<span class="w"> </span>ℕ<span class="w"> </span>ℕ
-<span class="w">  </span>HasSubtract-ℕ<span class="w"> </span><span class="ow">.</span>_-_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>ℕ._∸_
+<a id="280" class="Keyword">instance</a>
+  <a id="HasSubtract-ℕ"></a><a id="291" href="Interface.HasSubtract.Instances.html#291" class="Function">HasSubtract-ℕ</a> <a id="305" class="Symbol">:</a> <a id="307" href="Interface.HasSubtract.html#231" class="Record">HasSubtract</a> <a id="319" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="321" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a>
+  <a id="325" href="Interface.HasSubtract.Instances.html#291" class="Function">HasSubtract-ℕ</a> <a id="339" class="Symbol">.</a><a id="340" href="Interface.HasSubtract.html#292" class="Field Operator">_-_</a> <a id="344" class="Symbol">=</a> <a id="346" href="Data.Nat.Base.html#4462" class="Primitive Operator">ℕ._∸_</a>
 
-<span class="w">  </span><span class="nf">HasSubtract-ℤ</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasSubtract<span class="w"> </span>ℤ<span class="w"> </span>ℤ
-<span class="w">  </span>HasSubtract-ℤ<span class="w"> </span><span class="ow">.</span>_-_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>ℤ._-_
+  <a id="HasSubtract-ℤ"></a><a id="355" href="Interface.HasSubtract.Instances.html#355" class="Function">HasSubtract-ℤ</a> <a id="369" class="Symbol">:</a> <a id="371" href="Interface.HasSubtract.html#231" class="Record">HasSubtract</a> <a id="383" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a> <a id="385" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a>
+  <a id="389" href="Interface.HasSubtract.Instances.html#355" class="Function">HasSubtract-ℤ</a> <a id="403" class="Symbol">.</a><a id="404" href="Interface.HasSubtract.html#292" class="Field Operator">_-_</a> <a id="408" class="Symbol">=</a> <a id="410" href="Data.Integer.Base.html#5245" class="Function Operator">ℤ._-_</a>
 
-<span class="w">  </span><span class="nf">HasSubtract-ℕ-ℤ</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>HasSubtract<span class="w"> </span>ℕ<span class="w"> </span>ℤ
-<span class="w">  </span>HasSubtract-ℕ-ℤ<span class="w"> </span><span class="ow">.</span>_-_<span class="w"> </span><span class="ow">=</span><span class="w"> </span>ℤ._⊖_
-</code></pre></div>
+  <a id="HasSubtract-ℕ-ℤ"></a><a id="419" href="Interface.HasSubtract.Instances.html#419" class="Function">HasSubtract-ℕ-ℤ</a> <a id="435" class="Symbol">:</a> <a id="437" href="Interface.HasSubtract.html#231" class="Record">HasSubtract</a> <a id="449" href="Agda.Builtin.Nat.html#203" class="Datatype">ℕ</a> <a id="451" href="Agda.Builtin.Int.html#245" class="Datatype">ℤ</a>
+  <a id="455" href="Interface.HasSubtract.Instances.html#419" class="Function">HasSubtract-ℕ-ℤ</a> <a id="471" class="Symbol">.</a><a id="472" href="Interface.HasSubtract.html#292" class="Field Operator">_-_</a> <a id="476" class="Symbol">=</a> <a id="478" href="Data.Integer.Base.html#4959" class="Function Operator">ℤ._⊖_</a>
+</pre>
 
 
 

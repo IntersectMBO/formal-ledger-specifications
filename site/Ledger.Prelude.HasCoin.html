@@ -7765,18 +7765,18 @@
 
   <h1>HasCoin</h1>
 
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<pre class="Agda"><a id="85" class="Symbol">{-#</a> <a id="89" class="Keyword">OPTIONS</a> <a id="97" class="Pragma">--safe</a> <a id="104" class="Symbol">#-}</a>
 
-<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Prelude.HasCoin</span><span class="w"> </span><span class="kr">where</span>
+<a id="109" class="Keyword">module</a> <a id="116" href="Ledger.Prelude.HasCoin.html" class="Module">Ledger.Prelude.HasCoin</a> <a id="139" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Prelude</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude.Base</span>
+<a id="146" class="Keyword">open</a> <a id="151" class="Keyword">import</a> <a id="158" href="Prelude.html" class="Module">Prelude</a>
+<a id="166" class="Keyword">open</a> <a id="171" class="Keyword">import</a> <a id="178" href="Ledger.Prelude.Base.html" class="Module">Ledger.Prelude.Base</a>
 
-<span class="kr">record</span><span class="w"> </span>HasCoin<span class="w"> </span><span class="o">{</span>a<span class="o">}</span><span class="w"> </span><span class="o">(</span>A<span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="o">)</span><span class="w"> </span><span class="ow">:</span><span class="w"> </span>Type<span class="w"> </span>a<span class="w"> </span><span class="kr">where</span>
-<span class="w">  </span><span class="kr">field</span><span class="w"> </span>getCoin<span class="w"> </span><span class="ow">:</span><span class="w"> </span>A<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Coin
+<a id="199" class="Keyword">record</a> <a id="HasCoin"></a><a id="206" href="Ledger.Prelude.HasCoin.html#206" class="Record">HasCoin</a> <a id="214" class="Symbol">{</a><a id="215" href="Ledger.Prelude.HasCoin.html#215" class="Bound">a</a><a id="216" class="Symbol">}</a> <a id="218" class="Symbol">(</a><a id="219" href="Ledger.Prelude.HasCoin.html#219" class="Bound">A</a> <a id="221" class="Symbol">:</a> <a id="223" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="228" href="Ledger.Prelude.HasCoin.html#215" class="Bound">a</a><a id="229" class="Symbol">)</a> <a id="231" class="Symbol">:</a> <a id="233" href="Agda.Primitive.html#388" class="Primitive">Type</a> <a id="238" href="Ledger.Prelude.HasCoin.html#215" class="Bound">a</a> <a id="240" class="Keyword">where</a>
+  <a id="248" class="Keyword">field</a> <a id="HasCoin.getCoin"></a><a id="254" href="Ledger.Prelude.HasCoin.html#254" class="Field">getCoin</a> <a id="262" class="Symbol">:</a> <a id="264" href="Ledger.Prelude.HasCoin.html#219" class="Bound">A</a> <a id="266" class="Symbol">→</a> <a id="268" href="Ledger.Prelude.Base.html#234" class="Function">Coin</a>
 
-<span class="kr">open</span><span class="w"> </span>HasCoin<span class="w"> </span>⦃...⦄<span class="w"> </span>public
-</code></pre></div>
+<a id="274" class="Keyword">open</a> <a id="279" href="Ledger.Prelude.HasCoin.html#206" class="Module">HasCoin</a> <a id="287" class="Symbol">⦃...⦄</a> <a id="293" class="Keyword">public</a>
+</pre>
 
 
 

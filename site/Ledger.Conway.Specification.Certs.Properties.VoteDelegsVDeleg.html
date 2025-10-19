@@ -7771,18 +7771,17 @@
 
   <h1>VoteDelegsVDeleg</h1>
 
-<!--
-<div class="highlight"><pre><span></span><code><span class="cm">{-# OPTIONS --safe #-}</span>
+<pre class="Agda hidden-source">
+<a id="15" class="Symbol">{-#</a> <a id="19" class="Keyword">OPTIONS</a> <a id="27" class="Pragma">--safe</a> <a id="34" class="Symbol">#-}</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Gov.Base</span>
+<a id="39" class="Keyword">open</a> <a id="44" class="Keyword">import</a> <a id="51" href="Ledger.Conway.Specification.Gov.Base.html" class="Module">Ledger.Conway.Specification.Gov.Base</a>
 
-<span class="kr">module</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg</span><span class="w"> </span><span class="o">(</span>gs<span class="w"> </span><span class="ow">:</span><span class="w"> </span>_<span class="o">)</span><span class="w"> </span><span class="o">(</span><span class="kr">open</span><span class="w"> </span>GovStructure<span class="w"> </span>gs<span class="o">)</span><span class="w"> </span><span class="kr">where</span>
+<a id="89" class="Keyword">module</a> <a id="96" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html" class="Module">Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg</a> <a id="158" class="Symbol">(</a><a id="159" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#159" class="Bound">gs</a> <a id="162" class="Symbol">:</a> <a id="164" class="Symbol">_)</a> <a id="167" class="Symbol">(</a><a id="168" class="Keyword">open</a> <a id="173" href="Ledger.Conway.Specification.Gov.Base.html#423" class="Module">GovStructure</a> <a id="186" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#159" class="Bound">gs</a><a id="188" class="Symbol">)</a> <a id="190" class="Keyword">where</a>
 
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Certs</span><span class="w"> </span>gs
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Prelude</span>
-<span class="kr">open</span><span class="w"> </span><span class="kr">import</span><span class="w"> </span><span class="n">Ledger.Conway.Specification.Gov.Actions</span><span class="w"> </span>gs
-</code></pre></div>
--->
+<a id="197" class="Keyword">open</a> <a id="202" class="Keyword">import</a> <a id="209" href="Ledger.Conway.Specification.Certs.html" class="Module">Ledger.Conway.Specification.Certs</a> <a id="243" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#159" class="Bound">gs</a>
+<a id="246" class="Keyword">open</a> <a id="251" class="Keyword">import</a> <a id="258" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+<a id="273" class="Keyword">open</a> <a id="278" class="Keyword">import</a> <a id="285" href="Ledger.Conway.Specification.Gov.Actions.html" class="Module">Ledger.Conway.Specification.Gov.Actions</a> <a id="325" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#159" class="Bound">gs</a>
+</pre>
 
 <p><a id="thm:VDelegsInRegDReps"></a>
 <strong>Claim (<code class="AgdaField">voteDelegs</code> by <code class="AgdaInductiveConstructor">credVoter</code> constructor).</strong></p>
@@ -7803,9 +7802,9 @@ from the application of <code class="AgdaInductiveConstructor">vDelegCredential<
 domain of the <code class="AgdaField">voteDelegs</code> of <code class="AgdaBound">d</code> contains the range
 of the <code class="AgdaField">voteDelegs</code> of <code class="AgdaBound">d</code>.</p>
 <p><em>Formally</em>.</p>
-<div class="highlight"><pre><span></span><code><span class="nf">voteDelegsVDeleg</span><span class="w"> </span><span class="ow">:</span><span class="w">  </span>DState<span class="w"> </span><span class="ow">→</span><span class="w"> </span>Type
-voteDelegsVDeleg<span class="w"> </span>d<span class="w"> </span><span class="ow">=</span><span class="w"> </span>range<span class="w"> </span><span class="o">(</span>VoteDelegsOf<span class="w"> </span>d<span class="o">)</span><span class="w"> </span>⊆<span class="w"> </span>mapˢ<span class="w"> </span>vDelegCredential<span class="w"> </span><span class="o">(</span>dom<span class="w"> </span><span class="o">(</span>VoteDelegsOf<span class="w"> </span>d<span class="o">))</span>
-</code></pre></div>
+<pre class="Agda"><a id="voteDelegsVDeleg"></a><a id="1618" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1618" class="Function">voteDelegsVDeleg</a> <a id="1635" class="Symbol">:</a>  <a id="1638" href="Ledger.Conway.Specification.Certs.html#4311" class="Record">DState</a> <a id="1645" class="Symbol">→</a> <a id="1647" href="Agda.Primitive.html#388" class="Primitive">Type</a>
+<a id="1652" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1618" class="Function">voteDelegsVDeleg</a> <a id="1669" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1669" class="Bound">d</a> <a id="1671" class="Symbol">=</a> <a id="1673" href="Class.IsSet.html#959" class="Function">range</a> <a id="1679" class="Symbol">(</a><a id="1680" href="Ledger.Conway.Specification.Gov.Actions.html#4911" class="Field">VoteDelegsOf</a> <a id="1693" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1669" class="Bound">d</a><a id="1694" class="Symbol">)</a> <a id="1696" href="Interface.HasSubset.html#239" class="Field Operator">⊆</a> <a id="1698" href="abstract-set-theory.FiniteSetTheory.html#519" class="Function">mapˢ</a> <a id="1703" href="Ledger.Conway.Specification.Gov.Actions.html#2174" class="InductiveConstructor">vDelegCredential</a> <a id="1720" class="Symbol">(</a><a id="1721" href="Class.IsSet.html#916" class="Function">dom</a> <a id="1725" class="Symbol">(</a><a id="1726" href="Ledger.Conway.Specification.Gov.Actions.html#4911" class="Field">VoteDelegsOf</a> <a id="1739" href="Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.html#1669" class="Bound">d</a><a id="1740" class="Symbol">))</a>
+</pre>
 <p><em>Proof</em>. (coming soon)</p>
 
 
