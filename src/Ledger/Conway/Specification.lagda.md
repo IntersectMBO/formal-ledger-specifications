@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 module Ledger.Conway.Specification where
 
@@ -39,3 +45,4 @@ import Ledger.Conway.Specification.Utxo
 import Ledger.Conway.Specification.Utxo.Properties
 import Ledger.Conway.Specification.Utxow
 import Ledger.Conway.Specification.Utxow.Properties
+```

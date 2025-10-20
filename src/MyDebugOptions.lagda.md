@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/MyDebugOptions.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe --without-K #-}
 module MyDebugOptions where
 
@@ -8,3 +14,4 @@ instance
   defaultDebugOptionsI = record defaultDebugOptions
     { selection = All
     ; filter = Filter.⊥ }
+```

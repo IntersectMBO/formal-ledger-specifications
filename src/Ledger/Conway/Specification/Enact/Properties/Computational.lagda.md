@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Enact/Properties/Computational.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Gov.Base
@@ -49,3 +55,4 @@ instance
   ... | ⟦ .TreasuryWithdrawal  , wdrl            ⟧ᵍᵃ | Enact-Wdrl p
     rewrite dec-yes (¿ ∑[ x ← s .withdrawals ∪⁺ wdrl ] x ≤ EnactEnv.treasury Γᵉ ¿) p .proj₂
     = refl
+```

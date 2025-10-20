@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Interface/Hashable.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 module Interface.Hashable where
 
@@ -14,3 +20,4 @@ Hashable₁ F THash = {A : Type} → ⦃ Hashable A THash ⦄ → Hashable (F A)
 
 Hashable₂ : (Type → Type → Type) → Type → Type₁
 Hashable₂ F THash = {A B : Type} → ⦃ Hashable A THash ⦄ → ⦃ Hashable B THash ⦄ → Hashable (F A B) THash
+```

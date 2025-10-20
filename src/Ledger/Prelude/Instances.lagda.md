@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Prelude/Instances.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 module Ledger.Prelude.Instances where
@@ -30,3 +36,4 @@ instance
   HasSubset-Map {A} {B} ._⊆_ m₁ m₂ = {k : A} {v : B} → (k , v) ∈ (m₁ ˢ) → (k , v) ∈ (m₂ ˢ)
 
 
+```

@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/TokenAlgebra/Coin.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Prelude
 
@@ -22,3 +28,4 @@ Coin-TokenAlgebra = λ where
   ._≤ᵗ_                       → _≤_
   .coin∘inject≗id             → λ _ → refl
   .coinIsMonoidHomomorphism   → isMonoidHomomorphism _ refl
+```

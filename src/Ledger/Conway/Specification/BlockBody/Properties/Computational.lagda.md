@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/BlockBody/Properties/Computational.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
@@ -25,3 +31,4 @@ instance
     (BBODY-Block-Body (_ , _ , lsStep))
     with recomputeProof lsStep | completeness _ _ _ _ lsStep
   ... | success _ | refl = refl
+```

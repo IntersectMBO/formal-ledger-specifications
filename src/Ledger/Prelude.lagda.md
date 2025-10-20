@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Prelude.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 --------------------------------------------------------------------------------
@@ -80,3 +86,4 @@ module Filter where
   filter : ∀ {a} {p} {A : Type a} → (P : Pred A p) → ⦃ P ⁇¹ ⦄ → List A → List A
   filter P = Data.List.filter ¿ P ¿¹
 
+```

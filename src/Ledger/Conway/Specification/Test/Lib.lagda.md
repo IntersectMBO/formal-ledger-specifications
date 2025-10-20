@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Test/Lib.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (fromList; ε; _/_); open Computational
@@ -117,3 +123,4 @@ isSuccess (success x) = true
 isSuccess (failure x) = false
 
 -- [1] https://github.com/IntersectMBO/cardano-ledger/blob/master/docs/adr/2024-08-14_009-refscripts-fee-change.md
+```

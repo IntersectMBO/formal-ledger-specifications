@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Prelude/Numeric/UnitInterval.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 -- Rational number in the unit interval.
@@ -108,3 +114,4 @@ prop-toUnitInterval-fromUnitInterval : ∀ (x : UnitInterval)
 prop-toUnitInterval-fromUnitInterval (x , [ p0 ]) with isInUnitInterval x
 ... | no ¬p = ⊥-elim-irr (¬p p0)
 ... | yes p = refl
+```

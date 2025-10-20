@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Utxo/Properties/Computational.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
@@ -142,3 +148,4 @@ UTXO-step = compute ⦃ Computational-UTXO ⦄
 UTXO-step-computes-UTXO  :  UTXO-step Γ utxoState tx ≡ success utxoState'
                          ⇔  Γ ⊢ utxoState ⇀⦇ tx ,UTXO⦈ utxoState'
 UTXO-step-computes-UTXO = ≡-success⇔STS ⦃ Computational-UTXO ⦄
+```

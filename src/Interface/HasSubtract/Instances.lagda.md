@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Interface/HasSubtract/Instances.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 module Interface.HasSubtract.Instances where
@@ -16,3 +22,4 @@ instance
 
   HasSubtract-ℕ-ℤ : HasSubtract ℕ ℤ
   HasSubtract-ℕ-ℤ ._-_ = ℤ._⊖_
+```

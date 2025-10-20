@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Interface/HasSubset.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 module Interface.HasSubset where
@@ -9,3 +15,4 @@ record HasSubset {a} (A : Set a) : Set (suc a) where
   infix 4 _⊆_
 
 open HasSubset ⦃...⦄ public
+```

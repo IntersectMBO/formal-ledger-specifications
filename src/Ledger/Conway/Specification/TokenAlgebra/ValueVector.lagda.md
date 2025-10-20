@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/TokenAlgebra/ValueVector.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Prelude hiding (_∙_; ε)
 
@@ -35,10 +41,10 @@ module _ (Policies : Vec PolicyId n) where
 
         coin : Value → Coin
         coin = proj₁
-  
+
         inject : Coin → Value
         inject c = c , Vec.replicate n 0
-  
+
         policies                   = λ _ → fromList (toList Policies)
         size                       = λ _ → 1 + n
         _≤ᵗ_                       = Product.Pointwise _≤_ (Vec.Pointwise _≤_)
@@ -48,3 +54,4 @@ module _ (Policies : Vec PolicyId n) where
 
         Dec-≤ᵗ : _≤ᵗ_ ⁇²
         Dec-≤ᵗ {(c₁ , v₁)} {(c₂ , v₂)} = Dec-× ⦃ ℕ-Dec-≤ ⦄ ⦃ ⁇ Vec.decidable dec² v₁ v₂ ⦄
+```

@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/PreConway/NewPP/Properties.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Relation.Nullary.Decidable
@@ -24,3 +30,4 @@ instance
     completeness sig s' h with sig | h
     ... | nothing  | NEWPP-Reject   = refl
     ... | just upd | NEWPP-Accept p = refl
+```

@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Prelude/Numeric/PositiveNat.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 module Ledger.Prelude.Numeric.PositiveNat where
 
@@ -44,3 +50,4 @@ Number-PosNat = record
   { Constraint = NonZero
   ; fromNat = λ n ⦃ p ⦄ → n , [ p ]
   }
+```

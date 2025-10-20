@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Types/GovStructure.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 module Ledger.Conway.Specification.Types.GovStructure where
@@ -31,3 +37,4 @@ record GovStructure : Type₁ where
   open GlobalConstants globalConstants public
 
   open import Ledger.Core.Specification.Address Network KeyHash ScriptHash public
+```
