@@ -489,6 +489,16 @@ module VDelegDelegatedStake-≈
   calculate : vds.calculate ≡ᵐ vds'.calculate
   calculate = mapFromFun-cong _ activeVDelegs
 
+opaque
+  unfolding calculateVDelegDelegatedStake
+
+  calculateVDelegDelegatedStake-≈
+    : (e : Epoch) → (utxoSt : UTxOState) → (govSt : GovState)
+    → {gState gState' : GState} (gState≈gState' : GState-[ e ] gState ≈ gState')
+    → (dState : DState)
+    → calculateVDelegDelegatedStake e utxoSt govSt gState dState ≡ᵐ calculateVDelegDelegatedStake e utxoSt govSt gState' dState
+  calculateVDelegDelegatedStake-≈ e utxoSt govSt gState≈gState' dState = VDelegDelegatedStake-≈.calculate  e utxoSt govSt gState≈gState' dState
+
 module mkStakeDistrs {s s' : Snapshot} {utxoSt utxoSt' : UTxOState} {govSt govSt' : GovState} {gState gState' : GState} {dState dState' : DState}
                      where
 
@@ -498,7 +508,7 @@ module mkStakeDistrs {s s' : Snapshot} {utxoSt utxoSt' : UTxOState} {govSt govSt
   cong refl e refl refl gState≈gState' refl = record { R }
     where
       module R where
-        stakeDistrVDeleg = VDelegDelegatedStake-≈.calculate  e utxoSt govSt gState≈gState' dState
+        stakeDistrVDeleg = calculateVDelegDelegatedStake-≈ e utxoSt govSt gState≈gState' dState
         stakeDistrPools = refl
 
 module EPOCH {epSt epSt' : EpochState} (e : Epoch) (epSt≈epSt' : EpochState-[ e ] epSt ≈ epSt') where
