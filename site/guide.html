@@ -8603,7 +8603,7 @@ nix<span class="w"> </span>develop<span class="w"> </span>.#ci
 <p>🐚 <strong>Documentation Shell</strong></p>
 <p>A comprehensive environment for working on documentation, including the full documentation generation pipeline.</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Enter the documentation shell</span>
-nix<span class="w"> </span>develop<span class="w"> </span>.#mkdocs
+nix<span class="w"> </span>develop<span class="w"> </span>.#mkdocs-dev
 </code></pre></div>
 <p>⚒️ <strong>Available Tools</strong></p>
 <p>Everything from the default shell plus</p>
@@ -8627,7 +8627,9 @@ nix<span class="w"> </span>build<span class="w"> </span>.#formal-ledger
 nix<span class="w"> </span>build
 
 <span class="c1"># Generate the (HTML version of the) formal specification</span>
-nix<span class="w"> </span>build<span class="w"> </span>.#mkdocs
+nix<span class="w"> </span>build<span class="w"> </span>.#mkdocs-dev<span class="w">  </span><span class="c1"># without type-checking everything upon entering the shell</span>
+<span class="c1"># OR</span>
+nix<span class="w"> </span>build<span class="w"> </span>.#mkdocs<span class="w">      </span><span class="c1"># type-checks everything upon entering the shell</span>
 
 <span class="c1"># Generate browseable HTML version of Agda code</span>
 nix<span class="w"> </span>build<span class="w"> </span>.#html
@@ -8669,7 +8671,7 @@ to <a href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>.</p>
 <p><strong>Manually</strong></p>
 <p>This method only type-checks the Agda code that has changed since last time and
 then generates the HTML documentation.</p>
-<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>develop<span class="w"> </span>.#mkdocs
+<div class="highlight"><pre><span></span><code>nix<span class="w"> </span>develop<span class="w"> </span>.#mkdocs-dev
 python<span class="w"> </span>build-tools/scripts/md/build.py<span class="w"> </span>--run-agda
 <span class="nb">cd</span><span class="w"> </span>_build/md/mkdocs
 mkdocs<span class="w"> </span>serve
