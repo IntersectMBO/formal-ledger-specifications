@@ -1,23 +1,6 @@
 {
   "nodes": {
     "abstract-set-theory": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1760446691,
-        "narHash": "sha256-L+wHrHLqdv9oY8LtqQFsOeZNoCiiCAg/KhsB/M7lHe4=",
-        "owner": "input-output-hk",
-        "repo": "agda-sets",
-        "rev": "de39823e91d845232bbf22058565d0553f5da2ac",
-        "type": "github"
-      },
-      "original": {
-        "owner": "input-output-hk",
-        "repo": "agda-sets",
-        "rev": "de39823e91d845232bbf22058565d0553f5da2ac",
-        "type": "github"
-      }
-    },
-    "abstract-set-theory_2": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
@@ -53,7 +36,7 @@
     },
     "agda-nix": {
       "inputs": {
-        "abstract-set-theory": "abstract-set-theory_2",
+        "abstract-set-theory": "abstract-set-theory",
         "flake-utils": "flake-utils_2",
         "iog-prelude": "iog-prelude",
         "nixpkgs": [
@@ -342,7 +325,6 @@
     },
     "root": {
       "inputs": {
-        "abstract-set-theory": "abstract-set-theory",
         "agda-nix": "agda-nix",
         "flake-utils": "flake-utils_6",
         "fls-agda": "fls-agda",
