@@ -15,7 +15,7 @@ open import Ledger.Prelude.Numeric.UnitInterval
 
 module Ledger.Conway.Specification.Certs (gs : _) (open GovStructure gs) where
 
-open import Ledger.Conway.Specification.Gov.Actions gs
+open import Ledger.Conway.Specification.Gov.Actions gs hiding (yes; no)
 open RwdAddr
 open PParams
 ```
@@ -469,17 +469,50 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
 
 ### Auxiliary POOL transition system
 
+??? info "Differences with the Shelley Specification"
+
+       We are deviating in style from the Shelley specification here. In the
+       Shelley specification (Figure 25), the POOL transition system has three rules.
+       Here we use a single rule to register and to reregister pools, which is the way
+       in which the Haskell implementation does it as well.
+
+       Note, in particular, how the regpool rule only sets the pool parameters of
+       the current epoch only if the pool is not already registered. And conversely,
+       the future pool parameters are updated only if the pool is already registered.
+
 ```agda
+isPoolRegistered : Pools -> KeyHash -> Maybe StakePoolParams
+isPoolRegistered ps kh = lookupᵐ? ps kh
+
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-regpool :
-    ∙ kh ∉ dom pools
-      ────────────────────────────────
-      pp ⊢ ⟦ pools , fPools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , fPools , retiring ⟧
+    let
+      fPool' =
+        if isPoolRegistered pools kh
+          then ❴ kh , poolParams ❵ ∪ˡ fPools
+          else fPools
+     in
+    ────────────────────────────────
+    pp ⊢ ⟦ pools
+         , fPools
+         , retiring
+         ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
+           pools ∪ˡ ❴ kh , poolParams ❵
+         , fPool'
+         , retiring ∣  ❴ kh ❵ ᶜ
+         ⟧
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , fPools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , fPools , ❴ kh , e ❵ ∪ˡ retiring ⟧
+    pp ⊢ ⟦ pools
+         , fPools
+         , retiring
+         ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦
+           pools
+         , fPools
+         , ❴ kh , e ❵ ∪ˡ retiring
+         ⟧
 ```
 
 

@@ -3,6 +3,8 @@
 ## Conway spec
 
 ### WIP
+
+- Allow reregistration of pools in the POOL transition relation
 - Implement the fPoolParams field of PState as in the Shelley specification
 - Add the BBODY transition relation from Shelley
 - Add the RUPD and TICK transition relations

@@ -13,7 +13,7 @@ open import Ledger.Conway.Specification.Gov.Actions gs
 private module Certs = Ledger.Conway.Specification.Certs gs
 open Certs public
   hiding (DState; GState; CertState; HasCast-DState; HasCast-GState; HasCast-CertState;
-          _⊢_⇀⦇_,POOL⦈_; _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
+          _⊢_⇀⦇_,DELEG⦈_; _⊢_⇀⦇_,GOVCERT⦈_;
           _⊢_⇀⦇_,CERT⦈_; _⊢_⇀⦇_,PRE-CERT⦈_; _⊢_⇀⦇_,POST-CERT⦈_; _⊢_⇀⦇_,CERTS⦈_; ⟦_,_,_⟧ᵈ)
 open RwdAddr
 
@@ -103,19 +103,7 @@ private variable
 
 open GovVote
 
-data _⊢_⇀⦇_,POOL⦈_  : PoolEnv → PState → DCert → PState → Type
 data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type
-
-data _⊢_⇀⦇_,POOL⦈_ where
-  POOL-regpool :
-    ∙ kh ∉ dom pools
-      ────────────────────────────────
-      pp ⊢  ⟦ pools , fPools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈
-            ⟦ ❴ kh , poolParams ❵ ∪ˡ pools , fPools , retiring ⟧
-
-  POOL-retirepool :
-    ────────────────────────────────
-    pp ⊢ ⟦ pools , fPools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , fPools , ❴ kh , e ❵ ∪ˡ retiring ⟧
 
 data _⊢_⇀⦇_,DELEG⦈_ where
   DELEG-delegate : let open PParams pp in

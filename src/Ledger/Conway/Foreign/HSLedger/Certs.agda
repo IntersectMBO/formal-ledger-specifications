@@ -8,10 +8,11 @@ open import Ledger.Conway.Foreign.HSLedger.PParams
 
 open import Ledger.Conway.Conformance.Certs govStructure using (⟦_,_,_,_⟧ᵈ; ⟦_,_,_⟧ᵛ; DState; GState; CertEnv)
 
+open import Ledger.Conway.Specification.Certs.Properties.Computational govStructure
+  using (Computational-POOL)
 open import Ledger.Conway.Conformance.Certs.Properties govStructure
   using ( Computational-DELEG
         ; Computational-GOVCERT
-        ; Computational-POOL
         )
 
 instance
