@@ -23,28 +23,148 @@ module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) w
 ```
 -->
 
-We introduce the following distinct bodies with specific functions in the new governance framework:
+## Roles
 
-1.  a constitutional committee (henceforth called `CC`{.AgdaInductiveConstructor});
+There are three distinct roles with specific functions in the governance framework:
 
-2.  a group of delegate representatives (henceforth called `DReps`{.AgdaInductiveConstructor});
+1. constitutional committee (henceforth called `CC`{.AgdaInductiveConstructor});
 
-3.  the stake pool operators (henceforth called `SPOs`{.AgdaInductiveConstructor}).
+2. delegate representatives (henceforth called `DReps`{.AgdaInductiveConstructor});
 
-## Governance Action Types and Functions
-
-The `GovRole`{.AgdaDatatype} is used to represent the bodies (voter roles) defined
-above—`CC`{.AgdaInductiveConstructor}, `DRep`{.AgdaInductiveConstructor}, and `SPO`{.AgdaInductiveConstructor}.
+3. stake pool operators (henceforth called `SPOs`{.AgdaInductiveConstructor}).
 
 ```agda
 data GovRole : Type where
   CC DRep SPO : GovRole
+```
+<!--
+```agda
+instance
+  unquoteDecl Show-GovRole = derive-Show [ (quote GovRole , Show-GovRole) ]
+```
+-->
 
+Actors belonging to each governance role are identified by a type of
+credential:
+
+```agda
 GovRoleCredential : GovRole → Type
 GovRoleCredential CC   = Credential
 GovRoleCredential DRep = Credential
 GovRoleCredential SPO  = KeyHash
 ```
+
+## Actions {#sec:governance-actions}
+
+A governance action is one of the seven types described in the table below:
+
+| **Action** | **Description** |
+|:---|:---|
+| `NoConfidence`{.AgdaInductiveConstructor} | a motion to create a *state of no-confidence* in the current constitutional committee |
+| `UpdateCommittee`{.AgdaInductiveConstructor} | changes to the members of the constitutional committee and/or to its signature threshold and/or terms |
+| `NewConstitution`{.AgdaInductiveConstructor} | a modification to the off-chain Constitution and the proposal policy script |
+| `TriggerHardFork`{.AgdaInductiveConstructor} | triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade |
+| `ChangePParams`{.AgdaInductiveConstructor} | a change to *one or more* updatable protocol parameters, excluding changes to major protocol versions (“hard forks”) |
+| `TreasuryWithdrawal`{.AgdaInductiveConstructor} | movements from the treasury |
+| `Info`{.AgdaInductiveConstructor} | an action that has no effect on-chain, other than an on-chain record |
+
+```agda
+data GovActionType : Type where
+  NoConfidence        : GovActionType
+  UpdateCommittee     : GovActionType
+  NewConstitution     : GovActionType
+  TriggerHardFork     : GovActionType
+  ChangePParams       : GovActionType
+  TreasuryWithdrawal  : GovActionType
+  Info                : GovActionType
+```
+<!--
+```agda
+record HasGovActionType (A : Type) : Type where
+  field GovActionTypeOf : A → GovActionType
+open HasGovActionType ⦃...⦄ public
+```
+-->
+
+Governance actions carry the following information:
+
+- `UpdateCommittee`{.AgdaInductiveConstructor}: a map of credentials and terms to
+  add and a set of credentials to remove from the committee;
+
+- `NewConstitution`{.AgdaInductiveConstructor}: a hash of the new constitution
+  document and an optional proposal policy;
+
+- `TriggerHardFork`{.AgdaInductiveConstructor}: the protocol version of the epoch to
+  hard fork into;
+
+- `ChangePParams`{.AgdaInductiveConstructor}: the updates to the parameters;
+
+- `TreasuryWithdrawal`{.AgdaInductiveConstructor}: a map of withdrawals.
+
+```agda
+GovActionData : GovActionType → Type
+GovActionData NoConfidence        = ⊤
+GovActionData UpdateCommittee     = (Credential ⇀ Epoch) × ℙ Credential × ℚ
+GovActionData NewConstitution     = DocHash × Maybe ScriptHash
+GovActionData TriggerHardFork     = ProtVer
+GovActionData ChangePParams       = PParamsUpdate
+GovActionData TreasuryWithdrawal  = Withdrawals
+GovActionData Info                = ⊤
+```
+
+A governance action consist of a type of governance action together with the
+necessary data:
+
+```agda
+record GovAction : Type where
+  constructor ⟦_,_⟧ᵍᵃ
+  field
+    gaType : GovActionType
+    gaData : GovActionData gaType
+```
+
+<!--
+```agda
+open GovAction public
+
+record HasGovAction (A : Type) : Type where
+  field GovActionOf : A → GovAction
+open HasGovAction ⦃...⦄ public
+
+instance
+  HasGovActionType-GovAction : HasGovActionType GovAction
+  HasGovActionType-GovAction .GovActionTypeOf = GovAction.gaType
+
+  HasCast-GovAction-Sigma : HasCast GovAction (Σ GovActionType GovActionData)
+  HasCast-GovAction-Sigma .cast x = x .gaType , x .gaData
+```
+-->
+
+Governance actions are uniquely identified by a `GovActionID`. This type
+consists of the `TxId`{.AgdaDatatype} of the transaction that proposes the
+governance action together with an index that identifies the proposal within the
+transaction.
+```agda
+GovActionID : Type
+GovActionID  = TxId × ℕ
+```
+
+## Votes
+
+The `Vote`{.AgdaDatatype} type represents the three different voting options:
+`yes`{.AgdaInductiveConstructor}, `no`{.AgdaInductiveConstructor}, and
+`abstain`{.AgdaInductiveConstructor}.
+
+```agda
+data Vote : Type where
+  yes no abstain  : Vote
+```
+
+For a `Vote`{.AgdaDatatype} to be cast, it must be packaged together with
+further information, such as who votes `GovVoter`{.AgdaDatatype} and for which
+governance action.  This information is combined in the `GovVote`{.AgdaRecord}
+record. An optional `Anchor`{.AgdaRecord} can be provided to give context about
+why a vote was cast in a certain manner.
 
 ```agda
 record GovVoter : Type where
@@ -54,14 +174,42 @@ record GovVoter : Type where
     gvCredential : GovRoleCredential gvRole
 ```
 
-`GovActionID`{.AgdaDatatype} is a unique identifier for a governance action,
-consisting of the `TxId`{.AgdaDatatype} of the proposing transaction and an index
-to identify a proposal within a transaction.
+```agda
+record Anchor : Type where
+  field
+    url   : String
+    hash  : DocHash
+```
+
+!!! info "`DocHash`{.AgdaField}"
+
+    The type `DocHash`{.AgdaField} is abstract but in the implementation it is
+    instantiated with a 32-bit hash type (like, e.g., `ScriptHash`{.AgdaFunction}).
+    We keep it separate because it is used for a different purpose.
+
 
 ```agda
-GovActionID : Type
-GovActionID  = TxId × ℕ
+record GovVote : Type where
+  field
+    gid         : GovActionID
+    voter       : GovVoter
+    vote        : Vote
+    anchor      : Maybe Anchor
 ```
+
+Finally, we define the `GovVotes`{.AgdaRecord} type, an inhabitant of which is
+comprised of three maps that collect the votes cast by members of each of the
+three governance roles.
+
+```agda
+record GovVotes : Type where
+  field
+    gvCC   : Credential ⇀ Vote
+    gvDRep : Credential ⇀ Vote
+    gvSPO  : KeyHash ⇀ Vote
+```
+
+## Vote Delegation
 
 The type `VDeleg`{.AgdaDatatype} represents the different ways in which
 voting stake can be delegated:
@@ -79,116 +227,11 @@ data VDeleg : Type where
 VoteDelegs : Type
 VoteDelegs   = Credential ⇀ VDeleg
 ```
-
-An `Anchor`{.AgdaRecord} is a url and a document hash.
-
-```agda
-record Anchor : Type where
-  field
-    url   : String
-    hash  : DocHash
-```
-
-!!! info "`DocHash`{.AgdaField}"
-
-    The type `DocHash`{.AgdaField} is abstract but in the implementation it is
-    instantiated with a 32-bit hash type (like, e.g., `ScriptHash`{.AgdaFunction}).
-    We keep it separate because it is used for a different purpose.
-
-
-## Governance Action Types {#sec:governance-action-types}
-
-We classify governance actions by type which we represent using the following definition:
-
-```agda
-data GovActionType : Type where
-  NoConfidence        : GovActionType
-  UpdateCommittee     : GovActionType
-  NewConstitution     : GovActionType
-  TriggerHardFork     : GovActionType
-  ChangePParams       : GovActionType
-  TreasuryWithdrawal  : GovActionType
-  Info                : GovActionType
-```
-
-Thus, a governance actions is one of the seven kinds described in the table below.
-
-| **Action** | **Description** |
-|:---|:---|
-| `NoConfidence`{.AgdaInductiveConstructor} | a motion to create a *state of no-confidence* in the current constitutional committee |
-| `UpdateCommittee`{.AgdaInductiveConstructor} | changes to the members of the constitutional committee and/or to its signature threshold and/or terms |
-| `NewConstitution`{.AgdaInductiveConstructor} | a modification to the off-chain Constitution and the proposal policy script |
-| `TriggerHardFork`{.AgdaInductiveConstructor} | triggers a non-backwards compatible upgrade of the network; requires a prior software upgrade |
-| `ChangePParams`{.AgdaInductiveConstructor} | a change to *one or more* updatable protocol parameters, excluding changes to major protocol versions (“hard forks”) |
-| `TreasuryWithdrawal`{.AgdaInductiveConstructor} | movements from the treasury |
-| `Info`{.AgdaInductiveConstructor} | an action that has no effect on-chain, other than an on-chain record |
-
-Governance actions carry the following information:
-
-+  `UpdateCommittee`{.AgdaInductiveConstructor}: a map of credentials and terms to
-   add and a set of credentials to remove from the committee;
-
-+  `NewConstitution`{.AgdaInductiveConstructor}: a hash of the new constitution
-   document and an optional proposal policy;
-
-+  `TriggerHardFork`{.AgdaInductiveConstructor}: the protocol version of the epoch to
-   hard fork into;
-
-+  `ChangePParams`{.AgdaInductiveConstructor}: the updates to the parameters;
-
-+  `TreasuryWithdrawal`{.AgdaInductiveConstructor}: a map of withdrawals.
-
-
 <!--
 ```agda
 record HasVoteDelegs {a} (A : Type a) : Type a where
   field VoteDelegsOf : A → VoteDelegs
 open HasVoteDelegs ⦃...⦄ public
-
-record HasGovActionType (A : Type) : Type where
-  field GovActionTypeOf : A → GovActionType
-open HasGovActionType ⦃...⦄ public
-```
--->
-
-
-```agda
-GovActionData : GovActionType → Type
-GovActionData NoConfidence        = ⊤
-GovActionData UpdateCommittee     = (Credential ⇀ Epoch) × ℙ Credential × ℚ
-GovActionData NewConstitution     = DocHash × Maybe ScriptHash
-GovActionData TriggerHardFork     = ProtVer
-GovActionData ChangePParams       = PParamsUpdate
-GovActionData TreasuryWithdrawal  = Withdrawals
-GovActionData Info                = ⊤
-```
-
-Finally, we represent governance actions as the inhabitants of the
-`GovAction`{.AgdaRecord} type, which is defined as follows:
-
-```agda
-record GovAction : Type where
-  constructor ⟦_,_⟧ᵍᵃ
-  field
-    gaType : GovActionType
-    gaData : GovActionData gaType
-```
-
-<!--
-```agda
-open GovAction public
-record HasGovAction (A : Type) : Type where
-  field GovActionOf : A → GovAction
-open HasGovAction ⦃...⦄ public
-
-instance
-  HasGovActionType-GovAction : HasGovActionType GovAction
-  HasGovActionType-GovAction .GovActionTypeOf = GovAction.gaType
-
-  HasCast-GovAction-Sigma : HasCast GovAction (Σ GovActionType GovActionData)
-  HasCast-GovAction-Sigma .cast x = x .gaType , x .gaData
-
-  unquoteDecl Show-GovRole = derive-Show [ (quote GovRole , Show-GovRole) ]
 ```
 -->
 
@@ -243,41 +286,6 @@ instance
 ```
 -->
 
-
-## Vote Types {#sec:vote-types}
-
-The `Vote`{.AgdaDatatype} type represents the three different voting options:
-`yes`{.AgdaInductiveConstructor}, `no`{.AgdaInductiveConstructor}, and `abstain`{.AgdaInductiveConstructor}.
-
-```agda
-data Vote : Type where
-  yes no abstain  : Vote
-```
-
-For a `Vote`{.AgdaDatatype} to be cast, it must be packaged together with further
-information, such as who votes and for which governance action.  This information is
-combined in the `GovVote`{.AgdaRecord} record.  An optional `Anchor`{.AgdaRecord} can
-be provided to give context about why a vote was cast in a certain manner.
-
-```agda
-record GovVote : Type where
-  field
-    gid         : GovActionID
-    voter       : GovVoter
-    vote        : Vote
-    anchor      : Maybe Anchor
-```
-
-Finally, we define the `GovVotes`{.AgdaRecord} type, an inhabitant of which is comprised
-of three maps that collect the votes cast by members of each of the three governance bodies.
-
-```agda
-record GovVotes : Type where
-  field
-    gvCC   : Credential ⇀ Vote
-    gvDRep : Credential ⇀ Vote
-    gvSPO  : KeyHash ⇀ Vote
-```
 
 ## Governance Proposal Types {#sec:governance-proposal-types}
 

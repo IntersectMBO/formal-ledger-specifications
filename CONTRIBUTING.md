@@ -171,7 +171,7 @@ enter them using `nix develop`.
 
     ```bash
     # Enter the documentation shell
-    nix develop .#mkdocs-dev
+    nix develop .#mkdocs
     ```
 
     ⚒️ **Available Tools**
@@ -203,9 +203,7 @@ nix build .#formal-ledger
 nix build
 
 # Generate the (HTML version of the) formal specification
-nix build .#mkdocs-dev  # without type-checking everything upon entering the shell
-# OR
-nix build .#mkdocs      # type-checks everything upon entering the shell
+nix build .#mkdocs
 
 # Generate browseable HTML version of Agda code
 nix build .#html
@@ -260,7 +258,7 @@ There are two ways to do this.
     then generates the HTML documentation.
 
     ```bash
-    nix develop .#mkdocs-dev
+    nix develop .#mkdocs
     python build-tools/scripts/md/build.py --run-agda
     cd _build/md/mkdocs
     mkdocs serve
@@ -449,7 +447,7 @@ the `update-alternatives` approach.)
 
     ```bash
     nix develop
-    emacs src/Ledger.agda
+    emacs src/Ledger.lagda.md
     ```
 
 3.  Use standard `agda-mode` commands (e.g., `C-c C-l` to load a file).

@@ -1,5 +1,4 @@
 [Agda documentation]: https://agda.readthedocs.io/en/
-[Agda Essentials]: Ledger.EssentialAgda.md
 [Agda record types]: https://agda.readthedocs.io/en/stable/language/record-types.html
 [Agda Wiki]: https://wiki.portal.chalmers.se/agda/pmwiki.php
 [Amount of Rewards to be Paid Out]: Ledger.Conway.Specification.Rewards.md#sec:amount-of-rewards-to-be-paid-out
@@ -15,12 +14,11 @@
 [Certs.Properties.PoVLemmas]: Ledger.Conway.Specification.Certs.Properties.PoVLemmas.md
 [Certs.Properties.VoteDelegsVDeleg]: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.md
 [CHAIN]: Ledger.Conway.Specification.Chain.md#sec:the-chain-transition-system
+[CIPs]: https://github.com/cardano-foundation/CIPs
 [Chain.Properties.CredDepsEqualDomRwds]: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.md
 [Chain.Properties.EpochStep]: Ledger.Conway.Specification.Chain.Properties.EpochStep.md
 [Chain.Properties.PParamsWellFormed]: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md
 [Chain.Properties.GovDepsMatch]: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md
-[CHAIN]: Ledger.Conway.Specification.Chain.md#chain-transition-system
-[CIPs]: https://github.com/cardano-foundation/CIPs
 [DELEG]: Ledger.Conway.Specification.Certs.md#auxiliary-deleg-transition-system
 [ENACT]: Ledger.Conway.Specification.Enact.md#sec:the-enact-transition-system
 [EPOCH]: Ledger.Conway.Specification.Epoch.md#sec:the-epoch-transition-system
@@ -41,11 +39,6 @@
 [Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
-[Ledger.Conway.Specification.Enact]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Enact.lagda.md
-[Ledger.Conway.Specification.Fees]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Fees.lagda.md
-[Ledger.Conway.Specification.Gov]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Gov.lagda.md
-[Ledger.Conway.Specification.Rewards]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Rewards.lagda.md
-[Ledger.Conway.Specification.Utxo]: https://github.com/IntersectMBO/formal-ledger-specifications/blob/master/src/Ledger/Conway/Specification/Utxo.lagda.md
 [Ledger.Properties]: Ledger.Conway.Specification.Ledger.Properties.md
 [Ledger.Properties.GovDepsMatch]: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
 [Ledger.Properties.PoV]: Ledger.Conway.Specification.Ledger.Properties.PoV.md
@@ -79,5 +72,4 @@
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#sec:the-utxow-transition-system
 [Utxow module]: Ledger.Conway.Specification.Utxow.md
 [Validity and wellformedness predicates]: Ledger.Conway.Specification.Gov.md#validity-and-wellformedness-predicates
-[Voting Functions]: Ledger.Conway.Specification.Ratify.md#sec:voting-functions
 
