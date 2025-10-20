@@ -189,3 +189,19 @@ body.reveal-agda-source pre.Agda.hidden-source {
 }
 
 .svg-card img { display:block; max-width:100%; height:auto; }
+
+
+/* ======================================================================= */
+/* Make main content region wider */
+.md-main__inner {
+  max-width: 78rem;  /* default ~72rem */
+}
+/* Make Agda code blocks scroll horizontally instead of overflowing. */
+.md-content pre.Agda {
+  white-space: pre;
+  overflow-x: auto;
+}
+/* Tighten sidebars slightly. */
+.md-sidebar--secondary {
+  width: 14rem; /* default ~15rem */
+}
