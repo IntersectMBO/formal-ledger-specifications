@@ -481,17 +481,24 @@ data _⊢_⇀⦇_,DELEG⦈_ : DelegEnv → DState → DCert → DState → Type 
        the future pool parameters are updated only if the pool is already registered.
 
 ```agda
-ifPoolRegistered : {A : Set} → Pools → KeyHash → A → A → A
-ifPoolRegistered ps kh a b
-  with kh ∈? dom (ps ˢ)
-... | yes _ = a
-... | no _ = b
+isPoolRegistered : Pools -> KeyHash -> Maybe StakePoolParams
+isPoolRegistered ps kh = lookupᵐ? ps kh
 
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-regpool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , fPools , retiring ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦ pools ∪ˡ ❴ kh , poolParams ❵ , ifPoolRegistered pools kh (❴ kh , poolParams ❵ ∪ˡ fPools) fPools , retiring ∣  ❴ kh ❵ ᶜ ⟧
+    pp ⊢ ⟦ pools
+         , fPools
+         , retiring
+         ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
+           pools ∪ˡ ❴ kh , poolParams ❵
+         , (if isPoolRegistered pools kh
+              then ❴ kh , poolParams ❵ ∪ˡ fPools
+              else fPools
+           )
+         , retiring ∣  ❴ kh ❵ ᶜ
+         ⟧
 
   POOL-retirepool :
     ────────────────────────────────
