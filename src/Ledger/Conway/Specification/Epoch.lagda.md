@@ -484,6 +484,21 @@ opaque
 ```
 -->
 ```agda
+  calculateVDelegDelegatedStake
+    : Epoch
+    → UTxOState
+    → GovState
+    → GState
+    → DState
+    → VDeleg ⇀ Coin
+  calculateVDelegDelegatedStake = VDelegDelegatedStake.calculate
+```
+<!--
+```agda
+opaque
+```
+-->
+```agda
   calculatePoolDelegatedStakeForVoting
     : Snapshot
     → UTxOState
@@ -529,7 +544,7 @@ mkStakeDistrs
   → DState
   → StakeDistrs
 mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
-  ⟦ VDelegDelegatedStake.calculate currentEpoch utxoSt govSt gState dState
+  ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
   , calculatePoolDelegatedStakeForVoting ss utxoSt govSt ⟧
 ```
 
