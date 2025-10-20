@@ -502,7 +502,14 @@ data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type wh
 
   POOL-retirepool :
     ────────────────────────────────
-    pp ⊢ ⟦ pools , fPools , retiring ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦ pools , fPools , ❴ kh , e ❵ ∪ˡ retiring ⟧
+    pp ⊢ ⟦ pools
+         , fPools
+         , retiring
+         ⟧ ⇀⦇ retirepool kh e ,POOL⦈ ⟦
+           pools
+         , fPools
+         , ❴ kh , e ❵ ∪ˡ retiring
+         ⟧
 ```
 
 
