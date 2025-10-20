@@ -494,6 +494,7 @@ library
       MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Utxo
       MAlonzo.Code.Ledger.Conway.Specification.Abstract
       MAlonzo.Code.Ledger.Conway.Specification.Certs
+      MAlonzo.Code.Ledger.Conway.Specification.Certs.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Enact
       MAlonzo.Code.Ledger.Conway.Specification.Enact.Properties.Computational
       MAlonzo.Code.Ledger.Conway.Specification.Epoch
@@ -657,12 +658,14 @@ library
       MAlonzo.Code.Tactic.Assumption
       MAlonzo.Code.Tactic.ByEq
       MAlonzo.Code.Tactic.ClauseBuilder
+      MAlonzo.Code.Tactic.Constrs
       MAlonzo.Code.Tactic.Defaults
       MAlonzo.Code.Tactic.Derive
       MAlonzo.Code.Tactic.Derive.DecEq
       MAlonzo.Code.Tactic.Derive.Show
       MAlonzo.Code.Tactic.Derive.TestTypes
       MAlonzo.Code.Tactic.Inline
+      MAlonzo.Code.Tactic.ReduceDec
       MAlonzo.Code.Tactic.RingSolver
       MAlonzo.Code.Tactic.RingSolver.Core.AlmostCommutativeRing
       MAlonzo.Code.Tactic.RingSolver.Core.Expression
