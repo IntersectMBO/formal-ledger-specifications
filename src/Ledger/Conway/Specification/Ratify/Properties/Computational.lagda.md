@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Ratify/Properties/Computational.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -86,3 +92,4 @@ opaque
     → Γ' ⊢ s' ⇀⦇ sig' ,RATIFIES⦈ s'''
     → s'' ≡ s'''
   RATIFIES-deterministic-≡ refl refl refl = RATIFIES-deterministic
+```

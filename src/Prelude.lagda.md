@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Prelude.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe --without-K #-}
 
 module Prelude where
@@ -114,3 +120,4 @@ negPart x with sign x
 ∸≡posPart⊖ {zero} {ℕ.suc n} = _≡_.refl
 ∸≡posPart⊖ {ℕ.suc m} {zero} = _≡_.refl
 ∸≡posPart⊖ {ℕ.suc m} {ℕ.suc n} = trans (∸≡posPart⊖{m}{n}) (sym (cong posPart (([1+m]⊖[1+n]≡m⊖n m n))))
+```

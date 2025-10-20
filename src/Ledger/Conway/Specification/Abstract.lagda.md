@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Abstract.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
@@ -23,3 +29,4 @@ record AbstractFunctions : Type where
         indexOfImp   : indexOf
         runPLCScript : CostModel → P2Script → ExUnits → List Data → Bool
         scriptSize   : Script → ℕ
+```

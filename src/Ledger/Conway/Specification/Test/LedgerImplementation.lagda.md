@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Test/LedgerImplementation.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Test.Prelude
@@ -192,3 +198,4 @@ SVAbstractFunctions = record
   ; scriptSize = λ _ → 0
   }
 instance _ = SVAbstractFunctions
+```

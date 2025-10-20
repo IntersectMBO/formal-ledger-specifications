@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Test/Prelude.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
@@ -9,3 +15,4 @@ record ScriptImplementation (T D : Type) : Type₁ where
         toData' : ∀ {A : Type} → A → D -- fix this
         ⦃ DecEq-Data  ⦄    : DecEq D
         ⦃ Show-Data  ⦄     : Show D
+```

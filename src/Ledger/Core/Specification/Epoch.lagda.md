@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Core/Specification/Epoch.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 module Ledger.Core.Specification.Epoch where
@@ -106,3 +112,4 @@ record GlobalConstants : Type₁ where
    where open EpochStructure
 
 open GlobalConstants using (ℕEpochStructure) public
+```

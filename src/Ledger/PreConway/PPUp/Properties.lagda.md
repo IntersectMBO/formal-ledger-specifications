@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/PreConway/PPUp/Properties.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (_*_)
@@ -49,3 +55,4 @@ instance
                                   $ <⇒¬>⊎≈ {A = Slot} ¬p₃ (≤⇔<∨≈ .Equivalence.to p₃)
   ... | no _ | yes p = refl
   ... | no _ | no ¬p = ⊥-elim (¬p (p₁ , p₂ , p₃ , p₄))
+```

@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Utxo/Properties/Base.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
@@ -417,3 +423,4 @@ module _
       cbalance (utxo ∣ collateralInputs ᶜ) ℕ.+ (fees ℕ.+ cbalance (utxo ∣ collateralInputs)) ∎ ⟩
     cbalance (utxo ∣ collateralInputs ᶜ) + (fees + cbalance (utxo ∣ collateralInputs)) + dep + donations
     ∎
+```

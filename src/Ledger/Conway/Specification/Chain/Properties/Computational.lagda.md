@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Chain/Properties/Computational.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
@@ -45,3 +51,4 @@ instance
     with refScriptSize≤?Bound nes (Block.ts b)
   ... | yes p = refl
   ... | no ¬p = ⊥-elim (¬p p)
+```

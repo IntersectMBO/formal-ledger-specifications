@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Test/Examples/SucceedIfNumber.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude hiding (fromList; ε); open Computational
@@ -194,3 +200,4 @@ opaque
 
   _ : failExampleU ≡ false
   _ = refl
+```

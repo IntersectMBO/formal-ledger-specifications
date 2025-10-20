@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Gov/Properties/Computational.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Gov.Base
@@ -107,7 +113,7 @@ instance
           with lookupActionId pparams (gvRole voter) gid epoch s | isRegistered? (proj₁ Γ) voter
         ... | no ¬p | _ = ⊥-elim (¬p (Any↔ .to (_ , ∈-fromList .from mem , refl , cV , ¬expired)))
         ... | yes _ | no ¬p = ⊥-elim $ ¬p reg
-        ... | yes p | yes q with Any↔ .from p 
+        ... | yes p | yes q with Any↔ .from p
         ... | ((_ , ast') , mem , refl , cV) = refl
 
       module GoProp prop where
@@ -115,7 +121,7 @@ instance
           renaming (action to a; deposit to d; policy to p; returnAddr to addr; prevAction to prev)
         open PParams pparams hiding (a)
 
-        instance 
+        instance
           Dec-actionWellFormed = actionWellFormed?
           Dec-actionValid = actionValid?
         {-# INCOHERENT Dec-actionWellFormed #-}
@@ -169,3 +175,4 @@ allEnactable-singleton {aid} {s} {es} eq = helper All.∷ All.[]
       [ (aid , x) ] , proj₁ ≡ᵉ.refl , All.[] ∷ [] , inj₁ (refl , refl)
     ... | just x | nothing = case eq of λ ()
     ... | nothing | _ = _
+```
