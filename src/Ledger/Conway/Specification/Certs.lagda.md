@@ -487,16 +487,19 @@ isPoolRegistered ps kh = lookupᵐ? ps kh
 data _⊢_⇀⦇_,POOL⦈_ : PoolEnv → PState → DCert → PState → Type where
 
   POOL-regpool :
+    let
+      fPool' =
+        if isPoolRegistered pools kh
+          then ❴ kh , poolParams ❵ ∪ˡ fPools
+          else fPools
+     in
     ────────────────────────────────
     pp ⊢ ⟦ pools
          , fPools
          , retiring
          ⟧ ⇀⦇ regpool kh poolParams ,POOL⦈ ⟦
            pools ∪ˡ ❴ kh , poolParams ❵
-         , (if isPoolRegistered pools kh
-              then ❴ kh , poolParams ❵ ∪ˡ fPools
-              else fPools
-           )
+         , fPool'
          , retiring ∣  ❴ kh ❵ ᶜ
          ⟧
 
