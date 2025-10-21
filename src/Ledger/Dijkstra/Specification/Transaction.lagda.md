@@ -1,5 +1,17 @@
-# Transaction
+---
+source_branch: master
+source_path: src/Ledger/Dijkstra/Specification/Transaction.lagda.md
+---
 
+# Transactions {#sec:transactions}
+
+A transaction in Dijkstra is very similar to a transaction in Conway
+except that now, as described in CIP 0118[^1], it may include
+
++  other (sub)transactions as part of its body;
++  _guard_ scripts.
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 module Ledger.Dijkstra.Specification.Transaction where
@@ -22,17 +34,7 @@ import Ledger.Dijkstra.Specification.TokenAlgebra.Base
 open import Tactic.Derive.DecEq
 open import Relation.Nullary.Decidable using (⌊_⌋)
 ```
-
-A transaction in Dijkstra is very similar to a transaction in Conway
-except that now, as described in CIP 0118[^1], it may include
-
-+  other (sub)transactions as part of its body;
-+  _guard_ scripts.
-
-Before continuing, we remark that transactions cannot be arbitrarily
-nested. That is, a transaction (henceforth refered as top-level
-transaction) can include subtransactions, but these cannot include
-other subtransactions.
+-->
 
 ## Transaction Levels {#sec:transaction-levels}
 
@@ -45,8 +47,12 @@ data TxLevel : Type where
 ```
 
 This type will be used, among other purposes, to provide a concise
-definition of the types of top-level and sub transactions in the [Transactions][]
+definition of the types of top-level and sub transactions in the [Transaction Structure][]
 section below.
+
+Transactions cannot be arbitrarily nested. That is, a transaction (henceforth refered
+as top-level transaction) can include subtransactions, but these cannot include
+other subtransactions.
 
 To that end, we define two auxiliary functions that will aid in
 specifying which record fields of a transaction body are present at
@@ -66,6 +72,7 @@ These functions discriminate on an argument of type
 `TxLevel`{.agdatype} and either act as the identity function on types
 or as the constant function that returns the unit type.
 
+<!--
 ```agda
 unquoteDecl DecEq-TxLevel = derive-DecEq ((quote TxLevel , DecEq-TxLevel) ∷ [])
 
@@ -79,43 +86,55 @@ data Tag : TxLevel → Type where
 
 unquoteDecl DecEq-Tag = derive-DecEq ((quote Tag , DecEq-Tag) ∷ [])
 ```
+-->
 
-## Transactions {#sec:transactions}
+## Transaction Structure {#sec:transaction-structure}
 
 ```agda
 record TransactionStructure : Type₁ where
   field
-    Ix TxId AuxiliaryData : Type
-
+    Ix TxId AuxiliaryData  : Type
+    adHashingScheme        : isHashableSet AuxiliaryData
+    globalConstants        : GlobalConstants
+    crypto                 : CryptoStructure
+    epochStructure         : EpochStructure
+```
+<!--
+```agda
     ⦃ DecEq-Ix   ⦄ : DecEq Ix
     ⦃ DecEq-TxId ⦄ : DecEq TxId
-    adHashingScheme : isHashableSet AuxiliaryData
   open isHashableSet adHashingScheme renaming (THash to ADHash) public
-
-  field globalConstants : _
   open GlobalConstants globalConstants public
-
-  field crypto : _
   open CryptoStructure crypto public
   open Ledger.Dijkstra.Specification.TokenAlgebra.Base ScriptHash public
   open Ledger.Core.Specification.Address Network KeyHash ScriptHash ⦃ it ⦄ ⦃ it ⦄ ⦃ it ⦄ public
-
-  field epochStructure : _
   open EpochStructure epochStructure public
   open Ledger.Dijkstra.Specification.Script crypto epochStructure public
-
-  field scriptStructure : _
+  field
+```
+-->
+```agda
+    scriptStructure        : ScriptStructure
+```
+<!--
+```agda
   open ScriptStructure scriptStructure public
   open Ledger.Dijkstra.Specification.PParams crypto epochStructure scriptStructure public
-
-  field govParams : _
+  field
+```
+-->
+```agda
+    govParams              : GovParams
+    tokenAlgebra           : TokenAlgebra
+    txidBytes              : TxId → Ser
+```
+<!--
+```agda
   open GovParams govParams public
-
-  field tokenAlgebra : TokenAlgebra
   open TokenAlgebra tokenAlgebra public
-
-  field txidBytes : TxId → Ser
-
+```
+-->
+```agda
   govStructure : GovStructure
   govStructure = record
     -- TODO: figure out what to do with the hash
@@ -126,12 +145,16 @@ record TransactionStructure : Type₁ where
     ; govParams = govParams
     ; globalConstants = globalConstants
     }
-
+```
+<!--
+```agda
   module GovernanceActions = Ledger.Dijkstra.Specification.Gov.Actions govStructure
   open GovernanceActions hiding (Vote; yes; no; abstain) public
 
   open import Ledger.Dijkstra.Specification.Certs govStructure
-
+```
+-->
+```agda
   TxIn : Type
   TxIn = TxId × Ix
 
@@ -140,9 +163,6 @@ record TransactionStructure : Type₁ where
 
   UTxO : Type
   UTxO = TxIn ⇀ TxOut
-
-  -- Datums : Type
-  -- Datums = DataHash ⇀ Datum
 
   RedeemerPtr : TxLevel → Type
   RedeemerPtr txLevel  = Tag txLevel × Ix
@@ -194,7 +214,6 @@ The fields that depend on the transaction level use the auxiliary functions
         currentTreasury      : Maybe Coin
         mint                 : Value
         scriptIntegrityHash  : Maybe ScriptHash
-
 
         -- New in Dijkstra --
         --

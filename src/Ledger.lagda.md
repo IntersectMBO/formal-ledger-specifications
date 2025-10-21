@@ -8,6 +8,7 @@ module Ledger where
 
 import Ledger.Introduction
 import Ledger.PreConway
+import Ledger.Core
 import Ledger.Conway
 import Ledger.Dijkstra
 

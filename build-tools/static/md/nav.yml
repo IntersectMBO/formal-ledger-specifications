@@ -1,14 +1,151 @@
-- Navigation:
-  - Home: index.md
+- Home: index.md
+- Preliminaries:
   - Guide for Contributors: guide.md
-  - Preliminaries:
-    - Notation: Notation.md
-  - Ledger: Ledger.md
-  - Ledger/:
-    - Prelude: Ledger.Prelude.md
-    - Introduction: Ledger.Introduction.md
-    - Properties: Properties.md
-    - Prelude/:
+  - Introduction: Ledger.Introduction.md
+  - Properties: Properties.md
+  - Notation: Notation.md
+- Conway:
+  - Introduction: Ledger.Conway.Specification.md
+  - Modules/:
+    - Abstract: Ledger.Conway.Specification.Abstract.md
+    - BlockBody: Ledger.Conway.Specification.BlockBody.md
+    - BlockBody/:
+      - Properties: Ledger.Conway.Specification.BlockBody.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.BlockBody.Properties.Computational.md
+    - Certs: Ledger.Conway.Specification.Certs.md
+    - Certs/:
+      - Properties: Ledger.Conway.Specification.Certs.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.Certs.Properties.Computational.md
+        - PoV: Ledger.Conway.Specification.Certs.Properties.PoV.md
+        - PoVLemmas: Ledger.Conway.Specification.Certs.Properties.PoVLemmas.md
+        - VoteDelegsVDeleg: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.md
+    - Chain: Ledger.Conway.Specification.Chain.md
+    - Chain/:
+      - Properties: Ledger.Conway.Specification.Chain.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.Chain.Properties.Computational.md
+        - CredDepsEqualDomRwds: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.md
+        - EpochStep: Ledger.Conway.Specification.Chain.Properties.EpochStep.md
+        - GovDepsMatch: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md
+        - PParamsWellFormed: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md
+    - Enact: Ledger.Conway.Specification.Enact.md
+    - Enact/:
+      - Properties: Ledger.Conway.Specification.Enact.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.Enact.Properties.Computational.md
+    - Epoch: Ledger.Conway.Specification.Epoch.md
+    - Epoch/:
+      - Properties: Ledger.Conway.Specification.Epoch.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.Epoch.Properties.Computational.md
+        - ConstRwds: Ledger.Conway.Specification.Epoch.Properties.ConstRwds.md
+        - GovDepsMatch: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.md
+        - NoPropSameDReps: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.md
+    - Fees: Ledger.Conway.Specification.Fees.md
+    - Gov: Ledger.Conway.Specification.Gov.md
+    - Gov/:
+      - Base: Ledger.Conway.Specification.Gov.Base.md
+      - Actions: Ledger.Conway.Specification.Gov.Actions.md
+      - Properties: Ledger.Conway.Specification.Gov.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.Gov.Properties.Computational.md
+        - ChangePPGroup: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md
+    - Ledger: Ledger.Conway.Specification.Ledger.md
+    - Ledger/:
+      - Properties: Ledger.Conway.Specification.Ledger.Properties.md
+      - Properties/:
+        - Base: Ledger.Conway.Specification.Ledger.Properties.Base.md
+        - Computational: Ledger.Conway.Specification.Ledger.Properties.Computational.md
+        - GovDepsMatch: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
+        - PoV: Ledger.Conway.Specification.Ledger.Properties.PoV.md
+    - PoolReap: Ledger.Conway.Specification.PoolReap.md
+    - PParams: Ledger.Conway.Specification.PParams.md
+    - Properties: Ledger.Conway.Specification.Properties.md
+    - Ratify: Ledger.Conway.Specification.Ratify.md
+    - Ratify/:
+      - Properties: Ledger.Conway.Specification.Ratify.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.Ratify.Properties.Computational.md
+    - Rewards: Ledger.Conway.Specification.Rewards.md
+    - Rewards/:
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.Rewards.Properties.Computational.md
+    - RewardUpdate: Ledger.Conway.Specification.RewardUpdate.md
+    - RewardUpdate/:
+      - Properties: Ledger.Conway.Specification.RewardUpdate.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.RewardUpdate.Properties.Computational.md
+    - Script: Ledger.Conway.Specification.Script.md
+    - Script/:
+      - Base: Ledger.Conway.Specification.Script.Base.md
+      - Timelock: Ledger.Conway.Specification.Script.Timelock.md
+      - Validation: Ledger.Conway.Specification.Script.Validation.md
+    - TokenAlgebra/:
+      - Base: Ledger.Conway.Specification.TokenAlgebra.Base.md
+      - Coin: Ledger.Conway.Specification.TokenAlgebra.Coin.md
+      - ValueSet: Ledger.Conway.Specification.TokenAlgebra.ValueSet.md
+      - ValueVector: Ledger.Conway.Specification.TokenAlgebra.ValueVector.md
+    - Transaction: Ledger.Conway.Specification.Transaction.md
+    - Utxo: Ledger.Conway.Specification.Utxo.md
+    - Utxo/:
+      - Properties: Ledger.Conway.Specification.Utxo.Properties.md
+      - Properties/:
+        - Base: Ledger.Conway.Specification.Utxo.Properties.Base.md
+        - Computational: Ledger.Conway.Specification.Utxo.Properties.Computational.md
+        - GenMinspend: Ledger.Conway.Specification.Utxo.Properties.GenMinSpend.md
+        - MinSpend: Ledger.Conway.Specification.Utxo.Properties.MinSpend.md
+        - PoV: Ledger.Conway.Specification.Utxo.Properties.PoV.md
+    - Utxow: Ledger.Conway.Specification.Utxow.md
+    - Utxow/:
+      - Properties: Ledger.Conway.Specification.Utxow.Properties.md
+      - Properties/:
+        - Computational: Ledger.Conway.Specification.Utxow.Properties.Computational.md
+    - Test:
+      - Examples: Ledger.Conway.Specification.Test.Examples.md
+      - Examples/:
+        - HelloWorld: Ledger.Conway.Specification.Test.Examples.HelloWorld.md
+        - SucceedIfNumber: Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.md
+      - LedgerImplementation: Ledger.Conway.Specification.Test.LedgerImplementation.md
+      - Lib: Ledger.Conway.Specification.Test.Lib.md
+      - Prelude: Ledger.Conway.Specification.Test.Prelude.md
+      - StructuredContracts: Ledger.Conway.Specification.Test.StructuredContracts.md
+    - Types/:
+      - GovStructure: Ledger.Conway.Specification.Types.GovStructure.md
+- Dijkstra:
+  - Introduction: Ledger.Dijkstra.Specification.md
+  - Abstract: Ledger.Dijkstra.Specification.Abstract.md
+  - Certs: Ledger.Dijkstra.Specification.Certs.md
+  - Gov/:
+    - Actions: Ledger.Dijkstra.Specification.Gov.Actions.md
+    - Base: Ledger.Dijkstra.Specification.Gov.Base.md
+  - PParams: Ledger.Dijkstra.Specification.PParams.md
+  - Script: Ledger.Dijkstra.Specification.Script.md
+  - Script/:
+    - Validation: Ledger.Dijkstra.Specification.Script.Validation.md
+  - TokenAlgebra: Ledger.Dijkstra.Specification.TokenAlgebra.Base.md
+  - Transaction: Ledger.Dijkstra.Specification.Transaction.md
+- Appendix:
+  - Background:
+    - Definitions: Definitions.md
+    - Essential Agda: EssentialAgda.md
+    - Bootstrapping:
+      - Bootstrapping Governance: ConwayBootstrap.md
+      - Bootstrapping EnactState: ConwayBootstrapEnact.md
+  - Era Independent Modules:
+    - Core: Ledger.Core.md
+    - Core/:
+      - Specification: Ledger.Core.Specification.md
+      - Specification/:
+        - Address: Ledger.Core.Specification.Address.md
+        - Crypto: Ledger.Core.Specification.Crypto.md
+        - Epoch: Ledger.Core.Specification.Epoch.md
+  - Misc Modules:
+    - Prelude: Prelude.md
+    - Ledger: Ledger.md
+    - Ledger.Prelude: Ledger.Prelude.md
+    - Ledger.Prelude/:
       - Base: Ledger.Prelude.Base.md
       - Foreign/:
         - HSTypes: Ledger.Prelude.Foreign.HSTypes.md
@@ -19,128 +156,36 @@
       - Numeric/:
         - PositiveNat: Ledger.Prelude.Numeric.PositiveNat.md
         - UnitInterval: Ledger.Prelude.Numeric.UnitInterval.md
-    - Core/:
-      - Specification/:
-        - Address: Ledger.Core.Specification.Address.md
-        - Crypto: Ledger.Core.Specification.Crypto.md
-        - Epoch: Ledger.Core.Specification.Epoch.md
-    - Conway: Ledger.Conway.md
-    - Conway/:
-      - Specification: Ledger.Conway.Specification.md
-      - Specification/:
-        - Abstract: Ledger.Conway.Specification.Abstract.md
-        - BlockBody: Ledger.Conway.Specification.BlockBody.md
-        - BlockBody/:
-            - Properties: Ledger.Conway.Specification.BlockBody.Properties.md
-            - Properties/:
-              - Computational: Ledger.Conway.Specification.BlockBody.Properties.Computational.md
-        - Certs: Ledger.Conway.Specification.Certs.md
-        - Certs/:
-          - Properties: Ledger.Conway.Specification.Certs.Properties.md
-          - Properties/:
-            - Computational: Ledger.Conway.Specification.Certs.Properties.Computational.md
-            - PoV: Ledger.Conway.Specification.Certs.Properties.PoV.md
-            - PoVLemmas: Ledger.Conway.Specification.Certs.Properties.PoVLemmas.md
-            - VoteDelegsVDeleg: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.md
-        - Chain: Ledger.Conway.Specification.Chain.md
-        - Chain/:
-          - Properties: Ledger.Conway.Specification.Chain.Properties.md
-          - Properties/:
-            - Computational: Ledger.Conway.Specification.Chain.Properties.Computational.md
-            - CredDepsEqualDomRwds: Ledger.Conway.Specification.Chain.Properties.CredDepsEqualDomRwds.md
-            - EpochStep: Ledger.Conway.Specification.Chain.Properties.EpochStep.md
-            - GovDepsMatch: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md
-            - PParamsWellFormed: Ledger.Conway.Specification.Chain.Properties.PParamsWellFormed.md
-        - Enact: Ledger.Conway.Specification.Enact.md
-        - Enact/:
-            - Properties: Ledger.Conway.Specification.Enact.Properties.md
-            - Properties/:
-              - Computational: Ledger.Conway.Specification.Enact.Properties.Computational.md
-        - Epoch: Ledger.Conway.Specification.Epoch.md
-        - Epoch/:
-          - Properties: Ledger.Conway.Specification.Epoch.Properties.md
-          - Properties/:
-            - Computational: Ledger.Conway.Specification.Epoch.Properties.Computational.md
-            - ConstRwds: Ledger.Conway.Specification.Epoch.Properties.ConstRwds.md
-            - GovDepsMatch: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.md
-            - NoPropSameDReps: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.md
-        - Fees: Ledger.Conway.Specification.Fees.md
-        - Gov: Ledger.Conway.Specification.Gov.md
-        - Gov/:
-          - Base : Ledger.Conway.Specification.Gov.Base.md
-          - Actions: Ledger.Conway.Specification.Gov.Actions.md
-          - Properties: Ledger.Conway.Specification.Gov.Properties.md
-          - Properties/:
-            - Computational: Ledger.Conway.Specification.Gov.Properties.Computational.md
-            - ChangePPGroup: Ledger.Conway.Specification.Gov.Properties.ChangePPGroup.md
-        - Ledger.Ledger: Ledger.Conway.Specification.Ledger.md
-        - Ledger.Ledger/:
-          - Properties: Ledger.Conway.Specification.Ledger.Properties.md
-          - Properties/:
-            - Base: Ledger.Conway.Specification.Ledger.Properties.Base.md
-            - Computational: Ledger.Conway.Specification.Ledger.Properties.Computational.md
-            - GovDepsMatch: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
-            - PoV: Ledger.Conway.Specification.Ledger.Properties.PoV.md
-        - PoolReap: Ledger.Conway.Specification.PoolReap.md
-        - PoolReap/:
-          - Properties/:
-            - Computational: Ledger.Conway.Specification.PoolReap.Properties.Computational.md
-        - PParams: Ledger.Conway.Specification.PParams.md
-        - Properties: Ledger.Conway.Specification.Properties.md
-        - Ratify: Ledger.Conway.Specification.Ratify.md
-        - Ratify/:
-          - Properties: Ledger.Conway.Specification.Ratify.Properties.md
-          - Properties/:
-            - Computational: Ledger.Conway.Specification.Ratify.Properties.Computational.md
-        - Rewards: Ledger.Conway.Specification.Rewards.md
-        - Rewards/:
-          - Properties/:
-            - Computational: Ledger.Conway.Specification.Rewards.Properties.Computational.md
-        - RewardUpdate: Ledger.Conway.Specification.RewardUpdate.md
-        - RewardUpdate/:
-            - Properties: Ledger.Conway.Specification.RewardUpdate.Properties.md
-            - Properties/:
-              - Computational: Ledger.Conway.Specification.RewardUpdate.Properties.Computational.md
-        - Script: Ledger.Conway.Specification.Script.md
-        - Script/:
-          - Base: Ledger.Conway.Specification.Script.Base.md
-          - Timelock: Ledger.Conway.Specification.Script.Timelock.md
-          - Validation: Ledger.Conway.Specification.Script.Validation.md
-        - TokenAlgebra/:
-          - Base: Ledger.Conway.Specification.TokenAlgebra.Base.md
-          - Coin: Ledger.Conway.Specification.TokenAlgebra.Coin.md
-          - ValueSet: Ledger.Conway.Specification.TokenAlgebra.ValueSet.md
-          - ValueVector: Ledger.Conway.Specification.TokenAlgebra.ValueVector.md
-        - Transaction: Ledger.Conway.Specification.Transaction.md
-        - Utxo: Ledger.Conway.Specification.Utxo.md
-        - Utxo/:
-          - Properties: Ledger.Conway.Specification.Utxo.Properties.md
-          - Properties/:
-            - Base: Ledger.Conway.Specification.Utxo.Properties.Base.md
-            - Computational: Ledger.Conway.Specification.Utxo.Properties.Computational.md
-            - GenMinspend: Ledger.Conway.Specification.Utxo.Properties.GenMinSpend.md
-            - MinSpend: Ledger.Conway.Specification.Utxo.Properties.MinSpend.md
-            - PoV: Ledger.Conway.Specification.Utxo.Properties.PoV.md
-        - Utxow: Ledger.Conway.Specification.Utxow.md
-        - Utxow/:
-            - Properties: Ledger.Conway.Specification.Utxow.Properties.md
-            - Properties/:
-              - Computational: Ledger.Conway.Specification.Utxow.Properties.Computational.md
-        - Test:
-          - Examples: Ledger.Conway.Specification.Test.Examples.md
-          - Examples/:
-            - HelloWorld: Ledger.Conway.Specification.Test.Examples.HelloWorld.md
-            - SucceedIfNumber: Ledger.Conway.Specification.Test.Examples.SucceedIfNumber.md
-          - LedgerImplementation: Ledger.Conway.Specification.Test.LedgerImplementation.md
-          - Lib: Ledger.Conway.Specification.Test.Lib.md
-          - Prelude:   Ledger.Conway.Specification.Test.Prelude.md
-          - StructuredContracts: Ledger.Conway.Specification.Test.StructuredContracts.md
-        - Types/:
-          - GovStructure: Ledger.Conway.Specification.Types.GovStructure.md
-      - Bootstrap/:
-          - ConwayBootstrap : ConwayBootstrap.md
-          - ConwayBootstrapEnact : ConwayBootstrapEnact.md
-      - Foreign/:
+    - Foreign:
+      - Convertible: Foreign.Convertible.md
+      - Convertible/:
+        - Deriving: Foreign.Convertible.Deriving.md
+        - DerivingTest: Foreign.Convertible.DerivingTest.md
+      - HaskellTypes: Foreign.HaskellTypes.md
+      - HaskellTypes/:
+        - Deriving: Foreign.HaskellTypes.Deriving.md
+    - MyDebugOptions: MyDebugOptions.md
+    - Dijkstra:
+      - Ledger.Dijkstra: Ledger.Dijkstra.md
+    - PreConway:
+      - Ledger.PreConway: Ledger.PreConway.md
+      - Ledger.PreConway/:
+        - Conformance:
+          - NewPP: Ledger.PreConway.Conformance.NewPP.md
+          - NewPP/:
+            - Properties: Ledger.PreConway.Conformance.NewPP.Properties.md
+          - PPUp: Ledger.PreConway.Conformance.PPUp.md
+          - PPUp/:
+            - Properties: Ledger.PreConway.Conformance.PPUp.Properties.md
+        - NewPP: Ledger.PreConway.NewPP.md
+        - NewPP/:
+          - Properties: Ledger.PreConway.NewPP.Properties.md
+        - PPUp: Ledger.PreConway.PPUp.md
+        - PPUp/:
+          - Properties: Ledger.PreConway.PPUp.Properties.md
+    - Conway:
+      - Ledger.Conway: Ledger.Conway.md
+      - Foreign:
         - ExternalFunctions: Ledger.Conway.Foreign.ExternalFunctions.md
         - HSLedger: Ledger.Conway.Foreign.HSLedger.md
         - HSLedger/:
@@ -196,48 +241,7 @@
         - Utxow: Ledger.Conway.Conformance.Utxow.md
         - Utxow/:
           - Properties: Ledger.Conway.Conformance.Utxow.Properties.md
-    - Dijkstra: Ledger.Dijkstra.md
-    - Dijkstra/:
-      - Specification: Ledger.Dijkstra.Specification.md
-      - Abstract: Ledger.Dijkstra.Specification.Abstract.md
-      - Certs: Ledger.Dijkstra.Specification.Certs.md
-      - Gov/:
-        - Actions: Ledger.Dijkstra.Specification.Gov.Actions.md
-        - Base: Ledger.Dijkstra.Specification.Gov.Base.md
-      - PParams: Ledger.Dijkstra.Specification.PParams.md
-      - Script: Ledger.Dijkstra.Specification.Script.md
-      - Script/:
-        - Validation: Ledger.Dijkstra.Specification.Script.Validation.md
-      - TokenAlgebra: Ledger.Dijkstra.Specification.TokenAlgebra.Base.md
-      - Transaction: Ledger.Dijkstra.Specification.Transaction.md
-    - PreConway: Ledger.PreConway.md
-    - PreConway/:
-      - Conformance:
-        - NewPP: Ledger.PreConway.Conformance.NewPP.md
-        - NewPP/:
-          - Properties: Ledger.PreConway.Conformance.NewPP.Properties.md
-        - PPUp: Ledger.PreConway.Conformance.PPUp.md
-        - PPUp/:
-          - Properties: Ledger.PreConway.Conformance.PPUp.Properties.md
-      - NewPP: Ledger.PreConway.NewPP.md
-      - NewPP/:
-        - Properties: Ledger.PreConway.NewPP.Properties.md
-      - PPUp: Ledger.PreConway.PPUp.md
-      - PPUp/:
-        - Properties: Ledger.PreConway.PPUp.Properties.md
-  - Foreign/:
-    - Convertible: Foreign.Convertible.md
-    - Convertible/:
-      - Deriving: Foreign.Convertible.Deriving.md
-      - DerivingTest: Foreign.Convertible.DerivingTest.md
-    - HaskellTypes: Foreign.HaskellTypes.md
-    - HaskellTypes/:
-      - Deriving: Foreign.HaskellTypes.Deriving.md
-  - Appendix/:
-    - Definitions: Definitions.md
-    - EssentialAgda: EssentialAgda.md
-    - Agda Prelude: Prelude.md
-    - Type Classes:
+    - Type Classes/:
       - Interface:
         - ComputationalRelation: Interface.ComputationalRelation.md
         - HasSubset: Interface.HasSubset.md
@@ -246,4 +250,3 @@
           - Instance: Interface.HasSubtract.Instances.md
         - Hashable: Interface.Hashable.md
         - STS: Interface.STS.md
-      - MyDebugOptions: MyDebugOptions.md
