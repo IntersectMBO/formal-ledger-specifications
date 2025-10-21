@@ -78,7 +78,7 @@ module _ {eps : EpochState} {e : Epoch} where
       let
         EPOCHUpdates dState'' acnt'' =
           EPOCHUpdates.updates u0 ls dState' acnt'
-        certState' = ⟦ dState'' , pState' , u0.gState' ⟧ᶜˢ
+        certState' = ⟦ dState'' , pState'' , u0.gState' ⟧ᶜˢ
        in
           record
             { acnt = acnt''
