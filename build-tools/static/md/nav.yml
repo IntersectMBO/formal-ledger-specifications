@@ -190,6 +190,20 @@
         - Utxow: Ledger.Conway.Conformance.Utxow.md
         - Utxow/:
           - Properties: Ledger.Conway.Conformance.Utxow.Properties.md
+    - Dijkstra: Ledger.Dijkstra.md
+    - Dijkstra/:
+      - Specification: Ledger.Dijkstra.Specification.md
+      - Abstract: Ledger.Dijkstra.Specification.Abstract.md
+      - Certs: Ledger.Dijkstra.Specification.Certs.md
+      - Gov/:
+        - Actions: Ledger.Dijkstra.Specification.Gov.Actions.md
+        - Base: Ledger.Dijkstra.Specification.Gov.Base.md
+      - PParams: Ledger.Dijkstra.Specification.PParams.md
+      - Script: Ledger.Dijkstra.Specification.Script.md
+      - Script/:
+        - Validation: Ledger.Dijkstra.Specification.Script.Validation.md
+      - TokenAlgebra: Ledger.Dijkstra.Specification.TokenAlgebra.Base.md
+      - Transaction: Ledger.Dijkstra.Specification.Transaction.md
     - PreConway: Ledger.PreConway.md
     - PreConway/:
       - Conformance:

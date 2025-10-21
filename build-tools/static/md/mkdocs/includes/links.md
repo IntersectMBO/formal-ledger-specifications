@@ -72,5 +72,6 @@
 [Epoch.Properties.NoPropSameDReps]: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.md
 [Certs.Properties.VoteDelegsVDeleg]: Ledger.Conway.Specification.Certs.Properties.VoteDelegsVDeleg.md
 
-[Transactions]: Ledger.Dijkstra.Specification.Transaction.md##sec:transactions
-[Transaction Levels]: Ledger.Dijkstra.Specification.Transaction.md##sec:transaction-levels
+[Transactions]: Ledger.Dijkstra.Specification.Transaction.md#sec:transactions
+[Transaction Levels]: Ledger.Dijkstra.Specification.Transaction.md#sec:transaction-levels
+[Transaction Structure]: Ledger.Dijkstra.Specification.Transaction.md#sec:transaction-structure
