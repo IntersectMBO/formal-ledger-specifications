@@ -17,6 +17,7 @@ import      Data.Integer as ℤ
 open import Data.Integer.Properties using (module ≤-Reasoning; +-mono-≤; neg-mono-≤; +-identityˡ)
                                     renaming (nonNegative⁻¹ to nonNegative⁻¹ℤ)
 open import Data.Nat.GeneralisedArithmetic using (iterate)
+open import Data.Maybe using (fromMaybe)
 open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _⊓_; _≟_; ≢-nonZero)
 open import Data.Rational.Literals using (number; fromℤ)
 open import Data.Rational.Properties using (nonNegative⁻¹; pos⇒nonNeg; ⊓-glb)
@@ -87,6 +88,9 @@ instance
 
   HasDeposits-EpochState : HasDeposits EpochState
   HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
+
+  HasDReps-EpochState : HasDReps EpochState
+  HasDReps-EpochState .DRepsOf = DRepsOf ∘ CertStateOf ∘ LStateOf
 
   HasTreasury-EpochState : HasTreasury EpochState
   HasTreasury-EpochState .TreasuryOf = Acnt.treasury ∘ EpochState.acnt
@@ -445,6 +449,41 @@ each governance action, maps its `returnAddr` (as a staking
 credential) to the deposit.
 
 ```agda
+module VDelegDelegatedStake
+  (currentEpoch : Epoch)
+  (utxoSt       : UTxOState)
+  (govSt        : GovState)
+  (gState       : GState)
+  (dState       : DState)
+  where
+
+  open UTxOState utxoSt
+  open DState dState
+  open GState gState
+
+  -- active DReps
+  activeDReps : ℙ Credential
+  activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
+
+  -- active vote delegations
+  activeVDelegs : ℙ VDeleg
+  activeVDelegs = mapˢ vDelegCredential activeDReps ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵
+
+  -- compute the stake for a credential
+  stakePerCredential : Credential → Coin
+  stakePerCredential c = cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c)
+                         + fromMaybe 0 (lookupᵐ? (stakeFromGADeposits govSt utxoSt) c)
+
+  calculate : VDeleg ⇀ Coin
+  calculate = mapFromFun (λ vd → ∑ˢ[ c ← voteDelegs ⁻¹ vd ] (stakePerCredential c))
+                         activeVDelegs
+```
+<!--
+```agda
+opaque
+```
+-->
+```agda
   calculateVDelegDelegatedStake
     : Epoch
     → UTxOState
@@ -452,39 +491,20 @@ credential) to the deposit.
     → GState
     → DState
     → VDeleg ⇀ Coin
-  calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-    = aggregate₊ (((activeVoteDelegs ˢ) ⁻¹ʳ
-                  ∘ʳ (stakePerCredential ∪⁺ stakeFromGADeposits govSt utxoSt) ˢ) ᶠˢ)
-    where
-      open UTxOState utxoSt
-      open DState dState
-      open GState gState
-
-      -- active DReps
-      activeDReps : ℙ Credential
-      activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
-
-      -- active vote delegations
-      activeVoteDelegs : VoteDelegs
-      activeVoteDelegs = voteDelegs ∣^ ((mapˢ vDelegCredential activeDReps)
-                                        ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵)
-
-      -- stake per delegated credential
-      stakePerCredential : Stake
-      stakePerCredential = mapFromFun (λ c → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c))
-                                      (dom activeVoteDelegs)
-
+  calculateVDelegDelegatedStake = VDelegDelegatedStake.calculate
 ```
-
+<!--
+```agda
+opaque
+```
+-->
 ```agda
   calculatePoolDelegatedStakeForVoting
     : Snapshot
     → UTxOState
     → GovState
-    → GState
-    → DState
     → KeyHash ⇀ Coin
-  calculatePoolDelegatedStakeForVoting ss utxoSt govSt gState dState
+  calculatePoolDelegatedStakeForVoting ss utxoSt govSt
     = calculatePoolDelegatedStake ss ∪⁺ (stakeFromDeposits ∣ dom (PoolsOf ss))
     where
       stakeFromDeposits : KeyHash ⇀ Coin
@@ -515,17 +535,17 @@ governance actions.
     `SPO`{.AgdaInductiveConstructor}s as well.
 
 ```agda
-  mkStakeDistrs
-    : Snapshot
-    → Epoch
-    → UTxOState
-    → GovState
-    → GState
-    → DState
-    → StakeDistrs
-  mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
-    ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-    , calculatePoolDelegatedStakeForVoting ss utxoSt govSt gState dState ⟧
+mkStakeDistrs
+  : Snapshot
+  → Epoch
+  → UTxOState
+  → GovState
+  → GState
+  → DState
+  → StakeDistrs
+mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
+  ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
+  , calculatePoolDelegatedStakeForVoting ss utxoSt govSt ⟧
 ```
 
 <!--
@@ -584,107 +604,92 @@ record EPOCH-Updates0 : Type where
     utxoSt'        : UTxOState
     totWithdrawals : Coin
 
-EPOCH-updates0 : RatifyState → LState → EPOCH-Updates0
-EPOCH-updates0 fut ls =
-    EPOCHUpdates0 es govSt' payout pState' gState' utxoSt' totWithdrawals
-  where
-    open LState ls public
-    open PState
-    open CertState certState using (gState) public
-    open RatifyState fut renaming (es to esW)
+module EPOCHUpdates0 (fut : RatifyState)
+                     (ls : LState) where
 
-    es : EnactState
-    es = record esW { withdrawals = ∅ }
+  open LState ls public
+  open CertState certState using (gState) public
+  open RatifyState fut renaming (es to esW)
+  open PState
 
-    tmpGovSt : GovState
-    tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
+  es : EnactState
+  es = record esW { withdrawals = ∅ }
 
-    orphans : ℙ (GovActionID × GovActionState)
-    orphans  = fromList (getOrphans es tmpGovSt)
+  tmpGovSt : GovState
+  tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
 
-    removed' : ℙ (GovActionID × GovActionState)
-    removed' = removed ∪ orphans
+  orphans : ℙ (GovActionID × GovActionState)
+  orphans  = fromList (getOrphans es tmpGovSt)
 
-    govSt' : GovState
-    govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
+  removed' : ℙ (GovActionID × GovActionState)
+  removed' = removed ∪ orphans
 
-    removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
-    removedGovActions =
-      flip concatMapˢ removed' λ (gaid , gaSt) →
-        mapˢ
-          (returnAddr gaSt ,_)
-          ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+  govSt' : GovState
+  govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
 
-    govActionReturns : RwdAddr ⇀ Coin
-    govActionReturns =
-      aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+  removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
+  removedGovActions =
+    flip concatMapˢ removed' λ (gaid , gaSt) →
+      mapˢ
+        (returnAddr gaSt ,_)
+        ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
 
-    payout : RwdAddr ⇀ Coin
-    payout = govActionReturns ∪⁺ WithdrawalsOf esW
+  govActionReturns : RwdAddr ⇀ Coin
+  govActionReturns =
+    aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-    gState' : GState
-    gState' =
-      ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf gState) else DRepsOf gState)
-      , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
-      ⟧
+  payout : RwdAddr ⇀ Coin
+  payout = govActionReturns ∪⁺ WithdrawalsOf esW
 
-    pState = PStateOf ls
-    pState' = record pState
-      { pools  = pState .fPools ∪ˡ pState .pools
-      ; fPools = ∅ᵐ
-      }
+  pState = PStateOf ls
+  pState' =
+    ⟦ pState .fPools ∪ˡ pState .pools
+    , ∅
+    , pState .retiring
+    ⟧
 
-    utxoSt' : UTxOState
-    utxoSt' = record utxoSt
-      { deposits = DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
-      ; donations = 0
-      }
+  gState' : GState
+  gState' =
+    ⟦ (if null govSt' then mapValues sucᵉ (DRepsOf gState) else DRepsOf gState)
+    , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
+    ⟧
 
-    totWithdrawals : Coin
-    totWithdrawals = ∑[ x ← WithdrawalsOf esW ] x
+  utxoSt' : UTxOState
+  utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+
+  totWithdrawals : Coin
+  totWithdrawals = ∑[ x ← WithdrawalsOf esW ] x
+
+  updates : EPOCH-Updates0
+  updates = EPOCHUpdates0 es govSt' payout pState gState' utxoSt' totWithdrawals
 
 record EPOCH-Updates : Type where
   constructor EPOCHUpdates
   field
-    es             : EnactState
-    govSt'         : GovState
     dState''       : DState
-    pState''       : PState
-    gState'        : GState
-    utxoSt'        : UTxOState
     acnt''         : Acnt
 
-EPOCH-updates
-  : RatifyState → LState → DState → Acnt → EPOCH-Updates
-EPOCH-updates fut ls dState' acnt' =
-    EPOCHUpdates
-      (u0 .es)
-      (u0 .govSt')
-      dState''
-      (u0 .pState')
-      (u0 .gState')
-      (u0 .utxoSt')
-      acnt''
-  where
-    open LState
-    open EPOCH-Updates0
 
-    u0 = EPOCH-updates0 fut ls
+module EPOCHUpdates (eu0 : EPOCH-Updates0)
+                    (ls : LState)
+                    (dState' : DState)
+                    (acnt' : Acnt) where
+  open LState
+  open EPOCH-Updates0
 
-    refunds : Credential ⇀ Coin
-    refunds = pullbackMap (u0 .payout) toRwdAddr (dom (RewardsOf dState'))
+  refunds : Credential ⇀ Coin
+  refunds = pullbackMap (eu0 .payout) toRwdAddr (dom (RewardsOf dState'))
 
-    dState'' : DState
-    dState'' = record dState' { rewards = RewardsOf dState' ∪⁺ refunds }
+  dState'' : DState
+  dState'' = ⟦ VoteDelegsOf dState' , StakeDelegsOf dState' , RewardsOf dState' ∪⁺ refunds ⟧
 
-    unclaimed : Coin
-    unclaimed = getCoin (u0 .payout) - getCoin refunds
+  unclaimed : Coin
+  unclaimed = getCoin (eu0 .payout) - getCoin refunds
 
-    acnt'' : Acnt
-    acnt'' = record acnt'
-      { treasury =
-          TreasuryOf acnt' ∸ u0 .totWithdrawals + DonationsOf ls + unclaimed
-      }
+  acnt'' : Acnt
+  acnt'' = ⟦ TreasuryOf acnt' ∸ eu0 .totWithdrawals + DonationsOf ls + unclaimed , ReservesOf acnt' ⟧
+
+  updates = EPOCHUpdates dState'' acnt''
 ```
 
 ### Transition Rule
@@ -721,8 +726,8 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
 -->
 ```agda
     let
-      EPOCHUpdates es govSt' dState'' pState' gState' utxoSt' acnt'' =
-        EPOCH-updates fut ls dState' acnt'
+      eu0@(EPOCHUpdates0 es govSt' _ pState' gState' utxoSt' _) = EPOCHUpdates0.updates fut ls
+      EPOCHUpdates dState'' acnt'' = EPOCHUpdates.updates eu0 ls dState' acnt'
 
       stakeDistrs : StakeDistrs
       stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt'

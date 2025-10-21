@@ -180,7 +180,7 @@ For the formal statement of the lemma,
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
 
-    u0 = EPOCH-updates0 (RatifyStateOf eps) (LStateOf eps)
+    u0 = EPOCHUpdates0.updates (RatifyStateOf eps) (LStateOf eps)
 
     ls₁ = record (LStateOf eps') { utxoSt = EPOCH-Updates0.utxoSt' u0 }
 

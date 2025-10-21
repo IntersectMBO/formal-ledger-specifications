@@ -21,11 +21,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1760101453,
-        "narHash": "sha256-ACyo6WhFzNDak6dE2V0JEO4bnc/bXerqKnKnCRgGl+M=",
+        "lastModified": 1760957267,
+        "narHash": "sha256-xhU/YozvQL7I3Krw/VySqwbkOTpU6rDJQb810/YdBxg=",
         "owner": "input-output-hk",
         "repo": "agda-sets",
-        "rev": "82554d7b901749e0a36e5cecd23751002b979d67",
+        "rev": "60324463819e514bca0c39d0c39146069cc381cd",
         "type": "github"
       },
       "original": {
@@ -47,11 +47,11 @@
         "standard-library-meta": "standard-library-meta"
       },
       "locked": {
-        "lastModified": 1760347420,
-        "narHash": "sha256-0eYDkEhkbcFIlFJFfz1bUDJK4z4+r0n4ta5EzR+mv9c=",
+        "lastModified": 1760976118,
+        "narHash": "sha256-FF0oNtU7XaWKxi5XNgyyc0/F+PLB73Vo4OOfzrfFvq0=",
         "owner": "input-output-hk",
         "repo": "agda.nix",
-        "rev": "01bd2223ea377113f50a9688b5610a579ceb37f9",
+        "rev": "acc1da6d9d84dda2e7e95715e0ab5ee6ea8ea4ef",
         "type": "github"
       },
       "original": {
@@ -379,11 +379,11 @@
     "standard-library-classes_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1754406591,
-        "narHash": "sha256-tuXuZcwu6XNFP979oSZg0yfFY9eMyqpkUNddk+QchVc=",
+        "lastModified": 1754382520,
+        "narHash": "sha256-NaxK37VVO1Jrc4F9B5v+/yo0Pjnp4CwpH1us4Oxgby0=",
         "owner": "agda",
         "repo": "agda-stdlib-classes",
-        "rev": "e732956fb01eb616bb3429f290d9434f4ab59b6a",
+        "rev": "454d18c76b0baf4095006e46cbf094e628d7d31a",
         "type": "github"
       },
       "original": {
@@ -424,11 +424,11 @@
     "standard-library-meta_2": {
       "flake": false,
       "locked": {
-        "lastModified": 1754406588,
-        "narHash": "sha256-YH8OqGsQ2DKhKqhSUWBDTimQSZsNCnqwZqNqQwnnVS0=",
+        "lastModified": 1754389036,
+        "narHash": "sha256-ir4BxJ+XjYhB0RdBKVPd+YBaIMWzjRCq+188qKZjgdg=",
         "owner": "agda",
         "repo": "agda-stdlib-meta",
-        "rev": "ba0159a198c99185bda86541362f8e0a4a82538a",
+        "rev": "d80dc70374f9d33c15889c2cf0c8048b4f697c4c",
         "type": "github"
       },
       "original": {
