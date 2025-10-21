@@ -1,7 +1,5 @@
 # UTxO {#sec:utxo}
 
-This section defines types and functions needed for the UTxO transition system.
-
 The UTxO transition system is built up from a number of smaller parts defined in this
 section, culminating in the `UTXO`{.AgdaDatatype} rule given in the final
 subsection below ([UTXO Inference Rule][UTXO]).
@@ -49,6 +47,8 @@ instance
 -->
 
 ## Functions supporting UTxO rules {#sec:functions-supporting-utxo-rules}
+
+This section defines types and functions needed for the UTxO transition system.
 
 ```agda
 totExUnits : Tx → ExUnits
