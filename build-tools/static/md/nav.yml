@@ -4,19 +4,19 @@
   - Introduction: Ledger.Introduction.md
   - Properties: Properties.md
   - Notation: Notation.md
-- Ledger: Ledger.md
-- Prelude:
-  - Ledger.Prelude: Ledger.Prelude.md
-  - Base: Ledger.Prelude.Base.md
-  - Foreign/:
-    - HSTypes: Ledger.Prelude.Foreign.HSTypes.md
-    - Util: Ledger.Prelude.Foreign.Util.md
-  - HasCoin: Ledger.Prelude.HasCoin.md
-  - Instances: Ledger.Prelude.Instances.md
-  - Numeric: Ledger.Prelude.Numeric.md
-  - Numeric/:
-    - PositiveNat: Ledger.Prelude.Numeric.PositiveNat.md
-    - UnitInterval: Ledger.Prelude.Numeric.UnitInterval.md
+  - Agda Prelude/:
+    - Ledger.Prelude: Ledger.Prelude.md
+    - Base: Ledger.Prelude.Base.md
+    - Foreign/:
+      - HSTypes: Ledger.Prelude.Foreign.HSTypes.md
+      - Util: Ledger.Prelude.Foreign.Util.md
+    - HasCoin: Ledger.Prelude.HasCoin.md
+    - Instances: Ledger.Prelude.Instances.md
+    - Numeric: Ledger.Prelude.Numeric.md
+    - Numeric/:
+      - PositiveNat: Ledger.Prelude.Numeric.PositiveNat.md
+      - UnitInterval: Ledger.Prelude.Numeric.UnitInterval.md
+  - Main Ledger Agda Module: Ledger.md
 - Core:
   - Specification/:
     - Address: Ledger.Core.Specification.Address.md
