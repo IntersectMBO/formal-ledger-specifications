@@ -118,21 +118,29 @@ module _ {eps : EpochState} {e : Epoch} where
 
       fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
       fut'≡fut'' = RATIFIES-deterministic-≡
-                    (cong₂ (λ x p →
-                       let
-                         acnt' = PoolReapState.acnt p
-                         dState' = PoolReapState.dState p
-                         EPOCHUpdates _ _ _ _ _ _ acnt'' =
-                           EPOCH-updates fut ls dState' acnt'
-                        in
-                       record
-                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _ _ _
-                                   ; currentEpoch = _
-                                   ; dreps = _
-                                   ; ccHotKeys = _
-                                   ; treasury = TreasuryOf acnt''
-                                   }) ss'≡ss'' prs'≡prs'')
-                                   refl refl p₂ p₂'
+        (cong₂
+          (λ x p →
+            let
+              acnt' = PoolReapState.acnt p
+              dState' = PoolReapState.dState p
+              EPOCHUpdates _ _ _ _ _ _ acnt'' =
+                EPOCH-updates fut ls dState' acnt'
+             in
+              record
+                { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _ _ _
+                ; currentEpoch = _
+                ; dreps = _
+                ; ccHotKeys = _
+                ; treasury = TreasuryOf acnt''
+                }
+          )
+          ss'≡ss''
+          prs'≡prs''
+        )
+        refl
+        refl
+        p₂
+        p₂'
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' p = EPOCH-deterministic (proj₁ EPOCH-total) eps' (proj₂ EPOCH-total) p
