@@ -729,7 +729,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
                                   govSt' (GStateOf ls) (DStateOf ls)
 
       Γ : RatifyEnv
-      Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
+      Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt'' , PoolsOf ls , VoteDelegsOf ls ⟧
 
     in
         ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
