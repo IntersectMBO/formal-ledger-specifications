@@ -118,11 +118,11 @@ d_UTxOOf_578 v0
       (coe v0)
 -- _.VoteDelegsOf
 d_VoteDelegsOf_602 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_846 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_944 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_VoteDelegsOf_602 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_VoteDelegsOf_854
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_VoteDelegsOf_952
       (coe v0)
 -- _.epoch
 d_epoch_634 ::
@@ -137,7 +137,7 @@ d_epoch_634 v0
 -- _.GovActionState.action
 d_action_868 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1002 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_880
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_826
 d_action_868 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1020
@@ -169,7 +169,7 @@ d_returnAddr_874 v0
 -- _.GovActionState.votes
 d_votes_876 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionState_1002 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVotes_956
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVotes_914
 d_votes_876 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_votes_1014
@@ -185,7 +185,7 @@ d_HasVoteDelegs_1000 a0 a1 a2 = ()
 -- _.GovActions.GovProposal.action
 d_action_1068 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_974 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_880
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_826
 d_action_1068 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_988
@@ -193,7 +193,7 @@ d_action_1068 v0
 -- _.GovActions.GovProposal.anchor
 d_anchor_1070 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_974 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Anchor_814
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Anchor_882
 d_anchor_1070 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_anchor_998
@@ -232,44 +232,44 @@ d_returnAddr_1078 v0
       (coe v0)
 -- _.GovActions.GovVote.anchor
 d_anchor_1090 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_936 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_894 ->
   Maybe
-    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Anchor_814
+    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Anchor_882
 d_anchor_1090 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_anchor_952
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_anchor_910
       (coe v0)
 -- _.GovActions.GovVote.gid
 d_gid_1092 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_936 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_894 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_gid_1092 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gid_946
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gid_904
       (coe v0)
 -- _.GovActions.GovVote.vote
 d_vote_1094 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_936 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Vote_928
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_894 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Vote_862
 d_vote_1094 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_vote_950
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_vote_908
       (coe v0)
 -- _.GovActions.GovVote.voter
 d_voter_1096 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_936 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_790
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_894 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVoter_870
 d_voter_1096 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_voter_948
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_voter_906
       (coe v0)
 -- _.GovActions.HasVoteDelegs.VoteDelegsOf
 d_VoteDelegsOf_1134 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_846 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_944 ->
   AgdaAny -> MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_VoteDelegsOf_1134 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_VoteDelegsOf_854
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_VoteDelegsOf_952
       (coe v0)
 -- _.HasPParams.PParamsOf
 d_PParamsOf_1190 ::
@@ -695,7 +695,7 @@ d_txGovProposals_1816 v0
 -- _.TxBody.txGovVotes
 d_txGovVotes_1818 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3254 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_936]
+  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_894]
 d_txGovVotes_1818 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txGovVotes_3314
@@ -1122,11 +1122,11 @@ du_HasRewards'45'CertState_2510
 d_HasVoteDelegs'45'DState_2528 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2318 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_846
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_944
 d_HasVoteDelegs'45'DState_2528 ~v0 ~v1
   = du_HasVoteDelegs'45'DState_2528
 du_HasVoteDelegs'45'DState_2528 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_846
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_944
 du_HasVoteDelegs'45'DState_2528
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasVoteDelegs'45'DState_1506
@@ -1486,18 +1486,18 @@ du_HasPState'45'LState_2852
 d_HasVoteDelegs'45'LState_2854 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2318 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_846
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_944
 d_HasVoteDelegs'45'LState_2854 ~v0 ~v1
   = du_HasVoteDelegs'45'LState_2854
 du_HasVoteDelegs'45'LState_2854 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_846
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_HasVoteDelegs_944
 du_HasVoteDelegs'45'LState_2854
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_856
+      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_954
       (coe
          (\ v0 ->
             coe
-              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_VoteDelegsOf_854
+              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_VoteDelegsOf_952
               (coe
                  MAlonzo.Code.Ledger.Conway.Specification.Certs.du_HasVoteDelegs'45'DState_1506)
               (coe
@@ -2019,9 +2019,9 @@ du_go_2928 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_1024
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_970
+         MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_constructor_928
          (coe
-            MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvCC_964
+            MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvCC_922
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_votes_1014
                (coe v2)))
@@ -2061,12 +2061,12 @@ du_go_2928 v0 v1 v2
                        (coe
                           MAlonzo.Code.Ledger.Conway.Specification.Certs.d_gState_1402
                           (coe v1)))))
-            (MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvDRep_966
+            (MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvDRep_924
                (coe
                   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_votes_1014
                   (coe v2))))
          (coe
-            MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvSPO_968
+            MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gvSPO_926
             (coe
                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_votes_1014
                (coe v2))))
@@ -2152,11 +2152,11 @@ d_txGovVotes_3002 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2318 ->
   T_GeneralizeTel_22647 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_936]
+  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_894]
 d_txGovVotes_3002 ~v0 ~v1 v2 = du_txGovVotes_3002 v2
 du_txGovVotes_3002 ::
   T_GeneralizeTel_22647 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_936]
+  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_894]
 du_txGovVotes_3002 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txGovVotes_3314

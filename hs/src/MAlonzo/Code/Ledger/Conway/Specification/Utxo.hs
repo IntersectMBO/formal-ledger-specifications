@@ -298,7 +298,7 @@ d_GovProposal_934 a0 = ()
 -- _.GovActions.GovProposal.action
 d_action_1068 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_974 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_880
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_826
 d_action_1068 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_988
@@ -306,7 +306,7 @@ d_action_1068 v0
 -- _.GovActions.GovProposal.anchor
 d_anchor_1070 ::
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovProposal_974 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Anchor_814
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_Anchor_882
 d_anchor_1070 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_anchor_998
@@ -767,7 +767,7 @@ d_txGovProposals_1816 v0
 -- _.TxBody.txGovVotes
 d_txGovVotes_1818 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TxBody_3254 ->
-  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_936]
+  [MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovVote_894]
 d_txGovVotes_1818 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txGovVotes_3314

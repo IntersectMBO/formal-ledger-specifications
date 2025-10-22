@@ -103,7 +103,7 @@ d_ccCreds_50
       MAlonzo.Code.Ledger.Conway.Specification.Enact.du_ccCreds_1144
 -- Ledger.Conway.Foreign.HSLedger.Enact._.getHash
 d_getHash_52 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_getHash_52
   = coe
@@ -111,7 +111,7 @@ d_getHash_52
 -- Ledger.Conway.Foreign.HSLedger.Enact._.getHashES
 d_getHashES_54 ::
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1092 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_getHashES_54
   = coe

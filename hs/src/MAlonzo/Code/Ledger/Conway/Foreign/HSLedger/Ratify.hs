@@ -118,7 +118,7 @@ d_ccCreds_50
       MAlonzo.Code.Ledger.Conway.Specification.Enact.du_ccCreds_1144
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.getHash
 d_getHash_52 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   AgdaAny -> Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_getHash_52
   = coe
@@ -126,7 +126,7 @@ d_getHash_52
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.getHashES
 d_getHashES_54 ::
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1092 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   Maybe MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
 d_getHashES_54
   = coe
@@ -317,20 +317,20 @@ d_acceptedBySPO_148 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.canVote
 d_canVote_150 ::
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_272 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_880 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_826 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovRole_780 ->
   ()
 d_canVote_150 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.delayed
 d_delayed_152 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1092 ->
   Bool -> ()
 d_delayed_152 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.delayed?
 d_delayed'63'_154 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1092 ->
   Bool -> MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20
@@ -343,7 +343,7 @@ d_delayed'63'_154
             MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16))
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.delayingAction
 d_delayingAction_156 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   Bool
 d_delayingAction_156
   = coe
@@ -370,7 +370,7 @@ d_expired'63'_160
 d_threshold_162 ::
   MAlonzo.Code.Ledger.Conway.Specification.PParams.T_PParams_272 ->
   Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_880 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovAction_826 ->
   MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovRole_780 ->
   Maybe MAlonzo.Code.Data.Rational.Base.T_ℚ_6
 d_threshold_162
@@ -382,14 +382,14 @@ d_threshold_162
             MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16))
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.verifyPrev
 d_verifyPrev_164 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1092 ->
   ()
 d_verifyPrev_164 = erased
 -- Ledger.Conway.Foreign.HSLedger.Ratify._.verifyPrev?
 d_verifyPrev'63'_166 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_826 ->
+  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.T_GovActionType_792 ->
   AgdaAny ->
   MAlonzo.Code.Ledger.Conway.Specification.Enact.T_EnactState_1092 ->
   MAlonzo.Code.Relation.Nullary.Decidable.Core.T_Dec_20

@@ -148,7 +148,7 @@ du_acceptConds'63'_2286 v0 v1 v2 v3
                MAlonzo.Code.Ledger.Conway.Specification.Ratify.d_delayed'63'_3220
                (coe v0)
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_886
+                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_832
                   (coe
                      MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_action_1020
                      (coe MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30 (coe v3))))
@@ -256,9 +256,9 @@ d_RATIFY'45'total_2290 v0 v1 v2 v3
                                                                (coe
                                                                   MAlonzo.Code.Ledger.Conway.Specification.Ratify.du_delayingAction_3110
                                                                   (coe
-                                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_886
+                                                                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_gaType_832
                                                                      (coe
-                                                                        MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_GovActionOf_900
+                                                                        MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_GovActionOf_846
                                                                         (coe
                                                                            MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_HasGovAction'45'GovActionState_1094)
                                                                         (MAlonzo.Code.Agda.Builtin.Sigma.d_snd_30
