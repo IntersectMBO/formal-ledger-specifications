@@ -473,6 +473,7 @@ module VDelegDelegatedStake
   stakePerCredential : Credential → Coin
   stakePerCredential c = cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c)
                          + fromMaybe 0 (lookupᵐ? (stakeFromGADeposits govSt utxoSt) c)
+                         + fromMaybe 0 (lookupᵐ? (RewardsOf dState) c)
 
   calculate : VDeleg ⇀ Coin
   calculate = mapFromFun (λ vd → ∑ˢ[ c ← voteDelegs ⁻¹ vd ] (stakePerCredential c))
