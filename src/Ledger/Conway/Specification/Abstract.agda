@@ -7,7 +7,7 @@ module Ledger.Conway.Specification.Abstract (txs : TransactionStructure) where
 
 open TransactionStructure txs
 open import Ledger.Conway.Specification.Certs govStructure
-open import Ledger.Conway.Specification.ScriptPurpose txs
+open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 
 record indexOf : Type where
   field

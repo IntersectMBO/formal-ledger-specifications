@@ -1,13 +1,25 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Script/ScriptPurpose.lagda.md
+---
+
+# Script Purpose {#sec:script-purpose}
+
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
 
-module Ledger.Conway.Specification.ScriptPurpose (txs : TransactionStructure) where
+module Ledger.Conway.Specification.Script.ScriptPurpose (txs : TransactionStructure) where
 
+open import Ledger.Prelude
 open TransactionStructure txs
 open import Ledger.Conway.Specification.Certs govStructure
+```
+-->
 
+```agda
 data ScriptPurpose : Type where
   Cert     : DCert        → ScriptPurpose
   Rwrd     : RwdAddr      → ScriptPurpose
@@ -27,4 +39,4 @@ record TxInfo : Type where
         vkKey          : ℙ KeyHash
         txdats         : ℙ Datum
         txId           : TxId
-
+```

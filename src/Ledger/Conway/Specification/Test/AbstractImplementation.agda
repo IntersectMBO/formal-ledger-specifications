@@ -1,18 +1,19 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import Ledger.Conway.Specification.Test.Prelude
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Prelude using (DecEq; Show)
+import Ledger.Conway.Specification.Script.ScriptPurpose as SP
 open import Ledger.Conway.Specification.Test.LedgerImplementation using (SVTransactionStructure)
-open import Ledger.Conway.Specification.ScriptPurpose using ()
 
-module Ledger.Conway.Specification.Test.AbstractImplementation (T D : Set){{DecEq-Data : DecEq D}}{{Show-Data : Show D}}
-  (open TransactionStructure (SVTransactionStructure T D))
-  (open Ledger.Conway.Specification.ScriptPurpose (SVTransactionStructure T D))
+module Ledger.Conway.Specification.Test.AbstractImplementation
+  {T D : Set} {{DecEq-Data : DecEq D}} {{Show-Data : Show D}}
+  (open SP (SVTransactionStructure T D) using (TxInfo; ScriptPurpose))
   (valContext' : TxInfo → ScriptPurpose → D)
   where
 
-open import Ledger.Conway.Specification.Test.LedgerImplementation T D renaming (SVTransactionStructure to SVTransactionStructure')
+open import Ledger.Prelude using (nothing; _,_)
+
+open import Ledger.Conway.Specification.Test.LedgerImplementation T D
+  renaming (SVTransactionStructure to SVTransactionStructure')
 open import Ledger.Conway.Specification.Abstract SVTransactionStructure'
 
 open Implementation

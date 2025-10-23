@@ -18,7 +18,7 @@ open import Ledger.Prelude
 open import Ledger.Conway.Specification.Certs govStructure
 
 open import Ledger.Conway.Specification.Abstract txs
-open import Ledger.Conway.Specification.ScriptPurpose txs
+open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 
 rdptr : TxBody → ScriptPurpose → Maybe RdmrPtr
 rdptr txb = λ where

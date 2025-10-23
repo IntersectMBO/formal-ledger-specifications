@@ -1,27 +1,27 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
-open import Ledger.Conway.Specification.Test.Prelude
-
 module Ledger.Conway.Specification.Test.Examples.SucceedIfNumber where
-open import Ledger.Conway.Specification.Test.LedgerImplementation ℕ ℕ 
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+
+open import Ledger.Prelude hiding (fromList; ε); open Computational
+
+open import Ledger.Conway.Specification.Test.LedgerImplementation ℕ ℕ
+open import Ledger.Conway.Specification.Script.ScriptPurpose SVTransactionStructure
+
+open import Ledger.Conway.Specification.Transaction
 open TransactionStructure SVTransactionStructure using (Data)
-open import Ledger.Conway.Specification.ScriptPurpose SVTransactionStructure
 
 valContext : TxInfo → ScriptPurpose → Data
 valContext x x₁ = 0
 
-open import Ledger.Conway.Specification.Test.AbstractImplementation ℕ ℕ valContext
-open import Ledger.Conway.Specification.Test.Lib ℕ ℕ valContext
+open import Ledger.Conway.Specification.Test.AbstractImplementation valContext
+open import Ledger.Conway.Specification.Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
-open TransactionStructure SVTransactionStructure
-open import Ledger.Core.Specification.Epoch
-open EpochStructure SVEpochStructure
-open Implementation
 open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
+
+open TransactionStructure SVTransactionStructure
+open Implementation
 
 -- succeed if the datum is 1
 succeedIf1Datum' : Maybe ℕ → Maybe ℕ → Bool

@@ -1,32 +1,32 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
+module Ledger.Conway.Specification.Test.Examples.DEx.Test.Trace where
+
+import Data.Rational.Base as Q
+open import Data.Nat.Divisibility.Core
+open import Data.Nat.Properties
+
+open import Ledger.Prelude
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+
 open import Ledger.Conway.Specification.Test.Examples.DEx.Datum
 open import Ledger.Conway.Specification.Test.Examples.DEx.Validator
 open import Ledger.Conway.Specification.Test.Prelude DExData
 open import Ledger.Conway.Specification.Test.SymbolicData DExData
 open import Ledger.Conway.Specification.Test.LedgerImplementation SData SData
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-open TransactionStructure SVTransactionStructure
-open import Ledger.Conway.Specification.Test.AbstractImplementation SData SData valContext
-open import Ledger.Conway.Specification.Test.Lib SData SData valContext
+open import Ledger.Conway.Specification.Test.AbstractImplementation valContext
+open import Ledger.Conway.Specification.Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
-open import Ledger.Core.Specification.Epoch
-open EpochStructure SVEpochStructure
-open Implementation
 open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxow.Properties.Computational SVTransactionStructure SVAbstractFunctions
-open import Data.List using (filter)
-import Data.Rational.Base as Q
-open import Data.Nat.Divisibility.Core
-open import Data.Nat.Properties
 
-module Ledger.Conway.Specification.Test.Examples.DEx.Test.Trace where
 
 open import Ledger.Conway.Specification.Test.Examples.DEx.OffChain.OffChain
+
+open TransactionStructure SVTransactionStructure
+open Implementation
+
 
 par : Params
 par = record { sellC = 0 ; buyC = 0 }

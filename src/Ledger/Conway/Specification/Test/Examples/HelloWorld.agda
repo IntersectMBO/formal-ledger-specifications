@@ -1,30 +1,27 @@
 {-# OPTIONS --safe #-}
 
+module Ledger.Conway.Specification.Test.Examples.HelloWorld where
+
 open import Ledger.Prelude hiding (fromList; ε); open Computational
 
-open import Ledger.Conway.Specification.Test.Prelude (String)
-module Ledger.Conway.Specification.Test.Examples.HelloWorld where
 open import Ledger.Conway.Specification.Test.LedgerImplementation String String
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-open TransactionStructure SVTransactionStructure using (Data)
-open import Ledger.Conway.Specification.ScriptPurpose SVTransactionStructure
+open import Ledger.Conway.Specification.Script.ScriptPurpose SVTransactionStructure
 
+open import Ledger.Conway.Specification.Transaction
+open TransactionStructure SVTransactionStructure using (Data)
 
 valContext : TxInfo → ScriptPurpose → Data
 valContext x x₁ = ""
 
-open import Ledger.Conway.Specification.Test.AbstractImplementation String String valContext
-open import Ledger.Conway.Specification.Test.Lib String String valContext
+open import Ledger.Conway.Specification.Test.AbstractImplementation valContext
+open import Ledger.Conway.Specification.Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
+
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
-open TransactionStructure SVTransactionStructure
-open import Ledger.Core.Specification.Epoch
-open EpochStructure SVEpochStructure
-open Implementation
 open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
 
+open TransactionStructure SVTransactionStructure
+open Implementation
 
 -- true if redeemer is "Hello World"
 helloWorld' : Maybe String → Maybe String → Bool

@@ -1,31 +1,25 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude  hiding (fromList; ε; _/_); open Computational
-open import Ledger.Conway.Specification.Test.Prelude
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Prelude hiding (fromList; ε; _/_)
 open import Ledger.Conway.Specification.Test.LedgerImplementation using (SVTransactionStructure)
-open import Ledger.Conway.Specification.ScriptPurpose using ()
+import Ledger.Conway.Specification.Script.ScriptPurpose as SP
 
-module Ledger.Conway.Specification.Test.Lib (T D : Set){{DecEq-Data : DecEq D}}{{Show-Data : Show D}}
-  -- (open TransactionStructure (SVTransactionStructure T D) using (TxInfo; ScriptPurpose))
-  (open Ledger.Conway.Specification.ScriptPurpose (SVTransactionStructure T D) using (TxInfo; ScriptPurpose))
+module Ledger.Conway.Specification.Test.Lib
+  {T D : Set}{{DecEq-Data : DecEq D}}{{Show-Data : Show D}}
+  (open SP (SVTransactionStructure T D) using (TxInfo; ScriptPurpose))
   (valContext' : TxInfo → ScriptPurpose → D)
   where
 
-open import Ledger.Conway.Specification.Test.AbstractImplementation T D valContext'
-open import Ledger.Conway.Specification.Test.LedgerImplementation T D 
+open import Ledger.Conway.Specification.Test.AbstractImplementation valContext'
+open import Ledger.Conway.Specification.Test.LedgerImplementation T D
   renaming (SVTransactionStructure to SVTransactionStructure')
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure' SVAbstractFunctions
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure' SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure'
-open import Ledger.Core.Specification.Epoch
 open import Ledger.Prelude.Numeric using (mkUnitInterval; mkℕ⁺)
-open EpochStructure SVEpochStructure
 open import Data.Integer using (ℤ; +_)
 open import Data.Rational using (½; 1ℚ ; mkℚ+ ; _/_)
 open import Data.Nat.Coprimality using (Coprime; gcd≡1⇒coprime)
-open Implementation
 
 createEnv : ℕ → UTxOEnv
 createEnv s = record { slot = s ; treasury = 0 ;

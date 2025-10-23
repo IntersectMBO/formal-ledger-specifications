@@ -19,7 +19,7 @@ module Ledger.Conway.Specification.Test.StructuredContracts
   where
 
 open import Ledger.Conway.Specification.Ledger txs abs
-open import Ledger.Conway.Specification.ScriptPurpose txs
+open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 \end{code}

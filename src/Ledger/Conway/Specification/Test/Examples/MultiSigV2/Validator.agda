@@ -34,8 +34,8 @@ instance
 open import Ledger.Conway.Specification.Test.LedgerImplementation SData SData
 open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
 open TransactionStructure SVTransactionStructure
-open import Ledger.Conway.Specification.Test.AbstractImplementation SData SData valContext
-open import Ledger.Conway.Specification.Test.Lib SData SData valContext
+open import Ledger.Conway.Specification.Test.AbstractImplementation valContext
+open import Ledger.Conway.Specification.Test.Lib valContext
 open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
 open import Data.Empty
 open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
