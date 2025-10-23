@@ -550,7 +550,7 @@ du_getOrphans_2790 ::
   [MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14]
 du_getOrphans_2790 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getOrphans_3604
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getOrphans_3606
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.getStakeCred
 d_getStakeCred_2792 ::
@@ -590,7 +590,7 @@ du_mkStakeDistrs_2794 ::
   MAlonzo.Code.Ledger.Conway.Specification.Ratify.T_StakeDistrs_2580
 du_mkStakeDistrs_2794 v0
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3550
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_mkStakeDistrs_3552
       (coe v0)
 -- Ledger.Conway.Conformance.Epoch._.toRwdAddr
 d_toRwdAddr_2796 ::
