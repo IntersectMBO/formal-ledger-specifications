@@ -13,78 +13,28 @@ module Ledger.Conway.Specification.Epoch.Properties.Computational
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.PoolReap txs abs
+open import Ledger.Conway.Specification.PoolReap.Properties.Computational txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Ratify.Properties.Computational txs
 open import Ledger.Conway.Specification.Rewards txs abs
+open import Ledger.Conway.Specification.Rewards.Properties.Computational txs abs
 
 open import Data.List using (filter)
 import Relation.Binary.PropositionalEquality as PE
 
 open Computational ⦃...⦄
 
-module _ {lstate : LState} {ss : Snapshots} where
-  SNAP-total : ∃[ ss' ] lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-  SNAP-total = -, SNAP
-
-  SNAP-complete : ∀ ss' → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss' → proj₁ SNAP-total ≡ ss'
-  SNAP-complete ss' SNAP = refl
-
-  SNAP-deterministic : ∀ {ss' ss''}
-                     → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-                     → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
-  SNAP-deterministic SNAP SNAP = refl
-
-module _ {e : Epoch} (prs : PoolReapState) where
-  POOLREAP-total : ∃[ prs' ] _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
-  POOLREAP-total = -, POOLREAP
-
-  POOLREAP-complete
-    : ∀ prs' → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs' → proj₁ POOLREAP-total ≡ prs'
-  POOLREAP-complete prs' POOLREAP = refl
-
-  POOLREAP-deterministic
-    : ∀ {prs' prs''}
-    → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs'
-    → _ ⊢ prs ⇀⦇ e ,POOLREAP⦈ prs''
-    → prs' ≡ prs''
-  POOLREAP-deterministic POOLREAP POOLREAP = refl
-
 module _ {eps : EpochState} {e : Epoch} where
-
-  open EpochState eps hiding (es)
-
-  prs = ⟦ u0 .utxoSt' , acnt , cs .dState , u0 .pState' ⟧
-    where
-      open LState
-      open CertState
-      open EPOCH-Updates0
-      cs = ls .certState
-      u0 = EPOCH-updates0 fut ls
 
   EPOCH-total : ∃[ eps' ] _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
   EPOCH-total =
     -, EPOCH
-         ( SNAP-total .proj₂
-         , RATIFIES-total' .proj₂
-         , POOLREAP-total prs .proj₂)
-
-  private
-    EPOCH-state : Snapshots → RatifyState → PoolReapState → EpochState
-    EPOCH-state ss fut' (⟦ utxoSt'' , acnt' , dState' , pState'' ⟧ᵖ) =
-      let
-        EPOCHUpdates es govSt' dState'' _ gState' _ acnt'' =
-          EPOCH-updates fut ls dState' acnt'
-        certState' = ⟦ dState'' , pState'' , gState' ⟧ᶜˢ
-       in
-          record
-            { acnt = acnt''
-            ; ss = ss
-            ; ls = ⟦ utxoSt'' , govSt' , certState' ⟧ˡ
-            ; es = es
-            ; fut = fut'
-            }
+         ( SNAP-total      .proj₂
+         , POOLREAP-total  .proj₂
+         , RATIFIES-total' .proj₂)
 
   EPOCH-deterministic : ∀ eps' eps''
                       → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
@@ -94,38 +44,67 @@ module _ {eps : EpochState} {e : Epoch} where
       eps'
       eps''
       (EPOCH
-        {utxoSt'' = utxoSt''₁}
-        {acnt' = acnt'₁}
         {dState' = dState'₁}
+        {acnt' = acnt'₁}
+        {ss' = ss'₁}
+        {utxoSt'' = utxoSt''₁}
         {pState'' = pState'₁}
         (p₁ , p₂ , p₃)
       )
       (EPOCH
-        {utxoSt'' = utxoSt''₂}
-        {acnt' = acnt'₂}
         {dState' = dState'₂}
+        {acnt' = acnt'₂}
+        {ss' = ss'₂}
+        {utxoSt'' = utxoSt''₂}
         {pState'' = pState'₂}
         (p₁' , p₂' , p₃')
-      ) =
-    cong₂ _$_ (cong₂ EPOCH-state ss'≡ss'' fut'≡fut'') prs'≡prs''
-    where
-      ss'≡ss'' : EpochState.ss eps' ≡ EpochState.ss eps''
-      ss'≡ss'' = SNAP-deterministic p₁ p₁'
+      ) = eps'≡eps''
+       where
+         ls = EpochState.ls eps
+         fut = EpochState.fut eps
 
-      fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
-      fut'≡fut'' = RATIFIES-deterministic-≡
-                    (cong (λ x → record
-                                   { stakeDistrs = mkStakeDistrs (Snapshots.mark x) _ _ _ _ _
-                                   ; currentEpoch = _
-                                   ; dreps = _
-                                   ; ccHotKeys = _
-                                   ; treasury = _
-                                   }) ss'≡ss'')
-                                   refl refl p₂ p₂'
+         es = EnactStateOf fut
 
-      prs'≡prs'' : ⟦ utxoSt''₁ , acnt'₁ , dState'₁ , pState'₁ ⟧ᵖ ≡
-                   ⟦ utxoSt''₂ , acnt'₂ , dState'₂ , pState'₂ ⟧
-      prs'≡prs'' = POOLREAP-deterministic prs p₃ p₃'
+         govUpd = GovernanceUpdate.updates ls fut
+
+         govSt' = Governance-Update.govSt' govUpd
+
+         ss'₁≡ss'₂ : ss'₁ ≡ ss'₂
+         ss'₁≡ss'₂ = SNAP-deterministic p₁ p₁'
+
+         module pPRUpd =  Pre-POOLREAP-Update (Pre-POOLREAPUpdate.updates ls es govUpd)
+
+         pPRUpd₁ = Post-POOLREAPUpdate.updates (EnactStateOf fut) ls dState'₁ acnt'₁ govUpd
+         module pPRUpd₁ = Post-POOLREAP-Update pPRUpd₁
+
+         pPRUpd₂ = Post-POOLREAPUpdate.updates (EnactStateOf fut) ls dState'₂ acnt'₂ govUpd
+         module pPRUpd₂ = Post-POOLREAP-Update pPRUpd₂
+
+         prs'≡prs'' : ⟦ utxoSt''₁ , acnt'₁ , dState'₁ , pState'₁ ⟧ᵖ ≡
+                      ⟦ utxoSt''₂ , acnt'₂ , dState'₂ , pState'₂ ⟧
+         prs'≡prs'' = POOLREAP-deterministic-≡ refl refl p₂ p₂'
+
+         pPRUpd₁≡pPRUpd₂ : pPRUpd₁ ≡ pPRUpd₂
+         pPRUpd₁≡pPRUpd₂ rewrite (cong PoolReapState.dState prs'≡prs'') | (cong PoolReapState.acnt prs'≡prs'') = refl
+
+         stakeDistrs₁≡stakeDistrs₂ : mkStakeDistrs (Snapshots.mark ss'₁) e pPRUpd.utxoSt' govSt' (GStateOf ls) (DStateOf ls)
+                                     ≡ mkStakeDistrs (Snapshots.mark ss'₂) e pPRUpd.utxoSt' govSt' (GStateOf ls) (DStateOf ls)
+         stakeDistrs₁≡stakeDistrs₂ = cong (λ ss' → mkStakeDistrs (Snapshots.mark ss') e pPRUpd.utxoSt' govSt' (GStateOf ls) (DStateOf ls)) ss'₁≡ss'₂
+
+         Γ≡Γ' = cong₂ (λ sd acnt → ⟦ sd , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧)
+                      stakeDistrs₁≡stakeDistrs₂ (cong Post-POOLREAP-Update.acnt'' pPRUpd₁≡pPRUpd₂)
+
+         fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
+         fut'≡fut'' = RATIFIES-deterministic-≡ Γ≡Γ' refl refl p₃ p₃'
+
+         eps'≡eps'' : eps' ≡ eps''
+         eps'≡eps''
+           rewrite ss'₁≡ss'₂
+             | cong PoolReapState.utxoSt prs'≡prs''
+             | cong PoolReapState.pState prs'≡prs''
+             | cong Post-POOLREAP-Update.acnt'' pPRUpd₁≡pPRUpd₂
+             | cong Post-POOLREAP-Update.dState'' pPRUpd₁≡pPRUpd₂
+             | fut'≡fut'' = refl
 
   EPOCH-complete : ∀ eps' → _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps' → proj₁ EPOCH-total ≡ eps'
   EPOCH-complete eps' p = EPOCH-deterministic (proj₁ EPOCH-total) eps' (proj₂ EPOCH-total) p
