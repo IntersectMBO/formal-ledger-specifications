@@ -1,27 +1,24 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
+module Ledger.Conway.Specification.Test.Examples.MultiSigV2.OffChain.Open where
+
+open import Ledger.Prelude
+open import Ledger.Conway.Specification.Transaction
+
 open import Ledger.Conway.Specification.Test.Examples.MultiSigV2.Datum
+open import Ledger.Conway.Specification.Test.Examples.MultiSigV2.OffChain.Lib
 open import Ledger.Conway.Specification.Test.Examples.MultiSigV2.Validator
 open import Ledger.Conway.Specification.Test.Prelude MultiSigData
 open import Ledger.Conway.Specification.Test.SymbolicData MultiSigData
 open import Ledger.Conway.Specification.Test.LedgerImplementation SData SData
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-open TransactionStructure SVTransactionStructure
-open import Ledger.Conway.Specification.Test.AbstractImplementation SData SData valContext
-open import Ledger.Conway.Specification.Test.Lib SData SData valContext
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
-open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
-open import Ledger.Core.Specification.Epoch
-open EpochStructure SVEpochStructure
-open Implementation
-open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
-open import Data.List using (filter)
-open import Ledger.Conway.Specification.Test.Examples.MultiSigV2.OffChain.Lib
+open import Ledger.Conway.Specification.Test.AbstractImplementation valContext
+open import Ledger.Conway.Specification.Test.Lib valContext
 
-module Ledger.Conway.Specification.Test.Examples.MultiSigV2.OffChain.Open where
+open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
+open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
+
+open TransactionStructure SVTransactionStructure
+open Implementation
 
 openTxOut : Value → PlutusScript → TxOut
 openTxOut v script = inj₁ (record { net = 0 ;

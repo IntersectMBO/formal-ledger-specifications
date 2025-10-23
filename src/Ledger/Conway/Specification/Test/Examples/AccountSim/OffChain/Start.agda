@@ -1,27 +1,20 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude hiding (fromList; ε); open Computational
+module Ledger.Conway.Specification.Test.Examples.AccountSim.OffChain.Start where
+
+open import Ledger.Prelude
+open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+
 open import Ledger.Conway.Specification.Test.Examples.AccountSim.Datum
+open import Ledger.Conway.Specification.Test.Examples.AccountSim.OffChain.Lib
 open import Ledger.Conway.Specification.Test.Examples.AccountSim.Validator
 open import Ledger.Conway.Specification.Test.Prelude AccountSimData
 open import Ledger.Conway.Specification.Test.SymbolicData AccountSimData
 open import Ledger.Conway.Specification.Test.LedgerImplementation SData SData
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
-open TransactionStructure SVTransactionStructure
-open import Ledger.Conway.Specification.Test.AbstractImplementation SData SData valContext
-open import Ledger.Conway.Specification.Test.Lib SData SData valContext
-open import Ledger.Conway.Specification.Script.Validation SVTransactionStructure SVAbstractFunctions
-open import Data.Empty
-open import Ledger.Conway.Specification.Utxo SVTransactionStructure SVAbstractFunctions
-open import Ledger.Conway.Specification.Transaction
-open import Ledger.Core.Specification.Epoch
-open EpochStructure SVEpochStructure
-open Implementation
-open import Ledger.Conway.Specification.Utxo.Properties.Computational SVTransactionStructure SVAbstractFunctions
-open import Data.List using (filter)
-open import Ledger.Conway.Specification.Test.Examples.AccountSim.OffChain.Lib
+open import Ledger.Conway.Specification.Test.Lib valContext
 
-module Ledger.Conway.Specification.Test.Examples.AccountSim.OffChain.Start where
+open TransactionStructure SVTransactionStructure
+open Implementation
 
 startTxOut : Value → PlutusScript → TxOut
 startTxOut v script = inj₁ (record { net = 0 ;
@@ -46,9 +39,9 @@ startTx id w tw v script = record { body = record defaultTxBody
                          } ;
                 wits = record { vkSigs = fromListᵐ ((w , (_+_ {{addNat}} w id)) ∷ []) ;
                                 scripts = ∅ ;
-                                txdats = ∅ ; 
+                                txdats = ∅ ;
                                 txrdmrs = ∅ } ;
-                              
+
                 txsize = 10 ;
                 isValid = true ;
                 txAD = nothing }
