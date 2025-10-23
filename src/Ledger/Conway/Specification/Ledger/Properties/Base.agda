@@ -107,6 +107,37 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
     dpMap-rmOrphanDRepVotes : ∀ certState govSt → dpMap (rmOrphanDRepVotes certState govSt) ≡ dpMap govSt
     dpMap-rmOrphanDRepVotes certState govSt = sym (fmap-∘ govSt) -- map proj₁ ∘ map (map₂ _) ≡ map (proj₁ ∘ map₂ _) ≡ map proj₁
 
+-- TODO: Move these proofs to agda-sets
+module _ {A V : Set} ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄ ⦃ dA : DecEq A ⦄ {m m' : A ⇀ V} where
+
+  dom∪ˡˡ : dom (m ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
+  dom∪ˡˡ a∈ = proj₂ dom∪ $ ∈-∪⁺ $ inj₁ a∈
+
+  dom∪ˡʳ : dom (m' ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
+  dom∪ˡʳ {a} a∈ with a ∈? dom m
+  ... | yes p = dom∪ˡˡ p
+  ... | no ¬p with from ∈-map a∈
+  ... | ab , refl , ab∈m' =
+      proj₂ dom∪ $ ∈-∪⁺ $ inj₂ $
+      to ∈-map (ab , refl , to ∈-filter ( ¬p , ab∈m'))
+
+  dom∪ˡ⊆∪dom : dom ((m ∪ˡ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
+  dom∪ˡ⊆∪dom {a} a∈dom∪ with ∈-∪⁻ (proj₁ dom∪ a∈dom∪)
+  ... | inj₁ a∈domm = ∈-∪⁺ (inj₁ a∈domm)
+  ... | inj₂ a∈domf with from ∈-map a∈domf
+  ... | ab , refl , ab∈fm' with from ∈-filter ab∈fm'
+  ... | _ , ab∈m' =
+      ∈-∪⁺ $ inj₂ $ to ∈-map (ab , refl , ab∈m')
+
+  ∪dom⊆dom∪ˡ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
+  ∪dom⊆dom∪ˡ {a} a∈
+    with from ∈-∪ a∈
+  ... | inj₁ a∈ˡ = dom∪ˡˡ a∈ˡ
+  ... | inj₂ a∈ʳ = dom∪ˡʳ a∈ʳ
+
+  dom∪ˡ≡∪dom : dom ((m ∪ˡ m')ˢ) ≡ᵉ dom (m ˢ) ∪ dom (m' ˢ)
+  dom∪ˡ≡∪dom = dom∪ˡ⊆∪dom , ∪dom⊆dom∪ˡ
+
 module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   open Tx tx renaming (body to txb); open TxBody txb
   open LEnv Γ renaming (pparams to pp)
@@ -185,8 +216,8 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       cd = certDeposit dcert pp
       filter0 = filterCD dcert deps
   noGACerts (dcert@(regpool _ _) ∷ cs) deps = begin
-    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
-    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
+    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪ˡ cd))) ≈⟨ noGACerts cs _ ⟩
+    filterˢ isGADeposit (dom (deps ∪ˡ cd)) ≈⟨ filter-cong (dom∪ˡ≡∪dom {m = deps} {m' = cd}) ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl filter0 ⟩
     filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩
