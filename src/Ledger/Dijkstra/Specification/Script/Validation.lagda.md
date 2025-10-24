@@ -129,8 +129,8 @@ credsNeeded TxLevelSub utxo txb = credsNeededMinusCollateral txb
   ∪ mapˢ (λ (i , o) → (Spend  i , payCred (proj₁ o))) ((utxo ∣ txIns) ˢ)
   where open TxBody txb
 
-valContext : TxInfo → ScriptPurpose → Data
-valContext txinfo sp = toData (txinfo , sp)
+--valContext : TxInfo → ScriptPurpose → Data
+--valContext txinfo sp = toData (txinfo , sp)
 
 txOutToDataHash : TxOut → Maybe DataHash
 txOutToDataHash (_ , _ , d , _) = d >>= isInj₂

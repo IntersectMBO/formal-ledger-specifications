@@ -54,3 +54,9 @@ instance
     ... | no ¬p = ⊥-elim $ ¬p ((p₁ , p₂ , p₃ , p₄ , p₅ , p₆ , p₇ , p₈))
     ... | yes _ with computeProof' Γ s tx | completeness' _ _ _ _ h
     ... | success _ | refl = refl
+
+
+open Computational ⦃...⦄
+
+UTXO-stepW : UTxOEnv → UTxOState → Tx → ComputationResult String UTxOState
+UTXO-stepW = compute ⦃ Computational-UTXOW ⦄
