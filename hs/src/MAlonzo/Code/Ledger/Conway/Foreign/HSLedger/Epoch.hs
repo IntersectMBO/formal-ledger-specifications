@@ -119,7 +119,7 @@ d_getOrphans_38
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getOrphans_3596
+         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getOrphans_3606
          (coe v0))
 -- Ledger.Conway.Foreign.HSLedger.Epoch._.getStakeCred
 d_getStakeCred_40 ::
@@ -128,7 +128,7 @@ d_getStakeCred_40 ::
     MAlonzo.Code.Ledger.Core.Specification.Address.T_Credential_20
 d_getStakeCred_40
   = coe
-      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getStakeCred_3232
+      MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_getStakeCred_3234
 -- Ledger.Conway.Foreign.HSLedger.Epoch._.mkStakeDistrs
 d_mkStakeDistrs_42 ::
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshot_2914 ->
@@ -158,7 +158,7 @@ d_toRwdAddr_44
                  MAlonzo.Code.Ledger.Conway.Foreign.ExternalFunctions.d_dummyExternalFunctions_16) in
     coe
       (coe
-         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRwdAddr_3228
+         MAlonzo.Code.Ledger.Conway.Specification.Epoch.du_toRwdAddr_3230
          (coe v0))
 -- Ledger.Conway.Foreign.HSLedger.Epoch._.EpochState.acnt
 d_acnt_62 ::
