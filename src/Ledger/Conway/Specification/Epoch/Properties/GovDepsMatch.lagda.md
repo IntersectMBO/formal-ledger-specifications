@@ -13,6 +13,7 @@ module Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch
 
 open import Ledger.Prelude using (mapˢ)
 open import Ledger.Conway.Specification.Certs govStructure
+open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Ledger txs abs
 open import Ledger.Conway.Specification.Ledger.Properties.Base txs abs
@@ -46,7 +47,7 @@ module EPOCH-Body (eps : EpochState) where
 
   ens      = record (epsRState .ensRState) { withdrawals = ∅ }
   tmpGovSt = filter (λ x → ¿ proj₁ x ∉ map proj₁ (epsRState .removed) ¿) govSt
-  orphans  = fromList $ getOrphans ens tmpGovSt
+  orphans  = fromList $ getOrphans (epsRState .ensRState) tmpGovSt
   removed' : ℙ (GovActionID × GovActionState)
   removed' = (epsRState .removed) ∪ orphans
   removedGovActions = flip concatMapˢ removed' λ (gaid , gaSt) →
@@ -95,7 +96,7 @@ For the formal statement of the lemma,
 *Proof*.
 
 ```agda
-  EPOCH-govDepsMatch {eps'} {e} ratify-removed (EPOCH (x , _ , POOLREAP)) =
+  EPOCH-govDepsMatch {eps'} {e} ratify-removed (EPOCH (x , POOLREAP , _)) =
       poolReapMatch ∘ ratifiesSnapMatch
     where
 
@@ -180,9 +181,8 @@ For the formal statement of the lemma,
       a ∈ˡ map' (GovActionDeposit ∘ proj₁) (filter P? govSt)           ∼⟨ ∈-fromList ⟩
       a ∈ fromList (map' (GovActionDeposit ∘ proj₁) (filter P? govSt)) ∎
 
-    u0 = EPOCH-updates0 (RatifyStateOf eps) (LStateOf eps)
-
-    ls₁ = record (LStateOf eps') { utxoSt = EPOCH-Updates0.utxoSt' u0 }
+    ls₁ = record (LStateOf eps')
+           { utxoSt = Pre-POOLREAPUpdate.utxoSt' (LStateOf eps) (EnactStateOf eps) (GovernanceUpdate.updates ((LStateOf eps)) ((RatifyStateOf eps))) }
 
     open LState
     open CertState
