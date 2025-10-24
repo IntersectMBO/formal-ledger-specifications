@@ -61,8 +61,8 @@ module Certs-PoV  ( indexedSumᵛ'-∪' :  {A : Type} ⦃ _ : DecEq A ⦄ (m m' 
 
 *Informally*.
 
-Let `l`{.AgdaBound} be a list of `DCert`{.AgdaDatatype}s, and let `s₁`{.AgdaBound},
-`sₙ`{.AgdaBound} be `CertState`{.AgdaRecord}s such that
+Let `l`{.AgdaBound} be a list of `DCerts`{.AgdaDatatype}, and let `s₁`{.AgdaBound},
+`sₙ`{.AgdaBound} be `CertStates`{.AgdaRecord} such that
 `s₁`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `l`{.AgdaBound} `,CERTS⦈`{.AgdaDatatype} `sₙ`{.AgdaBound}.
 Then, the value of `s₁`{.AgdaBound} is equal to the value of `sₙ`{.AgdaBound} plus
 the value of the withdrawals in `Γ`{.AgdaBound}.

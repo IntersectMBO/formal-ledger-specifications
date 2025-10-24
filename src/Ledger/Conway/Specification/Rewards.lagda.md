@@ -77,7 +77,7 @@ block production lottery. In turn, the protocol distributes the rewards
 for produced blocks to the stake pool owner and their delegators. The
 owner receives a fixed fee (“cost”) and a share of the rewards
 (“margin”). The remainder is distributed among delegators in proportion
-to their stake. By design, delegation and ownership are separate---delegation counts
+to their stake. By design, delegation and ownership are separate—delegation counts
 towards the stake of the pool, but delegators remain in full control of their Ada,
 stake pools cannot spend delegated Ada.
 
@@ -110,57 +110,47 @@ very end of the computation.
 
 We use the following arithmetic operations besides basic arithmetic:
 
-- `fromℕ`{.AgdaFunction}: Interpret a natural number as a rational
-  number.
++  `fromℕ`{.AgdaFunction}: Interpret a natural number as a rational number.
 
-- `floor`{.AgdaFunction}: Round a rational number to the next smaller
-  integer.
++  `floor`{.AgdaFunction}: Round a rational number to the next smaller integer.
 
-- `posPart`{.AgdaFunction}: Convert an integer to a natural number by
-  mapping all negative numbers to zero.
++  `posPart`{.AgdaFunction}: Convert an integer to a natural number by mapping all
+   negative numbers to zero.
 
-- `÷`{.AgdaFunction}: Division of rational numbers.
++  `÷`{.AgdaFunction}: Division of rational numbers.
 
-- `÷₀`{.AgdaFunction}: Division operator that returns zero when the
-  denominator is zero.
++  `÷₀`{.AgdaFunction}: Division operator that returns zero when the denominator is zero.
 
-- `/`{.AgdaFunction}: Division operator that maps integer arguments to a
-  rational number.
++  `/`{.AgdaFunction}: Division operator that maps integer arguments to a rational number.
 
-- `/₀`{.AgdaFunction}: Like `÷₀`{.AgdaFunction}, but with integer
-  arguments.
++  `/₀`{.AgdaFunction}: Like `÷₀`{.AgdaFunction}, but with integer arguments.
+
 
 ## Rewards Distribution Calculation {#sec:rewards-distribution-calculation}
 
 This section defines the amount of rewards that are paid out to stake
 pools and their delegators.
 
-### Function `maxPool`{.AgdaFunction} used for computing a Reward Update {#sec:maxpool}
-[Function maxPool used for computing a Reward Update]: #sec:maxpool
+### The <span class="AgdaFunction">maxPool</span> Function {#sec:maxpool}
 
 This subsection defines the function `maxPool`{.AgdaFunction} which gives the maximum
 reward a stake pool can receive in an epoch. Relevant quantities are the following:
 
-- `rewardPot`{.AgdaArgument}: Total rewards to be paid out after the
-  epoch.
++  `rewardPot`{.AgdaArgument}: Total rewards to be paid out after the epoch.
 
-- `stake`{.AgdaArgument}: Relative stake of the pool.
++  `stake`{.AgdaArgument}: Relative stake of the pool.
 
-- `pledge`{.AgdaArgument}: Relative stake that the pool owner has
-  pledged themselves to the pool.
++  `pledge`{.AgdaArgument}: Relative stake that the pool owner has pledged themselves to the pool.
 
-- `z0`{.AgdaFunction}: Relative stake of a fully saturated pool.
++  `z0`{.AgdaFunction}: Relative stake of a fully saturated pool.
 
-- `nopt`{.AgdaFunction}: Protocol parameter, planned number of block
-  producers.
++  `nopt`{.AgdaFunction}: Protocol parameter, planned number of block producers.
 
-- `a0`{.AgdaFunction}: Protocol parameter that incentivizes higher
-  pledges.
++  `a0`{.AgdaFunction}: Protocol parameter that incentivizes higher pledges.
 
-- `rewardℚ`{.AgdaFunction}: Pool rewards as a rational number.
++  `rewardℚ`{.AgdaFunction}: Pool rewards as a rational number.
 
-- `rewardℕ`{.AgdaFunction}: Pool rewards after rounding to a natural
-  number of lovelace.
++  `rewardℕ`{.AgdaFunction}: Pool rewards after rounding to a natural number of lovelace.
 
 <!--
 ```agda
@@ -221,32 +211,30 @@ maxPool pparams rewardPot stake pledge = rewardℕ
     rewardℕ = posPart (floor rewardℚ)
 ```
 
-### Function `mkApparentPerformance`{.AgdaFunction} {#sec:mkApparentPerformance}
+### The <span class="AgdaFunction">mkApparentPerformance</span> Function {#sec:mkApparentPerformance}
 
-This section defines the function `mkApparentPerformance`{.AgdaFunction} which is
+This section defines the `mkApparentPerformance`{.AgdaFunction} function, which is
 used for computing a Reward Update; it computes the apparent performance of a stake
 pool.  Relevant quantities are the following:
 
-- `stake`{.AgdaArgument}: Relative active stake of the pool.
++  `stake`{.AgdaArgument}: Relative active stake of the pool.
 
-- `poolBlocks`{.AgdaArgument}: Number of blocks that the pool added to
-  the chain in the last epoch.
++  `poolBlocks`{.AgdaArgument}: Number of blocks that the pool added to the chain in the last epoch.
 
-- `totalBlocks`{.AgdaArgument}: Total number of blocks added in the last
-  epoch.
++  `totalBlocks`{.AgdaArgument}: Total number of blocks added in the last epoch.
 
 ```agda
 mkApparentPerformance : UnitInterval → ℕ → ℕ → ℚ
-mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ stake'
+mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ (fromUnitInterval stake)
   where
-    stake' = fromUnitInterval stake
 ```
-
 <!--
 ```agda
     instance
       nonZero-totalBlocks : NonZero (1 ⊔ totalBlocks)
       nonZero-totalBlocks = nonZero-max-1 totalBlocks
+
+    ratioBlocks : .⦃ _ : NonZero (1 ⊔ totalBlocks) ⦄ → ℚ
 ```
 -->
 
@@ -254,7 +242,7 @@ mkApparentPerformance stake poolBlocks totalBlocks = ratioBlocks ÷₀ stake'
     ratioBlocks = (pos poolBlocks) / (1 ⊔ totalBlocks)
 ```
 
-### Functions `rewardOwners`{.AgdaFunction} and `rewardMember`{.AgdaFunction} {#sec:rewardOwners-and-rewardMember}
+### The <span class="AgdaFunction">rewardOwners</span> and <span class="AgdaFunction">rewardMember</span> Functions {#sec:rewardOwners-and-rewardMember}
 
 This subsection defines the functions `rewardOwners`{.AgdaFunction} and
 `rewardMember`{.AgdaFunction}.  Their purpose is to divide the reward for one pool
@@ -262,27 +250,22 @@ between pool owners and individual delegators by taking into account a fixed poo
 cost, a relative pool margin, and the stake of each member.  The rewards will be
 distributed as follows:
 
-- `rewardOwners`{.AgdaArgument}: These funds will go to the
-  `rewardAccount`{.AgdaField} specified in the pool registration
-  certificate.
++  `rewardOwners`{.AgdaArgument}: These funds will go to the
+   `rewardAccount`{.AgdaField} specified in the pool registration certificate.
 
-- `rewardMember`{.AgdaArgument}: These funds will go to the reward
-  accounts of the individual delegators.
++  `rewardMember`{.AgdaArgument}: These funds will go to the reward accounts of the individual delegators.
 
 Relevant quantities for these functions are the following:
 
-- `rewards`{.AgdaArgument}: Rewards paid out to this pool.
++  `rewards`{.AgdaArgument}: Rewards paid out to this pool.
 
-- `poolParams`{.AgdaArgument}: Pool parameters, such as cost and margin.
++  `poolParams`{.AgdaArgument}: Pool parameters, such as cost and margin.
 
-- `ownerStake`{.AgdaArgument}: Stake of the pool owners relative to the
-  total amount of Ada.
++  `ownerStake`{.AgdaArgument}: Stake of the pool owners relative to the total amount of Ada.
 
-- `memberStake`{.AgdaArgument}: Stake of the pool member relative to the
-  total amount of Ada.
++  `memberStake`{.AgdaArgument}: Stake of the pool member relative to the total amount of Ada.
 
-- `stake`{.AgdaArgument}: Stake of the whole pool relative to the total
-  amount of Ada.
++  `stake`{.AgdaArgument}: Stake of the whole pool relative to the total amount of Ada.
 
 ```agda
 rewardOwners : Coin → StakePoolParams → UnitInterval → UnitInterval → Coin
@@ -294,9 +277,7 @@ rewardOwners rewards poolParams ownerStake stake = if rewards ≤ cost
     ratioStake  = fromUnitInterval ownerStake ÷₀ fromUnitInterval stake
     cost        = poolParams .StakePoolParams.cost
     margin      = fromUnitInterval (poolParams .StakePoolParams.margin)
-```
 
-```agda
 rewardMember : Coin → StakePoolParams → UnitInterval → UnitInterval → Coin
 rewardMember rewards poolParams memberStake stake = if rewards ≤ cost
   then 0
@@ -308,7 +289,7 @@ rewardMember rewards poolParams memberStake stake = if rewards ≤ cost
     margin      = fromUnitInterval (poolParams .StakePoolParams.margin)
 ```
 
-### Function `rewardOnePool`{.AgdaFunction} for Computing a Reward Update {#sec:rewardOnePool}
+### The <span class="AgdaFunction">rewardOnePool</span> Function {#sec:rewardOnePool}
 
 This subsection defines the function `rewardOnePool`{.AgdaFunction} which
 calculates the rewards given out to each member of a given pool.
@@ -387,11 +368,11 @@ to one stake pool. Relevant quantities are:
 - `hk`{.AgdaArgument}: `KeyHash`{.AgdaDatatype} of the stake pool to be
   filtered by.
 
-- `delegs`{.AgdaArgument}: Mapping from `Credential`{.AgdaDatatype}s to
+- `delegs`{.AgdaArgument}: Mapping from `Credentials`{.AgdaDatatype} to
   stake pool that they delegate to.
 
 - `stake`{.AgdaArgument}: Distribution of stake for all
-  `Credential`{.AgdaDatatype}s.
+  `Credentials`{.AgdaDatatype}.
 
 ```agda
 poolStake  : KeyHash → StakeDelegs → Stake → Stake
@@ -404,33 +385,32 @@ This section defines the `reward`{.AgdaFunction} function which applies
 `rewardOnePool`{.AgdaFunction} to each registered stake pool.
 Relevant quantities are the following:
 
-- `uncurryᵐ`{.AgdaFunction}: Helper function to rearrange a nested
-  mapping.
++  `uncurryᵐ`{.AgdaFunction}: Helper function to rearrange a nested mapping.
 
-- `blocks`{.AgdaArgument}: Number of blocks produced by pools in the
-  last epoch, as a mapping from pool `KeyHash`{.AgdaDatatype} to number.
++  `blocks`{.AgdaArgument}: Number of blocks produced by pools in the last epoch, as
+   a mapping from pool `KeyHash`{.AgdaDatatype} to number.
 
-- `poolParams`{.AgdaArgument}: Parameters of all known stake pools.
++  `poolParams`{.AgdaArgument}: Parameters of all known stake pools.
 
-- `stake`{.AgdaArgument}: Distribution of stake, as mapping from
-  `Credential`{.AgdaDatatype} to `Coin`{.AgdaFunction}.
++  `stake`{.AgdaArgument}: Distribution of stake, as mapping from
+   `Credential`{.AgdaDatatype} to `Coin`{.AgdaFunction}.
 
-- `delegs`{.AgdaArgument}: Mapping from `Credential`{.AgdaDatatype}s to
-  stake pool that they delegate to.
++  `delegs`{.AgdaArgument}: Mapping from `Credentials`{.AgdaDatatype} to stake pool
+   that they delegate to.
 
-- `total`{.AgdaArgument}: Total stake $=$ amount of Ada in circulation,
-  for computing the relative stake.
++  `total`{.AgdaArgument}: Total stake $=$ amount of Ada in circulation, for
+   computing the relative stake.
 
-- `active`{.AgdaFunction}: Active stake $=$ amount of Ada that was used
-  for selecting block producers.
++  `active`{.AgdaFunction}: Active stake $=$ amount of Ada that was used for
+   selecting block producers.
 
-- `Σ_/total`{.AgdaFunction}: Sum of stake divided by total stake.
++  `Σ_/total`{.AgdaFunction}: Sum of stake divided by total stake.
 
-- `Σ_/active`{.AgdaFunction}: Sum of stake divided by active stake.
++  `Σ_/active`{.AgdaFunction}: Sum of stake divided by active stake.
 
-- `N`{.AgdaFunction}: Total number of blocks produced in the last epoch.
++  `N`{.AgdaFunction}: Total number of blocks produced in the last epoch.
 
-- `pdata`{.AgdaFunction}: Data needed to compute rewards for each pool.
++  `pdata`{.AgdaFunction}: Data needed to compute rewards for each pool.
 
 ```agda
 BlocksMade : Type
@@ -490,17 +470,13 @@ This section defines the `RewardUpdate`{.AgdaRecord} type, which records
 the net flow of Ada due to paying out rewards after an epoch. The
 update consists of four net flows.
 
-- `Δt`{.AgdaField}: The change to the treasury. This will be a positive
-  value.
++  `Δt`{.AgdaField}: The change to the treasury. This will be a positive value.
 
-- `Δr`{.AgdaField}: The change to the reserves. We typically expect this
-  to be a negative value.
++  `Δr`{.AgdaField}: The change to the reserves. We typically expect this to be a negative value.
 
-- `Δf`{.AgdaField}: The change to the fee pot. This will be a negative
-  value.
++  `Δf`{.AgdaField}: The change to the fee pot. This will be a negative value.
 
-- `rs`{.AgdaField}: The map of new individual rewards, to be added to
-  the existing rewards.
++  `rs`{.AgdaField}: The map of new individual rewards, to be added to the existing rewards.
 
 We require these net flows to satisfy certain constraints that are also stored in the
 `RewardUpdate`{.AgdaRecord} data type.  Specifically, `flowConservation`{.AgdaField} asserts
@@ -519,10 +495,9 @@ record RewardUpdate : Set where
 
 The function `createRUpd`{.AgdaFunction} calculates the `RewardUpdate`{.AgdaRecord},
 but requires the definition of the type `EpochState`{.AgdaRecord}, so we have to
-defer the definition of this function to the
-[Epoch Boundary](Ledger.Conway.Specification.Epoch.md#sec:epoch-boundary) section.
+defer the definition of this function until the [Epoch][] module.
 
-### Diagram: preservation of funds and rewards {#sec:diagram-rewards}
+### Diagram: Preservation of Funds and Rewards {#sec:diagram-rewards}
 
 The flowchart in this section illustrates the potential flows of funds through the
 entire system that can happen during one transition step as described in this document.
@@ -556,14 +531,13 @@ This subsection defines the `Snapshot`{.AgdaField} type which represents a stake
 distribution snapshot.  Such a snapshot contains the essential data needed to compute
 rewards.
 
-- `stake`{.AgdaField} A stake distribution, that is a mapping from
-  stake credentials to the active stake that they own in coins.
++  `stake`{.AgdaField} A stake distribution, that is a mapping from stake credentials
+   to the active stake that they own in coins.
 
-- `delegations`{.AgdaField}: A delegation map, that is a mapping from
-  stake credentials to the stake pools that they delegate to.
++  `delegations`{.AgdaField}: A delegation map, that is a mapping from stake
+   credentials to the stake pools that they delegate to.
 
-- `pools`{.AgdaField}: A mapping that stores the pool
-  parameters of each stake pool.
++  `pools`{.AgdaField}: A mapping that stores the pool parameters of each stake pool.
 
 ```agda
 record Snapshot : Set where
@@ -595,19 +569,19 @@ instance
 This section defines the calculation of the stake distribution from the data
 contained in a ledger state.  Here,
 
-- `utxoBalance`{.AgdaFunction} computes the coin balance of all those
-  UTxO with a given stake `Credential`{.AgdaDatatype}.
++  `utxoBalance`{.AgdaFunction} computes the coin balance of all those
+   UTxO with a given stake `Credential`{.AgdaDatatype}.
 
-- `activeDelegs`{.AgdaFunction} represents the active stake
-  `Credential`{.AgdaDatatype}s, i.e. those that delegate to an existing
-  pool and that have a registered reward account.
++  `activeDelegs`{.AgdaFunction} represents the active stake
+   `Credentials`{.AgdaDatatype}, i.e., those that delegate to an existing
+   pool and that have a registered reward account.
 
-- `activeRewards`{.AgdaFunction} is a mapping from active stake
-  `Credential`{.AgdaDatatype}s to the balance of their reward account.
++  `activeRewards`{.AgdaFunction} is a mapping from active stake
+   `Credentials`{.AgdaDatatype} to the balance of their reward account.
 
-- `activeStake`{.AgdaFunction} stores the stake for each active
-  `Credential`{.AgdaDatatype}, i.e. the sum of coins from the UTxO set
-  plus the reward account balance.
++  `activeStake`{.AgdaFunction} stores the stake for each active
+   `Credential`{.AgdaDatatype}, i.e., the sum of coins from the UTxO set
+   plus the reward account balance.
 
 <!--
 ```agda
@@ -621,29 +595,24 @@ opaque
 
 ```agda
   stakeDistr : UTxO → DState → PState → Snapshot
-  stakeDistr utxo dState pState =
-      ⟦ activeStake , StakeDelegsOf dState , pools ⟧
+  stakeDistr utxo dState pState = ⟦ activeStake , StakeDelegsOf dState , pools ⟧
     where
+    pools : Pools
+    pools = PoolsOf pState
+
+    utxoBalance : Credential → Coin
+    utxoBalance = λ cred → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just cred)
+
+    activeDelegs : StakeDelegs
+    activeDelegs = (StakeDelegsOf dState ∣ dom (RewardsOf dState)) ∣^ dom pools
+
+    activeRewards : Rewards
+    activeRewards = RewardsOf dState ∣ dom activeDelegs
+
+    activeStake : Stake
+    activeStake = mapWithKey (λ c rewardBalance → utxoBalance c + rewardBalance) activeRewards
 ```
 
-<!--
-```agda
-      pools         : Pools
-      utxoBalance   : Credential → Coin
-      activeDelegs  : StakeDelegs
-      activeRewards : Rewards
-      activeStake   : Stake
-```
--->
-
-```agda
-      pools          = PoolsOf pState
-      utxoBalance    = λ cred → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just cred)
-      activeDelegs   = (StakeDelegsOf dState ∣ dom (RewardsOf dState)) ∣^ dom pools
-      activeRewards  = RewardsOf dState ∣ dom activeDelegs
-      activeStake    =
-        mapWithKey (λ c rewardBalance → utxoBalance c + rewardBalance) activeRewards
-```
 
 ## Timing of Rewards Payout {#sec:timing-of-rewards-payout}
 
@@ -745,19 +714,19 @@ performance during epoch $e_3$ (he produced 4 blocks) will be used with
 the darker blue snapshot for the rewards which will be handed out at the
 beginning of epoch $e_5$.
 
-### Stake Distribution Snapshots {#sec:stake-distribution-snapshots}
+## Stake Distribution Snapshots {#sec:stake-distribution-snapshots}
 
 This section defines the SNAP transition rule for stake distribution
 snapshots, including the type `Snapshots`{.AgdaField} that contains the data that
 needs to be saved at the end of an epoch.  This relevant data are:
 
-- `mark`{.AgdaField}, `set`{.AgdaField}, `go`{.AgdaField}: Three stake
-  distribution snapshots as explained in
-  the [Rewards Timeline][Rewards Calculation Timeline] section.
++  `mark`{.AgdaField}, `set`{.AgdaField}, `go`{.AgdaField}: Three stake
+   distribution snapshots as explained in the [Rewards Calculation Timeline][]
+   section.
 
-- `feeSS`{.AgdaField}: stores the fees which are added to the reward pot
-  during the next reward update calculation, which is then subtracted
-  from the fee pot on the epoch boundary.
++  `feeSS`{.AgdaField}: stores the fees which are added to the reward pot
+   during the next reward update calculation, which is then subtracted
+   from the fee pot on the epoch boundary.
 
 ```agda
 record Snapshots : Set where
@@ -781,16 +750,18 @@ instance
 ```
 -->
 
+### The <span class="AgdaDatatype">SNAP</span> Transition System {#sec:snap-transition-system}
+
 The snapshot transition rule has no preconditions and results in the following state change:
 
-- The oldest snapshot is replaced with the penultimate one.
++  The oldest snapshot is replaced with the penultimate one.
 
-- The penultimate snapshot is replaced with the newest one.
++  The penultimate snapshot is replaced with the newest one.
 
-- The newest snapshot is replaced with one just calculated.
++  The newest snapshot is replaced with one just calculated.
 
-- The current fees pot is stored in `feeSS`{.AgdaField}.  Note that this value will
-  not change during the epoch, unlike the `fees`{.AgdaField} value in the UTxO state.
++  The current fees pot is stored in `feeSS`{.AgdaField}.  Note that this value will
+   not change during the epoch, unlike the `fees`{.AgdaField} value in the UTxO state.
 
 <!--
 ```agda
@@ -801,7 +772,6 @@ private variable
 ```
 -->
 
-<a id="sec:snap-transition-system"></a>
 ```agda
 data _⊢_⇀⦇_,SNAP⦈_ : LState → Snapshots → ⊤ → Snapshots → Type where
   SNAP :

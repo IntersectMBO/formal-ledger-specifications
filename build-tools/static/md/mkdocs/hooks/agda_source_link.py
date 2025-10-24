@@ -49,7 +49,7 @@ Page front-matter (optional)
 ----------------------------
 Add something like this to any generated Markdown for which the true source is known:
 ---
-source_path: src/Ledger/Prelude.agda
+source_path: src/Ledger/Prelude.lagda.md
 source_branch: master
 ---
 

@@ -102,32 +102,33 @@ The main directories and files involved in the build process are as follows. (A 
 detailed version of this annotated tree can be found at the bottom of this page.)
 
 ```
-├── flake.nix                  # Nix flake
-└── build-tools/
+├── flake.nix                  # The main Nix flake file.
+│
+└── build-tools
     ├── agda/
-    │   ├── flake.nix          # Nix flake
     │   ├── data/
-    │   │   ├── Agda.css       # for styling Agda HTML output
-    │   │   └── AgdaKaTeX.js   # for integrating Agda's HTML with KaTeX
-    │   ├── fls-agda.cabal     # for building fls-agda Haskell package
+    │   │   ├── Agda.css       # For styling Agda HTML output.
+    │   │   └── AgdaKaTeX.js   # For integrating Agda's HTML with KaTeX.
+    │   ├── flake.nix          # Auxiliary Nix flake file.
+    │   ├── fls-agda.cabal     # For building fls-agda Haskell package.
     │   ├── nix/
-    │   │   └── fls-agda.nix   # Nix derivation for fls-agda package
+    │   │   └── fls-agda.nix   # Nix derivation for fls-agda package.
     │   └── src/
-    │       └── Main.hs        # Main entry point for fls-agda executable
+    │       └── Main.hs        # Main entry point for fls-agda executable.
     │
-    ├── nix                    # Nix derivations for exported packages
+    ├── nix/                   # Nix derivations for exported packages.
     │   ├── formal-ledger.nix
     │   ├── hs-src.nix
     │   ├── html.nix
     │   └── mkdocs.nix
     │
     └── shake/
-        ├── flake.nix          # Nix flake
-        ├── fls-shake.cabal    # for building fls-shake Haskell package
+        ├── flake.nix          # Auxiliary Nix flake file.
+        ├── fls-shake.cabal    # For building fls-shake Haskell package.
         ├── nix/
-        │   └── fls-shake.nix  # Nix derivation for fls-shake package
+        │   └── fls-shake.nix  # Nix derivation for fls-shake package.
         └── src/
-            └── Main.hs        # Main entry point for fls-shake build system
+            └── Main.hs        # Main entry point for fls-shake build system.
 ```
 
 ---
@@ -446,7 +447,7 @@ the `update-alternatives` approach.)
 
     ```bash
     nix develop
-    emacs src/Ledger.agda
+    emacs src/Ledger.lagda.md
     ```
 
 3.  Use standard `agda-mode` commands (e.g., `C-c C-l` to load a file).

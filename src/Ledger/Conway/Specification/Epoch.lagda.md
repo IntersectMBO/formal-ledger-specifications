@@ -12,33 +12,31 @@ reward calculation.
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Data.Integer using () renaming (+_ to pos)
-import      Data.Integer as ℤ
-open import Data.Integer.Properties using (module ≤-Reasoning; +-mono-≤; neg-mono-≤; +-identityˡ)
-                                    renaming (nonNegative⁻¹ to nonNegative⁻¹ℤ)
-open import Data.Maybe using (fromMaybe)
-open import Data.Nat.GeneralisedArithmetic using (iterate)
-open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _⊓_; _≟_; ≢-nonZero)
-open import Data.Rational.Literals using (number; fromℤ)
-open import Data.Rational.Properties using (nonNegative⁻¹; pos⇒nonNeg; ⊓-glb)
-open import stdlib.Data.Rational.Properties using (0≤⇒0≤floor; ÷-0≤⇒0≤; fromℕ-0≤; *-0≤⇒0≤; fromℤ-0≤)
-
-open import Data.Integer.Tactic.RingSolver using (solve-∀)
-
-open import Agda.Builtin.FromNat
-
-open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
-open Filter using (filter)
 open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
-open import Ledger.Prelude.Numeric.UnitInterval using (fromUnitInterval; UnitInterval-*-0≤)
-
-open Number number renaming (fromNat to fromℕ)
 
 module Ledger.Conway.Specification.Epoch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+
+open import Agda.Builtin.FromNat
+
+import      Data.Integer as ℤ
+open import Data.Integer                    using () renaming (+_ to pos)
+open import Data.Integer.Properties         using (module ≤-Reasoning; +-mono-≤; neg-mono-≤; +-identityˡ)
+                                            renaming (nonNegative⁻¹ to nonNegative⁻¹ℤ)
+open import Data.Integer.Tactic.RingSolver  using (solve-∀)
+open import Data.Maybe                      using (fromMaybe)
+open import Data.Nat.GeneralisedArithmetic  using (iterate)
+open import Data.Rational                   using (ℚ; floor; _*_; _÷_; _/_; _⊓_; _≟_; ≢-nonZero)
+open import Data.Rational.Literals          using (number; fromℤ)
+open import Data.Rational.Properties        using (nonNegative⁻¹; pos⇒nonNeg; ⊓-glb)
+
+open import stdlib.Data.Rational.Properties using (0≤⇒0≤floor; ÷-0≤⇒0≤; fromℕ-0≤; *-0≤⇒0≤; fromℤ-0≤)
+
+open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
+open import Ledger.Prelude.Numeric.UnitInterval using (fromUnitInterval; UnitInterval-*-0≤)
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
@@ -48,10 +46,15 @@ open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
+
+open Filter using (filter)
+open Number number renaming (fromNat to fromℕ)
 ```
 -->
 
-## <span class="AgdaDatatype">EPOCH</span> and <span class="AgdaDatatype">NEWEPOCH</span> Transition System Types
+## Epoch State
+
+The `EpochState`{.AgdaRecord} type encapsulates the components needed to represent an epoch state.
 
 ```agda
 record EpochState : Type where
@@ -69,6 +72,10 @@ record EpochState : Type where
     es         : EnactState
     fut        : RatifyState
 ```
+
+Note that the `Acnt`{.AgdaRecord} type has two fields—`treasury`{.AgdaField} and
+`reserves`{.AgdaField}.  Thus the `acnt`{.AgdaField} field in `EpochState`{.AgdaRecord}
+can keep track of the total assets that remain in treasury and reserves.
 
 <!--
 ```agda
@@ -190,9 +197,9 @@ opaque
 ```
 -->
 
-## <span class="AgdaDatatype">RewardUpdate</span>
+## Reward Updates
 
-### Computing <span class="AgdaDatatype">RewardUpdate</span>
+### Computing Reward Updates {#sec:computing-reward-updates}
 
 This section defines the function `createRUpd`{.AgdaFunction} which creates a
 `RewardUpdate`{.AgdaRecord}, i.e. the net flow of Ada due to paying out rewards
@@ -263,8 +270,7 @@ after an epoch:
 <!--
 ```agda
       -- Proofs
-      -- Note: Overloading of + and - seems to interfere with
-      -- the ring solver.
+      -- Note: Overloading of + and - seems to interfere with the ring solver.
       lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
         → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
       lemmaFlow = solve-∀
@@ -360,7 +366,7 @@ Relevant quantities are:
   denominator is zero.
 
 
-## Applying <span class="AgdaDatatype">RewardUpdate</span> {#applying-rewardupdate}
+### Applying Reward Updates {#sec:applying-reward-updates}
 
 This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
 `RewardUpdate`{.AgdaDatatype} to the `EpochState`{.AgdaFunction}.
@@ -389,7 +395,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
     unregRU'  = ∑[ x ← unregRU ] x
 ```
 
-## Stake Distributions {#stake-distributions}
+## Stake Distributions {#sec:stake-distributions}
 
 This section defines the functions
 `calculatePoolDelegatedState`{.AgdaFunction},
@@ -421,12 +427,11 @@ opaque
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the
-delegated stake to SPO{.AgdaFunction}s. This function is used both in the
+The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the delegated
+stake to `SPOs`{.AgdaInductiveConstructor}.  This function is used both in the
 `EPOCH`{.AgdaDatatype} rule (via
 `calculatePoolDelegatedStateForVoting`{.AgdaFunction}, see below) and in the
 `NEWEPOCH`{.AgdaDatatype} rule.
-
 
 ```agda
   stakeFromGADeposits
@@ -517,11 +522,10 @@ opaque
                                       ∘ʳ (stakeFromGADeposits govSt utxoSt ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction}
-computes the delegated stake to `SPO`{.AgdaInductiveConstructor}s that
-will be used for counting votes. It complements the result of
-`calculatePoolDelegatedStake`{.AgdaFunction} with the deposits made to
-governance actions.
+The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction} computes the
+delegated stake to `SPOs`{.AgdaInductiveConstructor} that will be used for counting
+votes. It complements the result of `calculatePoolDelegatedStake`{.AgdaFunction} with
+the deposits made to governance actions.
 
 ??? erratum
     [CIP-1694](https://cips.cardano.org/cip/CIP-1694) specifies that
@@ -534,10 +538,10 @@ governance actions.
     > submitter's voting power to vote on their own (and competing)
     > actions.
 
-    While originally _intended_ for `DRep`{.AgdaInductiveConstructor}s
+    While originally _intended_ for `DReps`{.AgdaInductiveConstructor}
     only, the Haskell implementation and the formal specification
     count deposits on governance actions towards the stake of
-    `SPO`{.AgdaInductiveConstructor}s as well.
+    `SPOs`{.AgdaInductiveConstructor} as well.
 
 ```agda
 mkStakeDistrs
@@ -576,7 +580,7 @@ private variable
 ```
 -->
 
-## <span class="AgdaDatatype">EPOCH</span> Transition System {#epoch-transition-system}
+## The <span class="AgdaDatatype">EPOCH</span> Transition System {#sec:the-epoch-transition-system}
 
 The `EPOCH`{.AgdaDatatype} transition system updates several parts of the
 `EpochState`{.AgdaDatatype}. We encapsulate these updates using Agda's module
@@ -585,17 +589,16 @@ proofs about properties of the `EPOCH`{.AgdaDatatype} transition system.
 
 ### Update Modules and Functions
 
-We organize the `EPOCH`{.AgdaInductiveConstructor} rule using three modules
-which roughly correspond to:
+We organize the `EPOCH`{.AgdaDatatype} rule around three modules.
 
-- `GovernanceUpdate`{.AgdaModule}: Used to compute the set of governance
-  actions to be removed and updating accordingly the governance state.
+- `GovernanceUpdate`{.AgdaModule} is used to compute the set of governance
+  actions to be removed and update the governance state accordingly;
 
-- `Pre-POOLREAPUpdate`{.AgdaModule}: Used to update the `PState`, `GState`
+- `Pre-POOLREAPUpdate`{.AgdaModule} is used to update the `PState`, `GState`
   and `utxoSt` which are the inputs to the `POOLREAP`{.AgdaDatatype} transition
-  system.
+  system;
 
-- `Post-POOLREAPUpdate`{.AgdaModule}: Used to update `Acnt` and `DState` from
+- `Post-POOLREAPUpdate`{.AgdaModule} is used to update `Acnt` and `DState` from
   the output of `POOLREAP`{.AgdaDatatype} part of which is in the environment of
   the `RATIFY`{.AgdaDatatype} transition system and part of which belongs to the
   returned `EpochState`{.AgdaRecord}.
@@ -615,9 +618,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
           govSt
       in
         (orps ++ orps' , govSt')
-```
 
-```agda
 record Governance-Update : Type where
   constructor GovernanceUpdate
   field
@@ -749,19 +750,19 @@ This section defines the `EPOCH`{.AgdaDatatype} transition rule.
 In Conway, the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
 and carries out the following tasks:
 
-- Payout all the enacted treasury withdrawals.
++  payout all the enacted treasury withdrawals;
 
-- Remove expired and enacted governance actions, and refund deposits.
++  remove expired and enacted governance actions, and refund deposits;
 
-- If `govSt’`{.AgdaBound} is empty, increment the activity counter for
-  `DRep`{.AgdaInductiveConstructor}s.
++  if `govSt’`{.AgdaBound} is empty, increment the activity counter for
+   `DReps`{.AgdaInductiveConstructor};
 
-- Remove all hot keys from the constitutional committee delegation map
-  that do not belong to currently elected members.
++  remove all hot keys from the constitutional committee delegation map
+   that do not belong to currently elected members;
 
-- Apply the resulting enact state from the previous epoch boundary
-  `fut`{.AgdaBound} and store the resulting enact state
-  `fut’`{.AgdaBound}.
++  Apply the resulting enact state from the previous epoch boundary
+   `fut`{.AgdaBound} and store the resulting enact state
+   `fut’`{.AgdaBound}.
 
 ```agda
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
@@ -798,9 +799,10 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧ , es' , fut' ⟧
 ```
 
-## <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#newepoch-transition-system}
+## The <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#sec:the-newepoch-transition-system}
 
-This section defines the `NEWEPOCH`{.AgdaDatatype} transition system.
+Finally, we define the `NEWEPOCH`{.AgdaDatatype} transition system, which computes
+the new state as of the start of a new epoch.
 
 ```agda
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where
