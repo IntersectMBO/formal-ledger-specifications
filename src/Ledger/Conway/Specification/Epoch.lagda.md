@@ -456,11 +456,15 @@ module VDelegDelegatedStake
   (gState       : GState)
   (dState       : DState)
   where
-
+```
+<!--
+```agda
   open UTxOState utxoSt
   open DState dState
   open GState gState
-
+```
+-->
+```agda
   -- active DReps
   activeDReps : ℙ Credential
   activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
@@ -584,17 +588,17 @@ proofs about properties of the `EPOCH`{.AgdaDatatype} transition system.
 We organize the `EPOCH`{.AgdaInductiveConstructor} rule using three modules
 which roughly correspond to:
 
-- `Governance-Update`{.AgdaDatatype}: Used to compute the set of governance
+- `GovernanceUpdate`{.AgdaModule}: Used to compute the set of governance
   actions to be removed and updating accordingly the governance state.
 
-- `Pre-POOLREAP-Update`{.AgdaDatatype}: Used to update the `PState`, `GState`
+- `Pre-POOLREAPUpdate`{.AgdaModule}: Used to update the `PState`, `GState`
   and `utxoSt` which are the inputs to the `POOLREAP`{.AgdaDatatype} transition
   system.
 
-- `Post-POOLREAP-Update`{.AgdaDatatype}: Used to update `Acnt` and `DState` from
+- `Post-POOLREAPUpdate`{.AgdaModule}: Used to update `Acnt` and `DState` from
   the output of `POOLREAP`{.AgdaDatatype} part of which is in the environment of
   the `RATIFY`{.AgdaDatatype} transition system and part of which belongs to the
-  returned `EpochState`{.AgdaInductiveConstructor}.
+  returned `EpochState`{.AgdaRecord}.
 
 #### Helper Functions
 
@@ -623,9 +627,14 @@ record Governance-Update : Type where
 module GovernanceUpdate (ls : LState)
                         (fut : RatifyState)
                         where
+```
+<!--
+```agda
   open LState ls
   open RatifyState fut
-
+```
+-->
+```agda
   tmpGovSt : GovState
   tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
 
@@ -660,12 +669,16 @@ module Pre-POOLREAPUpdate (ls : LState)
                           (es : EnactState)
                           (govUpdate : Governance-Update)
                           where
-
+```
+<!--
+```agda
   open LState ls
   open CertState certState using (pState; gState)
   open PState pState
   open Governance-Update govUpdate
-
+```
+-->
+```agda
   utxoSt' : UTxOState
   utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
 
@@ -694,11 +707,15 @@ module Post-POOLREAPUpdate (es : EnactState)
                            (acnt' : Acnt)
                            (govUpd : Governance-Update)
                            where
-
+```
+<!--
+```agda
   open LState
   open Governance-Update govUpd
-
   opaque
+```
+-->
+```agda
     govActionReturns : RwdAddr ⇀ Coin
     govActionReturns =
       aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)

@@ -1,16 +1,17 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
-
-open import Agda.Builtin.FromNat
 
 module Ledger.Conway.Specification.Epoch.Properties.Computational
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Agda.Builtin.FromNat
+import Relation.Binary.PropositionalEquality as PE
+
+open import Ledger.Prelude
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Enact govStructure
@@ -21,9 +22,6 @@ open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Ratify.Properties.Computational txs
 open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.Rewards.Properties.Computational txs abs
-
-open import Data.List using (filter)
-import Relation.Binary.PropositionalEquality as PE
 
 open Computational ⦃...⦄
 
@@ -60,12 +58,14 @@ module _ {eps : EpochState} {e : Epoch} where
         (p₁' , p₂' , p₃')
       ) = eps'≡eps''
        where
-         ls = EpochState.ls eps
-         fut = EpochState.fut eps
+         ls : LState
+         ls = LStateOf eps
 
-         es = EnactStateOf fut
+         es : EnactState
+         es = EnactStateOf (RatifyStateOf eps)
 
-         govUpd = GovernanceUpdate.updates ls fut
+         govUpd : Governance-Update
+         govUpd = GovernanceUpdate.updates ls (RatifyStateOf eps)
 
          govSt' = Governance-Update.govSt' govUpd
 
@@ -74,10 +74,10 @@ module _ {eps : EpochState} {e : Epoch} where
 
          module pPRUpd =  Pre-POOLREAP-Update (Pre-POOLREAPUpdate.updates ls es govUpd)
 
-         pPRUpd₁ = Post-POOLREAPUpdate.updates (EnactStateOf fut) ls dState'₁ acnt'₁ govUpd
+         pPRUpd₁ = Post-POOLREAPUpdate.updates es ls dState'₁ acnt'₁ govUpd
          module pPRUpd₁ = Post-POOLREAP-Update pPRUpd₁
 
-         pPRUpd₂ = Post-POOLREAPUpdate.updates (EnactStateOf fut) ls dState'₂ acnt'₂ govUpd
+         pPRUpd₂ = Post-POOLREAPUpdate.updates es ls dState'₂ acnt'₂ govUpd
          module pPRUpd₂ = Post-POOLREAP-Update pPRUpd₂
 
          prs'≡prs'' : ⟦ utxoSt''₁ , acnt'₁ , dState'₁ , pState'₁ ⟧ᵖ ≡
@@ -94,7 +94,7 @@ module _ {eps : EpochState} {e : Epoch} where
          Γ≡Γ' = cong₂ (λ sd acnt → ⟦ sd , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧)
                       stakeDistrs₁≡stakeDistrs₂ (cong Post-POOLREAP-Update.acnt'' pPRUpd₁≡pPRUpd₂)
 
-         fut'≡fut'' : EpochState.fut eps' ≡ EpochState.fut eps''
+         fut'≡fut'' : RatifyStateOf eps' ≡ RatifyStateOf eps''
          fut'≡fut'' = RATIFIES-deterministic-≡ Γ≡Γ' refl refl p₃ p₃'
 
          eps'≡eps'' : eps' ≡ eps''
