@@ -584,64 +584,68 @@ record EPOCH-Updates0 : Type where
     utxoSt'        : UTxOState
     totWithdrawals : Coin
 
-EPOCH-updates0 : RatifyState → LState → EPOCH-Updates0
-EPOCH-updates0 fut ls =
-    EPOCHUpdates0 es govSt' payout pState' gState' utxoSt' totWithdrawals
-  where
-    open LState ls public
-    open PState
-    open CertState certState using (gState) public
-    open RatifyState fut renaming (es to esW)
+opaque
+  EPOCH-updates0 : RatifyState → LState → EPOCH-Updates0
+  EPOCH-updates0 fut ls =
+      EPOCHUpdates0 es govSt' payout pState' gState' utxoSt' totWithdrawals
+    where
+      open LState ls public
+      open PState
+      open CertState certState using (gState) public
+      open RatifyState fut renaming (es to esW)
 
-    es : EnactState
-    es = record esW { withdrawals = ∅ }
+      es : EnactState
+      es = record esW { withdrawals = ∅ }
 
-    tmpGovSt : GovState
-    tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
+      tmpGovSt : GovState
+      tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
 
-    orphans : ℙ (GovActionID × GovActionState)
-    orphans  = fromList (getOrphans es tmpGovSt)
+      orphans : ℙ (GovActionID × GovActionState)
+      orphans  = fromList (getOrphans es tmpGovSt)
 
-    removed' : ℙ (GovActionID × GovActionState)
-    removed' = removed ∪ orphans
+      removed' : ℙ (GovActionID × GovActionState)
+      removed' = removed ∪ orphans
 
-    govSt' : GovState
-    govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
+      govSt' : GovState
+      govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
 
-    removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
-    removedGovActions =
-      flip concatMapˢ removed' λ (gaid , gaSt) →
-        mapˢ
-          (returnAddr gaSt ,_)
-          ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+      removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
+      removedGovActions =
+        flip concatMapˢ removed' λ (gaid , gaSt) →
+          mapˢ
+            (returnAddr gaSt ,_)
+            ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
 
-    govActionReturns : RwdAddr ⇀ Coin
-    govActionReturns =
-      aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
+      govActionReturns : RwdAddr ⇀ Coin
+      govActionReturns =
+        aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
-    payout : RwdAddr ⇀ Coin
-    payout = govActionReturns ∪⁺ WithdrawalsOf esW
+      payout : RwdAddr ⇀ Coin
+      payout = govActionReturns ∪⁺ WithdrawalsOf esW
 
-    gState' : GState
-    gState' =
-      ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf gState) else DRepsOf gState)
-      , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
-      ⟧
+      gState' : GState
+      gState' =
+        ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf gState) else DRepsOf gState)
+        , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
+        ⟧
 
-    pState = PStateOf ls
-    pState' = record pState
-      { pools  = pState .fPools ∪ˡ pState .pools
-      ; fPools = ∅ᵐ
-      }
+      pState : PState
+      pState = PStateOf ls
 
-    utxoSt' : UTxOState
-    utxoSt' = record utxoSt
-      { deposits = DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
-      ; donations = 0
-      }
+      pState' : PState
+      pState' = record pState
+        { pools  = pState .fPools ∪ˡ pState .pools
+        ; fPools = ∅ᵐ
+        }
 
-    totWithdrawals : Coin
-    totWithdrawals = ∑[ x ← WithdrawalsOf esW ] x
+      utxoSt' : UTxOState
+      utxoSt' = record utxoSt
+        { deposits = DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
+        ; donations = 0
+        }
+
+      totWithdrawals : Coin
+      totWithdrawals = ∑[ x ← WithdrawalsOf esW ] x
 
 record EPOCH-Updates : Type where
   constructor EPOCHUpdates

@@ -95,8 +95,7 @@ For the formal statement of the lemma,
 *Proof*.
 
 ```agda
-  EPOCH-govDepsMatch {eps'} {e} ratify-removed (EPOCH (x , _ , POOLREAP)) =
-      poolReapMatch ∘ ratifiesSnapMatch
+  EPOCH-govDepsMatch {eps'} {e} ratify-removed = mainProof
     where
 
     -- the combinator used in the EPOCH rule
@@ -200,11 +199,6 @@ For the formal statement of the lemma,
          res-dom d∈res  -- d ∈ retiredDeposits
       where import Data.Product.Base as Product using (map₂)
 
-    ratifiesSnapMatch : govDepsMatch (LStateOf eps) → govDepsMatch ls₁
-    ratifiesSnapMatch =
-       ≡ᵉ.trans (filter-cong $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
-       ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
-
     noGADepositIsRetired
       : (d : DepositPurpose)
       → d ∈ dom (DepositsOf ls₁ ∣ retiredDeposits)
@@ -271,7 +265,19 @@ For the formal statement of the lemma,
         open import Relation.Binary using (IsEquivalence)
         import Axiom.Set.Rel th as Rel
 
-    poolReapMatch : govDepsMatch ls₁ → govDepsMatch (LStateOf eps')
-    poolReapMatch = ≡ᵉ.trans dropRetiredDeposits
+    opaque
+      unfolding EPOCH-updates0
 
+      mainProof
+       : _ ⊢ eps ⇀⦇ e ,EPOCH⦈ eps'
+       → govDepsMatch (LStateOf eps) → govDepsMatch (LStateOf eps')
+      mainProof (EPOCH (x , _ , POOLREAP)) = poolReapMatch ∘ ratifiesSnapMatch
+        where
+          ratifiesSnapMatch : govDepsMatch (LStateOf eps) → govDepsMatch ls₁
+          ratifiesSnapMatch =
+            ≡ᵉ.trans (filter-cong $ dom-cong (res-comp-cong $ ≡ᵉ.sym ΔΠ'≡ΔΠ))
+            ∘ from ≡ᵉ⇔≡ᵉ' ∘ main-invariance-lemma ∘ to ≡ᵉ⇔≡ᵉ'
+
+          poolReapMatch : govDepsMatch ls₁ → govDepsMatch (LStateOf eps')
+          poolReapMatch = ≡ᵉ.trans dropRetiredDeposits
 ```
