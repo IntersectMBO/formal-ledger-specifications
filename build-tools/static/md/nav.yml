@@ -82,6 +82,9 @@
             - GovDepsMatch: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
             - PoV: Ledger.Conway.Specification.Ledger.Properties.PoV.md
         - PoolReap: Ledger.Conway.Specification.PoolReap.md
+        - PoolReap/:
+          - Properties/:
+            - Computational: Ledger.Conway.Specification.PoolReap.Properties.Computational.md
         - PParams: Ledger.Conway.Specification.PParams.md
         - Properties: Ledger.Conway.Specification.Properties.md
         - Ratify: Ledger.Conway.Specification.Ratify.md
@@ -90,6 +93,9 @@
           - Properties/:
             - Computational: Ledger.Conway.Specification.Ratify.Properties.Computational.md
         - Rewards: Ledger.Conway.Specification.Rewards.md
+        - Rewards/:
+          - Properties/:
+            - Computational: Ledger.Conway.Specification.Rewards.Properties.Computational.md
         - RewardUpdate: Ledger.Conway.Specification.RewardUpdate.md
         - RewardUpdate/:
             - Properties: Ledger.Conway.Specification.RewardUpdate.Properties.md
