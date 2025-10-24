@@ -54,7 +54,7 @@ GovRoleCredential DRep = Credential
 GovRoleCredential SPO  = KeyHash
 ```
 
-## Actions {#sec:governance-actions}
+## Actions {#sec:actions}
 
 A governance action is one of the seven types described in the table below:
 
@@ -117,7 +117,13 @@ necessary data:
 
 ```agda
 record GovAction : Type where
+```
+<!--
+```agda
   constructor ⟦_,_⟧ᵍᵃ
+```
+-->
+```agda
   field
     gaType : GovActionType
     gaData : GovActionData gaType
@@ -168,7 +174,13 @@ why a vote was cast in a certain manner.
 
 ```agda
 record GovVoter : Type where
+```
+<!--
+```agda
   constructor ⟦_,_⟧ᵍᵛ
+```
+-->
+```agda
   field
     gvRole       : GovRole
     gvCredential : GovRoleCredential gvRole
@@ -417,15 +429,15 @@ instance
 ```agda
 isGovVoterDRep : GovVoter → Maybe Credential
 isGovVoterDRep ⟦ DRep , c ⟧ᵍᵛ = just c
-isGovVoterDRep _              = nothing
+isGovVoterDRep _ = nothing
 
 isGovVoterCredential : GovVoter → Maybe Credential
 isGovVoterCredential ⟦ CC   , c ⟧ᵍᵛ = just c
 isGovVoterCredential ⟦ DRep , c ⟧ᵍᵛ = just c
-isGovVoterCredential _              = nothing
+isGovVoterCredential _ = nothing
 
 proposedCC : GovAction → ℙ Credential
-proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ  = dom x
-proposedCC _                                    = ∅
+proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ = dom x
+proposedCC _ = ∅
 ```
 
