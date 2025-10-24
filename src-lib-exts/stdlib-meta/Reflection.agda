@@ -13,7 +13,7 @@ open import Class.Show
 open import Meta.Prelude
 open import Meta.Init public
   renaming (TC to TCI)
-  hiding (Monad-TC; MonadError-TC; toℕ)
+  hiding (Monad-TC; MonadError-TC)
 open import Reflection using (TC; extendContext)
 
 open MonadTC ⦃...⦄
