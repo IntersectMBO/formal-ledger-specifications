@@ -409,7 +409,6 @@ open RwdAddr using (stake)
 opaque
 ```
 -->
-
 ```agda
   calculatePoolDelegatedStake
     : Snapshot
@@ -583,23 +582,23 @@ private variable
 
 ## The <span class="AgdaDatatype">EPOCH</span> Transition System {#sec:the-epoch-transition-system}
 
-We are nearly ready to present the `EPOCH`{.AgdaDatatype} transition system, but
-first we must define some functions needed to update various values in the
-states involved in the transition.
+The `EPOCH`{.AgdaDatatype} transition system updates several parts of the
+`EpochState`{.AgdaDatatype}. We encapsulate these updates using Agda's module
+system. This modularization reduces typechecking times and helps strucuturing
+proofs about properties of the `EPOCH`{.AgdaDatatype} transition system.
 
 ### Update Modules and Functions
 
-We organize the `EPOCH`{.AgdaInductiveConstructor} rule using three modules
-which roughly correspond to:
+We organize the `EPOCH`{.AgdaDatatype} rule around three modules.
 
-- `GovernanceUpdate`{.AgdaModule}: Used to compute the set of governance
-  actions to be removed and updating accordingly the governance state.
+- `GovernanceUpdate`{.AgdaModule} is used to compute the set of governance
+  actions to be removed and update the governance state accordingly;
 
-- `Pre-POOLREAPUpdate`{.AgdaModule}: Used to update the `PState`, `GState`
+- `Pre-POOLREAPUpdate`{.AgdaModule} is used to update the `PState`, `GState`
   and `utxoSt` which are the inputs to the `POOLREAP`{.AgdaDatatype} transition
-  system.
+  system;
 
-- `Post-POOLREAPUpdate`{.AgdaModule}: Used to update `Acnt` and `DState` from
+- `Post-POOLREAPUpdate`{.AgdaModule} is used to update `Acnt` and `DState` from
   the output of `POOLREAP`{.AgdaDatatype} part of which is in the environment of
   the `RATIFY`{.AgdaDatatype} transition system and part of which belongs to the
   returned `EpochState`{.AgdaRecord}.
