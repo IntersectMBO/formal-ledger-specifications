@@ -26,9 +26,8 @@ open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
 -->
 
 Governance actions are ratified through on-chain votes. Different kinds
-of governance actions ([governance action types][Governance Action Types]) have
-different ratification requirements but always involve at least two of the three
-governance bodies.
+of [Governance Actions][] have different ratification requirements but always involve
+at least two of the three governance bodies.
 
 A successful motion of no-confidence, election of a new constitutional
 committee, a constitutional change, or a hard-fork delays ratification
