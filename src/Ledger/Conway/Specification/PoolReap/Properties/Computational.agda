@@ -1,6 +1,5 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
 
@@ -9,6 +8,7 @@ module Ledger.Conway.Specification.PoolReap.Properties.Computational
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Prelude
 open import Ledger.Conway.Specification.PoolReap txs abs
 
 open Computational ⦃...⦄

@@ -1,11 +1,11 @@
 {-# OPTIONS --safe #-}
 
-open import Ledger.Prelude
 open import Ledger.Conway.Specification.Transaction
 
 module Ledger.Conway.Specification.Ratify.Properties.Computational
   (txs : _) (open TransactionStructure txs) where
 
+open import Ledger.Prelude
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Conway.Specification.Enact govStructure
 open import Ledger.Conway.Specification.Enact.Properties.Computational govStructure
