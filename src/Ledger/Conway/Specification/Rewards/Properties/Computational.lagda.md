@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Rewards/Properties/Computational.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Prelude
@@ -23,3 +29,4 @@ module _ {lstate : LState} {ss : Snapshots} where
                      → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
                      → lstate ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'' → ss' ≡ ss''
   SNAP-deterministic SNAP SNAP = refl
+```
