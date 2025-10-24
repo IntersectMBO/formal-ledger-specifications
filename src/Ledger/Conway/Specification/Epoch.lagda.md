@@ -619,9 +619,7 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
           govSt
       in
         (orps ++ orps' , govSt')
-```
 
-```agda
 record Governance-Update : Type where
   constructor GovernanceUpdate
   field
