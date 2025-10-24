@@ -1,3 +1,9 @@
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/PoolReap/Properties/Computational.lagda.md
+---
+
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -35,3 +41,4 @@ POOLREAP-deterministic-≡ : ∀ {prs' prs'' e e' prs''' prs''''}
   → _ ⊢ prs'' ⇀⦇ e' ,POOLREAP⦈ prs''''
   → prs''' ≡ prs''''
 POOLREAP-deterministic-≡ refl refl = POOLREAP-deterministic
+```
