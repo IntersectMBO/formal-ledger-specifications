@@ -401,6 +401,10 @@
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.PoolReap.Properties.Computational.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.PoolReap.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
@@ -430,6 +434,10 @@
     </url>
     <url>
          <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.RewardUpdate.html</loc>
+         <lastmod>1980-01-01</lastmod>
+    </url>
+    <url>
+         <loc>https://intersectmbo.github.io/formal-ledger-specifications/Ledger.Conway.Specification.Rewards.Properties.Computational.html</loc>
          <lastmod>1980-01-01</lastmod>
     </url>
     <url>
