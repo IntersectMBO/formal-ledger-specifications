@@ -454,7 +454,7 @@ credential) to the deposit.
     → VDeleg ⇀ Coin
   calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
     = aggregate₊ (((activeVoteDelegs ˢ) ⁻¹ʳ
-                  ∘ʳ (stakePerCredential ∪⁺ stakeFromGADeposits govSt utxoSt) ˢ) ᶠˢ)
+                  ∘ʳ (stakePerCredential ∪⁺ stakeFromRewards ∪⁺ stakeFromGADeposits govSt utxoSt) ˢ) ᶠˢ)
     where
       open UTxOState utxoSt
       open DState dState
@@ -474,6 +474,9 @@ credential) to the deposit.
       stakePerCredential = mapFromFun (λ c → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c))
                                       (dom activeVoteDelegs)
 
+      -- stake from rewards
+      stakeFromRewards : Stake
+      stakeFromRewards = rewards ∣ (dom activeVoteDelegs)
 ```
 
 ```agda
