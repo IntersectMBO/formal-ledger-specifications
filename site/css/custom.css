@@ -339,3 +339,14 @@ body.reveal-agda-source pre.Agda.hidden-source {
 }
 
 .svg-card img { display:block; max-width:100%; height:auto; }
+
+
+/* ======================================================================= */
+/* Make main content region wider */
+.md-main__inner {
+  max-width: 78rem;  /* default ~72rem */
+}
+/* Tighten sidebars slightly. */
+.md-sidebar--secondary {
+  width: 14rem; /* default ~15rem */
+}

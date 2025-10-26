@@ -939,22 +939,10 @@ du_mkApparentPerformance_2644 ::
 du_mkApparentPerformance_2644 v0 v1 v2
   = coe
       MAlonzo.Code.Ledger.Prelude.d__'247''8320'__54
-      (coe du_ratioBlocks_2660 v1 v2 erased)
-      (coe du_stake''_2656 (coe v0))
--- Ledger.Conway.Specification.Rewards._.stake'
-d_stake''_2656 ::
-  MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2318 ->
-  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
-  Integer -> Integer -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_stake''_2656 ~v0 ~v1 v2 ~v3 ~v4 = du_stake''_2656 v2
-du_stake''_2656 ::
-  MAlonzo.Code.Data.Refinement.Base.T_Refinement_28 ->
-  MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-du_stake''_2656 v0
-  = coe
-      MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
-      (coe v0)
+      (coe du_ratioBlocks_2660 (coe v1) (coe v2))
+      (coe
+         MAlonzo.Code.Ledger.Prelude.Numeric.UnitInterval.d_fromUnitInterval_72
+         (coe v0))
 -- Ledger.Conway.Specification.Rewards._.ratioBlocks
 d_ratioBlocks_2660 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
@@ -964,13 +952,11 @@ d_ratioBlocks_2660 ::
   Integer ->
   MAlonzo.Code.Data.Nat.Base.T_NonZero_112 ->
   MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-d_ratioBlocks_2660 ~v0 ~v1 ~v2 v3 v4 = du_ratioBlocks_2660 v3 v4
+d_ratioBlocks_2660 ~v0 ~v1 ~v2 v3 v4 ~v5
+  = du_ratioBlocks_2660 v3 v4
 du_ratioBlocks_2660 ::
-  Integer ->
-  Integer ->
-  MAlonzo.Code.Data.Nat.Base.T_NonZero_112 ->
-  MAlonzo.Code.Data.Rational.Base.T_ℚ_6
-du_ratioBlocks_2660 v0 v1 v2
+  Integer -> Integer -> MAlonzo.Code.Data.Rational.Base.T_ℚ_6
+du_ratioBlocks_2660 v0 v1
   = coe
       MAlonzo.Code.Data.Rational.Base.du__'47'__156 (coe v0)
       (coe
@@ -2744,7 +2730,7 @@ du_stakeDistr_2942 v0 v1 v2 v3
             (coe C_constructor_2928)))
       (coe
          MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
-         (coe du_activeStake_2962 (coe v0) (coe v1) (coe v2) (coe v3))
+         (coe du_activeStake_2966 (coe v0) (coe v1) (coe v2) (coe v3))
          (coe
             MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32
             (coe
@@ -2815,21 +2801,21 @@ du_utxoBalance_2956 v0 v1 v2
                  (coe du_getStakeCred_2938 (coe v3))
                  (coe MAlonzo.Code.Agda.Builtin.Maybe.C_just_16 (coe v2)))))
 -- Ledger.Conway.Specification.Rewards._.activeDelegs
-d_activeDelegs_2958 ::
+d_activeDelegs_2962 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2318 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1346 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PState_1362 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_activeDelegs_2958 v0 ~v1 ~v2 v3 v4
-  = du_activeDelegs_2958 v0 v3 v4
-du_activeDelegs_2958 ::
+d_activeDelegs_2962 v0 ~v1 ~v2 v3 v4
+  = du_activeDelegs_2962 v0 v3 v4
+du_activeDelegs_2962 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1346 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PState_1362 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_activeDelegs_2958 v0 v1 v2
+du_activeDelegs_2962 v0 v1 v2
   = coe
       MAlonzo.Code.Axiom.Set.Map.du__'8739''94'__2006
       (coe
@@ -2892,21 +2878,21 @@ du_activeDelegs_2958 v0 v1 v2
          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_588)
          (coe du_pools_2954 (coe v2)))
 -- Ledger.Conway.Specification.Rewards._.activeRewards
-d_activeRewards_2960 ::
+d_activeRewards_2964 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2318 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1346 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PState_1362 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_activeRewards_2960 v0 ~v1 ~v2 v3 v4
-  = du_activeRewards_2960 v0 v3 v4
-du_activeRewards_2960 ::
+d_activeRewards_2964 v0 ~v1 ~v2 v3 v4
+  = du_activeRewards_2964 v0 v3 v4
+du_activeRewards_2964 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1346 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PState_1362 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_activeRewards_2960 v0 v1 v2
+du_activeRewards_2964 v0 v1 v2
   = coe
       MAlonzo.Code.Axiom.Set.Map.du__'8739'__1532
       (coe
@@ -2941,24 +2927,24 @@ du_activeRewards_2960 v0 v1 v2
             (coe
                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
          (coe MAlonzo.Code.Class.IsSet.du_IsSet'45'Map_588)
-         (coe du_activeDelegs_2958 (coe v0) (coe v1) (coe v2)))
+         (coe du_activeDelegs_2962 (coe v0) (coe v1) (coe v2)))
 -- Ledger.Conway.Specification.Rewards._.activeStake
-d_activeStake_2962 ::
+d_activeStake_2966 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Abstract.T_AbstractFunctions_2318 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1346 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PState_1362 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-d_activeStake_2962 v0 ~v1 v2 v3 v4
-  = du_activeStake_2962 v0 v2 v3 v4
-du_activeStake_2962 ::
+d_activeStake_2966 v0 ~v1 v2 v3 v4
+  = du_activeStake_2966 v0 v2 v3 v4
+du_activeStake_2966 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_DState_1346 ->
   MAlonzo.Code.Ledger.Conway.Specification.Certs.T_PState_1362 ->
   MAlonzo.Code.Agda.Builtin.Sigma.T_Σ_14
-du_activeStake_2962 v0 v1 v2 v3
+du_activeStake_2966 v0 v1 v2 v3
   = coe
       MAlonzo.Code.Axiom.Set.Map.du_mapWithKey_1312
       (coe
@@ -2968,7 +2954,7 @@ du_activeStake_2962 v0 v1 v2 v3
       (coe
          (\ v4 ->
             addInt (coe du_utxoBalance_2956 (coe v0) (coe v1) (coe v4))))
-      (coe du_activeRewards_2960 (coe v0) (coe v2) (coe v3))
+      (coe du_activeRewards_2964 (coe v0) (coe v2) (coe v3))
 -- Ledger.Conway.Specification.Rewards.Snapshots
 d_Snapshots_2972 a0 a1 = ()
 data T_Snapshots_2972

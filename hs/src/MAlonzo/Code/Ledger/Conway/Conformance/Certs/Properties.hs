@@ -334,7 +334,7 @@ d_Computational'45'DELEG_1578 v0
                                                   coe
                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                     (coe
-                                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_804
+                                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_932
                                                        (coe v9)))
                                                (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1418
                                                   (coe v1)))
@@ -352,13 +352,13 @@ d_Computational'45'DELEG_1578 v0
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                         (coe
-                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_806))
+                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_934))
                                                      (coe
                                                         MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                            (coe
-                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_808))
+                                                              MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_936))
                                                         (coe
                                                            MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
                                    (coe
@@ -697,7 +697,7 @@ d_Computational'45'DELEG_1578 v0
                                                                                     coe
                                                                                       MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                       (coe
-                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_804
+                                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_932
                                                                                          (coe v16)))
                                                                                  (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1418
                                                                                     (coe v1)))
@@ -716,13 +716,13 @@ d_Computational'45'DELEG_1578 v0
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                           (coe
-                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_806))
+                                                                                             MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_934))
                                                                                        (coe
                                                                                           MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                              (coe
-                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_808))
+                                                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_936))
                                                                                           (coe
                                                                                              MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                                         erased in
@@ -2683,7 +2683,7 @@ d_Computational'45'CERT_2056 v0
                                                            coe
                                                              MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                              (coe
-                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_804
+                                                                MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_932
                                                                 (coe v12)))
                                                         (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1418
                                                            (coe v6)))
@@ -2702,13 +2702,13 @@ d_Computational'45'CERT_2056 v0
                                                               (coe
                                                                  MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                  (coe
-                                                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_806))
+                                                                    MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_934))
                                                               (coe
                                                                  MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                  (coe
                                                                     MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                     (coe
-                                                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_808))
+                                                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_936))
                                                                  (coe
                                                                     MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16))))))))
                                             (coe
@@ -3101,7 +3101,7 @@ d_Computational'45'CERT_2056 v0
                                                                                                       coe
                                                                                                         MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                                         (coe
-                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_804
+                                                                                                           MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_932
                                                                                                            (coe
                                                                                                               v19)))
                                                                                                    (MAlonzo.Code.Ledger.Conway.Specification.Certs.d_delegatees_1418
@@ -3122,13 +3122,13 @@ d_Computational'45'CERT_2056 v0
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                                             (coe
-                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_806))
+                                                                                                               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_934))
                                                                                                          (coe
                                                                                                             MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Agda.Builtin.Maybe.C_just_16
                                                                                                                (coe
-                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_808))
+                                                                                                                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_936))
                                                                                                             (coe
                                                                                                                MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))))
                                                                                           erased in
@@ -4814,7 +4814,7 @@ d_Computational'45'PRE'45'CERT_2364 v0
                                                                     coe
                                                                       MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.du_isGovVoterDRep_1210
                                                                       (coe
-                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_voter_948
+                                                                         MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.d_voter_906
                                                                          (coe v10)))
                                                                  (let v10
                                                                         = MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8 in
@@ -5012,7 +5012,7 @@ du_validVoteDelegs_2518 v0 v1
                (coe
                   MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
             (coe
-               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_804)
+               MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegCredential_932)
             (coe
                MAlonzo.Code.Class.IsSet.du_dom_580
                (coe
@@ -5030,11 +5030,11 @@ du_validVoteDelegs_2518 v0 v1
             (coe
                MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                (coe
-                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_808)
+                  MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegNoConfidence_936)
                (coe
                   MAlonzo.Code.Agda.Builtin.List.C__'8759'__22
                   (coe
-                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_806)
+                     MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions.C_vDelegAbstain_934)
                   (coe MAlonzo.Code.Agda.Builtin.List.C_'91''93'_16)))))
 -- Ledger.Conway.Conformance.Certs.Properties._.cs'
 d_cs''_2520 ::
