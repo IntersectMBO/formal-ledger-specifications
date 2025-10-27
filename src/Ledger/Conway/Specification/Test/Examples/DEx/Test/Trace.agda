@@ -105,7 +105,7 @@ validTrace = start 5 (adaValueOf 80000000) rate
 
 validTrace2 : List Tx'
 validTrace2 = start 5 (adaValueOf 8000000000) rate
-              ∷ exchange 1 (adaValueOf 70000000) --FIX
+              ∷ exchange 1 (adaValueOf 70000000) 
               ∷ []
 
 
