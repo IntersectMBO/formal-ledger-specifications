@@ -589,6 +589,6 @@ module EPOCH {epSt epSt' : EpochState} (e : Epoch) (epSt≈epSt' : EpochState-[ 
         ls   = record {LS}
 
         es : record (EnactStateOf (RatifyStateOf epSt)) { withdrawals = ∅ } ≡ record (EnactStateOf (RatifyStateOf epSt')) { withdrawals = ∅ }
-        es rewrite (P.cong EnactStateOf epSt≈epSt'.fut) = {!refl!}
+        es rewrite (P.cong EnactStateOf epSt≈epSt'.fut) = refl
 
         fut  = fut≡fut'
