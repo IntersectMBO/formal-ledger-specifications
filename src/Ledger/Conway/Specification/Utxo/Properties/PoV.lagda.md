@@ -24,7 +24,7 @@ open UTxOState; open Tx; open TxBody
 
 *Informally*.
 
-Let `s`{.AgdaBound} and `s'`{.AgdaBound} be `UTxOState`{.AgdaRecord}s, let
+Let `s`{.AgdaBound} and `s'`{.AgdaBound} be `UTxOStates`{.AgdaRecord}, let
 `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a fresh transaction with withdrawals
 `txWithdrawals`{.AgdaBound}, and suppose
 `s`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,UTXO⦈`{.AgdaDatatype} `s'`{.AgdaBound}. If `tx`{.AgdaBound} is

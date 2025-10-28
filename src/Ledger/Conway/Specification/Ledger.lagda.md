@@ -199,7 +199,7 @@ process governance action proposals and votes.
 ??? note
 
     The governance state used as input to `GOVS`{.AgdaDatatype} is filtered to
-    remove votes from `DRep`{.AgdaInductiveConstructor}s that are no longer
+    remove votes from `DReps`{.AgdaInductiveConstructor} that are no longer
     registered (see function `rmOrphanDRepVotes`{.AgdaFunction}).
 
     This mechanism serves to prevent attacks where malicious adversaries could

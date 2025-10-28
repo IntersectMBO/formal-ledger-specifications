@@ -86,6 +86,7 @@ extra_javascript:
 markdown_extensions:
   - admonition                # call-out boxes like !!! note
   - pymdownx.details
+  - pymdownx.smartsymbols
   - toc:                      # table of contents generation
       permalink: true         # anchor links to headers
   - pymdownx.superfences:     # syntax highlighting in code blocks

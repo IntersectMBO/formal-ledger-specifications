@@ -22,6 +22,7 @@ record PoolReapState : Type where
 ```
 <!--
 ```agda
+  inductive
   constructor ⟦_,_,_,_⟧ᵖ
 ```
 -->
