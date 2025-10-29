@@ -713,10 +713,10 @@ module Post-POOLREAPUpdate (es : EnactState)
 ```agda
   open LState
   open Governance-Update govUpd
-  opaque
 ```
 -->
 ```agda
+  opaque
     govActionReturns : RwdAddr ⇀ Coin
     govActionReturns =
       aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
@@ -724,23 +724,24 @@ module Post-POOLREAPUpdate (es : EnactState)
     payout : RwdAddr ⇀ Coin
     payout = govActionReturns ∪⁺ WithdrawalsOf es
 
+  opaque
     refunds : Credential ⇀ Coin
     refunds = pullbackMap payout toRwdAddr (dom (RewardsOf dState'))
 
-    dState'' : DState
-    dState'' = ⟦ VoteDelegsOf dState' , StakeDelegsOf dState' , RewardsOf dState' ∪⁺ refunds ⟧
+  dState'' : DState
+  dState'' = ⟦ VoteDelegsOf dState' , StakeDelegsOf dState' , RewardsOf dState' ∪⁺ refunds ⟧
 
-    unclaimed : Coin
-    unclaimed = getCoin payout - getCoin refunds
+  unclaimed : Coin
+  unclaimed = getCoin payout - getCoin refunds
 
-    totWithdrawals : Coin
-    totWithdrawals = ∑[ x ← WithdrawalsOf es ] x
+  totWithdrawals : Coin
+  totWithdrawals = ∑[ x ← WithdrawalsOf es ] x
 
-    acnt'' : Acnt
-    acnt'' = ⟦ TreasuryOf acnt' ∸ totWithdrawals + DonationsOf ls + unclaimed , ReservesOf acnt' ⟧
+  acnt'' : Acnt
+  acnt'' = ⟦ TreasuryOf acnt' ∸ totWithdrawals + DonationsOf ls + unclaimed , ReservesOf acnt' ⟧
 
-    updates : Post-POOLREAP-Update
-    updates = Post-POOLREAPUpdate dState'' acnt''
+  updates : Post-POOLREAP-Update
+  updates = Post-POOLREAPUpdate dState'' acnt''
 ```
 
 ### Transition Rule

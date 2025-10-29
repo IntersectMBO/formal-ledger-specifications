@@ -217,6 +217,9 @@ instance
   HasEnactState-RatifyState : HasEnactState RatifyState
   HasEnactState-RatifyState .EnactStateOf = RatifyState.es
 
+  HasDReps-RatifyEnv : HasDReps RatifyEnv
+  HasDReps-RatifyEnv .DRepsOf = RatifyEnv.dreps
+
   HasTreasury-RatifyEnv : HasTreasury RatifyEnv
   HasTreasury-RatifyEnv .TreasuryOf = RatifyEnv.treasury
 ```
@@ -303,23 +306,20 @@ In addition, it must be the case that either
 +  the threshold function returns `nothing`{.AgdaInductiveConstructor}.
 
 ```agda
-acceptedByCC : RatifyEnv → EnactState → GovActionState → Type
-acceptedByCC Γ eSt gaSt =
-  (acceptedStake /₀ totalStake) ≥ t
-  × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
-  where
+module AcceptedByCC (currentEpoch : Epoch)
+                    (ccHotKeys : Credential ⇀ Maybe Credential)
+                    (eSt : EnactState)
+                    (gaSt : GovActionState)
+                    where
 ```
-
 <!--
 ```agda
   open EnactState eSt using (cc; pparams)
-  open RatifyEnv Γ
   open PParams (proj₁ pparams)
   open GovActionState gaSt
   open GovVotes votes using (gvCC)
 ```
 -->
-
 ```agda
   castVotes : Credential ⇀ Vote
   castVotes = gvCC
@@ -356,6 +356,19 @@ acceptedByCC Γ eSt gaSt =
   acceptedStake totalStake : Coin
   acceptedStake  = ∑[ x ← stakeDistr ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+
+  accepted = (acceptedStake /₀ totalStake) ≥ t
+    × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
+```
+
+```agda
+acceptedByCC
+  : RatifyEnv
+  → EnactState
+  → GovActionState
+  → Type
+acceptedByCC Γ = AcceptedByCC.accepted currentEpoch ccHotKeys
+  where open RatifyEnv Γ using (currentEpoch; ccHotKeys)
 ```
 
 ### DRep Vote Counting {#sec:drep-vote-counting}
@@ -382,15 +395,15 @@ the following auxiliary definitions.
    voting stake that voted `yes`{.AgdaInductiveConstructor} or `no`{.AgdaInductiveConstructor}.
 
 ```agda
-acceptedByDRep : RatifyEnv → EnactState → GovActionState → Type
-acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
-  where
+module AcceptedByDRep (Γ : RatifyEnv)
+                      (eSt : EnactState)
+                      (gaSt : GovActionState)
+                      where
 ```
-
 <!--
 ```agda
   open EnactState eSt using (cc; pparams)
-  open RatifyEnv Γ
+  open RatifyEnv Γ using (currentEpoch; dreps; stakeDistrs)
   open PParams (proj₁ pparams)
   open StakeDistrs stakeDistrs
   open GovActionState gaSt
@@ -423,6 +436,17 @@ acceptedByDRep Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   acceptedStake totalStake : Coin
   acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistrVDeleg ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+
+  accepted = (acceptedStake /₀ totalStake) ≥ t
+```
+
+```agda
+acceptedByDRep
+  : RatifyEnv
+  → EnactState
+  → GovActionState
+  → Type
+acceptedByDRep = AcceptedByDRep.accepted
 ```
 
 ### Stake Pool Operator (<span class="AgdaInductiveConstructor">SPO</span>) Vote Counting {#sec:spo-vote-counting}
@@ -489,16 +513,17 @@ is not the same as the credential that is used for standard voting.
     [Bootstrapping the Governance System](ConwayBootstrap.md#sec:conway-bootstrap-gov).)
 
 ```agda
-acceptedBySPO : RatifyEnv → EnactState → GovActionState → Type
-acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
-  where
+module AcceptedBySPO (delegatees : VoteDelegs)
+                     (pools : Pools)
+                     (stakeDistrPools : KeyHash ⇀ Coin)
+                     (eSt : EnactState)
+                     (gaSt : GovActionState)
+                     where
 ```
 
 <!--
 ```agda
   open EnactState eSt using (cc; pparams)
-  open RatifyEnv Γ
-  open StakeDistrs stakeDistrs
   open GovActionState gaSt
   open GovVotes votes using (gvSPO)
 ```
@@ -527,6 +552,20 @@ acceptedBySPO Γ eSt gaSt = (acceptedStake /₀ totalStake) ≥ t
   acceptedStake totalStake : Coin
   acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes ] x
   totalStake     = ∑[ x ← stakeDistrPools ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
+
+  accepted : Type
+  accepted = (acceptedStake /₀ totalStake) ≥ t
+```
+
+```agda
+acceptedBySPO
+  : RatifyEnv
+  → EnactState
+  → GovActionState
+  → Type
+acceptedBySPO Γ = AcceptedBySPO.accepted delegatees pools stakeDistrPools
+  where open RatifyEnv Γ
+        open StakeDistrs stakeDistrs
 ```
 
 
@@ -537,7 +576,7 @@ which are used in the rules of the `RATIFY`{.AgdaDatatype} transition system.
 
 <!--
 ```agda
-abstract
+opaque
 ```
 -->
 
@@ -604,7 +643,9 @@ acceptConds Γ stʳ (id , st) =
           open RatifyState stʳ
           open GovActionState st
 
-abstract
+opaque
+  unfolding accepted
+
   verifyPrev? : ∀ a h es → Dec (verifyPrev a h es)
   verifyPrev? NoConfidence        h es = dec
   verifyPrev? UpdateCommittee     h es = dec
