@@ -33,8 +33,6 @@ import Ledger.Conway.Specification.RewardUpdate
 import Ledger.Conway.Specification.RewardUpdate.Properties
 import Ledger.Conway.Specification.Script
 import Ledger.Conway.Specification.Script.Validation
-import Ledger.Conway.Specification.Test.Examples
-import Ledger.Conway.Specification.Test.StructuredContracts
 import Ledger.Conway.Specification.TokenAlgebra.Base
 import Ledger.Conway.Specification.TokenAlgebra.Coin
 import Ledger.Conway.Specification.TokenAlgebra.ValueSet
@@ -45,4 +43,7 @@ import Ledger.Conway.Specification.Utxo
 import Ledger.Conway.Specification.Utxo.Properties
 import Ledger.Conway.Specification.Utxow
 import Ledger.Conway.Specification.Utxow.Properties
+
+import Test.Examples
+import Test.StructuredContracts
 ```
