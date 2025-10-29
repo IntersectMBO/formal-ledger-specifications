@@ -1,3 +1,5 @@
+<!--
+```agda
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Transaction
@@ -28,38 +30,27 @@ open import Relation.Binary.PropositionalEquality hiding (cong)
 
 open import Axiom.Set.Properties th hiding (filter-map)
 open import abstract-set-theory.Axiom.Set.Properties th
+```
+-->
 
--- | Epoch indexed relation.
--- Two DReps (Map Credential Epoch) are related iff: Non-expired DReps are the same.
+The EPOCH`{.AgdaDatatype} transition system behaves parametrically w.r.t. the
+set of expired `DReps`{.AgdaInductiveConstructor} that are part of the
+`EpochState`{.AgdaRecord}.
+
+The following family of equivalence relations indexed by `Epoch` formalize the
+concept of two maps of `DReps`{.AgdaInductiveConstructor} being the same on
+non-expired `DReps`{.AgdaInductiveConstructor}:
+
+```agda
 DReps-[_]_≈_ : Epoch → B.Rel DReps 0ℓ
 DReps-[_]_≈_ e dreps₁ dreps₂
   = filterᵐ (λ (c , e') → e ≤ e') dreps₁ ≡ᵐ filterᵐ (λ (c , e') → e ≤ e') dreps₂
+```
 
-DReps-≈-sucᵉ : ∀ (e : Epoch) {dreps₁ dreps₂ : DReps} → DReps-[ e ] dreps₁ ≈ dreps₂ → DReps-[ sucᵉ e ] mapValues sucᵉ dreps₁ ≈ mapValues sucᵉ dreps₂
-DReps-≈-sucᵉ e {dreps₁} {dreps₂} dreps₁≈dreps₂ =
-    begin
-      filterᵐ (λ (_ , e') → sucᵉ e ≤ e') (mapValues sucᵉ dreps₁) ˢ
-        ≈⟨ filter-map P⇒Q ⟩
-      filterᵐ (λ (_ , e') → sucᵉ e ≤ e') (mapValues sucᵉ (filterᵐ (λ (_ , e') → e ≤ e') dreps₁)) ˢ
-        ≈⟨ filter-cong (map-≡ᵉ dreps₁≈dreps₂) ⟩
-      filterᵐ (λ (_ , e') → sucᵉ e ≤ e') (mapValues sucᵉ (filterᵐ (λ (_ , e') → e ≤ e') dreps₂)) ˢ
-        ≈⟨ filter-map P⇒Q ⟨
-      filterᵐ (λ (_ , e') → sucᵉ e ≤ e') (mapValues sucᵉ dreps₂) ˢ
-    ∎
-    where
-      open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
-      import Relation.Unary as U
-      P⇒Q : U.Universal ((λ ((_ , e') : Credential × Epoch)  → sucᵉ e ≤ sucᵉ e') U.⇒ (λ (_ , e') → e ≤ e'))
-      P⇒Q _ p = ≤-predᵉ p
+This family of relations is monotonic w.r.t. increment on `Epoch`{.AgdaDatatype}
+and respects `sucᵉ`{.AgdaFunction}:
 
-DReps-≈-sym : (e : Epoch) {dreps₁ dreps₂ : DReps} → DReps-[ e ] dreps₁ ≈ dreps₂ → DReps-[ e ] dreps₂ ≈ dreps₁
-DReps-≈-sym _ = ≡ᵉ-isEquivalence.sym
-  where
-    open import Relation.Binary.Structures _≡ᵉ_
-    module ≡ᵉ-isEquivalence = IsEquivalence ≡ᵉ-isEquivalence
-
-open Equivalence
-
+```agda
 DReps-≈-mono : ∀ (e : Epoch) {dreps₁ dreps₂ : DReps} → DReps-[ e ] dreps₁ ≈ dreps₂ → DReps-[ sucᵉ e ] dreps₁ ≈ dreps₂
 DReps-≈-mono e {dreps₁} {dreps₂} dreps₁≈dreps₂ =
     begin
@@ -78,20 +69,45 @@ DReps-≈-mono e {dreps₁} {dreps₂} dreps₁≈dreps₂ =
       P⇒Q : U.Universal ((λ ((_ , e') : Credential × Epoch)  → sucᵉ e ≤ e') U.⇒ (λ (_ , e') → e ≤ e'))
       P⇒Q _ p = esp.≤-trans (proj₁ (esp.<⇒≤∧≉ e<sucᵉ)) p
 
+DReps-≈-sucᵉ : ∀ (e : Epoch) {dreps₁ dreps₂ : DReps} → DReps-[ e ] dreps₁ ≈ dreps₂ → DReps-[ sucᵉ e ] mapValues sucᵉ dreps₁ ≈ mapValues sucᵉ dreps₂
+DReps-≈-sucᵉ e {dreps₁} {dreps₂} dreps₁≈dreps₂ =
+    begin
+      filterᵐ (λ (_ , e') → sucᵉ e ≤ e') (mapValues sucᵉ dreps₁) ˢ
+        ≈⟨ filter-map P⇒Q ⟩
+      filterᵐ (λ (_ , e') → sucᵉ e ≤ e') (mapValues sucᵉ (filterᵐ (λ (_ , e') → e ≤ e') dreps₁)) ˢ
+        ≈⟨ filter-cong (map-≡ᵉ dreps₁≈dreps₂) ⟩
+      filterᵐ (λ (_ , e') → sucᵉ e ≤ e') (mapValues sucᵉ (filterᵐ (λ (_ , e') → e ≤ e') dreps₂)) ˢ
+        ≈⟨ filter-map P⇒Q ⟨
+      filterᵐ (λ (_ , e') → sucᵉ e ≤ e') (mapValues sucᵉ dreps₂) ˢ
+    ∎
+    where
+      open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
+      import Relation.Unary as U
+      P⇒Q : U.Universal ((λ ((_ , e') : Credential × Epoch)  → sucᵉ e ≤ sucᵉ e') U.⇒ (λ (_ , e') → e ≤ e'))
+      P⇒Q _ p = ≤-predᵉ p
+```
+
+<!--
+```agda
+DReps-≈-sym : (e : Epoch) {dreps₁ dreps₂ : DReps} → DReps-[ e ] dreps₁ ≈ dreps₂ → DReps-[ e ] dreps₂ ≈ dreps₁
+DReps-≈-sym _ = ≡ᵉ-isEquivalence.sym
+  where
+    open import Relation.Binary.Structures _≡ᵉ_
+    module ≡ᵉ-isEquivalence = IsEquivalence ≡ᵉ-isEquivalence
+
+open Equivalence
+```
+-->
+
+The family of relations is lifted to `EpochState`{.AgdaRecord}:
+
+```agda
 record StakeDistrs-_≈_ (sd sd' : StakeDistrs) : Type where
   module sd  = StakeDistrs sd
   module sd' = StakeDistrs sd'
   field
     stakeDistrVDeleg : sd.stakeDistrVDeleg ≡ᵐ sd'.stakeDistrVDeleg
     stakeDistrPools  : sd.stakeDistrPools ≡ sd'.stakeDistrPools
-
-StakeDistrs-≈-sym : Symmetric StakeDistrs-_≈_
-StakeDistrs-≈-sym sd≈sd' = record { stakeDistrVDeleg = ≡ᵉ-isEquivalence.sym sd≈sd'.stakeDistrVDeleg ; stakeDistrPools = ≡-sym sd≈sd'.stakeDistrPools }
-  where
-    module sd≈sd' = StakeDistrs-_≈_ sd≈sd'
-    open import Relation.Binary.Structures _≡ᵉ_
-    module ≡ᵉ-isEquivalence = IsEquivalence ≡ᵉ-isEquivalence
-    open import Relation.Binary.PropositionalEquality renaming (sym to ≡-sym)
 
 record RatifyEnv-_≈_ (Γ Γ' : RatifyEnv) : Type where
   module Γ  = RatifyEnv Γ
@@ -105,6 +121,51 @@ record RatifyEnv-_≈_ (Γ Γ' : RatifyEnv) : Type where
     treasury      : Γ.treasury ≡ Γ'.treasury
     pools         : Γ.pools ≡ Γ'.pools
     delegatees    : Γ.delegatees ≡ Γ'.delegatees
+
+record GState-[_]_≈_ (e : Epoch) (gSt gSt' : GState) : Type where
+  module gSt  = GState gSt
+  module gSt' = GState gSt'
+  field
+    dreps      : DReps-[ e ] gSt.dreps ≈ gSt'.dreps
+    ccHotKeys  : gSt.ccHotKeys ≡ gSt'.ccHotKeys
+
+record CertState-[_]_≈_ (e : Epoch) (cSt cSt' : CertState) : Type where
+  module cSt  = CertState cSt
+  module cSt' = CertState cSt'
+  field
+    dState : cSt.dState ≡ cSt'.dState
+    pState : cSt.pState ≡ cSt'.pState
+    gState : GState-[ e ] cSt.gState ≈ cSt'.gState
+
+record LState-[_]_≈_ (e : Epoch) (lSt lSt' : LState) : Type where
+  module lSt  = LState lSt
+  module lSt' = LState lSt'
+  field
+    utxoSt     : lSt.utxoSt ≡ lSt'.utxoSt
+    govSt      : lSt.govSt ≡ lSt'.govSt
+    certState  : CertState-[ e ] lSt.certState ≈ lSt'.certState
+
+record EpochState-[_]_≈_ (e : Epoch) (epSt epSt' : EpochState) : Type where
+  module epSt  = EpochState epSt
+  module epSt' = EpochState epSt'
+
+  field
+    acnt       : epSt.acnt ≡ epSt'.acnt
+    ss         : epSt.ss ≡ epSt'.ss
+    ls         : LState-[ e ] epSt.ls ≈ epSt'.ls
+    es         : epSt.es ≡ epSt'.es
+    fut        : epSt.fut ≡ epSt'.fut
+```
+
+<!--
+```agda
+StakeDistrs-≈-sym : Symmetric StakeDistrs-_≈_
+StakeDistrs-≈-sym sd≈sd' = record { stakeDistrVDeleg = ≡ᵉ-isEquivalence.sym sd≈sd'.stakeDistrVDeleg ; stakeDistrPools = ≡-sym sd≈sd'.stakeDistrPools }
+  where
+    module sd≈sd' = StakeDistrs-_≈_ sd≈sd'
+    open import Relation.Binary.Structures _≡ᵉ_
+    module ≡ᵉ-isEquivalence = IsEquivalence ≡ᵉ-isEquivalence
+    open import Relation.Binary.PropositionalEquality renaming (sym to ≡-sym)
 
 RatifyEnv-≈-sym : Symmetric RatifyEnv-_≈_
 RatifyEnv-≈-sym {Γ} {Γ'} Γ≈Γ' = record {R}
@@ -277,39 +338,6 @@ module RATIFIES {Γ Γ' : RatifyEnv} (Γ≈Γ' : RatifyEnv- Γ ≈ Γ') where
     with RATIFY.cong Γ≈Γ' {a = a} {a' = a'} refl p q
   ... | refl = cong refl refl ps  qs
 
-record GState-[_]_≈_ (e : Epoch) (gSt gSt' : GState) : Type where
-  module gSt  = GState gSt
-  module gSt' = GState gSt'
-  field
-    dreps      : DReps-[ e ] gSt.dreps ≈ gSt'.dreps
-    ccHotKeys  : gSt.ccHotKeys ≡ gSt'.ccHotKeys
-
-record CertState-[_]_≈_ (e : Epoch) (cSt cSt' : CertState) : Type where
-  module cSt  = CertState cSt
-  module cSt' = CertState cSt'
-  field
-    dState : cSt.dState ≡ cSt'.dState
-    pState : cSt.pState ≡ cSt'.pState
-    gState : GState-[ e ] cSt.gState ≈ cSt'.gState
-
-record LState-[_]_≈_ (e : Epoch) (lSt lSt' : LState) : Type where
-  module lSt  = LState lSt
-  module lSt' = LState lSt'
-  field
-    utxoSt     : lSt.utxoSt ≡ lSt'.utxoSt
-    govSt      : lSt.govSt ≡ lSt'.govSt
-    certState  : CertState-[ e ] lSt.certState ≈ lSt'.certState
-
-record EpochState-[_]_≈_ (e : Epoch) (epSt epSt' : EpochState) : Type where
-  module epSt  = EpochState epSt
-  module epSt' = EpochState epSt'
-
-  field
-    acnt       : epSt.acnt ≡ epSt'.acnt
-    ss         : epSt.ss ≡ epSt'.ss
-    ls         : LState-[ e ] epSt.ls ≈ epSt'.ls
-    es         : epSt.es ≡ epSt'.es
-    fut        : epSt.fut ≡ epSt'.fut
 
 module SNAP {lSt lSt' : LState} {ss ss' : Snapshots}
             (e : Epoch)
@@ -526,7 +554,13 @@ module mkStakeDistrs {s s' : Snapshot} {utxoSt utxoSt' : UTxOState} {govSt govSt
       module R where
         stakeDistrVDeleg = calculateVDelegDelegatedStake-≈ e utxoSt govSt gState≈gState' dState
         stakeDistrPools = refl
+```
+-->
 
+The main property states that `EPOCH`{.AgdaDatatype} "preserves" the above
+relation on `EpochState`{.AgdaRecord}:
+
+```agda
 module EPOCH {epSt epSt' : EpochState} (e : Epoch) (epSt≈epSt' : EpochState-[ e ] epSt ≈ epSt') where
   module epSt≈epSt' = EpochState-[_]_≈_ epSt≈epSt'
 
@@ -535,6 +569,11 @@ module EPOCH {epSt epSt' : EpochState} (e : Epoch) (epSt≈epSt' : EpochState-[ 
        → tt ⊢ epSt' ⇀⦇ e ,EPOCH⦈ epSt'''
        → EpochState-[ sucᵉ e ] epSt'' ≈ epSt'''
   cong eps'' eps''' (EPOCH (snap₁ , poolreap₁ , ratify₁)) (EPOCH (snap₂ , poolreap₂ , ratify₂))
+```
+(Proof ommited from rendering)
+
+<!--
+```agda
     = record {R}
     where
       module R where
@@ -592,3 +631,5 @@ module EPOCH {epSt epSt' : EpochState} (e : Epoch) (epSt≈epSt' : EpochState-[ 
         es rewrite (P.cong EnactStateOf epSt≈epSt'.fut) = refl
 
         fut  = fut≡fut'
+```
+-->
