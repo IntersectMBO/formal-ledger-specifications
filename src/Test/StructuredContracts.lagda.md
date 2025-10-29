@@ -18,12 +18,14 @@ open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.TokenAlgebra.Base
 open import Ledger.Conway.Specification.TokenAlgebra.ValueSet
 
-module Ledger.Conway.Specification.Test.StructuredContracts
+
+module Test.StructuredContracts
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
 open import Ledger.Conway.Specification.Ledger txs abs
+open import Ledger.Conway.Specification.Script.ScriptPurpose txs
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 ```
