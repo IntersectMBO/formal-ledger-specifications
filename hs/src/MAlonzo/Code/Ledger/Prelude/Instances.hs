@@ -50,7 +50,7 @@ du_HasCoin'45'Map_10 v0
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1276
+              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum'7515'''_1414
               (coe v0)
               (coe
                  MAlonzo.Code.Class.DecEq.Core.C_constructor_32
@@ -75,7 +75,7 @@ du_HasCoin'45'Set_18 v0
       (coe
          (\ v1 ->
             coe
-              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum''_1282
+              MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.du_indexedSum''_1420
               (coe
                  MAlonzo.Code.Class.DecEq.Instances.du_DecEq'45''215'_182 (coe v0)
                  (coe MAlonzo.Code.Class.DecEq.Instances.d_DecEq'45'ℕ_22))
@@ -102,13 +102,13 @@ du_HasSubtract'45'ℙ_34 v0
   = coe
       MAlonzo.Code.Interface.HasSubtract.C_constructor_18
       (coe
-         MAlonzo.Code.Axiom.Set.du__'65340'__732
+         MAlonzo.Code.Axiom.Set.du__'65340'__758
          (coe
-            MAlonzo.Code.Axiom.Set.d_th_1480
+            MAlonzo.Code.Axiom.Set.d_th_1516
             (coe
                MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
          (coe
-            MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1610
+            MAlonzo.Code.Axiom.Set.d_'8712''45'sp_1648
             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8
             erased v0))
 -- Ledger.Prelude.Instances.HasSubset-Map
