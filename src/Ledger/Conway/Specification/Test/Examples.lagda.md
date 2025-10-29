@@ -1,4 +1,7 @@
-{-# OPTIONS --safe #-}
+---
+source_branch: master
+source_path: src/Ledger/Conway/Specification/Test/Examples.lagda.md
+---
 
 The "Examples" module aims to add a couple of example smart contract
 validators written as part of the Cardano Formal Ledger Specification.
@@ -6,13 +9,15 @@ These validator scripts are functions that examine a transaction and decide
 if the UTxO locked by their script can be spent as part of the current
 transaction. 
 
+<!--
 ```agda
+{-# OPTIONS --safe #-}
 module Ledger.Conway.Specification.Test.Examples where
 
 import Ledger.Conway.Specification.Test.Examples.SucceedIfNumber
 import Ledger.Conway.Specification.Test.Examples.HelloWorld
-
 ```
+-->
 
 The first two examples, "SucceedIfNumber" and "HelloWorld" are very simple
 scripts that allow their UTxO to be spent if the input is a number or
@@ -28,11 +33,9 @@ The other examples are more in-depth and are separated across
 multiple modules. 
 
 ```agda
-
 import Ledger.Conway.Specification.Test.Examples.MultiSig.Datum
 import Ledger.Conway.Specification.Test.Examples.MultiSig.Validator
 import Ledger.Conway.Specification.Test.Examples.MultiSig.Test.Trace
-
 ```
 
 The "MultiSig" example is based on the Multi-Signature wallet smart
@@ -92,13 +95,11 @@ to propose another payment of a larger amount than is contained in the wallet,
 which naturally fails.
  
 ```agda
-
-
 import Ledger.Conway.Specification.Test.Examples.AccountSim.Datum
 import Ledger.Conway.Specification.Test.Examples.AccountSim.Validator
 import Ledger.Conway.Specification.Test.Examples.AccountSim.Test.Trace
-
 ```
+
 The "AccountSim" contract attempts to simulate an account-based system
 on UTxO. It is a naive implementation which holds all accounts represented
 as a list of pairs linking a Public Key Hash to its associated Value.
@@ -114,11 +115,9 @@ account has in it.
 
 
 ```agda
-
 import Ledger.Conway.Specification.Test.Examples.DEx.Datum
 import Ledger.Conway.Specification.Test.Examples.DEx.Validator
 import Ledger.Conway.Specification.Test.Examples.DEx.Test.Trace
-
 ```
 
 The "DEx" contract is meant to implement a Limit Order Book
@@ -130,11 +129,9 @@ the code can be easily modified to fulfill its full purpose.
 
 
 ```agda
-
 import Ledger.Conway.Specification.Test.Examples.MultiSigV2.Datum
 import Ledger.Conway.Specification.Test.Examples.MultiSigV2.Validator
 import Ledger.Conway.Specification.Test.Examples.MultiSigV2.Test.Trace
-
 ```
 
 The second implementation of "MultiSig" is, at its core, the same

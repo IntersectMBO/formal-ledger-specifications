@@ -3,6 +3,11 @@ source_branch: master
 source_path: src/Ledger/Conway/Specification/Script/Validation.lagda.md
 ---
 
+# Script Validation {#sec:script-validation}
+
+<!-- TODO: Document this section. -->
+
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
@@ -45,7 +50,9 @@ getDatum tx utxo (Spend txin) =
      where
        m = setToMap (mapˢ < hash , id > (TxWitnesses.txdats (Tx.wits tx)))
 getDatum tx utxo _ = nothing
-
+```
+-->
+```agda
 txInfo : Language → PParams
                   → UTxO
                   → Tx
@@ -88,7 +95,9 @@ txOutToP2Script utxo tx (a , _) =
   do sh ← isScriptObj (payCred a)
      s  ← lookupScriptHash sh tx utxo
      toP2Script s
-
+```
+<!--
+```agda
 opaque
   collectP2ScriptsWithContext
     : PParams → Tx → UTxO

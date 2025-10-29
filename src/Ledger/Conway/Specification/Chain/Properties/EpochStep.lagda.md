@@ -23,7 +23,7 @@ open Block
 
 *Informally*.
 
-Let `cs`{.AgdaBound} and `cs'`{.AgdaBound} be `ChainState`{.AgdaRecord}s
+Let `cs`{.AgdaBound} and `cs'`{.AgdaBound} be `ChainStates`{.AgdaRecord}
 and `b`{.AgdaBound} a `Block`{.AgdaRecord}.
 If `cs`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `b`{.AgdaBound} `,CHAIN⦈`{.AgdaDatatype} `cs'`{.AgdaBound} and
 if the enact states of `cs`{.AgdaBound} and `cs'`{.AgdaBound} differ, then

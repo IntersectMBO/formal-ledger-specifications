@@ -49,7 +49,7 @@ Here are some key components of the transaction body.
 +  `txFee`{.AgdaField} denotes a transaction fee to be added to the fee pot.
 
 +  `txId`{.AgdaField} denotes the hash of the serialized form of the
-   transaction---the form in which the transaction is included in a block.
+   transaction—the form in which the transaction is included in a block.
 
 In addition to these, the Conway era introduces some new fields to the transaction body.
 

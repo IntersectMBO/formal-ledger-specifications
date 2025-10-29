@@ -37,7 +37,7 @@ module _
 *Informally*.
 
 Let `tx`{.AgdaBound} : `Tx`{.AgdaRecord} be a valid transaction and let
-`txCerts`{.AgdaFunction} be its list of `DCert`{.AgdaDatatype}s.  Denote
+`txCerts`{.AgdaFunction} be its list of `DCerts`{.AgdaDatatype}.  Denote
 by `noRefundCert`{.AgdaFunction} `txCerts`{.AgdaFunction} the assertion that no
 element in `txCerts`{.AgdaFunction} is one of the two refund types (i.e., an
 element of `l`{.AgdaBound} is neither a `dereg`{.AgdaInductiveConstructor} nor a

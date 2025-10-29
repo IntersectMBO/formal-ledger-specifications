@@ -12,32 +12,31 @@ reward calculation.
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Data.Integer using () renaming (+_ to pos)
-import      Data.Integer as ℤ
-open import Data.Integer.Properties using (module ≤-Reasoning; +-mono-≤; neg-mono-≤; +-identityˡ)
-                                    renaming (nonNegative⁻¹ to nonNegative⁻¹ℤ)
-open import Data.Nat.GeneralisedArithmetic using (iterate)
-open import Data.Rational using (ℚ; floor; _*_; _÷_; _/_; _⊓_; _≟_; ≢-nonZero)
-open import Data.Rational.Literals using (number; fromℤ)
-open import Data.Rational.Properties using (nonNegative⁻¹; pos⇒nonNeg; ⊓-glb)
-open import stdlib.Data.Rational.Properties using (0≤⇒0≤floor; ÷-0≤⇒0≤; fromℕ-0≤; *-0≤⇒0≤; fromℤ-0≤)
-
-open import Data.Integer.Tactic.RingSolver using (solve-∀)
-
-open import Agda.Builtin.FromNat
-
-open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
-open Filter using (filter)
 open import Ledger.Conway.Specification.Abstract
 open import Ledger.Conway.Specification.Transaction
-open import Ledger.Prelude.Numeric.UnitInterval using (fromUnitInterval; UnitInterval-*-0≤)
-
-open Number number renaming (fromNat to fromℕ)
 
 module Ledger.Conway.Specification.Epoch
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
+
+open import Agda.Builtin.FromNat
+
+import      Data.Integer as ℤ
+open import Data.Integer                    using () renaming (+_ to pos)
+open import Data.Integer.Properties         using (module ≤-Reasoning; +-mono-≤; neg-mono-≤; +-identityˡ)
+                                            renaming (nonNegative⁻¹ to nonNegative⁻¹ℤ)
+open import Data.Integer.Tactic.RingSolver  using (solve-∀)
+open import Data.Maybe                      using (fromMaybe)
+open import Data.Nat.GeneralisedArithmetic  using (iterate)
+open import Data.Rational                   using (ℚ; floor; _*_; _÷_; _/_; _⊓_; _≟_; ≢-nonZero)
+open import Data.Rational.Literals          using (number; fromℤ)
+open import Data.Rational.Properties        using (nonNegative⁻¹; pos⇒nonNeg; ⊓-glb)
+
+open import stdlib.Data.Rational.Properties using (0≤⇒0≤floor; ÷-0≤⇒0≤; fromℕ-0≤; *-0≤⇒0≤; fromℤ-0≤)
+
+open import Ledger.Prelude hiding (iterate; _/_; _*_; _⊓_; _≟_; ≢-nonZero)
+open import Ledger.Prelude.Numeric.UnitInterval using (fromUnitInterval; UnitInterval-*-0≤)
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
@@ -47,10 +46,15 @@ open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Ratify txs
 open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
+
+open Filter using (filter)
+open Number number renaming (fromNat to fromℕ)
 ```
 -->
 
-## <span class="AgdaDatatype">EPOCH</span> and <span class="AgdaDatatype">NEWEPOCH</span> Transition System Types
+## Epoch State
+
+The `EpochState`{.AgdaRecord} type encapsulates the components needed to represent an epoch state.
 
 ```agda
 record EpochState : Type where
@@ -68,6 +72,10 @@ record EpochState : Type where
     es         : EnactState
     fut        : RatifyState
 ```
+
+Note that the `Acnt`{.AgdaRecord} type has two fields—`treasury`{.AgdaField} and
+`reserves`{.AgdaField}.  Thus the `acnt`{.AgdaField} field in `EpochState`{.AgdaRecord}
+can keep track of the total assets that remain in treasury and reserves.
 
 <!--
 ```agda
@@ -87,6 +95,9 @@ instance
 
   HasDeposits-EpochState : HasDeposits EpochState
   HasDeposits-EpochState .DepositsOf = DepositsOf ∘ LStateOf
+
+  HasDReps-EpochState : HasDReps EpochState
+  HasDReps-EpochState .DRepsOf = DRepsOf ∘ CertStateOf ∘ LStateOf
 
   HasTreasury-EpochState : HasTreasury EpochState
   HasTreasury-EpochState .TreasuryOf = Acnt.treasury ∘ EpochState.acnt
@@ -186,9 +197,9 @@ opaque
 ```
 -->
 
-## <span class="AgdaDatatype">RewardUpdate</span>
+## Reward Updates
 
-### Computing <span class="AgdaDatatype">RewardUpdate</span>
+### Computing Reward Updates {#sec:computing-reward-updates}
 
 This section defines the function `createRUpd`{.AgdaFunction} which creates a
 `RewardUpdate`{.AgdaRecord}, i.e. the net flow of Ada due to paying out rewards
@@ -259,8 +270,7 @@ after an epoch:
 <!--
 ```agda
       -- Proofs
-      -- Note: Overloading of + and - seems to interfere with
-      -- the ring solver.
+      -- Note: Overloading of + and - seems to interfere with the ring solver.
       lemmaFlow : ∀ (t₁ r₁ f z : ℤ)
         → (t₁ ℤ.+ (0 ℤ.- r₁ ℤ.+ ((f ℤ.+ r₁ ℤ.- t₁) ℤ.- z)) ℤ.+ (0 ℤ.- f) ℤ.+ z) ≡ 0
       lemmaFlow = solve-∀
@@ -356,7 +366,7 @@ Relevant quantities are:
   denominator is zero.
 
 
-## Applying <span class="AgdaDatatype">RewardUpdate</span> {#applying-rewardupdate}
+### Applying Reward Updates {#sec:applying-reward-updates}
 
 This section defines the function `applyRUpd`{.AgdaFunction}, which applies a
 `RewardUpdate`{.AgdaDatatype} to the `EpochState`{.AgdaFunction}.
@@ -385,7 +395,7 @@ applyRUpd rewardUpdate ⟦ ⟦ treasury , reserves ⟧ᵃ
     unregRU'  = ∑[ x ← unregRU ] x
 ```
 
-## Stake Distributions {#stake-distributions}
+## Stake Distributions {#sec:stake-distributions}
 
 This section defines the functions
 `calculatePoolDelegatedState`{.AgdaFunction},
@@ -417,12 +427,11 @@ opaque
       sd = aggregate₊ ((stakeCredentialsPerPool ∘ʳ (StakeOf ss ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the
-delegated stake to SPO{.AgdaFunction}s. This function is used both in the
+The function `calculatePoolDelegatedState`{.AgdaFunction} calculates the delegated
+stake to `SPOs`{.AgdaInductiveConstructor}.  This function is used both in the
 `EPOCH`{.AgdaDatatype} rule (via
 `calculatePoolDelegatedStateForVoting`{.AgdaFunction}, see below) and in the
 `NEWEPOCH`{.AgdaDatatype} rule.
-
 
 ```agda
   stakeFromGADeposits
@@ -445,6 +454,46 @@ each governance action, maps its `returnAddr` (as a staking
 credential) to the deposit.
 
 ```agda
+module VDelegDelegatedStake
+  (currentEpoch : Epoch)
+  (utxoSt       : UTxOState)
+  (govSt        : GovState)
+  (gState       : GState)
+  (dState       : DState)
+  where
+```
+<!--
+```agda
+  open UTxOState utxoSt
+  open DState dState
+  open GState gState
+```
+-->
+```agda
+  -- active DReps
+  activeDReps : ℙ Credential
+  activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
+
+  -- active vote delegations
+  activeVDelegs : ℙ VDeleg
+  activeVDelegs = mapˢ vDelegCredential activeDReps ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵
+
+  -- compute the stake for a credential
+  stakePerCredential : Credential → Coin
+  stakePerCredential c = cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c)
+                         + fromMaybe 0 (lookupᵐ? (stakeFromGADeposits govSt utxoSt) c)
+                         + fromMaybe 0 (lookupᵐ? (RewardsOf dState) c)
+
+  calculate : VDeleg ⇀ Coin
+  calculate = mapFromFun (λ vd → ∑ˢ[ c ← voteDelegs ⁻¹ vd ] (stakePerCredential c))
+                         activeVDelegs
+```
+<!--
+```agda
+opaque
+```
+-->
+```agda
   calculateVDelegDelegatedStake
     : Epoch
     → UTxOState
@@ -452,39 +501,20 @@ credential) to the deposit.
     → GState
     → DState
     → VDeleg ⇀ Coin
-  calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-    = aggregate₊ (((activeVoteDelegs ˢ) ⁻¹ʳ
-                  ∘ʳ (stakePerCredential ∪⁺ stakeFromGADeposits govSt utxoSt) ˢ) ᶠˢ)
-    where
-      open UTxOState utxoSt
-      open DState dState
-      open GState gState
-
-      -- active DReps
-      activeDReps : ℙ Credential
-      activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
-
-      -- active vote delegations
-      activeVoteDelegs : VoteDelegs
-      activeVoteDelegs = voteDelegs ∣^ ((mapˢ vDelegCredential activeDReps)
-                                        ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵)
-
-      -- stake per delegated credential
-      stakePerCredential : Stake
-      stakePerCredential = mapFromFun (λ c → cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c))
-                                      (dom activeVoteDelegs)
-
+  calculateVDelegDelegatedStake = VDelegDelegatedStake.calculate
 ```
-
+<!--
+```agda
+opaque
+```
+-->
 ```agda
   calculatePoolDelegatedStakeForVoting
     : Snapshot
     → UTxOState
     → GovState
-    → GState
-    → DState
     → KeyHash ⇀ Coin
-  calculatePoolDelegatedStakeForVoting ss utxoSt govSt gState dState
+  calculatePoolDelegatedStakeForVoting ss utxoSt govSt
     = calculatePoolDelegatedStake ss ∪⁺ (stakeFromDeposits ∣ dom (PoolsOf ss))
     where
       stakeFromDeposits : KeyHash ⇀ Coin
@@ -492,11 +522,10 @@ credential) to the deposit.
                                       ∘ʳ (stakeFromGADeposits govSt utxoSt ˢ)) ᶠˢ)
 ```
 
-The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction}
-computes the delegated stake to `SPO`{.AgdaInductiveConstructor}s that
-will be used for counting votes. It complements the result of
-`calculatePoolDelegatedStake`{.AgdaFunction} with the deposits made to
-governance actions.
+The function `calculatePoolDelegatedStakeForVoting`{.AgdaFunction} computes the
+delegated stake to `SPOs`{.AgdaInductiveConstructor} that will be used for counting
+votes. It complements the result of `calculatePoolDelegatedStake`{.AgdaFunction} with
+the deposits made to governance actions.
 
 ??? erratum
     [CIP-1694](https://cips.cardano.org/cip/CIP-1694) specifies that
@@ -509,23 +538,23 @@ governance actions.
     > submitter's voting power to vote on their own (and competing)
     > actions.
 
-    While originally _intended_ for `DRep`{.AgdaInductiveConstructor}s
+    While originally _intended_ for `DReps`{.AgdaInductiveConstructor}
     only, the Haskell implementation and the formal specification
     count deposits on governance actions towards the stake of
-    `SPO`{.AgdaInductiveConstructor}s as well.
+    `SPOs`{.AgdaInductiveConstructor} as well.
 
 ```agda
-  mkStakeDistrs
-    : Snapshot
-    → Epoch
-    → UTxOState
-    → GovState
-    → GState
-    → DState
-    → StakeDistrs
-  mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
-    ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
-    , calculatePoolDelegatedStakeForVoting ss utxoSt govSt gState dState ⟧
+mkStakeDistrs
+  : Snapshot
+  → Epoch
+  → UTxOState
+  → GovState
+  → GState
+  → DState
+  → StakeDistrs
+mkStakeDistrs ss currentEpoch utxoSt govSt gState dState =
+  ⟦ calculateVDelegDelegatedStake currentEpoch utxoSt govSt gState dState
+  , calculatePoolDelegatedStakeForVoting ss utxoSt govSt ⟧
 ```
 
 <!--
@@ -540,6 +569,10 @@ private variable
   mark set go : Snapshot
   feeSS : Fees
   lstate : LState
+  pState'' : PState
+  dState' : DState
+  acnt acnt' : Acnt
+  utxoSt'' : UTxOState
   ss ss' : Snapshots
   ru : RewardUpdate
   mru : Maybe RewardUpdate
@@ -547,13 +580,30 @@ private variable
 ```
 -->
 
-## <span class="AgdaDatatype">EPOCH</span> Transition System {#epoch-transition-system}
+## The <span class="AgdaDatatype">EPOCH</span> Transition System {#sec:the-epoch-transition-system}
 
-The `EPOCH`{.AgdaDatatype} transition has a few updates that are encapsulated
-in the following functions. We need these functions to bring them in scope for
-some proofs about `EPOCH`{.AgdaDatatype}.
+The `EPOCH`{.AgdaDatatype} transition system updates several parts of the
+`EpochState`{.AgdaDatatype}. We encapsulate these updates using Agda's module
+system. This modularization reduces typechecking times and helps strucuturing
+proofs about properties of the `EPOCH`{.AgdaDatatype} transition system.
 
-### Helper Functions
+### Update Modules and Functions
+
+We organize the `EPOCH`{.AgdaDatatype} rule around three modules.
+
+- `GovernanceUpdate`{.AgdaModule} is used to compute the set of governance
+  actions to be removed and update the governance state accordingly;
+
+- `Pre-POOLREAPUpdate`{.AgdaModule} is used to update the `PState`, `GState`
+  and `utxoSt` which are the inputs to the `POOLREAP`{.AgdaDatatype} transition
+  system;
+
+- `Post-POOLREAPUpdate`{.AgdaModule} is used to update `Acnt` and `DState` from
+  the output of `POOLREAP`{.AgdaDatatype} part of which is in the environment of
+  the `RATIFY`{.AgdaDatatype} transition system and part of which belongs to the
+  returned `EpochState`{.AgdaRecord}.
+
+#### Helper Functions
 
 ```agda
 getOrphans : EnactState → GovState → GovState
@@ -568,123 +618,129 @@ getOrphans es govSt = proj₁ $ iterate step ([] , govSt) (length govSt)
           govSt
       in
         (orps ++ orps' , govSt')
-```
 
-### Update Functions
-
-```agda
-record EPOCH-Updates0 : Type where
-  constructor EPOCHUpdates0
+record Governance-Update : Type where
+  constructor GovernanceUpdate
   field
-    es             : EnactState
-    govSt'         : GovState
-    payout         : Withdrawals
-    pState'        : PState
-    gState'        : GState
-    utxoSt'        : UTxOState
-    totWithdrawals : Coin
-
-EPOCH-updates0 : RatifyState → LState → EPOCH-Updates0
-EPOCH-updates0 fut ls =
-    EPOCHUpdates0 es govSt' payout pState' gState' utxoSt' totWithdrawals
-  where
-    open LState ls public
-    open PState
-    open CertState certState using (gState) public
-    open RatifyState fut renaming (es to esW)
-
-    es : EnactState
-    es = record esW { withdrawals = ∅ }
-
-    tmpGovSt : GovState
-    tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
-
-    orphans : ℙ (GovActionID × GovActionState)
-    orphans  = fromList (getOrphans es tmpGovSt)
-
-    removed' : ℙ (GovActionID × GovActionState)
-    removed' = removed ∪ orphans
-
-    govSt' : GovState
-    govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
-
     removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
-    removedGovActions =
-      flip concatMapˢ removed' λ (gaid , gaSt) →
-        mapˢ
-          (returnAddr gaSt ,_)
-          ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+    govSt'            : GovState
 
+module GovernanceUpdate (ls : LState)
+                        (fut : RatifyState)
+                        where
+```
+<!--
+```agda
+  open LState ls
+  open RatifyState fut
+```
+-->
+```agda
+  tmpGovSt : GovState
+  tmpGovSt = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed) govSt
+
+  orphans : ℙ (GovActionID × GovActionState)
+  orphans  = fromList (getOrphans es tmpGovSt)
+
+  removed' : ℙ (GovActionID × GovActionState)
+  removed' = removed ∪ orphans
+
+  removedGovActions : ℙ (RwdAddr × DepositPurpose × Coin)
+  removedGovActions =
+    flip concatMapˢ removed' λ (gaid , gaSt) →
+      mapˢ
+        (returnAddr gaSt ,_)
+        ((DepositsOf utxoSt ∣ ❴ GovActionDeposit gaid ❵) ˢ)
+
+  govSt' : GovState
+  govSt' = filter (λ x → proj₁ x ∉ mapˢ proj₁ removed') govSt
+
+  updates : Governance-Update
+  updates = GovernanceUpdate removedGovActions govSt'
+
+record Pre-POOLREAP-Update : Type where
+  inductive
+  constructor Pre-POOLREAPUpdate
+  field
+    pState' : PState
+    gState' : GState
+    utxoSt' : UTxOState
+
+module Pre-POOLREAPUpdate (ls : LState)
+                          (es : EnactState)
+                          (govUpdate : Governance-Update)
+                          where
+```
+<!--
+```agda
+  open LState ls
+  open CertState certState using (pState; gState)
+  open PState pState
+  open Governance-Update govUpdate
+```
+-->
+```agda
+  utxoSt' : UTxOState
+  utxoSt' = ⟦ UTxOOf utxoSt , FeesOf utxoSt , DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ , 0 ⟧
+
+  pState' : PState
+  pState' = ⟦ fPools ∪ˡ pools , ∅ , retiring ⟧
+
+  gState' : GState
+  gState' =
+    ⟦ (if null govSt' then mapValues sucᵉ (DRepsOf gState) else DRepsOf gState)
+    , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
+    ⟧
+
+  updates : Pre-POOLREAP-Update
+  updates = Pre-POOLREAPUpdate pState' gState' utxoSt'
+
+record Post-POOLREAP-Update : Type where
+  inductive
+  constructor Post-POOLREAPUpdate
+  field
+    dState''       : DState
+    acnt''         : Acnt
+
+module Post-POOLREAPUpdate (es : EnactState)
+                           (ls : LState)
+                           (dState' : DState)
+                           (acnt' : Acnt)
+                           (govUpd : Governance-Update)
+                           where
+```
+<!--
+```agda
+  open LState
+  open Governance-Update govUpd
+  opaque
+```
+-->
+```agda
     govActionReturns : RwdAddr ⇀ Coin
     govActionReturns =
       aggregate₊ (mapˢ (λ (a , _ , d) → a , d) removedGovActions ᶠˢ)
 
     payout : RwdAddr ⇀ Coin
-    payout = govActionReturns ∪⁺ WithdrawalsOf esW
-
-    gState' : GState
-    gState' =
-      ⟦ (if null govSt' then mapValues (1 +_) (DRepsOf gState) else DRepsOf gState)
-      , CCHotKeysOf gState ∣ ccCreds (EnactState.cc es)
-      ⟧
-
-    pState = PStateOf ls
-    pState' = record pState
-      { pools  = pState .fPools ∪ˡ pState .pools
-      ; fPools = ∅ᵐ
-      }
-
-    utxoSt' : UTxOState
-    utxoSt' = record utxoSt
-      { deposits = DepositsOf utxoSt ∣ mapˢ (proj₁ ∘ proj₂) removedGovActions ᶜ
-      ; donations = 0
-      }
-
-    totWithdrawals : Coin
-    totWithdrawals = ∑[ x ← WithdrawalsOf esW ] x
-
-record EPOCH-Updates : Type where
-  constructor EPOCHUpdates
-  field
-    es             : EnactState
-    govSt'         : GovState
-    dState''       : DState
-    pState''       : PState
-    gState'        : GState
-    utxoSt'        : UTxOState
-    acnt''         : Acnt
-
-EPOCH-updates
-  : RatifyState → LState → DState → Acnt → EPOCH-Updates
-EPOCH-updates fut ls dState' acnt' =
-    EPOCHUpdates
-      (u0 .es)
-      (u0 .govSt')
-      dState''
-      (u0 .pState')
-      (u0 .gState')
-      (u0 .utxoSt')
-      acnt''
-  where
-    open LState
-    open EPOCH-Updates0
-
-    u0 = EPOCH-updates0 fut ls
+    payout = govActionReturns ∪⁺ WithdrawalsOf es
 
     refunds : Credential ⇀ Coin
-    refunds = pullbackMap (u0 .payout) toRwdAddr (dom (RewardsOf dState'))
+    refunds = pullbackMap payout toRwdAddr (dom (RewardsOf dState'))
 
     dState'' : DState
-    dState'' = record dState' { rewards = RewardsOf dState' ∪⁺ refunds }
+    dState'' = ⟦ VoteDelegsOf dState' , StakeDelegsOf dState' , RewardsOf dState' ∪⁺ refunds ⟧
 
     unclaimed : Coin
-    unclaimed = getCoin (u0 .payout) - getCoin refunds
+    unclaimed = getCoin payout - getCoin refunds
+
+    totWithdrawals : Coin
+    totWithdrawals = ∑[ x ← WithdrawalsOf es ] x
 
     acnt'' : Acnt
-    acnt'' = record acnt'
-      { treasury =
-          TreasuryOf acnt' ∸ u0 .totWithdrawals + DonationsOf ls + unclaimed
-      }
+    acnt'' = ⟦ TreasuryOf acnt' ∸ totWithdrawals + DonationsOf ls + unclaimed , ReservesOf acnt' ⟧
+
+    updates : Post-POOLREAP-Update
+    updates = Post-POOLREAPUpdate dState'' acnt''
 ```
 
 ### Transition Rule
@@ -694,54 +750,59 @@ This section defines the `EPOCH`{.AgdaDatatype} transition rule.
 In Conway, the `EPOCH`{.AgdaDatatype} rule invokes `RATIFIES`{.AgdaDatatype},
 and carries out the following tasks:
 
-- Payout all the enacted treasury withdrawals.
++  payout all the enacted treasury withdrawals;
 
-- Remove expired and enacted governance actions, and refund deposits.
++  remove expired and enacted governance actions, and refund deposits;
 
-- If `govSt’`{.AgdaBound} is empty, increment the activity counter for
-  `DRep`{.AgdaInductiveConstructor}s.
++  if `govSt’`{.AgdaBound} is empty, increment the activity counter for
+   `DReps`{.AgdaInductiveConstructor};
 
-- Remove all hot keys from the constitutional committee delegation map
-  that do not belong to currently elected members.
++  remove all hot keys from the constitutional committee delegation map
+   that do not belong to currently elected members;
 
-- Apply the resulting enact state from the previous epoch boundary
-  `fut`{.AgdaBound} and store the resulting enact state
-  `fut’`{.AgdaBound}.
++  Apply the resulting enact state from the previous epoch boundary
+   `fut`{.AgdaBound} and store the resulting enact state
+   `fut’`{.AgdaBound}.
 
 ```agda
 data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Type where
 ```
 ```agda
   EPOCH :
-```
-<!--
-```agda
-    ∀ {acnt : Acnt} {utxoSt'' : UTxOState} {acnt' dState' pState''} →
-```
--->
-```agda
     let
-      EPOCHUpdates es govSt' dState'' pState' gState' utxoSt' acnt'' =
-        EPOCH-updates fut ls dState' acnt'
+      es = EnactStateOf fut
+
+      govUpd : Governance-Update
+      govUpd = GovernanceUpdate.updates ls fut
+
+      Pre-POOLREAPUpdate pState' gState' utxoSt' = Pre-POOLREAPUpdate.updates ls es govUpd
+      Post-POOLREAPUpdate dState'' acnt'' = Post-POOLREAPUpdate.updates es ls dState' acnt' govUpd
+
+      es' : EnactState
+      es' = record es { withdrawals = ∅ }
+
+      govSt' : GovState
+      govSt' = Governance-Update.govSt' govUpd
 
       stakeDistrs : StakeDistrs
       stakeDistrs = mkStakeDistrs (Snapshots.mark ss') e utxoSt'
                                   govSt' (GStateOf ls) (DStateOf ls)
 
       Γ : RatifyEnv
-      Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt , PoolsOf ls , VoteDelegsOf ls ⟧
+      Γ = ⟦ stakeDistrs , e , DRepsOf ls , CCHotKeysOf ls , TreasuryOf acnt'' , PoolsOf ls , VoteDelegsOf ls ⟧
 
     in
         ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
-      ∙ Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , pState' ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState'' ⟧
+      ∙ Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       ──────────────────────────────────────────────
-      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧ , es , fut' ⟧
+      _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧ , es' , fut' ⟧
 ```
 
-## <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#newepoch-transition-system}
+## The <span class="AgdaDatatype">NEWEPOCH</span> Transition System {#sec:the-newepoch-transition-system}
 
-This section defines the `NEWEPOCH`{.AgdaDatatype} transition system.
+Finally, we define the `NEWEPOCH`{.AgdaDatatype} transition system, which computes
+the new state as of the start of a new epoch.
 
 ```agda
 data _⊢_⇀⦇_,NEWEPOCH⦈_ : ⊤ → NewEpochState → Epoch → NewEpochState → Type where

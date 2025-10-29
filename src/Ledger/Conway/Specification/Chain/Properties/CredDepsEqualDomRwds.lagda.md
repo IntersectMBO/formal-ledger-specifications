@@ -34,7 +34,7 @@ these quantities are equal for `cs`{.AgdaBound}.
 
 The property `credDeposits≡dom-rwds-inv`{.AgdaFunction} asserts that
 `credDeposits≡dom-rwds`{.AgdaFunction} is a chain invariant. That is,
-if `cs`{.AgdaBound} and `cs'`{.AgdaBound} are two `ChainState`{.AgdaRecord}s such
+if `cs`{.AgdaBound} and `cs'`{.AgdaBound} are two `ChainStates`{.AgdaRecord} such
 that `cs`{.AgdaBound} `⇀⦇`{.AgdaDatatype} `tx`{.AgdaBound} `,CHAIN⦈`{.AgdaDatatype} `cs'`{.AgdaBound}, then
 `credDeposits≡dom-rwds`{.AgdaFunction} `cs`{.AgdaBound} only if
 `credDeposits≡dom-rwds`{.AgdaFunction} `cs'`{.AgdaBound}.
