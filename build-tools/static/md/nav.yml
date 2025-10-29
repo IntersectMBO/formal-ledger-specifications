@@ -62,6 +62,7 @@
           - Properties/:
             - Computational: Ledger.Conway.Specification.Epoch.Properties.Computational.md
             - ConstRwds: Ledger.Conway.Specification.Epoch.Properties.ConstRwds.md
+            - ExpiredDReps: Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps.md
             - GovDepsMatch: Ledger.Conway.Specification.Epoch.Properties.GovDepsMatch.md
             - NoPropSameDReps: Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps.md
         - Fees: Ledger.Conway.Specification.Fees.md
