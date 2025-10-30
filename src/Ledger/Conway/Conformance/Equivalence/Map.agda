@@ -656,5 +656,31 @@ module _  {A B : Type}
       lem-add-excluded p =
         filterᵐ-∪⁺-distr _ _ ⟨≈⟩ ∪⁺-cong-l (filterᵐ-singleton-false p) ⟨≈⟩ ∪⁺-id-r _
 
+      lem-add-excluded-∪ˡ
+        : (m : A ⇀ B)
+        → ¬ P k
+        → filterᵐ P′ (m ∪ˡ ❴ k , v ❵) ≡ᵐ filterᵐ P′ m
+      lem-add-excluded-∪ˡ {k = k} {v = v} m ¬p with k ∈? dom m
+      ... | yes k∈m =
+          filterᵐ-cong
+            {m = m ∪ˡ ❴ k , v ❵}
+            {m' = m}
+            (singleton-∈-∪ˡ {m = m} k∈m)
+      ... | no k∉m = begin
+          filterᵐ P′ (m ∪ˡ ❴ k , v ❵) ˢ
+            ≈⟨ filter-cong $ disjoint-∪ˡ-∪ (disjoint-sing k∉m) ⟩
+          filterˢ P′ (m ˢ ∪ ❴ k , v ❵)
+            ≈⟨ filter-hom-∪ ⟩
+          filterˢ P′ (m ˢ) ∪ filterˢ P′ ❴ k , v ❵
+            ≈⟨ ∪-cong ≡ᵉ.refl (filterᵐ-singleton-false ¬p) ⟩
+          filterˢ P′ (m ˢ) ∪ ∅
+            ≈⟨ ∪-identityʳ (filterˢ P′ (m ˢ)) ⟩
+          filterˢ P′ (m ˢ)
+          ∎
+        where
+          disjoint-sing : k ∉ dom m → disjoint (dom m) (dom (singleton (k , v)))
+          disjoint-sing k∉m a∈d a∈sing
+            rewrite from ∈-dom-singleton-pair a∈sing = k∉m a∈d
+
       lem-del-excluded : ∀ m → ¬ P k → filterᵐ P′ (m ∣ ❴ k ❵ ᶜ) ≡ᵐ filterᵐ P′ m
       lem-del-excluded m ¬p = filterᵐ-restrict m ⟨≈⟩ restrict-singleton-filterᵐ-false m ¬p
