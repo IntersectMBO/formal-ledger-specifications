@@ -125,6 +125,15 @@ open HasStakeDelegs ⦃...⦄ public
 
 ## Delegation Definitions
 
+
+An "active" `DRep`{.AgdaInductiveConstructor} is one whose expiry epoch is not less than the current epoch.
+
+```agda
+opaque
+  activeDReps : {A : Type} ⦃ _ : HasDReps A ⦄ → Epoch → A → ℙ Credential
+  activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (DRepsOf s))
+```
+
 ```agda
 data DCert : Type where
   delegate    : Credential → Maybe VDeleg → Maybe KeyHash → Coin → DCert

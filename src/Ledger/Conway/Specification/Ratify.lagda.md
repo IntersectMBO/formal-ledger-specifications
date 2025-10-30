@@ -403,7 +403,7 @@ module AcceptedByDRep (Γ : RatifyEnv)
 <!--
 ```agda
   open EnactState eSt using (cc; pparams)
-  open RatifyEnv Γ using (currentEpoch; dreps; stakeDistrs)
+  open RatifyEnv Γ using (currentEpoch; stakeDistrs)
   open PParams (proj₁ pparams)
   open StakeDistrs stakeDistrs
   open GovActionState gaSt
@@ -412,11 +412,11 @@ module AcceptedByDRep (Γ : RatifyEnv)
 -->
 
 ```agda
+  activeDReps' : ℙ Credential
+  activeDReps' = activeDReps currentEpoch Γ
+
   castVotes : VDeleg ⇀ Vote
   castVotes = mapKeys vDelegCredential gvDRep
-
-  activeDReps : ℙ Credential
-  activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
 
   predeterminedDRepVotes : VDeleg ⇀ Vote
   predeterminedDRepVotes = case gaType action of λ where
@@ -424,7 +424,7 @@ module AcceptedByDRep (Γ : RatifyEnv)
       _            → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.no  ❵
 
   defaultDRepCredentialVotes : VDeleg ⇀ Vote
-  defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
+  defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps') Vote.no
 
   actualVotes : VDeleg ⇀ Vote
   actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes
