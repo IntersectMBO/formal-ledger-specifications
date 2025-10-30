@@ -30,10 +30,10 @@ open import stdlib-classes.Class.HasCast public
 open import Class.HasOrder public
 open import Class.ToBool public
 open import Interface.ComputationalRelation public
-open import Interface.Hashable public
-open import Interface.HasSubset public
-open import Interface.HasSubtract public
-open import Interface.HasSubtract.Instances public
+open import Interface.TypeClasses.Hashable public
+open import Interface.TypeClasses.HasSubset public
+open import Interface.TypeClasses.HasSubtract public
+open import Interface.TypeClasses.HasSubtract.Instances public
 open import Ledger.Prelude.Instances public
 open import Ledger.Prelude.HasCoin public
 open import Tactic.Defaults public

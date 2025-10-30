@@ -1,18 +1,22 @@
 ---
 source_branch: master
-source_path: src/Interface/HasSubtract/Instances.lagda.md
+source_path: src/Interface/TypeClasses/HasSubtract/Instances.lagda.md
 ---
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
 
-module Interface.HasSubtract.Instances where
+module Interface.TypeClasses.HasSubtract.Instances where
 
-open import Interface.HasSubtract
+open import Interface.TypeClasses.HasSubtract
 
 open import Data.Integer as ℤ using (ℤ)
 open import Data.Nat     as ℕ using (ℕ)
+```
+-->
 
+```agda
 instance
   HasSubtract-ℕ : HasSubtract ℕ ℕ
   HasSubtract-ℕ ._-_ = ℕ._∸_

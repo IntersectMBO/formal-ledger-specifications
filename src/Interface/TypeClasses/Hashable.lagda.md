@@ -1,20 +1,30 @@
 ---
 source_branch: master
-source_path: src/Interface/Hashable.lagda.md
+source_path: src/Interface/TypeClasses/Hashable.lagda.md
 ---
 
+<!--
 ```agda
 {-# OPTIONS --safe #-}
-module Interface.Hashable where
+module Interface.TypeClasses.Hashable where
 
 open import Agda.Builtin.Equality
 open import Agda.Primitive using () renaming (Set to Type)
+```
+-->
 
+```agda
 record Hashable (T THash : Type) : Type where
   field hash    : T → THash
+```
 
+<!--
+```agda
 open Hashable ⦃...⦄ public
+```
+-->
 
+```agda
 Hashable₁ : (Type → Type) → Type → Type₁
 Hashable₁ F THash = {A : Type} → ⦃ Hashable A THash ⦄ → Hashable (F A) THash
 

@@ -38,6 +38,7 @@
 [GOVCERT]: Ledger.Conway.Specification.Certs.md#auxiliary-govcert-transition-system
 [Governance Functions]: Ledger.Conway.Specification.Gov.md#governance-functions
 [issues]: https://github.com/IntersectMBO/formal-ledger-specifications/issues
+[Introduction]: Ledger.Introduction.md
 [LEDGER]: Ledger.Conway.Specification.Ledger.md#ledger-transition-system
 [Ledger.Properties]: Ledger.Conway.Specification.Ledger.Properties.md
 [Ledger.Properties.GovDepsMatch]: Ledger.Conway.Specification.Ledger.Properties.GovDepsMatch.md
@@ -60,11 +61,15 @@
 [scriptsCost]: Ledger.Conway.Specification.Fees.md#scriptsCost
 [Shelley Ledger Spec (pdf)]: https://github.com/intersectmbo/cardano-ledger/releases/latest/download/shelley-ledger.pdf
 [SNAP]: Ledger.Conway.Specification.Rewards.md#sec:snap-transition-system
+[STS Diagram]: Ledger.Introduction.md#fig:latest-sts-diagram
+[The GOV Transition System]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
 [The UTXOW Transition System]: Ledger.Conway.Specification.Utxow.md#sec:the-utxow-transition-system
 [thm:ChainGovDepsMatch]: Ledger.Conway.Specification.Chain.Properties.GovDepsMatch.md#thm:ChainGovDepsMatch
 [Time handling on Cardano]: https://docs.cardano.org/about-cardano/explore-more/time
 [Timing of Rewards Payout]: Ledger.Conway.Specification.Rewards.md#sec:timing-of-rewards-payout
-[The GOV Transition System]: Ledger.Conway.Specification.Gov.md#the-gov-transition-system
+[Transaction Levels]: Ledger.Dijkstra.Specification.Transaction.md#sec:transaction-levels
+[Transaction Structure]: Ledger.Dijkstra.Specification.Transaction.md#sec:transaction-structure
+[Transactions]: Ledger.Dijkstra.Specification.Transaction.md#sec:transactions
 [UTXO]: Ledger.Conway.Specification.Utxo.md#sec:the-utxo-transition-system
 [Utxo.Properties.MinSpend]: Ledger.Conway.Specification.Utxo.Properties.MinSpend.md
 [Utxo.Properties.PoV]: Ledger.Conway.Specification.Utxo.Properties.PoV.md
@@ -72,4 +77,3 @@
 [UTXOW]: Ledger.Conway.Specification.Utxow.md#sec:the-utxow-transition-system
 [Utxow module]: Ledger.Conway.Specification.Utxow.md
 [Validity and wellformedness predicates]: Ledger.Conway.Specification.Gov.md#validity-and-wellformedness-predicates
-
