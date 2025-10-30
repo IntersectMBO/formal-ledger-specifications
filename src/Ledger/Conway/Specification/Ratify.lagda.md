@@ -10,14 +10,15 @@ source_path: src/Ledger/Conway/Specification/Ratify.lagda.md
 
 {-# OPTIONS --safe #-}
 
+open import Ledger.Conway.Specification.Transaction hiding (Vote)
+
+module Ledger.Conway.Specification.Ratify (txs : _) (open TransactionStructure txs) where
+
 import Data.Integer as ℤ
 open import Data.Rational as ℚ using (ℚ; 0ℚ; _⊔_)
 open import Data.Nat.Properties hiding (_≟_; _≤?_)
 
 open import Ledger.Prelude hiding (_∧_; _∨_; _⊔_) renaming (filterᵐ to filter; ∣_∣ to _↓)
-open import Ledger.Conway.Specification.Transaction hiding (Vote)
-
-module Ledger.Conway.Specification.Ratify (txs : _) (open TransactionStructure txs) where
 
 open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Enact govStructure
@@ -314,8 +315,8 @@ module AcceptedByCC (currentEpoch : Epoch)
 ```
 <!--
 ```agda
-  open EnactState eSt using (cc; pparams)
-  open PParams (proj₁ pparams)
+  open EnactState eSt using (cc)
+  open PParams (PParamsOf eSt)
   open GovActionState gaSt
   open GovVotes votes using (gvCC)
 ```
@@ -350,7 +351,7 @@ module AcceptedByCC (currentEpoch : Epoch)
                        else constMap (dom m) Vote.no
 
   mT : Maybe ℚ
-  mT = threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action CC
+  mT = threshold (PParamsOf eSt) (ℚof? cc) action CC
 
   t : ℚ
   t = maybe id 0ℚ mT
@@ -407,9 +408,8 @@ module AcceptedByDRep (Γ : RatifyEnv)
 ```
 <!--
 ```agda
-  open EnactState eSt using (cc; pparams)
-  open RatifyEnv Γ using (currentEpoch; dreps; stakeDistrs)
-  open PParams (proj₁ pparams)
+  open EnactState eSt using (cc)
+  open RatifyEnv Γ using (currentEpoch; stakeDistrs)
   open StakeDistrs stakeDistrs
   open GovActionState gaSt
   open GovVotes votes using (gvDRep)
@@ -421,7 +421,7 @@ module AcceptedByDRep (Γ : RatifyEnv)
   castVotes = mapKeys vDelegCredential gvDRep
 
   activeDReps : ℙ Credential
-  activeDReps = dom (filter (λ (_ , e) → currentEpoch ≤ e) dreps)
+  activeDReps = dom (activeDRepsOf Γ currentEpoch)
 
   predeterminedDRepVotes : VDeleg ⇀ Vote
   predeterminedDRepVotes = case gaType action of λ where
@@ -433,10 +433,10 @@ module AcceptedByDRep (Γ : RatifyEnv)
 
   actualVotes : VDeleg ⇀ Vote
   actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes
-                             ∪ˡ predeterminedDRepVotes
+                           ∪ˡ predeterminedDRepVotes
 
   t : ℚ
-  t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action DRep)
+  t = maybe id 0ℚ (threshold (PParamsOf eSt) (ℚof? cc) action DRep)
 
   acceptedStake totalStake : Coin
   acceptedStake  = ∑[ x ← stakeDistrVDeleg ∣ actualVotes ⁻¹ Vote.yes ] x
@@ -528,7 +528,7 @@ module AcceptedBySPO (delegatees : VoteDelegs)
 
 <!--
 ```agda
-  open EnactState eSt using (cc; pparams)
+  open EnactState eSt using (cc)
   open GovActionState gaSt
   open GovVotes votes using (gvSPO)
 ```
@@ -552,7 +552,7 @@ module AcceptedBySPO (delegatees : VoteDelegs)
   actualVotes = castVotes ∪ˡ mapFromFun defaultVote (dom stakeDistrPools)
 
   t : ℚ
-  t = maybe id 0ℚ (threshold (proj₁ pparams) (proj₂ <$> (proj₁ cc)) action SPO)
+  t = maybe id 0ℚ (threshold (PParamsOf eSt) (ℚof? cc) action SPO)
 
   acceptedStake totalStake : Coin
   acceptedStake  = ∑[ x ← stakeDistrPools ∣ actualVotes ⁻¹ Vote.yes ] x

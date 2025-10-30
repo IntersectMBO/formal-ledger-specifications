@@ -74,16 +74,7 @@ instance
   isGADeposit? {PoolDeposit x} = ⁇ (no λ ())
   isGADeposit? {DRepDeposit x} = ⁇ (no λ ())
   isGADeposit? {GovActionDeposit x} = ⁇ (yes tt)
-```
--->
 
-```agda
-activeDReps : Epoch → NewEpochState → ℙ Credential
-activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (DRepsOf s))
-```
-
-<!--
-```agda
 instance
   _ : IsSet Block Tx
   _ = record { toSet = fromList ∘ Block.ts }

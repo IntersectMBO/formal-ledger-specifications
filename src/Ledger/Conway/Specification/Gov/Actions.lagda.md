@@ -11,15 +11,16 @@ This section defines several concepts and types used to represent governance act
 ```agda
 {-# OPTIONS --safe #-}
 
+open import Ledger.Conway.Specification.Gov.Base
+
+module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) where
+
 open import Data.Nat.Properties using (+-0-monoid)
 open import Data.Rational using (ℚ; 0ℚ; 1ℚ)
 
 open import Tactic.Derive.Show
 
 open import Ledger.Prelude as P hiding (yes; no)
-open import Ledger.Conway.Specification.Gov.Base
-
-module Ledger.Conway.Specification.Gov.Actions (gs : _) (open GovStructure gs) where
 ```
 -->
 
@@ -441,3 +442,28 @@ proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ = dom x
 proposedCC _ = ∅
 ```
 
+```agda
+DReps : Type
+DReps = Credential ⇀ Epoch
+```
+
+<!--
+```agda
+record HasDReps {a} (A : Type a) : Type a where
+  field DRepsOf : A → DReps
+open HasDReps ⦃...⦄ public
+```
+-->
+
+The following function takes a type `A`{.AgdaDatatype} with an associated set of
+`DReps`{.AgdaDatatype}, and an epoch `e`{.AgdaBound}, and returns the
+`DReps`{.AgdaDatatype} of `A`{.AgdaDatatype} that expire in epoch `e`{.AgdaBound} or
+later.
+
+```agda
+activeInEpoch : Epoch → Credential × Epoch → Type
+activeInEpoch e (_ , expEpoch) = e ≤ expEpoch
+
+activeDRepsOf : {A : Type} ⦃ _ : HasDReps A ⦄ → A → Epoch → DReps
+activeDRepsOf a e = filterᵐ (activeInEpoch e) (DRepsOf a)
+```
