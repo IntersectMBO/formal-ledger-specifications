@@ -11,8 +11,8 @@ module Ledger.Prelude.Instances where
 open import Prelude
 open import Ledger.Prelude.Base
 open import Ledger.Prelude.HasCoin
-open import Interface.HasSubtract
-open import Interface.HasSubset
+open import Interface.TypeClasses.HasSubtract
+open import Interface.TypeClasses.HasSubset
 
 open import abstract-set-theory.FiniteSetTheory
   renaming (_⊆_ to _⊆ˢ_)
