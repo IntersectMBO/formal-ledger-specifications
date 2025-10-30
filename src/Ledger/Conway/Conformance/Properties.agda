@@ -48,9 +48,6 @@ getRewards = DState.rewards ∘ CertState.dState ∘ LState.certState ∘ getLSt
 allDReps : NewEpochState → DReps
 allDReps = GState.dreps ∘ CertState.gState ∘ LState.certState ∘ getLState
 
-activeDReps : Epoch → NewEpochState → ℙ Credential
-activeDReps currentEpoch s = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) (allDReps s))
-
 getGovState : NewEpochState → GovState
 getGovState = LState.govSt ∘ getLState
 

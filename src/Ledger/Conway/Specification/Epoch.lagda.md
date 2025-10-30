@@ -461,31 +461,21 @@ module VDelegDelegatedStake
   (gState       : GState)
   (dState       : DState)
   where
-```
-<!--
-```agda
-  open UTxOState utxoSt
-  open DState dState
-  open GState gState
-```
--->
-```agda
-  -- active DReps
-  activeDReps : ℙ Credential
-  activeDReps = dom (filterᵐ (λ (_ , e) → currentEpoch ≤ e) dreps)
 
-  -- active vote delegations
+  activeDReps : ℙ Credential
+  activeDReps = dom (activeDRepsOf gState currentEpoch)
+
   activeVDelegs : ℙ VDeleg
   activeVDelegs = mapˢ vDelegCredential activeDReps ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵
 
   -- compute the stake for a credential
   stakePerCredential : Credential → Coin
-  stakePerCredential c = cbalance (utxo ∣^' λ txout → getStakeCred txout ≡ just c)
+  stakePerCredential c = cbalance ((UTxOOf utxoSt) ∣^' λ txout → getStakeCred txout ≡ just c)
                          + fromMaybe 0 (lookupᵐ? (stakeFromGADeposits govSt utxoSt) c)
                          + fromMaybe 0 (lookupᵐ? (RewardsOf dState) c)
 
   calculate : VDeleg ⇀ Coin
-  calculate = mapFromFun (λ vd → ∑ˢ[ c ← voteDelegs ⁻¹ vd ] (stakePerCredential c))
+  calculate = mapFromFun (λ vd → ∑ˢ[ c ← (VoteDelegsOf dState) ⁻¹ vd ] (stakePerCredential c))
                          activeVDelegs
 ```
 <!--
