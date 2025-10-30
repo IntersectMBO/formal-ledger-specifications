@@ -11,6 +11,7 @@ module Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Prelude
