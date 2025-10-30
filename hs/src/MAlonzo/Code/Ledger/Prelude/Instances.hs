@@ -24,8 +24,8 @@ import qualified MAlonzo.Code.Class.CommutativeMonoid.Instances
 import qualified MAlonzo.Code.Class.DecEq.Core
 import qualified MAlonzo.Code.Class.DecEq.Instances
 import qualified MAlonzo.Code.Data.Nat.Properties
-import qualified MAlonzo.Code.Interface.HasSubset
-import qualified MAlonzo.Code.Interface.HasSubtract
+import qualified MAlonzo.Code.Interface.TypeClasses.HasSubset
+import qualified MAlonzo.Code.Interface.TypeClasses.HasSubtract
 import qualified MAlonzo.Code.Ledger.Prelude.HasCoin
 import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 
@@ -87,20 +87,20 @@ du_HasCoin'45'Set_18 v0
               (coe v1)))
 -- Ledger.Prelude.Instances.HasSubset-Set
 d_HasSubset'45'Set_30 ::
-  () -> MAlonzo.Code.Interface.HasSubset.T_HasSubset_8
+  () -> MAlonzo.Code.Interface.TypeClasses.HasSubset.T_HasSubset_10
 d_HasSubset'45'Set_30 = erased
 -- Ledger.Prelude.Instances.HasSubtract-ℙ
 d_HasSubtract'45'ℙ_34 ::
   () ->
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Interface.HasSubtract.T_HasSubtract_8
+  MAlonzo.Code.Interface.TypeClasses.HasSubtract.T_HasSubtract_10
 d_HasSubtract'45'ℙ_34 ~v0 v1 = du_HasSubtract'45'ℙ_34 v1
 du_HasSubtract'45'ℙ_34 ::
   MAlonzo.Code.Class.DecEq.Core.T_DecEq_10 ->
-  MAlonzo.Code.Interface.HasSubtract.T_HasSubtract_8
+  MAlonzo.Code.Interface.TypeClasses.HasSubtract.T_HasSubtract_10
 du_HasSubtract'45'ℙ_34 v0
   = coe
-      MAlonzo.Code.Interface.HasSubtract.C_constructor_18
+      MAlonzo.Code.Interface.TypeClasses.HasSubtract.C_constructor_20
       (coe
          MAlonzo.Code.Axiom.Set.du__'65340'__758
          (coe
@@ -113,5 +113,6 @@ du_HasSubtract'45'ℙ_34 v0
             erased v0))
 -- Ledger.Prelude.Instances.HasSubset-Map
 d_HasSubset'45'Map_42 ::
-  () -> () -> MAlonzo.Code.Interface.HasSubset.T_HasSubset_8
+  () ->
+  () -> MAlonzo.Code.Interface.TypeClasses.HasSubset.T_HasSubset_10
 d_HasSubset'45'Map_42 = erased

@@ -53,7 +53,7 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
-import qualified MAlonzo.Code.Interface.Hashable
+import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Base
@@ -477,7 +477,7 @@ d_Show'45'THash_1284 v0
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.T-Hashable
 d_T'45'Hashable_1286 ::
   T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_1286 v0
   = coe
       MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
@@ -692,7 +692,7 @@ d_Sig_1350 = erased
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.T-Hashable
 d_T'45'Hashable_1352 ::
   T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_1352 v0
   = let v1 = d_cryptoStructure_1322 (coe v0) in
     coe
@@ -1846,7 +1846,7 @@ d_DecEq'45'P1Script_1722 v0
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.P1ScriptStructure.Hashable-P1Script
 d_Hashable'45'P1Script_1724 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_P1ScriptStructure_104 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'P1Script_1724 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_122
@@ -1991,7 +1991,7 @@ d_ExUnits_1762 = erased
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.PlutusStructure.Hashable-PlutusScript
 d_Hashable'45'PlutusScript_1764 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_PlutusStructure_128 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'PlutusScript_1764 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'PlutusScript_226
@@ -2087,7 +2087,7 @@ d_Show'45'THash_1788 v0
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.PlutusStructure.T-Hashable
 d_T'45'Hashable_1790 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_PlutusStructure_128 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_1790 v0
   = let v1
           = MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
@@ -2300,7 +2300,7 @@ d_ExUnits_1836 = erased
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.ScriptStructure.Hashable-P1Script
 d_Hashable'45'P1Script_1838 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_280 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'P1Script_1838 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_122
@@ -2310,7 +2310,7 @@ d_Hashable'45'P1Script_1838 v0
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.ScriptStructure.Hashable-PlutusScript
 d_Hashable'45'PlutusScript_1840 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_280 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'PlutusScript_1840 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'PlutusScript_226
@@ -2321,11 +2321,11 @@ d_Hashable'45'PlutusScript_1840 v0
 d_Hashable'45'Script_1842 ::
   T_TransactionStructure_24 ->
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_280 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'Script_1842 ~v0 = du_Hashable'45'Script_1842
 du_Hashable'45'Script_1842 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_280 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 du_Hashable'45'Script_1842
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
@@ -2445,7 +2445,7 @@ d_Show'45'THash_1870 v0
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.ScriptStructure.T-Hashable
 d_T'45'Hashable_1872 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_ScriptStructure_280 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_1872 v0
   = let v1
           = MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
@@ -2476,9 +2476,9 @@ d_hashRespectsUnion_1876 ::
   () ->
   () ->
   () ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_hashRespectsUnion_1876 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_hashRespectsUnion_326
@@ -2769,7 +2769,7 @@ d_ExUnits_1942 = erased
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.Hashable-P1Script
 d_Hashable'45'P1Script_1944 ::
   T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'P1Script_1944 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_122
@@ -2779,7 +2779,7 @@ d_Hashable'45'P1Script_1944 v0
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.Hashable-PlutusScript
 d_Hashable'45'PlutusScript_1946 ::
   T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'PlutusScript_1946 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'PlutusScript_226
@@ -2789,7 +2789,7 @@ d_Hashable'45'PlutusScript_1946 v0
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.Hashable-Script
 d_Hashable'45'Script_1948 ::
   T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'Script_1948 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
@@ -2884,7 +2884,7 @@ d_Show'45'THash_1976 v0
 -- Ledger.Conway.Specification.Transaction.TransactionStructure._.T-Hashable
 d_T'45'Hashable_1978 ::
   T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_1978 v0
   = let v1
           = MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
@@ -2915,9 +2915,9 @@ d_hashRespectsUnion_1982 ::
   () ->
   () ->
   () ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_hashRespectsUnion_1982 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_hashRespectsUnion_326
@@ -5812,7 +5812,7 @@ d_txOutHash_3488 v0 v1
                                  MAlonzo.Code.Agda.Builtin.Sigma.C__'44'__32 (coe v6)
                                  (coe
                                     MAlonzo.Code.Data.Maybe.Base.du_map_64
-                                    (MAlonzo.Code.Interface.Hashable.d_hash_16
+                                    (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                        (coe
                                           MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_hashRespectsUnion_326
                                           (d_scriptStructure_1904 (coe v0)) erased erased erased
@@ -6210,7 +6210,7 @@ du_m_3592 v0 v1 v2
          (coe
             MAlonzo.Code.Data.Product.Base.du_'60'_'44'_'62'_112
             (coe
-               MAlonzo.Code.Interface.Hashable.d_hash_16
+               MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                (coe
                   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_hashRespectsUnion_326
                   (d_scriptStructure_1904 (coe v0)) erased erased erased

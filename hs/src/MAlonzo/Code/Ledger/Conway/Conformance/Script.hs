@@ -24,7 +24,7 @@ import qualified MAlonzo.Code.Data.List.Relation.Unary.All
 import qualified MAlonzo.Code.Data.List.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Maybe.Relation.Unary.Any
 import qualified MAlonzo.Code.Data.Nat.Properties
-import qualified MAlonzo.Code.Interface.Hashable
+import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Base
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Timelock
 import qualified MAlonzo.Code.Ledger.Core.Specification.Crypto
@@ -72,7 +72,7 @@ d_DecEq'45'P1Script_152 v0
 -- Ledger.Conway.Conformance.Script._.P1ScriptStructure.Hashable-P1Script
 d_Hashable'45'P1Script_154 ::
   MAlonzo.Code.Ledger.Conway.Specification.Script.Base.T_P1ScriptStructure_104 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'P1Script_154 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_122
@@ -117,14 +117,14 @@ d_tlScriptSize_374 v0
 d_Hashable'45'HSTimelock_378 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'HSTimelock_378 ~v0 ~v1
   = du_Hashable'45'HSTimelock_378
 du_Hashable'45'HSTimelock_378 ::
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 du_Hashable'45'HSTimelock_378
   = coe
-      MAlonzo.Code.Interface.Hashable.C_constructor_18
+      MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
       (coe (\ v0 -> d_tlScriptHash_372 (coe v0)))
 -- Ledger.Conway.Conformance.Script.DecEq-HSTimelock
 d_DecEq'45'HSTimelock_380 ::
@@ -214,14 +214,14 @@ d_psScriptSize_390 v0
 d_Hashable'45'HSPlutusScript_394 ::
   MAlonzo.Code.Ledger.Core.Specification.Crypto.T_CryptoStructure_140 ->
   MAlonzo.Code.Ledger.Core.Specification.Epoch.T_EpochStructure_22 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'HSPlutusScript_394 ~v0 ~v1
   = du_Hashable'45'HSPlutusScript_394
 du_Hashable'45'HSPlutusScript_394 ::
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 du_Hashable'45'HSPlutusScript_394
   = coe
-      MAlonzo.Code.Interface.Hashable.C_constructor_18
+      MAlonzo.Code.Interface.TypeClasses.Hashable.C_constructor_20
       (coe (\ v0 -> d_psScriptHash_388 (coe v0)))
 -- Ledger.Conway.Conformance.Script.P1ScriptStructure-HTL
 d_P1ScriptStructure'45'HTL_396 ::

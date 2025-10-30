@@ -348,5 +348,9 @@ body.reveal-agda-source pre.Agda.hidden-source {
 }
 /* Tighten sidebars slightly. */
 .md-sidebar--secondary {
-  width: 14rem; /* default ~15rem */
+  width: 15rem; /* default ~15rem */
+}
+.md-sidebar--primary .md-nav__list {
+  width: 9rem;
+  left: -9rem;
 }

@@ -448,11 +448,11 @@ library
       MAlonzo.Code.Induction.Lexicographic
       MAlonzo.Code.Induction.WellFounded
       MAlonzo.Code.Interface.ComputationalRelation
-      MAlonzo.Code.Interface.Hashable
-      MAlonzo.Code.Interface.HasSubset
-      MAlonzo.Code.Interface.HasSubtract
-      MAlonzo.Code.Interface.HasSubtract.Instances
       MAlonzo.Code.Interface.STS
+      MAlonzo.Code.Interface.TypeClasses.Hashable
+      MAlonzo.Code.Interface.TypeClasses.HasSubset
+      MAlonzo.Code.Interface.TypeClasses.HasSubtract
+      MAlonzo.Code.Interface.TypeClasses.HasSubtract.Instances
       MAlonzo.Code.IO.Primitive.Core
       MAlonzo.Code.Ledger.Conway.Conformance.Certs
       MAlonzo.Code.Ledger.Conway.Conformance.Certs.Properties

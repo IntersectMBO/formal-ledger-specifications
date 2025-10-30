@@ -40,7 +40,7 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum
 import qualified MAlonzo.Code.Data.Sum.Base
-import qualified MAlonzo.Code.Interface.Hashable
+import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Certs
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Gov.Actions
@@ -1037,7 +1037,7 @@ du_m_2458 v0 v1
          (coe
             MAlonzo.Code.Data.Product.Base.du_'60'_'44'_'62'_112
             (coe
-               MAlonzo.Code.Interface.Hashable.d_hash_16
+               MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                (coe
                   MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                   (coe

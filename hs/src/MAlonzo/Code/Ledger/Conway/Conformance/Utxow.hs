@@ -30,7 +30,7 @@ import qualified MAlonzo.Code.Class.Functor.Instances
 import qualified MAlonzo.Code.Class.IsSet
 import qualified MAlonzo.Code.Class.ToBool
 import qualified MAlonzo.Code.Data.Sum.Base
-import qualified MAlonzo.Code.Interface.Hashable
+import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Conformance.Utxo
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Abstract
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
@@ -48,7 +48,7 @@ import qualified MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory
 -- _.Hashable-Script
 d_Hashable'45'Script_344 ::
   MAlonzo.Code.Ledger.Conway.Specification.Transaction.T_TransactionStructure_24 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'Script_344 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
@@ -543,7 +543,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                 MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_cryptoStructure_1322
                                 (coe v0)))
                           (coe
-                             MAlonzo.Code.Interface.Hashable.d_hash_16
+                             MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                              (MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_122
                                 (coe
                                    MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_p1s_306
@@ -580,7 +580,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                              (MAlonzo.Code.Axiom.Set.d_th_1516
                                 (coe
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                             (MAlonzo.Code.Interface.Hashable.d_hash_16
+                             (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                 (coe
                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                    (coe
@@ -642,7 +642,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                              (MAlonzo.Code.Axiom.Set.d_th_1516
                                 (coe
                                    MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                             (MAlonzo.Code.Interface.Hashable.d_hash_16
+                             (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                 (coe
                                    MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                    (coe
@@ -704,7 +704,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                    (MAlonzo.Code.Axiom.Set.d_th_1516
                                       (coe
                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                   (MAlonzo.Code.Interface.Hashable.d_hash_16
+                                   (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                       (coe
                                          MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
                                          (coe
@@ -751,7 +751,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                               (MAlonzo.Code.Axiom.Set.d_th_1516
                                  (coe
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                              (MAlonzo.Code.Interface.Hashable.d_hash_16
+                              (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                  (coe
                                     MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
                                     (coe
@@ -815,7 +815,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                       (MAlonzo.Code.Axiom.Set.d_th_1516
                                          (coe
                                             MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                      (MAlonzo.Code.Interface.Hashable.d_hash_16
+                                      (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                          (coe
                                             MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
                                             (coe
@@ -831,7 +831,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                            (MAlonzo.Code.Axiom.Set.d_th_1516
                               (coe
                                  MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                           (MAlonzo.Code.Interface.Hashable.d_hash_16
+                           (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                               (coe
                                  MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
                                  (coe
@@ -870,7 +870,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                    (MAlonzo.Code.Axiom.Set.d_th_1516
                                       (coe
                                          MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                                   (MAlonzo.Code.Interface.Hashable.d_hash_16
+                                   (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                       (coe
                                          MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                          (coe
@@ -1107,7 +1107,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                               (MAlonzo.Code.Axiom.Set.d_th_1516
                                  (coe
                                     MAlonzo.Code.QabstractZ45ZsetZ45Ztheory.FiniteSetTheory.d_List'45'Model'7496'_8))
-                              (MAlonzo.Code.Interface.Hashable.d_hash_16
+                              (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                  (coe
                                     MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                     (coe
@@ -1174,7 +1174,7 @@ du_UTXOW'45'inductive'45'premises_2842 v0 v1 v2
                                  MAlonzo.Code.Class.Functor.Instances.d_Functor'45'Maybe_6
                                  MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
                                  MAlonzo.Code.Agda.Primitive.d_lzero_20 erased
-                                 (MAlonzo.Code.Interface.Hashable.d_hash_16
+                                 (MAlonzo.Code.Interface.TypeClasses.Hashable.d_hash_18
                                     (coe
                                        MAlonzo.Code.Ledger.Core.Specification.Crypto.d_T'45'Hashable_32
                                        (coe

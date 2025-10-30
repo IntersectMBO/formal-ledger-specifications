@@ -43,7 +43,7 @@ import qualified MAlonzo.Code.Data.Rational.Base
 import qualified MAlonzo.Code.Data.Refinement.Base
 import qualified MAlonzo.Code.Data.Sum.Base
 import qualified MAlonzo.Code.Function.Bundles
-import qualified MAlonzo.Code.Interface.Hashable
+import qualified MAlonzo.Code.Interface.TypeClasses.Hashable
 import qualified MAlonzo.Code.Ledger.Conway.Specification.PParams
 import qualified MAlonzo.Code.Ledger.Conway.Specification.Script.Base
 import qualified MAlonzo.Code.Ledger.Core.Specification.Address
@@ -190,7 +190,8 @@ d_Sig_630 :: T_GovStructure_10 -> ()
 d_Sig_630 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.T-Hashable
 d_T'45'Hashable_632 ::
-  T_GovStructure_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  T_GovStructure_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_632 v0
   = let v1 = d_cryptoStructure_602 (coe v0) in
     coe
@@ -557,7 +558,8 @@ d_ExUnits_734 :: T_GovStructure_10 -> ()
 d_ExUnits_734 = erased
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Hashable-P1Script
 d_Hashable'45'P1Script_736 ::
-  T_GovStructure_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  T_GovStructure_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'P1Script_736 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'P1Script_122
@@ -566,7 +568,8 @@ d_Hashable'45'P1Script_736 v0
          (coe d_scriptStructure_696 (coe v0)))
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Hashable-PlutusScript
 d_Hashable'45'PlutusScript_738 ::
-  T_GovStructure_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  T_GovStructure_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'PlutusScript_738 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Hashable'45'PlutusScript_226
@@ -575,7 +578,8 @@ d_Hashable'45'PlutusScript_738 v0
          (coe d_scriptStructure_696 (coe v0)))
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.Hashable-Script
 d_Hashable'45'Script_740 ::
-  T_GovStructure_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  T_GovStructure_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_Hashable'45'Script_740 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.du_Hashable'45'Script_402
@@ -669,7 +673,8 @@ d_Show'45'THash_768 v0
             (coe v1)))
 -- Ledger.Conway.Specification.Gov.Base.GovStructure._.T-Hashable
 d_T'45'Hashable_770 ::
-  T_GovStructure_10 -> MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  T_GovStructure_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_T'45'Hashable_770 v0
   = let v1
           = MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_Data'688'_204
@@ -700,9 +705,9 @@ d_hashRespectsUnion_774 ::
   () ->
   () ->
   () ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8 ->
-  MAlonzo.Code.Interface.Hashable.T_Hashable_8
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10 ->
+  MAlonzo.Code.Interface.TypeClasses.Hashable.T_Hashable_10
 d_hashRespectsUnion_774 v0
   = coe
       MAlonzo.Code.Ledger.Conway.Specification.Script.Base.d_hashRespectsUnion_326
