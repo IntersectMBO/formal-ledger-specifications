@@ -47,14 +47,14 @@ jobs:
       target: hs
 
   hs-build:
-    needs: [hs]
+    # needs: [hs]
     runs-on: ubuntu-latest
     steps:
-      - name: Download extracted Haskell code
-        uses: actions/download-artifact@v4
-        with:
-          name: hs
-          path: dist
+      # - name: Download extracted Haskell code
+      #   uses: actions/download-artifact@v4
+      #   with:
+      #     # name: hs
+      #     path: dist
       - name: Install Nix
         uses: cachix/install-nix-action@v31
         with:
@@ -64,7 +64,7 @@ jobs:
             substituters = https://cache.iog.io https://cache.nixos.org/
       - name: Build the extracted Haskell code
         run: |
-          nix-shell -p haskell.compiler.ghc96 cabal-install --run "cd dist/hs; cabal update && cabal build"
+          nix build ./#cardano-ledger-executable-spec
 
   html:
     needs: [formal-ledger-agda]
