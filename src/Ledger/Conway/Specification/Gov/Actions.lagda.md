@@ -442,8 +442,6 @@ proposedCC ⟦ UpdateCommittee , (x , _ , _) ⟧ᵍᵃ = dom x
 proposedCC _ = ∅
 ```
 
-An "active" `DRep`{.AgdaInductiveConstructor} is one whose expiry epoch is not less than the current epoch.
-
 ```agda
 DReps : Type
 DReps = Credential ⇀ Epoch
@@ -454,9 +452,16 @@ DReps = Credential ⇀ Epoch
 record HasDReps {a} (A : Type a) : Type a where
   field DRepsOf : A → DReps
 open HasDReps ⦃...⦄ public
+
 opaque
 ```
 -->
+
+The following function takes a type `A`{.AgdaDatatype} with an associated set of
+`DReps`{.AgdaDatatype}, and an epoch `e`{.AgdaBound}, and returns the
+`DReps`{.AgdaDatatype} of `A`{.AgdaDatatype} that expire in epoch `e`{.AgdaBound} or
+later.
+
 ```agda
   DRepsOf_∣_≤Expiry : {A : Type} ⦃ _ : HasDReps A ⦄ → A → Epoch → DReps
   DRepsOf a ∣ e ≤Expiry = filterᵐ (λ (_ , expEpoch) → e ≤ expEpoch) (DRepsOf a)
