@@ -33,7 +33,7 @@ open import abstract-set-theory.Axiom.Set.Properties th
 ```
 -->
 
-The EPOCH`{.AgdaDatatype} transition system behaves parametrically w.r.t. the
+The `EPOCH`{.AgdaDatatype} transition system behaves parametrically w.r.t. the
 set of expired `DReps`{.AgdaInductiveConstructor} that are part of the
 `EpochState`{.AgdaRecord}.
 
