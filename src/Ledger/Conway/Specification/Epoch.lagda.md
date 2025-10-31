@@ -462,11 +462,11 @@ module VDelegDelegatedStake
   (dState       : DState)
   where
 
-  activeDReps' : ℙ Credential
-  activeDReps' = activeDReps currentEpoch gState
+  activeDReps : ℙ Credential
+  activeDReps = dom (DRepsOf gState ∣ currentEpoch ≤Expiry)
 
   activeVDelegs : ℙ VDeleg
-  activeVDelegs = mapˢ vDelegCredential activeDReps' ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵
+  activeVDelegs = mapˢ vDelegCredential activeDReps ∪ ❴ vDelegNoConfidence ❵ ∪ ❴ vDelegAbstain ❵
 
   -- compute the stake for a credential
   stakePerCredential : Credential → Coin

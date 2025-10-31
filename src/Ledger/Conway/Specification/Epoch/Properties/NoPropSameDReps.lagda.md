@@ -34,7 +34,7 @@ then the set of `activeDReps`{.AgdaField} of `es`{.AgdaBound} in
 ```agda
 prop≡∅⇒activeDReps-const : Epoch → NewEpochState → Type
 prop≡∅⇒activeDReps-const e es =
-  GovStateOf es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es
+  GovStateOf es ≡ [] → dom (DRepsOf es ∣ e ≤Expiry) ≡ᵉ dom (DRepsOf es ∣ (sucᵉ e) ≤Expiry)
 ```
 
 *Proof*. (coming soon)

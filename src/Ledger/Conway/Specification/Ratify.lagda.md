@@ -412,8 +412,8 @@ module AcceptedByDRep (Γ : RatifyEnv)
 -->
 
 ```agda
-  activeDReps' : ℙ Credential
-  activeDReps' = activeDReps currentEpoch Γ
+  activeDReps : ℙ Credential
+  activeDReps = dom (DRepsOf Γ ∣ currentEpoch ≤Expiry)
 
   castVotes : VDeleg ⇀ Vote
   castVotes = mapKeys vDelegCredential gvDRep
@@ -424,7 +424,7 @@ module AcceptedByDRep (Γ : RatifyEnv)
       _            → ❴ vDelegAbstain , Vote.abstain ❵ ∪ˡ ❴ vDelegNoConfidence , Vote.no  ❵
 
   defaultDRepCredentialVotes : VDeleg ⇀ Vote
-  defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps') Vote.no
+  defaultDRepCredentialVotes = constMap (mapˢ vDelegCredential activeDReps) Vote.no
 
   actualVotes : VDeleg ⇀ Vote
   actualVotes  = castVotes ∪ˡ defaultDRepCredentialVotes

@@ -198,9 +198,9 @@ module AcceptedByDRep-≈ {Γ Γ' : RatifyEnv} (Γ≈Γ' : RatifyEnv- Γ ≈ Γ'
   castVotes = refl
 
   opaque
-    unfolding activeDReps
+    unfolding DRepsOf_∣_≤Expiry
 
-    activeDReps-≡ᵉ : abdr.activeDReps' ≡ᵉ abdr'.activeDReps'
+    activeDReps-≡ᵉ : abdr.activeDReps ≡ᵉ abdr'.activeDReps
     activeDReps-≡ᵉ with Γ≈Γ'.currentEpoch
     ... | refl = dom-cong $
       begin
@@ -513,8 +513,8 @@ module VDelegDelegatedStake-≈
   module vds' = VDelegDelegatedStake currentEpoch utxoSt govSt gState' dState
 
   opaque
-    unfolding activeDReps
-    activeDReps-≡ᵉ : vds.activeDReps' ≡ᵉ vds'.activeDReps'
+    unfolding DRepsOf_∣_≤Expiry
+    activeDReps-≡ᵉ : vds.activeDReps ≡ᵉ vds'.activeDReps
     activeDReps-≡ᵉ = dom-cong $
       begin
         filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState.dreps ˢ
