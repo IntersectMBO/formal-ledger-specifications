@@ -319,7 +319,9 @@ updateCertDeposits pp (reg c v ∷ certs) deposits
 updateCertDeposits pp (delegate c vd khs v ∷ certs) deposits
   = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (delegate c vd khs v) pp)
 updateCertDeposits pp (regpool kh p ∷ certs) deposits
-  = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (regpool kh p) pp)
+  -- pool deposits are not added a second time if they are already present
+  -- (reregistrations or duplicate certificates).
+  = updateCertDeposits pp certs (deposits ∪ˡ certDeposit (regpool kh p) pp)
 updateCertDeposits pp (regdrep c v a ∷ certs) deposits
   = updateCertDeposits pp certs (deposits ∪⁺ certDeposit (regdrep c v a) pp)
 updateCertDeposits pp (dereg c v ∷ certs) deposits

@@ -113,6 +113,102 @@ module LEDGER-PROPS (tx : Tx) (Γ : LEnv) (s : LState) where
     dpMap-rmOrphanDRepVotes : ∀ certState govSt → dpMap (rmOrphanDRepVotes certState govSt) ≡ dpMap govSt
     dpMap-rmOrphanDRepVotes certState govSt = sym (fmap-∘ govSt) -- map proj₁ ∘ map (map₂ _) ≡ map (proj₁ ∘ map₂ _) ≡ map proj₁
 
+-- TODO: Move these proofs to agda-sets
+module _ {A V : Set} ⦃ mon : CommutativeMonoid 0ℓ 0ℓ V ⦄ ⦃ dA : DecEq A ⦄ {m m' : A ⇀ V} where
+
+  rhs-∪ˡ : A ⇀ V
+  rhs-∪ˡ = filterᵐ? (sp-∘ (sp-¬ (∈-sp {X = dom (m ˢ)})) proj₁) m'
+
+  dom∪ˡˡ : dom (m ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
+  dom∪ˡˡ = begin
+    dom (m ˢ)                   ⊆⟨ ∪-⊆ˡ ⟩
+    dom (m ˢ) ∪ dom (rhs-∪ˡ ˢ)  ≈⟨ ≡ᵉA.sym dom∪ ⟩
+    dom ((m ˢ) ∪ (rhs-∪ˡ ˢ))    ≈⟨ ≡ᵉA.refl ⟩
+    dom ((m ∪ˡ m') ˢ)
+    ∎
+    where
+      open import Relation.Binary.Bundles using (Poset)
+      ⊆-Poset : Poset 0ℓ 0ℓ 0ℓ
+      ⊆-Poset = record
+        { Carrier = ℙ A
+        ; _≈_ = _≡ᵉ_
+        ; _≤_ = _⊆_
+        ; isPartialOrder = ⊆-PartialOrder
+        }
+      open import Relation.Binary.Reasoning.PartialOrder ⊆-Poset
+      open import Relation.Binary.Structures using (IsEquivalence)
+      module ≡ᵉA = IsEquivalence (≡ᵉ-isEquivalence {A = A})
+      open import Relation.Binary.Reasoning.Syntax
+      open ⊆-syntax _IsRelatedTo_ _IsRelatedTo_ ≤-go public
+
+  _∎→ : ∀ (A : Type) → A → A
+  A ∎→ = id
+  infix 3 _∎→
+
+  _→⟨_⟩_ : ∀ (x : Type) {y z : Type} → (x → y) → (y → z) → x → z
+  _ →⟨ f ⟩ g = g ∘ f
+  infixr 2 _→⟨_⟩_
+
+  begin→ : ∀ {A B : Type} → A → (A → B) → B
+  begin→ a f = f a
+
+  dom∪ˡʳ : dom (m' ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
+  dom∪ˡʳ {a} a∈ with a ∈? dom m
+  ... | yes p = dom∪ˡˡ p
+  ... | no ¬p =
+      begin→ a∈ $
+      a ∈ dom m'
+        →⟨ from ∈-map ⟩
+      (∃[ ab ] a ≡ proj₁ ab × ab ∈ (m' ˢ))
+        →⟨ (λ { (ab , refl , ab∈m') →
+             begin→ (¬p , ab∈m') $
+             (a ∉ dom m × ab ∈ m')
+               →⟨ to ∈-filter ⟩
+             ab ∈ rhs-∪ˡ
+               →⟨ (λ ab∈f → to ∈-map (ab , refl , ab∈f)) ⟩
+             a ∈ dom rhs-∪ˡ
+             ∎→
+         }) ⟩
+      a ∈ dom rhs-∪ˡ
+        →⟨ ∈-∪⁺ ∘ inj₂ ⟩
+      a ∈ dom m ∪ dom rhs-∪ˡ
+        →⟨ proj₂ dom∪ ⟩
+      a ∈ dom ((m ˢ) ∪ (rhs-∪ˡ ˢ))
+        →⟨ id ⟩
+      a ∈ dom ((m ∪ˡ m') ˢ)
+      ∎→
+
+  dom∪ˡ⊆∪dom : dom ((m ∪ˡ m') ˢ) ⊆ dom (m ˢ) ∪ dom (m' ˢ)
+  dom∪ˡ⊆∪dom {a} a∈dom∪ with ∈-∪⁻ (proj₁ dom∪ a∈dom∪)
+  ... | inj₁ a∈domm = ∈-∪⁺ (inj₁ a∈domm)
+  ... | inj₂ a∈domf =
+      begin→ a∈domf $
+      a ∈ dom rhs-∪ˡ
+        →⟨ from ∈-map ⟩
+      (∃[ ab ] a ≡ proj₁ ab × ab ∈ rhs-∪ˡ)
+        →⟨ (λ { (ab , refl , ab∈fm') →
+             begin→ ab∈fm' $
+             ab ∈ rhs-∪ˡ
+               →⟨ proj₂ ∘ from ∈-filter ⟩
+             ab ∈ m'
+               →⟨ (λ ab∈m' → to ∈-map (ab , refl , ab∈m')) ⟩
+             a ∈ dom m'
+             ∎→
+         }) ⟩
+      a ∈ dom m'
+        →⟨ ∈-∪⁺ ∘ inj₂ ⟩
+      a ∈ dom m ∪ dom m'
+      ∎→
+
+  ∪dom⊆dom∪ˡ : dom (m ˢ) ∪ dom (m' ˢ) ⊆ dom ((m ∪ˡ m') ˢ)
+  ∪dom⊆dom∪ˡ {a} a∈
+    with from ∈-∪ a∈
+  ... | inj₁ a∈ˡ = dom∪ˡˡ a∈ˡ
+  ... | inj₂ a∈ʳ = dom∪ˡʳ a∈ʳ
+
+  dom∪ˡ≡∪dom : dom ((m ∪ˡ m')ˢ) ≡ᵉ dom (m ˢ) ∪ dom (m' ˢ)
+  dom∪ˡ≡∪dom = dom∪ˡ⊆∪dom , ∪dom⊆dom∪ˡ
+
 module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
   open Tx tx renaming (body to txb); open TxBody txb
   open LEnv Γ renaming (pparams to pp)
@@ -191,8 +287,8 @@ module SetoidProperties (tx : Tx) (Γ : LEnv) (s : LState) where
       cd = certDeposit dcert pp
       filter0 = filterCD dcert deps
   noGACerts (dcert@(regpool _ _) ∷ cs) deps = begin
-    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪⁺ cd))) ≈⟨ noGACerts cs _ ⟩
-    filterˢ isGADeposit (dom (deps ∪⁺ cd)) ≈⟨ filter-cong dom∪⁺≡∪dom ⟩
+    filterˢ isGADeposit (dom (updateCertDeposits pp cs (deps ∪ˡ cd))) ≈⟨ noGACerts cs _ ⟩
+    filterˢ isGADeposit (dom (deps ∪ˡ cd)) ≈⟨ filter-cong (dom∪ˡ≡∪dom {m = deps} {m' = cd}) ⟩
     filterˢ isGADeposit (dom deps ∪ dom (cd ˢ )) ≈⟨ filter-hom-∪ ⟩
     filterˢ isGADeposit (dom deps) ∪ filterˢ isGADeposit (dom (cd ˢ)) ≈⟨ ∪-cong ≡ᵉ.refl filter0 ⟩
     filterˢ isGADeposit (dom deps) ∪ ∅ ≈⟨ ∪-identityʳ $ filterˢ isGADeposit (dom deps) ⟩
