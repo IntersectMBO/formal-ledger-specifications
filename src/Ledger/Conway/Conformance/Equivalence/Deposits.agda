@@ -16,13 +16,13 @@ module Ledger.Conway.Conformance.Equivalence.Deposits
   (txs : _) (open TransactionStructure txs)
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
- 
+
 private
   module L where
     open import Ledger.Conway.Specification.Ledger txs abs public
     open import Ledger.Conway.Specification.Utxo txs abs public
     open import Ledger.Conway.Specification.Certs govStructure public
-  
+
   module C where
     open import Ledger.Conway.Conformance.Ledger txs abs public
     open import Ledger.Conway.Conformance.Utxo txs abs public
@@ -118,8 +118,8 @@ cong-certGDeps = cong-filterᵐ
 castValidDepsᵈ : ∀ {pp deps₁ deps₂ certs} → deps₁ ≡ᵐ deps₂ → ValidDepsᵈ pp deps₁ certs → ValidDepsᵈ pp deps₂ certs
 castValidDepsᵈ                         eq [] = []
 castValidDepsᵈ {pp} {certs = cert ∷ _} eq (delegate   deps) = delegate           (castValidDepsᵈ (cong-updateCertDeposit pp cert eq) deps)
-castValidDepsᵈ {pp} {deps₁} {deps₂} {certs = cert ∷ _} eq (dereg h h' deps) = 
-  dereg (proj₁ eq h) h' 
+castValidDepsᵈ {pp} {deps₁} {deps₂} {certs = cert ∷ _} eq (dereg h h' deps) =
+  dereg (proj₁ eq h) h'
         (castValidDepsᵈ (cong-updateCertDeposit pp cert {deps₁} {deps₂} eq) deps)
 --castValidDepsᵈ {pp} {deps₁} {deps₂}
 --                    {certs = cert ∷ _} eq (dereg h    deps) = dereg (map₂ (proj₁ eq) h) (castValidDepsᵈ (cong-updateCertDeposit
