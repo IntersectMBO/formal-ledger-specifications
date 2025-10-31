@@ -197,26 +197,28 @@ module AcceptedByDRep-≈ {Γ Γ' : RatifyEnv} (Γ≈Γ' : RatifyEnv- Γ ≈ Γ'
   castVotes : abdr.castVotes ≡ abdr'.castVotes
   castVotes = refl
 
-  activeDReps : abdr.activeDReps ≡ᵉ abdr'.activeDReps
-  activeDReps with Γ≈Γ'.currentEpoch
-  ... | refl = dom-cong $
-    begin
-      filterᵐ (λ (_ , e) → Γ.currentEpoch ≤ e) Γ.dreps ˢ
-        ≈⟨ filterᵐ-idem {m = Γ.dreps} ⟨
-      filterᵐ (λ (_ , e) → Γ.currentEpoch ≤ e) (filterᵐ (λ (_ , e) → Γ.currentEpoch ≤ e) Γ.dreps) ˢ
-        ≈⟨ filter-cong Γ≈Γ'.dreps ⟩
-      filterᵐ (λ (_ , e) → Γ'.currentEpoch ≤ e) (filterᵐ (λ (_ , e) → Γ'.currentEpoch ≤ e) Γ'.dreps) ˢ
-        ≈⟨ filterᵐ-idem {m = Γ'.dreps} ⟩
-      filterᵐ (λ (_ , e) → Γ'.currentEpoch ≤ e) Γ'.dreps ˢ
-    ∎
-    where
-      open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
+  opaque
+    unfolding DRepsOf_∣_≤Expiry
+
+    activeDReps-≡ᵉ : abdr.activeDReps ≡ᵉ abdr'.activeDReps
+    activeDReps-≡ᵉ with Γ≈Γ'.currentEpoch
+    ... | refl = dom-cong $
+      begin
+        filterᵐ (λ (_ , e) → Γ.currentEpoch ≤ e) Γ.dreps ˢ
+          ≈⟨ filterᵐ-idem {m = Γ.dreps} ⟨
+        filterᵐ (λ (_ , e) → Γ.currentEpoch ≤ e) (filterᵐ (λ (_ , e) → Γ.currentEpoch ≤ e) Γ.dreps) ˢ
+          ≈⟨ filter-cong Γ≈Γ'.dreps ⟩
+        filterᵐ (λ (_ , e) → Γ'.currentEpoch ≤ e) (filterᵐ (λ (_ , e) → Γ'.currentEpoch ≤ e) Γ'.dreps) ˢ
+          ≈⟨ filterᵐ-idem {m = Γ'.dreps} ⟩
+        filterᵐ (λ (_ , e) → Γ'.currentEpoch ≤ e) Γ'.dreps ˢ
+      ∎
+      where open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
 
   predeterminedDRepVotes : abdr.predeterminedDRepVotes ≡ abdr'.predeterminedDRepVotes
   predeterminedDRepVotes = refl
 
   defaultDRepCredentialVotes : abdr.defaultDRepCredentialVotes ≡ᵐ abdr'.defaultDRepCredentialVotes
-  defaultDRepCredentialVotes = map-≡ᵉ (map-≡ᵉ activeDReps)
+  defaultDRepCredentialVotes = map-≡ᵉ (map-≡ᵉ activeDReps-≡ᵉ)
 
   actualVotes : abdr.actualVotes ≡ᵐ abdr'.actualVotes
   actualVotes = ∪ˡ-cong {m = abdr.castVotes} {m' = abdr.defaultDRepCredentialVotes ∪ˡ abdr.predeterminedDRepVotes}
@@ -251,8 +253,8 @@ module AcceptedByDRep-≈ {Γ Γ' : RatifyEnv} (Γ≈Γ' : RatifyEnv- Γ ≈ Γ'
                             (StakeDistrs-_≈_.stakeDistrVDeleg Γ≈Γ'.stakeDistrs)
                             (dom-cong (coresᵐ-cong {m = abdr.actualVotes} {m' = abdr'.actualVotes} actualVotes ≡ᵉ-isEquivalence.refl)))
     where
-      open import Relation.Binary.Structures _≡ᵉ_
-      module ≡ᵉ-isEquivalence = IsEquivalence ≡ᵉ-isEquivalence
+    open import Relation.Binary.Structures _≡ᵉ_
+    module ≡ᵉ-isEquivalence = IsEquivalence ≡ᵉ-isEquivalence
 
   accepted-→ : abdr.accepted → abdr'.accepted
   accepted-→ x =
@@ -510,22 +512,24 @@ module VDelegDelegatedStake-≈
   module vds  = VDelegDelegatedStake currentEpoch utxoSt govSt gState  dState
   module vds' = VDelegDelegatedStake currentEpoch utxoSt govSt gState' dState
 
-  activeDReps : vds.activeDReps ≡ᵉ vds'.activeDReps
-  activeDReps = dom-cong $
-    begin
-      filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState.dreps ˢ
-        ≈⟨ filterᵐ-idem {m = gState.dreps} ⟨
-      filterᵐ (λ (_ , e) → currentEpoch ≤ e) (filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState.dreps) ˢ
-        ≈⟨ filter-cong gState≈gState'.dreps ⟩
-      filterᵐ (λ (_ , e) → currentEpoch ≤ e) (filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState'.dreps) ˢ
-        ≈⟨ filterᵐ-idem {m = gState'.dreps} ⟩
-      filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState'.dreps ˢ
-    ∎
-    where
-      open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
+  opaque
+    unfolding DRepsOf_∣_≤Expiry
+    activeDReps-≡ᵉ : vds.activeDReps ≡ᵉ vds'.activeDReps
+    activeDReps-≡ᵉ = dom-cong $
+      begin
+        filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState.dreps ˢ
+          ≈⟨ filterᵐ-idem {m = gState.dreps} ⟨
+        filterᵐ (λ (_ , e) → currentEpoch ≤ e) (filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState.dreps) ˢ
+          ≈⟨ filter-cong gState≈gState'.dreps ⟩
+        filterᵐ (λ (_ , e) → currentEpoch ≤ e) (filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState'.dreps) ˢ
+          ≈⟨ filterᵐ-idem {m = gState'.dreps} ⟩
+        filterᵐ (λ (_ , e) → currentEpoch ≤ e) gState'.dreps ˢ
+      ∎
+      where
+        open import Relation.Binary.Reasoning.Setoid ≡ᵉ-Setoid
 
   activeVDelegs : vds.activeVDelegs ≡ᵉ vds'.activeVDelegs
-  activeVDelegs = ∪-cong (map-≡ᵉ activeDReps) ≡ᵉ-isEquivalence.refl
+  activeVDelegs = ∪-cong (map-≡ᵉ activeDReps-≡ᵉ) ≡ᵉ-isEquivalence.refl
     where
       open import Relation.Binary.Structures _≡ᵉ_
       module ≡ᵉ-isEquivalence = IsEquivalence ≡ᵉ-isEquivalence

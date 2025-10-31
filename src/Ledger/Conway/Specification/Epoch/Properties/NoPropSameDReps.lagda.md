@@ -11,6 +11,7 @@ module Ledger.Conway.Specification.Epoch.Properties.NoPropSameDReps
   (abs : AbstractFunctions txs) (open AbstractFunctions abs)
   where
 
+open import Ledger.Conway.Specification.Certs govStructure
 open import Ledger.Conway.Specification.Epoch txs abs
 open import Ledger.Conway.Specification.Gov txs
 open import Ledger.Prelude
@@ -33,7 +34,7 @@ then the set of `activeDReps`{.AgdaField} of `es`{.AgdaBound} in
 ```agda
 prop≡∅⇒activeDReps-const : Epoch → NewEpochState → Type
 prop≡∅⇒activeDReps-const e es =
-  GovStateOf es ≡ [] → activeDReps e es ≡ᵉ activeDReps (sucᵉ e) es
+  GovStateOf es ≡ [] → dom (DRepsOf es ∣ e ≤Expiry) ≡ᵉ dom (DRepsOf es ∣ (sucᵉ e) ≤Expiry)
 ```
 
 *Proof*. (coming soon)
