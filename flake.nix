@@ -86,9 +86,14 @@
             in
             nixpkgs.stdenv.mkDerivation (args // default);
 
+          hs-src = nixpkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
+
+          cardano-ledger-executable-spec = nixpkgs.haskell.lib.compose.disableLibraryProfiling (
+            nixpkgs.haskellPackages.callCabal2nix "cardano-ledger-executable-spec" "${hs-src}/hs" { }
+          );
+
           pkgs = {
-            inherit formal-ledger;
-            hs-src = nixpkgs.callPackage ./build-tools/nix/hs-src.nix { inherit mkDerivation; };
+            inherit formal-ledger hs-src cardano-ledger-executable-spec;
             html = nixpkgs.callPackage ./build-tools/nix/html.nix { inherit mkDerivation; };
             mkdocs = nixpkgs.callPackage ./build-tools/nix/mkdocs.nix {
               inherit (nixpkgs.stdenv) mkDerivation;
