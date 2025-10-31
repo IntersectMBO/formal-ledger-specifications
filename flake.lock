@@ -47,11 +47,11 @@
         "standard-library-meta": "standard-library-meta"
       },
       "locked": {
-        "lastModified": 1760976118,
-        "narHash": "sha256-FF0oNtU7XaWKxi5XNgyyc0/F+PLB73Vo4OOfzrfFvq0=",
+        "lastModified": 1761838648,
+        "narHash": "sha256-jU2SKGxAaX6PYZ+5SalfULagR6XA8lPvy7BzHcdWC4Q=",
         "owner": "input-output-hk",
         "repo": "agda.nix",
-        "rev": "acc1da6d9d84dda2e7e95715e0ab5ee6ea8ea4ef",
+        "rev": "eba91d0ed265ee0f48910ce0125a6492c1183685",
         "type": "github"
       },
       "original": {
@@ -310,11 +310,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1760449853,
-        "narHash": "sha256-ttv5P8N1vRJXxj90Nai0eVhBaCbGgMvb2kZkmU6zjc8=",
+        "lastModified": 1761895013,
+        "narHash": "sha256-pNDT+e2DBOamgcMyMVEtm43QfvQCPES9w48Olev8scE=",
         "owner": "NixOs",
         "repo": "nixpkgs",
-        "rev": "5ee9ed6cc3acb33d6554f6d1fb7f84aa6239b1a9",
+        "rev": "78324291425a318af7b6fe08ce0646291f5588db",
         "type": "github"
       },
       "original": {
