@@ -522,7 +522,7 @@ d_Conv'45'TxBody_32
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_to_18
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_902))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_904))
                         v13)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -740,7 +740,7 @@ d_Conv'45'TxBody_32
                         () erased
                         (MAlonzo.Code.Foreign.Convertible.d_from_20
                            (coe
-                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_902))
+                              MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_904))
                         v13)
                      (coe
                         MAlonzo.Code.Foreign.Convertible.d_from_20
@@ -961,7 +961,7 @@ d_Conv'45'Tx_36
                            () erased
                            (MAlonzo.Code.Foreign.Convertible.d_to_18
                               (coe
-                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_902))
+                                 MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_904))
                            (MAlonzo.Code.Ledger.Conway.Specification.Transaction.d_txGovProposals_3326
                               (coe v1)))
                         (coe
@@ -1246,7 +1246,7 @@ d_Conv'45'Tx_36
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_to_18
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_902))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_904))
                                              v19)
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_to_18
@@ -1476,7 +1476,7 @@ d_Conv'45'Tx_36
                                              () erased () erased
                                              (MAlonzo.Code.Foreign.Convertible.d_from_20
                                                 (coe
-                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_902))
+                                                   MAlonzo.Code.Ledger.Conway.Foreign.HSLedger.Gov.d_Conv'45'GovProposal_904))
                                              v19)
                                           (coe
                                              MAlonzo.Code.Foreign.Convertible.d_from_20

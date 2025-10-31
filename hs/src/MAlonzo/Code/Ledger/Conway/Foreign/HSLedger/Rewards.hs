@@ -386,7 +386,7 @@ d_set_114 v0
       (coe v0)
 -- Ledger.Conway.Foreign.HSLedger.Rewards.Show-SNAP
 d_Show'45'SNAP_122 ::
-  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2584 ->
+  MAlonzo.Code.Ledger.Conway.Conformance.Ledger.T_LState_2586 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2988 ->
   MAlonzo.Code.Ledger.Conway.Specification.Rewards.T_Snapshots_2988 ->
   MAlonzo.Code.Class.Show.Core.T_Show_10
