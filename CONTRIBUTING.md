@@ -225,7 +225,7 @@ nix develop
 
 # Build specific artifacts using fls-shake
 fls-shake html                # Build HTML docs
-fls-shake hs                  # Build Haskell source
+rm -rf _build dist/hs; fls-shake hs   # Build Haskell source
 
 # See all available targets
 fls-shake --help
