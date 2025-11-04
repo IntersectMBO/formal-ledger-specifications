@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html><head><meta charset="utf-8"><title>Ledger.Core.Specification.TokenAlgebra.Coin</title><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css"><link rel="stylesheet" href="Agda.css"><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js"></script><script src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js"></script><script src="AgdaKaTeX.js" defer=""></script></head><body><pre class="Agda">
+<a id="2" class="Symbol">{-#</a> <a id="6" class="Keyword">OPTIONS</a> <a id="14" class="Pragma">--safe</a> <a id="21" class="Symbol">#-}</a>
+<a id="25" class="Keyword">open</a> <a id="30" class="Keyword">import</a> <a id="37" href="Ledger.Prelude.html" class="Module">Ledger.Prelude</a>
+
+<a id="53" class="Keyword">module</a> <a id="60" href="Ledger.Core.Specification.TokenAlgebra.Coin.html" class="Module">Ledger.Core.Specification.TokenAlgebra.Coin</a> <a id="104" class="Symbol">(</a><a id="105" href="Ledger.Core.Specification.TokenAlgebra.Coin.html#105" class="Bound">X</a> <a id="107" class="Symbol">:</a> <a id="109" href="Agda.Primitive.html#388" class="Primitive">Type</a><a id="113" class="Symbol">)</a> <a id="115" class="Keyword">where</a>
+
+<a id="122" class="Keyword">open</a> <a id="127" class="Keyword">import</a> <a id="134" href="Algebra.Morphism.Construct.Identity.html" class="Module">Algebra.Morphism.Construct.Identity</a>
+  <a id="172" class="Keyword">using</a> <a id="178" class="Symbol">(</a><a id="179" href="Algebra.Morphism.Construct.Identity.html#1946" class="Function">isMonoidHomomorphism</a><a id="199" class="Symbol">)</a>
+
+<a id="202" class="Keyword">open</a> <a id="207" class="Keyword">import</a> <a id="214" href="Ledger.Core.Specification.TokenAlgebra.Base.html" class="Module">Ledger.Core.Specification.TokenAlgebra.Base</a> <a id="258" href="Ledger.Core.Specification.TokenAlgebra.Coin.html#105" class="Bound">X</a>
+
+<a id="261" class="Keyword">open</a> <a id="266" href="Ledger.Core.Specification.TokenAlgebra.Base.html#476" class="Module">TokenAlgebra</a>
+
+<a id="Coin-TokenAlgebra"></a><a id="280" href="Ledger.Core.Specification.TokenAlgebra.Coin.html#280" class="Function">Coin-TokenAlgebra</a> <a id="298" class="Symbol">:</a> <a id="300" href="Ledger.Core.Specification.TokenAlgebra.Base.html#476" class="Record">TokenAlgebra</a>
+<a id="313" href="Ledger.Core.Specification.TokenAlgebra.Coin.html#280" class="Function">Coin-TokenAlgebra</a> <a id="331" class="Symbol">=</a> <a id="333" class="Symbol">λ</a> <a id="335" class="Keyword">where</a>
+  <a id="343" class="Symbol">.</a><a id="344" href="Ledger.Core.Specification.TokenAlgebra.Base.html#515" class="Field">Value</a>                      <a id="371" class="Symbol">→</a> <a id="373" href="Ledger.Prelude.Base.html#154" class="Function">Coin</a>
+  <a id="380" class="Symbol">.</a><a id="381" href="Ledger.Core.Specification.TokenAlgebra.Base.html#533" class="Field">Value-CommutativeMonoid</a>    <a id="408" class="Symbol">→</a> <a id="410" href="Function.Base.html#4755" class="Function">it</a>
+    <a id="417" class="Comment">-- ^ Agda bug? Without this line, `coinIsMonoidHomomorphism` doesn&#39;t type check anymore</a>
+  <a id="507" class="Symbol">.</a><a id="508" href="Ledger.Core.Specification.TokenAlgebra.Base.html#835" class="Field">coin</a>                       <a id="535" class="Symbol">→</a> <a id="537" href="Function.Base.html#704" class="Function">id</a>
+  <a id="542" class="Symbol">.</a><a id="543" href="Ledger.Core.Specification.TokenAlgebra.Base.html#880" class="Field">inject</a>                     <a id="570" class="Symbol">→</a> <a id="572" href="Function.Base.html#704" class="Function">id</a>
+  <a id="577" class="Symbol">.</a><a id="578" href="Ledger.Core.Specification.TokenAlgebra.Base.html#925" class="Field">policies</a>                   <a id="605" class="Symbol">→</a> <a id="607" class="Symbol">λ</a> <a id="609" href="Ledger.Core.Specification.TokenAlgebra.Coin.html#609" class="Bound">_</a> <a id="611" class="Symbol">→</a> <a id="613" href="Class.HasEmptySet.html#287" class="Field">∅</a>
+  <a id="617" class="Symbol">.</a><a id="618" href="Ledger.Core.Specification.TokenAlgebra.Base.html#976" class="Field">size</a>                       <a id="645" class="Symbol">→</a> <a id="647" class="Symbol">λ</a> <a id="649" href="Ledger.Core.Specification.TokenAlgebra.Coin.html#649" class="Bound">x</a> <a id="651" class="Symbol">→</a> <a id="653" class="Number">1</a> <a id="655" class="Comment">-- there is only ada in this token algebra</a>
+  <a id="700" class="Symbol">.</a><a id="701" href="Ledger.Core.Specification.TokenAlgebra.Base.html#1031" class="Field Operator">_≤ᵗ_</a>                       <a id="728" class="Symbol">→</a> <a id="730" href="Class.HasOrder.Core.html#613" class="Field Operator">_≤_</a>
+  <a id="736" class="Symbol">.</a><a id="737" href="Ledger.Core.Specification.TokenAlgebra.Base.html#1084" class="Field">coin∘inject≗id</a>             <a id="764" class="Symbol">→</a> <a id="766" class="Symbol">λ</a> <a id="768" href="Ledger.Core.Specification.TokenAlgebra.Coin.html#768" class="Bound">_</a> <a id="770" class="Symbol">→</a> <a id="772" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+  <a id="779" class="Symbol">.</a><a id="780" href="Ledger.Core.Specification.TokenAlgebra.Base.html#1135" class="Field">coinIsMonoidHomomorphism</a>   <a id="807" class="Symbol">→</a> <a id="809" href="Algebra.Morphism.Construct.Identity.html#1946" class="Function">isMonoidHomomorphism</a> <a id="830" class="Symbol">_</a> <a id="832" href="Agda.Builtin.Equality.html#207" class="InductiveConstructor">refl</a>
+
+</pre></body></html>
