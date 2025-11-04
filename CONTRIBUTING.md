@@ -341,10 +341,10 @@ Then point your browser to <http://127.0.0.1:8000>.
 
 For the best development experience, you should configure your IDE to use the Agda executable provided by this project's Nix environment.
 
-First, build `agdaWithPackages` and create a stable symlink to it in your home directory. This prevents you from having to update your IDE settings every time the project's dependencies change.
+First, build `fls-agdaWithPackages` and create a stable symlink to it in your home directory. This prevents you from having to update your IDE settings every time the project's dependencies change.
 
 ```bash
-nix build ./#agdaWithPackages -o ~/ledger-agda
+nix build ./#fls-agdaWithPackages -o ~/ledger-agda
 ```
 
 Then make sure that the `~/ledger-agda/bin` directory is in your `PATH` when starting your editor.
