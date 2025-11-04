@@ -6,7 +6,7 @@ source_path: src/Ledger/Conway/Specification/Chain/Properties/Computational.lagd
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction using (TransactionStructure)
+open import Ledger.Core.Specification.Transaction using (TransactionStructure)
 open import Ledger.Conway.Specification.Abstract using (AbstractFunctions)
 
 module Ledger.Conway.Specification.Chain.Properties.Computational
@@ -16,9 +16,9 @@ module Ledger.Conway.Specification.Chain.Properties.Computational
 open import Ledger.Conway.Specification.BlockBody.Properties.Computational txs abs
 open import Ledger.Conway.Specification.Chain txs abs
 open import Ledger.Conway.Specification.Enact govStructure using (EnactState)
-open import Ledger.Conway.Specification.Epoch txs abs
-open import Ledger.Conway.Specification.Ledger txs abs
-open import Ledger.Conway.Specification.RewardUpdate txs abs
+-- open import Ledger.Conway.Specification.Epoch txs abs
+-- open import Ledger.Conway.Specification.Ledger txs abs
+-- open import Ledger.Conway.Specification.RewardUpdate txs abs
 open import Ledger.Conway.Specification.RewardUpdate.Properties.Computational txs abs
 open import Ledger.Prelude
 

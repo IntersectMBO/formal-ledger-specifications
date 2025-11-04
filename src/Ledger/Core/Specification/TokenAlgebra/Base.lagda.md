@@ -1,6 +1,6 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/TokenAlgebra/Base.lagda
+source_path: src/Ledger/Core/Specification/TokenAlgebra/Base.lagda
 ---
 
 # Token Algebras {#sec:token-algebra}
@@ -11,7 +11,7 @@ Token algebras are used for multiple assets.
 ```agda
 {-# OPTIONS --safe #-}
 open import Prelude using (Type)
-module Ledger.Conway.Specification.TokenAlgebra.Base (
+module Ledger.Core.Specification.TokenAlgebra.Base (
 ```
 -->
  *Abstract types*

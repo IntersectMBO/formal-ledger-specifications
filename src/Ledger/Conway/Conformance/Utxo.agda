@@ -11,7 +11,7 @@ import Data.Rational as ℚ
 
 open import Ledger.Prelude
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Conformance.Utxo
   (txs : _) (open TransactionStructure txs)
@@ -20,7 +20,8 @@ module Ledger.Conway.Conformance.Utxo
 
 open import Ledger.Conway.Specification.Script.Validation txs abs
 open import Ledger.Conway.Specification.Fees txs using (scriptsCost)
-open import Ledger.Conway.Conformance.Certs govStructure
+-- open import Ledger.Conway.Conformance.Certs govStructure
+open import Ledger.Conway.Specification.Transaction txs
 
 private
   module L where

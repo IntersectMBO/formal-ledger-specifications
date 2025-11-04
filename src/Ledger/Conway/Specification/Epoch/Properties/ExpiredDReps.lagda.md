@@ -2,7 +2,7 @@
 ```agda
 {-# OPTIONS --safe #-}
 
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
 
 module Ledger.Conway.Specification.Epoch.Properties.ExpiredDReps
@@ -25,7 +25,7 @@ open import Ledger.Conway.Specification.Rewards txs abs
 open import Ledger.Conway.Specification.PoolReap txs abs
 open import Ledger.Conway.Specification.Utxo txs abs
 open import Ledger.Conway.Specification.Gov txs
-open import Ledger.Conway.Specification.Gov.Actions govStructure using (Vote)
+open import Ledger.Core.Specification.Gov.Actions govStructure using (Vote)
 open import Relation.Binary.PropositionalEquality hiding (cong)
 
 open import Axiom.Set.Properties th hiding (filter-map)

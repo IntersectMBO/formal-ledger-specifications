@@ -4,7 +4,7 @@
 {-# OPTIONS --safe #-}
 
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.Transaction
+open import Ledger.Core.Specification.Transaction
 
 module Ledger.Conway.Specification.Chain.Properties.EpochStep
   (txs : _) (open TransactionStructure txs)

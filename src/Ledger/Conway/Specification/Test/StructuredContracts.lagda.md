@@ -15,8 +15,8 @@ open import Data.Nat.Properties using (+-0-monoid)
 open import Ledger.Prelude; open Equivalence
 open import Ledger.Conway.Specification.Transaction
 open import Ledger.Conway.Specification.Abstract
-open import Ledger.Conway.Specification.TokenAlgebra.Base
-open import Ledger.Conway.Specification.TokenAlgebra.ValueSet
+open import Ledger.Core.Specification.TokenAlgebra.Base
+open import Ledger.Core.Specification.TokenAlgebra.ValueSet
 
 module Ledger.Conway.Specification.Test.StructuredContracts
   (txs : _) (open TransactionStructure txs)

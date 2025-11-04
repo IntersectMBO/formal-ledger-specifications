@@ -32,7 +32,7 @@ instance
 -- No P2 scripts for now
 
 open import Ledger.Conway.Specification.Script it it
-open import Ledger.Conway.Specification.Script.Timelock it it public
+open import Ledger.Core.Specification.Script.Timelock it it public
 open import Ledger.Conway.Conformance.Script it it public
 
 instance

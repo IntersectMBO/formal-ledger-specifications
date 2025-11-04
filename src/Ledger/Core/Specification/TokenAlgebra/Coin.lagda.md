@@ -1,18 +1,18 @@
 ---
 source_branch: master
-source_path: src/Ledger/Conway/Specification/TokenAlgebra/Coin.lagda.md
+source_path: src/Ledger/Core/Specification/TokenAlgebra/Coin.lagda.md
 ---
 
 ```agda
 {-# OPTIONS --safe #-}
 open import Ledger.Prelude
 
-module Ledger.Conway.Specification.TokenAlgebra.Coin (X : Type) where
+module Ledger.Core.Specification.TokenAlgebra.Coin (X : Type) where
 
 open import Algebra.Morphism.Construct.Identity
   using (isMonoidHomomorphism)
 
-open import Ledger.Conway.Specification.TokenAlgebra.Base X
+open import Ledger.Core.Specification.TokenAlgebra.Base X
 
 open TokenAlgebra
 
