@@ -358,7 +358,7 @@ module AcceptedByCC (currentEpoch : Epoch)
   totalStake     = ∑[ x ← stakeDistr ∣ dom (actualVotes ∣^ (❴ Vote.yes ❵ ∪ ❴ Vote.no ❵)) ] x
 
   accepted = (acceptedStake /₀ totalStake) ≥ t
-    × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ Is-nothing mT)
+    × (maybe (λ (m , _) → lengthˢ m) 0 (proj₁ cc) ≥ ccMinSize ⊎ (Is-nothing mT × ccMinSize ≡ 0))
 ```
 
 ```agda
@@ -666,7 +666,7 @@ opaque
   accepted? Γ es st = acceptedByCC? Γ es st ×-dec acceptedByDRep? Γ es st ×-dec acceptedBySPO? Γ es st
     where
     acceptedByCC? : ∀ Γ es st → Dec (acceptedByCC Γ es st)
-    acceptedByCC? _ _ _ = _ ℚ.≤? _ ×-dec (_ ≥? _ ⊎-dec Is-nothing?)
+    acceptedByCC? _ _ _ = _ ℚ.≤? _ ×-dec (_ ≥? _ ⊎-dec (Is-nothing? ×-dec ¿ _ ¿))
 
     acceptedByDRep? : ∀ Γ es st → Dec (acceptedByDRep Γ es st)
     acceptedByDRep? _ _ _ = _ ℚ.≤? _
