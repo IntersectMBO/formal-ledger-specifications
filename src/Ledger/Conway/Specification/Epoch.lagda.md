@@ -795,7 +795,7 @@ data _⊢_⇀⦇_,EPOCH⦈_ : ⊤ → EpochState → Epoch → EpochState → Ty
     in
         ls ⊢ ss ⇀⦇ tt ,SNAP⦈ ss'
       ∙ _  ⊢ ⟦ utxoSt' , acnt , DStateOf ls , pState' ⟧ ⇀⦇ e ,POOLREAP⦈ ⟦ utxoSt'' , acnt' , dState' , pState'' ⟧
-      ∙ Γ  ⊢ ⟦ es , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
+      ∙ Γ  ⊢ ⟦ es' , ∅ , false ⟧ ⇀⦇ govSt' ,RATIFIES⦈ fut'
       ──────────────────────────────────────────────
       _ ⊢ ⟦ acnt , ss , ls , es₀ , fut ⟧ ⇀⦇ e ,EPOCH⦈ ⟦ acnt'' , ss' , ⟦ utxoSt'' , govSt' , ⟦ dState'' , pState'' , gState' ⟧ᶜˢ ⟧ , es' , fut' ⟧
 ```
